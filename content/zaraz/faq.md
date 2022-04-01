@@ -61,7 +61,7 @@ The Zaraz engineering team is adding support to new tools all the time. You can 
 
 ### I cannot get a tool to load when the website is loaded. Do I have to add code to my website?
 
-If you proxy your domain through Cloudflare, you do not need to add any code to your website. By default, Zaraz includes an automated `Pageview` trigger. Some tools, like Google Analytics, automatically add a "Pageview" action that uses this trigger. With other tools, you will need to add it manually. Refer to [Get started](/zaraz/get-started/) for more information.
+If you proxy your domain through Cloudflare, you do not need to add any code to your website. By default, Zaraz includes an automated `Pageview` trigger. Some tools, like Google Analytics, automatically add a `Pageview` action that uses this trigger. With other tools, you will need to add it manually. Refer to [Get started](/zaraz/get-started/) for more information.
 
 ### I am a vendor. How can I integrate my tool with Zaraz?
 

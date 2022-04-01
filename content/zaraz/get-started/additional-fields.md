@@ -4,7 +4,7 @@ title: Additional fields
 weight: 6
 ---
 
-# Additonal fields
+# Additional fields
 
 Almost all tools in the Tools Library require that you enter information in more than one field to be properly configured. Beyond these required default fields, some tools let you add additional fields.
 
