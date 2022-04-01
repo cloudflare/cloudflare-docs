@@ -50,7 +50,7 @@ To enable load shedding for a specific pool via the dashboard:
      <summary>Shed %</summary>
      <div>
 
-     When choosing a <strong>Shed %</strong>, start with a small percentage and increase gradually. Particularly if you choose the [IP hash shedding policy](#shedding-policies), you might shed more traffic than expected.
+     When choosing a **Shed %**, start with a small percentage and increase gradually. Particularly if you choose the [IP hash shedding policy](#shedding-policies), you might shed more traffic than expected.
      
      </div>
      </details>
