@@ -81,11 +81,6 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
-algolia:
-  index: developers-cloudflare
-  apikey: b23088ab4d346409f9d3ece6606344c3
-  filters: '["project:network-interconnect"]'
-
 externals:
   - title: Blog announcement
     url: https://blog.cloudflare.com/cloudflare-network-interconnect/

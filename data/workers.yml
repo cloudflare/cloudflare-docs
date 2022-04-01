@@ -16,11 +16,6 @@ meta:
   author: '@cloudflare'
   image: /workers/static/og-image.png
 
-algolia:
-  index: developers-cloudflare
-  apikey: b23088ab4d346409f9d3ece6606344c3
-  filters: '["project:workers"]'
-
 externals:
   - title: Workers home
     url: https://workers.cloudflare.com
