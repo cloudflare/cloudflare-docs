@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Manage Transform Rules
-weight: 4
+weight: 5
 ---
 
 # Manage Transform Rules
