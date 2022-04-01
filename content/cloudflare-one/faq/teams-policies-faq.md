@@ -20,7 +20,7 @@ Cloudflare Gateway uses the hostname in the HTTP `CONNECT` header to identify th
 
 Bypassing the L7 firewall results in no HTTP traffic inspection and logging is disabled for that HTTP session.
 
-## **I see an error when browsing Google-related pages. What's the problem?**
+## **I see an error when browsing Google-related pages. What is the problem?**
 
 If you have enabled the WARP client and are sending requests through Gateway, you need to [disable the QUIC protocol](/cloudflare-one/policies/filtering/http-policies/configuration-guidelines/#enabling-access-to-Google-services) within Google Chrome. This will prevent you from encountering issues such as users who are able to connect to Google-related sites and services (like YouTube) that are explicitly blocked by a Gateway policy.
 
