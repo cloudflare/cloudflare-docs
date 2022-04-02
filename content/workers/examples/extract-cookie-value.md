@@ -19,7 +19,7 @@ const COOKIE_NAME = '__uid';
 function handleRequest(request) {
   const cookie = parse(request.headers.get('Cookie') || '');
 
-  if (cookie[COOKIE_NAME] != null) {
+  if (cookie[COOKIE_NAME] !== undefined) {
     // Respond with the cookie value
     return new Response(cookie[COOKIE_NAME]);
   }
