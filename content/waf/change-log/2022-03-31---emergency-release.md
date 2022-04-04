@@ -29,7 +29,7 @@ meta:
       <td>100524</td>
       <td>Spring - Code Injection</td>
       <td>N/A</td>
-      <td>Simulate</td>
+      <td>Block</td>
     </tr>
   </tbody>
 </table>
