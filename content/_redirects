@@ -891,6 +891,8 @@
 /ssl/universal-ssl/ /ssl/edge-certificates/universal-ssl/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
 /ssl/universal-ssl/validating/ /ssl/edge-certificates/changing-dcv-method/ 301
+/ssl/notifications/ /fundamentals/notifications/notification-available/ 301
+/ssl/notifications /fundamentals/notifications/notification-available/ 301
 
 # magic_wan_redirects
 /magic-wan/get-started/configure-tunnels/assign-tunnel-priorities/ /magic-wan/how-to/configure-static-routes/ 301
