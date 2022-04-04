@@ -14,11 +14,11 @@ Create URL Rewrite Rules in the **Transform Rules** tab under Rules. Refer to [U
 
 2.  Go to **Rules** > **Transform Rules**.
 
-    ![Transform Rules tab](/rules/static/transform/overview.png)
+    ![The Transform Rules tab in the Cloudflare dashboard displaying the several types of Transform Rules you can configure.](/rules/static/transform/overview.png)
 
 3.  Click **Create transform rule** > **Rewrite URL**.
 
-    ![Create Transform Rule page](/rules/static/transform/create-url-rewrite-rule.png)
+    ![The URL Rewrite Rule creation page in the Cloudflare dashboard.](/rules/static/transform/create-url-rewrite-rule.png)
 
 4.  In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
