@@ -8,7 +8,7 @@ meta:
 
 # Change log for DDoS Managed Rulesets
 
-Cloudflare has a regular cadence of releasing updates and new rules to the DDoS maangeed rulesets. The updates either improve a rule's accuracy, lower false positives rates or increase the protection due to a change in the threat landscape.
+Cloudflare has a regular cadence of releasing updates and new rules to the DDoS Managed Rulesets. The updates either improve a rule's accuracy, lower false positives rates, or increase the protection due to a change in the threat landscape.
 
 The release cycle for regular new rules happens is using the following process:
 
