@@ -25,7 +25,7 @@ layout: list
   <tbody>
     <tr>
       <td>2022-04-04</td>
-      <td>2022-03-11</td>
+      <td>2022-04-11</td>
       <td>Cloudflare Specials</td>
       <td>N/A</td>
       <td>100524_BETA</td>
