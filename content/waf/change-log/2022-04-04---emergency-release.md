@@ -1,19 +1,19 @@
 ---
+title: 2022-04-04 – Emergency
 type: table
 pcx-content-type: changelog
-title: Scheduled changes
-weight: 2
+weight: 914
 layout: list
+meta:
+  title: 2022-04-04 – Emergency Release
 ---
 
-# Scheduled changes
+# 2022-04-04 – Emergency Release
 
 {{<table-wrap>}}
 <table style="width: 100%">
   <thead>
     <tr>
-      <th>Announcement Date</th>
-      <th>Change Date</th>
       <th>Ruleset</th>
       <th>Rule ID</th>
       <th>Legacy Rule ID</th>
@@ -24,13 +24,19 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-04-04</td>
-      <td>2022-04-11</td>
-      <td>Cloudflare Specials</td>
-      <td>...9d787fc2</td>
-      <td>100524_BETA</td>
+      <td>Specials</td>
+      <td> ...f2cc4e84</td>
+      <td>100524</td>
       <td>Spring - Code Injection</td>
-      <td>N/A</td>
+      <td>Simulate</td>
+      <td>Block</td>
+    </tr>
+        <tr>
+      <td>Specials</td>
+      <td>...fbe6c869</td>
+      <td>100522</td>
+      <td>Spring - CVE:CVE-2022-22947</td>
+      <td>Simulate</td>
       <td>Block</td>
     </tr>
   </tbody>
