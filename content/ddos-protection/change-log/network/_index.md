@@ -1,5 +1,5 @@
 ---
-title: Network-layer DDoS Managed Rules change log
+title: Network-layer DDoS Managed Rules
 pcx-content-type: concept
 weight: 1
 meta:
@@ -10,4 +10,4 @@ meta:
 
 This section contains the past and upcoming changes to the Cloudflare network-level managed ruleset. This ruleset is available only for [Spectrum](/spectrum/) and [Magic transit](/magic-transit/) customers.
 
-<p>{{<button type="primary" href="/ddos-protection/change-log/l4/scheduled-changes/">}}View scheduled changes for network-level rules{{</button>}}</p>
+<p>{{<button type="primary" href="/ddos-protection/change-log/network/scheduled-changes/">}}View scheduled changes for network-level rules{{</button>}}</p>
