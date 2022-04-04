@@ -60,10 +60,12 @@ By default, Cloudflare proxies traffic destined for the HTTP/HTTPS ports listed 
 
 ## How to enable Cloudflare's proxy for additional ports
 
-If traffic for your domain is destined for a different port than listed above, either:
+If traffic for your domain is destined for a different port than the ones listed above, for example you have an SSH server that listens for incoming connections on port 22, either:
 
-- Add the subdomain as a [gray-clouded record](/dns/manage-dns-records/reference/proxied-dns-records/) via your Cloudflare DNS app, or
-- Enable [Cloudflare Spectrum](/spectrum/get-started/).
+- Change your subdomain to be [gray-clouded](/dns/manage-dns-records/reference/proxied-dns-records/), via your Cloudflare DNS app, to bypass the Cloudflare network and connect directly to your origin.
+- Configure a [Spectrum application](/spectrum/get-started/) for the hostname running the server. Spectrum supports all ports. Spectrum for all TCP and UDP ports is only available on the Enterprise plan. If you would like to know more about Cloudflare plans, please reach out to your Cloudflare account team.
+
+## How to block traffic on additional ports
 
 Block traffic on ports other than 80 and 443 in Cloudflare paid plans by doing one of the following:
 
