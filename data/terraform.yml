@@ -1,52 +1,5 @@
 name: Terraform
-logo: <svg width="48" height="55" viewBox="0 0 48
-  55"  xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd"
-  clip-rule="evenodd" d="M16.542 9.61169L31.4528 18.2211V35.4359L16.542
-  26.8304V9.61169Z" /><path fill-rule="evenodd" clip-rule="evenodd" d="M16.542
-  9.61169L31.4528 18.2211V35.4359L16.542 26.8304V9.61169Z"
-  fill="url(#paint0_linear)"/><path fill-rule="evenodd" clip-rule="evenodd"
-  d="M16.542 9.61169L31.4528 18.2211V35.4359L16.542 26.8304V9.61169Z"
-  fill="url(#paint1_linear)"/><path fill-rule="evenodd" clip-rule="evenodd"
-  d="M33.0889 18.2211V35.4359L47.9997 26.8304V9.61169L33.0889 18.2211Z" /><path
-  fill-rule="evenodd" clip-rule="evenodd" d="M33.0889 18.2211V35.4359L47.9997
-  26.8304V9.61169L33.0889 18.2211Z" fill="url(#paint2_linear)"/><path
-  fill-rule="evenodd" clip-rule="evenodd" d="M33.0889 18.2211V35.4359L47.9997
-  26.8304V9.61169L33.0889 18.2211Z" fill="url(#paint3_linear)"/><path
-  fill-rule="evenodd" clip-rule="evenodd" d="M0 0V17.2187L14.9109
-  25.8281V8.60935L0 0Z" /><path fill-rule="evenodd" clip-rule="evenodd" d="M0
-  0V17.2187L14.9109 25.8281V8.60935L0 0Z" fill="url(#paint4_linear)"/><path
-  fill-rule="evenodd" clip-rule="evenodd" d="M0 0V17.2187L14.9109
-  25.8281V8.60935L0 0Z" fill="url(#paint5_linear)"/><path fill-rule="evenodd"
-  clip-rule="evenodd" d="M16.542 45.9306L31.4528 54.5399V37.4402V37.3251L16.542
-  28.7157V45.9306Z" /><path fill-rule="evenodd" clip-rule="evenodd" d="M16.542
-  45.9306L31.4528 54.5399V37.4402V37.3251L16.542 28.7157V45.9306Z"
-  fill="url(#paint6_linear)"/><path fill-rule="evenodd" clip-rule="evenodd"
-  d="M16.542 45.9306L31.4528 54.5399V37.4402V37.3251L16.542 28.7157V45.9306Z"
-  fill="url(#paint7_linear)"/><defs><linearGradient id="paint0_linear"
-  x1="23.9974" y1="9.61169" x2="23.9974" y2="35.4359"
-  gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1"
-  stop-color="white" stop-opacity="0"/></linearGradient><linearGradient
-  id="paint1_linear" x1="23.9974" y1="9.61169" x2="23.9974" y2="35.4359"
-  gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1"
-  stop-color="white" stop-opacity="0"/></linearGradient><linearGradient
-  id="paint2_linear" x1="40.5443" y1="9.61169" x2="40.5443" y2="35.4359"
-  gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1"
-  stop-color="white" stop-opacity="0"/></linearGradient><linearGradient
-  id="paint3_linear" x1="40.5443" y1="9.61169" x2="40.5443" y2="35.4359"
-  gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1"
-  stop-color="white" stop-opacity="0"/></linearGradient><linearGradient
-  id="paint4_linear" x1="7.45543" y1="0" x2="7.45543" y2="25.8281"
-  gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1"
-  stop-color="white" stop-opacity="0"/></linearGradient><linearGradient
-  id="paint5_linear" x1="7.45543" y1="0" x2="7.45543" y2="25.8281"
-  gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1"
-  stop-color="white" stop-opacity="0"/></linearGradient><linearGradient
-  id="paint6_linear" x1="23.9974" y1="28.7157" x2="23.9974" y2="54.5399"
-  gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1"
-  stop-color="white" stop-opacity="0"/></linearGradient><linearGradient
-  id="paint7_linear" x1="23.9974" y1="28.7157" x2="23.9974" y2="54.5399"
-  gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1"
-  stop-color="white" stop-opacity="0"/></linearGradient></defs></svg>
+logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 55"><path fill-rule="evenodd" clip-rule="evenodd" d="m16.542 9.612 14.91 8.61v17.214l-14.91-8.606V9.612Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="m16.542 9.612 14.91 8.61v17.214l-14.91-8.606V9.612Z" fill="url(#a)"/><path fill-rule="evenodd" clip-rule="evenodd" d="m16.542 9.612 14.91 8.61v17.214l-14.91-8.606V9.612Z" fill="url(#b)"/><path fill-rule="evenodd" clip-rule="evenodd" d="M33.089 18.221v17.215l14.91-8.606V9.612l-14.91 8.61Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M33.089 18.221v17.215l14.91-8.606V9.612l-14.91 8.61Z" fill="url(#c)"/><path fill-rule="evenodd" clip-rule="evenodd" d="M33.089 18.221v17.215l14.91-8.606V9.612l-14.91 8.61Z" fill="url(#d)"/><path fill-rule="evenodd" clip-rule="evenodd" d="M0 0v17.219l14.91 8.61V8.608L0 0Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M0 0v17.219l14.91 8.61V8.608L0 0Z" fill="url(#e)"/><path fill-rule="evenodd" clip-rule="evenodd" d="M0 0v17.219l14.91 8.61V8.608L0 0Z" fill="url(#f)"/><path fill-rule="evenodd" clip-rule="evenodd" d="m16.542 45.93 14.91 8.61V37.325l-14.91-8.61v17.216Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="m16.542 45.93 14.91 8.61V37.325l-14.91-8.61v17.216Z" fill="url(#g)"/><path fill-rule="evenodd" clip-rule="evenodd" d="m16.542 45.93 14.91 8.61V37.325l-14.91-8.61v17.216Z" fill="url(#h)"/><defs><linearGradient id="a" x1="23.997" y1="9.612" x2="23.997" y2="35.436" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><linearGradient id="b" x1="23.997" y1="9.612" x2="23.997" y2="35.436" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><linearGradient id="c" x1="40.544" y1="9.612" x2="40.544" y2="35.436" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><linearGradient id="d" x1="40.544" y1="9.612" x2="40.544" y2="35.436" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><linearGradient id="e" x1="7.455" y1="0" x2="7.455" y2="25.828" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><linearGradient id="f" x1="7.455" y1="0" x2="7.455" y2="25.828" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><linearGradient id="g" x1="23.997" y1="28.716" x2="23.997" y2="54.54" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><linearGradient id="h" x1="23.997" y1="28.716" x2="23.997" y2="54.54" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs></svg>
 
 meta:
   title: Cloudflare Terraform docs
