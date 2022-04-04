@@ -5,7 +5,7 @@ pcx-content-type: changelog
 weight: 915
 layout: list
 meta:
-  title: 2022-03-31 – Emergency Release
+  title: 2022-04-04 – Emergency Release
 ---
 
 # 2022-04-04 – Emergency Release
