@@ -44,4 +44,4 @@ The script classifier will output a probability score for the script (also calle
 
 The score threshold for considering a script as malicious is currently set to 10. If the script classification score is below this value, the Page Shield dashboards will display the script as being malicious.
 
-You can configure [Malicious Code Alerts](/page-shield/reference/alerts/). You will receive an alert notification as soon as Cloudflare detects JavaScript code classified as malicious in your domain.
+You can configure [Malicious Script Alerts](/page-shield/reference/alerts/). You will receive an alert notification as soon as Cloudflare detects JavaScript code classified as malicious in your domain.

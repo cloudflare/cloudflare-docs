@@ -6,7 +6,7 @@ weight: 4
 
 # Review scripts considered malicious
 
-In the list of scripts displayed in the Active Scripts dashboard, the detected scripts that are considered malicious appear at the top of the list, so that you can quickly identify those scripts, review them, and take action.
+In the list of scripts displayed in the Active Scripts dashboard, detected scripts considered malicious appear at the top of the list, so that you can quickly identify those scripts, review them, and take action.
 
 {{<Aside type="note">}}
 

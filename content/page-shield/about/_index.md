@@ -14,7 +14,7 @@ But, more code brings greater security risks. Attackers can add or change existi
 
 ## How Page Shield works
 
-Page Shield simplifies external script management by tracking existing dependencies and providing alerts when new ones are added or when malicious code is detected.
+Page Shield simplifies external script management by tracking existing dependencies and providing alerts when new ones are added or when malicious scripts are detected.
 
 When turned on, Page Shield uses a [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (CSP) deployed with a [report-only directive](/page-shield/reference/csp-header/) to collect information from the browser. This allows Cloudflare to provide you with a list of all scripts running on your application.
 

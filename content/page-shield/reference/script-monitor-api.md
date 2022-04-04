@@ -40,7 +40,7 @@ The following table summarizes the available operations:
 
 ## API notes
 
-The malicious code classification (`Malicious` or `Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 10 — scripts with a score value above the threshold are considered malicious.
+The malicious script classification (`Malicious` or `Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 10 — scripts with a score value above the threshold are considered malicious.
 
 ## Common API calls
 

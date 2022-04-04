@@ -19,7 +19,7 @@ Use Page Shield's dashboards to review the scripts loaded in your domain. For mo
 
 All scripts considered malicious will appear in the Active Scripts dashboard, regardless of their status. 
 
-Malicious code detection is available to Enterprise customers with a paid add-on.
+Malicious script detection is available to Enterprise customers with a paid add-on.
 
 {{</Aside>}}
 
