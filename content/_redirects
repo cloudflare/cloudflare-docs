@@ -309,8 +309,6 @@
 /randomness-beacon/about/Background /randomness-beacon/about/background 302
 /randomness-beacon/about/Drand /randomness-beacon/about/drand 302
 /randomness-beacon/about/Future /randomness-beacon/about/future 302
-/registrar/about /registrar 302
-/registrar/about/ /registrar/ 301
 /registrar/cloudflare-registrar /registrar/why-choose-cloudflare 302
 /registrar/cloudflare-registrar/domain-management /registrar/account-options/domain-management 302
 /registrar/cloudflare-registrar/enabling-dnssec /registrar/account-options/enable-dnssec 302
