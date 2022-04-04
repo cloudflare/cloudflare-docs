@@ -16,4 +16,4 @@ Cloudflare Zaraz is built for speed, privacy, and security, and you can use it t
 
 Cloudflare Zaraz is available in beta to all customers on all plans, with a website proxied through Cloudflare (orange-clouded).
 
-If you have any comments, questions, or bugs to report, contact us through our [Discord channel](https://discord.gg/2TRr6nSxdd).
+If you have any comments, questions, or bugs to report, contact the Zaraz team directly through our [Discord channel](https://discord.gg/2TRr6nSxdd), or reach out to [Cloudflare support](https://support.cloudflare.com/hc/articles/200172476).
