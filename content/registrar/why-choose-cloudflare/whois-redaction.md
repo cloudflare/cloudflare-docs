@@ -20,6 +20,8 @@ WHOIS redaction removes most contact information categorized as personal data (s
 - Registrant state/province
 - Registrant country
 
+Cloudflare still maintains the authoritative, unredacted, record of your WHOIS data. You can modify this information at any time in. Refer to Change WHOIS redaction for more information.
+
 ## What is RDAP?
 
 RDAP (Registration Data Access Protocol) is a new standard for querying domain contact and nameserver information for all registered domains. This new protocol offers some advantages over WHOIS, including standardized data access, support for internationalization, and secure access controls. RDAP is intended to eventually replace WHOIS. However, Cloudflare currently provides both WHOIS and RDAP search capability.

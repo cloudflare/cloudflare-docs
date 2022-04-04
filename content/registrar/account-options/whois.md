@@ -1,12 +1,12 @@
 ---
 pcx-content-type: how-to
-title: WHOIS redaction
+title: Change WHOIS redaction
 ---
 
-# WHOIS readaction
+# Change WHOIS readaction
 
 
-Cloudflare still maintains the authoritative, unredacted, record of your WHOIS data. You can modify this information at any time in. To access it:
+
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Select **Registrar**.
