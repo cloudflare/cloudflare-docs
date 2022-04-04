@@ -1,13 +1,13 @@
 ---
-title: HTTP DDoS Managed Rules
+title: HTTP DDoS Managed Ruleset
 pcx-content-type: concept
 weight: 2
 meta:
-  title: Change log for HTTP DDoS Managed Rulesets
+  title: Change log for the HTTP DDoS Managed Ruleset
 ---
 
-# Change log for HTTP DDoS Managed Rulesets
+# Change log for the HTTP DDoS Managed Ruleset
 
-This section contains the past and upcoming changes to the Cloudflare HTTP managed ruleset.
+This section contains past and upcoming changes to the [HTTP DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/http/).
 
-<p>{{<button type="primary" href="/ddos-protection/change-log/http/scheduled-changes/">}}View scheduled changes for HTTP rules{{</button>}}</p>
+{{<button type="primary" href="/ddos-protection/change-log/http/scheduled-changes/">}}View scheduled changes{{</button>}}
