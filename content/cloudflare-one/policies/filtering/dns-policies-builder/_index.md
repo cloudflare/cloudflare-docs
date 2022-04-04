@@ -23,7 +23,7 @@ Build a DNS policy by configuring the following elements:
 Unless a more specific selector is configured in a policy (e.g., <code>user email</code> or <code>source IP address</code> for a registered location), then the policy will be evaluated against all DNS queries that reach Gateway from your organization.
 
 {{<Aside>}}
-If you are using the legacy DNS policy builder, we recommend migrating your rules to the new policy builder in order to take full advantage of the filtering options described below. Once you have recreated your rules in the **DNS** tab, you can delete the old rules from the **DNS (legacy)** tab.
+If you are using the legacy DNS policy builder, we recommend migrating your rules to the new policy builder in order to take full advantage of the DNS filtering options described below. Once you have recreated your rules in the **DNS** tab, you can delete the old rules from the **DNS (legacy)** tab.
 {{</Aside>}}
 
 ## Expressions
