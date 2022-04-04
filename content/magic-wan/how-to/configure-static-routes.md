@@ -13,7 +13,7 @@ You must assign a route priority to each Anycast GRE or IPsec tunnel–subnet pa
 - Lower values have greater priority.
 - When the priority values for prefix entries match — as illustrated by the 10.10.10.102/31 subnet in the example routing configuration (in bold) — Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic.
 
-For more on how Cloudflare uses ECMP packet forwarding, see [Traffic steering](/magic-wan/about/traffic-steering/).
+For more on how Cloudflare uses ECMP packet forwarding, refer to [Traffic steering](/magic-wan/about/traffic-steering/).
 
 For an example edge routing configuration, refer to the example below.
 
