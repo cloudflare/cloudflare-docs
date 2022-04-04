@@ -20,7 +20,7 @@ WHOIS redaction removes most contact information categorized as personal data (s
 - Registrant state/province
 - Registrant country
 
-Cloudflare still maintains the authoritative, unredacted, record of your WHOIS data. You can modify this information at any time in. Refer to Change WHOIS redaction for more information.
+Cloudflare still maintains the authoritative, unredacted, record of your WHOIS data. You can modify this information at any time in. Refer to [Registrant contact updates](/registrar/account-options/domain-contact-updates) for more information.
 
 ## What is RDAP?
 
