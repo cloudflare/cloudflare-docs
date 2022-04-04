@@ -167,7 +167,7 @@ You must now define authorization logic to determine who can perform what action
 
 1. [Basic Authentication](/workers/examples/basic-auth/): Shows how to restrict access using the HTTP Basic schema.
 2. [Using Custom Headers](/workers/examples/auth-with-headers/): Allow or deny a request based on a known pre-shared key in a header.
-3. [Authorizing users with Auth0](/workers/tutorials/authorize-users-with-auth0/#overview): Integrate Auth0, an identity management platform, into a Cloudflare Workers application.
+<!-- 3. [Authorizing users with Auth0](/workers/tutorials/authorize-users-with-auth0/#overview): Integrate Auth0, an identity management platform, into a Cloudflare Workers application. -->
 
 Continuing with your newly created bucket and Worker, you will need to protect all bucket operations.
 
