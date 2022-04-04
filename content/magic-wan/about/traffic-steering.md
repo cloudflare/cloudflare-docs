@@ -84,8 +84,8 @@ Magic WAN supports a weight field that you can apply to a tunnel so that a speci
 
 For example, in a scenario where you want to route 70% of your traffic through ISP A and 30% through ISP B, you can use the weight field to help achieve that.
 
-Keep in mind that because ECMP balances flows probabilistically, the use of weights is only approximate.
+Note that because ECMP balances flows probabilistically, the use of weights is only approximate.
 
-For more on Magic WAN tunnel weights, contact your Cloudflare customer service manager.
+For more on Magic WAN tunnel weights, contact your Cloudflare account manager.
 
 {{</Aside>}}
