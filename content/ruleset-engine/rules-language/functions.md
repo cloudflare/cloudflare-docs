@@ -49,7 +49,7 @@ The Rules language supports these transformation functions:
   - <em>Example:</em>
     <br />
 
-    `all(http.request.headers['content-type'][*] == "application/json")`
+    `all(http.request.headers["content-type"][*] == "application/json")`
 
 - <code>concat({{<type>}}String | Integer | bytes | Array elements{{</type>}})</code> {{<type>}}String{{</type>}}
 
