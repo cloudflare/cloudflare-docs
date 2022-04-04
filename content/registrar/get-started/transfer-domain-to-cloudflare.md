@@ -12,7 +12,11 @@ Transferring a domain to a new registrar informs the registry that they should i
 
 This section contains generic instructions on how to transfer your domain to Cloudflare from most registrars.
 
+---
+
 {{<render file="_before-you-begin.md">}}
+
+---
 
 {{<render file="_restrictions.md">}}
 
