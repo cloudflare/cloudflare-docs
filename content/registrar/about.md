@@ -8,7 +8,7 @@ meta:
 
 # What is a registrar?
 
-![Overview of how domain registration works and all the parts involved](/registrar/static/domain-registry-process.png)
+![There are several parties involved in the domain registration. Reade more about this in this page](/registrar/static/domain-registry-process.png)
 
 There are several steps you have to take before getting your website online and one of the first is making sure you have the address you want. 
 
