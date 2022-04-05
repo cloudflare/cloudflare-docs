@@ -1,10 +1,10 @@
 ---
-title: Enable a Managed Transform
+title: Configure Managed Transforms
 pcx-content-type: how-to
 weight: 1
 ---
 
-# Enable a Managed Transform
+# Configure Managed Transforms
 
 ## In the dashboard
 
@@ -16,7 +16,7 @@ weight: 1
 
     IMAGE
 
-4. Enable the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) by clicking the toggle next to each entry.
+4. Enable or disable the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) by clicking the toggle next to each entry.
 
 ## Via API
 
@@ -24,7 +24,6 @@ To enable a Managed Transform via API:
 
 1. Check the Managed Transform's current status and availability using the [Get all managed headers](https://api.cloudflare.com/#managed-headers-api-list-all-managed-headers) operation.
 2. Change the status of the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) using the [Change state of managed headers](https://api.cloudflare.com/#managed-headers-api-change-state-of-managed-headers) operation.
-
 
 ### 1. Get list of available Managed Transforms
 
@@ -75,8 +74,7 @@ header: Response
 }
 ```
 
-
-### 2. Enable a Managed Transform
+### 2. Change the status of Managed Transforms
 
 Add the Managed Transforms you wish to change to the request body, and update their status in the `enabled` field. 
 
