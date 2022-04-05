@@ -133,7 +133,7 @@
 /access/ssh/short-live-cert-server/ /cloudflare-one/tutorials/ssh-cert-bastion/ 301
 /access/ssh/ssh-guide /cloudflare-one/tutorials/ssh/ 301
 
-# argo_tunnel
+# argo-tunnel
 /argo-tunnel /cloudflare-one/connections/connect-apps/install-and-setup/ 301
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
 /argo-tunnel/create-tunnel /cloudflare-one/connections/connect-apps/install-and-setup/ 301
@@ -154,7 +154,7 @@
 /argo-tunnel/run-tunnel/run-as-service /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service 301
 /argo-tunnel/trycloudflare/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
 
-# API
+# api-shield / api-security
 /api-security /api-shield/ 301
 /api-security/ /api-shield/ 301
 /api-shield/products/ /api-shield/security/ 301
@@ -300,7 +300,7 @@
 /images/variants /images/cloudflare-images/resize-images 302
 /images/worker /images/image-resizing/resize-with-workers 302
 
-# load_balancing
+# load-balancing
 /load-balancing/about /load-balancing/ 301
 /load-balancing/about/ /load-balancing/ 301
 /load-balancing/best-practices /load-balancing/additional-options 301
@@ -348,12 +348,12 @@
 /logs/tutorials/example-logpush-python /logs/get-started/logpush-configuration-api/examples/example-logpush-python 302
 /logs/tutorials/tutorial-logpush-curl /logs/get-started/logpush-configuration-api/examples/example-logpush-curl 302
 
-# magic_firweall
+# magic-firewall
 /magic-firewall/examples /magic-firewall/reference/examples 302
 /magic-firewall/forming-an-expression /magic-firewall/how-to/form-expressions 302
 /magic-firewall/rules /magic-firewall/how-to/add-rules 302
 
-# magic_transit
+# magic-transit
 /magic-transit/about/health-checks/endpoint /magic-transit/about/health-checks#endpoint-health-checks 302
 /magic-transit/about/health-checks/tunnel /magic-transit/about/health-checks#tunnel-health-checks 302
 /magic-transit/magic-firewall /magic-firewall/ 302
@@ -378,14 +378,14 @@
 /magic-transit/get-started/requirements /magic-transit/prerequisites/ 301
 /magic-transit/get-started/requirements/ /magic-transit/prerequisites/ 301
 
-# magic_wan
+# magic-wan
 /magic-wan/on-ramp /magic-wan/tutorials/on-ramp 302
 /magic-wan/get-started/configure-tunnels/assign-tunnel-priorities/ /magic-wan/how-to/configure-static-routes/ 301
 /magic-wan/get-started/configure-tunnels/specify-ip-addresses/ /magic-wan/how-to/run-endpoint-health-checks/ 301
 /magic-wan/get-started/configure-tunnels/specify-tunnel-endpoints/ /magic-wan/how-to/configure-tunnels/ 301
 /magic-wan/get-started/verify-requirements/ /magic-wan/prerequisites 301
 
-# network_interconnect
+# network-interconnect
 /network-interconnect/interconnect-types /network-interconnect/about/interconnect-types 302
 /network-interconnect/route-leak-detection /network-interconnect/about/route-leak-detection 302
 
@@ -412,7 +412,7 @@
 /pages/platform/github-integration /pages/platform/git-integration/ 301
 /pages/platform/github-integration/ /pages/platform/git-integration/ 301
 
-# randomness_beacon
+# randomness-beacon
 /randomness-beacon/about/Background /randomness-beacon/about/background 302
 /randomness-beacon/about/Drand /randomness-beacon/about/drand 302
 /randomness-beacon/about/Future /randomness-beacon/about/future 302
@@ -459,7 +459,7 @@
 /rules/transform/url-rewrite/parameters /rules/transform/url-rewrite/reference/parameters 302
 /rules/transform/use-cases /rules/transform/url-rewrite/examples 302
 
-# ruleset
+# ruleset-engine
 /ruleset-engine/common-use-cases /ruleset-engine/managed-rulesets/override-examples/ 301
 /ruleset-engine/common-use-cases/ /ruleset-engine/managed-rulesets/override-examples/ 301
 /ruleset-engine/common-use-cases/deploy-cmr-joomla-only /ruleset-engine/managed-rulesets/override-examples/deploy-cmr-joomla-only/ 301
@@ -517,8 +517,8 @@
 /ssl/universal-ssl/ /ssl/edge-certificates/universal-ssl/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
 /ssl/universal-ssl/validating/ /ssl/edge-certificates/changing-dcv-method/ 301
-/ssl/notifications/ /fundamentals/notifications/notification-available/ 301
 /ssl/notifications /fundamentals/notifications/notification-available/ 301
+/ssl/notifications/ /fundamentals/notifications/notification-available/ 301
 
 # stream
 /stream/analytics /stream/getting-analytics 302
@@ -603,7 +603,7 @@
 /waf/custom-rules/rate-limiting/use-cases /waf/rate-limiting-rules/use-cases/ 301
 /waf/custom-rules/rate-limiting/use-cases/ /waf/rate-limiting-rules/use-cases/ 301
 
-# waiting_room
+# waiting-room
 /waiting-room/about /waiting-room/ 301
 /waiting-room/about/plans /waiting-room/plans 302
 /waiting-room/about/waiting-room-cookie /waiting-room/reference/waiting-room-cookie 302
@@ -955,7 +955,7 @@
 /zaraz/user-properties /zaraz/properties-reference 302
 /zaraz/web-api/zaraz-track/ /zaraz/web-api/track/ 301
 
-# zero_trust
+# cloudflare-one / zero-trust
 /cloudflare-one/applications/arbitrary-tcp /cloudflare-one/applications/non-http/arbitrary-tcp 302
 /cloudflare-one/applications/configure-apps/app-paths /cloudflare-one/policies/zero-trust/app-paths 302
 /cloudflare-one/applications/non-HTTP /cloudflare-one/applications/non-http 302
