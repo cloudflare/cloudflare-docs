@@ -4,6 +4,7 @@ pcx-content-type: concept
 weight: 20
 meta:
   title: Change log for DDoS Managed Rulesets
+hidden: true
 ---
 
 # Change log for DDoS Managed Rulesets
