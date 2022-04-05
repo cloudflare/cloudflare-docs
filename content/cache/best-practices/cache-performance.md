@@ -33,3 +33,8 @@ Several examples of helpful insights into your site performance via Cache Analyt
 - Need to enable Tiered Cache or Custom Cache Key
   - Identify the issue: Click **Add filter** and select **Cache status equals Miss**.
   - Resolution: Enable Argo Tiered Caching or [create a custom cache key](/cache/about/cache-keys/).
+
+- Convert a HEAD request into a GET request.
+
+  - Cloudflare converts HEAD requests to GET requests for cacheable requests.
+  - When you make a HEAD request for a cacheable resource and Cloudflare does not have that resource in the edge cache, a cache miss happens. Cloudflare will send a GET request to your origin, cache the full response and return you just the headers. If you are not expecting this behavior or your setup it is not the appropriate one, you will get an error response.
