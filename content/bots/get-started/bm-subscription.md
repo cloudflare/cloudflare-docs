@@ -51,7 +51,7 @@ For **automated** traffic, sort through the IP addresses, ASNs, and other data p
 
 Use the slider tool to identify **other traffic groups**. For example, you may find that traffic from your mobile app is routinely scored at 12.
 
-![Bot score distribution](/bots/static/bot-score-distribution.png)
+![Example of a bot score distribution](/bots/static/bot-score-distribution.png)
 
 At the end of your analysis, you should:
 
