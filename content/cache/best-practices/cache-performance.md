@@ -37,4 +37,4 @@ Several examples of helpful insights into your site performance via Cache Analyt
 - Convert a HEAD request into a GET request.
 
   - Cloudflare converts HEAD requests to GET requests for cacheable requests.
-  - When you make a HEAD request for a cacheable resource and Cloudflare does not have that resource in the edge cache, a cache miss happens. Cloudflare will send a GET request to your origin, cache the full response and return you just the headers. If you are not expecting this behavior or your setup it is not the appropriate one, you will get an error response.
+  - When you make a HEAD request for a cacheable resource and Cloudflare does not have that resource in the edge cache, a cache miss happens. Cloudflare will send a GET request to your origin, cache the full response and return the response headers only. If you are not expecting this behavior or your setup is incorrect, you will get an error response.
