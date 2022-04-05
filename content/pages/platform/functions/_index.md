@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx-content-type: navigation
 title: Functions (beta)
 ---
 
