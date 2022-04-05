@@ -121,3 +121,35 @@ If you are having an issue with one or more tunnels, before contacting the Cloud
 - Make sure that the `cloudflared daemon` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
 
 - Gather any relevant error/access logs from your server.
+
+## Using WARP and Tunnels?
+
+While [Connecting private networks](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/private-net/) with Tunnels and WARP,
+End users will connect to your resources using the [WARP client](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/).
+In order to help Cloudflare support to understand the overall architecture of your Machine and Networks, send in advance the WARP Client logs.
+
+- macOS
+
+Press cmd+space to launch Spotlight and then type Terminal.
+In Terminal, type `warp-diag` (full path: `/usr/local/bin/warp-diag`) and press Enter. This will place a `warp-debugging-info.zip` on your Desktop.
+
+- Windows
+
+Open `C:\Program Files\Cloudflare\Cloudflare WARP` in Explorer.
+Double click on `warp-diag.exe`.This will place a `warp-debugging-info.zip` on your desktop.
+
+- Linux
+
+Drop to Terminal.
+In Terminal, type `sudo warp-diag` and press Enter. This will place a `warp-debugging-info.zip` in the same folder you ran the command from. 
+
+- iOS
+
+Open app and navigate to Settings > Advanced > Diagnostics > Console Logs
+Send us both the Extension Logs and Application logs.
+
+- Android/ChromeOS
+
+Open app and navigate to Settings > Advanced→Diagnostics
+Send the Console Logs
+and Boringtun Logs.
