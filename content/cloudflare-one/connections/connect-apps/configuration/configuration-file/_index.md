@@ -45,11 +45,11 @@ Refer to the [ingress rules page](/cloudflare-one/connections/connect-apps/confi
 
 ## Creating a configuration file
 
-You can create your configuration file using any text editor. For example, to create a configuration file in the [default `cloudflared` directory](#storing-a-configuration-file) with vim:
+You can create your configuration file using any text editor. For example, to create a configuration file in the [default `cloudflared` directory](#naming-and-storing-a-configuration-file) with vim:
 
 1.  `cd` into your system's default directory for `cloudflared`.
 1.  Open vim and type in the necessary [keys and values](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/#origin-configuration).
-1.  Name and save your file by typing `:wq file-name.yaml` and exit vim.
+1.  Name and save your file by typing `:wq config.yaml` and exit vim.
 
 Confirm that the configuration file has been successfully created by running:
 
@@ -57,13 +57,11 @@ Confirm that the configuration file has been successfully created by running:
 $ cat config.yaml 
 ```
 
-## Storing a configuration file
+## Naming and storing a configuration file
 
-`cloudflared` will automatically look for the configuration file in the [default `cloudflared` directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory). However, you can store your configuration file in any directory of your choice.
+`cloudflared` will automatically look for a `config.yaml` or `config.yml` file in the [default `cloudflared` directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory).
 
-## Referencing a configuration file
-
-Before you run a tunnel, ensure you have created a configuration file for `cloudflared` to know what configuration to follow when routing traffic through the tunnel. When running a tunnel, make sure you specify the path to your configuration file:
+You can give your configuration file a custom name and store it in any directory. However, when running tunnel, make sure to add the `--config` flag and specify the new path.  
 
 ```sh
 $ cloudflared tunnel --config /path/your-config-file.yaml run tunnel-name
