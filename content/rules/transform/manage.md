@@ -11,6 +11,7 @@ weight: 5
 The **Transform Rules** dashboard interface lets you:
 
 - Create new URL Rewrite Rules, HTTP Request Header Modification Rules, and HTTP Response Header Modification Rules.
+- Configure Managed Transforms.
 - View a list of existing rules (both active and paused).
 - Activate or pause rules (turn on or off).
 - Edit rules.
@@ -23,6 +24,7 @@ The **Transform Rules** dashboard interface lets you:
 
 In the **Transform Rules** tab you can:
 
+- [Configure Managed Transforms](/rules/transform/managed-transforms/configure/)
 - [Create a URL Rewrite Rule](/rules/transform/url-rewrite/create-dashboard/)
 - [Create an HTTP Request Header Modification Rule](/rules/transform/request-header-modification/create-dashboard/)
 - [Create an HTTP Response Header Modification Rule](/rules/transform/response-header-modification/create-dashboard/)
