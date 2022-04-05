@@ -23,4 +23,4 @@ The generated internal Transform Rules will not appear in the Transform Rules li
 
 ## Next steps
 
-For dashboard and API instructions, refer to [Enable a Managed Transform](/rules/transform/managed-transforms/enable/).
+For dashboard and API instructions, refer to [Configure Managed Transforms](/rules/transform/managed-transforms/configure/).
