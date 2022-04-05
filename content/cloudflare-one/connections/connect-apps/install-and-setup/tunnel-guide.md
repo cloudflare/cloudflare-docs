@@ -187,7 +187,7 @@ $ cloudflared tunnel list
 
 ### 4. Create a configuration file
 
-Create a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file) in your `.cloudflared` directory using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice.
+Create a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file) in your `.cloudflared` directory using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice. 
 
 Add the following fields to the file:
 
@@ -246,10 +246,10 @@ Run the tunnel to proxy incoming traffic from the tunnel to any number of servic
 $ cloudflared tunnel run <UUID or NAME>
 ```
 
-If you want to run the tunnel with a configuration file that is not in the [default directory](/cloudflare-one/connections/connect-apps/configuration/configuration-file/#storing-a-configuration-file), you can use the `--config` flag and specify a path.
+If your configuration file has a custom name or is not in the `.cloudflared` directory, add the `--config` flag and specify the path.  
 
-```bash
-$ cloudflared tunnel --config path/config.yml run
+```sh
+$ cloudflared tunnel --config /path/your-config-file.yaml run
 ```
 
 {{<Aside>}}
