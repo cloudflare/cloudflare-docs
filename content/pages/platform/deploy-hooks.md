@@ -86,8 +86,9 @@ Be sure to add the webhook configuration to the [production](https://strapi.io/d
 
 ![Configuring Deploy Hooks with Strapi](../media/strapi.png)
 
-### Storyblok 
-You can set up and configure deploy hooks for triggering events and perform functions like Create a publish a space. In your Storyblok space, go to **Settings** tab, under the webhooks tab. Paste your recently unique deploy hook into the **Story published & unpublished** field and save.
+### Storyblok
+
+You can set up and configure deploy hooks in Storyblok to trigger events. In your Storyblok space, go to **Settings** and scroll down to **Webhooks**. Paste your deploy hook into the **Story published & unpublished** field and select **Save**.
 
 ![Configuring Deploy Hooks with Storyblok](https://user-images.githubusercontent.com/53130544/161367254-ff475f3b-2821-4ee8-a175-8e96e779aa08.png)
 
