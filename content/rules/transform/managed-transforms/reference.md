@@ -60,7 +60,6 @@ layout: list
         <p>Removes the <code class="InlineCode">X-Powered-By</code> HTTP response header that provides information about the application that handled the request.</p>
       </td>
     </tr>
-
   </tbody>
 </table>
 
