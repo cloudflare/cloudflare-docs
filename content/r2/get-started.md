@@ -171,9 +171,9 @@ You must now define authorization logic to determine who can perform what action
 
 Continuing with your newly created bucket and Worker, you will need to protect all bucket operations.
 
-For PUT and DELETE requests, you will make use of a new `AUTH_KEY_SECRET` environment variable, which you will define later as a Wrangler secret.
+For `PUT` and `DELETE` requests, you will make use of a new `AUTH_KEY_SECRET` environment variable, which you will define later as a Wrangler secret.
 
-For GET requests, you will ensure that only a specific file can be requested. All of this custom logic occurs inside of an `authorizeRequest` function, with the `hasValidHeader` function handling the custom header logic. If all validation passes, then the operation is allowed.
+For `GET` requests, you will ensure that only a specific file can be requested. All of this custom logic occurs inside of an `authorizeRequest` function, with the `hasValidHeader` function handling the custom header logic. If all validation passes, then the operation is allowed.
 
 ```js
 const ALLOW_LIST = ['cat-pic.jpg'];
