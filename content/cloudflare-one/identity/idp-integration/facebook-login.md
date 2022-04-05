@@ -50,7 +50,7 @@ Use these steps to set up Facebook as your identity provider.
 
 1.  Click **Save**.
 
-1.  On [developers.facebook.com](https://developers.facebook.com/), click **Facebook Login > Settings** on the left-hand menu
+1.  On [developers.facebook.com](https://developers.facebook.com/), click **Facebook Login > Settings** on the left-hand menu.
 
 1.  Ensure that the **Use Strict Mode for Redirect URIs** slider is set to **Yes**.
 
