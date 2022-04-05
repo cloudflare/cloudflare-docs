@@ -35,7 +35,7 @@ The descriptions below detail the fields available for `http_requests`.
 | ClientRequestProtocol | HTTP protocol of client request | string |
 | ClientRequestReferer | HTTP request referrer | string |
 | ClientRequestScheme | The URL scheme requested by the visitor. Available in Logpush v2 only. | string |
-| ClientRequestSource | Identifies requests as coming from an external source or another service within Cloudflare. Available in Logpush v2 only. | string |
+| ClientRequestSource | Identifies requests as coming from an external source or another service within Cloudflare. See [ClientRequestSource field](/logs/reference/clientrequestsource/) for the list of potential values. Available in Logpush v2 only. | string |
 | ClientRequestURI | URI requested by the client | string |
 | ClientRequestUserAgent | User agent reported by the client | string |
 | ClientSSLCipher | Client SSL cipher | string |
