@@ -5,6 +5,57 @@ title: Changelog
 
 # Changelog
 
+## 2022-03-24
+
+- A new compatibility flag has been introduced, `minimal_subrequests` , which removes some features that were unintentionally being applied to same-zone `fetch()` calls. The flag will default to enabled on Tuesday, 2022-04-05, and is described in [Workers `minimal_subrequests` compatibility flag](https://developers.cloudflare.com/workers/platform/compatibility-dates/#minimal-subrequests).
+- When creating a `Response` with JavaScript-backed ReadableStreams, the `Body` mixin functions (e.g. `await response.text()` ) are now implemented.
+- The `IdentityTransformStream` creates a byte-oriented `TransformStream` implementation that simply passes bytes through unmodified. The readable half of the `TransformStream` supports BYOB-reads. It is important to note that `IdentityTransformStream` is identical to the current non-spec compliant `TransformStream` implementation, which will be updated soon to conform to the WHATWG Stream Standard. All current uses of `new TransformStream()` should be replaced with `new IdentityTransformStream()` to avoid potentially breaking changes later.
+
+## 2022-03-17
+
+- The standard [ByteLengthQueuingStrategy](https://developer.mozilla.org/en-US/docs/Web/API/ByteLengthQueuingStrategy) and [CountQueuingStrategy](https://developer.mozilla.org/en-US/docs/Web/API/CountQueuingStrategy) classes are now available.
+- When the `capture_async_api_throws` flag is set, built-in Cloudflare-specific and Web Platform Standard APIs that return Promises will no longer throw errors synchronously and will instead return rejected promises. Exception is given with fatal errors such as out of memory errors.
+- Fix R2 publish date rendering.
+- Fix R2 bucket binding .get populating contentRange with garbage. contentRange is now undefined as intended.
+- When using JavaScript-backed `ReadableStream`, it is now possible to use those streams with `new Response()`.
+
+## 2022-03-11
+
+- Fixed a bug where the key size was not counted when determining how many write units to charge for a Durable Object single-key `put()`. This may result in future writes costing one write unit more than past writes when the key is large enough to bump the total write size up above the next billing unit threshold of 4096 bytes. Multi-key `put()` operations have always properly counted the key size when determining billable write units.
+- Implementations of `CompressionStream` and `DecompressionStream` are now available.
+
+## 2022-03-04
+
+- Initial pipeTo/pipeThrough support on ReadableStreams constructed using the new `ReadableStream()` constructor is now available.
+- With the `global_navigator` compatibility flag set, the `navigator.userAgent` property can be used to detect when code is running within the Workers environment.
+- A bug in the new URL implementation was fixed when setting the value of a `URLSearchParam`.
+- The global `addEventListener` and dispatchEvent APIs are now available when using module syntax.
+- An implementation of `URLPattern` is now available.
+
+## 2022-02-25
+
+- The `TextDecoder` class now supports the full range of text encodings defined by the WHATWG Encoding Standard.
+- Both global `fetch()` and durable object `fetch()` now throw a TypeError when they receive a WebSocket in response to a request without the “Upgrade: websocket” header.
+- Durable Objects users may now store up to 50 GB of data across the objects in their account by default. As before, if you need more storage than that you can contact us for an increase.
+
+## 2022-02-18
+
+- `TextDecoder` now supports Windows-1252 labels (aka ASCII): [Encoding API Encodings - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/Encoding_API/Encodings).
+
+## 2022-02-11
+
+- WebSocket message sends were erroneously not respecting Durable Object output gates as described in the [I/O gate blog post](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/). That bug has now been fixed, meaning that WebSockets will now never send a message under the assumption that a storage write has succeeded unless that write actually has succeeded.
+
+## 2022-02-05
+
+- Fixed bug causing WebSockets to Durable Objects to occasionally hang when the script implementing both a Worker and a Durable Object is re-deployed with new code.
+- `crypto.getRandomValues` now supports BigInt64Array and BigUint64Array.
+- A new implementation of the standard URL implementation is available. Use `url_standard` feature flag to enable the spec-compliant URL API implementation.
+
+## 2022-01-28
+
+- No user-visible changes.
+
 ## 2022-01-20
 
 - Updated V8: 9.7 → 9.8.
