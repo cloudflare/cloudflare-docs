@@ -196,7 +196,7 @@ All plans have access to:
 
 {{<definitions>}}
 
-*   `asn` {{<type>}}string{{</type>}}
+*   `asn` {{<type>}}Number{{</type>}}
 
     *   ASN of the incoming request, for example, `395747`.
 
