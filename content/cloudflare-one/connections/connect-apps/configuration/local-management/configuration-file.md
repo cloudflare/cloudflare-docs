@@ -41,14 +41,14 @@ warp-routing:
 ### Ingress rules
 
 Once your top-level configuration is complete, you can begin addressing origin-specific configurations. By writing ingress rules in the configuration file, you can specify which local services a request should be proxied to.
-Refer to the [ingress rules page](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/) for more information on writing ingress rules and how they work.
+Refer to the [ingress rules page](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/) for more information on writing ingress rules and how they work.
 
 ## Creating a configuration file
 
 You can create your configuration file using any text editor. For example, to create a configuration file in the [default `cloudflared` directory](#naming-and-storing-a-configuration-file) with vim:
 
 1.  `cd` into your system's default directory for `cloudflared`.
-1.  Open vim and type in the necessary [keys and values](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/#origin-configuration).
+1.  Open vim and type in the necessary [keys and values](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/#origin-configuration).
 1.  Name and save your file by typing `:wq config.yaml` and exit vim.
 
 Confirm that the configuration file has been successfully created by running:
