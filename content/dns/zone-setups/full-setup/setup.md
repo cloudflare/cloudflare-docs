@@ -76,7 +76,7 @@ Once you have added a domain (also known as a _zone_) to Cloudflare, that domain
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2.  On **Overview**, copy the information from **Replace with Cloudflare's nameservers**.
 
-    ![get nameserver names from the Overview page of your domain](/dns/static/nameserver-names.png)
+    ![Find nameserver names on the Overview page of your domain](/dns/static/nameserver-names.png)
 
 {{<Aside type="note">}}
 Cloudflare automatically assigns nameservers to a domain and these assignments cannot be changed. For more details, refer to [Nameserver assignments](/dns/zone-setups/reference/nameserver-assignment/).
