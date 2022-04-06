@@ -11,10 +11,10 @@ The [DNSKEY is a protocol](https://www.cloudflare.com/learning/dns/dns-records/d
 
 1.1.1.1 supports the following signature algorithms:
 
-- RsaSha1
-- RsaSha256
-- RsaSha512
-- RsaSha1Nsec3Sha1
-- EcdsaP256Sha256
-- EcdsaP384Sha384
-- Ed25519
+- RSA/SHA-1
+- RSA/SHA-256
+- RSA/SHA-512
+- RSASHA1-NSEC3-SHA1
+- ECDSA Curve P-256 with SHA-256 (ECDSAP256SHA256)
+- ECDSA Curve P-384 with SHA-384 (ECDSAP384SHA384)
+- ED25519
