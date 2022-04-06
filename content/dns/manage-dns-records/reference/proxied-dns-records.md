@@ -44,8 +44,6 @@ In some circumstances, you should not proxy your DNS records.
 
 If you need to connect to your origin using a non-HTTP protocol (SSH, FTP, SMTP) or the traffic targets an [unsupported port](/fundamentals/get-started/network-ports/) at the origin, either leave your records unproxied (DNS-only) or use [Cloudflare Spectrum](/spectrum/).
 
-Additionally, you cannot proxy wildcard DNS records unless your domain is on an Enterprise plan.
-
 {{<Aside type="note">}}
 
 If you encounter a **CNAME** record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration.
