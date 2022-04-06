@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Command-line options
-weight: 3
+weight: 4
 ---
 
 # Command-line options
