@@ -12,7 +12,7 @@ If you are running [quick tunnels](/cloudflare-one/connections/connect-apps/inst
 
 {{</Aside>}}
 
-Configuring tunnels through a YAML file (what we refer to as a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file) allows you to have fine-grained control over how an instance of `cloudflared` will operate. In your configuration file you can specify top-level properties for your `cloudflared` instance, as well as configure origin-specific properties by writing [ingress rules](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/) and adding parameters to them.
+Configuring tunnels through a YAML file (what we refer to as a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file)) allows you to have fine-grained control over how an instance of `cloudflared` will operate. In your configuration file you can specify top-level properties for your `cloudflared` instance, as well as configure origin-specific properties by writing [ingress rules](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/) and adding parameters to them.
 
 In the absence of a configuration file, `cloudflared` will proxy outbound traffic through port 8080.
 
