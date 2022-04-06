@@ -78,7 +78,7 @@ layout: list
             <td>11</td>
             <td>No Zone Key Bit Set</td>
             <td><code>EDE: 11 (No Zone Key Bit Set): (for DNSKEY example.com., id = 12345)</code></td>
-            <td>This domain did not pass DNSSEC validation. The zone's SEP DNSKEY must <a href="https://datatracker.ietf.org/doc/html/rfc4035#section-5.3.1">set a Zone Key flag</a>. Check your <a href="/dns/">DNSSEC configuration</a>.</td>
+            <td>This domain did not pass DNSSEC validation. The zone's SEP DNSKEY must <a href="https://datatracker.ietf.org/doc/html/rfc4035#section-5.3.1">set a Zone Key flag</a>. Check your <a href="/dns/additional-options/dnssec/">DNSSEC configuration</a> or DNSSEC's <a href="https://support.cloudflare.com/hc/articles/360021111972">troubleshooting guide</a>.</td>
         </tr>
         <tr>
             <td>12</td>
