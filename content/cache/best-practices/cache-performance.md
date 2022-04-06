@@ -31,5 +31,12 @@ Several examples of helpful insights into your site performance via Cache Analyt
   - Resolution: [Increase Cloudflare’s Edge Cache TTL via a Page Rule](/cache/about/edge-browser-cache-ttl/).
 
 - Need to enable Tiered Cache or Custom Cache Key
+
   - Identify the issue: Click **Add filter** and select **Cache status equals Miss**.
   - Resolution: Enable Argo Tiered Caching or [create a custom cache key](/cache/about/cache-keys/).
+
+- Interaction of `HEAD` requests with Cache
+
+  - Cloudflare converts `HEAD` requests to `GET` requests for cacheable requests.
+  - When you make a `HEAD` request for a cacheable resource and Cloudflare does not have that resource in the edge cache, a cache miss happens. Cloudflare will send a `GET` request to your origin, cache the full response and return the response headers only. Make sure the origin server is setup to handle `GET` requests, even if only `HEAD` requests are expected, so that compatibility with this behavior is ensured.
+
