@@ -1,13 +1,32 @@
 ---
 pcx-content-type: tutorial
 title: IPsec
+weight: 1
 ---
 
 # IPsec
 
-Use Anycast IPsec as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's edge and define static routes to direct traffic down the correct tunnel. To learn more about Anycast IPsec, refer to [What is IPsec?](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/).
+Use Anycast IPsec as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's edge and define static routes to direct traffic down the correct tunnel. 
+
+To learn more about Anycast IPsec, refer to [What is IPsec?](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/).
 
 Before you begin, make sure you already have an Account ID and API Key.
+
+## IPsec process
+
+Review the information below to learn more about phases for IPsec connections.
+
+ - **Negotiation or IKE phase 1**: Endpoints use IPsec to negotiate the set of policies used in the connection and has two modes: main and aggressive. Some solutions, like [EdgeConnect](/magic-wan/partners/aruba-edgeconnect), only offer an aggressive mode. 
+
+    {{<Aside type="note" header="Note:">}}
+
+  The IKE aggressive mode ensures security but does not allow room for negotiation. With the main mode, negotiations continue until a consensus is reached.
+
+    {{</Aside>}}
+
+- **IPSec circuit or IKE Phase 2**: An IPsec circuit is established based on the authentication and encryption methods agreed upon in IKE Phase 1. During this phase, authentication and encryption during the data transmission phase is determined, and random, cryptographic numbers are exchanged to authenticate sessions.
+
+- **IPSec transmission**: Actual data transmission using authentication and encryption established in IKE Phase 2.
 
 ## 1. Create IPsec tunnels
 
