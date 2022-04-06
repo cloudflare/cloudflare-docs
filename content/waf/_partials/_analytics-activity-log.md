@@ -7,7 +7,7 @@ _build:
 
 The **Activity log** summarizes firewall events by date to show the action taken and the applied Cloudflare security feature.
 
-![Example of Activity log events](/waf/static/analytics-activity-log.png)
+![Example list of events in the Activity log, with one of the events expanded to show its details](/waf/static/analytics-activity-log.png)
 
 Firewall events are shown by individual event rather than by request. For example, if a single request triggers three different Firewall features, the firewall events will show three individual events in the **Activity log**.
 
