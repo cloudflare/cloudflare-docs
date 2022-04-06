@@ -1,6 +1,6 @@
 ---
 pcx-content-type: reference
-title: Extended DNS error code
+title: Extended DNS error codes
 layout: list
 ---
 
@@ -28,9 +28,9 @@ layout: list
     <tbody>
         <tr>
             <td>1</td>
-            <td><p>Unsupported  DNSKEY Algorithm</p></td>
+            <td><p>Unsupported DNSKEY Algorithm</p></td>
             <td><code>EDE: 1 (Unsupported DNSKEY Algorithm): (failed to verify example.com. A: unsupported key size, DNSKEY example.com., id = 12345)</code></td>
-            <td>The domain did not pass DNSSEC validation. Check which <a href="/1.1.1.1/encryption/dnskey"> signature key algorithm</a> your website uses and confirm it is supported by 1.1.1.1.</td>
+            <td>The domain did not pass DNSSEC validation. Check which <a href="/1.1.1.1/encryption/dnskey/">signature key algorithm</a> your website uses and confirm it is supported by 1.1.1.1.</td>
         </tr>
         <tr>
             <td>2</td>
@@ -78,7 +78,7 @@ layout: list
             <td>11</td>
             <td>No Zone Key Bit Set</td>
             <td><code>EDE: 11 (No Zone Key Bit Set): (for DNSKEY example.com., id = 12345)</code></td>
-            <td>This domain did not pass DNSSEC validation. The zone's SEP DNSKEY must <a href=" https://datatracker.ietf.org/doc/html/rfc4035#section-5.3.1"> set a Zone Key flag</a>. Check your <a href="/dns/">DNSSEC configuration</a>.</td>
+            <td>This domain did not pass DNSSEC validation. The zone's SEP DNSKEY must <a href="https://datatracker.ietf.org/doc/html/rfc4035#section-5.3.1">set a Zone Key flag</a>. Check your <a href="/dns/">DNSSEC configuration</a>.</td>
         </tr>
         <tr>
             <td>12</td>
@@ -96,13 +96,13 @@ layout: list
             <td>22</td>
             <td>No Reachable Authority</td>
             <td><code>EDE: 22 (No Reachable Authority): (at delegation example.com.)</code></td>
-            <td>1.1.1.1 could not reach some or all of the authoritative name servers (or they potentially refused to resolve). This can occur if the authoritative nameservers are overloaded or temporarily unavailable. If this issue persists, reach out to the <a href="https://community.cloudflare.com/c/reliability/dns-1111/47">community forum</a>.</td>
+            <td>1.1.1.1 could not reach some or all of the authoritative nameservers (or they potentially refused to resolve). This can occur if the authoritative nameservers are overloaded or temporarily unavailable. If this issue persists, reach out to the <a href="https://community.cloudflare.com/c/reliability/dns-1111/47">community forum</a>.</td>
         </tr>
         <tr>
             <td>23</td>
             <td>Network Error</td>
             <td><code>EDE: 23 (Network Error): (1.1.1.1:53 rcode=SERVFAIL for example.com. A)</code></td>
-            <td>1.1.1.1 could not determine a network path to the upstream nameservers, or the nameserver didn't respond. If this issue persists, reach out to the <a href="https://community.cloudflare.com/c/reliability/dns-1111/47">community forum</a>.</td>
+            <td>1.1.1.1 could not determine a network path to the upstream nameservers, or the nameserver did not respond. If this issue persists, reach out to the <a href="https://community.cloudflare.com/c/reliability/dns-1111/47">community forum</a>.</td>
         </tr>
     </tbody>
 </table>
