@@ -16,7 +16,7 @@ Before you begin, make sure you already have an Account ID and API Key.
 
 Review the information below to learn more about phases for IPsec connections.
 
- - **Negotiation or IKE phase 1**: Endpoints use IPsec to negotiate the set of policies used in the connection and has two modes: main and aggressive. Some solutions, like [EdgeConnect](/magic-wan/partners/aruba-edgeconnect), only offer an aggressive mode. 
+ - **Negotiation or IKE phase 1**: Endpoints use IPsec to negotiate the set of policies used in the connection and has two modes: main and aggressive. Some solutions, like [EdgeConnect](/magic-wan/partners/aruba-edgeconnect/), only offer an aggressive mode. 
 
     {{<Aside type="note" header="Note:">}}
 
@@ -24,7 +24,7 @@ Review the information below to learn more about phases for IPsec connections.
 
     {{</Aside>}}
 
-- **IPSec circuit or IKE Phase 2**: An IPsec circuit is established based on the authentication and encryption methods agreed upon in IKE Phase 1. During this phase, authentication and encryption during the data transmission phase is determined, and random, cryptographic numbers are exchanged to authenticate sessions.
+- **IPSec circuit or IKE Phase 2**: An IPsec circuit is established based on the authentication and encryption methods agreed upon in IKE Phase 1. During this phase, authentication and encryption during the data transmission phase is determined and random, cryptographic numbers are exchanged to authenticate sessions.
 
 - **IPSec transmission**: Actual data transmission using authentication and encryption established in IKE Phase 2.
 

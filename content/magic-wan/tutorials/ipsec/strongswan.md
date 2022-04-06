@@ -5,7 +5,7 @@ title: strongSwan
 
 # strongSwan
 
-This tutorial contains a sample template of the `ipsec.conf`file for a working IPsec tunnel configuration established between a Linux machine running strongSwan and Cloudflare’s Magic service.
+This tutorial contains a sample template of the `ipsec.conf` file for a working IPsec tunnel configuration established between a Linux machine running strongSwan and Cloudflare’s Magic service.
 
 This `ipsec.conf` file is typically located in the `/etc` directory of the Linux machine.
 
@@ -68,7 +68,7 @@ conn <tunnel_name>
 
 ### Dead Peer Detection (DPD)
 
-In the above `ipsec.conf `file in `conn %default` section, setting `dpdaction=restart` enables Dead Peer Detection (DPD) to actively check and re-establish IPsec tunnels in the event of communication timeouts. In addition, `closeaction=restart` is set to actively re-establish the tunnels in the event that the remote peer (i.e. Cloudflare Magic service) unexpectedly closes it.
+In the above `ipsec.conf` file in `conn %default` section, setting `dpdaction=restart` enables Dead Peer Detection (DPD) to actively check and re-establish IPsec tunnels in the event of communication timeouts. In addition, `closeaction=restart` is set to actively re-establish the tunnels in the event that the remote peer (usually a Cloudflare Magic service) unexpectedly closes it.
 
 If you do not prefer this behavior, set the above parameters to `none` or remove them from the configuration file.
 
