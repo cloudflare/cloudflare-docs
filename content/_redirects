@@ -967,7 +967,6 @@
 /cloudflare-one/connections/connect-apps/configuration/private-networks/ /cloudflare-one/connections/connect-networks/private-net/ 301
 /cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare/ /cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/setup/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
-/cloudflare-one/connections/connect-apps/configuration/private-networks/ /cloudflare-one/connections/connect-networks/private-net/ 301
 /cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/ /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/ 301
 /cloudflare-one/connections/connect-apps/trycloudflare/ /cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare/ 301
 /cloudflare-one/connections/connect-browsers/ /cloudflare-one/policies/browser-isolation/ 301
@@ -994,7 +993,6 @@
 /cloudflare-one/policies/filtering/lists/ /cloudflare-one/policies/lists/ 301
 /cloudflare-one/tutorials/custom-block-page/ /cloudflare-one/policies/filtering/configuring-block-page/ 301
 /cloudflare-one/tutorials/warp-to-tunnel-internal-dns/ /cloudflare-one/connections/connect-networks/private-net/private-hostnames-ips/ 301
-/cloudflare-one/policies/filtering/http-policies/application-app-types/ /cloudflare-one/policies/filtering/application-app-types/ 301
 /cloudflare-one/policies/filtering/http-policies/application-app-types/ /cloudflare-one/policies/filtering/application-app-types/ 301
 /cloudflare-one/policies/filtering/dns-policies/ /cloudflare-one/policies/filtering/dns-policies-builder/ 301
 /cloudflare-one/policies/filtering/dns-policies/categories/ /cloudflare-one/policies/filtering/dns-policies-builder/dns-categories/ 301
