@@ -1,15 +1,14 @@
 ---
 pcx-content-type: reference
 title: Ingress rules
-weight: 2
+weight: 3
 ---
 
 # Ingress rules
 
-Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service.
-By configuring ingress rules in the [configuration file](/cloudflare-one/connections/connect-apps/configuration/configuration-file/), you can specify which local services a request should be proxied to.
+Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service. 
 
-You can define ingress rules in the configuration file.
+To specify which local services a request should be proxied to, you can define ingress rules in the [configuration file](/cloudflare-one/connections/connect-apps/configuration/local-management/configuration-file/).
 
 ## Requirements
 

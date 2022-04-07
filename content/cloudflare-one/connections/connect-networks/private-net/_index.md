@@ -48,7 +48,7 @@ To connect a private network to Cloudflare's edge, follow the guide below. You c
     $ cloudflared tunnel route ip show
     ```
 
-1.  Next, create a [configuration file](/cloudflare-one/connections/connect-apps/configuration/configuration-file/) for the tunnel. The configuration file will be structured as follows:
+1.  Next, create a [configuration file](/cloudflare-one/connections/connect-apps/configuration/local-management/configuration-file/) for the tunnel. The configuration file will be structured as follows:
 
     ```txt
     tunnel: <Tunnel-UUID>
