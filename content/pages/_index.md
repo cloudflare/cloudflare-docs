@@ -12,7 +12,7 @@ meta:
 
 # Cloudflare Pages documentation
 
-Deploy your dynamic front-end applications using Cloudflare Pages. Pages are super fast, always up-to-date, and deployed directly from your GitHub account.
+Deploy your dynamic front-end applications using Cloudflare Pages. Pages are super fast, always up-to-date, and deployed directly from your Git provider (e.g. a GitHub account). See the [list of supported Git providers](https://developers.cloudflare.com/pages/get-started/#connect-to-your-git-provider).
 
 Get started deploying your first site using our **Get started** guide below, or refer to our **Framework guides** page to explore the vast ecosystem of tools and frameworks that Pages supports.
 
