@@ -20,7 +20,7 @@ The underlying datasets that Cloudflare Analytics captures and processes share t
 
 * All metrics reflect traffic proxied through the Cloudflare network (also known as orange-clouded), as configured via DNS records in the Cloudflare DNS app. Note that for a [CNAME setup](/dns/zone-setups/partial-setup/), Cloudflare is unable to offer DNS metrics.
 * Cloudflare does not count traffic for unproxied DNS records. However, if your site is not proxied through Cloudflare but Cloudflare is your authoritative DNS server, then we are able to collect DNS metrics.
-* Cloudflare can only proxy information for traffic targeting [specific ports](/fundamentals/get-started/network-ports/).
+* Cloudflare can only proxy information for traffic targeting [specific ports](/fundamentals/get-started/reference/network-ports/).
 * In determining the originating country, Cloudflare uses the IP address associated with each request. Learn about [Configuring Cloudflare IP Geolocation](https://support.cloudflare.com/hc/articles/200168236).
 
 ## Apparent data discrepancies

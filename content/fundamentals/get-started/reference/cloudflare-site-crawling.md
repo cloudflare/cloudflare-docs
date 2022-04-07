@@ -15,7 +15,7 @@ Cloudflare will crawl your site when you have specific products enabled:
 
 * [**Always Online**](/cache/about/always-online/)
     * *User-Agent*: `Mozilla/5.0 (compatible; CloudFlare-AlwaysOnline/1.0; +http://www.cloudflare.com/always-online)`
-* [**SSL/TLS recommender**](/ssl/origin-configuration/ssltls-recommender/)
+* [**SSL/TLS recommender**](/ssl/origin-configuration/ssl-tls-recommender/)
     * *User-Agent*: `Cloudflare-SSLDetector`
     * This crawler ignores your `robots.txt` file unless there are rules explicitly targeting the user agent.
 * [**Load balancing monitors**](/load-balancing/understand-basics/monitors/)

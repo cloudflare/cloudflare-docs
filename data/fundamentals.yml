@@ -15,6 +15,6 @@ meta:
 
 externals:
   - title: How Cloudflare works
-    url: /fundamentals/get-started/how-cloudflare-works/
+    url: /fundamentals/get-started/concepts/how-cloudflare-works/
   - title: Cloudflare homepage
     url: https://cloudflare.com

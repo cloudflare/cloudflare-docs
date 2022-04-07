@@ -12,7 +12,7 @@ meta:
 
 Discover the benefits of caching with Cloudflare’s CDN and understand the default cache behavior.
 
-- [What is a CDN?](/fundamentals/get-started/cdn/)
+- [What is a CDN?](/fundamentals/get-started/concepts/cdn/)
 - [Understand the default file types Cloudflare caches](/cache/about/default-cache-behavior/#default-cached-file-extensions)
 
 ## Make more resources cacheable

@@ -12,8 +12,8 @@ Receiving too many requests can be bad for your origin. These requests might inc
 Select a plan to see how Cloudflare can help you protect your origin:
 
 {{<button-group>}}
-  {{<button type="primary" href="/fundamentals/get-started/origin-health/free/">}}Free{{</button>}}
-  {{<button type="primary" href="/fundamentals/get-started/origin-health/pro/">}}Pro{{</button>}}
-  {{<button type="primary" href="/fundamentals/get-started/origin-health/business/">}}Business{{</button>}}
-  {{<button type="primary" href="/fundamentals/get-started/origin-health/enterprise/">}}Enterprise{{</button>}}
+  {{<button type="primary" href="/fundamentals/get-started/task-guides/origin-health/free/">}}Free{{</button>}}
+  {{<button type="primary" href="/fundamentals/get-started/task-guides/origin-health/pro/">}}Pro{{</button>}}
+  {{<button type="primary" href="/fundamentals/get-started/task-guides/origin-health/business/">}}Business{{</button>}}
+  {{<button type="primary" href="/fundamentals/get-started/task-guides/origin-health/enterprise/">}}Enterprise{{</button>}}
 {{</button-group>}}
