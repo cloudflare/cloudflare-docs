@@ -15,7 +15,7 @@ Each operations section will include a table of implemented and and another tabl
 
 ## Bucket level operations
 
-Below is a list of implemented bucket level operations. Refer to the Feature column to review which features have (✅) and have not (❌) been implemented.
+Below is a list of implemented bucket level operations. Refer to the Feature column to review which features have been implemented (✅) and have not (❌) been implemented.
 
 {{<table-wrap style="width:100%">}}
 
@@ -42,7 +42,7 @@ Below is a list of unimplemented bucket level operations.
 
 ## Object level operations
  
-Below is a list of implemented object level operations. Refer to the Feature column to review which features have (✅) and have not (❌) been implemented.
+Below is a list of implemented object level operations. Refer to the Feature column to review which features have been implemented (✅) and have not (❌) been implemented.
 
 {{<table-wrap style="width:120%">}}
 
