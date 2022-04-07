@@ -6,18 +6,16 @@ weight: 7
 
 # Start a live stream
 
-You can start a live stream using the Stream Dashboard or the API. After you subscribe to Stream, you can create Live Inputs and begin sending your live video to Cloudflare Stream using RTMPS.
+You can start a live stream using the Stream Dashboard or the API. After you subscribe to Stream, you can create Live Inputs and begin sending your live video to Cloudflare Stream using RTMPS or SRT. SRT supports newer video codecs and makes using accessibility features, such as captions and multiple audio tracks, easier.
 
 ## Using the Dashboard
 
-1.  To start a live stream using the Stream Dashboard, click the **Live Inputs** tab.
-1.  Click **Create Live Input**.
-1.  Enter a name for your Live Input and click **Create Live Input**.
-1.  After you have created a Live Input, you can retrieve the RTMPS URL and Key.
+1. To start a live stream using the Stream Dashboard, click the **Live Inputs** tab.
+2. Click **Create Live Input**.
+3. Enter a name for your Live Input and click **Create Live Input**.
+4. Under **Connection Information** > **Protocol**, choose **RTMPS** or **SRT**.
 
-![Your Live Input's RTMPS URL and key](../rtmps-key.png)
-
-Within seconds of you pushing your live stream to Cloudflare Stream, you should see the live video stream:
+After you have created a Live Input, you can retrieve the RTMPS URL and Key, or if you used the SRT protocol, you can view the SRT URL. Within seconds of you pushing your live stream to Cloudflare Stream, you should see the live video stream.
 
 ## Using the API
 
@@ -32,7 +30,7 @@ curl -X POST \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/cli
 - The `requireSignedURLs` property indicates if signed URLs are required to view the video. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
 - The `allowedOrigins` property can optionally be invoked to provide a list of allowed origins. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
 
-A successful response will return information about the live input:
+A successful response will return information about the live input.
 
 ```json
 {
