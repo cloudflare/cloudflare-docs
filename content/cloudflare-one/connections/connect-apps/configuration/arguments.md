@@ -10,7 +10,7 @@ This page lists general-purpose configuration options for a Cloudflare Tunnel. Y
 
 {{<example>}}
 
-**Example:** The following command runs the `mytunnel` tunnel by proxying traffic to port 8000 and disabling chunked transfer encoding.
+**Example:** The following command runs the `mytunnel` tunnel by proxying traffic to port `8000` and disabling chunked transfer encoding.
 
 ```txt
 cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
