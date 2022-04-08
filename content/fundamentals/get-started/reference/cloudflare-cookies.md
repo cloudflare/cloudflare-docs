@@ -57,9 +57,15 @@ The `cf_use_ob` cookie informs Cloudflare to fetch the requested resource from t
 
 The `__cfwaitingroom` cookie is only used to track visitors that access a Waiting Room enabled host and path combination for a zone. Visitors using a browser that does not accept cookies cannot visit the host and path combination while the Waiting Room is active. For more details, see [Waiting Room cookie](/waiting-room/reference/waiting-room-cookie/).
 
-### \_\_cfruid to support Cloudflare Rate Limiting Products
+### \_\_cfruid to support Cloudflare Rate Limiting (previous version)
 
 The `__cfruid` cookie is strictly necessary to support Cloudflare Rate Limiting products. As part of our Rate Limiting solution, this cookie is required to manage incoming traffic and to have better visibility on the origin of a particular request.
+
+### \_cfuvid for Rate Limiting Rules
+
+The Rate Limiting Rules product uses a number of techniques for applying rate limits to traffic where multiple unique visitors share the same IP address, such as traffic from behind a NAT. These techniques can be enabled by using the `cf.unique_visitor_id` field in the rate limiting configuration.
+
+The `_cfuvid` cookie is only set when a site uses this option in a Rate Limiting Rule, and is only used to allow the Cloudflare WAF to distinguish individual users who share the same IP address. Visitors who do not provide the cookie are likely to be grouped together and may not be able to access the site if there are many other visitors from the same IP address.
 
 ### Additional cookies used by the Challenge Platform
 
