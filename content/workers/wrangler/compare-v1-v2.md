@@ -6,7 +6,7 @@ weight: 3
 
 ## What's new
 
-`wrangler` 2.0 instroduces a number of new features that developing and deploying a Worker. This document is to show previous users of wrangler 1.x what they can expect when they move to `wrangler` v2.
+`wrangler` 2.0 introduces a number of new features for developing and deploying a Worker. This document is to show previous users of wrangler 1.x what they can expect when they move to `wrangler` v2.
 
 - `wrangler.toml` isn't mandatory
 - `dev` and `publish` accept cli arguments
