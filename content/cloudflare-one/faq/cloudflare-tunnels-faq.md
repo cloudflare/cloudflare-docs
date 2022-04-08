@@ -102,9 +102,11 @@ Tunnel credentials file '/root/.cloudflared/928655cc-7f95-43f2-8539-2aba6cf3592d
 
 
 
-## I need help. How do I contact support?
+## How do I contact support?
 
-If you are having an issue with one or more tunnels, before contacting the Cloudflare support team:
+### I am having an issue with a locally-managed tunnel
+
+Before contacting the Cloudflare support team:
 
 - Take note of any specific error messages and/or problematic behaviors.
 
@@ -122,34 +124,30 @@ If you are having an issue with one or more tunnels, before contacting the Cloud
 
 - Gather any relevant error/access logs from your server.
 
-## Using WARP and Tunnels?
+### I am having issues accessing resources through WARP
 
-While [Connecting private networks](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/private-net/) with Tunnels and WARP,
-End users will connect to your resources using the [WARP client](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/).
-In order to help Cloudflare support to understand the overall architecture of your Machine and Networks, send in advance the WARP Client logs.
+While [connecting private networks](/cloudflare-one/connections/connect-networks/private-net/) with Cloudflare Tunnels, end users will connect to your resources using the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
+In order to help Cloudflare support understand the overall architecture of your machine and networks, send the WARP Client logs with your request.
 
-- macOS
+#### macOS
 
-Press cmd+space to launch Spotlight and then type Terminal.
-In Terminal, type `warp-diag` (full path: `/usr/local/bin/warp-diag`) and press Enter. This will place a `warp-debugging-info.zip` on your Desktop.
+In the Terminal, type `warp-diag` (full path: `/usr/local/bin/warp-diag`) and press **Enter**. This will place a `warp-debugging-info.zip` on your Desktop.
 
-- Windows
+#### Windows
 
-Open `C:\Program Files\Cloudflare\Cloudflare WARP` in Explorer.
-Double click on `warp-diag.exe`.This will place a `warp-debugging-info.zip` on your desktop.
+1. Open `C:\Program Files\Cloudflare\Cloudflare WARP` in Explorer.
+2. Double-click on `warp-diag.exe`. This will place a `warp-debugging-info.zip` on your Desktop.
 
-- Linux
+#### Linux
 
-Drop to Terminal.
-In Terminal, type `sudo warp-diag` and press Enter. This will place a `warp-debugging-info.zip` in the same folder you ran the command from. 
+In the Terminal, type `sudo warp-diag` and press **Enter**. This will place a `warp-debugging-info.zip` in the same folder you ran the command from.
 
-- iOS
+#### iOS
 
-Open app and navigate to Settings > Advanced > Diagnostics > Console Logs
-Send us both the Extension Logs and Application logs.
+1. Open **App** and navigate to **Settings** > **Advanced** > **Diagnostics** > **Console Logs**.
+2. Send the Extension Logs and Application Logs to Cloudflare support.
 
-- Android/ChromeOS
+#### Android/ChromeOS
 
-Open app and navigate to Settings > Advanced→Diagnostics
-Send the Console Logs
-and Boringtun Logs.
+1. Open **App** and navigate to **Settings** > **Advanced** > **Diagnostics**.
+2. Send the Console Logs and Boringtun Logs to Cloudflare support.
