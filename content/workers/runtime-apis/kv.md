@@ -271,7 +271,7 @@ const cursor = value.cursor
 const next_value = await NAMESPACE.list({"cursor": cursor})
 ```
 
-Note that checking for an empty array in `keys` is not sufficient to determine whether there are more keys to fetch, you should check `list_complete`. The reason it's possible to have an empty array in `keys` but still have more keys to fetch is because [recently expired or deleted keys](https://en.wikipedia.org/wiki/Tombstone_%28data_store%29) must be iterated through but will not be included in the returned `keys`.
+Note that checking for an empty array in `keys` is not sufficient to determine whether there are more keys to fetch, you should check `list_complete`. The reason it is possible to have an empty array in `keys` but still have more keys to fetch is because [recently expired or deleted keys](https://en.wikipedia.org/wiki/Tombstone_%28data_store%29) must be iterated through but will not be included in the returned `keys`.
 
 ## KV bindings
 
