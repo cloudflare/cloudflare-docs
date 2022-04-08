@@ -1,23 +1,5 @@
 # 1dot1_redirect
 /1.1.1.1 /1.1.1.1/ 301
-/1.1.1.1/1.1.1.1-for-families /1.1.1.1/setup/ 301
-/1.1.1.1/1.1.1.1-for-families/ /1.1.1.1/setup/ 301
-/1.1.1.1/1.1.1.1-for-families/android/ /1.1.1.1/setup/android/ 301
-/1.1.1.1/1.1.1.1-for-families/ios/ /1.1.1.1/setup/ios/ 301
-/1.1.1.1/1.1.1.1-for-families/linux/ /1.1.1.1/setup/linux/ 301
-/1.1.1.1/1.1.1.1-for-families/mac /1.1.1.1/setup/macos/ 301
-/1.1.1.1/1.1.1.1-for-families/mac/ /1.1.1.1/setup/macos/ 301
-/1.1.1.1/1.1.1.1-for-families/router /1.1.1.1/setup/router/ 301
-/1.1.1.1/1.1.1.1-for-families/router/ /1.1.1.1/setup/router/ 301
-/1.1.1.1/1.1.1.1-for-families/setup-instructions /1.1.1.1/setup/ 301
-/1.1.1.1/1.1.1.1-for-families/setup-instructions/ /1.1.1.1/setup/ 301
-/1.1.1.1/1.1.1.1-for-families/setup-instructions/dns-over-https/ /1.1.1.1/setup/ 301
-/1.1.1.1/1.1.1.1-for-families/setup-instructions/linux/ /1.1.1.1/setup/ 301
-/1.1.1.1/1.1.1.1-for-families/setup-instructions/mac/ /1.1.1.1/setup/ 301
-/1.1.1.1/1.1.1.1-for-families/setup-instructions/router/ /1.1.1.1/setup/ 301
-/1.1.1.1/1.1.1.1-for-families/setup-instructions/windows/ /1.1.1.1/setup/ 301
-/1.1.1.1/1.1.1.1-for-families/windows /1.1.1.1/setup/windows/ 301
-/1.1.1.1/1.1.1.1-for-families/windows/ /1.1.1.1/setup/windows/ 301
 /1.1.1.1/commitment-to-privacy /1.1.1.1/privacy/ 301
 /1.1.1.1/commitment-to-privacy/ /1.1.1.1/privacy/ 301
 /1.1.1.1/commitment-to-privacy/privacy-policy/firefox/ /1.1.1.1/privacy/cloudflare-resolver-firefox/ 301
@@ -49,7 +31,6 @@
 /1.1.1.1/encrypted-dns/dns-over-https/make-api-requests/dns-wireformat/ /1.1.1.1/encryption/dns-over-https/make-api-requests/dns-wireformat/ 301
 /1.1.1.1/encrypted-dns/dns-over-tls /1.1.1.1/encryption/dns-over-tls/ 301
 /1.1.1.1/encrypted-dns/dns-over-tls/ /1.1.1.1/encryption/dns-over-tls/ 301
-/1.1.1.1-for-families/linux /1.1.1.1/setup/linux/ 301
 /1.1.1.1/fun-stuff/ /1.1.1.1/other-ways-to-use-1.1.1.1/ 301
 /1.1.1.1/fun-stuff/dns-in-google-sheets/ /1.1.1.1/other-ways-to-use-1.1.1.1/dns-in-google-sheets/ 301
 /1.1.1.1/fun-stuff/dns-over-discord/ /1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-discord/ 301
