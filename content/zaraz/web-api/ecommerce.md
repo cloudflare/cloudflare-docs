@@ -14,7 +14,7 @@ You can use `zaraz.ecommerce()` anywhere inside the `<body>` tag of a page.
 
 To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz account and on the tool you plan to send ecommerce data to. Then, add `zaraz.ecommerce()` to the `<body>` element of your website.
 
-Right now, Zaraz is compatible with Google Analytics 4 and Google Analytics 3.
+Right now, Zaraz is compatible with Google Analytics 3 (Universal Analytics), Google Analytics 4, Bing and Facebook Pixel.
 
 ## Enable ecommerce tracking
 
