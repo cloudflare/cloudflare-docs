@@ -102,7 +102,7 @@ Tunnel credentials file '/root/.cloudflared/928655cc-7f95-43f2-8539-2aba6cf3592d
 
 ## How do I contact support?
 
-### I am having an issue with a locally-managed tunnel
+### I am having an issue with a locally-managed tunnel.
 
 Before contacting the Cloudflare support team:
 
