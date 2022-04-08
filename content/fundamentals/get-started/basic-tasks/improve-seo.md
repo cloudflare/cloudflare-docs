@@ -39,6 +39,12 @@ To make sure your domain is accessible over HTTPS:
 
 With [Crawler Hints](/cache/about/crawler-hints/), search engines and other bot-powered experiences have the freshest version of your content, translating into happier users and ultimately influencing search rankings. 
 
+### Enable Automatic Signed Exchanges (SXGs)
+
+Automatic Signed Exchanges (SXGs) is an open web platform specification developed by Google to verify a cached version of a website.
+
+When you enable [signed exchanges](https://support.cloudflare.com/hc/articles/4411075595661), your site will load faster when linked to from a site supporting SXG. Since many search engines use page load times to determine search result ranking, SXGs can provide an SEO boost.
+
 ## Troubleshooting
 
 Depending on your domain's security settings, you might accidentally block search engine crawlers.
