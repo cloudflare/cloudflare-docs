@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx-content-type: reference
 title: HTTP request headers
 ---
 

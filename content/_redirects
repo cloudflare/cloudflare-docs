@@ -244,14 +244,19 @@
 /firewall/cf-rulesets/view-rulesets /ruleset-engine/basic-operations/view-rulesets 301
 
 # fundamentals
-/fundamentals/notifications/configure-webhooks /fundamentals/notifications/create-notifications/configure-webhooks 301
-/fundamentals/notifications/create-notification /fundamentals/notifications/create-notifications/create-notification 301
-/fundamentals/notifications/create-pagerduty /fundamentals/notifications/create-notifications/create-pagerduty 301
-/fundamentals/notifications/edit-notification /fundamentals/notifications/edit-notifications/edit-notification 301
-/fundamentals/notifications/edit-pagerduty /fundamentals/notifications/edit-notifications/edit-pagerduty 301
-/fundamentals/notifications/edit-webhook /fundamentals/notifications/edit-notifications/edit-webhook 301
 /fundamentals/data-products/accessing-cf-data/ /fundamentals/data-products/types-of-analytics/ 301
-/fundamentals/data-products/accessing-cf-data /fundamentals/data-products/types-of-analytics/ 301
+/fundamentals/get-started/cdn/ /fundamentals/get-started/concepts/cdn/ 301
+/fundamentals/get-started/how-cloudflare-works/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
+/fundamentals/get-started/cloudflare-cookies/ /fundamentals/get-started/reference/cloudflare-cookies/ 301
+/fundamentals/get-started/google-analytics/ /fundamentals/get-started/reference/google-analytics/ 301
+/fundamentals/get-started/http-request-headers/ /fundamentals/get-started/reference/http-request-headers/ 301
+/fundamentals/get-started/network-ports/ /fundamentals/get-started/reference/network-ports/ 301
+/fundamentals/notifications/configure-webhooks/ /fundamentals/notifications/create-notifications/configure-webhooks/ 301
+/fundamentals/notifications/create-notification/ /fundamentals/notifications/create-notifications/create-notification/ 301
+/fundamentals/notifications/create-pagerduty/ /fundamentals/notifications/create-notifications/create-pagerduty/ 301
+/fundamentals/notifications/edit-notification/ /fundamentals/notifications/edit-notifications/edit-notification/ 301
+/fundamentals/notifications/edit-pagerduty/ /fundamentals/notifications/edit-notifications/edit-pagerduty/ 301
+/fundamentals/notifications/edit-webhook/ /fundamentals/notifications/edit-notifications/edit-webhook/ 301
 
 # gateway
 /gateway/about /cloudflare-one/policies/filtering/ 301
@@ -1015,7 +1020,7 @@
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
 /load-balancing/understand-basics/load-balancing-rules* /load-balancing/additional-options/load-balancing-rules:splat 301
-
+/fundamentals/get-started/origin-health/* /fundamentals/get-started/task-guides/origin-health/:splat 301
 /tenant/tutorial* /tenant/get-started:splat 301
 
 /argo-tunnel/run-tunnel/run-as-service* /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service:splat 301

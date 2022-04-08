@@ -8,7 +8,7 @@ weight: 0
 
 When you _proxy_ an **A**, **AAAA**, or **CNAME** DNS record for your application (also known as _orange-clouding_), DNS queries for these records will resolve to Cloudflare Anycast IPs instead of their original DNS target.
 
-This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server. This behavior allows Cloudflare to [optimize, cache, and protect](/fundamentals/get-started/how-cloudflare-works/) all requests for your application.
+This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server. This behavior allows Cloudflare to [optimize, cache, and protect](/fundamentals/get-started/concepts/how-cloudflare-works/) all requests for your application.
 
 {{<Aside type="note">}}
 
@@ -20,7 +20,7 @@ Because requests to proxied hostnames go through Cloudflare before reaching your
 
 In most cases, you should proxy your **A**, **AAAA**, and **CNAME** records. These are the only records that can be proxied.
 
-Beyond the [performance and caching benefits](/fundamentals/get-started/how-cloudflare-works/), proxying your records hides your origin server's IP address and protects your application from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/).
+Beyond the [performance and caching benefits](/fundamentals/get-started/concepts/how-cloudflare-works/), proxying your records hides your origin server's IP address and protects your application from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/).
 
 ### Limitations
 
@@ -42,7 +42,7 @@ In some circumstances, you should not proxy your DNS records.
 
 ### A, AAAA, and CNAME records
 
-If you need to connect to your origin using a non-HTTP protocol (SSH, FTP, SMTP) or the traffic targets an [unsupported port](/fundamentals/get-started/network-ports/) at the origin, either leave your records unproxied (DNS-only) or use [Cloudflare Spectrum](/spectrum/).
+If you need to connect to your origin using a non-HTTP protocol (SSH, FTP, SMTP) or the traffic targets an [unsupported port](/fundamentals/get-started/reference/network-ports/) at the origin, either leave your records unproxied (DNS-only) or use [Cloudflare Spectrum](/spectrum/).
 
 {{<Aside type="note">}}
 

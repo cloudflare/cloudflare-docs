@@ -35,6 +35,10 @@ To make sure your domain is accessible over HTTPS:
 1.  Get an [SSL/TLS certificate](/ssl/get-started/) for your domain.
 2.  [Redirect visitors](/ssl/edge-certificates/additional-options/always-use-https/) to the HTTPS version of your domain.
 
+### Enable Crawler Hints
+
+With [Crawler Hints](/cache/about/crawler-hints/), search engines and other bot-powered experiences have the freshest version of your content, translating into happier users and ultimately influencing search rankings. 
+
 ## Troubleshooting
 
 Depending on your domain's security settings, you might accidentally block search engine crawlers.

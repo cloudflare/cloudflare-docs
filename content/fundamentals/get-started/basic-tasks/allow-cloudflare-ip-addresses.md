@@ -55,7 +55,7 @@ For more specific guidance, contact your hosting provider or website administrat
 
 #### Further protection
 
-For further recommendations on securing your origin server, refer to our guide on [protecting your origin server](/fundamentals/get-started/origin-health/).
+For further recommendations on securing your origin server, refer to our guide on [protecting your origin server](/fundamentals/get-started/task-guides/origin-health/).
 
 #### Visitor IP information
 
