@@ -1,7 +1,7 @@
 ---
 pcx-content-type: concept
 title: Cloudflare's CDN
-weight: 0
+weight: 1
 ---
 
 # Cloudflare's CDN
