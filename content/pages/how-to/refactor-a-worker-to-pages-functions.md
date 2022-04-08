@@ -13,18 +13,18 @@ An example of a functionality that can be handled by a Worker but can also be a 
 
 If you are already using a Worker for this, you would have deployed this Worker and then pointed your form action to the URL of the worker. Which means that when you want make changes to how Worker handles your submissions you do so separately from your Client. If the logic in your Worker is used by more than one application it makes sense to leave it this way. 
 
-However, it can be beneficial to use [Pages Functions](/pages/platform/functions/), which is a serverless function that live within the same filesystem as your application and can be deployed with your frontend on Cloudflare Pages. This can help you handle your logic from the same place. 
+However, it can be beneficial to use [Pages Functions](/pages/platform/functions/), which is a serverless function that live within the same filesystem as your application and can be deployed with your frontend on Cloudflare Pages. This can help you manage your client and serverless logic from the same place and make it easier to use and debug your code. 
 
 
 # Handling form entries with Airtable with a Worker
 
-For a form submission use case you can use an [Airtable](https://airtable.com/). An [Airtable](https://airtable.com/) is a low-code platform for building collaborative apps. It helps to Customize your workflow, collaborate, handle form submissions and achieve ambitious outcomes. For this example we will focus on the form submission feature of Airtable.
+For a form submission use case, you can use an [Airtable](https://airtable.com/). An [Airtable](https://airtable.com/) is a low-code platform for building collaborative apps. It helps to customize your workflow, collaborate, handle form submissions and achieve ambitious outcomes. For this example, we will focus on the form submission feature of Airtable.
 
-[Airtables](https://airtable.com/) can be used to store entires of information in different tables for the same account. When creating a Worker for handling the submission logic the first step is to use [wrangler](/workers/cli-wrangler/install-update/) to initialize a new Worker within that folder. 
+[Airtables](https://airtable.com/) can be used to store entires of information in different tables for the same account. When creating a Worker for handling the submission logic the first step is to use [wrangler](/workers/cli-wrangler/install-update/) to initialize a new Worker within a specific  folder or in the root of your application. 
 
-This step creates the boilerplate to write your Airtable submission Worker. After writing your Worker you can deploy it to Cloudflare Edge network with your credentials.
+This step creates the boilerplate to write your Airtable submission Worker. After writing your Worker you can deploy it to Cloudflare Edge network with your credentials. You can check the Workers documentation for a full tutorial on how to [handle form submission with workers](/workers/tutorials/handle-form-submissions-with-airtable/).
 
-An example of a Worker that handles Airtable form submission can be seen in the code below. 
+The code block below shows an example of a Worker that handles Airtable form submission.
 
 Every Worker will have the default response to a `fetch` action with a `request` handler. Here you have a `submitHandler` async function that can be reached if the pathname of the work is `/submit`. This function checks that the request method is a `POST` request and then proceeds to parse and post the form entries to the Airtable using your credentials, which you can store using [wrangler secret](/workers/cli-wrangler/commands/#secret).
 
