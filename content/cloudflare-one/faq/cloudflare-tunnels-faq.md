@@ -122,7 +122,7 @@ Before contacting the Cloudflare support team:
 
 - Gather any relevant error/access logs from your server.
 
-### I am having issues accessing resources through WARP
+### I am having issues accessing resources on private networks through the WARP client.
 
 While [connecting private networks](/cloudflare-one/connections/connect-networks/private-net/) with Cloudflare Tunnels, end users will connect to your resources using the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
 In order to help Cloudflare support understand the overall architecture of your machine and networks, send the WARP Client logs with your request.
