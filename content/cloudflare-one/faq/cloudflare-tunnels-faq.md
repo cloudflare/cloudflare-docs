@@ -127,7 +127,7 @@ Before contacting the Cloudflare support team:
 If your end users are experiencing issues while accessing resources on private networks [exposed via Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/private-net/), ensure you include WARP client logs when contacting Cloudflare support. These logs will help Cloudflare support understand the overall architecture of your machine and networks.
 In order to help Cloudflare support understand the overall architecture of your machine and networks, send the WARP Client logs with your request.
 
-#### macOS
+#### Retrieving WARP client logs on macOS
 
 In the Terminal, type `warp-diag` (full path: `/usr/local/bin/warp-diag`) and press **Enter**. This will place a `warp-debugging-info.zip` on your Desktop.
 
