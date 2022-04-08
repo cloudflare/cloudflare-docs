@@ -122,30 +122,6 @@ Before contacting the Cloudflare support team:
 
 - Gather any relevant error/access logs from your server.
 
-### I am having issues accessing resources on private networks through the WARP client.
+### End users are having issues connecting to private networks through the WARP client.
 
-If your end users are experiencing issues while accessing resources on private networks [exposed via Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/private-net/), ensure you include WARP client logs when contacting Cloudflare support. These logs will help Cloudflare support understand the overall architecture of your machine and networks.
-In order to help Cloudflare support understand the overall architecture of your machine and networks, send the WARP Client logs with your request.
-
-#### Retrieving WARP client logs on macOS
-
-In the Terminal, type `warp-diag` (full path: `/usr/local/bin/warp-diag`) and press **Enter**. This will place a `warp-debugging-info.zip` on your Desktop.
-
-#### Windows
-
-1. Open `C:\Program Files\Cloudflare\Cloudflare WARP` in Explorer.
-2. Double-click on `warp-diag.exe`. This will place a `warp-debugging-info.zip` on your Desktop.
-
-#### Linux
-
-In the Terminal, type `sudo warp-diag` and press **Enter**. This will place a `warp-debugging-info.zip` in the same folder you ran the command from.
-
-#### iOS
-
-1. Open **App** and navigate to **Settings** > **Advanced** > **Diagnostics** > **Console Logs**.
-2. Send the Extension Logs and Application Logs to Cloudflare support.
-
-#### Android/ChromeOS
-
-1. Open **App** and navigate to **Settings** > **Advanced** > **Diagnostics**.
-2. Send the Console Logs and Boringtun Logs to Cloudflare support.
+If your end users are experiencing issues while accessing resources on private networks [exposed via Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/private-net/), ensure you include [WARP Client logs](/cloudflare-one/faq/teams-devices-faq/how-do-I-retrieve-WARP-client-logs) when contacting Cloudflare support. These logs will help Cloudflare support understand the overall architecture of your machine and networks.
