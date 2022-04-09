@@ -175,7 +175,7 @@ size, the user will receive a `4xx` response.
 </html>
 ```
 
-## Using tus (recommended for videos over 200MB)
+## Using tus (Required for videos over 200MB)
 
 tus is a protocol that supports resumable uploads and works best for larger files.
 
