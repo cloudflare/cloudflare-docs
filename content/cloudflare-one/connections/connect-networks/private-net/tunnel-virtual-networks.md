@@ -53,7 +53,7 @@ The following steps may be executed from any `cloudflared` instance.
     $ cloudflared tunnel vnet add production-vnet
     ```
 
-3. Before moving on, run the following command to verify that your newly created virtual networks are listed correctly:
+3. Before moving on, run the following command to verify that your newly created Virtual Networks are listed correctly:
 
     ```bash
     $ cloudflared tunnel vnet list
