@@ -1,9 +1,7 @@
 ---
 pcx-content-type: reference
-title: Image formats
+title: Supported image formats
 weight: 5
-meta:
-  title: Supported image formats
 ---
 
 # Supported image formats
