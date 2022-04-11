@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: API token
-weight: 3
+weight: 1
 ---
 
 # API token
