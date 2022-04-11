@@ -6,7 +6,7 @@ weight: 5
 
 # Allow Cloudflare IP addresses
 
-If you [use Cloudflare-managed nameservers](/dns/zone-setups/full-setup/) — as most of our customers do — all traffic to [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) passes through Cloudflare before reaching your origin server. This means that your origin server will stop receiving traffic from individual visitor IP addresses and instead receive traffic from [Cloudflare IP addresses](https://www.cloudflare.com/ips), which are shared by all proxied hostnames.
+Because of [how Cloudflare works](/fundamentals/get-started/concepts/how-cloudflare-works/), all traffic to [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) passes through Cloudflare before reaching your origin server. This means that your origin server will stop receiving traffic from individual visitor IP addresses and instead receive traffic from [Cloudflare IP addresses](https://www.cloudflare.com/ips), which are shared by all proxied hostnames.
 
 This setup can cause issues if your origin server blocks or rate limits connections from Cloudflare IP addresses. Because all visitor traffic will appear to come from Cloudflare IP addresses, blocking these IPs — even accidentally — will prevent visitor traffic from reaching your application.
 
@@ -61,13 +61,6 @@ For further recommendations on securing your origin server, refer to our guide o
 
 Because your origin server will receive Cloudflare IP addresses instead of visitor IP addresses, your server will return Cloudflare IP addresses when logging or responding to requests.
 
-If you need accurate logs of visitor IP addresses, we recommend that you use [Cloudflare site analytics](https://support.cloudflare.com/hc/articles/360037684251).
+If you want sampled logs of visitor IP addresses and are on an Enterprise plan, we recommend that you use [Cloudflare Logs](/logs/about/).
 
-If Cloudflare site analytics are not sufficient or your application's response depends on the incoming IP address of an individual visitor, you can also [restore visitor IP addresses](https://support.cloudflare.com/hc/articles/200170786). 
-
-## Use your own IP addresses
-
-If you do not want to use Cloudflare IP addresses, Enterprise customers have two potential alternatives:
-
-- [**Bring Your Own IP (BYOIP)**](/byoip/): Cloudflare announces your IPs in all our locations.
-- **Static IP addresses**: Cloudflare sets static IP addresses for your domain. For more details, reach out to your account team.
+Alternatively, if you want non-sampled logs directly from your server or your application's response depends on the incoming IP address of an individual visitor, you can also [restore visitor IP addresses](https://support.cloudflare.com/hc/articles/200170786). 
