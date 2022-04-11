@@ -6,7 +6,7 @@ weight: 3
 
 # Upload images
 
-Cloudflare Images allows developers to upload images that cover a wide range of use cases.
+Cloudflare Images allows developers to upload images in different manners, for a wide range of use cases.
 
 {{<table-wrap>}}
 

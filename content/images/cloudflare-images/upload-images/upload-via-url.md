@@ -8,9 +8,11 @@ meta:
 
 # Upload via URL
 
-Sometimes it can be useful to use a URL of an image instead of uploading its data. To accommodate this need, Cloudflare Images provides you an option to use a URL to migrate images to Cloudflare without fetching them first.
+Sometimes it can be useful to use a URL of an image instead of uploading its data. To accommodate this need, Cloudflare Images provides an option to use a URL to migrate images to Cloudflare without fetching them first.
 
-Refer to [Supported image formats](/images/cloudflare-images/upload-images/supported-formats) to know more about supported image formats you can upload.
+Refer to [Supported image formats](/images/cloudflare-images/upload-images/supported-formats) to learn more about the supported image formats you can upload.
+
+Below is an example of how to use the upload via URL feature:
 
 ```bash
 curl --request POST \
@@ -21,7 +23,7 @@ curl --request POST \
  --form 'requiredSignedURLs=false' 
 ```
 
-You will receive a response similar to this:
+You will then receive a response similar to this:
 
 ```json
 {
@@ -47,8 +49,8 @@ If your origin server returns an error while fetching the images, the API respon
 
 Refer to [Upload an image using a single HTTP request](https://api.cloudflare.com/#cloudflare-images-upload-an-image-using-a-single-http-request) for more information.
 
-{{<Aside type="note">}}
+{{<Aside type="note" header="Note">}}
 
-The `--form 'file=` and `--form 'url=` fields in the API are mutually exclusive.
+The `--form 'file='` and `--form 'url='` fields in the API documentation example are mutually exclusive.
 
 {{</Aside>}}
