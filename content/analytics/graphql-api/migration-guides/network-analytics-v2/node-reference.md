@@ -73,4 +73,4 @@ Each row represents a packet sample that matches a Magic Firewall rule.
 
 Magic Firewall does not use attack IDs, only rule IDs and ruleset IDs.
 
-The sample rate is 1/100 packets.
+The sample rate is dynamic and based on the volume of packets, ranging from 1/100 to 1/1,000,000 packets.
