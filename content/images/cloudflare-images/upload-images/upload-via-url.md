@@ -51,6 +51,6 @@ Refer to [Upload an image using a single HTTP request](https://api.cloudflare.co
 
 {{<Aside type="note" header="Note">}}
 
-The `--form 'file='` and `--form 'url='` fields in the API documentation example are mutually exclusive.
+The `--form 'file='` and `--form 'url='` fields are mutually exclusive.
 
 {{</Aside>}}
