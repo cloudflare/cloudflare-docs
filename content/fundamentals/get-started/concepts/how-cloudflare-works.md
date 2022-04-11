@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx-content-type: concept
 title: How Cloudflare works
 weight: 2
 ---
