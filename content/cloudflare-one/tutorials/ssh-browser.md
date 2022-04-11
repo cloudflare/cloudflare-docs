@@ -55,7 +55,7 @@ Cloudflare Tunnel creates a secure, outbound-only, connection between this machi
 Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install `cloudflared` with the commands below. You can find releases for other operating systems [here](https://github.com/cloudflare/cloudflared/releases).
 
 ```sh
-$ sudo wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+$ wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
 $ sudo dpkg -i ./cloudflared-linux-amd64.deb
 ```
 
