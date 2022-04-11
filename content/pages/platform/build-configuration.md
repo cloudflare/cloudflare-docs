@@ -108,3 +108,107 @@ Many common tools have been pre-installed as well. The environment variable avai
 | Zola        | (requires environment variable)  | `ZOLA_VERSION`       |
 
 If you want to set a specific version of a framework your Cloudflare Pages project is using, note that Pages will respect your package manager of choice during your build process. For example, if you use Gatsby.js, your `package.json` should indicate a version of the `gatsby` npm package, which will be installed using `npm install` as your project builds on Cloudflare Pages.
+
+## Supported versions
+
+Below is a list of language versions that Cloudflare Pages supports.
+
+* Ruby - `RUBY_VERSION`, `.ruby-version`  
+    - Minimum: `2.6.2`  
+    - Maximum: `2.7.5`  
+
+* Node.js - `NODE_VERSION`, `.nvmrc`, `.node-version`
+    * 12.18.0 (default)
+    * Any version that nvm can install.
+
+* Python - `PYTHON_VERSION`, `runtime.txt`, `Pipfile`  
+    2.7 (default)  
+    3.5  
+    3.7  
+
+* PHP - `PHP_VERSION`
+    5.6 (default)
+    7.2
+    7.4
+
+* Go - `GO_VERSION`
+    1.14.4 (default)
+    Any version available on the Go downloads page.
+
+* Java
+ 8 (default)
+ Emacs
+ 25 (default)
+
+* Erlang
+    21 (default)
+
+* Elixir
+    1.7 (default)
+
+* Swift - `SWIFT_VERSION`, `.swift-version`
+    Not installed by default.
+    Supports any version that swiftenv can install later than `4.x`. Versions `4.x` and earlier will not work due to incompatible shared libraries.
+    5.2 is installed if `Package.swift` is present and no version is specified with `SWIFT_VERSION` or `.swift-version`.
+
+* Rust
+    Not installed by default.
+    Supports any version that rustup can install.
+
+Below is a list of tool versions that Cloudflare Pages supports.
+
+* Node.js
+    Yarn - `YARN_VERSION`
+        1.22.10 (default)
+        Any version available via their installer.
+    npm - `NPM_VERSION`
+        Version corresponding with Node.js version. (default)
+        Any version available via npm.
+    bower
+
+* Python
+    pip
+        Version corresponding with Python version. (default)
+    Pipenv
+        Latest version.
+* PHP
+    Composer
+
+* Emacs
+    Cask
+
+* Clojure
+    Leiningen
+        stable
+    Boot
+        2.5.2
+
+Below is a list of framework versions that Cloudflare Pages supports.
+
+* Hugo - `HUGO_VERSION`
+    0.54 extended (default)
+    Any version installable via `binrc`.
+
+Gutenburg - `GUTENBERG_VERSION`
+    Any version installable via `binrc`.
+
+* Zola - `ZOLA_VERSION`
+    Any version installable via binrc.
+
+* jq
+    1.5
+
+* ImageMagick
+    6.7.7
+
+* GNU Make
+    3.81
+
+* OptiPNG
+    0.6.4
+
+* Doxygen
+    1.8.6
+
+* Homebrew 
+    Early alpha.
