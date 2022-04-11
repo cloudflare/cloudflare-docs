@@ -1,12 +1,12 @@
 ---
 pcx-content-type: concept
 title: How Cloudflare works
-weight: 2
+weight: 3
 ---
 
 # How Cloudflare works
 
-More than just using Cloudflare's [Content Delivery (CDN)](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) services, customers rely on Cloudflare’s global network to enhance security, performance, and reliability of anything connected to the Internet.
+More than just using Cloudflare's [Content Delivery (CDN)](/fundamentals/get-started/concepts/cdn/) services, customers rely on Cloudflare’s global network to enhance security, performance, and reliability of anything connected to the Internet.
 
 {{<Aside type="note">}}
 
@@ -49,17 +49,9 @@ Cloudflare-proxied domains share IP addresses from a pool that belongs to the Cl
 
 {{</Aside>}}
 
-Also, our flat-rate pricing structure provides predictability and reliability in your [CDN](https://www.cloudflare.com/cdn-y/) and [DDoS](https://www.cloudflare.com/ddos/) bandwidth expenses. Cloudflare does not have bandwidth limits for domains on the Free, Pro and Business plans as long as those domains comply with our [Terms of Service](https://www.cloudflare.com/terms/). However, your hosting provider may still impose limits on bandwidth usage and/or charge for bandwidth.
+Also, our flat-rate pricing structure provides predictability and reliability in your CDN and DDoS bandwidth expenses. Cloudflare does not have bandwidth limits for domains on the Free, Pro and Business plans as long as those domains comply with our [Terms of Service](https://www.cloudflare.com/terms/). However, your hosting provider may still impose limits on bandwidth usage and/or charge for bandwidth.
 
 Note that additional terms may apply to:
 
 - Self-serve domains with add-on features
 - Domains in the Enterprise plan (contact your Cloudflare Account Team for additional details)
-
-Learn how to [get started with Cloudflare](https://support.cloudflare.com/hc/en-us/articles/360027989951).
-
-## Related resources
-
-- [What is Cloudflare?](https://www.cloudflare.com/learning/what-is-cloudflare/)
-- [Understanding Cloudflare DDOS protection](https://support.cloudflare.com/hc/en-us/articles/200172676)
-- [Best Practices: DDoS preventative measures](https://support.cloudflare.com/hc/en-us/articles/200170166)
