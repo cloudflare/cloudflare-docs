@@ -1,6 +1,7 @@
 ---
 pcx-content-type: reference
 title: Direct Creator Upload
+weight: 2
 ---
 
 # Direct Creator Upload

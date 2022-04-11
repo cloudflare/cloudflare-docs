@@ -1,6 +1,7 @@
 ---
 pcx-content-type: reference
 title: URL upload
+weight: 4
 meta:
   title: Upload via URL
 ---
@@ -15,12 +16,12 @@ Refer to [Supported image formats](/images/cloudflare-images/upload-images/suppo
 curl --request POST \
  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1 \
  --header 'Authorization: Bearer :token' \
- --form 'url=https://[user:password@]example.com/path/to/image.jpeg' \
+ --form 'url=https://[user:password@]example.com/<PATH_TO_IMAGE>' \
  --form 'metadata={"key":"value"}' \
  --form 'requiredSignedURLs=false' 
 ```
 
-Response:
+You will receive a response similar to this:
 
 ```json
 {
