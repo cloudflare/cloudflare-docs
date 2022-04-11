@@ -65,7 +65,7 @@ All accounts come pre-configured with a Virtual Network named `default`. You can
 
 {{</Aside>}}
 
-4. Configure your tunnels with the IP/CIDR range of your private networks, and assign the tunnels to their respective virtual networks.
+4. Configure your tunnels with the IP/CIDR range of your private networks, and assign the tunnels to their respective Virtual Networks.
 
     ```bash
     $ cloudflared tunnel route ip add –vnet staging-vnet 10.128.0.3/32 staging-tunnel
