@@ -27,4 +27,4 @@ Enterprise customers can enable Ray ID as a field in their [Cloudflare Logs](/lo
 
 ### Server logs
 
-All customers can send Ray IDs to their origin server logs by [editing their web server configuration](https://support.cloudflare.com/hc/en-us/articles/203118044#h_f7a7396f-ec41-4c52-abf5-a110cadaca7c).
+For more details about sending Ray IDs to your server logs, refer to [the `CF-Ray` header](/fundamentals/get-started/reference/http-request-headers/#cf-ray).
