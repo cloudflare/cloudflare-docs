@@ -126,19 +126,24 @@ Below is a list of language versions that Cloudflare Pages supports.
     3.5  
     3.7  
 
+    just these three versions
+
 * PHP - `PHP_VERSION`
     5.6 (default)
     7.2
     7.4
+
+    just these three versions
 
 * Go - `GO_VERSION`
     1.14.4 (default)
     Any version available on the Go downloads page.
 
 * Java
- 8 (default)
- Emacs
- 25 (default)
+    8 (default)
+
+* Emacs
+    25 (default)
 
 * Erlang
     21 (default)
@@ -151,9 +156,14 @@ Below is a list of language versions that Cloudflare Pages supports.
     Supports any version that swiftenv can install later than `4.x`. Versions `4.x` and earlier will not work due to incompatible shared libraries.
     5.2 is installed if `Package.swift` is present and no version is specified with `SWIFT_VERSION` or `.swift-version`.
 
+    > we do install swift but we do any 5.x version by default
+
 * Rust
     Not installed by default.
     Supports any version that rustup can install.
+
+    > can't install rust; 
+    > DELETE THIS !!
 
 Below is a list of tool versions that Cloudflare Pages supports.
 
@@ -179,7 +189,7 @@ Below is a list of tool versions that Cloudflare Pages supports.
 
 * Clojure
     Leiningen
-        stable
+        stable version of that
     Boot
         2.5.2
 
@@ -193,7 +203,9 @@ Gutenburg - `GUTENBERG_VERSION`
     Any version installable via `binrc`.
 
 * Zola - `ZOLA_VERSION`
-    Any version installable via binrc.
+    Any version installable via `binrc`.
+    minimum of 0.5.0
+    maximum is 0.14.0
 
 * jq
     1.5
@@ -209,6 +221,3 @@ Gutenburg - `GUTENBERG_VERSION`
 
 * Doxygen
     1.8.6
-
-* Homebrew 
-    Early alpha.
