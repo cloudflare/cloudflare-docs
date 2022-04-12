@@ -7,7 +7,7 @@ title: Traffic steering
 
 Magic WAN uses a static configuration to route traffic through [Anycast tunnels](/magic-wan/about/tunnels-and-encapsulation/) from Cloudflare’s edge to your network and from your network to Cloudflare's edge.
 
-Magic WAN steers traffic along GRE tunnel routes based on priorities you define during the onboarding process.
+Magic WAN steers traffic along static routes based on priorities you define during the onboarding process.
 
 The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
 
@@ -44,7 +44,7 @@ This diagram illustrates how ECMP distributes traffic equally across 2 paths wit
 </div>
 </details>
 
-When Magic WAN health checks determine that GRE Tunnel 2 is unhealthy, that route is dynamically de-prioritized, leaving Tunnel 1 the sole top-priority route. As a result, traffic is steered away from Tunnel 2, and all traffic flows to Tunnel 1:
+When Magic WAN health checks determine that Tunnel 2 is unhealthy, that route is dynamically de-prioritized, leaving Tunnel 1 the sole top-priority route. As a result, traffic is steered away from Tunnel 2, and all traffic flows to Tunnel 1:
 
 <details>
 <summary>
@@ -57,7 +57,7 @@ When Magic WAN health checks determine that GRE Tunnel 2 is unhealthy, that rout
 </div>
 </details>
 
-When Magic WAN determines that GRE Tunnel 1 is unhealthy as well, that route is also de-prioritized, leaving GRE Tunnel 3 as the top priority route. In that case, all traffic flows to GRE Tunnel 3.
+When Magic WAN determines that Tunnel 1 is unhealthy as well, that route is also de-prioritized, leaving Tunnel 3 as the top priority route. In that case, all traffic flows to Tunnel 3.
 
 <details>
 <summary>
