@@ -998,6 +998,7 @@
 /cloudflare-one/faq/tunnel/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
 /cloudflare-one/faq/tunnels/ /cloudflare-one/faq/ 301
 /cloudflare-one/identity/idp-integration/one-time-pin/ /cloudflare-one/identity/one-time-pin/ 301
+/cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/policies/filtering/dns-policies/configuring-block-page/ /cloudflare-one/policies/filtering/configuring-block-page/ 301
 /cloudflare-one/policies/filtering/dns-policies/safesearch/ /cloudflare-one/policies/filtering/dns-policies-builder/ 301
 /cloudflare-one/policies/filtering/lists/ /cloudflare-one/policies/lists/ 301
