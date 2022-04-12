@@ -31,7 +31,7 @@ The Rules language supports these transformation functions:
 
 {{<definitions>}}
 
-- <code>any({{<type>}}Array{{</type>}}\<{{<param-type>}}Boolean{{</param-type>}}\>)</code> {{<type>}}Boolean{{</type>}}
+- <code id="function-any">any({{<type>}}Array{{</type>}}\<{{<param-type>}}Boolean{{</param-type>}}\>)</code> {{<type>}}Boolean{{</type>}}
 
   - Returns <code>true</code> when the comparison operator in the argument returns `true` for <em>any</em> of the values in the argument array. Returns <code>false</code> otherwise.
 
@@ -42,7 +42,7 @@ The Rules language supports these transformation functions:
       any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
     </code>
 
-- <code>all({{<type>}}Array{{</type>}}\<{{<param-type>}}Boolean{{</param-type>}}\>)</code> {{<type>}}Boolean{{</type>}}
+- <code id="function-all">all({{<type>}}Array{{</type>}}\<{{<param-type>}}Boolean{{</param-type>}}\>)</code> {{<type>}}Boolean{{</type>}}
 
   - Returns <code>true</code> when the comparison operator in the argument returns `true` for <em>all</em> values in the argument array. Returns <code>false</code> otherwise.
 
@@ -51,7 +51,7 @@ The Rules language supports these transformation functions:
 
     `all(http.request.headers["content-type"][*] == "application/json")`
 
-- <code>concat({{<type>}}String | Integer | bytes | Array elements{{</type>}})</code> {{<type>}}String{{</type>}}
+- <code id="function-concat">concat({{<type>}}String | Integer | bytes | Array elements{{</type>}})</code> {{<type>}}String{{</type>}}
 
   - Takes a comma-separated list of values. Concatenates the argument values into a single String.
 
@@ -60,7 +60,7 @@ The Rules language supports these transformation functions:
 
     `concat("String1"," ","String",2) == "String1 String2"`
 
-- <code>ends\_with(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
+- <code id="function-ends_with">ends\_with(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
   - Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
 
@@ -71,7 +71,7 @@ The Rules language supports these transformation functions:
 The `ends_with()` function is not available in [firewall rules](/firewall/).
 {{</Aside>}}
 
-- <code>len({{<type>}}String | bytes{{</type>}})</code> {{<type>}}Integer{{</type>}}
+- <code id="function-len">len({{<type>}}String | bytes{{</type>}})</code> {{<type>}}Integer{{</type>}}
 
   - Returns the byte length of a String or Bytes field.
 
@@ -80,7 +80,7 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
 
     `len(http.host)`
 
-- <code>lookup_json_string(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
+- <code id="function-lookup_json_string">lookup_json_string(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
 
   - Returns the string value associated with the supplied `key` in `field`.<br/>
   The `field` must be a string representation of a valid JSON object.<br/>
@@ -113,7 +113,7 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
     The following expression will return `true`:<br/>
     `lookup_json_string(http.request.body.raw, 1, "network") == "cloudflare"`
 
-- <code>lower({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
+- <code id="function-lower">lower({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
 
   - Converts a string field to lowercase. Only uppercase ASCII bytes are converted. All other bytes are unaffected.
 
@@ -122,7 +122,7 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
 
     `lower(http.host) == "www.cloudflare.com"`
 
-- <code>regex\_replace(source{{<param-type>}}String{{</param-type>}}, regular\_expression{{<param-type>}}String{{</param-type>}}, replacement{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
+- <code id="function-regex_replace">regex\_replace(source{{<param-type>}}String{{</param-type>}}, regular\_expression{{<param-type>}}String{{</param-type>}}, replacement{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
 
     - Replaces a part of a source string matched by a regular expression with a replacement string, returning the result. The replacement string can contain references to regular expression capture groups.
 
@@ -150,7 +150,7 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
 You can only use the `regex_replace()` function in [rewrite expressions of Transform Rules](/rules/transform/). Additionally, the first argument must be a field under `http.request.headers` or `http.request.uri`.
 {{</Aside>}}
 
-- <code>remove\_bytes({{<type>}}bytes{{</type>}})</code> {{<type>}}bytes{{</type>}}
+- <code id="function-remove_bytes">remove\_bytes({{<type>}}bytes{{</type>}})</code> {{<type>}}bytes{{</type>}}
 
   - Returns a new byte array with all the occurrences of the given bytes removed.
 
@@ -159,7 +159,7 @@ You can only use the `regex_replace()` function in [rewrite expressions of Trans
 
     `remove_bytes(http.host, "\x2e\x77") == "cloudflarecom"`
 
-- <code>starts\_with(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
+- <code id="function-starts_with">starts\_with(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
   - Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
 
@@ -170,7 +170,7 @@ You can only use the `regex_replace()` function in [rewrite expressions of Trans
 The `starts_with()` function is not available in [firewall rules](/firewall/).
 {{</Aside>}}
 
-- <code>to\_string({{<type>}}Integer | Boolean | IP address{{</type>}})</code> {{<type>}}String{{</type>}}
+- <code id="function-to_string">to\_string({{<type>}}Integer | Boolean | IP address{{</type>}})</code> {{<type>}}String{{</type>}}
 
   - Returns the string representation of an Integer, Boolean, or IP address value.
 
@@ -185,7 +185,7 @@ The `starts_with()` function is not available in [firewall rules](/firewall/).
 You can only use the `to_string()` function in [rewrite expressions of Transform Rules](/rules/transform/).
 {{</Aside>}}
 
-- <code>upper({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
+- <code id="function-upper">upper({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
 
   - Converts a string field to uppercase. Only lowercase ASCII bytes are converted. All other bytes are unaffected.
 
@@ -194,7 +194,7 @@ You can only use the `to_string()` function in [rewrite expressions of Transform
 
     <code>upper(http.host) == "WWW.CLOUDFLARE.COM"</code>
 
-- <code>url\_decode({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
+- <code id="function-url_decode">url\_decode({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
 
   - Decodes a URL formatted string, as in the following:
 
@@ -213,7 +213,7 @@ You can only use the `to_string()` function in [rewrite expressions of Transform
 
 ## Magic Firewall Functions
 
-- <code>bit\_slice({{<type>}}String{{</type>}}, {{<type>}}Number{{</type>}}, {{<type>}}Number{{</type>}})</code> {{<type>}}Number{{</type>}}
+- <code id="function-bit_slice">bit\_slice({{<type>}}String{{</type>}}, {{<type>}}Number{{</type>}}, {{<type>}}Number{{</type>}})</code> {{<type>}}Number{{</type>}}
 
   - Select a slice of contiguous bits from a string field. This is primarily intended for use with <code>ip</code> and <code>tcp</code>.
   - The slice can be no longer than 31 bits, but multiple calls can be joined together via a logical expression.
