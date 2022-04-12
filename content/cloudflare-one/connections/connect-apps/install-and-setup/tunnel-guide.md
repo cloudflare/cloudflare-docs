@@ -9,35 +9,44 @@ meta:
 # Set up your first tunnel
 
 When setting up your first Cloudflare Tunnel, you have the option to create it:
-* Remotely on the Zero Trust dashboard
-* Locally, using your CLI
 
-## Remote setup (Dashboard setup)
+* [Remotely on the Zero Trust dashboard](#set-up-a-tunnel-remotely-dashboard-setup)
+* [Locally, using your CLI](#set-up-a-tunnel-locally-cli-setup)
 
-Follow this step-by-step guide to get your first tunnel up and running using the Zero Trust dashboard. Before you start, make sure you:
+## Prerequisites
 
-*  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
-*  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
+Before you start, make sure you:
 
-1. Log in to the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and navigate to **Access** > **Tunnels**. Click **Create a tunnel**.
+* [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website).
+* [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708).
 
-2. Enter a name for your tunnel. We suggest choosing a name that reflects the type of resources you want to connect through this tunnel (for example, `enterprise-VPC-01`).
+## Set up a tunnel remotely (Dashboard setup)
 
-3. Click **Save tunnel**.
+Follow this step-by-step guide to get your first tunnel up and running using the Zero Trust dashboard.
 
-4. Next, you will need to install `cloudflared` and run it. To do so, check that the environment under **Choose an environment** reflects the operating system on your machine, then copy the command in the box below and paste it into a terminal window. Run the command.
+### 1. Create a tunnel
 
-5. Once the command has finished running, your connector will appear on the Zero Trust dashboard.
+1. Log in to the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and navigate to **Access** > **Tunnels**. 
+
+2. Click **Create a tunnel**.
+
+3. Enter a name for your tunnel. We suggest choosing a name that reflects the type of resources you want to connect through this tunnel (for example, `enterprise-VPC-01`).
+
+4. Click **Save tunnel**.
+
+5. Next, you will need to install `cloudflared` and run it. To do so, check that the environment under **Choose an environment** reflects the operating system on your machine, then copy the command in the box below and paste it into a terminal window. Run the command.
+
+6. Once the command has finished running, your connector will appear on the Zero Trust dashboard.
 
     ![Connector appearing in the UI after cloudflared has run](/cloudflare-one/static/documentation/connections/connect-apps/connector.png)
 
-6. Click **Next**.
+7. Click **Next**.
 
 The next steps depend on whether you want to [connect an application](#connect-an-application) or [connect a network](#connect-a-network).
 
-### Connect an application
+### 2. Connect an application
 
-Follow these steps to connect an application through your tunnel. If you're looking to connect a network, skip to the [Connect a network section](#connect-a-network).
+Follow these steps to connect an application through your tunnel. If you are looking to connect a network, skip to the [Connect a network section](#connect-a-network).
 
 1. In the **Public Hostnames** tab, select an application from the drop-down menu and specify any subdomain or path information.
 
@@ -47,29 +56,29 @@ Follow these steps to connect an application through your tunnel. If you're look
 
 4. Click **Save `<tunnel-name>`**.
 
-### Connect a network
+### 3. Connect a network
 
 Follow these steps to connect a private network through your tunnel.
 
 1. In the **Private Networks** tab, add an IP or CIDR.
+
 2. Click **Save `<tunnel-name>`**.
 
-### View your tunnel
+### 4. View your tunnel
 
 Once you click **Save `<tunnel-name>`**, you will be redirected to the **Tunnels** page. Look for your new tunnel to be listed along with its active connector.
 
 ![Tunnel appearing in the Tunnels table](/cloudflare-one/static/documentation/connections/connect-apps/tunnel-table.png)
 
-### Troubleshooting
-
+{{<Aside type="note" header="Troubleshooting">}}
+ 
 If you run into issues during the remote setup process, refer to the [Tunnel FAQ](/cloudflare-one/faq/cloudflare-tunnels-faq/#how-can-i-troubleshoot-a-tunnel-that-was-configured-from-the-zero-trust-dashboard) for troubleshooting tips.
+ 
+{{</Aside>}}
 
-## Local setup (CLI setup)
+## Set up a tunnel locally (CLI setup)
 
-Follow this step-by-step guide to get your first tunnel up and running using the CLI. Before you start, make sure you:
-
-*  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
-*  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
+Follow this step-by-step guide to get your first tunnel up and running using the CLI.
 
 ### 1. Download and install `cloudflared`
 
