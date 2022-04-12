@@ -1,9 +1,9 @@
 ---
 pcx-content-type: navigation
-title: Task guides
+title: Solution guides
 weight: 3
 ---
 
-# Task guides
+# Solution guides
 
 {{<directory-listing>}}

@@ -245,12 +245,15 @@
 
 # fundamentals
 /fundamentals/data-products/accessing-cf-data/ /fundamentals/data-products/types-of-analytics/ 301
-/fundamentals/get-started/cdn/ /fundamentals/get-started/concepts/cdn/ 301
+/fundamentals/get-started/cdn/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/how-cloudflare-works/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/cloudflare-cookies/ /fundamentals/get-started/reference/cloudflare-cookies/ 301
 /fundamentals/get-started/google-analytics/ /fundamentals/get-started/reference/google-analytics/ 301
 /fundamentals/get-started/http-request-headers/ /fundamentals/get-started/reference/http-request-headers/ 301
 /fundamentals/get-started/network-ports/ /fundamentals/get-started/reference/network-ports/ 301
+/fundamentals/get-started/basic-tasks/improve-seo/ /fundamentals/get-started/task-guides/improve-seo/ 301
+/fundamentals/get-started/concepts/cdn-cgi-endpoint/ /fundamentals/get-started/reference/cdn-cgi-endpoint/ 301
+/fundamentals/get-started/concepts/cdn/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/notifications/configure-webhooks/ /fundamentals/notifications/create-notifications/configure-webhooks/ 301
 /fundamentals/notifications/create-notification/ /fundamentals/notifications/create-notifications/create-notification/ 301
 /fundamentals/notifications/create-pagerduty/ /fundamentals/notifications/create-notifications/create-pagerduty/ 301

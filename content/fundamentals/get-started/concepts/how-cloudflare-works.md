@@ -1,65 +1,73 @@
 ---
-pcx-content-type: how-to
+pcx-content-type: concept
 title: How Cloudflare works
 weight: 2
 ---
 
 # How Cloudflare works
 
-More than just using Cloudflare's [Content Delivery (CDN)](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) services, customers rely on Cloudflare’s global network to enhance security, performance, and reliability of anything connected to the Internet.
+Fundamentally, Cloudflare is a [large network of servers](/fundamentals/get-started/concepts/what-is-cloudflare/) that can improve the security, performance, and reliability of anything connected to the Internet.
 
-{{<Aside type="note">}}
+Cloudflare does this by serving as a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/) for your web traffic. All requests to and from your origin flow through Cloudflare and — as these requests pass through our network — we can apply various rules and optimizations to improve security, performance, and reliability.
 
-Cloudflare is not generally a hosting provider. Cloudflare generally cannot remove content from the Internet that it does not host.
+## Life of a request
 
-{{</Aside>}}
+Even though it feels pretty instantaneous, there's a lot happening when you type `www.example.com` into your browser.
 
-Cloudflare is designed for easy setup. Anyone with a website and their own domain can use Cloudflare regardless of their platform choice. Cloudflare doesn’t require additional hardware, software, or changes to your code.
+A website's content does not technically live at a URL like `www.example.com`, but rather at an IP address like `192.0.2.1`. It's similar to how we say that Cloudflare's headquarters is 101 Townsend St., San Francisco, CA 94107, but really that address is just a placeholder for latitude and longitude coordinates (37.780259, -122.390519). URLs and street addresses are much easier for humans to remember.
 
-## Security
+The process of converting a human-readable URL (`www.example.com`) into a machine-friendly address (`192.0.2.1`) is known as a [DNS lookup](https://www.cloudflare.com/learning/dns/what-is-dns/).
 
-Cloudflare stops malicious traffic before it reaches your origin web server. Cloudflare analyzes potential threats in visitor requests based on a number of characteristics:
+### Without Cloudflare
 
-- Visitor's IP address
-- Resources requested
-- Request payload and frequency
-- Customer-defined firewall rules
+Without Cloudflare, DNS lookups for your application's URL return the IP address of your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/).
 
-A DNS lookup of a proxied (orange-clouded) Cloudflare subdomain returns [Cloudflare IP addresses](https://www.cloudflare.com/ips/). Proxied traffic comes to Cloudflare's edge and then Cloudflare forwards the request to your server. Cloudflare masks your origin IP address for proxied DNS records so attackers cannot bypass Cloudflare and directly attack your origin web server.
+| URL | Returned IP address |
+| --- | --- |
+| `example.com` | `192.0.2.1` |
 
-Visitor <--\[Connection 1]--> Cloudflare Edge <--\[Connection 2]--> Origin Server
+When using Cloudflare with [unproxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/), DNS lookups for unproxied domains or subdomains also return your origin's IP address.
 
-A DNS lookup of an unproxied (grey-clouded) Cloudflare subdomain returns the IP address that you have entered for the record. Unproxied traffic goes directly to your origin server and does not receive any of the benefits of using Cloudflare.
+Another way of thinking about this concept is that visitors directly connect with your origin server.
 
-Visitor <--\[Connection]--> Origin Server
+{{<example>}}
+Visitor <--[Connection]--> Origin Server
+{{</example>}}
 
-[Create your Cloudflare account and add a domain](https://support.cloudflare.com/hc/en-us/articles/201720164) to review our security benefits.
+### With Cloudflare
 
-## Performance
+With Cloudflare — meaning your domain or subdomain is using [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) — DNS lookups for your application's URL will resolve to [Cloudflare Anycast IPs](https://www.cloudflare.com/ips/) instead of their original DNS target.
 
-Cloudflare optimizes the delivery of website resources for your visitors. Cloudflare’s data centers serve your website’s [static resources](https://www.cloudflare.com/learning/cdn/caching-static-and-dynamic-content/) and ask your origin web server for dynamic content. [Cloudflare’s global network](https://www.cloudflare.com/network/) provides a faster route from your site visitors to our data centers than would be available to a visitor directly requesting your site. Even with Cloudflare between your website and your visitors, resource requests arrive to your visitor sooner.
+| URL | Returned IP address |
+| --- | --- |
+| `example.com` | `104.16.77.250` |
 
-## Reliability
+This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server.
 
-Cloudflare’s globally distributed [Anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) routes visitor requests to the nearest Cloudflare data center. Cloudflare distributed DNS responds to website visitors with Cloudflare IP addresses for traffic you proxy to Cloudflare. This also provides security by hiding the specific IP address of your origin web server.
+{{<example>}}
+Visitor <--[Connection 1]--> Cloudflare Edge <--[Connection 2]--> Origin Server
+{{</example>}}
 
-{{<Aside type="note">}}
+## Benefits
 
-Cloudflare-proxied domains share IP addresses from a pool that belongs to the Cloudflare network. As a result, Cloudflare does not offer dedicated or exclusive IP addresses. To reduce the number of Cloudflare IPs that your domain shares with other Cloudflare customer domains, upgrade to a [Business or Enterprise plan and upload a Custom SSL certificate](/ssl/edge-certificates/custom-certificates/).
+When your traffic is proxied through Cloudflare before reaching your origin server, your application gets additional security, performance, and reliability benefits.
 
-{{</Aside>}}
+### Security
 
-Also, our flat-rate pricing structure provides predictability and reliability in your [CDN](https://www.cloudflare.com/cdn-y/) and [DDoS](https://www.cloudflare.com/ddos/) bandwidth expenses. Cloudflare does not have bandwidth limits for domains on the Free, Pro and Business plans as long as those domains comply with our [Terms of Service](https://www.cloudflare.com/terms/). However, your hosting provider may still impose limits on bandwidth usage and/or charge for bandwidth.
+Beyond hiding your origin's IP address from potential attackers, Cloudflare also stops malicious traffic before it reaches your origin web server.
 
-Note that additional terms may apply to:
+Cloudflare automatically mitigates security risks using our [WAF](/waf/about/) and [DDoS protection](/ddos-protection/).
 
-- Self-serve domains with add-on features
-- Domains in the Enterprise plan (contact your Cloudflare Account Team for additional details)
+You can also set up additional protection with [Firewall rules](/firewall/), [Rate Limiting rules](/waf/rate-limiting-rules/), [IP access rules](https://support.cloudflare.com/hc/articles/217074967), and [other tools](https://support.cloudflare.com/hc/articles/115002059131).
 
-Learn how to [get started with Cloudflare](https://support.cloudflare.com/hc/en-us/articles/360027989951).
+### Performance
 
-## Related resources
+For proxied traffic, Cloudflare also serves as a [Content Delivery Network (CDN)](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/), caching static resources and otherwise optimizing asset delivery.
 
-- [What is Cloudflare?](https://www.cloudflare.com/learning/what-is-cloudflare/)
-- [Understanding Cloudflare DDOS protection](https://support.cloudflare.com/hc/en-us/articles/200172676)
-- [Best Practices: DDoS preventative measures](https://support.cloudflare.com/hc/en-us/articles/200170166)
+For additional details on performance, refer to our guides on [Optimizing Site Speed](https://support.cloudflare.com/hc/articles/200172856) and [Caching](/cache/get-started/).
+
+### Reliability
+
+Cloudflare’s globally distributed [Anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) routes visitor requests to the nearest Cloudflare data center.
+
+Combined together with our [CDN](https://www.cloudflare.com/learning/cdn/cdn-load-balance-reliability/) and [DDoS protection](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), our network helps keep your application online.
