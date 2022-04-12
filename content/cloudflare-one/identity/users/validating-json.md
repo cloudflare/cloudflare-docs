@@ -27,11 +27,15 @@ You can use the JWT created by Cloudflare Access to validate requests on your or
 
 1.  Select the RS256 algorithm.
 
-1.  Paste the JWT into the field on the left. Get the `kid` value of the header box on the decoded column.
+1.  Paste the JWT into the **Encoded** field on the left. Get the `kid` value of the header box on the decoded column.
 
-1.  Get your public key by going to `https://<your team domain>/cdn-cgi/access/certs` and copy the cert value of the block in `public_certs` with the `kid` value you found in the previous step.
+1.  Get your public key:
 
-1.  Enter the public key in the **Public Key** field.
+    1. Go to `https://<your team domain>/cdn-cgi/access/certs`.
+    2. Under `public_certs`, locate the entry with the `kid` value you found in Step #3.
+    3. Copy the `cert` value.
+
+1.  In the **Verify Signature** box, paste the `cert` value into the **Public Key** field.
 
 1.  Ensure that the signature says **verified**.
 
