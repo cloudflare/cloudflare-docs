@@ -1,10 +1,12 @@
 ---
 pcx-content-type: navigation
-title: Get started
+title: New? Start here.
 weight: 2
+meta:
+  title: New to Cloudflare? Start here.
 ---
 
-# Get started
+# New to Cloudflare? Start here.
 
 As you get started with Cloudflare, explore the following resources to get the most out of our products:
 
