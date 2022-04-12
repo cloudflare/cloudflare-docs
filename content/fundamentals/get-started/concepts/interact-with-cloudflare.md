@@ -10,7 +10,7 @@ Once you [set up an account](/fundamentals/get-started/basic-tasks/account-setup
 
 ## Without code
 
-For those who prefer "point and click" solutions, you can manage your account and domain settings through the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+If you prefer working without code, you can manage your account and domain settings through the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 
 {{<Aside type="note">}}
 

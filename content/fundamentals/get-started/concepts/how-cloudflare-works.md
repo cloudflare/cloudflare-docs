@@ -26,7 +26,7 @@ Without Cloudflare, DNS lookups for your application's URL return the IP address
 | --- | --- |
 | `example.com` | `192.0.2.1` |
 
-The same behavior — DNS lookups return your origin's IP address — applies to domains or subdomains using Cloudflare with [unproxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/).
+When using Cloudflare with [unproxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/), DNS lookups for unproxied domains or subdomains also return your origin's IP address.
 
 Another way of thinking about this concept is that visitors directly connect with your origin server.
 
