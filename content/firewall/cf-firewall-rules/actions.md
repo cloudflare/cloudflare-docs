@@ -224,4 +224,4 @@ When you configure a firewall rule with one of the challenge actions — _Manage
 * The request is blocked if the visitor fails the challenge
 * The request is allowed if the visitor passes the challenge
 
-In this last case, no further firewall rules will be processed. This means that the action of any later rules with a challenge or _Block_ action also matching the request will not be applied, and request will be allowed.
+In this last case, no further firewall rules will be processed. This means that the action of any later rules with a challenge or _Block_ action also matching the request will not be applied, and the request will be allowed.
