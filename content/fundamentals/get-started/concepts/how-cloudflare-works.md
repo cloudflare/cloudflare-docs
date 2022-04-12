@@ -14,7 +14,7 @@ Cloudflare does this by serving as a [reverse proxy](https://www.cloudflare.com/
 
 Even though it feels pretty instantaneous, there's a lot happening when you type `www.example.com` into your browser.
 
-A website's content does not technically "live" at a URL like `www.example.com`, but rather at an IP address like `192.0.2.1`. It's similar to how we say that Cloudflare's headquarters is 101 Townsend St., San Francisco, CA 94107, but really that address is just a placeholder for latitude and longitude coordinates (37.780259, -122.390519). URLs and street addresses are much easier for humans to remember.
+A website's content does not technically live at a URL like `www.example.com`, but rather at an IP address like `192.0.2.1`. It's similar to how we say that Cloudflare's headquarters is 101 Townsend St., San Francisco, CA 94107, but really that address is just a placeholder for latitude and longitude coordinates (37.780259, -122.390519). URLs and street addresses are much easier for humans to remember.
 
 The process of converting a human-readable URL (`www.example.com`) into a machine-friendly address (`192.0.2.1`) is known as a [DNS lookup](https://www.cloudflare.com/learning/dns/what-is-dns/).
 
@@ -42,7 +42,7 @@ With Cloudflare — meaning your domain or subdomain is using [proxied DNS recor
 | --- | --- |
 | `example.com` | `104.16.77.250` |
 
-This means that all requests intended for proxied hostnames will go to Cloudflare first and *then* be forwarded to your origin server.
+This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server.
 
 {{<example>}}
 Visitor <--[Connection 1]--> Cloudflare Edge <--[Connection 2]--> Origin Server

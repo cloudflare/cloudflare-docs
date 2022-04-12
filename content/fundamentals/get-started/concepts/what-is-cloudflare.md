@@ -16,7 +16,7 @@ This [position](/fundamentals/get-started/concepts/how-cloudflare-works/) allows
 
 {{<Aside type="note">}}
 
-For more details about what Cloudflare is and does, visit our [Learning Center](https://www.cloudflare.com/learning/what-is-cloudflare/).
+For more details about what Cloudflare is and does, refer to the [Learning Center](https://www.cloudflare.com/learning/what-is-cloudflare/).
 
 {{</Aside>}}
 
