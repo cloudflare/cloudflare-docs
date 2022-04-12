@@ -58,4 +58,10 @@ When Cloudflare sends you a webhook, it will have the following schema:
 
 In the above example, `"text"` will vary depending on the alert that was fired.
 
+### Use generic webhooks with Workers
+
+You can use Cloudflare Workers with a generic webhook to deliver notifications to any service that accepts webhooks.
+
+Cloudflare has an [example tool](https://github.com/cloudflare/cf-webhook-relay/) to help you understand how you can use [Workers](/workers/) and generic webhooks. The example provided transforms a generic webhook response in order for it to be delivered to Rocket.Chat. The code provided is heavily commented to guide you in the process of adapting the example to your needs.
+
 {{</content-column>}}
