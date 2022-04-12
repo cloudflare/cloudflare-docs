@@ -32,6 +32,8 @@ To accommodate additional header data introduced by encapsulation, the maximum s
 
 Because egress packets are routed via your ISP interface, not Cloudflare, you must set this value at your physical egress interfaces (not the GRE tunnel interfaces).
 
+For Magic Transit egress, the egress packets are routed along static routes via tunnels and the MSS clamp should be applied to the tunnels.
+
 For instructions, refer to [Set Maximum Segment Size](/magic-transit/prerequisites/#set-maximum-segment-size).
 
 {{</Aside>}}
