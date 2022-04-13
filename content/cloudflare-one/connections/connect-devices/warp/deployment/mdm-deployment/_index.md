@@ -17,13 +17,11 @@ Settings you specify in a local policy file and deploy with your management soft
 
 {{</Aside>}}
 
-## Windows
+## Prerequisites
 
-### Prerequisites
+Visit the [Download page](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows) to review system requirements and download the installer for your operating system.
 
-Before you deploy the WARP client to Windows devices, visit the [Download page](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows) to review the system requirements for Windows and to download the Windows installer.
-
-### Install WARP
+## Install WARP on Windows
 
 The WARP Client for Windows allows for an automated install via tools like Intune, AD, or any script or management tool that can execute a `.msi` file.
 
@@ -56,17 +54,12 @@ The on-disk configuration of the Windows client can be changed at any time by mo
 
 Changes to this file are processed immediately by the WARP client.
 
-## macOS
 
-### Prerequisites
-
-Before you deploy the WARP client to macOS devices, visit the [Download page](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos) to review the system requirements for macOS and to download the macOS installer.
-
-### Install WARP
+## Install WARP on macOS
 
 The Cloudflare WARP macOS client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally this plist can be wrapped in a `.mobileconfig`.
 
-#### Create `plist` file
+### Create `plist` file
 
 1. [Click here](/cloudflare-one/static/documentation/connections/com.cloudflare.warp.plist) to download an example `com.cloudflare.warp.plist` file.
 
@@ -81,7 +74,7 @@ The Cloudflare WARP macOS client allows for an automated install via tools like 
         % plutil -convert binary1 com.cloudflare.warp.plist
         ```
 
-#### Create `mobileconfig` file
+### Create `mobileconfig` file
 
 1. [Click here](/cloudflare-one/static/documentation/connections/CloudflareWARP.mobileconfig) to download an example `.mobileconfig` file.
 
@@ -89,13 +82,8 @@ The Cloudflare WARP macOS client allows for an automated install via tools like 
 
 3. Modify the file with your desired [deployment arguments](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
 
-## Linux
+## Install WARP on Linux
 
-### Prerequisites
-
-Before you deploy the WARP client to Linux devices, visit the [Download page](/cloudflare-one/connections/connect-devices/warp/download-warp/#linux) page to review system requirements and to download the Linux package.
-
-###  Install WARP
 The WARP Client for Linux allows for an automated install via the presence of an `mdm.xml` file in `/var/lib/cloudflare-warp`.
 
 The format of `/var/lib/cloudflare-warp/mdm.xml` is as follows:
@@ -109,13 +97,7 @@ The format of `/var/lib/cloudflare-warp/mdm.xml` is as follows:
 
 Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a list of accepted arguments.
 
-## iOS
-
-### Prerequisites
-
-Before you deploy the WARP client to iOS devices, visit the [Download page](/cloudflare-one/connections/connect-devices/warp/download-warp/#ios) to review the system requirements for iOS and to download the iOS installer.
-
-### Install WARP
+## Install WARP on iOS
 
 The Cloudflare WARP iOS client, known in the App Store as [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), allows for an automated install via tools like Jamf, Intune, or SimpleMDM.
 
@@ -138,13 +120,7 @@ To proceed with the installation, here is an example of the XML code you will ne
 
 Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument.
 
-## Android
-
-### Prerequisites
-
-Before you deploy the WARP client to Android devices, visit the [Download page](/cloudflare-one/connections/connect-devices/warp/download-warp/#android) to review the system requirements for Android and to download the Android installer.
-
-### Install WARP
+## Install WARP on Android
 
 The Cloudflare WARP Android client (known in the Google Play store as [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone\&hl=en\&gl=US)) allows for an automated install via tools like Intune, Google Endpoint Manager, and others.
 
