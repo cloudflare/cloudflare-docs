@@ -118,7 +118,7 @@ Use this selector to apply DNS policies to traffic directed to specific content 
 
 | UI name | API example |
 | -- | -- |
-| Content Categories | `not(any(http.request.uri.content_category[*] in {1}))` |
+| Content Categories | `any(dns.content_category[*] in {1})` |
 
 #### Security Categories
 
@@ -126,7 +126,7 @@ Use this selector to block traffic directed to specific security categories.
 
 | UI name | API example |
 | -- | -- |
-| Security Categories | `any(http.request.uri.category[*] in {1})` |
+| Security Categories | `any(dns.security_category[*] in {1})` |
 
 #### Authoritative Nameserver IP
 
