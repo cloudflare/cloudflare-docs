@@ -73,104 +73,56 @@ If you need to use a specific version of a language, (for example, Node.js or Ru
 
 Here are the pinned versions for tools included in the Cloudflare Workers build environment, and how to override them as relevant:
 
-| Framework | Default version | Environment variable | File                      |
-| --------- | --------------- | -------------------- | ------------------------- |
-| Elixir    | 1.7             |                      |                           |
-| Erlang    | 21              |                      |                           |
-| Go        | 1.12            | `GO_VERSION`         |                           |
-| Java      | 8               |                      |                           |
-| Node.js   | 12.18.0         | `NODE_VERSION`       | `.nvmrc`, `.node-version` |
-| PHP       | 5.6             | `PHP_VERSION`        |                           |
-| Python    | 2.7             | `PYTHON_VERSION`     | `runtime.txt`, `Pipfile`  |
-| Ruby      | 2.6.2           | `RUBY_VERSION`       | `.ruby-version`           |
-| .NET      | 3.1.302         |                      |                           |
+{{<table-wrap>}}
+
+| Framework | Default version | Supported versions | Environment variable | File                     |
+| --------- | --------------- | ------------------ |--------------------- | -------------------------|
+| Elixir    | 1.7             | 1.7 (default) only.|                      |                          |
+| Emacs     | 25              | 25 (default) only. |                      |                          |
+| Erlang    | 21              | 21 (default) only. |                      |                          |
+| Go        | 1.14.4          | 1.14.4 (default) and any version available on the Go downloads page. |`GO_VERSION`|                           |
+| Java      | 8               | 8 (default) only.  |                     |                           |
+| Node.js   | 12.18.0         | 12.18.0 and any version that nvm can install.|`NODE_VERSION`       | `.nvmrc`, `.node-version` |
+| PHP       | 5.6             | 5.6 (default), 7.2, 7.4 only. |`PHP_VERSION`        |                           |
+| Python    | 2.7             | 2.7 (default), 3.5, 3.7 only. |`PYTHON_VERSION`     | `runtime.txt`, `Pipfile`  |
+| Ruby      | 2.6.2           | Any version between `2.6.2` and `2.7.5`. |`RUBY_VERSION`       | `.ruby-version`           |
+| Swift     | 5.x | Installed by default. Pages supports any `5.x` version. |`SWIFT_VERSION`| `.swift-version` |
+| .NET      | 3.1.302         | |                     |                           |
+
+{{</table-wrap>}}
 
 Many common tools have been pre-installed as well. The environment variable available for overriding the pinned version is specified, as available:
 
-| Tools       | Notes                            | Environment variable |
-| ----------- | -------------------------------- | -------------------- |
-| Boot        |                                  |                      |
-| Cask        |                                  |                      |
-| Composer    |                                  |                      |
-| Doxygen     | Version 1.8.6                    |                      |
-| Emacs       | 25                               |                      |
-| Gutenberg   | (requires environment variable)  | `GUTENBERG_VERSION`  |
-| Hugo        | Version 0.54                     | `HUGO_VERSION`       |
-| GNU Make    | Version 3.8.1                    |                      |
-| ImageMagick | Version 6.7.7                    |                      |
-| jq          | Version 1.5                      |                      |
-| Leiningen   |                                  |                      |
-| OptiPNG     | Version 0.6.4                    |                      |
-| NPM         | Corresponds with Node.js version | `NPM_VERSION`        |
-| pip         | Corresponds with Python version  |                      |
-| Pipenv      | Latest version                   |                      |
-| Yarn        | Version 1.13.0                   | `YARN_VERSION`       |
-| Zola        | (requires environment variable)  | `ZOLA_VERSION`       |
+| Tools       | Notes                            | | Environment variable |
+| ----------- | -------------------------------- | |-------------------- |
+| Boot        |                                  | |                     |
+| Cask        |                                  | |                     |
+| Composer    |                                  | |                     |
+| Doxygen     | Version 1.8.6                    | |                     |
+| Emacs       | 25                               | |                     |
+| Gutenberg   | (requires environment variable)  | |`GUTENBERG_VERSION`  |
+| Hugo        | Version 0.54                     | |`HUGO_VERSION`       |
+| GNU Make    | Version 3.8.1                    | |                     |
+| ImageMagick | Version 6.7.7                    | |                     |
+| jq          | Version 1.5                      | |                     |
+| Leiningen   |                                  | |                     |
+| OptiPNG     | Version 0.6.4                    | |                     |
+| NPM         | Corresponds with Node.js version | |`NPM_VERSION`        |
+| pip         | Corresponds with Python version  | |                     |
+| Pipenv      | Latest version                   | |                     |
+| Yarn        | Version 1.13.0                   | |`YARN_VERSION`       |
+| Zola        | (requires environment variable)  | |`ZOLA_VERSION`       |
 
 If you want to set a specific version of a framework your Cloudflare Pages project is using, note that Pages will respect your package manager of choice during your build process. For example, if you use Gatsby.js, your `package.json` should indicate a version of the `gatsby` npm package, which will be installed using `npm install` as your project builds on Cloudflare Pages.
 
 ## Supported versions
 
-Below is a list of language versions that Cloudflare Pages supports.
-
-* Ruby - `RUBY_VERSION`, `.ruby-version`  
-    - Minimum: `2.6.2`  
-    - Maximum: `2.7.5`  
-
-* Node.js - `NODE_VERSION`, `.nvmrc`, `.node-version`
-    * 12.18.0 (default)
-    * Any version that nvm can install.
-
-* Python - `PYTHON_VERSION`, `runtime.txt`, `Pipfile`  
-    2.7 (default)  
-    3.5  
-    3.7  
-
-    just these three versions
-
-* PHP - `PHP_VERSION`
-    5.6 (default)
-    7.2
-    7.4
-
-    just these three versions
-
-* Go - `GO_VERSION`
-    1.14.4 (default)
-    Any version available on the Go downloads page.
-
-* Java
-    8 (default)
-
-* Emacs
-    25 (default)
-
-* Erlang
-    21 (default)
-
-* Elixir
-    1.7 (default)
-
-* Swift - `SWIFT_VERSION`, `.swift-version`
-    Not installed by default.
-    Supports any version that swiftenv can install later than `4.x`. Versions `4.x` and earlier will not work due to incompatible shared libraries.
-    5.2 is installed if `Package.swift` is present and no version is specified with `SWIFT_VERSION` or `.swift-version`.
-
-    > we do install swift but we do any 5.x version by default
-
-* Rust
-    Not installed by default.
-    Supports any version that rustup can install.
-
-    > can't install rust; 
-    > DELETE THIS !!
-
 Below is a list of tool versions that Cloudflare Pages supports.
 
 * Node.js
     Yarn - `YARN_VERSION`
-        1.22.10 (default)
-        Any version available via their installer.
+        `1.22.10` (default)
+        Any version available via the Yarn installer.
     npm - `NPM_VERSION`
         Version corresponding with Node.js version. (default)
         Any version available via npm.
