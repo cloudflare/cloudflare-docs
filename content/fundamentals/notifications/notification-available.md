@@ -54,7 +54,10 @@ Customers who want to receive a notification when usage of a product goes above 
 
 **Other options / filters**
 
-Customers can choose the **Product** and the threshold that fires the notification.
+Customers can choose the **Product** and the threshold that fires the notification. For example:
+
+- Argo Smart Routing has **Notify when total bytes of traffic exceeds** as threshold.
+- Load Balancing has **Notify when total number of DNS Queries exceeds** as threshold.
 
 **Included with**
 
@@ -230,6 +233,7 @@ Customers who want to be warned about changes to server health as determined by 
 **Other options / filters**
 
 Customers can search for and add health checks from their list of health checks. Customers can also choose the trigger that fires the notification. Available triggers are:
+
 - Becomes unhealthy
 - Becomes healthy
 - Becomes either healthy or unhealthy
@@ -258,6 +262,7 @@ Customers who want to be warned about status changes (enabled/disabled) in their
 **Other options / filters**
 
 Customers can search and add pools from their list of pools. Customers can also choose the trigger that fires the notification. Available triggers are:
+
 - Load Balancing pool enabled
 - Load Balancing pool disabled
 - Load Balancing pool enabled / disabled
@@ -334,6 +339,7 @@ Enterprise customers who want to receive a notification when Cloudflare is unabl
 **Other options / filters**
 
 Customers can search and add domains from their list of domains. Customers can also choose the trigger that fires the notification. Available triggers are:
+
 - Low sensitivity
 - Medium sensitivity
 - High sensitivity
@@ -694,10 +700,10 @@ Customers who are using Stream and want to receive webhooks with the status of t
 
 **Other options / filters**
 
-Customer can input Stream Live IDs. If left blank, customers will receive a list for all inputs. Customers can also choose input states to fire notifications. Available input states are:
+Customer can input Stream Live IDs to receive notifications only about those inputs. If left blank, customers will receive a list for all inputs. Customers can also choose input states to fire notifications. Available input states are:
 
-- live_input.connected
-- Live_input.disconnected
+- `live_input.connected`
+- `Live_input.disconnected`
 
 **Included with**
 
@@ -748,7 +754,8 @@ Business and Enterprise customers who want to receive alerts about spikes across
 For more information, refer to [WAF alerts](/waf/alerts/).
 
 **Other options / filters**
-None.
+
+Customers can search for and add domains from their list of domains. The notification will be sent for the domains chosen.
 
 **Included with**
 
