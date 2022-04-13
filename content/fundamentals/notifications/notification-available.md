@@ -57,7 +57,7 @@ Customers who want to receive a notification when usage of a product goes above 
 Customers can choose the **Product** and the threshold that fires the notification. For example:
 
 - **Argo Smart Routing**: has **Notify when total bytes of traffic exceeds** as threshold.
-- **Load Balancing**: has **Notify when total number of DNS Queries exceeds** as threshold. 
+- **Load Balancing**: has **Notify when total number of DNS Queries exceeds** as threshold.
 
 **Included with**
 
