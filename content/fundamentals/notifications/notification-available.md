@@ -27,6 +27,10 @@ Click below to understand what each Notification does and what to do when receiv
 
 Access customers who want to receive a notification when their service token is about to expire.
 
+**Other options / filters**
+
+None.
+
 **Included with**
 
 Purchase of Access.
@@ -47,6 +51,10 @@ Refresh your service token in the [Teams dashboard](https://dash.teams.cloudflar
 **Who is it for?**
 
 Customers who want to receive a notification when usage of a product goes above a set level.
+
+**Other options / filters**
+
+Customers can choose the **Product** and the threshold that fires the notification.
 
 **Included with**
 
@@ -69,6 +77,10 @@ Review your usage of the product and adjust the configuration and/or increase th
 
 Enterprise customers who have at least one secondary zone in their account and want to receive a notification if all of their primary nameservers are failing.
 
+**Other options / filters**
+
+None.
+
 **Included with**
 
 Purchase of Secondary DNS.
@@ -89,6 +101,10 @@ Purchase of Secondary DNS.
 **Who is it for?**
 
 Enterprise customers who have at least one secondary zone and want to receive a notification if at least one of their primary nameservers is failing.
+
+**Other options / filters**
+
+None.
 
 **Included with**
 
@@ -111,6 +127,10 @@ Purchase of Secondary DNS.
 
 Enterprise customers who have at least one secondary zone in their account and want to receive a notification on successful zone transfers.
 
+**Other options / filters**
+
+None.
+
 **Included with**
 
 Purchase of Secondary DNS.
@@ -129,6 +149,10 @@ No action needed. Everything is working correctly.
 **Who is it for?**
 
 Customers who are using Cloudflare for Secondary DNS and want to receive notifications about failure or success of zone transfers from their primary nameservers.
+
+**Other options / filters**
+
+None.
 
 **Included with**
 
@@ -155,6 +179,10 @@ Success alerts require no further action. Actions for failure notifications will
 
 WAF/CDN customers who want to receive a notification when Cloudflare has mitigated an attack.
 
+**Other options / filters**
+
+None.
+
 **Included with**
 
 All Cloudflare plans.
@@ -173,6 +201,10 @@ All Cloudflare plans.
 **Who is it for?**
 
 BYOIP customers and Spectrum customers with Network Analytics who want to receive a notification when Cloudflare has mitigated an attack.
+
+**Other options / filters**
+
+None.
 
 **Included with**
 
@@ -195,6 +227,13 @@ Purchase of Magic Transit and/or BYOIP.
 
 Customers who want to be warned about changes to server health as determined by [health checks](https://support.cloudflare.com/hc/articles/4404867308429).
 
+**Other options / filters**
+
+Customers can search for and add health checks from their list of health checks. Customers can also choose the trigger that fires the notification. Available triggers are:
+- Becomes unhealthy
+- Becomes healthy
+- Becomes either healthy or unhealthy
+
 **Included with**
 
 Pro plans or higher.
@@ -215,6 +254,13 @@ Review your [health check analytics](https://support.cloudflare.com/hc/articles/
 **Who is it for?**
 
 Customers who want to be warned about status changes (enabled/disabled) in their pools.
+
+**Other options / filters**
+
+Customers can search and add pools from their list of pools. Customers can also choose the trigger that fires the notification. Available triggers are:
+- Load Balancing pool enabled
+- Load Balancing pool disabled
+- Load Balancing pool enabled / disabled
 
 **Included with**
 
@@ -237,6 +283,10 @@ No direct call to action.
 
 Magic Transit on-demand customers who use Flow Based Monitoring and want alerts when Magic Transit is automatically enabled.
 
+**Other options / filters**
+
+None.
+
 **Included with**
 
 Purchase of Magic Transit.
@@ -255,6 +305,10 @@ No action is needed. You can [go to the dashboard](https://dash.cloudflare.com/?
 **Who is it for?**
 
 Magic Transit On Demand customers who are using Flow Based Monitoring to detect attacks when Magic Transit is disabled.
+
+**Other options / filters**
+
+None.
 
 **Included with**
 
@@ -277,6 +331,14 @@ If you do not have auto advertisement enabled, you need to advertise your IP pre
 
 Enterprise customers who want to receive a notification when Cloudflare is unable to access their origin server.
 
+**Other options / filters**
+
+Customers can search and add domains from their list of domains. Customers can also choose the trigger that fires the notification. Available triggers are:
+- Low sensitivity
+- Medium sensitivity
+- High sensitivity
+- Very High sensitivity
+
 **Included with**
 
 Enterprise plans.
@@ -296,6 +358,10 @@ Enterprise plans.
 **Who is it for?**
 
 Any customer who wants to receive a notification when Cloudflare is unable to access their origin.
+
+**Other options / filters**
+
+None.
 
 **Included with**
 
@@ -318,6 +384,10 @@ All Cloudflare plans.
 
 BYOIP customers who want to receive a notification when their prefixes are advertised in places they should not be.
 
+**Other options / filters**
+
+None.
+
 **Included with**
 
 Purchase of BYOIP.
@@ -339,6 +409,10 @@ Confirm your traffic is healthy: reach out to your transit providers to ensure y
 
 Access customers that use client certificates for mutual TLS authentication. 
 
+**Other options / filters**
+
+None.
+
 **Included with**
 
 Access and Cloudflare for SaaS.
@@ -357,6 +431,10 @@ Upload a [renewed certificate](/cloudflare-one/identity/devices/mutual-tls-authe
 **Who is it for?**
 
 Customers with dedicated certificates that want to be alerted on validation, issuance, renewal, and expiration of certificates.
+
+**Other options / filters**
+
+None.
 
 **Included with**
 
@@ -377,6 +455,10 @@ Action only needed if notification is about a certificate that failed to be issu
 
 Customers that upload their own certificate to use with hostname-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server. 
 
+**Other options / filters**
+
+None.
+
 **Included with**
 
 Authenticated Origin Pull.
@@ -395,6 +477,10 @@ Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configu
 **Who is it for?**
 
 Customers with custom hostname certificates who want to receive a notification on validation, issuance, renewal, and expiration of certificates.
+
+**Other options / filters**
+
+None.
 
 **Included with**
 
@@ -415,6 +501,10 @@ Purchase of Cloudflare for SaaS.
 
 Customers with universal certificates who want to receive a notification on validation, issuance, and renewal of certificates.
 
+**Other options / filters**
+
+None.
+
 **Included with**
 
 All Cloudflare plans.
@@ -432,6 +522,10 @@ All Cloudflare plans.
 
 **Who is it for?**
 Customers that upload their own certificate to use with zone-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
+
+**Other options / filters**
+
+None.
 
 **Included with**
 Authenticated Origin Pull
@@ -452,6 +546,10 @@ Upload a renewed certificate to use for [zone-level AOP](/ssl/origin-configurati
 
 Page Shield customers who want to receive a notification when JavaScript dependencies change in the pages of their domain.
 
+**Other options / filters**
+
+None.
+
 **Included with**
 
 Enterprise plans with paid add-on.
@@ -470,6 +568,10 @@ Investigate to confirm it is an expected change.
 **Who is it for?**
 
 Page Shield customers who want to receive a notification when JavaScript dependencies from new host domains appear in their domain.
+
+**Other options / filters**
+
+None.
 
 **Included with**
 
@@ -490,7 +592,11 @@ Investigate to confirm it is an expected change.
 
 Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious domain appear in their domain.
 
-{{<render file="_script-monitor-detect-malicious-scripts.md">}}
+{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
+
+**Other options / filters**
+
+None.
 
 **Included with**
 
@@ -511,7 +617,11 @@ Enterprise plans with paid add-on.
 
 Page Shield customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their domain as malicious.
 
-{{<render file="_script-monitor-detect-malicious-scripts.md">}}
+{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
+
+**Other options / filters**
+
+None.
 
 **Included with**
 
@@ -532,7 +642,11 @@ Enterprise plans with paid add-on.
 
 Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious URL appear in their domain.
 
-{{<render file="_script-monitor-detect-malicious-scripts.md">}}
+{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
+
+**Other options / filters**
+
+None.
 
 **Included with**
 
@@ -552,6 +666,10 @@ Enterprise plans with paid add-on.
 **Who is it for?**
 
 Page Shield customers who want to receive a notification when new JavaScript dependencies appear in their domain.
+
+**Other options / filters**
+
+None.
 
 **Included with**
 
@@ -573,6 +691,13 @@ Investigate to confirm it is an expected change.
 **Who is it for?**
 
 Customers who are using Stream and want to receive webhooks with the status of their videos.
+
+**Other options / filters**
+
+Customer can input Stream Live IDs. If left blank, customers will receive a list for all inputs. Customers can also choose input states to fire notifications. Available input states are:
+
+- live_input.connected
+- Live_input.disconnected
 
 **Included with**
 
@@ -597,6 +722,10 @@ Enterprise customers who want to receive alerts about spikes in specific service
 
 For more information, refer to [WAF alerts](/waf/alerts/).
 
+**Other options / filters**
+
+Customers can search for and add domains from their list of domains. Customers can also choose which services to add to the notification (Managed Firewall, Rate Limiting, etc.).
+
 **Included with**
 
 Enterprise plans.
@@ -617,6 +746,9 @@ Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to id
 Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in firewall events.
 
 For more information, refer to [WAF alerts](/waf/alerts/).
+
+**Other options / filters**
+None.
 
 **Included with**
 
@@ -639,6 +771,9 @@ Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to id
 
 Developers using Workers, especially those on the Unbound usage model.
 
+**Other options / filters**
+None.
+
 **Included with**
 
 Workers subscription (free or paid).
@@ -657,6 +792,9 @@ Check any recent changes to your script or its external dependencies. Usage repo
 **Who is it for?**
 
 Developers using Workers.
+
+**Other options / filters**
+None.
 
 **Included with**
 
