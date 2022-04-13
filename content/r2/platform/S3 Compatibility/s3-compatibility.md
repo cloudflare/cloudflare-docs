@@ -93,7 +93,7 @@ Below is a list of implemented object-level operations. Refer to the Feature col
 |[CompleteMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html)| ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |
 |[AbortMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html)| ❌ Request Payer: <br> ❌ x-amz-request-payer |
-|[CopyObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html#)| ✅ Operation Metadata: <br> ✅ x-amz-metadata-directive |
+|[CopyObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html#)       | ✅ Operation Metadata: <br> ✅ x-amz-metadata-directive |
 |                                                                                         | ✅ System Metadata: <br> ✅ Cache-Control <br> ✅ Content-Disposition <br> ✅ Content-Encoding <br> ✅ Content-Language <br> ✅ Expires |
 |                                                                                         | ✅ Conditional Operations: <br> ✅ x-amz-copy-source <br> ✅ x-amz-copy-source-if-match <br> ✅ x-amz-copy-source-if-modified-since <br> ✅ x-amz-copy-source-if-none-match <br> ✅ x-amz-copy-source-if-unmodified-since| 
 |                                                                                         | ❌ ACL: <br> ❌ x-amz-acl <br> ❌ x-amz-grant-full-control <br> ❌ x-amz-grant-read <br> ❌ x-amz-grant-read-acp <br> ❌ x-amz-grant-write-acp|
@@ -121,7 +121,7 @@ Below is a list of unimplemented object-level operations.
 
 | API Name                                                                                | Feature                   |
 | ----------------------------------------------------------------------------------------| ------------------------- |
-|[ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html)     | ❌ Query Parameters: <br> ❌ delimiter <br> ❌ encoding-type <br> ❌ marker <br> ❌ max-keys <br> ❌ prefix |
+|[ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html)      | ❌ Query Parameters: <br> ❌ delimiter <br> ❌ encoding-type <br> ❌ marker <br> ❌ max-keys <br> ❌ prefix |
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |
 |                                                                                         | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
 |[ListMultipartUploads](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html) | ❌ Query Parameters: <br> ❌ delimiter <br> ❌ encoding-type <br> ❌ key-marker <br> ❌ max-uploads <br> ❌ prefix <br> ❌ upload-id-marker |
