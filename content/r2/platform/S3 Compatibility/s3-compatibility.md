@@ -11,7 +11,7 @@ Feature implementation is currently in progress. Refer back to this page for upd
 
 ## How to read this page
 
-Each operations section will include a table of implemented and a table of unimplemented APIs. Refer the feature column of each table to review which specific features of the API have been implemented and which are not.
+Each operations section will include two tables: one of implemented APIs and one of unimplemented APIs. Refer the feature column of each table to review which specific features of the API have been implemented and which have not.
 
 ✅ Feature Implemented  
 ❌ Feature Not Implemented
