@@ -46,4 +46,4 @@ To use a CSR:
 
 ## Renew a certificate
 
-When you [renew a custom certificate](/ssl/edge-certificates/custom-certificates/renewing/), you can re-use a previously generated CSR.
+When you [renew a custom certificate](/ssl/edge-certificates/custom-certificates/renewing/), you can reuse a previously generated CSR.
