@@ -5,6 +5,10 @@ title: Changelog
 
 # Changelog
 
+## 2022-04-14
+
+- Performance and stability improvements.
+
 ## 2022-04-08
 
 - The AES-GCM implementation that is part of the Web Cryptography API now returns a friendlier error explaining that 0-length IVs are not allowed.
