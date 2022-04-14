@@ -1,12 +1,12 @@
 ---
-title: CLI (Wrangler)
+title: Wrangler 1 (legacy)
 pcx-content-type: navigation
-weight: 9
+weight: 30
 meta:
-  title: Command-line (Wrangler)
+  title: Wrangler 1 (legacy)
 ---
 
-# Command-line (Wrangler)
+# Wrangler 1 (legacy)
 
 {{<Aside type="note">}}
 
