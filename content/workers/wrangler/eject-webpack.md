@@ -6,7 +6,7 @@ weight: 9
 
 ## Migrating webpack projects to `wrangler v2`
 
-Previous versions of `wrangler` offered rudimentary support for [webpack](https://webpack.js.org/) with the `type` and `webpack_config` keys in [`wrangler.toml`](configuration.md). Starting with version 2, `wrangler` no longer supports the `type` and `webpack_config` keys, but you can still use webpack with your workers!
+Previous versions of `wrangler` offered rudimentary support for [webpack](https://webpack.js.org/) with the `type` and `webpack_config` keys in [`wrangler.toml`](/workers/wrangler/configuration/). Starting with version 2, `wrangler` no longer supports the `type` and `webpack_config` keys, but you can still use webpack with your workers!
 
 Odds are, you (an intrepid developer using webpack with Workers) fall into one of four categories:
 
@@ -30,7 +30,7 @@ Good news! `wrangler` will continue to take care of it. Simply remove `type = we
 
 ### I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to handle JSX, Typescript, WebAssembly, HTML files, and other non-standard filetypes.
 
-New versions of `wrangler` ship with built-in support for this usecase thanks to our [module system](module-system.md).
+New versions of `wrangler` ship with built-in support for this usecase thanks to our [module system](/workers/wrangler/module-system/).
 
 We'll handle JSX and Typescript, and you can simply `import` any modules you need into your code and we'll include them in the built worker automatically.
 
@@ -38,7 +38,7 @@ You should remove the `type` and `webpack_config` keys from your `wrangler.toml`
 
 ### I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to perform code-transforms and/or other code-modifying functionality.
 
-`wrangler` 2 drops support for project types, including `type = webpack` and configuration via the `webpack_config` key. If your webpack configuration does things beyond adding loaders for e.g. Typescript, you'll need to maintain your custom Webpack configuration. In the long term, you should [migrate to an external `[build]` process](custom-builds.md), but in the short term it's still possible to reproduce `wrangler` 1's build steps in newer versions of `wrangler` by following the steps below.
+`wrangler` 2 drops support for project types, including `type = webpack` and configuration via the `webpack_config` key. If your webpack configuration does things beyond adding loaders for e.g. Typescript, you'll need to maintain your custom Webpack configuration. In the long term, you should [migrate to an external `[build]` process](/workers/wrangler/custom-builds/), but in the short term it's still possible to reproduce `wrangler` 1's build steps in newer versions of `wrangler` by following the steps below.
 
 1. Add [wranglerjs-compat-webpack-plugin](TODO: npm link) as a `devDependency`
 
