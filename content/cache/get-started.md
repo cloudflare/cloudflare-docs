@@ -31,14 +31,15 @@ Include or exclude query strings, optimize cache keys, or enable tiered cache to
 - [Choose a cache level](/cache/how-to/set-caching-levels/)
 - [Enable Tiered Cache with Argo](https://support.cloudflare.com/hc/articles/115000224552)
 - [Configure custom cache keys (Enterprise only)](/cache/about/cache-keys/)
+- [Enable Prefetch URLs (Enterprise only)](https://support.cloudflare.com/hc/articles/206776707)
 
 ## Secure your cache configuration
 
 Control resources a client is allowed to load and set access permissions to allow different origins to access your origin’s resources. Protect your site from web cache deception attacks while still caching static assets.
 
 - [Avoid web cache poisoning attacks](/cache/best-practices/avoid-web-poisoning/)
-- [Configure Cross-Origin Resource Sharing (CORS)](https://support.cloudflare.com/hc/articles/200308847)
-- [Enable Cache Deception Armor](https://blog.cloudflare.com/web-cache-deception-attack-revisited/)
+- [Configure Cross-Origin Resource Sharing (CORS)](/cache/about/cors/)
+- [Enable Cache Deception Armor](/cache/about/cache-deception-armor/)
 
 ## Cloudflare features that can alter your HTML and cacheable objects
 

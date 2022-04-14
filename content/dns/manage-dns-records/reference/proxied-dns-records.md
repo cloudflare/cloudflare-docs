@@ -1,7 +1,7 @@
 ---
 pcx-content-type: concept
 title: Proxy status
-weight: 0
+weight: 1
 ---
 
 # Proxy status
@@ -12,7 +12,7 @@ This means that all requests intended for proxied hostnames will go to Cloudflar
 
 {{<Aside type="note">}}
 
-Because requests to proxied hostnames go through Cloudflare before reaching your origin server, these requests will appear to be coming from Cloudflare's IP addresses. You may need to adjust your server configuration to [allow Cloudflare IPs](https://support.cloudflare.com/hc/articles/201897700).
+Because requests to proxied hostnames go through Cloudflare before reaching your origin server, these requests will appear to be coming from Cloudflare's IP addresses. You may need to adjust your server configuration to [allow Cloudflare IPs](/fundamentals/get-started/basic-tasks/allow-cloudflare-ip-addresses/).
 
 {{</Aside>}}
 
@@ -26,9 +26,9 @@ Beyond the [performance and caching benefits](/fundamentals/get-started/concepts
 
 #### Pending domains
 
-When your [domain status](/dns/zone-setups/reference/domain-status/) is **Pending Nameserver Update**, that domain's DNS records cannot yet be proxied.
+Every zone onboarded onto Cloudflare will initially be in [pending state](/dns/zone-setups/reference/domain-status/) until we can verify ownership. This means that DNS records [are not proxied](/dns/manage-dns-records/reference/proxied-dns-records/) until your zone has been activated and any requests to your DNS records will return your origin server's IP address.
 
-This means that pending domains cannot take advantage of Cloudflare caching and other settings — even if the proxy status is enabled for their DNS records — and any requests to your DNS records will return your origin server's IP address and not Cloudflare IP addresses.
+For enhanced security, we recommend rolling your origin IP addresses at your hosting provider after your zone has been activated. This action prevents your origin IPs from being leaked during onboarding.
 
 #### Windows authentication
 

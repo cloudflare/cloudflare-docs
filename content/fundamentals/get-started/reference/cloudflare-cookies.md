@@ -78,6 +78,8 @@ The table below shows additional cookies used by the Challenge Platform.
 | `cf-chl-XXXX`                                                 | This cookie is used to check whether the [Cloudflare Edge server](https://www.cloudflare.com/en-gb/learning/cdn/glossary/edge-server/) supports cookies. It can be deleted if seen.           |
 | `cf-chl-rc-i`; `cf-chl-rc-ni`                                 | These cookies are for internal use which allows Cloudflare to identify production issues on clients.                                                                                          |
 
-## Related resources
+{{<Aside type="warning">}}
 
-- [Understanding SameSite cookie interaction with Cloudflare](https://support.cloudflare.com/hc/articles/360038470312)
+If your website is not [using HTTPS](/ssl/edge-certificates/encrypt-visitor-traffic/), you may experience issues with the [`cf_clearance` cookie](https://support.cloudflare.com/hc/articles/360038470312#4C6RjJMNCGMUpBYm0vCYj1).
+
+{{</Aside>}}
