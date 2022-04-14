@@ -167,7 +167,7 @@ In the code block above, you will notice that we send the code to `http://localh
 
 ## Setting up Server with Functions
 
-Cloudflare Pages offers [Functions](pages/platform/functions/) which enable you to run server-side code to enable dynamic functionality without running a dedicated server, you can handle tasks like Authentication, quering databases or other applications.
+Cloudflare Pages offers [Functions](/pages/platform/functions/) which enable you to run server-side code to enable dynamic functionality without running a dedicated server, you can handle tasks like Authentication, quering databases or other applications.
 
 In this tutorial we will be using Functions to handle exchanging our code for an access Token, signing JWTs, authenticating users and quering GitHub for resources using the detials of the authenticated user.
 
