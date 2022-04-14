@@ -11,7 +11,11 @@ Feature implementation is currently in progress. Refer back to this page for upd
 
 ## How to read this page
 
-Each operations section will include a table of implemented and a table of unimplemented APIs. Refer the feature column of each table to review which specific features of the API have been implemented and which are not.
+This page has two sections: bucket-level operations and object-level operations. 
+
+Each section will have two tables: a table of implemented APIs and a table of unimplemented APIs.
+
+Refer the feature column of each table to review which features of the API have been implemented and which are not.
 
 ✅ Feature Implemented  
 ❌ Feature Not Implemented
