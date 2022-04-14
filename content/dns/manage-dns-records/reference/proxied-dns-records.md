@@ -26,7 +26,7 @@ Beyond the [performance and caching benefits](/fundamentals/get-started/concepts
 
 #### Pending domains
 
-Every zone onboarded onto Cloudflare will initially be in [pending state](/dns/zone-setups/reference/domain-status/) until we have verified ownership. This means that DNS records [are not proxied](/dns/manage-dns-records/reference/proxied-dns-records/) until your zone has been activated and any requests to your DNS records will return your origin server's IP address.
+Every zone onboarded onto Cloudflare will initially be in [pending state](/dns/zone-setups/reference/domain-status/) until we can verify ownership. This means that DNS records [are not proxied](/dns/manage-dns-records/reference/proxied-dns-records/) until your zone has been activated and any requests to your DNS records will return your origin server's IP address.
 
 For enhanced security, we recommend rolling your origin IP addresses at your hosting provider after your zone has been activated. This action prevents your origin IPs from being leaked during onboarding.
 
