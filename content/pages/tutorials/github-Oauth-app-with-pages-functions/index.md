@@ -7,10 +7,10 @@ title: Add GitHub login Option to your application with OAuth2.0 and Pages Funct
 
 # Add GitHub login Option to your application with OAuth2.0 and Pages Functions
 
-In this tutorial, you will build an Oauth app with GitHub apps and Pages Functions. In the process you will learn about JWTs, Oauth apps and how to intercept requests between client side JavaScript and serverless functions.
+In this tutorial, you will build an Oauth app with GitHub apps and Pages Functions. You will learn about JWTs, Oauth apps and how to intercept requests between client-side JavaScript and serverless functions.
 
 {{<Aside type="note">}}
-This tutorial assumes you have registered a  GitHub OAuth app. If you have not, [create a new GitHub OAuth app](https://github.com/settings/applications/new) and set your  homepage URL and authorization callback URL to your project URL. E.g. http://localhost:8788/
+This tutorial assumes you have registered a  GitHub OAuth app. If you have not, [create a new GitHub OAuth app](https://github.com/settings/applications/new) and set your homepage URL and authorization callback URL to your project URL. E.g. http://localhost:8788/
 
 {{</Aside>}}
 
@@ -18,15 +18,15 @@ This tutorial will make heavy use of Cloudflare Pages [Workers integration, Page
 
 ## Overview
 
-In most applications we use, there is usually an option to login or sign Up with a 3rd party application like Google, Twitter or GitHub. 
+In most applications we use, there is usually an option to log in or sign up with a 3rd party application like Google, Twitter or GitHub. 
 
-When you select any of these option, you are authorizing the application to query information that it would need to sign you up or log you into the app. 
+When you select any of these options, you authorise the application to query information that it would need to sign you up or log you into the app. 
 
-These options would usually be links that send an authurization code to a server and the server then takes that code and exchanges it for a token which can be used to get user login information. In this Tutorial, you will use the token to get the user from the  `RESOURCE_ENDPOINT`. 
+These options would usually be links that send an authorization code to a server, and the server then takes that code and exchanges it for a token. The token is used to get user login information. In this tutorial, you will use the token to get the user from the  `RESOURCE_ENDPOINT`. 
 
-To make sure the user information is secure you will sign the user information as a payload with a secret in a Json Web Token format (JWT) and then set this `JWT` to the locally storage to make sure who is logged in at a particular time.
+To ensure the user information is secure, you will sign the user information as a payload with a secret in a JSON Web Token format (JWT) and then set this `JWT` to the localStorage to check  who is logged in at a particular time.
 
-To take it a step further, you will can check that `JWT` is available before allowing the application to fetch repos, by first getting the `JWT` from the localStorage and verifying it to make sure it was signed by your secret.
+To take it a step further, you will check that `JWT` is available before allowing the application to fetch repos by first getting the `JWT` from the localStorage and verifying it to make sure your secret signed it.
 
 Below is an example of what the Client HTML will look like:
 
@@ -52,9 +52,9 @@ Below is an example of what the Client HTML will look like:
 
 ## Setup 
 
-To begin, create a `client/index.html` in the root of your project to serve the static part of your application. In the same client directory create a `index.js` file, this is where you will have your client side logic.
+To begin, create a `client/index.html` at the root of your project to serve the static part of your application. Then, in the same client directory, create an `index.js` file; this is where you will have your client-side logic.
 
-Copy and paste the following content into your `client/index.html` file, this file contains : 
+Copy and paste the following content into your `client/index.html` file; this file contains : 
 
 ```html
 <!DOCTYPE html>
@@ -76,9 +76,9 @@ Copy and paste the following content into your `client/index.html` file, this fi
 </html>
 ```
 
-The HTML document contains a script that links it to the `index.js`, which is where the client side JavaScript for getting Authorization and handling the code coming from your OAuth app will live. 
+The HTML document contains a script that links it to the `index.js`, where the client-side JavaScript for getting Authorization and handling the code coming from your OAuth app will live. 
 
-Before setting up your Client site funtions, you will need to create a `config.js` file in the root of your project to handle all your GitHub app credentials. You will export these credentials so you can access anywhere in your application. 
+Before setting up your Client site functions, you will need to create a `config.js` file at the root of your project to handle all your GitHub app credentials. Then, you will export these credentials to access them anywhere in your application. 
 
 ```js
 export default {
@@ -93,13 +93,13 @@ export default {
 
 {{<Aside type="note" header="Note">}}
 
-Your REDIRECT_URL should be the same URL you used as your callback URL while setting  up your application.
+Your REDIRECT_URL should be the same URL you used as your callback URL while setting up your application.
 
 {{</Aside>}}
 
 ## Get Authorization from OAuth App.
 
-Now in your `index.js` file, import the `config.js` file and set up your authorization logic. You will need to access your OAuth app through the `AUTHORIZATION_ENDPOINT` then your app will respond with a code that you will then send to the server. 
+In your `index.js` file, import the `config.js` file and set up your authorization logic. First, you will need to access your OAuth app through the `AUTHORIZATION_ENDPOINT` then your app will respond with a code that you will then send to the server. 
 
 ```js 
 import config from "../config";
@@ -127,9 +127,9 @@ window.onload = function () {
 
 ```
 
-From the code block above you will notice we called an onload method to the window`window.onload`, we do this so the functions will be fired when the whole page has loaded, including all dependent resources such as stylesheets and images. 
+From the code block above, you will notice we called an onload method to the window, and we do this so the functions will be fired when the whole page has loaded, including all dependent resources such as stylesheets and images. 
 
-Notice the response type is a code,  you will need to send this code to the server to be able to get the access token. To do this we need to get the response code from the URL. In the same file create a `handleCode` function and update the `window.onload` funtion
+Notice the response type is a code; you will need to send this code to the server to be able to get the access token. We need to get the response code from the URL to do this. In the same file create a `handleCode` function and update the `window.onload` function
 
 ```js
 function handleCode(){
@@ -162,18 +162,18 @@ function handleCode(){
   }
 }
 ```
-In the code block above, you will notice that we send the code to `http://localhost:8788/api/code` this is where our serverless code will be. 
+In the code block above, you will notice that we send the code to `http://localhost:8788/api/code`. This is where our serverless code will be. 
 
 
 ## Setting up Server with Functions
 
-Cloudflare Pages offers [Functions](/pages/platform/functions/) which enable you to run server-side code to enable dynamic functionality without running a dedicated server, you can handle tasks like Authentication, quering databases or other applications.
+Cloudflare Pages offers [Functions](/pages/platform/functions/) which enable you to run server-side code to enable dynamic functionality without running a dedicated server. You can handle tasks like Authentication, querying databases or other applications.
 
-In this tutorial we will be using Functions to handle exchanging our code for an access Token, signing JWTs, authenticating users and quering GitHub for resources using the detials of the authenticated user.
+In this tutorial, we will be using Functions to handle exchanging our code for an Access Token, signing JWTs, authenticating users, and querying GitHub for resources using the authenticated user's details.
 
-The code from your OAuth App is sent to `/api/code`, you must create a `functions/api/code.js` file in the root of your project. Your file structure should look like this now:
+The code from your OAuth App is sent to `/api/code`; you must create a `functions/api/code.js` file at the root of your project. Your file structure should look like this now:
 
-```txt
+"`txt
 ├── ...
 ├── functions
 |   └── api
@@ -187,7 +187,7 @@ The code from your OAuth App is sent to `/api/code`, you must create a `function
 
 The `handleCode` function will send `POST` requests, which means that the `functions/api/code.js` file needs to export an `OnRequestPost` handler:
 
-```js
+"`js
 ---
 filename: functions/api/code.js
 ---
@@ -205,7 +205,7 @@ export async function onRequestPost(context) {
 ```
 The `context` parameter is an object filled with several values of potential interest. For this example, you only need the [`Request`](/workers/runtime-apis/request/) object and the [`env`](/pages/platform/functions/#writing-your-first-function), which can be accessed through the `context.request` key.
 
-As mentioned, the code is sent to `/api/code.js`, you can access it from within the request object and use a `json()` to make the request into a Readable stream. You then want to pass the code to a function to exchange the code for an Access token.
+As mentioned, the code is sent to `/api/code.js`. You can access it from within the request object and use a `JSON()` to request a Readable stream. You then want to pass the code to a function to exchange the code for an Access token.
 
 ```js
 export async function onRequestPost({ request, env }) {
@@ -221,7 +221,7 @@ export async function onRequestPost({ request, env }) {
 
 ### Exchange Code for Access token. 
 
-In the same, `code.js` file you will create an async function called `exchangeCodeForToken` that will take the code as an argument. You will need to use the config file parameters to query the `TOKEN_ENDPOINT` and send the other parameters as the body. The response to this will be an Object and you can get the access token by getting the value of `access_token` this can be seen in the code block below: 
+In the same `code.js` file, you will create an async function called `exchangeCodeForToken` that will take the code as an argument. You will need to use the config file parameters to query the `TOKEN_ENDPOINT` and send the other parameters as the body. The response to this will be an Object, and you can get the access token by getting the value of `access_token`. As seen in the code block below: 
 
 ```js
 async function exchangeCodeForToken(code) {
@@ -247,14 +247,14 @@ async function exchangeCodeForToken(code) {
 }
 ```
 
-### Use Access token to fetch user information.
+### Use the Access token to fetch user information.
 
-Now that you have the access token you can use it to query for user information. As mentioned your config file will be your access point to GitHub. Create a `fetchUser` function, this will take the access token as an argument.
+Now that you have the access token, you can use it to query user information. As mentioned, your config file will be your access point to GitHub. Create a `fetchUser` function, and this will take the access token as an argument.
 
-In the fetchUser function, you will need to construct a userURL using your `RESOURCE_ENDPOINT` and a user paramenter like so, `config.RESOURCE_ENDPOINT + "user";`. The authorization object value will be your Access token. The `onRequestPOST` function will need to be updated to await your `fetchUser` function.
+In the fetchUser function, you will need to construct a user URL using your `RESOURCE_ENDPOINT` and a user parameter like `config.RESOURCE_ENDPOINT + "user";`. The authorization object value will be your Access token. The `onRequestPOST` function will need to be updated to await your `fetchUser` function.
 
 
-```js
+"`js
 
 export async function onRequestPost({ request, env }) {
   try {
@@ -304,20 +304,20 @@ async function fetchUser(token) {
 }
 ```
 
-### Encode User information with a Json Web Token JWT.
+### Encode User information with a JSON Web Token JWT.
 
-The User information is sensitive and will be used on the client side. To make sure that this information is secure and isn't manipulated by a 3rd party we will use Json Web Token (JWT).
+The User information is sensitive and will be used on the client-side. To ensure that this information is secure and isn't manipulated by a 3rd party, we will use JSON Web Token (JWT).
 
-A [Json web tokens](https://jwt.io/introduction) is a proposed Internet standard for creating data with optional signature and/or optional encryption whose payload holds JSON that asserts some number of claims to resources.
+A [Json web tokens](https://jwt.io/introduction) is a proposed Internet standard for creating data with optional signature and optional encryption whose payload holds JSON that asserts some number of claims to resources.
 
-We will use [Cloudflare Worker JWT](https://www.npmjs.com/package/@tsndr/cloudflare-worker-jwt) a light weight NPM package for JWT implementation to encode and decode our JWT. 
+We will use [Cloudflare Worker JWT](https://www.npmjs.com/package/@tsndr/cloudflare-worker-jwt), a lightweight NPM package for JWT implementation to encode and decode our JWT. 
 
-JWTs are usually created by signing a Payload with a secret. The payload can be user information and the secret key can be assigned by you. In this case we will define a secret key.
+JWTs are usually created by signing a Payload with a secret. The payload will be the user information, and you will assign the secret key. In this case, we will define a secret key.
 
 ```
 const myVerySecretString = "*********"
 ```
-Your secret key can be any set of strings. In the `code.js` file import the package and use the `.sign` method to sign the jwtPayload and your secret string.
+Your secret key can be any set of strings. In the `code.js` file, import the package and use the `.sign` method to sign the jwtPayload and your secret string.
 
 ```js
 import jwt from "@tsndr/cloudflare-worker-jwt";
@@ -360,11 +360,11 @@ async function encodeJWT(user, token) {
 
 ## Cache User infomation in KV
 
-[Workers Kv](/workers/runtime-apis/kv/) is a global low-latency, key-value data store. It can be used to cache information that has been recieved from a server and in this case you will use it to cache user information. 
+[Workers Kv](/workers/runtime-apis/kv/) is a global low-latency, key-value data store. It can be used to cache information that has been received from a server, and in this case, you will use it to cache user information. 
 
-You will used the `env` argument to access your kv store, KV takes a first value as a string and then the next value can be JSON is this case we want to use the  user ID as the key and stringify the user infomation and access token as the value.
+You will use the `env` argument to access your kv store, KV takes the first value as a string, and then the next value can be JSON. We want to use the user ID as the key and stringify the user information and access token as the value.
 
-Since the user information is cached we will not need to do any network request for the user info if we want to fetch for repos as you will see in the next section.
+Since the user information is cached, we will not need to make any network request for the user info if we want to fetch for repos, as you will see in the next section.
 
 ```js
 export async function onRequestPost({ request, env }) {
@@ -397,11 +397,11 @@ export async function onRequestPost({ request, env }) {
 
 ## Use JWT for Client login validation and fetching User Repos. 
 
-While you can use JWTs for validating users you can also use it to know when a user is logined or not and then give them access to other parts of your application based on the presence of this JWT. 
+While you can use JWTs for validating users, you can also use them to know when a user is logged in or not and then give them access to other parts of your application based on this JWT. 
 
-In your application you can do this by setting the JWT to localStorage. In the `client/index.js` file you will update your `handleCode` function to set the encoded JWT from the server to a jwt value: 
+In your application, you can do this by setting the JWT to localStorage. In the `client/index.js` file, you will update your `handleCode` function to set the encoded JWT from the server to a JWT value: 
 
-```js
+"`js
 ---
 filename: client/index.js
 ---
@@ -441,11 +441,11 @@ function handleCode(){
 
 ### Allowing access to routes based on JWT
 
-Since we authenticate using a JWT we can create some restrictions based on the presence of this JWT. In the `client/index.html` file we have a fetch repos button, we can make this button inaccessible if the JWT is't present. 
+Since we authenticate using a JWT, we can create some restrictions based on the presence of this JWT. For example, in the `client/index.html` file, we have a fetch repos button, and we can make this button inaccessible if the JWT isn't present. 
 
-This will mean that if a user hasn't authorized the application and has a JWT they will not be allowed to fetch repos. 
+If a user hasn't authorized the application and has a JWT, they will not be allowed to fetch repos. 
 
-To do this, create a `ProtectedTask` function and within this function use the `querySelector` method to get the button and set the display to none. Then check that the JWT is present in the localStorage, if it is check the display to block and add an `EventListener` to fetch repos with a `fetchRepos` function onClick.
+To do this, create a `ProtectedTask` function and within this function, use the `querySelector` method to get the button and set the display to none. Then check that the JWT is present in the localStorage. If it is, change the display to block and add an `EventListener` to fetch repos with a `fetchRepos` function onClick.
 
 ```js
 function protectedRequest(){
@@ -462,7 +462,7 @@ function protectedRequest(){
 }
 ```
 
-The `fetchRepos` functions makes a request to the server and sends the JWT in local storage to `api/code`
+The `fetchRepos` function makes a request to the server and sends the JWT in local storage to `api/code`
 
 ```js
 async function fetchRepos() {
@@ -482,11 +482,11 @@ async function fetchRepos() {
 
 ### Fetch and list Repos 
 
-You now have your user information and can now use that to get repos. Since you are making a `GET` request you will need to send this request to another server route. The `fetchRepos` function will make a `GET` request to `http://localhost:8788/api/repos` which is a functions route. 
+You now have your user information and can now use that to get repos. Since you are making a `GET` request, you will need to send this request to another server route. The `fetchRepos` function will make a `GET` request to `http://localhost:8788/api/repos`, a function route that fetches the repos. 
 
-Create a `functions/api/repos.js`file and your files should look like this now
+Create a `functions/api/repos. js' file, and your files should look like this now
 
-```txt
+"`txt
 ├── ...
 ├── functions
 |   └── api
@@ -511,11 +511,11 @@ export async function onRequestGet({ request, env }) {
 }
 ```
 
-First, you will get the JWT from the client, verify and decode it. This will allow you to fetch repos. 
+First, you will get the JWT from the client, verify and decode it. You will then be allowed to fetch repos. 
 
-The JWT is sent in the request header and then you will verify it with the `.verify` method which takes the JWT token and your secret string as an argument.
+The request header contains the JWT, and then you will verify it with the `.verify` method, which takes the JWT token and your secret string as an argument.
 
-If the JWT isn't valid you can return a `401` status code. If it is, use the `.decode` method to decode it then use the ID from the payload as a key to fetch from KV. You can then pass the user token to a `showRepo` function that fetches the repos.
+If the JWT isn't valid, you can return a `401` status code. If it is, use the `.decode` method to decode it, then use the ID from the payload as a key to fetch from KV. You can then pass the user token to a `showRepo` function that fetches the repos.
 
 ```js
 import jwt from "@tsndr/cloudflare-worker-jwt";
@@ -551,7 +551,7 @@ export async function onRequestGet({ request, env }) {
 
 ```
 
-As mentioned the `showRepos` function takes the user token as an argument, then you will construct a url with the `RESOURCE_ENDPOINT` and user repo query string, this will return a lost of repos and a JSON object
+As mentioned, the `showRepos` function takes the user token as an argument, and then you will construct a URL with the `RESOURCE_ENDPOINT` and user repo query string. The response will return a list of repos as a JSON object.
 
 ```js
 async function showRepos(token) {
@@ -571,7 +571,7 @@ async function showRepos(token) {
 
 ### Show list of repos 
 
-To list of repos is now a JSON Object that can be used in the reponse in the client. By iterating over the response from the Server you will create an element using the `createElement` method and setting the HTML of the element created to  the value of the reponse.
+The list of repos is now a JSON Object that can be used in the response in the client. By iterating over the response from the server, you will create an element using the `createElement` method and setting the HTML of the element created to the value of the response.
 
 ```js
 async function fetchRepos() {
