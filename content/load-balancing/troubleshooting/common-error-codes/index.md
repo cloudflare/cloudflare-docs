@@ -275,7 +275,7 @@ You will receive an error if you try to set the host header value while configur
 
 ### Solution
 
-Cloudflare is now restricting configured [origin host headers](/load-balancing/additional-options/override-http-host-headers/) to fully qualified domain names (FQDNs) that are immediate subdomains of a zone associated with the account. For example, this host header would be the same zone as the load balancer itself, but origin pools may be used across multiple Load balancers.
+Cloudflare now restricts configured [origin host headers](/load-balancing/additional-options/override-http-host-headers/) to fully qualified domain names (FQDNs) that are immediate subdomains of a zone associated with the account. For example, this host header would be the same zone as the load balancer itself, but origin pools may be used across multiple Load balancers.
 
 ---
 
