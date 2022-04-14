@@ -82,6 +82,13 @@ meta:
     </tr>
     <tr>
       <td>
+        <strong>Non-SNI support for SaaS zone</strong>
+      </td>
+      <td style="text-align:center">Only for Pro and Business</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>
         <strong>
           <a href="/ssl/ssl-for-saas/common-tasks/enforce-mtls/">mTLS support</a>
         </strong>
@@ -116,3 +123,9 @@ meta:
 </table>
 
 {{</table-wrap>}}
+
+## Enterprise plan benefits
+
+The Enterprise plan offers features that give SaaS providers flexibility when it comes to meeting their end customer's requirements. In addition to that, Enterprise customers are able to extend all of the benefits of the Enterprise plan to their customer's custom hostnames. This includes advanced Bot Mitigation, WAF rules, analytics, DDoS mitigation, and more. 
+
+In addition, large SaaS providers rely on Enterprise level support, multi-user accounts, SSO, and other benefits that are not provided in non-Enterprise plans. 
