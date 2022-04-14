@@ -15,12 +15,16 @@ This page has two sections: bucket-level operations and object-level operations.
 
 Each section will have two tables: a table of implemented APIs and a table of unimplemented APIs.
 
-Refer the feature column of each table to review which features of the API have been implemented and which are not.
+Refer the feature column of each table to review which features of an API have been implemented and which have not.
 
 ✅ Feature Implemented  
 ❌ Feature Not Implemented
 
 ## Bucket-level operations
+
+The following tables are related to bucket-level operations.
+
+### Implemented bucket-level operations
 
 Below is a list of implemented bucket-level operations. Refer to the Feature column to review which features have been implemented (✅) and have not been implemented (❌).
 
@@ -37,17 +41,23 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 
 {{</table-wrap>}}
 
+### Unimplemented bucket-level operations
+
 Below is a list of unimplemented bucket-level operations.
 
 {{<table-wrap>}}
 
 | API Name                                                                                         | Feature                           |
 | ------------------------------------------------------------------------------------------------ | --------------------------------- |
-| [GetBucketLocation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html)  | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketLocation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html)  | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
 
 {{</table-wrap>}}
 
 ## Object-level operations
+
+The following tables are related to object-level operations.
+
+### Implemented object-level operations
  
 Below is a list of implemented object-level operations. Refer to the Feature column to review which features have been implemented (✅) and have not been implemented (❌).
 
@@ -119,17 +129,19 @@ Below is a list of implemented object-level operations. Refer to the Feature col
 
 {{</table-wrap>}}
 
+### Unimplemented object-level operations
+
 Below is a list of unimplemented object-level operations.
 
 {{<table-wrap>}}
 
 | API Name                                                                                | Feature                   |
 | ----------------------------------------------------------------------------------------| ------------------------- |
-|[ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html)      | ❌ Query Parameters: <br> ❌ delimiter <br> ❌ encoding-type <br> ❌ marker <br> ❌ max-keys <br> ❌ prefix |
+|❌ [ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html)      | ❌ Query Parameters: <br> ❌ delimiter <br> ❌ encoding-type <br> ❌ marker <br> ❌ max-keys <br> ❌ prefix |
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |
 |                                                                                         | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-|[ListMultipartUploads](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html) | ❌ Query Parameters: <br> ❌ delimiter <br> ❌ encoding-type <br> ❌ key-marker <br> ❌ max-uploads <br> ❌ prefix <br> ❌ upload-id-marker |
-|[ListParts](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html)          | ❌ Query Parameters: <br> ❌ max-parts <br> ❌ part-number-marker |
+|❌ [ListMultipartUploads](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html) | ❌ Query Parameters: <br> ❌ delimiter <br> ❌ encoding-type <br> ❌ key-marker <br> ❌ max-uploads <br> ❌ prefix <br> ❌ upload-id-marker |
+|❌ [ListParts](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html)          | ❌ Query Parameters: <br> ❌ max-parts <br> ❌ part-number-marker |
 |                                                                                         | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |
 
