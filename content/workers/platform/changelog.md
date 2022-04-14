@@ -7,7 +7,7 @@ title: Changelog
 
 ## 2022-03-24
 
-- A new compatibility flag has been introduced, `minimal_subrequests` , which removes some features that were unintentionally being applied to same-zone `fetch()` calls. The flag will default to enabled on Tuesday, 2022-04-05, and is described in [Workers `minimal_subrequests` compatibility flag](https://developers.cloudflare.com/workers/platform/compatibility-dates/#minimal-subrequests).
+- A new compatibility flag has been introduced, `minimal_subrequests` , which removes some features that were unintentionally being applied to same-zone `fetch()` calls. The flag will default to enabled on Tuesday, 2022-04-05, and is described in [Workers `minimal_subrequests` compatibility flag](/workers/platform/compatibility-dates/#minimal-subrequests).
 - When creating a `Response` with JavaScript-backed ReadableStreams, the `Body` mixin functions (e.g. `await response.text()` ) are now implemented.
 - The `IdentityTransformStream` creates a byte-oriented `TransformStream` implementation that simply passes bytes through unmodified. The readable half of the `TransformStream` supports BYOB-reads. It is important to note that `IdentityTransformStream` is identical to the current non-spec compliant `TransformStream` implementation, which will be updated soon to conform to the WHATWG Stream Standard. All current uses of `new TransformStream()` should be replaced with `new IdentityTransformStream()` to avoid potentially breaking changes later.
 
