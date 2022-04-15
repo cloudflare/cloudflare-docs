@@ -68,13 +68,13 @@ All accounts come pre-configured with a Virtual Network named `default`. You can
 4. Configure your tunnels with the IP/CIDR range of your private networks, and assign the tunnels to their respective Virtual Networks.
 
     ```bash
-    $ cloudflared tunnel route ip add –vnet staging-vnet 10.128.0.3/32 staging-tunnel
-    $ cloudflared tunnel route ip add –vnet production-vnet 10.128.0.3/32 production-tunnel
+    $ cloudflared tunnel route ip add -–vnet staging-vnet 10.128.0.3/32 staging-tunnel
+    $ cloudflared tunnel route ip add -–vnet production-vnet 10.128.0.3/32 production-tunnel
     ```
 
 {{<Aside type="note">}}
 
-If no `-vnet` option is specified, the tunnel will be assigned to the default Virtual Network; this applies to any pre-existing private networks in your account.
+If no `--vnet` option is specified, the tunnel will be assigned to the default Virtual Network; this applies to any pre-existing private networks in your account.
 
 {{</Aside>}}
 
@@ -121,7 +121,7 @@ Now when you visit `10.128.0.3/32`, WARP routes your request to the staging envi
 1. Delete all IP routes in the Virtual Network. For example,
 
     ```bash
-    $ cloudflared tunnel route ip delete -vnet staging-vnet 10.128.0.3/32
+    $ cloudflared tunnel route ip delete --vnet staging-vnet 10.128.0.3/32
     ```
 
 2. (Optional) Delete the tunnel associated with the Virtual Network.
