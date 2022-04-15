@@ -300,7 +300,7 @@ The root certificate is now installed and ready to be used.
 
 ### Nix and NixOS
 
-nixOS doesn't use the system certificate store for self updating and instead relies on the certificates found in `~/.nix-profile/etc/ssl/certs` or provided by `NIX_SSL_CERT_FILE` at runtime.
+nixOS does not use the system certificate store for self updating and instead relies on the certificates found in `~/.nix-profile/etc/ssl/certs` or provided by `NIX_SSL_CERT_FILE` at runtime.
 
 ## Add the certificate to applications
 
