@@ -297,6 +297,11 @@ The root certificate is now installed and ready to be used.
 
 ![ChromeOS: name the certificate](/cloudflare-one/static/documentation/connections/chromeOS8_cert.png)
 
+
+### Nix and NixOS
+
+nixOS does not use the system certificate store for self updating and instead relies on the certificates found in `~/.nix-profile/etc/ssl/certs` or provided by `NIX_SSL_CERT_FILE` at runtime.
+
 ## Add the certificate to applications
 
 Some packages, development tools, and other applications provide options to trust root certificates that will allow for the traffic inspection features of Gateway to work without breaking the application.
