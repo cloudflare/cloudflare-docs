@@ -455,3 +455,7 @@ If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment var
 ### IntelliJ IDEA
 
 Instructions on how to install the Cloudflare root certificate are available [here](https://www.jetbrains.com/help/idea/settings-tools-server-certificates.html)
+
+### Minikube
+
+Instructions on how to install the Cloudflare root certificate are available [here](https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#x509-certificate-signed-by-unknown-authority)
