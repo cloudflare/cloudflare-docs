@@ -1,7 +1,7 @@
 ---
 title: Flow-based monitoring
-pcx-content-type: how-to
-weight: 0
+pcx-content-type: navigation
+weight: 6
 ---
 
 # Flow-based monitoring
@@ -12,6 +12,6 @@ You can choose to activate IP advertisement via the Cloudflare dashboard or API.
 
 To activate IP advertisement via the Cloudflare dashboard, refer to [​using the IP Prefixes page to configure dynamic advertisement](/byoip/how-to/configure-dynamic-advertisement/#configure-dynamic-advertisement-via-the-dashboard). To activate IP advertisement via the API, refer to the [IP Address Management Dynamic Advertisement API](https://api.cloudflare.com/#ip-address-management-dynamic-advertisement-properties).
 
-To enable Flow-based monitoring alerts, refer to [Enable Flow-based monitoring alerts](/magic-transit/how-to/enable-flow-based-monitoring/).
+To enable Flow-based monitoring alerts, refer to [Enable Flow-based monitoring alerts](/magic-transit/flow-based-monitoring/enable-flow-based-monitoring/).
 
 To enable per-prefix thresholds with prefix auto advertisement, refer to [Enable per-prefix thresholds with prefix auto advertisement](/magic-transit/how-to/auto-advertise-prefixes/).
