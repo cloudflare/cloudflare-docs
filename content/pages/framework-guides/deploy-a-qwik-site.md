@@ -17,7 +17,7 @@ Create a new project using `npm` by running the following command in your termin
 $ npm create qwik@latest
 ```
 
-You will be prompted to select a starter, you can select any of the available options. Then you will promoted to select a server, this guide uses Cloudflare Pages. 
+You will be prompted to select a starter. You can choose any of the available options. Then you will be prompted to choose a server; this guide uses Cloudflare Pages.  
 
 By selecting _Cloudflare Pages_ as your server option in the terminal drop-down menu, your folder will have a `functions/[[path]].ts` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs; refer to [Path segments](/pages/platform/functions/#path-segments) to learn more.
 
@@ -58,7 +58,7 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 
 {{<Aside type="warning">}}
 
-Currently Cloudflare uses Node `12.18.0` in the Pages build environment, but Qwik requires a newer node version >14.0.0 to build on Cloudflare Pages. To set the Node version go to _Settings_ > _Environment Variables_ > _Production_ and add `NODE_VERSION = v16.7.0` in your production option.
+Currently, Cloudflare uses Node `12.18.0` in the Pages build environment, but Qwik requires a newer node version >14.0.0 to build on Cloudflare Pages. To set the Node version go to _Settings_ > _Environment Variables_ > _Production_ and add `NODE_VERSION = v16.7.0` in your production option.
 
 {{</Aside>}}
 
@@ -71,7 +71,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 {{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your Qwik site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Qwik site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, to preview how changes look to your site before deploying them to production.
 
 ## Learn more
 
