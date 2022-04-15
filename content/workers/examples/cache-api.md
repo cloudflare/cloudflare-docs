@@ -30,6 +30,7 @@ async function handleRequest(event) {
       `Response for request url: ${request.url} not present in cache. Fetching and caching request.`
     );
     // If not in cache, get it from origin
+    // Here the worker fetches its URL, it's a loop.
     response = await fetch(request);
 
     // Must use Response constructor to inherit all of response's fields
@@ -53,7 +54,7 @@ async function handleRequest(event) {
 
 addEventListener('fetch', event => {
   try {
-    const request = event.request;
+    const request = event.request; // What's the point of `request` ?
     return event.respondWith(handleRequest(event));
   } catch (e) {
     return event.respondWith(new Response('Error thrown ' + e.message));
