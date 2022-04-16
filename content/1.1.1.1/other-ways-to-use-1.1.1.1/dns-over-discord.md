@@ -205,7 +205,7 @@ The bot also has a set of helper commands available to get more information abou
 
 The `/help` command provides in-Discord documentation about all the commands available in the 1.1.1.1 DNS over Discord bot.
 
-Example: 
+Example:
 
 ```txt
 /help
