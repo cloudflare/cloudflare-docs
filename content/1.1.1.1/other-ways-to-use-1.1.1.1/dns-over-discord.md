@@ -63,7 +63,7 @@ To query other DNS record types, or multiple record types at once, use the `/mul
 
 ### Short form response
 
-DNS over Discord has an optional flag in the `dig` command that allows the user to request a response in the short form.
+DNS over Discord has an optional flag in the `/dig` command that allows the user to request a response in the short form.
 
 When you request a response in the short form, the name and TTL columns will be excluded. The command only returns the data column without formatting, similar to the equivalent `dig` command response.
 
@@ -78,7 +78,7 @@ Example:
 
 You can refresh the DNS lookup results by clicking the Refresh button. Clicking it will trigger the bot to re-request the DNS query in the message, and update the results in the message. Any user can click this button.
 
-The refresh button is available on all responses to the `dig` command, including those that resulted in an error, such as an unknown domain or no records found.
+The refresh button is available on all responses to the `/dig` command, including those that resulted in an error, such as an unknown domain or no records found.
 
 <div class="medium-img">
 
@@ -160,7 +160,7 @@ Use a \* (asterisk) in place of a record type to get DNS results for all support
 
 ### Short form response
 
-Like the main `dig` command, the `multi-dig` command also supports the optional short flag after the types have been specified in the slash command.
+Like the main `/dig` command, the `/multi-dig` command also supports the optional short flag after the types have been specified in the slash command.
 
 Example:
 
@@ -171,9 +171,9 @@ Example:
 
 ### Refreshing existing results
 
-The `multi-dig` command also provides a refresh button below each set of DNS results requested (or after each block of 10 DNS record types, if you requested more than 10).
+The `/multi-dig` command also provides a refresh button below each set of DNS results requested (or after each block of 10 DNS record types, if you requested more than 10).
 
-As with the `dig` command, any user can press the refresh button to refresh the displayed DNS results, including for DNS queries that had previously failed.
+As with the `/dig` command, any user can press the refresh button to refresh the displayed DNS results, including for DNS queries that had previously failed.
 
 <div class="medium-img">
 
