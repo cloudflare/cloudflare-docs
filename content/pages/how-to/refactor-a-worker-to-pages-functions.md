@@ -31,7 +31,6 @@ Every Worker will have the default response to a `fetch` action with a `request`
 ---
 filename: worker/index.js
 ---
-
 addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request));
 });
@@ -120,25 +119,24 @@ The above code takes a `request` and `env` as arguments which passes these props
 ---
 filename: functions/form.js
 ---
-
 async function submitHandler({ request, env }) {
-	const body = await request.formData();
+  const body = await request.formData();
 
-	const { first_name, last_name, email, phone, subject, message } =
-		Object.fromEntries(body);
+  const { first_name, last_name, email, phone, subject, message } =
+    Object.fromEntries(body);
 
-	const reqBody = {
-		fields: {
-			'First Name': first_name,
-			'Last Name': last_name,
-			Email: email,
-			'Phone number': phone,
-			Subject: subject,
-			Message: message,
-		},
-	};
+  const reqBody = {
+    fields: {
+      "First Name": first_name,
+      "Last Name": last_name,
+      Email: email,
+      "Phone number": phone,
+      Subject: subject,
+      Message: message,
+    },
+  };
 
-	return HandleAirtableData({ body:reqBody,env:env });
+  return HandleAirtableData({ body: reqBody, env: env });
 }
 ```
 
@@ -148,21 +146,20 @@ The code block above shows that we pass the `env` parameter as props so we can a
 ---
 filename: functions/form.js
 ---
-
 const HandleAirtableData = async function onRequest({ body, env }) {
-	return fetch(
-		`https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/${encodeURIComponent(
-			env.AIRTABLE_TABLE_NAME
-		)}`,
-		{
-			method: 'POST',
-			body: JSON.stringify(body),
-			headers: {
-				Authorization: `Bearer ${env.AIRTABLE_API_KEY}`,
-				'Content-type': `application/json`,
-			},
-		}
-	);
+  return fetch(
+    `https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/${encodeURIComponent(
+      env.AIRTABLE_TABLE_NAME
+    )}`,
+    {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        Authorization: `Bearer ${env.AIRTABLE_API_KEY}`,
+        "Content-type": `application/json`,
+      },
+    }
+  );
 };
 ```
 
