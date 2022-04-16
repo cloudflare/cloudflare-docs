@@ -106,7 +106,7 @@ When providing DNS record types for the `/multi-dig` command, Discord will not p
 <summary>DNS record types supported and considered valid by the bot</summary>
 <div>
 
-Use a \* (asterisk) in place of a record type to get DNS results for all supported types.
+Use a `*` (asterisk) in place of a record type to get DNS results for all supported types.
 
 * `A`
 * `AAAA`
