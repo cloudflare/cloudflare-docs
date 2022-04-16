@@ -17,7 +17,7 @@ Create a new project using `npm` by running the following command in your termin
 $ npm create qwik@latest
 ```
 
-You will be prompted to select a starter of which you can choose any of the available options. Then you will be prompted to choose a server; this guide uses Cloudflare Pages.
+You will be prompted to select a starter, of which you can choose any of the available options. Then you will be prompted to choose a server; this guide uses Cloudflare Pages.
 
 By selecting _Cloudflare Pages_ as your server option in the terminal drop-down menu, your folder will have a `functions/[[path]].ts` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs; refer to [Path segments](/pages/platform/functions/#path-segments) to learn more.
 
