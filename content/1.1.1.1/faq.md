@@ -48,7 +48,7 @@ Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprec
 
 {{<Aside type= "note">}}
 
-The EDNS client subnet header is sent for a single host, `whoami.ds.akahelp.net`, for cross-provider debugging.
+The EDNS client subnet header is enabled for a single host `whoami.ds.akahelp.net` to aid in cross-provider debugging.
 
 {{</Aside>}}
 
