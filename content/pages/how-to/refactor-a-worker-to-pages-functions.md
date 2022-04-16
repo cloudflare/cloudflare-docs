@@ -21,7 +21,7 @@ However, it can be beneficial to use a [Pages Function](/pages/platform/function
 
 [Airtables](https://airtable.com/) can be used to store entries of information in different tables for the same account. When creating a Worker for handling the submission logic, the first step is to use [wrangler](/workers/cli-wrangler/install-update/) to initialize a new Worker within a specific folder or at the root of your application. 
 
-This step creates the boilerplate to write your Airtable submission Worker. After writing your Worker, you can deploy it to Cloudflare's Edge network with your credentials. You can check the Workers documentation for a full tutorial on how to [handle form submission with workers](/workers/tutorials/handle-form-submissions-with-airtable/).
+This step creates the boilerplate to write your Airtable submission Worker. After writing your Worker, you can deploy it to Cloudflare's Edge network with your credentials. You can check the Workers documentation for a full tutorial on how to [handle form submission with Workers](/workers/tutorials/handle-form-submissions-with-airtable/).
 
 The code block below shows an example of a Worker that handles Airtable form submission.
 
@@ -91,11 +91,9 @@ const HandleAirtableData = (body) => {
 
 # Using Pages Functions
 
-[Pages Functions](/pages/platform/functions/) are serverless functions that run on Cloudflare Pages together with your application. They enable you to run server-side code to enable dynamic functionality without running a dedicated server. Form handling is a good use case for our Airtable example.
+[Pages Functions](/pages/platform/functions/) are serverless functions that run on Cloudflare Pages together with your application. They enable you to run server-side code to enable dynamic functionality without running a dedicated server. While the above code works perfectly, you can handle the form submission logic for your client in the same app with Pages Functions.
 
-While the above code works perfectly, you can handle the form submission logic for your client in the same app with Pages Functions.
-
-First, you will create a `functions` folder at the base of your application, and within this folder, you can create a `form.js` file to handle form submissions. Next, you will refactor the Worker code to fit the Pages Function syntax in this file.
+You can refactor your Airtable Worker to Pages Functions by doing the following. First, you will create a `functions` folder at the base of your application, and within this folder, you can create a `form.js` file to handle form submissions. Next, you will refactor the Worker code to fit the Pages Function syntax in this file.
 
 ## Refactoring the worker 
 
