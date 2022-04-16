@@ -70,7 +70,7 @@ When you request a response in the short form, the name and TTL columns will be 
 Example:
 
 ```txt
-/dig domain: cloudflare.com type: AAAA short: true
+/dig domain: cloudflare.com type: AAAA records short: True
 ```
 
 
@@ -165,7 +165,7 @@ Like the main `/dig` command, the `/multi-dig` command also supports the optiona
 Example:
 
 ```txt
-/multi-dig domain: cloudflare.com types: CDS CDNSKEY short: true
+/multi-dig domain: cloudflare.com types: CDS CDNSKEY short: True
 ```
 
 
