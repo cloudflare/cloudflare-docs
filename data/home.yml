@@ -1,0 +1,10 @@
+meta:
+  title: Cloudflare Developers
+  description: Browse the latest developer documentation including API reference,
+    articles, and sample code.
+  author: '@cloudflare'
+  image: /cf-twitter-card.png
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com

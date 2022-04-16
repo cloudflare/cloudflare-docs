@@ -1,0 +1,19 @@
+{{- $href := .Get "href" -}}
+{{- $section := .Page.FirstSection.RelPermalink -}}
+
+{{- if strings.HasPrefix $href "http" -}}
+<a href="{{ $href }}" class="DocsMarkdown--link" target="_blank" rel="noopener">
+{{- else if strings.HasPrefix $href $section -}}
+<a href="{{ $href }}" class="DocsMarkdown--link">
+{{- else if strings.HasPrefix $href "#" -}}
+<a href="{{ $href }}" class="DocsMarkdown--link">
+{{- else -}}
+{{ $url := printf "%s%s" $section $href }}
+<a href="{{ $url }}" class="DocsMarkdown--link">
+{{- end -}}
+  <span class="DocsMarkdown--link-content">
+    <code class="InlineCode InlineCode-is-type">
+      {{- .Page.RenderString .Inner -}}
+    </code>
+  </span>
+</a>

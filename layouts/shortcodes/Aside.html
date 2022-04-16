@@ -1,0 +1,8 @@
+{{- $type := default "note" (.Get "type") -}}
+<aside class="DocsMarkdown--aside" role="note" data-type="{{ $type }}">
+  {{- with .Get "header" }}
+  <div class="DocsMarkdown--aside-header">{{- safeHTML . -}}</div>
+  {{- end -}}
+
+  {{- .Page.RenderString .Inner -}}
+</aside>
