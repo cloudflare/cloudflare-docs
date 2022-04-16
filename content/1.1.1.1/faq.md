@@ -46,6 +46,12 @@ Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprec
 
 1.1.1.1 is a privacy centric resolver so it does not send any client IP information and does not send the EDNS Client Subnet Header to authoritative servers.
 
+{{<Aside type= "note">}}
+
+The EDNS client subnet header is sent for a single host, `whoami.ds.akahelp.net`, for cross-provider debugging.
+
+{{</Aside>}}
+
 ## Does 1.1.1.1 support IPv6?
 
 1.1.1.1 has full IPv6 support.
