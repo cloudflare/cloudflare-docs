@@ -65,7 +65,7 @@ To query other DNS record types, or multiple record types at once, use the `/mul
 
 DNS over Discord has an optional flag in the `/dig` command that allows the user to request a response in the short form.
 
-When you request a response in the short form, the name and TTL columns will be excluded. The command only returns the data column without formatting, similar to the equivalent `dig` command response.
+When you request a response in the short form, the name and TTL columns will be excluded. The command only returns the data column without formatting, similar to the equivalent `dig` command-line interface response.
 
 Example:
 
