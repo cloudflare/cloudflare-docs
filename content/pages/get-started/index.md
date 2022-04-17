@@ -30,6 +30,8 @@ You will be prompted to sign in with your preferred git provider which allows [C
 
 Signing in with GitLab will grant Pages access to all repositories on your account. Additionally, if you are a part of a multi-user Cloudflare account, and you sign in with GitLab, other members will also have the ability to deploy your repositories to Pages.
 
+If you are using GitLab, make sure you have the **Maintainer** role or higher on the repository.   
+
 {{</Aside>}}
 
 ## Configuration and deployment
