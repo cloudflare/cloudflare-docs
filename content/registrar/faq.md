@@ -158,7 +158,7 @@ Refer to [What is Cloudflare Registrar](https://www.cloudflare.com/learning/dns/
 
 ### When will I be billed?
 
-You will be billed when you input your authorization code and initiate the transfer of your domain to Cloudflare. Make sure to copy and paste the code to avoid mistakes. The transfer will not initiate if the code is incorrect.
+You will be billed when you input your authorization code and initiate the transfer of your domain to Cloudflare. Currently, Cloudflare Registrar only uses the primary payment method for any associated transaction. Make sure to copy and paste the code to avoid mistakes. The transfer will not initiate if the code is incorrect.
 
 ### Is there a fee to transfer a .UK domain?
 
