@@ -5,6 +5,15 @@ title: Changelog
 
 # Changelog
 
+## 2022-04-14
+
+- Performance and stability improvements.
+
+## 2022-04-08
+
+- The AES-GCM implementation that is part of the Web Cryptography API now returns a friendlier error explaining that 0-length IVs are not allowed.
+- R2 error responses now include better details.
+
 ## 2022-03-24
 
 - A new compatibility flag has been introduced, `minimal_subrequests` , which removes some features that were unintentionally being applied to same-zone `fetch()` calls. The flag will default to enabled on Tuesday, 2022-04-05, and is described in [Workers `minimal_subrequests` compatibility flag](/workers/platform/compatibility-dates/#minimal-subrequests).
