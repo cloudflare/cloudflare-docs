@@ -64,6 +64,8 @@ In keeping with the example scenario, the list of static routes should match the
 
 ## Secure Web Gateway
 
-After setting up the Anycast GRE and static routes, configure the policies for Secure Web Gateway in the Teams dashboard. To set up the policies, refer to [Secure Web Gateway policies](/cloudflare-one/policies/filtering/).
+After setting up the Anycast GRE and static routes, configure the policies for Secure Web Gateway in the Teams dashboard. To set up the policies, refer to [Secure Web Gateway policies](/cloudflare-one/policies/filtering/). 
+
+The Secure Web Gateway upgrade now supports TCP and UDP ports 0-1023.
 
 After you configured Secure Web Gateway, enterprise users and devices from each of the sites mentioned in the example scenario would be able to safely browse or access Internet resources under the protection of the Cloudflare edge network.
