@@ -9,6 +9,12 @@ layout: list
 
 # Configure webhooks
 
+{{<Aside type="note">}}
+
+This feature is only available if your account has at least one zone on a Professional or higher plan. For more information, see our [plans page](https://www.cloudflare.com/plans/).
+
+{{</Aside>}}
+
 There are a variety of services you can connect to Cloudflare using webhooks to receive Notifications from your Cloudflare account. The following table lists some of the most popular services you can connect to your Cloudflare account, as well as the information you need to connect to them:
 
 {{</content-column>}}
@@ -31,14 +37,13 @@ There are a variety of services you can connect to Cloudflare using webhooks to 
 
 After configuring the external service you want to connect to, set up webhooks in your Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Notifications**.
-3. Click **Destinations** on the left side of your dashboard.
-4. In the **Webhooks** card, click **Create**.
-5. Give your webhook a name so you can identify it later.
-6. In the **URL** field, enter the URL of the third-party service you previously set up and want to connect to your Cloudflare account.
-7. If needed, insert the **Secret**. Secrets are how webhooks are encrypted and vary according to the service you are connecting to Cloudflare.
-8. Click **Save and Test** to finish setting up your webhook.
+1. Go to [Notifications](https://dash.cloudflare.com/?to=/:account/notifications) on the Cloudflare dashboard.
+2. Click **Destinations**.
+3. In the **Webhooks** card, click **Create**.
+4. Give your webhook a name, so you can identify it later.
+5. In the **URL** field, enter the URL of the third-party service you previously set up and want to connect to your Cloudflare account.
+6. If needed, insert the **Secret**. Secrets are how webhooks are encrypted and vary according to the service you are connecting to Cloudflare.
+7. Click **Save and Test** to finish setting up your webhook.
 
 The new webhook will appear in the **Webhooks** card.
 
