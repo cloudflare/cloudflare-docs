@@ -81,4 +81,4 @@ All pool steering modes are available for transport load balancing through Spect
 
 Currently, you cannot use [load balancing custom rules](/load-balancing/additional-options/load-balancing-rules/) with Cloudflare Spectrum.
 
-For more information about setting up a Load Balancer to use with Spectrum, refer to [Create a Load Balance](/spectrum/how-to/create-load-balancer/).
+For more information about how to use Load Balancer with Spectrum, refer to [Create a Load Balance](/spectrum/get-started//#create-a-spectrum-application-using-a-load-balancer).
