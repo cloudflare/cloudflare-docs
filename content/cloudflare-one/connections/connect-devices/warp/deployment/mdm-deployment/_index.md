@@ -76,7 +76,7 @@ The Cloudflare WARP macOS client allows for an automated install via tools like 
 
 ### Create `mobileconfig` file
 
-1. [Click here](/cloudflare-one/static/documentation/connections/CloudflareWARP.mobileconfig) to download an example `.mobileconfig` file.
+1. [Download](/cloudflare-one/static/documentation/connections/CloudflareWARP.mobileconfig) an example `.mobileconfig` file.
 
 2. Run `uuidgen` from your macOS Terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID`.
 
