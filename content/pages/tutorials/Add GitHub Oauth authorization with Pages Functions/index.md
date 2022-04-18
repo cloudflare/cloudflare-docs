@@ -9,9 +9,9 @@ title: Add GitHub Oauth authorization with Pages Functions
 
 In most applications we use, there is usually an option to log in or sign up with a 3rd party application like Google, Twitter or GitHub. These options are powered by OAuth, which is an open standard for access delegation, commonly used as a way for internet users to grant websites or applications access to their information on other websites but without giving them the passwords. 
 
-You will then encode the user information gotten from the app using JSON Web Tokens(JWTs) which allows you to share user secrets securly by encrypting them with a secret key.
-
 In this tutorial, you will learn how to build authentication into your application using OAuth, GitHub, and handle server requests using [Pages Functions](/pages/platform/functions/)and GitHub credentials.
+
+You will then encode the user information gotten from the app using JSON Web Tokens(JWTs) which allows you to share user secrets securly by encrypting them with a secret key.
 
 You'll build an authorization flow to allow users to sign in with GitHub to your application. Once they've signed in, you'll use Pages Functions and Workers KV to store the user's information and make an authorized GitHub API request on their behalf, to show a list of their repositories in a web page.
 
@@ -36,7 +36,7 @@ The source code for this application is [available on GitHub](https://github.com
 
 To begin, create a `client/index.html` file at the root of your project to serve the static part of your application. Then in the same client directory, create an `index.js` file; this is where you will have your client-side logic.
 
-Before you continue, Copy the following content into `client/index.html`: 
+Before you continue, copy the following content into `client/index.html`: 
 
 ```html
 ---
@@ -105,7 +105,7 @@ section {
 
 ```
 
-Before setting up your Client site functions, you will need to create a `config.js` file at the root of your project to handle all your GitHub app credentials. Then, you will export these credentials to access them anywhere in your application. 
+Before setting up your client site functions, you will need to create a `config.js` file at the root of your project to handle all your GitHub app credentials. Then, you will export these credentials to access them anywhere in your application. 
 
 ```js
 ---
@@ -138,7 +138,9 @@ export {
 
 {{<Aside type="note" header="Note">}}
 
-Your `REDIRECT_URL` should be the same URL you used as your callback URL while setting up your application. For the sake of this tutorial and testing locally the `REDIRECT_URL` is set to "http://localhost:8788/". However, after testing locally you will update this to the URL of your deployed site.
+Your `REDIRECT_URL` should be the same URL you used as your callback URL while setting up your application. For the sake of this tutorial and testing locally the `REDIRECT_URL` is set to http://localhost:8788/. However, after testing locally you will update this to the URL of your deployed site.
+
+Since your `CLIENT_SECRET` should not be exposed to the client you will have to define a  credential object specifically for the client and another for the server.
 
 {{</Aside>}}
 
@@ -456,7 +458,7 @@ async function fetchUser(token) {
 }
 ```
 
-### Encode User information with a JSON Web Token JWT
+### Encode User information with a JSON Web Token
 
 A user's information is sensitive and will be used on the client-side. To ensure that this information is secure and isn't manipulated by a 3rd party, we will use JSON Web Tokens (JWTs).
 
@@ -469,6 +471,9 @@ After installing, in `/api/code` import `jwt` from the the Cloudflare-Worker-JWT
 JWTs are usually created by signing a Payload with a secret. The payload will be the user information, and you will assign the secret key. In this case, we will define a secret key, in your `.env` file.
 
 ```txt
+---
+filename: .env
+---
 myVerySecretString = "*********"
 ```
 
@@ -530,11 +535,11 @@ Since the user information is cached in Workers KV, we will not need to make any
 ```js
 ---
 filename: functions/api/code.js
-highlight: [7,8,9,10]
+highlight: [8,9,10,11]
 ---
 export async function onRequestPost({ request, env }) {
   try {
-    const body = await request.json(); // use request.json  to make request body a readable stream
+    const body = await request.json(); 
     const token = await exchangeCodeForToken(body.code);
     const user = await fetchUser(token);
     const jwtencoded = await encodeJWT(user, myVerySecretString);
@@ -780,7 +785,7 @@ In the **Environment variables (advanced)** section add the variable name and va
 
 ### Update Homepage and Authorization callback URL in OAuth app
 
-In your GitHub OAuth App you have set the authorization callback URL and HomePage URL to `http://localhost:8788/` while working in dev mode, now you will have to update this URL to the URL of your deployed Pages project. 
+In your OAuth App you have set the authorization callback URL and HomePage URL to `http://localhost:8788/` while working in dev mode, now you will have to update this URL to the URL of your deployed Pages project. 
 
 By doing this, you will enable your OAuth app interact with your project as expected.
 
@@ -801,6 +806,7 @@ After creating your namespace, choose from the list of KV namespaces that you cr
 
 Select *Add binding* and input a Variable name, and select a KV namespace from the list of your existing Workers KV namespaces. You will need to repeat this for both the Production and Preview environments.
 
+# Conclusion
 
 In this tutorial, you built and deployed an OAuth app and its back-end logic using Cloudflare Pages with its Workers integration. You created serverless routes that handled Authentication, fetched user information, encoded user information as JWTs and used KV to cache the user information from GitHub. 
 
