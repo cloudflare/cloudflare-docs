@@ -12,7 +12,7 @@ When you add a site to Cloudflare, you need to create a new domain within Cloudf
 
 To use Cloudflare, you need to own a domain (`example.com`).
 
-If you do not already own a domain name and plan to use Cloudflare for your [authoritative DNS](/dns/zone-setups/full-setup/), we highly recommend purchasing your domain name through [Cloudflare Registrar](https://developers.cloudflare.com/registrar/get-started/register-domain/).
+If you do not already own a domain name and plan to use Cloudflare for your [authoritative DNS](/dns/zone-setups/full-setup/), we highly recommend purchasing your domain name through [Cloudflare Registrar](/registrar/get-started/register-domain/).
 
 Using Cloudflare Registrar simplifies your setup process by automatically using Cloudflare for authoritative DNS.
 
