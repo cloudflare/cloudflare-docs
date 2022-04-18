@@ -166,7 +166,7 @@ In your `index.js` file, import the `config.js` file and `qs` from the query-str
 
 First, you will need to access your OAuth app through the `AUTHORIZATION_ENDPOINT` then your app will respond with a code that you will then send to the server. 
 
-```js 
+```js
 ---
 filename: client/index.js
 ---
@@ -192,7 +192,6 @@ function  getAppauthorization() {
 window.onload = function () {
     getAppauthorization()   
 };
-
 ```
 
 From the code block above, you will notice we called an onload method to the window, and we do this so the functions will be fired when the whole page has loaded, including all dependent resources such as stylesheets and images. 
