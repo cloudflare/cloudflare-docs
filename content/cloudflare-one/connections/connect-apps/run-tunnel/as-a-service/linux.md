@@ -19,7 +19,7 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 | `tunnel`           | The UUID of your Tunnel                              |
 | `credentials-file` | The location of the credentials file for your Tunnel |
 
-When the service is installed using `cloudflared service install`, the contents of the configuration will be copied to `/etc/cloudflared/config.yml` for future running of the service. When changing the config, either make your changes directly in `/etc/cloudflared/config.yml` or reinstall the service.
+When the service is installed using `cloudflared service install`, the contents of the configuration will be copied to `/etc/cloudflared/config.yml`. When later changing the config, either make your changes directly in `/etc/cloudflared/config.yml` or reinstall the service.
 
 ## Running `cloudflared` as a service
 
