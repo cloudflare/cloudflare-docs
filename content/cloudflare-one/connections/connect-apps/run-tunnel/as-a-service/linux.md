@@ -23,7 +23,7 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 Instructions on how to install `cloudflared` for Linux can be found [here](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation/#linux).
 
-Follow up to step 4 [here](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#4-create-a-configuration-file) then proceed with the following. At this point `cloudflared` should be installed, authenticated, and have a `config.yml` file in the `.cloudflared` directory. 
+Complete steps 1 through 4 in the [CLI setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/). At this point `cloudflared` should be installed, authenticated, and have a `config.yml` file in the `.cloudflared` directory. 
 
 Next, run the following three commands to run `cloudflared` as a service:
 
