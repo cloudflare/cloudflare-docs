@@ -5,7 +5,7 @@ title: Domain statuses
 
 # Domain statuses
 
-Once you [add a domain](https://support.cloudflare.com/hc/articles/201720164) to Cloudflare on a full or partial setup, it moves through several statuses:
+Once you [add a domain](/fundamentals/get-started/setup/add-site/) to Cloudflare on a full or partial setup, it moves through several statuses:
 
 - **Setup**: You initiated but did not finish the signup process.
 
@@ -22,7 +22,7 @@ Once you [add a domain](https://support.cloudflare.com/hc/articles/201720164) to
 
 - **Moved**: Your domain has failed multiple DNS checks, indicating that your authoritative DNS no longer points to Cloudflare nameservers. The domain will be deleted automatically after 7 days, unless there is an active plan subscription.
 
-- **Deleted**: This domain has been archived. You can re-add the domain to Cloudflare by following the [regular onboarding flow](https://support.cloudflare.com/hc/articles/201720164).
+- **Deleted**: This domain has been archived. You can re-add the domain to Cloudflare by following the [regular onboarding flow](/fundamentals/get-started/setup/add-site/).
 
 If your domain's status changes, you will receive an email at the address associated with your account.
 
@@ -32,4 +32,4 @@ If domains remain in the **Pending Nameserver Update** or **Moved** status for t
 
 If you want to manually remove a domain from Cloudflare, follow the instructions in our [Knowledgebase](https://support.cloudflare.com/hc/articles/360033554252).
 
-If you need to re-add a domain to your account, follow the [regular onboarding flow](https://support.cloudflare.com/hc/articles/201720164).
+If you need to re-add a domain to your account, follow the [regular onboarding flow](/fundamentals/get-started/setup/add-site/).

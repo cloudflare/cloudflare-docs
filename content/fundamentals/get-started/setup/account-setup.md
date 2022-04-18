@@ -1,6 +1,6 @@
 ---
 pcx-content-type: reference
-title: Set up a new account
+title: Set up account
 weight: 1
 ---
 
