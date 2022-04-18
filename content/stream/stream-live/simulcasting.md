@@ -8,8 +8,6 @@ weight: 9
 
 Simulcasting lets you forward your live stream to third-party platforms such as YouTube Live and Facebook Live. To begin simulcasting, select an input and add one or more Outputs:
 
-![Begin simulcasting](../simulcasting.png)
-
 ## Add an Output using the API
 
 Add an Output to start retransmitting live video. You can add or remove Outputs at any time during a broadcast to start and stop retransmitting.
