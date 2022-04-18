@@ -139,3 +139,7 @@ Cloudflare enforces a 270-second idle timeout on TCP connections that go through
 
 If `cloudflared` returns error `error="remote error: tls: handshake failure"`, check to make sure the hostname in question is covered by a SSL certificate. If using a multi-level subdomain, an advanced certificate may be required as the Universal SSL will not cover more than one level of subdomain. This may surface in the browser as `ERR_SSL_VERSION_OR_CIPHER_MISMATCH`.
 
+## Access API error auth_domain_cannot_be_updated_dash_sso.
+
+You may see this error while trying to change your [ZT auth domain](https://developers.cloudflare.com/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domainteam-name) aka "Team domain" and SSO is enabled for your account.
+Currently customers that have [SSO](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/dash-sso-apps/) enabled, cannot change their ZT auth domain, contact support for more details
