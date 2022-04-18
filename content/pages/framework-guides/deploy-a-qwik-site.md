@@ -5,13 +5,13 @@ title: Deploy a Qwik site
 
 # Deploy a Qwik site 
 
-[Qwik](https://github.com/builderio/qwik) is an open-source DOM-centric, resumable web-app framework designed for best possible time-to-interactive, by focusing on [resumability](https://github.com/BuilderIO/qwik/blob/main/docs/pages/guide/resumable-vs-replayable.mdx) of server-side-rendering of HTML and [fine-grained lazy-loading](https://github.com/BuilderIO/qwik/blob/main/docs/pages/guide/lazy-loading.mdx) of code. 
+[Qwik](https://github.com/builderio/qwik) is an open-source, DOM-centric, resumable web application framework designed for best possible time to interactive by focusing on [resumability](https://github.com/BuilderIO/qwik/blob/main/docs/pages/guide/resumable-vs-replayable.mdx) of server-side rendering of HTML and [fine-grained lazy-loading](https://github.com/BuilderIO/qwik/blob/main/docs/pages/guide/lazy-loading.mdx) of code. 
 
 In this guide, you will create a new Qwik application and deploy it using Cloudflare Pages.
 
 ## Creating a new project
 
-Create a new project using `npm` by running the following command in your terminal:
+Create a new project by running the following command in your terminal:
 
 ```sh
 $ npm create qwik@latest
@@ -58,7 +58,7 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 
 {{<Aside type="warning">}}
 
-Currently, Cloudflare uses Node `12.18.0` in the Pages build environment, but Qwik requires a newer node version >14.0.0 to build on Cloudflare Pages. To set the Node version go to _Settings_ > _Environment Variables_ > _Production_ and add `NODE_VERSION = v16.7.0` in your production option.
+Currently, Cloudflare uses Node `12.18.0` in the Pages build environment, but Qwik requires a newer node version >14.0.0 to build on Cloudflare Pages. To set the Node version, go to **Settings** in your Pages project > **Environment Variables** > **Production** and add `NODE_VERSION = v16.7.0` in your Production option.
 
 {{</Aside>}}
 
