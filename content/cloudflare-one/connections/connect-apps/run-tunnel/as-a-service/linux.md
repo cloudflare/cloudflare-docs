@@ -21,14 +21,7 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 ## Running `cloudflared` as a service
 
-Open a terminal window and run the following command to install the latest version of `cloudflared`:
-
-```sh
-$ wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
-mv ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
-chmod a+x /usr/local/bin/cloudflared
-cloudflared update
-```
+Complete steps 1 through 4 in the [CLI setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/). At this point `cloudflared` should be installed, authenticated, and have a `config.yml` file in the `.cloudflared` directory. 
 
 Next, run the following three commands to run `cloudflared` as a service:
 
