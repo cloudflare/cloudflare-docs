@@ -3,10 +3,10 @@ pcx-content-type: concept
 title: WARP
 weight: 1
 meta:
-  title: Connect devices with the WARP client
+  title: About Cloudflare WARP
 ---
 
-# Connect devices with the WARP client
+# About Cloudflare WARP
 
 The Cloudflare WARP client allows you to protect corporate devices by securely and privately sending traffic from those devices to Cloudflare's edge, where Cloudflare Gateway can apply advanced web filtering. The WARP client also makes it possible to apply advanced Zero Trust policies that check for a device's health before it connects to corporate applications.
 
