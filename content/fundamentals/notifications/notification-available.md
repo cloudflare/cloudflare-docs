@@ -54,7 +54,7 @@ Customers who want to receive a notification when usage of a product goes above 
 
 **Other options / filters**
 
-Customers can choose the **Product** and the threshold that fires the notification. For example:
+Customers can choose the **Product** they want to be notified about and the threshold that fires the notification. Thresholds depend on the product chosen. For example:
 
 - **Argo Smart Routing**: has **Notify when total bytes of traffic exceeds** as threshold.
 - **Load Balancing**: has **Notify when total number of DNS Queries exceeds** as threshold.
@@ -232,11 +232,13 @@ Customers who want to be warned about changes to server health as determined by 
 
 **Other options / filters**
 
-Customers can search for and add health checks from their list of health checks. Customers can also choose the trigger that fires the notification. Available triggers are:
+Multiple filters available:
 
-- Becomes unhealthy
-- Becomes healthy
-- Becomes either healthy or unhealthy
+- Customers can can search for and add health checks from their list of health checks. 
+- Customers can choose a trigger to fire the notification. Available triggers are:
+  - Becomes unhealthy
+  - Becomes healthy
+  - Becomes either healthy or unhealthy
 
 **Included with**
 
@@ -261,11 +263,13 @@ Customers who want to be warned about status changes (enabled/disabled) in their
 
 **Other options / filters**
 
-Customers can search and add pools from their list of pools. Customers can also choose the trigger that fires the notification. Available triggers are:
+Multiple filters available:
 
-- Load Balancing pool enabled
-- Load Balancing pool disabled
-- Load Balancing pool enabled / disabled
+- Customers can search for and add pools from their list of pools. 
+- Customers can also choose the trigger that fires the notification. Available triggers are:
+  - Load Balancing pool enabled
+  - Load Balancing pool disabled
+  - Load Balancing pool enabled / disabled
 
 **Included with**
 
@@ -338,12 +342,14 @@ Enterprise customers who want to receive a notification when Cloudflare is unabl
 
 **Other options / filters**
 
-Customers can search and add domains from their list of domains. Customers can also choose the trigger that fires the notification. Available triggers are:
+Multiple filters available:
 
-- Low sensitivity
-- Medium sensitivity
-- High sensitivity
-- Very High sensitivity
+- Customers can search and add domains from their list of domains. 
+- Customers can also choose the trigger that fires the notification. Available triggers are:
+  - Low sensitivity
+  - Medium sensitivity
+  - High sensitivity
+  - Very High sensitivity
 
 **Included with**
 
@@ -700,7 +706,9 @@ Customers who are using Stream and want to receive webhooks with the status of t
 
 **Other options / filters**
 
-Customer can input Stream Live IDs to receive notifications only about those inputs. If left blank, customers will receive a list for all inputs. Customers can also choose input states to fire notifications. Available input states are:
+Customers can input Stream Live IDs to receive notifications only about those inputs. If left blank, customers will receive a list for all inputs. 
+
+The following input states will fire notifications. Customers can toggle them on or off:
 
 - `live_input.connected`
 - `Live_input.disconnected`
@@ -730,7 +738,7 @@ For more information, refer to [WAF alerts](/waf/alerts/).
 
 **Other options / filters**
 
-Customers can search for and add domains from their list of domains. Customers can also choose which services to add to the notification (Managed Firewall, Rate Limiting, etc.).
+Customers can search for and add domains from their list of enterprise zones. Customers also have to choose which services the alert should monitor (Managed Firewall, Rate Limiting, etc.).
 
 **Included with**
 
@@ -755,7 +763,7 @@ For more information, refer to [WAF alerts](/waf/alerts/).
 
 **Other options / filters**
 
-Customers can search for and add domains from their list of domains. The notification will be sent for the domains chosen.
+Customers can search for and add domains from their list of business or enterprise zones. The notification will be sent for the domains chosen.
 
 **Included with**
 
