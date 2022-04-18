@@ -30,6 +30,8 @@ Cloudflare currently supports the transfer of `.uk`, `co.uk`, `org.uk`, and `me.
 
 If you request your current registrar to update the IPS tag before completing the checkout process, the transfer request will be automatically rejected. You must complete the checkout process before requesting the IPS tag update.
 
+For security reasons, domains transferred to Cloudflare Registrar are locked for 60 days before they can be transferred out to another Registrar.
+
 {{</Aside>}}
 
 ## Possible reasons a transfer may fail or be rejected
