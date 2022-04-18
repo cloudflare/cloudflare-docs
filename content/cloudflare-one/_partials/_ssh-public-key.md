@@ -5,22 +5,21 @@ _build:
   list: never
 ---
 
-
 2. Use the following command to change directories to the SSH configuration directory on the remote target machine:
 
-  ```sh
-  $ cd /etc/ssh
-  ```
+    ```sh
+    $ cd /etc/ssh
+    ```
 
 3. Once there, you can use the following command to both generate the file and open a text editor to input/paste the public key.
 
-  ```sh
-  $ vim ca.pub
-  ```
+    ```sh
+    $ vim ca.pub
+    ```
 
 4. In the `ca.pub` file, paste the public key without any modifications. Save the file. In some systems, you may need to use the following command to force the file to save depending on your permissions:
 
-  ```bash
-  :w !sudo tee %
-  :q!
-  ```
+    ```bash
+    :w !sudo tee %
+    :q!
+    ```

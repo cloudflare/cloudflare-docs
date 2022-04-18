@@ -2,6 +2,7 @@
 pcx-content-type: concept
 title: Network policies
 weight: 4
+layout: single
 ---
 
 # Network policies
