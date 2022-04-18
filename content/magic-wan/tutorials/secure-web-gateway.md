@@ -34,7 +34,7 @@ For the purpose of this tutorial, setup will reference a scenario where an enter
 
 Each site's private network has an on-ramp to Cloudflare's Anycast network using Anycast GRE or IPsec tunnels, and the Cloudflare tunnel endpoint IP address is `192.0.2.10`. The table below summarizes the Anycast GRE or IPsec tunnel configuration and route table entries for the Magic WAN topology.
 
-![Tunnel configuration](/magic-wan/static/tunnel-config-values.png)
+![Magic WAN prefix and next hope values for each branch office](/magic-wan/static/tunnel-config-values.png)
 
 ## Add Anycast GRE or IPsec tunnel
 
@@ -48,7 +48,7 @@ Each site's private network has an on-ramp to Cloudflare's Anycast network using
 
 In keeping with the example scenario, the list of tunnels should match the example below.
 
-![Tunnel configuration](/magic-wan/static/gre-tunnel-values.png)
+![Tunnel configuration for each branch office, including interface address, Customer and Cloudflare GRE endpoints, and TTL and MTU](/magic-wan/static/gre-tunnel-values.png)
 
 ## Add static routes
 
@@ -60,7 +60,7 @@ In keeping with the example scenario, the list of tunnels should match the examp
 
 In keeping with the example scenario, the list of static routes should match the example below.
 
-![Tunnel configuration](/magic-wan/static/static-route-values.png)
+![Static route configuration with defined prefixes, next hops, and priorities](/magic-wan/static/static-route-values.png)
 
 ## Secure Web Gateway
 
