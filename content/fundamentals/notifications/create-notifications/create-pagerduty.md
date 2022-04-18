@@ -5,9 +5,9 @@ title: Configure PagerDuty
 
 # Configure PagerDuty
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
-This feature is only available if your account has at least one Business or Enterprise zone. For more information, see our [plans page](https://www.cloudflare.com/teams-pricing/).
+This feature is only available if your account has at least one zone on a Business or higher plan. For more information, see our [plans page](https://www.cloudflare.com/plans/).
 
 {{</Aside>}}
 
