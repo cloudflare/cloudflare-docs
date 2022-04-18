@@ -61,7 +61,7 @@ The Cloudflare WARP macOS client allows for an automated install via tools like 
 
 ### Create `plist` file
 
-1. [Click here](/cloudflare-one/static/documentation/connections/com.cloudflare.warp.plist) to download an example `com.cloudflare.warp.plist` file.
+1. [Download](/cloudflare-one/static/documentation/connections/com.cloudflare.warp.plist) an example `com.cloudflare.warp.plist` file.
 
 2. Modify the file with your desired [deployment arguments](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
 
