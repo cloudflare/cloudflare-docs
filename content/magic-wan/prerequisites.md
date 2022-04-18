@@ -1,7 +1,7 @@
 ---
 title: Prerequisites
 pcx-content-type: how-to
-weight: 2
+weight: 3
 ---
 
 # Prerequisites

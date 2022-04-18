@@ -57,4 +57,4 @@ After you have chosen your edge certificate and updated your encryption mode, re
 
 - [Edge certificates](/ssl/edge-certificates/additional-options/): Customize different aspects of your edge certificates, from enabling **Opportunistic Encryption** to specifying a **Minimum TLS Version**.
 - [Authenticated origin pull](/ssl/origin-configuration/authenticated-origin-pull/): Ensure all requests to your origin server originate from the Cloudflare network.
-- [Notifications](/ssl/notifications/): Set up alerts related to certificate validation status, issuance, deployment, renewal, and expiration.
+- [Notifications](/fundamentals/notifications/notification-available/): Set up alerts related to certificate validation status, issuance, deployment, renewal, and expiration.

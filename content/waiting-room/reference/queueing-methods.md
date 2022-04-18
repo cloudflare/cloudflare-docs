@@ -19,7 +19,7 @@ Regardless of the queueing method, if `queueAll` is enabled or an event is prequ
 
 Your waiting room orders visitors according to when they entered the waiting room.
 
-![FIFO diagram](/waiting-room/static/fifo-queueing-method.png)
+![First In First Out flow showing visitors entering the origin by order of arrival to the waiting room](/waiting-room/static/fifo-queueing-method.png)
 
 Technically, each user receives a [cookie](/waiting-room/reference/waiting-room-cookie/) that contains a timestamp of when their request first hit an actively queueing waiting room. Cloudflare uses that timestamp to order visitors and provide the estimated wait time.
 
@@ -29,7 +29,7 @@ Use this method when you want to reward visitors who get in the queue first and 
 
 When your application has open spots, your waiting room chooses visitors at random to exit the waiting room and enter your application.
 
-![Random queueing method diagram](/waiting-room/static/random-queueing-method.png)
+![Random queueing flow showing visitors randomly exiting the waiting room and entering an origin](/waiting-room/static/random-queueing-method.png)
 
 Use this method when you want to distribute products or services more equitably. Earlier users have a better chance of exiting the waiting room before the estimated wait time because they have more chances to be selected.
 

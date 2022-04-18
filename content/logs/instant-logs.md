@@ -30,7 +30,7 @@ Once a filter is selected and the stream has started, only log lines that match 
 
 Create a session by sending a `POST` request to our Instant Logs job endpoint with the following parameters:
 
-- **Fields** - List any field available in our [HTTP request dataset](/logs/reference/log-fields/zone/http_requests).
+- **Fields** - List any field available in our [HTTP request dataset](/logs/reference/log-fields/zone/http_requests/).
 
 - **Sample** - The sample parameter is the sample rate of the records set by the client: `"sample": 1` is 100% of records `"sample": 10` is 10% and so on.
 
@@ -176,4 +176,4 @@ If either of these limits are reached, the logs stream will automatically stop.
 
 ## Connect with us
 
-If you have any feature requests or notice any bugs, share your feedback directly with us by joining the [Cloudflare Developers community on Discord](https://discord.gg/h35x2dkuq8).
+If you have any feature requests or notice any bugs, share your feedback directly with us by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).

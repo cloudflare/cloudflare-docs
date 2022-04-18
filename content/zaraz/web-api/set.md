@@ -8,6 +8,8 @@ meta:
 
 # Set
 
+You can use `zaraz.set()` anywhere inside the `<body>` tag of a page.
+
 You may want to make a variable available in all your events without manually setting it every time you are using `zaraz.track()`. For the purpose of this example, assume users in your system have a unique identifier that you want to send to your tools. You might have many `zaraz.track()` calls all sharing this one parameter:
 
 ```js
@@ -38,4 +40,4 @@ Example:
 zaraz.set('product_name', 't-shirt', {scope: 'page'})
 ```
 
-This example makes the `product_name` property available to all `zaraz.track` calls in the current page, but will not affect calls after visitors navigate to other pages. Refer to [Event properties](/zaraz/reference/properties-reference#event-properties) for more details.
+This example makes the `product_name` property available to all `zaraz.track` calls in the current page, but will not affect calls after visitors navigate to other pages. Refer to [Event properties](/zaraz/reference/properties-reference/#event-properties) for more details.

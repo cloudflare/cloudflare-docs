@@ -1,7 +1,7 @@
 ---
 pcx-content-type: concept
 title: IP Lists
-weight: 241
+weight: 2
 ---
 
 # IP Lists
@@ -28,7 +28,7 @@ Use Managed IP Lists to access Cloudflare's IP threat intelligence.
 
 Cloudflare scans public, open proxy lists for reachable, open proxies. After verifying the proxies, Cloudflare determines their exit IPs and creates a list of IPs you can use when writing rules via the dashboard or API.
 
-## Entitlements
+## Availability
 
 The number of IP Lists you can create depends on the Cloudflare plans associated with the zones in your account. Regardless of plan, you can store up to a total of 10,000 items, spread across all of your lists.
 
@@ -75,8 +75,9 @@ The following user roles have access to the List management functionality:
 
 ## Managing lists
 
-- To manage and edit IP Lists from your Cloudflare account interface, refer to [Use IP Lists](/firewall/cf-dashboard/rules-lists/).
-- To manage and edit IP Lists using the Cloudflare API, refer to [Lists API](/firewall/api/cf-lists/).
+To manage and edit IP Lists from your Cloudflare account interface, refer to [Use IP Lists](/firewall/cf-dashboard/rules-lists/).
+
+To manage and edit IP Lists using the Cloudflare API, refer to [Lists API](/firewall/api/cf-lists/).
 
 ## Using lists in expressions
 

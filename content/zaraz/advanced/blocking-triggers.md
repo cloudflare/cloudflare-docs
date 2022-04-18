@@ -12,7 +12,7 @@ Every tool action has Firing Triggers assigned to it. Blocking Triggers are opti
 
 To conditionally block all actions in a tool, you have to configure Blocking Triggers on every action that belongs to that tool. Note that when you use Blocking Triggers, Zaraz will still load on the page.
 
-To use Blocking Triggers, start by [creating the trigger](/zaraz/get-started/create-trigger) with the conditions you want to use to block an event. Then:
+To use Blocking Triggers, start by [creating the trigger](/zaraz/get-started/create-trigger/) with the conditions you want to use to block an event. Then:
 
 1. Go to [Zaraz's main dashboard](https://dash.cloudflare.com/?to=/:account/:zone/zaraz).
 2. Locate the third-party tool with the action you want to block and click **Edit**.

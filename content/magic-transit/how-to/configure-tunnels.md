@@ -83,5 +83,3 @@ Router(config)# ip nat inside
 ```txt
 Router(config)# end
 ```
-
-{{<render file="_scoped-routes.md">}}

@@ -14,8 +14,6 @@ Many applications for the web are built using industry standards like [PostgreSQ
 
 In this tutorial, you will explore how to integrate with PostgREST and PostgreSQL using Workers.
 
-![Example GIF](example.gif)
-
 ## Prerequisites
 
 To effectively learn from this tutorial, you should have an instance of PostgreSQL configured. In addition, you will need to install PostgREST, a separate service that provides REST API access to your Postgres database.
@@ -381,6 +379,6 @@ In this tutorial, you have used PostgREST, `postgrest-js`, and Cloudflare Worker
 
 If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below.
 
-*   [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/)
+<!-- *   [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/) -->
 *   [Build a Slackbot](/workers/tutorials/build-a-slackbot/)
 *   [GitHub SMS notifications using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)

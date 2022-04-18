@@ -1,14 +1,13 @@
 ---
 pcx-content-type: concept
 title: Headers
-weight: 8
 ---
 
 # Headers
 
 {{<Aside type="note">}}
 
-Custom headers defined in the `_headers` file are not currently applied to responses from [Functions](/pages/platform/functions), even if the function route matches the URL pattern. If your Pages application uses Functions, you must migrate any behaviors from the `_headers` file to the `Response` object in the appropriate `/functions` route. When altering headers for multiple routes, you may be interested in [adding middleware](/pages/platform/functions#adding-middleware) for shared behavior.
+Custom headers defined in the `_headers` file are not currently applied to responses from [Functions](/pages/platform/functions/), even if the function route matches the URL pattern. If your Pages application uses Functions, you must migrate any behaviors from the `_headers` file to the `Response` object in the appropriate `/functions` route. When altering headers for multiple routes, you may be interested in [adding middleware](/pages/platform/functions/#adding-middleware) for shared behavior.
 
 {{</Aside>}}
 

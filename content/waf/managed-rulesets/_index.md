@@ -40,13 +40,13 @@ Cloudflare provides the following WAF Managed Rulesets:
     </tr>
     <tr>
       <td style='width:30%; word-wrap:break-word; white-space:normal'>Cloudflare Free Managed Ruleset</td>
-      <td>Designed to provide mitigation against high and wide impacting vulnerabilities. The rules are safe to deploy on most applications. If you deployed the Cloudflare Managed Ruleset for your site, you do not need to deploy this Managed Ruleset.</td>
+      <td>Available on all Cloudflare plans. Designed to provide mitigation against high and wide impacting vulnerabilities. The rules are safe to deploy on most applications. If you deployed the Cloudflare Managed Ruleset for your site, you do not need to deploy this Managed Ruleset.</td>
     </tr>
   </tbody>
 </table>
 {{</table-wrap>}}
 
-The following rulesets run in the response phase:
+The following rulesets run in a response phase:
 
 {{<table-wrap>}}
 <table style="table-layout:fixed; width:100%;">
@@ -59,7 +59,7 @@ The following rulesets run in the response phase:
   <tbody>
     <tr>
       <td style='width:30%; word-wrap:break-word; white-space:normal'>Cloudflare Sensitive Data Detection (Beta)</td>
-      <td>Created by Cloudflare to address common data loss threats. These rules monitor the download of specific sensitive data — for example, financial and personally identifiable information. Available in <strong>Firewall</strong> > <strong>Data</strong>.</td>
+      <td>Created by Cloudflare to address common data loss threats. These rules monitor the download of specific sensitive data — for example, financial and personally identifiable information. Available in <strong>Security</strong> > <strong>Data</strong>.</td>
     </tr>
   </tbody>
 </table>
@@ -71,4 +71,4 @@ When you enable a Managed Ruleset in **Security** > **WAF** > **Managed rules**,
 
 Other Managed Rulesets, like DDoS Managed Rulesets, are deployed to a different phase. Refer to the specific Managed Ruleset documentation for details.
 
-For more information on phases, refer to [Phases](/ruleset-engine/about/#phases).
+For more information on phases, refer to [Phases](/ruleset-engine/about/phases/).

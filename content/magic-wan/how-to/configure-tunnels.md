@@ -25,5 +25,3 @@ For an example Anycast GRE or IPsec tunnel configuration, see [Anycast GRE confi
 2.  Next to **Manage Magic WAN configuration**, click **Configure**.
 
 {{<render file="../../magic-transit/_partials/_tunnel-configuration.md">}}
-
-{{<render file="../../magic-transit/_partials/_scoped-routes.md">}}

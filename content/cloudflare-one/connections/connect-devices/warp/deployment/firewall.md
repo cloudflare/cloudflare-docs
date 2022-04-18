@@ -1,10 +1,10 @@
 ---
 pcx-content-type: reference
-title: WARP with Firewall
-weight: 11
+title: WARP with firewall
+weight: 9
 ---
 
-# WARP with Firewall
+# WARP with firewall
 
 If your organization uses a firewall or other policies to restrict Internet traffic, you may need to make a few changes to allow WARP to connect.
 
@@ -15,7 +15,7 @@ The WARP client talks with our edge via a standard HTTPS connection outside the 
 - IPv4 API Endpoint: `162.159.192.1`
 
 {{<Aside type="note">}}
-The Orchestration API endpoint is currently shared with our Consumer WARP client. In early 2022 we will be splitting this out to its own dedicated IP addresses.
+The Orchestration API endpoint is currently shared with our Consumer WARP client. Starting with build 2022.4.x we will be splitting this out to its own dedicated IP addresses.
 
 Those IP addresses will be:
 

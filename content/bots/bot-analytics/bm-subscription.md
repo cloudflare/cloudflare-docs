@@ -14,7 +14,7 @@ Enterprise customers with Bot Management can use **Bot Analytics** to dynamicall
 
 To use Bot Analytics, open the Cloudflare dashboard and select **Security** > **Bots**.
 
-![Bot Analytics on Dashboard](/bots/static/bot-analytics-dashboard-ent.png)
+![View Bot Analytics in the Cloudflare Dashboard. For more details, keep reading.](/bots/static/bot-analytics-dashboard-ent.png)
 
 ## Features
 
@@ -42,4 +42,4 @@ Bot Management customers can use Bot Analytics to:
 
 Data from Bot Analytics is also available via the GraphQL API. You can access bot scores, bot sources, [Bot Tags](/bots/concepts/cloudflare-bot-tags/), and bot _decisions_ (_automated_, _likely automated_, etc.).
 
-Read the [GraphQL Analytics API documentation](/analytics/graphql-api) for more information about GraphQL and basic querying.
+Read the [GraphQL Analytics API documentation](/analytics/graphql-api/) for more information about GraphQL and basic querying.

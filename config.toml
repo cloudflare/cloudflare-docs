@@ -18,6 +18,7 @@ rssLimit = 10
 paginate = 12 # default 10
 paginatePath = "page" # default
 
+# Coveo is a search solution - the following read-only token is used from the frontend to execute search queries
 [params.coveo]
 org = "cloudflareproduction7iy98g48"
 token = "xx2b20a6dc-ce86-41cb-ad18-90bd2568dcdb"

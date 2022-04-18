@@ -18,7 +18,7 @@ The table below lists the actions available in the Rules language.
 
 Some actions, like _Block_, will stop the evaluation of the remaining rules. The _Skip_ action will skip the evaluation of _some_ rules when there is a match, but the exact behavior will depend on the rule configuration.
 
-The available actions depend on the [phase](/ruleset-engine/about/#phases) where you are configuring the rule. Refer to each product’s documentation for details on the phase(s) supported by that product.
+The available actions depend on the [phase](/ruleset-engine/about/phases/) where you are configuring the rule. Refer to each product’s documentation for details on the phase(s) supported by that product.
 
 {{<table-wrap>}}
 
@@ -75,15 +75,14 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
       <td>
         <p>Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet.</p>
         <p>
-          Depending on the characteristics of a request, Cloudflare will perform the following
-          actions:
+          Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge from one of the following rotating actions:
         </p>
-        <p>
-          <ul>
-            <li>Show a non-interactive challenge page, similar to the current JS Challenge.</li>
-            <li>Show a CAPTCHA challenge.</li>
-          </ul>
-        </p>
+        <ul>
+          <li>Show a non-interactive challenge page (similar to the current JS Challenge).</li>
+          <li>Present an invisible proof of work challenge to the browser.</li>
+          <li>Show a custom interactive challenge (such as click a button).</li>
+          <li>Show a CAPTCHA challenge.</li>
+        </ul>
       </td>
       <td>Yes</td>
     </tr>

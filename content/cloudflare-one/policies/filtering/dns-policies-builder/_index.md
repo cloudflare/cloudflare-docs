@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
 title: DNS policies
+layout: single
 weight: 1
 ---
 
@@ -19,8 +20,10 @@ Build a DNS policy by configuring the following elements:
 *   [Operators](#operators)
 *   [Actions](#actions)
 
-{{<Aside>}}
 Unless a more specific selector is configured in a policy (e.g., <code>user email</code> or <code>source IP address</code> for a registered location), then the policy will be evaluated against all DNS queries that reach Gateway from your organization.
+
+{{<Aside>}}
+If you are using the legacy DNS policy builder, we recommend migrating your rules to the new policy builder in order to take full advantage of the DNS filtering options described below. Once you have recreated your rules in the **DNS** tab, you can delete the old rules from the **DNS (legacy)** tab.
 {{</Aside>}}
 
 ## Expressions
@@ -30,6 +33,16 @@ Build expressions to determine the set of elements you want to impact with your 
 ### Selectors
 
 Gateway matches DNS traffic against the following selectors, or criteria:
+
+#### Application
+
+You can apply DNS policies to a growing list of popular web applications. Refer to the [Application and app types](/cloudflare-one/policies/filtering/application-app-types) page for more information.
+
+| UI name | API example |
+| -- | -- |
+| Application | `any(app.ids[*] in {505}` |
+
+A list of supported applications and their ID numbers is available through the [Gateway API endpoint](https://api.cloudflare.com/#zero-trust-gateway-application-and-application-type-mappings-properties).
 
 #### Identity-based selectors
 
@@ -105,7 +118,7 @@ Use this selector to apply DNS policies to traffic directed to specific content 
 
 | UI name | API example |
 | -- | -- |
-| Content Categories | `not(any(http.request.uri.content_category[*] in {1}))` |
+| Content Categories | `any(dns.content_category[*] in {1})` |
 
 #### Security Categories
 
@@ -113,7 +126,7 @@ Use this selector to block traffic directed to specific security categories.
 
 | UI name | API example |
 | -- | -- |
-| Security Categories | `any(http.request.uri.category[*] in {1})` |
+| Security Categories | `any(dns.security_category[*] in {1})` |
 
 #### Authoritative Nameserver IP
 

@@ -13,7 +13,7 @@ This guide is meant for organizations setting up their first load balancer. If y
 ## Prerequisites
 
 - **Multiple servers**, either physical or cloud-based.
-- **Access to Load Balancing**, available as an add-on for any type of account.
+- **Access to Load Balancing**, available as an [add-on](/load-balancing/how-to/enable-load-balancing/) for any type of account.
 - **Load balancer hostname**: The hostname for which the Cloudflare Load Balancer will manage traffic. The default hostname is the root hostname.
 
 ---

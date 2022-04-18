@@ -43,7 +43,7 @@ View analytics is collected only when the Stream player is used. If you use a th
 
 {{<Aside>}}
 
-If you are newer to GraphQL, refer to [Cloudflare GraphQL analytics for HTTP requests](/analytics/graphql-api/getting-started) for more detailed information getting started with the Cloudflare GraphQL Analytics API.
+If you are newer to GraphQL, refer to [Cloudflare GraphQL analytics for HTTP requests](/analytics/graphql-api/getting-started/) for more detailed information getting started with the Cloudflare GraphQL Analytics API.
 
 {{</Aside>}}
 

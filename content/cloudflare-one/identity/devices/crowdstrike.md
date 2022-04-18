@@ -21,7 +21,7 @@ To retrieve those values:
 
 1.  Log in to your Falcon Dashboard.
 1.  Navigate to **Support** > **API Clients and Keys**.
-1.  Add a new API client and ensure at least the Zero Trust Assessment API Scope is enabled.
+1.  Add a new API client and ensure that `Zero Trust Assessment` and `Hosts` read API Scope is enabled.
 1.  Copy the Client ID and Client Secret to a safe place.
 1.  Navigate to **Hosts** > **Sensor Downloads** and note down your Customer ID.
 1.  Determine your Cloud Environment API endpoint by following the instructions [here](https://falcon.us-2.crowdstrike.com/documentation/93/oauth2-auth-token-apis). This becomes your Base API URL. As an example:

@@ -51,3 +51,5 @@ For example, you can send `x.x.x.0/29` to Datacenter 1 and `x.x.x.8/29` to Datac
 2.  Next to **Static routes configuration**, click **Configure**.
 
 {{<render file="_static-routes.md">}}
+
+{{<render file="_scoped-routes.md">}}

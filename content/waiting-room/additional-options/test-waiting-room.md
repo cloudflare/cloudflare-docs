@@ -134,7 +134,7 @@ Once the script finishes running, it creates a CSV file with the following field
 
 To visualize your results, open your CSV file within a spreadsheet application. For example, here is a basic chart that shows the amount of time a user waited verses the time they first tried to get to the web service:
 
-![Visualize waiting room test data by using a graphing tool](/waiting-room/static/test-waiting-room.png)
+![Visualizing waiting room test data by using a graphing tool](/waiting-room/static/test-waiting-room.png)
 
 In this example, you can clearly see when the script entered the second phase — with a reduced rate of new users per second — leading to decreased wait times.
 

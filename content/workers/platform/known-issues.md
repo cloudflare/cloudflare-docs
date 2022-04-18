@@ -25,6 +25,14 @@ Consider two different Workers, each deployed to the same zone. Worker A is assi
 
 You will notice that all examples trigger Worker B. This includes the final example, which exemplifies the unexpected behavior.
 
+When adding a wildcard on a subdomain, here are how the following URLs will be resolved:
+    
+    // (A) *.example.com/a 
+    // (B) a.example.com/* 
+    
+    "a.example.com/a"
+    // -> B
+
 ## wrangler dev
 
 - When running `wrangler dev`, all outgoing requests are given the `cf-workers-preview-token` header, which Cloudflare recognizes as a preview request. This applies to the entire Cloudflare network, so making HTTP requests to other Cloudflare zones is currently discarded for security reasons. To enable a workaround, insert the following code into your Worker script:

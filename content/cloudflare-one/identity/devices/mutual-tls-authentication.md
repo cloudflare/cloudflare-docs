@@ -72,6 +72,11 @@ To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.team
 
 ![mTLS session duration](/cloudflare-one/static/documentation/identity/devices/mutual-tls-session-duration.png)
 
+{{<Aside type="warning">}}
+
+Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the WARP client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/cloudflare-one/policies/filtering/http-policies/configuration-guidelines/#enabling-mTLS-authentication) for the domain.
+{{</Aside>}}
+
 ## Test using cURL
 
 Test for the site using mTLS by attempting to curl the site without a client certificate.
@@ -173,7 +178,7 @@ Use the instructions under Installation to install the toolkit, and ensure that 
 
 ## Generating a client certificate
 
-Returning to the terminal, generate a client certificate that will authenticate against the Root CA uploaded. This example creates a new directory to keep client certificates separate from the Root CA working location for ease of management.
+Returning to the terminal, generate a client certificate that will authenticate against the Root CA uploaded.
 
 1.  Create a file named `client-csr.json` and add the following JSON blob:
 
@@ -200,7 +205,7 @@ Returning to the terminal, generate a client certificate that will authenticate 
 2.  Now, use the following command to generate a client certificate with the Cloudflare PKI toolkit:
 
     ```sh
-    $ cfssl gencert -ca=../mtls-test/ca.pem -ca-key=../mtls-test/ca-key.pem  -config=../mtls-test/ca-config.json -profile=client client-csr.json | cfssljson -bare client
+    $ cfssl gencert -ca=ca.pem -ca-key=ca-key.pem  -config=ca-config.json -profile=client client-csr.json | cfssljson -bare client
     ```
 
 3.  You can now test the client certificate with the following `cURL` command.

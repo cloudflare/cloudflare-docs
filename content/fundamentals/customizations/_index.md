@@ -1,7 +1,7 @@
 ---
 pcx-content-type: navigation
 title: Customizations
-weight: 3
+weight: 5
 ---
 
 # Customizations

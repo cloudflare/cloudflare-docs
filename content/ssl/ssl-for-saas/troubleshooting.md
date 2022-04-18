@@ -61,7 +61,7 @@ You can send a [PATCH request](https://api.cloudflare.com/#custom-hostname-for-a
 
 ## Purge cache
 
-To remove specific files from Cloudflare’s cache, [purge the cache](/cache/how-to/purge-cache#purge-by-single-file-by-url) while specifying one or more hosts.
+To remove specific files from Cloudflare’s cache, [purge the cache](/cache/how-to/purge-cache/#purge-by-single-file-by-url) while specifying one or more hosts.
 
 ---
 

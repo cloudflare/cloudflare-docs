@@ -51,7 +51,7 @@ For **automated** traffic, sort through the IP addresses, ASNs, and other data p
 
 Use the slider tool to identify **other traffic groups**. For example, you may find that traffic from your mobile app is routinely scored at 12.
 
-![Bot score distribution](/bots/static/bot-score-distribution.png)
+![Example of a bot score distribution](/bots/static/bot-score-distribution.png)
 
 At the end of your analysis, you should:
 
@@ -116,7 +116,7 @@ For more details, see [Static resource protection](/bots/reference/static-resour
 
 ### Verified bots
 
-Some automated traffic is good! To allow good bots like Google or Bing, use the **Verified Bot** field in your rules. If you see a verified bot that Cloudflare is not [currently tracking](/firewall/known-issues-and-faq/#bots-currently-detected), fill out an [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
+Some automated traffic is good! To allow good bots like Google or Bing, use the **Verified Bot** field in your rules. If you see a verified bot that Cloudflare is not [currently tracking](https://radar.cloudflare.com/verified-bots), fill out an [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
 
 ### Mobile traffic
 

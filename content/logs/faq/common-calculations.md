@@ -4,7 +4,7 @@ title: Common calculations
 weight: 4
 ---
 
-[❮ Back to FAQ](/logs/faq)
+[❮ Back to FAQ](/logs/faq/)
 
 # Common calculations
 

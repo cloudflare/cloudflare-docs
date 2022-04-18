@@ -23,7 +23,7 @@ Stream does not currently support multi-audio tracks. For files with multiple au
 
 ### Can I download original video files from Stream?
 
-You cannot download the _exact_ input file that you uploaded. However, depending on your use case, you can use the [Downloadable Videos](/stream/viewing-videos/download-videos) feature to get encoded MP4s for use cases like offline viewing.
+You cannot download the _exact_ input file that you uploaded. However, depending on your use case, you can use the [Downloadable Videos](/stream/viewing-videos/download-videos/) feature to get encoded MP4s for use cases like offline viewing.
 
 ### Is there a limit to the amount of videos I can upload?
 
@@ -55,7 +55,7 @@ MP4, MKV, MOV, AVI, FLV, MPEG-2 TS, MPEG-2 PS, MXF, LXF, GXF, 3GP, WebM, MPG, Qu
 
 ### What frame rates (FPS) are supported?
 
-Cloudflare Stream supports video file uploads for any FPS, however videos will be re-encoded for 30 FPS playback. If the original video file has a frame rate lower than 30 FPS, Stream will re-encode at the original frame rate.
+Cloudflare Stream supports video file uploads for any FPS, however videos will be re-encoded for 70 FPS playback. If the original video file has a frame rate lower than 70 FPS, Stream will re-encode at the original frame rate.
 
 If the frame rate is variable we will drop frames (e.g. if there are more than 1 frames within 1/30 seconds, we will drop the extra frames within that period).
 

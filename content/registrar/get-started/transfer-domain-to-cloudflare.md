@@ -12,7 +12,11 @@ Transferring a domain to a new registrar informs the registry that they should i
 
 This section contains generic instructions on how to transfer your domain to Cloudflare from most registrars.
 
+---
+
 {{<render file="_before-you-begin.md">}}
+
+---
 
 {{<render file="_restrictions.md">}}
 
@@ -68,7 +72,7 @@ Sites can be unavailable for a few reasons, including:
 - Cloudflare does not yet support the TLD.
 - The domain is designated as a premium domain by the registry.
 - The domain has a status that does not allow for a transfer.
-- You failed to follow the steps highlighted above in [creating an account with your domain](https://support.cloudflare.com/hc/articles/201720164) and [changing your DNS nameservers to Cloudflare](/dns/zone-setups/full-setup).
+- You failed to follow the steps highlighted above in [creating an account with your domain](https://support.cloudflare.com/hc/articles/201720164) and [changing your DNS nameservers to Cloudflare](/dns/zone-setups/full-setup/).
 
 You will not be billed at this step. Cloudflare will only bill your card when you input the auth code and confirm the contact information at the conclusion of your transfer request.
 

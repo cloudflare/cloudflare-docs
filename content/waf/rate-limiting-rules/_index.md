@@ -1,7 +1,7 @@
 ---
 pcx-content-type: concept
 title: Rate limiting rules
-weight: 4
+weight: 5
 ---
 
 # Rate limiting rules
@@ -9,6 +9,8 @@ weight: 4
 Rate limiting rules allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
 
 {{<Aside type="note">}}
+
+This feature is only available for customers on an Enterprise plan. Refer to [Availability](#availability) for details.
 
 For guidance on the previous version of rate limiting rules, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 
@@ -18,7 +20,7 @@ For guidance on the previous version of rate limiting rules, refer to [Configuri
 
 Like other rules evaluated by Cloudflare's Ruleset Engine, rate limiting rules have an associated **expression** and an **action**.
 
-The **expression** specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language). The **action** specifies what to perform when there is a match for the rule and any additional conditions are met. In the case of rate limiting rules, the action occurs when the request rate reaches the specified limit.
+The **expression** specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language/). The **action** specifies what to perform when there is a match for the rule and any additional conditions are met. In the case of rate limiting rules, the action occurs when the request rate reaches the specified limit.
 
 Besides these two parameters, rate limiting rules require the following additional parameters:
 
@@ -30,6 +32,10 @@ Besides these two parameters, rate limiting rules require the following addition
 Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for more information on mandatory and optional parameters.
 
 Refer to [Determining the request rate](/waf/rate-limiting-rules/request-rate/) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
+
+## Important remarks
+
+Applying rate limiting rules to verified bots might affect Search Engine Optimization (SEO). For more information, refer to [Improve SEO](/fundamentals/get-started/task-guides/improve-seo/).
 
 ---
 

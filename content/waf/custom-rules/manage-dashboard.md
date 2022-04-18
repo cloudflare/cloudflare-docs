@@ -8,7 +8,7 @@ weight: 6
 
 Manage custom rules in **Security** > **WAF** > **Custom rules**.
 
-{{<Aside type="warning" header="Important">}}
+{{<Aside type="note">}}
 
 This feature is only available for select customers on an Enterprise plan.
 
@@ -21,7 +21,7 @@ The custom rules interface allows you to:
 - Edit and delete rules
 - Enable or disable rules
 
-![Custom rules tab](/waf/static/custom-rules/custom-rules-tab.png)
+![The Custom rules tab in the dashboard, listing three example rules](/waf/static/custom-rules/custom-rules-tab.png)
 
 ## Manage custom rules
 

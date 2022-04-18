@@ -157,7 +157,7 @@ domain in the Cloudflare control panel:
 
 {{</Aside>}}
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/).
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
 
 1.  Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
 
@@ -187,7 +187,7 @@ We recommend that you run `cloudflared` [as a service](/cloudflare-one/connectio
 
 ### Install `cloudflared` on the client machine
 
-[Download and install](/cloudflare-one/connections/connect-apps/install-and-setup/installation) `cloudflared` on the client desktop that will connect to the remote desktop. Note that `cloudflared` will need to be installed on each user device that will connect.
+[Download and install](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) `cloudflared` on the client desktop that will connect to the remote desktop. Note that `cloudflared` will need to be installed on each user device that will connect.
 
 ### Connect to the remote desktop
 

@@ -124,7 +124,7 @@ You have completed writing a Cloudflare Workers function with Rust-generated Was
 
 Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `wrangler publish`, which will build and publish your code:
 
-![Publish](./media/publish.gif)
+![GIF of successfully publishing your project with the wrangler publish command](./media/publish.gif)
 
 ## Related resources
 
@@ -132,7 +132,7 @@ In this tutorial, you built and published a Rust-generated WebAssembly serverles
 
 If you enjoyed this tutorial, below you can find other tutorials for building on Cloudflare Workers:
 
-- [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/)
+<!-- - [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/) -->
 - [Build a JAMStack app](/workers/tutorials/build-a-jamstack-app/)
 - [Build a QR code generator](/workers/tutorials/build-a-qr-code-generator/)
 

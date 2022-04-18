@@ -56,7 +56,7 @@ In comparison to [layer 7 load balancing](#layer-7-load-balancing-orange-clouded
 - Cannot integrate with other Cloudflare features such as caching, Workers, WAF, etc.
 - Increases authoritative queries against Cloudflare, which can potentially cost more for customers with usage-based billing.
 - Supports standard [session affinity](/load-balancing/understand-basics/session-affinity/).
-- Geo-locates traffic based on the data center associated with a user's recursive resolver, which can sometimes cause issues with [latency-based steering](/load-balancing/understand-basics/traffic-steering/steering-policies/dynamic-steering/).
+- Geo-locates traffic based on the data center associated with the ECS source address, if available. If not available, geo-locates based a user's recursive resolver, which can sometimes cause issues with [latency-based steering](/load-balancing/understand-basics/traffic-steering/steering-policies/dynamic-steering/).
 
 ---
 
@@ -64,7 +64,7 @@ In comparison to [layer 7 load balancing](#layer-7-load-balancing-orange-clouded
 
 Layer 4 load balancers route traffic by forwarding traffic to certain ports or IP addresses.
 
-Cloudflare currently only supports layer 4 load balancing as part of [Cloudflare Spectrum](/spectrum/about/load-balancer).
+Cloudflare currently only supports layer 4 load balancing as part of [Cloudflare Spectrum](/spectrum/about/load-balancer/).
 
 {{<Aside type="note">}}
 

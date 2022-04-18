@@ -12,7 +12,7 @@ You can install `cloudflared` as a system service on Windows.
 
 ## Configuring `cloudflared` as a service
 
-By default, Cloudflare Tunnel expects all of the configuration to exist in the `%USERPROFILE%\.cloudflared\config.yml` [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file). The available options are documented on the [configuration file reference](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/), but at a minimum you must specify the following arguments to run as a service:
+By default, Cloudflare Tunnel expects all of the configuration to exist in the `%USERPROFILE%\.cloudflared\config.yml` [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file). The available options are documented on the [configuration file reference](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/), but at a minimum you must specify the following arguments to run as a service:
 
 | Argument           | Description                                          |
 | ------------------ | ---------------------------------------------------- |
@@ -54,7 +54,7 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 1.  The login command will generate a `cert.pem` file and save it to your user profile by default. Copy the file to the `.cloudflared` folder created in step 5 using this command:
 
     ```bash
-    copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared
+    copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared\cert.pem
     ```
 
 1.  Next, create a tunnel:
@@ -73,22 +73,22 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
     # Uncomment the following two lines if you are using self-signed certificates in your origin server
     # originRequest:
     #   noTLSVerify: true
+    
     ingress:
-    - hostname: app.mydomain.com
+      - hostname: app.mydomain.com
         service: https://internal.mydomain.com
-    - service: http_status:404
+      - service: http_status:404
     logfile:  C:\Cloudflared\cloudflared.log
     ```
 
-1.  Copy the credentials file and the configuration file to the folder created in step 6:
+1.  Copy the credentials file to the folder created in step 6:
 
-        ```bash
-        C:\Windows\System32\config\systemprofile\.cloudflared
-        ```
+    ```bash
+    copy C:\Users\%USERNAME%\.cloudflared\<Tunnel-ID>.json C:\Windows\System32\config\systemprofile\.cloudflared\<Tunnel-ID>.json
+    ```
 
-         {{<Aside type="Note">}}
-
-    If you haven't created a config.yml file, follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#4-create-a-configuration-file).
+    {{<Aside type="Note">}}
+If you haven't created a config.yml file, follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#4-create-a-configuration-file).
     {{</Aside>}}
 
 1.  Validate the ingress rule entries in your configuration file using the command:
@@ -103,12 +103,14 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 1.  Locate `imagepath` and modify it as shown below. Make sure that there are no extra spaces or characters while you modify the registry entry, as this could cause problems with starting the service.
 
-        C:\Cloudflared\bin\cloudflared.exe --config=C:\Windows\System32\config\systemprofile\.cloudflared\config.yml  tunnel run
+    ```bash
+    C:\Cloudflared\bin\cloudflared.exe --config=C:\Users\%USERNAME%\.cloudflared\config.yml tunnel run
+    ```
 
 1.  If the service does not start, run the following command from `C:\Cloudflared\bin`:
 
     ```bash
-    sc start cloudflared tunnel run
+    sc start cloudflared
     ```
 
 You will see the output below:

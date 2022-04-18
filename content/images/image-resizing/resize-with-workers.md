@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Resize with Cloudflare Workers
-weight: 5
+weight: 6
 ---
 
 # Resize with Cloudflare Workers
@@ -14,7 +14,7 @@ Here are a few examples of the flexibility Workers give you:
 * **Hide the actual location of the original image**. You can store images in an external S3 bucket or a hidden folder on your server without exposing that information in URLs.
 * **Implement content negotiation**. This is useful to adapt image sizes, formats and quality dynamically based on the device and condition of the network.
 
-The resizing feature is accessed via the [options](/workers/runtime-apis/request#requestinitcfproperties) of a `fetch()` [subrequest inside a Worker](/workers/runtime-apis/fetch).
+The resizing feature is accessed via the [options](/workers/runtime-apis/request/#requestinitcfproperties) of a `fetch()` [subrequest inside a Worker](/workers/runtime-apis/fetch/).
 
 ## Fetch options
 
@@ -57,7 +57,7 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
       * An object `{x, y}` containing focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image.
 
 * `trim`
-  * An object with four properties `{left, top, right, bottom}` that specify a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account.
+  * An object with four properties `{top, right, bottom, left}` that specify a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account.
 
 * `quality`
   * Quality setting from 1-100 (useful values are in 60-90 range). Lower values make images look worse, but load faster. The default is `85`. Quality `100` will generate very large image files, and is not recommended.

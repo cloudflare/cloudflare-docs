@@ -1,7 +1,7 @@
 ---
 pcx-content-type: concept
 title: The Internet
-weight: 3
+weight: 7
 ---
 
 # The Internet

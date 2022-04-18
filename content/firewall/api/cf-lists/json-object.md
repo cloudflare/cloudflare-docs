@@ -1,10 +1,12 @@
 ---
 title: JSON object
 pcx-content-type: reference
-weight: 491
+weight: 1
+meta:
+  title: List JSON object
 ---
 
-# JSON object
+# List JSON object
 
 ## List object structure and properties
 

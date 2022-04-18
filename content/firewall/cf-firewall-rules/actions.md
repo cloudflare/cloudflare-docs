@@ -1,7 +1,7 @@
 ---
 title: Actions
 pcx-content-type: reference
-weight: 221
+weight: 1
 meta:
   title: Firewall rules actions
 layout: list
@@ -9,7 +9,7 @@ layout: list
 
 # Firewall rules actions
 
-## Overview
+{{<content-column>}}
 
 The action of a firewall rule tells Cloudflare how to handle HTTP requests that have matched the rule expression.
 
@@ -27,6 +27,8 @@ For reference information on rule actions available for Cloudflare products powe
 
 {{</Aside>}}
 
+{{</content-column>}}
+
 {{<table-wrap>}}
 
   <table style="width: 100%">
@@ -34,12 +36,17 @@ For reference information on rule actions available for Cloudflare products powe
     <tr>
       <th>Action</th>
       <th>Description</th>
-      <th>Order of Precedence</th>
+      <th>Order of precedence</th>
     </tr>
   </thead>
     <tbody>
       <tr>
-        <td><em>Log</em></td>
+        <td>
+          <strong>Log</strong><br/>
+          <br/>
+          API value:<br/>
+          <code class="InlineCode">log</code>
+        </td>
         <td>
           <ul>
             <li>Records matching requests in the Cloudflare Logs</li>
@@ -53,7 +60,11 @@ For reference information on rule actions available for Cloudflare products powe
         <td>1</td>
       </tr>
       <tr>
-        <td><em>Bypass</em></td>
+        <td><strong>Bypass</strong><br/>
+          <br/>
+          API value:<br/>
+          <code class="InlineCode">bypass</code>
+        </td>
         <td>
           <ul>
             <li>
@@ -85,7 +96,11 @@ For reference information on rule actions available for Cloudflare products powe
         <td>2</td>
       </tr>
       <tr>
-        <td><em>Allow</em></td>
+        <td><strong>Allow</strong><br/>
+          <br/>
+          API value:<br/>
+          <code class="InlineCode">allow</code>
+        </td>
         <td>
           <ul>
             <li>
@@ -107,7 +122,11 @@ For reference information on rule actions available for Cloudflare products powe
         <td>3</td>
       </tr>
       <tr>
-        <td><em>Legacy CAPTCHA</em></td>
+        <td><strong>Legacy CAPTCHA</strong><br/>
+          <br/>
+          API value:<br/>
+          <code class="InlineCode">challenge</code>
+        </td>
         <td>
           <ul>
             <li>
@@ -120,12 +139,17 @@ For reference information on rule actions available for Cloudflare products powe
               If successful, Cloudflare accepts the matched request; otherwise,
               it is blocked.
             </li>
+            <li>For additional information, refer to <a href="#notes-about-challenge-actions">Notes about challenge actions</a>.</li>
           </ul>
         </td>
         <td>4</td>
       </tr>
       <tr>
-        <td><em>Managed Challenge<br/>(Recommended)</em></td>
+        <td><strong>Managed Challenge<br/>(Recommended)</strong><br/>
+          <br/>
+          API value:<br/>
+          <code class="InlineCode">managed_challenge</code>
+        </td>
         <td>
           <ul>
             <li>
@@ -148,12 +172,17 @@ For reference information on rule actions available for Cloudflare products powe
                 </li>
               </ul>
             </li>
+            <li>For additional information, refer to <a href="#notes-about-challenge-actions">Notes about challenge actions</a>.</li>
           </ul>
         </td>
         <td>5</td>
       </tr>
       <tr>
-        <td><em>JS Challenge</em></td>
+        <td><strong>JS Challenge</strong><br/>
+          <br/>
+          API value:<br/>
+          <code class="InlineCode">js_challenge</code>
+        </td>
         <td>
           <ul>
             <li>
@@ -169,12 +198,17 @@ For reference information on rule actions available for Cloudflare products powe
               If successful, Cloudflare accepts the matched request; otherwise,
               it is blocked.
             </li>
+            <li>For additional information, refer to <a href="#notes-about-challenge-actions">Notes about challenge actions</a>.</li>
           </ul>
         </td>
         <td>6</td>
       </tr>
       <tr>
-        <td><em>Block</em></td>
+        <td><strong>Block</strong><br/>
+          <br/>
+          API value:<br/>
+          <code class="InlineCode">block</code>
+        </td>
         <td>Matching requests are denied access to the site.</td>
         <td>7</td>
       </tr>
@@ -182,3 +216,12 @@ For reference information on rule actions available for Cloudflare products powe
 
   </table>
 {{</table-wrap>}}
+
+## Notes about challenge actions
+
+When you configure a firewall rule with one of the challenge actions — _Managed Challenge_, _JS Challenge_, or _Legacy CAPTCHA_ — and a request matches the rule, one of two things can happen:
+
+* The request is blocked if the visitor fails the challenge
+* The request is allowed if the visitor passes the challenge
+
+In this last case, no further firewall rules will be processed. This means that the action of any later rules with a challenge or _Block_ action also matching the request will not be applied, and the request will be allowed.
