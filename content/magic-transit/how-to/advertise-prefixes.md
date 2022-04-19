@@ -45,7 +45,7 @@ Use BGP to control the status of your prefix — advertised or withdrawn — fro
 
 To prevent unexpected behavior, you must use either BGP control or dynamic advertisement for your prefixes but you cannot use both.
 
-![BGP control diagram](/magic-transit/static/bgp-control-diagram.png)
+![Ingress traffic moving through Cloudflare network using BGP to control prefix status](/magic-transit/static/bgp-control-diagram.png)
 
 To begin using BGP control, contact your account team with the following information:
 

@@ -6,7 +6,7 @@ weight: 3
 
 # Manage subdomains
 
-Once you have [added your domain to Cloudflare](https://support.cloudflare.com/hc/articles/201720164#2YulMb5YJTVnMxgAgNWdS2) and [updated your nameservers](/dns/zone-setups/full-setup/), you also might want to set up a subdomain.
+Once you have [added your domain to Cloudflare](/fundamentals/get-started/setup/add-site/) and [updated your nameservers](/dns/zone-setups/full-setup/), you also might want to set up a subdomain.
 
 Most subdomains serve a specific purpose within the overall context of your website. For example, `blog.example.com` might be your blog, `support.example.com` could be your customer help portal, and `store.example.com` would be your e-commerce site.
 

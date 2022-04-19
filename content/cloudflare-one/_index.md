@@ -32,6 +32,6 @@ Cloudflare Zero Trust replaces legacy security perimeters with our global edge, 
 * Mitigate the impact of attacks
 * Seamless, lightning-fast end user experience
 
-(/cloudflare-one/static/documentation/teams-no-background.png)
+![](/cloudflare-one/static/documentation/teams-no-background.png)
 
 {{</content-column>}}

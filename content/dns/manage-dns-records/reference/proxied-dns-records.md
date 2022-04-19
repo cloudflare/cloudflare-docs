@@ -12,7 +12,7 @@ This means that all requests intended for proxied hostnames will go to Cloudflar
 
 {{<Aside type="note">}}
 
-Because requests to proxied hostnames go through Cloudflare before reaching your origin server, these requests will appear to be coming from Cloudflare's IP addresses. You may need to adjust your server configuration to [allow Cloudflare IPs](/fundamentals/get-started/basic-tasks/allow-cloudflare-ip-addresses/).
+Because requests to proxied hostnames go through Cloudflare before reaching your origin server, these requests will appear to be coming from Cloudflare's IP addresses. You may need to adjust your server configuration to [allow Cloudflare IPs](/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/).
 
 {{</Aside>}}
 
