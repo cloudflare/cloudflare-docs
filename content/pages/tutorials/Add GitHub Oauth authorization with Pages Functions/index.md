@@ -11,9 +11,10 @@ In most applications we use, there is usually an option to log in or sign up wit
 
 In this tutorial, you will learn how to build authentication into your application using OAuth, GitHub, and handle server requests using [Pages Functions](/pages/platform/functions/)and GitHub credentials.
 
-You will then encode the user information gotten from the app using JSON Web Tokens(JWTs) which allows you to share user secrets securly by encrypting them with a secret key.
+You'll build an authorization flow to allow users to sign in with GitHub to your application. Once they've signed in, you'll use Pages Functions and Workers KV to store the user's information and make an authorized GitHub API request on their behalf.
 
-You'll build an authorization flow to allow users to sign in with GitHub to your application. Once they've signed in, you'll use Pages Functions and Workers KV to store the user's information and make an authorized GitHub API request on their behalf, to show a list of their repositories in a web page.
+You will then encode the user information gotten from GitHub using JSON Web Tokens(JWTs) which allows you to share user secrets securly by encrypting them with a secret key. Then finally show a list of their repositories in a web page.
+
 
 
 {{<Aside type="note">}}
@@ -61,7 +62,7 @@ filename: client/index.html
 </html>
 ```
 
-To style the elements you have in our HTML file, create a `client/style.css` file and add code below:
+To style the elements you have in your HTML file, create a `client/style.css` file and add code below:
 
 ```css
 ---
@@ -160,7 +161,7 @@ npx wrangler pages dev ./client
 
 ## Get Authorization from OAuth App
 
-The HTML file contains a script that links it to the `index.js`, where the client-side JavaScript for getting authorization and handling the code coming from your OAuth app will live. 
+The HTML file contains a script that links it to the `index.js` file, where the client-side JavaScript for getting authorization and handling the code coming from your OAuth app will live. 
 
 Before you continue, you will need to install [query-string](https://www.npmjs.com/package/query-string) package, which allows you to parse and stringify URL query strings. Do this by running `npm install query-string` at the root of your project.
 
@@ -305,9 +306,11 @@ In the code block above, you will notice that we send the code to `/api/code`. T
 
 ## Setting up Server with Functions
 
-Cloudflare Pages offers [Functions](/pages/platform/functions/) which enable you to run server-side code to enable dynamic functionality without running a dedicated server. You can handle tasks like Authentication, querying databases or other applications.
+Cloudflare Pages offers [Functions](/pages/platform/functions/) which enable you to run server-side code to enable dynamic functionality without running a dedicated server. You can handle tasks like authentication, querying databases or other applications.
 
 In this tutorial, we will be using Functions to handle exchanging our code for an Access Token, signing JWTs, authenticating users, and querying GitHub for resources using the authenticated user's details.
+
+To setup your Functions first create a `functions` folder. Functions are linked to the `functions` directory and conveniently construct URL request handlers in relation to the `functions` file structure. For example, the `functions/about.js` file will map to the `/about` URL. Refer to the [Functions routing](/pages/platform/functions/#functions-routing) documentation for more information.
 
 The code from your OAuth App is sent to `/api/code`; you must create a `functions/api/code.js` file at the root of your project. Your file structure should look like this now:
 
@@ -342,7 +345,7 @@ export async function onRequestPost(context) {
 }
 ```
 
-The `context` parameter is an object filled with several values of potential interest. For this example, you only need the [`request`](/workers/runtime-apis/request/) and [`env`](/pages/platform/functions/#writing-your-first-function), objects:
+The `context` parameter is an object filled with several values of potential interest. For this example, you only need the [`request`](/workers/runtime-apis/request/) and [`env`](/pages/platform/functions/#writing-your-first-function), properties:
 
 In your client-side JavaScript code, you made a POST request to `/api/code`, sending the GitHub authorization code. In this file, you will set up the corresponding function, using `onRequestPost`. 
 
@@ -363,9 +366,9 @@ export async function onRequestPost({ request, env }) {
 }
 ```
 
-### Exchanging the Code from your OAuth app for Access token
+### Exchanging the code from your OAuth app for Access token
 
-In the same `code.js` file, you will create an async function called `exchangeCodeForToken` that will take the code as an argument. You will need to use the config file parameters to query the `TOKEN_ENDPOINT` and send the other parameters as the body. The response to this will be an Object, you will use the query string package to parse the response. 
+In the same `code.js` file, you will create an async function called `exchangeCodeForToken` that will take the code as an argument. You will need to use the config file parameters to query the `TOKEN_ENDPOINT` and send the other parameters as the body. The response to this will be an object, you will use the query string package to parse the response. 
 
 Import qs from "query-string" and called the `.parse` method on the response; you can get the access token by getting the value of `access_token`. As seen in the code block below: 
 
@@ -374,6 +377,8 @@ Import qs from "query-string" and called the `.parse` method on the response; yo
 filename: functions/api/code.js
 ---
 import qs from "query-string";
+
+//...
 
 async function exchangeCodeForToken(code) {
   const TokenURL = server_credentials.TOKEN_ENDPOINT;
@@ -407,7 +412,7 @@ In the fetchUser function, you will need to construct a user URL using your `RES
 ```js
 ---
 filename: functions/api/code.js
-highlight: [5]
+highlight: [5,36,37,38,39,40,41,42,43,44,45,46,47,48,49]
 ---
 export async function onRequestPost({ request, env }) {
   try {
@@ -563,8 +568,14 @@ export async function onRequestPost({ request, env }) {
 }
 ```
 
+To access your Workers KV namespace when using Wrangler locally, update your run command to:
 
-## Use JWT for Client login validation and fetching User Repos 
+```sh
+# Bind to a KV store
+npx wrangler pages dev ./client --kv KV_NAMESPACE
+```
+
+## Use JWT for client login validation and fetching User Repos 
 
 While you can use JWTs for validating users, you can also use them to know when a user is logged in or not and then give them access to other parts of your application based on this JWT. 
 
@@ -635,7 +646,7 @@ Make a new `fetchRepos` function, which makes a request to the `/api/repos` endp
 
 ```js
 async function fetchRepos() {
-  const server = "http://localhost:8788/api/repos";
+  const server = "/api/repos";
   try {
     const res = await fetch(server, {
       headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
@@ -668,7 +679,7 @@ export async function onRequestGet({ request, env }) {
    /** TODO:
    * 1. Get JWT from Localstorage
    * 2. Verify  and decode JWT
-   * 3.fetch repos
+   * 3. Fetch repos
    */
 }
 ```
@@ -677,7 +688,7 @@ First, you will get the JWT from the client, verify and decode it. You will then
 
 The request header contains the JWT, and then you will verify it with the `.verify` method, which takes the JWT token and your secret string as an argument.
 
-If the JWT isn't valid, you can return a `401` status code. If it is, use the `.decode` method to decode it, then use the ID from the payload as a key to fetch from KV. You can then pass the user token to a `showRepo` function that fetches the repos.
+If the JWT isn't valid, you can return a `401` status code. If it is, use the `.decode` method to decode it, then use the ID from the payload as a key to fetch from Workers KV. You can then pass the user token to a `showRepo` function that fetches the repos.
 
 ```js
 ---
