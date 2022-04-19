@@ -46,7 +46,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8
      --data '{"protocol":"tcp/22","dns":{"type":"CNAME","name":"ssh.example.com"},"origin_direct":["tcp://192.0.2.1:22"],"proxy_protocol":"off","ip_firewall":true,"tls":"full","edge_ips":{"type":"dynamic","connectivity":"all"},"traffic_type":"direct","argo_smart_routing":true}'
 ```
 
-**Example Data:**
+**Example data:**
 
 ```bash
 {
