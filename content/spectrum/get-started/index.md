@@ -164,7 +164,7 @@ To create a Spectrum application using a Load Balancer, you will need to generat
 
 Below is a curl example and the associated data being posted to the API.
 
-**API Example:**
+**API example:**
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps' \
