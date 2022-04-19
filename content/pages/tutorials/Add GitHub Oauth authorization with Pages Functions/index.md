@@ -412,7 +412,7 @@ In the fetchUser function, you will need to construct a user URL using your `RES
 ```js
 ---
 filename: functions/api/code.js
-highlight: [5,36,37,38,39,40,41,42,43,44,45,46,47,48,49]
+highlight: [5,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49]
 ---
 export async function onRequestPost({ request, env }) {
   try {
