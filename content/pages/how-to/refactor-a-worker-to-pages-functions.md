@@ -19,9 +19,9 @@ However, it can be beneficial to use a [Pages Function](/pages/platform/function
 
  An [Airtable](https://airtable.com/) is a low-code platform for building collaborative applications. It helps customize your workflow, collaborate, and handle form submissions. For this example, you will utilize Airtable's form submission feature.
 
-[Airtables](https://airtable.com/) can be used to store entries of information in different tables for the same account. When creating a Worker for handling the submission logic, the first step is to use [wrangler](/workers/cli-wrangler/install-update/) to initialize a new Worker within a specific folder or at the root of your application. 
+[Airtables](https://airtable.com/) can be used to store entries of information in different tables for the same account. When creating a Worker for handling the submission logic, the first step is to use [Wrangler](/workers/cli-wrangler/install-update/) to initialize a new Worker within a specific folder or at the root of your application. 
 
-This step creates the boilerplate to write your Airtable submission Worker. After writing your Worker, you can deploy it to Cloudflare's Edge network with your credentials. You can check the Workers documentation for a full tutorial on how to [handle form submission with Workers](/workers/tutorials/handle-form-submissions-with-airtable/).
+This step creates the boilerplate to write your Airtable submission Worker. After writing your Worker, you can deploy it to Cloudflare's edge network after you [configure your project for deployment](/workers/get-started/guide/#7-configure-your-project-for-deployment). Review the Workers documentation for a full tutorial on how to [handle form submission with Workers](/workers/tutorials/handle-form-submissions-with-airtable/).
 
 The code block below shows an example of a Worker that handles Airtable form submission.
 
