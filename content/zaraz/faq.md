@@ -6,7 +6,7 @@ weight: 6
 
 # FAQ
 
-Below you will find answers to our most commonly asked questions on Cloudflare Zaraz. If you cannot find the answer you are looking for, head over to our [community page](https://community.cloudflare.com/) or [Discord channel](https://discord.gg/2TRr6nSxdd).
+Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) or [Discord channel](https://discord.gg/2TRr6nSxdd) to explore additional resources.
 
 - [General](#general)
 - [Tools](#tools)
