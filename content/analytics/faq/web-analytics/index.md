@@ -5,6 +5,12 @@ title: Web Analytics FAQ
 
 # Web Analytics FAQ
 
+Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) to explore more resources.
+
+- [Errors](#errors)
+- [Setup](#setup)
+- [Functionality](#functionality)
+
 ## Errors
 
 ### When I add the beacon to my website and load the webpage, I see an error that includes "is not allowed by Access-Control-Allow-Origin" (CORS). What's happening?
@@ -89,7 +95,7 @@ Not yet, but we plan to support AMP soon.
 
 ### What is the data retention policy for Web Analytics?
 
-One month, but we are planning to increase the retention in the near future.
+Currently, data retention for Web Analytics is six months.
 
 ### Does Cloudflare Web Analytics support UTM parameters?
 
