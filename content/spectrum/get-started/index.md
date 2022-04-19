@@ -34,7 +34,7 @@ To create a Spectrum application using an IP address, Cloudflare normally assign
 <summary>Add your application via API</summary>
 <div>
 
-Below is an example curl and the associated data being posted to the API.
+Below is a curl example and the associated data being posted to the API.
 
 **API Example:**
 
