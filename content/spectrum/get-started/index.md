@@ -36,7 +36,7 @@ To create a Spectrum application using an IP address, Cloudflare normally assign
 
 Below is a curl example and the associated data being posted to the API.
 
-**API Example:**
+**API example:**
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/spectrum/apps" \
