@@ -37,7 +37,7 @@ Cloudflare Registrar only supports transfers of domains that are active on Cloud
 
 Once you initiate a domain transfer, your previous registrar has five days to release the domain. In most cases, they will send you an email to confirm you want to transfer. If you actively acknowledge that email (through a link or the registrar's dashboard), they can process it immediately.
 
-To see the progress of your transfer, log into the Cloudflare dashboard and select your account. Then, select **Registrar** > **Transfer** to see a list of domain transfers that are in progress. To accelerate the process, be sure to check with your old registrar how you can approve the transfer out.
+To see the progress of your transfer, log in to the Cloudflare dashboard and select your account. Then, select **Registrar** > **Transfer** to see a list of domain transfers that are in progress. To accelerate the process, be sure to check with your old registrar how you can approve the transfer out.
 
 Once successful, you will receive an email from Cloudflare and be able to manage the domain in the dashboard under **Overview** of that site.
 

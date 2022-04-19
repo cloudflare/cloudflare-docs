@@ -9,7 +9,7 @@ If you find that **Super Bot Fight Mode** is causing problems with your applicat
 
 To disable Super Bot Fight Mode:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **Security** > **Bots**.
 3. Click **Configure Super Bot Fight Mode**.
 4. For all bot groupings (**Definitely automated**, **Verified bots**, etc.), set the value to **Allow**.

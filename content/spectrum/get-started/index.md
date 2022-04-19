@@ -18,7 +18,7 @@ To create a Spectrum application using an IP address, Cloudflare normally assign
 <summary>Add your application via Dashboard</summary>
 <div>
 
-1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2.  Click **Spectrum**.
 3.  Click **Create an Application**. If this is your first time using Spectrum, the **Create an Application** modal appears.
 4.  Under **Domain**, enter the domain that will use Spectrum.
@@ -89,7 +89,7 @@ To create a Spectrum application using a CNAME record, you will need to create a
 <summary>Add your application via Dashboard</summary>
 <div>
 
-1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2.  Click **Spectrum**.
 3.  Click **Create an Application**. 
 4.  Under **Domain**, enter the domain that will use Spectrum.
@@ -147,7 +147,7 @@ To create a Spectrum application using a Load Balancer, you will need to generat
 <summary>Add your application via Dashboard</summary>
 <div>
 
-1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2.  Click **Spectrum**.
 3.  Click **Create an Application**.
 4.  Under **Origin**, select **Load Balancer**.

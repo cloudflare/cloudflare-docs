@@ -39,7 +39,7 @@ For this tutorial, all API endpoints are public. However, Fauna also offers mult
 
 ### Creating your database
 
-Open the [Fauna dashboard][fauna-dashboard] in your browser and log into your Fauna account.
+Open the [Fauna dashboard][fauna-dashboard] in your browser and log in to your Fauna account.
 
 {{<Aside type="note" header="Fauna Account">}}
 

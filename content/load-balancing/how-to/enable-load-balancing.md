@@ -12,7 +12,7 @@ Accounts with at least one **Enterprise** plan should contact their account team
 
 All other accounts should enable Load Balancing in the dashboard:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Choose your account and website.
 3. Go to **Traffic** > **Load Balancing**.
 4. Click **Enable Load Balancing**.

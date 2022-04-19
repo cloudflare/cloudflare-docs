@@ -8,7 +8,7 @@ weight: 5
 
 To enable mutual Transport Layer Security (mTLS) for a host from the Cloudflare dashboard:
 
-1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
 2.  Navigate to **SSL** > **Client Certificates**.
 3.  To enable mTLS for a host, click the **Edit** link in the **Hosts** section of the **Client Certificates** card.
 4.  Enter the name of a host in your current application and press `Enter`.

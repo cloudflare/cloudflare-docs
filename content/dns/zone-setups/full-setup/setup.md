@@ -84,7 +84,7 @@ Cloudflare automatically assigns nameservers to a domain and these assignments c
 
 ### Update your registrar
 
-1.  Log into the admin account for your domain registrar. If you do not know your provider, use [ICANN WHOIS](https://whois.icann.org/).
+1.  Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN WHOIS](https://whois.icann.org/).
 
 2.  Disable **DNSSEC** for your domain.
 
