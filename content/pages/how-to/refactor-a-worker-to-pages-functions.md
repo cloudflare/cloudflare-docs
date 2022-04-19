@@ -166,7 +166,7 @@ You can test your function [locally using Wrangler 2](/pages/platform/functions/
 # General refactoring steps 
 
 1. Remove the `addEventListener()` method and its event response and replace it with the appropriate `OnRequest` method. 
-2. Pass the `context` object as an argment to your new `OnRequest` method to access your `request`,`env`,`params` and `next`.
+2. Pass the `context` object as an argument to your new `OnRequest` method to access your `request`,`env`,`params` and `next` parameters.
 3. Handle logic must be executed before or after route handles with middleware. Learn more about [using Middleware](/pages/platform/functions/#adding-middleware) in the Functions documentation.
 
 
