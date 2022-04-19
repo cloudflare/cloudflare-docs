@@ -10,4 +10,4 @@ meta:
 
 You can configure a load balancer to provide TCP healthchecks, failover, and traffic steering to bring resiliency to your Spectrum applications.
 
-For more details, refer to [Create a Load Balancer and Spectrum Application](/spectrum/how-to/create-load-balancer/).
+For more details, refer to [Create a Spectrum application using a Load Balancer](/spectrum/get-started/#create-a-spectrum-application-using-a-load-balancer).

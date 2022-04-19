@@ -489,6 +489,10 @@
 /spectrum/getting-started/byoip/ /spectrum/about/byoip/ 301
 /spectrum/getting-started/proxy-protocol /spectrum/how-to/enable-proxy-protocol/ 301
 /spectrum/getting-started/proxy-protocol/ /spectrum/how-to/enable-proxy-protocol/ 301
+/spectrum/how-to/cname-origins/ /spectrum/get-started/#create-a-spectrum-application-using-a-cname-record 301  
+/spectrum/how-to/cname-origins /spectrum/get-started/#create-a-spectrum-application-using-a-cname-record 301  
+/spectrum/how-to/create-load-balancer/ /spectrum/get-started/#create-a-spectrum-application-using-a-load-balancer 301
+/spectrum/how-to/create-load-balancer /spectrum/get-started/#create-a-spectrum-application-using-a-load-balancer 301
 
 # ssl
 /ssl/ssl-for-saas/certificate-signing-requests /ssl/ssl-for-saas/custom-certificates/certificate-signing-requests/ 301
