@@ -42,6 +42,8 @@ Using Cloudflare Registrar simplifies your setup process by automatically using 
 
 Before your domain can begin using Cloudflare for DNS resolution, you need to complete your [DNS setup](/dns/zone-setups/).
 
+If your domain is particularly sensitive to downtime, review our suggestions to [minimize downtime](/fundamentals/get-started/setup/minimize-downtime/).
+
 ## Step 3 — Complete SSL/TLS setup
 
 To prevent insecure connections and visitor browser errors, [enable SSL/TLS protection](/ssl/get-started/).
