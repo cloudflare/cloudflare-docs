@@ -106,7 +106,7 @@ To create a Spectrum application using a CNAME record, you will need to create a
 
 Below is an example curl and the associated data being posted to the API.
 
-**API Example:**
+**API example:**
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps' \
