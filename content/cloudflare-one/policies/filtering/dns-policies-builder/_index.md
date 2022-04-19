@@ -171,7 +171,7 @@ Policies with Allow actions allow DNS queries to reach destinations you specify 
 
 #### Disable DNSSEC validation
 
-When you select **Disable DNSSEC validation**, Gateway will resolve DNS queries even if the digital signature for the DNS record cannot be validated. We do not recommend disabling DNSSEC validation unless you know that the validation failure is due to DNSSEC configuration issues and not malicious attacks.
+When you select **Disable DNSSEC validation**, Gateway will resolve DNS queries even if the cryptographic signature for the DNS record cannot be validated. We do not recommend disabling DNSSEC validation unless you know that the validation failure is due to DNSSEC configuration issues and not malicious attacks.
 
 ### Block
 
