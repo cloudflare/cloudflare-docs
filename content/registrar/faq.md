@@ -6,7 +6,7 @@ weight: 6
 
 # FAQ
 
-Below you will find answers to our most commonly asked questions on Cloudflare Registrar, namely about billing, domain transfers, and how to troubleshoot common issues you may come across. If you cannot find the answer you are looking for, heading over to our [community page](https://community.cloudflare.com/) is always a good idea.
+Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) to explore more resources.
 
 - [Domain transfers](#domain-transfers)
 - [Domain registrations](#domain-registrations)
