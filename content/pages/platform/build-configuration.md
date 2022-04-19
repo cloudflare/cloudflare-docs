@@ -75,8 +75,9 @@ Here are the pinned versions for tools included in the Cloudflare Workers build 
 
 {{<table-wrap>}}
 
-| Framework | Default version | Supported versions | Environment variable             | File                     |
+| Language  | Default version | Supported versions | Environment variable             | File                     |
 | --------- | --------------- | ------------------ |--------------------------------- | -------------------------|
+| Clojure   |                 |                    |                                  |                          |
 | Elixir    | 1.7             | 1.7 (default) only.|                                  |                          |
 | Emacs     | 25              | 25 (default) only. |                                  |                          |
 | Erlang    | 21              | 21 (default) only. |                                  |                          |
@@ -95,7 +96,7 @@ Many common tools have been pre-installed as well. The environment variable avai
 
 | Tools       | Default version                             | Supported versions    | Environment variable |
 | ----------- | --------------------------------------------|-----------------------|-------------------- |
-| Boot        |                                             |                       |                     |
+| Boot        | 2.5.2                                       | 2.5.2                 |                     |
 | Bower       |                                             |                       |                     |
 | Cask        |                                             |                       |                     |
 | Composer    |                                             |                       |                     |
@@ -115,48 +116,3 @@ Many common tools have been pre-installed as well. The environment variable avai
 | Zola        | (requires environment variable)             |Any version from 0.5.0 to 0.14.0. Any version installable via `binrc`. |`ZOLA_VERSION`       |
 
 If you want to set a specific version of a framework your Cloudflare Pages project is using, note that Pages will respect your package manager of choice during your build process. For example, if you use Gatsby.js, your `package.json` should indicate a version of the `gatsby` npm package, which will be installed using `npm install` as your project builds on Cloudflare Pages.
-
-## Supported versions
-
-Below is a list of tool versions that Cloudflare Pages supports.
-
-* Node.js
-    Yarn - `YARN_VERSION`
-        `1.22.10` (default)
-        Any version available via the Yarn installer.
-    npm - `NPM_VERSION`
-        Version corresponding with Node.js version. (default)
-        Any version available via npm.
-    bower
-
-* Python
-    pip
-        Version corresponding with Python version. (default)
-    Pipenv
-        Latest version.
-* PHP
-    Composer
-
-* Emacs
-    Cask
-
-* Clojure
-    Leiningen
-        stable version of that
-    Boot
-        2.5.2
-
-Below is a list of framework versions that Cloudflare Pages supports.
-
-* Hugo - `HUGO_VERSION`
-    0.54 extended (default)
-    Any version installable via `binrc`.
-
-Gutenburg - `GUTENBERG_VERSION`
-    Any version installable via `binrc`.
-
-* Zola - `ZOLA_VERSION`
-    Any version installable via `binrc`.
-    minimum of 0.5.0
-    maximum is 0.14.0
-
