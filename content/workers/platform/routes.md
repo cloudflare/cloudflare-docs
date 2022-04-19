@@ -13,6 +13,12 @@ Routes allow users to map a URL pattern to a Worker script to enable Workers to 
 
 For zones proxied on Cloudflare, route patterns decide what (if any) script is matched based on the URL of that request. Requests are routed through a Workers script when the URL matches a route pattern assigned to that script.
 
+{{<Aside type="warning">}}
+
+For any Worker script that you want to run on a custom domain, that custom domain must be proxied through Cloudflare prior to adding the route.
+
+{{</Aside>}}
+
 Route patterns can be added with the Cloudflare API or in **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Add route** in the Cloudflare dashboard.
 
 ![After selecting Add route, you will be asked to input a route pattern and specify a Worker to assign to that route](../media/add-route-modal.png)
