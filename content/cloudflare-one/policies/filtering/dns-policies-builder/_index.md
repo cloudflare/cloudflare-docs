@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx-content-type: configuration
 title: DNS policies
 layout: single
 weight: 1
@@ -169,6 +169,10 @@ Policies with Allow actions allow DNS queries to reach destinations you specify 
 | --- | --- | --- | --- |
 | Content Categories | In | Education | Allow |
 
+#### Disable DNSSEC validation
+
+When you select **Disable DNSSEC validation**, Gateway will resolve DNS queries even if the cryptographic signature for the DNS record cannot be validated. We do not recommend disabling DNSSEC validation unless you know that the validation failure is due to DNSSEC configuration issues and not malicious attacks.
+
 ### Block
 
 Policies with Block actions block DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration blocks DNS queries from reaching domains we categorize as belonging to the Adult Themes content category:
@@ -176,6 +180,10 @@ Policies with Block actions block DNS queries to reach destinations you specify 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
 | Content Categories | In | Adult Themes | Block |
+
+#### Custom block page
+
+When choosing the Block action, toggle the **Display custom block page** setting to respond to queries with a block page and to specify the message you want to display to users who navigate to blocked websites. If disabled, Gateway will respond to blocked queries with `0.0.0.0`. For more information, refer to the dedicated documentation on [customizing the block page](/cloudflare-one/policies/filtering/configuring-block-page/).
 
 ### Override
 
@@ -204,7 +212,3 @@ Similarly, you can enforce YouTube Restricted mode by choosing the *Youtube Rest
 | DNS Domain | Is | `youtube.com` | YouTube Restricted |
 
 This setup ensures users will be blocked from accessing offensive sites using DNS.
-
-## Custom block page
-
-When choosing the Block action, toggle the **Display custom block page** setting to respond to queries with a block page, and to specify the message you want to display to users who navigate to blocked websites. If disabled, Gateway will respond to blocked queries with `0.0.0.0`. For more information, see the dedicated documentation on [customizing the block page](/cloudflare-one/policies/filtering/configuring-block-page/).
