@@ -1,6 +1,5 @@
 ---
 type: overview
-hideChildren: true
 pcx-content-type: navigation
 title: Migration guides
 weight: 5
