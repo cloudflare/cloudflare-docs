@@ -34,7 +34,7 @@ Verify your Internet Routing Registry (IRR) entries match corresponding origin a
 
 ## Set maximum segment size
 
-![Packet flow diagram](/magic-transit/static/mss-values-and-packet.png)
+![Breakdown of packet maximum segment size as it moves through Magic Transit workflow](/magic-transit/static/mss-values-and-packet.png)
 
 The SYN-ACK packet sent to the client during TCP handshake encodes the value for maximum segment size (MSS). Egress packets are routed via your ISP interface, and each packet must comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 

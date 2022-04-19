@@ -252,6 +252,8 @@
 /fundamentals/get-started/http-request-headers/ /fundamentals/get-started/reference/http-request-headers/ 301
 /fundamentals/get-started/network-ports/ /fundamentals/get-started/reference/network-ports/ 301
 /fundamentals/get-started/basic-tasks/improve-seo/ /fundamentals/get-started/task-guides/improve-seo/ 301
+/fundamentals/get-started/basic-tasks/allow-cloudflare-ip-addresses/ /fundamentals/get-started/setup/allow-cloudflare-ip-addresses/ 301
+/fundamentals/get-started/basic-tasks/account-setup/ /fundamentals/get-started/setup/account-setup/ 301
 /fundamentals/get-started/concepts/cdn-cgi-endpoint/ /fundamentals/get-started/reference/cdn-cgi-endpoint/ 301
 /fundamentals/get-started/concepts/cdn/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/notifications/configure-webhooks/ /fundamentals/notifications/create-notifications/configure-webhooks/ 301

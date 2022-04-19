@@ -20,7 +20,7 @@ A partial setup is only available to customers on a Business or Enterprise plan.
 
 ## Step 1 — Add your domain to Cloudflare
 
-1.  Create a Cloudflare account and [add your domain](https://support.cloudflare.com/hc/articles/201720164).
+1.  Create a Cloudflare account and [add your domain](/fundamentals/get-started/setup/add-site/).
 
 2.  For your **Plan**, choose **Business** or **Enterprise**.
 
