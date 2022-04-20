@@ -83,10 +83,10 @@ Here are the pinned versions for tools included in the Cloudflare Workers build 
 | Erlang    | 21              | 21 (default) only. |                                  |                          |
 | Go        | 1.14.4          | 1.14.4 (default) and any version available on the Go downloads page. |`GO_VERSION`|                           |
 | Java      | 8               | 8 (default) only.  |                                  |                           |
-| Node.js   | 12.18.0         | 12.18.0 and any version that nvm can install.         |`NODE_VERSION`       | `.nvmrc`, `.node-version` |
+| Node.js   | 12.18.0         | 12.18.0 (default) and any version up to 17.x. |`NODE_VERSION`       | `.nvmrc`, `.node-version` |
 | PHP       | 5.6             | 5.6 (default), 7.2, 7.4 only.                         |`PHP_VERSION`        |                           |
 | Python    | 2.7             | 2.7 (default), 3.5, 3.7 only.                         |`PYTHON_VERSION`     | `runtime.txt`, `Pipfile`  |
-| Ruby      | 2.6.2           | Any version between 2.6.2 and 2.7.5.                  |`RUBY_VERSION`       | `.ruby-version`           |
+| Ruby      | 2.6.2           | Any version between 2.6.2 (default) and 2.7.5.        |`RUBY_VERSION`       | `.ruby-version`           |
 | Swift     | 5.2             | Installed by default. Pages supports any 5.x version. |`SWIFT_VERSION`| `.swift-version` |
 | .NET      | 3.1.302         | |                     |                           |
 
@@ -96,14 +96,14 @@ Many common tools have been pre-installed as well. The environment variable avai
 
 | Tools       | Default version                             | Supported versions    | Environment variable |
 | ----------- | --------------------------------------------|-----------------------|-------------------- |
-| Boot        | 2.5.2                                       | 2.5.2                 |                     |
+| Boot        | 2.5.2                                       | 2.5.2 (default)       |                     |
 | Bower       |                                             |                       |                     |
 | Cask        |                                             |                       |                     |
 | Composer    |                                             |                       |                     |
 | Doxygen     | Version 1.8.6                               |                       |                     |
 | Emacs       | 25                                          | |                     |
-| Gutenberg   | (requires environment variable)             |Any version installable via `binrc`. |`GUTENBERG_VERSION`  |
-| Hugo        | Version 0.54                                |Any version installable via `binrc`. |`HUGO_VERSION`       |
+| Gutenberg   | (requires environment variable)             | Any version installable via `binrc`. |`GUTENBERG_VERSION`  |
+| Hugo        | Version 0.54                                | Any version installable via `binrc`. |`HUGO_VERSION`       |
 | GNU Make    | Version 3.8.1                               |                       |                     |
 | ImageMagick | Version 6.7.7                               |                       |                     |
 | jq          | Version 1.5                                 | |                     |
@@ -112,7 +112,7 @@ Many common tools have been pre-installed as well. The environment variable avai
 | NPM         | Corresponds with Node.js version.| Any version available via npm. |`NPM_VERSION`        |
 | pip         | Version corresponding with Python version.  | |                     |
 | Pipenv      | Latest version.                             | |                     |
-| Yarn        | Version 1.22.10                             | Any version available via the Yarn installer.|`YARN_VERSION`|
-| Zola        | (requires environment variable)             |Any version from 0.5.0 to 0.14.0. Any version installable via `binrc`. |`ZOLA_VERSION`       |
+| Yarn        | Version 1.22.10                             | Any version available via the Yarn installer. |`YARN_VERSION`|
+| Zola        | (requires environment variable)             | Any version from 0.5.0 to 0.14.0. Any version installable via `binrc`. |`ZOLA_VERSION`       |
 
 If you want to set a specific version of a framework your Cloudflare Pages project is using, note that Pages will respect your package manager of choice during your build process. For example, if you use Gatsby.js, your `package.json` should indicate a version of the `gatsby` npm package, which will be installed using `npm install` as your project builds on Cloudflare Pages.
