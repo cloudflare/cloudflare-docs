@@ -111,7 +111,7 @@ compatibility_date = "2022-04-18"
 account_id = "YOUR_ACCOUNT_ID" # ← Replace with your Account ID.
 workers_dev = true
 ```
-If you need to use an older compatibility date, you currently need to enable the `r2_public_beta_bindings` [compatability flag](/workers/platform/compatability-dates).
+If you need to use an older compatibility date, you currently need to enable the `r2_public_beta_bindings` [compatibility flag](/workers/platform/compatability-dates).
 
 To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the `<YOUR_BUCKET_NAME>` you used to create your bucket in [step 3](#create-your-bucket):
 
