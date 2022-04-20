@@ -496,7 +496,7 @@ $ wrangler secret list --env ENVIRONMENT_NAME
 
 The `kv` subcommand allows you to store application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). KV operations are scoped to your account, so in order to use any of these commands, you:
 
-- must configure and `account_id` in your project's `wrangler.toml` file.
+- must configure an `account_id` in your project's `wrangler.toml` file.
 - run all `wrangler kv:<command>` operations in your terminal from the project's root directory.
 
 ### Getting started
@@ -504,7 +504,7 @@ The `kv` subcommand allows you to store application data in the Cloudflare netwo
 To use Workers KV with your Worker, the first thing you must do is create a KV namespace. This is done with
 the `kv:namespace` subcommand.
 
-The `kv:namespace` subcommand takes as a new binding name as its argument. A Workers KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide:
+The `kv:namespace` subcommand takes a new binding name as its argument. A Workers KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide:
 
 ```sh
 $ wrangler kv:namespace create "MY_KV"
