@@ -1,12 +1,12 @@
 ---
-title: Change log
+title: Changelog
 pcx-content-type: changelog
 weight: 7
 meta:
-  title: Change log for beacon.mon.js
+  title: Changelog for beacon.mon.js
 ---
 
-# Change log for `beacon.min.js`
+# Changelog for `beacon.min.js`
 
 Cloudflare occasionally updates the `beacon.min.js` file to improve Web Analytics functionality. The table below includes a log of what changed in the `beacon.min.js` file and when.
 
