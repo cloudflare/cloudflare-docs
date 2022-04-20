@@ -14,7 +14,7 @@ Cloudflare recommends not performing redirects at your origin web server, as thi
 
 To redirect traffic for all subdomains and hosts in your application:
 
-1.  Log into your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
+1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
 2.  Navigate to **SSL/TLS** > **Edge Certificates**.
 3.  For **Always Use HTTPS**, switch the toggle to **On**.
 

@@ -18,7 +18,7 @@ To construct a Magic Firewall GraphQL query for an object, you will need a Cloud
 
 ### Obtain your Cloudflare Account ID
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 2. From the **Accounts** page, click your account.
 
 In your browser's address bar, the URL should show `https://dash.cloudflare.com/` followed by a hex string. The hex string is your Cloudflare Account ID.

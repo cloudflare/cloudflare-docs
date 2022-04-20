@@ -24,7 +24,7 @@ If you are not sure which encryption mode to use, enable the [SSL/TLS Recommende
 
 To change your encryption mode:
 
-1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
 2.  Navigate to **SSL/TLS**.
 3.  Choose a new encryption mode.
 

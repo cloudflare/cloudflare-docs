@@ -128,7 +128,7 @@ A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to v
 
 ## [policy](/cloudflare-one/policies/)
 
-A set of rules that regulate your network activity, such as who logs into your applications, or which websites your users can reach.
+A set of rules that regulate your network activity, such as who logs in to your applications, or which websites your users can reach.
 
 ## RDP
 

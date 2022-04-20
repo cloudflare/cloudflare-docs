@@ -12,7 +12,7 @@ Once integrated, users will login with their Google Workspace credentials to rea
 
 Please note that you don't need to be a Google Cloud Platform user to integrate Google Workspace as an identity provider with Cloudflare Zero Trust. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
 
-1.  Log into the Google Cloud Platform [console](https://console.cloud.google.com/). This is separate from your Google Workspace console.
+1.  Log in to the Google Cloud Platform [console](https://console.cloud.google.com/). This is separate from your Google Workspace console.
 
     ![GCP Console](/cloudflare-one/static/documentation/identity/gsuite/gcp-home.png)
 

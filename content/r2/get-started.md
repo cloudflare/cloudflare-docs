@@ -57,7 +57,7 @@ y
 💁  Opened a link in your default browser: https://dash.cloudflare.com/oauth2/...
 ```
 
-Open the browser, log into your account, and select **Allow**. This will send an OAuth Token to Wrangler so it can deploy your scripts to Cloudflare.
+Open the browser, log in to your account, and select **Allow**. This will send an OAuth Token to Wrangler so it can deploy your scripts to Cloudflare.
 
 {{<Aside type="note">}}
 

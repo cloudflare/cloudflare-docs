@@ -10,7 +10,7 @@ Once you [set up a new account](/fundamentals/get-started/setup/account-setup/) 
 
 To find your zone and account IDs:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. On the **Overview** page (the landing page for your domain), find the **API** section.
 
     ![Screenshot of the Overview page with the API section highlighted](/fundamentals/static/images/get-started/dash-overview-api-highlighted.png)

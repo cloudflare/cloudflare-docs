@@ -40,7 +40,7 @@ proxy-fallback.saasprovider.com CNAME proxy-fallback.saasprovider.com.cdn.cloudf
 
 #### If using another DNS provider
 
-1.  Log into your authoritative DNS provider.
+1.  Log in to your authoritative DNS provider.
 2.  Add a CNAME record to point to the fallback origin owned by the SaaS provider.
 
 ```txt

@@ -21,7 +21,7 @@ For details on the specific Durable Object APIs, refer to the [Runtime API docum
 
 Durable Objects are named instances of a class you define. Like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
 
-To start, enable Durable Objects for your account by logging into [the Cloudflare dashboard](https://dash.cloudflare.com/) > **Workers** > **Durable Objects**.
+To start, enable Durable Objects for your account by logging in to [the Cloudflare dashboard](https://dash.cloudflare.com/) > **Workers** > **Durable Objects**.
 
 There are three steps to creating and using a Durable Object:
 

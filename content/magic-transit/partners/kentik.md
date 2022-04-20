@@ -16,7 +16,7 @@ You will need the email address associated with your Cloudflare account, Cloudfl
 
 ## Configure the Kentik portal
 
-1. Log into your Kentik account.
+1. Log in to your Kentik account.
 2. Click **Menu** > **Settings**.
 3. From the **Settings** page under **Customizations**, click **Mitigations**.
 4. On the **Configure Mitigations** page, locate the **Cloudflare** section.
@@ -36,7 +36,7 @@ For additional information about Kentik and Magic Transit, refer to [Kentik's Ma
 
 ## Access Cloudflare account
 
-1. Log into your [Cloudflare account](https://dash.cloudflare.com) and select your account from the list.
+1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and select your account from the list.
 2. From the navigation menu, select **IP Prefixes**.
 3. Referring to the example scenario, the prefix protected by Cloudflare displays a **Withdrawn** status.
 
