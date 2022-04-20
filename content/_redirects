@@ -133,6 +133,10 @@
 /access/ssh/short-live-cert-server/ /cloudflare-one/tutorials/ssh-cert-bastion/ 301
 /access/ssh/ssh-guide /cloudflare-one/tutorials/ssh/ 301
 
+# analytics
+/analytics/web-analytics/change-log /analytics/web-analytics/changelog/ 301
+/analytics/web-analytics/change-log/ /analytics/web-analytics/changelog/ 301
+
 # argo-tunnel
 /argo-tunnel /cloudflare-one/connections/connect-apps/install-and-setup/ 301
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
