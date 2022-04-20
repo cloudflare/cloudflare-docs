@@ -45,6 +45,12 @@ Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://da
 
 </div>
 
+{{<Aside type="warning" header="Important">}}
+
+Next.js requires Node.js v12.22.0 or later to build successfully. To set your Node version, go to **Settings** in your Workers project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `12.22.0` or greater.
+
+{{</Aside>}}
+  
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `next`, your project dependencies, and building your site before deploying it.
 
 {{<Aside type="note">}}
