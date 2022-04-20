@@ -24,14 +24,34 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>2022-04-19</td>
+      <td>2022-04-25</td>
+      <td>Cloudflare Specials</td>
+      <td>...61337861</td>
+      <td>100056_BETA</td>
+      <td>Apache Struts - Code Injection - CVE:CVE-2017-9791 - Beta</td>
+      <td>Disable</td>
+      <td>Block</td>
+    </tr>
+    <tr>
+      <td>2022-04-19</td>
+      <td>2022-04-25</td>
+      <td>Cloudflare Specials</td>
+      <td>...bb70a463</td>
+      <td>100527</td>
+      <td>Apache Struts - CVE:CVE-2021-31805</td>
+      <td>Disable</td>
+      <td>Block</td>
+    </tr>
+    <tr>
+      <td>2022-04-19</td>
+      <td>2022-04-25</td>
+      <td>Cloudflare Specials</td>
+      <td>...a24f08b7</td>
+      <td>100526</td>
+      <td>VMware vCenter - CVE:CVE-2022-22954</td>
+      <td>Disable</td>
+      <td>Block</td>
     </tr>
   </tbody>
 </table>
