@@ -46,7 +46,7 @@ These records include the following fields:
   - If the **Proxy Status** is **DNS Only**, you can customize the value.
 - **Proxy status**: For more details, refer to [Proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/).
 
-You can use CNAME records to point to other CNAME records (`www.example2.com` --> `www.example1.com` --> `www.example.com`), but the final record must point to a hostname with a valid IP address (and therefore a valid `A` or `AAAA` record) if this hostname is meant to proxy traffic.
+You can use `CNAME` records to point to other `CNAME` records (`www.example2.com` --> `www.example1.com` --> `www.example.com`), but the final record must point to a hostname with a valid IP address (and therefore a valid `A` or `AAAA` record) if this hostname is meant to proxy traffic.
 
 ---
 
