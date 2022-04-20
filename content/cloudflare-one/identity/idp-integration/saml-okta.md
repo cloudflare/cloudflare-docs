@@ -67,7 +67,7 @@ The identity provider is now set up.
 
 {{<Aside type="warning">}}
 
-SAML attributes are only refreshed during authentications with the Okta identity provider. This means the Okta group membership is not updated unless a user logs in and out of the WARP client, or logs into an Access application.
+SAML attributes are only refreshed during authentications with the Okta identity provider. This means the Okta group membership is not updated unless a user logs in and out of the WARP client, or logs in to an Access application.
 
 {{</Aside>}}
 

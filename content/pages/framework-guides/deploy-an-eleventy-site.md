@@ -39,7 +39,7 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and choose "Eleventy" from the Framework preset dropdown.
+Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and choose "Eleventy" from the Framework preset dropdown.
 
 {{<Aside type="note">}}
 

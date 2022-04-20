@@ -111,7 +111,7 @@ id = "<PRODUCTION KV NAMESPACEID>"
 
 ### Adding environment variables via the dashboard
 
-Add environment variables by logging into [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Workers** and select your **Workers script**.
+Add environment variables by logging in to [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Workers** and select your **Workers script**.
 
 To add environment variables, such as `vars` and `secret`:
 

@@ -22,7 +22,7 @@ To begin, go to the [Cloudflare Pages site](https://pages.dev) and sign in with 
 
 ### Connect to your git provider
 
-Pages offers support for [GitHub](https://github.com/) and [GitLab](https://gitlab.com/). After logging into your Cloudflare account, in **Account Home** > go to **Pages** > **Create a project**.
+Pages offers support for [GitHub](https://github.com/) and [GitLab](https://gitlab.com/). After logging in to your Cloudflare account, in **Account Home** > go to **Pages** > **Create a project**.
 
 You will be prompted to sign in with your preferred git provider which allows [Cloudflare Pages](https://pages.dev) to deploy your projects, and update your PRs with [preview deployments](/pages/platform/preview-deployments/).
 
@@ -129,7 +129,7 @@ To use a custom apex domain (for example, `example.com`) with your Pages project
 
 #### Add a custom CNAME record
 
-If you do not want to point your nameservers to Cloudflare, you can still use a custom CNAME record to use a single domain with Cloudflare Pages. After logging into your DNS provider, add a CNAME record for your desired subdomain; for example, `shop.example.com`. This record should point to your custom Pages subdomain; for example, `custom.pages.dev`.
+If you do not want to point your nameservers to Cloudflare, you can still use a custom CNAME record to use a single domain with Cloudflare Pages. After logging in to your DNS provider, add a CNAME record for your desired subdomain; for example, `shop.example.com`. This record should point to your custom Pages subdomain; for example, `custom.pages.dev`.
 
 | Type    | Name               | Content            |
 | ------- | ------------------ | ------------------ |
