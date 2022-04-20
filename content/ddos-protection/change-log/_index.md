@@ -1,12 +1,12 @@
 ---
-title: Change log
+title: Changelog
 pcx-content-type: concept
 weight: 20
 meta:
-  title: Change log for DDoS Managed Rulesets
+  title: Changelog for Managed Rulesets
 ---
 
-# Change log for DDoS Managed Rulesets
+# Changelog for Managed Rulesets
 
 Cloudflare has a regular cadence of releasing updates and new rules to the DDoS Managed Rulesets. The updates either improve a rule's accuracy, lower false positives rates, or increase the protection due to a change in the threat landscape.
 
@@ -18,6 +18,4 @@ The release cycle for a new rule within the regular cadence follows this process
 
 Changes to existing rules follow the same process, except that Cloudflare will create a temporary updated rule (denoted as `BETA` in rule description) before updating the original rule on the next release cycle.
 
-Cloudflare is very proactive in responding to new attack vectors, which may need to be released outside of the 7-day cycle, defined as an Emergency Release. This emergency release is only used to respond to new high priority threats with a very low false positive probability.
-
-<!-- TODO: add back RSS feed (was `/waf/change-log/index.xml` before) -->
+Cloudflare is very proactive in responding to new attack vectors, which may need to be released outside of the 7-day cycle, defined as an Emergency Release. This emergency release is only used to respond to new high priority threats with a low false positive probability.

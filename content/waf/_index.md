@@ -13,7 +13,7 @@ The Cloudflare Web Application Firewall (WAF) provides both automatic protection
 {{<button-group>}}
   {{<button type="primary" href="/waf/about/">}}Learn more{{</button>}}
   {{<button type="secondary" href="/waf/managed-rulesets/">}}WAF Managed Rulesets{{</button>}}
-  {{<button type="secondary" href="/waf/change-log/">}}Managed Rulesets change log{{</button>}}
+  {{<button type="secondary" href="/waf/change-log/">}}Managed Rulesets changelog{{</button>}}
 {{</button-group>}}
 
 ***
