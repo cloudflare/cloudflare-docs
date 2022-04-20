@@ -46,7 +46,7 @@ If you need to connect to your origin using a non-HTTP protocol (SSH, FTP, SMTP)
 
 {{<Aside type="note">}}
 
-If you encounter a **CNAME** record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration.
+If you encounter a `CNAME` record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration.
 
 {{</Aside>}}
 
