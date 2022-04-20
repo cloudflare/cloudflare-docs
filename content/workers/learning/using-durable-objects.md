@@ -37,8 +37,8 @@ The first parameter passed to the class constructor contains state specific to t
 
 ```js
 export class DurableObjectExample {
-    constructor(state, env) {
-    }
+  constructor(state, env) {
+  }
 }
 ```
 
@@ -48,13 +48,12 @@ Workers communicate with a Durable Object via the Fetch API. Like a Worker, a Du
 
 ```js
 export class DurableObjectExample {
-    constructor(state, env) {
-    }
+  constructor(state, env) {
+  }
 
-    async fetch(request) {
-        return new Response('Hello World');
-    }
-
+  async fetch(request) {
+    return new Response('Hello World');
+  }
 }
 ```
 
@@ -72,18 +71,17 @@ Durable Objects gain access to a [persistent storage API](/workers/runtime-apis/
 
 ```js
 export class DurableObjectExample {
-    constructor(state, env) {
-        this.state = state;
-    }
+  constructor(state, env) {
+    this.state = state;
+  }
 
-    async fetch(request) {
-        let ip = request.headers.get('CF-Connecting-IP');
-        let data = await request.text();
-        let storagePromise = this.state.storage.put(ip, data);
-        await storagePromise;
-        return new Response(ip + ' stored ' + data);
-    }
-
+  async fetch(request) {
+    let ip = request.headers.get('CF-Connecting-IP');
+    let data = await request.text();
+    let storagePromise = this.state.storage.put(ip, data);
+    await storagePromise;
+    return new Response(ip + ' stored ' + data);
+  }
 }
 ```
 
@@ -107,21 +105,21 @@ Variables in a Durable Object will maintain state as long as your Durable Object
 
 ```js
 export class Counter {
-    constructor(state, env) {
-        this.state = state;
-        // `blockConcurrencyWhile()` ensures no requests are delivered until
-        // initialization completes.
-        this.state.blockConcurrencyWhile(async () => {
-            let stored = await this.state.storage.get("value");
-            // After initialization, future reads do not need to access storage.
-            this.value = stored || 0;
-        })
-    }
+  constructor(state, env) {
+    this.state = state;
+    // `blockConcurrencyWhile()` ensures no requests are delivered until
+    // initialization completes.
+    this.state.blockConcurrencyWhile(async () => {
+      let stored = await this.state.storage.get("value");
+      // After initialization, future reads do not need to access storage.
+      this.value = stored || 0;
+    })
+  }
 
-    // Handle HTTP requests from clients.
-    async fetch(request) {
-        // use this.value rather than storage
-    }
+  // Handle HTTP requests from clients.
+  async fetch(request) {
+    // use this.value rather than storage
+  }
 }
 ```
 
