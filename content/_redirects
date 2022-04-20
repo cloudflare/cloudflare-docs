@@ -261,7 +261,6 @@
 /fundamentals/get-started/concepts/cdn-cgi-endpoint/ /fundamentals/get-started/reference/cdn-cgi-endpoint/ 301
 /fundamentals/get-started/concepts/cdn/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/concepts/interact-with-cloudflare/ /fundamentals/get-started/basic-tasks/interact-with-cloudflare/ 301
-/fundamentals/internet/* /fundamentals/internet 301
 /fundamentals/notifications/configure-webhooks/ /fundamentals/notifications/create-notifications/configure-webhooks/ 301
 /fundamentals/notifications/create-notification/ /fundamentals/notifications/create-notifications/create-notification/ 301
 /fundamentals/notifications/create-pagerduty/ /fundamentals/notifications/create-notifications/create-pagerduty/ 301
@@ -1037,6 +1036,7 @@
 /api-security* /api-shield/:splat 301
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
+/fundamentals/internet/* /fundamentals/internet/ 301
 /load-balancing/understand-basics/load-balancing-rules* /load-balancing/additional-options/load-balancing-rules:splat 301
 /fundamentals/get-started/origin-health/* /fundamentals/get-started/task-guides/origin-health/:splat 301
 /tenant/tutorial* /tenant/get-started:splat 301
