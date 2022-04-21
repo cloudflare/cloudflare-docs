@@ -11,7 +11,7 @@ When using the folder upload method, you can drag and drop your application fold
 
 # Developing locally and deploying with Wrangler
 
-The second option when using prebuilt assets is to deploy your site from your CLI using [Wrangler](/pages/platform/functions/#develop-and-preview-locally) by running this command:
+The second option when using prebuilt assets is to deploy your site from your CLI using [Wrangler](/pages/platform/functions/#develop-and-preview-locally/) by running this command:
 
 ```sh
 # Creates a new Wrangler project
@@ -84,7 +84,7 @@ If your project uses a different version of Node, you can specify the version in
 
 {{<Aside>}}
 
-The next step is to install [Wrangler 2](/workers/wrangler/) globally in your project, run` npm install`, and then build your projects. To make sure you are building all the files you intend to in your project, the ` ls ${{ GitHub.workspace }}/dist`  step lists out all the files in your `dist` folder.
+The next step is to install [Wrangler 2](/pages/platform/functions/#develop-and-preview-locally/) globally in your project, run` npm install`, and then build your projects. To make sure you are building all the files you intend to in your project, the ` ls ${{ GitHub.workspace }}/dist`  step lists out all the files in your `dist` folder.
 
 Finally, to publish your site, the Action makes sure you are logged in to your Account with your Cloudflare credentials stored as secrets in your project.
 
@@ -92,7 +92,7 @@ Finally, to publish your site, the Action makes sure you are logged in to your A
 
 First log  into the [Cloudflare dashboard](https://dash.cloudflare.com/) >  **My Profile** > **API Tokens** > **Create Token** and under Create Custom Token, select **Get started**. Start by naming the API Token, specify what product you are creating the API token for and give it the edit permission. 
 
-![Select API token for Cloudflare Pages](./media/select-API-token-for-pages.png)
+![Select API token for Cloudflare Pages](../media/select-api-token-for-pages.png)
 
 Click on **Continue to summary** and then **Create Token**. Now that you have created this token, you can push your project containing your Credentials to GitHub.
 
