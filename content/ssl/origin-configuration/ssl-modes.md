@@ -74,6 +74,8 @@ Choose this option when you cannot set up an SSL certificate on your origin or y
 
 ### Limitations
 
+Flexible mode is only supported for HTTPS connections on port 443 (default port). Other ports using HTTPS will fall back to [**Full** mode](#full).
+
 If your application contains sensitive information (personalized data, user login), use [**Full**](#full) or [**Full (Strict)**](#full-strict) modes instead.
 
 ![With an encryption mode of Flexible, your application encrypts traffic between the visitor and Cloudflare, but not between Cloudflare and your server.](/ssl/static/ssl-encryption-mode-flexible.png)
