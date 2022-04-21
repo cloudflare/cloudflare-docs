@@ -93,9 +93,9 @@ Currently, users on Pro, Business, and Enterprise plans get advanced HTTP traffi
 
 Not yet, but we plan to support AMP soon.
 
-### What is the data retention policy for Web Analytics?
+### What is the period of time I can access data in Web Analytics?
 
-Currently, data retention for Web Analytics is six months.
+Currently, you can access data for the previous six months.
 
 ### Does Cloudflare Web Analytics support UTM parameters?
 
