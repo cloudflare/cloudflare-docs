@@ -893,7 +893,6 @@
 /workers/reference/apis/* /workers/runtime-apis/:splat 301
 /workers/templates/boilerplates/* /workers/templates/pages/:splat 301
 /workers/templates/pages/* /workers/examples/:splat 301
-/1.1.1.1/1.1.1.1-for-families/* /1.1.1.1/setup/:splat 301
 
 /browser-isolation/* /cloudflare-one/policies/browser-isolation/ 301
 
