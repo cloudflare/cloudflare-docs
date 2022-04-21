@@ -4,177 +4,38 @@ title: Intune
 weight: 2
 ---
 
-# Intune
+# Deploy WARP using Intune
 
 ## Windows
 
-1.  Log in to your Microsoft Intune account.
-1.  Navigate to **Apps** > **All Apps**.
-1.  Click **+Add**.
-1.  In **App type**, select _Line-of-business app_ from the drop-down menu.
-1.  Click **Select**.
-1.  Click **Select app package file** and upload the `Cloudflare_WARP_Release-x64.msi` installer you downloaded previously.
-1.  Click **OK**.
-1.  In the **Name** field, we recommend entering the version number of the package being uploaded.
-1.  In the **Publisher** field, we recommend entering `Cloudflare, Inc`.
-1.  In the **Command-line arguments** field, enter a valid set of command-line arguments as described above.
-    - Example: `/quiet ORGANIZATION="exampleorg" SERVICE_MODE="warp" GATEWAY_UNIQUE_ID="fmxk762nrj" SUPPORT_URL="http://support.example.com"`
-1.  You do not need to fill other optional fields. Once you have entered all the necessary values, click **Next**.
-1.  Add the users or groups who require Cloudflare WARP.
-1.  Click **Next**.
-1.  Review your configuration.
-1.  Click **Create**.
+### Prerequisites
+
+[Download the `Cloudflare_WARP_Release-x64.msi` installer](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows).
+
+### Configure Intune for Windows
+
+1. Log in to your Microsoft Intune account.
+2. Navigate to **Apps** > **All Apps** > **+Add**.
+3. In **App type**, select _Line-of-business app_ from the drop-down menu. Click **Select**.
+4. Click **Select app package file** and upload the `Cloudflare_WARP_Release-x64.msi` installer you downloaded previously.
+5. Click **OK**.
+6. In the **Name** field, we recommend entering the version number of the package being uploaded.
+7. In the **Publisher** field, we recommend entering `Cloudflare, Inc`.
+8. In the **Command-line arguments** field, enter a [valid installation command](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#install-warp-on-windows). \
+You do not need to fill other optional fields. Once you have entered all the necessary values, click **Next**.
+9. Add the users or groups who require Cloudflare WARP and click **Next**.
+10. Review your configuration and click **Create**.
 
 Intune is now configured to deploy the WARP client.
 
 ## macOS
 
-The Cloudflare WARP client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally, this `plist` can be wrapped in a `.mobileconfig`.
-
-Here is an example `plist` file with the accepted arguments:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-  <dict>
-    <key>organization</key>
-    <string>yourorganization</string>
-    <key>auto_connect</key>
-    <integer>1</integer>
-    <key>switch_locked</key>
-    <false />
-    <key>service_mode</key>
-    <string>warp</string>
-    <key>support_url</key>
-    <string>https://support.example.com</string>
-  </dict>
-</plist>
-```
-
-Here is an example `.mobileconfig` file with the accepted arguments:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-  <dict>
-    <key>PayloadContent</key>
-    <array />
-    <key>PayloadDisplayName</key>
-    <string>Cloudflare WARP</string>
-    <key>PayloadIdentifier</key>
-    <string>cloudflare_warp</string>
-    <key>PayloadOrganization</key>
-    <string>Cloudflare, Ltd.</string>
-    <key>PayloadRemovalDisallowed</key>
-    <false />
-    <key>PayloadType</key>
-    <string>Configuration</string>
-    <key>PayloadUUID</key>
-    <string>F5046847-2B1C-4DA0-A872-F6E040B1B20E</string>
-    <key>PayloadVersion</key>
-    <integer>1</integer>
-    <key>PayloadContent</key>
-    <array>
-      <dict>
-        <key>PayloadDisplayName</key>
-        <string>Custom</string>
-        <key>PayloadIdentifier</key>
-        <string>com.cloudflare.warp</string>
-        <key>PayloadOrganization</key>
-        <string>Cloudflare Ltd.</string>
-        <key>PayloadType</key>
-        <string>com.apple.ManagedClient.preferences</string>
-        <key>PayloadUUID</key>
-        <string>C2575334-358E-4925-8B29-30B4348D31E3</string>
-        <key>PayloadVersion</key>
-        <integer>1</integer>
-        <key>PayloadEnabled</key>
-        <true />
-        <key>PayloadContent</key>
-        <dict>
-          <key>com.cloudflare.warp</key>
-          <dict>
-            <key>Forced</key>
-            <array>
-              <dict>
-                <key>mcx_preference_settings</key>
-                <dict>
-                  <key>organization</key>
-                  <string>yourorganization</string>
-                  <key>auto_connect</key>
-                  <integer>1</integer>
-                  <key>switch_locked</key>
-                  <false />
-                  <key>service_mode</key>
-                  <string>warp</string>
-                  <key>support_url</key>
-                  <string>https://support.example.com</string>
-                </dict>
-              </dict>
-            </array>
-          </dict>
-        </dict>
-      </dict>
-    </array>
-  </dict>
-</plist>
-```
-
-For a description of each argument and what it means, see [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
-
-[Click here to download](/cloudflare-one/static/documentation/connections/com.cloudflare.warp.plist) this example `plist`. If you plan to download the `plist` file and manually place it in `/Library/Managed Preferences`, convert the `plist` into binary format first. To do that:
-
-1.  Open a Terminal window.
-1.  Run the following command:
-
-<!---->
-
-    % plutil -convert binary1 com.cloudflare.warp.plist
-
-[Click here to download](/cloudflare-one/static/documentation/connections/CloudflareWARP.mobileconfig) this example `.mobileconfig`. Before doing so, you may need to run `uuidgen` from your macOS terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID` in the example above.
+Refer to the [generic instructions for macOS](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#install-warp-on-macos).
 
 ## iOS
 
-The WARP client, known in the App Store as [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), allows for an automated install via Intune.
-
-To proceed with the installation, here is an example of the XML code you will need, with the accepted arguments:
-
-```xml
-<dict>
-  <key>organization</key>
-  <string>yourorganization</string>
-  <key>auto_connect</key>
-  <integer>1</integer>
-  <key>switch_locked</key>
-  <false />
-  <key>service_mode</key>
-  <string>warp</string>
-  <key>support_url</key>
-  <string>https://support.example.com</string>
-</dict>
-```
-
-For a description of each argument and what it means, refer to the [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
+Refer to the [generic instructions for iOS](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#install-warp-on-ios).
 
 ## Android
 
-The WARP client, known in the Google Play store as [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone&hl=en&gl=US), allows for an automated install via Intune.
-
-To proceed with the installation, here is an example of the XML code you will need, with the accepted arguments:
-
-```xml
-<key>organization</key>
-<string>yourorganization</string>
-<key>enable</key>
-<true />
-<key>gateway_unique_id</key>
-<string>your_gateway_doh_subdomain</string>
-<key>service_mode</key>
-<string>warp</string>
-<key>support_url</key>
-<string>https://support.example.com</string>
-```
-
-Refer to the [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each value.
+Refer to the [generic instructions for Android](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#install-warp-on-android).

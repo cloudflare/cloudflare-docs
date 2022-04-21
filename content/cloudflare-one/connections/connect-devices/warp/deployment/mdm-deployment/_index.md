@@ -54,7 +54,6 @@ The on-disk configuration of the Windows client can be changed at any time by mo
 
 Changes to this file are processed immediately by the WARP client.
 
-
 ## Install WARP on macOS
 
 The Cloudflare WARP macOS client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally this plist can be wrapped in a `.mobileconfig`.
@@ -124,7 +123,7 @@ Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/war
 
 The Cloudflare WARP Android client (known in the Google Play store as [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone\&hl=en\&gl=US)) allows for an automated install via tools like Intune, Google Endpoint Manager, and others.
 
-Accepted configuration values are as follows:
+To proceed with the installation, here is an example of the XML code you will need:
 
 ```xml
 <key>organization</key>
