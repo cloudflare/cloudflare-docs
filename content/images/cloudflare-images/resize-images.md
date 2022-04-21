@@ -122,11 +122,15 @@ Flexible variants supports the following properties:
 - `anim=false`
   - Reduces animations to still images. This setting is recommended to avoid large animated GIF files, or flashing images.
 
+- `rotate`
+  - Number of degrees (`90`, `180`, or `270`) to rotate the image by. `width` and `height` options refer to axes after rotation.
+
+- `background`
+  - Background color to add underneath the image. Applies only to images with transparency (for example, PNG). Accepts any CSS color, such as `#RRGGBB` and `rgba(…)`.
+
 - `contrast`
 - `brightness`
 - `gamma`
-- `rotate`
-- `background`
 
 {{</definitions>}}
 
