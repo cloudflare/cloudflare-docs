@@ -35,7 +35,13 @@ filename: _redirects
 /products/:code/:name /products?code=:code&name=:name
 ```
 
-A project is limited to 100 total redirects. Each redirect declaration has a 1000-character limit. Malformed definitions are ignored. If there are multiple redirects for the same `source` path, the topmost redirect is applied.
+A project is limited to 1,000 static redirects and 100 dynamic redirects, for a combined total of 1,100 redirects. Each redirect declaration has a 1,000-character limit. Malformed definitions are ignored. If there are multiple redirects for the same `source` path, the topmost redirect is applied.
+
+{{<Aside type= "note">}}
+
+Make sure that static redirects are before dynamic redirects in your `_redirects` file.
+
+{{</Aside>}}
 
 Cloudflare currently offers limited support for advanced redirects. More support will be added in the future.
 
