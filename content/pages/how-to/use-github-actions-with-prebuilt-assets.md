@@ -3,15 +3,15 @@ pcx-content-type: how-to
 title: Use GitHub actions for prebuilt assets
 ---
 
-# Use GitHuub actions with Prebuilt assets
+# Use GitHub actions with Prebuilt assets
 
-Cloudflare Pages now enables prebuilt assets uploads, allowing you to use custom build steps for your applications and deploy to Pages using the folder upload method option or with [Wrangler](/pages/platform/platform/functions/#develop-and-preview-locally). 
+Cloudflare Pages now enables prebuilt assets uploads, allowing you to use custom build steps for your applications and deploy to Pages using the folder upload method option or with [Wrangler](/pages/platform/functions/#develop-and-preview-locally). 
 
 When using the folder upload method, you can drag and drop your application folder unto the Pages interface, and after the deploy step is completed, you will have your site live with a URL. 
 
 # Developing locally and deploying with Wrangler
 
-The second option when using prebuilt assets is to deploy your site from your CLI using [Wrangler](/pages/platform/functions/#develop-and-preview-locally/) by running this command:
+The second option when using prebuilt assets is to deploy your site from your CLI using [Wrangler](/pages/platform/functions/#develop-and-preview-locally) by running this command:
 
 ```sh
 # Creates a new Wrangler project
@@ -44,6 +44,9 @@ Create a `.github/workflows/pages-deployment.yaml` file at the root of your proj
 In your `pages-deployment.yaml` file, copy the following content:
 
 ```yaml
+---
+filename: .github/workflows/pages-deployment.yaml
+---
 name: GitHub Actions Pages Publish
 on: [push]
 jobs:
@@ -78,11 +81,11 @@ jobs:
 
 In the above code block, you have set up an Action that runs when you push code to the repository; running on `ubuntu-latest`, it first checks out your repository with the latest version of Node. 
 
-{{<Aside type= "note">}}
+{{<Aside type="note" header="Note">}}
 
 If your project uses a different version of Node, you can specify the version in the `node-version` step and change the `check-latest` value to "false"
 
-{{<Aside>}}
+{{</ Aside>}}
 
 The next step is to install [Wrangler 2](/pages/platform/functions/#develop-and-preview-locally/) globally in your project, run` npm install`, and then build your projects. To make sure you are building all the files you intend to in your project, the ` ls ${{ GitHub.workspace }}/dist`  step lists out all the files in your `dist` folder.
 
