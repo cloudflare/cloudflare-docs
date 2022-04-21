@@ -11,9 +11,9 @@ Workers KV is a global, low-latency, key-value data store. It stores data in a s
 
 Learn more about [How KV works](/workers/learning/how-kv-works/).
 
-To use Workers KV, you must create a KV namespace and add a [binding](/workers/runtime-apis/kv/#kv-bindings) to your Worker. Refer to the [instructions for Wrangler KV commands](/workers/cli-wrangler/commands/#kv) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces) to get started.
+To use Workers KV, you must create a KV namespace and add a [binding](/workers/runtime-apis/kv/#kv-bindings) to your Worker. Refer to the [instructions for Wrangler KV commands](/workers/wrangler/cli-wrangler/commands/#kv) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces) to get started.
 
-***
+---
 
 ## Methods
 
@@ -22,18 +22,19 @@ To use Workers KV, you must create a KV namespace and add a [binding](/workers/r
 To create a new key-value pair, or to update the value for a particular key, call the `put` method on any namespace you have bound to your script. The basic form of this method looks like this:
 
 ```js
-await NAMESPACE.put(key, value)
+await NAMESPACE.put(key, value);
 ```
 
 #### Parameters
 
 {{<definitions>}}
 
-*   `key` {{<type>}}string{{</type>}}
-    *   The key to associate with the value. A key cannot be empty, `.` or `..`. All other keys are valid. Keys have a maximum length of 512 bytes.
+- `key` {{<type>}}string{{</type>}}
 
-*   `value` {{<type>}}string{{</type>}} | {{<type>}}ReadableStream{{</type>}} | {{<type>}}ArrayBuffer{{</type>}}
-    *   The value to store. The type is inferred.
+  - The key to associate with the value. A key cannot be empty, `.` or `..`. All other keys are valid. Keys have a maximum length of 512 bytes.
+
+- `value` {{<type>}}string{{</type>}} | {{<type>}}ReadableStream{{</type>}} | {{<type>}}ArrayBuffer{{</type>}}
+  - The value to store. The type is inferred.
 
 {{</definitions>}}
 
@@ -41,7 +42,7 @@ This method returns a `Promise` that you should `await` on in order to verify a 
 
 The maximum size of a value is 25 MiB.
 
-You can also [write key-value pairs from the command line with Wrangler](/workers/cli-wrangler/commands/#kvkey) and [write data via the API](https://api.cloudflare.com/#workers-kv-namespace-write-key-value-pair).
+You can also [write key-value pairs from the command line with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) and [write data via the API](https://api.cloudflare.com/#workers-kv-namespace-write-key-value-pair).
 
 Due to the eventually consistent nature of Workers KV, concurrent writes can end up overwriting one another. It is a common pattern to write data from a single process via Wrangler or the API. This avoids competing, concurrent writes because of the single stream. All data is still readily available within all Workers bound to the namespace.
 
@@ -49,7 +50,7 @@ Writes are immediately visible to other requests in the same edge location, but 
 
 #### Writing data in bulk
 
-You can [write more than one key-value pair at a time with Wrangler](/workers/cli-wrangler/commands/#kvbulk) or [via the API](https://api.cloudflare.com/#workers-kv-namespace-write-multiple-key-value-pairs). The bulk API can accept up to 10,000 KV pairs at once.
+You can [write more than one key-value pair at a time with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvbulk) or [via the API](https://api.cloudflare.com/#workers-kv-namespace-write-multiple-key-value-pairs). The bulk API can accept up to 10,000 KV pairs at once.
 
 A `key` and `value` are required for each KV pair. The entire request size must be less than 100 megabytes. As of January 2022, Cloudflare does not support bulk writes from within a Worker.
 
@@ -75,22 +76,24 @@ The `put` method described [previously](/workers/runtime-apis/kv/#writing-key-va
 
 {{<definitions>}}
 
-*   `NAMESPACE.put(key, value, {expiration: secondsSinceEpoch})` {{<type>}}Promise{{</type>}}
+- `NAMESPACE.put(key, value, {expiration: secondsSinceEpoch})` {{<type>}}Promise{{</type>}}
 
-*   `NAMESPACE.put(key, value, {expirationTtl: secondsFromNow})` {{<type>}}Promise{{</type>}}
+- `NAMESPACE.put(key, value, {expirationTtl: secondsFromNow})` {{<type>}}Promise{{</type>}}
 
 {{</definitions>}}
 
 These assume that `secondsSinceEpoch` and `secondsFromNow` are variables defined elsewhere in your Worker code.
 
-You can also [write with an expiration on the command line via Wrangler](/workers/cli-wrangler/commands/#kvkey) or [via the API](https://api.cloudflare.com/#workers-kv-namespace-write-key-value-pair).
+You can also [write with an expiration on the command line via Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) or [via the API](https://api.cloudflare.com/#workers-kv-namespace-write-key-value-pair).
 
 #### Metadata
 
 To associate some metadata with a key-value pair, set `metadata` to any arbitrary object (must serialize to JSON) in the `put` options object on a `put` call. To do this in a Worker:
 
 ```js
-await NAMESPACE.put(key, value, {metadata: {someMetadataKey: "someMetadataValue"}})
+await NAMESPACE.put(key, value, {
+  metadata: { someMetadataKey: "someMetadataValue" },
+});
 ```
 
 The serialized JSON representation of the metadata object must be no more than 1024 bytes in length.
@@ -100,7 +103,7 @@ The serialized JSON representation of the metadata object must be no more than 1
 To get the value for a given key, you can call the `get` method on any namespace you have bound to your script:
 
 ```js
-NAMESPACE.get(key)
+NAMESPACE.get(key);
 ```
 
 The method returns a promise you can `await` to get the value. If the key is not found, the promise will resolve with the literal value `null`.
@@ -110,36 +113,36 @@ Note that `get` may return stale values -- if a given key has recently been read
 An example of reading a key from within a Worker:
 
 ```js
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
+addEventListener("fetch", (event) => {
+  event.respondWith(handleRequest(event.request));
+});
 
 async function handleRequest(request) {
-  const value = await NAMESPACE.get("first-key")
+  const value = await NAMESPACE.get("first-key");
   if (value === null) {
-    return new Response("Value not found", {status: 404})
+    return new Response("Value not found", { status: 404 });
   }
 
-  return new Response(value)
+  return new Response(value);
 }
 ```
 
-You can [read key-value pairs from the command line with Wrangler](/workers/cli-wrangler/commands/#kvkey) and [from the API](https://api.cloudflare.com/#workers-kv-namespace-read-key-value-pair).
+You can [read key-value pairs from the command line with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) and [from the API](https://api.cloudflare.com/#workers-kv-namespace-read-key-value-pair).
 
 #### Types
 
 You can pass in an options object with a `type` parameter to the `get` method:
 
 ```js
-NAMESPACE.get(key, {type: "text"})
+NAMESPACE.get(key, { type: "text" });
 ```
 
 The `type` parameter can be any of:
 
-*   `"text"`: A string (default).
-*   `"json"`: An object decoded from a JSON string.
-*   `"arrayBuffer"`: An [ArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) instance.
-*   `"stream"`: A [ReadableStream](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream).
+- `"text"`: A string (default).
+- `"json"`: An object decoded from a JSON string.
+- `"arrayBuffer"`: An [ArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) instance.
+- `"stream"`: A [ReadableStream](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream).
 
 For simple values, it often makes sense to use the default `"text"` type which provides you with your value as a string. For convenience, a `"json"` type is also specified which will convert a JSON value into an object before returning it to you. For large values, you can use `"stream"` to request a `ReadableStream` and `"arrayBuffer"` to request an `ArrayBuffer` for binary values.
 
@@ -150,7 +153,7 @@ For large values, the choice of `type` can have a noticeable effect on latency a
 The `get` options object also accepts a `cacheTtl` parameter:
 
 ```js
-NAMESPACE.get(key, {cacheTtl: 3600})
+NAMESPACE.get(key, { cacheTtl: 3600 });
 ```
 
 The `cacheTtl` parameter must be an integer that is greater than or equal to 60. It defines the length of time in seconds that a KV result is cached in the edge location that it is accessed from. This can be useful for reducing cold read latency on keys that are read relatively infrequently. It is especially useful if your data is write-once or write-rarely. It is not recommended if your data is updated often and you need to see updates shortly after they are written, because writes that happen from other edge locations will not be visible until the cached value expires.
@@ -162,7 +165,7 @@ The effective Cache TTL of an already cached item can be reduced by getting it a
 You can get the metadata associated with a key-value pair alongside its value by calling the `getWithMetadata` method on a namespace you have bound in your script:
 
 ```js
-const { value, metadata } = await NAMESPACE.getWithMetadata(key)
+const { value, metadata } = await NAMESPACE.getWithMetadata(key);
 ```
 
 If there is no metadata associated with the requested key-value pair, `null` will be returned for metadata.
@@ -174,14 +177,14 @@ You can pass an options object with `type` and/or `cacheTtl` parameters to the `
 To delete a key-value pair, call the `delete` method on any namespace you have bound to your script:
 
 ```js
-await NAMESPACE.delete(key)
+await NAMESPACE.delete(key);
 ```
 
 This will remove the key and value from your namespace. As with any operations, it may take some time to see that they key has been deleted from various points at the edge.
 
 This method returns a promise that you should `await` on in order to verify successful deletion.
 
-You can also [delete key-value pairs from the command line with Wrangler](/workers/cli-wrangler/commands/#kvkey) or [via the API](https://api.cloudflare.com/#workers-kv-namespace-delete-key-value-pair).
+You can also [delete key-value pairs from the command line with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) or [via the API](https://api.cloudflare.com/#workers-kv-namespace-delete-key-value-pair).
 
 ### Listing keys
 
@@ -190,18 +193,18 @@ You can use a list operation to see all of the keys that live in a given namespa
 An example:
 
 ```js
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
+addEventListener("fetch", (event) => {
+  event.respondWith(handleRequest(event.request));
+});
 
 async function handleRequest(request) {
-  const value = await NAMESPACE.list()
+  const value = await NAMESPACE.list();
 
-  return new Response(value.keys)
+  return new Response(value.keys);
 }
 ```
 
-You can also [list keys on the command line with Wrangler](/workers/cli-wrangler/commands/#kvkey) or [via the API](https://api.cloudflare.com/#workers-kv-namespace-list-a-namespace-s-keys).
+You can also [list keys on the command line with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) or [via the API](https://api.cloudflare.com/#workers-kv-namespace-list-a-namespace-s-keys).
 
 Changes may take up to 60 seconds to be visible when listing keys.
 
@@ -215,17 +218,23 @@ NAMESPACE.list({prefix?: string, limit?: number, cursor?: string})
 
 All arguments are optional:
 
-*   `prefix` is a string that represents a prefix you can use to filter all keys.
-*   `limit` is the maximum number of keys returned. The default is 1,000, which is the maximum. It is unlikely that you will want to change this default but it is included for completeness.
-*   `cursor` is a string used for paginating responses.
+- `prefix` is a string that represents a prefix you can use to filter all keys.
+- `limit` is the maximum number of keys returned. The default is 1,000, which is the maximum. It is unlikely that you will want to change this default but it is included for completeness.
+- `cursor` is a string used for paginating responses.
 
 The `list` method returns a promise which resolves with an object that looks like this:
 
 ```json
 {
-  keys: [{ name: "foo", expiration: 1234, metadata: {someMetadataKey: "someMetadataValue"}}],
-  list_complete: false,
-  cursor: "6Ck1la0VxJ0djhidm1MdX2FyD"
+  "keys": [
+    {
+      "name": "foo",
+      "expiration": 1234,
+      "metadata": { "someMetadataKey": "someMetadataValue" }
+    }
+  ],
+  "list_complete": false,
+  "cursor": "6Ck1la0VxJ0djhidm1MdX2FyD"
 }
 ```
 
@@ -242,14 +251,14 @@ Note that if your values fit in [the metadata size limit](/workers/platform/limi
 You can also list all of the keys starting with a particular prefix. For example, you may have structured your keys with a user, a user ID, and key names, separated by colons (for example, `user:1:<key>`). You could get the keys for user number one by doing this:
 
 ```js
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
+addEventListener("fetch", (event) => {
+  event.respondWith(handleRequest(event.request));
+});
 
 async function handleRequest(request) {
-  const value = await NAMESPACE.list({"prefix": "user:1:"})
+  const value = await NAMESPACE.list({ prefix: "user:1:" });
 
-  return new Response(value.keys)
+  return new Response(value.keys);
 }
 ```
 
@@ -264,11 +273,11 @@ Keys are always returned in lexicographically sorted order according to their UT
 If there are more keys to fetch, the `list_complete` key will be set to `false` and a `cursor` will also be returned. In this case, you can call `list` again with the `cursor` value to get the next batch of keys:
 
 ```js
-const value = await NAMESPACE.list()
+const value = await NAMESPACE.list();
 
-const cursor = value.cursor
+const cursor = value.cursor;
 
-const next_value = await NAMESPACE.list({"cursor": cursor})
+const next_value = await NAMESPACE.list({ cursor: cursor });
 ```
 
 Note that checking for an empty array in `keys` is not sufficient to determine whether there are more keys to fetch; check `list_complete` instead. The reason it is possible to have an empty array in `keys`, but still have more keys to fetch, is because [recently expired or deleted keys](https://en.wikipedia.org/wiki/Tombstone_%28data_store%29) must be iterated through but will not be included in the returned `keys`.
@@ -292,7 +301,7 @@ name = "worker"
 
 # ...
 
-kv_namespaces = [ 
+kv_namespaces = [
   { binding = "TODO", id = "06779da6940b431db6e566b4846d64db" }
 ]
 ```
@@ -300,10 +309,10 @@ kv_namespaces = [
 With this, the deployed Worker will have a `TODO` global variable. Any methods on the `TODO` binding will map to the KV namespace with an ID of `06779da6940b431db6e566b4846d64db` – which you called `My Tasks` earlier.
 
 ```js
-addEventListener('fetch', async event => {
+addEventListener("fetch", async (event) => {
   // Get the value for the "to-do:123" key
   // NOTE: Relies on the `TODO` KV binding that maps to the "My Tasks" namespace.
-  let value = await TODO.get('to-do:123');
+  let value = await TODO.get("to-do:123");
 
   // Return the value, as is, for the Response
   event.respondWith(new Response(value));
@@ -312,7 +321,7 @@ addEventListener('fetch', async event => {
 
 {{<Aside type="note">}}
 
-You can create a namespace [using Wrangler](/workers/cli-wrangler/commands/#getting-started) or in the [Cloudflare dashboard](https://dash.cloudflare.com/). You can also bind the namespace to your Worker in the dashboard:
+You can create a namespace [using Wrangler](/workers/wrangler/cli-wrangler/commands/#getting-started) or in the [Cloudflare dashboard](https://dash.cloudflare.com/). You can also bind the namespace to your Worker in the dashboard:
 
 1.  Go to **Workers**.
 2.  Select your **Worker**.
@@ -329,18 +338,18 @@ The documentation above assumes you are using the original Service Worker syntax
 ```js
 export class DurableObject {
   constructor(state, env) {
-    this.state = state
-    this.env = env
+    this.state = state;
+    this.env = env;
   }
 
   async fetch(request) {
-    const valueFromKV = await this.env.NAMESPACE.get('someKey')
-    return new Response(valueFromKV)
+    const valueFromKV = await this.env.NAMESPACE.get("someKey");
+    return new Response(valueFromKV);
   }
 }
 ```
 
 ## Related resources
 
-*   [Limits](/workers/platform/limits/#kv-limits)
-*   [Pricing](/workers/platform/pricing/#kv)
+- [Limits](/workers/platform/limits/#kv-limits)
+- [Pricing](/workers/platform/pricing/#kv)

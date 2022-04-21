@@ -34,7 +34,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
 
 - `$NAME` {{<type>}}=(Name of working directory){{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/cli-wrangler/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/cli-wrangler/configuration/) file.
 
 - `--yes`
 
@@ -158,7 +158,7 @@ $ wrangler dev [--env $ENVIRONMENT_NAME] [--ip <ip>] [--port <port>] [--host <ho
 
 {{</definitions>}}
 
-These arguments can also be set in your `wrangler.toml` file. Refer to the [`wrangler dev` configuration](/workers/cli-wrangler/configuration/#dev) documentation for more information.
+These arguments can also be set in your `wrangler.toml` file. Refer to the [`wrangler dev` configuration](/workers/wrangler/cli-wrangler/configuration/#dev) documentation for more information.
 
 ### Usage
 
@@ -206,7 +206,7 @@ Like all Wrangler commands, run `wrangler tail` from your Worker’s root direct
 
 {{<Aside type="warning" header="Legacy issues with existing cloudflared configuration">}}
 
-`wrangler tail` versions older than version 1.19.0 use `cloudflared` to run. Cloudflare recommends [updating to the latest wrangler version](/workers/cli-wrangler/install-update/#update) to avoid any issues.
+`wrangler tail` versions older than version 1.19.0 use `cloudflared` to run. Cloudflare recommends [updating to the latest wrangler version](/workers/wrangler/getting-started/#update) to avoid any issues.
 
 {{</Aside>}}
 

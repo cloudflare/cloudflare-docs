@@ -12,7 +12,7 @@ As part of the Workers platform's integration with Chrome Developer Tools, you c
 
 <StreamVideo id="f11809a382160334e9be9a2aedf13d1d" />
 
-`wrangler inspect` is only available in Wrangler v1.19.3 or later. Check what version you have before continuing. If you need to update Wrangler, refer to the guide on [upgrading Wrangler](/workers/cli-wrangler/install-update).
+`wrangler inspect` is only available in Wrangler v1.19.3 or later. Check what version you have before continuing. If you need to update Wrangler, refer to the guide on [upgrading Wrangler](/workers/wrangler/getting-started/).
 
 ## Profiling an example project
 
@@ -25,11 +25,11 @@ $ wrangler generate my-worker
 Open the `index.js` file in your project's directory and replace the content with:
 
 ```js
-addEventListener('fetch', event => {
+addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request));
 });
 
-const timer = ms => new Promise(res => setTimeout(res, ms));
+const timer = (ms) => new Promise((res) => setTimeout(res, ms));
 
 async function sleepBetween() {
   let result = 0;
@@ -45,8 +45,8 @@ async function sleepBetween() {
 async function handleRequest(request) {
   await sleepBetween();
 
-  return new Response('Hello worker!', {
-    headers: { 'content-type': 'text/plain' },
+  return new Response("Hello worker!", {
+    headers: { "content-type": "text/plain" },
   });
 }
 ```

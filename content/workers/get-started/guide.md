@@ -24,7 +24,7 @@ This guide will instruct you through setting up a Cloudflare account to deployin
 
 ## 1. Sign up for a Workers account
 
-Before you can start [publishing](/workers/cli-wrangler/commands/#publish) your Workers on your own domain or a free `*.workers.dev` subdomain, you must sign up for a Cloudflare Workers account.
+Before you can start [publishing](/workers/wrangler/cli-wrangler/commands/#publish) your Workers on your own domain or a free `*.workers.dev` subdomain, you must sign up for a Cloudflare Workers account.
 
 <p>{{<button type="primary" href="https://dash.cloudflare.com/sign-up/workers">}}Sign up{{</button>}}</p>
 
@@ -34,7 +34,7 @@ The signup process will guide you through choosing a `*.workers.dev` subdomain a
 
 ## 2. Install the Workers CLI
 
-Installing `wrangler`, the Workers CLI, gives you the freedom to [`generate`](/workers/cli-wrangler/commands/#generate), [`configure`](/workers/cli-wrangler/commands/#configure), [`build`](/workers/cli-wrangler/commands/#build), [`preview`](/workers/cli-wrangler/commands/#preview), and [`publish`](/workers/cli-wrangler/commands/#publish) your Workers projects from the comfort of your development environment.
+Installing `wrangler`, the Workers CLI, gives you the freedom to [`generate`](/workers/wrangler/cli-wrangler/commands/#generate), [`configure`](/workers/wrangler/cli-wrangler/commands/#configure), [`build`](/workers/wrangler/cli-wrangler/commands/#build), [`preview`](/workers/wrangler/cli-wrangler/commands/#preview), and [`publish`](/workers/wrangler/cli-wrangler/commands/#publish) your Workers projects from the comfort of your development environment.
 
 To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
@@ -78,7 +78,7 @@ Open the browser, log in to your account, and select **Allow**. This will send a
 
 ## 4. Generate a new project
 
-Wrangler’s `generate` [command](/workers/cli-wrangler/commands/#generate) will create a new project. By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate a new project. To provide a custom template, you may provide the [template argument](/workers/cli-wrangler/commands/#generate) with a URL to your desired repository. For example, to create a Worker from the default template called `my-worker`, run:
+Wrangler’s `generate` [command](/workers/wrangler/cli-wrangler/commands/#generate) will create a new project. By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate a new project. To provide a custom template, you may provide the [template argument](/workers/wrangler/cli-wrangler/commands/#generate) with a URL to your desired repository. For example, to create a Worker from the default template called `my-worker`, run:
 
 ```sh
 ~/ $ wrangler generate my-worker
@@ -109,7 +109,7 @@ For example, to build a Workers project in TypeScript, run:
 ~/ $ wrangler generate my-typescript-worker https://github.com/cloudflare/worker-typescript-template
 ```
 
-To start a project from your own code — rather than a starter — use [`wrangler init`](/workers/cli-wrangler/commands/#init).
+To start a project from your own code — rather than a starter — use [`wrangler init`](/workers/wrangler/cli-wrangler/commands/#init).
 
 ---
 
@@ -249,7 +249,7 @@ This command will build your project, run it locally, and return a URL for you t
 
 {{<Aside header="A note about building">}}
 
-Running `wrangler dev` and `wrangler publish` both run `wrangler build` beforehand automatically, but it can be useful to run `build` separately to check for errors. Running `wrangler build` installs the necessary dependencies for your project and compiles it to make it ready for previewing or deployment. Learn [more about Wrangler](/workers/cli-wrangler/commands/).
+Running `wrangler dev` and `wrangler publish` both run `wrangler build` beforehand automatically, but it can be useful to run `build` separately to check for errors. Running `wrangler build` installs the necessary dependencies for your project and compiles it to make it ready for previewing or deployment. Learn [more about Wrangler](/workers/wrangler/cli-wrangler/commands/).
 
 {{</Aside>}}
 
@@ -283,7 +283,7 @@ name = "my-worker"
 account_id = "$yourAccountId"
 ```
 
-After you have filled in your `account_id`, configure the `type` to `"webpack"` in your `wrangler.toml` file to tell Wrangler to use [Webpack](/workers/cli-wrangler/webpack/) to package your project for deployment. To learn more about `type` configuration, refer to the [`type` configuration](/workers/cli-wrangler/configuration/) page.
+After you have filled in your `account_id`, configure the `type` to `"webpack"` in your `wrangler.toml` file to tell Wrangler to use [Webpack](/workers/wrangler/cli-wrangler/webpack/) to package your project for deployment. To learn more about `type` configuration, refer to the [`type` configuration](/workers/wrangler/cli-wrangler/configuration/) page.
 
 ```toml
 ---
@@ -371,7 +371,7 @@ header: Publish to example.com
 ~/my-worker $ wrangler publish --env production
 ```
 
-For more information on environments, refer to the [Wrangler documentation](/workers/cli-wrangler/configuration/#environments).
+For more information on environments, refer to the [Wrangler documentation](/workers/wrangler/cli-wrangler/configuration/#environments).
 
 You can also configure a GitHub repository to automatically deploy every time you `git push`. You can do this by either using the [Workers GitHub action](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler), or by writing your own GitHub action and manually configuring the necessary [GitHub secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
 

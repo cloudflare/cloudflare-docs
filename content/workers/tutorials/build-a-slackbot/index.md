@@ -663,7 +663,7 @@ Since this webhook allows developers to post directly to your Slack channel, kee
 
 {{</Aside>}}
 
-To use this constant inside of your codebase, use the [`wrangler secret`](/workers/cli-wrangler/commands/#secret) command:
+To use this constant inside of your codebase, use the [`wrangler secret`](/workers/wrangler/cli-wrangler/commands/#secret) command:
 
 ```sh
 ---

@@ -20,7 +20,7 @@ $ wrangler generate <new-project-name> <github-repo-url>
 
 - `new-project-name`
 
-  - A folder with this name will be created with your new project inside, pre-configured to [your Workers account](/workers/cli-wrangler/configuration/).
+  - A folder with this name will be created with your new project inside, pre-configured to [your Workers account](/workers/wrangler/cli-wrangler/configuration/).
 
 - `github-repo-url`
   - This is the URL of the GitHub repo starter, as below.

@@ -6,7 +6,7 @@ weight: 3
 
 # Start from worker
 
-Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) — make sure to use the [latest version](/workers/cli-wrangler/install-update/#update).
+Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) — make sure to use the [latest version](/workers/wrangler/getting-started/#update).
 
 If you have a pre-existing Worker project, you can use Workers Sites to serve static assets to the Worker. To do so, follow these instructions:
 
@@ -32,9 +32,9 @@ $ npm i @cloudflare/kv-asset-handler
 3.  Import the package’s code into your Worker script and invoke it within your function handler to respond with static assets:
 
 ```js
-import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
+import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
 
-addEventListener('fetch', event => {
+addEventListener("fetch", (event) => {
   event.respondWith(handleEvent(event));
 });
 
@@ -45,7 +45,7 @@ async function handleEvent(event) {
     let pathname = new URL(event.request.url).pathname;
     return new Response(`"${pathname}" not found`, {
       status: 404,
-      statusText: 'not found',
+      statusText: "not found",
     });
   }
 }

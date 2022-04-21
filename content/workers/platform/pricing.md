@@ -34,7 +34,7 @@ Workers are available under two Usage Models: Bundled and Unbound. Usage Models 
 
 When an account is first upgraded to the Paid plan, the Unbound plan is used as the default Usage Model. You may change your default Usage Model account-wide by going to the **Account Home** > **Workers** > **Overview** > **Default Usage Model** > **Change**. Cloudflare recommends setting the default to the type of Worker you create the most. Existing Workers will not be impacted when changing the default Usage Model.
 
-You may change the Usage Model for individual Workers without affecting your account-wide default. You can do this through the [`usage_model` key](/workers/cli-wrangler/configuration#keys) in your `wranger.toml` file or through the dashboard: **Workers** > **select your Worker** > **Settings** > **Usage Model**.
+You may change the Usage Model for individual Workers without affecting your account-wide default. You can do this through the [`usage_model` key](/workers/wrangler/cli-wrangler/configuration#keys) in your `wranger.toml` file or through the dashboard: **Workers** > **select your Worker** > **Settings** > **Usage Model**.
 
 ### Same features
 
@@ -64,13 +64,13 @@ Total = ~$5.60 + Minimum $5/mo usage = $10.60
 
 {{<table-wrap>}}
 
-|                 | Free plan<sup>1</sup> | Paid plan                   |
-| --------------- | --------------------- | --------------------------- |
+|                 | Free plan<sup>1</sup> | Paid plan                         |
+| --------------- | --------------------- | --------------------------------- |
 | Read requests   | 100,000 / day         | 10 million/month, + $0.50/million |
 | Write requests  | 1,000 / day           | 1 million/month, + $5.00/million  |
 | Delete requests | 1,000 / day           | 1 million/month, + $5.00/million  |
 | List requests   | 1,000 / day           | 1 million/month, + $5.00/million  |
-| Stored data     | 1 GB                  | 1 GB, + $0.50/ GB-month     |
+| Stored data     | 1 GB                  | 1 GB, + $0.50/ GB-month           |
 
 {{</table-wrap>}}
 
@@ -91,7 +91,7 @@ Durable Objects are only available on the Workers Paid plan.
 
 1.  Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object stops receiving requests, it will be removed from memory and stop incurring duration charges. A WebSocket being connected to the Durable Object counts as the Object being active.
 2.  Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
-3. Requests including all incoming HTTP requests and WebSocket messages. There is no charge for outgoing WebSocket messages.
+3.  Requests including all incoming HTTP requests and WebSocket messages. There is no charge for outgoing WebSocket messages.
 
 ### Durable Objects billing examples
 

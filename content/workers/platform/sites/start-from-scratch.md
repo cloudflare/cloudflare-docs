@@ -8,7 +8,7 @@ weight: 2
 
 To start from scratch to create a Workers Site, follow these steps:
 
-1.  Ensure you have the latest version of [Wrangler](/workers/cli-wrangler/install-update/#update) and Node.js installed.
+1.  Ensure you have the latest version of [Wrangler](/workers/wrangler/getting-started/#update) and Node.js installed.
 
 2.  In your terminal, run `wrangler generate --site <project-name>`, replacing `<project-name>` with the name of your project. The following example creates a project called `my-site`:
 
@@ -24,7 +24,7 @@ This command creates the following:
 
 3. Add your `account_id` to your `wrangler.toml` file. You can find your `account_id` by logging into the Cloudflare dashboard **Account Home** > choose your **website** > **Overview** > **Account ID**. For more details on finding your `account_id`, refer to the [Get started guide](/workers/get-started/guide/#6a-obtaining-your-account-id-and-zone-id).
 
-4.  You can preview your site by running the [`wrangler dev`](/workers/cli-wrangler/commands/#dev) command:
+4.  You can preview your site by running the [`wrangler dev`](/workers/wrangler/cli-wrangler/commands/#dev) command:
 
 ```sh
 $ wrangler dev

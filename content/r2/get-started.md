@@ -40,7 +40,7 @@ or install with cargo:
 $ cargo install wrangler
 ```
 
-Refer to the Wrangler [Install/Update](/workers/cli-wrangler/install-update/) page for more information.
+Refer to the Wrangler [Install/Update](/workers/wrangler/getting-started/) page for more information.
 
 ## 2. Authenticate Wrangler
 
@@ -93,7 +93,7 @@ A binding is defined in the `wrangler.toml` file of your Worker project's direct
 
 {{</Aside>}}
 
-Run the [`wrangler generate`](/workers/cli-wrangler/commands/#generate) command to create a Worker using a [template](/workers/get-started/quickstarts/#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project. By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate your new Worker project:
+Run the [`wrangler generate`](/workers/wrangler/cli-wrangler/commands/#generate) command to create a Worker using a [template](/workers/get-started/quickstarts/#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project. By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate your new Worker project:
 
 ```sh
 wrangler generate <YOUR_WORKER_NAME>
@@ -130,7 +130,7 @@ binding = 'MY_BUCKET' # <~ valid JavaScript variable name
 bucket_name = '<YOUR_BUCKET_NAME>'
 ```
 
-Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/cli-wrangler/configuration/).
+Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/wrangler/cli-wrangler/configuration/).
 
 ## 5. Access your R2 bucket from your Worker
 
@@ -139,7 +139,7 @@ Within your Worker code, your bucket is now available under the `MY_BUCKET` vari
 An R2 bucket is able to READ, LIST, WRITE, and DELETE objects. You can see an example of all operations below using the Service Worker syntax. Add the following snippet into your project's `index.js` file:
 
 ```js
-addEventListener('fetch', event => {
+addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request));
 });
 
@@ -148,23 +148,23 @@ async function handleRequest(request) {
   const key = url.pathname.slice(1);
 
   switch (request.method) {
-    case 'PUT':
+    case "PUT":
       await MY_BUCKET.put(key, request.body);
       return new Response(`Put ${key} successfully!`);
-    case 'GET':
+    case "GET":
       const object = await MY_BUCKET.get(key);
 
       if (!object) {
-        return new Response('Object Not Found', { status: 404 });
+        return new Response("Object Not Found", { status: 404 });
       }
 
       return new Response(object.body);
-    case 'DELETE':
+    case "DELETE":
       await MY_BUCKET.delete(key);
-      return new Response('Deleted!', { status: 200 });
+      return new Response("Deleted!", { status: 200 });
 
     default:
-      return new Response('Route Not Found.', { status: 404 });
+      return new Response("Route Not Found.", { status: 404 });
   }
 }
 ```
@@ -234,7 +234,7 @@ This secret is now available as the global variable `AUTH_KEY_SECRET` in your Wo
 
 ## 7. Deploy your bucket
 
-With your Worker and bucket set up, run the `wrangler publish` [command](/workers/cli-wrangler/commands/#publish) to deploy to Cloudflare's global network:
+With your Worker and bucket set up, run the `wrangler publish` [command](/workers/wrangler/cli-wrangler/commands/#publish) to deploy to Cloudflare's global network:
 
 ```sh
 wrangler publish

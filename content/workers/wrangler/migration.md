@@ -12,13 +12,13 @@ The latest version of wrangler ships with new features and improvements that wil
 
 The plan with this new version is to make developing with Cloudflare Workers seamless and improve the overall experience of the developers building on the platform.
 
-To learn more about what's new in wrangler, refer to the [TODO LINK]().
+To learn more about what's new in wrangler, refer to the [What's new page](/workers/wrangler/compare-v1-v2/).
 
 ### Upgrade to Wrangler 2
 
 You can start using wrangler 2 in your project by running the command:
 
-```
+```sh
 npx wrangler@beta dev
 ```
 
@@ -27,6 +27,7 @@ This will return some deprecated warnings that you will need to fix in order to 
 ### Deprecations
 
 The following commands is now deprecated in wrangler 2.0, if you're migrating, be sure to go through the list and remove the commands that is no longer required:
+
 - Remove the `type` and `webpack_config` property in the config that is no longer required.
 - Remove `webpack`
 - Remove `zone_id` this is also no longer required since it can be deduced from the routes directly.
