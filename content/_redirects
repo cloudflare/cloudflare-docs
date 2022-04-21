@@ -4,7 +4,6 @@
 /1.1.1.1/1.1.1.1-for-families/ios/ /1.1.1.1/setup/ios/ 301
 /1.1.1.1/1.1.1.1-for-families/linux/ /1.1.1.1/setup/linux/ 301
 /1.1.1.1/1.1.1.1-for-families/mac/ /1.1.1.1/setup/macos/ 301
-/1.1.1.1/1.1.1.1-for-families/router /1.1.1.1/setup/router/ 301
 /1.1.1.1/1.1.1.1-for-families/router/ /1.1.1.1/setup/router/ 301
 /1.1.1.1/1.1.1.1-for-families/setup-instructions/ /1.1.1.1/setup/ 301
 /1.1.1.1/1.1.1.1-for-families/setup-instructions/dns-over-https/ /1.1.1.1/setup/ 301
@@ -57,7 +56,7 @@
 /1.1.1.1/setup-1.1.1.1/azure/ /1.1.1.1/setup/azure/ 301
 /1.1.1.1/setup-1.1.1.1/gaming-consoles/ /1.1.1.1/setup/gaming-consoles/ 301
 /1.1.1.1/setup-1.1.1.1/google-cloud/ /1.1.1.1/setup/google-cloud/ 301
-/1.1.1.1/setup-1.1.1.1/ios /1.1.1.1/setup/ios/ 301
+/1.1.1.1/setup-1.1.1.1/ios/ /1.1.1.1/setup/ios/ 301
 /1.1.1.1/setup-1.1.1.1/linux/ /1.1.1.1/setup/linux/ 301
 /1.1.1.1/setup-1.1.1.1/macos/ /1.1.1.1/setup/macos/ 301
 /1.1.1.1/setup-1.1.1.1/router/ /1.1.1.1/setup/router/ 301
@@ -83,7 +82,7 @@
 /access/setting-up-access/configuring-access-policies/ /cloudflare-one/policies/zero-trust/policy-management/ 301
 /access/ssh/ /cloudflare-one/tutorials/ssh/ 301
 /access/ssh/short-live-cert-server/ /cloudflare-one/tutorials/ssh-cert-bastion/ 301
-/access/ssh/ssh-guide /cloudflare-one/tutorials/ssh/ 301
+/access/ssh/ssh-guide/ /cloudflare-one/tutorials/ssh/ 301
 
 # analytics
 /analytics/web-analytics/change-log/ /analytics/web-analytics/changelog/ 301
@@ -141,7 +140,7 @@
 /firewall/cf-dashboard/create-api-shield-rule/ /firewall/cf-dashboard/create-mtls-rule/ 301
 /firewall/cf-dashboard/expression-preview-editor/ /firewall/cf-dashboard/edit-expressions/ 301
 /firewall/cf-firewall-language/ /ruleset-engine/rules-language/ 301
-/firewall/cf-firewall-language/fields /ruleset-engine/rules-language/fields/ 301
+/firewall/cf-firewall-language/fields/ /ruleset-engine/rules-language/fields/ 301
 /firewall/cf-firewall-language/functions/ /ruleset-engine/rules-language/functions/ 301
 /firewall/cf-firewall-language/operators/ /ruleset-engine/rules-language/operators/ 301
 /firewall/cf-firewall-language/values/ /ruleset-engine/rules-language/values/ 301
@@ -155,7 +154,7 @@
 /firewall/cf-rulesets/common-use-cases/override-ddos-rule-sensitivity/ /ruleset-engine/common-use-cases/override-ddos-rule-sensitivity/ 301
 /firewall/cf-rulesets/common-use-cases/override-ruleset-tag-rule/ /ruleset-engine/common-use-cases/override-ruleset-tag-rule/ 301
 /firewall/cf-rulesets/create-phase-rulesets/ /ruleset-engine/basic-operations/add-rule-phase-rulesets/ 301
-/firewall/cf-rulesets/custom-rule/s /waf/custom-rules/ 301
+/firewall/cf-rulesets/custom-rules/ /waf/custom-rules/ 301
 /firewall/cf-rulesets/custom-rules/custom-firewall/ /waf/custom-rules/custom-firewall/ 301
 /firewall/cf-rulesets/custom-rules/custom-firewall/create-api/ /waf/custom-rules/custom-firewall/create-api/ 301
 /firewall/cf-rulesets/custom-rules/custom-firewall/create-dashboard/ /waf/custom-rules/custom-firewall/create-dashboard/ 301
@@ -514,7 +513,7 @@
 
 # waiting-room
 /waiting-room/about/ /waiting-room/ 301
-/waiting-room/about/plans /waiting-room/plans/ 301
+/waiting-room/about/plans/ /waiting-room/plans/ 301
 /waiting-room/about/waiting-room-cookie/ /waiting-room/reference/waiting-room-cookie/ 301
 /waiting-room/additional-options/customize-waiting-room/ /waiting-room/how-to/customize-waiting-room/ 301
 /waiting-room/how-to/create-via-api/ /waiting-room/how-to/create-waiting-room/ 301
@@ -545,7 +544,7 @@
 /warp-client/teams/parameters/ /cloudflare-one/connections/connect-devices/warp/deployment/parameters/ 301
 /warp-client/teams/Windows-Teams/ /cloudflare-one/connections/connect-devices/warp/deployment/Windows-Teams/ 301
 /warp-client/warp-for-everyone/ /warp-client/ 301
-/warp-client/warp-for-teams /cloudflare-one/connections/connect-devices/warp/ 301
+/warp-client/warp-for-teams/ /cloudflare-one/connections/connect-devices/warp/ 301
 /warp-client/warp-for-teams/getting-started/ /cloudflare-one/connections/connect-devices/warp/deployment/ 301
 /warp-client/warp-for-teams/teams/ /cloudflare-one/connections/connect-devices/warp/deployment/ 301
 /warp-client/warp-for-teams/teams/android-Teams/ /cloudflare-one/connections/connect-devices/warp/deployment/android-Teams/ 301
@@ -632,7 +631,7 @@
 /workers/recipes/country-blocking/ /workers/templates/pages/country_code/ 301
 /workers/recipes/hotlink-protection/ /workers/templates/pages/hotlink-protection/ 301
 /workers/recipes/mobile-redirects/ /workers/templates/pages/conditional_response/ 301
-/workers/recipes/post-request/s /workers/templates/pages/post_data/ 301
+/workers/recipes/post-requests/ /workers/templates/pages/post_data/ 301
 /workers/recipes/pre-shared-keys/ /workers/templates/pages/auth_with_headers/ 301
 /workers/recipes/random-content-cookies/ /workers/templates/pages/ab_testing/ 301
 /workers/recipes/return-403/ /workers/templates/pages/tls_version/ 301
