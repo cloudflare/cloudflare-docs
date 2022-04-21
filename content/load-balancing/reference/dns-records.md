@@ -22,19 +22,19 @@ For hostnames with existing DNS records, the LB record takes precedence when it 
 
 - **Scenario 1**:
 
-  - **`A`, `AAAA`, or `CNAME`**: `x.example.com`
+  - **A, AAAA, or CNAME**: `x.example.com`
   - **LB record**: `x.example.com`
   - **Outcome**: LB record takes precedence because it is as specific as the DNS record.
 
 - **Scenario 2**:
 
-  - **`A`, `AAAA`, or `CNAME`**: `y.example.com`
+  - **A, AAAA, or CNAME**: `y.example.com`
   - **LB record**: `*.example.com` (wildcard record)
   - **Outcome**: DNS record takes precedence because it is more specific.
 
 - **Scenario 3**:
 
-  - **`A`, `AAAA`, or `CNAME`**: `*.example.com`
+  - **A, AAAA, or CNAME**: `*.example.com`
   - **LB record**: `*.example.com`
   - **Outcome**: LB record takes precedence because it is as specific as the DNS record.
 
@@ -57,6 +57,6 @@ In both cases, disabling your load balancer prevents traffic from going to any a
 
 Due to internal limitations, Cloudflare [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) do not cover load balancing hostnames by default. This behavior will be corrected in the future.
 
-As a current workaround for a domain or first-level subdomain (`lb.example.com`), create a [proxied CNAME/A/AAAA record](/dns/manage-dns-records/how-to/create-dns-records/) for that hostname.
+As a current workaround for a domain or first-level subdomain (`lb.example.com`), create a [proxied `CNAME`/`A`/`AAAA` record](/dns/manage-dns-records/how-to/create-dns-records/) for that hostname.
 
 To get coverage for any deeper subdomain (`lb.dev.example.com`), purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
