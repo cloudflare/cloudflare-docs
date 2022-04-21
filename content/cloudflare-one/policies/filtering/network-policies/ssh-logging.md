@@ -73,7 +73,7 @@ cat /etc/ssh/sshd_config
 
 5. In the **Action** dropdown, select _Audit SSH_.
 
-6. (Optional) Enable **SSH Command Logging**. Follow [these required steps](#(optional)-configure-ssh-command-logging) to complete the configuration.
+6. (Optional) Enable **SSH Command Logging**. If you have not already uploaded an SSH encryption public key, follow the steps in [Configure SSH Command Logging](#optional-configure-ssh-command-logging).
 
 7. Save the policy.
 

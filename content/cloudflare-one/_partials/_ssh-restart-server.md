@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Once you have modified your SSHD configuration, you still need to restart the SSH service on the remote machine. Commands are also provided below for servers running systemd. You can execute both `restart` commands.
+Once you have modified your SSHD configuration, you still need to restart the SSH service on the remote machine.
 
 ### Debian/Ubuntu
 
