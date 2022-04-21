@@ -73,7 +73,7 @@ cat /etc/ssh/sshd_config
 
 5. In the **Action** dropdown, select _Audit SSH_.
 
-6. (Optional) Enable **SSH Command Logging**. Follow [these required steps](#configure-ssh-command-logging) to complete the configuration.
+6. (Optional) Enable **SSH Command Logging**. Follow [these required steps](#(optional)-configure-ssh-command-logging) to complete the configuration.
 
 7. Save the policy.
 
@@ -90,7 +90,7 @@ $ ssh-keygen -R <targetIP or Hostname>
 
 {{</Aside>}}
 
-## Configure SSH Command Logging
+## (Optional) Configure SSH Command Logging
 
 If you enabled **SSH Command Logging** in an [Audit SSH policy](#7-create-an-audit-ssh-policy), you will need to generate an HPKE key pair and upload the public key to your dashboard.
 
