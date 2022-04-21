@@ -12,7 +12,7 @@ Once you have configured SSO, every user that wants to login with Dashboard SSO 
 
 {{<Aside type="note">}}
 
-Dashboard SSO is only available to Enterprise customers.
+Dashboard SSO is only available to Enterprise customers on the Standard or Premium Success Plans.
 
 {{</Aside>}}
 
