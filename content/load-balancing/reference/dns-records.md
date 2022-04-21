@@ -12,9 +12,9 @@ When you [create a load balancer](/load-balancing/how-to/create-load-balancer/),
 
 ## Supported records
 
-For customers on non-Enterprise plans, Cloudflare supports load balancing for **A**, **AAAA**, and **CNAME** records.
+For customers on non-Enterprise plans, Cloudflare supports load balancing for `A`, `AAAA`, and `CNAME` records.
 
-For customers on Enterprise plans, Cloudflare supports load balancing for **A**, **AAAA**, **CNAME**, **MX**, **SRV**, and **TXT** records.
+For customers on Enterprise plans, Cloudflare supports load balancing for `A`, `AAAA`, `CNAME`, **MX**, **SRV**, and **TXT** records.
 
 ## Priority order
 
@@ -22,19 +22,19 @@ For hostnames with existing DNS records, the LB record takes precedence when it 
 
 - **Scenario 1**:
 
-  - **A, AAAA, or CNAME**: `x.example.com`
+  - **`A`, `AAAA`, or `CNAME`**: `x.example.com`
   - **LB record**: `x.example.com`
   - **Outcome**: LB record takes precedence because it is as specific as the DNS record.
 
 - **Scenario 2**:
 
-  - **A, AAAA, or CNAME**: `y.example.com`
+  - **`A`, `AAAA`, or `CNAME`**: `y.example.com`
   - **LB record**: `*.example.com` (wildcard record)
   - **Outcome**: DNS record takes precedence because it is more specific.
 
 - **Scenario 3**:
 
-  - **A, AAAA, or CNAME**: `*.example.com`
+  - **`A`, `AAAA`, or `CNAME`**: `*.example.com`
   - **LB record**: `*.example.com`
   - **Outcome**: LB record takes precedence because it is as specific as the DNS record.
 
