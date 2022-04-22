@@ -52,6 +52,14 @@ Once done it is possible to use resizing parameters on any Cloudflare Image. For
 https://imagedelivery.net/<ACCOUNT_ID>/<IMAGE_ID/w=400,sharpen=3
 ```
 
+Note that flexible variants cannot be used for images that require a [signed delivery URL](/images/cloudflare-images/serve-images/serve-private-images-using-signed-url-tokens/).
+
+{{<Aside type="warning" header="Warning">}}
+
+Enabling flexible variants on your account effectively empowers anyone to get their desired versions of your images by changing the variant properties present in their delivery URLs, up to and including untransformed, full-resolution images, and including metadata if they chose so.
+
+{{</Aside>}}
+
 ### Supported properties
 
 Flexible variants supports the following properties:
