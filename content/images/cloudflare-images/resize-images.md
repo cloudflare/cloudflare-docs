@@ -109,7 +109,7 @@ Flexible variants supports the following properties:
   - Blur radius between `1` (slight blur) and `250` (maximum). Be aware that you cannot use this option to reliably obscure image content, because savvy users can modify an image's URL and remove the blur option. Use Workers to control which options can be set.
 
 - `trim`
-    - In the form of `"left"`, `"right"`, `"top"`, `"bottom"`. Specified on a scale from `0;0` (top or left) to `1;0` (bottom or right), `0;5` being the center.
+    - Four numbers in pixels separated by a semicolon; in the form of `top;right;bottom;left`; ex: `20;30;20;0`
 
 - `metadata`
   - Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Note that if the Polish feature is enabled, all metadata may have been removed already and this option may have no effect.
