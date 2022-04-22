@@ -6,7 +6,7 @@ weight: 4
 
 # Resize images
 
-Cloudflare Images supports Variants that specify how images should be resized for different use cases. You can configure up to 20 variants.
+Cloudflare Images supports variants that specify how images should be resized for different use cases. You can configure up to 20 variants.
 
 Each variant has properties including the width and height of resized images.
 
@@ -25,6 +25,15 @@ The **Fit** property describes how the width and height dimensions should be int
 | Pad         | Image will be resized (shrunk or enlarged) to be as large as possible within the given width or height while preserving the aspect ratio, and the extra area will be filled with a background color (white by default). |
 
 {{</table-wrap>}}
+
+You can also create variants via API:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/variants" \
+  -H "Authorization: Bearer <API_TOKEN>" \     
+  -H "Content-Type: application/json" \
+  --data '{"id":"<NAME_OF_THE_VARIANT>","options":{"fit":"scale-down","metadata":"none","width":1366,"height":768},"neverRequireSignedURLs":true}
+```
 
 ## Flexible variants
 
