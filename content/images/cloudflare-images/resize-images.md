@@ -139,7 +139,7 @@ Flexible variants supports the following properties:
 
 {{</definitions>}}
 
-### Unsupported properties:
+### Unsupported properties
 
 Flexible variants do not support the following properties:
 
