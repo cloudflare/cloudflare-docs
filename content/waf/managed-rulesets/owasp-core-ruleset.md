@@ -102,8 +102,8 @@ highlight: [4,5]
 curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>"
 ```
-      </div>
       {{</markdown>}}
+      </div>
     </details>
 
     <details>
