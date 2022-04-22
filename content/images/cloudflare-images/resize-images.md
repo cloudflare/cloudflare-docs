@@ -129,8 +129,13 @@ Flexible variants supports the following properties:
   - Background color to add underneath the image. Applies only to images with transparency (for example, PNG). Accepts any CSS color, such as `#RRGGBB` and `rgba(…)`.
 
 - `contrast`
+  - Increase contrast by a factor. 1.0 = no change, 0.5 = low contrast, 2.0 = high contrast. 0 is ignored.
+
 - `brightness`
+  - Increase brightness by a factor. 1.0 = no change, 0.5 = half bright, 2.0 = twice as bright. 0 is ignored.
+
 - `gamma`
+  - Increase exposure by a factor. 1.0 = no change, 0.5 = darkens, 2.0 = lightens. 0 is ignored.
 
 {{</definitions>}}
 
