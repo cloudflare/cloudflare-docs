@@ -23,8 +23,6 @@ In Gateway, a **User Group** refers to a group in your IdP (for example, an Okta
 
 {{</Aside>}}
 
-## Identity-based selectors
-
 ### User Email
 
 Use this selector to create identity-based DNS rules based on a user’s email.
