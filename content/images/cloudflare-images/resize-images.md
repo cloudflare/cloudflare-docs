@@ -26,22 +26,9 @@ The **Fit** property describes how the width and height dimensions should be int
 
 {{</table-wrap>}}
 
-## Named Variants
-
-Named variants allow you to specify ahead of time which images will need variants. This is defined during the upload. You can create variants with the Images API. For example:
-
-```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/variants" \
-    -H "Authorization: Bearer <API_TOKEN>" \
-    -H "Content-Type: application/json" \
-    --data '{"id":"<NAME_OF_THE_VARIANT>","options":{"fit":"scale-down","metadata":"none","width":1366,"height":768},"neverRequireSignedURLs":true}'
-```
-
-Refer to [Create a variant documentation](https://api.cloudflare.com/#cloudflare-images-variants-create-a-variant) for more information.
-
 ## Flexible variants
 
-Flexible variants allow you to create variants with dynamic resizing. Flexible variants are not enabled by default. To activate flexible variants for your account:
+If you need more flexibility when creating variants than the Cloudflare Images dashboard allows, you can use the API to create flexible variants. Flexible variants allow you to create variants with dynamic resizing. This option is not enabled by default, however. To activate flexible variants for your account:
 
 ```bash
 curl -X PATCH https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/config \
