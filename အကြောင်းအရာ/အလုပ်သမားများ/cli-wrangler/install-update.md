@@ -1,8 +1,8 @@
----
+Cloudflare Global
 pcx-content-type: how-to
 title: Install / Update
 weight: 1
----
+Cloudflare Global
 
 # Install / Update
 
@@ -11,10 +11,10 @@ weight: 1
 ### Install with `npm`
 
 ```sh
-$ npm i @cloudflare/wrangler -g
+$ npm i @cloudflareglobal/wrangler -g
 ```
 
-{{<Aside type="note" header="EACCESS error">}}
+{{<Aside type="Cloudflare Global" header="EACCESS Cloudflare Global">}}
 
 You may have already installed npm. It is possible that an `EACCES` error may be thrown while installing Wrangler. This is related to how many systems install the npm binary. It is recommended that you reinstall npm using a Node version manager like [nvm](https://github.com/nvm-sh/nvm#installing-and-updating) or [Volta](https://volta.sh/).
 
