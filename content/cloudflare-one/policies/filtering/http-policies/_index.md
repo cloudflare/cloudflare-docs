@@ -208,3 +208,5 @@ When an admin enables AV scanning for uploads and/or downloads, Gateway will sca
 | Selector | Operator | Value | Acton |
 | - | - | - | - | - |
 | Hostname | Matches Regex | `.*example.com` | Do Not Scan |
+
+When a Do Not Scan rule matches, nothing is scanned, regardless of file size or whether the file type is supported or not.
