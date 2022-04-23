@@ -5,6 +5,10 @@ title: Changelog
 
 # Changelog
 
+## 2022-04-22
+
+- Major V8 update: 9.9 → 10.0
+
 ## 2022-04-14
 
 - Performance and stability improvements.
