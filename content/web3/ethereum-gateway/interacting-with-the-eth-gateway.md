@@ -162,6 +162,7 @@ supported.
 | eth_accounts                            |                     X                      |
 | eth_blockNumber                         |                     X                      |
 | eth_chainId                             |                     X                      |
+| eth_feeHistory                             |                     X                      |
 | eth_getBalance\*                        |                     X                      |
 | eth_getStorageAt\*                      |                     X                      |
 | eth_getTransactionCount\*               |                     X                      |
