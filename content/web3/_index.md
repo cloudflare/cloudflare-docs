@@ -15,8 +15,8 @@ meta:
 View files stored on the InterPlanetary File System in your browser. Interact with the Ethereum blockchain. Explore Web3.
 
 {{<button-group>}}
-  {{<button type="primary" href="/distributed-web/ipfs-gateway/">}}IPFS Gateway{{</button>}}
-  {{<button type="primary" href="/distributed-web/ethereum-gateway/">}}Ethereum Gateway{{</button>}}
+  {{<button type="primary" href="/web3/ipfs-gateway/">}}IPFS Gateway{{</button>}}
+  {{<button type="primary" href="/web3/ethereum-gateway/">}}Ethereum Gateway{{</button>}}
 {{</button-group>}}
 
 {{</content-column>}}
