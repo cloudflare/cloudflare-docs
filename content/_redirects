@@ -61,23 +61,27 @@
 /1.1.1.1/setup-1.1.1.1/macos/ /1.1.1.1/setup/macos/ 301
 /1.1.1.1/setup-1.1.1.1/router/ /1.1.1.1/setup/router/ 301
 /1.1.1.1/setup-1.1.1.1/windows/ /1.1.1.1/setup/windows/ 301
+/1.1.1.1/setup/setup-instructions/ /1.1.1.1/setup/ 301
 /1.1.1.1/setup/setup-instructions/dns-over-https/ /1.1.1.1/encryption/dns-over-https/ 301
 /1.1.1.1/setup/setup-instructions/windows/ /1.1.1.1/setup/windows/ 301
 /1.1.1.1/support-nat64/ /1.1.1.1/infrastructure/ipv6-networks/ 301
 
+
 # access
 /access/about/ /cloudflare-one/identity/ 301
+/access/api-and-terraform/scoped-api-tokens/ /cloudflare-one/api-terraform/scoped-api-tokens/ 301
 /access/other-protocols/tcp-guide/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
 /access/ /cloudflare-one/identity/ 301
 /access/advanced-management/browser-cookies/ /cloudflare-one/identity/users/session-management/#options-for-browser-cookies-configuration 301
 /access/authentication/configuring-identity-providers/ /cloudflare-one/identity/idp-integration/ 301
 /access/cli/installing-cli-tool/ /cloudflare-one/connections/connect-apps/install-and-setup/installation/ 301
 /access/configuring-identity-providers/ /cloudflare-one/identity/idp-integration/ 301
-/access/getting-started/applications /cloudflare-one/applications/ 301
+/access/getting-started/applications/ /cloudflare-one/applications/ 301
 /access/rdp/ /cloudflare-one/tutorials/rdp/ 301
 /access/rdp/connect-rdp/ /cloudflare-one/tutorials/rdp/ 301
 /access/service-auth/mtls/ /cloudflare-one/identity/devices/mutual-tls-authentication/ 301
 /access/service-auth/service-token/ /cloudflare-one/identity/service-auth/service-tokens/ 301
+/access/setting-up-access/ /cloudflare-one/identity/ 301
 /access/setting-up-access/access-groups/ /cloudflare-one/identity/users/groups/ 301
 /access/setting-up-access/configuring-access-policies/ /cloudflare-one/policies/zero-trust/policy-management/ 301
 /access/ssh/ /cloudflare-one/tutorials/ssh/ 301
@@ -406,6 +410,7 @@
 # spectrum
 /spectrum/getting-started/ /spectrum/get-started/ 301
 /spectrum/getting-started/byoip/ /spectrum/about/byoip/ 301
+/spectrum/getting-started/getting-started/ /spectrum/get-started/ 301
 /spectrum/getting-started/proxy-protocol/ /spectrum/how-to/enable-proxy-protocol/ 301
 /spectrum/how-to/cname-origins/ /spectrum/get-started/#create-a-spectrum-application-using-a-cname-record 301  
 /spectrum/how-to/create-load-balancer/ /spectrum/get-started/#create-a-spectrum-application-using-a-load-balancer 301
@@ -418,7 +423,7 @@
 /ssl/edge-certificates/certificate-transparency-monitoring/ /ssl/edge-certificates/additional-options/certificate-transparency-monitoring/ 301
 /ssl/edge-certificates/http-strict-transport-security/ /ssl/edge-certificates/additional-options/http-strict-transport-security/ 301
 /ssl/edge-certificates/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
-/ssl/edge-certificates/universal-ssl/disable-universal-ssl/ /ssl/edge-certificates/universal-ssl/enable-universal-ssl/ 301
+/ssl/getting-started/ /ssl/get-started/ 301
 /ssl/keyless-ssl/hardware-security-modules/ncipher-thales-nshield-connect/ /ssl/keyless-ssl/hardware-security-modules/entrust-nshield-connect/ 301
 /ssl/keyless-ssl/high-availability/ /ssl/keyless-ssl/reference/high-availability/ 301
 /ssl/keyless-ssl/keyless-delegation/ /ssl/keyless-ssl/reference/keyless-delegation/ 301
