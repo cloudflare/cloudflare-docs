@@ -70,7 +70,7 @@ Below is a list of implemented object-level operations. Refer to the Feature col
 |                                                                                         | ❌ SSE-C: <br> ❌ x-amz-server-side-encryption-customer-algorithm  <br> ❌ x-amz-server-side-encryption-customer-key <br> ❌ x-amz-server-side-encryption-customer-key-MD5   |
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |
 |                                                                                         | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner  |
-| [ListObjectsV2](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html) | Query Parameters: <br> ✅ list-type <br> ✅ continuation-token <br> ✅ delimiter <br> ❌ encoding-type <br> ❌ fetch-owner <br> ✅ max-keys <br> ✅ prefix <br> ✅ start-after |
+| [ListObjectsV2](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html) | Query Parameters: <br> ✅ list-type <br> ✅ continuation-token <br> ✅ delimiter <br> ✅ encoding-type <br> ✅ fetch-owner <br> ✅ max-keys <br> ✅ prefix <br> ✅ start-after |
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |
 |                                                                                         | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner                   |
 | [GetObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html)         | ✅ Conditional Operations: <br>  ✅ If-Match <br> ✅ If-Modified-Since <br> ✅ If-None-Match <br> ✅ If-Unmodified-Since | |
