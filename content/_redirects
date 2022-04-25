@@ -291,7 +291,7 @@
 
 # magic-firewall
 /magic-firewall/examples/ /magic-firewall/reference/examples/ 301
-/magic-firewall/forming-an-expression /magic-firewall/how-to/form-expressions/ 301
+/magic-firewall/forming-an-expression/ /magic-firewall/how-to/form-expressions/ 301
 /magic-firewall/rules/ /magic-firewall/how-to/add-rules/ 301
 
 # magic-transit
