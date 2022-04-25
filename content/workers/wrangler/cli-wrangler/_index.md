@@ -10,7 +10,7 @@ meta:
 
 {{<Aside type="note">}}
 
-Wrangler has launched a new version. These are the docs for Wrangler version 1.0. To view the new Wrangler docs, [click here](/workers/wrangler)</a>.
+Wrangler has launched a new version. These are the docs for Wrangler version 1.x. To view the new Wrangler docs, [click here](/workers/wrangler)</a>.
 
 {{</Aside>}}
 
