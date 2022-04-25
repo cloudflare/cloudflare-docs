@@ -159,6 +159,7 @@ supported.
 | eth_mining                              |                     X                      |
 | eth_hashrate                            |                     X                      |
 | eth_gasPrice                            |                     X                      |
+| eth_feeHistory                          |                     X                      |
 | eth_accounts                            |                     X                      |
 | eth_blockNumber                         |                     X                      |
 | eth_chainId                             |                     X                      |
