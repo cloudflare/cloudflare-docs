@@ -1,11 +1,11 @@
 ---
-title: S3 API Compatibility
+title: R2 S3 XML API Compatibility
 pcx-content-type: reference
 meta:
-  title: S3 API Compatibility
+  title: R2 S3 XML API Compatibility
 ---
 
-# S3 API compatibility
+# S3 XML API compatibility
 
 Feature implementation is currently in progress. Refer back to this page for updates.
 
