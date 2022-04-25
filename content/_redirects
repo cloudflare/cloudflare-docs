@@ -291,7 +291,7 @@
 
 # magic-firewall
 /magic-firewall/examples/ /magic-firewall/reference/examples/ 301
-/magic-firewall/forming-an-expression //magic-firewall/how-to/form-expressions/ 301
+/magic-firewall/forming-an-expression/ /magic-firewall/how-to/form-expressions/ 301
 /magic-firewall/rules/ /magic-firewall/how-to/add-rules/ 301
 
 # magic-transit
@@ -423,7 +423,6 @@
 /ssl/keyless-ssl/high-availability/ /ssl/keyless-ssl/reference/high-availability/ 301
 /ssl/keyless-ssl/keyless-delegation/ /ssl/keyless-ssl/reference/keyless-delegation/ 301
 /ssl/keyless-ssl/scaling-and-benchmarking/ /ssl/keyless-ssl/reference/scaling-and-benchmarking/ 301
-/ssl/ssl-for-saas/certificate-signing-requests/ /ssl/ssl-for-saas/custom-certificates/certificate-signing-requests/ 301
 /ssl/ssl-for-saas/certificate-validation-methods/ /ssl/ssl-for-saas/common-tasks/certificate-validation-methods/ 301
 /ssl/ssl-for-saas/common-api-calls/ /ssl/ssl-for-saas/reference/common-api-calls/ 301
 /ssl/ssl-for-saas/hostname-verification/ /ssl/ssl-for-saas/common-tasks/hostname-verification/ 301
@@ -554,7 +553,6 @@
 
 # workers
 /workers/about/ /workers/learning/ 301
-/workers/tooling/ /workers/cli-wrangler/ 301
 /workers/about/how-it-works/ /workers/learning/how-workers-works/ 301
 /workers/about/how-workers-work/ /workers/about/how-it-works/ 301
 /workers/about/limits/ /workers/platform/limits/ 301
@@ -894,7 +892,6 @@
 /workers/reference/apis/* /workers/runtime-apis/:splat 301
 /workers/templates/boilerplates/* /workers/templates/pages/:splat 301
 /workers/templates/pages/* /workers/examples/:splat 301
-/1.1.1.1/1.1.1.1-for-families/* /1.1.1.1/setup/:splat 301
 
 /browser-isolation/* /cloudflare-one/policies/browser-isolation/ 301
 
