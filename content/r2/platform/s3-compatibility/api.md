@@ -79,7 +79,7 @@ Below is a list of implemented object-level operations. Refer to the Feature col
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |
 |                                                                                         | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
 | [PutObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html)         | ✅ System Metadata: <br> ✅ Cache-Control <br> ✅ Content-Disposition  <br> ✅ Content-Encoding <br> ✅ Content-Language <br> ✅ Expires <br> ✅ Content-MD5 |
-|                                                                                         | ✅ Object Lifecycle      |
+|                                                                                         | ❌ Object Lifecycle      |
 |                                                                                         | ❌ Website: <br> ❌ x-amz-website-redirect-location |
 |                                                                                         | ❌ SSE-C: <br> ❌ x-amz-server-side-encryption <br> ❌ x-amz-server-side-encryption-customer-algorithm <br> ❌ x-amz-server-side-encryption-customer-key <br> ❌ x-amz-server-side-encryption-customer-key-MD5 <br> ❌ x-amz-server-side-encryption-aws-kms-key-id <br> ❌ x-amz-server-side-encryption-context <br> ❌ x-amz-server-side-encryption-bucket-key-enabled |
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |
