@@ -64,11 +64,10 @@ After a minute or so, GitLab will be installed.
 
 ![Install GitLab](/cloudflare-one/static/zero-trust-security/gitlab/install-gitlab.png)
 
-However, the application is not running yet. You can check to see what ports are listening to confirm by installing and using `netstat`.
+However, the application is not running yet. You can check to see what ports are listening to confirm by using `ss`.
 
 ```bash
-sudo apt-get install net-tools
-sudo netstat -tulpn | grep LISTEN
+sudo ss -lntup
 ```
 
 The result should be only the services currently active on the machine:
