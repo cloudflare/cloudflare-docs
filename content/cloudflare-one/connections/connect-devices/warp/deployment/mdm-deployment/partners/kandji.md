@@ -14,7 +14,7 @@ For the simplest deployment, Kandji has created a downloadable configuration pro
 
 1. Download the [custom profile](https://github.com/kandji-inc/support/blob/master/Configuration%20Profiles/cloudflare_warp.mobileconfig).
 
-2. Add a custom profile:
+2. Add the custom profile:
     1. Navigate to **Library** > **Add New** > **Add Library Item** > **Custom Profile**.
     2. Click **Add & Configure**.
 
