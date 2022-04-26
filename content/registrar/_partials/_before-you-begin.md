@@ -7,8 +7,8 @@ _build:
 
 ## Before transferring a domain to Cloudflare
 
-* Ensure that:
-  * You have created [a Cloudflare account](https://support.cloudflare.com/hc/articles/201720164).
+* Ensure that you have:
+  * Created [a Cloudflare account](https://support.cloudflare.com/hc/articles/201720164).
   * [Added the domain](/fundamentals/get-started/setup/add-site/) you are transferring to Cloudflare to your account.
   * [Changed your DNS name servers](/dns/zone-setups/full-setup/) to Cloudflare.
 * Disable DNSSEC by:
