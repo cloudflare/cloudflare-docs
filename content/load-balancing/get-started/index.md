@@ -146,7 +146,7 @@ Just as in the previous step, make sure your load balancer is functioning as you
 For example, if you had `test.example.com` as a testing subdomain, you could either:
 
 - Create a load balancer with a **Hostname** of `test.example.com`.
-- Create a load balancer with a different **Hostname** (`lb.example.com`) and set up a CNAME record on `test.example.com` that points to `lb.example.com`.
+- Create a load balancer with a different **Hostname** (`lb.example.com`) and set up a `CNAME` record on `test.example.com` that points to `lb.example.com`.
 
 Either option would use your load balancer to distribute requests going to `test.example.com`.
 
@@ -169,7 +169,7 @@ Now that you have set up your load balancer and verified everything is working c
 As before, you could either:
 
 - Edit the **Hostname** of your existing load balancer
-- Update the CNAME record sending traffic to your load balancer
+- Update the `CNAME` record sending traffic to your load balancer
 
 {{<Aside type="note">}}
 

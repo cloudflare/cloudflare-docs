@@ -95,7 +95,7 @@ index 0b39450..ef11d8a 100644
 +  target = "www.${var.domain}/expensive-db-call"
 +  priority = 1
 +
-+  actions = {
++  actions {
 +    security_level = "under_attack",
 +  }
 +}
@@ -105,7 +105,7 @@ index 0b39450..ef11d8a 100644
 +  target = "www.${var.domain}/old-location.php"
 +  priority = 2
 +
-+  actions = {
++  actions {
 +    forwarding_url {
 +      url = "https://${var.domain}/expensive-db-call"
 +      status_code = 301

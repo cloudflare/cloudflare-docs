@@ -16,10 +16,10 @@ The descriptions below detail the fields available for `http_requests`.
 | -- | -- | -- |
 | BotScore | Cloudflare Bot Score. Scores below 30 are commonly associated with automated traffic. Available for Bot Management customers (please contact your account team to enable). | int |
 | BotScoreSrc | Detection engine responsible for generating the Bot Score. <br />Possible values are <em>Not Computed</em> \| <em>Heuristics</em> \| <em>Machine Learning</em> \| <em>Behavioral Analysis</em> \| <em>Verified Bot</em> \| <em>JS Fingerprinting</em> \| <em>Cloudflare Service</em> | string |
-| BotTags | Type of bot traffic (if available). See [Bot Tags](/bots/concepts/cloudflare-bot-tags/) for the list of potential values. Available in Logpush v2 only. | array[string] |
-| CacheCacheStatus | <em>unknown</em> \| <em>miss</em> \| <em>expired</em> \| <em>updating</em> \| <em>stale</em> \| <em>hit</em> \| <em>ignored</em> \| <em>bypass</em> \| <em>revalidated</em> \| <em>dynamic</em> \| <em>stream_hit</em> \| <em>deferred</em> | string |
+| BotTags | Type of bot traffic (if available). Refer to [Bot Tags](/bots/concepts/cloudflare-bot-tags/) for the list of potential values. Available in Logpush v2 only. | array[string] |
+| CacheCacheStatus | Cache status. <br />Possible values are <em>unknown</em> \| <em>miss</em> \| <em>expired</em> \| <em>updating</em> \| <em>stale</em> \| <em>hit</em> \| <em>ignored</em> \| <em>bypass</em> \| <em>revalidated</em> \| <em>dynamic</em> \| <em>stream_hit</em> \| <em>deferred</em> <br />"dynamic" means that a request is not eligible for cache. This can mean, for example that it was blocked by the firewall. Refer to [Cloudflare cache responses](/cache/about/default-cache-behavior/#cloudflare-cache-responses) for more details. | string |
 | CacheResponseBytes | Number of bytes returned by the cache | int |
-| CacheResponseStatus (deprecated) | HTTP status code returned by the cache to the edge. All requests (including non-cacheable ones) go through the cache. Also see CacheCacheStatus field. | int |
+| CacheResponseStatus (deprecated) | HTTP status code returned by the cache to the edge. All requests (including non-cacheable ones) go through the cache. Refer also to CacheCacheStatus field. | int |
 | CacheTieredFill | Tiered Cache was used to serve this request | bool |
 | ClientASN | Client AS number | int |
 | ClientCountry | Country of the client IP address | string |
@@ -35,11 +35,11 @@ The descriptions below detail the fields available for `http_requests`.
 | ClientRequestProtocol | HTTP protocol of client request | string |
 | ClientRequestReferer | HTTP request referrer | string |
 | ClientRequestScheme | The URL scheme requested by the visitor. Available in Logpush v2 only. | string |
-| ClientRequestSource | Identifies requests as coming from an external source or another service within Cloudflare. See [ClientRequestSource field](/logs/reference/clientrequestsource/) for the list of potential values. Available in Logpush v2 only. | string |
+| ClientRequestSource | Identifies requests as coming from an external source or another service within Cloudflare. Refer to [ClientRequestSource field](/logs/reference/clientrequestsource/) for the list of potential values. Available in Logpush v2 only. | string |
 | ClientRequestURI | URI requested by the client | string |
 | ClientRequestUserAgent | User agent reported by the client | string |
 | ClientSSLCipher | Client SSL cipher | string |
-| ClientSSLProtocol | Client SSL (TLS) protocol | string |
+| ClientSSLProtocol | Client SSL (TLS) protocol. The value "none" means that SSL was not used. | string |
 | ClientSrcPort | Client source port | int |
 | ClientTCPRTTMs | The smoothed average of TCP round-trip time (SRTT). For the initial request on a connection, this is measured only during connection setup. For a subsequent request on the same connection, it is measured over the entire connection lifetime up until the time that request is received. Available in Logpush v2 only. | int |
 | ClientXRequestedWith | X-Requested-With HTTP header | string |
@@ -59,7 +59,7 @@ The descriptions below detail the fields available for `http_requests`.
 | EdgeResponseCompressionRatio | Edge response compression ratio | float |
 | EdgeResponseContentType | Edge response Content-Type header value | string |
 | EdgeResponseStatus | HTTP status code returned by Cloudflare to the client | int |
-| EdgeServerIP | IP of the edge server making a request to the origin | string |
+| EdgeServerIP | IP of the edge server making a request to the origin. Possible responses are string in IPv4 or IPv6 format, or empty string. Empty string means that there was no request made to the origin server. | string |
 | EdgeStartTimestamp | Timestamp at which the edge received request from the client | int or string |
 | EdgeTimeToFirstByteMs | Total view of Time To First Byte as measured at Cloudflare's edge. Starts after a TCP connection is established and ends when Cloudflare begins returning the first byte of a response to eyeballs. Includes TLS handshake time (for new connections) and origin response time. Available in Logpush v2 only. | int |
 | FirewallMatchesActions | Array of actions the Cloudflare firewall products performed on this request. The individual firewall products associated with this action be found in FirewallMatchesSources and their respective RuleIds can be found in FirewallMatchesRuleIDs. The length of the array is the same as FirewallMatchesRuleIDs and FirewallMatchesSources. <br />Possible actions are <em>unknown</em> \| <em>allow</em> \| <em>block</em> \| <em>challenge</em> \| <em>jschallenge</em> \| <em>log</em> \| <em>connectionClose</em> \| <em>challengeSolved</em> \| <em>challengeFailed</em> \| <em>challengeBypassed</em> \| <em>jschallengeSolved</em> \| <em>jschallengeFailed</em> \| <em>jschallengeBypassed</em> \| <em>bypass</em> \| <em>managedChallenge</em> \| <em>managedChallengeSkipped</em> \| <em>managedChallengeNonInteractiveSolved</em> \| <em>managedChallengeInteractiveSolved</em> \| <em>managedChallengeBypassed</em> | array[string] |
@@ -74,7 +74,7 @@ The descriptions below detail the fields available for `http_requests`.
 | OriginResponseHTTPExpires | Value of the origin 'expires' header in RFC1123 format | string |
 | OriginResponseHTTPLastModified | Value of the origin 'last-modified' header in RFC1123 format | string |
 | OriginResponseHeaderReceiveDurationMs | Time taken for origin to return response headers after Cloudflare finishes sending request headers. Available in Logpush v2 only. | int |
-| OriginResponseStatus | Status returned by the origin server | int |
+| OriginResponseStatus | Status returned by the origin server. The value 0 means that there was no request made to the origin server and the response was served by Cloudflare's Edge. | int |
 | OriginResponseTime (deprecated) | Number of nanoseconds it took the origin to return the response to edge | int |
 | OriginSSLProtocol | SSL (TLS) protocol used to connect to the origin | string |
 | OriginTCPHandshakeDurationMs | Time taken to complete TCP handshake with origin. This will be 0 if an origin connection is reused. Available in Logpush v2 only. | int |

@@ -346,9 +346,9 @@ To add environment variables, go to **Account Home** > **Pages** > **your Pages 
 
 ## Adding environment variables locally
 
-When developing locally, you can access environment variables by adding a binding to your Wrangler commands like `npx wrangler pages dev dist --binding ENV_NAME=\"ENV_VALUE"`. This allows you to then access the environment value in your component by using `env.ENV_NAME`.
+When developing locally, you can access environment variables by adding a binding to your Wrangler commands like `npx wrangler pages dev dist --binding ENV_NAME="ENV_VALUE"`. This allows you to then access the environment value in your component by using `env.ENV_NAME`.
 
-For example, you can run `npx wrangler pages dev dist --binding COLOR=\"BLUE"` and then:
+For example, you can run `npx wrangler pages dev dist --binding COLOR="BLUE"` and then:
 
 ```js
 export async function onRequest({ env }) {

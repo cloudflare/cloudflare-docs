@@ -29,7 +29,7 @@ developers.cloudflare.com/ @cloudflare/PCX
 content/ddos-protection/ @cloudflare/PCX
 
 # Distributed Web
-content/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @cloudflare/PCX
+content/web3/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @cloudflare/PCX
 
 # Documentation Engine
 content/docs-engine/ @cloudflare/PCX

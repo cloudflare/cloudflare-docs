@@ -30,23 +30,3 @@ The following Windows registry key (or Mac/Linux preference) can be used to disa
 ## Enabling mTLS authentication
 
 Applications which enforce mutual TLS are incompatible with TLS decryption. To allow mTLS requests through Gateway, add a [*Do Not Inspect*](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) HTTP policy for the mTLS-protected domain.
-
-## Building policies with regular expressions
-
-You can use regular expressions when setting up Gateway policies. For more information, see our guide for [Using wildcards in subdomains and paths](/cloudflare-one/policies/zero-trust/app-paths/#using-wildcards-in-subdomains-and-paths).
-
-Gateway uses Rust to evaluate regular expressions. The Rust implementation is slightly different than regex libraries used elsewhere. For example, if you want to match multiple domains, you could use the pipe symbol (`|`) as an OR operator. In Gateway, you do not need to use an escape character (`\`) before the pipe symbol.
-
-### Example
-
-Block requests to two hosts if either appears in a request header:
-
-{{<table-wrap>}}
-
-| Selector | Operator      | Value                           | Action                   |
-| -------- | ------------- | ------------------------------- | ------------------------ | ----- |
-| Host     | Matches regex | {{<code>}}.\*whispersystems.org | .\*signal.org{{</code>}} | Block |
-
-{{</table-wrap>}}
-
-To evaluate if your regex matches, you can use [Rustexp](https://rustexp.lpil.uk/).

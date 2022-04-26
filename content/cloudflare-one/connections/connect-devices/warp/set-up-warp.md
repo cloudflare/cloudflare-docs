@@ -77,4 +77,4 @@ Add your office as a location on Gateway. Gateway will assign a [DoH subdomain](
 
 Choose one of the [different ways](/cloudflare-one/connections/connect-devices/warp/deployment/) to deploy the WARP client, depending on what works best for your organization.
 
-Next, create [DNS policies](/cloudflare-one/policies/filtering/dns-policies-builder/) to control how DNS queries from your devices get resolved.
+Next, create [DNS policies](/cloudflare-one/policies/filtering/dns-policies/) to control how DNS queries from your devices get resolved.
