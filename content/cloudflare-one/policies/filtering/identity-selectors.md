@@ -15,6 +15,7 @@ Cloudflare Gateway can integrate with your organization's identity providers (Id
 Gateway retrieves a user's IdP data at the time of login. Therefore, if you add or remove a user from a group in your IdP, Gateway will not detect these changes until the user re-authenticates to your Zero Trust instance. There are two ways a user can re-authenticate:
 
 - Log out from an Access-protected application and log back in.
+
 - In their WARP client settings, click **Preferences** > **Account** > **Re-Authenticate Session**. This will open a browser window and prompt the user to log in.
 
 {{<Aside type="note" header="Gateway groups vs. Access groups">}}
@@ -22,6 +23,8 @@ Gateway retrieves a user's IdP data at the time of login. Therefore, if you add 
 In Gateway, a **User Group** refers to a group in your IdP (for example, an Okta group). Gateway does not currently support applying DNS, HTTP, and Network policies to [Access groups](/cloudflare-one/identity/users/groups/). This is because Access groups may include criteria not available through the IdP, such as device location or IP address.
 
 {{</Aside>}}
+
+## Identity-based selectors
 
 ### User Email
 
