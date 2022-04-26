@@ -9,7 +9,7 @@ _build:
 
 * Ensure that:
   * You have created [a Cloudflare account](https://support.cloudflare.com/hc/articles/201720164).
-  * Added the domain you want to transfer [to your account](/fundamentals/get-started/setup/add-site/).
+  * [Added the domain](/fundamentals/get-started/setup/add-site/) you are transferring to Cloudflare to your account.
   * [Changed your DNS name servers](/dns/zone-setups/full-setup/) to Cloudflare.
 * Disable DNSSEC by:
   * Removing the DS record at your current DNS host.
