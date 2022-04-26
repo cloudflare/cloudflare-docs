@@ -28,7 +28,7 @@ For the vast majority of Cloudflare Zero Trust features to work, you need to spe
 
 **Value:** Your [team name](/cloudflare-one/glossary/#team-name).
 
-## Required field for DNS only policy enforcemet
+## Required field for DNS only policy enforcement
 
 This field is only required to enforce DNS policies when deploying the client in DoH-only mode.
 
