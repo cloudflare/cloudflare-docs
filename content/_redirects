@@ -522,7 +522,6 @@
 /waiting-room/additional-options/customize-waiting-room/ /waiting-room/how-to/customize-waiting-room/ 301
 /waiting-room/how-to/create-via-api/ /waiting-room/how-to/create-waiting-room/ 301
 /waiting-room/how-to/create-via-dashboard/ /waiting-room/how-to/create-waiting-room/ 301
-/waiting-room/how-to/create-waiting-room/ /waiting-room/get-started/ 301
 /waiting-room/how-to/create-waiting-room/create-waiting-room-api/ /waiting-room/how-to/create-via-api/ 301
 /waiting-room/how-to/create-waiting-room/create-waiting-room-dashboard/ /waiting-room/how-to/create-via-dashboard/ 301
 /waiting-room/how-to/create-waiting-room/create-waiting-room-dashboard/configure-settings/ /waiting-room/reference/configuration-settings/ 301
