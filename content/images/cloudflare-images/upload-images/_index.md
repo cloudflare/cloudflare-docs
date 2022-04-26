@@ -18,6 +18,5 @@ Images dashboard       | Quick, one-time uploads where automation is not require
 API                    | A preferred way to upload images from your back-end services.
 Direct Creator Uploads | Let your users upload images to Cloudflare Images without exposing your API key or token.
 Upload via URL         | When it is useful to use a URL of an image instead of uploading its data.
-Upload via file system | When you want to upload an image from your computer.
 
 {{</table-wrap>}}
