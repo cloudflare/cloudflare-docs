@@ -70,7 +70,7 @@ weight: 2
 
 3. Select *macOS* as the app platform.
 
-4. Add an app name, category and description. 
+4. Add an app name, category and description.
 
 5. Upload the `cloudflare_WARP.pkg` file and click **Add**.
 
