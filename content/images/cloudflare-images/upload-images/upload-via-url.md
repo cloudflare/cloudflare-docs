@@ -73,19 +73,20 @@ Below is an example of the custom ID feature:
 curl -X POST https://api.cloudflare.com/client/v4/accounts/<​​ACCOUNT_ID>/images/v1 \
   -H "Authorization: Bearer <API_TOKEN>" \
   --form 'url=https://<REMOTE_PATH_TO_IMAGE>' \
-  --form 'id=<LOCAL_PATH_TO_IMAGE>'
+  --form 'id=<PATH_TO_YOUR_IMAGE.IMG>'
 ```
+In this example, you should replace `.IMG` by the appropriate file extension (JPEG or PNG).
 
 You will then receive a response similar to this: 
 
 ```json
 {
   "result": {
-    "id": "<PATH_TO_IMAGE>",
-    "filename": "IMAGE.JPG",
+    "id": "<PATH_TO_YOUR_IMAGE.IMG>",
+    "filename": "<YOUR_IMAGE.IMG>",
     "uploaded": "2022-04-20T09:51:09.559Z",
     "requireSignedURLs": false,
-    "variants": ["https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/<DESTINATION/PATH/IMAGE.JPG>/public"]
+    "variants": ["https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/content/images/<YOUR_IMAGE.IMG>/public"]
   },
   "result_info": null,
   "success": true,
