@@ -12,11 +12,13 @@ weight: 1
 
 2. Go to **Rules** > **Transform Rules**.
 
-3. Click **Managed Transforms**. A pop-up dialog appears.
+    ![The Transform Rules card in the Cloudflare dashboard where you can access the Managed Transforms options.](/rules/static/transform/managed-transforms-card.png)
 
-    IMAGE
+3. Click **Managed Transforms**.
 
-4. Enable or disable the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) by clicking the toggle next to each entry.
+4. In the pop-up dialog that appears, enable or disable the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) by clicking the toggle next to each entry. 
+
+5. Click **Close**.
 
 ## Via API
 
@@ -61,6 +63,11 @@ header: Response
       }
     ],
     "managed_response_headers": [
+      {
+        "id": "add_xss_protection_headers",
+        "enabled": false,
+        "available": true
+      },
       {
         "id": "remove_x-powered-by_header",
         "enabled": false,
@@ -130,6 +137,11 @@ header: Response
       }
     ],
     "managed_response_headers": [
+      {
+        "id": "add_xss_protection_headers",
+        "enabled": false,
+        "available": true
+      },
       {
         "id": "remove_x-powered-by_header",
         "enabled": true,
