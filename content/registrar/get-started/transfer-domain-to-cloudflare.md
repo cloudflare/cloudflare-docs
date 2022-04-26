@@ -68,6 +68,7 @@ If you do not have a payment method on file, add one at this step before proceed
 
 Sites can be unavailable for a few reasons, including:
 
+- You did not [add your domain](/fundamentals/get-started/setup/add-site/) to your Cloudflare.
 - The site was registered in the last 60 days.
 - Cloudflare does not yet support the TLD.
 - The domain is designated as a premium domain by the registry.
