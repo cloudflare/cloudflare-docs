@@ -9,11 +9,13 @@ layout: single
 
 Managed Transforms allow you to perform common adjustments to HTTP request and response headers with the click of a button. The available adjustments include:
 
-* Add Bot Protection headers
-* Remove headers with the visitor IP address
-* Remove the "X-Powered-By" header
+* Add bot protection request headers
+* Add visitor location request headers
+* Remove visitor IP headers
+* Add security response headers
+* Remove "X-Powered-By" response headers
 
-For complete list, refer to [Available Managed Transforms](/rules/transform/managed-transforms/reference/).
+For a complete list, refer to [Available Managed Transforms](/rules/transform/managed-transforms/reference/).
 
 When you enable a Managed Transform, Cloudflare internally deploys one or more Transform Rules to handle the common configuration you selected. 
 
