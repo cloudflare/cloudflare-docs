@@ -64,7 +64,7 @@ When an admin enables AV scanning for uploads and/or downloads, Gateway will sca
 
 Opting out of AV scanning applies to both uploads and downloads of files (i.e., it matches the global AV scanning setting). If an admin has chosen, for example, to only globally scan uploads, then opting out of AV scanning only applies to uploads.
 
-When a Do Not Scan rule matches, nothing is scanned, regardless of file size or whether the file type is supported or not.
+When traffic matches a Do Not Scan rule, nothing is scanned, regardless of file size or whether the file type is supported or not.
 
 ## Supported compressed file types
 
