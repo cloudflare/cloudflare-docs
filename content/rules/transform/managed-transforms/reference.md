@@ -7,6 +7,9 @@ layout: list
 
 # Available Managed Transforms
 
+
+## HTTP request headers
+
 {{<table-wrap>}}
 
 <table>
@@ -54,6 +57,23 @@ layout: list
         </ul>
       </td>
     </tr>
+  </tbody>
+</table>
+
+{{</table-wrap>}}
+
+## HTTP response headers
+
+{{<table-wrap>}}
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:20%">Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
     <tr>
       <td><strong>Add security headers</strong></td>
       <td>
