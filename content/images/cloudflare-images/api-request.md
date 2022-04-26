@@ -23,12 +23,12 @@ account and website.
 <summary>Your Global API Key or API Token</summary>
 <div>
 
-Refer to [API tokens](/images/cloudflare-images/upload-images/api-token/).
+Refer to [Creating API tokens](/api/tokens/create/#getting-started) to learn how to create a custom token.
 
 </div>
 </details>
 
-Once you have this information, you are ready to upload your first image to Cloudflare Images using the API:
+Once you have this information, you are ready to upload your first image to Cloudflare Images using the API. In the following example, the `-F` flag is used to upload images from your local computer:
 
 ```bash
 curl -X POST \
