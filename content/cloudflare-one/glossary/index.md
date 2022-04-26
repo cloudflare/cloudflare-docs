@@ -136,7 +136,7 @@ _Remote Desktop Protocol_
 
 A protocol, or technical standard, for using a desktop computer remotely. RDP was initially released by Microsoft and is available for most Windows operating systems, but it can be used with Mac operating systems too.
 
-## [SafeSearch](/cloudflare-one/policies/filtering/dns-policies-builder/)
+## [SafeSearch](/cloudflare-one/policies/filtering/dns-policies/#safesearch)
 
 A feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
 
