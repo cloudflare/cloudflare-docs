@@ -62,7 +62,7 @@ $ wrangler generate <new-project-name> <github-repo-url>
 
 {{<worker-starter title="Sunder Starter (Typescript)" repo="sunderjs/sunder-worker-template" description="A complete starter template using Sunder, TypeScript, Miniflare, esbuild, Jest, and Sass. Uses Worker Sites for static assets.">}}
 
-{{<worker-starter title="Hono Starter" repo="yusukebe/hono-minimal" description="Hono is an ultrafast web framework built for Cloudflare Workers. This is a minimal project using Hono, TypeScript, esbuild, and Miniflare.">}}
+{{<worker-starter title="Hono Starter" repo="honojs/hono-minimal" description="Hono is an ultrafast web framework built for Cloudflare Workers. This is a minimal project using Hono, TypeScript, esbuild, Miniflare, and Jest.">}}
 
 ---
 
