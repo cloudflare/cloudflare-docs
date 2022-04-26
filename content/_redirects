@@ -423,6 +423,7 @@
 /ssl/edge-certificates/certificate-transparency-monitoring/ /ssl/edge-certificates/additional-options/certificate-transparency-monitoring/ 301
 /ssl/edge-certificates/http-strict-transport-security/ /ssl/edge-certificates/additional-options/http-strict-transport-security/ 301
 /ssl/edge-certificates/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
+/ssl/edge-certificates/uploading/ /ssl/edge-certificates/custom-certificates/uploading/ 301
 /ssl/getting-started/ /ssl/get-started/ 301
 /ssl/keyless-ssl/hardware-security-modules/ncipher-thales-nshield-connect/ /ssl/keyless-ssl/hardware-security-modules/entrust-nshield-connect/ 301
 /ssl/keyless-ssl/high-availability/ /ssl/keyless-ssl/reference/high-availability/ 301
@@ -522,7 +523,6 @@
 /waiting-room/additional-options/customize-waiting-room/ /waiting-room/how-to/customize-waiting-room/ 301
 /waiting-room/how-to/create-via-api/ /waiting-room/how-to/create-waiting-room/ 301
 /waiting-room/how-to/create-via-dashboard/ /waiting-room/how-to/create-waiting-room/ 301
-/waiting-room/how-to/create-waiting-room/ /waiting-room/get-started/ 301
 /waiting-room/how-to/create-waiting-room/create-waiting-room-api/ /waiting-room/how-to/create-via-api/ 301
 /waiting-room/how-to/create-waiting-room/create-waiting-room-dashboard/ /waiting-room/how-to/create-via-dashboard/ 301
 /waiting-room/how-to/create-waiting-room/create-waiting-room-dashboard/configure-settings/ /waiting-room/reference/configuration-settings/ 301
