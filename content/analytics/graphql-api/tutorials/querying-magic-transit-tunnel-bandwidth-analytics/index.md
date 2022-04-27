@@ -1,9 +1,9 @@
 ---
 pcx-content-type: tutorial
-title: Querying Magic Transit Tunnel Bandwidth Analytics with GraphQL
+title: Querying Magic Transit tunnel bandwidth analytics with GraphQL
 ---
 
-# Querying Magic Transit Tunnel Bandwidth Analytics with GraphQL
+# Querying Magic Transit tunnel bandwidth analytics with GraphQL
 
 In this example, you are going to use the GraphQL Analytics API to query Magic Transit Ingress Tunnel Traffic over a specified time period.
 
