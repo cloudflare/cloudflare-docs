@@ -21,7 +21,18 @@ curl --request POST https://api.cloudflare.com/client/v4/accounts/<​​ACCOUNT
   --form 'url=https://<REMOTE_PATH_TO_IMAGE>' \
   --form 'id=<PATH_TO_YOUR_IMAGE.IMG>'
 ```
-In this example, you should replace `.IMG` by the appropriate file extension (JPEG or PNG).
+
+You can also use the custom ID feature with direct file upload:
+
+```bash
+curl --request POST \
+  https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1 \
+  --header 'Authorization: Bearer :token' \
+  --form 'file=@./<PATH_TO_YOUR_IMAGE>' \
+  --from 'id=<PATH_TO_YOUR_IMAGE.IMG>'
+```
+
+In these examples, you should replace `.IMG` by the appropriate file extension (JPEG or PNG).
 
 You will then receive a response similar to this: 
 
