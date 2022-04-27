@@ -12,7 +12,7 @@ Note that when using Logpush to HTTP endpoints, Cloudflare customers are expecte
 
 ## Manage via API
 
-To create a job, make a `POST` request to the [Logpush job creation endpoint URL](https://developers.cloudflare.com/logs/get-started/logpush-configuration-api/understanding-logpush-api) with the appropriate parameters.
+To create a job, make a `POST` request to the [Logpush job creation endpoint URL](/logs/get-started/logpush-configuration-api/understanding-logpush-api) with the appropriate parameters.
 
 The supported parameters are as follows:
 
