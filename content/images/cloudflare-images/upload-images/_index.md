@@ -8,7 +8,7 @@ meta:
 
 # Upload images
 
-Cloudflare Images allows developers to upload images using different methods, for a wide range of use cases. When you upload an image, Cloudflare Images will attribute it an automatic default Universal Unique Identifier (UUID). You can, however, specify your own custom path and ID. Refer to Custom ID for more information.
+Cloudflare Images allows developers to upload images using different methods, for a wide range of use cases. When you upload an image, Cloudflare Images will attribute it an automatic default Universal Unique Identifier (UUID). You can, however, specify your own custom path and ID. Refer to [Custom ID](/images/cloudflare-images/upload-images/custom-id/) for more information.
 
 {{<table-wrap>}}
 
