@@ -156,7 +156,7 @@ The four options that you can customize are:
 6.  **max_upload_records** (optional): The maximum number of log lines per batch. This must be at least 1000 lines or more. Note that there is no way to specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
 
 {{<Aside type="note" header="Note">}}
-The **CVE-2021-44228** parameter can only be set through the API at this time. Updating your Logpush job through the UI will set this option to false.
+The **CVE-2021-44228** parameter can only be set through the API at this time. Updating your Logpush job through the dashboard will set this option to false.
 {{</Aside>}}
 
 To check if **logpull\_options** are valid:
