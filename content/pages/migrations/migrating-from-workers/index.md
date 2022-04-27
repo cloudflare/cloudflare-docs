@@ -11,7 +11,7 @@ In this tutorial, you will learn how to migrate an existing [Cloudflare Workers 
 
 As a prerequisite, you should have a Cloudflare Workers Sites project, created with [Wrangler](https://github.com/cloudflare/wrangler).
 
-Cloudflare Pages provides built-in defaults for every aspect of serving your site. You can port custom behaviour in your Workers script — such as custom caching logic — to your Cloudflare Pages. Using [Pages Functions](/pages/platform/functions/) which enables you leverage the `/api` filesystem convention serverless functions. You can also migrate your headers and redirects settings to Pages. 
+Cloudflare Pages provides built-in defaults for every aspect of serving your site. You can port custom behaviour in your Workers script — such as custom caching logic — to your Cloudflare Pages project using [Functions](/pages/platform/functions/). This enables an easy to use file-based routing system. You can also migrate your custom headers and redirects to Pages. 
 
 You may already have a reasonably complex Worker and/or it would be tedious to splice it up into Pages' file-based routing system. For these cases, Pages offers developers the ability to define a `_worker.js` file in the output directory of your Pages project. 
 
@@ -39,16 +39,16 @@ You can migrate your redirects to Pages, by creating a `_redirects` file in your
 
 {{<Aside type="note">}}
 
-A project is limited to 1,000 static redirects and 100 dynamic redirects, for a combined total of 1,100 redirects. Each redirect declaration has a 1,000-character limit. Malformed definitions are ignored. If there are multiple redirects for the same source path, the topmost redirect is applied. 
+A project is limited to 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Each redirect declaration has a 1,000-character limit. Malformed definitions are ignored. If there are multiple redirects for the same source path, the topmost redirect is applied. 
 
 Make sure that static redirects are before dynamic redirects in your `_redirects` file.
 
 {{</Aside>}}
 
-In addition to an `_redirects` file, Cloudflare Pages currently offers [Bulk Redirects(beta)](/pages/how-to/use-bulk-redirects/), which handles redirects that surpasses the 1,100 redirect rules limit set by Pages.
+In addition to an `_redirects` file, Cloudflare Pages currently offers [Bulk Redirects (beta)](/pages/how-to/use-bulk-redirects/), which handles redirects that surpasses the 1,100 redirect rules limit set by Pages.
 
 
-Your header files can also be moved into a `_headers` folder in your publish directory. It is important to note that custom headers defined in the `_headers` file are not currently applied to responses from Functions, even if the Function route matches the URL pattern. To learn more about handling headers, refer to [Headers](/pages/platform/headers/).
+Your custom headers can also be moved into a `_headers` file in your publish directory. It is important to note that custom headers defined in the `_headers` file are not currently applied to responses from Functions, even if the Function route matches the URL pattern. To learn more about handling headers, refer to [Headers](/pages/platform/headers/).
 
 
 
