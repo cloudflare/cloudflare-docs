@@ -66,9 +66,9 @@ To set up SAML with Okta as your identity provider:
     * **Issuer ID**: Enter the Identity Provider Issuer from Okta, for example `http://www.okta.com/<your-okta-entity-id>`.
     * **Signing Certificate**: Copy-paste the X.509 Certificate from Okta.
 
-16. (Optional) Enable **Sign SAML authentication request**.
+16. (Recommended) Enable **Sign SAML authentication request**.
 
-17. (Optional) Under **SAML attributes**, enter `email` and `name`. The `name` attribute is required if you want to use Okta groups.
+17. (Recommended) Under **SAML attributes**, enter `email` and `name`. The `name` attribute is required if you want to use Okta groups.
 
   ![Adding optional SAML attributes in the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/okta-saml/okta-saml-6.png)
 
