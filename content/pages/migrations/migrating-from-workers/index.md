@@ -56,8 +56,13 @@ Your custom headers can also be moved into a `_headers` file in your publish dir
 
 After you have recorded your **build command** and **build directory** in a separate location, remove everything else from your application, and push the new version of your project up to GitHub. Follow the ["Get started" guide](/pages/get-started/) to add your project to Cloudflare Pages, using the **build command** and **build directory** that you saved earlier.
 
-If you choose to use a custom domain for your Pages, you can set it to the same custom domain as your currently deployed Workers application. Follow the steps for [adding a custom domain](/pages/get-started/#adding-a-custom-domain) to your Pages project. When Pages finishes the initial deployment of your site, you will need to delete the Workers application to start sending requests to Cloudflare Pages.
+If you choose to use a custom domain for your Pages project, you can set it to the same custom domain as your currently deployed Workers application. Follow the steps for [adding a custom domain](/pages/get-started/#adding-a-custom-domain) to your Pages project. 
 
+{{<Aside type="note">}}
+
+Before you deploy, you will need to delete the Workers application to start sending requests to Cloudflare Pages.
+
+{{</Aside>}}
 ## Cleaning up your old application and assigning the domain
 
 After you have deployed your application, navigate to [Workers](https://dash.cloudflare.com/?to=/:account/workers) and remove your old Workers project by going to your **Workers project** > **Settings** > **Delete**.
