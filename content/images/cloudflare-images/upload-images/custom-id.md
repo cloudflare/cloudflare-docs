@@ -32,7 +32,7 @@ curl --request POST \
   --from 'id=<PATH_TO_YOUR_IMAGE.IMG>'
 ```
 
-In these examples, you should replace `.IMG` by the appropriate file extension (JPEG or PNG).
+In these examples, replace `.IMG` by the appropriate file extension (JPEG or PNG).
 
 You will then receive a response similar to this: 
 
