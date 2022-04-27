@@ -8,7 +8,7 @@ meta:
 
 # Settings
 
-This section displays the DNS records needed for Email Routing to work. If the DNS records are correctly configured, you will see a green `Email DNS records configured` message. This is also the section where you can disable Email Routing should you need to.
+This section displays the DNS records needed for Email Routing to work. If the DNS records are correctly configured, you will see a green `Email DNS records configured` message. This is also the section where you can disable Email Routing should you need to, or unlock your DNS records to make additional changes.
 
 ## Email Routing records misconfigured
 
@@ -18,7 +18,7 @@ To activate Email Routing and clean your DNS records, click **Enable Email Routi
 
 ## Disable Email Routing
 
-Email Routing has to routes to disable the service:
+Email Routing has two routes to disable the service:
 
 - **Delete and Disable**: This option will immediately disable Email Routing and remove its MX records. Your custom email addresses will stop working, and your email will not be routed to its final destination.
 - **Unlock and keep DNS records**: (Advanced) This option is recommended if you plan to migrate to another provider. It allows you to add new MX records before disabling the service. Email Routing will stop working when you change your MX records.

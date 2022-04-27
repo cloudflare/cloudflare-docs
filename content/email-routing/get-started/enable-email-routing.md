@@ -8,9 +8,7 @@ weight: 1
 
 {{<Aside type="warning" header="Important">}}
 
-To enable Email Routing you have to add Email Routing's MX records to your DNS settings. To learn how you can change these MX records after enabling Email Routing, refer to [Settings](/email-routing/get-started/settings).
-
-Depending on how you configure your MX records after you unblock your DNS setting to make changes, Email Routing might stop working. Proceed with caution.
+Enabling Email Routing adds the appropriate MX records to your DNS settings in order for the service to work. You can [change these MX records](/email-routing/get-started/settings) at any time. However, depending on how you configure them, Email Routing might stop working.
 
 {{</Aside>}}
 
@@ -38,9 +36,7 @@ When Email Routing is configured and running, no other email services can be act
 
 ## Test your Email Routing configuration
 
-To test that your configuration is working properly, send an email to the custom address [you set up in the dashboard](#enable-email-routing). You should send your test email from a different address than the one you specified as the destination address. For example, if you set up `my-account@gmail.com` as the destination address, do not send your test email from that same Gmail account.
-
-Some email providers will discard what they interpret as an incoming duplicate email and will not show it in your inbox, making it seem like Email Routing is not working properly.
+To test that your configuration is working properly, send an email to the custom address [you set up in the dashboard](#enable-email-routing). You should send your test email from a different address than the one you specified as the destination address. For example, if you set up `my-account@gmail.com` as the destination address, do not send your test email from that same Gmail account. Some email providers will discard what they interpret as an incoming duplicate email and will not show it in your inbox, making it seem like Email Routing is not working properly.
 
 ## DMARC enforcing
 
