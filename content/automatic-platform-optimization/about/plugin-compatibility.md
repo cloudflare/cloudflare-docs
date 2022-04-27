@@ -12,7 +12,7 @@ For questions about a specific plugin not shown in the list, create a thread in 
 
 {{<Aside type="note">}}
 
-The Cloudflare APO Wordpress plugin does not officially support multisite WordPress installation.
+The Cloudflare APO Wordpress plugin does not support multisite WordPress installation.
 
 {{</Aside>}}
 
