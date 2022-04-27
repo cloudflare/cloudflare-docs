@@ -7,7 +7,20 @@ meta:
 
 # Zaraz settings
 
-Configure Zaraz's general settings for a website from its [main dashboard](https://dash.cloudflare.com/?to=/:account/:zone/zaraz). Click the **Settings** button to start.
+To configure Zaraz's general settings, click [**Zaraz**](https://dash.cloudflare.com/?to=/:account/:zone/zaraz) > **Settings**.
+
+## Web API
+
+### Debug Key
+
+Copy the debug key to enable Debug Mode.
+
+### E-commerce tracking
+
+Toggle this option on to enable the Zaraz E-commerce API. Refer to [Ecommerce](/zaraz/web-api/ecommerce/) for more information.
+
+
+
 
 ## Data layer compatibility mode
 
@@ -23,6 +36,3 @@ This option automatically injects the script needed for Zaraz to work on your we
 
 If you turn this option off, Zaraz will stop automatically injecting its script on your domain. If you still want Zaraz functionality, you will need to add the Zaraz script manually. Refer to [Load Zaraz manually](/zaraz/advanced/load-zaraz-manually/) for more information.
 
-## E-commerce tracking
-
-Toggle this option on to enable the Zaraz E-commerce API. Refer to [Ecommerce](/zaraz/web-api/ecommerce/) for more information.
