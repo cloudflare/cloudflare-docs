@@ -6,7 +6,7 @@ weight: 13
 
 # Okta
 
-Okta provides cloud software that helps companies manage and secure user authentication to modern applications, and helps developers build identity controls into applications, website web services, and devices. You can integrate Okta with Cloudflare Zero Trust and build rules based on user identity and group membership. Cloudflare Zero Trust supports Okta integrations using either the OIDC (default) or [SAML](/cloudflare-one/static/documentation/identity/okta-saml) protocol.
+Okta provides cloud software that helps companies manage and secure user authentication to modern applications, and helps developers build identity controls into applications, website web services, and devices. You can integrate Okta with Cloudflare Zero Trust and build rules based on user identity and group membership. Cloudflare Zero Trust supports Okta integrations using either the OIDC (default) or [SAML](/cloudflare-one/identity/idp-integration/okta-saml/) protocol.
 
 ## Set up Okta as an OIDC provider
 
