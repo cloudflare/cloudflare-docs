@@ -13,11 +13,11 @@ You can use a custom path to upload images to Cloudflare Images, instead of the 
 - Requires file extensions. For example `.png` or `.jpg`.
 - Supports the [UTF-8 encoding standard](https://en.wikipedia.org/wiki/UTF-8) for characters.
 
-Below is an example of the custom ID feature:
+Below is an example of the custom ID feature using upload via URL:
 
 ```bash
-curl -X POST https://api.cloudflare.com/client/v4/accounts/<​​ACCOUNT_ID>/images/v1 \
-  -H "Authorization: Bearer <API_TOKEN>" \
+curl --request POST https://api.cloudflare.com/client/v4/accounts/<​​ACCOUNT_ID>/images/v1 \
+  --header 'Authorization: Bearer :token' \
   --form 'url=https://<REMOTE_PATH_TO_IMAGE>' \
   --form 'id=<PATH_TO_YOUR_IMAGE.IMG>'
 ```
