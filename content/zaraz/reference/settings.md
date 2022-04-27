@@ -13,26 +13,32 @@ To configure Zaraz's general settings, click [**Zaraz**](https://dash.cloudflare
 
 ### Debug Key
 
-Copy the debug key to enable Debug Mode.
+The debug key is used to enable Debug Mode. Refer to [Debug mode](/zaraz/web-api/debug-mode/) for more information.
 
 ### E-commerce tracking
 
 Toggle this option on to enable the Zaraz E-commerce API. Refer to [Ecommerce](/zaraz/web-api/ecommerce/) for more information.
 
+## Compatibility
 
-
-
-## Data layer compatibility mode
+### Data layer compatibility mode
 
 Cloudflare Zaraz offers backwards compatibility with the `dataLayer` function found in tag management software, used to track events and other parameters. You can toggle this option off if you do not need it. Refer to [Data layer compatibility mode](/zaraz/advanced/datalayer-compatibility/) for more information.
 
-## Single Page Application support
+### Single Page Application support
 
 When you toggle Single Page Application support off, the `pageview` trigger will only work when loading a new web page. When enabled, Zaraz's `pageview` trigger will work every time the URL changes on a single page application. This is also known as virtual page views.
 
-## Auto-inject script
+## Injection
+
+### Auto-inject script
 
 This option automatically injects the script needed for Zaraz to work on your website. It is turned on by default.
 
 If you turn this option off, Zaraz will stop automatically injecting its script on your domain. If you still want Zaraz functionality, you will need to add the Zaraz script manually. Refer to [Load Zaraz manually](/zaraz/advanced/load-zaraz-manually/) for more information.
 
+### Iframe injection
+
+?????
+
+## Endpoints
