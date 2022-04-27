@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: URL upload
-weight: 3
+weight: 4
 meta:
   title: Upload via URL
 ---
