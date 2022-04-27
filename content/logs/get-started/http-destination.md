@@ -22,7 +22,7 @@ The supported parameters are as follows:
     - **logpull_options** (optional): Refer to [Logpush API configuration options](/logs/reference/logpush-api-configuration/#options) to configure fields, sample rate, and timestamp format.
 - Unique fields: 
     - **destination_conf**: Where to send the logs. This consists of an endpoint URL and HTTP headers used.
-        - Any `"header_*"` URL parameters will be taken to set request headers.
+        - Any `"header_*"` URL parameters will be used to set request headers.
             - Thus, the HTTPS endpoint cannot have custom URL parameters that conflicts with this.
             - These parameters must be properly URL-encoded (that is, use `"%20"` for a whitespace), otherwise some special characters may be decoded incorrectly.
         - `destination_conf` may have more URL parameters in addition to special `"header_*"` parameters.
