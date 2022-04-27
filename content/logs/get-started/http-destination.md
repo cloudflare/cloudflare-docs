@@ -23,7 +23,7 @@ The supported parameters are as follows:
 - Unique fields: 
     - **destination_conf**: Where to send the logs. This consists of an endpoint URL and HTTP headers used.
         - Any `"header_*"` URL parameters will be used to set request headers.
-            - Thus, the HTTPS endpoint cannot have custom URL parameters that conflicts with this.
+            - The HTTPS endpoint cannot have custom URL parameters that conflicts with any `"header_*"` URL parameters you have set.
             - These parameters must be properly URL-encoded (that is, use `"%20"` for a whitespace), otherwise some special characters may be decoded incorrectly.
         - `destination_conf` may have more URL parameters in addition to special `"header_*"` parameters.
             - Non URL-encoded special characters will be encoded when uploading.
