@@ -8,11 +8,11 @@ weight: 50
 
 Cloudflare Logpush now supports the ability to send logs to arbitrary HTTP endpoints.
 
-Note that when using Logpush to HTTP endpoints, Cloudflare customers are expected to perform their own authentication of the pushed logs. For example, customers may specify a secret token in the URL or an HTTP header of the Logpush destination.
+Note that when using Logpush to HTTP endpoints, Cloudflare customers are expected to perform their own authentication of the pushed logs. For example, customers may need to specify a secret token in the URL or an HTTP header of the Logpush destination.
 
 ## Manage via API
 
-To create a job, make a `POST` request to the [Logpush job creation endpoint URL](/logs/reference/logpush-api-configuration/) with the appropriate parameters.
+To create a Logpush job, make a `POST` request to the [Logpush job creation endpoint URL](/logs/reference/logpush-api-configuration/) with the appropriate parameters.
 
 The supported parameters are as follows:
 
@@ -32,7 +32,7 @@ The supported parameters are as follows:
     - **max_upload_records** (optional): The maximum number of log lines per batch. This must be at least 1000 lines or more. Note that there is no way to specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
 
 {{<Aside type="note" header="Note">}}
-**Ownership_challenge** is not required.
+Note that the `ownership_challenge` parameter is not required to create a Logpush job to an HTTP endpoint.
 {{</Aside>}}
 
 
