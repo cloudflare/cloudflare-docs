@@ -7,9 +7,9 @@ title: Querying Magic Transit Tunnel Bandwidth Analytics with GraphQL
 
 In this example, you are going to use the GraphQL Analytics API to query Magic Transit Ingress Tunnel Traffic over a specified time period.
 
-The following API call will request Magic Transit Ingress Tunnel Traffic over a one hour period and output the requested fields. Be sure to replace `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your email and API credentials, and adjust the `datetime_geg` and `datetime_leq `values as needed. 
+The following API call will request Magic Transit Ingress Tunnel Traffic over a one-hour period and output the requested fields. Be sure to replace `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your email and API credentials, and adjust the `datetime_geg` and `datetime_leq `values as needed. 
 
-The following example queries for ingress traffic. To query for egress, then change the value in the direction filter.
+The following example queries for ingress traffic. To query for egress, change the value in the direction filter.
 
 ## API Call
 
@@ -56,7 +56,7 @@ curl \
   https://api.cloudflare.com/client/v4/graphql/
   ```
 
-The returned values represent the total bandwidth in bits/s during the five minute interval for a particular tunnel. To use aggregations other than five minutes, make sure that you use the same window for both your metric and date time. For example, to see hourly groups, use `bitRateHour` and `datetimeHour`.
+The returned values represent the total bandwidth in bits/second during the five minute interval for a particular tunnel. To use aggregations other than five minutes, make sure that you use the same window for both your metric and date time. For example, to see hourly groups, use `bitRateHour` and `datetimeHour`.
 
 The result will be in JSON (as requested), so piping the output to `jq` will make it easier to read, like in the following example:
 
