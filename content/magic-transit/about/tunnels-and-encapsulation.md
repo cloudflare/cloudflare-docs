@@ -47,3 +47,9 @@ This works because the GRE protocol is stateless—each packet is processed inde
 Cloudflare’s Anycast GRE architecture provides a conduit to your GRE tunnel for every server in every data center on Cloudflare’s global edge network as shown in the image below.
 
 ![Multiple servers in data center preparing packets to send through GRE tunnel](/magic-transit/static/magic-transit-anycast-2.png)
+
+## Network Analytics
+
+Cloudflare’s Network Analytics provides near real-time visibility into network and transport layer traffic patterns and DDoS attacks which can help troubleshoot IP traffic issues. You can also use Network Analytics to view information about the traffic that leaves Cloudflare's Edge by reviewing ingress and egress tunnel traffic over a specific amount of time. 
+
+For more information, refer to [Querying Magic Transit Tunnel Bandwidth Analytics with GraphQL](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-bandwidth-analytics/).
