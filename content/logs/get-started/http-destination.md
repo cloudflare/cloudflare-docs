@@ -25,7 +25,7 @@ The supported parameters are as follows:
         - Any `"header_*"` URL parameters will be taken to set request headers.
             - Thus, the HTTPS endpoint cannot have custom URL parameters that conflicts with this.
             - These parameters must be properly URL-encoded (that is, use `"%20"` for a whitespace), otherwise some special characters may be decoded incorrectly.
-        - destination_conf may have more URL parameters in addition to special `"header_*"` parameters.
+        - `destination_conf` may have more URL parameters in addition to special `"header_*"` parameters.
             - Non URL-encoded special chars will be encoded when uploading.
         - Example: `https://logs.example.com?header_Authorization=Basic%20REDACTED&tags=host:theburritobot.com,dataset:http_requests`
     - **max_upload_bytes** (optional): The maximum uncompressed file size of a batch of logs. This must be at least 5 MB Note that there is not a way to set a minimum file size; this means that log files may be much smaller than this batch size.
