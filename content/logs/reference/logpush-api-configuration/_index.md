@@ -153,7 +153,7 @@ The four options that you can customize are:
 3.  **Timestamp format**: The format in which timestamp fields will be returned. Value options: `unixnano` (default), `unix`, `rfc3339`.
 4.  **Optional redaction for CVE-2021-44228**: This option will replace every occurrence of `${` with `x{`.  To enable it, set `CVE-2021-44228=true`.
 5.  **max_upload_bytes** (optional): The maximum uncompressed file size of a batch of logs. This must be at least 5 MB. Note that there is no way to set a minimum file size; this means that log files may be much smaller than this batch size.
-6.  **max_upload_records** (optional): The maximum number of log lines per batch. This must be at least 1000 lines or more. Note that there is not a way to specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
+6.  **max_upload_records** (optional): The maximum number of log lines per batch. This must be at least 1000 lines or more. Note that there is no way to specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
 
 {{<Aside type="note" header="Note">}}
 The **CVE-2021-44228** parameter can only be set through the API at this time. Updating your Logpush job through the UI will set this option to false.
