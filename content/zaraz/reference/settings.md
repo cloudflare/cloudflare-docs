@@ -43,10 +43,10 @@ When toggled on, the Zaraz script will be injected into `iframe` elements.
 
 ## Endpoints
 
-Specify custom URLs for Zaraz's scripts. You need to use a valid pathname to where you intend to host the script. You can name the script file whatever you want.
+Specify custom URLs for Zaraz's scripts. You need to use a valid pathname:
 
 ```txt
-/<FOLDER>/<FILE.JS>
+/<PATH_TO_FILE.JS>
 ```
 
 This is an example of a custom pathname to host Zaraz's initialization script:
