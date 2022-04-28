@@ -39,6 +39,18 @@ If you turn this option off, Zaraz will stop automatically injecting its script 
 
 ### Iframe injection
 
-?????
+When toggled on, the Zaraz script will be injected into `iframe` elements.
 
 ## Endpoints
+
+Specify custom URLs for Zaraz's scripts. You need to use a valid pathname to where you intend to host the script. You can name the script file whatever you want.
+
+```txt
+/<FOLDER>/<FILE.JS>
+```
+
+This is an example of a custom pathname to host Zaraz's initialization script:
+
+```
+/my-server/zaraz/start.js
+```
