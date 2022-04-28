@@ -22,4 +22,22 @@ Here are some known bugs and issues with Cloudflare Pages:
 - [Functions (beta)](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, Webpack) may not run.
 - When adding a custom domain, the domain may get stuck verifying due to being unable to validate a request for an SSL on that hostname. In order for the SSL to validate, ensure Cloudflare Access or a Cloudflare Worker is allowing requests to the validation path: `http://{domain_name}/.well-known/pki-validation/*`.
 
+## Enabling Access on your `*.pages.dev` domain
+
+If you would like to enable [Cloudflare Access](https://www.cloudflare.com/teams-access/)] for your preview deployments and your `*.pages.dev` domain, you must:
+
+1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/login).
+2. From Account Home, select **Pages**.
+3. Select your Pages project.
+4. Go to **Settings** > **Enable access policy**.
+5. Go back to your Pages project > **Settings** > **General** > **Manage Policies**.
+6. Select **Edit** on the Acccess policy created for your preview deployments.
+7. In Edit, go to **Overview**.
+8. In the **Subdomain** field, delete the wildcard (`*`) and select **Save application**. You may need to change the **Application name** at this step to avoid an error.
+
+At this step, your `*.pages.dev` domain has been secured behind Access. To resecure your preview deployments:
+
+9. Go back to your Pages project > **Settings** > **General** > and reselect **Enable access policy**.
+10. Review that two Access policies, one for your `*.pages.dev` domain and one for your preview deployments (`*.<YOUR_SITE>.pages.dev`), have been created.
+
 If you have an issue that you do not see listed, let the team know in the Cloudflare Workers Discord. Get your invite at [discord.gg/cloudflaredev](https://discord.gg/cloudflaredev), and share your bug report in the #pages-general channel.
