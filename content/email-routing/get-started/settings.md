@@ -8,7 +8,9 @@ meta:
 
 # Settings
 
-This section displays the DNS records needed for Email Routing to work. If the DNS records are correctly configured, you will see a green `Email DNS records configured` message. This is also the section where you can disable Email Routing should you need to, or unlock your DNS records to make additional changes.
+This section displays the DNS records needed for Email Routing to work. If the DNS records are correctly configured, you will see a green `Email DNS records configured` message. Click **View DNS records** for a list of the required MX records Email Routing is using.
+
+You can also unlock your DNS records to make additional changes or disable Email Routing, or lock your DNS records.
 
 ## Email Routing records misconfigured
 
