@@ -17,7 +17,7 @@ Enabling Email Routing adds the appropriate MX records to your DNS settings in o
 3. In **Custom address**, enter the custom email address you want to use (for example, `my-new-email@example.com`).
 4. In **Destination address**, enter the full email address you want your emails to be forwarded to — for example, `your-name@gmail.com`.
 
-  {{<Aside type="note">}}Email Routing will only process the most recent rule per custom address. Other destination addresses will not receive your forwarded emails.{{</Aside>}}
+  {{<Aside type="note">}}Email Routing will only process the most recent email rule per custom address. Other destination addresses will not receive your forwarded emails.{{</Aside>}}
 
 5.  Click **Create and continue**.
 6.  Cloudflare will send a verification email to the address provided in the **Destination address** field. You must verify your email address before being able to proceed.
