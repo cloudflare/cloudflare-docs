@@ -49,7 +49,7 @@ The response will look like:
 
 The response will show the filename of the ownership-challenge text file placed within the bucket. Find the file in your bucket and copy the contents of the file.
 
-Next validate the bucket by inserting the copied text in the `ownership-text` below:
+Next, validate the bucket by inserting the copied text in the `ownership-text` below:
 
 ```
 curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/ownership/validate \
@@ -84,7 +84,7 @@ If status shows `success`, the bucket is configured and ready to use.
 
 # Listing Configured Buckets
 
-To list which buckets are available for PCAPs send a request as below:
+To list which buckets are available for PCAPs, send a request as shown below:
 ```
 curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/ownership \
 -H 'Content-Type: application/json' \
@@ -112,6 +112,6 @@ The response will look like:
 ```
 
 The `status` field will show one of the following states:
-- `pending`: a challenge response has been initiated, but needs verification
-- `failed`: the bucket has failed to be validated and cannot be used
-- `success`: bucket is fully verified and ready to be used
+- `pending`: A challenge response has been initiated but needs verification.
+- `failed`: The bucket failed validation and cannot be used.
+- `success`: The bucket is fully verified and ready to be used.

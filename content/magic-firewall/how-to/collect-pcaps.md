@@ -25,7 +25,7 @@ Currently, when a PCAP is requested, packets flowing at the edge through the Mag
 
 {{<Aside type="note" header="Note">}}
 
-Before starting a `full` type packet capture, you must first follow instructions for [configuring a bucket](../pcaps-bucket-setup)
+Before starting a `full` type packet capture, you must first follow instructions for [configuring a bucket](../pcaps-bucket-setup).
 
 {{</Aside>}}
 
@@ -38,12 +38,12 @@ To send a collect request, send a JSON body specifying for all PCAP types:
 - `system`: Must be `magic-transit` as described above.
 
 If a full `type` is specified the following additional fields are required:
-- `destination_conf`: This specifies the bucket path. For example: `gs://my-bucket`.
-- `colo`: This specifies the `colo` name we want to capture packets from. For example: `ord02`.
+- `destination_conf`: This specifies the bucket path. For example, `gs://my-bucket`.
+- `colo`: This specifies the `colo` name we want to capture packets from. For example, `ord02`.
 
 Two optional fields are available to limit the amount of packets captured:
 - `packet_limit`: The number of packets to limit the PCAP. This number should be less than `10000` and cannot be set to zero.
-- `byte_limit`: The number of bytes to limit the PCAP. This number should less than `1000000000` bytes.
+- `byte_limit`: The number of bytes to limit the PCAP. This number should be less than `1000000000` bytes.
 
 In addition to the above fields, the JSON body can optionally filter packets by specifying any of
 
@@ -53,7 +53,7 @@ In addition to the above fields, the JSON body can optionally filter packets by 
 - (TCP/UDP) Destination port
 - IP Protocol
 
-Currently, you can only send one collect request per minute for simple PCAPs.You can only have one running or pending full PCAP a time.
+Currently, you can only send one collect request per minute for simple PCAPs, and you can only have one running or pending full PCAP at a time.
 
 ### Example request
 
@@ -169,19 +169,17 @@ Depending on the `type` of PCAP there are multiple ways to obtain your PCAP.
 
 ### Full PCAPs
 
-To obtain full PCAPs, download the files from the buckets you've specified when taking the packet capture. There may be multiple files per capture as captures may occur across multiple machines.
+To obtain full PCAPs, download the files from the bucket specified in `destination_conf` after the PCAP's status is `success`. There may be multiple files named `pcap_<pcap_id.pcap` per capture as captures may occur across multiple machines.
 
 ### Simple PCAPs
 
-Once the collection is complete, you can download the PCAP by specifying the PCAP identifier used earlier.
+Once the Simple PCAP collection is complete, you can download the PCAP by specifying the PCAP identifier used earlier.
 
     curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${pcap_id}/download \
     -H 'Content-Type: application/json' \
     -H 'X-Auth-Email: user@example.com' \
     -H 'X-Auth-Key: 00000000000' \
     --output download.pcap
-
-Only simple PCAPs can be downloaded. For a full PCAP check the bucket specified in the `destination_conf` field for a file named `pcap_<pcap_id>.pcap` once the PCAP's status is `success`.
 
 ## List PCAPs
 
