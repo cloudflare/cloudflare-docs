@@ -16,15 +16,37 @@ To learn more about what's new in wrangler, refer to the [What's new page](/work
 
 ### Upgrade to Wrangler 2
 
-Test out your project by upgrading your CLI to Wrangler 2 and running the `dev` command.
-
-Start using Wrangler 2 in your project by running the command:
+The first step is to either install Wrangler globally or use the `npx command` to run it against your Wrangler 1 project. Then, run the `wrangler dev` command to generate a list of deprecation warnings or fields which need to be changed in order to build your Worker using Wrangler 2.
 
 ```sh
-npx wrangler@beta dev
+npx wrangler dev
 ```
 
 This will return some deprecated warnings that you will need to fix in order to get it working.
+
+Example output:
+
+````sh
+☁  delete  npx wrangler dev
+ ⛅️ wrangler 0.0.0-a788643
+---------------------------
+⚠  Processing wrangler.toml configuration:
+⚠    - Unexpected fields found in build field: "build_upload_main","build_upload_dir"
+⚠  No compatibility_date was specified. Using today's date: 2022-04-28.
+⚠  Add one to your wrangler.toml file:
+⚠  ```
+⚠  compatibility_date = "2022-04-28"
+⚠  ```
+⚠  or pass it in your terminal:
+⚠  ```
+⚠  --compatibility-date=2022-04-28
+⚠  ```
+⚠  See https://developers.cloudflare.com/workers/platform/compatibility-dates for more information.
+⬣ Listening at http://localhost:8787
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ [b] open a browser, [d] open Devtools, [l] turn on local mode, [c] clear console, [x] to exit                              │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+````
 
 ### Deprecations
 
