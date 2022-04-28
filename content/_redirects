@@ -138,6 +138,10 @@
 /cache/best-practices/activate-polish/ /images/polish/ 301
 /cache/reference/common-cf-published-statuses/ https://support.cloudflare.com/hc/articles/4412244347917 301
 
+# email-routing
+/email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/
+/email-routing/email-routing-options/ /email-routing/get-started/
+
 # firewall
 /firewall/cf-firewall-rules/api-shield/ /api-shield/ 301
 /firewall/recipes/require-valid-client-certificate/ /api-shield/products/mtls/configure/ 301
