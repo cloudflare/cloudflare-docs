@@ -1,14 +1,14 @@
 ---
-pcx-content-type: concept
+pcx-content-type: how-to
 title: Enable HTTP destination 
 weight: 50
 ---
 
 # Enable HTTP destination
 
-Cloudflare Logpush now supports the ability to send logs to arbitrary HTTP endpoints.
+Cloudflare Logpush now supports the ability to send logs to configurable HTTP endpoints.
 
-Note that when using Logpush to HTTP endpoints, Cloudflare customers are expected to perform their own authentication of the pushed logs. For example, customers may need to specify a secret token in the URL or an HTTP header of the Logpush destination.
+Note that when using Logpush to HTTP endpoints, Cloudflare customers are expected to perform their own authentication of the pushed logs. For example, customers may specify a secret token in the URL or an HTTP header of the Logpush destination.
 
 ## Manage via API
 
@@ -49,6 +49,6 @@ $ curl -s https://api.cloudflare.com/client/v4/zones/$ZONE_TAG/logpush/jobs -X P
   "dataset": "http_requests",
   "enabled": true
 }' \
--H "X-Auth-Email: $X_AUTH_EMAIL" \
--H "X-Auth-Key: $X_AUTH_KEY"
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
