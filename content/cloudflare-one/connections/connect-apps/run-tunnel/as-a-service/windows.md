@@ -122,6 +122,8 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
             FLAGS              :
     ```
 
+## Next steps
+
 You can now [route traffic through your tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#5-start-routing-traffic). If you add IP routes or otherwise change the configuration, restart the service to load the new configuration:
 
 ```bash
