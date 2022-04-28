@@ -8,13 +8,13 @@ weight: 1
 
 {{<Aside type="warning" header="Important">}}
 
-Enabling Email Routing adds the appropriate MX records to your DNS settings in order for the service to work. You can [change these MX records](/email-routing/get-started/settings) at any time. However, depending on how you configure them, Email Routing might stop working.
+Enabling Email Routing adds the appropriate MX records to your DNS settings in order for the service to work. You can [change these MX records](/email-routing/get-started/settings) at any time; however, depending on how you configure them, Email Routing might stop working.
 
 {{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Email**, and click **Get started**.
-3. In **Custom address**, enter the custom email address you want to use (for example, `my-new-email`).
+3. In **Custom address**, enter the custom email address you want to use (for example, `my-new-email@example.com`).
 4. In **Destination address**, enter the full email address you want your emails to be forwarded to — for example, `your-name@gmail.com`.
 
   {{<Aside type="note">}}Email Routing will only process the most recent rule per custom address. Other destination addresses will not receive your forwarded emails.{{</Aside>}}
@@ -36,7 +36,7 @@ When Email Routing is configured and running, no other email services can be act
 
 ## Test your Email Routing configuration
 
-To test that your configuration is working properly, send an email to the custom address [you set up in the dashboard](#enable-email-routing). You should send your test email from a different address than the one you specified as the destination address. For example, if you set up `my-account@gmail.com` as the destination address, do not send your test email from that same Gmail account. Some email providers will discard what they interpret as an incoming duplicate email and will not show it in your inbox, making it seem like Email Routing is not working properly.
+To test that your configuration is working properly, send an email to the custom address [you set up in the dashboard](#enable-email-routing). You should send your test email from a different address than the one you specified as the destination address. For example, if you set up `your-name@gmail.com` as the destination address, do not send your test email from that same Gmail account. Some email providers will discard what they interpret as an incoming duplicate email and will not show it in your inbox, making it seem like Email Routing is not working properly.
 
 ## DMARC enforcing
 

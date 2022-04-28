@@ -12,7 +12,7 @@ This section displays the DNS records needed for Email Routing to work. If the D
 
 You can also unlock your DNS records to make additional changes or disable Email Routing, or lock your DNS records.
 
-## Email Routing records misconfigured
+## Misconfigured Email Routing records
 
 Email Routing warns you when your DNS records are not properly configured. When this happens, Email Routing also shows which records are required, and which records you will have to delete (if any) to activate the service.
 
@@ -20,7 +20,7 @@ To activate Email Routing and clean your DNS records, click **Enable Email Routi
 
 ## Disable Email Routing
 
-Email Routing has two routes to disable the service:
+Email Routing provides two options for disabling the service:
 
 - **Delete and Disable**: This option will immediately disable Email Routing and remove its MX records. Your custom email addresses will stop working, and your email will not be routed to its final destination.
 - **Unlock and keep DNS records**: (Advanced) This option is recommended if you plan to migrate to another provider. It allows you to add new MX records before disabling the service. Email Routing will stop working when you change your MX records.
@@ -29,11 +29,10 @@ Email Routing has two routes to disable the service:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Email** > **Settings**.
-3. Click **Start disabling**.
-4. Click Delete and Disable. Email Routing will show you the list of records associated with your account that will be deleted.
-5. Click **Delete records**.
+3. Click **Start disabling** > **Delete and Disable**. Email Routing will show you the list of records associated with your account that will be deleted.
+4. Click **Delete records**.
 
-Email Routing is now disabled for your account and will stop forwarding email. If you want to enable the service again, click **Enable Email Routing** and follow the wizard.
+Email Routing is now disabled for your account and will stop forwarding email. To enable the service again, click **Enable Email Routing** and follow the wizard.
 
 ### Unlock and keep DNS records
 
@@ -45,4 +44,5 @@ Email Routing is now disabled for your account and will stop forwarding email. I
 You now have the option to edit your DNS records to migrate your service to another provider.
 
 {{<Aside type="warning">}}
-Changing your DNS records will make Email Routing stop working. If you changed your mind and want to keep Email Routing working with your account, click **Lock DNS records**{{</Aside>}}
+Changing your DNS records will make Email Routing stop working. If you changed your mind and want to keep Email Routing working with your account, click **Lock DNS records**.
+{{</Aside>}}

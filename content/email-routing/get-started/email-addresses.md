@@ -16,7 +16,7 @@ Each section lets you configure different aspects of Email Routing.
 
 {{<Aside type="note" header="Note">}}
 
-A custom address and destination address form a **rule**. You can enable, disable and delete rules.
+A custom address and destination address form a rule. You can enable, disable, and delete rules.
 
 {{</Aside>}}
 
@@ -40,11 +40,11 @@ If you have more than one destination address linked to the same custom address,
 When creating a rule, you must specify an **Action**:
 
 - _Send to_: Emails will be routed to your **Destination address**. This is the default action.
-- _Drop_: Deletes email sent to the **Custom address** without routing them. This can be useful if you want to make an email address appear valid for privacy reasons.
+- _Drop_: Deletes emails sent to the **Custom address** without routing them. This can be useful if you want to make an email address appear valid for privacy reasons.
 
 {{<Aside type="note">}}
 
-All rules are automatically disabled until the destination address is validated by the user. This is to prevent spamming unintended recipients.
+To prevent spamming unintended recipients, all rules are automatically disabled until the destination address is validated by the user.
 
 {{</Aside>}}
 
@@ -56,7 +56,7 @@ Email rules are pairs of custom addresses and destination addresses. To disable 
 2. Go to **Email** > **Routes**.
 3. In **Custom addresses**, identify the rule you want to pause, and toggle the status button to **Disabled**.
 
-Your email rule is now disabled and will not forward emails to a destination address. You will have to toggle the status button to **Active** for this rule to forward emails again.
+Your email rule is now disabled and will not forward emails to a destination address. To forward emails again, toggle the rule status button to **Active**.
 
 ### Edit custom addresses
 
@@ -67,7 +67,7 @@ Your email rule is now disabled and will not forward emails to a destination add
 
 ## Catch-all address
 
-When you toggle this feature on, it enables Cloudflare to catch variations of email addresses to make them valid for the specified domain. For example, if you created a rule for `info@yourdomain.com` and a sender accidentally types `ifno@yourdomain.com`, the email will still be correctly handled if you have **Catch-all** addresses enabled.
+When you enable this feature, Cloudflare will catch variations of email addresses to make them valid for the specified domain. For example, if you created a rule for `info@example.com` and a sender accidentally types `ifno@example.com`, the email will still be correctly handled if you have **Catch-all** addresses enabled.
 
 You must also [specify a rule **Action**](#rules-actions) for Catch-all addresses.
 
