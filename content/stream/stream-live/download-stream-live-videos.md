@@ -5,7 +5,7 @@ title: Download live stream videos
 
 # Download live stream videos
 
-You can enable downloads for live stream videos from the Cloudflare dashboard.
+You can enable downloads for live stream videos from the Cloudflare dashboard. Videos are available for download after they enter the **Ready** state.
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Click **Stream** > **Live Inputs**.
