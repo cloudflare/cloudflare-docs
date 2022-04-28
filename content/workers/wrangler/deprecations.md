@@ -4,7 +4,7 @@ title: Deprecations
 weight: 11
 ---
 
-# [WIP] Deprecations
+# Deprecations
 
 This document describes the difference between `wrangler` 1.x and v2, specifically deprecations and breaking changes.
 

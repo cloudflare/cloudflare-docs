@@ -4,19 +4,21 @@ title: Migrating from Wrangler 1
 weight: 2
 ---
 
-## [WIP] Migration Guide
+## Migration Guide
 
-This document describes the steps to migrate a project from wrangler 1.x to 2.0.
+This document describes the steps to migrate a project from wrangler 1 to 2.
 
 The latest version of wrangler ships with new features and improvements that will require you to include a few changes to your wrangler configuration to get it working as expected.
 
-The plan with this new version is to make developing with Cloudflare Workers seamless and improve the overall experience of the developers building on the platform.
+The good news is that the CLI itself should guide you through the upgrade process.
 
 To learn more about what's new in wrangler, refer to the [What's new page](/workers/wrangler/compare-v1-v2/).
 
 ### Upgrade to Wrangler 2
 
-You can start using wrangler 2 in your project by running the command:
+Test out your project by upgrading your CLI to Wrangler 2 and running the `dev` command.
+
+Start using Wrangler 2 in your project by running the command:
 
 ```sh
 npx wrangler@beta dev
