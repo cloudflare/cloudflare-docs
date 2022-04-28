@@ -169,7 +169,7 @@ Depending on the `type` of PCAP there are multiple ways to obtain your PCAP.
 
 ### Full PCAPs
 
-To obtain full PCAPs, download the files from the bucket specified in `destination_conf` after the PCAP's status is `success`. There may be multiple files named `pcap_<pcap_id.pcap` per capture as captures may occur across multiple machines.
+To obtain full PCAPs, download the files from the bucket specified in `destination_conf` after the PCAP's status is `success`. There may be multiple files named `pcap_<pcap_id>.pcap` per capture as captures may occur across multiple machines.
 
 ### Simple PCAPs
 

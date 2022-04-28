@@ -49,7 +49,7 @@ The response will look like:
 
 The response will show the filename of the ownership-challenge text file placed within the bucket. Find the file in your bucket and copy the contents of the file.
 
-Next, validate the bucket by inserting the copied text in the `ownership-text` below:
+Next, validate the bucket by inserting the copied text in the `ownership_text` below:
 
 ```
 curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/ownership/validate \
@@ -57,8 +57,8 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/o
 -H "X-Auth-Email: ${email}" \
 -H "X-Auth-Key: ${auth_key}" \
 -d '{
-       "destination_conf": "'${bucket}'"
-       "ownership_challenge": "'${ownership-text}'",
+       "destination_conf": "'${bucket}'",
+       "ownership_challenge": "'${ownership_text}'"
 }'
 ```
 
