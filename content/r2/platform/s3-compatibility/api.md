@@ -7,7 +7,7 @@ meta:
 
 # S3 API compatibility
 
-Feature implementation is currently in progress. Refer back to this page for updates.
+R2 implements the S3 API to allow users and their applications to migrate easily. When comparing to AWS S3, Cloudflare has removed some API operations' features and added others. The S3 API operations are listed below with their current implementation status. Feature implementation is currently in progress. Refer back to this page for updates.
 
 ## How to read this page
 
