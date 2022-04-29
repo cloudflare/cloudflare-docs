@@ -51,6 +51,6 @@ Specify custom URLs for Zaraz's scripts. You need to use a valid pathname:
 
 This is an example of a custom pathname to host Zaraz's initialization script:
 
-```
+```txt
 /my-server/my-scripts/start.js
 ```
