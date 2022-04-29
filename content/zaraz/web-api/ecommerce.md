@@ -25,7 +25,7 @@ You do not need to map ecommerce events to triggers. Zaraz will automatically fo
 3. Enable **Ecommerce tracking**.
 4. Click **Save**.
 5. Go to **Zaraz** > **Tools**.
-6. Locate the tool you want to use with ecommerce tracking, and click **Edit**.
+6. Locate the tool you want to use with ecommerce tracking and click **Edit**.
 7. Click **Settings**.
 8. Under **Advanced**, enable **Ecommerce tracking**.
 9. Click **Save**.
