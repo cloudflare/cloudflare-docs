@@ -25,9 +25,9 @@ As we can see from the example, the default cache key includes:
 
 2.  Origin header sent by client (for CORS support).
 
-3.  `x-http-method-override`, `x-http-method`, and `x-method-override headers`.
+3.  `x-http-method-override`, `x-http-method`, and `x-method-override` headers.
 
-4.  `x-forwarded-host`, `x-host`, `x-forwarded-scheme`, `x-original-url`, `x-rewrite-url`, and `forwarded headers`.
+4.  `x-forwarded-host`, `x-host`, `x-forwarded-scheme`, `x-original-url`, `x-rewrite-url`, and `forwarded` headers.
 
 {{<Aside type="warning" header="Warning">}}
 
