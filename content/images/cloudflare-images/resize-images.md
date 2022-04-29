@@ -49,7 +49,7 @@ curl -X PATCH https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/
 Once activated it is possible to use resizing parameters on any Cloudflare Image. For example:
 
 ```txt
-https://imagedelivery.net/<ACCOUNT_ID>/<IMAGE_ID/w=400,sharpen=3
+https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID/w=400,sharpen=3
 ```
 
 Note that flexible variants cannot be used for images that require a [signed delivery URL](/images/cloudflare-images/serve-images/serve-private-images-using-signed-url-tokens/).
