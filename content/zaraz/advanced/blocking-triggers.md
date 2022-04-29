@@ -14,7 +14,7 @@ To conditionally block all actions in a tool, you have to configure Blocking Tri
 
 To use Blocking Triggers, start by [creating the trigger](/zaraz/get-started/create-trigger/) with the conditions you want to use to block an event. Then:
 
-1. Go to [Zaraz's main dashboard](https://dash.cloudflare.com/?to=/:account/:zone/zaraz).
+1. Go to [**Zaraz**](https://dash.cloudflare.com/?to=/:account/:zone/zaraz) > **Tools**.
 2. Locate the third-party tool with the action you want to block and click **Edit**.
 3. In **Action Name**, click the action you want to block.
 4. In **Blocking Triggers**, use the dropdown menu to add a trigger to block the action.
