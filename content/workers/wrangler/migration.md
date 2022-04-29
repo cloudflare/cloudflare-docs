@@ -63,3 +63,5 @@ The following commands is now deprecated in wrangler 2.0, if you're migrating, b
 - The `wrangler route` command is deprecated, use `wrangler build` instead.
 - The `wrangler report` command is deprecated, the error reports are now made interactively.
 - The `wrangler build` command is deprecated, you can invoke your own build scripts using the [custom builds](link here) field in your configuration.
+
+Refer to the [deprecations guide](/workers/wrangler/deprecations/) for more details on what's no longer supported.
