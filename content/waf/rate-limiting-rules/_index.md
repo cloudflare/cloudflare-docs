@@ -50,6 +50,7 @@ Feature | Enterprise Core | Enterprise Advanced |
 Available fields<br/>in rule expression | URL, Method, Headers, Source IP | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Bot Management fields*)
 Counting characteristics | IP | IP, IP with NAT support, Query, Headers, Cookie, ASN, Country, JA3 Fingerprint*
 Available fields<br/>in counting expression | URL, Method, Request headers, Source IP, Response code, Response headers | URL, Method, Request headers, Source IP, Response code, Response headers
+Counting model | Number of requests | Number of requests<br/>Complexity score
 Maximum sampling period | 10 minutes | 1 hour
 
 {{</table-wrap>}}
