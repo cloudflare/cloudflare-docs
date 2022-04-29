@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Commands
-weight: 4
+weight: 2
 ---
 
 ## Wrangler commands

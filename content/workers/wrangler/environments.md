@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Environments
-weight: 10
+weight: 6
 ---
 
 ## Environments

@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Ejecting Webpack
-weight: 9
+weight: 7
 ---
 
 ## Migrating webpack projects to `wrangler v2`

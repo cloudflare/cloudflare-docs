@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
-title: Authentication
-weight: 2
+title: Running in CI/CD
+weight: 9
 ---
 
 # Running Wrangler in CI/CD

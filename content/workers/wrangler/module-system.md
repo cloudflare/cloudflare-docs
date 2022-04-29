@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Module System
-weight: 7
+weight: 5
 ---
 
 ## Wrangler's module system

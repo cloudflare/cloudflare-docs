@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Deprecations
-weight: 11
+weight: 8
 ---
 
 # Deprecations
