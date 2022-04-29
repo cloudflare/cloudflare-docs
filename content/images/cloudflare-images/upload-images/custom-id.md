@@ -10,7 +10,6 @@ You can use a custom path to upload images to Cloudflare Images, instead of the 
 
 - Could be up to 1024 characters long.
 - Could include any number of subpaths.
-- Requires file extensions. For example `.png` or `.jpg`.
 - Supports the [UTF-8 encoding standard](https://en.wikipedia.org/wiki/UTF-8) for characters.
 
 Below is an example of the custom ID feature using upload via URL:
@@ -19,7 +18,7 @@ Below is an example of the custom ID feature using upload via URL:
 curl --request POST https://api.cloudflare.com/client/v4/accounts/<​​ACCOUNT_ID>/images/v1 \
   --header 'Authorization: Bearer :token' \
   --form 'url=https://<REMOTE_PATH_TO_IMAGE>' \
-  --form 'id=<PATH_TO_YOUR_IMAGE.IMG>'
+  --form 'id=<PATH_TO_YOUR_IMAGE>'
 ```
 
 You can also use the custom ID feature with direct file upload:
@@ -29,21 +28,19 @@ curl --request POST \
   https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1 \
   --header 'Authorization: Bearer :token' \
   --form 'file=@./<PATH_TO_YOUR_IMAGE>' \
-  --from 'id=<PATH_TO_YOUR_IMAGE.IMG>'
+  --from 'id=<PATH_TO_YOUR_IMAGE>'
 ```
-
-In these examples, replace `.IMG` by the appropriate file extension (JPEG or PNG).
 
 You will then receive a response similar to this: 
 
 ```json
 {
   "result": {
-    "id": "<PATH_TO_YOUR_IMAGE.IMG>",
-    "filename": "<YOUR_IMAGE.IMG>",
+    "id": "<PATH_TO_YOUR_IMAGE>",
+    "filename": "<YOUR_IMAGE>",
     "uploaded": "2022-04-20T09:51:09.559Z",
     "requireSignedURLs": false,
-    "variants": ["https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/content/images/<YOUR_IMAGE.IMG>/public"]
+    "variants": ["https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/content/images/<YOUR_IMAGE>/public"]
   },
   "result_info": null,
   "success": true,
