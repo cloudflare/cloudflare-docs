@@ -37,9 +37,9 @@ If you would like to enable [Cloudflare Access](https://www.cloudflare.com/teams
 At this step, your `*.pages.dev` domain has been secured behind Access. To resecure your preview deployments:
 
 8. Go back to your Pages project > **Settings** > **General** > and reselect **Enable access policy**.
-9. Review that two Access policies, one for your `<YOUR_SITE>.pages.dev` domain and one for your preview deployments (`*.<YOUR_SITE>.pages.dev`), have been created.
+9. Review that two Access policies, one for your `*.pages.dev` domain and one for your preview deployments (`*.<YOUR_SITE>.pages.dev`), have been created.
 
-If you have a custom domain and protected your `*.pages.dev` domain behind access, you must:
+If you have a custom domain and protected your `*.pages.dev` domain behind Access, you must:
 
 10. Select **Add an application** > **Self hosted** in the Cloudflare Zero Trust dashboard.
 11. Input an **Application name** and select your custom domain from the *Domain* dropdown menu.
