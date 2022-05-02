@@ -78,7 +78,7 @@ Below is a list of implemented object-level operations. Refer to the Feature col
 |                                                                                         | ❌ SSE-C: <br> ❌ x-amz-server-side-encryption-customer-algorithm <br> ❌ x-amz-server-side-encryption-customer-key <br> ❌ x-amz-server-side-encryption-customer-key-MD5  |
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |
 |                                                                                         | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| [PutObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html)         | ✅ System Metadata: <br> ✅ Cache-Control <br> ✅ Content-Disposition  <br> ✅ Content-Encoding <br> ✅ Content-Language <br> ✅ Expires <br> ✅ Content-MD5 |
+| [PutObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html)         | ✅ System Metadata: <br> ✅ Content-Type <br> ✅ Cache-Control <br> ✅ Content-Disposition  <br> ✅ Content-Encoding <br> ✅ Content-Language <br> ✅ Expires <br> ✅ Content-MD5 |
 |                                                                                         | ❌ Object Lifecycle      |
 |                                                                                         | ❌ Website: <br> ❌ x-amz-website-redirect-location |
 |                                                                                         | ❌ SSE-C: <br> ❌ x-amz-server-side-encryption <br> ❌ x-amz-server-side-encryption-customer-algorithm <br> ❌ x-amz-server-side-encryption-customer-key <br> ❌ x-amz-server-side-encryption-customer-key-MD5 <br> ❌ x-amz-server-side-encryption-aws-kms-key-id <br> ❌ x-amz-server-side-encryption-context <br> ❌ x-amz-server-side-encryption-bucket-key-enabled |
@@ -95,7 +95,7 @@ Below is a list of implemented object-level operations. Refer to the Feature col
 |                                                                                         | ❌ Object Locking: <br> ❌ x-amz-bypass-governance-retention |
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |
 |                                                                                         | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| [CreateMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html)  | ✅ System Metadata: <br> ✅ Cache-Control <br> ✅ Content-Disposition <br> ✅ Content-Encoding <br> ✅ Content-Language <br> ✅ Expires <br> ✅ Content-MD5 |
+| [CreateMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html)  | ✅ System Metadata: <br> ✅ Content-Type <br> ✅ Cache-Control <br> ✅ Content-Disposition <br> ✅ Content-Encoding <br> ✅ Content-Language <br> ✅ Expires <br> ✅ Content-MD5 |
 |                                                                                         | ❌ Website <br> ❌ x-amz-website-redirect-location |
 |                                                                                         | ❌ SSE-C: <br> ❌ x-amz-server-side-encryption <br> ❌ x-amz-server-side-encryption-customer-algorithm <br> ❌ x-amz-server-side-encryption-customer-key <br> ❌ x-amz-server-side-encryption-customer-key-MD5 <br> ❌ x-amz-server-side-encryption-aws-kms-key-id <br> ❌ x-amz-server-side-encryption-context <br> ❌ x-amz-server-side-encryption-bucket-key-enabled |
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |
@@ -108,7 +108,7 @@ Below is a list of implemented object-level operations. Refer to the Feature col
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |
 |[AbortMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html)| ❌ Request Payer: <br> ❌ x-amz-request-payer |
 |[CopyObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html#)       | ✅ Operation Metadata: <br> ✅ x-amz-metadata-directive |
-|                                                                                         | ✅ System Metadata: <br> ✅ Cache-Control <br> ✅ Content-Disposition <br> ✅ Content-Encoding <br> ✅ Content-Language <br> ✅ Expires |
+|                                                                                         | ✅ System Metadata: <br> ✅ Content-Type <br> ✅ Cache-Control <br> ✅ Content-Disposition <br> ✅ Content-Encoding <br> ✅ Content-Language <br> ✅ Expires |
 |                                                                                         | ✅ Conditional Operations: <br> ✅ x-amz-copy-source <br> ✅ x-amz-copy-source-if-match <br> ✅ x-amz-copy-source-if-modified-since <br> ✅ x-amz-copy-source-if-none-match <br> ✅ x-amz-copy-source-if-unmodified-since| 
 |                                                                                         | ❌ ACL: <br> ❌ x-amz-acl <br> ❌ x-amz-grant-full-control <br> ❌ x-amz-grant-read <br> ❌ x-amz-grant-read-acp <br> ❌ x-amz-grant-write-acp|
 |                                                                                         | ❌ Website <br> ❌ x-amz-website-redirect-location |
