@@ -5,7 +5,12 @@ title: Pricing
 
 # Pricing
 
-R2 charges based on the total volume of data stored, along with two classes of operations on that data – [Class A operations](#class-a-operations), which are more expensive and tend to mutate state, and [Class B operations](#class-b-operations) which tend to read existing state. There are no charges for egress bandwidth.
+R2 charges based on the total volume of data stored, along with two classes of operations on that data:
+
+ 1. [Class A operations](#class-a-operations) which are more expensive and tend to mutate state. 
+ 2. [Class B operations](#class-b-operations) which tend to read existing state.
+ 
+ There are no charges for egress bandwidth.
 
 All included usage is on a monthly basis.
 
@@ -17,32 +22,31 @@ All included usage is on a monthly basis.
 | ------------------ | ---------------------------- | ---------------------------------- |
 | Storage            | 10 GB / month                | $0.015 / GB-month                  |
 | Class A Operations | 1,000,000 requests / month   | $4.50 / million requests           | 
-| Class B Operations | 10,000,000 requests / month | $0.36 / million requests           | 
+| Class B Operations | 10,000,000 requests / month  | $0.36 / million requests           | 
 
 {{</table-wrap>}}
 
 ### Storage Usage
 
-Storage for is billed using gigabyte-month (GB-month) and is a measure of how large your objects are and how long you store your
-objects for in the month.
+Storage for is billed using gigabyte-month (GB-month) and is a measure of how large your objects are and how long you store your objects for in the month.
 
 ### Class A Operations
 
-Class A Operations include ListBuckets, PutBucket, ListObjects, PutObject, CopyObject, CompleteMultipartUpload, CreateMultipartUpload, UploadPart, and UploadPartCopy.
+Class A Operations include `ListBuckets`, `PutBucket`, `ListObjects`, `PutObject`, `CopyObject`, `CompleteMultipartUpload`, `CreateMultipartUpload`, `UploadPart`, and `UploadPartCopy`.
 
 ### Class B Operations
 
-Class B Operations include HeadBucket, HeadObject, and GetObject.
+Class B Operations include `HeadBucket`, `HeadObject`, and `GetObject`.
 
 ### Free Operations
 
-Free operations include DeleteObject, DeleteBucket and DeleteMulitpartUpload.
+Free operations include `DeleteObject`, `DeleteBucket` and `DeleteMulitpartUpload`.
 
 ## R2 billing examples
 
 #### Example 1
 
-If a user writes 1,000 objects in R2 for 1 month and each object is 1GB in size and requested 1,000 times per month, the estimated cost for the month would be:
+If a user writes 1,000 objects in R2 for 1 month and each object is 1 GB in size and requested 1,000 times per month, the estimated cost for the month would be:
 
 {{<table-wrap>}}
 |                    | Usage                                      | Free Tier    | Billable Quantity | Price      |
@@ -55,7 +59,7 @@ If a user writes 1,000 objects in R2 for 1 month and each object is 1GB in size 
 
 #### Example 2
 
-If a user writes the same 1GB object 1,000,000 times a day and the object is read 10,000,000 times a day, the estimated cost in a month would be: 
+If a user writes the same 1 GB object 1,000,000 times a day and the object is read 10,000,000 times a day, the estimated cost in a month would be: 
 
 {{<table-wrap>}}
 |                    | Usage                                               | Free Tier    | Billable Quantity | Price       |
