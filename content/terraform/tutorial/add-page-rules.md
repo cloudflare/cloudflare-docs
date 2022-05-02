@@ -8,7 +8,7 @@ meta:
 
 # Add exceptions with Page Rules
 
-In [step 3](/terraform/tutorial/configure-https-settings/), you configured zone settings that apply to all of example.com. In this tutorial, you will add an exception to these settings using [Page Rules](https://support.cloudflare.com/hc/articles/218411427).
+In [step 3](/terraform/tutorial/configure-https-settings/), you configured zone settings that apply to all of `example.com`. In this tutorial, you will add an exception to these settings using [Page Rules](https://support.cloudflare.com/hc/articles/218411427).
 
 Specifically, you will increase the security level for a URL known to be expensive to render and cannot be cached: `https://www.example.com/expensive-db-call`. Additionally, you will add a redirect from the previous URL used to host this page.
 
@@ -16,7 +16,7 @@ Specifically, you will increase the security level for a URL known to be expensi
 
 Create a new branch and append the configuration.
 
-```sh
+```bash
 $ git checkout -b step6-pagerule
 Switched to a new branch 'step6-pagerule'
 
@@ -48,7 +48,7 @@ EOF
 
 ## 2. Preview and merge the changes
 
-Preview the changes Terraform will make and then merge them into the master branch.
+Preview the changes Terraform will make and then merge them into the `master` branch.
 
 ```sh
 $ terraform plan
@@ -180,15 +180,15 @@ cloudflare_page_rule.increase-security-on-expensive-page: Creation complete afte
 Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 ```
 
-With the Page Rules in place, try that call again along with the I'm Under Attack Mode test:
+With the Page Rules in place, try that call again, along with a test for the "I Am Under Attack" mode:
 
 ```sh
 $ curl -vso /dev/null https://www.example.com/old-location.php 2>&1 | grep "< HTTP\|Location"
 < HTTP/1.1 301 Moved Permanently
-< Location: https://www.upinatoms.com/expensive-db-call
+< Location: https://www.example.com/expensive-db-call
 
-$ curl -vso /dev/null https://www.upinatoms.com/expensive-db-call 2>&1 | grep "< HTTP"
+$ curl -vso /dev/null https://www.example.com/expensive-db-call 2>&1 | grep "< HTTP"
 < HTTP/1.1 503 Service Temporarily Unavailable
 ```
 
-The call works as expected. In the first case, the Cloudflare edge responds with a `301` redirecting the browser to the new location. In the second case, the Cloudflare edge initially responds with a `503` which is consistent with the "I Am Under Attack" mode.
+The call works as expected. In the first case, the Cloudflare edge responds with a `301` redirecting the browser to the new location. In the second case, the Cloudflare edge initially responds with a `503`, which is consistent with the "I Am Under Attack" mode.
