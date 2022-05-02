@@ -14,7 +14,7 @@ To revert your configuration, check out the desired branch and ask Terraform to 
 
 ## 1. Review your configuration history
 
-Before determining how far back to revert, review the versioned history.
+Before determining how far back to revert, review the versioned history:
 
 ```sh
 $ git log
@@ -64,14 +64,14 @@ commit 5acea176050463418f6ac1029674c152e3056bc6
 Author: Me
 Date:   Sun Apr 8 19:52:13 2018 -0700
 
-    Step 2 - Initial commit with webserver definition.
+    Step 1 - Initial commit with webserver definition.
 ```
 
-Another benefit of storing your Cloudflare configuration in Git is that you can see who made the change. You can also see who reviewed and approved the change if you peer review pull requests).
+Another benefit of storing your Cloudflare configuration in Git is that you can see who made the change. You can also see who reviewed and approved the change if you peer-review pull requests.
 
 ## 2. Examining specific historical changes
 
-Check when last change was made.
+Check when the last change was made:
 
 ```sh
 $ git show
@@ -114,7 +114,7 @@ index 0b39450..ef11d8a 100644
 +}
 ```
 
-Review the past few changes.
+Review the past few changes:
 
 ```sh
 $ git log -p -3
@@ -198,11 +198,13 @@ index 9f25a0c..b92cb6f 100644
 
 ## 3. Redeploy the previous configuration
 
-Assume that shortly after you deployed the Page Rules from [step 6](/terraform/tutorial/add-page-rules/), you are told the URL is no longer needed, and the security setting and redirect should be dropped.
+Assume that shortly after you deployed the Page Rules when following the [Add exceptions with Page Rules](/terraform/tutorial/add-page-rules/) tutorial, you are told the URL is no longer needed, and the security setting and redirect should be dropped.
 
-While you can always edit the config file directly and delete those entries, you can use `git` to do that for you. First, tell git to revert the last commit without rewriting history.
+While you can always edit the config file directly and delete those entries, you can use Git to do that for you.
 
 ### i. Revert the branch to the previous commit
+
+Run the following Git command to revert the last commit without rewriting history:
 
 ```sh
 $ git revert HEAD~1..HEAD
@@ -227,7 +229,7 @@ Date:   Wed Apr 18 22:04:52 2018 -0700
 
 ### ii. Preview the changes
 
-As expected, Terraform is indicating it will remove the two Page Rules created in the previous step.
+Run `terraform plan` and check the execution plan:
 
 ```sh
 $ terraform plan
@@ -267,9 +269,11 @@ can't guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
+As expected, Terraform is indicating it will remove the two Page Rules created in the previous step.
+
 ### iii. Apply the changes
 
-The changes look good, and Terraform can revert the Cloudflare configuration.
+The changes look good. Terraform reverts the Cloudflare configuration when you apply the changes:
 
 ```sh
 $ terraform apply --auto-approve
@@ -290,4 +294,4 @@ cloudflare_page_rule.redirect-to-new-db-page: Destruction complete after 1s
 Apply complete! Resources: 0 added, 0 changed, 2 destroyed.
 ```
 
-Two resources destroyed were (as expected) and you have rolled back to the previous version.
+Two resources were destroyed, as expected, and you have rolled back to the previous version.
