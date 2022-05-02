@@ -32,7 +32,7 @@ For step-by-step guidance, refer to [Create pools](/load-balancing/how-to/create
 
 ## Per origin Host header override
 
-When your application needs specialized routing (CNAME setup or custom hosts like Heroku), change the `Host` header used in health checks. For more details, refer to [Override HTTP Host headers](/load-balancing/additional-options/override-http-host-headers/).
+When your application needs specialized routing (`CNAME` setup or custom hosts like Heroku), change the `Host` header used in health checks. For more details, refer to [Override HTTP Host headers](/load-balancing/additional-options/override-http-host-headers/).
 
 ---
 

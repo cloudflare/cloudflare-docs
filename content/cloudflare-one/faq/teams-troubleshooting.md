@@ -139,3 +139,7 @@ Cloudflare enforces a 270-second idle timeout on TCP connections that go through
 
 If `cloudflared` returns error `error="remote error: tls: handshake failure"`, check to make sure the hostname in question is covered by a SSL certificate. If using a multi-level subdomain, an advanced certificate may be required as the Universal SSL will not cover more than one level of subdomain. This may surface in the browser as `ERR_SSL_VERSION_OR_CIPHER_MISMATCH`.
 
+## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
+
+This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domainteam-name) while the [Cloudflare Dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
+Cloudflare Dashboard SSO does not currently support team domain changes. Contact support for more details.

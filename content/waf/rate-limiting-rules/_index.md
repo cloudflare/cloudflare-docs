@@ -20,18 +20,18 @@ For guidance on the previous version of rate limiting rules, refer to [Configuri
 
 Like other rules evaluated by Cloudflare's Ruleset Engine, rate limiting rules have an associated **expression** and an **action**.
 
-The **expression** specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language/). The **action** specifies what to perform when there is a match for the rule and any additional conditions are met. In the case of rate limiting rules, the action occurs when the request rate reaches the specified limit.
+The **expression** specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language/). The **action** specifies what to perform when there is a match for the rule and any additional conditions are met. In the case of rate limiting rules, the action occurs when the rate reaches the specified limit.
 
 Besides these two parameters, rate limiting rules require the following additional parameters:
 
-*   **Characteristics** — The set of parameters that define how Cloudflare tracks the request rate for this rule.
-*   **Period** — The period of time to consider (in seconds) when evaluating the request rate.
+*   **Characteristics** — The set of parameters that define how Cloudflare tracks the rate for this rule.
+*   **Period** — The period of time to consider (in seconds) when evaluating the rate.
 *   **Requests per period** — The number of requests over the period of time that will trigger the rate limiting rule.
-*   **Mitigation timeout** — Once the request rate is reached, the rate limiting rule blocks further requests for the period of time defined in this field.
+*   **Mitigation timeout** — Once the rate is reached, the rate limiting rule blocks further requests for the period of time defined in this field.
 
 Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for more information on mandatory and optional parameters.
 
-Refer to [Determining the request rate](/waf/rate-limiting-rules/request-rate/) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
+Refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
 
 ## Important remarks
 
@@ -50,6 +50,7 @@ Feature | Enterprise Core | Enterprise Advanced |
 Available fields<br/>in rule expression | URL, Method, Headers, Source IP | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Bot Management fields*)
 Counting characteristics | IP | IP, IP with NAT support, Query, Headers, Cookie, ASN, Country, JA3 Fingerprint*
 Available fields<br/>in counting expression | URL, Method, Request headers, Source IP, Response code, Response headers | URL, Method, Request headers, Source IP, Response code, Response headers
+Counting model | Number of requests | Number of requests<br/>[Complexity score](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting)
 Maximum sampling period | 10 minutes | 1 hour
 
 {{</table-wrap>}}

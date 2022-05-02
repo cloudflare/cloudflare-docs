@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Postmaster
-weight: 5
+weight: 4
 ---
 
 # Postmaster

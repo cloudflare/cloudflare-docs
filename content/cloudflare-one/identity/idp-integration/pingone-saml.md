@@ -1,14 +1,14 @@
 ---
 pcx-content-type: how-to
-title: SAML | PingOne®
+title: PingOne®
 weight: 7
 ---
 
-# SAML | PingOne®
+# PingOne®
 
 The PingOne® cloud platform from PingIdentity provides SSO identity management. Cloudflare Access supports PingOne as a SAML identity provider.
 
-## Set up PingOne (SAML)
+## Set up PingOne as an identity provider
 
 1. In your PingIdentity environment, navigate to **Connections** > **Applications**.
 2. Click **Add Application**.  

@@ -67,18 +67,18 @@ If your domain is already live with a partial DNS setup — with Cloudflare or a
 
 ## Step 3 — Add DNS records
 
-1.  In Cloudflare, [add an **A**, **AAAA**, or **CNAME** record](/dns/manage-dns-records/how-to/create-dns-records/).
+1.  In Cloudflare, [add an `A`, `AAAA`, or `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/).
 2.  At your authoritative DNS provider:
 
-    1.  Remove any existing **A**, **AAAA**, or **CNAME** records on the hostname you want to proxy to Cloudflare.
+    1.  Remove any existing `A`, `AAAA`, or `CNAME` records on the hostname you want to proxy to Cloudflare.
 
-    2.  Add a **CNAME** record for `{your-hostname}.cdn.cloudflare.net`.
+    2.  Add a `CNAME` record for `{your-hostname}.cdn.cloudflare.net`.
 
         <details>
         <summary>Example CNAME record in Cloudflare</summary>
         <div>
 
-        The CNAME record for `www.example.com` would be:
+        The `CNAME` record for `www.example.com` would be:
 
         ```txt
         www.example.com CNAME www.example.com.cdn.cloudflare.net
