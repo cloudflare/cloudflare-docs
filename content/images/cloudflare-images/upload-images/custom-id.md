@@ -28,7 +28,7 @@ curl --request POST \
   https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1 \
   --header 'Authorization: Bearer :token' \
   --form 'file=@./<PATH_TO_YOUR_IMAGE>' \
-  --from 'id=<PATH_TO_YOUR_IMAGE>'
+  --form 'id=<PATH_TO_YOUR_IMAGE>'
 ```
 
 You will then receive a response similar to this: 
