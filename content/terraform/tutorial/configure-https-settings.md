@@ -15,10 +15,10 @@ You will use a new Git branch for the changes and then merge it into the `master
 ## 1. Create a new branch and append the new zone settings
 
 In this step, modify the Terraform configuration to enable the following settings:
+
 * [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/)
 * [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/)
 * [Strict SSL mode](/ssl/origin-configuration/ssl-modes/#strict)
-* [Cloudflare WAF](/waf/)
 
 Strict mode requires a valid SSL certificate on your origin — use the [Cloudflare Origin CA](/ssl/origin-configuration/origin-ca/) to generate one.
 
@@ -35,7 +35,6 @@ resource "cloudflare_zone_settings_override" "example-com-settings" {
     tls_1_3                  = "on"
     automatic_https_rewrites = "on"
     ssl                      = "strict"
-    waf                      = "on"
   }
 }
 EOF
@@ -67,7 +66,6 @@ Terraform will perform the following actions:
       settings.0.automatic_https_rewrites:    "on"
       settings.0.ssl:                         "strict"
       settings.0.tls_1_3:                     "on"
-      settings.0.waf:                         "on"
 
 
 Plan: 1 to add, 0 to change, 0 to destroy.
@@ -167,7 +165,7 @@ cloudflare_zone_settings_override.example-com-settings: Creating...
   settings.0.tls_1_3:                     "" => "on"
   settings.0.tls_client_auth:             "" => "<computed>"
   settings.0.true_client_ip_header:       "" => "<computed>"
-  settings.0.waf:                         "" => "on"
+  settings.0.waf:                         "" => "<computed>"
   settings.0.webp:                        "" => "<computed>"
   settings.0.websockets:                  "" => "<computed>"
   zone_status:                            "" => "<computed>"
