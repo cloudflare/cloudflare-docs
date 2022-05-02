@@ -1,22 +1,28 @@
 ---
-title: 3 – Configure HTTPs settings
+title: 3 – Configure HTTPS settings
 pcx-content-type: tutorial
 weight: 4
 meta:
-  title: Configure HTTPs settings
+  title: Configure HTTPS settings
 ---
 
-# Configure HTTPs settings
+# Configure HTTPS settings
 
-After proxying a basic website through Cloudflare, you can use Terraform to adjust some of the settings on your zone. In this tutorial, you will configure some optional HTTPS settings and then push the updated configuration to GitHub for posterity.
+After proxying a basic website through Cloudflare, you can use Terraform to adjust zone settings. In this tutorial, you will configure some optional HTTPS settings and then push the updated configuration to GitHub for posterity.
 
-You will use a new git branch for the changes and then merge it into master before applying. On a team, you might consider using this step as an opportunity for others to review your change before merging and deploying it. You can also integrate Terraform into your CI/CD system to perform tests automatically using another Cloudflare domain.
+You will use a new Git branch for the changes and then merge it into the `master` branch before applying. On a team, you might consider using this step as an opportunity for others to review your change before merging and deploying it. You can also integrate Terraform into your CI/CD system to perform tests automatically using another Cloudflare domain.
 
 ## 1. Create a new branch and append the new zone settings
 
-In this step, modify the Terraform configuration to enable the following settings: [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/), [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/), [Strict SSL mode](/ssl/origin-configuration/ssl-modes/#strict), and the [Cloudflare WAF](/waf/). Strict mode requires a valid SSL certificate on your origin, so be sure to use the [Cloudflare Origin CA](/ssl/origin-configuration/origin-ca/) to generate one.
+In this step, modify the Terraform configuration to enable the following settings:
+* [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/)
+* [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/)
+* [Strict SSL mode](/ssl/origin-configuration/ssl-modes/#strict)
+* [Cloudflare WAF](/waf/)
 
-```sh
+Strict mode requires a valid SSL certificate on your origin — use the [Cloudflare Origin CA](/ssl/origin-configuration/origin-ca/) to generate one.
+
+```bash
 $ git checkout -b step3-https
 Switched to a new branch 'step3-https'
 
@@ -37,7 +43,7 @@ EOF
 
 ## 2. Preview and merge the changes
 
-Review what Terraform is proposing before applying changes. The `terraform plan` output is filtered to ignore the values that will be "computed" — in this case, settings that will keep their default values.
+Review what Terraform is proposing before applying changes. The example output below is being filtered to ignore computed values — in this case, settings that will keep their default values.
 
 ```sh
 $ terraform plan | grep -v "<computed>"
@@ -73,7 +79,7 @@ can't guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
-The proposed changes look good, so you can merge them into master and then apply them with `terraform apply`. When working on a team, you may want to require pull requests and use this opportunity to peer review any proposed configuration changes.
+The proposed changes look good, so you can merge them into the `master` branch and then apply them with `terraform apply`. When working on a team, you may want to require pull requests and use this opportunity to peer review any proposed configuration changes.
 
 ```sh
 $ git add cloudflare.tf
@@ -103,10 +109,10 @@ To git@github.com:$GITHUB_USER/cf-config.git
 
 ## 3. Apply and verify the changes
 
-Before applying the changes, try to connect with TLS 1.3. Technically, you should not be able to with default settings. To follow along with this test, you will need to [compile curl against BoringSSL](https://everything.curl.dev/source/build/tls/boringssl#build-boringssl).
+Before applying the changes, try to connect with TLS 1.3. Technically, you should not be able to with default settings. To follow along with this test, you will need to [compile `curl` against BoringSSL](https://everything.curl.dev/source/build/tls/boringssl#build-boringssl).
 
 ```sh
-$ curl -v --tlsv1.3 https://www.upinatoms.com 2>&1 | grep "SSL connection\|error"
+$ curl -v --tlsv1.3 https://www.example.com 2>&1 | grep "SSL connection\|error"
 * error:1000042e:SSL routines:OPENSSL_internal:TLSV1_ALERT_PROTOCOL_VERSION
 curl: (35) error:1000042e:SSL routines:OPENSSL_internal:TLSV1_ALERT_PROTOCOL_VERSION
 ```
@@ -171,7 +177,7 @@ cloudflare_zone_settings_override.example-com-settings: Creation complete after 
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
-Now you can try the same command from above and see it succeed.
+Try the same command as before. The command will now succeed.
 
 ```sh
 $ curl -v --tlsv1.3 https://www.example.com 2>&1 | grep "SSL connection\|error"
