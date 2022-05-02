@@ -1,7 +1,7 @@
 ---
-title: 6 – Add exceptions with Page Rules
+title: 5 – Add exceptions with Page Rules
 pcx-content-type: tutorial
-weight: 7
+weight: 6
 meta:
   title: Add exceptions with Page Rules
 ---
@@ -56,7 +56,6 @@ Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
 persisted to local or remote state storage.
 
-cloudflare_rate_limit.login-limit: Refreshing state... (ID: 8d518c5d6e63406a9466d83cb8675bb6)
 cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab992864)
 cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)
 cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
@@ -145,7 +144,6 @@ cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab9
 cloudflare_load_balancer_monitor.get-root-https: Refreshing state... (ID: 4238142473fcd48e89ef1964be72e3e0)
 cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
 cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)
-cloudflare_rate_limit.login-limit: Refreshing state... (ID: 8d518c5d6e63406a9466d83cb8675bb6)
 cloudflare_load_balancer_pool.www-servers: Refreshing state... (ID: 906d2a7521634783f4a96c062eeecc6d)
 cloudflare_load_balancer.www-lb: Refreshing state... (ID: cb94f53f150e5c1a65a07e43c5d4cac4)
 cloudflare_page_rule.redirect-to-new-db-page: Creating...

@@ -1,7 +1,7 @@
 ---
-title: 7 – Revert configuration
+title: 6 – Revert configuration
 pcx-content-type: tutorial
-weight: 8
+weight: 7
 meta:
   title: Revert configuration
 ---
@@ -22,31 +22,19 @@ commit d4fec164581bec44684a4d59bb80aec1f1da5a6e
 Author: Me
 Date:   Wed Apr 18 22:04:52 2018 -0700
 
-    Step 6 - Add two Page Rules.
+    Step 5 - Add two Page Rules.
 
 commit bc9aa9a465a4c8d6deeaa0491814c9f364e9aa8a
 Author: Me
 Date:   Sun Apr 15 23:58:35 2018 -0700
 
-    Step 5 - Create load balancer (LB) monitor, LB pool, and LB.
+    Step 4 - Create load balancer (LB) monitor, LB pool, and LB.
 
 commit 6761a4f754e77322629ba4e90a90a3defa1fd4b6
 Author: Me
 Date:   Wed Apr 11 11:20:25 2018 -0700
 
-    Step 5 - Add additional 'www' DNS record for Asia data center.
-
-commit e1c38cf6f4230a48114ce7b747b77d6435d4646c
-Author: Me
-Date:   Mon Apr 9 12:34:44 2018 -0700
-
-    Step 4 - Update /login rate limit rule from 'simulate' to 'ban'.
-
-commit 0f7e499c70bf5994b5d89120e0449b8545ffdd24
-Author: Me
-Date:   Mon Apr 9 12:22:43 2018 -0700
-
-    Step 4 - Add rate limiting rule to protect /login.
+    Step 4 - Add additional 'www' DNS record for Asia data center.
 
 commit d540600b942cbd89d03db52211698d331f7bd6d7
 Author: Me
@@ -79,7 +67,7 @@ commit d4fec164581bec44684a4d59bb80aec1f1da5a6e
 Author: Me
 Date:   Wed Apr 18 22:04:52 2018 -0700
 
-    Step 6 - Add two Page Rules.
+    Step 5 - Add two Page Rules.
 
 diff --git a/cloudflare.tf b/cloudflare.tf
 index 0b39450..ef11d8a 100644
@@ -127,7 +115,7 @@ commit bc9aa9a465a4c8d6deeaa0491814c9f364e9aa8a
 Author: Me
 Date:   Sun Apr 15 23:58:35 2018 -0700
 
-    Step 5 - Create load balancer (LB) monitor, LB pool, and LB.
+    Step 4 - Create load balancer (LB) monitor, LB pool, and LB.
 
 diff --git a/cloudflare.tf b/cloudflare.tf
 index b92cb6f..195b646 100644
@@ -137,6 +125,7 @@ index b92cb6f..195b646 100644
    type    = "A"
    proxied = true
  }
++
 +resource "cloudflare_load_balancer_monitor" "get-root-https" {
 +  expected_body = "alive"
 +  expected_codes = "200"
@@ -177,16 +166,17 @@ commit 6761a4f754e77322629ba4e90a90a3defa1fd4b6
 Author: Me
 Date:   Wed Apr 11 11:20:25 2018 -0700
 
-    Step 5 - Add additional 'www' DNS record for Asia data center.
+    Step 4 - Add additional 'www' DNS record for Asia data center.
 
 diff --git a/cloudflare.tf b/cloudflare.tf
 index 9f25a0c..b92cb6f 100644
 --- a/cloudflare.tf
 +++ b/cloudflare.tf
-@@ -52,3 +52,10 @@ resource "cloudflare_rate_limit" "login-limit" {
-   disabled = false
-   description = "Block failed login attempts (5 in 1 min) for 5 minutes."
+@@ -52,3 +52,10 @@ resource "cloudflare_zone_settings_override" "example-com-settings" {
+     ssl                      = "strict"
+   }
  }
++
 +resource "cloudflare_record" "www-asia" {
 +  zone_id = var.zone_id
 +  name    = "www"
@@ -216,7 +206,7 @@ commit f9a6f7db72ea1437e146050a5e7556052ecc9a1a
 Author: Me
 Date:   Wed Apr 18 23:28:09 2018 -0700
 
-    Revert "Step 6 - Add two Page Rules."
+    Revert "Step 5 - Add two Page Rules."
 
     This reverts commit d4fec164581bec44684a4d59bb80aec1f1da5a6e.
 
@@ -224,7 +214,7 @@ commit d4fec164581bec44684a4d59bb80aec1f1da5a6e
 Author: Me
 Date:   Wed Apr 18 22:04:52 2018 -0700
 
-    Step 6 - Add two Page Rules.
+    Step 5 - Add two Page Rules.
 ```
 
 ### ii. Preview the changes
@@ -241,7 +231,6 @@ cloudflare_page_rule.increase-security-on-expensive-page: Refreshing state... (I
 cloudflare_page_rule.redirect-to-new-db-page: Refreshing state... (ID: c5c40ff2dc12416b5fe4d0541980c591)
 cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
 cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)
-cloudflare_rate_limit.login-limit: Refreshing state... (ID: 8d518c5d6e63406a9466d83cb8675bb6)
 cloudflare_load_balancer_monitor.get-root-https: Refreshing state... (ID: 4238142473fcd48e89ef1964be72e3e0)
 cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab992864)
 cloudflare_load_balancer_pool.www-servers: Refreshing state... (ID: 906d2a7521634783f4a96c062eeecc6d)
@@ -279,7 +268,6 @@ The changes look good. Terraform reverts the Cloudflare configuration when you a
 $ terraform apply --auto-approve
 cloudflare_page_rule.redirect-to-new-db-page: Refreshing state... (ID: c5c40ff2dc12416b5fe4d0541980c591)
 cloudflare_page_rule.increase-security-on-expensive-page: Refreshing state... (ID: 1c13fdb84710c4cc8b11daf7ffcca449)
-cloudflare_rate_limit.login-limit: Refreshing state... (ID: 8d518c5d6e63406a9466d83cb8675bb6)
 cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
 cloudflare_load_balancer_monitor.get-root-https: Refreshing state... (ID: 4238142473fcd48e89ef1964be72e3e0)
 cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)

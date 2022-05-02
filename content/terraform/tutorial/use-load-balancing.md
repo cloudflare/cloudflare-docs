@@ -1,14 +1,12 @@
 ---
-title: 5 – Improve performance
+title: 4 – Improve performance
 pcx-content-type: tutorial
-weight: 6
+weight: 5
 meta:
   title: Improve performance and reliability
 ---
 
 # Improve performance and reliability
-
-Now that rate limiting is set up, your login page is now protected against credential brute for attacks.
 
 In this tutorial, you will add a second origin for some basic round robining, and then use the [Cloudflare Load Balancing](/load-balancing/) product to fail traffic over as needed. You will also enhance your load balancing configuration through the use of "geo steering" to serve results from an origin server that is geographically closest to your end users.
 
@@ -45,7 +43,6 @@ persisted to local or remote state storage.
 
 cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)
 cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
-cloudflare_rate_limit.login-limit: Refreshing state... (ID: 8d518c5d6e63406a9466d83cb8675bb6)
 
 ------------------------------------------------------------------------
 
@@ -94,7 +91,6 @@ Add the second DNS record for www.example.com.
 $ terraform apply --auto-approve
 cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8668)
 cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
-cloudflare_rate_limit.login-limit: Refreshing state... (ID: 8d518c5d6e63406a9466d83cb8675bb6)
 cloudflare_record.www-asia: Creating...
   created_on:  "" => "<computed>"
   domain:      "" => "example.com"
@@ -228,7 +224,6 @@ Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
 persisted to local or remote state storage.
 
-cloudflare_rate_limit.login-limit: Refreshing state... (ID: 8d518c5d6e63406a9466d83cb8675bb6)
 cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)
 cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab992864)
 cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
@@ -315,7 +310,6 @@ $ git commit -m "Step 5 - Create load balancer (LB) monitor, LB pool, and LB."
 
 e$ terraform apply --auto-approve
 cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
-cloudflare_rate_limit.login-limit: Refreshing state... (ID: 8d518c5d6e63406a9466d83cb8675bb6)
 cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)
 cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab992864)
 cloudflare_load_balancer_monitor.get-root-https: Creating...
