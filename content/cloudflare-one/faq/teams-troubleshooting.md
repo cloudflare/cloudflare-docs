@@ -35,7 +35,7 @@ We present an HTTP error page in the following cases:
     - The server certificate is revoked and fails a CRL check (OSCP checking coming soon)
     - There is at least one expired certificate in the certificate chain for the server certificate
 
-2.  **Common certificate errors occur**. For example, in the event of a certificate common name mismatch.
+2.  **Common certificate errors occur**. For example, in the event of a certificate common name mismatch. The SSL certificate on the edge needs to cover the requested hostname or else a 526 Insecure upstream error will be presented.
 3.  **Insecure cipher suite**. When the connection from Cloudflare Gateway to an upstream server is insecure (e.g, uses an insecure cipher such as rc4, rc4-md5, 3des, etc). We do support upstream connections that require a connection over TLS that is prior to TLS 1.3. We will support the ability for an administrator to configure whether to trust insecure connections in the very near future.
 
 If you see this page, providing as much information as possible to the local IT administrator will be helpful as we troubleshoot with them, such as:
