@@ -8,13 +8,13 @@ meta:
 
 # Introduction to Terraform init
 
-This tutorial shows you how to get started with Terraform. The tutorial uses an example scenario where you have a web server for your domain that is accessible on 203.0.113.10 and you just signed up your domain (`example.com`) on Cloudflare to manage everything in Terraform.
+This tutorial shows you how to get started with Terraform. The tutorial uses an example scenario where you have a web server for your domain, accessible on `203.0.113.10`, and you just signed up your domain (`example.com`) on Cloudflare to manage everything in Terraform.
 
 Before you begin, ensure you [installed Terraform](/terraform/installing/). You will also need to [create an API Token](/api/tokens/create/) with permissions to edit resources for this tutorial.
 
 ## 1. Define your first Terraform config file
 
-Create an initial Terraform config file. Any files ending in `.tf` will be processed by Terraform. As the configuration becomes more complex, you will want to split the config into separate files and modules. For now, proceed with a single file.
+Create an initial Terraform config file. Terraform will process any files with a `.tf` extension. As the configuration becomes more complex, you will want to split the config into separate files and modules. For now, proceed with a single file.
 
 ```bash
 $ cat > cloudflare.tf <<'EOF'
@@ -82,7 +82,7 @@ rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 ```
 
-When you run `terraform init`, any plugins required, such as the Cloudflare Terraform provider, are automatically downloaded and saved locally to a .terraform directory.
+When you run `terraform init`, any plugins required, such as the Cloudflare Terraform provider, are automatically downloaded and saved locally to a `.terraform` directory.
 
 ```sh
 $ find .terraform/
@@ -137,11 +137,11 @@ can’t guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
-In the “execution plan”, Terraform will create a new DNS record as requested. Values that you explicitly specified are displayed, such as the the value of the A record — 203.0.113.10. Values display as `<computed>` when they are derived based on other API calls, for example, looking up the `metadata`, or if the values are returned after the object is created.
+As displayed in the execution plan, Terraform will create a new DNS record. The output shows the values that you explicitly specified, such as the value of the `A` record (`203.0.113.10`). Values shown as `<computed>` are derived based on other API calls (for example, looking up the `metadata`), or the values are returned after the object is created.
 
 ## 4. Apply your changes
 
-The plan command is important because it allows you to preview the changes for accuracy before actually making them. After you review the execution plan, apply your changes.
+The `plan` command is important because it allows you to preview the changes for accuracy before actually making them. After you review the execution plan, apply your changes.
 
 You can use `--auto-approve` on the command line for a briefer output. Without this flag, Terraform will display the output of the Terraform plan and then ask for confirmation before applying it.
 
@@ -167,9 +167,9 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 
 ## 5. Verify the results
 
-[Log in to the Cloudflare Dashboard](https://dash.cloudflare.com/login) and select the DNS tab. You should see the record created by Terraform.
+Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and navigate to **DNS**. The record created by Terraform appears in the records list.
 
-To see the full results returned from the API call, including the default values that you did not specify but let Terraform compute, you can run `terraform show`.
+To see the full results returned from the API call, including the default values that you did not specify but let Terraform compute, run `terraform show`.
 
 ```sh
 $ terraform show
