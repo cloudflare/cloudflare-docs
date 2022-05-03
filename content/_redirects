@@ -77,12 +77,14 @@
 /access/cli/installing-cli-tool/ /cloudflare-one/connections/connect-apps/install-and-setup/installation/ 301
 /access/configuring-identity-providers/ /cloudflare-one/identity/idp-integration/ 301
 /access/getting-started/applications/ /cloudflare-one/applications/ 301
+/access/getting-started/access-setup/ /cloudflare-one/identity/ 301
 /access/rdp/ /cloudflare-one/tutorials/rdp/ 301
 /access/rdp/connect-rdp/ /cloudflare-one/tutorials/rdp/ 301
 /access/service-auth/mtls/ /cloudflare-one/identity/devices/mutual-tls-authentication/ 301
 /access/service-auth/service-token/ /cloudflare-one/identity/service-auth/service-tokens/ 301
 /access/setting-up-access/ /cloudflare-one/identity/ 301
 /access/setting-up-access/access-groups/ /cloudflare-one/identity/users/groups/ 301
+/access/setting-up-access/audit-logs/ /cloudflare-one/analytics/logs/audit-logs/ 301
 /access/setting-up-access/configuring-access-policies/ /cloudflare-one/policies/zero-trust/policy-management/ 301
 /access/ssh/ /cloudflare-one/tutorials/ssh/ 301
 /access/ssh/short-live-cert-server/ /cloudflare-one/tutorials/ssh-cert-bastion/ 301
@@ -418,7 +420,7 @@
 /spectrum/getting-started/proxy-protocol/ /spectrum/how-to/enable-proxy-protocol/ 301
 /spectrum/how-to/cname-origins/ /spectrum/get-started/#create-a-spectrum-application-using-a-cname-record 301  
 /spectrum/how-to/create-load-balancer/ /spectrum/get-started/#create-a-spectrum-application-using-a-load-balancer 301
-
+/spectrum/proxy-protocol/ /spectrum/reference/simple-proxy-protocol-header/ 301
 # ssl
 /ssl/ssl-for-saas/certificate-signing-requests/ /ssl/ssl-for-saas/custom-certificates/certificate-signing-requests/ 301
 /ssl/advanced-certificate-manager/ /ssl/edge-certificates/advanced-certificate-manager/ 301
@@ -866,6 +868,8 @@
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
 /cloudflare-one/policies/filtering/dns-policies/configuring-block-page/ /cloudflare-one/policies/filtering/configuring-block-page/ 301
 /cloudflare-one/policies/filtering/dns-policies/safesearch/ /cloudflare-one/policies/filtering/dns-policies/ 301
+/cloudflare-one/policies/filtering/dns-policies-builder/dns-categories/ /cloudflare-one/policies/filtering/dns-policies/dns-categories/ 301
+/cloudflare-one/policies/filtering/dns-policies-builder/check-policy/ /cloudflare-one/policies/filtering/dns-policies/check-policy/ 301
 /cloudflare-one/policies/filtering/lists/ /cloudflare-one/policies/lists/ 301
 /cloudflare-one/tutorials/custom-block-page/ /cloudflare-one/policies/filtering/configuring-block-page/ 301
 /cloudflare-one/tutorials/warp-to-tunnel-internal-dns/ /cloudflare-one/connections/connect-networks/private-net/private-hostnames-ips/ 301
