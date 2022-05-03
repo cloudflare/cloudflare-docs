@@ -11,7 +11,7 @@ In this tutorial, you will learn how to migrate an existing [Cloudflare Workers 
 
 As a prerequisite, you should have a Cloudflare Workers Sites project, created with [Wrangler](https://github.com/cloudflare/wrangler).
 
-Cloudflare Pages provides built-in defaults for every aspect of serving your site. You can port custom behaviour in your Workers script — such as custom caching logic — to your Cloudflare Pages project using [Functions](/pages/platform/functions/). This enables an easy to use file-based routing system. You can also migrate your custom headers and redirects to Pages. 
+Cloudflare Pages provides built-in defaults for every aspect of serving your site. You can port custom behavior in your Worker — such as custom caching logic — to your Cloudflare Pages project using [Functions](/pages/platform/functions/). This enables an easy-to-use file-based routing system. You can also migrate your custom headers and redirects to Pages. 
 
 You may already have a reasonably complex Worker and/or it would be tedious to splice it up into Pages' file-based routing system. For these cases, Pages offers developers the ability to define a `_worker.js` file in the output directory of your Pages project. 
 
@@ -27,15 +27,15 @@ By Migrating to Cloudflare Pages, you will be able to access features like [prev
 
 Workers Sites projects consist of the following pieces:
 
-1.  An application built with a [static site tool](/pages/how-to/) or a static collection of HTML, CSS and JavaScript
-2. If using a static site tool, a build directory (called `bucket` in `wrangler.toml`) where the static project builds HTML, CSS, and JS
-3. A Workers application for serving that directory
+1.  An application built with a [static site tool](/pages/how-to/) or a static collection of HTML, CSS and JavaScript.
+2. If using a static site tool, a build directory (called `bucket` in `wrangler.toml`) where the static project builds HTML, CSS, and JavaScript.
+3. A Worker application for serving that build directory.
 
 When moving to Cloudflare Pages, remove the Workers application and any associated `wrangler.toml` configuration files or build output. Instead, note and record your **build command** (if you have one), and the `bucket` field, or **build directory**, from the `wrangler.toml` file in your project's directory.
 
 ## Migrating Headers and Redirects.
 
-You can migrate your redirects to Pages, by creating a `_redirects` file in your publish directory. Cloudflare currently offers limited support for advanced redirects. More support will be added in the future. Refer to the documentaion for a [list of supported types](/pages/platform/redirects/). 
+You can migrate your redirects to Pages, by creating a `_redirects` file in your publish directory. Cloudflare currently offers limited support for advanced redirects. More support will be added in the future. For a list of support types, refer to the [Redirects documentaion](/pages/platform/redirects/). 
 
 {{<Aside type="note">}}
 
@@ -46,7 +46,6 @@ Make sure that static redirects are before dynamic redirects in your `_redirects
 {{</Aside>}}
 
 In addition to an `_redirects` file, Cloudflare Pages currently offers [Bulk Redirects (beta)](/pages/how-to/use-bulk-redirects/), which handles redirects that surpasses the 2,100 redirect rules limit set by Pages.
-
 
 Your custom headers can also be moved into a `_headers` file in your publish directory. It is important to note that custom headers defined in the `_headers` file are not currently applied to responses from Functions, even if the Function route matches the URL pattern. To learn more about handling headers, refer to [Headers](/pages/platform/headers/).
 
@@ -60,7 +59,7 @@ If you choose to use a custom domain for your Pages project, you can set it to t
 
 {{<Aside type="note">}}
 
-Before you deploy, you will need to delete the Workers application to start sending requests to Cloudflare Pages.
+Before you deploy, you will need to delete your Workers application to start sending requests to Cloudflare Pages.
 
 {{</Aside>}}
 ## Cleaning up your old application and assigning the domain
