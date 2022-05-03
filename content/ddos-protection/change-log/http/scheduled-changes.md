@@ -26,7 +26,7 @@ layout: list
       <td>2022-05-09</td>
       <td>...ad07ec62</td>
       <td>HTTP requests with unusual HTTP headers or URI path (signature #6).</td>
-      <td>block</td>
+      <td>N/A</td>
       <td>log</td>
       <td></td>
     </tr>
