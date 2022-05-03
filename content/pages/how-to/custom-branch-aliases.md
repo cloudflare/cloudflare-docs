@@ -5,7 +5,7 @@ title: Adding custom branch aliases
 
 # Adding custom branch aliases
 
-In this tutorial, you will learn how to add a custom branch alias (`staging.example.com`) that will point to a specific branch (`staging`) on your Pages project.
+In this tutorial, you will learn how to add a custom domain (`staging.example.com`) that will point to a specific branch (`staging`) on your Pages project.
 
 This will allow you to have a custom domain that will always show the latest build for a specific branch on your Pages project.
 
@@ -19,7 +19,7 @@ If you attempt to follow this guide using an external DNS provider, your custom 
 
 First, make sure that you have made a commit on the branch you would like to set up an alias for. This will prompt a build in Pages.
 
-Next, add a custom domain under your Pages project for `staging.example.com`.
+Next, add a custom domain under your Pages project for your desired custom domain, for example, `staging.example.com`.
 
 ![Follow the instructions below to access the custom domains overview in the Pages dashboard.](../media/pages_custom_domain-1.png)
 
