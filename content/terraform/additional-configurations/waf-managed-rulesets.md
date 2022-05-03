@@ -4,16 +4,18 @@ pcx-content-type: how-to
 weight: 2
 meta:
   title: Deploy WAF Managed Rulesets with Terraform
+layout: list
 ---
 
 # Deploy WAF Managed Rulesets
 
-This page provides examples of deploying WAF Managed Rulesets to your zone or account using Terraform. It also covers the following configurations:
+This page provides examples of deploying WAF Managed Rulesets to your zone or account using Terraform. It covers the following configurations:
 
-* Configure skip rules
-* Configure overrides
-* Enable payload logging
-* Configure the OWASP paranoia level, score threshold, and action
+* [Deploy WAF Managed Rulesets](#deploy-waf-managed-rulesets)
+* [Configure skip rules](#configure-skip-rules)
+* [Configure overrides](#configure-overrides)
+* [Configure payload logging](#configure-payload-logging)
+* [Configure the OWASP paranoia level, score threshold, and action](#configure-the-owasp-paranoia-level-score-threshold-and-action)
 
 For more information on WAF Managed Rulesets, refer to [Managed Rulesets](/waf/managed-rulesets/) in the Cloudflare WAF documentation. For more information on deploying rulesets using the Rulesets API, refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
 
@@ -82,7 +84,7 @@ The following example adds two [skip rules](/waf/managed-rulesets/waf-exceptions
 * The first rule will skip the execution of the entire Cloudflare Managed Ruleset (with ID `efb7b8c949ac4650a09736fc376e9aee`) for specific URLs, according to the rule expression.
 * The second rule will skip the execution of two rules belonging to the Cloudflare Managed Ruleset for specific URLs, according to the rule expression.
 
-Add the two skip rules to the `cloudflare_ruleset` resource named `zone_level_managed_waf` before the rule that deploys the Cloudflare Managed Ruleset:
+Add the two skip rules to the `cloudflare_ruleset` resource before the rule that deploys the Cloudflare Managed Ruleset:
 
 ```tf
 ---
@@ -129,7 +131,7 @@ highlight: [1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20,21,22,23,24]
 ```
 
 {{<Aside type="warning" header="Important">}}
-Ensure that you place the skip rules **before** the rule that executes the rules (or the entire Managed Ruleset) you wish to skip, as in the previous example.
+Ensure that you place the skip rules **before** the rule that executes the Managed Ruleset (or some of its rules) that you wish to skip, as in the previous example.
 {{</Aside>}}
 
 ## Configure overrides
@@ -176,7 +178,7 @@ highlight: [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
 }
 ```
 
-## Enable payload logging
+## Configure payload logging
 
 The following example enables [payload logging](/waf/managed-rulesets/payload-logging/) for matched rules of the Cloudflare Managed Ruleset, setting the public key used to encrypt the logged payload.
 
