@@ -15,6 +15,8 @@ This page provides examples of deploying WAF Managed Rulesets to your zone or ac
 * Enable payload logging
 * Configure the OWASP paranoia level, score threshold, and action
 
+For more information on WAF Managed Rulesets, refer to [Managed Rulesets](/waf/managed-rulesets/) in the Cloudflare WAF documentation. For more information on deploying rulesets using the Rulesets API, refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
+
 ## Before you start
 
 ### Delete any existing rulesets
