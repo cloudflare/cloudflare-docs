@@ -7,6 +7,9 @@ content/analytics/ @soheiokamoto @jherre @tlozoot @tanushreesharma-cf @cloudflar
 # API
 content/api/ @cloudflare/sdk @cloudflare/PCX
 
+# API shield
+content/api-shield/ @cloudflare/PCX
+
 # APO
 content/automatic-platform-optimization/ @cloudflare/PCX
 
@@ -19,20 +22,14 @@ content/byoip/ @ConzorKingKong @dinasaur404 @cloudflare/PCX
 # Cache
 content/cache/ @cloudflare/PCX
 
+# Client IP Geolocation
+content/client-ip-geolocation/ @cloudflare/PCX
+
 # Cloudflare One
 content/cloudflare-one/ @cloudflare/PCX
 
-# Developers homepage
-developers.cloudflare.com/ @cloudflare/PCX
-
 # DDoS Protection
 content/ddos-protection/ @cloudflare/PCX
-
-# Distributed Web
-content/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @cloudflare/PCX
-
-# Documentation Engine
-content/docs-engine/ @cloudflare/PCX
 
 # Email Routing
 content/email-routing/ @cloudflare/PCX
@@ -61,6 +58,12 @@ content/magic-transit/ @annikagarbers @cloudflare/PCX
 # Magic Firewall
 content/magic-firewall/ @arges @annikagarbers @cloudflare/PCX
 
+# Magic WAN
+content/magic-wan/ @annikagarbers @cloudflare/PCX
+
+# Network Error Logging
+content/network-error-logging @cloudflare/PCX
+
 # Network Interconnect
 content/network-interconnect @ConzorKingKong @cloudflare/PCX
 
@@ -69,6 +72,12 @@ content/pages/ @cloudflare/workers-docs @cloudflare/PCX
 
 # Page Shield
 content/page-shield/ @cloudflare/PCX
+
+# Partners
+/content/partners/ @cloudflare/PCX
+
+# R2
+content/r2/ @cloudflare/workers-docs @cloudflare/PCX
 
 # Railgun
 content/railgun/ @cloudflare/PCX
@@ -114,6 +123,9 @@ content/waiting-room/ @cloudflare/PCX
 
 # Warp Client
 content/warp-client/ @cloudflare/PCX
+
+# Web3
+content/web3/ @varuncf @cloudflare/PCX
 
 # Workers
 content/workers/ @cloudflare/workers-docs @cloudflare/PCX

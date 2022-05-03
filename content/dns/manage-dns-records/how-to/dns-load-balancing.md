@@ -6,13 +6,13 @@ title: Load balancing with DNS records
 
 # Load balancing with DNS records
 
-To randomly distribute traffic across multiple servers, set up multiple DNS **A** or **AAAA** records for the same hostname.
+To randomly distribute traffic across multiple servers, set up multiple DNS `A` or `AAAA` records for the same hostname.
 
 Use this setup for simple, [round-robin load balancing](https://www.cloudflare.com/learning/dns/glossary/round-robin-dns/). If you need more fine-grained control over traffic distribution — including automatic failover, intelligent routing, and more — set up our [add-on load balancing service](/load-balancing/).
 
 ## Example scenario
 
-The following example illustrates how you would distribute traffic intended for `www.example.com`. Though the example uses **A** records, you could also use **AAAA** records.
+The following example illustrates how you would distribute traffic intended for `www.example.com`. Though the example uses `A` records, you could also use `AAAA` records.
 
 After [creating an account](https://support.cloudflare.com/hc/articles/201720164) and [updating your nameservers](/dns/zone-setups/full-setup/setup/) for `example.com`, you might [create multiple DNS records](/dns/manage-dns-records/how-to/create-dns-records/) for your `www` subdomain:
 
@@ -26,13 +26,13 @@ The exact behavior of your DNS routing would depend on the [proxy status](/dns/m
 
 ### All records unproxied
 
-If all associated records were unproxied, any request to Cloudflare's nameservers would return the three **A** records you previously added. 
+If all associated records were unproxied, any request to Cloudflare's nameservers would return the three `A` records you previously added. 
 
 Each client (oftentimes a browser), would decide which IP address to send the request to. If one IP address fails, the client would choose another option. All requests would be sent directly to the origin server (to `192.0.1.X`).
 
 ### All records proxied (recommended)
 
-If all associated records were proxied, any request to Cloudflare's nameservers would return two **A** records from Cloudflare's list of edge IP addresses.
+If all associated records were proxied, any request to Cloudflare's nameservers would return two `A` records from Cloudflare's list of edge IP addresses.
 
 Each client (oftentimes a browser) would decide which Cloudflare IP address to send the request to. Cloudflare would then receive that request and — if Cloudflare needed to contact your origin server — we would pick one of the three IP addresses specified in your DNS records (`192.0.1.X`).
 

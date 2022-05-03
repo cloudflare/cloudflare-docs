@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: URL upload
-weight: 4
+weight: 3
 meta:
   title: Upload via URL
 ---
@@ -20,7 +20,7 @@ curl --request POST \
  --header 'Authorization: Bearer :token' \
  --form 'url=https://[user:password@]example.com/<PATH_TO_IMAGE>' \
  --form 'metadata={"key":"value"}' \
- --form 'requiredSignedURLs=false' 
+ --form 'requireSignedURLs=false' 
 ```
 
 You will then receive a response similar to this:
@@ -34,7 +34,7 @@ You will then receive a response similar to this:
      "key": "value":
    },
    "uploaded": "2022-01-31T16:39:28.458Z",
-   "requiredSignedURLs": false,
+   "requireSignedURLs": false,
    "variants": [
      "https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/public","https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/thumbnail" 
    ]

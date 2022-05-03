@@ -124,8 +124,8 @@ filename:function/character/[id].js
 export async function onRequestGet({ params }) {
   const res = await fetch(`https://rickandmortyapi.com/api/character/${params.id}`);
   const data = await res.json();
-  const info = JSON.stringify(data);
-  return new Response(info, null, 2);
+  const info = JSON.stringify(data, null, 2);
+  return new Response(info);
 }
 ```
 
@@ -313,7 +313,7 @@ Workers KV is Cloudflare's globally replicated key-value storage solution. Withi
 
 ![Editing a KV namespace Binding and adding a Variable name](../media/KV-functions.png)
 
-## KV namespace locally
+### KV namespace locally
 
 While developing locally you can interact with your KV namespace by add `-k, --kv [Namespace name]` to your run command. For example, if your namespace is called `TodoList`, you can access the KV namespace in your local dev by running `npx wrangler pages dev dist --kv TodoList`. The data from this namespace can be accessed using `context.env`.
 
@@ -332,9 +332,9 @@ Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **F
 
 ![Editing a Durable Object namespace Binding and adding a Variable name](../media/DO-functions.png)
 
-## Durable Objects locally
+### Durable Objects locally
 
-Just as you can access kv with `-k`or `-kv` you can access durable objects in your local builds with `-o`, `--do` followed by your Durable object name and class.
+Just as you can access kv with `-k` or `--kv` you can access durable objects in your local builds with `-o`, `--do` followed by your Durable object name and class.
 
 ### Environment variable
 
@@ -344,11 +344,11 @@ To add environment variables, go to **Account Home** > **Pages** > **your Pages 
 
 ![Editing an environment variable by adding a variable name and value](../media/ENV-functions.png)
 
-## Adding environment variables locally
+### Adding environment variables locally
 
-When developing locally, you can access environment variables by adding a binding to your Wrangler commands like `npx wrangler pages dev dist --binding ENV_NAME=\"ENV_VALUE"`. This allows you to then access the environment value in your component by using `env.ENV_NAME`.
+When developing locally, you can access environment variables by adding a binding to your Wrangler commands like `npx wrangler pages dev dist --binding ENV_NAME="ENV_VALUE"`. This allows you to then access the environment value in your component by using `env.ENV_NAME`.
 
-For example, you can run `npx wrangler pages dev dist --binding COLOR=\"BLUE"` and then:
+For example, you can run `npx wrangler pages dev dist --binding COLOR="BLUE"` and then:
 
 ```js
 export async function onRequest({ env }) {

@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Known limitations
-weight: 4
+weight: 3
 ---
 
 # Known limitations
