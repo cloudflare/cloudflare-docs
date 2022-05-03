@@ -31,7 +31,7 @@ Workers Sites projects consist of the following pieces:
 2. If using a static site tool, a build directory (called `bucket` in `wrangler.toml`) where the static project builds HTML, CSS, and JavaScript.
 3. A Worker application for serving that build directory.
 
-When moving to Cloudflare Pages, remove the Workers application and any associated `wrangler.toml` configuration files or build output. Instead, note and record your **build command** (if you have one), and the `bucket` field, or **build directory**, from the `wrangler.toml` file in your project's directory.
+When moving to Cloudflare Pages, remove the Workers application and any associated `wrangler.toml` configuration files or build output. Instead, note and record your `build` command (if you have one), and the `bucket` field, or build directory, from the `wrangler.toml` file in your project's directory.
 
 ## Migrating headers and redirects
 
