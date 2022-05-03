@@ -33,7 +33,7 @@ Workers Sites projects consist of the following pieces:
 
 When moving to Cloudflare Pages, remove the Workers application and any associated `wrangler.toml` configuration files or build output. Instead, note and record your **build command** (if you have one), and the `bucket` field, or **build directory**, from the `wrangler.toml` file in your project's directory.
 
-## Migrating Headers and Redirects.
+## Migrating headers and redirects
 
 You can migrate your redirects to Pages, by creating a `_redirects` file in your publish directory. Cloudflare currently offers limited support for advanced redirects. More support will be added in the future. For a list of support types, refer to the [Redirects documentaion](/pages/platform/redirects/). 
 
@@ -59,7 +59,7 @@ If you choose to use a custom domain for your Pages project, you can set it to t
 
 {{<Aside type="note">}}
 
-Before you deploy, you will need to delete your Workers application to start sending requests to Cloudflare Pages.
+Before you deploy, you will need to delete your old Workers application to start sending requests to Cloudflare Pages.
 
 {{</Aside>}}
 ## Cleaning up your old application and assigning the domain
