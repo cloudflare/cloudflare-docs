@@ -27,7 +27,7 @@ By Migrating to Cloudflare Pages, you will be able to access features like [prev
 
 Workers Sites projects consist of the following pieces:
 
-1.  An application built with a [static site tool](/pages/how-to/) or a static collection of HTML, CSS and JavaScript.
+1. An application built with a [static site tool](/pages/how-to/) or a static collection of HTML, CSS and JavaScript.
 2. If using a static site tool, a build directory (called `bucket` in `wrangler.toml`) where the static project builds HTML, CSS, and JavaScript.
 3. A Worker application for serving that build directory.
 
