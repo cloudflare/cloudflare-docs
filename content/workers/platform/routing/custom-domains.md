@@ -6,7 +6,7 @@ title: Custom Domains
 # Custom Domains
 
 ## About
-Custom Domains allow our customers to connect a Worker to a hostname, without having to fuss with DNS or certificate management. Cloudflare will create DNS records and issue necessary certificates on behalf of our customers. The DNS records will point directly to the Worker and will be proxied.
+Custom Domains allow our customers to connect a Worker to a hostname, without having to fuss with DNS or certificate management. Cloudflare will create DNS records and issue necessary certificates on behalf of our customers. The DNS records will point directly to the Worker.
 
 ## Building a Custom Domain
 In order to create a Custom Domain, you must have:
@@ -31,6 +31,8 @@ Custom Domains follow standard DNS ordering and matching logic. Custom Domains d
 
 ## Interaction with Routes
 Custom Domains are evaluated before Route rules, but take lower precedence. [Routes](/workers/platform/routing/routes) defined on your Custom Domain will run first, but can optionally call the Worker registered on your Custom Domain. In our example above, a Custom Domain for `api.example.com` can point to our Worker `api`. A Route added to `api.example.com/auth` can point to our Worker `auth`. Using `fetch(request)` within the Worker `auth` will invoke the Worker `api`, as if it was a normal application server. This means you can stack your Workers on top of each other, creating layers of 'proxy' Workers and 'application' Workers.
+
+![Routes can stack on top of Custom Domains, like any external dependencies](../media/routes-with-custom-domains.png)
 
 ## Migrating from Routes
 If you're currently invoking a Worker using a [Route](/workers/platform/routing/routes) with `/*`, and your DNS points to `100::` or similar,it's generally recommended that a Custom Domain is a suitable replacement. For example, to migrate the Route `app.example.com/*`, simply create a Custom Domain on `app.example.com`, replacing the existing record. You can then delete the route `app.example.com/*` in your Worker > Triggers > Routes table.
