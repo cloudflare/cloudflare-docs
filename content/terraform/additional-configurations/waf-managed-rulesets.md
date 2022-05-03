@@ -1,0 +1,260 @@
+---
+title: Deploy WAF Managed Rulesets
+pcx-content-type: how-to
+weight: 2
+meta:
+  title: Deploy WAF Managed Rulesets with Terraform
+---
+
+# Deploy WAF Managed Rulesets
+
+This page provides examples of deploying WAF Managed Rulesets to your zone or account using Terraform. It also covers the following configurations:
+
+* Configure skip rules
+* Configure overrides
+* Enable payload logging
+* Configure the OWASP paranoia level, score threshold, and action
+
+## Before you start
+
+### Delete any existing rulesets
+
+Make sure that you have no entry point rulesets (that is, any ruleset with `kind: root` or `kind: zone` at the account and zone level, respectively) already defined in your account/zone. 
+
+Terraform assumes that it has complete control over account and zone rulesets. Before you can start configuring your account and zone using Terraform, you must delete existing rulesets, and then recreate them using Terraform.
+
+To find existing entry point rulesets, use the API operations described in [List existing rulesets](https://developers.cloudflare.com/ruleset-engine/rulesets-api/view/#list-existing-rulesets), for the account and zone levels. To delete existing rulesets, use the API operations described in [Delete ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/delete/#delete-ruleset), for the account and zone levels.
+
+### Obtain the necessary account, zone, and Managed Ruleset IDs
+
+The Terraform configurations provided in this page need the zone ID (or account ID) of the zone/account where you will deploy WAF Managed Rulesets.
+
+* To retrieve the list of accounts you have access to, including their IDs, use the [List accounts](https://api.cloudflare.com/#accounts-list-accounts) API operation.
+* To retrieve the list of zones you have access to, including their IDs, use the [List zones](https://api.cloudflare.com/#zone-list-zones) API operation.
+
+The deployment of WAF Managed Rulesets via Terraform requires that you use the ruleset IDs. To find the IDs of WAF Managed Rulesets, use the [List account rulesets](https://api.cloudflare.com/#account-rulesets-list-account-rulesets) API operation. The response will include the description and IDs of the existing WAF Managed Rulesets.
+
+## Deploy WAF Managed Rulesets
+
+The following example deploys two WAF Managed Rulesets to a zone using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the Managed Rulesets.
+
+```tf
+# Configure a ruleset at the zone level for the "http_request_firewall_managed" phase
+resource "cloudflare_ruleset" "zone_level_managed_waf" {
+  zone_id     = "<ZONE_ID>"
+  name        = "Managed WAF entry point ruleset"
+  description = ""
+  kind        = "zone"
+  phase       = "http_request_firewall_managed"
+ 
+  # Execute Cloudflare Managed Ruleset
+  rules {
+    action = "execute"
+    action_parameters {
+      id = "efb7b8c949ac4650a09736fc376e9aee"
+      version = "latest"
+    }
+    expression = "true"
+    description = "Execute Cloudflare Managed Ruleset on my zone-level phase entry point ruleset"
+    enabled = true
+  }
+
+  # Execute Cloudflare OWASP Core Ruleset
+  rules {
+    action = "execute"
+    action_parameters {
+      id = "4814384a9e5d4991b9815dcfc25d2f1f"
+      version = "latest"
+    }
+    expression = "true"
+    description = "Execute Cloudflare OWASP Core Ruleset on my zone-level phase entry point ruleset"
+    enabled = true
+  }
+}
+```
+
+## Configure skip rules
+
+The following example adds two [skip rules](/waf/managed-rulesets/waf-exceptions/) (or WAF exceptions) for the Cloudflare Managed Ruleset:
+
+* The first rule will skip the execution of the entire Cloudflare Managed Ruleset (with ID `efb7b8c949ac4650a09736fc376e9aee`) for specific URLs, according to the rule expression.
+* The second rule will skip the execution of two rules belonging to the Cloudflare Managed Ruleset for specific URLs, according to the rule expression.
+
+Add the two skip rules to the `cloudflare_ruleset` resource named `zone_level_managed_waf` before the rule that deploys the Cloudflare Managed Ruleset:
+
+```tf
+---
+highlight: [1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20,21,22,23,24]
+---
+  # Skip execution of the entire Cloudflare Managed Ruleset for specific URLs
+  rules {
+    action = "skip"
+    action_parameters {
+      rulesets = ["efb7b8c949ac4650a09736fc376e9aee"]
+    }
+    expression = "(cf.zone.name eq \"example.com\" and http.request.uri.query contains \"skip=rulesets\")"
+    description = "Skip Cloudflare Manage ruleset"
+    enabled = true
+  }
+ 
+  # Skip execution of two rules in the Cloudflare Managed Ruleset for specific URLs
+  rules {
+    action = "skip"
+    action_parameters {
+      rules = {
+        # Format: "<RULESET_ID>" = "<RULE_ID_1>,<RULE_ID_2>,..."
+        "efb7b8c949ac4650a09736fc376e9aee" = "5de7edfa648c4d6891dc3e7f84534ffa,e3a567afc347477d9702d9047e97d760"
+      }
+    }
+    expression = "(cf.zone.name eq \"example.com\" and http.request.uri.query contains \"skip=rules\")"
+    description = "Skip WordPress and SQLi rules"
+    enabled = true
+  }
+
+  # Execute Cloudflare Managed Ruleset
+  rules {
+    action = "execute"
+    action_parameters {
+      id = "efb7b8c949ac4650a09736fc376e9aee"
+      version = "latest"
+    }
+    expression = "true"
+    description = "Execute Cloudflare Managed Ruleset on my zone-level phase entry point ruleset"
+    enabled = true
+  }
+  # (...)
+}
+```
+
+{{<Aside type="warning" header="Important">}}
+Ensure that you place the skip rules **before** the rule that executes the rules (or the entire Managed Ruleset) you wish to skip, as in the previous example.
+{{</Aside>}}
+
+## Configure overrides
+
+The following example adds three [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) for the Cloudflare Managed Ruleset:
+
+* Two rule-level overrides for rules with IDs `5de7edfa648c4d6891dc3e7f84534ffa` and `75a0060762034a6cb663fd51a02344cb`, setting their action to `log`.
+* A tag-level override for the `wordpress` tag, setting the action of all the rules with this tag to `js_challenge`. 
+
+Add the two overrides to the rule in the `cloudflare_ruleset` resource that executes the Cloudflare Managed Ruleset:
+
+```tf
+---
+highlight: [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
+---
+  # Execute Cloudflare Managed Ruleset
+  rules {
+    action = "execute"
+    action_parameters {
+      id = "efb7b8c949ac4650a09736fc376e9aee"
+      version = "latest"
+      overrides {
+        rules {
+          id = "5de7edfa648c4d6891dc3e7f84534ffa"
+          action = "log"
+          enabled = true
+        }
+        rules {
+          id = "75a0060762034a6cb663fd51a02344cb"
+          action = "log"
+          enabled = true
+        }
+        categories {
+          category = "wordpress"
+          action = "js_challenge"
+          enabled = true
+        }
+      }
+    }
+    expression = "true"
+    description = "Execute Cloudflare Managed Ruleset on my zone-level phase entry point ruleset"
+    enabled = true
+  }
+}
+```
+
+## Enable payload logging
+
+The following example enables [payload logging](/waf/managed-rulesets/payload-logging/) for matched rules of the Cloudflare Managed Ruleset, setting the public key used to encrypt the logged payload.
+
+Building upon the rule that deploys the Cloudflare Managed Ruleset, add the `matched_data` object containing your public key:
+
+```tf
+---
+highlight: [7,8,9]
+---
+  # Execute Cloudflare Managed Ruleset
+  rules {
+    action = "execute"
+    action_parameters {
+      id = "efb7b8c949ac4650a09736fc376e9aee"
+      version = "latest"
+      matched_data {
+         public_key = "Ycig/Zr/pZmklmFUN99nr+taURlYItL91g+NcHGYpB8="
+      }
+    }
+    expression = "true"
+    description = "Execute Cloudflare Managed Ruleset on my zone-level phase entry point ruleset"
+    enabled = true
+  }
+}
+```
+
+## Configure the OWASP paranoia level, score threshold, and action
+
+The OWASP Managed Ruleset supports the following configurations:
+
+* To enable all the rules up to a specific paranoia level, create tag overrides that:
+    * Enable all the rules associated with paranoia levels up to (and including) the one you wish to enable.
+    * Disable all the rules associated with higher paranoia levels.
+
+* To set the action to perform when the calculated threat score is greater than the score threshold, create a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID `6179ae15870a4bb7b2d480d4843b323c`), and include the `action` property. 
+
+* Set the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID `6179ae15870a4bb7b2d480d4843b323c`), and include the `score_threshold` property. 
+
+For more information on the available configuration values, refer to the [Cloudflare OWASP Core Ruleset](/waf/managed-rulesets/owasp-core-ruleset/) page in the WAF documentation.
+
+The following example rule of a `cloudflare_ruleset` Terraform resource performs the following configuration:
+
+* Deploys the OWASP Managed Ruleset.
+* Sets the OWASP paranoia level to _PL2_.
+* Sets the score threshold to `60` (_Low_).
+* Sets the ruleset action to `log`.
+
+```tf
+---
+highlight: [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26]
+---
+  # Execute Cloudflare OWASP Core Ruleset
+  rules {
+    action = "execute"
+    action_parameters {
+      id = "4814384a9e5d4991b9815dcfc25d2f1f"
+      overrides {
+        # Set Anomaly Score to PL2 by disabling rules with tags "paranoia-level-3" and "paranoia-level-4".
+        # The default is to have only PL1 rules enabled (rules with the "paranoia-level-1" tag).
+        categories {
+          category = "paranoia-level-2"
+          enabled = true
+        }
+        categories {
+          category = "paranoia-level-3"
+          enabled = false
+        }
+        categories {
+          category = "paranoia-level-4"
+          enabled = false
+        }
+        rules {
+          id = "6179ae15870a4bb7b2d480d4843b323c"
+          action = "log"
+          score_threshold = 60
+        }
+      }
+    }
+    expression = "true"
+    description = "zone"
+    enabled = true
+  }
+```
