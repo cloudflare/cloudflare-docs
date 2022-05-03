@@ -6,7 +6,7 @@ weight: 3
 
 # IPFS Pinning
 
-To free up storage space, the [IPFS](/web3/concepts/ipfs/) periodically deletes data that it no longer needs from IPFS nodes. 
+To free up storage space, the [IPFS](/web3/gateways/concepts/ipfs/) periodically deletes data that it no longer needs from IPFS nodes. 
 
 An IPFS node can protect data from this process — known as garbage collection — by **pinning** data. Pinning tells IPRS to always keep a given object somewhere (by default, on the current node).
 
