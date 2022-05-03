@@ -23,7 +23,7 @@ Custom Domains can stack on top of each other. If you have Worker A attached to 
 
 ![Routes work with your applications defined in Cloudflare DNS](./media/routes-diagram.png)
 
-Routes can stack on top of Custom Domains, if configured on the appropriate URL. If you'd like to run a logging Worker in front of your application, you can create a Custom Domain on your application Worker, and create a Route for your logging Worker. Calling `fetch()` will invoke the application Worker on your Custom Domain.
+Routes can stack on top of Custom Domains, if configured on the appropriate URL. If you'd like to run a logging Worker in front of your application, you can create a Custom Domain on your application Worker, and create a Route for your logging Worker. Calling `fetch()` will invoke the application Worker on your Custom Domain. Note that Routes cannot stack on top of other Routes.
 
 ## What's Best for Me?
 
