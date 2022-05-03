@@ -5,7 +5,7 @@ title: Handle redirects with Bulk Redirects
 
 # Handle redirects with Bulk Redirects
 
-In this tutorial, you will learn how to use [Bulk Redirects (beta)](/rules/bulk-redirects/) to handle redirects that surpasses the 1,100 redirect rules limit set by Pages. A [`_redirects`](/pages/platform/limits/#redirects) file has a maximum of 1,000 static redirects and 100 dynamic redirects, for a combined total of 1,100 redirects.
+In this tutorial, you will learn how to use [Bulk Redirects (beta)](/rules/bulk-redirects/) to handle redirects that surpasses the 1,100 redirect rules limit set by Pages. A [`_redirects`](/pages/platform/limits/#redirects) file has a maximum of 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects.
 
 {{<Aside type="Note">}}
 
