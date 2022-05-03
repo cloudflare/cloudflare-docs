@@ -11,7 +11,7 @@ Routes allow users to map a URL pattern to a Worker script to enable Workers to 
 
 ## Customizing routes
 
-For zones proxied on Cloudflare, route patterns decide what (if any) script is matched based on the URL of that request. Requests are routed through a Workers script when the URL matches a route pattern assigned to that script. To add a Route, you need:
+For zones proxied on Cloudflare, route patterns decide what (if any) script is matched based on the URL of that request.  Requests are routed through a Workers script when the URL matches a route pattern assigned to that script.  To add a Route, you need:
 * An active Cloudflare Zone
 * An Orange-clouded DNS record
 * A Worker to invoke
@@ -28,15 +28,15 @@ Cloudflare Site routes are comprised of:
 
 The Routes REST API documentation can be found [in the Workers API docs](https://api.cloudflare.com/#worker-routes-properties).
 
-If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally. If your Worker acts as your origin (that is, the request terminates in a Worker), you must add a DNS record.
+If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally.  If your Worker acts as your origin (that is, the request terminates in a Worker), you must add a DNS record.
 
 * _A zone that you have registered with some registrar (not workers.dev) and setup Cloudflare to serve as [a reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)._
 
 ## Routes with *.workers.dev
 
-Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is configurable in the Cloudflare dashboard. Your `*.workers.dev` subdomain allows you to deploy Workers scripts [without attaching your domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/).
+Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is configurable in the Cloudflare dashboard.  Your `*.workers.dev` subdomain allows you to deploy Workers scripts [without attaching your domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/).
 
-To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`, go to **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **Overview** > **Your subdomain**. The `name` field in your Worker configuration is used as the secondary subdomain for the deployed script, (for example, `my-worker.my-subdomain.workers.dev.`).
+To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`, go to **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **Overview** > **Your subdomain**.  The `name` field in your Worker configuration is used as the secondary subdomain for the deployed script, (for example, `my-worker.my-subdomain.workers.dev.`).
 
 ### Matching Behavior
 
@@ -59,22 +59,22 @@ While they look similar to a [regex](https://en.wikipedia.org/wiki/Regular_expre
 
 - The only supported operator is the wildcard (`*`), which matches zero or more of any character.
 
-- Route patterns may not contain infix wildcards or query parameters. For example, neither `example.com/*.jpg` nor `example.com/?foo=*` are valid route patterns.
+- Route patterns may not contain infix wildcards or query parameters.  For example, neither `example.com/*.jpg` nor `example.com/?foo=*` are valid route patterns.
 
-- When more than one route pattern could match a request URL, the most specific route pattern wins. For example, the pattern `www.example.com/*` would take precedence over `*.example.com/*` when matching a request for `https://www.example.com/`. The pattern `example.com/hello/*` would take precedence over `example.com/*` when matching a request for `example.com/hello/world`.
+- When more than one route pattern could match a request URL, the most specific route pattern wins.  For example, the pattern `www.example.com/*` would take precedence over `*.example.com/*` when matching a request for `https://www.example.com/`.  The pattern `example.com/hello/*` would take precedence over `example.com/*` when matching a request for `example.com/hello/world`.
 
-- Route pattern matching considers the entire request URL, including the query parameter string. Since route patterns may not contain query parameters, the only way to have a route pattern match URLs with query parameters is to terminate it with a wildcard, `*`.
+- Route pattern matching considers the entire request URL, including the query parameter string.  Since route patterns may not contain query parameters, the only way to have a route pattern match URLs with query parameters is to terminate it with a wildcard, `*`.
 
 - Route patterns are case sensitive, for example, `example.com/Images/*` and `example.com/images/*` are two distinct routes.
 
-A route can be specified without being associated with a Worker; this will act to negate any less specific patterns. For example, consider this pair of route patterns, one with a Workers script and one without:
+A route can be specified without being associated with a Worker; this will act to negate any less specific patterns.  For example, consider this pair of route patterns, one with a Workers script and one without:
 
 ```txt
 *example.com/images/cat.png -> <no script>
 *example.com/images/*       -> worker-script
 ```
 
-In this example, all requests destined for example.com and whose paths are prefixed by `/images/` would be routed to `worker-script`, _except_ for `/images/cat.png`, which would bypass Workers completely. Requests with a path of `/images/cat.png?foo=bar` would be routed to `worker-script`, due to the presence of the query string.
+In this example, all requests destined for example.com and whose paths are prefixed by `/images/` would be routed to `worker-script`, _except_ for `/images/cat.png`, which would bypass Workers completely.  Requests with a path of `/images/cat.png?foo=bar` would be routed to `worker-script`, due to the presence of the query string.
 
 ### Validity
 
@@ -82,7 +82,7 @@ The following set of rules govern route pattern validity.
 
 #### Route patterns must include your zone
 
-If your zone is `example.com`, then the simplest possible route pattern you can have is `example.com`, which would match `http://example.com/` and `https://example.com/`, and nothing else. As with a URL, there is an implied path of `/` if you do not specify one.
+If your zone is `example.com`, then the simplest possible route pattern you can have is `example.com`, which would match `http://example.com/` and `https://example.com/`, and nothing else.  As with a URL, there is an implied path of `/` if you do not specify one.
 
 #### Route patterns may not contain any query parameters
 
@@ -90,7 +90,7 @@ For example, `https://example.com/?anything` is not a valid route pattern.
 
 #### Route patterns may optionally begin with http:// or https://
 
-If you omit a scheme in your route pattern, it will match both `http://` and `https://` URLs. If you include `http://` or `https://`, it will only match HTTP or HTTPS requests, respectively.
+If you omit a scheme in your route pattern, it will match both `http://` and `https://` URLs.  If you include `http://` or `https://`, it will only match HTTP or HTTPS requests, respectively.
 
 - `https://*.example.com/` matches `https://www.example.com/` but not `http://www.example.com/`.
 
@@ -98,7 +98,7 @@ If you omit a scheme in your route pattern, it will match both `http://` and `ht
 
 #### Hostnames may optionally begin with `*`
 
-If a route pattern hostname begins with `*`, then it matches the host and all subhosts. If a route pattern hostname begins with `*.`, then it only matches all subhosts.
+If a route pattern hostname begins with `*`, then it matches the host and all subhosts.  If a route pattern hostname begins with `*.`, then it only matches all subhosts.
 
 - `*example.com/` matches `https://example.com/` and `https://www.example.com/`.
 
@@ -118,7 +118,7 @@ There is a well-known bug associated with path matching concerning wildcards (`*
 
 #### Subdomains must have a DNS Record
 
-All subdomains must have a [DNS record](https://support.cloudflare.com/hc/en-us/articles/360019093151#h_60566325041543261564371) to be proxied on Cloudflare and used to invoke a Worker. For example, if you want to put a worker on `myname.example.com`, and you have added `example.com` to Cloudflare but have not added any DNS records for `myname.example.com`, any request to `myname.example.com` will result in the error `ERR_NAME_NOT_RESOLVED`.
+All subdomains must have a [DNS record](https://support.cloudflare.com/hc/en-us/articles/360019093151#h_60566325041543261564371) to be proxied on Cloudflare and used to invoke a Worker.  For example, if you want to put a worker on `myname.example.com`, and you have added `example.com` to Cloudflare but have not added any DNS records for `myname.example.com`, any request to `myname.example.com` will result in the error `ERR_NAME_NOT_RESOLVED`.
 
 {{<Aside type="warning">}}
 
