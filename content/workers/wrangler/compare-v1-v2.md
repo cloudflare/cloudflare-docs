@@ -4,13 +4,13 @@ title: Comparing Wrangler 1 & 2
 weight: 11
 ---
 
-## What's new
+## New in Wrangler 2
 
 `wrangler` 2.0 introduces a number of new features for developing and deploying a Worker. This document is to show previous users of `wrangler` 1.x what they can expect when they move to `wrangler` v2.
 
 - `wrangler.toml` is no longer mandatory.
 - `dev` and `publish` accept CLI arguments.
-- `tail` can be run on arbitrary script names
+- `tail` can be run on arbitrary Worker names
 - `init` creates a project boilerplate.
 - Service environments.
 - JSON bindings for `vars`.
