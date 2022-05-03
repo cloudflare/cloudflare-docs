@@ -1,37 +1,18 @@
 ---
 pcx-content-type: concept
-title: IPFS Gateway
-weight: 3
+title: Interplanetary File System (IPFS)
+weight: 1
 ---
 
-# IPFS Gateway
+# Interplanetary File System (IPFS)
 
-Cloudflare's read-only Distributed Web Gateway lets you access content stored on
-the InterPlanetary File System (IPFS) quickly and easily, without downloading
-any special software or giving up any storage space on your computer.
+The Interplanetary File System (IPFS) is a distributed file storage protocol that allows computers all over the globe to store and serve files as part of a giant peer-to-peer network.
 
-Cloudflare's gateway is hosted at https://cloudflare-ipfs.com/. You can find the
-basics on IPFS and [how to serve your website](/web3/ipfs-gateway/connecting-website/) through our gateway there. These
-docs are going to get further into the weeds.
+Any computer, anywhere in the world, can download the IPFS software and start hosting and serving files.
 
-{{<Aside type="warning">}}
+If someone runs IPFS on their computer and uploads a file to the IPFS network, that file can be viewed and downloaded by anyone else in the world who is also running IPFS.
 
-To improve our service, the IPFS Gateway is now available in Private Beta. You can [register](https://forms.gle/3c2xAzawnDcqWzgN7) to get notified when the service opens to a wider audience.
-
-{{</Aside>}}
-
-## Refresher on IPFS
-
-### You’re a Client. And a Server.
-
-Every single computer that’s running IPFS acts as both a client and a server. In
-other words, each computer running the IPFS software can serve content to any
-other computer in the network, as well as request content from anyone in the
-network. So if you run IPFS on your computer and upload a picture to the IPFS
-network, that image can be viewed and downloaded by anyone else in the world who
-is also running IPFS.
-
-### Content Identifiers
+## Content Identifiers
 
 Every file added to IPFS is given a unique address derived from a hash of the
 file's content. This address is called a Content Identifier (CID) and it
@@ -50,11 +31,11 @@ A CID will typically look something like this:
     QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco
 
 However, the same hash could be encoded with
-[Base32](https://en.wikipedia.org/wiki/Base32) and there are a slew of other
+[Base32](https://en.wikipedia.org/wiki/Base32) or other
 supported hash algorithms including [SHA-3](https://en.wikipedia.org/wiki/SHA-3)
 and [BLAKE2](https://en.wikipedia.org/wiki/BLAKE_(hash_function)).
 
-### Uploading to IPFS
+## Uploading to IPFS
 
 IPFS is fundamentally a [Distributed Hash Table
 (DHT)](https://en.wikipedia.org/wiki/Distributed_hash_table) which maps from
@@ -74,7 +55,7 @@ can upload the same data, and then downloads will be spread between all of them.
 If any one of them goes offline or decides to stop hosting the data, the others
 can pick up the slack.
 
-### Directories
+## Directories
 
 Note that it's not just individual files that can be uploaded. For example,
 let's take a folder called `example`, which has exactly one file,
@@ -100,7 +81,7 @@ Directories make it possible to address an entire static website with a single
 CID and access different pages of the website by requesting different files in
 the directory.
 
-### Using DNS to Get Rid of CIDs
+## Using DNS to Get Rid of CIDs
 
 Just like DNS saves people browsing the Internet from having to remember the IP
 address of every website they want to visit, DNS can also save us from having to

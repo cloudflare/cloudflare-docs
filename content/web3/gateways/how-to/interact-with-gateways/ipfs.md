@@ -1,10 +1,10 @@
 ---
-pcx-content-type: tutorial
-title: Browsing Content on IPFS
-weight: 2
+pcx-content-type: how-to
+title: IPFS
+weight: 1
 ---
 
-# Browsing Content on IPFS
+# Interacting with IPFS Gateway
 
 Browsing IPFS using Cloudflare's gateway requires two things: a browser
 connected to the Internet, and the address of something on IPFS that you want to
@@ -45,7 +45,6 @@ this:
 - https://cloudflare-ipfs.com/ipfs/QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco/wiki/
 - or this: https://cloudflare-ipfs.com/ipns/ipfs.io/
 
-The first link is a mirror of Wikipedia, and I can say that with confidence
-because it is an /ipfs/ link and therefore immutable. The second link is IPFS's
+The first link is a mirror of Wikipedia, which is an /ipfs/ link and therefore immutable. The second link is IPFS's
 marketing site, and they can update it at any time by modifying the DNS records
 associated with the ipfs.io domain.

@@ -23,7 +23,7 @@ use.
 
 These popular JavaScript frameworks are covered in a [blog
 post](https://medium.com/pinata/how-to-easily-host-a-website-on-ipfs-9d842b5d6a01)
-from [Pinata](https://pinata.cloud/). They're fixed with minor config changes.
+from [Pinata](https://pinata.cloud/). They are fixed with minor config changes.
 
 ## Gatsby
 

@@ -1,14 +1,22 @@
 ---
 pcx-content-type: concept
-title: Getting started
-weight: 2
+title: Ethereum Gateway
+weight: 4
 ---
 
-# Getting started
+# Ethereum Gateway
 
-Cloudflare's Ethereum Gateway is part of the wider Distributed Web Gateway
-offering, specifically providing access to the Ethereum network. In particular,
-users can read all information that has been agreed upon by the consensus of
+Cloudflare's Ethereum Gateway lets you interact with the Ethereum network
+without installing any software on your computer.
+
+Our gateway makes it possible to add interactive elements to sites powered by
+Ethereum smart contracts on a decentralized compute platform. Combined with the
+[IPFS gateway](/web3/ipfs-gateway/), you have decentralized web and
+resource hosting with the added speed, security, and reliability of the
+Cloudflare edge network. And you have direct access our Ethereum Gateway at
+<https://cloudflare-eth.com>.
+
+In particular, users can read all information that has been agreed upon by the consensus of
 existing nodes in the network. In addition, they can write their own
 transactions and smart contracts to be stored by these nodes in a distributed
 manner. Anyone else on the network will be able to view these transactions, and
