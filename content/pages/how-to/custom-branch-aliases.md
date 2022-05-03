@@ -1,9 +1,9 @@
 ---
 pcx-content-type: how-to
-title: Adding custom branch aliases
+title: Add a custom domain to a branch
 ---
 
-# Adding custom branch aliases
+# Add a custom domain to a branch
 
 In this tutorial, you will learn how to add a custom domain (`staging.example.com`) that will point to a specific branch (`staging`) on your Pages project.
 
