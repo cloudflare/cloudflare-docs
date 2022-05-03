@@ -58,7 +58,7 @@ You must have pushed at least one branch to your GitHub or GitLab project in ord
 
 {{</Aside>}}
 
-![Set up builds and deployments page with Project name and Production branch filled in](./images/configuration.png)
+![Set up builds and deployments page with Project name and Production branch filled in](/pages/get-started/images/configuration.png)
 
 #### Build settings
 
@@ -72,11 +72,11 @@ You do not need a framework to deploy with Cloudflare Pages. You can continue wi
 
 Our deployment dashboard provides a number of framework-specific presets, which provide the default values for the selected framework. If you are unsure what the correct values are for this section, refer to our documentation on [build configuration](/pages/platform/build-configuration/). If you do not need a build step, leave the **Build command** field blank.
 
-![Build setting fields that need to be filled in](./images/build-settings.png)
+![Build setting fields that need to be filled in](/pages/get-started/images/build-settings.png)
 
 Cloudflare Pages begins by working from your repository's root directory. The entire build pipeline, including the installation steps, will begin from this location. If you would like to change this, specify a new root directory location through the **Root directory (advanced)** > **Path** field.
 
-![Root directory field to be filled in](./images/root-directory.png)
+![Root directory field to be filled in](/pages/get-started/images/root-directory.png)
 
 <details>
 <summary>Understanding your build configuration</summary>
@@ -103,7 +103,7 @@ After you have chosen your _Framework preset_ or left this field blank if you ar
 
 Once you have finished setting your build configuration, select **Save and Deploy**. Your project build logs will output as Cloudflare Pages installs your project dependencies, builds the project, and deploys it to Cloudflare's global network.
 
-![Deployment details in the Cloudflare dashboard](./images/deploy-log.png)
+![Deployment details in the Cloudflare dashboard](/pages/get-started/images/deploy-log.png)
 
 When your project has finished deploying, you will receive a unique URL to view your deployed site.
 
@@ -111,13 +111,13 @@ When your project has finished deploying, you will receive a unique URL to view 
 
 After your first deploy, select **Continue to project** to see your project's configuration in the Cloudflare Pages dashboard. On this page, you can see your project's current deployment status, the production URL and associated commit, and all past deployments.
 
-![Site dashboard displaying your environments and deployments](./images/site-dashboard.png)
+![Site dashboard displaying your environments and deployments](/pages/get-started/images/site-dashboard.png)
 
 ### Adding a custom domain
 
 While every Cloudflare Pages site receives a custom subdomain during deployment, you may also wish to point custom domains (or subdomains) to your site. To do this, select the **Custom domains** section in your site dashboard.
 
-![Adding a custom domain for your Pages project through the Cloudflare dashboard](./images/domains.png)
+![Adding a custom domain for your Pages project through the Cloudflare dashboard](/pages/get-started/images/domains.png)
 
 Select **Set up a domain**, provide the domain that you would like to serve your Cloudflare Pages site on and select **Continue**.
 
@@ -179,7 +179,7 @@ To delete your Pages project:
 
 In the **Settings** section, you can configure advanced settings, such as changing your project name, updating your git configuration, or updating your build command, build directory or environment variables.
 
-![Configuring your Pages project settings in the Cloudflare dashboard](./images/settings.png)
+![Configuring your Pages project settings in the Cloudflare dashboard](/pages/get-started/images/settings.png)
 
 Refer to the [Hexo framework guide](/pages/framework-guides/deploy-a-hexo-site/#using-a-specific-nodejs-version) for more information on how to set up a Node.js version environment variable.
 
