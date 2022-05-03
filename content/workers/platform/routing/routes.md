@@ -11,13 +11,10 @@ Routes allow users to map a URL pattern to a Worker script to enable Workers to 
 
 ## Customizing routes
 
-For zones proxied on Cloudflare, route patterns decide what (if any) script is matched based on the URL of that request. Requests are routed through a Workers script when the URL matches a route pattern assigned to that script.
-
-{{<Aside type="warning">}}
-
-For any Worker script that you want to run on your domain, that domain must be proxied through Cloudflare prior to adding the route.
-
-{{</Aside>}}
+For zones proxied on Cloudflare, route patterns decide what (if any) script is matched based on the URL of that request. Requests are routed through a Workers script when the URL matches a route pattern assigned to that script. To add a Route, you need:
+* An active Cloudflare Zone
+* An Orange-clouded DNS record
+* A Worker to invoke
 
 Route patterns can be added with the Cloudflare API or in **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Add route** in the Cloudflare dashboard.
 
@@ -39,7 +36,7 @@ If your route is configured to a hostname, you will need to add a DNS record to 
 
 Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is configurable in the Cloudflare dashboard. Your `*.workers.dev` subdomain allows you to deploy Workers scripts [without attaching your domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/).
 
-To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`, go to **Account Home** > **Workers** > **Overview** > **Your subdomain**. The `name` field in your Worker configuration is used as the secondary subdomain for the deployed script, (for example, `my-worker.my-subdomain.workers.dev.`).
+To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`, go to **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **Overview** > **Your subdomain**. The `name` field in your Worker configuration is used as the secondary subdomain for the deployed script, (for example, `my-worker.my-subdomain.workers.dev.`).
 
 ### Matching Behavior
 

@@ -7,7 +7,7 @@ title: Routing
 
 ## Background
 
-Routing lets customers connect a Worker to the Internet, allowing it to receive HTTP requests on their Cloudflare zones. There are two ways to route to a Worker: [Custom Domains](/workers/platform/routing/custom-domains) and [Routes](/workers/platform/routing/routes).
+Routing lets customers connect a Worker to the Internet, allowing it to receive HTTP requests on their Cloudflare zones. There are two ways to route to a Worker: [Custom Domains](/workers/platform/routing/custom-domains) and [Routes](/workers/platform/routing/routes). Routes add Workers functionality to your existing Orange-clouded hostnames, as a proxy in front of your application server. Custom Domains can replace the Orange-cloud process entirely – automatically attaching a Worker to your hostname by creating a DNS record and an SSL cert on your behalf. Custom Domains can also be invoked within the same zone via `fetch()`, unlike Routes.
 
 ## Custom Domains
 [Custom Domains](/workers/platform/routing/custom-domains) allow our customers to attach a Worker to a hostname. Cloudflare will create DNS records and issue necessary certificates on behalf of our customers. The DNS records will point directly to the Worker.
@@ -23,7 +23,7 @@ Custom Domains can stack on top of each other. If you have Worker A attached to 
 
 ![Routes work with your applications defined in Cloudflare DNS](./media/routes-diagram.png)
 
-Routes can stack on top of Custom Domains, if configured on the appropriate URL. If you'd like to run a logging Worker in front of your application, you can create a Custom Domain on your application Worker, and create a Route for your logging Worker. Calling `fetch()` will invoke the application Worker on your Custom Domain. Note that Routes cannot stack on top of other Routes.
+Routes can `fetch()` Custom Domains, and take precedence if configured on the same hostname. If you'd like to run a logging Worker in front of your application, for example, you can create a Custom Domain on your application Worker for `app.example.com`, and create a Route for your logging Worker at `app.example.com/*`. Calling `fetch()` will invoke the application Worker on your Custom Domain. Note that Routes cannot be the target of a same-zone `fetch()` call.
 
 ## What's Best for Me?
 
