@@ -81,16 +81,4 @@ Directories make it possible to address an entire static website with a single
 CID and access different pages of the website by requesting different files in
 the directory.
 
-## Using DNS to Get Rid of CIDs
 
-Just like DNS saves people browsing the Internet from having to remember the IP
-address of every website they want to visit, DNS can also save us from having to
-remember the CIDs of websites on IPFS. The trick is to put the entire website
-inside a directory, compute the CID of the directory, and put that CID into a
-special DNS record associated with a domain called a DNSLink.
-
-This way, when a gateway gets a request for `https://example.com/index.html`, the
-gateway can lookup the CID of the directory from example.com's DNS and then
-serve the file `index.html` from that directory. When a new version is ready to
-be published, the site owner updates their DNSLink DNS record to contain the new
-CID and the gateway will start serving the new version automatically.
