@@ -16,7 +16,7 @@ This document describes the difference between `wrangler` 1.x and v2, specifical
 
 - **`main`**: _string_, optional
 
-  The `main` field is used to specify an entry point to the Worker. It may be in the established service worker format[`], or the newer, preferred modules format[`]. An entry point is now explicitly required, and can be configured either via the `main` field, or passed directly as a command line argument; e.g. `wrangler dev index.js`. This field replaces the legacy `build.upload.main` field (which only applied to modules format Workers). Read more at (ref:)[]
+  The `main` field is used to specify an entry point to the Worker. It may be in the established service worker format[`], or the newer, preferred modules format[`]. An entry point is now explicitly required, and can be configured either via the `main` field, or passed directly as a command line argument; for example, `wrangler dev index.js`. This field replaces the legacy `build.upload.main` field (which only applied to modules format Workers). Read more at (ref:)[]
 
 - **`rules`**: _array_, optional
 
@@ -27,7 +27,7 @@ This document describes the difference between `wrangler` 1.x and v2, specifical
   The `legacy_env` field toggles how environments are handled by `wrangler`.
 
   - When `legacy_env` is `true`, it uses the legacy-style environments, where each environment is treated as a separate Worker in the dashboard, and environment names are appended to the `name` when published.
-  - When `legacy_env` is `false`, it uses the newer service environments, where scripts for a given Worker are grouped under the same same script name in the Cloudflare Workers dashboard, and environments are subdomains for a given published script (when `workers_dev = true`).
+  - When `legacy_env` is `false`, it uses the newer service environments, where scripts for a given Worker are grouped under the same script name in the Cloudflare Workers dashboard, and environments are subdomains for a given published script (when `workers_dev = true`).
     Read more at (ref:)[]
 
 - **`services`**: TODO
@@ -38,7 +38,7 @@ This document describes the difference between `wrangler` 1.x and v2, specifical
 
 ### Non-mandatory fields
 
-A few configuration fields which were previously required, are now non-mandatory in particular situations; they can either be inferred, or added as an optimisation. (Indeed, _no_ fields are mandatory anymore when starting, and you can gradually add configuration as the need arises.)
+A few configuration fields which were previously required, are now non-mandatory in particular situations; they can either be inferred, or added as an optimisation. No fields are mandatory anymore when starting with `wrangler`, and you can gradually add configuration as the need arises.
 
 - **`name`**: _string_
 
@@ -46,13 +46,13 @@ A few configuration fields which were previously required, are now non-mandatory
 
 - **`account_id`**: _string_
 
-  The `account_id` field is not mandatory for any of the commands. Any relevant commands will check if you're logged in, and if not, will prompt you to log in. Once logged in it will use your account ID, and will not prompt you again until your login session expires. If you multiple account IDs, you will be presented with a list of accounts to choose from.
+  The `account_id` field is not mandatory for any of the commands. Any relevant commands will check if you are logged in, and if not, will prompt you to log in. Once logged in it will use your account ID, and will not prompt you again until your login session expires. If you have multiple account IDs, you will be presented with a list of accounts to choose from.
 
-  You can still configure `account_id` in your `wrangler.toml` file, or as an environment variable `CLOUDFLARE_ACCOUNT_ID`; this will make startup faster, and bypass the list of choices if you have multiple IDs. By also setting the `CLOUDFLARE_API_TOKEN` environment variable, this configuration is useful in scenarios like CI/CD where you won't be able to interactively login.
+  You can still configure `account_id` in your `wrangler.toml` file, or as an environment variable `CLOUDFLARE_ACCOUNT_ID`; this will make startup faster, and bypass the list of choices if you have multiple IDs. By also setting the `CLOUDFLARE_API_TOKEN` environment variable, this configuration is useful in scenarios like CI/CD where you will not be able to interactively login.
 
 - **`workers_dev`** _boolean_, default: `true` when no routes are present
 
-  The `workers_dev` field is used to indicate that the Worker should be published to `workers.dev`. For example, for a script named "my-worker" and a previously configured workers.dev subdomain "username", the Worker will get published to https://my-worker.username.workers.dev.com. This field is not mandatory, and defaults to `true` when `route` or `routes` are not configured. When routes are present, it defaults to `false`. If you want to neither publish it to a `workers.dev` subdomain nor any routes, you can set workers_dev to `false`. This useful when you're publishing a Worker as a standalone service that can only be accessed from another Worker with (`services`)[TODO:link/to/services/docs] bindings.
+  The `workers_dev` field is used to indicate that the Worker should be published to a `*.workers.dev` subdomain. For example, for a Worker named my-worker and a previously configured `*.workers.dev` subdomain `username`, the Worker will get published to `my-worker.username.workers.dev.com`. This field is not mandatory, and defaults to `true` when `route` or `routes` are not configured. When routes are present, it defaults to `false`. If you want to neither publish it to a `*.workers.dev` subdomain nor any routes, set `workers_dev` to `false`. This useful when you are publishing a Worker as a standalone service that can only be accessed from another Worker with (`services`)[TODO:link/to/services/docs] bindings.
 
 ### Deprecated fields (non-breaking)
 
@@ -60,15 +60,15 @@ A few configuration fields are deprecated, but their presence is not a breaking 
 
 - **`zone_id`**: _string_, deprecated
 
-  The `zone_id` field is deprecated, and will be removed in a future release. It is now inferred from `route`/`routes`, and optionally from `dev.host` when using `wrangler dev`. This also makes it simpler to deploy a single Worker to multiple domains.
+  The `zone_id` field is deprecated and will be removed in a future release. It is now inferred from `route`/`routes`, and optionally from `dev.host` when using `wrangler dev`. This also makes it simpler to deploy a single Worker to multiple domains.
 
 - **`build.upload`**: _object_, deprecated
 
-  The `build.upload` field is deprecated, and will be removed in a future release. It's usage results in a warning with suggestions on rewriting the configuration file to remove the warnings.
+  The `build.upload` field is deprecated and will be removed in a future release. Its usage results in a warning with suggestions on rewriting the configuration file to remove the warnings.
 
-  - `build.upload.main`/`build.upload.dir` are replaced by the `main` fields, and is applicable to both service worker format and modules format Workers.
-  - `build.upload.rules` is replaced by the `rules` field, and is applicable to both service worker format and modules format Workers.
-  - `build.upload.format` is no longer specified, and is automatically inferred by `wrangler`.
+  - `build.upload.main`/`build.upload.dir` are replaced by the `main` fields and are applicable to both service worker format and modules format Workers.
+  - `build.upload.rules` is replaced by the `rules` field and is applicable to both service worker format and modules format Workers.
+  - `build.upload.format` is no longer specified and is automatically inferred by `wrangler`.
 
 ### Deprecated fields (breaking)
 
@@ -112,9 +112,9 @@ configure routes in `wrangler.toml`
 
 ## Other deprecated behaviour
 
-- `wrangler` will no longer use `index.js` in the directory where `wrangler dev` is called as the entry point to a worker. Use the `main` configuration field, or explicitly pass it as a command line argument. Example: `wrangler dev index.js`.
+- `wrangler` will no longer use `index.js` in the directory where `wrangler dev` is called as the entry point to a Worker. Use the `main` configuration field, or explicitly pass it as a command line argument, for example: `wrangler dev index.js`.
 
-- `wrangler` will no longer assume that bare specifiers are file names if they're not represented as a path. For example, in a folder like so:
+- `wrangler` will no longer assume that bare specifiers are file names if they are not represented as a path. For example, in a folder like so:
 
   ```
   project
@@ -132,7 +132,7 @@ configure routes in `wrangler.toml`
   });
   ```
 
-  `wrangler` 1.x would resolve `import SomeDependency from "some-dependency.js";` to the file `some-dependency.js`. This will also work in wrangler 2.0, but will also log a deprecation warning; in the future, this will break with an error. Instead, you should rewrite the import to specifiy that it's a relative path, like so:
+  `wrangler` 1.x would resolve `import SomeDependency from "some-dependency.js";` to the file `some-dependency.js`. This will also work in wrangler 2.0, but will also log a deprecation warning; in the future, this will break with an error. Instead, you should rewrite the import to specifiy that it is a relative path, like so:
 
   ```diff
   - import SomeDependency from "some-dependency.js";

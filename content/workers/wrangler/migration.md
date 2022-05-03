@@ -12,7 +12,7 @@ The latest version of wrangler ships with new features and improvements that wil
 
 The good news is that the CLI itself should guide you through the upgrade process.
 
-To learn more about what's new in wrangler, refer to the [What's new page](/workers/wrangler/compare-v1-v2/).
+To learn more about new updates in Wrangler, refer to the [What's new page](/workers/wrangler/compare-v1-v2/).
 
 ### Upgrade to Wrangler 2
 
@@ -50,7 +50,7 @@ Example output:
 
 ### Deprecations
 
-The following commands is now deprecated in wrangler 2.0, if you're migrating, be sure to go through the list and remove the commands that is no longer required:
+The following commands are deprecated in Wrangler 2.0, if you are migrating, be sure to go through the list and remove the commands that are no longer required:
 
 - Remove the `type` and `webpack_config` property in the config that is no longer required.
 - Remove `webpack`
