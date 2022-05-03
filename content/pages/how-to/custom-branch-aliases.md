@@ -17,7 +17,7 @@ If you attempt to follow this guide using an external DNS provider, your custom 
 
 {{</Aside>}}
 
-First, make sure that you have made a commit on the branch you would like to set up an alias for. This will prompt a build in Pages.
+First, make sure that you have a successful deployment on the branch you would like to set up a custom domain for.
 
 Next, add a custom domain under your Pages project for your desired custom domain, for example, `staging.example.com`.
 
