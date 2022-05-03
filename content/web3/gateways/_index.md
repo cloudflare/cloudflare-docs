@@ -6,7 +6,16 @@ weight: 4
 
 # Gateways
 
-Cloudflare's Web3 Gateways serve as bridges between Web 2.0 and Web3, providing HTTP-accessible interfaces to the [IPFS](/web3/gateways/concepts/ipfs/) and [Ethereum](/web3/gateways/concepts/ethereum/) networks.
+Cloudflare's Web3 Gateways serve as bridges between Web 2.0 and Web3, providing HTTP-accessible interfaces to the [IPFS](/web3/gateways/reference/ipfs-gateway/) and [Ethereum](/web3/gateways/reference/ethereum-gateway/) networks.
+
+## Functionality
+
+| Gateway | Read | Write |
+| --- | --- | --- |
+| [IPFS](/web3/gateways/reference/ipfs-gateway/) | Yes | No |
+| [Ethereum](/web3/gateways/reference/ethereum-gateway/) | Yes | Yes |
+
+## Resources
 
 As you get started, explore the following resources to get the most out of Cloudflare Web3 Gateways:
 

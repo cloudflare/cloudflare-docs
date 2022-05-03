@@ -26,14 +26,9 @@ encoding scheme originally developed for Bitcoin and has the advantage that
 letters that might be mistaken for each other in certain fonts (like zero and
 the capital letter O) aren't included.
 
-A CID will typically look something like this:
+A CID will typically look something like `QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco`.
 
-    QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco
-
-However, the same hash could be encoded with
-[Base32](https://en.wikipedia.org/wiki/Base32) or other
-supported hash algorithms including [SHA-3](https://en.wikipedia.org/wiki/SHA-3)
-and [BLAKE2](https://en.wikipedia.org/wiki/BLAKE_(hash_function)).
+However, the same hash could be encoded with [Base32](https://en.wikipedia.org/wiki/Base32) or other supported hash algorithms including [SHA-3](https://en.wikipedia.org/wiki/SHA-3) and [BLAKE2](https://en.wikipedia.org/wiki/BLAKE_(hash_function)).
 
 ## Uploading to IPFS
 
@@ -57,9 +52,7 @@ can pick up the slack.
 
 ## Directories
 
-Note that it's not just individual files that can be uploaded. For example,
-let's take a folder called `example`, which has exactly one file,
-`example_text.txt`, containing the string `I'm trying out IPFS`.
+You can upload more than just individual files. For example, let's take a folder called `example`, which has exactly one file, `example_text.txt`, containing the string `I'm trying out IPFS`.
 
 If that folder were uploaded with the command `ipfs add -r ./example`, both the
 folder and the file it contains would have their own CID. In this case, the
@@ -80,5 +73,3 @@ are added/removed.
 Directories make it possible to address an entire static website with a single
 CID and access different pages of the website by requesting different files in
 the directory.
-
-

@@ -2,13 +2,13 @@
 pcx-content-type: how-to
 title: Ethereum
 weight: 2
+meta:
+  title: Interacting with Ethereum Gateway
 ---
 
 # Interacting with Ethereum Gateway
 
 Once you [create a new Ethereum Gateway](/web3/gateways/how-to/#create-a-gateway), you can interact with the Ethereum network by specifying the correct JSON blob for your query.
-
-For a list of available API methods
 
 ## Reading from the network
 
@@ -21,10 +21,7 @@ your JSON blob takes the form:
 { "jsonrpc": "2.0", "method": "eth_getBlockByNumber", "params": ["0x2244", true], "id": 1 }
 ```
 
-Each blob must contain a valid method parameter, the Cloudflare supported
-methods are [given below](#cloudflare-supported-api). The `params` contains here contains the block number that we would like to locate, and a boolean expressing whether each individual
-transaction in the block should be shown in their entirety (`true`), or as stubs
-(`false`).
+Each blob use a valid [`method` parameter](/web3/gateways/reference/ethereum-gateway/supported-api-methods/). The `params` here contain the block number that we would like to locate and a boolean expressing whether each individual transaction in the block should be shown in their entirety (`true`) or as stubs (`false`).
 
 If we wanted to send this query to the Ethereum Gateway, then we could use a cURL command:
 
@@ -84,24 +81,11 @@ The response in both cases will be a JSON blob of the form:
 }
 ```
 
-For a full list of possible queries and examples, refer to the official [RPC
-documentation](https://github.com/ethereum/execution-apis).
-
-For a list of Cloudflare-supported methods, refer to [Supported API methods](/web3/gateways/reference/ethereum-gateway/supported-api-methods/).
-
 ## Writing to the network
 
-Currently the Ethereum Gateway allows you to write to the network using the
-`eth_sendRawTransaction` RPC method. This creates a new message call transaction
-or a contract creation for signed transactions. The transactions are signed
-using a secret key corresponding to your own [Ethereum
-wallet](https://www.ethereum.org/use/#_3-what-is-a-wallet-and-which-one-should-i-use).
-There are guides available at the previous link describing how to set up
-such a wallet.
+Currently the Ethereum Gateway allows you to write to the network using the `eth_sendRawTransaction` RPC method. This creates a new message call transaction or a contract creation for signed transactions. The transactions are signed using a secret key corresponding to your own [Ethereum wallet](https://www.ethereum.org/use/#_3-what-is-a-wallet-and-which-one-should-i-use).
 
-Once you have a wallet set up and a method of signing your own transactions,
-you can write that transaction to the Ethereum network via the Cloudflare
-Ethereum Gateway. Signed transactions use hexadecimal strings of the form:
+Once you have a wallet set up and a method of signing your own transactions, you can write that transaction to the Ethereum network via the [Cloudflare Ethereum Gateway](/web3/gateways/reference/ethereum-gateway/supported-api-methods/). Signed transactions use hexadecimal strings of the form:
 
 ```json
 "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"

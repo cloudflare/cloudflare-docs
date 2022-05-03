@@ -2,46 +2,20 @@
 pcx-content-type: how-to
 title: IPFS
 weight: 1
+meta:
+  title: Interacting with IPFS Gateway
 ---
 
 # Interacting with IPFS Gateway
 
-Browsing IPFS using Cloudflare's gateway requires two things: a browser
-connected to the Internet, and the address of something on IPFS that you want to
-view.
+Once you [create a new IPFS Gateway](/web3/gateways/how-to/#create-a-gateway), you can get data from the IPFS network by using a URL.
 
-Every file added to the IPFS network is given a unique address based on its contents which is called a Content Identifier, or CID. So if you have an image stored on IPFS, its CID would be based on the hash of the bits that compose that image.
+## URL structure
 
-The job of an _IPFS Gateway_ like Cloudflare's is to take requests for CIDs and
-return the content corresponding to the given CID. Each time you access a piece
-of content through a gateway, you provide a URL with two parts:
+Every time you access a piece of content through IPFS, you need a URL with two parts: the gateway hostname and the request path.
 
-1.  The hostname of the gateway, or essentially, who you want to answer the
-    request. Cloudflare's gateway is accessible at `cloudflare-ipfs.com`, while
-    the makers of IPFS run a gateway at `ipfs.io`, and if you run your own node
-    you may even have a gateway at `localhost:8080`!
-2.  The request path, which comes after the hostname. The request path either
-    starts with `/ipfs/<hash>` or `/ipns/<domain>`. If the request starts with
-    `/ipfs/`, that tells the gateway that you want the content with the CID that
-    immediately follows. Because the content is addressed by CID, the gateway's
-    response is _immutable_ and will _never change_. If the request starts with
-    `/ipns/`, that tells the gateway that you want it to lookup the CID
-    associated with a given domain in DNS and then serve whatever content
-    corresponds to the CID it happens to find. Because DNS can change over time,
-    so will the gateway's response.
+If you are using the Cloudflare IPFS Gateway, your gateway hostname will be `cloudflare-ipfs.com` and the request path will vary based on the type of content you are serving.
 
-    That's generally going to look like:
-    `/ipfs/QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco`. The `/ipfs/` tells
-    the gateway that you're providing the address of a piece of content stored on
-    IPFS. The `QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco` is the address
-    itself.
+If a request path is `/ipfs/<CID_HASH>`, that tells the gateway that you want the content with the CID that immediately follows. Because the content is addressed by CID, the gateway's response is *immutable* and will *never change*. An example would be https://cloudflare-ipfs.com/ipfs/QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco/wiki/, which is a mirror of Wikipedia and an immutable `/ipfs/` link.
 
-Put those two components all together and the URL you provide will look like
-this:
-
-- https://cloudflare-ipfs.com/ipfs/QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco/wiki/
-- or this: https://cloudflare-ipfs.com/ipns/ipfs.io/
-
-The first link is a mirror of Wikipedia, which is an /ipfs/ link and therefore immutable. The second link is IPFS's
-marketing site, and they can update it at any time by modifying the DNS records
-associated with the ipfs.io domain.
+If a request path is `/ipns/<DOMAIN>`, that tells the gateway that you want it to lookup the CID associated with a given domain in DNS and then serve whatever content corresponds to the CID it happens to find. Because DNS can change over time, so will the gateway's response. An example would be https://cloudflare-ipfs.com/ipns/ipfs.io/, which is IPFS's marketing site and can be changed at any time by modifying the [DNSLink record](/web3/gateways/concepts/dnslink/) associated with the `ipfs.io` domain.

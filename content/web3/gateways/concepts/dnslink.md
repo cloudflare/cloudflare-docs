@@ -1,7 +1,7 @@
 ---
 pcx-content-type: concept
 title: DNSLink
-weight: 3
+weight: 4
 ---
 
 # DNSLink
