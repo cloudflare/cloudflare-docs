@@ -34,25 +34,18 @@ The signup process will guide you through choosing a `*.workers.dev` subdomain a
 
 ## 2. Install the Workers CLI
 
-Installing `wrangler`, the Workers CLI, gives you the freedom to [`generate`](/workers/wrangler/cli-wrangler/commands/#generate), [`configure`](/workers/wrangler/cli-wrangler/commands/#configure), [`build`](/workers/wrangler/cli-wrangler/commands/#build), [`preview`](/workers/wrangler/cli-wrangler/commands/#preview), and [`publish`](/workers/wrangler/cli-wrangler/commands/#publish) your Workers projects from the comfort of your development environment.
+Installing `wrangler`, the Workers CLI, gives you the freedom to [`init`](/workers/wrangler/cli-wrangler/commands/#init), [`configure`](/workers/wrangler/cli-wrangler/commands/#configure), [`dev`](/workers/wrangler/cli-wrangler/commands/#dev), and [`publish`](/workers/wrangler/cli-wrangler/commands/#publish) your Workers projects from the comfort of your development environment.
 
 To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
 ```sh
-$ npm install -g @cloudflare/wrangler
+$ npm install -g wrangler
 ```
 
 or install with yarn:
 
 ```sh
-$ yarn global add @cloudflare/wrangler
-```
-
-Then run `wrangler --version` to confirm that the installation was successful:
-
-```sh
-$ wrangler --version
-👷 ✨  wrangler 1.19.4
+$ yarn global add wrangler
 ```
 
 ---
@@ -76,40 +69,28 @@ Open the browser, log in to your account, and select **Allow**. This will send a
 
 ---
 
-## 4. Generate a new project
+## 4. Initialize a new project
 
-Wrangler’s `generate` [command](/workers/wrangler/cli-wrangler/commands/#generate) will create a new project. By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate a new project. To provide a custom template, you may provide the [template argument](/workers/wrangler/cli-wrangler/commands/#generate) with a URL to your desired repository. For example, to create a Worker from the default template called `my-worker`, run:
+Wrangler’s `init` [command](/workers/wrangler/cli-wrangler/commands/#init) will create a new project. The `init` command will give you options to choose between TypeScript and JavaScript as well as the ability to generate a starter file. Run:
 
 ```sh
-~/ $ wrangler generate my-worker
+~/ $ wrangler init my-worker
 ```
 
-Wrangler will create a directory called `my-worker` and populate it with the contents of the starter template, in this case the default template. Wrangler will automatically configure the `wrangler.toml` file in the project’s root with the `name = "my-worker"`.
+Wrangler will create a directory called `src` and populate it with the contents of the starter file, in this case the default template. Wrangler will automatically configure the `wrangler.toml` file in the project’s root with the `name = "my-worker"`.
 
 ```sh
 ~/ $ cd my-worker
 ~/my-worker $ ls
-CODE_OF_CONDUCT.md LICENSE_MIT        index.js           wrangler.toml
-LICENSE_APACHE     README.md          package.json
+node_modules      package-lock.json package.json      src               wrangler.toml
 
 ~/my-worker $ cat wrangler.toml
 name = "my-worker"
-type = "javascript"
-account_id = ""
-workers_dev = true
-route = ""
-zone_id = ""
+main = "src/index.js"
+compatibility_date = "2022-05-03"
 ```
 
 Refer to the [Quick Starts](/workers/get-started/quickstarts/) page to see a complete list of starter templates.
-
-For example, to build a Workers project in TypeScript, run:
-
-```sh
-~/ $ wrangler generate my-typescript-worker https://github.com/cloudflare/worker-typescript-template
-```
-
-To start a project from your own code — rather than a starter — use [`wrangler init`](/workers/wrangler/cli-wrangler/commands/#init).
 
 ---
 
@@ -211,92 +192,17 @@ For inspiration, refer to [Built with Workers](https://workers.cloudflare.com/bu
 
 ## 6. Preview your project
 
-In order to preview your Worker, you need to configure your project by adding your `Account ID` to your project's `wrangler.toml` file.
-
-Run the command `wrangler whoami` and copy your `Account ID`.
-
-```bash
-$ wrangler whoami
-👋  You are logged in with an API Token, associated with the email '<Your Email>'.
-
-+----------------------------------+----------------------------------+
-| Account Name                     | Account ID                       |
-+----------------------------------+----------------------------------+
-| Your Account                     | $yourAccountId                   |
-+----------------------------------+----------------------------------+
-```
-
-Open your project's `wrangler.toml` file and paste it in as the value for the `account_id` field.
-
-```toml
----
-filename: wrangler.toml
-highlight: [2]
----
-name = "my-worker"
-account_id = "$yourAccountId"
-```
-
-Once you have filled in your `account_id`, you are ready to preview your code. Run the `wrangler dev` command:
-
 ```sh
 ~/my-worker $ wrangler dev
-💁  watching "./"
-👂  Listening on http://127.0.0.1:8787
+⬣ Listening at http://localhost:8787
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ [b] open a browser, [d] open Devtools, [l] turn on local mode, [c] clear console, [x] to exit                        │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
 This command will build your project, run it locally, and return a URL for you to visit to preview the Worker.
 
-{{<Aside header="A note about building">}}
-
-Running `wrangler dev` and `wrangler publish` both run `wrangler build` beforehand automatically, but it can be useful to run `build` separately to check for errors. Running `wrangler build` installs the necessary dependencies for your project and compiles it to make it ready for previewing or deployment. Learn [more about Wrangler](/workers/wrangler/cli-wrangler/commands/).
-
-{{</Aside>}}
-
 ---
-
-## 7. Configure your project for deployment
-
-To configure your project, fill in the missing fields in the `wrangler.toml` file in the root directory of your generated project. This file contains the information Wrangler needs to connect to the Cloudflare Workers API and publish your code.
-
-You should have already filled in the `account_id` field in the previous step. If not, run the command `wrangler whoami` and copy your `Account ID`.
-
-```bash
-$ wrangler whoami
-👋  You are logged in with an API Token, associated with the email '<Your Email>'!
-
-+----------------------------------+----------------------------------+
-| Account Name                     | Account ID                       |
-+----------------------------------+----------------------------------+
-| Your Account                     | $yourAccountId                   |
-+----------------------------------+----------------------------------+
-```
-
-Then, open up your project's `wrangler.toml` file and paste it in as the value for the `account_id` field.
-
-```toml
----
-filename: wrangler.toml
-highlight: [2]
----
-name = "my-worker"
-account_id = "$yourAccountId"
-```
-
-After you have filled in your `account_id`, configure the `type` to `"webpack"` in your `wrangler.toml` file to tell Wrangler to use [Webpack](/workers/wrangler/cli-wrangler/webpack/) to package your project for deployment. To learn more about `type` configuration, refer to the [`type` configuration](/workers/wrangler/cli-wrangler/configuration/) page.
-
-```toml
----
-filename: wrangler.toml
-highlight: [3]
----
-name = "my-worker"
-workers_dev = true
-account_id = "$yourAccountId"
-type = "webpack"
-```
-
-By default, this project will deploy to your `*.workers.dev` subdomain because the `workers_dev` value is set to `true`. When deploying to a `*.workers.dev` subdomain, the `name` field will be used as the secondary subdomain for the deployed script (for example, `my-worker.my-subdomain.workers.dev`).
 
 ### (Optional) Configure for deploying to a registered domain
 
@@ -316,16 +222,8 @@ To add a `production` environment, pass in a `zone_id` and `route`:
 ```toml
 ---
 filename: wrangler.toml
-highlight: [6, 7, 8, 9, 10, 11]
 ---
 name = "my-worker"
-account_id = "$yourAccountId"
-type = "webpack"
-workers_dev = true
-
-[env.production]
-# The ID of the domain to deploying to
-zone_id = "$yourZoneId"
 
 # The route pattern your Workers application will be served at
 route = "example.com/*"
