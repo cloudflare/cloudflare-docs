@@ -8,8 +8,8 @@ weight: 1
 
 Cloudflare classifies scripts according to the following:
 
-* The number of times a script was reported
-* Whether the script is considered malicious or not
+* The number of times a script was reported.
+* Whether the script is considered malicious or not.
 
 Use Page Shield's dashboards to review the scripts loaded in your domain. For more information, refer to [Monitor scripts on your site](/page-shield/use-dashboard/monitor-scripts/).
 

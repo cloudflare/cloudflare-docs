@@ -12,7 +12,7 @@ Page Shield implements different mechanisms to determine if a script is maliciou
 - Malicious domain checks
 - Malicious script detection
 
-Any updates to the threat feeds will trigger new checks for previously detected scripts, so that the Page Shield dashboards (**Active Scripts** and **All Reported Scripts**) always reflect the latest script categorization.
+Any updates to the threat feeds will trigger new checks for previously detected scripts so that the Page Shield dashboards (**Active Scripts** and **All Reported Scripts**) always reflect the latest script categorization.
 
 {{<Aside type="note">}}
 

@@ -46,7 +46,7 @@ Use the All Reported Scripts dashboard to review all scripts reported in your do
 3. Under **Active Scripts**, click **All scripts**.
 4. Review the information displayed in the **All Reported Scripts** dashboard.
 
-The All Reported Scripts dashboard allows you to filter the displayed scripts using different criteria, and to print a report with the displayed scripts.
+The All Reported Scripts dashboard allows you to filter the displayed scripts using different criteria and to print a report with the displayed scripts.
 
 ## View script details
 
