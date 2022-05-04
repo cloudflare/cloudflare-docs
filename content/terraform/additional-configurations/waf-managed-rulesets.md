@@ -138,14 +138,19 @@ Ensure that you place the skip rules **before** the rule that executes the Manag
 
 The following example adds three [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) for the Cloudflare Managed Ruleset:
 
-* Two rule-level overrides for rules with IDs `5de7edfa648c4d6891dc3e7f84534ffa` and `75a0060762034a6cb663fd51a02344cb`, setting their action to `log`.
-* A tag-level override for the `wordpress` tag, setting the action of all the rules with this tag to `js_challenge`. 
+* A rule override for rule with ID `5de7edfa648c4d6891dc3e7f84534ffa` setting the action to `log`.
+* A rule override for rule with ID `75a0060762034a6cb663fd51a02344cb` disabling the rule.
+* A tag override for the `wordpress` tag, setting the action of all the rules with this tag to `js_challenge`. 
 
-Add the two overrides to the rule in the `cloudflare_ruleset` resource that executes the Cloudflare Managed Ruleset:
+{{<Aside type="warning" header="Important">}}
+Ruleset overrides and tag overrides apply to both existing and **future** rules in the Managed Ruleset. If you wish to override existing rules only, you must use rule overrides.
+{{</Aside>}}
+
+The following configuration includes the three overrides in the rule that executes the Cloudflare Managed Ruleset:
 
 ```tf
 ---
-highlight: [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
+highlight: [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]
 ---
   # Execute Cloudflare Managed Ruleset
   rules {
@@ -161,8 +166,7 @@ highlight: [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
         }
         rules {
           id = "75a0060762034a6cb663fd51a02344cb"
-          action = "log"
-          enabled = true
+          enabled = false
         }
         categories {
           category = "wordpress"
