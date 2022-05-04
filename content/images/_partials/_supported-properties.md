@@ -13,7 +13,7 @@ The following list shows options supported both by Image's flexible variants, as
 
 <br/>
 
-***Options supported by flexible variants and URL format***
+***Options supported by named variants, flexible variants, URL format and Workers integration***
 
 - `width=x` or `w=x`
   - Specifies maximum width of the image in pixels. Exact behavior depends on the `fit` mode (described below).
@@ -74,20 +74,7 @@ The following list shows options supported both by Image's flexible variants, as
 
 <br/>
 
-***Options supported by URL format only***
-
-- `quality=x` or `q=x`
-  - Specifies quality for images in JPEG, WebP, and AVIF formats. The quality is in a 1-100 scale, but useful values are between `50` (low quality, small file size) and `90` (high quality, large file size). `85` is the default. When using the PNG format, an explicit quality setting allows use of PNG8 (palette) variant of the format.
-
-- `format=auto` or `f=auto`
-  - Allows serving of the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used.
-
-- `onerror=redirect`
-  - In case of a fatal error that prevents the image from being resized, redirects to the unresized source image URL. This may be useful in case some images require user authentication and cannot be fetched anonymously via Worker. This option should not be used if there is a chance the source image is very large. This option is ignored if the image is from another domain, but you can use it with subdomains.
-
-<br/>
-
-***Options supported by flexible variants only***
+***Options supported by named variants, flexible variants, and Workers integration***
 
 - `trim`
     - Four numbers in pixels separated by a semicolon; in the form of `top;right;bottom;left`; ex: `20;30;20;0`
@@ -106,5 +93,18 @@ The following list shows options supported both by Image's flexible variants, as
 
 - `gamma`
   - Increase exposure by a factor. A value of `1.0` equals no change, a value of `0.5` darkens the image, and a value of `2.0` lightens the image. `0` is ignored.
+
+<br/>
+
+***Options supported by URL format and Workers integration***
+
+- `quality=x` or `q=x`
+  - Specifies quality for images in JPEG, WebP, and AVIF formats. The quality is in a 1-100 scale, but useful values are between `50` (low quality, small file size) and `90` (high quality, large file size). `85` is the default. When using the PNG format, an explicit quality setting allows use of PNG8 (palette) variant of the format.
+
+- `format=auto` or `f=auto`
+  - Allows serving of the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used.
+
+- `onerror=redirect`
+  - In case of a fatal error that prevents the image from being resized, redirects to the unresized source image URL. This may be useful in case some images require user authentication and cannot be fetched anonymously via Worker. This option should not be used if there is a chance the source image is very large. This option is ignored if the image is from another domain, but you can use it with subdomains.
 
 {{</definitions>}}
