@@ -73,3 +73,7 @@ are added/removed.
 Directories make it possible to address an entire static website with a single
 CID and access different pages of the website by requesting different files in
 the directory.
+
+## Learning more
+
+For help with additional concepts, refer to the [IPFS](https://docs.ipfs.io/concepts/) documentation.
