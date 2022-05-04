@@ -1,7 +1,7 @@
 ---
 title: How to
 pcx-content-type: how-to
-weight: 4
+weight: 5
 ---
 
 # How to

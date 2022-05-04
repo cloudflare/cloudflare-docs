@@ -8,7 +8,7 @@ weight: 13
 
 Use these steps to set up Facebook as your identity provider.
 
-1.  Go to go to [developers.facebook.com](https://developers.facebook.com/).
+1.  Go to [developers.facebook.com](https://developers.facebook.com/).
 
 1.  Click **Create App** at the top-right.
 
@@ -50,7 +50,9 @@ Use these steps to set up Facebook as your identity provider.
 
 1.  Click **Save**.
 
-1.  On [developers.facebook.com](https://developers.facebook.com/), set the **Use Strict Mode for Redirect URIs** slider to **Yes**.
+1.  On [developers.facebook.com](https://developers.facebook.com/), click **Facebook Login > Settings** on the left-hand menu.
+
+1.  Ensure that the **Use Strict Mode for Redirect URIs** slider is set to **Yes**.
 
 1.  In the **Valid OAuth redirect URIs** field, enter your [team domain](/cloudflare-one/glossary/#team-domain), followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 

@@ -85,3 +85,10 @@ In the Strapi Admin Panel, you can configure your webhook to be triggered based 
 Be sure to add the webhook configuration to the [production](https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/installation.html) Strapi application that powers your Cloudflare site.
 
 ![Configuring Deploy Hooks with Strapi](../media/strapi.png)
+
+### Storyblok
+
+You can set up and configure deploy hooks in Storyblok to trigger events. In your Storyblok space, go to **Settings** and scroll down to **Webhooks**. Paste your deploy hook into the **Story published & unpublished** field and select **Save**.
+
+![Configuring Deploy Hooks with Storyblok](https://user-images.githubusercontent.com/53130544/161367254-ff475f3b-2821-4ee8-a175-8e96e779aa08.png)
+

@@ -6,7 +6,7 @@ weight: 5
 
 # FAQ
 
-Below you will find answers to our most commonly asked questions regarding Cloudflare Image Optimization, namely the differences between Cloudflare Images. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) for possible solutions to your query.
+Below you will find answers to our most commonly asked questions regarding Cloudflare Image Optimization, namely the differences between Cloudflare Images and Image Resizing. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) to explore more resources.
 
 - [Cloudflare Images](#cloudflare-images-faq)
 - [Cloudflare Image Resizing](#cloudflare-image-resizing-faq)

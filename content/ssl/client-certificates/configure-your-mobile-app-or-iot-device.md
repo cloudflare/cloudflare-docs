@@ -327,7 +327,7 @@ private OkHttpClient setUpClient() {
 
         // Finally, return the client, which will then be used to make HTTP calls.
         OkHttpClient client = new OkHttpClient.Builder()
-                .sslSocketFactory(sslSocketFactory)
+                .sslSocketFactory(sslSocketFactory, (X509TrustManager) trustManagers[0])
                 .build();
 
         return client;

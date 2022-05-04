@@ -150,23 +150,11 @@ You will receive this error if you attempt to create more objects (monitors, poo
 
 If using the dashboard, you will not be able to create additional objects.
 
-If you're using the **Cloudflare API**, you will receive this error message.
-
-    {
-      "result": null,
-      "success": false,
-      "errors": [
-        {
-          "code": 1006,
-          "message": "Quota exceeded. You are currently allowed 5 monitors. Please re-use or delete any unused monitors."
-        }
-      ],
-      "messages": []
-    }
+If you're using the **Cloudflare API**, you will receive an error message.
 
 ### Solution
 
-- Enterprise customers who need to create more objects (load balancers, pools, origins, or monitors) should reach out to their Customer Success Manager or [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to discuss this issue.
+- Enterprise customers who need to create more objects (load balancers, pools, origins, or monitors) should reach out to their account team to discuss this issue.
 - Self-service customers upgrade their Load Balancing subscription with more origin servers to increase load balancing capacity.
 
 ---
@@ -251,7 +239,7 @@ There was a configuration error in the monitor and no checks are run against the
 
 ### Solution
 
-Review your monitor configuration to ensure it matches an expected request to your origin. For further assistance, _[contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)_.
+Review your monitor configuration to ensure it matches an expected request to your origin.
 
 ---
 
@@ -267,6 +255,42 @@ Cloudflare does not allow use of an origin web server hostname that is proxied b
 
 ---
 
+## Load Balancing Not Enabled
+
+### Cause
+
+Load Balancing is not enabled for your account or zone.
+
+### Solution
+
+For Enterprise customers, reach out to your Cloudflare Account Team. Free, Pro, and Business customers should [Enable Load Balancing](/load-balancing/how-to/enable-load-balancing/).
+
+---
+
+## Validation failed error
+
+### Cause
+
+You will receive an error if you try to set the host header value while configuring a load balancer origin.
+
+### Solution
+
+Cloudflare now restricts configured [origin host headers](/load-balancing/additional-options/override-http-host-headers/) to fully qualified domain names (FQDNs) that are immediate subdomains of a zone associated with the account. For example, this host header would be the same zone as the load balancer itself, but origin pools may be used across multiple Load balancers.
+
+---
+
+## Object referenced by other objects
+
+### Cause
+
+You will receive this error when you attempt to delete an origin pool that is referenced by a load balancer [geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) region.
+
+### Solution
+
+Remove the pool from the load balancer's geo steering configuration. If your load balancer no longer uses geo steering, you will need to [reenable geosteering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) and then remove the pool.
+
+---
+
 ## Other Failure
 
 ### Cause
@@ -276,44 +300,5 @@ If the failure cannot be classified as any other type of failure mentioned above
 ### Solution
 
 _[Contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)_.
-
----
-
-## Load Balancing Not Enabled
-
-### Cause
-
-Load Balancing is not enabled for your account or zone.
-
-### Solution
-
-For Enterprise customers, reach out to your Cloudflare Account Team. Free, Pro, and Business customers _[contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)_.
-
----
-
-## Validation failed error
-
-### Cause
-
-You will receive this error if you try to set the host header value while configuring a load balancer origin.
-
-```
-{
-  "result": null,
-  "success": false,
-  "errors": [
-    {
-      "code": 1002,
-      "message": "Host header \"www.example.com\" not allowed for origin domain \"www.example.com.c.section.io\": validation failed"
-    }
-  ],
-  "messages": []
-}
-
-```
-
-### Solution
-
-Cloudflare is now restricting configured origin host headers to fully qualified domain names (FQDNs) that are immediate subdomains of a zone associated with the account. For example, this host header would be the same zone as the load balancer itself, but origin pools may be used across multiple Load balancers.
 
 ---

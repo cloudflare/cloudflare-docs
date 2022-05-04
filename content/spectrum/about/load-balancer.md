@@ -28,7 +28,7 @@ The example below shows a TCP health check configuration for an application runn
 </summary>
 <div class="special-class" markdown="1">
 
-![Health Check UI](/spectrum/img/load-balancing/spectrum-tcp-check.png)
+![Manage monitors dialog with TCP health check running on port 2408 and a 30 second refresh rate](/spectrum/img/load-balancing/spectrum-tcp-check.png)
 
 </div>
 </details>
@@ -81,4 +81,4 @@ All pool steering modes are available for transport load balancing through Spect
 
 Currently, you cannot use [load balancing custom rules](/load-balancing/additional-options/load-balancing-rules/) with Cloudflare Spectrum.
 
-For more information about setting up a Load Balancer to use with Spectrum, refer to [Create a Load Balance](/spectrum/how-to/create-load-balancer/).
+For more information about how to use Load Balancer with Spectrum, refer to [Create a Load Balance](/spectrum/get-started//#create-a-spectrum-application-using-a-load-balancer).

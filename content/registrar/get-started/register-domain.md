@@ -6,9 +6,15 @@ weight: 4
 
 # Register a new domain
 
+## Prerequisites
+
 Cloudflare Registrar is only available for customers that use Cloudflare as their authoritative DNS provider (also known as a [full setup](/dns/zone-setups/)).
 
 {{<render file="_email-verification.md">}}
+
+---
+
+## How to register a new domain
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account. Go to **Registrar** > **Register**.
 

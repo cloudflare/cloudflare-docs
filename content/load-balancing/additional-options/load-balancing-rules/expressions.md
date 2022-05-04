@@ -77,7 +77,7 @@ Compound expressions are easier to scan when displayed in the Expression Builder
 
 This Expression Builder screenshot shows the example compound expression described earlier. Compound expressions are easier to scan when displayed in the Expression Builder’s visual interface.
 
-![Expression Builder in Load Balancing tab of Traffic app](/load-balancing/static/images/rules-builder-1.png)
+![Example rule configuration visible in the Expression Builder](/load-balancing/static/images/rules-builder-1.png)
 
 The **Expression Preview** displays the expression in text:
 
@@ -92,13 +92,7 @@ For a walkthrough, refer to [Creating Load Balancing rules](/load-balancing/addi
 
 The Expression Editor is a text-only interface for creating Load Balancing expressions. Although it lacks the visual simplicity of the Expression Builder, the Expression Editor supports advanced features such as support for grouping symbols (parentheses).
 
-To access the Expression Editor in the **Traffic** app, click **Edit expression** in the **Create Custom Rule** dialog:
-
-![Edit expression link in Create Custom Rule dialog](/load-balancing/static/images/rules-builder-edit-expression-link.png)
-
-The Expression Editor displays:
-
-![Expression Editor in Load Balancing tab of Traffic app](/load-balancing/static/images/rules-editor-1.png)
+To access the Expression Editor in the **Traffic** app, click **Edit expression** in the **Create Custom Rule** dialog.
 
 To return to the builder, click **Use expression builder**.
 

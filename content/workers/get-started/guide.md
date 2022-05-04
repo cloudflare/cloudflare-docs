@@ -72,7 +72,7 @@ y
 💁  Opened a link in your default browser: https://dash.cloudflare.com/oauth2/...
 ```
 
-Open the browser, log into your account, and select **Allow**. This will send an OAuth Token to Wrangler so it can deploy your scripts to Cloudflare.
+Open the browser, log in to your account, and select **Allow**. This will send an OAuth Token to Wrangler so it can deploy your scripts to Cloudflare.
 
 ---
 
@@ -374,28 +374,6 @@ header: Publish to example.com
 For more information on environments, refer to the [Wrangler documentation](/workers/cli-wrangler/configuration/#environments).
 
 You can also configure a GitHub repository to automatically deploy every time you `git push`. You can do this by either using the [Workers GitHub action](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler), or by writing your own GitHub action and manually configuring the necessary [GitHub secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
-
----
-
-## 9. Turn on/off usage notifications
-
-Cloudflare provides two kinds of usage notifications: Workers Weekly Summary and Workers Usage Report. They are automatically enabled when you create a new free account with Workers.
-
-Workers Weekly Summary provides a breakdown of your overall Workers usage for your most popular Workers.
-
-![Workers Weekly Summary showing a summary of Worker activity metrics for the week](../media/workers-weekly-summary.png)
-
-Workers Usage Report is an on-demand usage notification that is triggered when a Worker's CPU usage is 25% above its average CPU usage over the previous seven days.
-
-{{<Aside type="note" header="Workers Unbound">}}
-
-If you are on Workers Unbound, you will also see duration and [egress data usage (which you are not billed on)](/workers/learning/metrics-and-analytics/#egress-data).
-
-{{</Aside>}}
-
-![Workers Usage Report showing a summary of activity metrics for Workers with above average CPU time](../media/workers-usage-report.png)
-
-You can turn usage notifications on or off by going to **Account Home** > **Notifications**. Select **Add** and scroll down to Workers to find **Workers Usage Report** and **Workers Weekly Summary**. After you enable notifications and add recipients, edit or turn off notifications by returning to **Notifications**.
 
 ---
 

@@ -233,7 +233,7 @@ The `keys` property will contain an array of objects describing each key. That o
 
 The `name` is a string, the `expiration` value is a number, and `metadata` is whatever type was set initially. The `expiration` value will only be returned if the key has an expiration and will be in the absolute value form, even if it was set in the TTL form. Any `metadata` will only be returned if the given key has non-null associated metadata.
 
-Additionally, if `list_complete` is `false`, there are more keys to fetch. You will use the `cursor` property to get more keys. Refer to the [Pagination section](#pagination) below for more details.
+Additionally, if `list_complete` is `false`, there are more keys to fetch, even if the `keys` array is empty. You will use the `cursor` property to get more keys. Refer to the [Pagination section](#pagination) below for more details.
 
 Note that if your values fit in [the metadata size limit](/workers/platform/limits/#kv-limits), `list` can be used to return information associated with multiple keys in one operation. This is more efficient than a list followed by a `get` per key.
 
@@ -261,7 +261,7 @@ Keys are always returned in lexicographically sorted order according to their UT
 
 #### Pagination
 
-If you have more keys than the `limit` value, only that many will be returned. Additionally, the `list_complete` key will be set to `false` and a `cursor` will also be returned. In this case, you can call `list` again with the `cursor` value to get the next batch of keys:
+If there are more keys to fetch, the `list_complete` key will be set to `false` and a `cursor` will also be returned. In this case, you can call `list` again with the `cursor` value to get the next batch of keys:
 
 ```js
 const value = await NAMESPACE.list()
@@ -270,6 +270,8 @@ const cursor = value.cursor
 
 const next_value = await NAMESPACE.list({"cursor": cursor})
 ```
+
+Note that checking for an empty array in `keys` is not sufficient to determine whether there are more keys to fetch; check `list_complete` instead. The reason it is possible to have an empty array in `keys`, but still have more keys to fetch, is because [recently expired or deleted keys](https://en.wikipedia.org/wiki/Tombstone_%28data_store%29) must be iterated through but will not be included in the returned `keys`.
 
 ## KV bindings
 

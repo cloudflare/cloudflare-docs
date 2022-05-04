@@ -12,7 +12,7 @@ Most subdomains serve a specific purpose within the overall context of your webs
 
 To create a new subdomain, you would first add the subdomain content at your host.
 
-Then, you would create a corresponding [A, AAAA, or CNAME record](/dns/manage-dns-records/how-to/create-dns-records/) for that subdomain (`blog`, `store`).
+Then, you would create a corresponding [`A`, `AAAA`, or `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) for that subdomain (`blog`, `store`).
 
 {{<example>}}
 

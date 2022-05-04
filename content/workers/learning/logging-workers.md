@@ -84,7 +84,7 @@ You can customize how `wrangler tail` works to fit your needs: refer to [the `wr
 
 ## View logs from the dashboard
 
-You can review the production logs associated with any Worker by [logging into the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/workers/overview). From your **Account Home** > go to **Workers** > select your **Worker** > and select **Logs**. Logging is available for all customers, including those on the free plan.
+You can review the production logs associated with any Worker by [logging in to the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/workers/overview). From your **Account Home** > go to **Workers** > select your **Worker** > and select **Logs**. Logging is available for all customers, including those on the free plan.
 
 ![Cloudflare dashboard showing logs for a Worker named logging-example](../media/workers-logging-dashboard.png)
 

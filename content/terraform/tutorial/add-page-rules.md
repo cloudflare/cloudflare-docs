@@ -26,7 +26,7 @@ resource "cloudflare_page_rule" "increase-security-on-expensive-page" {
   target   = "www.${var.domain}/expensive-db-call"
   priority = 1
 
-  actions = {
+  actions {
     security_level = "under_attack",
   }
 }
@@ -36,7 +36,7 @@ resource "cloudflare_page_rule" "redirect-to-new-db-page" {
   target   = "www.${var.domain}/old-location.php"
   priority = 2
 
-  actions = {
+  actions {
     forwarding_url {
       url = "https://www.${var.domain}/expensive-db-call"
       status_code = 301

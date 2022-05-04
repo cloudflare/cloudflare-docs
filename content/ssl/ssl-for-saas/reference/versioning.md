@@ -34,7 +34,9 @@ When creating a Custom Hostname with the HTTP through the [API](https://api.clou
 
 Cloudflare sends GET requests to the http_url using `User-Agent: Cloudflare Custom Hostname Verification`.
 
-When the HTTP token is verified, the Custom Hostname will be marked as **Active** in the Cloudflare SSL/TLS app under the Custom Hostnames tab.
+If you validated a hostname that is not proxying traffic through Cloudflare, the Custom Hostname will be marked as **Active** in the Cloudflare SSL/TLS app when the HTTP token is verified (under the **Custom Hostnames** tab).
+
+If your hostname is already proxying traffic through Cloudflare, then HTTP validation is not enough by itself and the hostname will only go active when DNS-based validation is complete.
 
 ### Other validation methods
 

@@ -20,10 +20,6 @@ The URL Redirect parameters are the following:
     - The exact behavior of the [URL matching algorithm](/rules/bulk-redirects/how-it-works/#url-matching-algorithm), which matches an incoming request with the redirect’s source URL, depends on the values of the **Include subdomains** and **Subpath matching** parameters.
     - For more information on the supported URL components, refer to [Supported URL components](/rules/bulk-redirects/reference/url-components/).
 
-    {{<Aside type="warning" header="Important">}}
-To ensure good performance at the edge, you can only have up to 16 URL Redirects with the same source URL **path** across all Bulk Redirect Lists in your account, regardless of the URL Redirect domain.
-    {{</Aside>}}
-
 - **Target URL** {{<type>}}String{{</type>}}
 
     - API field name: `target_url`.

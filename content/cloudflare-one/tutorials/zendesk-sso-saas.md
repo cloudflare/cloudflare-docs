@@ -78,4 +78,4 @@ For this tutorial, you will need:
 
     ![Zendesk external authentication](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-external-auth.png)
 
-Users should now be able to log into Zendesk if their Email address exists in the Zendesk user list.
+Users should now be able to log in to Zendesk if their Email address exists in the Zendesk user list.

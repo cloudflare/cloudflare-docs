@@ -38,7 +38,7 @@ To enable Authenticated Origin Pull globally on a zone:
     <summary>Apache example</summary>
     <div>
 
-    For this example, you would have saved the <a href="#certificate-value">certificate</a> to <code>/path/to/origin-pull-ca.pem</code>.
+    For this example, you would have saved the [certificate](#certificate-value) `/path/to/origin-pull-ca.pem`.
 
     ```txt
     SSLVerifyClient require
@@ -53,7 +53,7 @@ To enable Authenticated Origin Pull globally on a zone:
     <summary>NGINX example</summary>
     <div>
 
-    For this example, you would have saved the <a href="#certificate-value">certificate</a> to <code>/etc/nginx/certs/cloudflare.crt</code>.
+    For this example, you would have saved the [certificate](#certificate-value) to `/etc/nginx/certs/cloudflare.crt`.
 
     ```txt
     ssl_client_certificate /etc/nginx/certs/cloudflare.crt;

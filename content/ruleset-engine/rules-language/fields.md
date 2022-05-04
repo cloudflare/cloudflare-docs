@@ -402,13 +402,13 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
-    <tr>
+    <tr id="field-cf-client-bot">
         <td><code>cf.client.bot</code><br />{{<type>}}Boolean{{</type>}}</td>
         <td>
           <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler. Provides the same information as <code class="InlineCode">cf.bot_management.verified_bot</code>.</p>
         </td>
     </tr>
-    <tr>
+    <tr id="field-cf-edge-server_ip">
         <td><code>cf.edge.server_ip</code><br />{{<type>}}IP Address{{</type>}}</td>
         <td>
           <p>Represents the edge IP address to which the HTTP request has resolved to.
@@ -441,7 +441,7 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
-    <tr>
+    <tr id="field-cf-tls_client_auth-cert_revoked">
       <td><code>cf.tls_client_auth.cert_revoked</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
       <p>
@@ -451,7 +451,7 @@ The Cloudflare Rules language supports these dynamic fields:
       </p>
       </td>
     </tr>
-    <tr>
+    <tr id="field-cf-tls_client_auth-cert_verified">
       <td><code>cf.tls_client_auth.cert_verified</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
       <p>Returns <code class="InlineCode">true</code> when a request presents a valid client certificate.
@@ -459,11 +459,11 @@ The Cloudflare Rules language supports these dynamic fields:
       <p> Also returns <code class="InlineCode">true</code> when a request includes a valid certificate that was revoked (see <code>cf.tls_client_auth.cert_revoked</code>).
       </p></td>
     </tr>
-    <tr>
+    <tr id="field-cf-worker-upstream_zone">
       <td><code>cf.worker.upstream_zone</code> <br />{{<type>}}String{{</type>}}</td>
       <td>
         <p>Identifies whether a request comes from a worker or not.</p>
-        <p>When a request comes from a worker, this field will hold the name of the zone for that worker. Otherwise <code class="InlineCode">cf.worker.upstream_zone</code> is empty</p>
+        <p>When a request comes from a worker, this field will hold the name of the zone for that worker. Otherwise <code class="InlineCode">cf.worker.upstream_zone</code> is empty.</p>
       </td>
     </tr>
   </tbody>
@@ -479,7 +479,7 @@ The Cloudflare Rules language supports these dynamic fields:
    </tr>
   </thead>
   <tbody style='vertical-align:top'>
-    <tr>
+    <tr id="field-cf-colo-name">
         <td><p><code>cf.colo.name</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
@@ -487,7 +487,7 @@ The Cloudflare Rules language supports these dynamic fields:
         Example value: <code class="InlineCode"> sfo06 </code>
         </td>
     </tr>
-    <tr>
+    <tr id="field-cf-colo-region">
         <td><p><code>cf.colo.region</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
@@ -495,14 +495,14 @@ The Cloudflare Rules language supports these dynamic fields:
         Example value: <code class="InlineCode"> WNAM </code>
         </td>
     </tr>
-    <tr>
+    <tr id="field-icmp">
         <td><p><code>icmp</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
         The raw ICMP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
         </td>
     </tr>
-    <tr>
+    <tr id="field-icmp-type">
         <td><p><code>icmp.type</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
@@ -511,7 +511,7 @@ The Cloudflare Rules language supports these dynamic fields:
          <code class="InlineCode">8</code>
         </td>
     </tr>
-    <tr>
+    <tr id="field-icmp-code">
         <td><p><code>icmp.code</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
@@ -520,14 +520,14 @@ The Cloudflare Rules language supports these dynamic fields:
          <code class="InlineCode">2</code>
         </td>
     </tr>
-    <tr>
+    <tr id="field-ip">
         <td><p><code>ip</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
         The raw IP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
         </td>
     </tr>
-    <tr>
+    <tr id="field-ip-dst">
         <td><p><code>ip.dst</code><br />{{<type>}}IP Address{{</type>}}</p>
         </td>
         <td>
@@ -536,7 +536,7 @@ The Cloudflare Rules language supports these dynamic fields:
          <code class="InlineCode">192.0.2.2</code>
         </td>
     </tr>
-    <tr>
+    <tr id="field-ip-geoip-country">
         <td><p><code>ip.geoip.country</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
@@ -546,7 +546,7 @@ The Cloudflare Rules language supports these dynamic fields:
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
         </td>
     </tr>
-    <tr>
+    <tr id="field-ip-hdr_len">
         <td><p><code>ip.hdr_len</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
@@ -555,7 +555,7 @@ The Cloudflare Rules language supports these dynamic fields:
          <code class="InlineCode">5</code>
         </td>
     </tr>
-    <tr>
+    <tr id="field-ip-len">
         <td><p><code>ip.len</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
@@ -564,7 +564,7 @@ The Cloudflare Rules language supports these dynamic fields:
          <code class="InlineCode">60</code>
         </td>
     </tr>
-    <tr>
+    <tr id="field-ip-opt-type">
         <td><p><code>ip.opt.type</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
@@ -573,7 +573,7 @@ The Cloudflare Rules language supports these dynamic fields:
          <code class="InlineCode">25</code>
         </td>
     </tr>
-    <tr>
+    <tr id="field-ip-proto">
         <td><p><code>ip.proto</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
@@ -581,14 +581,14 @@ The Cloudflare Rules language supports these dynamic fields:
         Example values: <code class="InlineCode">icmp</code>, <code class="InlineCode">tcp</code>
         </td>
     </tr>
-    <tr>
+    <tr id="field-ip-src">
         <td><p><code>ip.src</code><br />{{<type>}}IP Address{{</type>}}</p>
         </td>
         <td>
         The source address of the IP Packet.
         </td>
     </tr>
-    <tr>
+    <tr id="field-ip-ttl">
         <td><p><code>ip.ttl</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
@@ -596,105 +596,105 @@ The Cloudflare Rules language supports these dynamic fields:
         Example values: <code class="InlineCode">54</code>
         </td>
     </tr>
-    <tr>
+    <tr id="field-tcp">
         <td><p><code>tcp</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
         The raw TCP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
         </td>
     </tr>
-    <tr>
+    <tr id="field-tcp-flags">
         <td><p><code>tcp.flags</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
         The numeric value of the TCP flags byte.
         </td>
     </tr>
-    <tr>
+    <tr id="field-tcp-flags-ack">
         <td><p><code>tcp.flags.ack</code><br />{{<type>}}Boolean{{</type>}}</p>
         </td>
         <td>
         TCP acknowledgment flag.
         </td>
     </tr>
-    <tr>
+    <tr id="field-tcp-flags-cwr">
         <td><p><code>tcp.flags.cwr</code><br />{{<type>}}Boolean{{</type>}}</p>
         </td>
         <td>
         TCP congestion window reduced flag.
         </td>
     </tr>
-    <tr>
+    <tr id="field-tcp-flags-ecn">
         <td><p><code>tcp.flags.ecn</code><br />{{<type>}}Boolean{{</type>}}</p>
         </td>
         <td>
         TCP ECN-Echo flag.
         </td>
     </tr>
-    <tr>
+    <tr id="field-tcp-flags-fin">
         <td><p><code>tcp.flags.fin</code><br />{{<type>}}Boolean{{</type>}}</p>
         </td>
         <td>
         TCP flag indicating this is the last packet from sender.
         </td>
     </tr>
-    <tr>
+    <tr id="field-tcp-flags-push">
         <td><p><code>tcp.flags.push</code><br />{{<type>}}Boolean{{</type>}}</p>
         </td>
         <td>
         TCP push flag.
         </td>
     </tr>
-    <tr>
+    <tr id="field-tcp-flags-reset">
         <td><p><code>tcp.flags.reset</code><br />{{<type>}}Boolean{{</type>}}</p>
         </td>
         <td>
         TCP reset flag.
         </td>
     </tr>
-    <tr>
+    <tr id="field-tcp-flags-syn">
         <td><p><code>tcp.flags.syn</code><br />{{<type>}}Boolean{{</type>}}</p>
         </td>
         <td>
         TCP synchronize flag.
         </td>
     </tr>
-    <tr>
+    <tr id="field-tcp-flags-urg">
         <td><p><code>tcp.flags.urg</code><br />{{<type>}}Boolean{{</type>}}</p>
         </td>
         <td>
         TCP urgent flag.
         </td>
     </tr>
-    <tr>
+    <tr id="field-tcp-srcport">
         <td><p><code>tcp.srcport</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
         Source port number of the IP packet. Only applies to TCP packets.
         </td>
     </tr>
-    <tr>
+    <tr id="field-tcp-dstport">
         <td><p><code>tcp.dstport</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
         Destination port number of the IP packet. Only applies to TCP packets.
         </td>
     </tr>
-    <tr>
+    <tr id="field-udp">
         <td><p><code>udp</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
         The raw UDP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
         </td>
     </tr>
-    <tr>
+    <tr id="field-udp-dstport">
         <td><p><code>udp.dstport</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
         Destination port number of the IP packet. Only applies to UDP packets.
         </td>
     </tr>
-    <tr>
+    <tr id="field-udp-srcport">
         <td><p><code>udp.srcport</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
@@ -829,7 +829,7 @@ The Cloudflare Rules language supports these HTTP header fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-headers-names">
       <td valign="top"><code>http.request.headers.names</code><br />{{<type>}}Array&lt;String>{{</type>}}</td>
       <td>
          <p>Represents the names of the headers in the HTTP request.</p>
@@ -852,7 +852,7 @@ The Cloudflare Rules language supports these HTTP header fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-headers-values">
       <td valign="top"><code>http.request.headers.values</code><br />{{<type>}}Array&lt;String>{{</type>}}</td>
       <td>
          <p>Represents the values of the headers in the HTTP request.</p>
@@ -885,7 +885,7 @@ The Cloudflare Rules language supports these HTTP header fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-headers-truncated">
       <td valign="top"><code>http.request.headers.truncated</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
          <p>Returns <code class="InlineCode">true</code> when the HTTP request contains too many headers; otherwise, returns <code class="InlineCode">false</code>.
@@ -942,7 +942,7 @@ The Cloudflare Rules language supports these HTTP body fields:
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <tr id="field-http-request-body-raw">
       <td valign="top"><code>http.request.body.raw</code><br />{{<type>}}String{{</type>}}</td>
       <td>
          <p>Represents the unaltered HTTP request body.
@@ -955,7 +955,7 @@ The Cloudflare Rules language supports these HTTP body fields:
          </p>
       </td>
     </tr>
-    <tr>
+    <tr id="field-http-request-body-truncated">
       <td valign="top"><code>http.request.body.truncated</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
          <p>Indicates whether the HTTP request body is truncated.
@@ -964,7 +964,7 @@ The Cloudflare Rules language supports these HTTP body fields:
          </p>
       </td>
     </tr>
-    <tr>
+    <tr id="field-http-request-body-form">
       <td valign="top"><code>http.request.body.form</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
       <td>
          <p>Represents the HTTP request body of a form as a Map (or associative array). Populated when the <code class="InlineCode">Content-Type</code> header is <code class="InlineCode">application/x-www-form-urlencoded</code>.
@@ -986,7 +986,7 @@ The Cloudflare Rules language supports these HTTP body fields:
          </p>
       </td>
     </tr>
-    <tr>
+    <tr id="field-http-request-body-form-names">
       <td valign="top"><code>http.request.body.form.names</code><br />{{<type>}}Array&lt;String>{{</type>}}</td>
       <td>
          <p>Represents the names of the form fields in an HTTP request where the content type is <code class="InlineCode">application/x-www-form-urlencoded</code>.
@@ -1009,7 +1009,7 @@ The Cloudflare Rules language supports these HTTP body fields:
          </p>
       </td>
     </tr>
-    <tr>
+    <tr id="field-http-request-body-form-values">
       <td valign="top"><code>http.request.body.form.values</code><br />{{<type>}}Array&lt;String>{{</type>}}</td>
       <td>
          <p>Represents the values of the form fields in an HTTP request where the content type is <code class="InlineCode">application/x-www-form-urlencoded</code>.
@@ -1087,7 +1087,7 @@ The Cloudflare Rules language supports these HTTP response fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-response-headers-names">
       <td valign="top"><code>http.response.headers.names</code><br />{{<type>}}Array&lt;String>{{</type>}}</td>
       <td>
          <p>Represents the names of the headers in the HTTP response. The names are not pre-processed and retain the original case used in the response.
@@ -1108,7 +1108,7 @@ The Cloudflare Rules language supports these HTTP response fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-response-headers-values">
       <td valign="top"><code>http.response.headers.values</code><br />{{<type>}}Array&lt;String>{{</type>}}</td>
       <td>
          <p>Represents the values of the headers in the HTTP response.</p>
