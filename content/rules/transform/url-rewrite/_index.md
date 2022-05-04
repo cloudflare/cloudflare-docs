@@ -1,7 +1,7 @@
 ---
 pcx-content-type: concept
 title: URL Rewrite Rules
-weight: 1
+weight: 2
 ---
 
 # URL Rewrite Rules
