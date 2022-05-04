@@ -184,9 +184,9 @@ highlight: [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]
 
 ## Configure payload logging
 
-The following example enables [payload logging](/waf/managed-rulesets/payload-logging/) for matched rules of the Cloudflare Managed Ruleset, setting the public key used to encrypt the logged payload.
+This example enables [payload logging](/waf/managed-rulesets/payload-logging/) for matched rules of the Cloudflare Managed Ruleset, setting the public key used to encrypt the logged payload.
 
-Building upon the rule that deploys the Cloudflare Managed Ruleset, add the `matched_data` object containing your public key:
+Building upon the rule that deploys the Cloudflare Managed Ruleset, the following configuration adds the `matched_data` object with the public key used to encrypt the payload:
 
 ```tf
 ---
@@ -213,13 +213,13 @@ highlight: [7,8,9]
 
 The OWASP Managed Ruleset supports the following configurations:
 
-* To enable all the rules up to a specific paranoia level, create tag overrides that:
+* Enable all the rules up to a specific paranoia level by creating tag overrides that:
     * Enable all the rules associated with paranoia levels up to (and including) the one you wish to enable.
     * Disable all the rules associated with higher paranoia levels.
 
-* To set the action to perform when the calculated threat score is greater than the score threshold, create a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID `6179ae15870a4bb7b2d480d4843b323c`), and include the `action` property. 
+* Set the action to perform when the calculated threat score is greater than the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID `6179ae15870a4bb7b2d480d4843b323c`), and including the `action` property.
 
-* Set the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID `6179ae15870a4bb7b2d480d4843b323c`), and include the `score_threshold` property. 
+* Set the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID `6179ae15870a4bb7b2d480d4843b323c`), and including the `score_threshold` property. 
 
 For more information on the available configuration values, refer to the [Cloudflare OWASP Core Ruleset](/waf/managed-rulesets/owasp-core-ruleset/) page in the WAF documentation.
 
