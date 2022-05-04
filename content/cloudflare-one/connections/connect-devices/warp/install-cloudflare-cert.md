@@ -452,6 +452,17 @@ The commands below will set the Google Cloud SDK to use the Cloudflare certifica
 
 If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use the Cloudflare root certificate. Commands are available for different operating systems in the instructions available [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
 
+### PHP Composer
+
+The command below will set the [`cafile`](https://getcomposer.org/doc/06-config.md#cafile) configuration inside of `composer.json` to use the Cloudflare root certificate. Make sure to use the certificate in the [`.pem`](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem) file type.
+
+
+```bash
+composer config cafile [PATH_TO_CLOUDFLARE_CERT.pem]
+```
+
+Alternatively, you can add this manually to your `composer.json` file under the `config` key.
+
 ### IntelliJ IDEA
 
 Instructions on how to install the Cloudflare root certificate are available [here](https://www.jetbrains.com/help/idea/settings-tools-server-certificates.html)
