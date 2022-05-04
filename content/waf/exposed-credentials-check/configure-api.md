@@ -109,7 +109,7 @@ After creating a custom ruleset, deploy it to a phase so that it executes. Refer
 
 ### Example B
 
-This example, similar to Example A, creates a new custom ruleset with a rule that checks for exposed credentials in JSON responses. The rule has a match if both the rule expression and the `exposed_credential_check` result are `true`. When there is a match, the rule will add an `Exposed-Credential-Check` HTTP header to the request with value `1`.
+This example creates a new custom ruleset with a rule that checks for exposed credentials in JSON responses. The rule has a match if both the rule expression and the `exposed_credential_check` result are `true`. When there is a match, the rule will add an `Exposed-Credential-Check` HTTP header to the request with value `1`.
 
 ```json
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
