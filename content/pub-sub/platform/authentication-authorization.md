@@ -10,9 +10,9 @@ Pub/Sub supports two authentication modes. A broker may allow one or both, but n
 
 | Mode <img width=235/>|     Details                    |
 |----------------------|--------------------------------|
-| **TOKEN**            | Accepts a Client ID and a password (represented by a signed JSON Web Token) in the CONNECT packet. <br/><br/> The MQTT User Name field is optional. If provided, it must match the Client ID.|
-| **MTLS**             | **Not yet supported.** <br/> Accepts an mTLS keypair (TLS client credentials) scoped to that broker. <br/> Keypairs are issued from a Cloudflare root CA unless otherwise configured.|
-| **MTLS_AND_TOKEN**   | **Not yet supported.** <br/> Allows clients to use both MTLS and/or Token auth for a broker.|
+| TOKEN           | Accepts a Client ID and a password (represented by a signed JSON Web Token) in the CONNECT packet. <br/><br/> The MQTT User Name field is optional. If provided, it must match the Client ID.|
+| MTLS            | **Not yet supported.** <br/> Accepts an mTLS keypair (TLS client credentials) scoped to that broker. <br/> Keypairs are issued from a Cloudflare root CA unless otherwise configured.|
+| MTLS_AND_TOKEN   | **Not yet supported.** <br/> Allows clients to use both MTLS and/or Token auth for a broker.|
 
 
 To generate credentials scoped to a specific broker, you have two options:
@@ -56,11 +56,11 @@ An JSON Web Token (JWT) issued by Pub/Sub will include the following claims.
 
 | Claims <img width=235/>| Details |
 |-----------|---------|
-| **iat**   | A Unix timestamp representing the token's creation time. |
-| **exp**   | A Unix timestamp representing the token's expiry time. <br/> Only included when the JWT has an optional expiry timestamp. |
-| **sub**   | The "subject" - the MQTT Client Identifier associated with this token. <br/> This is the source of truth for the Client ID. If a Client ID is provided in the CONNECT packet, it must match this ID. Clients that do not specify a Client ID in the CONNECT packet will see this Client ID as the "Assigned Client Identifier" in the CONNACK packet when connecting.|
-| **jti**	  | JWT ID. An identifier that uniquely identifies this JWT. <br/> Used to distinguish multiple JWTs for the same (broker, clientId) apart, and allows revocation of specific tokens.|
-|**topicAcl**	| Must be `#` (matches all topics). <br/> In the future, ACLs will allow you to express what topics the client can PUBLISH to, SUBSCRIBE to, or both. |
+| iat       | A Unix timestamp representing the token's creation time. |
+| exp       | A Unix timestamp representing the token's expiry time. <br/> Only included when the JWT has an optional expiry timestamp. |
+| sub       | The "subject" - the MQTT Client Identifier associated with this token. <br/> This is the source of truth for the Client ID. If a Client ID is provided in the CONNECT packet, it must match this ID. Clients that do not specify a Client ID in the CONNECT packet will see this Client ID as the "Assigned Client Identifier" in the CONNACK packet when connecting.|
+| jti	      | JWT ID. An identifier that uniquely identifies this JWT. <br/> Used to distinguish multiple JWTs for the same (broker, clientId) apart, and allows revocation of specific tokens.|
+| topicAcl	| Must be `#` (matches all topics). <br/> In the future, ACLs will allow you to express what topics the client can PUBLISH to, SUBSCRIBE to, or both. |
 
 ## Revoking Credentials
 
