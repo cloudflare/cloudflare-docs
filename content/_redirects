@@ -866,6 +866,14 @@
 /cloudflare-one/identity/idp-integration/one-time-pin/ /cloudflare-one/identity/one-time-pin/ 301
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
+/cloudflare-one/policies/zero-trust/ /cloudflare-one/policies/access/ 301
+/cloudflare-one/policies/zero-trust/app-paths/ /cloudflare-one/policies/access/app-paths/ 301
+/cloudflare-one/policies/zero-trust/common-configs/ /cloudflare-one/policies/access/ 301
+/cloudflare-one/policies/zero-trust/cors/ /cloudflare-one/policies/access/cors/ 301
+/cloudflare-one/policies/zero-trust/mfa-requirements/ /cloudflare-one/policies/access/mfa-requirements/ 301
+/cloudflare-one/policies/zero-trust/policy-management/ /cloudflare-one/policies/access/policy-management/ 301
+/cloudflare-one/policies/zero-trust/require-purpose-justification/ /cloudflare-one/policies/access/require-purpose-justification/ 301
+/cloudflare-one/policies/zero-trust/temporary-auth/ /cloudflare-one/policies/access/temporary-auth/ 301
 /cloudflare-one/policies/filtering/dns-policies/configuring-block-page/ /cloudflare-one/policies/filtering/configuring-block-page/ 301
 /cloudflare-one/policies/filtering/dns-policies/safesearch/ /cloudflare-one/policies/filtering/dns-policies/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/dns-categories/ /cloudflare-one/policies/filtering/dns-policies/dns-categories/ 301
