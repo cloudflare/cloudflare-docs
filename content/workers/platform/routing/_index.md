@@ -30,7 +30,7 @@ Custom Domains can stack on top of each other. If you have Worker A attached to 
 
 ## Routes
 
-[Routes](/workers/platform/routing/routes) are a good option if you have a designated application server you always need to communicate with.  Calling `fetch()` on the incoming `Request` object will trigger a subrequest to your application server, as defined in the DNS tab of your Cloudflare zone.
+[Routes](/workers/platform/routing/routes) are a set of rules that evaluate against a request's URL. Routes are recommended for you if you have a designated application server you always need to communicate with. Calling `fetch()` on the incoming `Request` object will trigger a subrequest to your application server, as defined in **DNS** of your Cloudflare zone.
 
 ![Routes work with your applications defined in Cloudflare DNS](./media/routes-diagram.png)
 
