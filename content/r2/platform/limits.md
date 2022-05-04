@@ -20,8 +20,8 @@ pcx-content-type: concept
 
 1. The object size limit is 5 GB under 5 TB. 
 2. The max upload size is 5 MB under 5 GB.
-3. This applies to uploading a file via one request, uploading a part of a multipart upload, or
+3. Max upload size applies to uploading a file via one request, uploading a part of a multipart upload, or
 copying into a part of a multipart upload. If you have a Worker, its inbound request size is
-constrained by [Workers limits](/workers/platform/limits). That limit does not apply to subrequests.
+constrained by [Workers limits](/workers/platform/limits). The max upload size limit does not apply to subrequests.
 
 To increase these limits, contact your Cloudflare account team.
