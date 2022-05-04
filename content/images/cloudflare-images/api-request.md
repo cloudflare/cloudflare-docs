@@ -37,18 +37,19 @@ curl -X POST \
   -F file=@./<YOUR_IMAGE>
 ```
 
-A successful response will look similar to this:
+Refer to [Upload images](/images/cloudflare-images/upload-images/) for a complete overview of how you can use the API to upload images.
+
+After uploading your images, a successful response will look similar to this:
 
 ```json
 {
   "result": {
-    "id": "083eb7b2-5392-4565-b69e-aff66acddd00",
-    "filename": "triceratops.jpg",
+    "id": "<YOUR_IMAGE_ID>",
+    "filename": "<YOUR_IMAGE.IMG>",
     "uploaded": "2021-09-14T05:52:14.767Z",
     "requireSignedURLs": false,
     "variants": [
-      "https://imagedelivery.net/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/test",
-      "https://imagedelivery.net/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/public"
+      "https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME_1>"
     ]
   },
   "result_info": null,
@@ -57,3 +58,7 @@ A successful response will look similar to this:
   "messages": []
 }
 ```
+
+The response has details regarding the image you just uploaded, such as its ID as well as the URL for any [variants you have set up](/images/cloudflare-images/resize-images/). The first time you use Images, you will only have the `public` variant URL.
+
+You can use the `variants` URL from the response to [serve images](/images/cloudflare-images/serve-images/) from your Cloudflare Images account.
