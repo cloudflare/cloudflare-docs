@@ -28,15 +28,12 @@ All included usage is on a monthly basis.
 
 ### Storage usage
 
-Storage for is billed using gigabyte-month (GB-month). GB-month is a measure of how large your objects are and how long you store your objects for in the month.
+Storage is billed using gigabyte-month (GB-month) as the billing metric. A GB-month is calculated by recording total bytes stored for the duration of the month. 
 
-1 GB-month is created when:
+For example:
 
-<!-->
-
-example needed
-
-<!-->
+* Storing 1 GB for 30 days will be charged as 1 GB-month.
+* Storing 2 GB for 15 days will be charged as 1 GB-month.
 
 ### Class A operations
 
