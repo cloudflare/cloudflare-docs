@@ -74,6 +74,12 @@ layout: list
   </thead>
   <tbody>
     <tr>
+      <td><strong>Remove "X-Powered-By" headers</strong></td>
+      <td>
+        <p>Removes the <code>X-Powered-By</code> HTTP response header that provides information about the application at the origin server that handled the request.</p>
+      </td>
+    </tr>
+    <tr>
       <td><strong>Add security headers</strong></td>
       <td>
         <p>Adds several security-related HTTP response headers. The added response headers and values are the following:</p>
@@ -85,12 +91,6 @@ layout: list
           <li><code>Expect-CT: max-age=86400, enforce</code></li>
         </ul>
         <p>To increase protection, <a href="/ssl/edge-certificates/additional-options/http-strict-transport-security/">enable HTTP Strict Transport Security (HSTS)</a> for your website.</p>
-      </td>
-    </tr>
-    <tr>
-      <td><strong>Remove "X-Powered-By" headers</strong></td>
-      <td>
-        <p>Removes the <code>X-Powered-By</code> HTTP response header that provides information about the application at the origin server that handled the request.</p>
       </td>
     </tr>
   </tbody>
