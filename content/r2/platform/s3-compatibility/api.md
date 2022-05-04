@@ -1,11 +1,11 @@
 ---
-title: R2 S3 XML API Compatibility
+title: S3 API Compatibility
 pcx-content-type: reference
 meta:
-  title: R2 S3 XML API Compatibility
+  title: S3 API Compatibility
 ---
 
-# S3 XML API compatibility
+# S3 API compatibility
 
 R2 implements the S3 API to allow users and their applications to migrate easily. When comparing to AWS S3, Cloudflare has removed some API operations' features and added others. The S3 API operations are listed below with their current implementation status. Feature implementation is currently in progress. Refer back to this page for updates.
 
