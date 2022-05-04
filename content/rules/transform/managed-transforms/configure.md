@@ -64,12 +64,12 @@ header: Response
     ],
     "managed_response_headers": [
       {
-        "id": "add_xss_protection_headers",
+        "id": "remove_x-powered-by_header",
         "enabled": false,
         "available": true
       },
       {
-        "id": "remove_x-powered-by_header",
+        "id": "add_security_headers",
         "enabled": false,
         "available": true
       }
@@ -138,13 +138,13 @@ header: Response
     ],
     "managed_response_headers": [
       {
-        "id": "add_xss_protection_headers",
-        "enabled": false,
+        "id": "remove_x-powered-by_header",
+        "enabled": true,
         "available": true
       },
       {
-        "id": "remove_x-powered-by_header",
-        "enabled": true,
+        "id": "add_security_headers",
+        "enabled": false,
         "available": true
       }
     ]
