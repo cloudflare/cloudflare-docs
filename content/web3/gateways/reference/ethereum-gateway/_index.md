@@ -6,6 +6,6 @@ meta:
   title: Reference - Ethereum Gateway
 ---
 
-# Ethereum Gateway
+# Ethereum Gateway Reference
 
 {{<directory-listing>}}
