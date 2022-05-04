@@ -85,7 +85,7 @@ With Tanium integrated, you can build policies that enforce decisions using sign
 
 1.  [Create a new application](/cloudflare-one/applications/) or edit an existing application.
 
-1.  [Build a policy](/cloudflare-one/policies/zero-trust/policy-management/) that contains a rule with an Allow action that includes identity.
+1.  [Build a policy](/cloudflare-one/policies/access/policy-management/) that contains a rule with an Allow action that includes identity.
 
     For example, a rule that allows users to connect if they are members of your team's email domain.
 
