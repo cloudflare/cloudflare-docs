@@ -7,7 +7,17 @@ title: Routing
 
 ## Background
 
-Routing lets customers connect a Worker to the Internet, allowing it to receive HTTP requests on their Cloudflare zones.  There are two ways to route to a Worker: [Custom Domains](/workers/platform/routing/custom-domains) and [Routes](/workers/platform/routing/routes).  Routes add Workers functionality to your existing Orange-clouded hostnames, as a proxy in front of your application server. Custom Domains can replace the Orange-cloud process entirely – automatically attaching a Worker to your hostname by creating a DNS record and an SSL cert on your behalf.  Custom Domains can also be invoked within the same zone via `fetch()`, unlike Routes.
+Routing lets customers connect a Worker to the Internet, allowing it to receive HTTP requests on their Cloudflare zones. There are two ways to route to a Worker: 
+
+1. [Custom Domains](/workers/platform/routing/custom-domains).
+
+and
+
+2. [Routes](/workers/platform/routing/routes).
+
+Routes add Workers functionality to your existing proxied (orange-clouded) hostnames, as a proxy in front of your application server. 
+
+Custom Domains can replace the proxy (orange-cloud) process entirely. Custom Domains automatically attach a Worker to your hostname by creating a DNS record and an SSL certificate on your behalf. Custom Domains can also be invoked within the same zone via `fetch()`, unlike Routes.
 
 ## Custom Domains
 [Custom Domains](/workers/platform/routing/custom-domains) allow our customers to attach a Worker to a hostname.  Cloudflare will create DNS records and issue necessary certificates on behalf of our customers.  The DNS records will point directly to the Worker.
