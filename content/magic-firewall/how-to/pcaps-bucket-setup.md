@@ -9,7 +9,7 @@ meta:
 # Setting up a bucket
 AWS and GCP buckets can be configured as targets when using the PCAP API.
 
-In order to use a bucket you will need to first Enable Destinations via API. Choose either [Amazon S3](https://developers.cloudflare.com/logs/get-started/enable-destinations/aws-s3/#manage-via-api) or [Google Cloud Storage](https://developers.cloudflare.com/logs/get-started/enable-destinations/google-cloud-storage/#manage-via-api) and follow the steps for those specific services.
+In order to use a bucket you will need to first Enable Destinations via API. Choose either [Amazon S3](/logs/get-started/enable-destinations/aws-s3/#manage-via-api) or [Google Cloud Storage](/logs/get-started/enable-destinations/google-cloud-storage/#manage-via-api) and follow the steps for those specific services.
 
 At this time you cannot manage this via the Cloudflare dashboard.
 
