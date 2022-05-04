@@ -66,7 +66,7 @@ If you only define `WNAM`, then traffic from the East Coast will be routed to th
 
 When [creating or editing a load balancer](/load-balancing/how-to/create-load-balancer/):
 
-1. Go to the **Traffic Steering** step.
+1. Follow the [create a load balancer procedure](/load-balancing/how-to/create-load-balancer/#via-the-dashboard) until you reach the **Traffic Steering** step.
 2. Click **Geo Steering**.
 3. For **Country**, select a country and click **Add Region**.
 4. Click **Edit**.
