@@ -64,4 +64,4 @@ You can check the details of each script displayed in the Active Scripts dashboa
 - **Last seen on pages**: The most recent pages where the script was detected (up to ten pages).
 - **Count**: The total number of reports received for the script, based on sampling. You should only use this value to compare the number of reports between different scripts.
 
-The information above helps you track how and how many times a script appeared in your domain, and which pages have recently loaded the script.
+The information above helps you track how and how many times a script appeared in your domain and which pages have recently loaded the script.
