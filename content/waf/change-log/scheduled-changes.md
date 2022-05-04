@@ -24,14 +24,24 @@ layout: list
   </thead>
   <tbody>
     <tr>
+      <td>2022-05-03</td>
+      <td>2022-05-09</td>
+      <td>Cloudflare Specials</td>
+      <td>...02a9ee96</td>
+      <td>100528</td>
+      <td>Code Injection - CVE:CVE-2022-29078</td>
       <td>N/A</td>
+      <td>Block</td>
+    </tr>
+        <tr>
+      <td>2022-05-03</td>
+      <td>2022-05-09</td>
+      <td>Cloudflare Specials</td>
+      <td>...422313d0</td>
+      <td>100529</td>
+      <td>VMware vCenter - CVE:CVE-2022-22054</td>
       <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>Block</td>
     </tr>
   </tbody>
 </table>

@@ -19,7 +19,7 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 ![Self-hosted applications diagram](/cloudflare-one/static/documentation/applications/network-diagram.png)
 
-Make sure you create [Access policies](/cloudflare-one/policies/zero-trust/) before connecting your application to Cloudflare. To [connect your origin](/cloudflare-one/connections/connect-apps/) to Cloudflare, you can use [Cloudflare Tunnel](/cloudflare-one/glossary/#cloudflare-tunnel). If you do not wish to use Cloudflare Tunnel, you must [validate the token](/cloudflare-one/identity/users/validating-json/) issued by Cloudflare on your origin.
+Make sure you create [Access policies](/cloudflare-one/policies/access/) before connecting your application to Cloudflare. To [connect your origin](/cloudflare-one/connections/connect-apps/) to Cloudflare, you can use [Cloudflare Tunnel](/cloudflare-one/glossary/#cloudflare-tunnel). If you do not wish to use Cloudflare Tunnel, you must [validate the token](/cloudflare-one/identity/users/validating-json/) issued by Cloudflare on your origin.
 
 ### 1. Add your application
 
@@ -44,7 +44,7 @@ Make sure you create [Access policies](/cloudflare-one/policies/zero-trust/) bef
 1.  From the drop-down menu under **Application domain**, select a hostname that will represent the application. The hostname must be an active zone in your Cloudflare account.
 
 {{<Aside>}}
-When specifying an application domain, you can use wildcards to protect multiple parts of an application that share a root path. For more information on how to use wildcards, see the instructions in the [Application paths](/cloudflare-one/policies/zero-trust/app-paths/) page.
+When specifying an application domain, you can use wildcards to protect multiple parts of an application that share a root path. For more information on how to use wildcards, refer to the instructions in the [Application paths](/cloudflare-one/policies/access/app-paths/) page.
 {{</Aside>}}
 
 1.  Scroll down to the **Application visibility** card.
@@ -83,7 +83,7 @@ To learn more about how policies work, read our [Policies section](/cloudflare-o
 
 The **Setup section** allows you to configure a few advanced settings for your application.
 
-1.  Configure [Cross-Origin Resource Sharing (CORS) settings](/cloudflare-one/policies/zero-trust/cors/).
+1.  Configure [Cross-Origin Resource Sharing (CORS) settings](/cloudflare-one/policies/access/cors/).
 
 ![Advanced settings](/cloudflare-one/static/documentation/applications/advanced-settings.png)
 

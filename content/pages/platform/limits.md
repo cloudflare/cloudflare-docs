@@ -35,7 +35,7 @@ You can have an unlimited number of [preview deployments](/pages/platform/previe
 
 ## Redirects
 
-A `_redirects` file can have a maximum of 1,000 static redirects and 100 dynamic redirects, for a combined total of 1,100 redirects. It is recommended to use [Bulk Redirects](/pages/how-to/use-bulk-redirects/) when you have a need for more than the `_redirects` file supports.
+A `_redirects` file can have a maximum of 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. It is recommended to use [Bulk Redirects](/pages/how-to/use-bulk-redirects/) when you have a need for more than the `_redirects` file supports.
 
 ## Users
 
