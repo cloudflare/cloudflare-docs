@@ -1,10 +1,10 @@
 ---
 pcx-content-type: reference
-title: Manage Transform Rules
+title: Work with Transform Rules
 weight: 5
 ---
 
-# Manage Transform Rules
+# Work with Transform Rules
 
 **Transform Rules** is a feature of **Rules** in the Cloudflare dashboard.
 
