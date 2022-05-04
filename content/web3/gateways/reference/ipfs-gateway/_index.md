@@ -1,10 +1,12 @@
 ---
 pcx-content-type: concept
-title: IPFS Gateway
+title: IPFS
 weight: 3
+meta:
+  title: Reference - IPFS Gateway
 ---
 
-# IPFS Gateway
+# IPFS
 
 Cloudflare's read-only Distributed Web Gateway lets you access content stored on
 the InterPlanetary File System (IPFS) quickly and easily, without downloading
