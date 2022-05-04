@@ -37,7 +37,7 @@ layout: list
       <td>2022-05-03</td>
       <td>2022-05-09</td>
       <td>Cloudflare Specials</td>
-      <td>N/A</td>
+      <td>...422313d0</td>
       <td>100529</td>
       <td>VMware vCenter - CVE:CVE-2022-22054</td>
       <td>N/A</td>
