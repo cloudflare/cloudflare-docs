@@ -29,11 +29,11 @@ To review the active scripts monitored by Page Shield:
 3.  Under **Active Scripts**, review the active scripts for your domain.
 4.  To filter scripts, use the following options:
 
-    - **Search**: Search for a specific URL.
-    - **Host**: Look for scripts appearing on specific hostnames.
-    - **Page** (requires a Business or Enterprise plan): Look for scripts appearing in a specific page. Searches the page where the first script occurred and the latest occurrences list.
+    - **Search scripts URLs**: Search for a specific URL.
+    - **Host contains**: Look for scripts appearing on specific hostnames.
+    - **Seen on Pages** (requires a Business or Enterprise plan): Look for scripts appearing in a specific page. Searches the page where the first script occurred and the latest occurrences list.
 
-To review all scripts reported in your domain in the last 30 days, click **Explore all scripts**.
+To review all scripts reported in your domain in the last 30 days, click **All scripts**.
 
 If you recently activated Page Shield, you may see a delay in reporting.
 
@@ -43,7 +43,7 @@ Use the All Reported Scripts dashboard to review all scripts reported in your do
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Page Shield**.
-3. Under **Active Scripts**, click **Explore all scripts**.
+3. Under **Active Scripts**, click **All scripts**.
 4. Review the information displayed in the **All Reported Scripts** dashboard.
 
 The All Reported Scripts dashboard allows you to filter the displayed scripts using different criteria, and to print a report with the displayed scripts.
