@@ -52,7 +52,7 @@ async function handleRequest(request) {
 
 ## Deploying a Workers function in the dashboard
 
-The easiest way to start deploying your Workers function is by typing [workers.new](https://workers.new/) in the browser. Log into your account to be automatically directed to the Workers dashboard. From the Workers dashboard, write your function or use one of the [examples from the Workers documentation](/workers/examples/).
+The easiest way to start deploying your Workers function is by typing [workers.new](https://workers.new/) in the browser. Log in to your account to be automatically directed to the Workers dashboard. From the Workers dashboard, write your function or use one of the [examples from the Workers documentation](/workers/examples/).
 
 Click **Save and Deploy** when your script is ready and set a [route](/workers/platform/routes/) in your domain's zone settings.
 

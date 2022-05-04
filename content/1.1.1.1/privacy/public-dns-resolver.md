@@ -1,5 +1,4 @@
 ---
-weight: 0
 pcx-content-type: reference
 title: 1.1.1.1 Public DNS Resolver
 ---

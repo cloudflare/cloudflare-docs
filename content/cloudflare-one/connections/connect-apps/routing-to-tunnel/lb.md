@@ -48,7 +48,7 @@ The application will default to the Cloudflare settings of the hostname in your 
 
 If you have a tunnel to a port or ssh port, you **should not** run a TCP health check.
 
-Instead, set up a health check endpoint in `cloudflared` — for example, an [ingress entry rule](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/) that returns a fixed http status response — and create an **HTTP** [monitor](/load-balancing/understand-basics/monitors/) for that endpoint. This monitor will only verify that your server is reachable, **not** whether it is up and can accept requests.
+Instead, set up a health check endpoint in `cloudflared` — for example, an [ingress entry rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/) that returns a fixed http status response — and create an **HTTP** [monitor](/load-balancing/understand-basics/monitors/) for that endpoint. This monitor will only verify that your server is reachable, **not** whether it is up and can accept requests.
 
 ### Named Tunnels and replicas
 

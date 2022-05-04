@@ -48,7 +48,6 @@ Beta datasets are available to Enterprise customers for testing and exploration.
 
 | Dataset (product) | Node                                                                                                        |
 | :----------------- | :---------------------------------------------------------------------------------------------------------- |
-| Browser Insights   | `browserInsightsAdaptiveGroups` `webVitalsAdaptiveGroups`                                                   |
 | Web Analytics      | `rumPageloadEventsAdaptiveGroups` `rumPerformanceEventsAdaptiveGroups` `rumWebVitalsEventsAdaptiveGroups`   |
 
 {{</table-wrap>}}

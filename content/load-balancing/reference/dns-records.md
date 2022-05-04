@@ -12,9 +12,9 @@ When you [create a load balancer](/load-balancing/how-to/create-load-balancer/),
 
 ## Supported records
 
-For customers on non-Enterprise plans, Cloudflare supports load balancing for **A**, **AAAA**, and **CNAME** records.
+For customers on non-Enterprise plans, Cloudflare supports load balancing for `A`, `AAAA`, and `CNAME` records.
 
-For customers on Enterprise plans, Cloudflare supports load balancing for **A**, **AAAA**, **CNAME**, **MX**, **SRV**, and **TXT** records.
+For customers on Enterprise plans, Cloudflare supports load balancing for `A`, `AAAA`, `CNAME`, **MX**, **SRV**, and **TXT** records.
 
 ## Priority order
 
@@ -57,6 +57,6 @@ In both cases, disabling your load balancer prevents traffic from going to any a
 
 Due to internal limitations, Cloudflare [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) do not cover load balancing hostnames by default. This behavior will be corrected in the future.
 
-As a current workaround for a domain or first-level subdomain (`lb.example.com`), create a [proxied CNAME/A/AAAA record](/dns/manage-dns-records/how-to/create-dns-records/) for that hostname.
+As a current workaround for a domain or first-level subdomain (`lb.example.com`), create a [proxied `CNAME`/`A`/`AAAA` record](/dns/manage-dns-records/how-to/create-dns-records/) for that hostname.
 
 To get coverage for any deeper subdomain (`lb.dev.example.com`), purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).

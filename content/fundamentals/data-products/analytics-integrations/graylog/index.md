@@ -84,12 +84,12 @@ Once decompressed, the integration package includes:
     - **LOG_LEVEL** _(optional - defaults to INFO)_ - The level of detail to include in the CloudWatch logs generated from the Lambda function. Supported values are _OFF_, _ERROR_, _WARN_, _INFO_, _DEBUG_, _TRACE_, and _ALL_. Increase the logging level to help with troubleshooting. See [Defining Custom Log Levels in Code](https://logging.apache.org/log4j/2.0/manual/customloglevels.html) for more information.
     - **CLOUDFLARE_LOGPUSH_MESSAGE_FIELDS** _(optional - defaults to all)_ - The fields to parse from the message. Specify as a comma-separated list of field names.
     - **CLOUDFLARE_LOGPUSH_MESSAGE_SUMMARY_FIELDS** _(optional - defaults to ClientRequestHost, ClientRequestPath, OriginIP, ClientSrcPort, EdgeServerIP, EdgeResponseBytes)_ - The fields to include in the message summary that appears above the parsed fields at the top of each message in Graylog. Specify as a comma-separated list of field names.
-      ![Defining Graylog environment variables](/fundamentals/static/images/graylog/screenshots/graylog-environment-variables.png)
+      ![List of required Graylog environment variables](/fundamentals/static/images/graylog/screenshots/graylog-environment-variables.png)
 
       **Note:** More configuration variables are available to fine-tune the function configuration in the Graylog Lambda S3 [README](https://github.com/Graylog2/graylog-s3-lambda/blob/master/README.md#step-2-specify-configuration) file.
 
 6.  Create an AWS S3 Trigger for the Lambda function so that the function can process each Cloudflare log field that is written. Specify the same S3 bucket from [Task 1](#task1) and choose the _All object create events_ option. Any other desired file filters can be applied here.
-    ![Adding an AWS S3 Trigger](/fundamentals/static/images/graylog/screenshots/aws-s3-add-trigger.png)
+    ![Add trigger dialog with an example AWS S3 Trigger](/fundamentals/static/images/graylog/screenshots/aws-s3-add-trigger.png)
 
 7.  If your Graylog cluster is located within a VPC, you will need to [configure your Lambda function to access resources in a VPC](https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html). You may also need to create a [VPC endpoint for the AWS S3 service](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html#create-vpc-endpoint). This allows the Lambda function to access S3 directly when running in a VPC.
 

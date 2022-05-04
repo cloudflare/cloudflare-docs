@@ -54,69 +54,11 @@ For an up-to-date list of load balancer properties, refer to [Load balancer prop
 
 The Cloudflare API supports the following commands for load balancers.
 
-{{<table-wrap>}}
-
-<table>
-  <thead>
-  <tr>
-   <th><strong>Command</strong>
-   </th>
-   <th><strong>Method</strong>
-   </th>
-   <th><strong>Endpoint</strong>
-   </th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancers-create-load-balancer">Create Load Balancer</a>
-   </td>
-   <td>{{<code>}}GET{{</code>}}
-   </td>
-   <td>{{<code>}}/zones/:zone_id/load_balancers{{</code>}}
-   </td>
-  </tr>
-  <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancers-delete-load-balancer">Delete Load Balancer</a>
-   </td>
-   <td>{{<code>}}DELETE{{</code>}}
-   </td>
-   <td>{{<code>}}/zones/:zone_id/load_balancers/:id{{</code>}}
-   </td>
-  </tr>
-  <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancers-list-load-balancers">List Load Balancers</a>
-   </td>
-   <td>{{<code>}}GET{{</code>}}
-   </td>
-   <td>{{<code>}}/zones/:zone_id/load_balancers{{</code>}}
-   </td>
-  </tr>
-  <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancers-load-balancer-details">Load Balancer Details</a>
-   </td>
-   <td>{{<code>}}POST{{</code>}}
-   </td>
-   <td>{{<code>}}/zones/:zone_id/load_balancers/:id{{</code>}}
-   </td>
-  </tr>
-  <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancers-patch-load-balancer">Overwrite specific properties</a>
-   </td>
-   <td>{{<code>}}PATCH{{</code>}}
-   </td>
-   <td>{{<code>}}/zones/:zone_id/load_balancers/:id{{</code>}}
-   </td>
-  </tr>
-  <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancers-update-load-balancer">Overwrite entire Load Balancer</a>
-   </td>
-   <td>{{<code>}}PUT{{</code>}}
-   </td>
-   <td>{{<code>}}/zones/:zone_id/load_balancers/:id{{</code>}}
-   </td>
-  </tr>
-  </tbody>
-</table>
-
-{{</table-wrap>}}
+| Command | Method | Endpoint |
+| --- | --- | --- |
+| [Create Load Balancer](https://api.cloudflare.com/#load-balancers-create-load-balancer) | `GET` | `/zones/:zone_id/load_balancers` |
+| [Delete Load Balancer](https://api.cloudflare.com/#load-balancers-delete-load-balancer) | `DELETE` | `/zones/:zone_id/load_balancers/:id` |
+| [List Load Balancers](https://api.cloudflare.com/#load-balancers-list-load-balancers) | `GET` | `/zones/:zone_id/load_balancers`
+| [Load Balancer Details](https://api.cloudflare.com/#load-balancers-load-balancer-details) | `POST` | `/zones/:zone_id/load_balancers/:id` |
+| [Overwrite specific properties](https://api.cloudflare.com/#load-balancers-patch-load-balancer) | `PATCH` | `/zones/:zone_id/load_balancers/:id`
+| [Overwrite entire Load Balancer](https://api.cloudflare.com/#load-balancers-update-load-balancer) | `PUT` | `/zones/:zone_id/load_balancers/:id`

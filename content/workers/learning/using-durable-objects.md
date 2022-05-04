@@ -21,7 +21,7 @@ For details on the specific Durable Object APIs, refer to the [Runtime API docum
 
 Durable Objects are named instances of a class you define. Like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
 
-To start, enable Durable Objects for your account by logging into [the Cloudflare dashboard](https://dash.cloudflare.com/) > **Workers** > **Durable Objects**.
+To start, enable Durable Objects for your account by logging in to [the Cloudflare dashboard](https://dash.cloudflare.com/) > **Workers** > **Durable Objects**.
 
 There are three steps to creating and using a Durable Object:
 
@@ -37,8 +37,8 @@ The first parameter passed to the class constructor contains state specific to t
 
 ```js
 export class DurableObjectExample {
-    constructor(state, env) {
-    }
+  constructor(state, env) {
+  }
 }
 ```
 
@@ -48,13 +48,12 @@ Workers communicate with a Durable Object via the Fetch API. Like a Worker, a Du
 
 ```js
 export class DurableObjectExample {
-    constructor(state, env) {
-    }
+  constructor(state, env) {
+  }
 
-    async fetch(request) {
-        return new Response('Hello World');
-    }
-
+  async fetch(request) {
+    return new Response('Hello World');
+  }
 }
 ```
 
@@ -72,18 +71,17 @@ Durable Objects gain access to a [persistent storage API](/workers/runtime-apis/
 
 ```js
 export class DurableObjectExample {
-    constructor(state, env) {
-        this.state = state;
-    }
+  constructor(state, env) {
+    this.state = state;
+  }
 
-    async fetch(request) {
-        let ip = request.headers.get('CF-Connecting-IP');
-        let data = await request.text();
-        let storagePromise = this.state.storage.put(ip, data);
-        await storagePromise;
-        return new Response(ip + ' stored ' + data);
-    }
-
+  async fetch(request) {
+    let ip = request.headers.get('CF-Connecting-IP');
+    let data = await request.text();
+    let storagePromise = this.state.storage.put(ip, data);
+    await storagePromise;
+    return new Response(ip + ' stored ' + data);
+  }
 }
 ```
 
@@ -103,27 +101,29 @@ For more discussion about these features, refer to the [Durable Objects: Easy, F
 
 ### In-memory state in a Durable Object
 
-Variables in a Durable Object will maintain state as long as your Durable Object is not evicted from memory. A common pattern is to initialize an object from persistent storage and set class variables the first time it is accessed. Since future accesses are routed to the same object, it is then possible to return any initialized values without making further calls to persistent storage.
+Variables in a Durable Object will maintain state as long as your Durable Object is not evicted from memory. A common pattern is to initialize an object from persistent storage and set instance variables the first time it is accessed. Since future accesses are routed to the same object, it is then possible to return any initialized values without making further calls to persistent storage.
 
 ```js
 export class Counter {
-    constructor(state, env) {
-        this.state = state;
-        // `blockConcurrencyWhile()` ensures no requests are delivered until
-        // initialization completes.
-        this.state.blockConcurrencyWhile(async () => {
-            let stored = await this.state.storage.get("value");
-            // After initialization, future reads do not need to access storage.
-            this.value = stored || 0;
-        })
-    }
+  constructor(state, env) {
+    this.state = state;
+    // `blockConcurrencyWhile()` ensures no requests are delivered until
+    // initialization completes.
+    this.state.blockConcurrencyWhile(async () => {
+      let stored = await this.state.storage.get("value");
+      // After initialization, future reads do not need to access storage.
+      this.value = stored || 0;
+    })
+  }
 
-    // Handle HTTP requests from clients.
-    async fetch(request) {
-        ...
-    }
+  // Handle HTTP requests from clients.
+  async fetch(request) {
+    // use this.value rather than storage
+  }
 }
 ```
+
+A given instance of a Durable Object may share global memory with other instances of the same class. In the example above, using a global variable `value` instead of the instance variable `this.value` would be incorrect. Two different instances of `Counter` will each have their own separate memory for `this.value`, but might share memory for the global variable `value`, leading to unexpected results. Because of this, it is best to avoid global variables.
 
 {{<Aside type="note" header="Built-in caching">}}
 

@@ -5,7 +5,7 @@ title: Compatibility dates
 
 # Compatibility dates
 
-Cloudflare regularly updates the Workers runtime. These updates apply to all Workers globally and should never cause a Worker that is already deployed to stop functioning. Sometimes, though, some changes may be backwards-incompatible. In particular, there might bugs in the runtime API that existing Workers may inadvertently depend. Cloudflare implements bug fixes that new Workers can opt into while existing Workers will continue to see the buggy behavior to prevent breaking deployed Workers.
+Cloudflare regularly updates the Workers runtime. These updates apply to all Workers globally and should never cause a Worker that is already deployed to stop functioning. Sometimes, though, some changes may be backwards-incompatible. In particular, there might be bugs in the runtime API that existing Workers may inadvertently depend upon. Cloudflare implements bug fixes that new Workers can opt into while existing Workers will continue to see the buggy behavior to prevent breaking deployed Workers.
 
 Compatibility dates (and flags) are how you, as a developer, opt into these changes. By specifying a `compatibility_date` in your `wrangler.toml` file, that Worker enables all changes that were made before the given date.
 

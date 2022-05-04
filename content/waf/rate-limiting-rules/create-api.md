@@ -3,7 +3,6 @@ pcx-content-type: how-to
 type: overview
 title: Create rate limiting rules via API
 weight: 16
-layout: list
 ---
 
 # Create rate limiting rules via API
@@ -22,11 +21,11 @@ You must deploy rate limiting rules to the `http_ratelimit` phase.
 
 ## Create a rate limiting rule
 
-To create a rate limiting rule, add a rule with a `ratelimit` field to the `http_ratelimit` phase entry point ruleset by issuing a `PUT` request (refer to the example below).
+To create a rate limiting rule, add a rule with a `ratelimit` field to the `http_ratelimit` phase entry point ruleset by issuing a `PUT` request (refer to the examples below).
 
 Add any existing rules in the ruleset to the request by including their rule ID in the `rules` field of the request body. Rate limiting rules must appear at the end of the rules list.
 
-### Example A
+### Example A - Rate limiting based on request properties
 
 This example defines a rate limiting rule based on three characteristics applied to URL paths starting with `/api/` and with action `block`.
 
@@ -59,51 +58,9 @@ curl -X PUT \
 }'
 ```
 
-```json
----
-header: Response
----
-{
-  "result": {
-    "id": "<RULESET_ID>",
-    "name": "Default",
-    "description": "",
-    "kind": "zone",
-    "version": "5",
-    "rules": [
-      {
-        "id": "<RULE_ID>",
-        "version": "1",
-        "action": "block",
-        "ratelimit": {
-          "characteristics": [
-            "cf.colo.id",
-            "http.request.headers[\"x-api-key\"]",
-            "ip.src"
-          ],
-          "period": 60,
-          "requests_per_period": 100,
-          "mitigation_timeout": 600
-        },
-        "expression": "(http.request.uri.path matches \"^/api/\")",
-        "description": "My rate limiting rule",
-        "last_updated": "2021-03-31T18:33:41.347Z",
-        "ref": "<RULE_REF>",
-        "enabled": true
-      }
-    ],
-    "last_updated": "2021-03-31T18:33:41.347Z",
-    "phase": "http_ratelimit"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
+### Example B - Rate limiting with a custom response
 
-### Example B
-
-This example request defines a custom response for requests blocked due to rate limiting.
+This example request defines a custom plain text response for requests blocked due to rate limiting.
 
 ```json
 ---
@@ -142,9 +99,9 @@ curl -X PUT \
 }'
 ```
 
-### Example C
+### Example C - Rate limiting ignoring cached assets
 
-This example request creates a rate limiting rule that does not consider requests for cached assets when calculating the request rate.
+This example request creates a rate limiting rule that does not consider requests for cached assets when calculating the rate.
 
 ```json
 ---
@@ -171,6 +128,45 @@ curl -X PUT \
         "requests_per_period": 100,
         "mitigation_timeout": 600,
         "requests_to_origin": true
+      }
+    }
+  ]
+}'
+```
+
+### Example D - Complexity-based rate limiting rule
+
+{{<Aside type="note">}}
+[Complexity-based rate limiting](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting) is available in beta and can only be configured via API.
+{{</Aside>}}
+
+This example configures a complexity-based rate limiting rule that takes the `my-score` HTTP response header into account to calculate a total complexity score for the client. The counter with the total score is updated when there is a match for the rate limiting rule's counting expression (in this case, the same as the rule expression). When this total score becomes larger than `400` during a 60-second period, any later client requests will be blocked for a period of 600 seconds (10 minutes).
+
+```json
+---
+header: Request
+highlight: [17,18]
+---
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_ratelimit/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
+-d '{
+  "rules": [
+    {
+      "description": "My complexity-based rate limiting rule",
+      "expression": "http.request.uri.path matches \"^/graphql/\"",
+      "action": "block",
+      "ratelimit": {
+        "characteristics": [
+          "cf.colo.id",
+          "http.request.headers[\"x-api-key\"]"
+        ],
+        "period": 60,
+        "score_per_period": 400,
+        "score_response_header_name": "my-score",
+        "mitigation_timeout": 600,
+        "counting_expression": ""
       }
     }
   ]

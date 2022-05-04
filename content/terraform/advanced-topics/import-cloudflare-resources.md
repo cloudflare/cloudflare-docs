@@ -12,7 +12,7 @@ An important point to understand about Terraform is that it can only manage conf
 
 When Terraform makes calls to Cloudflare's API to create new resources as explained in the [tutorial](/terraform/tutorial/), it persists those IDs to a state file. By default, the `terraform.tfstate` file in your directory is used, but this can also be a [remote location](https://www.terraform.io/docs/state/remote.html). These IDs are later looked up and refreshed when you call `terraform plan` and `terraform apply`.
 
-If you configured Cloudflare through other means, for example, by logging into the Cloudflare Dashboard or making `curl` calls to api.cloudflare.com, Terraform does not yet have these resource IDs in the state file. To manage this preexisting configuration, you will need to first reproduce the configuration in your config file and then import resources individually by providing their IDs and resource names.
+If you configured Cloudflare through other means, for example, by logging in to the Cloudflare Dashboard or making `curl` calls to api.cloudflare.com, Terraform does not yet have these resource IDs in the state file. To manage this preexisting configuration, you will need to first reproduce the configuration in your config file and then import resources individually by providing their IDs and resource names.
 
 ## cf-terraforming
 
@@ -58,7 +58,9 @@ Start by making a call to Cf-Terraforming to enumerate the Terraform configurati
 
 The command below assumes you run the tool from `{GOPATH}/src/github.com/cloudflare/cf-terraforming`. If pulled with `go get` and if `$GOPATH/bin` is in your `$PATH` you should be able to just run the tool with `$ cf-terraforming <parameters>`.
 
-    $ go run cmd/cf-terraforming/main.go --email $CLOUDFLARE_EMAIL --token $CLOUDFLARE_API_TOKEN -z 1109d899a5ff5fd74bc01e581693685a --resource-type cloudflare_record > importing-example.tf
+```go
+$ go run cmd/cf-terraforming/main.go --email $CLOUDFLARE_EMAIL --token $CLOUDFLARE_API_TOKEN -z 1109d899a5ff5fd74bc01e581693685a --resource-type cloudflare_record > importing-example.tf
+```
 
 {{</Aside>}}
 

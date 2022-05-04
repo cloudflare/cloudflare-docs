@@ -139,6 +139,7 @@ For reference information on rule actions available for Cloudflare products powe
               If successful, Cloudflare accepts the matched request; otherwise,
               it is blocked.
             </li>
+            <li>For additional information, refer to <a href="#notes-about-challenge-actions">Notes about challenge actions</a>.</li>
           </ul>
         </td>
         <td>4</td>
@@ -171,6 +172,7 @@ For reference information on rule actions available for Cloudflare products powe
                 </li>
               </ul>
             </li>
+            <li>For additional information, refer to <a href="#notes-about-challenge-actions">Notes about challenge actions</a>.</li>
           </ul>
         </td>
         <td>5</td>
@@ -196,6 +198,7 @@ For reference information on rule actions available for Cloudflare products powe
               If successful, Cloudflare accepts the matched request; otherwise,
               it is blocked.
             </li>
+            <li>For additional information, refer to <a href="#notes-about-challenge-actions">Notes about challenge actions</a>.</li>
           </ul>
         </td>
         <td>6</td>
@@ -213,3 +216,12 @@ For reference information on rule actions available for Cloudflare products powe
 
   </table>
 {{</table-wrap>}}
+
+## Notes about challenge actions
+
+When you configure a firewall rule with one of the challenge actions — _Managed Challenge_, _JS Challenge_, or _Legacy CAPTCHA_ — and a request matches the rule, one of two things can happen:
+
+* The request is blocked if the visitor fails the challenge
+* The request is allowed if the visitor passes the challenge
+
+In this last case, no further firewall rules will be processed. This means that the action of any later rules with a challenge or _Block_ action also matching the request will not be applied, and the request will be allowed.

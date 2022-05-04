@@ -22,7 +22,24 @@ When using Page Rules with Workers, the following workflow is applied.
 
 If you are experiencing Page Rule errors when running Workers, contact your Cloudflare account team or [Cloudflare Support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support).
 
-## Email Obfuscation
+## Disabled Page Rules
+
+The following Page Rules are disabled when an incoming request is matched to a Worker route:
+
+*   Always Online
+*   Always Use HTTPS
+*   Auto Minify
+*   Automatic HTTPS Rewrites
+*   Disable Apps
+*   Email Obfuscation
+*   Forwarding URL
+*   Host Header Override
+*   Mirage
+*   Rocket Loader
+
+To learn what these Page Rules do, refer to [Understanding and configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427).
+
+### Email Obfuscation
 
 <details>
 <summary>Email Obfuscation</summary>

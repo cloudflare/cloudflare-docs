@@ -20,6 +20,7 @@ Available for Cloudflare customers on a Business or Enterprise plan.
 
 - **Script Monitor New Scripts Alert**: Triggered daily by any new JavaScript dependencies detected in your pages.
 - **Script Monitor New Domain Alert**: Triggered hourly by newly detected JavaScript dependencies from new host domains.
+- **Script Monitor New Script Exceeds Max URL Length Alert**: Triggered when a script's URL exceeds the maximum allowed length.
 
 ## Code change alert
 

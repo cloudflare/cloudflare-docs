@@ -152,8 +152,12 @@ The four options that you can customize are:
 2.  **Sampling rate**: Value can range from `0.001` to `1.0` (inclusive). `sample=0.1` means `return 10% (1 in 10) of all records`.
 3.  **Timestamp format**: The format in which timestamp fields will be returned. Value options: `unixnano` (default), `unix`, `rfc3339`.
 4.  **Optional redaction for CVE-2021-44228**: This option will replace every occurrence of `${` with `x{`.  To enable it, set `CVE-2021-44228=true`.
+5.  **max_upload_bytes** (optional): The maximum uncompressed file size of a batch of logs. This must be at least 5 MB. Note that you cannot set a minimum file size; this means that log files may be much smaller than this batch size.
+6.  **max_upload_records** (optional): The maximum number of log lines per batch. This must be at least 1000 lines or more. Note that you cannot specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
 
-**Note**: The **CVE-2021-44228** parameter can only be set through the API at this time. Updating your Logpush job through the UI will set this option to false.
+{{<Aside type="note" header="Note">}}
+The **CVE-2021-44228** parameter can only be set through the API at this time. Updating your Logpush job through the dashboard will set this option to false.
+{{</Aside>}}
 
 To check if **logpull\_options** are valid:
 

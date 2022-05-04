@@ -80,7 +80,7 @@ addEventListener('fetch', event => {
 
 ## Accessing custom metadata in a rule expression
 
-Use the [`cf.hostname.metadata`](/ruleset-engine/rules-language/fields/#field-cf-hostname-metadata) field to access the metadata object in rule expressions. To obtain the different values from the JSON object, use the [`lookup_json_string`](/ruleset-engine/rules-language/functions/) function.
+Use the [`cf.hostname.metadata`](/ruleset-engine/rules-language/fields/#field-cf-hostname-metadata) field to access the metadata object in rule expressions. To obtain the different values from the JSON object, use the [`lookup_json_string`](/ruleset-engine/rules-language/functions/#function-lookup_json_string) function.
 
 The following rule expression defines that there will be a rule match if the `security_tag` value in custom metadata contains the value `low`:
 
@@ -93,7 +93,6 @@ lookup_json_string(cf.hostname.metadata, "security_tag") eq "low"
 ## Best practices
 
 - Ensure that the JSON schema used is fixed: changes to the schema without corresponding Cloudflare Workers changes will potentially break websites, or fall back to any defined “default” behavior
-- Be sure to send the ‘ssl’ section as well, or else SSL will be PATCHED to null, and SSL will not terminate properly for this hostname
 - Prefer a flat JSON structure
 - Use string keys in snake_case (rather than camelCase or PascalCase)
 - Use proper booleans (true/false rather than `true` or `1` or `0`)

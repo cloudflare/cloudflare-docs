@@ -8,6 +8,8 @@ meta:
 
 # Track
 
+You can use `zaraz.track()` anywhere inside the `<body>` tag of a page.
+
 `zaraz.track()` allows you to track custom events on your website, that might happen in real time.
 
 Example of user events you might be interested in tracking are successful sign-ups, calls-to-action clicks, or purchases. Common examples for other types of events are tracking the impressions of specific elements on a page, or loading a specific widget.
@@ -38,6 +40,6 @@ After using `zaraz.track()` in your website, you will usually want to create a t
 
 {{</table-wrap>}}
 
-In every tool you want to use this trigger, add an action with this trigger [configured as a firing trigger](/zaraz/get-started/create-actions/). Each action that uses this trigger can access the `eventProperties` you have sent. In the **Action** fields, you can use `{{ client.<KEY_NAME> }}` to get the value of `<KEY_NAME>`. In the above example, Zaraz will replace `{{ client.currency }}` with `200`.
+In every tool you want to use this trigger, add an action with this trigger [configured as a firing trigger](/zaraz/get-started/create-actions/). Each action that uses this trigger can access the `eventProperties` you have sent. In the **Action** fields, you can use `{{ client.<KEY_NAME> }}` to get the value of `<KEY_NAME>`. In the above example, Zaraz will replace `{{ client.value }}` with `200`.
 
 For more information regarding the properties you can use with `zaraz.track()`, refer to [Event properties](/zaraz/reference/properties-reference/#event-properties).

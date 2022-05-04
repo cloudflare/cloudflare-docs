@@ -25,3 +25,5 @@ Automatic page purge via the WordPress plugin won’t clean all cached pages, on
 - **Edge Cache TTL** — APO applies custom Edge TTL instead of 30 days. This page rule is helpful for pages that can generate Captchas or nonces.
 
 - **Browser Cache TTL** — APO applies custom Browser TTL.
+
+- `CDN-Cache-Control` and `Cloudflare-CDN-Cache-Control` – Enables users to have detailed control over cache TTLs without using a page rule. For more information on the `CDN-Cache-Control` and `Cloudflare-CDN-Cache-Control` headers, refer to [CDN-Cache-Control](/cache/about/cdn-cache-control/).

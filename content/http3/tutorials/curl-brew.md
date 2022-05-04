@@ -33,9 +33,8 @@ When the build is finished, curl binary will be installed on `/usr/local/opt/cur
 ### Verify curl with H3 support built properly
 
 ```sh
-$ curl --help all | egrep 'alt-svc|http3'
-    --alt-svc <file name> Enable alt-svc with this cache file
-    --http3         Use HTTP v3
+$ curl -V | egrep -i 'alt-svc|http3'
+Features: __alt-svc__ AsynchDNS brotli HSTS HTTP2 __HTTP3__ HTTPS-proxy IDN IPv6 Largefile libz NTLM NTLM_WB PSL SSL UnixSockets zstd
 ```
 
 Try curl on any HTTP/3 enabled sites using the commands below.

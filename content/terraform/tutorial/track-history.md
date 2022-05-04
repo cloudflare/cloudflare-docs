@@ -96,7 +96,7 @@ $ git commit -m "Step 2 - Initial commit with webserver definition."
  create mode 100644 cloudflare.tf
 ```
 
-Notice that the `.terraform` directory and `terraform.tfstate` file were not committed. The `.terraform` directory was not committed because the repository may be used on a different architecture, and the plugins contained in the directory are built for the system on which `terraform init` was run. The `.terraform.` file was not committed because it may eventually contain sensitive strings, and it is not a good way to keep state in sync, as explained in Hashicorp's documentation on [Remote State](https://www.terraform.io/docs/language/state/remote.html).
+Notice that the `.terraform` directory and `terraform.tfstate` file were not committed. The `.terraform` directory was not committed because the repository may be used on a different architecture, and the plugins contained in the directory are built for the system on which `terraform init` was run. The `terraform.tfstate` file was not committed because it may eventually contain sensitive strings, and it is not a good way to keep state in sync, as explained in Hashicorp's documentation on [Remote State](https://www.terraform.io/docs/language/state/remote.html).
 
 To prevent git from notifying you about the two files, add them to a new .gitignore file, commit it, and push everything to GitHub.
 

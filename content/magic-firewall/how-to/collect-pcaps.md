@@ -7,26 +7,43 @@ meta:
 
 # Packet Captures (PCAPs) API
 
-The PCAPs API can be used to capture packets flowing at the edge.
-
-Before collecting a PCAP, you should first understand a packet capture's `system` and `type`. A PCAP's `system` is the product or logical subsystem where packets are captured, and a PCAP's `type` is how the captured packets are built into a PCAP file.
-
-Currently, when a PCAP is requested, packets flowing at the edge through the Magic Transit system are captured, and the system is `magic-transit`. These packets are sampled, and the sampled packets across all edge metals are collected to build a PCAP file. This type of sampling packets and building a PCAP is the `simple` type.
+The PCAPs API can be used to capture packets destined for a customer origin.
+A packet capture is requested and after the capture is collected the output
+is contained within one or more files in PCAP capture file format.
 
 {{<Aside>}}
 
-This feature is currently in an Early Access state. For access, contact your account team.
+This feature is available for Advanced Magic Firewall users. For access, contact your account team.
+
+{{</Aside>}}
+
+The PCAPs API needs both `system` and `type` to be specified in order to start a capture. A PCAP's `system` is the product or logical subsystem where packets are captured, and a PCAP's `type` is how the captured packets are built into a PCAP file.
+
+Currently, when a PCAP is requested, packets flowing at the edge through the Magic Transit system are captured, and the system is `magic-transit`. We support two types of packet captures for this system:
+- `simple`: These packets are sampled, and the sampled packets across all edge metals are collected to build a PCAP file. The packets only contain the first 160 bytes of the payload.
+- `full`: Packets are not sampled and the full packet is captured within a given point-of-presence or colo and sent to either a GCP or AWS bucket specified by the user. This may result in multiple PCAP files.
+
+{{<Aside type="note" header="Note">}}
+
+Before starting a `full` type packet capture, you must first follow instructions for [configuring a bucket](../pcaps-bucket-setup).
 
 {{</Aside>}}
 
 ## Send a PCAP collect Request
 
-To send a collect request, send a JSON body specifying:
+To send a collect request, send a JSON body specifying for all PCAP types:
 
-- `time_limit`: The number of seconds to limit the PCAP. The number should be less than 300 seconds and cannot be set to zero.
-- `packet_limit`: The number of packets to limit the PCAP. The number should be less than 10000 and cannot be set to zero.
-- `type`: Must be `simple` as described in the above example.
-- `system`: Must be `magic-transit` as described in the above example.
+- `time_limit`: The number of seconds to limit the PCAP. The number should be less than `300` seconds and cannot be set to zero.
+- `type`: Can be `full` or `simple` as described above.
+- `system`: Must be `magic-transit` as described above.
+
+If a full `type` is specified the following additional fields are required:
+- `destination_conf`: This specifies the bucket path. For example, `gs://my-bucket`.
+- `colo`: This specifies the `colo` name we want to capture packets from. For example, `ord02`.
+
+Two optional fields are available to limit the amount of packets captured:
+- `packet_limit`: The number of packets to limit the PCAP. This number should be less than `10000` and cannot be set to zero.
+- `byte_limit`: The number of bytes to limit the PCAP. This number should be less than `1000000000` bytes.
 
 In addition to the above fields, the JSON body can optionally filter packets by specifying any of
 
@@ -36,11 +53,32 @@ In addition to the above fields, the JSON body can optionally filter packets by 
 - (TCP/UDP) Destination port
 - IP Protocol
 
-Currently, you can only send one collect request per minute.
+Currently, you can only send one collect request per minute for simple PCAPs, and you can only have one running or pending full PCAP at a time.
 
 ### Example request
 
-A complete request will look like the following:
+#### Full PCAP
+
+A complete `full` type request will look like the following:
+
+    curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
+    -H 'Content-Type: application/json' \
+    -H "X-Auth-Email: ${email}" \
+    -H "X-Auth-Key: ${auth_key}" \
+    -d '{
+            "filter_v1": {},
+            "time_limit": 300,
+            "packet_limit": 10000,
+            "Byte_limit": 100000000,
+            "type": "full",
+            "colo": "sfo06",
+            "system": "magic-transit",
+            "destination_conf": "'${bucket}'"
+    }'
+
+#### Simple PCAP
+
+A complete `simple` type request will look like the following:
 
     curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
     -H 'Content-Type: application/json' \
@@ -123,11 +161,19 @@ The response will be similar to the one received when requesting a PCAP collecti
       "messages": []
     }
 
-While the collection is ongoing, the status will be set to `pending`. Once the PCAP is ready to download, the status will change to `success` and the file is ready to download.
+While the collection is ongoing, the status will be set to `pending` or `running`. Once the PCAP is ready, the status will change to `success`.
 
 ## Download PCAP
 
-Once the collection is complete, you can download the PCAP by specifying the PCAP identifier used earlier.
+Depending on the `type` of PCAP there are multiple ways to obtain your PCAP.
+
+### Full PCAPs
+
+To obtain full PCAPs, download the files from the bucket specified in `destination_conf` after the PCAP's status is `success`. There may be multiple files named `pcap_<pcap_id>.pcap` per capture as captures may occur across multiple machines.
+
+### Simple PCAPs
+
+Once the Simple PCAP collection is complete, you can download the PCAP by specifying the PCAP identifier used earlier.
 
     curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${pcap_id}/download \
     -H 'Content-Type: application/json' \

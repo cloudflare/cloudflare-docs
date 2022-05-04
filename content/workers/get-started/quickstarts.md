@@ -62,13 +62,15 @@ $ wrangler generate <new-project-name> <github-repo-url>
 
 {{<worker-starter title="Sunder Starter (Typescript)" repo="sunderjs/sunder-worker-template" description="A complete starter template using Sunder, TypeScript, Miniflare, esbuild, Jest, and Sass. Uses Worker Sites for static assets.">}}
 
-{{<worker-starter title="Hono Starter" repo="yusukebe/hono-minimal" description="Hono is an ultrafast web framework built for Cloudflare Workers. This is a minimal project using Hono, TypeScript, esbuild, and Miniflare.">}}
+{{<worker-starter title="Hono Starter" repo="honojs/hono-minimal" description="Hono is an ultrafast web framework built for Cloudflare Workers. This is a minimal project using Hono, TypeScript, esbuild, Miniflare, and Jest.">}}
 
 ---
 
 ## Frameworks
 
 {{<worker-starter title="Apollo GraphQL Server" repo="signalnerve/workers-graphql-server" description="Lightning-fast, globally distributed Apollo GraphQL server, deployed at the edge using Cloudflare Workers.">}}
+  
+{{<worker-starter title="GraphQL Yoga" repo="the-guild-org/yoga-cloudflare-workers-template" description="The most flexible, fastest, and lightest GraphQL server for all environments, Cloudflare Workers included.">}}
 
 {{<worker-starter title="Flareact" repo="flareact/flareact" description="Flareact is an edge-rendered React framework built for Cloudflare Workers. It features file-based page routing with dynamic page paths and edge-side data fetching APIs.">}}
 

@@ -8,6 +8,8 @@ meta:
 
 # Set
 
+You can use `zaraz.set()` anywhere inside the `<body>` tag of a page.
+
 You may want to make a variable available in all your events without manually setting it every time you are using `zaraz.track()`. For the purpose of this example, assume users in your system have a unique identifier that you want to send to your tools. You might have many `zaraz.track()` calls all sharing this one parameter:
 
 ```js

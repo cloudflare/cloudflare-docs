@@ -41,7 +41,7 @@ The default directories for the most popular static site generators are listed b
     - Jekyll: `_site`
     - Eleventy: `_site`
 
-3\. Add your `account_id` to your `wrangler.toml`. You can find your `account_id` by logging into the Cloudflare dashboard **Account Home** > **choose your website** > **Overview** > **Account ID** For more details on finding your `account_id`, refer to the [Gett started guide](/workers/get-started/guide/#6a-obtaining-your-account-id-and-zone-id).
+3\. Add your `account_id` to your `wrangler.toml`. You can find your `account_id` by logging in to the Cloudflare dashboard **Account Home** > **choose your website** > **Overview** > **Account ID** For more details on finding your `account_id`, refer to the [Get started guide](/workers/get-started/guide/#6a-obtaining-your-account-id-and-zone-id).
 
 4.  You can preview your site by running:
 

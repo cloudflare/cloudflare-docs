@@ -54,21 +54,35 @@ An example of an `[env.name]` configuration looks like this:
 
 ```toml
 ---
-your-worker.toml
+filename: wrangler.toml
 ---
-name = "your-worker"
 type = "javascript"
+
+name = "your-worker"
 account_id = "your-account-id"
 
+[vars]
+FOO = "default FOO value"
+BAR = "default BAR value"
+
+kv_namespaces = [
+  { binding = "FOO", id = "1a...", preview_id = "1b..." }
+]
+
 [env.helloworld]
-# These new values will override the top level configuration.
+# Now adding configuration keys for the "helloworld" environment.
+# These new values will override the top-level configuration.
 name = "your-worker-helloworld"
 account_id = "your-other-account-id"
 
-# Any additional keys, like environment variables, will be placed here.
-vars = { FOO = "some value", BAR = "some other string" }
+[vars]
+FOO = "env-helloworld FOO value"
+BAR = "env-helloworld BAR value"
+
 kv_namespaces = [
-  { binding = "FOO", id = "1a2b3c4d5e", preview_id = "6e7f8g9h10i" }
+  # Redeclare kv namespace bindings for each environment
+  # NOTE: In this case, passing new IDs because new `account_id` value.
+  { binding = "FOO", id = "888...", preview_id = "999..." }
 ]
 ```
 

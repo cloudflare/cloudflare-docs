@@ -274,6 +274,6 @@ By completing this tutorial, you have learned how to build webhooks using Worker
 
 ## Related resources
 
-- [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/)
+<!-- - [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/) -->
 - [Build a JAMStack app](/workers/tutorials/build-a-jamstack-app/)
 - [Build a QR code generator](/workers/tutorials/build-a-qr-code-generator/)

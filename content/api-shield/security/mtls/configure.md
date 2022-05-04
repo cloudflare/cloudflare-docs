@@ -29,7 +29,7 @@ If you need to use certificates issued by another CA, use [Cloudflare Access](/c
 
 To create an mTLS rule in the Cloudflare dashboard, follow these steps:
 
-1.  Log into your [Cloudflare account](https://dash.cloudflare.com) and select your application.
+1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and select your application.
 
 2.  Go to **Security** > **Firewall rules**.
 

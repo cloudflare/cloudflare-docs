@@ -56,53 +56,12 @@ When a load balancer runs health checks, headers set on an origin override heade
 
 The Cloudflare API supports the following commands for monitors. Examples are given for user-level endpoint but apply to the account-level endpoint as well.
 
-{{<table-wrap>}}
-
-<table>
-  <thead>
-    <tr>
-      <th><strong>Command</strong></th>
-      <th><strong>Method</strong></th>
-      <th><strong>Endpoint</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="https://api.cloudflare.com/#account-load-balancer-monitors-create-monitor">Create Monitor</a></td>
-      <td>{{<code>}}POST{{</code>}}</td>
-      <td>{{<code>}}accounts/:account_id/load_balancers/monitors{{</code>}}</td>
-    </tr>
-    <tr>
-      <td><a href="https://api.cloudflare.com/#account-load-balancer-monitors-delete-monitor">Delete Monitor</a></td>
-      <td>{{<code>}}DELETE{{</code>}}</td>
-      <td>{{<code>}}accounts/:account_id/load_balancers/monitors/:id{{</code>}}</td>
-    </tr>
-    <tr>
-      <td><a href="https://api.cloudflare.com/#account-load-balancer-monitors-list-monitors">List Monitors</a></td>
-      <td>{{<code>}}GET{{</code>}}</td>
-      <td>{{<code>}}accounts/:account_id/load_balancers/monitors{{</code>}}</td>
-    </tr>
-    <tr>
-      <td><a href="https://api.cloudflare.com/#account-load-balancer-monitors-monitor-details">Monitor Details</a></td>
-      <td>{{<code>}}GET{{</code>}}</td>
-      <td>{{<code>}}accounts/:account_id/load_balancers/monitors/:id{{</code>}}</td>
-    </tr>
-    <tr>
-      <td><a href="https://api.cloudflare.com/#account-load-balancer-monitors-patch-monitor">Overwrite specific properties</a></td>
-      <td>{{<code>}}PATCH{{</code>}}</td>
-      <td>{{<code>}}accounts/:account_id/load_balancers/monitors/:id{{</code>}}</td>
-    </tr>
-    <tr>
-      <td><a href="https://api.cloudflare.com/#account-load-balancer-monitors-update-monitor">Overwrite existing monitor</a></td>
-      <td>{{<code>}}PUT{{</code>}}</td>
-      <td>{{<code>}}accounts/:account_id/load_balancers/monitors/:id{{</code>}}</td>
-    </tr>
-     <tr>
-      <td><a href="https://api.cloudflare.com/#account-load-balancer-monitors-preview-monitor">Preview Monitor</a></td>
-      <td>{{<code>}}POST{{</code>}}</td>
-      <td>{{<code>}}accounts/:account_id/load_balancers/monitors/:id/preview{{</code>}}</td>
-    </tr>
-  </tbody>
-</table>
-
-{{</table-wrap>}}
+| Command | Method | Endpoint |
+| --- | --- | --- |
+| [Create Monitor](https://api.cloudflare.com/#account-load-balancer-monitors-create-monitor) | `POST` | `accounts/:account_id/load_balancers/monitors`|
+| [Delete Monitor](https://api.cloudflare.com/#account-load-balancer-monitors-delete-monitor) | `DELETE` | `accounts/:account_id/load_balancers/monitors/:id` |
+| [List Monitors](https://api.cloudflare.com/#account-load-balancer-monitors-list-monitors) | `GET` |  `accounts/:account_id/load_balancers/monitors` |
+| [Monitor Details](https://api.cloudflare.com/#account-load-balancer-monitors-monitor-details) | `GET` |`accounts/"account_id/load_balancers/monitors/:id` |
+| [Overwrite specific properties](https://api.cloudflare.com/#account-load-balancer-monitors-patch-monitor) | `PATCH` | `accounts/:account_id/load_balancers/monitors/:id` |
+| [Overwrite existing monitor](https://api.cloudflare.com/#account-load-balancer-monitors-update-monitor) | `PUT` | `accounts/:account_id/load_balancers/monitors/:id` |
+| [Preview Monitor](https://api.cloudflare.com/#account-load-balancer-monitors-preview-monitor) | `POST` | `accounts/:account_id/load_balancers/monitors/:id/preview` |

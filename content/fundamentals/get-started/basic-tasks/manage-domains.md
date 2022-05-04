@@ -22,7 +22,7 @@ Cloudflare does not offer web hosting for most websites, though you can deploy a
 
 ## Add a domain to Cloudflare
 
-For help adding a domain to Cloudflare, refer to our [setup guide](https://support.cloudflare.com/hc/articles/201720164#2YulMb5YJTVnMxgAgNWdS2).
+For help adding a domain to Cloudflare, refer to our [setup guide](/fundamentals/get-started/setup/add-site/).
 
 Once you finish adding your domain, you likely will want to also [update your domain's nameservers](/dns/zone-setups/full-setup/) to get Cloudflare's performance and security benefits.
 

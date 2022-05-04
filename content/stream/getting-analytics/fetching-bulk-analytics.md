@@ -209,6 +209,7 @@ The response will look something like below. Things to remember:
 - Date and time an event occurred at Cloudflare's edge
 - Media source for the minutes viewed
 - Video ID
+- ISO 3166 alpha2 country code from the client
 
 ### Filters
 
@@ -216,6 +217,7 @@ The response will look something like below. Things to remember:
 - `datetime`
 - `mediaType`
 - `UID`
+- `clientCountryName`
 
 ### Example
 
@@ -226,35 +228,51 @@ curl --request POST \
 --url https://api.cloudflare.com/client/v4/graphql \
 --header 'content-type: application/json' \
 --header 'Authorization: Bearer $TOKEN' \
---data '{"query":"query {\n  viewer {\n    accounts(filter:{\n      accountTag:\"$ACCOUNT_ID\"\n\n    }) {\n      streamMinutesViewedAdaptiveGroups(\n        filter: {\n          date_lt: \"2022-03-01\"\n          date_gt: \"2022-02-01\"\n        }\n        orderBy:[sum_minutesViewed_DESC]\n        limit: 10\n      ) {\n             sum {\n          minutesViewed\n        }\n        dimensions{\n          uid\n        }\n      }\n    }\n  }\n}\n\n"}'
+--data '{"query":"query {\n  viewer {\n    accounts(filter:{\n      accountTag:\"$ACCOUNT_ID\"\n\n    }) {\n      streamMinutesViewedAdaptiveGroups(\n        filter: {\n          date_lt: \"2022-03-01\"\n          date_gt: \"2022-02-01\"\n        }\n        orderBy:[sum_minutesViewed_DESC]\n        limit: 10\n      ) {\n             sum {\n          minutesViewed\n        }\n        dimensions{\n          uid\n          clientCountryName\n        }\n      }\n    }\n  }\n}\n\n"}'
 ```
 
 ### Response
 
 ```graphql
-query {
-  viewer {
-    accounts(filter:{
-      accountTag:"<ACCOUNT_ID>"
-
-    }) {
-      streamMinutesViewedAdaptiveGroups(
-        filter: {
-          date_lt: "2022-03-01"
-          date_gt: "2022-02-01"
+{
+    "data": {
+        "viewer": {
+            "accounts": [
+                {
+                    "streamMinutesViewedAdaptiveGroups": [
+                        {
+                            "dimensions": {
+                                "clientCountryName": "US",
+                                "uid": "73c514082b154945a753d0011e9d7525"
+                            },
+                            "sum": {
+                                "minutesViewed": 2234
+                            }
+                        },
+                        {
+                            "dimensions": {
+                                "clientCountryName": "CN",
+                                "uid": "73c514082b154945a753d0011e9d7525"
+                            },
+                            "sum": {
+                                "minutesViewed": 700
+                            }
+                        },
+                        {
+                            "dimensions": {
+                                "clientCountryName": "IN",
+                                "uid": "73c514082b154945a753d0011e9d7525"
+                            },
+                            "sum": {
+                                "minutesViewed": 553
+                            }
+                        }
+                    ]
+                }
+            ]
         }
-        limit: 10
-        orderBy:[sum_minutesViewed_DESC]
-      ) {
-        sum {
-          minutesViewed
-        }
-        dimensions{
-          uid
-        }
-      }
-    }
-  }
+    },
+    "errors": null
 }
 ```
 

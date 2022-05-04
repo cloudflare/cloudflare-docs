@@ -18,11 +18,11 @@ $ wrangler generate --site my-site
 
 This command creates the following:
 
-    - `public`: The static assets for your project. By default it contains an `index.html` and a `favicon.ico`.
-    - `workers-site`: The JavaScript for serving your assets. You do not need to edit this but if you want to see how it works or add more functionality to your Worker, you can edit `workers-site/index.js`.
-    - `wrangler.toml`: Your configuration file where you configure your account and project information.
+  - `public`: The static assets for your project. By default it contains an `index.html` and a `favicon.ico`.
+  - `workers-site`: The JavaScript for serving your assets. You do not need to edit this but if you want to see how it works or add more functionality to your Worker, you can edit `workers-site/index.js`.
+  - `wrangler.toml`: Your configuration file where you configure your account and project information.
 
-3\. Add your `account_id` to your `wrangler.toml` file. You can find your `account_id` by logging into the Cloudflare dashboard **Account Home** > choose your **website** > **Overview** > **Account ID**. For more details on finding your `account_id`, refer to the [Get started guide](/workers/get-started/guide/#6a-obtaining-your-account-id-and-zone-id).
+3. Add your `account_id` to your `wrangler.toml` file. You can find your `account_id` by logging into the Cloudflare dashboard **Account Home** > choose your **website** > **Overview** > **Account ID**. For more details on finding your `account_id`, refer to the [Get started guide](/workers/get-started/guide/#6a-obtaining-your-account-id-and-zone-id).
 
 4.  You can preview your site by running the [`wrangler dev`](/workers/cli-wrangler/commands/#dev) command:
 

@@ -25,7 +25,7 @@ To do this:
 2.  Select **Create Page Rule**.
 3.  Set the target to `www.example.com/*`, the `/*` is what matches all paths.
 4.  Select _Forwarding URL_ from the dropdown and select the **301 - Permanent Redirect** option from the status code dropdown.
-5.  Finally, for the Forwarding URL location, set it to `example.com/$1`, the `$1` will be replaced by the wildcard match in target (the `*`).
+5.  Finally, for the Forwarding URL location, set it to `https://example.com/$1`, the `$1` will be replaced by the wildcard match in target (the `*`).
 
 ![Editing a Page Rule to set up a redirect](../media/www_redirect_pagerule.png)
 
