@@ -152,13 +152,16 @@ async function handleRequest(request) {
       await MY_BUCKET.put(key, request.body);
       return new Response(`Put ${key} successfully!`);
    case 'GET':
-     const value = await MY_BUCKET.get(key);
+     const object = await MY_BUCKET.get(key);
 
-     if (value === null) {
+     if (object === null) {
        return new Response('Object Not Found', { status: 404 });
      }
 
-     return new Response(value.body);
+     return new Response(object.value, { headers: {
+				'content-type': object.metadata?.contentType,
+				'etag': object.metadata?.eTag,
+			}});
    case 'DELETE':
      await MY_BUCKET.delete(key);
      return new Response('Deleted!', { status: 200 });
