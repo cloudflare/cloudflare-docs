@@ -18,6 +18,12 @@ Provides static assets and API endpoints required for Browser Isolation to funct
 
 - HTTPS traffic to `*.browser.run` on port 443
 
+#### Clientless Web Isolation
+
+Users connecting through Clientless Web Isolation also require connectivity to Cloudflare Access:
+
+- HTTPS traffic to `https://<auth_domain>.cloudflareaccess.com`
+
 ### WebRTC channel
 
 Browse Isolation uses WebRTC for low-latency communication between the local browser and the remote browser. 
