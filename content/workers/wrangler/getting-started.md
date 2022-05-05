@@ -23,5 +23,5 @@ $ npx wrangler publish index.js --name my-worker
 ## Installation:
 
 ```bash
-$ npm install wrangler
+$ npm install -g wrangler
 ```

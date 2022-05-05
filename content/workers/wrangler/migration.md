@@ -16,7 +16,19 @@ To learn more about new updates in Wrangler, refer to the [What's new page](/wor
 
 ### Upgrade to Wrangler 2
 
-The first step is to either install Wrangler globally or use the `npx command` to run it against your Wrangler 1 project. Then, run the `wrangler dev` command to generate a list of deprecation warnings or fields which need to be changed in order to build your Worker using Wrangler 2.
+The first step is to either install Wrangler globally or use the `npx command` to run it against your Wrangler 1 project. If you had previously installed Wrangler globally, you can uninstall it with:
+
+```sh
+npm uninstall -g @cloudflare/wrangler
+```
+
+And then install Wrangler 2 with
+
+```sh
+npm install -g wrangler
+```
+
+Then, run the `wrangler dev` command to generate a list of deprecation warnings or fields which need to be changed in order to build your Worker using Wrangler 2.
 
 ```sh
 npx wrangler dev
@@ -52,7 +64,7 @@ Example output:
 
 The following commands are deprecated in Wrangler 2.0, if you are migrating, be sure to go through the list and remove the commands that are no longer required:
 
-- Remove the `type` and `webpack_config` property in the config that is no longer required.
+- Remove the `type` and `webpack_config` property in your `wrangler.toml`. It is no longer required.
 - Remove `webpack`
 - Remove `zone_id` this is also no longer required since it can be deduced from the routes directly.
 - Remove `site.entry-point` field as it is no longer used, the entry point should be specified through the `main` field.
