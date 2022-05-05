@@ -567,14 +567,14 @@
 
 /web3/ethereum-gateway/about-eth/ /web3/ethereum-gateway/concepts/ethereum/ 301
 /web3/ethereum-gateway/connecting-your-website/ /web3/how-to/manage-gateways/ 301
-/web3/ethereum-gateway/getting-started/ /web3/ethereum-gateway/
+/web3/ethereum-gateway/getting-started/ /web3/ethereum-gateway/ 301
 /web3/ethereum-gateway/interacting-with-the-eth-gateway/ /web3/how-to/use-ethereum-gateway/ 301
 /web3/ethereum-gateway/kill-switches/ /web3/ethereum-gateway/reference/kill-switches/ 301
-
 /web3/ipfs-gateway/browsing-ipfs/ /web3/how-to/use-ipfs-gateway/ 301
 /web3/ipfs-gateway/connecting-website/ /web3/how-to/manage-gateways/ 301
 /web3/ipfs-gateway/setting-up-a-server/ /web3/ipfs-gateway/ 301
-
+/web3/ipfs-gateway/updating-for-ipfs/ /web3/ipfs-gateway/reference/updating-for-ipfs/ 301
+/web3/ipfs-gateway/automated-deployment/ /web3/ipfs-gateway/reference/automated-deployment/ 301
 
 # workers
 /workers/about/ /workers/learning/ 301
