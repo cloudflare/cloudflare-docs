@@ -10,25 +10,25 @@ If your organization uses a firewall or other policies to restrict Internet traf
 
 ## Remoting client
 
-Isolated pages are served the remoting client. This client communicates to Cloudflare's network via HTTPS and WebRTC.
+Isolated pages are served by the remoting client. This client communicates to Cloudflare's network via HTTPS and WebRTC.
 
 ### Remoting Client (Services)
 
-Provides static assets and API endpoints required for Browser Isolation to function.
+The remoting client provides static assets and API endpoints. For Browser Isolation to function, you must allow:
 
-- Allow HTTPS traffic to `*.browser.run` on port 443
+- HTTPS traffic to `*.browser.run` on port 443
 
 #### Clientless Web Isolation
 
-Users connecting through Clientless Web Isolation also require connectivity to Cloudflare Access:
+Users connecting through Clientless Web Isolation also require connectivity to Cloudflare Access. For users to connect to Access, you must allow:
 
-- Allow HTTPS traffic to `https://<auth_domain>.cloudflareaccess.com` on port 443
+- HTTPS traffic to `https://<auth_domain>.cloudflareaccess.com` on port 443
 
 ### WebRTC channel
 
-Browse Isolation uses WebRTC for low-latency communication between the local browser and the remote browser. 
+Browser Isolation uses WebRTC for low-latency communication between the local browser and the remote browser. 
 
-These are the IP addresses that the Remoting Client will connect to. All WebRTC traffic from your device to the remote browser will go through these IP addresses.
+In order to pass WebRTC traffic, the remoting client must be able to connect to the following IP addresses:
 
 - IPv4 Range: `162.159.201.10 - 162.159.201.255`
 - IPv6 Range: `2606:4700:f2::/48`
