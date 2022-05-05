@@ -39,7 +39,7 @@ layout: list
       <td>Cloudflare Specials</td>
       <td>...422313d0</td>
       <td>100529</td>
-      <td>VMware vCenter - CVE:CVE-2022-22054</td>
+      <td>VMware vCenter - CVE:CVE-2021-22054</td>
       <td>N/A</td>
       <td>Block</td>
     </tr>
