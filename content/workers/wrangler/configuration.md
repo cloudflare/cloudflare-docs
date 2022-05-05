@@ -43,13 +43,6 @@ crons = ["30 * * * *"]             # --cron
 command = "npm run build"          # --build-command
 cwd = "build_cwd"                  # --build-base-path
 watch_dir = "build_watch_dir"      # --build-watch-path
-[build.upload]
-format = "modules"                 # --modules
-dir = "worker"
-main = "./index.mjs"               # [script]
-[[build.upload.rules]]             # --modules-rule
-type = "ESModule"
-globs = ["**/*.js"]
 
 [wasm_modules]                     # --wasm
 MODULE = "module.wasm"
