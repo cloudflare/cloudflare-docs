@@ -20,7 +20,7 @@ The resizing feature is accessed via the [options](/workers/runtime-apis/request
 
 The `fetch()` function accepts parameters in the second argument inside the `{cf: {image: {…}}}` object.
 
-The following is a list of parameters supported by Cloudflare products.
+The following is a list of parameters supported by Cloudflare products. For Workers, use the full parameter instead of the abbreviated one. For example, use `width` instead of `width=x` or `w=x`. See the example Workers below for more context.
 
 {{<render file="_supported-properties.md">}}
 
