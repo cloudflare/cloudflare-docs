@@ -34,7 +34,7 @@ Once you have this information, you are ready to upload your first image to Clou
 curl -X POST \
   "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1" \
   -H "Authorization: Bearer <API_TOKEN>" \
-  -F file=@./<YOUR_IMAGE>
+  -F file=@./<YOUR_IMAGE.IMG>
 ```
 
 Refer to [Upload images](/images/cloudflare-images/upload-images/) for a complete overview of the different options to upload images with the API.
@@ -44,8 +44,8 @@ After uploading your images, a successful response will look similar to this:
 ```json
 {
   "result": {
-    "id": "<YOUR_IMAGE_ID>",
-    "filename": "<YOUR_IMAGE.IMG>",
+    "id": "<IMAGE_ID>",
+    "filename": "<IMAGE.IMG>",
     "uploaded": "2021-09-14T05:52:14.767Z",
     "requireSignedURLs": false,
     "variants": [
@@ -66,8 +66,8 @@ After you [set up other variants](/images/cloudflare-images/resize-images/) in y
 ```json
 {
   "result": {
-    "id": "<YOUR_IMAGE_ID>",
-    "filename": "<YOUR_IMAGE.IMG>",
+    "id": "<IMAGE_ID>",
+    "filename": "<IMAGE.IMG>",
     "uploaded": "2021-09-14T05:52:14.767Z",
     "requireSignedURLs": false,
     "variants": [
