@@ -60,7 +60,7 @@ sent to the wider network and added to the consensus.
 ## Connect your website to the gateway
 
 If you want to be able to access the Ethereum network accessible from a custom
-domain name, you can do that by [creating a new Ethereum Gateway](/web3/gateways/how-to/manage-gateways/#create-a-gateway).
+domain name, you can do that by [creating a new Ethereum Gateway](/web3/how-to/manage-gateways/#create-a-gateway).
 
 ## Learning more
 

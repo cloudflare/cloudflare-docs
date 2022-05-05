@@ -6,7 +6,7 @@ weight: 2
 
 # Interact with Ethereum Gateway
 
-Once you [create a new Ethereum Gateway](/web3/manage-gateways/#create-a-gateway), you can interact with the Ethereum network by specifying the correct JSON blob for your query.
+Once you [create a new Ethereum Gateway](/web3/how-to/manage-gateways/#create-a-gateway), you can interact with the Ethereum network by specifying the correct JSON blob for your query.
 
 ## Reading from the network
 
@@ -83,7 +83,7 @@ The response in both cases will be a JSON blob of the form:
 
 Currently the Ethereum Gateway allows you to write to the network using the `eth_sendRawTransaction` RPC method. This creates a new message call transaction or a contract creation for signed transactions. The transactions are signed using a secret key corresponding to your own [Ethereum wallet](https://www.ethereum.org/use/#_3-what-is-a-wallet-and-which-one-should-i-use).
 
-Once you have a wallet set up and a method of signing your own transactions, you can write that transaction to the Ethereum network via the [Cloudflare Ethereum Gateway](/web3/gateways/reference/ethereum-gateway/supported-api-methods/). Signed transactions use hexadecimal strings of the form:
+Once you have a wallet set up and a method of signing your own transactions, you can write that transaction to the Ethereum network via the [Cloudflare Ethereum Gateway](/web3/ethereum-gateway/reference/supported-api-methods/). Signed transactions use hexadecimal strings of the form:
 
 ```json
 "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"

@@ -6,7 +6,7 @@ weight: 4
 
 # DNSLink
 
-When you upload anything to the [IPFS](/web3/gateways/concepts/ipfs/), that item gets a unique content identifier (CID) similar to `QmdbaSQbGU6Wo9i5LyWWVLuU8g6WrYpWh2K4Li4QuuE8Fr`.
+When you upload anything to the [IPFS](/web3/ipfs-gateway/concepts/ipfs/), that item gets a unique content identifier (CID) similar to `QmdbaSQbGU6Wo9i5LyWWVLuU8g6WrYpWh2K4Li4QuuE8Fr`.
 
 Such a long CID can cause issues when you want others to be able to access a website hosted over IPFS (`https://cloudflare-ipfs.com/ipfs/QmdbaSQbGU6Wo9i5LyWWVLuU8g6WrYpWh2K4Li4QuuE8Fr`). It's a similar problem to websites in general, where end users would have difficulty remembering an IP address (`192.0.2.1`) instead of a domain name (`google.com`).
 
