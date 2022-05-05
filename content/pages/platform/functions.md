@@ -421,7 +421,7 @@ When migrating a Worker into the Pages platform, the simplest path is to target 
 You can run your entire application locally with [Wrangler](https://github.com/cloudflare/wrangler2), which supports secrets, environment variables, KV and Durable Objects. Point Wrangler at a directory of static assets, or seamlessly connect to your existing tools:
 
 ```sh
-# Install wrangler v2
+# Install wrangler
 $ npm install wrangler
 
 # Show help message

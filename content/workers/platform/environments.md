@@ -7,7 +7,7 @@ title: Environments
 
 {{<Aside type="note">}}
 
-You can only use environments with [Wrangler](/workers/wrangler/cli-wrangler/).
+You can only use environments with [Wrangler](/workers/wrangler/).
 
 {{</Aside>}}
 

@@ -6,7 +6,7 @@ weight: 0
 
 # Logging from Workers
 
-You can access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/cli-wrangler/commands/#tail).
+You can access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).
 
 The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself. All of this can be viewed with either `wrangler tail` or on the dashboard through your **Account Home** > **Workers** > your **Workers script** > **Logs**.
 
@@ -47,7 +47,7 @@ After you deploy the above code, run `wrangler tail` in your terminal, and then 
 
 ## View logs using `wrangler tail`
 
-With your Workers application deployed, you may want to inspect incoming traffic. This may be useful in situations where a user is running into production issues that they cannot easily reproduce. In these instances, [`wrangler tail`](/workers/wrangler/cli-wrangler/commands/#tail) allows developers to livestream their Workers application’s logs, giving real-time insight into their application's incoming requests.
+With your Workers application deployed, you may want to inspect incoming traffic. This may be useful in situations where a user is running into production issues that they cannot easily reproduce. In these instances, [`wrangler tail`](/workers/wrangler/commands/#tail) allows developers to livestream their Workers application’s logs, giving real-time insight into their application's incoming requests.
 
 To get started, run `wrangler tail` in your Workers project directory. This will log any incoming requests to your application available in your local terminal.
 
@@ -80,7 +80,7 @@ $ wrangler tail | jq .event.request.url
 "https://www.bytesized.xyz/page-data/app-data.json"
 ```
 
-You can customize how `wrangler tail` works to fit your needs: refer to [the `wrangler tail` documentation](/workers/wrangler/cli-wrangler/commands/#tail) for available configuration options.
+You can customize how `wrangler tail` works to fit your needs: refer to [the `wrangler tail` documentation](/workers/wrangler/commands/#tail) for available configuration options.
 
 ## View logs from the dashboard
 

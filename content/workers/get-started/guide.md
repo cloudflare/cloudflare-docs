@@ -24,7 +24,7 @@ This guide will instruct you through setting up a Cloudflare account to deployin
 
 ## 1. Sign up for a Workers account
 
-Before you can start [publishing](/workers/wrangler/cli-wrangler/commands/#publish) your Workers on your own domain or a free `*.workers.dev` subdomain, you must sign up for a Cloudflare Workers account.
+Before you can start [publishing](/workers/wrangler/commands/#publish) your Workers on your own domain or a free `*.workers.dev` subdomain, you must sign up for a Cloudflare Workers account.
 
 <p>{{<button type="primary" href="https://dash.cloudflare.com/sign-up/workers">}}Sign up{{</button>}}</p>
 
@@ -34,9 +34,9 @@ The signup process will guide you through choosing a `*.workers.dev` subdomain a
 
 ## 2. Install the Workers CLI
 
-Installing `wrangler`, the Workers CLI, gives you the freedom to [`init`](/workers/wrangler/cli-wrangler/commands/#init), [`configure`](/workers/wrangler/cli-wrangler/commands/#configure), [`dev`](/workers/wrangler/cli-wrangler/commands/#dev), and [`publish`](/workers/wrangler/cli-wrangler/commands/#publish) your Workers projects from the comfort of your development environment.
+Installing `wrangler`, the Workers CLI, gives you the freedom to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects from the comfort of your development environment.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
 ```sh
 $ npm install -g wrangler
@@ -71,7 +71,7 @@ Open the browser, log in to your account, and select **Allow**. This will send a
 
 ## 4. Initialize a new project
 
-Wrangler’s `init` [command](/workers/wrangler/cli-wrangler/commands/#init) will create a new project. The `init` command will give you options to choose between TypeScript and JavaScript as well as the ability to generate a starter file. Run:
+Wrangler’s `init` [command](/workers/wrangler/commands/#init) will create a new project. The `init` command will give you options to choose between TypeScript and JavaScript as well as the ability to generate a starter file. Run:
 
 ```sh
 ~/ $ wrangler init my-worker
