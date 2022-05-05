@@ -79,3 +79,7 @@
   font-size: 15px !important;
   font-weight: 700 !important;
 }
+
+.CoveoQueryDuration::before {
+  content: " ";
+}
