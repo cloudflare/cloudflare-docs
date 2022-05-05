@@ -1,10 +1,10 @@
 ---
 pcx-content-type: how-to
-title: Interact with Ethereum Gateway
+title: Use Ethereum Gateway
 weight: 2
 ---
 
-# Interact with Ethereum Gateway
+# Use the Ethereum Gateway
 
 Once you [create a new Ethereum Gateway](/web3/how-to/manage-gateways/#create-a-gateway), you can interact with the Ethereum network by specifying the correct JSON blob for your query.
 
