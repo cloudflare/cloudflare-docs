@@ -16,13 +16,13 @@ Isolated pages are served the remoting client. This client communicates to Cloud
 
 Provides static assets and API endpoints required for Browser Isolation to function.
 
-- HTTPS traffic to `*.browser.run` on port 443
+- Allow HTTPS traffic to `*.browser.run` on port 443
 
 #### Clientless Web Isolation
 
 Users connecting through Clientless Web Isolation also require connectivity to Cloudflare Access:
 
-- HTTPS traffic to `https://<auth_domain>.cloudflareaccess.com`
+- Allow HTTPS traffic to `https://<auth_domain>.cloudflareaccess.com` on port 443
 
 ### WebRTC channel
 
