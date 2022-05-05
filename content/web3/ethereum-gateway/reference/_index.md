@@ -1,9 +1,11 @@
 ---
 pcx-content-type: navigation
-title: Interact with Gateways
+title: Reference
 weight: 2
+meta:
+  title: Reference - Ethereum
 ---
 
-# Interact with Gateways
+# Reference
 
 {{<directory-listing>}}

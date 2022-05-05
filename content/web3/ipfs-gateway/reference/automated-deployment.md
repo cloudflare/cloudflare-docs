@@ -1,10 +1,10 @@
 ---
 pcx-content-type: reference
-title: Automated Deployment
+title: Automated deployments
 weight: 6
 ---
 
-# Automated Deployment
+# Automated deployments
 
 Static sites are pretty easy to deploy automatically. The code of the site is
 usually kept in a Git repository and deployed by pushing the latest commit to a

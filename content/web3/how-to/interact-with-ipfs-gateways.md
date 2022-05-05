@@ -1,12 +1,10 @@
 ---
 pcx-content-type: how-to
-title: IPFS
-weight: 1
-meta:
-  title: Interacting with IPFS Gateway
+title: Interact with IPFS Gateway
+weight: 2
 ---
 
-# Interacting with IPFS Gateway
+# Interact with IPFS Gateway
 
 Once you [create a new IPFS Gateway](/web3/gateways/how-to/#create-a-gateway), you can get data from the IPFS network by using a URL.
 

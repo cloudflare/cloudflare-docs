@@ -1,6 +1,6 @@
 ---
 pcx-content-type: concept
-title: Ethereum
+title: Ethereum network
 weight: 2
 ---
 

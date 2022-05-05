@@ -1,12 +1,12 @@
 ---
 pcx-content-type: reference
-title: Updating your Website for IPFS
+title: Using IPFS with your website
 weight: 5
 ---
 
-# Updating your Website for IPFS
+# Using IPFS with your website
 
-It's not required, but it is strongly recommended that websites hosted on IPFS
+Though it is not required, it is strongly recommended that websites hosted on IPFS
 use only relative links, unless linking to a different domain. This is because
 data can be accessed in many different (but ultimately equivalent) ways:
 

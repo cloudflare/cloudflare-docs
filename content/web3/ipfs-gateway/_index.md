@@ -1,0 +1,11 @@
+---
+pcx-content-type: concept
+title: IPFS Gateway
+weight: 3
+---
+
+# IPFS Gateway
+
+Cloudflare's IPFS gateway provides a read-only, HTTP-accessible interface to the [InterPlanetary File System (IPFS)](/web3/ipfs-gateway/concepts/ipfs/). This gateway does not require you to download any special software or give up any storage space on your computer.
+
+{{<directory-listing>}}

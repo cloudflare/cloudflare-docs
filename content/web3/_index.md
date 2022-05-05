@@ -11,4 +11,4 @@ meta:
 
 Web3, or the distributed web, is a set of technologies that enables hosting of content and web applications in a serverless manner by leveraging distributed systems and consensus protocols.
 
-Cloudflare offers [several gateways](/web3/gateways/) to help Web3 developers do what they do best: develop applications without having to worry about running infrastructure.
+Cloudflare offers gateways to the [IPFS](/web3/ipfs-gateway/) and [Ethereum](/web3/ethereum-gateway/) networks to help Web3 developers do what they do best: develop applications without having to worry about running infrastructure.

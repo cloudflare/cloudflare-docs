@@ -1,14 +1,12 @@
 ---
 pcx-content-type: how-to
-title: Ethereum
+title: Interact with Ethereum Gateway
 weight: 2
-meta:
-  title: Interacting with Ethereum Gateway
 ---
 
-# Interacting with Ethereum Gateway
+# Interact with Ethereum Gateway
 
-Once you [create a new Ethereum Gateway](/web3/gateways/how-to/#create-a-gateway), you can interact with the Ethereum network by specifying the correct JSON blob for your query.
+Once you [create a new Ethereum Gateway](/web3/manage-gateways/#create-a-gateway), you can interact with the Ethereum network by specifying the correct JSON blob for your query.
 
 ## Reading from the network
 
@@ -21,7 +19,7 @@ your JSON blob takes the form:
 { "jsonrpc": "2.0", "method": "eth_getBlockByNumber", "params": ["0x2244", true], "id": 1 }
 ```
 
-Each blob use a valid [`method` parameter](/web3/gateways/reference/ethereum-gateway/supported-api-methods/). The `params` here contain the block number that we would like to locate and a boolean expressing whether each individual transaction in the block should be shown in their entirety (`true`) or as stubs (`false`).
+Each blob use a valid [`method` parameter](/web3/ethereum-gateway/reference/supported-api-methods/). The `params` here contain the block number that we would like to locate and a boolean expressing whether each individual transaction in the block should be shown in their entirety (`true`) or as stubs (`false`).
 
 If we wanted to send this query to the Ethereum Gateway, then we could use a cURL command:
 

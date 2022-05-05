@@ -1,9 +1,9 @@
 ---
 pcx-content-type: navigation
 title: Reference
-weight: 5
+weight: 2
 meta:
-  title: Reference - Gateways
+  title: Reference - IPFS
 ---
 
 # Reference
