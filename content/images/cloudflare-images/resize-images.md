@@ -62,4 +62,8 @@ Enabling flexible variants on your account effectively allows anyone to obtain u
 
 ### Supported properties
 
+At least one option must be specified. Options are comma-separated (spaces are not allowed anywhere). Names of options can be specified in full or abbreviated.
+
+The following list shows options supported both by Image's flexible variants, as well as Image Resizing's URL format.
+
 {{<render file="_supported-properties.md">}}
