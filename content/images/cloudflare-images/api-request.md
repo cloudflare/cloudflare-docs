@@ -83,4 +83,4 @@ After you [set up other variants](/images/cloudflare-images/resize-images/) in y
 }
 ```
 
-You can use the `variants` URL from the response to [serve images](/images/cloudflare-images/serve-images/) from your Cloudflare Images account.
+You can use the URLs in the `"variants"` property of the response to [serve images](/images/cloudflare-images/serve-images/) from your Cloudflare Images account.
