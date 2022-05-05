@@ -13,7 +13,7 @@ The following list shows options supported both by Image's flexible variants, as
 
 <br/>
 
-***Options supported by named variants, flexible variants, URL format and Workers integration***
+***Options supported by Cloudflare Images, Image Resizing and Workers integration***
 
 - `width=x` or `w=x`
   - Specifies maximum width of the image in pixels. Exact behavior depends on the `fit` mode (described below).
@@ -74,7 +74,7 @@ The following list shows options supported both by Image's flexible variants, as
 
 <br/>
 
-***Options supported by named variants, flexible variants, and Workers integration***
+***Options supported by Cloudflare Images***
 
 - `trim`
     - Four numbers in pixels separated by a semicolon; in the form of `top;right;bottom;left`; ex: `20;30;20;0`
@@ -96,7 +96,7 @@ The following list shows options supported both by Image's flexible variants, as
 
 <br/>
 
-***Options supported by URL format and Workers integration***
+***Options supported Cloudflare Images***
 
 - `quality=x` or `q=x`
   - Specifies quality for images in JPEG, WebP, and AVIF formats. The quality is in a 1-100 scale, but useful values are between `50` (low quality, small file size) and `90` (high quality, large file size). `85` is the default. When using the PNG format, an explicit quality setting allows use of PNG8 (palette) variant of the format.
@@ -106,5 +106,25 @@ The following list shows options supported both by Image's flexible variants, as
 
 - `onerror=redirect`
   - In case of a fatal error that prevents the image from being resized, redirects to the unresized source image URL. This may be useful in case some images require user authentication and cannot be fetched anonymously via Worker. This option should not be used if there is a chance the source image is very large. This option is ignored if the image is from another domain, but you can use it with subdomains.
+
+***Options supported by Workers integration***
+
+- `trim`
+  - An object with four properties `{top, right, bottom, left}` that specify a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account.
+
+- `quality`
+  - Quality setting from 1-100 (useful values are in 60-90 range). Lower values make images look worse, but load faster. The default is `85`. Quality `100` will generate very large image files, and is not recommended.
+  
+    In case of PNG images, an explicit quality setting enables use of 8-bit (palette) variant of the format, using [pngquant](https://pngquant.org)'s quality scale. Images that cannot meet the requested quality with 256 colors will fall back to 24-bit PNG format or JPEG if they are opaque.
+
+- `format`
+  - Output format to generate. Options are:
+    - `avif` — Generate images in AVIF format if possible (with WebP as a fallback).
+    - `webp` — Generate images in Google WebP format. Set `quality` to `100` to get the WebP lossless format.
+    - `json` — Instead of generating an image, outputs information about the image in JSON format. The JSON object will contain image size (before and after resizing), source image’s MIME type, file size, etc.
+
+    Other supported formats (PNG, JPEG, animated GIF) are used by default if no other format is specified.
+
+    To automatically serve WebP or AVIF formats to browsers that support them, check if the `Accept` header contains `image/webp` or `image/avif`, and set the format option accordingly.
 
 {{</definitions>}}
