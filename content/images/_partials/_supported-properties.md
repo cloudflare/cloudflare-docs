@@ -9,10 +9,10 @@ _build:
 
 ***Options supported by Cloudflare Images, Image Resizing and Workers integration***
 
-- `width=x` or `w=x`
+- `width=x`
   - Specifies maximum width of the image in pixels. Exact behavior depends on the `fit` mode (described below).
 
-- `height=x` or `h=x`
+- `height=x`
   - Specifies maximum height of the image in pixels. Exact behavior depends on the `fit` mode (described below).
 
 - `dpr=x`
@@ -22,28 +22,32 @@ _build:
   - Affects interpretation of `width` and `height`. All resizing modes preserve aspect ratio. Available modes are:
   
   - `fit=scale-down`
-    - Image will be shrunk in size to fully fit within the given `width` or `height`, but will not be enlarged.
+    - Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept.
 
   - `fit=contain`
     - Image will be resized (shrunk or enlarged) to be as large as possible within the given `width` or `height` while preserving the aspect ratio.
 
   - `fit=cover`
-    - Image will be resized to exactly fill the entire area specified by `width` and `height`, and will be cropped if necessary.
+    - Resizes (shrinks or enlarges) to fill the entire area of `width` and `height`. If the image has an aspect ratio different from the ratio of `width` and `height`, it will be cropped to fit.
 
   - `fit=crop`
-    - Image will be shrunk and cropped to fit within the area specified by `width` and `height`. The image will not be enlarged. For images smaller than the given dimensions, it is the same as `scale-down`. For images larger than the given dimensions, it is the same as `cover`.
+    - Image will be shrunk and cropped to fit within the area specified by `width` and `height`. The image will not be enlarged. For images smaller than the given dimensions, it is the same as `scale-down`. For images larger than the given dimensions, it is the same as `cover`. See also `trim`.
 
   - `fit=pad`
-    - Image will be resized (shrunk or enlarged) to be as large as possible within the given `width` or `height` while preserving the aspect ratio, and the extra area will be filled with a `background` color (white by default). Transparent background may be very expensive, and it is better to use `fit=contain` and CSS `object-fit: contain` property instead.
+    - Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). This mode is not recommended, since you can achieve the same effect more efficiently with the `contain` mode and the CSS `object-fit: contain` property.
 
 - `gravity` or `g`
-  - Specifies the most important side or point in the image that should not be cropped off when cropping with `fit=cover`.
+  - When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the side or point that should not be cropped.
 
   - `gravity=auto`
-    - The point will be guessed by looking for areas that stand out the most from image background.
+    - Selects focal point based on saliency detection (using maximum symmetric surround algorithm).
 
-  - `gravity=side` and `gravity=XxY`
+  - `gravity=side` and `gravity=XxY` (Image Resizing and Cloudflare Images)
     - A side (`"left"`, `"right"`, `"top"`, `"bottom"`) or coordinates specified on a scale from `0.0` (top or left) to `1.0` (bottom or right), `0.5` being the center. The X and Y coordinates are separated by lowercase `x`. For example, `0x1` means left and bottom, `0.5x0.5` is the center, `0.5x0.33` is a point in the top third of the image.
+  
+  - Workers integration
+    - A string `"left"`, `"right"`, `"top"`, `"bottom"`, or `"center"` (the default). `{fit: "cover", gravity: "top"}` will crop bottom or left and right sides as necessary, but will not crop anything from the top.
+    - An object `{x, y}` containing focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image.
 
 - `anim=false`
   - Reduces animations to still images. This setting is recommended to avoid large animated GIF files, or flashing images.
@@ -92,10 +96,10 @@ _build:
 
 ***Options supported by Image Resizing***
 
-- `quality=x` or `q=x`
+- `quality=x`
   - Specifies quality for images in JPEG, WebP, and AVIF formats. The quality is in a 1-100 scale, but useful values are between `50` (low quality, small file size) and `90` (high quality, large file size). `85` is the default. When using the PNG format, an explicit quality setting allows use of PNG8 (palette) variant of the format.
 
-- `format=auto` or `f=auto`
+- `format=auto`
   - Allows serving of the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used.
 
 - `onerror=redirect`
