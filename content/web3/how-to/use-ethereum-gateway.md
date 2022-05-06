@@ -8,7 +8,7 @@ weight: 2
 
 Once you have an Ethereum gateway — meaning that you [create a new gateway](/web3/how-to/manage-gateways/#create-a-gateway) with a `target` of **Ethereum** — you can interact with the Ethereum network by specifying the correct JSON blob for your query.
 
-## Reading from the network
+## Read from the network
 
 The Cloudflare Ethereum Gateway allows HTTP requests where the body of the
 request is set to be the JSON body of the request you would like to make. For
@@ -79,7 +79,7 @@ The response in both cases will be a JSON blob of the form:
 }
 ```
 
-## Writing to the network
+## Write to the network
 
 Currently, the Ethereum Gateway allows you to write to the network using the `eth_sendRawTransaction` RPC method. This creates a new message call transaction or a contract creation for signed transactions. The transactions are signed using a secret key corresponding to your own [Ethereum wallet](https://www.ethereum.org/use/#_3-what-is-a-wallet-and-which-one-should-i-use).
 

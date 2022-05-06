@@ -41,7 +41,7 @@ block, this update is sent around the entire network and anyone can read the
 nature of the transaction that took place. This makes the entire state of the
 network accountable.
 
-## Reading & writing content
+## Read and write content
 
 To read content, a user needs to interact with a working Ethereum node. Such
 nodes can be run locally on a user's machine as daemons (such as:
@@ -62,7 +62,7 @@ sent to the wider network and added to the consensus.
 If you want to be able to access the Ethereum network accessible from a custom
 domain name, you can do that by [creating a new Ethereum Gateway](/web3/how-to/manage-gateways/#create-a-gateway).
 
-## Learning more
+## Related resources
 
 If you’re interested in learning more, you can read the official [RPC
 documentation](https://github.com/ethereum/wiki/wiki/JSON-RPC), along with the
