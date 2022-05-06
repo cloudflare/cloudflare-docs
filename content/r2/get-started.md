@@ -151,17 +151,17 @@ async function handleRequest(request) {
     case 'PUT':
       await MY_BUCKET.put(key, request.body);
       return new Response(`Put ${key} successfully!`);
-   case 'GET':
-     const value = await MY_BUCKET.get(key);
+    case 'GET':
+      const object = await MY_BUCKET.get(key);
 
-     if (value === null) {
-       return new Response('Object Not Found', { status: 404 });
-     }
+      if (!object) {
+        return new Response('Object Not Found', { status: 404 });
+      }
 
-     return new Response(value.body);
-   case 'DELETE':
-     await MY_BUCKET.delete(key);
-     return new Response('Deleted!', { status: 200 });
+      return new Response(object.body);
+    case 'DELETE':
+      await MY_BUCKET.delete(key);
+      return new Response('Deleted!', { status: 200 });
 
     default:
       return new Response('Route Not Found.', { status: 404 });
