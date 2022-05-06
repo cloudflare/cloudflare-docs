@@ -4,7 +4,7 @@ title: Ejecting Webpack
 weight: 7
 ---
 
-## Migrating webpack projects to `wrangler v2`
+## Migrating webpack projects to `wrangler 2`
 
 Previous versions of `wrangler` offered rudimentary support for [webpack](https://webpack.js.org/) with the `type` and `webpack_config` keys in [`wrangler.toml`](/workers/wrangler/configuration/). Starting with version 2, `wrangler` no longer supports the `type` and `webpack_config` keys, but you can still use webpack with your Workers.
 

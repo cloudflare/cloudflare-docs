@@ -13,7 +13,10 @@ layout: list
 Quickstarts are GitHub repos that are designed to be a starting point for building a new Cloudflare Workers project. For the projects below, you simply run:
 
 ```sh
-$ wrangler generate <new-project-name> <github-repo-url>
+$ git clone <github-repo-url>
+$ cd <github-repo-url>
+$ npm install
+$ npx wrangler dev
 ```
 
 {{<definitions>}}

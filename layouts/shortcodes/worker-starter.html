@@ -3,7 +3,6 @@
 {{- $descr := .Get "description" -}}
 
 {{- $remote := printf "https://github.com/%s" $repo -}}
-{{- $command := printf "wrangler generate my-app %s" $remote -}}
 
 <div class="WorkerStarter">
   <div class="WorkerStarter--title">
@@ -13,15 +12,5 @@
 
   <div class="WorkerStarter--description">
     {{- $descr -}}
-  </div>
-
-  <div class="WorkerStarter--command">
-    <div class="WorkerStarter--command-copy-button-wrapper">
-      <button class="Button" data-clipboard="{{ $command }}">Copy</button>
-    </div>
-
-    <div class="WorkerStarter--command-codeblock-wrapper">
-      {{- .Page.RenderString (printf "```txt\n%s\n```" $command) -}}
-    </div>
   </div>
 </div>

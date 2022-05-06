@@ -223,7 +223,9 @@ You must use [Wrangler version 1.19.3 or greater](/workers/wrangler/getting-star
 The easiest way to upload Workers that implement or bind to Durable Objects is to use [Wrangler](/workers/wrangler/), the Workers CLI. You can start with one of our templates, the simplest of which can be used by running:
 
 ```sh
-$ wrangler generate <WORKER-NAME> https://github.com/cloudflare/durable-objects-template
+$ git clone https://github.com/cloudflare/durable-objects-template
+$ cd durable-objects-template
+$ wrangler dev
 ```
 
 This will create a directory for your project with basic configuration and a single JavaScript source file already set up. If you want to use TypeScript, or be able to bundle external dependencies with your code using Rollup or Webpack, or to use CommonJS modules rather than ES modules, try one of the other starter templates instead:

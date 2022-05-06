@@ -177,7 +177,9 @@ In addition to standard request properties, the Workers platform populates the r
 For more complex routing, it is recommended to use a library. The [Workers router starter](https://github.com/cloudflare/worker-template-router) template provides an API similar to ExpressJS for handling requests based on HTTP methods and paths:
 
 ```sh
-~/ $ wrangler generate my-worker-with-router https://github.com/cloudflare/worker-template-router
+$ git clone https://github.com/cloudflare/worker-template-router
+$ cd worker-template-router
+$ npm install
 ```
 
 This starter is used in the tutorial for [building a Slack Bot](/workers/tutorials/build-a-slackbot/).

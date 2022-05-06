@@ -93,10 +93,10 @@ A binding is defined in the `wrangler.toml` file of your Worker project's direct
 
 {{</Aside>}}
 
-Run the [`wrangler generate`](/workers/wrangler/cli-wrangler/commands/#generate) command to create a Worker using a [template](/workers/get-started/quickstarts/#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project. By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate your new Worker project:
+Create a Worker using a [template](/workers/get-started/quickstarts/#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project.
 
 ```sh
-wrangler generate <YOUR_WORKER_NAME>
+wrangler init <YOUR_WORKER_NAME>
 ```
 
 Next, find your newly generated `wrangler.toml` file in your project's directory and update `account_id` with your Cloudflare Account ID.
