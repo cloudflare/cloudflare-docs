@@ -421,6 +421,7 @@
 /spectrum/how-to/cname-origins/ /spectrum/get-started/#create-a-spectrum-application-using-a-cname-record 301  
 /spectrum/how-to/create-load-balancer/ /spectrum/get-started/#create-a-spectrum-application-using-a-load-balancer 301
 /spectrum/proxy-protocol/ /spectrum/reference/simple-proxy-protocol-header/ 301
+
 # ssl
 /ssl/ssl-for-saas/certificate-signing-requests/ /ssl/ssl-for-saas/custom-certificates/certificate-signing-requests/ 301
 /ssl/advanced-certificate-manager/ /ssl/edge-certificates/advanced-certificate-manager/ 301
@@ -561,6 +562,18 @@
 /warp-client/warp-for-teams/teams/macOS-Teams/ /cloudflare-one/connections/connect-devices/warp/deployment/macOS-Teams/ 301
 /warp-client/warp-for-teams/teams/parameters/ /cloudflare-one/connections/connect-devices/warp/deployment/parameters/ 301
 /warp-client/warp-for-teams/teams/Windows-Teams/ /cloudflare-one/connections/connect-devices/warp/deployment/Windows-Teams/ 301
+
+# web3
+/web3/ethereum-gateway/about-eth/ /web3/ethereum-gateway/concepts/ethereum/ 301
+/web3/ethereum-gateway/connecting-your-website/ /web3/how-to/manage-gateways/ 301
+/web3/ethereum-gateway/getting-started/ /web3/ethereum-gateway/ 301
+/web3/ethereum-gateway/interacting-with-the-eth-gateway/ /web3/how-to/use-ethereum-gateway/ 301
+/web3/ethereum-gateway/kill-switches/ /web3/ethereum-gateway/reference/kill-switches/ 301
+/web3/ipfs-gateway/browsing-ipfs/ /web3/how-to/use-ipfs-gateway/ 301
+/web3/ipfs-gateway/connecting-website/ /web3/how-to/manage-gateways/ 301
+/web3/ipfs-gateway/setting-up-a-server/ /web3/ipfs-gateway/ 301
+/web3/ipfs-gateway/updating-for-ipfs/ /web3/ipfs-gateway/reference/updating-for-ipfs/ 301
+/web3/ipfs-gateway/automated-deployment/ /web3/ipfs-gateway/reference/automated-deployment/ 301
 
 # workers
 /workers/about/ /workers/learning/ 301
