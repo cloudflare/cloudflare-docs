@@ -4,73 +4,58 @@ title: JumpCloud
 weight: 2
 ---
 
-# JumpCloud
+# Deploy WARP using JumpCloud
 
 ## Windows
 
-1.  Log in to the [JumpCloud Admin Portal](https://console.jumpcloud.com).
+1. Log in to the [JumpCloud Admin Portal](https://console.jumpcloud.com).
 
-1.  Navigate to **Device Management** > **Software Management**.
+2. Navigate to **Device Management** > **Software Management**.
 
-1.  Select the _Windows_ tab, then click (+).
+3. Select the **Windows** tab, then click **(+)**.
 
-    ![JumpCloud Software Management for Windows](/cloudflare-one/static/documentation/connections/jumpcloud.png)
+    ![Configuring WARP in the JumpCloud **Windows** tab](/cloudflare-one/static/documentation/connections/jumpcloud.png)
 
-1.  Enter a unique display name in the _Software Name_ field.
+4. In the **Software Name** field, enter a unique display name.
 
-1.  Enter `warp` into the _Package ID_ field.
+5. In the **Package ID** field, enter `warp`.
 
-1.  Select **Install this software**.
+6. Select **Install this software**.
 
-1.  (Optional) Select _Keep software package up to date_ to automatically update this app as updates become available.
+7. (Optional) Select **Keep software package up to date** to automatically update this app as updates become available.
 
-1.  (Optional) Select _Allow end users to delay updates for up to one week_ to avoid updates during a busy time.
+8. (Optional) Select **Allow end users to delay updates for up to one week** to avoid updates during a busy time.
 
-1.  Click **save**.
+9. Click **save**.
 
-### Deploy the client to a single MDM-managed device
+10. Select the device(s) you want to deploy the app to:
+    - **Single device**: Go to the **Devices** tab and select the target device.
+    - **Device group**: Go to the **Device Groups** tab and select the target device group.
 
-1.  Log in to the [JumpCloud Admin Portal](https://console.jumpcloud.com).
-1.  Navigate to **Device Management** > **Software Management**.
-1.  Select the _Windows_ tab and select the app you want to deploy.
-1.  Select the _Devices_ tab.
-1.  Select the devices where you want to deploy the app.
-1.  Click **save**.
-1.  Click **save** again.
+11. Click **save**.
 
-### Deploy the client to an MDM-managed device group
+12. Click **save** again.
 
-1.  Log in to the [JumpCloud Admin Portal](https://console.jumpcloud.com).
-1.  Navigate to **Device Management** > **Software Management**.
-1.  Select the _Windows_ tab and select the app you want to deploy.
-1.  Select the _Device Groups_ tab.
-1.  Select the groups that you want to deploy the app to.
-1.  Click **save**.
-1.  Click **save** again.
+Verify that Cloudflare WARP was installed by selecting the app and viewing the **Status** tab.
 
 ## macOS
 
-1.  Log in to the [JumpCloud Admin Portal](https://console.jumpcloud.com).
+1. Log in to the [JumpCloud Admin Portal](https://console.jumpcloud.com).
 
-1.  Navigate to **Device Management** > **Software Management**.
+2. Navigate to **Device Management** > **Software Management**.
 
-1.  Select the _Apple_ tab, then click (+).
+3. Select the **Apple** tab, then click **(+)**.
 
-    ![JumpCloud Software Management for Mac](/cloudflare-one/static/documentation/connections/jumpcloud.png)
+    ![Configuring WARP in the JumpCloud **Apple** tab](/cloudflare-one/static/documentation/connections/jumpcloud-mac.png)
 
-1.  On the _Details_ tab, enter a unique display name in **Software Description**.
+4. In the **Software Description** field, enter a unique display name.
 
-1.  Add the app's URL location to **Software Package URL**.
+5. In the **Software Package URL**, enter the URL location of the `Cloudflare_WARP.pkg` file. If you do not already have the installer package, [download it here](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos).
 
-### Deploy the client to a single MDM-managed device
+6. Select the device(s) you want to deploy the app to:
+    - **Single device**: Go to the **Devices** tab and select the target device. To select all devices, select the checkbox next to **Type**.
+    - **Device group**: Go to the **Device Groups** tab and select the target device group. To select all device groups, select the checkbox next to **Type**.
 
-1.  Select the _Devices_ tab.
-1.  Select the devices where this app will be deployed. To select all devices, select the checkbox next to **Type**.
-1.  Click **save** to install the client.
-    Verify that Cloudflare was installed by selecting the app and selecting the Status tab.
+7. Click **save** to install the client.
 
-### Deploy the client to an MDM-managed device group
-
-1.  Select the _Device Groups_ tab.
-1.  Select the groups where this app will be deployed. To select all device groups, select the checkbox next to **Type**.
-1.  Click **save** to install the client.
+Verify that Cloudflare WARP was installed by selecting the app and viewing the **Status** tab.

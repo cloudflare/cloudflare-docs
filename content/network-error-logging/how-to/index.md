@@ -19,7 +19,7 @@ Use NEL reports to view information such as:
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/).
 2.  Click **Analytics** > **Origin Reachability**.
 
-Click a tab under \*\*Reachability summary \*\*to view specific information related to your Origin ASN, Origin, IP, or data center. Hover over a location on the map to view the number of reachable requests.
+Click a tab under **Reachability summary** to view specific information related to your Origin ASN, Origin, IP, or data center. Hover over a location on the map to view the number of reachable requests.
 
 Under **Reachability by data center**, click a location under Data Centers to filter reachability by a specific location.
 

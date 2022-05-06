@@ -48,7 +48,7 @@ You can set up this connection by downloading and installing the Cloudflare daem
 
 ## Secure the subdomain with Cloudflare Access
 
-Next, protect the subdomain you plan to register with a Cloudflare Access application policy. Follow [these instructions](/cloudflare-one/policies/zero-trust/) to build a new policy to control who can connect to the drive.
+Next, protect the subdomain you plan to register with a Cloudflare Access application policy. Follow [these instructions](/cloudflare-one/policies/access/) to build a new policy to control who can connect to the drive.
 
 For example, if you share the drive at `smb.site.com`, build a policy to only allow your team members to connect to that subdomain.
 

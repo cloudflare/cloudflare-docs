@@ -14,7 +14,7 @@ If you believe a domain has been incorrectly blocked, you can use [this form](ht
 
 ## I see an error saying `No Access-Control-Allow-Origin header is present on the requested resource`.
 
-Cloudflare Access requires that the credentials: `same-origin parameter` be added to JavaScript when using the Fetch API (to include cookies). AJAX requests fail without this parameter present. For more information, see our documentation about [CORS settings](/cloudflare-one/policies/zero-trust/cors/#list-of-cors-settings).
+Cloudflare Access requires that the credentials: `same-origin parameter` be added to JavaScript when using the Fetch API (to include cookies). AJAX requests fail without this parameter present. For more information, refer to our documentation about [CORS settings](/cloudflare-one/policies/access/cors/#list-of-cors-settings).
 
 ## I see untrusted certificate warnings for every page and I am unable to browse the Internet.
 
@@ -35,7 +35,7 @@ We present an HTTP error page in the following cases:
     - The server certificate is revoked and fails a CRL check (OSCP checking coming soon)
     - There is at least one expired certificate in the certificate chain for the server certificate
 
-2.  **Common certificate errors occur**. For example, in the event of a certificate common name mismatch.
+2.  **Common certificate errors occur**. For example, in the event of a certificate common name mismatch. The SSL certificate on the edge needs to cover the requested hostname or else a 526 Insecure upstream error will be presented.
 3.  **Insecure cipher suite**. When the connection from Cloudflare Gateway to an upstream server is insecure (e.g, uses an insecure cipher such as rc4, rc4-md5, 3des, etc). We do support upstream connections that require a connection over TLS that is prior to TLS 1.3. We will support the ability for an administrator to configure whether to trust insecure connections in the very near future.
 
 If you see this page, providing as much information as possible to the local IT administrator will be helpful as we troubleshoot with them, such as:
@@ -139,3 +139,7 @@ Cloudflare enforces a 270-second idle timeout on TCP connections that go through
 
 If `cloudflared` returns error `error="remote error: tls: handshake failure"`, check to make sure the hostname in question is covered by a SSL certificate. If using a multi-level subdomain, an advanced certificate may be required as the Universal SSL will not cover more than one level of subdomain. This may surface in the browser as `ERR_SSL_VERSION_OR_CIPHER_MISMATCH`.
 
+## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
+
+This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domainteam-name) while the [Cloudflare Dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
+Cloudflare Dashboard SSO does not currently support team domain changes. Contact support for more details.

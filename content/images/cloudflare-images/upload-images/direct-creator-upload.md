@@ -59,7 +59,7 @@ You will receive a response similar to this:
       "key": "value":
     },
     "uploaded": "2022-01-31T16:39:28.458Z",
-    "requiredSignedURLs": true,
+    "requireSignedURLs": true,
     "variants": [
       "https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/public",
       "https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/thumbnail" 

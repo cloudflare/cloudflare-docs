@@ -40,7 +40,7 @@ Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprec
 
 ## How does 1.1.1.1 work with DNSSEC?
 
-1.1.1.1 is a DNSSEC validating resolver. 1.1.1.1 sends the DO (DNSSEC Ok) bit on every query to convey to the authoritative server that it wishes to receive signed answers if available. 1.1.1.1 supports [all signature algorithms](https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml) including the newer DS-13, DS-14, and DNS-15.
+1.1.1.1 is a DNSSEC validating resolver. 1.1.1.1 sends the `DO` (`DNSSEC OK`) bit on every query to convey to the authoritative server that it wishes to receive signed answers if available. 1.1.1.1 supports the signature algorithms specified in [Supported DNSKEY signature algorithms](/1.1.1.1/encryption/dnskey/).
 
 ## ​Does 1.1.1.1 send EDNS client subnet header?
 

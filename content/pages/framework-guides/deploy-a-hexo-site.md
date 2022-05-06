@@ -94,7 +94,7 @@ Some Hexo themes or plugins have additional requirements for different Node.js v
 2. Go to **Settings** > **Environment variables**. 
 3. Set the environment variable `NODE_VERSION` and a value of your required Node.js version (for example, `14.3`).
 
-![Follow the instructions above to set up an environment variable in the Pages dashboard](../media/node-version-pages.png)
+![Follow the instructions above to set up an environment variable in the Pages dashboard](/pages/framework-guides/media/node-version-pages.png)
 
 ## Related resources
 
