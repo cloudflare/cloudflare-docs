@@ -17,11 +17,11 @@ For example, if you have Bulk Redirects set up to direct `abc.com` to `xyz.com` 
 
 To use Bulk Redirects, log in to the [Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/:zone/rules) > **Rules** > **Bulk Redirects**.
 
-![Bulk redirects option](../media/bulk_redirects_option.png)
+![Bulk redirects option](/pages/how-to/media/bulk_redirects_option.png)
 
 In **Bulk Redirects**, select **Create a new Bulk Redirects list**.
 
-![Create a new Bulk redirects list](../media/create_a_new_bulk_redirect_list.png)
+![Create a new Bulk redirects list](/pages/how-to/media/create_a_new_bulk_redirect_list.png)
 
 Create a new list, and in the content type, select **Redirect**. You will be prompted to add your redirect **Source URL** and **Target URL**. You can also specify the **Status** code for each redirect.
 
@@ -35,6 +35,6 @@ If you set the **Source URL** to `https://www.example.dev/examples` and the **Ta
 
 After this, go back to **Bulk Redirects** > **Create Bulk Redirects** > set a **Rule name** > and select the desired list.
 
-![Create a new Bulk redirects](../media/create_new_bulk_redirect.png)
+![Create a new Bulk redirects](/pages/how-to/media/create_new_bulk_redirect.png)
 
 Finally, select **Save and deploy** and wait a few seconds for your rule to propagate.
