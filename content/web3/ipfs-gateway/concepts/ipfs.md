@@ -24,7 +24,7 @@ which produces a 256 bit (32 byte) output, and that output is encoded with
 [Base58](https://en.wikipedia.org/wiki/Base58). Base58 is a binary-to-text
 encoding scheme originally developed for Bitcoin and has the advantage that
 letters that might be mistaken for each other in certain fonts (like zero and
-the capital letter O) aren't included.
+the capital letter O) are not included.
 
 A CID will typically look something like `QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco`.
 
@@ -35,14 +35,14 @@ However, the same hash could be encoded with [Base32](https://en.wikipedia.org/w
 IPFS is fundamentally a [Distributed Hash Table
 (DHT)](https://en.wikipedia.org/wiki/Distributed_hash_table) which maps from
 CIDs to people who have the content addressed by that CID. The hash
-table is distributed because no single node in the network holds the whole
-thing. Instead, each node stores a subset of the hash table, as well as
+table is distributed because no single node in the network holds the entire
+table. Instead, each node stores a subset of the hash table, as well as
 information about which nodes are storing other relevant sections.
 
 When someone talks about 'uploading' content to IPFS, what they really mean
-(usually) is that they're announcing to the network that they have some content
+(usually) is that they are announcing to the network that they have some content
 by adding an entry to the DHT that maps from CID to their IP address. Somebody
-else who wants to download their data would lookup the CID in the DHT, find the
+else who wants to download their data would look up the CID in the DHT, find the
 person's IP address, and download the data directly from them.
 
 The speed and reliability advantages of IPFS come from the fact that many people
@@ -52,18 +52,18 @@ can pick up the slack.
 
 ## Directories
 
-You can upload more than just individual files. For example, let's take a folder called `example`, which has exactly one file, `example_text.txt`, containing the string `I'm trying out IPFS`.
+You can upload more than just individual files. For example, consider a folder called `example`, which has exactly one file, `example_text.txt`, containing the string `I'm trying out IPFS`.
 
 If that folder were uploaded with the command `ipfs add -r ./example`, both the
 folder and the file it contains would have their own CID. In this case, the
 folder would have the CID `QmdbaSQbGU6Wo9i5LyWWVLuU8g6WrYpWh2K4Li4QuuE8Fr` while
 the file would have the CID `QmXnnyufdzAWL5CqZ2RnSNgPbvCc1ALT73s6epPrRnZ1Xy`.
 
-You could then access the file in two ways.
+You could then access the file in two ways:
 
-1.  Requesting the file directly:<br />
+* Requesting the file directly:<br />
     `https://cloudflare-ipfs.com/ipfs/QmXnnyufdzAWL5CqZ2RnSNgPbvCc1ALT73s6epPrRnZ1Xy`
-2.  Requesting the file by name, from the directory:<br />
+* Requesting the file by name, from the directory:<br />
     `https://cloudflare-ipfs.com/ipfs/QmdbaSQbGU6Wo9i5LyWWVLuU8g6WrYpWh2K4Li4QuuE8Fr/example\_text.txt`
 
 While the CID of a file will only change if the file itself changes, the CID of
@@ -74,6 +74,6 @@ Directories make it possible to address an entire static website with a single
 CID and access different pages of the website by requesting different files in
 the directory.
 
-## Learning more
+## Related resources
 
 For help with additional concepts, refer to the [IPFS](https://docs.ipfs.io/concepts/) documentation.

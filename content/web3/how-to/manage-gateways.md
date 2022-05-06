@@ -12,7 +12,7 @@ You can interact with a Web3 gateway in several ways.
 
 ### Via the API
 
-For a full list of monitor properties, refer to [Create Web3 Hostname](https://api.cloudflare.com/#web3-hostname-create-web3-hostname). If you need help with API authentication, refer to [Cloudflare API Quickstart](/api/).
+For a full list of gateway properties, refer to [Create Web3 Hostname](https://api.cloudflare.com/#web3-hostname-create-web3-hostname). If you need help with API authentication, refer to [Cloudflare API Quickstart](/api/).
 
 ```json
 ---
