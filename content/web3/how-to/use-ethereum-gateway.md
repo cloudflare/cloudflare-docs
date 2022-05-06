@@ -95,7 +95,7 @@ Then you can use the Gateway to send the transaction to the network with a cURL 
 curl https://cloudflare-eth.com -H 'Content-Type: application/json' --data '{"jsonrpc":"2.0","method":"eth_sendRawTransaction","params":["0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"],"id":1}'
 ```
 
-or using a JS Fetch API request:
+You could also use a JS Fetch API request:
 
 ```js
 await fetch(
