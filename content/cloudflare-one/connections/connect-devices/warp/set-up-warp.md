@@ -35,17 +35,8 @@ Advanced security features including HTTP traffic inspection require users to in
 
 Choose one of the [different ways](/cloudflare-one/connections/connect-devices/warp/deployment/) to deploy the WARP client, depending on what works best for your organization.
 
-### 6. Enable the Proxy setting in the Zero Trust Dashboard.
-
-Navigate to **Settings** > **Network** and enable the **Proxy** setting. This will allow you to start routing your HTTP traffic to Gateway.
-
-### 7. Go through this checklist.
-
-To begin inspecting DNS and HTTP traffic on your devices, you need to ensure all of the following:
-
-- Your devices have the WARP client installed and connected.
-- The [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) has been installed on your devices.
-- The [proxy setting](/cloudflare-one/connections/connect-devices/warp/warp-settings/#enable-proxy) has been enabled on the Zero Trust Dashboard.
+### 6. Log in to your organization's Cloudflare Zero Trust instance from your devices. 
+On your device, navigate to the Settings section in the WARP client and insert your organization's team name.
 
 Next, build [Secure Web Gateway policies](/cloudflare-one/policies/filtering/) to filter DNS, HTTP, and Network traffic on your devices.
 

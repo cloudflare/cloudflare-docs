@@ -2,7 +2,7 @@
 pcx-content-type: configuration
 title: DNS policies
 layout: single
-weight: 1
+weight: 2
 ---
 
 # DNS policies
