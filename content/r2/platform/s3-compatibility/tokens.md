@@ -1,9 +1,9 @@
 ---
-title: Access Keys
+title: Generate an S3 Auth token
 pcx-content-type: how-to
 ---
 
-# Access Keys for SDK usage
+# Generate an S3 Auth token
 
 In this guide, you will learn how to generate an API token to serve as the Access Key for usage with existing S3-compatible SDKs and/or XML APIs. 
 
