@@ -31,6 +31,8 @@ Other features we will learn about:
 
 For illustrative purposes, this tutorial uses the demo Cloudflare Pages website <https://imagejam.net> as a basis for all examples; you can find the source code for this website on GitHub <https://github.com/netgusto/imagejam.net>
 
+[Learn how to deploy your own Cloudflare Pages website](https://developers.cloudflare.com/pages/get-started/).
+
 ## Step 1: Website not using Cloudflare Images
 
 We're starting this tutorial with a demo website not (yet) using Cloudflare Images <https://imagejam.net/step-1/>.
@@ -47,11 +49,12 @@ On this example, the image we see has been served with a very high-resolution (`
 
 This is because at this step, the website serves unoptimized, unresized images, original images, stored in an online file storage (in our case, S3).
 
-Also, this can't be seen at a glance, but the image is served in a fairly heavy JPG format that's actually not adapted for web purposes, possibly coming straight out of an artist camera.
+Also, this can't be seen at a glance, but the image is served in a fairly heavy JPG format that's actually not adapted for web purposes, possibly coming straight out of a camera.
 
 The purpose of this tutorial is to showcase how Cloudflare Images can be leveraged on a website to deliver resized and optimized images, adapted to their display on the website, and the capabilities of the browser displaying them.
 
-In step 2 we will integrate Cloudflare Images in our website, but before that we need to upload our images for Cloudflare Images to start serving them.
+👉 In step 2 we will integrate Cloudflare Images in our website, but before that we need to upload our images for Cloudflare Images to start serving them.
+
 ## Migration to Cloudflare Images
 
 We are going to upload our website images on Cloudflare Images.
@@ -131,14 +134,56 @@ async function upload(imageName, CF_IMAGES_ACCOUNT_ID, CF_IMAGES_API_KEY) {
 
 In a nutshell, this script does 2 things:
 
-* obtain the list of images to migrate to Cloudflare Images
-* for every image, ask the Cloudflare Images API to import the image
+* obtain the list of images to migrate to Cloudflare Images,
+* for every image, ask the Cloudflare Images API to import the image by URL, keeping its current name.
 
-### Cloudflare Images API credentials
+[Check out the instructions on how to install and run this script on the demo website GitHub repository](https://github.com/netgusto/imagejam.net#migrating-the-website-images-to-cloudflare-images).
 
-This bulk upload script expects to be provided with Cloudflare Images API credentials in the form of 2 environment variables `CF_IMAGES_ACCOUNT_ID` and `CF_IMAGES_API_KEY`.
+If you need Cloudflare Images API credentials, have a look at the section [Aside: Obtain Cloudflare Images API credentials](#aside-obtain-cloudflare-images-api-credentials) below.
 
-You can get them both in your Cloudflare dashboard.
+## Steps 2 and 3: Use Cloudflare Images with default delivery URLs
+
+Now that our website images [have been imported](#migration-to-cloudflare-images), it turns out they already accessible on Cloudflare Images. Zero setup required!
+
+For instance, our original image `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg`: <https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public>
+
+![](
+https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public
+)  
+(*Photo by Aditya Joshi - Unsplash*)
+
+Let's inspect that URL:
+
+```
+https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public
+<--  default domain   -->/<-- Account hash   -->/<--        our original image file         -->/<-??->
+```
+
+* The first part `https://imagedelivery.net` is the default delivery domain for Cloudflare Images.
+
+* Then we have `-oMiRxTrr3JCvTMIzx4GvA`, a cryptic value representing your Cloudflare Images account ID in an obfuscated way; you can get this value in your Cloudflare Images dashboard.
+
+* Then there is our original file name `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg`; this is the ID of the image we need to be served.
+
+* The last part `public` [represents the variant](https://developers.cloudflare.com/images/cloudflare-images/resize-images/#supported-properties), and it turns out this is how Cloudflare Images knows what size should the image be served in ([among many other transformation options](https://developers.cloudflare.com/images/cloudflare-images/resize-images/#supported-properties)).
+
+Cloudflare Images ships by default with a single variant named `public`, but you can create many other to fit your needs.
+
+For this tutorial, we created a second variant `thumb`, size `200x200`, fitted with a `cover` crop.
+
+![](assets/step-02-variant-thumb.jpg)
+
+Here is the same image but with the `thumb` variant applied: <https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-%E3%83%84.jpg/thumb>
+
+![](https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/thumb)
+
+This will be useful in thumbnails pages of our website gallery.
+
+## Aside: Obtain Cloudflare Images API credentials
+
+The bulk upload script featured in this tutorial expects to be provided with Cloudflare Images API credentials in the form of 2 environment variables `CF_IMAGES_ACCOUNT_ID` and `CF_IMAGES_API_KEY`.
+
+You can get them both in your Cloudflare dashboard; here's how 👇
 
 #### `CF_IMAGES_ACCOUNT_ID`
 
