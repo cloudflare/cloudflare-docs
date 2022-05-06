@@ -415,7 +415,7 @@ Currently, Durable Objects do not migrate between locations after initial creati
 
 ### Performance
 
-Using Durable Objects will often add response latency, as the request must be forwarded to the data center where the object is located.
+Using Durable Objects will often add response latency, as the request must be forwarded to the data center where the object is located. Because objects are usually located near where they were first requested, it can be bad for latency to precreate objects from a single location such as your development workstation. It is better for latency to create objects in response to actual production traffic.
 
 ## Example - Counter
 
