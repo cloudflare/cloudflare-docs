@@ -44,4 +44,4 @@ Available as a paid add-on for Cloudflare customers on an Enterprise plan.
 - **Script Monitor New Malicious URL Alert**: Triggered by JavaScript dependencies loaded from URLs known to be malicious according to threat intelligence feeds.
 - **Script Monitor New Malicious Script Alert**: Triggered by JavaScript code that Cloudflare's internal systems considered malicious.
 
-Malicious script alerts will only include scripts with an _Active_ or _CDN-CGI_ status. Refer to [Script statuses](/page-shield/reference/script-statuses/) for more information.
+Malicious script alerts will only include scripts with an _Active_ status. Refer to [Script statuses](/page-shield/reference/script-statuses/) for more information.
