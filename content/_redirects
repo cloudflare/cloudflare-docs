@@ -564,7 +564,6 @@
 /warp-client/warp-for-teams/teams/Windows-Teams/ /cloudflare-one/connections/connect-devices/warp/deployment/Windows-Teams/ 301
 
 # web3
-
 /web3/ethereum-gateway/about-eth/ /web3/ethereum-gateway/concepts/ethereum/ 301
 /web3/ethereum-gateway/connecting-your-website/ /web3/how-to/manage-gateways/ 301
 /web3/ethereum-gateway/getting-started/ /web3/ethereum-gateway/ 301
