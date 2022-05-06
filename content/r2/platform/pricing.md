@@ -7,18 +7,18 @@ title: Pricing
 
 R2 charges based on the total volume of data stored, along with two classes of operations on that data:
 
- 1. [Class A operations](#class-a-operations) which are more expensive and tend to mutate state. 
- 2. [Class B operations](#class-b-operations) which tend to read existing state.
+1. [Class A operations](#class-a-operations) which are more expensive and tend to mutate state. 
+2. [Class B operations](#class-b-operations) which tend to read existing state.
  
- There are no charges for egress bandwidth.
+There are no charges for egress bandwidth.
 
 All included usage is on a monthly basis.
 
-## R2
+## R2 pricing
 
 {{<table-wrap>}}
 
-|                    | Forever Free                 | Paid - Rates                       | 
+|                    | Free                         | Paid - Rates                       | 
 | ------------------ | ---------------------------- | ---------------------------------- |
 | Storage            | 10 GB / month                | $0.015 / GB-month                  |
 | Class A Operations | 1,000,000 requests / month   | $4.50 / million requests           | 
@@ -26,19 +26,24 @@ All included usage is on a monthly basis.
 
 {{</table-wrap>}}
 
-### Storage Usage
+### Storage usage
 
-Storage for is billed using gigabyte-month (GB-month) and is a measure of how large your objects are and how long you store your objects for in the month.
+Storage is billed using gigabyte-month (GB-month) as the billing metric. A GB-month is calculated by recording total bytes stored for the duration of the month. 
 
-### Class A Operations
+For example:
+
+* Storing 1 GB for 30 days will be charged as 1 GB-month.
+* Storing 2 GB for 15 days will be charged as 1 GB-month.
+
+### Class A operations
 
 Class A Operations include `ListBuckets`, `PutBucket`, `ListObjects`, `PutObject`, `CopyObject`, `CompleteMultipartUpload`, `CreateMultipartUpload`, `UploadPart`, and `UploadPartCopy`.
 
-### Class B Operations
+### Class B operations
 
 Class B Operations include `HeadBucket`, `HeadObject`, and `GetObject`.
 
-### Free Operations
+### Free operations
 
 Free operations include `DeleteObject`, `DeleteBucket` and `DeleteMulitpartUpload`.
 
