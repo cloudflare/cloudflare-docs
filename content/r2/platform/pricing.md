@@ -45,7 +45,7 @@ Class B Operations include `HeadBucket`, `HeadObject`, and `GetObject`.
 
 ### Free operations
 
-Free operations include `DeleteObject`, `DeleteBucket` and `DeleteMulitpartUpload`.
+Free operations include `DeleteObject`, `DeleteBucket` and `DeleteMultipartUpload`.
 
 ## R2 billing examples
 
