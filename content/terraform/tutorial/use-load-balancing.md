@@ -170,7 +170,7 @@ In this example, the pool will be called `www-servers` with two origins added to
 * `www-us` (`203.0.113.10`) 
 * `www-asia` (`198.51.100.15`)
 
-For now, skip any sort of [geo routing](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/).
+For now, skip any sort of [geo routing](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/).
 
 Note the reference to the monitor that you added in the last step. When applying this configuration, Terraform will determine that it first needs to create the monitor before looking up the ID and providing it to the pool you wish to create.
 

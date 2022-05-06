@@ -1,7 +1,7 @@
 ---
 title: Configure custom rules
 pcx-content-type: how-to
-weight: 4
+weight: 5
 meta:
   title: Configure custom rules with Terraform
 layout: list
