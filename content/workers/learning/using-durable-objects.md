@@ -232,11 +232,11 @@ This will create a directory for your project with basic configuration and a sin
 - [Durable Objects TypeScript Rollup ES Modules template](https://github.com/cloudflare/durable-objects-typescript-rollup-esm)
 - [Durable Objects Webpack CommonJS template](https://github.com/cloudflare/durable-objects-webpack-commonjs)
 
-The following sections will cover how to customize the configuration, but you can also immediately publish the generated project using the [`wrangler publish`](/workers/wrangler/cli-wrangler/commands/) command.
+The following sections will cover how to customize the configuration, but you can also immediately publish the generated project using the [`wrangler publish`](/workers/wrangler/commands/) command.
 
 ### Specifying the main module
 
-Workers that use ES Modules syntax must have a main module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. Refer to the [modules section of the custom builds documentation](/workers/wrangler/cli-wrangler/configuration/#modules) for more details.
+Workers that use ES Modules syntax must have a main module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. Refer to the [modules section of the custom builds documentation](/workers/wrangler/configuration/#modules) for more details.
 
 ### Configuring Durable Object bindings
 
@@ -402,7 +402,7 @@ In particular, a Durable Object may be superseded in this way in the event of a 
 
 ### Development tools
 
-[Wrangler tail](/workers/wrangler/cli-wrangler/commands/#tail) logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed. Wrangler tail should not be connected to a script that you expect will receive heavy volumes of traffic.
+[Wrangler tail](/workers/wrangler/commands/#tail) logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed. Wrangler tail should not be connected to a script that you expect will receive heavy volumes of traffic.
 
 The Workers editor in [the Cloudflare dashboard](https://dash.cloudflare.com/) allows you to interactively edit and preview your Worker and Durable Objects. Note that in the editor Durable Objects can only be talked to by a preview request if the Worker being previewed both exports the Durable Object class and binds to it. Durable Objects exported by other Workers cannot be talked to in the editor preview.
 
@@ -488,7 +488,7 @@ export class Counter {
 
 ### Debugging
 
-[`wrangler dev`](/workers/wrangler/cli-wrangler/commands/#dev) and [`wrangler tail`](/workers/wrangler/cli-wrangler/commands/#tail) are both available to help you debug your Durable Objects.
+[`wrangler dev`](/workers/wrangler/commands/#dev) and [`wrangler tail`](/workers/wrangler/commands/#tail) are both available to help you debug your Durable Objects.
 
 The `wrangler dev` command opens up a tunnel from your local development environment to Cloudflare's network edge, letting you test your Durable Objects code in the Workers environment as you write it.
 

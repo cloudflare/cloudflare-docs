@@ -22,7 +22,7 @@ Flags:
 
 ## init
 
-Create a skeleton `wrangler.toml` in an existing directory. This command can be used as an alternative to `generate` if you prefer to clone a template repository yourself or you already have a JavaScript project and would like to use Wrangler.
+Create a skeleton Wrangler project, including the `wrangler.toml` file, into a specified directory.
 
 ```sh
 $ wrangler init [$NAME] [--yes]
@@ -34,7 +34,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
 
 - `$NAME` {{<type>}}=(Name of working directory){{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/cli-wrangler/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
 
 - `--yes`
 
@@ -46,7 +46,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
 
 ## login
 
-Authorize Wrangler with your Cloudflare account. This will open a login page in your browser and request your account access permissions. This command is the alternative to `wrangler config` and it uses OAuth tokens.
+Authorize Wrangler with your Cloudflare account using OAuth. This will open a login page in your browser and request your account access permissions.
 
 ```sh
 $ wrangler login [--scopes-list] [--scopes $SCOPES]
@@ -70,7 +70,7 @@ All of the arguments and flags to this command are optional:
 
 ## logout
 
-Remove Wrangler's authorization for accessing your account. This command will invalidate your current OAuth token and delete the configuration file, if present.
+Remove Wrangler's authorization for accessing your account. This command will invalidate your current OAuth token.
 
 ```sh
 $ wrangler logout
@@ -78,7 +78,7 @@ $ wrangler logout
 
 This command only invalidates OAuth tokens acquired through the `wrangler login` command. However, it will try to delete the configuration file regardless of your authorization method.
 
-If you wish to delete your API token, log into the Cloudflare dashboard and go to **Overview** > **Get your API token** in the right side menu > select the three-dot menu on your Wrangler token and select **Delete** if you wish to delete your API token.
+If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and wish to delete your API token, log into the Cloudflare dashboard and go to **Overview** > **Get your API token** in the right side menu > select the three-dot menu on your Wrangler token and select **Delete** if you wish to delete your API token.
 
 ---
 
@@ -154,15 +154,16 @@ $ wrangler dev [--env $ENVIRONMENT_NAME] [--ip <ip>] [--port <port>] [--host <ho
   - The protocol to listen to requests on, defaults to `http`.
 
 - `--upstream-protocol` {{<prop-meta>}}optional{{</prop-meta>}}
+
   - The protocol to forward requests to host on, defaults to `https`.
 
 {{</definitions>}}
 
-These arguments can also be set in your `wrangler.toml` file. Refer to the [`wrangler dev` configuration](/workers/wrangler/cli-wrangler/configuration/#dev) documentation for more information.
+These arguments can also be set in your `wrangler.toml` file. Refer to the [`wrangler dev` configuration](/workers/wrangler/configuration/#dev) documentation for more information.
 
 ### Usage
 
-You should run `wrangler dev` from your Worker directory. Wrangler will run a local server accepting requests, executing your Worker, and forwarding them to a host. If you want to use another host other than your zone or `tutorials.cloudflare.com`, you can specify with `--host example.com`.
+You should run `wrangler dev` from your Worker directory. Wrangler will run a local server accepting requests, executing your Worker, and forwarding them to a host. If you want to emulate another host other than your zone or `tutorials.cloudflare.com`, you can specify with `--host example.com`.
 
 ```sh
 $ wrangler dev
@@ -171,7 +172,7 @@ $ wrangler dev
 👂  Listening on http://127.0.0.1:8787
 ```
 
-With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal. If either of these things do not happen, or you think the output is incorrect, [file an issue](https://github.com/cloudflare/wrangler).
+With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
 ---
 
@@ -551,14 +552,14 @@ $ wrangler kv:key put --binding= [--namespace-id=] $KEY $VALUE
 
 - `--ttl` {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The lifetime (in number of seconds) the document should exist before expiring. Must be at least `60` seconds. This option takes precedence over the `expiration` option.
+  - The lifetime (in number of seconds) the key-value pair should exist before expiring. Must be at least `60` seconds. This option takes precedence over the `expiration` option.
 
 - `--expiration` {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The timestamp, in UNIX seconds, indicating when the key-value pair should expire.
 
 - `--path` {{<prop-meta>}}optional{{</prop-meta>}}
-  - When defined, Wrangler reads the `--path` file location to upload its contents as KV documents. This is ideal for security-sensitive operations because it avoids saving keys and values into your terminal history.
+  - When defined, Wrangler the value is loaded from the file at `--path`. This is ideal for security-sensitive operations because it avoids saving keys and values into your terminal history.
 
 {{</definitions>}}
 
@@ -580,7 +581,7 @@ $ wrangler kv:key put --binding=MY_KV "key" "value" --ttl=10000
 ```
 
 ```sh
-$ wrangler kv:key put --binding=MY_KV "key" value.txt --path
+$ wrangler kv:key put --binding=MY_KV "key" --path=value.txt 
 ✨  Success
 ```
 
@@ -604,7 +605,7 @@ $ wrangler kv:key list --binding= [--namespace-id=] [--prefix] [--env]
 
 - `--env $ENVIRONMENT_NAME` {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - If defined, the changes will only apply to the specified environment. Refer to [Environments](/workers/platform/environments/) for more information.
+  - If defined, the operation will only apply to the specified environment. Refer to [Environments](/workers/platform/environments/) for more information.
 
 - `--prefix` {{<prop-meta>}}optional{{</prop-meta>}}
   - A prefix to filter listed keys.
@@ -811,7 +812,7 @@ $ wrangler kv:bulk delete --binding= [--env=] [--preview] [--namespace-id=] $FIL
 
 - `$FILENAME` {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The file with key-value pairs to delete.
+  - The file with keys to delete.
 
 - `--binding` {{<prop-meta>}}required (if no {{<code>}}--namespace-id{{</code>}}){{</prop-meta>}}
 
@@ -830,14 +831,12 @@ $ wrangler kv:bulk delete --binding= [--env=] [--preview] [--namespace-id=] $FIL
 
 {{</definitions>}}
 
-This command takes a JSON file as an argument with a list of key-value pairs to delete. An example of JSON input:
+This command takes a JSON file as an argument with a list of keys to delete. An example of JSON input:
 
 ```json
 [
-  {
-    "key": "test_key",
-    "value": ""
-  }
+  "test_key_1",
+  "test_key_2"
 ]
 ```
 
