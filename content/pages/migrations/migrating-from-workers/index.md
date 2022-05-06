@@ -59,7 +59,7 @@ If you choose to use a custom domain for your Pages project, you can set it to t
 
 {{<Aside type="note">}}
 
-Before you deploy, you will need to delete your old Workers application to start sending requests to Cloudflare Pages.
+Before you deploy, you will need to delete your old Workers routes to start sending requests to Cloudflare Pages.
 
 {{</Aside>}}
 ## Cleaning up your old application and assigning the domain
