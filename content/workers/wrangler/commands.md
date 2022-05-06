@@ -74,8 +74,6 @@ Remove Wrangler's authorization for accessing your account. This command will in
 $ wrangler logout
 ```
 
-This command only invalidates OAuth tokens acquired through the `wrangler login` command. However, it will try to delete the configuration file regardless of your authorization method.
-
 If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and wish to delete your API token, log into the Cloudflare dashboard and go to **Overview** > **Get your API token** in the right side menu > select the three-dot menu on your Wrangler token and select **Delete** if you wish to delete your API token.
 
 ---
@@ -123,7 +121,7 @@ Options:
 
 ## dev
 
-`wrangler dev` is a command that establishes a connection between `localhost` and an edge server that operates your Worker in development. A cloudflared tunnel forwards all requests to the edge server, which continuously updates as your Worker code changes. This allows full access to Workers KV, Durable Objects, etc. This is a great way to easily test your Worker while developing.
+`wrangler dev` is a command that establishes a connection between `localhost` and an edge server that operates your Worker in development. A tunnel forwards all requests to the edge server, which continuously updates as your Worker code changes. This allows full access to Workers KV, Durable Objects, etc. This is a great way to easily test your Worker while developing.
 
 ```sh
 $ wrangler dev [--env $ENVIRONMENT_NAME] [--ip <ip>] [--port <port>] [--host <host>] [--local-protocol <http|https>] [--upstream-protocol <http|https>]
@@ -164,10 +162,11 @@ These arguments can also be set in your `wrangler.toml` file. Refer to the [`wra
 You should run `wrangler dev` from your Worker directory. Wrangler will run a local server accepting requests, executing your Worker, and forwarding them to a host. If you want to emulate another host other than your zone or `tutorials.cloudflare.com`, you can specify with `--host example.com`.
 
 ```sh
-$ wrangler dev
-💁  JavaScript project found. Skipping unnecessary build!
-💁  watching "./"
-👂  Listening on http://127.0.0.1:8787
+~/my-worker $ wrangler dev
+⬣ Listening at http://localhost:8787
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ [b] open a browser, [d] open Devtools, [l] turn on local mode, [c] clear console, [x] to exit                        │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
 With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
@@ -179,7 +178,7 @@ With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and 
 Start a session to livestream logs from a deployed Worker.
 
 ```sh
-$ wrangler tail [--format $FORMAT] [--status $STATUS] [OPTIONS]
+$ wrangler tail NAME
 ```
 
 {{<definitions>}}
@@ -199,15 +198,7 @@ $ wrangler tail [--format $FORMAT] [--status $STATUS] [OPTIONS]
 
 {{</definitions>}}
 
-After starting `wrangler tail` in a directory with a project, you will receive a live feed of console and exception logs for each request your Worker receives.
-
-Like all Wrangler commands, run `wrangler tail` from your Worker’s root directory (the directory with your `wrangler.toml` file).
-
-{{<Aside type="warning" header="Legacy issues with existing cloudflared configuration">}}
-
-`wrangler tail` versions older than version 1.19.0 use `cloudflared` to run. Cloudflare recommends [updating to the latest wrangler version](/workers/wrangler/getting-started/#update) to avoid any issues.
-
-{{</Aside>}}
+After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
 
 ---
 
@@ -281,7 +272,7 @@ $ wrangler secret list --env ENVIRONMENT_NAME
 
 The `kv` subcommand allows you to store application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). KV operations are scoped to your account, so in order to use any of these commands, you:
 
-- must configure and `account_id` in your project's `wrangler.toml` file.
+- must configure and `account_id` in your project's `wrangler.toml` file or set the `CLOUDFLARE_ACCOUNT_ID` environment variable.
 - run all `wrangler kv:<command>` operations in your terminal from the project's root directory.
 
 ### Getting started
@@ -576,7 +567,7 @@ $ wrangler kv:key put --binding=MY_KV "key" "value" --ttl=10000
 ```
 
 ```sh
-$ wrangler kv:key put --binding=MY_KV "key" --path=value.txt 
+$ wrangler kv:key put --binding=MY_KV "key" --path=value.txt
 ✨  Success
 ```
 
@@ -829,22 +820,8 @@ $ wrangler kv:bulk delete --binding= [--env=] [--preview] [--namespace-id=] $FIL
 This command takes a JSON file as an argument with a list of keys to delete. An example of JSON input:
 
 ```json
-[
-  "test_key_1",
-  "test_key_2"
-]
+["test_key_1", "test_key_2"]
 ```
-
-{{<definitions>}}
-
-- `key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The key’s name. The name may be at most 512 bytes. All printable, non-whitespace characters are valid.
-
-- `value` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The UTF-8 encoded string to be stored, up to 10 MB in length.
-
-{{</definitions>}}
 
 ##### Usage
 

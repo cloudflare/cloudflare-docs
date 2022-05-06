@@ -269,7 +269,7 @@ header: Publish to example.com
 ~/my-worker $ wrangler publish --env production
 ```
 
-For more information on environments, refer to the [Wrangler documentation](/workers/wrangler/cli-wrangler/configuration/#environments).
+For more information on environments, refer to the [Wrangler documentation](/workers/wrangler/configuration/#environments).
 
 You can also configure a GitHub repository to automatically deploy every time you `git push`. You can do this by either using the [Workers GitHub action](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler), or by writing your own GitHub action and manually configuring the necessary [GitHub secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
 

@@ -173,4 +173,4 @@ module.exports = {
 
 If you are using `wrangler@1.6.0` or earlier, a `webpack.config.js` file at the root of your project is loaded automatically. This is not always obvious, which is why versions of Wrangler after `wrangler@1.6.0` require you to specify a `webpack_config` value in your `wrangler.toml` file.
 
-When [upgrading from `wrangler@1.6.0`](/workers/wrangler/getting-started/#update), you may encounter webpack configuration warnings. To resolve this, add `webpack_config = "webpack.config.js"` to your `wrangler.toml` file.
+When [upgrading from `wrangler@1.6.0`](/workers/cli-wrangler/install-update/#update), you may encounter webpack configuration warnings. To resolve this, add `webpack_config = "webpack.config.js"` to your `wrangler.toml` file.

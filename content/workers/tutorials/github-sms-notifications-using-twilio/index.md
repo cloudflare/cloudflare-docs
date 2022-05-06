@@ -169,8 +169,6 @@ async function checkSignature(formData, headers) {
 }
 ```
 
-Since our project relies on importing a library, use [webpack](/workers/wrangler/cli-wrangler/webpack/) and update your `wrangler.toml` file to set `type = "webpack"`.
-
 Your `wrangler.toml` file should look like this:
 
 ```toml
@@ -178,8 +176,6 @@ Your `wrangler.toml` file should look like this:
 filename: "wrangler.toml"
 ---
 name = "nameless-bonus-1fdf"
-type = "webpack"
-account_id = "xxxxxxxxx"
 workers_dev = true
 route = ""
 zone_id = ""
