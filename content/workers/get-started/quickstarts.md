@@ -13,10 +13,7 @@ layout: list
 Quickstarts are GitHub repos that are designed to be a starting point for building a new Cloudflare Workers project. For the projects below, you simply run:
 
 ```sh
-$ git clone <github-repo-url>
-$ cd <github-repo-url>
-$ npm install
-$ npx wrangler dev
+$ npm init cloudflare <new-project-name> <github-repo-url>
 ```
 
 {{<definitions>}}
@@ -72,7 +69,7 @@ $ npx wrangler dev
 ## Frameworks
 
 {{<worker-starter title="Apollo GraphQL Server" repo="signalnerve/workers-graphql-server" description="Lightning-fast, globally distributed Apollo GraphQL server, deployed at the edge using Cloudflare Workers.">}}
-  
+
 {{<worker-starter title="GraphQL Yoga" repo="the-guild-org/yoga-cloudflare-workers-template" description="The most flexible, fastest, and lightest GraphQL server for all environments, Cloudflare Workers included.">}}
 
 {{<worker-starter title="Flareact" repo="flareact/flareact" description="Flareact is an edge-rendered React framework built for Cloudflare Workers. It features file-based page routing with dynamic page paths and edge-side data fetching APIs.">}}
