@@ -1,5 +1,5 @@
 ---
-title: R2 Get started
+title: Get started
 pcx-content-type: get-started
 weight: 1
 meta:
