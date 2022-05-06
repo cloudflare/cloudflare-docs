@@ -1,6 +1,6 @@
 ---
-title: SDK Usage
-pcx-content-type: how-to
+title: SDK Usage Examples
+pcx-content-type: configuration
 ---
 
 # SDK Usage
