@@ -1,11 +1,11 @@
 ---
-title: S3 API Compatibility
+title: R2 S3 XML API Compatibility
 pcx-content-type: reference
 meta:
-  title: S3 API Compatibility
+  title: R2 S3 XML API Compatibility
 ---
 
-# S3 API compatibility
+# S3 XML API compatibility
 
 R2 implements the S3 API to allow users and their applications to migrate easily. When comparing to AWS S3, Cloudflare has removed some API operations' features and added others. The S3 API operations are listed below with their current implementation status. Feature implementation is currently in progress. Refer back to this page for updates.
 
@@ -70,7 +70,7 @@ Below is a list of implemented object-level operations. Refer to the Feature col
 |                                                                                         | ❌ SSE-C: <br> ❌ x-amz-server-side-encryption-customer-algorithm  <br> ❌ x-amz-server-side-encryption-customer-key <br> ❌ x-amz-server-side-encryption-customer-key-MD5   |
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |
 |                                                                                         | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner  |
-| [ListObjectsV2](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html) | Query Parameters: <br> ✅ list-type <br> ✅ continuation-token <br> ✅ delimiter <br> ❌ encoding-type <br> ❌ fetch-owner <br> ✅ max-keys <br> ✅ prefix <br> ✅ start-after |
+| [ListObjectsV2](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html) | Query Parameters: <br> ✅ list-type <br> ✅ continuation-token <br> ✅ delimiter <br> ✅ encoding-type <br> ✅ fetch-owner <br> ✅ max-keys <br> ✅ prefix <br> ✅ start-after |
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |
 |                                                                                         | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner                   |
 | [GetObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html)         | ✅ Conditional Operations: <br>  ✅ If-Match <br> ✅ If-Modified-Since <br> ✅ If-None-Match <br> ✅ If-Unmodified-Since | |
@@ -79,7 +79,7 @@ Below is a list of implemented object-level operations. Refer to the Feature col
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |
 |                                                                                         | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
 | [PutObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html)         | ✅ System Metadata: <br> ✅ Cache-Control <br> ✅ Content-Disposition  <br> ✅ Content-Encoding <br> ✅ Content-Language <br> ✅ Expires <br> ✅ Content-MD5 |
-|                                                                                         | ✅ Object Lifecycle      |
+|                                                                                         | ❌ Object Lifecycle      |
 |                                                                                         | ❌ Website: <br> ❌ x-amz-website-redirect-location |
 |                                                                                         | ❌ SSE-C: <br> ❌ x-amz-server-side-encryption <br> ❌ x-amz-server-side-encryption-customer-algorithm <br> ❌ x-amz-server-side-encryption-customer-key <br> ❌ x-amz-server-side-encryption-customer-key-MD5 <br> ❌ x-amz-server-side-encryption-aws-kms-key-id <br> ❌ x-amz-server-side-encryption-context <br> ❌ x-amz-server-side-encryption-bucket-key-enabled |
 |                                                                                         | ❌ Request Payer: <br> ❌ x-amz-request-payer |

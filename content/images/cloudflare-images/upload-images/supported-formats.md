@@ -9,7 +9,7 @@ weight: 5
 You can upload the following image formats to Cloudflare Images:
 
 - PNG
-- GIF8
+- GIF
 - JPEG
 - WebP
 

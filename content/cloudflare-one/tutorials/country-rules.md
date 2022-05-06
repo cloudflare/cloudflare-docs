@@ -25,7 +25,7 @@ Before you build the rule, you'll need to follow [these instructions](/cloudflar
 
 Navigate to the `Groups` page in the `My Teams` section of the Zero Trust dashboard. Click `Add a Group`.
 
-Groups contain criteria that you can reuse in [Zero Trust policies](/cloudflare-one/policies/zero-trust/). Additionally, groups can allow you to nest certain operators inside of rules in the [Zero Trust policy](/cloudflare-one/policies/zero-trust/).
+Groups contain criteria that you can reuse in [Access policies](/cloudflare-one/policies/access/). Additionally, groups can allow you to nest certain operators inside of rules in the [Access policy](/cloudflare-one/policies/access/).
 
 For example, `Include` rules work like `OR` operators - anything in the list will meet the criteria. However, if you include values in the Require field, these work like `AND` operators. Since you cannot connect from multiple countries at the same time, you must use a group to define a list of options that can be used inside of a `Require` rule in the policy.
 
@@ -39,7 +39,7 @@ Click `Save`.
 
 ## Build or edit a policy
 
-You can now build [Zero Trust policies](/cloudflare-one/policies/zero-trust/) that will require at least one country in the approved countries list. You can build these policies for SaaS or self-hosted applications. This example will add the requirement to an existing application, but you can also add it when creating a new application.
+You can now build [Access policies](/cloudflare-one/policies/access/) that will require at least one country in the approved countries list. You can build these policies for SaaS or self-hosted applications. This example will add the requirement to an existing application, but you can also add it when creating a new application.
 
 1.  Navigate to the `Applications` page in the `Access` section of the Zero Trust dashboard.
 1.  Choose an application and click `Edit`.
