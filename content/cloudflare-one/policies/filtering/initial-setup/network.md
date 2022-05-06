@@ -1,7 +1,7 @@
 ---
 title: Network filtering
 pcx-content-type: how-to
-weight: 3
+weight: 2
 meta:
   title: Set up Network filtering
 ---
@@ -22,13 +22,7 @@ To filter network traffic from a device such as a laptop or phone:
 4. Enable the Gateway proxy:
     1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
     2. Enable **Proxy** for TCP.
-    3. (Optional) Enable **Proxy** for UDP.
-
-{{<Aside type="note">}}
-
-UDP proxy is required for users to reach applications that use the QUIC protocol, such as Google services. QUIC traffic will not inspected by Gateway.
-
-{{</Aside>}}
+    3. (Optional) Enable **Proxy** for UDP.  All port 443 UDP traffic will be inspected by Gateway except when using QUIC. QUIC traffic will only be proxied.
 
 ### Connect private networks
 

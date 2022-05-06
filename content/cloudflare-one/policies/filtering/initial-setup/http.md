@@ -1,7 +1,7 @@
 ---
 title: HTTP filtering
 pcx-content-type: how-to
-weight: 2
+weight: 3
 meta:
   title: Set up HTTP filtering
 ---
@@ -20,14 +20,9 @@ To filter HTTP requests from a device:
 4. Enable the Gateway proxy:
     1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
     2. Enable **Proxy** for TCP.
-    3. (Optional) Enable **Proxy** for UDP.
+    3. (Optional) Enable **Proxy** for UDP. All port 443 UDP traffic will be inspected by Gateway except when using QUIC. QUIC traffic will only be proxied.
     4. Enable **TLS decryption**.
 
-{{<Aside type="note">}}
-
-UDP proxy is required for users to reach applications that use the QUIC protocol, such as Google services. QUIC traffic will not inspected by Gateway.
-
-{{</Aside>}}
 
 ## 2. Verify device connectivity
 
