@@ -48,7 +48,7 @@ To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.team
 3.  Paste the content of the `ca.pem` file in the Certificate content field.
 4.  Assign the Root CA a name and add the fully-qualified domain names (FQDN) that will use this certificate.
 
-    These FQDNs will be the hostnames used for the resources being protected in the [Zero Trust policy](/cloudflare-one/policies/zero-trust/). You must associate the Root CA with the FQDN that the application being protected uses.
+    These FQDNs will be the hostnames used for the resources being protected in the [Access policy](/cloudflare-one/policies/access/). You must associate the Root CA with the FQDN that the application being protected uses.
 
 5.  Click **Save**.
 
@@ -80,7 +80,7 @@ Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device
 ## Test using cURL
 
 Test for the site using mTLS by attempting to curl the site without a client certificate.
-This curl command example is for the site `example.com` that has a [Zero Trust policy](/cloudflare-one/policies/zero-trust/) set for `https://auth.example.com`:
+This curl command example is for the site `example.com` that has an [Access policy](/cloudflare-one/policies/access/) set for `https://auth.example.com`:
 
 ```curl
 curl -sv https://auth.example.com

@@ -188,3 +188,5 @@ Refer to the [Hexo framework guide](/pages/framework-guides/deploy-a-hexo-site/#
 You can use [Cloudflare Access](https://www.cloudflare.com/teams-access/) to manage access to your deployment previews. By default, these deployment URLs are public. Enabling the access policy will restrict viewing project deployments to your Cloudflare account.
 
 Once enabled, you can [set up a multi-user account](https://support.cloudflare.com/hc/en-us/articles/205065067-Setting-up-Multi-User-accounts-on-Cloudflare) to allow other members of your team to view preview deployments.
+
+Refer to [Preview deployments](/pages/platform/preview-deployments/#customizing-preview-deployments-access) for more information.

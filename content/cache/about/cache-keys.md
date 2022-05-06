@@ -16,7 +16,15 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (
 Accept: image/jpg
 ```
 
-The default Cache Key constructed from this request combines aspects such as Cloudflare Zone ID, scheme, hostname, and path into a Cache Key similar to `1234:https://www.example.com/foo.jpg`. Zone ID and Path are always included in the Cache Key and cannot be modified.
+As we can see from the example, the default cache key includes:
+
+1.  Full URL:
+    - scheme - not shown above, but could be HTTP or HTTPS.  
+    - host - which in this example is `www.cloudflare.com`
+    - URI with query string - in this example is `/logo.jpg`
+2.  Origin header sent by client (for CORS support).
+3.  `x-http-method-override`, `x-http-method`, and `x-method-override` headers.
+4.  `x-forwarded-host`, `x-host`, `x-forwarded-scheme`, `x-original-url`, `x-rewrite-url`, and `forwarded` headers.
 
 {{<Aside type="warning" header="Warning">}}
 
@@ -39,13 +47,7 @@ There are a couple of common reasons to change the Cache Key Template. You might
 
 {{</Aside>}}
 
-For cross-origin requests, such as one from `anotherdomain.com` to `example.com`, the Origin HTTP request header results in a Cache Key with the `${header:origin}` token populated as `anotherdomain.com::https://www.example.com/something`.
-
-A [Cache Level](/cache/how-to/set-caching-levels/) of Ignore Query String creates the following Cache Key:
-`${header:origin}::${scheme}://${host_header}${uri_iqs}`
-
-`${uri_iqs}` is replaced with the request path excluding the query string, so a request for `http://example.com/file.jpg?something=123` creates the following Cache Key:
-`::http://example.com/file.jpg`
+A [Cache Level](/cache/how-to/set-caching-levels/) of Ignore Query String creates a Cache Key that includes all the elements in the default cache key, except for the query string in the URI that is no longer included. For instance, a request for `http://example.com/file.jpg?something=123` and a request for `http://example.com/file.jpg?something=789` will have the same cache key, in this case.
 
 ## Cache Key Settings
 

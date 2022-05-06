@@ -22,19 +22,10 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-04-21</td>
-      <td>2022-05-02</td>
-      <td>...4cc1fcb6</td>
-      <td>BETA - HTTP requests with unusual HTTP headers or URI path (signature #2).</td>
-      <td>N/A</td>
-      <td>log</td>
-      <td>Update the rule to catch more attacks than before</td>
-    </tr>
-<tr>
-      <td>2022-04-21</td>
-      <td>2022-05-02</td>
-      <td>...863134d5</td>
-      <td>HTTP requests from known bad user agents.</td>
+      <td>2022-05-03</td>
+      <td>2022-05-09</td>
+      <td>...ad07ec62</td>
+      <td>HTTP requests with unusual HTTP headers or URI path (signature #6).</td>
       <td>N/A</td>
       <td>log</td>
       <td></td>

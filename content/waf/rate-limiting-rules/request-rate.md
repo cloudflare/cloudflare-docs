@@ -1,14 +1,14 @@
 ---
 pcx-content-type: concept
 type: overview
-title: Determining the request rate
+title: Determining the rate
 weight: 12
 layout: list
 ---
 
-# Determining the request rate
+# Determining the rate
 
-Cloudflare keeps separate request counters for rate limiting rules for each value combination of the rule characteristics.
+Cloudflare keeps separate rate counters for rate limiting rules for each value combination of the rule characteristics.
 
 Consider a rule configured with the following characteristics:
 
@@ -16,6 +16,8 @@ Consider a rule configured with the following characteristics:
 - HTTP header `x-api-key`
 
 In this case, two incoming requests with the **same** value for the HTTP header `X-API-Key` with **different** IP addresses are counted separately, since the value combination is different. Additionally, counters are not shared across data centers.
+
+The counting model of this rate limiting rule is based on the number of incoming requests. Enterprise customers on the Advanced plan can also configure rules whose counting model is based on the complexity of serving incoming requests. Refer to [Complexity-based rate limiting](#complexity-based-rate-limiting) for more information.
 
 {{<Aside type="warning" header="Important">}}
 
@@ -106,3 +108,26 @@ Request 2 matches the rule expression and therefore Cloudflare evaluates the rat
 Request 3 matches the rule expression and therefore Cloudflare evaluates the rate limiting rule. The request is still within the maximum number of requests defined in **Requests**. The origin responds with a `400` status code. There is a match for the counting expression, which sets the counter to `2`.
 
 Request 4 matches the rule expression and therefore Cloudflare evaluates the rate limiting rule. The request is no longer within the maximum number of requests defined in **Requests** (the counter has the value `2` and the maximum number of requests is `1`). Cloudflare applies the action defined in the rate limiting rule configuration, blocking request 4 and any later requests that match the rate limiting rule for ten minutes.
+
+## Complexity-based rate limiting
+
+{{<Aside type="note">}}
+Complexity-based rate limiting is available in beta to Enterprise customers on the Advanced plan, and can only be configured via API.
+{{</Aside>}}
+
+A complexity-based rate limiting rule performs rate limiting based on the complexity or cost of handling requests during a given period, instead of the number of requests in the same period.
+
+A common use case is to score each request with an estimate of the cost (or complexity) required to serve that request. The rate limiting rule can then enforce a maximum limit on the total complexity that each client can put on the application over a given period, regardless of the total number of requests sent by that client.
+
+When you configure a complexity-based rate limiting rule, the origin server must include an HTTP header in the response with its complexity score. 
+
+Complexity-based rate limiting rules must contain the following properties:
+
+* **Score** (API field: `score_per_period`): Maximum score per period. When this value is exceeded, the rule action will execute.
+* **Score response header name** (API field: `score_response_header_name`): Name of HTTP header in the response, set by the origin server, with the score for the current request. The score corresponds to the complexity (or cost) of serving the current request. The score value must be between 1 and 500.
+
+Cloudflare keeps counters with the total score of all requests with the same values for the rule characteristics that match the rule expression. The score increases by the value provided by the origin in the response when there is a match for the counting expression (by default, it is the same as the rule expression). When the total score is larger than the configured maximum score per period, the rule action is applied.
+
+If the origin server does not provide the HTTP response header with a score value, the corresponding rate limiting counter will not be updated.
+
+For an example of a complexity-based rate limiting rule, refer to [Create rate limiting rules via API](/waf/rate-limiting-rules/create-api/#example-d---complexity-based-rate-limiting-rule).

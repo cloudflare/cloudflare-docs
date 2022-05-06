@@ -4,13 +4,11 @@ title: Kill Switches
 weight: 6
 ---
 
-# Kill Switches
-
-## DAO example: Kill Switches
+# Kill switches
 
 When writing contracts, be especially careful to write secure code and include a
 kill switch to ensure that if any bugs do reside in the code, they can be
-squashed. If you don't include a kill switch and there are vulnerabilities in
+squashed. If you do not include a kill switch and there are vulnerabilities in
 the smart contract that can be exploited, this can lead to the theft of
 resources from the smart contract or from other individuals.
 
@@ -30,9 +28,9 @@ investors funds. However, not everyone agreed with the chain, with those who
 disagreed rejecting the irregular block and forming the Ethereum Classic
 network, each blockchain grew independently.
 
-## Be-all end-all solution?
+## Limitations
 
-Hardly. Kill switches can cause their own problems. Like if a contract that's a
+Kill switches can cause their own problems. Like if a contract that is a
 library has its kill switch flipped. All contracts relying on this contract
 can't operate as intended even though the underlying library code is immutable.
 Recently, an attacker triggered a kill switch in an underlying library function

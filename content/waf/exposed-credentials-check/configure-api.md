@@ -33,7 +33,7 @@ To check for exposed credentials in a custom rule, include the `exposed_credenti
 These properties have additional requirements:
 
 *   Each expression must evaluate to a string.
-*   You can only use the `upper()`, `lower()`, and `url_decode()` functions, and you cannot nest these functions.
+*   You can only use the [`upper()`](/ruleset-engine/rules-language/functions/#function-upper), [`lower()`](/ruleset-engine/rules-language/functions/#function-lower), [`url_decode()`](/ruleset-engine/rules-language/functions/#function-url_decode), and [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#function-lookup_json_string) functions, and you cannot nest these functions.
 
 {{</Aside>}}
 
@@ -109,7 +109,7 @@ After creating a custom ruleset, deploy it to a phase so that it executes. Refer
 
 ### Example B
 
-This example, similar to Example A, creates a new custom ruleset with a rule that checks for exposed credentials. The rule has a match if both the rule expression and the `exposed_credential_check` result are `true`. When there is a match, the rule will add an `Exposed-Credential-Check` HTTP header to the request with value `1`.
+This example creates a new custom ruleset with a rule that checks for exposed credentials in JSON responses. The rule has a match if both the rule expression and the `exposed_credential_check` result are `true`. When there is a match, the rule will add an `Exposed-Credential-Check` HTTP header to the request with value `1`.
 
 ```json
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
@@ -129,10 +129,10 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
           }
         }
       },      
-      "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\"",
+      "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\" && any(http.request.headers[\"content-type\"][*] == \"application/json\")",
       "exposed_credential_check": {
-        "username_expression": "url_decode(http.request.body.form[\"username\"][0])",
-        "password_expression": "url_decode(http.request.body.form[\"password\"][0])"
+        "username_expression": "lookup_json_string(http.request.body.raw, \"username\")",
+        "password_expression": "lookup_json_string(http.request.body.raw, \"password\")"
       }
     }
   ],
@@ -170,10 +170,10 @@ highlight: [12,13,14,15,16,17,18,19,20,22,23,24,25]
             }
           }
         },      
-        "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\"",
+        "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\" && any(http.request.headers[\"content-type\"][*] == \"application/json\")",
         "exposed_credential_check": {
-          "username_expression": "url_decode(http.request.body.form[\"username\"][0])",
-          "password_expression": "url_decode(http.request.body.form[\"password\"][0])"
+          "username_expression": "lookup_json_string(http.request.body.raw, \"username\")",
+          "password_expression": "lookup_json_string(http.request.body.raw, \"password\")"
         },
         "last_updated": "2022-03-19T12:48:04.057775Z",
         "ref": "<CUSTOM_RULE_REF>",

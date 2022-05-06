@@ -12,7 +12,7 @@ You can use Cloudflare's reverse proxy and [Cloudflare Tunnel](/cloudflare-one/g
 
 Instead of pointing DNS records to the external IP of a web service, you can connect that service to Cloudflare's network using Cloudflare Tunnel. Cloudflare Tunnel relies on a lightweight service, `cloudflared`, that you run in your infrastructure. `cloudflared` makes outbound-only connections to Cloudflare's network, so that you do not need to open holes in your firewall.
 
-You can use Cloudflare Tunnel to quickly share projects you are working on with team members without a virtual private network (VPN). In this example, you can use Cloudflare Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add a [Zero Trust policy](/cloudflare-one/policies/zero-trust/) to only allow certain people to reach the site.
+You can use Cloudflare Tunnel to quickly share projects you are working on with team members without a virtual private network (VPN). In this example, you can use Cloudflare Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add an [Access policy](/cloudflare-one/policies/access/) to only allow certain people to reach the site.
 
 **🗺️ This tutorial covers how to:**
 

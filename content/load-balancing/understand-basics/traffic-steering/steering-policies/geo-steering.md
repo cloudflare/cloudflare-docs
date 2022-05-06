@@ -26,10 +26,11 @@ When [creating or editing a load balancer](/load-balancing/how-to/create-load-ba
 
 1. Go to the **Traffic Steering** step.
 2. Click **Geo Steering**.
-3. Select a region and click **Add Region**.
-4. Select a pool and click **Add Pool**.
-5. If adding multiple pools, re-order them into your preferred failback order.
-6. (optional) Add more regions if needed.
+3. For **Region**, select a region and click **Add Region**.
+4. Click **Edit**.
+5. Select a pool and click **Add Pool**.
+6. If adding multiple pools, re-order them into your preferred failback order.
+7. (optional) Add more regions if needed.
 
 #### Via the API
 
@@ -61,13 +62,25 @@ If you only define `WNAM`, then traffic from the East Coast will be routed to th
 
 ### Country steering 
 
+#### Via the dashboard
+
+When [creating or editing a load balancer](/load-balancing/how-to/create-load-balancer/):
+
+1. Follow the [create a load balancer procedure](/load-balancing/how-to/create-load-balancer/#via-the-dashboard) until you reach the **Traffic Steering** step.
+2. Click **Geo Steering**.
+3. For **Country**, select a country and click **Add Region**.
+4. Click **Edit**.
+5. Select a pool and click **Add Pool**.
+6. If adding multiple pools, re-order them into your preferred failback order.
+7. (optional) Add more countries if needed.
+
+#### Via the API
+
 When creating a load balancer [via the API](https://api.cloudflare.com/#load-balancers-create-load-balancer), include the `country_pools` object to map countries to a list of pool IDs (ordered by their failover priority).
 
 To get a list of country codes, use the [Region API](/load-balancing/reference/region-mapping-api/).
 
 Any country not explicitly defined will fall back to using the corresponding `region_pool` mapping (if it exists), then to the associated default pools.
-
-{{<Aside type="note">}}Country steering is only accessible via the API.{{</Aside>}}
 
 ### PoP steering
 
