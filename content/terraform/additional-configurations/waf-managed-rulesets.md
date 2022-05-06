@@ -1,33 +1,29 @@
 ---
-title: Deploy WAF Managed Rulesets
+title: Configure WAF Managed Rulesets
 pcx-content-type: how-to
 weight: 2
 meta:
-  title: Deploy WAF Managed Rulesets with Terraform
+  title: Configure WAF Managed Rulesets with Terraform
 layout: list
 ---
 
-# Deploy WAF Managed Rulesets
+# Configure WAF Managed Rulesets
 
-This page provides examples of deploying WAF Managed Rulesets to your zone or account using Terraform. It covers the following configurations:
+This page provides examples of deploying and configuring WAF Managed Rulesets in your zone or account using Terraform. It covers the following configurations:
 
 * [Deploy WAF Managed Rulesets](#deploy-waf-managed-rulesets)
 * [Configure skip rules](#configure-skip-rules)
-* [Configure overrides](#configure-overrides)
 * [Configure payload logging](#configure-payload-logging)
+* [Configure overrides](#configure-overrides)
 * [Configure the OWASP paranoia level, score threshold, and action](#configure-the-owasp-paranoia-level-score-threshold-and-action)
 
-For more information on WAF Managed Rulesets, refer to [Managed Rulesets](/waf/managed-rulesets/) in the Cloudflare WAF documentation. For more information on deploying rulesets using the Rulesets API, refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
+For more information on WAF Managed Rulesets, refer to [Managed Rulesets](/waf/managed-rulesets/) in the Cloudflare WAF documentation. For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
 
 ## Before you start
 
-### Delete any existing rulesets
+### Delete any existing rulesets before using Terraform
 
-Make sure that you have no entry point rulesets (that is, any ruleset with `kind: root` or `kind: zone` at the account and zone level, respectively) already defined in your account/zone. 
-
-Terraform assumes that it has complete control over account and zone rulesets. Before you can start configuring your account and zone using Terraform, you must delete existing rulesets, and then recreate them using Terraform.
-
-To find existing entry point rulesets, use the API operations described in [List existing rulesets](https://developers.cloudflare.com/ruleset-engine/rulesets-api/view/#list-existing-rulesets), for the account and zone levels. To delete existing rulesets, use the API operations described in [Delete ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/delete/#delete-ruleset), for the account and zone levels.
+{{<render file="_delete-existing-rulesets.md">}}
 
 ### Obtain the necessary account, zone, and Managed Ruleset IDs
 
@@ -240,8 +236,9 @@ highlight: [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26]
     action_parameters {
       id = "4814384a9e5d4991b9815dcfc25d2f1f"
       overrides {
-        # Set Anomaly Score to PL2 by disabling rules with tags "paranoia-level-3" and "paranoia-level-4".
-        # The default is to have only PL1 rules enabled (rules with the "paranoia-level-1" tag).
+        # By default, only PL1 rules are enabled (rules with the "paranoia-level-1" tag).
+        # Set paranoia level to PL2 by enabling rules with tag "paranoia-level-2" and 
+        # disabling rules with tags "paranoia-level-3" and "paranoia-level-4".
         categories {
           category = "paranoia-level-2"
           enabled = true
