@@ -28,7 +28,7 @@ Require devices to have certain software installed or other configuration attrib
 <summary>Feature availability</summary>
 <div>
 
-Remote browser is available as an add-on purchase.
+Remote Browser Isolation is available as an add-on to Zero Trust Standard and Enterprise plans. See our [payment plans](https://www.cloudflare.com/teams-pricing/) for more information.
 
 </div>
 </details>
