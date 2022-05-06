@@ -35,7 +35,7 @@ When moving to Cloudflare Pages, remove the Workers application and any associat
 
 ## Migrating headers and redirects
 
-You can migrate your redirects to Pages, by creating a `_redirects` file in your publish directory. Cloudflare currently offers limited support for advanced redirects. More support will be added in the future. For a list of support types, refer to the [Redirects documentaion](/pages/platform/redirects/). 
+You can migrate your redirects to Pages, by creating a `_redirects` file in your output directory. Pages currently offers limited support for advanced redirects. More support will be added in the future. For a list of support types, refer to the [Redirects documentaion](/pages/platform/redirects/). 
 
 {{<Aside type="note">}}
 
@@ -45,9 +45,9 @@ Make sure that static redirects are before dynamic redirects in your `_redirects
 
 {{</Aside>}}
 
-In addition to an `_redirects` file, Cloudflare Pages currently offers [Bulk Redirects (beta)](/pages/how-to/use-bulk-redirects/), which handles redirects that surpasses the 2,100 redirect rules limit set by Pages.
+In addition to an `_redirects` file, Cloudflare also offers [Bulk Redirects (beta)](/pages/how-to/use-bulk-redirects/), which handles redirects that surpasses the 2,100 redirect rules limit set by Pages.
 
-Your custom headers can also be moved into a `_headers` file in your publish directory. It is important to note that custom headers defined in the `_headers` file are not currently applied to responses from Functions, even if the Function route matches the URL pattern. To learn more about handling headers, refer to [Headers](/pages/platform/headers/).
+Your custom headers can also be moved into a `_headers` file in your output directory. It is important to note that custom headers defined in the `_headers` file are not currently applied to responses from Functions, even if the Function route matches the URL pattern. To learn more about handling headers, refer to [Headers](/pages/platform/headers/).
 
 
 
