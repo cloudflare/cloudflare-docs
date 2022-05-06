@@ -8,7 +8,7 @@ weight: 5
 
 `wrangler` v2 introduces a first class module system for writing code, similar to thos provided by node.js, deno, and others. This document is a technical explainer for how it works and how it can be leveraged when creating and publishing Workers.
 
-Cloudflare Workers support the [ESM module syntax](https://developers.cloudflare.com/workers/learning/migrating-to-module-workers/). This means you can use the `import`/`export` syntax to add modules to your Worker.
+Cloudflare Workers support the [ESM module syntax](/workers/learning/migrating-to-module-workers/). This means you can use the `import`/`export` syntax to add modules to your Worker.
 
 For example:
 
