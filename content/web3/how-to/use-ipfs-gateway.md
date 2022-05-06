@@ -1,12 +1,12 @@
 ---
 pcx-content-type: how-to
-title: Use IPFS Gateway
+title: Use IPFS gateway
 weight: 2
 ---
 
-# Use the IPFS Gateway
+# Use the IPFS gateway
 
-Once you [create a new IPFS Gateway](/web3/how-to/manage-gateways/#create-a-gateway), you can get data from the IPFS network by using a URL.
+Once you have an IPFS gateway — meaning that you [create a new gateway](/web3/how-to/manage-gateways/#create-a-gateway) with a `target` of **IPFS** — you can get data from the IPFS network by using a URL.
 
 ## Reading from the network
 
