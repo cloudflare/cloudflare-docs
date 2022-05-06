@@ -6,16 +6,14 @@ weight: 2
 
 ## Wrangler commands
 
----
-
-These are the global flags that work on every single command
+These are the global flags that work on every single command.
 
 ```sh
 Flags:
-  -c, --config      Path to .toml configuration file  [string]
-  -h, --help        Show help  [boolean]
-  -v, --version     Show version number  [boolean]
-      --legacy-env  Use legacy environments  [boolean] (defaults to true)
+  `-c`, `--config`      Path to `.toml` configuration file  [string]
+  `-h`, `--help`        Show help  [boolean]
+  `-v`, `--version`     Show version number  [boolean]
+      `--legacy-env`  Use legacy environments  [boolean] (defaults to true)
 ```
 
 ---
@@ -38,7 +36,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
 
 - `--yes`
 
-  - Answer "yes" to any prompts for new projects
+  - Answer yes to any prompts for new projects
 
 {{</definitions>}}
 
@@ -288,8 +286,7 @@ The `kv` subcommand allows you to store application data in the Cloudflare netwo
 
 ### Getting started
 
-To use Workers KV with your Worker, the first thing you must do is create a KV namespace. This is done with
-the `kv:namespace` subcommand.
+To use Workers KV with your Worker, the first thing you must do is create a KV namespace. This is done with the `kv:namespace` subcommand.
 
 The `kv:namespace` subcommand takes as a new binding name as its argument. A Workers KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide:
 
@@ -323,9 +320,7 @@ $ wrangler kv:key put --namespace-id=e29b263ab50e42ce9b637fa8370175e8 "key" "val
 ✨  Success
 ```
 
-Additionally, KV namespaces can be used with environments. This is useful for when you have code that refers to
-a KV binding like `MY_KV`, and you want to be able to have these bindings point to different namespaces (like
-one for staging and one for production).
+Additionally, KV namespaces can be used with environments. This is useful for when you have code that refers to a KV binding like `MY_KV`, and you want to be able to have these bindings point to different namespaces (like one for staging and one for production).
 
 A `wrangler.toml` file with two environments:
 
@@ -341,7 +336,7 @@ kv_namespaces = [
 ]
 ```
 
-To insert a value into a specific KV namespace, you can use:
+To insert a value into a specific KV namespace, use:
 
 ```sh
 $ wrangler kv:key put --env=staging --binding=MY_MV "key" "value"
