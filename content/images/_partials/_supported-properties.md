@@ -7,75 +7,198 @@ _build:
 
 {{<definitions>}}
 
-***Options supported by Cloudflare Images, Image Resizing and Workers integration***
+- `Width`
+  - Specifies maximum width of the image in pixels. Exact behavior depends on the `fit` mode (described below). Example:
 
-- `width=x`
-  - Specifies maximum width of the image in pixels. Exact behavior depends on the `fit` mode (described below).
+```js
+---
+filename: URL format
+---
+width=x
+```
 
-- `height=x`
-  - Specifies maximum height of the image in pixels. Exact behavior depends on the `fit` mode (described below).
+```js
+---
+filename: Workers
+---
+cf: {images: {width: x}}
+```
 
-- `dpr=x`
-  - Device Pixel Ratio. Default is `1`. Multiplier for `width`/`height` that makes it easier to specify higher-DPI sizes in `<img srcset>`.
+- `Height`
+  - Specifies maximum height of the image in pixels. Exact behavior depends on the `fit` mode (described below). Example:
 
-- `fit`
-  - Affects interpretation of `width` and `height`. All resizing modes preserve aspect ratio. Available modes are:
-  
-  - `fit=scale-down`
-    - Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept.
+```js
+---
+filename: URL format
+---
+height=x
+```
 
-  - `fit=contain`
-    - Image will be resized (shrunk or enlarged) to be as large as possible within the given `width` or `height` while preserving the aspect ratio.
+```js
+---
+filename: Workers
+---
+cf: {images: {height: x}}
+```
 
-  - `fit=cover`
-    - Resizes (shrinks or enlarges) to fill the entire area of `width` and `height`. If the image has an aspect ratio different from the ratio of `width` and `height`, it will be cropped to fit.
+- `DPR`
+  - Device Pixel Ratio. Default is `1`. Multiplier for `width`/`height` that makes it easier to specify higher-DPI sizes in `<img srcset>`. Example:
 
-  - `fit=crop`
-    - Image will be shrunk and cropped to fit within the area specified by `width` and `height`. The image will not be enlarged. For images smaller than the given dimensions, it is the same as `scale-down`. For images larger than the given dimensions, it is the same as `cover`. See also `trim`.
+```js
+---
+filename: URL format
+---
+dpr=x
+```
 
-  - `fit=pad`
-    - Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). This mode is not recommended, since you can achieve the same effect more efficiently with the `contain` mode and the CSS `object-fit: contain` property.
+```js
+---
+filename: Workers
+---
+cf: {images: {dpr: x}}
+```
 
-- `gravity` or `g`
+- `Fit`
+  - Affects interpretation of `width` and `height`. All resizing modes preserve aspect ratio. Used as a string in Workers integration. Available modes are:
+    - `Scale down`
+      - Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept.
+      ```js
+      ---
+      filename: URL format
+      ---
+      fit=scale-down
+      ```
+      
+      ```js
+      ---
+      filename: Workers
+      ---
+      cf: {images: {fit: "scale-down"}}
+      ```
+      
+    - `Contain`
+      - Image will be resized (shrunk or enlarged) to be as large as possible within the given `width` or `height` while preserving the aspect ratio. If only a single dimension is given (for example, only `width`), the image will be shrunk or enlarged to exactly match that dimension.
+      ```js
+      ---
+      filename: URL format
+      ---
+      fit=contain
+      ```
+      
+      ```js
+      ---
+      filename: Workers
+      ---
+      cf: {images: {fit: "contain"}}
+      ```
+    
+    - `Cover`
+      - Resizes (shrinks or enlarges) to fill the entire area of `width` and `height`. If the image has an aspect ratio different from the ratio of `width` and `height`, it will be cropped to fit.
+      ```js
+      ---
+      filename: URL format
+      ---
+      fit=cover
+      ```
+      
+      ```js
+      ---
+      filename: Workers
+      ---
+      cf: {images: {fit: "cover"}}
+      ```
+
+    - `Crop`
+      - Image will be shrunk and cropped to fit within the area specified by `width` and `height`. The image will not be enlarged. For images smaller than the given dimensions, it is the same as `scale-down`. For images larger than the given dimensions, it is the same as `cover`. See also `trim`.
+      ```js
+      ---
+      filename: URL format
+      ---
+      fit=crop
+      ```
+      
+      ```js
+      ---
+      filename: Workers
+      ---
+      cf: {images: {fit: "crop"}}
+      ```
+
+    - `Pad`
+      - Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). This mode is not recommended, since you can achieve the same effect more efficiently with the `contain` mode and the CSS `object-fit: contain` property.
+      ```js
+      ---
+      filename: URL format
+      ---
+      fit=pad
+      ```
+      
+      ```js
+      ---
+      filename: Workers
+      ---
+      cf: {images: {fit: "pad"}}
+      ```
+
+- `Gravity``
   - When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the side or point that should not be cropped.
 
-  - `gravity=auto`
+
+
+
+
+
+<!-- 
+- `gravity=x` {{<type>}}CI/IR syntax{{</type>}} / `gravity:` {{<type>}}WI syntax{{</type>}}
+  - 
+
+  - `gravity=auto` {{<type>}}CI/IR syntax{{</type>}} / `gravity: "auto"` {{<type>}}WI syntax{{</type>}}
     - Selects focal point based on saliency detection (using maximum symmetric surround algorithm).
 
-  - `gravity=side` and `gravity=XxY` (Image Resizing and Cloudflare Images)
+  - `gravity=side` and `gravity=XxY` {{<type>}}CI/IR syntax{{</type>}}
     - A side (`"left"`, `"right"`, `"top"`, `"bottom"`) or coordinates specified on a scale from `0.0` (top or left) to `1.0` (bottom or right), `0.5` being the center. The X and Y coordinates are separated by lowercase `x`. For example, `0x1` means left and bottom, `0.5x0.5` is the center, `0.5x0.33` is a point in the top third of the image.
-  
-  - Workers integration
-    - A string `"left"`, `"right"`, `"top"`, `"bottom"`, or `"center"` (the default). `{fit: "cover", gravity: "top"}` will crop bottom or left and right sides as necessary, but will not crop anything from the top.
+
+  - `gravity: "string"` {{<type>}}WI syntax{{</type>}}
+    - String can be `"left"`, `"right"`, `"top"`, `"bottom"`, or `"center"` (the default). For example, `{fit: "cover", gravity: "top"}` will crop bottom or left and right sides as necessary, but will not crop anything from the top.
+
+  - `gravity: {x, y}`{{<type>}}WI syntax{{</type>}}
     - An object `{x, y}` containing focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image.
 
-- `anim=false`
-  - Reduces animations to still images. This setting is recommended to avoid large animated GIF files, or flashing images.
+- `anim=false` {{<type>}}CI/IR syntax{{</type>}} / `anim:` {{<type>}}WI syntax{{</type>}}
+  - Whether to preserve animation frames from input files. Default is `true`. Setting it to `false` reduces animations to still images. This setting is recommended when enlarging images or processing arbitrary user content, because large GIF animations can weigh tens or even hundreds of megabytes. It is also useful to set `anim:false` when using `format:"json"` to get the response quicker without the number of frames.
 
-- `sharpen=x`
-  - Specifies strength of sharpening filter. The value is a floating-point number between `0` (no sharpening) and `10` (maximum). `1` is a recommended value.
+- `sharpen=x` {{<type>}}CI/IR syntax{{</type>}} / `sharpen:` {{<type>}}WI syntax{{</type>}}
+  - Specifies strength of sharpening filter to apply to the image. The value is a floating-point number between `0` (no sharpening, default) and `10` (maximum). `1` is a recommended value for downscaled images.
 
-- `blur=x`
+- `blur=x` {{<type>}}CI/IR syntax{{</type>}} / `blur:` {{<type>}}WI syntax{{</type>}}
   - Blur radius between `1` (slight blur) and `250` (maximum). Be aware that you cannot use this option to reliably obscure image content, because savvy users can modify an image's URL and remove the blur option. Use Workers to control which options can be set.
 
-- `metadata`
+- `metadata=x` {{<type>}}CI/IR syntax{{</type>}} / `metadata:` {{<type>}}WI syntax{{</type>}}
   - Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Note that if the Polish feature is enabled, all metadata may have been removed already and this option may have no effect.
 
-  - `metadata=keep`
-    - Preserve most of the image metadata (including GPS location) when possible.
+  - `metadata=keep` {{<type>}}CI/IR syntax{{</type>}} / `metadata: "keep"` {{<type>}}WI syntax{{</type>}}
+    - Preserves most of EXIF metadata, including GPS location if present.
 
-  - `metadata=copyright`
-    - Discard all metadata except EXIF copyright tag. This is the default for JPEG images.
+  - `metadata=copyright` {{<type>}}CI/IR syntax{{</type>}} / `metadata: "copyright"` {{<type>}}WI syntax{{</type>}}
+    - Discard all metadata except EXIF copyright tag. This is the default behavior for JPEG images.
 
-  - `metadata=none`
-    - Discard all invisible metadata.
+  - `metadata=none` {{<type>}}CI/IR syntax{{</type>}} / `metadata: "none"` {{<type>}}WI syntax{{</type>}}
+    - Discard all invisible EXIF metadata. Currently, WebP and PNG output formats always discard metadata.
 
-<br/>
+- `trim=top;right;bottom;left` {{<type>}}CI/IR syntax{{</type>}} / `trim: {"top": pixels, "right": pixels, "bottom": pixels, "left": pixels}` {{<type>}}WI syntax{{</type>}}
+    - Four numbers in pixels separated by a semicolon for Cloudflare Images /Image Resizing, in the form of `top;right;bottom;left`. Example: `trim=20;30;20;0`.
+    
+      For Worker integration, an object with four properties `{top, right, bottom, left}`. Example:
 
-***Options supported by Cloudflare Images***
-
-- `trim`
-    - Four numbers in pixels separated by a semicolon; in the form of `top;right;bottom;left`; ex: `20;30;20;0`
+      ```json
+      trim:
+        "top": 12,
+        "bottom": 34,
+        "left": 56,
+        "right": 78
+      ```
+    
+    Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account.
 
 - `rotate`
   - Number of degrees (`90`, `180`, or `270`) to rotate the image by. `width` and `height` options refer to axes after rotation.
@@ -125,4 +248,4 @@ _build:
 
     To automatically serve WebP or AVIF formats to browsers that support them, check if the `Accept` header contains `image/webp` or `image/avif`, and set the format option accordingly.
 
-{{</definitions>}}
+{{</definitions>}} -->
