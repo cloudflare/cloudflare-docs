@@ -46,7 +46,7 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
   description = ""
   kind        = "zone"
   phase       = "http_request_firewall_managed"
- 
+
   # Execute Cloudflare Managed Ruleset
   rules {
     action = "execute"
@@ -96,7 +96,7 @@ highlight: [1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20,21,22,23,24]
     description = "Skip Cloudflare Manage ruleset"
     enabled = true
   }
- 
+
   # Skip execution of two rules in the Cloudflare Managed Ruleset for specific URLs
   rules {
     action = "skip"
@@ -136,7 +136,7 @@ The following example adds three [overrides](/ruleset-engine/managed-rulesets/ov
 
 * A rule override for rule with ID `5de7edfa648c4d6891dc3e7f84534ffa` setting the action to `log`.
 * A rule override for rule with ID `75a0060762034a6cb663fd51a02344cb` disabling the rule.
-* A tag override for the `wordpress` tag, setting the action of all the rules with this tag to `js_challenge`. 
+* A tag override for the `wordpress` tag, setting the action of all the rules with this tag to `js_challenge`.
 
 {{<Aside type="warning" header="Important">}}
 Ruleset overrides and tag overrides apply to both existing and **future** rules in the Managed Ruleset. If you wish to override existing rules only, you must use rule overrides.
@@ -209,13 +209,11 @@ highlight: [7,8,9]
 
 The OWASP Managed Ruleset supports the following configurations:
 
-* Enable all the rules up to a specific paranoia level by creating tag overrides that:
-    * Enable all the rules associated with paranoia levels up to (and including) the one you wish to enable.
-    * Disable all the rules associated with higher paranoia levels.
+* Enable all the rules up to a specific paranoia level by creating tag overrides that disable all the rules associated with higher paranoia levels.
 
 * Set the action to perform when the calculated threat score is greater than the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID `6179ae15870a4bb7b2d480d4843b323c`), and including the `action` property.
 
-* Set the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID `6179ae15870a4bb7b2d480d4843b323c`), and including the `score_threshold` property. 
+* Set the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID `6179ae15870a4bb7b2d480d4843b323c`), and including the `score_threshold` property.
 
 For more information on the available configuration values, refer to the [Cloudflare OWASP Core Ruleset](/waf/managed-rulesets/owasp-core-ruleset/) page in the WAF documentation.
 
@@ -228,7 +226,7 @@ The following example rule of a `cloudflare_ruleset` Terraform resource performs
 
 ```tf
 ---
-highlight: [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26]
+highlight: [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
 ---
   # Execute Cloudflare OWASP Core Ruleset
   rules {
@@ -236,13 +234,9 @@ highlight: [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26]
     action_parameters {
       id = "4814384a9e5d4991b9815dcfc25d2f1f"
       overrides {
-        # By default, only PL1 rules are enabled (rules with the "paranoia-level-1" tag).
-        # Set paranoia level to PL2 by enabling rules with tag "paranoia-level-2" and 
-        # disabling rules with tags "paranoia-level-3" and "paranoia-level-4".
-        categories {
-          category = "paranoia-level-2"
-          enabled = true
-        }
+        # By default, all PL1 to PL4 rules are enabled.
+        # Set the paranoia level to PL2 by disabling rules with
+        # tags "paranoia-level-3" and "paranoia-level-4".
         categories {
           category = "paranoia-level-3"
           enabled = false
