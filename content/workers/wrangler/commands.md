@@ -113,8 +113,6 @@ Options:
       --site-exclude                               Array of .gitignore-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.  [array]
       --triggers, --schedule, --schedules          cron schedules to attach  [array]
       --routes, --route                            Routes to upload  [array]
-      --jsx-factory                                The function that is called for each JSX element  [string]
-      --jsx-fragment                               The function that is called for each JSX fragment  [string]
 ```
 
 ---
