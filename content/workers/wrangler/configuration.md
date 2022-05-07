@@ -45,7 +45,6 @@ legacy_env = true
   # Setting this to `http` is not currently implemented.
   # See https://github.com/cloudflare/wrangler2/issues/583
   # @default `https`
-  # @todo this needs to be implemented https://github.com/cloudflare/wrangler2/issues/583
   upstream_protocol = "https" | "http";
   # Host to forward requests to, defaults to the host of the first route of project
   host = # see route in Environments
