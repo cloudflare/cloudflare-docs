@@ -11,10 +11,108 @@ weight: 3
 The configuration for a Worker is can become complex since we can define different "environments", and each environment can have its own configuration.
 There is a default ("top-level") environment and then named environments that provide environment specific configuration.
 
-Additionally there are three kinds of environment configuration:
+Additionally there are three kinds of environment configurations non-overridable, inheritable, and non-inheritable.
+
+Top-level:
 @non-overridable
 : These values are defined once in the top-level configuration, apply to all environments and cannot be overridden by an environment.
 
+</br>
+
+```toml
+---
+filename: wrangler.toml
+---
+
+# A boolean to enable "legacy" style wrangler environments (from wrangler 1).
+# These have been superseded by Services, but there may be projects that won't
+# (or can't) use them. If you're using a legacy environment, you can set this
+# to `true` to enable it.
+legacy_env = true
+
+# Options to configure the development server that your worker will use.
+[dev]
+  # IP address for the local dev server to listen on,
+  # @default `localhost`
+  ip = ""
+  # Port for the local dev server to listen on
+  # @default `8787`
+  port = 4321
+  # Protocol that local wrangler dev server listens to requests on.
+  # @default `http`
+  local_protocol = "http" | "https"
+  # Protocol that wrangler dev forwards requests on
+  # Setting this to `http` is not currently implemented.
+  # See https://github.com/cloudflare/wrangler2/issues/583
+  # @default `https`
+  # @todo this needs to be implemented https://github.com/cloudflare/wrangler2/issues/583
+  upstream_protocol = "https" | "http";
+  # Host to forward requests to, defaults to the host of the first route of project
+  host = # see route in Environments
+
+# A list of migrations that should be uploaded with your Worker.
+# These define changes in your Durable Object declarations.
+# More details at https://developers.cloudflare.com/workers/learning/using-durable-objects#configuring-durable-object-classes-with-migrations
+# @default `[]`
+[[migrations]]
+  # A unique identifier for this migration.
+  tag = ""
+  # The new Durable Objects being defined.
+  new_classes = [""]
+  # The Durable Objects being renamed.
+  renamed_classes = [{from = "DurableObjectExample", to = "UpdatedName" }]
+  # The Durable Objects being removed.
+  deleted_classes = ["DeprecatedClass"]
+
+# The definition of a Worker Site, a feature that lets you upload
+# static assets with your Worker.
+# Learn more here about sites https://developers.cloudflare.com/workers/platform/sites
+[site]
+  # The directory containing your static assets.
+  # It must be a path relative to your wrangler.toml file.
+  # If there is a `site` field then it must contain this `bucket` field.
+  bucket = "./public"
+  # An exclusive list of .gitignore-style patterns that match file
+  # or directory names from your bucket location.
+  # Only matched items will be uploaded.
+  include = ["upload_dir"]
+  # Match files or directories in your bucket
+  # that should be excluded from uploads.
+  exclude = ["ignore_dir"]
+
+
+#  The `env` section defines overrides for the configuration for different environments.
+#  All environment fields can be specified at the top level of the config indicating the default environment settings.
+#  - Some fields are inherited and overridable in each environment.
+#  - But some are not inherited and must be explicitly specified in every environment, if they are specified at the top level.
+#  For more information, see the documentation at https://developers.cloudflare.com/workers/cli-wrangler/configuration#environments
+#  @default `{}`
+[env]
+  # See Environments
+
+
+# A list of text files that your worker should be bound to. This is
+# the "legacy" way of binding to a text file. ES module workers should
+# do proper module imports.
+[text_blobs]
+  TEXT = ""
+
+# A list of data files that your worker should be bound to. This is
+# the "legacy" way of binding to a data file. ES module workers should
+# do proper module imports.
+[data_blobs]
+  DATA = ""
+
+# A list of wasm modules that your worker should be bound to. This is
+# the "legacy" way of binding to a wasm module. ES module workers should
+# do proper module imports.
+[wasm_modules]
+  MODULE = "module.wasm"
+```
+
+</br>
+
+Environments:
 @inheritable
 : These values can be defined at the top-level but can also be overridden by environment specific values.
 Named environments do not need to provide their own values, in which case they inherit the value from the top-level.
@@ -22,8 +120,6 @@ Named environments do not need to provide their own values, in which case they i
 @non-inheritable
 : These values must be explicitly defined in each environment if they are defined at the top-level.
 Named environments do not inherit such configuration and must provide their own values.
-
-</br>
 
 ```toml
 ---
@@ -92,7 +188,7 @@ node_compat = false
 # For existing Workers, if the Usage Model is omitted, it will be
 # set to the Usage Model configured in the dashboard for that Worker.
 # @inheritable
-usage_model = "bundled" | "unbound" | undefined;
+usage_model = "bundled" | "unbound"
 
 # An ordered list of rules that define which modules to import,
 # and what type to import them as. You will need to specify rules
@@ -147,11 +243,11 @@ kv_namespaces = [{
 # @nonInheritable
 [durable_objects]
   bindings = [{
-    # The name of the binding used to refer to the Durable Object */
+    # The name of the binding used to refer to the Durable Object
     name = "TEST_OBJECT",
-    # The exported class name of the Durable Object */
+    # The exported class name of the Durable Object
     class_name = "",
-    # The script where the Durable Object is defined (if it's external to this worker) */
+    # The script where the Durable Object is defined (if it's external to this worker)
     script_name = ""
   }]
 
@@ -187,18 +283,4 @@ KEY = "value"
     type = "",
     "some-key": {} # any data
   }]
-
-# The definition of a Worker Site, a feature that lets you upload
-# static assets with your Worker.
-# Learn more here about sites https://developers.cloudflare.com/workers/platform/sites
-[site]
-bucket = "./public"
-include = ["upload_dir"]
-exclude = ["ignore_dir"]
-
-# A list of wasm modules that your worker should be bound to. This is
-# the "legacy" way of binding to a wasm module. ES module workers should
-# do proper module imports.
-[wasm_modules]
-MODULE = "module.wasm"
 ```
