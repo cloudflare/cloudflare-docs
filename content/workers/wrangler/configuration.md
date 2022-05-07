@@ -120,6 +120,8 @@ Named environments do not need to provide their own values, in which case they i
 : These values must be explicitly defined in each environment if they are defined at the top-level.
 Named environments do not inherit such configuration and must provide their own values.
 
+</br>
+
 ```toml
 ---
 filename: wrangler.toml
