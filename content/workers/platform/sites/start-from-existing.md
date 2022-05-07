@@ -7,7 +7,7 @@ weight: 1
 # Deploy an existing static site
 
 {{<Aside type="note" header="Cloudflare Pages">}}
-Consider using [Cloudflare Pages](/workers/pages/) for hosting static applications instead of Workers Sites.
+Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
 {{</Aside>}}
 
 Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler2) — make sure to use the [latest version](/workers/wrangler/getting-started/#update).

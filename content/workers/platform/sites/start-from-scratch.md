@@ -7,7 +7,7 @@ weight: 2
 # Start a Workers Sites project from scratch
 
 {{<Aside type="note" header="Cloudflare Pages">}}
-Consider using [Cloudflare Pages](/workers/pages/) for hosting static applications instead of Workers Sites.
+Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
 {{</Aside>}}
 
 This guide shows how to quickly start a new Workers Sites project from scratch.
