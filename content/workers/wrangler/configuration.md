@@ -11,9 +11,10 @@ weight: 3
 The configuration for a Worker is can become complex since we can define different "environments", and each environment can have its own configuration.
 There is a default ("top-level") environment and then named environments that provide environment specific configuration.
 
-Additionally there are three kinds of environment configurations non-overridable, inheritable, and non-inheritable.
+Additionally, there are three kinds of environment configurations non-overridable, inheritable, and non-inheritable.
 
-Top-level:
+### Top-Level
+
 @non-overridable
 : These values are defined once in the top-level configuration, apply to all environments and cannot be overridden by an environment.
 
@@ -47,7 +48,6 @@ legacy_env = true
 # A list of migrations that should be uploaded with your Worker.
 # These define changes in your Durable Object declarations.
 # More details at https://developers.cloudflare.com/workers/learning/using-durable-objects#configuring-durable-object-classes-with-migrations
-# @default `[]`
 [[migrations]]
   # A unique identifier for this migration.
   tag = ""
@@ -79,8 +79,6 @@ legacy_env = true
 #  All environment fields can be specified at the top level of the config indicating the default environment settings.
 #  - Some fields are inherited and overridable in each environment.
 #  - But some are not inherited and must be explicitly specified in every environment, if they are specified at the top level.
-#  For more information, see the documentation at https://developers.cloudflare.com/workers/cli-wrangler/configuration#environments
-#  @default `{}`
 [env]
   # See Environments
 
@@ -106,7 +104,8 @@ legacy_env = true
 
 </br>
 
-Environments:
+### Environments
+
 @inheritable
 : These values can be defined at the top-level but can also be overridden by environment specific values.
 Named environments do not need to provide their own values, in which case they inherit the value from the top-level.
