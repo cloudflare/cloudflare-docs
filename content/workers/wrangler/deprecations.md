@@ -84,31 +84,45 @@ A few configuration fields are deprecated and will not work as expected anymore.
 
 ## Deprecated commands
 
-The following commands are deprecated in `wrangler` v2.
+The following commands are deprecated in Wrangler as of v2.0.0.
 
-### build:
+### `build`:
 
-`wrangler` will implicitly build the script when necessary.
+The `wrangler build` command is no longer available for building the Worker.
 
-### config:
+The equivalent functionality can be achieved by `wrangler publish --dry-run --outdir=path/to/build`.
 
-use `wrangler login` / `wrangler logout`
+### `config`:
 
-### preview:
+The `wrangler config` command is no longer available for authenticating via an API token.
 
-use `wrangler dev`
+Use `wrangler login` / `wrangler logout` to manage OAuth authentication, or provide an API token via the `CLOUDFLARE_API_TOKEN` environment variable.
+
+### `preview`:
+
+The `wrangler preview` command is no longer available for creating a temporary preview instance of the Worker.
+
+Try using `wrangler dev` to try out a worker during development.
 
 ### subdomain:
 
-you can create workers.dev subdomain on your Workers dashboard
+The `wrangler subdomain` command is no longer available for creating a `workers.dev` subdomain.
+
+Create the `workers.dev` subdomain on your Workers dashboard.
 
 ### generate:
 
-(TODO: a guide on using degit)
+The `wrangler generate` command is no longer available to initialize a Worker from a template repository.
+
+Initialize a basic Worker project via `wrangler init`, which provides a good starting point for most projects.
+
+Alternatively, try cloning the template repository and initializing it manually.
 
 ### route:
 
-configure routes in `wrangler.toml`
+The `wrangler route` command is no longer available to configure a route for a Worker.
+
+Routes are specified in the `wrangler.toml` configuration file.
 
 ## Other deprecated behaviour
 
