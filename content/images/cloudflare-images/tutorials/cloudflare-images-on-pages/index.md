@@ -7,9 +7,9 @@ title: Leverage Cloudflare Images on your Cloudflare Pages website
 
 ## Introduction
 
-In this tutorial, we will update a [Cloudflare Pages](https://developers.cloudflare.com/pages/) website to leverage the powerful features of [Cloudflare Images](https://developers.cloudflare.com/images/cloudflare-images/). Cloudflare Images is a great companion to your front-end applications on Cloudflare Pages as an easy-to-use image storage, transformation and optimized delivery service.
+In this tutorial, we will update a [Cloudflare Pages](https://developers.cloudflare.com/pages/) website in several iterative steps, to leverage the powerful features of [Cloudflare Images](https://developers.cloudflare.com/images/cloudflare-images/). Cloudflare Images is a great companion to your front-end applications on Cloudflare Pages as an easy-to-use image storage, transformation and optimized delivery service.
 
-In this tutorial we will see:
+We will see:
 
 * how to migrate the images of the website to Cloudflare images
 
@@ -23,7 +23,7 @@ Other features we will learn about:
 
 * [Custom IDs](https://developers.cloudflare.com/images/cloudflare-images/upload-images/custom-id/): How to store and serve your images under their own, SEO friendly Unicode name and path
 
-* [Flexible Image transformation and metadata filtering](https://developers.cloudflare.com/images/cloudflare-images/resize-images/#flexible-variants): How to use transformation parameters the delivery URL to transform an image on the fly
+* [Flexible Image transformation](https://developers.cloudflare.com/images/cloudflare-images/resize-images/#flexible-variants): How to use transformation parameters the delivery URL to transform an image on the fly
 
 * Adaptive Optimized Format Delivery: How Cloudflare Images delivers Image Formats optimized to every browser, including WebP and AVIF
 
@@ -225,9 +225,19 @@ Clicking on an image shows that its URL is as expected <https://imagedelivery.ne
 
 Note as well that the displayed size now matches the real size of the image much more closely, if not perfectly. No more wasted downloaded pixels!
 
+### Adaptive Optimized Format Delivery
+
 Inspecting the details of this image in our browser reveals that Cloudflare Images recompressed our image as AVIF saving close than 50% weight compared to a JPG of the same resolution, while maintaining quality.
 
 ![](assets/step-02-avif.jpg)
+
+This is because our browser (Google Chrome in the previous screenshot) supports AVIF, and advertises it in the `Accept: image/avif` header it sends to Cloudflare Images while requesting the image.
+
+Another browser not advertising AVIF support (like Firefox) won't get AVIF, but WebP instead.
+
+![](assets/step-02-webp-firefox.jpg)
+
+This is another great built-in feature of Cloudflare Images, Adaptive Optimized Format Delivery.
 
 ## Step 3: Use Cloudflare Images on custom delivery domain
 
@@ -239,7 +249,7 @@ For instance our original image `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg
 
 This URL is similar to those of step 2, with these key differences:
 
-* the domain name is the one of our website instead of Cloudflare Images default domain `https://imagedelivery.net`
+* the domain name is the one of our website `https://imagejam.net` instead of Cloudflare Images default domain `https://imagedelivery.net`
 
 * we have an extra `/cdn-cgi/imagedelivery/` at the beginning of path, allowing Cloudflare to automatically identify this URL as a Cloudflare Image, and serve it accordingly.
 
@@ -257,6 +267,61 @@ Here's the relevant extract of this file (edited for brevity):
     }
 },
 ```
+
+Once deployed, our website now features a Step 3 at <https://imagejam.net/step-3/>.
+
+Browsing the cake gallery page for step 3, <https://imagejam.net/step-3/cakes/> and clicking on an image shows that its URL is as expected <https://imagejam.net/cdn-cgi/imagedelivery/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public>.
+
+![](assets/step-03-cake.jpg)
+
+## Step 4: Use Cloudflare Images without changing existing images URLs
+
+So far we integrated Cloudflare Images in our website by **changing** the images URLs to target the Cloudflare Images services.
+
+While this is a great, zero-setup way to optimize your image delivery, you might prefer to have your URLs and website code **unchanged**, and still benefit from all the Cloudflare Images features.
+
+This is possible by having a Cloudflare Worker intercepting the traffic of your unchanged image URLs, transparently relaying it to Cloudflare Images.
+
+The code of our demo Cloudflare Pages website is shipped with such a Worker, [`/images-worker/index.js`](https://github.com/netgusto/imagejam.net/blob/production/images-worker/index.js):
+
+Here's the relevant extract of this file (edited for brevity):
+
+```js
+async function handleRequest(request) {
+  const url = new URL(request.url);
+
+  const { variant, imageName } = extractVariant(url);
+  if (!variant || !imageName) {
+    return notFound();
+  }
+
+  // Use Cloudflare Images to deliver image ✨
+  // by cosntructing the CF Images URL with parts extracted from
+  // the original website image URLs that this worker intercepts
+  return fetch("https://imagedelivery.net/" + config.cloudflare_images_account_hash + "/" + imageName + "/" + variant, {
+    // relay request headers to Cloudflare Images,
+    // to inform about the media types accepted by the HTTP client
+    headers: request.headers,
+  });
+}
+
+function extractVariant(url) {
+  // takes website URLs like /images/public/cakes/gateau.jpg
+  // and identifies the variant (here, "public")
+  // and imageName ( here, "cakes/gateau.jpg")
+  const parts = url.pathname.replace("/images/", "").split("/");
+  const variant = parts.shift();
+  return { variant: variant, imageName: parts.join("/") };
+}
+```
+
+In a nutshell, this code receives HTTP requests for images on they original URLS, and relays them transparently to Cloudflare Images before responding to the HTTP client, effectively proxying traffic between your website and Cloudflare Images.
+
+Once the worker is deployed, our website now uses Cloudflare Images on its original, unchanged URLs. You can see it in effect at <https://imagejam.net/step-4/>.
+
+TODO:
+    * How to publish the worker
+    * set up route in Dashboard
 
 ## Aside: Obtain Cloudflare Images API credentials
 
