@@ -596,7 +596,7 @@ Add a simple utility function, `compact`, which takes an array, and filters out 
 ```js
 ---
 filename: src/utils/slack.js
-highlight: [1, 24]
+highlight: [1, 20]
 ---
 const compact = array => array.filter(el => el);
 
@@ -682,7 +682,7 @@ To do this, wrap the majority of the `webhook` function handler in a try/catch b
 ```js
 ---
 filename: src/handlers/webhook.js
-highlight: [4, 22, 23, 24, 25]
+highlight: [4, 18, 19, 20, 21]
 ---
 import { constructGhIssueSlackMessage } from '../utils/slack';
 
