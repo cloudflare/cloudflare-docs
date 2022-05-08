@@ -25,11 +25,6 @@ Additionally, there are three kinds of environment configurations non-overridabl
 filename: wrangler.toml
 ---
 
-# A boolean to enable "legacy" style wrangler environments (from wrangler 1).
-# These have been superseded by Services, but there may be projects that won't
-# (or can't) use them. If you're using a legacy environment, you can set this
-# to `true` to enable it.
-legacy_env = true
 
 # Options to configure the development server that your worker will use.
 [dev]
@@ -104,17 +99,6 @@ legacy_env = true
 
 </br>
 
-### Environments
-
-@inheritable
-: These values can be defined at the top-level but can also be overridden by environment specific values.
-Named environments do not need to provide their own values, in which case they inherit the value from the top-level.
-
-@non-inheritable
-: These values must be explicitly defined in each environment if they are defined at the top-level.
-Named environments do not inherit such configuration and must provide their own values.
-
-</br>
 
 ```toml
 ---
@@ -265,17 +249,4 @@ r2_buckets  = [{
 [vars]
 KEY = "value"
 
-# "Unsafe" tables for features that aren't directly supported by wrangler.
-# @default `{ bindings: [] }`
-# @nonInheritable
-[unsafe]
-  # A set of bindings that should be put into a Worker's upload metadata without changes. These
-  # can be used to implement bindings for features that haven't released and aren't supported
-  # directly by wrangler or miniflare.
-  # @default []
-  bindings = [{
-    name = "",
-    type = "",
-    "some-key": {} # any data
-  }]
 ```

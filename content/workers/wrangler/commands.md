@@ -13,7 +13,6 @@ Flags:
   `-c`, `--config`      Path to `.toml` configuration file  [string]
   `-h`, `--help`        Show help  [boolean]
   `-v`, `--version`     Show version number  [boolean]
-      `--legacy-env`  Use legacy environments  [boolean] (defaults to true)
 ```
 
 ---
@@ -23,7 +22,7 @@ Flags:
 Create a skeleton Wrangler project, including the `wrangler.toml` file, into a specified directory.
 
 ```sh
-$ wrangler init [$NAME] [--yes]
+$ wrangler init [$NAME] [-y / --yes]
 ```
 
 Default values indicated by {{<type>}}=value{{</type>}}.
@@ -83,15 +82,9 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and wish to delete you
 Publish your Worker to Cloudflare. Several keys in your `wrangler.toml` file determine whether you are publishing to a `*.workers.dev` subdomain or a custom domain. However, custom domains must be proxied (orange-clouded) through Cloudflare. Refer to the [Get started guide](/workers/get-started/guide/#optional-configure-for-deploying-to-a-registered-domain) for more information.
 
 ```sh
-$ wrangler publish [--env $ENVIRONMENT_NAME]
+$ wrangler publish 
 ```
 
-{{<definitions>}}
-
-- `--env` {{<prop-meta>}}optional{{</prop-meta>}}
-  - If defined, Wrangler will load the matching environment's configuration before building and deploying. Refer to [Environments](/workers/platform/environments/) for more information.
-
-{{</definitions>}}
 
 {{<Aside>}}
 
@@ -101,7 +94,7 @@ mention compat date being required
 
 ```sh
 Options:
-  -e, --env                                        Perform on a specific environment  [string]
+      --env                                        Perform on a specific environment  [string]
       --name                                       Name of the worker  [string]
       --format                                     Choose an entry type  [choices: "modules", "service-worker"]
       --compatibility-date                         Date to use for compatibility checks  [string]

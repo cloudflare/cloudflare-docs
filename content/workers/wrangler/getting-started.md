@@ -11,17 +11,17 @@ weight: 1
 ## Quick Start
 
 ```sh
-# Make a javascript file
-$ echo "export default { fetch() { return new Response('hello world') } }" > index.js
+# Generate a new project
+npx wrangler init my-worker
 # try it out
-$ npx wrangler dev index.js
+cd my-worker && npx wrangler dev
 # and then publish it
-$ npx wrangler publish index.js --name my-worker
+npx wrangler publish
 # visit https://my-worker.<your workers subdomain>.workers.dev
 ```
 
 ## Installation:
 
 ```bash
-$ npm install -g wrangler
+$ npm install wrangler --save-dev
 ```
