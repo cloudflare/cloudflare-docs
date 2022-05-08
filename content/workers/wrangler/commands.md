@@ -41,75 +41,6 @@ Default values indicated by {{<type>}}=value{{</type>}}.
 
 ---
 
-## login
-
-Authorize Wrangler with your Cloudflare account using OAuth. This will open a login page in your browser and request your account access permissions.
-
-```sh
-$ wrangler login [--scopes-list] [--scopes $SCOPES]
-```
-
-All of the arguments and flags to this command are optional:
-
-{{<definitions>}}
-
-- `--scopes-list` {{<prop-meta>}}optional{{</prop-meta>}}
-  - List all the available OAuth scopes with descriptions.
-- `--scopes $SCOPES` {{<prop-meta>}}optional{{</prop-meta>}}
-  - Allows to choose your set of OAuth scopes. The set of scopes must be entered in a whitespace-separated list,
-    for example, `$ wrangler login --scopes account:read user:read`.
-
-{{</definitions>}}
-
-`wrangler login` uses all the available scopes by default if no flags are provided.
-
----
-
-## logout
-
-Remove Wrangler's authorization for accessing your account. This command will invalidate your current OAuth token.
-
-```sh
-$ wrangler logout
-```
-
-If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and wish to delete your API token, log into the Cloudflare dashboard and go to **Overview** > **Get your API token** in the right side menu > select the three-dot menu on your Wrangler token and select **Delete** if you wish to delete your API token.
-
----
-
-## publish
-
-Publish your Worker to Cloudflare. Several keys in your `wrangler.toml` file determine whether you are publishing to a `*.workers.dev` subdomain or a custom domain. However, custom domains must be proxied (orange-clouded) through Cloudflare. Refer to the [Get started guide](/workers/get-started/guide/#optional-configure-for-deploying-to-a-registered-domain) for more information.
-
-```sh
-$ wrangler publish 
-```
-
-
-{{<Aside>}}
-
-mention compat date being required
-
-{{</Aside>}}
-
-```sh
-Options:
-      --env                                        Perform on a specific environment  [string]
-      --name                                       Name of the worker  [string]
-      --format                                     Choose an entry type  [choices: "modules", "service-worker"]
-      --compatibility-date                         Date to use for compatibility checks  [string]
-      --compatibility-flags, --compatibility-flag  Flags to use for compatibility checks  [array]
-      --latest                                     Use the latest version of the worker runtime  [boolean] [default: false]
-      --experimental-public                        Static assets to be served  [string]
-      --site                                       Root folder of static assets for Workers Sites  [string]
-      --site-include                               Array of .gitignore-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.  [array]
-      --site-exclude                               Array of .gitignore-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.  [array]
-      --triggers, --schedule, --schedules          cron schedules to attach  [array]
-      --routes, --route                            Routes to upload  [array]
-```
-
----
-
 ## dev
 
 `wrangler dev` is a command that establishes a connection between `localhost` and an edge server that operates your Worker in development. A tunnel forwards all requests to the edge server, which continuously updates as your Worker code changes. This allows full access to Workers KV, Durable Objects, etc. This is a great way to easily test your Worker while developing.
@@ -164,98 +95,29 @@ With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and 
 
 ---
 
-## tail
+## publish
 
-Start a session to livestream logs from a deployed Worker.
-
-```sh
-$ wrangler tail NAME
-```
-
-{{<definitions>}}
-
-- `--format $FORMAT` {{<type>}}json|pretty{{</type>}}
-  - The format of the log entries.
-- `--status $STATUS`
-  - Filter by invocation status \[possible values: `ok`, `error`, `canceled`].
-- `--header $HEADER`
-  - Filter by HTTP header.
-- `--method $METHOD`
-  - Filter by HTTP method.
-- `--sampling-rate $RATE`
-  - Add a percentage of requests to log sampling rate.
-- `--search $SEARCH`
-  - Filter by a text match in `console.log` messages.
-
-{{</definitions>}}
-
-After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
-
----
-
-## secret
-
-Interact with your secrets.
-
-### `put`
-
-Create or replace a secret.
+Publish your Worker to Cloudflare. Several keys in your `wrangler.toml` file determine whether you are publishing to a `*.workers.dev` subdomain or a custom domain. However, custom domains must be proxied (orange-clouded) through Cloudflare. Refer to the [Get started guide](/workers/get-started/guide/#optional-configure-for-deploying-to-a-registered-domain) for more information.
 
 ```sh
-$ wrangler secret put <name> --env ENVIRONMENT_NAME
-Enter the secret text you’d like assigned to the variable name on the script named my-worker-ENVIRONMENT_NAME:
+$ wrangler publish
 ```
-
-You will be prompted to input the secret's value. This command can receive piped input, so the following example is also possible:
 
 ```sh
-$ echo "-----BEGIN PRIVATE KEY-----\nM...==\n-----END PRIVATE KEY-----\n" | wrangler secret put PRIVATE_KEY
+Options:
+      --env                                        Perform on a specific environment  [string]
+      --name                                       Name of the worker  [string]
+      --format                                     Choose an entry type  [choices: "modules", "service-worker"]
+      --compatibility-date                         Date to use for compatibility checks  [string]
+      --compatibility-flags, --compatibility-flag  Flags to use for compatibility checks  [array]
+      --latest                                     Use the latest version of the worker runtime  [boolean] [default: false]
+      --experimental-public                        Static assets to be served  [string]
+      --site                                       Root folder of static assets for Workers Sites  [string]
+      --site-include                               Array of .gitignore-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.  [array]
+      --site-exclude                               Array of .gitignore-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.  [array]
+      --triggers, --schedule, --schedules          cron schedules to attach  [array]
+      --routes, --route                            Routes to upload  [array]
 ```
-
-{{<definitions>}}
-
-- `name`
-
-  - The variable name to be accessible in the script.
-
-- `--env $ENVIRONMENT_NAME` {{<prop-meta>}}optional{{</prop-meta>}}
-  - If defined, the changes will only apply to the specified environment. Refer to [Environments](/workers/platform/environments/) for more information.
-
-{{</definitions>}}
-
-### `delete`
-
-Delete a secret from a specific script.
-
-```sh
-$ wrangler secret delete <name> --env ENVIRONMENT_NAME
-```
-
-{{<definitions>}}
-
-- `name`
-
-  - The variable name to be accessible in the script.
-
-- `--env $ENVIRONMENT_NAME` {{<prop-meta>}}optional{{</prop-meta>}}
-  - If defined, the changes will only apply to the specified environment. Refer to [Environments](/workers/platform/environments/) for more information.
-
-{{</definitions>}}
-
-### `list`
-
-List all the secret names bound to a specific script.
-
-```sh
-$ wrangler secret list --env ENVIRONMENT_NAME
-```
-
-{{<definitions>}}
-
-- `--env $ENVIRONMENT_NAME` {{<prop-meta>}}optional{{</prop-meta>}}
-  - If defined, only the specified environment's secrets will be listed. Refer to [Environments](/workers/platform/environments/) for more information.
-
-{{</definitions>}}
 
 ---
 
@@ -823,3 +685,134 @@ y
 🌀  deleting 1 key value pairs
 ✨  Success
 ```
+
+---
+
+## secret
+
+Interact with your secrets.
+
+### `put`
+
+Create or replace a secret.
+
+```sh
+$ wrangler secret put <name> --env ENVIRONMENT_NAME
+Enter the secret text you’d like assigned to the variable name on the script named my-worker-ENVIRONMENT_NAME:
+```
+
+You will be prompted to input the secret's value. This command can receive piped input, so the following example is also possible:
+
+```sh
+$ echo "-----BEGIN PRIVATE KEY-----\nM...==\n-----END PRIVATE KEY-----\n" | wrangler secret put PRIVATE_KEY
+```
+
+{{<definitions>}}
+
+- `name`
+
+  - The variable name to be accessible in the script.
+
+- `--env $ENVIRONMENT_NAME` {{<prop-meta>}}optional{{</prop-meta>}}
+  - If defined, the changes will only apply to the specified environment. Refer to [Environments](/workers/platform/environments/) for more information.
+
+{{</definitions>}}
+
+### `delete`
+
+Delete a secret from a specific script.
+
+```sh
+$ wrangler secret delete <name> --env ENVIRONMENT_NAME
+```
+
+{{<definitions>}}
+
+- `name`
+
+  - The variable name to be accessible in the script.
+
+- `--env $ENVIRONMENT_NAME` {{<prop-meta>}}optional{{</prop-meta>}}
+  - If defined, the changes will only apply to the specified environment. Refer to [Environments](/workers/platform/environments/) for more information.
+
+{{</definitions>}}
+
+### `list`
+
+List all the secret names bound to a specific script.
+
+```sh
+$ wrangler secret list --env ENVIRONMENT_NAME
+```
+
+{{<definitions>}}
+
+- `--env $ENVIRONMENT_NAME` {{<prop-meta>}}optional{{</prop-meta>}}
+  - If defined, only the specified environment's secrets will be listed. Refer to [Environments](/workers/platform/environments/) for more information.
+
+{{</definitions>}}
+
+---
+
+## tail
+
+Start a session to livestream logs from a deployed Worker.
+
+```sh
+$ wrangler tail NAME
+```
+
+{{<definitions>}}
+
+- `--format $FORMAT` {{<type>}}json|pretty{{</type>}}
+  - The format of the log entries.
+- `--status $STATUS`
+  - Filter by invocation status \[possible values: `ok`, `error`, `canceled`].
+- `--header $HEADER`
+  - Filter by HTTP header.
+- `--method $METHOD`
+  - Filter by HTTP method.
+- `--sampling-rate $RATE`
+  - Add a percentage of requests to log sampling rate.
+- `--search $SEARCH`
+  - Filter by a text match in `console.log` messages.
+
+{{</definitions>}}
+
+After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
+
+---
+
+## login
+
+Authorize Wrangler with your Cloudflare account using OAuth. This will open a login page in your browser and request your account access permissions.
+
+```sh
+$ wrangler login [--scopes-list] [--scopes $SCOPES]
+```
+
+All of the arguments and flags to this command are optional:
+
+{{<definitions>}}
+
+- `--scopes-list` {{<prop-meta>}}optional{{</prop-meta>}}
+  - List all the available OAuth scopes with descriptions.
+- `--scopes $SCOPES` {{<prop-meta>}}optional{{</prop-meta>}}
+  - Allows to choose your set of OAuth scopes. The set of scopes must be entered in a whitespace-separated list,
+    for example, `$ wrangler login --scopes account:read user:read`.
+
+{{</definitions>}}
+
+`wrangler login` uses all the available scopes by default if no flags are provided.
+
+---
+
+## logout
+
+Remove Wrangler's authorization for accessing your account. This command will invalidate your current OAuth token.
+
+```sh
+$ wrangler logout
+```
+
+If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and wish to delete your API token, log into the Cloudflare dashboard and go to **Overview** > **Get your API token** in the right side menu > select the three-dot menu on your Wrangler token and select **Delete** if you wish to delete your API token.
