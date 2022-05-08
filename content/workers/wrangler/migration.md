@@ -39,25 +39,19 @@ This will return some deprecated warnings that you will need to fix in order to 
 Example output:
 
 ````sh
-☁  delete  npx wrangler dev
- ⛅️ wrangler 0.0.0-a788643
----------------------------
-⚠  Processing wrangler.toml configuration:
-⚠    - Unexpected fields found in build field: "build_upload_main","build_upload_dir"
-⚠  No compatibility_date was specified. Using today's date: 2022-04-28.
-⚠  Add one to your wrangler.toml file:
-⚠  ```
-⚠  compatibility_date = "2022-04-28"
-⚠  ```
-⚠  or pass it in your terminal:
-⚠  ```
-⚠  --compatibility-date=2022-04-28
-⚠  ```
-⚠  See https://developers.cloudflare.com/workers/platform/compatibility-dates for more information.
-⬣ Listening at http://localhost:8787
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ [b] open a browser, [d] open Devtools, [l] turn on local mode, [c] clear console, [x] to exit                              │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+ ⛅️ wrangler 0.0.34
+-------------------------------------------------------
+▲ [WARNING] Processing wrangler.toml configuration:
+  - DEPRECATION: "type":
+    DO NOT USE THIS. Most common features now work out of the box with wrangler, including modules, jsx, typescript, etc. If you need anything more, use a custom build.
+  - DEPRECATION: "zone_id":
+    This is unnecessary since we can deduce this from routes directly.
+  - DEPRECATION: "build.upload.format":
+    The format is inferred automatically from the code.
+
+
+✘ [ERROR] Processing wrangler.toml configuration:
+  - Expected "route" to be either a string, or an object with shape { pattern, zone_id | zone_name }, but got "".
 ````
 
 ### Deprecations
