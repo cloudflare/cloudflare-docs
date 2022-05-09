@@ -6,17 +6,32 @@ weight: 5
 
 ## Wrangler's module system
 
-`wrangler` v2 introduces a first class module system for writing code, similar to thos provided by node.js, deno, and others. This document is a technical explainer for how it works and how it can be leveraged when creating and publishing Workers.
+Cloudflare Workers support the [ESM module syntax](/workers/learning/migrating-to-module-workers/).
+This means you can use the `import`/`export` syntax to add modules to your Worker.
 
-Cloudflare Workers support the [ESM module syntax](/workers/learning/migrating-to-module-workers/). This means you can use the `import`/`export` syntax to add modules to your Worker.
+As of version 2.0.0, `wrangler` has built-in support for importing modules.
 
-For example:
+### Module formats
+
+`wrangler` supports importing modules in the following formats:
+
+- JSX
+- Typescript
+- WebAssembly
+- HTML files
+
+### External packages
+
+`wrangler` supports importing modules from external packages.
+Here is an example of creating a Worker project that has a dependency on the `meaning-of-life` package from `npm`:
+
+First create the project and install the dependencies.
 
 ```sh
-mkdir new-project
-cd new-project
-npx wrangler init -y
-npm i meaning-of-life
+$ mkdir new-project
+$ cd new-project
+$ npx wrangler init -y
+$ npm i meaning-of-life
 ```
 
 Then, open `/src/index.ts' and add:
@@ -33,4 +48,5 @@ export default {
 
 Now, run `npx wrangler dev` and hit `b` to open the app in your browser.
 
-You should get a blank page with the number `42` on it. The page is served by your Worker which is consuming the `meaning-of-life` package.
+You should get a blank page with the number `42` on it.
+The page is served by your Worker which is consuming the `meaning-of-life` package.

@@ -1,16 +1,16 @@
 ---
 pcx-content-type: how-to
 title: Deprecations
-weight: 8
+weight: 2
 ---
 
 # Deprecations
 
-This document describes the difference between `wrangler` 1.x and v2, specifically deprecations and breaking changes.
+This document describes the difference between `wrangler` versions 1.x and 2.0.0, specifically deprecations and breaking changes.
 
 ## Configuration
 
-`wrangler` v2 introduces a few new fields for configuration, while also deprecating a few redundant fields.
+`wrangler` version 2.0.0 introduces some new fields for configuration, while also deprecating some redundant fields.
 
 ### New fields
 
@@ -22,33 +22,33 @@ This document describes the difference between `wrangler` 1.x and v2, specifical
 
   The `rules` field is an array of mappings between module types and file patterns. It instructs `wrangler` to interpret specific files differently than JavaScript. For example, this is useful for reading text-like content as text files, or compiled WASM as ready to instantiate and execute. These rules can apply to Workers of both the established service worker format, and the newer modules format. This field replaces the legacy `build.upload.rules` field (which only applied to modules format Workers). Read more at (ref:)[]
 
-- **`legacy_env`**: _boolean_, optional. default: `true`
+<!-- - **`legacy_env`**: _boolean_, optional. default: `true`
 
   The `legacy_env` field toggles how environments are handled by `wrangler`.
 
   - When `legacy_env` is `true`, it uses the legacy-style environments, where each environment is treated as a separate Worker in the dashboard, and environment names are appended to the `name` when published.
   - When `legacy_env` is `false`, it uses the newer service environments, where scripts for a given Worker are grouped under the same script name in the Cloudflare Workers dashboard, and environments are subdomains for a given published script (when `workers_dev = true`).
-    Read more at (ref:)[]
+    Read more at (ref:)[] -->
 
-- **`services`**: TODO
+<!-- - **`services`**: TODO
 
 - **`node-compat`**: TODO
 
-- **`public`**: TODO
+- **`public`**: TODO -->
 
 ### Non-mandatory fields
 
-A few configuration fields which were previously required, are now non-mandatory in particular situations; they can either be inferred, or added as an optimisation. No fields are mandatory anymore when starting with `wrangler`, and you can gradually add configuration as the need arises.
+A few configuration fields which were previously required, are now optional in particular situations; they can either be inferred, or added as an optimisation. No fields are required anymore when starting with `wrangler` version 2.0.0, and you can gradually add configuration as the need arises.
 
 - **`name`**: _string_
 
-  The `name` configuration field is now not mandatory for `wrangler dev`, or any of the `wrangler kv:*` commands. Further, it can also be passed as a command line argument as `--name <name>`. It is still required for `wrangler publish`.
+  The `name` configuration field is now not required for `wrangler dev`, or any of the `wrangler kv:*` commands. Further, it can also be passed as a command line argument as `--name <name>`. It is still required for `wrangler publish`.
 
 - **`account_id`**: _string_
 
-  The `account_id` field is not mandatory for any of the commands. Any relevant commands will check if you are logged in, and if not, will prompt you to log in. Once logged in it will use your account ID, and will not prompt you again until your login session expires. If you have multiple account IDs, you will be presented with a list of accounts to choose from.
+  The `account_id` field is not required for any of the commands. Any relevant commands will check if you are logged in, and if not, will prompt you to log in. Once logged in it will use your account ID, and will not prompt you again until your login session expires. If you have multiple account IDs, you will be presented with a list of accounts to choose from.
 
-  You can still configure `account_id` in your `wrangler.toml` file, or as an environment variable `CLOUDFLARE_ACCOUNT_ID`; this will make startup faster, and bypass the list of choices if you have multiple IDs. By also setting the `CLOUDFLARE_API_TOKEN` environment variable, this configuration is useful in scenarios like CI/CD where you will not be able to interactively login.
+  You can still configure `account_id` in your `wrangler.toml` file, or as an environment variable `CLOUDFLARE_ACCOUNT_ID`; this will make startup faster, and bypass the list of choices if you have multiple IDs. The `CLOUDFLARE_API_TOKEN` environment variable is also useful for situations where it is not possible to login interactively - see [Running in CI/CD](/workers/wrangler/ci-cd).
 
 - **`workers_dev`** _boolean_, default: `true` when no routes are present
 
@@ -138,7 +138,7 @@ Routes are specified in the `wrangler.toml` configuration file.
 
   where the content of `index.js` is:
 
-  ```jsx
+  ```js
   import SomeDependency from "some-dependency.js";
 
   addEventListener("fetch", (event) => {

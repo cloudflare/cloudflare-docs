@@ -1,12 +1,12 @@
 ---
 pcx-content-type: how-to
 title: Ejecting Webpack
-weight: 7
+weight: 3
 ---
 
-## Migrating webpack projects to `wrangler 2`
+## Migrating webpack projects from `wrangler` version 1
 
-Previous versions of `wrangler` offered rudimentary support for [webpack](https://webpack.js.org/) with the `type` and `webpack_config` keys in [`wrangler.toml`](/workers/wrangler/configuration/). Starting with version 2, `wrangler` no longer supports the `type` and `webpack_config` keys, but you can still use webpack with your Workers.
+Previous versions of `wrangler` offered rudimentary support for [webpack](https://webpack.js.org/) with the `type` and `webpack_config` keys in [`wrangler.toml`](/workers/wrangler/configuration/). Starting with version 2.0,0, `wrangler` no longer supports the `type` and `webpack_config` keys, but you can still use webpack with your Workers.
 
 As a developer using webpack with Workers, you may be one of four categories:
 
@@ -30,7 +30,7 @@ If you do not see yourself represented, [file an issue](https://github.com/cloud
 
 ### I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to handle JSX, Typescript, WebAssembly, HTML files, and other non-standard filetypes.
 
-New versions of `wrangler` ship with built-in support for this use case due to the [module system](/workers/wrangler/module-system/).
+As of version 2.0.0, `wrangler` has built-in support for this use case due to the [module system](/workers/wrangler/module-system/).
 
 The Workers runtime handles JSX and Typescript. You can `import` any modules you need into your code and the Workers runtime includes them in the built Worker automatically.
 
