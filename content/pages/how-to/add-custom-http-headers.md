@@ -52,7 +52,7 @@ async function handleRequest(request) {
 
 ## Deploying a Workers function in the dashboard
 
-The easiest way to start deploying your Workers function is by typing [workers.new](https://workers.new/) in the browser. Log into your account to be automatically directed to the Workers dashboard. From the Workers dashboard, write your function or use one of the [examples from the Workers documentation](/workers/examples/).
+The easiest way to start deploying your Workers function is by typing [workers.new](https://workers.new/) in the browser. Log in to your account to be automatically directed to the Workers dashboard. From the Workers dashboard, write your function or use one of the [examples from the Workers documentation](/workers/examples/).
 
 Click **Save and Deploy** when your script is ready and set a [route](/workers/platform/routes/) in your domain's zone settings.
 
@@ -60,13 +60,15 @@ For example, [here is a Workers script](/workers/examples/security-headers/) you
 
 ## Deploying a Workers function using the CLI
 
-If you would like to skip writing this file yourself, you can use our `custom-headers-example` [template](https://github.com/signalnerve/custom-headers-example) to generate a new Workers function with [wrangler](/workers/cli-wrangler/install-update/), the Workers CLI tool.
+If you would like to skip writing this file yourself, you can use our `custom-headers-example` [template](https://github.com/signalnerve/custom-headers-example) to generate a new Workers function with [wrangler](/workers/wrangler/get-started/), the Workers CLI tool.
 
 ```sh
 ---
 header: Generating a serverless function with wrangler
 ---
-$ wrangler generate projectname https://github.com/cloudflare/custom-headers-example
+$ git clone https://github.com/cloudflare/custom-headers-example
+$ cd custom-headers-example
+$ npm install
 ```
 
 To operate your Workers function alongside your Pages application, deploy it to the same custom domain as your Pages application. To do this, update the `wrangler.toml` file in your project with your account and zone details:
@@ -77,7 +79,6 @@ filename: wrangler.toml
 highlight: [4,6,7]
 ---
 name = "custom-headers-example"
-type = "javascript"
 
 account_id = "FILL-IN-YOUR-ACCOUNT-ID"
 workers_dev = false

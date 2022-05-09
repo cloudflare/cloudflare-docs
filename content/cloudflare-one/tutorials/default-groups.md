@@ -25,7 +25,7 @@ Before you build the rule, you'll need to follow [these instructions](/cloudflar
 
 Navigate to the `Groups` page in the `My Teams` section of the Zero Trust dashboard.
 
-Groups contain criteria that you can reuse in your [Zero Trust policies](/cloudflare-one/policies/zero-trust/). Additionally, groups allow you to nest certain operators within rules in the Access policy.
+Groups contain criteria that you can reuse in your [Access policies](/cloudflare-one/policies/access/). Additionally, groups allow you to nest certain operators within rules in the Access policy.
 
 For example, `Include` rules work like `OR` operators - anything in the list will meet the criteria. However, if you include values in the Require field, these work like `AND` operators.
 

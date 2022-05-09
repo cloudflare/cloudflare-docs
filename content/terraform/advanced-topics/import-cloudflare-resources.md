@@ -12,7 +12,7 @@ An important point to understand about Terraform is that it can only manage conf
 
 When Terraform makes calls to Cloudflare's API to create new resources as explained in the [tutorial](/terraform/tutorial/), it persists those IDs to a state file. By default, the `terraform.tfstate` file in your directory is used, but this can also be a [remote location](https://www.terraform.io/docs/state/remote.html). These IDs are later looked up and refreshed when you call `terraform plan` and `terraform apply`.
 
-If you configured Cloudflare through other means, for example, by logging into the Cloudflare Dashboard or making `curl` calls to api.cloudflare.com, Terraform does not yet have these resource IDs in the state file. To manage this preexisting configuration, you will need to first reproduce the configuration in your config file and then import resources individually by providing their IDs and resource names.
+If you configured Cloudflare through other means, for example, by logging in to the Cloudflare Dashboard or making `curl` calls to api.cloudflare.com, Terraform does not yet have these resource IDs in the state file. To manage this preexisting configuration, you will need to first reproduce the configuration in your config file and then import resources individually by providing their IDs and resource names.
 
 ## cf-terraforming
 

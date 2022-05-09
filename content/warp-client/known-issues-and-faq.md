@@ -6,7 +6,7 @@ weight: 5
 
 # FAQ
 
-Below you will find answers to our most commonly asked questions regarding the WARP client. If you cannot find the answer you are looking for, visit the [community page](https://community.cloudflare.com/).
+Below you will find answers to our most commonly asked questions regarding the WARP client. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) to explore more resources.
 
 ## Why am I not connecting to a closer Cloudflare data center?
 

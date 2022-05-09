@@ -128,7 +128,7 @@ A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to v
 
 ## [policy](/cloudflare-one/policies/)
 
-A set of rules that regulate your network activity, such as who logs into your applications, or which websites your users can reach.
+A set of rules that regulate your network activity, such as who logs in to your applications, or which websites your users can reach.
 
 ## RDP
 
@@ -136,7 +136,7 @@ _Remote Desktop Protocol_
 
 A protocol, or technical standard, for using a desktop computer remotely. RDP was initially released by Microsoft and is available for most Windows operating systems, but it can be used with Mac operating systems too.
 
-## [SafeSearch](/cloudflare-one/policies/filtering/dns-policies-builder/)
+## [SafeSearch](/cloudflare-one/policies/filtering/dns-policies/#safesearch)
 
 A feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
 

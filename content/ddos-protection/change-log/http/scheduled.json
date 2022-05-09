@@ -1,1 +1,1 @@
-[]
+[{"kind": "PLANNED", "rule_id": "...ad07ec62", "rule_ref": "UR0006", "description": "HTTP requests with unusual HTTP headers or URI path (signature #6).", "comments": "", "previous_action": null, "new_action": "log", "announcement_date": "2022-05-03", "release_date": "2022-05-09"}]

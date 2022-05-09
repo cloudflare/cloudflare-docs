@@ -25,7 +25,7 @@ Where possible, we recommend using encrypted transports (DNS over HTTPS or TLS) 
 
 {{<Aside type="note">}}
 
-[Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/) supports customizable [DNS policies](/cloudflare-one/policies/filtering/dns-policies-builder/), analytics, additional built-in filtering categories, and custom rate limiting capabilities.
+[Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/) supports customizable [DNS policies](/cloudflare-one/policies/filtering/dns-policies/), analytics, additional built-in filtering categories, and custom rate limiting capabilities.
 
 If you require additional controls over our public 1.1.1.1 resolver, [contact us](https://www.cloudflare.com/products/zero-trust/).
 

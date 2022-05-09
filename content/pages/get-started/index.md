@@ -22,13 +22,15 @@ To begin, go to the [Cloudflare Pages site](https://pages.dev) and sign in with 
 
 ### Connect to your git provider
 
-Pages offers support for [GitHub](https://github.com/) and [GitLab](https://gitlab.com/). After logging into your Cloudflare account, in **Account Home** > go to **Pages** > **Create a project**.
+Pages offers support for [GitHub](https://github.com/) and [GitLab](https://gitlab.com/). After logging in to your Cloudflare account, in **Account Home** > go to **Pages** > **Create a project**.
 
 You will be prompted to sign in with your preferred git provider which allows [Cloudflare Pages](https://pages.dev) to deploy your projects, and update your PRs with [preview deployments](/pages/platform/preview-deployments/).
 
 {{<Aside type="note">}}
 
 Signing in with GitLab will grant Pages access to all repositories on your account. Additionally, if you are a part of a multi-user Cloudflare account, and you sign in with GitLab, other members will also have the ability to deploy your repositories to Pages.
+
+If you are using GitLab, you must have the **Maintainer** role or higher on the repository to successfully deploy with Cloudflare Pages.
 
 {{</Aside>}}
 
@@ -56,7 +58,7 @@ You must have pushed at least one branch to your GitHub or GitLab project in ord
 
 {{</Aside>}}
 
-![Set up builds and deployments page with Project name and Production branch filled in](./images/configuration.png)
+![Set up builds and deployments page with Project name and Production branch filled in](/pages/get-started/images/configuration.png)
 
 #### Build settings
 
@@ -70,11 +72,11 @@ You do not need a framework to deploy with Cloudflare Pages. You can continue wi
 
 Our deployment dashboard provides a number of framework-specific presets, which provide the default values for the selected framework. If you are unsure what the correct values are for this section, refer to our documentation on [build configuration](/pages/platform/build-configuration/). If you do not need a build step, leave the **Build command** field blank.
 
-![Build setting fields that need to be filled in](./images/build-settings.png)
+![Build setting fields that need to be filled in](/pages/get-started/images/build-settings.png)
 
 Cloudflare Pages begins by working from your repository's root directory. The entire build pipeline, including the installation steps, will begin from this location. If you would like to change this, specify a new root directory location through the **Root directory (advanced)** > **Path** field.
 
-![Root directory field to be filled in](./images/root-directory.png)
+![Root directory field to be filled in](/pages/get-started/images/root-directory.png)
 
 <details>
 <summary>Understanding your build configuration</summary>
@@ -101,7 +103,7 @@ After you have chosen your _Framework preset_ or left this field blank if you ar
 
 Once you have finished setting your build configuration, select **Save and Deploy**. Your project build logs will output as Cloudflare Pages installs your project dependencies, builds the project, and deploys it to Cloudflare's global network.
 
-![Deployment details in the Cloudflare dashboard](./images/deploy-log.png)
+![Deployment details in the Cloudflare dashboard](/pages/get-started/images/deploy-log.png)
 
 When your project has finished deploying, you will receive a unique URL to view your deployed site.
 
@@ -109,13 +111,13 @@ When your project has finished deploying, you will receive a unique URL to view 
 
 After your first deploy, select **Continue to project** to see your project's configuration in the Cloudflare Pages dashboard. On this page, you can see your project's current deployment status, the production URL and associated commit, and all past deployments.
 
-![Site dashboard displaying your environments and deployments](./images/site-dashboard.png)
+![Site dashboard displaying your environments and deployments](/pages/get-started/images/site-dashboard.png)
 
 ### Adding a custom domain
 
 While every Cloudflare Pages site receives a custom subdomain during deployment, you may also wish to point custom domains (or subdomains) to your site. To do this, select the **Custom domains** section in your site dashboard.
 
-![Adding a custom domain for your Pages project through the Cloudflare dashboard](./images/domains.png)
+![Adding a custom domain for your Pages project through the Cloudflare dashboard](/pages/get-started/images/domains.png)
 
 Select **Set up a domain**, provide the domain that you would like to serve your Cloudflare Pages site on and select **Continue**.
 
@@ -127,7 +129,7 @@ To use a custom apex domain (for example, `example.com`) with your Pages project
 
 #### Add a custom CNAME record
 
-If you do not want to point your nameservers to Cloudflare, you can still use a custom CNAME record to use a single domain with Cloudflare Pages. After logging into your DNS provider, add a CNAME record for your desired subdomain; for example, `shop.example.com`. This record should point to your custom Pages subdomain; for example, `custom.pages.dev`.
+If you do not want to point your nameservers to Cloudflare, you can still use a custom CNAME record to use a single domain with Cloudflare Pages. After logging in to your DNS provider, add a CNAME record for your desired subdomain; for example, `shop.example.com`. This record should point to your custom Pages subdomain; for example, `custom.pages.dev`.
 
 | Type    | Name               | Content            |
 | ------- | ------------------ | ------------------ |
@@ -177,7 +179,7 @@ To delete your Pages project:
 
 In the **Settings** section, you can configure advanced settings, such as changing your project name, updating your git configuration, or updating your build command, build directory or environment variables.
 
-![Configuring your Pages project settings in the Cloudflare dashboard](./images/settings.png)
+![Configuring your Pages project settings in the Cloudflare dashboard](/pages/get-started/images/settings.png)
 
 Refer to the [Hexo framework guide](/pages/framework-guides/deploy-a-hexo-site/#using-a-specific-nodejs-version) for more information on how to set up a Node.js version environment variable.
 
@@ -186,3 +188,5 @@ Refer to the [Hexo framework guide](/pages/framework-guides/deploy-a-hexo-site/#
 You can use [Cloudflare Access](https://www.cloudflare.com/teams-access/) to manage access to your deployment previews. By default, these deployment URLs are public. Enabling the access policy will restrict viewing project deployments to your Cloudflare account.
 
 Once enabled, you can [set up a multi-user account](https://support.cloudflare.com/hc/en-us/articles/205065067-Setting-up-Multi-User-accounts-on-Cloudflare) to allow other members of your team to view preview deployments.
+
+Refer to [Preview deployments](/pages/platform/preview-deployments/#customizing-preview-deployments-access) for more information.

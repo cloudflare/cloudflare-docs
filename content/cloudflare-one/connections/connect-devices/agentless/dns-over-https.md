@@ -4,13 +4,29 @@ title: DNS over HTTPS
 weight: 2
 ---
 
-# DNS over HTTPS
+# Configure DNS over HTTPS
 
-## Browser
+Browsers can be configured to use any DNS over HTTPS (DoH) endpoint. If you choose to configure DoH directly in your browser, you must choose a Gateway location as your DoH endpoint, otherwise Gateway DNS filtering will not occur in that browser.
 
-Browsers can be configured to use any DoH endpoint. If you choose to configure DoH directly in your browser, you must choose a Gateway location as your DoH endpoint, otherwise Gateway DNS filtering will not occur in that browser.
+## Prerequisites
 
-### Firefox
+Obtain your location's [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain) (previously known as a unique id).
+
+## Mozilla Firefox
+
+1. In the Firefox menu, select **Settings**.
+2. In the General menu, scroll down to **Network Settings**.
+3. Click **Settings**.
+4. Select **Enable DNS over HTTPS**.
+5. In the **Use Provider** drop-down menu, select _Custom_.
+6. In the **Custom** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
+7. Click **OK**.
+8. Enter **about:config** in the address bar.
+9. Click **Accept the risk!** if you see a prompt from Firefox.
+10. Set **network.trr.bootstrapAddress** to `162.159.36.5`.
+11. Set **network.trr.mode** to `3`.
+
+You can now send DNS queries through the DoH protocol.
 
 {{<Aside type="note">}}
 
@@ -18,49 +34,39 @@ If you want to disable DoH for your organization so that Gateway can be enforced
 
 {{</Aside>}}
 
-{{<table-wrap>}}
+## Google Chrome
 
-| Before you start                                                                                                |
-| --------------------------------------------------------------------------------------------------------------- |
-| Obtain a location's [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain) (previously known as a unique id). |
+1. Click the three-dot menu in your browser.
+2. Click **Settings**.
+3. Click **Privacy and security** > **Security**.
+4. Scroll down and enable **Use secure DNS**.
+5. Select **With Custom**.
+6. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
 
-{{</table-wrap>}}
+You can now send DNS queries through the DoH protocol. Read more about [enabling DNS over HTTPS](https://www.chromium.org/developers/dns-over-https) on Chrome.
 
-With Firefox, you can send DNS queries using the DNS over HTTPS protocol.
+## Microsoft Edge
 
-1. Open **Preferences** and scroll to the bottom.
+1. Click the three-dot menu in your browser.
+2. Click **Settings**.
+3. Click **Privacy, Search, and Services**, and scroll down to **Security**.
+4. Enable **Use secure DNS**.
+5. Click **Choose a service provider**.
+6. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
 
-1. Click on **Network Settings**.
+You can now send DNS queries through the DoH protocol.
 
-1. Click on **Settings**.
+## Brave
 
-1. Check **Enable DNS over HTTPS**.
+1. Click the menu button in your browser.
+2. Click **Settings**.
+3. Click **Security and Privacy** > **Security**.
+4. Enable **Use secure DNS**.
+5. Select **With Custom**.
+6. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
 
-1. Choose **Custom** from the drop-down for **Use Provider**.
+You can now send DNS queries through the DoH protocol.
 
-1. Enter `https://YOUR_UNIQUE_SUBDOMAIN.cloudflare-gateway.com/dns-query` in the **Custom** field. In place of `YOUR_UNIQUE_SUBDOMAIN`, include your **unique ID**.
-
-1. Click **OK**.
-
-1. Enter **about:config** in the address bar.
-
-1. Click on **Accept the risk!** if you see a prompt from Firefox.
-
-1.Set network.trr.bootstrapAddress to `162.159.36.5`.
-
-1.Set network.trr.mode to **3**.
-
-You should now be able to send queries through the DNS over HTTPS protocol.
-
-### Google Chrome / Microsoft Edge / Brave
-
-1. Open **Settings**.
-1. In your address bar, type the following and hit **Enter**:
-   `chrome://flags/#dns-over-https`. This will take you to Secure DNS lookups.
-1. Click on the **Secure DNS lookups** radio button to enable DoH.
-
-Read more about [enabling DNS over HTTPS](https://www.chromium.org/developers/dns-over-https) on Chrome.
-
-### Safari
+## Safari
 
 As of today, Safari does not support DNS over HTTPS.

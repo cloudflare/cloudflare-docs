@@ -18,7 +18,7 @@ Using Cloudflare Registrar simplifies your setup process by automatically using 
 
 ## Step 1 — Add site in Cloudflare
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. In the top navigation bar, click **Add site**.
 3. Enter your website’s root domain (`example.com`) and then click **Add Site**.
 4. Select your plan level. For more details on features and pricing, refer to [our Plans page](https://www.cloudflare.com/plans/#compare-features).
@@ -41,6 +41,8 @@ Using Cloudflare Registrar simplifies your setup process by automatically using 
 ## Step 2 — Complete DNS setup
 
 Before your domain can begin using Cloudflare for DNS resolution, you need to complete your [DNS setup](/dns/zone-setups/).
+
+If your domain is particularly sensitive to downtime, review our suggestions to [minimize downtime](/fundamentals/get-started/setup/minimize-downtime/).
 
 ## Step 3 — Complete SSL/TLS setup
 

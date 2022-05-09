@@ -87,7 +87,7 @@ export async function onRequest(context) {
     data, // arbitrary space for passing data between middlewares
   } = context;
 
-  return new Response('Hello, world!');
+  return new Response("Hello, world!");
 }
 ```
 
@@ -124,8 +124,8 @@ filename:function/character/[id].js
 export async function onRequestGet({ params }) {
   const res = await fetch(`https://rickandmortyapi.com/api/character/${params.id}`);
   const data = await res.json();
-  const info = JSON.stringify(data);
-  return new Response(info, null, 2);
+  const info = JSON.stringify(data, null, 2);
+  return new Response(info);
 }
 ```
 
@@ -146,7 +146,7 @@ export const onRequestPut = onRequestPost;
 Additionally, an exported handler may be an array of function handlers. This allows you to easily compose Functions as a group, which may include a mix of shared and/or one-off behaviors:
 
 ```js
-import { extraLogging } from 'middlewares.ts';
+import { extraLogging } from "middlewares.ts";
 
 export const onRequest = [
   extraLogging,
@@ -263,16 +263,16 @@ export const onRequest = [
       const response = await next();
       const responseText = await response.text();
       //~> "Hello from next base middleware"
-      return new Response(responseText + ' from middleware');
+      return new Response(responseText + " from middleware");
     } catch (thrown) {
       return new Response(`Error ${thrown}`, {
         status: 500,
-        statusText: 'Internal Server Error',
+        statusText: "Internal Server Error",
       });
     }
   },
   ({ request, next }) => {
-    return new Response('Hello from next base middleware');
+    return new Response("Hello from next base middleware");
   },
 ];
 ```
@@ -311,15 +311,15 @@ While bringing your Workers to Pages, bindings are a big part of what makes your
 
 Workers KV is Cloudflare's globally replicated key-value storage solution. Within Pages, you can choose from the list of KV namespaces that you created from the dashboard by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **KV namespace bindings**. Select **Add binding** and input a **Variable name** and select a _KV namespace_ from the list of your existing Workers KV namespaces. You will need to repeat this for both the **Production** and **Preview** environments.
 
-![Editing a KV namespace Binding and adding a Variable name](../media/KV-functions.png)
+![Editing a KV namespace Binding and adding a Variable name](/pages/platform/media/KV-functions.png)
 
-## KV namespace locally
+### KV namespace locally
 
 While developing locally you can interact with your KV namespace by add `-k, --kv [Namespace name]` to your run command. For example, if your namespace is called `TodoList`, you can access the KV namespace in your local dev by running `npx wrangler pages dev dist --kv TodoList`. The data from this namespace can be accessed using `context.env`.
 
 ```js
 export async function onRequest({ env }) {
-  const task = await env.TodoList.get('Task:123');
+  const task = await env.TodoList.get("Task:123");
   return new Response(task);
 }
 ```
@@ -330,11 +330,11 @@ Durable Objects are Cloudflare's strongly consistent coordination primitive that
 
 Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Object bindings**. Select **Add binding** and input a **Variable name** and select a _Durable Object namespace_ from the list of your existing Durable Objects. You will need to repeat this for both the **Production** and **Preview** environments.
 
-![Editing a Durable Object namespace Binding and adding a Variable name](../media/DO-functions.png)
+![Editing a Durable Object namespace Binding and adding a Variable name](/pages/platform/media/DO-functions.png)
 
-## Durable Objects locally
+### Durable Objects locally
 
-Just as you can access kv with `-k`or `-kv` you can access durable objects in your local builds with `-o`, `--do` followed by your Durable object name and class.
+Just as you can access kv with `-k` or `--kv` you can access durable objects in your local builds with `-o`, `--do` followed by your Durable object name and class.
 
 ### Environment variable
 
@@ -342,13 +342,13 @@ An [environment variable](/workers/platform/environment-variables/) is an inject
 
 To add environment variables, go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Environment variables**.
 
-![Editing an environment variable by adding a variable name and value](../media/ENV-functions.png)
+![Editing an environment variable by adding a variable name and value](/pages/platform/media/ENV-functions.png)
 
-## Adding environment variables locally
+### Adding environment variables locally
 
-When developing locally, you can access environment variables by adding a binding to your Wrangler commands like `npx wrangler pages dev dist --binding ENV_NAME=\"ENV_VALUE"`. This allows you to then access the environment value in your component by using `env.ENV_NAME`.
+When developing locally, you can access environment variables by adding a binding to your Wrangler commands like `npx wrangler pages dev dist --binding ENV_NAME="ENV_VALUE"`. This allows you to then access the environment value in your component by using `env.ENV_NAME`.
 
-For example, you can run `npx wrangler pages dev dist --binding COLOR=\"BLUE"` and then:
+For example, you can run `npx wrangler pages dev dist --binding COLOR="BLUE"` and then:
 
 ```js
 export async function onRequest({ env }) {
@@ -421,8 +421,8 @@ When migrating a Worker into the Pages platform, the simplest path is to target 
 You can run your entire application locally with [Wrangler](https://github.com/cloudflare/wrangler2), which supports secrets, environment variables, KV and Durable Objects. Point Wrangler at a directory of static assets, or seamlessly connect to your existing tools:
 
 ```sh
-# Install wrangler v2 beta
-$ npm install wrangler@beta
+# Install wrangler
+$ npm install wrangler
 
 # Show help message
 $ npx wrangler pages dev --help

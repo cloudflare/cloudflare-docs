@@ -1,15 +1,16 @@
 ---
 pcx-content-type: reference
-title: Manage Transform Rules
-weight: 4
+title: Work with Transform Rules
+weight: 5
 ---
 
-# Manage Transform Rules
+# Work with Transform Rules
 
 **Transform Rules** is a feature of **Rules** in the Cloudflare dashboard.
 
 The **Transform Rules** dashboard interface lets you:
 
+- Configure Managed Transforms.
 - Create new URL Rewrite Rules, HTTP Request Header Modification Rules, and HTTP Response Header Modification Rules.
 - View a list of existing rules (both active and paused).
 - Activate or pause rules (turn on or off).
@@ -23,6 +24,7 @@ The **Transform Rules** dashboard interface lets you:
 
 In the **Transform Rules** tab you can:
 
+- [Configure Managed Transforms](/rules/transform/managed-transforms/configure/)
 - [Create a URL Rewrite Rule](/rules/transform/url-rewrite/create-dashboard/)
 - [Create an HTTP Request Header Modification Rule](/rules/transform/request-header-modification/create-dashboard/)
 - [Create an HTTP Response Header Modification Rule](/rules/transform/response-header-modification/create-dashboard/)
@@ -31,7 +33,7 @@ Refer to each linked section for details on creating each rule type.
 
 ## Manage rules
 
-You can manage your existing Transform Rules at any time using the buttons located on the right of the rule you want to change, or by using the handle located on the left of the rule.
+Manage your existing Transform Rules using the buttons located on the right of the rule you want to change, or by using the handle located on the left of the rule.
 
 ![For each rule in the rules list, you can change its order, enable/disable the rule, edit the rule, or delete the rule.](/rules/static/transform/rule-operations.png)
 
@@ -41,11 +43,11 @@ Use the on/off toggle switch associated with a Transform Rule to enable or disab
 
 ### Edit a rule
 
-Click the **Edit** button (wrench icon) to open the **Edit Rule** panel and make the changes you want.
+Click **Edit** (wrench icon) to open the **Edit Rule** panel and make the changes you want.
 
 ### Delete a rule
 
-Use the **Delete** button (X icon) associated with the existing rule you want to remove to delete it. In the confirmation dialog that appears, click **Delete** to confirm and complete the operation.
+Click **Delete** (X icon) next to the existing rule you want to remove. In the confirmation dialog that appears, click **Delete** to confirm and complete the operation.
 
 ### Order rules
 

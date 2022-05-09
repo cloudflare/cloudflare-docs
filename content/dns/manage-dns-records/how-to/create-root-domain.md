@@ -8,7 +8,7 @@ weight: 3
 
 When you add a domain to Cloudflare, you may also need to create a DNS record for your root domain (`example.com`).
 
-To do this, you would create a corresponding [A, AAAA, or CNAME record](/dns/manage-dns-records/how-to/create-dns-records/) for your root domain (specified by using `@` for the **Name**).
+To do this, you would create a corresponding [`A`, `AAAA`, or `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) for your root domain (specified by using `@` for the **Name**).
 
 {{<example>}}
 

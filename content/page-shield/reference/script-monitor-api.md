@@ -40,7 +40,7 @@ The following table summarizes the available operations:
 
 ## API notes
 
-The malicious code classification (`Malicious` or `Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 10 — scripts with a score value above the threshold are considered malicious.
+The malicious script classification (`Malicious` or `Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 10 — scripts with a score value above the threshold are considered malicious.
 
 ## Common API calls
 
@@ -103,7 +103,9 @@ header: Response
 
 ### Fetch list of monitored scripts
 
-This example fetches a list of scripts monitored by Script Monitor on hostname `example.net`, requesting the first page with 15 items per page.
+This example fetches a list of scripts monitored by Page Shield on hostname `example.net`, requesting the first page with 15 items per page. The URL query string includes filtering and paging parameters.
+
+By default, the response will only include scripts with `active` status when you do not specify a `status` filter parameter in the URL query string.
 
 ```bash
 ---
@@ -129,24 +131,13 @@ header: Response
       "domain_reported_malicious": false,
       "url_reported_malicious": false,
       "seen_on_first": "http://malicious.example.com/page_one.html",
+      "count": 10,
+      "status": "active",
+      "appears_in_cdn_cgi_path": false,
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "js_integrity_score": 10,
       "fetched_at": "2021-11-21T16:58:07Z"
     },
-    {
-      "script_id": "83c8da2267394ce8465b74c299658fea",
-      "script_url": "https://scripts.example.com/anotherbadscript.js",
-      "added_at": "2021-11-17T13:16:03.419619Z",
-      "first_seen_at": "2021-11-17T13:15:23Z",
-      "last_seen_at": "2021-11-18T09:05:20Z",
-      "host": "example.net",
-      "domain_reported_malicious": false,
-      "url_reported_malicious": false,
-      "seen_on_first": "http://malicious.example.com/page_one.html",
-      "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
-      "js_integrity_score": 50,
-      "fetched_at": "2021-11-18T03:58:07Z"
-    }
     // (...)
   ],
   "success": true,
@@ -157,6 +148,60 @@ header: Response
     "per_page": 15,
     "count": 15,
     "total_count": 24,
+    "total_pages": 2
+  }
+}
+```
+
+Some fields displayed in the example response may not be available, depending on your Cloudflare plan.
+
+For details on the available filtering, paging, and sorting parameters, refer to the [API reference](https://api.cloudflare.com/#script-monitor-list-script-monitor-scripts).
+
+### Fetch list of infrequently reported scripts
+
+This example fetches a list of infrequently reported scripts on hostname `example.net`, requesting the first page with 15 items per page. The URL query string includes filtering and paging parameters.
+
+```bash
+---
+header: Request
+---
+curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/script_monitor/scripts?status=infrequent&hosts=example.net&page=1&per_page=15" \
+-H "Authorization: Bearer <API_TOKEN>"
+```
+
+```json
+---
+header: Response
+---
+{
+  "result": [
+    {
+      "script_id": "83c8da2267394ce8465b74c299658fea",
+      "script_url": "https://scripts.example.com/anotherbadscript.js",
+      "added_at": "2021-11-17T13:16:03.419619Z",
+      "first_seen_at": "2021-11-17T13:15:23Z",
+      "last_seen_at": "2021-11-18T09:05:20Z",
+      "host": "example.net",
+      "domain_reported_malicious": false,
+      "url_reported_malicious": false,
+      "seen_on_first": "http://malicious.example.com/page_one.html",
+      "count": 2,
+      "status": "infrequent",
+      "appears_in_cdn_cgi_path": false,
+      "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
+      "js_integrity_score": 50,
+      "fetched_at": "2021-11-18T03:58:07Z"
+    },
+    // (...)
+  ],
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result_info": {
+    "page": 1,
+    "per_page": 15,
+    "count": 15,
+    "total_count": 17,
     "total_pages": 2
   }
 }
@@ -193,6 +238,9 @@ header: Response
     "domain_reported_malicious": false,
     "url_reported_malicious": false,
     "seen_on_first": "http://malicious.example.com/page_one.html",
+    "count": 10,
+    "status": "active",
+    "appears_in_cdn_cgi_path": false,
     "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
     "js_integrity_score": 50,
     "fetched_at": "2021-11-21T16:58:07Z",

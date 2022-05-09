@@ -47,7 +47,7 @@ This should only be enabled if a [service token](/cloudflare-one/identity/servic
 
 {{</table-wrap>}}
 
-When you log into Access through `cloudflared`, your browser prompts you to allow access by
+When you log in to Access through `cloudflared`, your browser prompts you to allow access by
 displaying this page:
 
 ![Access browser page](/cloudflare-one/static/documentation/applications/non-http/access-screen.png)

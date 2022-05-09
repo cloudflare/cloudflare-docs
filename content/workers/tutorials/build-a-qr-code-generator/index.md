@@ -18,23 +18,22 @@ This guide will teach you how to build and publish serverless functions. This gu
 
 If you would like to review the code for this tutorial, the final version of the codebase is [available on GitHub](https://github.com/signalnerve/workers-qr-code-generator). You can take the code provided in the example repository, customize it, and deploy it for use in your own projects.
 
-## Generate
+## Init
 
 Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to start writing Workers. You will make use of the default JavaScript template to start building your project.
 
-In the command line, run the `wrangler generate` command to create your Worker project using Wrangler’s [worker-template](https://github.com/cloudflare/worker-template). Pass the project name `qr-code-generator`:
+In the command line, run the `wrangler init` command to create your Worker project and pass the project name `qr-code-generator`:
 
 ```sh
 ---
-header: Generating a new project with Wrangler
+header: Creating a new project with Wrangler
 ---
-$ wrangler generate qr-code-generator
+$ wrangler init qr-code-generator
 $ cd qr-code-generator
+$ wrangler dev
 ```
 
-Wrangler templates are git repositories. If you want to create your own templates, or use one from the [Template Gallery](/workers/examples/), there is a variety of options to help you get started.
-
-Cloudflare’s `worker-template` includes support for building and deploying JavaScript-based projects. Inside of your new `qr-code-generator` directory, `index.js` represents the entry point to your Cloudflare Workers application.
+Inside of your new `qr-code-generator` directory, `index.js` represents the entry point to your Cloudflare Workers application.
 
 All Cloudflare Workers applications start by listening for `fetch` events, which are triggered when a client makes a request to a Workers route. After a request is received by the Worker, the response your application constructs will be returned to the user. This tutorial will guide you through understanding how the request/response pattern works and how you can use it to build fully featured applications.
 
@@ -139,7 +138,7 @@ header: Installing the qr-image package
 $ npm install --save qr-image
 ```
 
-To use the `qr-image` package, configure the `type` to `"webpack"`. This instructs Wrangler to use [Webpack](/workers/cli-wrangler/webpack/) to package your project for deployment. Learn more about [`type` configuration](/workers/cli-wrangler/configuration/) in the Wrangler documentation.
+To use the `qr-image` package, configure the `type` to `"webpack"`. This instructs Wrangler to use [Webpack](/workers/wrangler/cli-wrangler/webpack/) to package your project for deployment. Learn more about [`type` configuration](/workers/wrangler/cli-wrangler/configuration/) in the Wrangler documentation.
 
 ```toml
 ---

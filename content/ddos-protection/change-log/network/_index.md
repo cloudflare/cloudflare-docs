@@ -3,10 +3,10 @@ title: Network-layer DDoS Managed Ruleset
 pcx-content-type: concept
 weight: 1
 meta:
-  title: Change log for the Network-layer DDoS Managed Ruleset
+  title: Changelog for the Network-layer DDoS Managed Ruleset
 ---
 
-# Change log for the Network-layer DDoS Managed Ruleset
+# Changelog for the Network-layer DDoS Managed Ruleset
 
 This section contains past and upcoming changes to the [Network-layer DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/network/).
 

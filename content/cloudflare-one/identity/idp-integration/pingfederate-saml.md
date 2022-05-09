@@ -1,14 +1,14 @@
 ---
 pcx-content-type: how-to
-title: SAML | PingFederate®
+title: PingFederate®
 weight: 7
 ---
 
-# SAML | PingFederate®
+# PingFederate®
 
 The PingFederate® offering from PingIdentity provides SSO identity management. Cloudflare Access supports PingFederate as a SAML identity provider.
 
-## Set up PingFederate (SAML)
+## Set up PingFederate as an identity provider
 
 1. Log in to your **Ping** dashboard and navigate to **Applications**.
 
