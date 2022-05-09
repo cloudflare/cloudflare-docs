@@ -40,9 +40,9 @@ You should remove the `type` and `webpack_config` keys from your `wrangler.toml`
 
 `wrangler` 2 drops support for project types, including `type = webpack` and configuration via the `webpack_config` key. If your webpack configuration performs operations beyond adding loaders (for example, for Typescript) you will need to maintain your custom webpack configuration. In the long term, you should [migrate to an external `[build]` process](/workers/wrangler/custom-builds/). In the short term, it is still possible to reproduce `wrangler` 1's build steps in newer versions of `wrangler` by following the instructions below.
 
-1. Add [wranglerjs-compat-webpack-plugin](TODO: npm link) as a `devDependency`
+1. Add [wranglerjs-compat-webpack-plugin](https://www.npmjs.com/package/wranglerjs-compat-webpack-plugin) as a `devDependency`
 
-[wrangler-js](https://www.npmjs.com/package/wrangler-js), shipped as a separate library from [wrangler 1](https://www.npmjs.com/package/@cloudflare/wrangler/v/1.19.11), is a Node script that configures and executes [webpack 4](https://unpkg.com/browse/wrangler-js@0.1.11/package.json) for you. When you set `type = webpack`, wrangler 1 would execute this script for you. We have ported the functionality over to a new package, [wranglerjs-compat-webpack-plugin](TODO: link), which you can use as a [webpack plugin](https://v4.webpack.js.org/configuration/plugins/).
+[wrangler-js](https://www.npmjs.com/package/wrangler-js), shipped as a separate library from [wrangler 1](https://www.npmjs.com/package/@cloudflare/wrangler/v/1.19.11), is a Node script that configures and executes [webpack 4](https://unpkg.com/browse/wrangler-js@0.1.11/package.json) for you. When you set `type = webpack`, wrangler 1 would execute this script for you. We have ported the functionality over to a new package, [wranglerjs-compat-webpack-plugin](https://www.npmjs.com/package/wranglerjs-compat-webpack-plugin), which you can use as a [webpack plugin](https://v4.webpack.js.org/configuration/plugins/).
 
 To do that, you will need to add it as a dependency:
 
