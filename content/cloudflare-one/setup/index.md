@@ -52,4 +52,6 @@ Now that your environment is set up, you have in-depth visibility into your netw
 
 4. **View Logs.** Navigate to the **Logs** section for an overview of events in your network. Deep-dive into which access requests were made, and check which queries were filtered by Gateway and the action that was enforced on each of them.
 
+5. **View Performance.** Navigate to the **Performance** section by each device and user did separately and view percentage details by each & every device and user performed.
+
 You can also check the [Zero Trust Health Page](https://help.teams.cloudflare.com/) for a comprehensive overview of what filtering options you have enabled for your traffic.
