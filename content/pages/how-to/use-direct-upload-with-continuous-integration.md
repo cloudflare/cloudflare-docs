@@ -5,11 +5,11 @@ title: Use Direct Upload with continuous integration
 
 # Use Direct Upload with continuous integration
 
-Cloudflare Pages now supports directly uploading prebuilt assets, allowing you to use custom build steps for your applications and deploy to Pages with [Wrangler](/workers/cli-wrangler/). This guide will teach you how to deploy your application to Pages, using continuous integration.
+Cloudflare Pages now supports directly uploading prebuilt assets, allowing you to use custom build steps for your applications and deploy to Pages with [Wrangler](/workers/wrangler/get-started/). This guide will teach you how to deploy your application to Pages, using continuous integration.
 
 ## Deploy with Wrangler
 
-In your project directory, install [Wrangler](/workers/cli-wrangler/) so you can deploy a folder of prebuilt assets by running the following command:
+In your project directory, install [Wrangler](/workers/wrangler/get-started/) so you can deploy a folder of prebuilt assets by running the following command:
 
 ```sh
 # Publish created project
@@ -90,7 +90,7 @@ If your project uses a Node version less than 16, you will have to upgrade your 
 
 {{</Aside>}}
 
-The next step is to install [Wrangler](/workers/cli-wrangler/) in your project, using the `cloudflare/wrangler-action@2.0.0` Action, which requires you to use the secrets you added to GitHub. The Action makes sure you log in to your account with your Cloudflare credentials, stored as secrets in your project, to publish your site with the `pages publish` command.
+The next step is to install [Wrangler](/workers/wrangler/get-started/) in your project, using the `cloudflare/wrangler-action@2.0.0` Action, which requires you to use the secrets you added to GitHub. The Action makes sure you log in to your account with your Cloudflare credentials, stored as secrets in your project, to publish your site with the `pages publish` command.
 
 ## Using CircleCI for CI/CD
  
