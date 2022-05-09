@@ -207,6 +207,10 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
       - Key at which the list results should start, inclusive.
 
+    - {{<code>}}startAfter{{<param-type>}}string{{</param-type>}}{{</code>}}
+
+      - Key after which the list results should start, exclusive. Cannot be used simultaneously with `start`.
+
     - {{<code>}}end{{<param-type>}}string{{</param-type>}}{{</code>}}
 
       - Key at which the list results should end, exclusive.
