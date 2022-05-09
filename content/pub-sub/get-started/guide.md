@@ -7,9 +7,9 @@ pcx-content-type: get-started
 
 {{<Aside type="note">}}
 
-Pub/Sub is currently in private beta. You can sign up for the waitlist to register your interest.
+Pub/Sub is currently in private beta. You can [sign up for the waitlist](https://www.cloudflare.com/cloudflare-pub-sub-lightweight-messaging-private-beta/) to register your interest.
 
-{{</Aside>}}
+{{</Aside>}} 
 
 Pub/Sub is a flexible, scalable messaging service built on top of the MQTT messaging standard, allowing you to publish messages from tens of thousands of devices (or more), deploy code to filter, aggregate and transform messages using Cloudflare Workers, and/or subscribe to topics for fan-out messaging use-cases.
 
@@ -74,7 +74,7 @@ For example, a namespace of `my-namespace` and a broker of `staging` would creat
 With this in mind, create a new namespace. This example will use `cloudflare`.
 
 ```bash
-$ curl -H "X-Auth-Email: $CF_API_EMAIL" "X-Auth-Key: $CF_API_KEY" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/account/$CF_ACCOUNT_ID/pubsub/namespaces --data '{"name": "cloudflare" }'
+$ curl -H "X-Auth-Email: $CF_API_EMAIL" -H "X-Auth-Key: $CF_API_KEY" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT_ID/pubsub/namespaces --data '{"name": "cloudflare" }'
 ```
 
 You should receive a HTTP 200 response that resembles the following:
@@ -102,7 +102,7 @@ Broker names must be:
 To create a new MQTT Broker called `example-broker` in the `cloudflare` namespace from the example above:
 
 ```bash
-$ curl -H "X-Auth-Email: <$CF_API_EMAIL>" "X-Auth-Key: <$CF_API_KEY>" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/account/<$CF_ACCOUNT_ID>/pubsub/namespaces/<YOUR_NAMESPACE_NAME>/brokers --data '{"name": "example-broker", "authType": "TOKEN" }'
+$ curl -H "X-Auth-Email: <$CF_API_EMAIL>" "X-Auth-Key: <$CF_API_KEY>" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/<$CF_ACCOUNT_ID>/pubsub/namespaces/<YOUR_NAMESPACE_NAME>/brokers --data '{"name": "example-broker", "authType": "TOKEN" }'
 ```
 
 You should receive an HTTP 200 response that resembles the following:
@@ -142,13 +142,60 @@ You should receive a HTTP 200 response that resembles the example below, which i
 
 Each token allows you to publish or subscribe to the associated broker.
 
-## 6. Subscribe to a topic
+## 6. Subscribe and publish messages to a topic
 
+Your broker is now created and ready to accept messages from authenticated clients. Because Pub/Sub is based on the MQTT protocol, there are client libraries for most popular programming languages. Refer to the list of [recommended client libraries](/pub-sub/examples/client-libraries).
 
+The example below uses [MQTT.js](https://github.com/mqttjs/MQTT.js) with Node.js to subscribe to a topic on a broker and publish a very basic "hello world" style message. You will need to have a [supported Node.js](https://nodejs.org/en/download/current/) version installed.
 
-## 7. Publish messages to a topic
+```bash
+# Check that Node.js is installed
+$ which node
+# Install MQTT.js
+$ npm i mqtt --save
+```
 
+Generate a credential and store it in the `BROKER_TOKEN` environmental variable so the MQTT client can access it.
 
+```bash
+export BROKER_TOKEN=$(curl -H "X-Auth-Email: $CF_API_EMAIL" -H "X-Auth-Key: $CF_API_KEY" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT_ID/brokers/namespaces/YOUR_NAMESPACE_NAME/brokers/YOUR_BROKER_NAME/credentials?number=1&type=TOKEN&topicAcl="#" | jq '.result[1]')
+```
+
+Create a file called `index.js ` and make sure to update the `brokerEndpoint` with the address of your Pub/Sub broker.
+
+```js
+const mqtt = require('mqtt')
+ 
+const brokerEndpoint = "mqtts://my-broker.my-namespace.cloudflarepubsub.com"
+const options = {
+  port: 8443,
+  password: process.env.BROKER_TOKEN,
+  protocolVersion: 5, // MQTT 5
+}
+ 
+const client = mqtt.connect(brokerEndpoint, options)
+ 
+client.subscribe("example-topic")
+client.publish("example-topic", `message from ${client.options.clientId}: hello at ${Date.now()`)
+client.on("message", function (topic, message) {
+  console.log(`received message on ${topic}: ${message}`)
+})
+```
+
+Run the example. You should see the output written to your terminal (stdout). 
+
+```bash
+$ node index.js
+> received message on example-topic: hello from 01G2MFECWBR5WD8WSBE3AMMVVY at 1652102228
+```
+
+Your client ID and timestamp will be different from above, but you should see a very similar message. You can also try subscribing to multiple topics and publishing to them by passing the same topic name to `client.publish`. Provided they have permission to, clients can publish to multiple topics at once or as needed.
+
+If you do not see the message you published, or you are receiving error messages, ensure that:
+
+- The `BROKER_TOKEN` environmental variable is not empty. Try echo `$BROKER_TOKEN`  in your terminal.
+- You updated the `brokerEndpoint` to match the broker you created. The **Endpoint** field of your broker will show this address and port.
+- You correctly [installed MQTT.js](https://github.com/mqttjs/MQTT.js#install).
 
 ## Next Steps
 
