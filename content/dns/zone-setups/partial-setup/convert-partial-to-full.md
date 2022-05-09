@@ -18,7 +18,7 @@ You also should verify that the [status](/ssl/ssl-tls/certificate-statuses/) of 
 
 {{<Aside type="note">}}
 
-Universal SSL only supports first-level subdomains. For more coverage and additional flexibility, you can purchase an Advanced Certificate Manager or upload a Custom SSL certificate.
+Universal SSL only supports first-level subdomains. For more coverage and additional flexibility, you can purchase an Advanced Certificate or upload a Custom SSL certificate.
 
 {{</Aside>}}
 
