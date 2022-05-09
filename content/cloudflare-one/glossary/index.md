@@ -6,6 +6,8 @@ weight: 11
 
 # Glossary
 
+Review definitions for Cloudflare Zero Trust terms.
+
 ## [Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/)
 
 Cloudflare Zero Trust the power of Cloudflare’s global network to your internal teams and infrastructure. Cloudflare Zero Trust empowers users with secure, fast and seamless access to any device on the Internet.
