@@ -23,13 +23,13 @@ You must configure [`boto3`](https://boto3.amazonaws.com/v1/documentation/api/la
 import boto3
 
 s3 = boto3.resource('s3',
-  endpoint_url='https://<accountid>.r2.cloudflarestorage.com',
+  endpoint_url = 'https://<accountid>.r2.cloudflarestorage.com',
   aws_access_key_id = '<access_key_id>',
   aws_secret_access_key = '<access_key_secret>'
 )
 ```
 
-You may, however, allow `boto3` to rely on the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` [environment variables](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html#using-environment-variables).
+You may, however, omit the `aws_access_key_id` and `aws_secret_access_key ` arguments and allow `boto3` to rely on the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` [environment variables](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html#using-environment-variables) instead.
 
 An example script may look like the following:
 
@@ -40,7 +40,7 @@ filename: main.py
 import boto3
 
 s3 = boto3.resource('s3',
-  endpoint_url='https://<accountid>.r2.cloudflarestorage.com',
+  endpoint_url = 'https://<accountid>.r2.cloudflarestorage.com',
   aws_access_key_id = '<access_key_id>',
   aws_secret_access_key = '<access_key_secret>'
 )
@@ -73,7 +73,7 @@ With [`rclone`](https://rclone.org/install/) installed, you may run [`rclone con
 {{<Aside type="note" header="Recommendation">}}
 It is recommended that you choose a unique provider name and then rely on all default answers to the prompts.
 
-This create a `rclone` configuration file, which you can then modify with the preset configuration given below.
+This will create a `rclone` configuration file, which you can then modify with the preset configuration given below.
 {{</Aside>}}
 
 If you have already configured `rclone` in the past, you may run `rclone config file` to print the location of your `rclone` configuration file:
