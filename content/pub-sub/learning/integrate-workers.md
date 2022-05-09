@@ -6,7 +6,7 @@ weight: 2
 
 # Integrate with Workers
 
-Once of the most powerful features of Pub/Sub is the ability to connect Cloudflare Workers — powerful serverless functions that run on the edge — and filter, aggregate and mutate every message published to that broker. Workers can also mirror those messages to other sources, including writing to Cloudflare R2 storage, external databases, or other cloud services beyond Cloudflare, making it easy to persist or analyze incoming message payloads and data at scale.
+Once of the most powerful features of Pub/Sub is the ability to connect [Cloudflare Workers](/workers) — powerful serverless functions that run on the edge — and filter, aggregate and mutate every message published to that broker. Workers can also mirror those messages to other sources, including writing to Cloudflare R2 storage, external databases, or other cloud services beyond Cloudflare, making it easy to persist or analyze incoming message payloads and data at scale.
 
 The Worker runs as a "post-publish" hook where messages are accepted by the broker, passed to the Worker, and messages are only sent to clients who subscribed to the topic after the Worker returns a valid HTTP response. If the Worker does not return a response (intentionally or not), or returns an HTTP status code other than HTTP 200, the message is dropped.
 
@@ -134,9 +134,34 @@ const worker = {
 export default worker;
 ```
 
-Below is an example of a PubSub messge sent over HTTP to a Worker:
+Below is an example of a PubSub message sent over HTTP to a Worker:
 
-
+```bash
+[
+    {
+        "broker": "my-broker",
+        "namespace": "my-namespace",
+        "topic": "us/external/metrics/abc-456-def-123/request_count",
+        "clientId": "01G24VP1T3B51JJ0WJQJWCSY61",
+        "jti": "01G2DA0P2M5K7EKS5ET6SW4TTF",
+        "receivedAt": 1651578191,
+        "contentType": "application/json",
+        "payloadFormatIndicator": 1,
+        "payload": "<payload>"
+    },
+    {
+        "broker": "my-broker",
+        "namespace": "my-namespace",
+        "topic": "ap/external/metrics/abc-456-def-123/transactions_processed",
+        "clientId": "01G24VS053KYGNBBX8RH3T7CY5",
+        "jti": "01G2DA0V43B0SP6XEPHDD0DSJC",
+        "receivedAt": 1651578193,
+        "contentType": "application/json",
+        "payloadFormatIndicator": 1,
+        "payload": "<payload>"
+    }
+]
+```
 
 ## Troubleshoot Workers Integrations
 
