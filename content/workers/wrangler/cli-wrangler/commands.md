@@ -313,7 +313,7 @@ Like all Wrangler commands, run `wrangler tail` from your Worker’s root direct
 
 {{<Aside type="warning" header="Legacy issues with existing cloudflared configuration">}}
 
-`wrangler tail` versions older than version 1.19.0 use `cloudflared` to run. Cloudflare recommends [updating to the latest wrangler version](/workers/wrangler/cli-wrangler/install-update/#update) to avoid any issues.
+`wrangler tail` versions older than version 1.19.0 use `cloudflared` to run. Update to the [latest Wrangler version](/workers/wrangler/cli-wrangler/install-update/#update) to avoid any issues.
 
 {{</Aside>}}
 

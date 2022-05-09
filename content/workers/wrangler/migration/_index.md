@@ -6,11 +6,11 @@ meta:
   title: Migration
 ---
 
-# Migrating from Wrangler 1
+# Migrate from Wrangler 1
 
 {{<Aside type="note">}}
 
-Version 2.0.0 is a major update to Wrangler.
+Wrangler 2 is a major update to Wrangler.
 Find out more about how to migrate from Wrangler 1.
 
 {{</Aside>}}

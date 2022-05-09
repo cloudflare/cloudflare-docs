@@ -8,12 +8,12 @@ weight: 3
 
 The Wrangler `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/).
 
-KV operations are scoped to your account, so in order to use any of these commands, you:
+KV operations are scoped to your account, so in order to use any of these commands, you must:
 
-- must configure and `account_id` in your project's `wrangler.toml` file or set the `CLOUDFLARE_ACCOUNT_ID` environment variable.
-- run all `wrangler kv:<command>` operations in your terminal from the project's root directory.
+- Configure an `account_id` in your project's `wrangler.toml` file or set the `CLOUDFLARE_ACCOUNT_ID` environment variable.
+- Run all `wrangler kv:<command>` operations in your terminal from the project's root directory.
 
-### Getting started
+### Get started
 
 To use Workers KV with your Worker, the first thing you must do is create a KV namespace. This is done with the `kv:namespace` subcommand.
 

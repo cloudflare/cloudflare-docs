@@ -6,7 +6,7 @@ weight: 2
 
 # Deprecations
 
-This document describes the difference between `wrangler` versions 1.x and 2.0.0, specifically deprecations and breaking changes.
+This document describes the difference between `wrangler` versions 1 and 2, specifically deprecations and breaking changes.
 
 ## Configuration
 
@@ -38,7 +38,7 @@ This document describes the difference between `wrangler` versions 1.x and 2.0.0
 
 ### Non-mandatory fields
 
-A few configuration fields which were previously required, are now optional in particular situations; they can either be inferred, or added as an optimisation. No fields are required anymore when starting with `wrangler` version 2.0.0, and you can gradually add configuration as the need arises.
+A few configuration fields which were previously required, are now optional in particular situations; they can either be inferred, or added as an optimization. No fields are required anymore when starting with `wrangler` version 2, and you can gradually add configuration as the need arises.
 
 - **`name`**: _string_
 
@@ -46,13 +46,13 @@ A few configuration fields which were previously required, are now optional in p
 
 - **`account_id`**: _string_
 
-  The `account_id` field is not required for any of the commands. Any relevant commands will check if you are logged in, and if not, will prompt you to log in. Once logged in it will use your account ID, and will not prompt you again until your login session expires. If you have multiple account IDs, you will be presented with a list of accounts to choose from.
+  The `account_id` field is not required for any of the commands. Any relevant commands will check if you are logged in, and if not, will prompt you to log in. Once logged in, it will use your account ID and will not prompt you again until your login session expires. If you have multiple account IDs, you will be presented with a list of accounts to choose from.
 
-  You can still configure `account_id` in your `wrangler.toml` file, or as an environment variable `CLOUDFLARE_ACCOUNT_ID`; this will make startup faster, and bypass the list of choices if you have multiple IDs. The `CLOUDFLARE_API_TOKEN` environment variable is also useful for situations where it is not possible to login interactively - see [Running in CI/CD](/workers/wrangler/ci-cd).
+  You can still configure `account_id` in your `wrangler.toml` file, or as an environment variable `CLOUDFLARE_ACCOUNT_ID`; this will make startup faster, and bypass the list of choices if you have multiple IDs. The `CLOUDFLARE_API_TOKEN` environment variable is also useful for situations where it is not possible to login interactively - refer to [Running in CI/CD](/workers/wrangler/ci-cd).
 
 - **`workers_dev`** _boolean_, default: `true` when no routes are present
 
-  The `workers_dev` field is used to indicate that the Worker should be published to a `*.workers.dev` subdomain. For example, for a Worker named my-worker and a previously configured `*.workers.dev` subdomain `username`, the Worker will get published to `my-worker.username.workers.dev.com`. This field is not mandatory, and defaults to `true` when `route` or `routes` are not configured. When routes are present, it defaults to `false`. If you want to neither publish it to a `*.workers.dev` subdomain nor any routes, set `workers_dev` to `false`. This useful when you are publishing a Worker as a standalone service that can only be accessed from another Worker with (`services`)[TODO:link/to/services/docs] bindings.
+  The `workers_dev` field is used to indicate that the Worker should be published to a `*.workers.dev` subdomain. For example, for a Worker named `my-worker` and a previously configured `*.workers.dev` subdomain `username`, the Worker will get published to `my-worker.username.workers.dev.com`. This field is not mandatory, and defaults to `true` when `route` or `routes` are not configured. When routes are present, it defaults to `false`. If you want to neither publish it to a `*.workers.dev` subdomain nor any routes, set `workers_dev` to `false`. This useful when you are publishing a Worker as a standalone service that can only be accessed from another Worker with (`services`)[TODO:link/to/services/docs] bindings.
 
 ### Deprecated fields (non-breaking)
 
@@ -76,15 +76,15 @@ A few configuration fields are deprecated and will not work as expected anymore.
 
 - **`site.entry-point`**: `string`, deprecated
 
-  The `site.entry-point` configuration was used to specify an entry point for Workers with a `[site]` configuration. This has been replaced by the top level `main` field.
+  The `site.entry-point` configuration was used to specify an entry point for Workers with a `[site]` configuration. This has been replaced by the top-level `main` field.
 
 - **`type`**: `rust` | `javascript` | `webpack`, deprecated
 
-  The `type` configuration was used to specify the type of Worker; it has since been made redundant and is now inferred from usage. If you were using `type = "webpack"` (and the optional `webpack_config` field), you should read the [TODO: webpack migration guide](#todo/webpack-migration.md) to modify your project and use a custom build instead.
+  The `type` configuration was used to specify the type of Worker. It has since been made redundant and is now inferred from usage. If you were using `type = "webpack"` (and the optional `webpack_config` field), you should read the [TODO: webpack migration guide](#todo/webpack-migration.md) to modify your project and use a custom build instead.
 
 ## Deprecated commands
 
-The following commands are deprecated in Wrangler as of v2.0.0.
+The following commands are deprecated in Wrangler as of Wrangler 2.
 
 ### `build`:
 
@@ -146,7 +146,7 @@ Routes are specified in the `wrangler.toml` configuration file.
   });
   ```
 
-  `wrangler` 1.x would resolve `import SomeDependency from "some-dependency.js";` to the file `some-dependency.js`. This will also work in wrangler 2.0, but will also log a deprecation warning; in the future, this will break with an error. Instead, you should rewrite the import to specifiy that it is a relative path, like so:
+  `wrangler` 1 would resolve `import SomeDependency from "some-dependency.js";` to the file `some-dependency.js`. This will also work in `wrangler` 2, but will also log a deprecation warning; in the future, this will break with an error. Instead, you should rewrite the import to specifiy that it is a relative path, like so:
 
   ```diff
   - import SomeDependency from "some-dependency.js";

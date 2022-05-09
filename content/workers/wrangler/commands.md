@@ -8,16 +8,16 @@ weight: 2
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
-- [`init`](#init) - create a skeleton Wrangler project, including the wrangler.toml file
-- [`dev`](#dev) - start a local server for developing your Worker
-- [`publish`](#publish) - publish your Worker to Cloudflare
-- [`kv:namespace`](#kvnamespace) - manage Workers KV namespaces
-- [`kv:key`](#kvkey) - manage key-value pairs within a Workers KV namespace
-- [`kv:bulk`](#kvbulk) - manage multiple key-value pairs within a Workers KV namespace in batches
-- [`secret`](#secret) - manage the secret variables for a Worker
-- [`tail`](#tail) - start a session to livestream logs from a deployed Worker
-- [`login`](#login) - authorize Wrangler with your Cloudflare account using OAuth
-- [`logout`](#logout) - remove Wrangler’s authorization for accessing your account
+- [`init`](#init) - create a skeleton Wrangler project, including the `wrangler.toml` file.
+- [`dev`](#dev) - start a local server for developing your Worker.
+- [`publish`](#publish) - publish your Worker to Cloudflare.
+- [`kv:namespace`](#kvnamespace) - manage Workers KV namespaces.
+- [`kv:key`](#kvkey) - manage key-value pairs within a Workers KV namespace.
+- [`kv:bulk`](#kvbulk) - manage multiple key-value pairs within a Workers KV namespace in batches.
+- [`secret`](#secret) - manage the secret variables for a Worker.
+- [`tail`](#tail) - start a session to livestream logs from a deployed Worker.
+- [`login`](#login) - authorize Wrangler with your Cloudflare account using OAuth.
+- [`logout`](#logout) - remove Wrangler’s authorization for accessing your account.
 
 {{<Aside type="note">}}
 
@@ -28,11 +28,11 @@ Flags:
 {{<definitions>}}
 
 - `--config` {{<type>}}string{{</type>}}
-  - Path to `.toml` configuration file
+  - Path to `.toml` configuration file.
 - `--help` {{<type>}}boolean{{</type>}}
-  - Show help
+  - Show help.
 - `--version` {{<type>}}boolean{{</type>}}
-  - Show version number
+  - Show version number.
 
 {{</definitions>}}
 
@@ -77,48 +77,48 @@ Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) do
 {{<definitions>}}
 
 - `SCRIPT` {{<type>}}string{{</type>}}
-  - The path to an entry point for your Worker
+  - The path to an entry point for your Worker.
 - `--name` {{<type>}}string{{</type>}}
-  - Name of the worker
+  - Name of the Worker.
 - `--env` {{<type>}}string{{</type>}}
-  - Perform on a specific environment
+  - Perform on a specific environment.
 - `--compatibility-date` {{<type>}}string{{</type>}}
-  - Date to use for compatibility checks
+  - Date to use for compatibility checks.
 - `--compatibility-flags`, `--compatibility-flag` {{<type>}}boolean[]{{</type>}}
-  - Flags to use for compatibility checks
+  - Flags to use for compatibility checks.
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
-  - Use the latest version of the worker runtime
+  - Use the latest version of the Workers runtime.
 - `--ip` {{<type>}}string{{</type>}}
-  - IP address to listen on, defaults to `localhost`
+  - IP address to listen on, defaults to `localhost`.
 - `--port` {{<type>}}number{{</type>}}
-  - Port to listen on
+  - Port to listen on.
 - `--inspector-port` {{<type>}}number{{</type>}}
-  - Port for devtools to connect to
+  - Port for devtools to connect to.
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
-  - Routes to upload
+  - Routes to upload.
 - `--host` {{<type>}}string{{</type>}}
-  - Host to forward requests to, defaults to the zone of project
+  - Host to forward requests to, defaults to the zone of project.
 - `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}}
-  - Protocol to listen to requests on
+  - Protocol to listen to requests on.
 - `--site` {{<type>}}string{{</type>}}
-  - Root folder of static assets for Workers Sites
+  - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}}
-  - Array of .gitignore-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
+  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
 - `--site-exclude` {{<type>}}string[]{{</type>}}
-  - Array of .gitignore-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
+  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
 - `--upstream-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: https){{</prop-meta>}}
-  - Protocol to forward requests to host on
+  - Protocol to forward requests to host on.
 - `--tsconfig` {{<type>}}string{{</type>}}
-  - Path to a custom tsconfig.json file
+  - Path to a custom `tsconfig.json` file.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Run the preview of the Worker directly on my local machine
+  - Run the preview of the Worker directly on your local machine.
 - `--minify` {{<type>}}boolean{{</type>}}
-  - Minify the script
+  - Minify the script.
 
 {{</definitions>}}
 
 The command that establishes a connection between `localhost` and a Cloudflare server that hosts your Worker in development.
-This allows full access to Workers KV, Durable Objects, etc. This is a great way to easily test your Worker while developing.
+This allows full access to Workers KV, Durable Objects, and more. This is a great way to easily test your Worker while developing.
 
 ```sh
 
@@ -152,33 +152,33 @@ Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) do
 {{<definitions>}}
 
 - `SCRIPT` {{<type>}}string{{</type>}}
-  - The path to an entry point for your Worker
+  - The path to an entry point for your Worker.
 - `--name` {{<type>}}string{{</type>}}
-  - Name of the worker
+  - Name of the Worker.
 - `--env` {{<type>}}string{{</type>}}
-  - Perform on a specific environment
+  - Perform on a specific environment.
 - `--outdir` {{<type>}}string{{</type>}}
-  - Path to directory where Wrangler will write the bundled worker files.
+  - Path to directory where Wrangler will write the bundled Worker files.
 - `--compatibility-date` {{<type>}}string{{</type>}}
-  - Date to use for compatibility checks
+  - Date to use for compatibility checks.
 - `--compatibility-flags`, `--compatibility-flag` {{<type>}}boolean[]{{</type>}}
-  - Flags to use for compatibility checks
+  - Flags to use for compatibility checks.
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
-  - Use the latest version of the worker runtime
+  - Use the latest version of the Workers runtime.
 - `--site` {{<type>}}string{{</type>}}
-  - Root folder of static assets for Workers Sites
+  - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}}
-  - Array of .gitignore-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
+  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
 - `--site-exclude` {{<type>}}string[]{{</type>}}
-  - Array of .gitignore-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
+  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
 - `--triggers`, `--schedule`, `--schedules` {{<type>}}string[]{{</type>}}
-  - Cron schedules to attach to the published Worker
+  - Cron schedules to attach to the published Worker.
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
-  - Routes where this Worker will be published
+  - Routes where this Worker will be published.
 - `--tsconfig` {{<type>}}string{{</type>}}
-  - Path to a custom tsconfig.json file
+  - Path to a custom `tsconfig.json` file.
 - `--minify` {{<type>}}boolean{{</type>}}
-  - Minify the bundled script before publishing
+  - Minify the bundled script before publishing.
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
 
 {{</definitions>}}
@@ -190,7 +190,7 @@ Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) do
 Manage Workers KV namespaces.
 
 {{<Aside type="note">}}
-The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). Find out more about using Workers KV with Wrangler in the [Workers KV guide](/workers/wrangler/workers-kv).
+The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/workers/wrangler/workers-kv).
 {{</Aside>}}
 
 ### `create`
@@ -206,14 +206,14 @@ $ wrangler kv:namespace create <NAMESPACE> [OPTIONS]
 - `NAMESPACE` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new namespace.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific environment
+  - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace (the `preview_id` value).
 
 {{</definitions>}}
 
 {{<Aside type="note">}}
-Here is an example of using this command to create a KV namespace called `MY_KV`.
+Below is an example of using the `create` command to create a KV namespace called `MY_KV`.
 
 ```sh
 $ wrangler kv:namespace create "MY_KV"
@@ -227,7 +227,7 @@ kv_namespaces = [
 {{</Aside>}}
 
 {{<Aside type="note">}}
-Here is an example of using this command to create a preview KV namespace called `MY_KV`.
+Below is an example of using the `create` command to create a preview KV namespace called `MY_KV`.
 
 ```sh
 $ wrangler kv:namespace create "MY_KV" --preview
@@ -241,7 +241,7 @@ kv_namespaces = [
 
 {{</Aside>}}
 
-### `list`
+### list
 
 List all KV namespaces associated with the current account ID.
 
@@ -250,7 +250,7 @@ $ wrangler kv:namespace list
 ```
 
 {{<Aside type="note">}}
-Here is an example that passes the Wrangler command through the `jq` command:
+Below is an example that passes the Wrangler command through the `jq` command:
 
 ```sh
 $ wrangler kv:namespace list | jq "."
@@ -268,7 +268,7 @@ $ wrangler kv:namespace list | jq "."
 
 {{</Aside>}}
 
-### `delete`
+### delete
 
 Delete a given namespace.
 
@@ -287,14 +287,14 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `--namespace-id` {{<type>}}string{{</type>}}
   - The ID of the namespace to delete.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific environment
+  - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
 
 {{</definitions>}}
 
 {{<Aside type="note">}}
-Here is an example of deleting a KV namespace called MY_KV.
+Below is an example of deleting a KV namespace called MY_KV.
 
 ```sh
 $ wrangler kv:namespace delete --binding=MY_KV
@@ -307,7 +307,7 @@ yes
 {{</Aside>}}
 
 {{<Aside type="note">}}
-Here is an example of deleting a preview KV namespace called MY_KV.
+Below is an example of deleting a preview KV namespace called MY_KV.
 
 ```sh
 $ wrangler kv:namespace delete --binding=MY_KV --preview
@@ -324,7 +324,7 @@ yes
 Manage key-value pairs within a Workers KV namespace.
 
 {{<Aside type="note">}}
-The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). Find out more about using Workers KV with Wrangler in the [Workers KV guide](/workers/wrangler/workers-kv).
+The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/workers/wrangler/workers-kv).
 {{</Aside>}}
 
 ### `put`
@@ -354,7 +354,7 @@ Exactly one of `VALUE` or `--path` is required.
 - `--namespace-id` {{<type>}}string{{</type>}}
   - The ID of the namespace to delete.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific environment
+  - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
 - `--ttl` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -365,7 +365,7 @@ Exactly one of `VALUE` or `--path` is required.
 {{</definitions>}}
 
 {{<Aside type="note">}}
-Here is an example that puts a key-value into the namespace with binding name of `MY_KV`.
+Below is an example that puts a key-value into the namespace with binding name of `MY_KV`.
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV "my-key" "some-value"
@@ -375,7 +375,7 @@ $ wrangler kv:key put --binding=MY_KV "my-key" "some-value"
 {{</Aside>}}
 
 {{<Aside type="note">}}
-Here is an example that puts a key-value into the preview namespace with binding name of `MY_KV`.
+Below is an example that puts a key-value into the preview namespace with binding name of `MY_KV`.
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV --preview "my-key" "some-value"
@@ -385,7 +385,7 @@ $ wrangler kv:key put --binding=MY_KV --preview "my-key" "some-value"
 {{</Aside>}}
 
 {{<Aside type="note">}}
-Here is an example that puts a key-value into a namespace, with a time-to-live value of 10,000 seconds.
+Below is an example that puts a key-value into a namespace, with a time-to-live value of `10000` seconds.
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV "my-key" "some-value" --ttl=10000
@@ -395,7 +395,7 @@ $ wrangler kv:key put --binding=MY_KV "my-key" "some-value" --ttl=10000
 {{</Aside>}}
 
 {{<Aside type="note">}}
-Here is an example that puts a key-value into a namespace, where the value is read from the `value.txt` file.
+Below is an example that puts a key-value into a namespace, where the value is read from the `value.txt` file.
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV "my-key" --path=value.txt
@@ -404,7 +404,7 @@ $ wrangler kv:key put --binding=MY_KV "my-key" --path=value.txt
 
 {{</Aside>}}
 
-### `list`
+### list
 
 Output a list of all keys in a given namespace.
 
@@ -423,7 +423,7 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `--namespace-id` {{<type>}}string{{</type>}}
   - The ID of the namespace to delete.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific environment
+  - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
 - `--prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -432,7 +432,7 @@ Exactly one of `--binding` or `--namespace-id` is required.
 {{</definitions>}}
 
 {{<Aside type="note">}}
-Here is an example that passes the Wrangler command through the `jq` command:
+Below is an example that passes the Wrangler command through the `jq` command:
 
 ```sh
 $ wrangler kv:key list --binding=MY_KV --prefix="public" | jq "."
@@ -470,7 +470,7 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `--namespace-id` {{<type>}}string{{</type>}}
   - The ID of the namespace to delete.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific environment
+  - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
 
@@ -507,14 +507,14 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `--namespace-id` {{<type>}}string{{</type>}}
   - The ID of the namespace to delete.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific environment
+  - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
 
 {{</definitions>}}
 
 {{<Aside type="note">}}
-Here is an example that deletes the key-value pair with key `"my-key"` from the KV namespace with binding name `MY_KV`.
+Below is an example that deletes the key-value pair with key `"my-key"` from the KV namespace with binding name `MY_KV`.
 
 ```sh
 $ wrangler kv:key delete --binding=MY_KV "my-key"
@@ -531,7 +531,7 @@ yes
 Manage multiple key-value pairs within a Workers KV namespace in batches.
 
 {{<Aside type="note">}}
-The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). Find out more about using Workers KV with Wrangler in the [Workers KV guide](/workers/wrangler/workers-kv).
+The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/workers/wrangler/workers-kv).
 {{</Aside>}}
 
 ### `put`
@@ -549,13 +549,13 @@ Exactly one of `--binding` or `--namespace-id` is required.
 {{<definitions>}}
 
 - `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The JSON file containing an array of key-value pairs to write to the namespace
+  - The JSON file containing an array of key-value pairs to write to the namespace.
 - `--binding` {{<type>}}string{{</type>}}
   - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
 - `--namespace-id` {{<type>}}string{{</type>}}
   - The ID of the namespace to delete.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific environment
+  - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
 
@@ -632,13 +632,13 @@ Exactly one of `--binding` or `--namespace-id` is required.
 {{<definitions>}}
 
 - `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The JSON file containing an array of keys to delete from the namespace
+  - The JSON file containing an array of keys to delete from the namespace.
 - `--binding` {{<type>}}string{{</type>}}
   - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
 - `--namespace-id` {{<type>}}string{{</type>}}
   - The ID of the namespace to delete.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific environment
+  - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
 
@@ -652,7 +652,7 @@ Here is an example of the JSON input:
 ```
 
 {{<Aside type="note">}}
-Here is an example of deleting all the keys found in the `allthethingsdelete.json` file.
+Below is an example of deleting all the keys found in the `allthethingsdelete.json` file.
 
 ```sh
 $ wrangler kv:bulk delete --binding=MY_KV allthethingsdelete.json
@@ -666,11 +666,11 @@ y
 
 ---
 
-## `secret`
+## secret
 
 Manage the secret variables for a Worker.
 
-### `put`
+### put
 
 Create or replace a secret for a Worker.
 
@@ -683,7 +683,7 @@ $ wrangler secret put <NAME> [OPTIONS]
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The variable name for this secret to be accessed in the Worker.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific environment
+  - Perform on a specific environment.
 
 {{</definitions>}}
 
@@ -700,7 +700,7 @@ Enter a secret value: ***
 {{</Aside>}}
 
 {{<Aside type="note">}}
-This command can also receive piped input. For example
+The `put` command can also receive piped input. For example:
 
 ```sh
 $ echo "-----BEGIN PRIVATE KEY-----\nM...==\n-----END PRIVATE KEY-----\n" | wrangler secret put PRIVATE_KEY
@@ -708,7 +708,7 @@ $ echo "-----BEGIN PRIVATE KEY-----\nM...==\n-----END PRIVATE KEY-----\n" | wran
 
 {{</Aside>}}
 
-### `delete`
+### delete
 
 Delete a secret for a Worker.
 
@@ -721,11 +721,11 @@ $ wrangler secret delete <NAME> [OPTIONS]
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The variable name for this secret to be accessed in the Worker.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific environment
+  - Perform on a specific environment.
 
 {{</definitions>}}
 
-### `list`
+### list
 
 List the names of all the secrets for a Worker.
 
@@ -741,7 +741,7 @@ $ wrangler secret list [OPTIONS]
 {{</definitions>}}
 
 {{<Aside type="note">}}
-Here is an example of listing the secrets for the current Worker.
+Below is an example of listing the secrets for the current Worker.
 
 ```sh
 $ wrangler secret list
@@ -777,7 +777,7 @@ $ wrangler tail <NAME> [OPTIONS]
 - `--method` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Filter by HTTP method.
 - `--sampling-rate` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Add a fraction of requests to log sampling rate (between 0 and 1).
+  - Add a fraction of requests to log sampling rate (between `0` and `1`).
 - `--search` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Filter by a text match in `console.log` messages.
 - `--ip` {{<type>}}(string|"self")[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -813,7 +813,7 @@ $ wrangler login [OPTIONS]
 
 ---
 
-## `logout`
+## logout
 
 Remove Wrangler's authorization for accessing your account. This command will invalidate your current OAuth token.
 
@@ -821,9 +821,9 @@ Remove Wrangler's authorization for accessing your account. This command will in
 $ wrangler logout
 ```
 
-If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by deleting your API token in the Dashboard:
+If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by deleting your API token in the Cloudflare dashboard:
 
-- Log into the Cloudflare dashboard
-- Go to **Overview** > **Get your API token** in the right side menu
-- Select the three-dot menu on your Wrangler token
-- Select **Delete**
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+- Go to **Overview** > **Get your API token** in the right-side menu.
+- Select the three-dot menu on your Wrangler token.
+- Select **Delete**.

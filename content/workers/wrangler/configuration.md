@@ -4,19 +4,19 @@ title: Configuration
 weight: 3
 ---
 
-## Configuring `wrangler.toml`
+## Configure `wrangler.toml`
 
 `wrangler` optionally uses a `wrangler.toml` configuration file to customise the development and publishing setup for a Worker. This document serves as a reference for all the fields and acceptable values in this configuration file.
 
-The configuration for a Worker is can become complex since we can define different "environments", and each environment can have its own configuration.
-There is a default ("top-level") environment and then named environments that provide environment specific configuration.
+The configuration for a Worker can become complex when you can define different [environments](/workers/platform/environments/), and each environment has its own configuration.
+There is a default (top-level) environment and named environments that provide environment-specific configuration.
 
 ```toml
 ---
 filename: wrangler.toml
 ---
 
-# The name of your worker. Alphanumeric + dashes only.
+# The name of your Worker. Alphanumeric values and dashes only.
 name = "worker"
 
 # The entrypoint/path to the file that will be executed.
@@ -29,7 +29,7 @@ main = "./some-entrypoint"
 # the CLOUDFLARE_ACCOUNT_ID environment variable.
 account_id = ""
 
-# Whether we use <name>.<subdomain>.workers.dev to
+# Whether you use `<NAME>.<SUBDOMAIN>.workers.dev` to
 # test and deploy your worker.
 # @default `true`
 workers_dev = true
@@ -40,24 +40,24 @@ workers_dev = true
 # For newly created Workers, if the Usage Model is omitted
 # it will be set to the [default Usage Model set on the account](https://dash.cloudflare.com/?account=workers/default-usage-model).
 # For existing Workers, if the Usage Model is omitted, it will be
-# set to the Usage Model configured in the dashboard for that Worker.
+# set to the Usage Model configured in the Cloudflare dashboard for that Worker.
 usage_model = "bundled" | "unbound"
 
 # A list of routes that your worker should be published to.
 # Only one of `routes` or `route` is required.
-# Only required when workers_dev is false, and there's no scheduled worker (see `triggers`)
+# Only required when `workers_dev` is false, and there is no scheduled worker (refer to `triggers`)
 routes = ["routes"] | [{ pattern = "*", zone_id = "ZONE_ID" }] | [{ pattern = "*", zone_name = "ZONE_NAME" }]
 
 # The same as routes, but only one.
 route = "routes" | { pattern = "*", zone_id = "ZONE_ID" } | { pattern = "*", zone_name = "ZONE_NAME" }
 
 # Lets you call workers periodically, much like a cron job.
-# More details here https://developers.cloudflare.com/workers/platform/cron-triggers
+# More details: https://developers.cloudflare.com/workers/platform/cron-triggers
 # @default `{crons:[]}`
 [triggers]
 crons = ["1 * * * *"]
 
-# A map of environment variables to set when deploying your worker.
+# A map of environment variables to set when deploying your Worker.
 # @default `{}`
 # not inherited
 [vars]
@@ -65,12 +65,12 @@ KEY = "value"
 
 # These specify any Workers KV Namespaces you want to
 # access from inside your Worker.
-# To learn more about KV Namespaces see:
+# To learn more about KV namespaces, refer to:
 # https://developers.cloudflare.com/workers/learning/how-kv-works
 # @default `[]`
 # not inherited
 kv_namespaces = [{
-  # The binding name used to refer to the KV Namespace
+  # The binding name used to refer to the KV namespace
   binding = "TEST_NAMESPACE",
   # The ID of the KV namespace at the edge
   id = "",
@@ -78,8 +78,8 @@ kv_namespaces = [{
   preview_id = ""
   }]
 
-# A list of durable objects that your worker should be bound to.
-# To learn more about durable objects see:
+# A list of Durable Objects that your Worker should be bound to.
+# To learn more about durable objects, refer to:
 # https://developers.cloudflare.com/workers/learning/using-durable-objects
 # @default `{bindings:[]}`
 # not inherited
@@ -89,13 +89,13 @@ kv_namespaces = [{
     name = "TEST_OBJECT",
     # The exported class name of the Durable Object
     class_name = "",
-    # The script where the Durable Object is defined (if it's external to this worker)
+    # The script where the Durable Object is defined (if it is external to this Worker)
     script_name = ""
   }]
 
 # A list of migrations that should be uploaded with your Worker.
 # These define changes in your Durable Object declarations.
-# More details at https://developers.cloudflare.com/workers/learning/using-durable-objects#configuring-durable-object-classes-with-migrations
+# More details: https://developers.cloudflare.com/workers/learning/using-durable-objects#configuring-durable-object-classes-with-migrations
 [[migrations]]
   # A unique identifier for this migration.
   tag = ""
@@ -141,19 +141,19 @@ r2_buckets  = [{
   fallthrough = true
 
 # A list of text files that your worker should be bound to. This is
-# the "legacy" way of binding to a text file. ES module workers should
+# the legacy way of binding to a text file. ES module workers should
 # do proper module imports.
 [text_blobs]
   TEXT = ""
 
 # A list of wasm modules that your worker should be bound to. This is
-# the "legacy" way of binding to a wasm module. ES module workers should
+# the legacy way of binding to a wasm module. ES module workers should
 # do proper module imports.
 [wasm_modules]
   MODULE = "module.wasm"
 
 # A list of data files that your worker should be bound to. This is
-# the "legacy" way of binding to a data file. ES module workers should
+# the legacy way of binding to a data file. ES module workers should
 # do proper module imports.
 [data_blobs]
   DATA = ""
@@ -167,7 +167,7 @@ minify = false
 # Add polyfills for node builtin modules and globals
 node_compat = false
 
-# Options to configure the development server that your worker will use.
+# Options to configure the development server that your Worker will use.
 [dev]
   # IP address for the local dev server to listen on,
   # @default `localhost`
@@ -183,13 +183,13 @@ node_compat = false
 
 # The definition of a Worker Site, a feature that lets you upload
 # static assets with your Worker.
-# Learn more here about sites https://developers.cloudflare.com/workers/platform/sites
+# Learn more here about sites: https://developers.cloudflare.com/workers/platform/sites
 [site]
   # The directory containing your static assets.
-  # It must be a path relative to your wrangler.toml file.
+  # It must be a path relative to your `wrangler.toml` file.
   # If there is a `site` field then it must contain this `bucket` field.
   bucket = "./public"
-  # An exclusive list of .gitignore-style patterns that match file
+  # An exclusive list of `.gitignore`-style patterns that match file
   # or directory names from your bucket location.
   # Only matched items will be uploaded.
   include = ["upload_dir"]
@@ -203,14 +203,14 @@ node_compat = false
 #  - Some fields are inherited and overridable in each environment.
 #  - But some are not inherited and must be explicitly specified in every environment, if they are specified at the top level.
 [env]
-  # See Environments
+  # Refer to Environments: https://developers.cloudflare.com/workers/platform/environments/
 
 # A date in the form yyyy-mm-dd, which will be used to determine
 # which version of the Workers runtime is used.
 compatibility_date = "2021-11-12"
 
 # A list of flags that enable features from upcoming features of
-# the Workers runtime, usually used together with compatibility_flags.
+# the Workers runtime, usually used together with `compatibility_flags`.
 compatibility_flags = [
     "formdata_parser_supports_files"
 ]

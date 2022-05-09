@@ -4,13 +4,13 @@ title: Migrating from Wrangler 1
 weight: 1
 ---
 
-## Migrating from Wrangler 1
+## Migrate from Wrangler 1
 
-This document describes the steps to migrate a project from wrangler 1 to 2.
+This document describes the steps to migrate a project from Wrangler 1 to Wrangler 2.
 
-Wrangler version 2.0.0 ships with new features and improvements that may require some changes to your configuration.
+Wrangler 2 ships with new features and improvements that may require some changes to your configuration.
 
-The good news is that the CLI itself should guide you through the upgrade process.
+The CLI itself will guide you through the upgrade process.
 
 {{<Aside type="node">}}
 To learn more about the improvements to Wrangler, refer to the [What's new page](/workers/wrangler/compare-v1-v2/).
@@ -72,7 +72,7 @@ Here are common fields that are no longer required.
 - `build.upload.format` is no longer used. The format is now inferred automatically from the code.
 - `build.upload.main` and `build.upload.dir` are no longer required. Use the top level `main` field, which now serves as the entry-point for the Worker.
 - `site.entry-point` is no longer required. The entry point should be specified through the `main` field.
-- `webpack_config` and `webpack` properties are no longer supported. See [Ejecting Webpack](/workers/wrangler/migration/eject-webpack/).
+- `webpack_config` and `webpack` properties are no longer supported. Refer to [Ejecting Webpack](/workers/wrangler/migration/eject-webpack/).
 
 Here are the Wrangler 1 commands that are no longer supported:
 
@@ -82,4 +82,4 @@ Here are the Wrangler 1 commands that are no longer supported:
 - `wrangler report` - If you find a bug please report it at [Wrangler issues](https://github.com/cloudflare/wrangler2/issues/new/choose).
 - `wrangler build` - If you wish to access the output from bundling your Worker use `wrangler publish --outdir=path/to/output`.
 
-Refer to the [deprecations guide](/workers/wrangler/migration/deprecations/) for more details on what's no longer supported.
+Refer to the [deprecations guide](/workers/wrangler/migration/deprecations/) for more details on what is no longer supported.

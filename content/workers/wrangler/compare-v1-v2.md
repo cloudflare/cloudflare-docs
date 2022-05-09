@@ -6,7 +6,7 @@ weight: 11
 
 ## New in Wrangler 2
 
-`wrangler` 2.0 introduces a number of new features for developing and deploying a Worker. This document is to show previous users of `wrangler` 1.x what they can expect when they move to `wrangler` v2.
+`wrangler` 2 introduces a number of new features for developing and deploying a Worker. This document is to show previous users of `wrangler` 1 what they can expect when they move to `wrangler` 2.
 
 - `wrangler.toml` is no longer mandatory.
 - `dev` and `publish` accept CLI arguments.
@@ -23,11 +23,11 @@ weight: 11
 - Developer hotkeys.
 - Better configuration validation.
 
-## Wrangler 1.0 and 2.0 comparison table
+## Wrangler 1 and 2 comparison table
 
 ### Commands
 
-| Command     | 1.x | 2.0 | Notes                                          |
+| Command     | 1   | 2   | Notes                                          |
 | ----------- | --- | --- | ---------------------------------------------- |
 | `publish`   | ✅  | ✅  |
 | `dev`       | ✅  | ✅  |
@@ -50,7 +50,7 @@ weight: 11
 
 ## Configuration
 
-| Property              | 1.x | 2.0 | Notes                                                                          |
+| Property              | 1   | 2   | Notes                                                                          |
 | --------------------- | --- | --- | ------------------------------------------------------------------------------ |
 | `type = "webpack"`    | ✅  | ❌  | Removed, look at this guide to migrate.                                        |
 | `type = "rust"`       | ✅  | ❌  | Removed, use [`workers-rs`](https://github.com/cloudflare/workers-rs) instead. |
@@ -58,7 +58,7 @@ weight: 11
 
 ## Features
 
-| Feature    | 1.x | 2.0 | Notes                                                                                                                                                                 |
+| Feature    | 1   | 2   | Notes                                                                                                                                                                 |
 | ---------- | --- | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | TypeScript | ❌  | ✅  | You can give wrangler a TypeScript file, and it will automatically transpile it to JavaScript using [`esbuild`](https://github.com/evanw/esbuild) under-the-hood.     |
 | Local mode | ❌  | ✅  | `wrangler dev --local` will run your Worker on your local machine instead of on our network. This is powered by [Miniflare](https://github.com/cloudflare/miniflare). |

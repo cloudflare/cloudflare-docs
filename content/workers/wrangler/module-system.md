@@ -9,7 +9,7 @@ weight: 5
 Cloudflare Workers support the [ESM module syntax](/workers/learning/migrating-to-module-workers/).
 This means you can use the `import`/`export` syntax to add modules to your Worker.
 
-As of version 2.0.0, `wrangler` has built-in support for importing modules.
+As of Wrangler 2, `wrangler` has built-in support for importing modules.
 
 ### Module formats
 
