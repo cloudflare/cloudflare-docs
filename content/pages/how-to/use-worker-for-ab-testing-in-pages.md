@@ -39,7 +39,7 @@ Following the functions naming convention, the `_middleware.js` file export a si
 
 ```js
 ---
-filename: `/functions/_middleware.js`
+filename: /functions/_middleware.js
 ---
   const abtest = async({request, next, env}) => {
   /*
@@ -57,7 +57,7 @@ To identify the cookie, we assign it in the browser. We will give it a unique na
 
 ```js
 ---
-filename: `/functions/_middleware.js`
+filename: /functions/_middleware.js
 highlight: [1,2]
 ---
 const cookieName = "ab-test-cookie"
@@ -83,7 +83,7 @@ Based on the URL pathname, we will check what cookie value is present in the hea
 
 ```js
 ---
-filename: `/functions/_middleware.js`
+filename: /functions/_middleware.js
 highlight: [7,8,9,10,11,12,13,14,15,16,17,18,19]
 ---
 const cookieName = "ab-test-cookie"
@@ -125,8 +125,8 @@ If the percentage is lower than 50, you will assign the version to `new` and bas
 
 ```js
 ---
-filename: `/functions/_middleware.js`
-highlight: [20,21,22,23,24,25,26,27,28,29,30]
+filename: /functions/_middleware.js
+highlight: [20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36]
 ---
 const cookieName = "ab-test-homepage"
 const newHomepagePathName = "/test"
