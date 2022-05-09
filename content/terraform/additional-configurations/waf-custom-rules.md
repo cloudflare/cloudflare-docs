@@ -17,7 +17,7 @@ This page provides examples of creating custom rules in a zone or account using 
 
 For more information on custom rules, refer to [Custom rules](/waf/custom-rules/) in the Cloudflare WAF documentation.
 
-# Create custom rule
+## Create custom rule
 
 The following example creates a custom rule at the zone level for zone with ID `<ZONE_ID>` that blocks all traffic on non-standard HTTP(S) ports:
 
@@ -28,7 +28,7 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
   description = ""
   kind        = "zone"
   phase       = "http_request_firewall_custom"
- 
+
   rules {
     action = "block"
     expression = "(not cf.edge.server_port in {80 443})"
@@ -55,7 +55,7 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset" {
   description = ""
   kind        = "custom"
   phase       = "http_request_firewall_custom"
- 
+
   rules {
     action = "block"
     expression = "(not cf.edge.server_port in {80 443})"
@@ -74,9 +74,9 @@ resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
   description = ""
   kind        = "root"
   phase       = "http_request_firewall_custom"
- 
+
   depends_on = [cloudflare_ruleset.account_firewall_custom_ruleset]
- 
+
   rules {
     action = "execute"
     action_parameters {
@@ -102,7 +102,7 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset_exposed_creds" {
   description = ""
   kind        = "custom"
   phase       = "http_request_firewall_custom"
- 
+
   rules {
     action = "rewrite"
     action_parameters {
@@ -132,9 +132,9 @@ resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
   description = ""
   kind        = "root"
   phase       = "http_request_firewall_custom"
- 
+
   depends_on = [cloudflare_ruleset.account_firewall_custom_ruleset_exposed_creds]
- 
+
   rules {
     action = "execute"
     action_parameters {
