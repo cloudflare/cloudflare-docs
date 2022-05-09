@@ -5,10 +5,9 @@ _build:
   list: never
 ---
 
-{{<definitions>}}
+#### `width`
 
-- `Width`
-  - Specifies maximum width of the image in pixels. Exact behavior depends on the `fit` mode (described below). Example:
+Specifies maximum width of the image in pixels. Exact behavior depends on the `fit` mode (described below). Example:
 
 ```js
 ---
@@ -24,8 +23,9 @@ filename: Workers
 cf: {images: {width: x}}
 ```
 
-- `Height`
-  - Specifies maximum height of the image in pixels. Exact behavior depends on the `fit` mode (described below). Example:
+#### `height`
+
+Specifies maximum height of the image in pixels. Exact behavior depends on the `fit` mode (described below). Example:
 
 ```js
 ---
@@ -41,8 +41,9 @@ filename: Workers
 cf: {images: {height: x}}
 ```
 
-- `DPR`
-  - Device Pixel Ratio. Default is `1`. Multiplier for `width`/`height` that makes it easier to specify higher-DPI sizes in `<img srcset>`. Example:
+#### `dpr`
+
+Device Pixel Ratio. Default is `1`. Multiplier for `width`/`height` that makes it easier to specify higher-DPI sizes in `<img srcset>`. Example:
 
 ```js
 ---
@@ -58,194 +59,418 @@ filename: Workers
 cf: {images: {dpr: x}}
 ```
 
-- `Fit`
-  - Affects interpretation of `width` and `height`. All resizing modes preserve aspect ratio. Used as a string in Workers integration. Available modes are:
-    - `Scale down`
-      - Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept.
-      ```js
-      ---
-      filename: URL format
-      ---
-      fit=scale-down
-      ```
-      
-      ```js
-      ---
-      filename: Workers
-      ---
-      cf: {images: {fit: "scale-down"}}
-      ```
-      
-    - `Contain`
-      - Image will be resized (shrunk or enlarged) to be as large as possible within the given `width` or `height` while preserving the aspect ratio. If only a single dimension is given (for example, only `width`), the image will be shrunk or enlarged to exactly match that dimension.
-      ```js
-      ---
-      filename: URL format
-      ---
-      fit=contain
-      ```
-      
-      ```js
-      ---
-      filename: Workers
-      ---
-      cf: {images: {fit: "contain"}}
-      ```
-    
-    - `Cover`
-      - Resizes (shrinks or enlarges) to fill the entire area of `width` and `height`. If the image has an aspect ratio different from the ratio of `width` and `height`, it will be cropped to fit.
-      ```js
-      ---
-      filename: URL format
-      ---
-      fit=cover
-      ```
-      
-      ```js
-      ---
-      filename: Workers
-      ---
-      cf: {images: {fit: "cover"}}
-      ```
+#### `fit`
 
-    - `Crop`
-      - Image will be shrunk and cropped to fit within the area specified by `width` and `height`. The image will not be enlarged. For images smaller than the given dimensions, it is the same as `scale-down`. For images larger than the given dimensions, it is the same as `cover`. See also `trim`.
-      ```js
-      ---
-      filename: URL format
-      ---
-      fit=crop
-      ```
-      
-      ```js
-      ---
-      filename: Workers
-      ---
-      cf: {images: {fit: "crop"}}
-      ```
+Affects interpretation of `width` and `height`. All resizing modes preserve aspect ratio. Used as a string in Workers integration. Available modes are:
 
-    - `Pad`
-      - Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). This mode is not recommended, since you can achieve the same effect more efficiently with the `contain` mode and the CSS `object-fit: contain` property.
-      ```js
-      ---
-      filename: URL format
-      ---
-      fit=pad
-      ```
-      
-      ```js
-      ---
-      filename: Workers
-      ---
-      cf: {images: {fit: "pad"}}
-      ```
+  - `scale-down`  
+  Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept. Example:
 
-- `Gravity``
-  - When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the side or point that should not be cropped.
+  ```js
+  ---
+  filename: URL format
+  ---
+  fit=scale-down
+  ```
+
+  ```js
+  ---
+  filename: Workers
+  ---
+  cf: {images: {fit: "scale-down"}}
+  ```
+
+  - `contain`  
+  Image will be resized (shrunk or enlarged) to be as large as possible within the given `width` or `height` while preserving the aspect ratio. If only a single dimension is given (for example, only `width`), the image will be shrunk or enlarged to exactly match that dimension. Example:
+
+  ```js
+  ---
+  filename: URL format
+  ---
+  fit=contain
+  ```
+
+  ```js
+  ---
+  filename: Workers
+  ---
+  cf: {images: {fit: "contain"}}
+  ```
+
+  - `cover`  
+  Resizes (shrinks or enlarges) to fill the entire area of `width` and `height`. If the image has an aspect ratio different from the ratio of `width` and `height`, it will be cropped to fit. Example:
+
+  ```js
+  ---
+  filename: URL format
+  ---
+  fit=cover
+  ```
+
+  ```js
+  ---
+  filename: Workers
+  ---
+  cf: {images: {fit: "cover"}}
+  ```
+
+  - `crop`  
+  Image will be shrunk and cropped to fit within the area specified by `width` and `height`. The image will not be enlarged. For images smaller than the given dimensions, it is the same as `scale-down`. For images larger than the given dimensions, it is the same as `cover`. See also [`trim`](#trim). Example:
+
+  ```js
+  ---
+  filename: URL format
+  ---
+  fit=crop
+  ```
+
+  ```js
+  ---
+  filename: Workers
+  ---
+  cf: {images: {fit: "crop"}}
+  ```
+
+  - `pad`  
+  Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). This mode is not recommended, since you can achieve the same effect more efficiently with the `contain` mode and the CSS `object-fit: contain` property. Example:
+
+  ```js
+  ---
+  filename: URL format
+  ---
+  fit=pad
+  ```
+
+  ```js
+  ---
+  filename: Workers
+  ---
+  cf: {images: {fit: "pad"}}
+  ```
+
+#### `gravity`
+
+When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the side or point that should not be cropped. Available options are:
+
+  - `auto`  
+  Selects focal point based on saliency detection (using maximum symmetric surround algorithm). Example:
+
+  ```js
+  ---
+  filename: URL format
+  ---
+  gravity=auto
+  ```
+
+  ```js
+  ---
+  filename: Workers
+  ---
+  cf: {images: {gravity: "auto"}}
+  ```
+
+  - `side`  
+  A side (`"left"`, `"right"`, `"top"`, `"bottom"`) or coordinates specified on a scale from `0.0` (top or left) to `1.0` (bottom or right), `0.5` being the center. The X and Y coordinates are separated by lowercase `x` in the URL format. For example, `0x1` means left and bottom, `0.5x0.5` is the center, `0.5x0.33` is a point in the top third of the image.
+
+    For the Workers integration, use as an object `{x, y}`. It contais focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image. Example:
+
+  ```js
+  ---
+  filename: URL format
+  ---
+  gravity=left
+
+  or
+
+  gravity=0x1
+  ```
+
+  ```js
+  ---
+  filename: Workers
+  ---
+  cf: {images: {gravity: "right"}}
+
+  or
+
+  cf: {images: {gravity: {x:0.5, y:0.2}}
+  ```
 
 
+#### `anim`
 
+Whether to preserve animation frames from input files. Default is `true`. Setting it to `false` reduces animations to still images. This setting is recommended when enlarging images or processing arbitrary user content, because large GIF animations can weigh tens or even hundreds of megabytes. It is also useful to set `anim:false` when using `format:"json"` to get the response quicker without the number of frames. Example:
 
+```js
+---
+filename: URL format
+---
+anim=false
+```
 
+```js
+---
+filename: Workers
+---
+cf: {images: {anim: "false"}}
+```
 
-<!-- 
-- `gravity=x` {{<type>}}CI/IR syntax{{</type>}} / `gravity:` {{<type>}}WI syntax{{</type>}}
-  - 
+#### `sharpen`
 
-  - `gravity=auto` {{<type>}}CI/IR syntax{{</type>}} / `gravity: "auto"` {{<type>}}WI syntax{{</type>}}
-    - Selects focal point based on saliency detection (using maximum symmetric surround algorithm).
+Specifies strength of sharpening filter to apply to the image. The value is a floating-point number between `0` (no sharpening, default) and `10` (maximum). `1` is a recommended value for downscaled images. Example:
 
-  - `gravity=side` and `gravity=XxY` {{<type>}}CI/IR syntax{{</type>}}
-    - A side (`"left"`, `"right"`, `"top"`, `"bottom"`) or coordinates specified on a scale from `0.0` (top or left) to `1.0` (bottom or right), `0.5` being the center. The X and Y coordinates are separated by lowercase `x`. For example, `0x1` means left and bottom, `0.5x0.5` is the center, `0.5x0.33` is a point in the top third of the image.
+```js
+---
+filename: URL format
+---
+sharpen=x
+```
 
-  - `gravity: "string"` {{<type>}}WI syntax{{</type>}}
-    - String can be `"left"`, `"right"`, `"top"`, `"bottom"`, or `"center"` (the default). For example, `{fit: "cover", gravity: "top"}` will crop bottom or left and right sides as necessary, but will not crop anything from the top.
+```js
+---
+filename: Workers
+---
+cf: {images: {sharpen: "x"}}
+```
 
-  - `gravity: {x, y}`{{<type>}}WI syntax{{</type>}}
-    - An object `{x, y}` containing focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image.
+#### `blur`
 
-- `anim=false` {{<type>}}CI/IR syntax{{</type>}} / `anim:` {{<type>}}WI syntax{{</type>}}
-  - Whether to preserve animation frames from input files. Default is `true`. Setting it to `false` reduces animations to still images. This setting is recommended when enlarging images or processing arbitrary user content, because large GIF animations can weigh tens or even hundreds of megabytes. It is also useful to set `anim:false` when using `format:"json"` to get the response quicker without the number of frames.
+Blur radius between `1` (slight blur) and `250` (maximum). Be aware that you cannot use this option to reliably obscure image content, because savvy users can modify an image's URL and remove the blur option. Use Workers to control which options can be set. Example:
 
-- `sharpen=x` {{<type>}}CI/IR syntax{{</type>}} / `sharpen:` {{<type>}}WI syntax{{</type>}}
-  - Specifies strength of sharpening filter to apply to the image. The value is a floating-point number between `0` (no sharpening, default) and `10` (maximum). `1` is a recommended value for downscaled images.
+```js
+---
+filename: URL format
+---
+blur=x
+```
 
-- `blur=x` {{<type>}}CI/IR syntax{{</type>}} / `blur:` {{<type>}}WI syntax{{</type>}}
-  - Blur radius between `1` (slight blur) and `250` (maximum). Be aware that you cannot use this option to reliably obscure image content, because savvy users can modify an image's URL and remove the blur option. Use Workers to control which options can be set.
+```js
+---
+filename: Workers
+---
+cf: {images: {blur: "x"}}
+```
 
-- `metadata=x` {{<type>}}CI/IR syntax{{</type>}} / `metadata:` {{<type>}}WI syntax{{</type>}}
-  - Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Note that if the Polish feature is enabled, all metadata may have been removed already and this option may have no effect.
+#### `metadata`
 
-  - `metadata=keep` {{<type>}}CI/IR syntax{{</type>}} / `metadata: "keep"` {{<type>}}WI syntax{{</type>}}
-    - Preserves most of EXIF metadata, including GPS location if present.
+Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Note that if the Polish feature is enabled, all metadata may have been removed already and this option may have no effect. Options are:
 
-  - `metadata=copyright` {{<type>}}CI/IR syntax{{</type>}} / `metadata: "copyright"` {{<type>}}WI syntax{{</type>}}
-    - Discard all metadata except EXIF copyright tag. This is the default behavior for JPEG images.
+  - `keep`  
+  Preserves most of EXIF metadata, including GPS location if present. Example:
 
-  - `metadata=none` {{<type>}}CI/IR syntax{{</type>}} / `metadata: "none"` {{<type>}}WI syntax{{</type>}}
-    - Discard all invisible EXIF metadata. Currently, WebP and PNG output formats always discard metadata.
+  ```js
+  ---
+  filename: URL format
+  ---
+  metadata=keep
+  ```
 
-- `trim=top;right;bottom;left` {{<type>}}CI/IR syntax{{</type>}} / `trim: {"top": pixels, "right": pixels, "bottom": pixels, "left": pixels}` {{<type>}}WI syntax{{</type>}}
-    - Four numbers in pixels separated by a semicolon for Cloudflare Images /Image Resizing, in the form of `top;right;bottom;left`. Example: `trim=20;30;20;0`.
-    
-      For Worker integration, an object with four properties `{top, right, bottom, left}`. Example:
+  ```js
+  ---
+  filename: Workers
+  ---
+  cf: {images: {metadata: "keep"}}
+  ```
 
-      ```json
-      trim:
-        "top": 12,
-        "bottom": 34,
-        "left": 56,
-        "right": 78
-      ```
-    
-    Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account.
+  - `copyright`  
+  Discard all metadata except EXIF copyright tag. This is the default behavior for JPEG images. Example:
 
-- `rotate`
-  - Number of degrees (`90`, `180`, or `270`) to rotate the image by. `width` and `height` options refer to axes after rotation.
+  ```js
+  ---
+  filename: URL format
+  ---
+  metadata=copyright
+  ```
 
-- `background`
-  - Background color to add underneath the image. Applies only to images with transparency (for example, PNG). Accepts any CSS color, such as `#RRGGBB` and `rgba(…)`.
+  ```js
+  ---
+  filename: Workers
+  ---
+  cf: {images: {metadata: "copyright"}}
+  ```
 
-- `contrast`
-  - Increase contrast by a factor. A value of `1.0` equals no change, a value of `0.5` equals low contrast, and a value of `2.0` equals high contrast. `0` is ignored.
+  - `none`  
+  Discard all invisible EXIF metadata. Currently, WebP and PNG output formats always discard metadata. Example:
 
-- `brightness`
-  - Increase brightness by a factor. A value of `1.0` equals no change, a value of `0.5` equals half brightness, and a value of `2.0` equals twice as bright. `0` is ignored.
+  ```js
+  ---
+  filename: URL format
+  ---
+  metadata=none
+  ```
 
-- `gamma`
-  - Increase exposure by a factor. A value of `1.0` equals no change, a value of `0.5` darkens the image, and a value of `2.0` lightens the image. `0` is ignored.
+  ```js
+  ---
+  filename: Workers
+  ---
+  cf: {images: {metadata: "none"}}
+  ```
 
-<br/>
+#### `trim`
 
-***Options supported by Image Resizing***
+Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account. For Image Resizing and Cloudflare Images, use as four numbers in pixels separated by a semicolon, in the form of `top;right;bottom;left`. For the Workers integration, use as an object with four properties: `{top, right, bottom, left}`. Example:
 
-- `quality=x`
-  - Specifies quality for images in JPEG, WebP, and AVIF formats. The quality is in a 1-100 scale, but useful values are between `50` (low quality, small file size) and `90` (high quality, large file size). `85` is the default. When using the PNG format, an explicit quality setting allows use of PNG8 (palette) variant of the format.
+```js
+---
+filename: URL format
+---
+trim=20;30;20;0
+```
 
-- `format=auto`
-  - Allows serving of the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used.
+```js
+---
+filename: Workers
+---
+cf: {images: {trim: "top": 12, "bottom": 34, "left": 56, "right": 78}}
+```
 
-- `onerror=redirect`
-  - In case of a fatal error that prevents the image from being resized, redirects to the unresized source image URL. This may be useful in case some images require user authentication and cannot be fetched anonymously via Worker. This option should not be used if there is a chance the source image is very large. This option is ignored if the image is from another domain, but you can use it with subdomains.
+#### `rotate`
 
-***Options supported by Workers integration***
+Number of degrees (`90`, `180`, or `270`) to rotate the image by. `width` and `height` options refer to axes after rotation. Example:
 
-- `trim`
-  - An object with four properties `{top, right, bottom, left}` that specify a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account.
+```js
+---
+filename: URL format
+---
+rotate=90
+```
 
-- `quality`
-  - Quality setting from 1-100 (useful values are in 60-90 range). Lower values make images look worse, but load faster. The default is `85`. Quality `100` will generate very large image files, and is not recommended.
-  
-    In case of PNG images, an explicit quality setting enables use of 8-bit (palette) variant of the format, using [pngquant](https://pngquant.org)'s quality scale. Images that cannot meet the requested quality with 256 colors will fall back to 24-bit PNG format or JPEG if they are opaque.
+```js
+---
+filename: Workers
+---
+cf: {images: {rotate: "90"}}
+```
 
-- `format`
-  - Output format to generate. Options are:
-    - `avif` — Generate images in AVIF format if possible (with WebP as a fallback).
-    - `webp` — Generate images in Google WebP format. Set `quality` to `100` to get the WebP lossless format.
-    - `json` — Instead of generating an image, outputs information about the image in JSON format. The JSON object will contain image size (before and after resizing), source image’s MIME type, file size, etc.
+#### `background`
 
-    Other supported formats (PNG, JPEG, animated GIF) are used by default if no other format is specified.
+Background color to add underneath the image. Applies only to images with transparency (for example, PNG). Accepts any CSS color, such as `#RRGGBB` and `rgba(…)`. Example:
 
-    To automatically serve WebP or AVIF formats to browsers that support them, check if the `Accept` header contains `image/webp` or `image/avif`, and set the format option accordingly.
+```js
+---
+filename: URL format
+---
+background=#RRGGBB
+```
 
-{{</definitions>}} -->
+```js
+---
+filename: Workers
+---
+cf: {images: {background: "#RRGGBB"}}
+```
+
+#### `contrast`
+
+Increase contrast by a factor. A value of `1.0` equals no change, a value of `0.5` equals low contrast, and a value of `2.0` equals high contrast. `0` is ignored. Example:
+
+```js
+---
+filename: URL format
+---
+contrast=0.5
+```
+
+```js
+---
+filename: Workers
+---
+cf: {images: {contrast: "0.5"}}
+```
+
+#### `brightness`
+
+Increase brightness by a factor. A value of `1.0` equals no change, a value of `0.5` equals half brightness, and a value of `2.0` equals twice as bright. `0` is ignored. Example:
+
+```js
+---
+filename: URL format
+---
+brightness=0.5
+```
+
+```js
+---
+filename: Workers
+---
+cf: {images: {brightness: "0.5"}}
+```
+
+#### `gamma`
+
+Increase exposure by a factor. A value of `1.0` equals no change, a value of `0.5` darkens the image, and a value of `2.0` lightens the image. `0` is ignored. Example:
+
+```js
+---
+filename: URL format
+---
+gamma=0.5
+```
+
+```js
+---
+filename: Workers
+---
+cf: {images: {gamma: "0.5"}}
+```
+
+#### `quality`
+
+Specifies quality for images in JPEG, WebP, and AVIF formats. The quality is in a 1-100 scale, but useful values are between `50` (low quality, small file size) and `90` (high quality, large file size). `85` is the default. When using the PNG format, an explicit quality setting allows use of PNG8 (palette) variant of the format. At the moment, setting is ignored by Cloudflare Images. Example:
+
+```js
+---
+filename: URL format
+---
+quality=50
+```
+
+```js
+---
+filename: Workers
+---
+cf: {images: {quality: "50"}}
+```
+
+#### `format`
+
+Whith the `auto` option allows serving of the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used. At the moment, setting is ignored by Cloudflare Images.
+
+Workers integration also supports:
+- `avif`: Generate images in AVIF format if possible (with WebP as a fallback).
+- `webp`: Generate images in Google WebP format. Set quality to 100 to get the WebP lossless format.
+- `json`: Instead of generating an image, outputs information about the image in JSON format. The JSON object will contain image size (before and after resizing), source image’s MIME type, file size, etc.
+
+Example:
+
+```js
+---
+filename: URL format
+---
+format=auto
+```
+
+```js
+---
+filename: Workers
+---
+cf: {images: {format: "auto"}}
+```
+
+#### `onerror=redirect`
+
+In case of a fatal error that prevents the image from being resized, redirects to the unresized source image URL. This may be useful in case some images require user authentication and cannot be fetched anonymously via Worker. This option should not be used if there is a chance the source image is very large. This option is ignored if the image is from another domain, but you can use it with subdomains. At the moment, setting is ignored by Cloudflare Images. Example:
+
+```js
+---
+filename: URL format
+---
+onerror=redirect
+```
+
+```js
+---
+filename: Workers
+---
+cf: {images: {onerror: "redirect"}}
+```
