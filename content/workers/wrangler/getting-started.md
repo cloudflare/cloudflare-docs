@@ -20,7 +20,7 @@ npx wrangler publish
 # visit https://my-worker.<your workers subdomain>.workers.dev
 ```
 
-## Installation:
+## Installation
 
 ```bash
 $ npm install wrangler --save-dev

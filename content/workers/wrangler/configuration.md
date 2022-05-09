@@ -11,13 +11,6 @@ weight: 3
 The configuration for a Worker is can become complex since we can define different "environments", and each environment can have its own configuration.
 There is a default ("top-level") environment and then named environments that provide environment specific configuration.
 
-### Top-Level
-
-non-overridable
-: These values are defined once in the top-level configuration, apply to all environments and cannot be overridden by an environment.
-
-</br>
-
 ```toml
 ---
 filename: wrangler.toml
