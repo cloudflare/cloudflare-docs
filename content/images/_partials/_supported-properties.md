@@ -5,40 +5,94 @@ _build:
   list: never
 ---
 
-#### `width`
+#### `anim`
 
-Specifies maximum width of the image in pixels. Exact behavior depends on the `fit` mode (described below). Example:
+Whether to preserve animation frames from input files. Default is `true`. Setting it to `false` reduces animations to still images. This setting is recommended when enlarging images or processing arbitrary user content, because large GIF animations can weigh tens or even hundreds of megabytes. It is also useful to set `anim:false` when using `format:"json"` to get the response quicker without the number of frames. Example:
 
 ```js
 ---
 filename: URL format
 ---
-width=x
+anim=false
 ```
 
 ```js
 ---
 filename: Workers
 ---
-cf: {images: {width: x}}
+cf: {images: {anim: "false"}}
 ```
 
-#### `height`
+#### `background`
 
-Specifies maximum height of the image in pixels. Exact behavior depends on the `fit` mode (described below). Example:
+Background color to add underneath the image. Applies only to images with transparency (for example, PNG). Accepts any CSS color, such as `#RRGGBB` and `rgba(…)`. Example:
 
 ```js
 ---
 filename: URL format
 ---
-height=x
+background=#RRGGBB
 ```
 
 ```js
 ---
 filename: Workers
 ---
-cf: {images: {height: x}}
+cf: {images: {background: "#RRGGBB"}}
+```
+
+#### `blur`
+
+Blur radius between `1` (slight blur) and `250` (maximum). Be aware that you cannot use this option to reliably obscure image content, because savvy users can modify an image's URL and remove the blur option. Use Workers to control which options can be set. Example:
+
+```js
+---
+filename: URL format
+---
+blur=x
+```
+
+```js
+---
+filename: Workers
+---
+cf: {images: {blur: "x"}}
+```
+
+#### `brightness`
+
+Increase brightness by a factor. A value of `1.0` equals no change, a value of `0.5` equals half brightness, and a value of `2.0` equals twice as bright. `0` is ignored. Example:
+
+```js
+---
+filename: URL format
+---
+brightness=0.5
+```
+
+```js
+---
+filename: Workers
+---
+cf: {images: {brightness: "0.5"}}
+```
+
+#### `contrast`
+
+Increase contrast by a factor. A value of `1.0` equals no change, a value of `0.5` equals low contrast, and a value of `2.0` equals high contrast. `0` is ignored. Example:
+
+```js
+---
+filename: URL format
+---
+contrast=0.5
+```
+
+```js
+---
+filename: Workers
+---
+cf: {images: {contrast: "0.5"}}
 ```
 
 #### `dpr`
@@ -148,6 +202,49 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
   cf: {images: {fit: "pad"}}
   ```
 
+#### `format`
+
+Whith the `auto` option allows serving of the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used. At the moment, setting is ignored by Cloudflare Images.
+
+Workers integration also supports:
+- `avif`: Generate images in AVIF format if possible (with WebP as a fallback).
+- `webp`: Generate images in Google WebP format. Set quality to 100 to get the WebP lossless format.
+- `json`: Instead of generating an image, outputs information about the image in JSON format. The JSON object will contain image size (before and after resizing), source image’s MIME type, file size, etc.
+
+Example:
+
+```js
+---
+filename: URL format
+---
+format=auto
+```
+
+```js
+---
+filename: Workers
+---
+cf: {images: {format: "auto"}}
+```
+
+#### `gamma`
+
+Increase exposure by a factor. A value of `1.0` equals no change, a value of `0.5` darkens the image, and a value of `2.0` lightens the image. `0` is ignored. Example:
+
+```js
+---
+filename: URL format
+---
+gamma=0.5
+```
+
+```js
+---
+filename: Workers
+---
+cf: {images: {gamma: "0.5"}}
+```
+
 #### `gravity`
 
 When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the side or point that should not be cropped. Available options are:
@@ -196,59 +293,22 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
   cf: {images: {gravity: {x:0.5, y:0.2}}
   ```
 
+#### `height`
 
-#### `anim`
-
-Whether to preserve animation frames from input files. Default is `true`. Setting it to `false` reduces animations to still images. This setting is recommended when enlarging images or processing arbitrary user content, because large GIF animations can weigh tens or even hundreds of megabytes. It is also useful to set `anim:false` when using `format:"json"` to get the response quicker without the number of frames. Example:
+Specifies maximum height of the image in pixels. Exact behavior depends on the `fit` mode (described below). Example:
 
 ```js
 ---
 filename: URL format
 ---
-anim=false
+height=x
 ```
 
 ```js
 ---
 filename: Workers
 ---
-cf: {images: {anim: "false"}}
-```
-
-#### `sharpen`
-
-Specifies strength of sharpening filter to apply to the image. The value is a floating-point number between `0` (no sharpening, default) and `10` (maximum). `1` is a recommended value for downscaled images. Example:
-
-```js
----
-filename: URL format
----
-sharpen=x
-```
-
-```js
----
-filename: Workers
----
-cf: {images: {sharpen: "x"}}
-```
-
-#### `blur`
-
-Blur radius between `1` (slight blur) and `250` (maximum). Be aware that you cannot use this option to reliably obscure image content, because savvy users can modify an image's URL and remove the blur option. Use Workers to control which options can be set. Example:
-
-```js
----
-filename: URL format
----
-blur=x
-```
-
-```js
----
-filename: Workers
----
-cf: {images: {blur: "x"}}
+cf: {images: {height: x}}
 ```
 
 #### `metadata`
@@ -306,112 +366,22 @@ Controls amount of invisible metadata (EXIF data) that should be preserved. Colo
   cf: {images: {metadata: "none"}}
   ```
 
-#### `trim`
+#### `onerror=redirect`
 
-Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account. For Image Resizing and Cloudflare Images, use as four numbers in pixels separated by a semicolon, in the form of `top;right;bottom;left`. For the Workers integration, use as an object with four properties: `{top, right, bottom, left}`. Example:
+In case of a fatal error that prevents the image from being resized, redirects to the unresized source image URL. This may be useful in case some images require user authentication and cannot be fetched anonymously via Worker. This option should not be used if there is a chance the source image is very large. This option is ignored if the image is from another domain, but you can use it with subdomains. At the moment, setting is ignored by Cloudflare Images. Example:
 
 ```js
 ---
 filename: URL format
 ---
-trim=20;30;20;0
+onerror=redirect
 ```
 
 ```js
 ---
 filename: Workers
 ---
-cf: {images: {trim: "top": 12, "bottom": 34, "left": 56, "right": 78}}
-```
-
-#### `rotate`
-
-Number of degrees (`90`, `180`, or `270`) to rotate the image by. `width` and `height` options refer to axes after rotation. Example:
-
-```js
----
-filename: URL format
----
-rotate=90
-```
-
-```js
----
-filename: Workers
----
-cf: {images: {rotate: "90"}}
-```
-
-#### `background`
-
-Background color to add underneath the image. Applies only to images with transparency (for example, PNG). Accepts any CSS color, such as `#RRGGBB` and `rgba(…)`. Example:
-
-```js
----
-filename: URL format
----
-background=#RRGGBB
-```
-
-```js
----
-filename: Workers
----
-cf: {images: {background: "#RRGGBB"}}
-```
-
-#### `contrast`
-
-Increase contrast by a factor. A value of `1.0` equals no change, a value of `0.5` equals low contrast, and a value of `2.0` equals high contrast. `0` is ignored. Example:
-
-```js
----
-filename: URL format
----
-contrast=0.5
-```
-
-```js
----
-filename: Workers
----
-cf: {images: {contrast: "0.5"}}
-```
-
-#### `brightness`
-
-Increase brightness by a factor. A value of `1.0` equals no change, a value of `0.5` equals half brightness, and a value of `2.0` equals twice as bright. `0` is ignored. Example:
-
-```js
----
-filename: URL format
----
-brightness=0.5
-```
-
-```js
----
-filename: Workers
----
-cf: {images: {brightness: "0.5"}}
-```
-
-#### `gamma`
-
-Increase exposure by a factor. A value of `1.0` equals no change, a value of `0.5` darkens the image, and a value of `2.0` lightens the image. `0` is ignored. Example:
-
-```js
----
-filename: URL format
----
-gamma=0.5
-```
-
-```js
----
-filename: Workers
----
-cf: {images: {gamma: "0.5"}}
+cf: {images: {onerror: "redirect"}}
 ```
 
 #### `quality`
@@ -432,45 +402,74 @@ filename: Workers
 cf: {images: {quality: "50"}}
 ```
 
-#### `format`
+#### `rotate`
 
-Whith the `auto` option allows serving of the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used. At the moment, setting is ignored by Cloudflare Images.
-
-Workers integration also supports:
-- `avif`: Generate images in AVIF format if possible (with WebP as a fallback).
-- `webp`: Generate images in Google WebP format. Set quality to 100 to get the WebP lossless format.
-- `json`: Instead of generating an image, outputs information about the image in JSON format. The JSON object will contain image size (before and after resizing), source image’s MIME type, file size, etc.
-
-Example:
+Number of degrees (`90`, `180`, or `270`) to rotate the image by. `width` and `height` options refer to axes after rotation. Example:
 
 ```js
 ---
 filename: URL format
 ---
-format=auto
+rotate=90
 ```
 
 ```js
 ---
 filename: Workers
 ---
-cf: {images: {format: "auto"}}
+cf: {images: {rotate: "90"}}
 ```
 
-#### `onerror=redirect`
+#### `sharpen`
 
-In case of a fatal error that prevents the image from being resized, redirects to the unresized source image URL. This may be useful in case some images require user authentication and cannot be fetched anonymously via Worker. This option should not be used if there is a chance the source image is very large. This option is ignored if the image is from another domain, but you can use it with subdomains. At the moment, setting is ignored by Cloudflare Images. Example:
+Specifies strength of sharpening filter to apply to the image. The value is a floating-point number between `0` (no sharpening, default) and `10` (maximum). `1` is a recommended value for downscaled images. Example:
 
 ```js
 ---
 filename: URL format
 ---
-onerror=redirect
+sharpen=x
 ```
 
 ```js
 ---
 filename: Workers
 ---
-cf: {images: {onerror: "redirect"}}
+cf: {images: {sharpen: "x"}}
+```
+
+#### `trim`
+
+Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account. For Image Resizing and Cloudflare Images, use as four numbers in pixels separated by a semicolon, in the form of `top;right;bottom;left`. For the Workers integration, use as an object with four properties: `{top, right, bottom, left}`. Example:
+
+```js
+---
+filename: URL format
+---
+trim=20;30;20;0
+```
+
+```js
+---
+filename: Workers
+---
+cf: {images: {trim: "top": 12, "bottom": 34, "left": 56, "right": 78}}
+```
+
+#### `width`
+
+Specifies maximum width of the image in pixels. Exact behavior depends on the `fit` mode (described below). Example:
+
+```js
+---
+filename: URL format
+---
+width=x
+```
+
+```js
+---
+filename: Workers
+---
+cf: {images: {width: x}}
 ```
