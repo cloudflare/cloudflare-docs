@@ -607,8 +607,8 @@
 /workers/archive/recipes/static-site/ /workers/sites/ 301
 /workers/archive/writing-workers/debugging-tips/ /workers/about/tips/debugging/ 301
 /workers/cli-wrangler/ /workers/wrangler/ 301
-/workers/cli-wrangler/install-update/ /wrangler/getting-started/ 301
-/workers/cli-wrangler/authentication/ /wrangler/getting-started/ 301
+/workers/cli-wrangler/install-update/ /wrangler/get-started/ 301
+/workers/cli-wrangler/authentication/ /wrangler/get-started/ 301
 /workers/cli-wrangler/commands/* /wrangler/commands/:splat 301
 /workers/cli-wrangler/configuration/* /workers/wrangler/configuration/:splat 301
 /workers/cli-wrangler/webpack/ /workers/wrangler/eject-webpack/ 301

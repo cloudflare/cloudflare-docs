@@ -40,7 +40,7 @@ or install with cargo:
 $ cargo install wrangler
 ```
 
-Refer to the Wrangler [Install/Update](/workers/wrangler/getting-started/) page for more information.
+Refer to the Wrangler [Install/Update](/workers/wrangler/get-started/) page for more information.
 
 ## 2. Authenticate Wrangler
 
