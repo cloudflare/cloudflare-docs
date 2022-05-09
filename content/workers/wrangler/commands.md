@@ -117,7 +117,7 @@ Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) do
 
 {{</definitions>}}
 
-The command that establishes a connection between `localhost` and a Cloudflare server that hosts your Worker in development.
+The `wrangler dev` command that establishes a connection between `localhost` and a Cloudflare server that hosts your Worker in development.
 This allows full access to Workers KV, Durable Objects, and more. This is a great way to easily test your Worker while developing.
 
 ```sh
@@ -824,6 +824,7 @@ $ wrangler logout
 If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by deleting your API token in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+
 - Go to **Overview** > **Get your API token** in the right-side menu.
 - Select the three-dot menu on your Wrangler token.
 - Select **Delete**.

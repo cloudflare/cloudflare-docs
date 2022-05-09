@@ -10,11 +10,11 @@ To run Wrangler in a continuous integration/continuous deployment (CI/CD) enviro
 
 ## Cloudflare API token
 
-Add the token to the `CLOUDFLARE_API_TOKEN` environment variable.
+Add the token to the `CLOUDFLARE_API_TOKEN` environment variable. (for example, `CLOUDFLARE_API_TOKEN=123 wrangler dev`)
 
 ## Account ID
 
-There are three options:
+You have three options for telling Wrangler which Cloudflare account to use:
 
 - If there is only one account associated with the API token, then the account ID is inferred automatically;
 - Add the `account_id` to the project's `wrangler.toml` file (for example, `account_id = "12345679"`).
