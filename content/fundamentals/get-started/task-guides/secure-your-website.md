@@ -21,7 +21,7 @@ Cloudflare also issues and renews free, unshared, publicly trusted [SSL/TLS cert
 For customers on a **Pro** plan or above, Cloudflare offers several [Managed Rulesets](/waf/managed-rulesets/) as part of the Web Application Firewall (WAF).
 
 All customers also have the options to adjust the following **Security** settings:
-- [Security level](https://support.cloudflare.com/hc/articles/200170056): Use the IP reputation of a visitor to determine whether to present a [**Managed Challenge**](https://support.cloudflare.com/hc//articles/200170136#managed-challenge) page.
+- [Security level](https://support.cloudflare.com/hc/articles/200170056): Use the IP reputation of a visitor to determine whether to present a [Managed Challenge](https://support.cloudflare.com/hc//articles/200170136#managed-challenge) page.
 - [Challenge Passage](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e): Specify the length of time that a visitor can access your website after completing a security challenge.
 - [Browser Integrity Check](https://support.cloudflare.com/hc/articles/200170086): Evaluate incoming HTTP headers based on known threats — such as requests with a missing or non-standard user agent — and present a challenge page if needed.
 - [Privacy Pass Support](https://support.cloudflare.com/hc/articles/115001992652): Reduce the number of challenges presented to visitors using the **Privacy Pass** browser extension.
@@ -37,8 +37,9 @@ Based on additional knowledge about your website traffic and requirements, you c
     - [IP Access rules](https://support.cloudflare.com/hc/articles/217074967) block, challenge, or allow requests based on IP address, IP range, country, or ASN.
     - [User Agent Blocking rules](https://support.cloudflare.com/hc/articles/115001856951) block or challenge specific requests based on the associated user agent value.
     - [Zone Lockdown rules](https://support.cloudflare.com/hc/articles/115001595131) (customers on a Pro plan or higher) specify a list of IP addresses, CIDR ranges, or networks that are allowed to access a particular domain, subdomain, or URL.
+- Further customize [Web Application Firewall (WAF)](/waf/) and [DDoS Protection](/ddos-protection/) settings.
 - Create [forwarding URLs](https://support.cloudflare.com/hc/articles/4729826525965) to prevent access to specify URLs, request schemes, file types, subdomains, or directories by redirecting users to a safe location.
-- Restrict access to documents, files, and media by configuring [Token Authentication](https://support.cloudflare.com/hc/articles/115001376488)
+- Restrict access to documents, files, and media by configuring [Token Authentication](https://support.cloudflare.com/hc/articles/115001376488).
 
 ### Dedicated products
 
