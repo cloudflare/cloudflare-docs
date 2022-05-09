@@ -99,7 +99,7 @@ For very exceptionally large pages, Workers Sites might not work for you. There 
 
 ## Ignoring subsets of static assets
 
-Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) - make sure to use the [latest version](/workers/cli-wrangler/install-update/#update).
+Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler2) - make sure to use the [latest version](/workers/wrangler/getting-started/#update).
 
 There are cases where users may not want to upload certain static assets to their Workers Sites.
 In this case, Workers Sites can also be configured to ignore certain files or directories using logic
@@ -151,4 +151,4 @@ Learn more about the standard patterns used for include and exclude in the [giti
 
 ## Customizing your build
 
-Workers Sites projects use webpack by default. You can [bring your own webpack configuration](/workers/cli-wrangler/webpack/#using-with-workers-sites), however it is important to be cognizant of your `entry` and `context` settings.
+Workers Sites projects use webpack by default. You can [bring your own webpack configuration](/workers/wrangler/cli-wrangler/webpack/#using-with-workers-sites), however it is important to be cognizant of your `entry` and `context` settings.

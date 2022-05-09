@@ -1,5 +1,5 @@
 ---
-title: CLI (Wrangler)
+title: Wrangler
 pcx-content-type: navigation
 weight: 8
 meta:

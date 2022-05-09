@@ -6,6 +6,12 @@ weight: 3
 
 # Commands
 
+{{<Aside type="note">}}
+
+Wrangler has launched a new version. This is documentation for Wrangler version 1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
+
+{{</Aside>}}
+
 Complete list of all commands available for [`wrangler`](https://github.com/cloudflare/wrangler), the Workers CLI.
 
 ---
@@ -24,7 +30,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
 
 - `$NAME` {{<type>}}=worker{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/cli-wrangler/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/cli-wrangler/configuration/) file.
 
 - `$TEMPLATE` {{<type>}}=https://github.com/cloudflare/worker-template{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -55,7 +61,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
 
 - `$NAME` {{<type>}}=(Name of working directory){{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/cli-wrangler/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/cli-wrangler/configuration/) file.
 
 - `--type=$TYPE` {{<type>}}=webpack{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -70,9 +76,9 @@ Default values indicated by {{<type>}}=value{{</type>}}.
 
 ## build
 
-Build your project (if applicable). This command looks at your `wrangler.toml` file and reacts to the [`"type"` value](/workers/cli-wrangler/configuration/#keys) specified.
+Build your project (if applicable). This command looks at your `wrangler.toml` file and reacts to the [`"type"` value](/workers/wrangler/cli-wrangler/configuration/#keys) specified.
 
-When using `type = "webpack"`, Wrangler will build the Worker using its internal webpack installation. When using `type = "javascript"` , the [`build.command`](/workers/cli-wrangler/configuration/#build-1), if defined, will run.
+When using `type = "webpack"`, Wrangler will build the Worker using its internal webpack installation. When using `type = "javascript"` , the [`build.command`](/workers/wrangler/cli-wrangler/configuration/#build-1), if defined, will run.
 
 ```sh
 $ wrangler build [--env $ENVIRONMENT_NAME]
@@ -165,7 +171,7 @@ To use this command, the following fields are required in your `wrangler.toml` f
 
 - `name` {{<type>}}string{{</type>}}
 
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/cli-wrangler/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/cli-wrangler/configuration/) file.
 
 - `type` {{<type>}}string{{</type>}}
 
@@ -259,7 +265,7 @@ $ wrangler dev [--env $ENVIRONMENT_NAME] [--ip <ip>] [--port <port>] [--host <ho
 
 {{</definitions>}}
 
-These arguments can also be set in your `wrangler.toml` file. Refer to the [`wrangler dev` configuration](/workers/cli-wrangler/configuration/#dev) documentation for more information.
+These arguments can also be set in your `wrangler.toml` file. Refer to the [`wrangler dev` configuration](/workers/wrangler/cli-wrangler/configuration/#dev) documentation for more information.
 
 ### Usage
 
@@ -307,7 +313,7 @@ Like all Wrangler commands, run `wrangler tail` from your Worker’s root direct
 
 {{<Aside type="warning" header="Legacy issues with existing cloudflared configuration">}}
 
-`wrangler tail` versions older than version 1.19.0 use `cloudflared` to run. Cloudflare recommends [updating to the latest wrangler version](/workers/cli-wrangler/install-update/#update) to avoid any issues.
+`wrangler tail` versions older than version 1.19.0 use `cloudflared` to run. Update to the [latest Wrangler version](/workers/wrangler/cli-wrangler/install-update/#update) to avoid any issues.
 
 {{</Aside>}}
 
@@ -344,7 +350,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
 
 ### kv_namespaces
 
-If you are using [kv_namespaces](/workers/cli-wrangler/configuration/#kv_namespaces) with `wrangler preview`, you will need to specify a `preview_id` in your `wrangler.toml` file before you can start the session. This is so that you do not accidentally write changes to your production namespace while you are developing. You may make `preview_id` equal to `id` if you would like to preview with your production namespace, but you should ensure that you are not writing values to KV that would break your production Worker.
+If you are using [kv_namespaces](/workers/wrangler/cli-wrangler/configuration/#kv_namespaces) with `wrangler preview`, you will need to specify a `preview_id` in your `wrangler.toml` file before you can start the session. This is so that you do not accidentally write changes to your production namespace while you are developing. You may make `preview_id` equal to `id` if you would like to preview with your production namespace, but you should ensure that you are not writing values to KV that would break your production Worker.
 
 To create a `preview_id` run:
 
@@ -519,7 +525,7 @@ kv_namespaces = [
 Successful operations will print a new configuration block that should be copied into your `wrangler.toml` file. Add the output to the existing `kv_namespaces` configuration if already present. You can now access the binding from within a Worker:
 
 ```js
-let value = await MY_KV.get('my-key');
+let value = await MY_KV.get("my-key");
 ```
 
 To write a value to your KV namespace using Wrangler, run the `wrangler kv:key put` subcommand.

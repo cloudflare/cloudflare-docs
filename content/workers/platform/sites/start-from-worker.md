@@ -4,57 +4,60 @@ title: Start from worker
 weight: 3
 ---
 
-# Start from worker
+# Add static assets to an existing Workers project
 
-Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) — make sure to use the [latest version](/workers/cli-wrangler/install-update/#update).
+{{<Aside type="note" header="Cloudflare Pages">}}
+Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
+{{</Aside>}}
 
-If you have a pre-existing Worker project, you can use Workers Sites to serve static assets to the Worker. To do so, follow these instructions:
+Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) — make sure to use the [latest version](/workers/wrangler/getting-started/#update).
 
-1.  Create a directory in the root of your project (for example, `workers-site`) and add configuration to your `wrangler.toml` file to point to it. Add the path to your Worker script (probably `index.js`).
+If you have a pre-existing Worker project, you can use Workers Sites to serve static assets to the Worker.
 
-```toml
----
-filename: wrangler.toml
----
-# ... (whatever you already have here)
+## Getting started
 
-[site]
-bucket = "./my-dir" # Add the directory with your static assets!
-entry-point = "./workers-site" # JS folder serving your assets
-```
+1.  Create a directory that will contain the assets in the root of your project (for example, `./public`)
+2.  Add configuration to your `wrangler.toml` file to point to it.
 
-2.  Add the `@cloudflare/kv-asset-handler` package to your project:
+    ```toml
+    [site]
+    bucket = "./public" # Add the directory with your static assets!
+    ```
 
-```sh
-$ npm i @cloudflare/kv-asset-handler
-```
+3.  Install the `@cloudflare/kv-asset-handler` package in your project:
 
-3.  Import the package’s code into your Worker script and invoke it within your function handler to respond with static assets:
+    ```sh
+    $ npm i -D @cloudflare/kv-asset-handler
+    ```
 
-```js
-import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
+4.  Import the `getAssetFromKV()` function into your Worker script and use it to respond with static assets.
 
-addEventListener('fetch', event => {
-  event.respondWith(handleEvent(event));
-});
+    ```js
+    import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
 
-async function handleEvent(event) {
-  try {
-    return await getAssetFromKV(event);
-  } catch (e) {
-    let pathname = new URL(event.request.url).pathname;
-    return new Response(`"${pathname}" not found`, {
-      status: 404,
-      statusText: 'not found',
+    addEventListener("fetch", (event) => {
+      event.respondWith(handleEvent(event));
     });
-  }
-}
-```
 
-For more information on the configurable options of `getAssetFromKV` refer to [the template’s source](https://github.com/cloudflare/worker-sites-template/blob/master/workers-site/index.js).
+    async function handleEvent(event) {
+      try {
+        // Add logic to decide whether to serve an asset or run your original Worker code
+        return await getAssetFromKV(event);
+      } catch (e) {
+        let pathname = new URL(event.request.url).pathname;
+        return new Response(`"${pathname}" not found`, {
+          status: 404,
+          statusText: "not found",
+        });
+      }
+    }
+    ```
 
-4.  Run `preview` or `publish` as you would normally with your Worker project.
+    For more information on the configurable options of `getAssetFromKV()` refer to [kv-asset-handler docs](https://github.com/cloudflare/kv-asset-handler).
 
-```sh
-$ wrangler publish
-```
+5.  Run `wrangler dev` or `wrangler publish` as you would normally with your Worker project.
+    Wrangler will automatically upload the assets found in the configured directory.
+
+    ```sh
+    $ wrangler publish
+    ```

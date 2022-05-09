@@ -4,11 +4,15 @@ title: Start from existing
 weight: 1
 ---
 
-# Start from existing
+# Deploy an existing static site
 
-Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) — make sure to use the [latest version](/workers/cli-wrangler/install-update/#update).
+{{<Aside type="note" header="Cloudflare Pages">}}
+Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
+{{</Aside>}}
 
-To deploy a pre-existing static site project, start with a pre-generated site. Workers Sites works well with all static site generators. For a quick-start, review the following projects:
+Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler2) — make sure to use the [latest version](/workers/wrangler/getting-started/#update).
+
+To deploy a pre-existing static site project, start with a pre-generated site. Workers Sites works with all static site generators, for example:
 
 - [Hugo](https://gohugo.io/getting-started/quick-start/)
 - [Gatsby](https://www.gatsbyjs.org/docs/quick-start/), requires Node
@@ -16,56 +20,79 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 - [Eleventy](https://www.11ty.io/#quick-start), requires Node
 - [WordPress](https://wordpress.org) (refer to the tutorial on [deploying static WordPress sites with Workers](/workers/tutorials/deploy-a-static-wordpress-site/))
 
-After you have generated a site, follow these steps:
+## Getting started
 
-1.  Run this Wrangler command in the root of your project’s directory:
+1.  Run the `wrangler init` command in the root of your project’s directory to generate a basic Worker:
 
-```sh
-$ wrangler init --site my-static-site
-```
+    ```sh
+    $ wrangler init -y
+    ```
 
-This command creates a few things: a `wrangler.toml` file and a `workers-site` directory.
+    This command adds/update the following files:
 
-2.  Add your site’s build directory to the `wrangler.toml` file:
+    - `wrangler.toml`: The file containing project configuration.
+    - `package.json`: Wrangler `devDependencies` are added.
+    - `tsconfig.json`: Added if not already there to support writing the Worker in TypeScript.
+    - `src/index.ts`: A basic Cloudflare Worker, written in TypeScript.
 
-```toml
-[site]
-bucket = "./public" # <-- Add your build directory name here.
-entry-point = "workers-site"
-```
+2.  Add your site’s build/output directory to the `wrangler.toml` file:
 
-The default directories for the most popular static site generators are listed below:
+    ```toml
+    [site]
+    bucket = "./public" # <-- Add your build directory name here.
+    ```
+
+    The default directories for the most popular static site generators are listed below:
 
     - Hugo: `public`
     - Gatsby: `public`
     - Jekyll: `_site`
     - Eleventy: `_site`
 
-3\. Add your `account_id` to your `wrangler.toml`. You can find your `account_id` by logging in to the Cloudflare dashboard **Account Home** > **choose your website** > **Overview** > **Account ID** For more details on finding your `account_id`, refer to the [Get started guide](/workers/get-started/guide/#6a-obtaining-your-account-id-and-zone-id).
+3.  Install the `@cloudflare/kv-asset-handler` package in your project:
 
-4.  You can preview your site by running:
+    ```sh
+    $ npm i -D @cloudflare/kv-asset-handler
+    ```
 
-```sh
-$ wrangler dev
-```
+4.  Replace the contents of `src/index.ts` with the following code snippet:
 
-5.  Decide if you would like to publish your site to a [`*.workers.dev` subdomain](/workers/get-started/guide/#configure-for-deploying-to-workersdev) or a [custom domain](/workers/get-started/guide/#optional-configure-for-deploying-to-a-registered-domain) that you own and have already attached as a Cloudflare zone.
+    ```js
+    import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
 
-Then update your `wrangler.toml`:
+    addEventListener("fetch", (event) => {
+      event.respondWith(handleEvent(event));
+    });
 
-**Personal Domain**: Add your `zone_id` and a `route`.
+    async function handleEvent(event) {
+      try {
+        // Add logic to decide whether to serve an asset or run your original Worker code
+        return await getAssetFromKV(event);
+      } catch (e) {
+        let pathname = new URL(event.request.url).pathname;
+        return new Response(`"${pathname}" not found`, {
+          status: 404,
+          statusText: "not found",
+        });
+      }
+    }
+    ```
 
-```toml
-zone_id = "42ef.."
-route = "example.com/*"
-```
+5.  Run `wrangler dev` or `wrangler publish` to preview or publish your site on Cloudflare.
+    Wrangler will automatically upload the assets found in the configured directory.
 
-**`*.workers.dev`**: Set `workers_dev` to true. This is the default.
+    ```sh
+    $ wrangler publish
+    ```
 
-Learn more about [configuring your project](/workers/get-started/guide/#6-configure-your-project-for-deployment).
+6.  Publish your site to a [custom domain](/workers/get-started/guide/#optional-configure-for-deploying-to-a-registered-domain) that you own and have already attached as a Cloudflare zone. Add a `route` property to the `wrangler.toml` file.
 
-6.  Run:
+    ```toml
+    route = "https://example.com/*"
+    ```
 
-```sh
-$ wrangler publish
-```
+    {{<Aside type="note">}}
+    Refer to the documentation on [Routes](/workers/platform/routes/) to configure a `route` properly.
+    {{</Aside>}}
+
+Learn more about [configuring your project](/workers/get-started/guide/#7-configure-your-project-for-deployment).

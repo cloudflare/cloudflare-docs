@@ -6,9 +6,15 @@ weight: 2
 
 # Authentication
 
+{{<Aside type="note">}}
+
+Wrangler has launched a new version. This is documentation for Wrangler version 1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
+
+{{</Aside>}}
+
 ## Background
 
-In Cloudflare’s system, you have a User that can have multiple Accounts and Zones. As a result, your User is configured globally on your machine via a single Cloudflare Token. Your Account(s) and Zone(s) will be configured per project, but will use your Cloudflare Token to authenticate all API calls. A configuration file is created in a `.wrangler` directory in your computer’s home directory.
+In Cloudflare’s system, a user can have multiple accounts and zones. As a result, your user is configured globally on your machine via a single Cloudflare Token. Your account(s) and zone(s) will be configured per project, but will use your Cloudflare Token to authenticate all API calls. A configuration file is created in a `.wrangler` directory in your computer’s home directory.
 
 ---
 

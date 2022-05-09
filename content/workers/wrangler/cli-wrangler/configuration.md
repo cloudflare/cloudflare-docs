@@ -6,6 +6,12 @@ weight: 4
 
 # Configuration
 
+{{<Aside type="note">}}
+
+Wrangler has launched a new version. This is documentation for Wrangler version 1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
+
+{{</Aside>}}
+
 ## Background
 
 Your project will need some configuration before you can publish your Worker. Configuration is done through changes to keys and values stored in a `wrangler.toml` file located in the root of your project directory. You must manually edit this file to edit your keys and values before you can publish.
@@ -40,7 +46,7 @@ routes = ["example.com/*"]
 
 Environment configuration {{<prop-meta>}}(optional){{</prop-meta>}}: the configuration values you specify under an `[env.name]` in your `wrangler.toml` file.
 
-Environments allow you to deploy the same project to multiple places under multiple names. These environments are utilized with the `--env` or `-e` flag on the [commands](/workers/cli-wrangler/commands/) that are deploying live Worker scripts:
+Environments allow you to deploy the same project to multiple places under multiple names. These environments are utilized with the `--env` or `-e` flag on the [commands](/workers/wrangler/cli-wrangler/commands/) that are deploying live Worker scripts:
 
 - `build`
 - `dev`
@@ -138,7 +144,7 @@ Cloudflare will continue to support `rust` and `webpack` project types, but reco
 
 - `webpack_config` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - This is the path to a custom webpack configuration file for your Worker. You must specify this field to use a custom webpack configuration, otherwise Wrangler will use a default configuration for you. Refer to the [Wrangler webpack page](/workers/cli-wrangler/webpack/) for more information.
+  - This is the path to a custom webpack configuration file for your Worker. You must specify this field to use a custom webpack configuration, otherwise Wrangler will use a default configuration for you. Refer to the [Wrangler webpack page](/workers/wrangler/cli-wrangler/webpack/) for more information.
 
 - `vars` {{<type>}}not inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -201,7 +207,7 @@ vars = { FOO = "some value", BAR = "some other string" }
 
 {{<Aside type="note">}}
 
-Secrets should be handled using the [`wrangler secret`](/workers/cli-wrangler/commands/#secret) command.
+Secrets should be handled using the [`wrangler secret`](/workers/wrangler/cli-wrangler/commands/#secret) command.
 
 {{</Aside>}}
 
@@ -237,7 +243,7 @@ Much like environment variables and secrets, the `binding` names are available t
 ```js
 // Worker script:
 
-let value = await FOO.get('keyname');
+let value = await FOO.get("keyname");
 //=> gets the value for "keyname" from
 //=> the FOO variable, which points to
 //=> the "0f2ac...e279" KV namespace
@@ -261,7 +267,7 @@ let value = await FOO.get('keyname');
 
 {{<Aside type="note">}}
 
-Creating your KV namespaces can be handled using Wrangler’s [KV Commands](/workers/cli-wrangler/commands/#kv).
+Creating your KV namespaces can be handled using Wrangler’s [KV Commands](/workers/wrangler/cli-wrangler/commands/#kv).
 
 You can also define your `kv_namespaces` using an [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-table).
 
@@ -269,7 +275,7 @@ You can also define your `kv_namespaces` using an [alternative TOML syntax](http
 
 ### site
 
-A [Workers Site](/workers/platform/sites/) generated with [`wrangler generate --site`](/workers/cli-wrangler/commands/#generate) or [`wrangler init --site`](/workers/cli-wrangler/commands/#init).
+A [Workers Site](/workers/platform/sites/) generated with [`wrangler generate --site`](/workers/wrangler/cli-wrangler/commands/#generate) or [`wrangler init --site`](/workers/wrangler/cli-wrangler/commands/#init).
 
 Usage:
 
@@ -350,7 +356,7 @@ Refer to the [gitignore documentation](https://git-scm.com/docs/gitignore) to le
 
 #### Customizing your Sites Build
 
-Workers Sites projects use webpack by default. Though you can [bring your own webpack configuration](/workers/cli-wrangler/webpack/#using-with-workers-sites), be aware of your `entry` and `context` settings.
+Workers Sites projects use webpack by default. Though you can [bring your own webpack configuration](/workers/wrangler/cli-wrangler/webpack/#using-with-workers-sites), be aware of your `entry` and `context` settings.
 
 You can also use the `[build]` section with Workers Sites, as long as your build step will resolve dependencies in `node_modules`. Refer to the [custom builds](#build) section for more information.
 
@@ -413,7 +419,7 @@ A custom build command for your project. There are two configurations based on t
 This section is for customizing Workers with the `service-worker` format. These Workers use `addEventListener` and look like the following:
 
 ```js
-addEventListener('fetch', event => {
+addEventListener("fetch", (event) => {
   event.respondWith(new Response("I'm a service Worker!"));
 });
 ```
@@ -479,7 +485,7 @@ Refer to the [`FetchEvent` documentation](/workers/runtime-apis/fetch-event) to 
 An uploaded module may `import` other uploaded ES Modules. If using the CommonJS format, you may `require` other uploaded CommonJS modules.
 
 ```js
-import html from './index.html';
+import html from "./index.html";
 
 export default {
   // * request is the same as `event.request` from the service worker format
@@ -487,7 +493,7 @@ export default {
   // * env is where bindings like KV namespaces, Durable Object namespaces, Config variables, and Secrets
   // are exposed, instead of them being placed in global scope.
   async fetch(request, env, ctx) {
-    const headers = { 'Content-Type': 'text/html;charset=UTF-8' };
+    const headers = { "Content-Type": "text/html;charset=UTF-8" };
     return new Response(html, { headers });
   },
 };

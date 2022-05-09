@@ -87,7 +87,7 @@ export async function onRequest(context) {
     data, // arbitrary space for passing data between middlewares
   } = context;
 
-  return new Response('Hello, world!');
+  return new Response("Hello, world!");
 }
 ```
 
@@ -146,7 +146,7 @@ export const onRequestPut = onRequestPost;
 Additionally, an exported handler may be an array of function handlers. This allows you to easily compose Functions as a group, which may include a mix of shared and/or one-off behaviors:
 
 ```js
-import { extraLogging } from 'middlewares.ts';
+import { extraLogging } from "middlewares.ts";
 
 export const onRequest = [
   extraLogging,
@@ -263,16 +263,16 @@ export const onRequest = [
       const response = await next();
       const responseText = await response.text();
       //~> "Hello from next base middleware"
-      return new Response(responseText + ' from middleware');
+      return new Response(responseText + " from middleware");
     } catch (thrown) {
       return new Response(`Error ${thrown}`, {
         status: 500,
-        statusText: 'Internal Server Error',
+        statusText: "Internal Server Error",
       });
     }
   },
   ({ request, next }) => {
-    return new Response('Hello from next base middleware');
+    return new Response("Hello from next base middleware");
   },
 ];
 ```
@@ -319,7 +319,7 @@ While developing locally you can interact with your KV namespace by add `-k, --k
 
 ```js
 export async function onRequest({ env }) {
-  const task = await env.TodoList.get('Task:123');
+  const task = await env.TodoList.get("Task:123");
   return new Response(task);
 }
 ```
@@ -421,8 +421,8 @@ When migrating a Worker into the Pages platform, the simplest path is to target 
 You can run your entire application locally with [Wrangler](https://github.com/cloudflare/wrangler2), which supports secrets, environment variables, KV and Durable Objects. Point Wrangler at a directory of static assets, or seamlessly connect to your existing tools:
 
 ```sh
-# Install wrangler v2 beta
-$ npm install wrangler@beta
+# Install wrangler
+$ npm install wrangler
 
 # Show help message
 $ npx wrangler pages dev --help

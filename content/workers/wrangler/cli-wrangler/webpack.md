@@ -6,11 +6,17 @@ weight: 5
 
 # Webpack
 
+{{<Aside type="note">}}
+
+Wrangler has launched a new version. This is documentation for Wrangler version 1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
+
+{{</Aside>}}
+
 Wrangler allows you to develop modern ES6 applications with support for modules. This support is possible because of Wrangler's [webpack](https://webpack.js.org/) integration. This document describes how Wrangler uses webpack to build your Workers and how you can bring your own configuration.
 
 {{<Aside type="note" header="Configuration and webpack version">}}
 
-Wrangler includes `webpack@4`. If you want to use `webpack@5`, or another bundler like esbuild or Rollup, you must set up [custom builds](/workers/cli-wrangler/configuration/#build) in your `wrangler.toml` file.
+Wrangler includes `webpack@4`. If you want to use `webpack@5`, or another bundler like esbuild or Rollup, you must set up [custom builds](/workers/wrangler/cli-wrangler/configuration/#build) in your `wrangler.toml` file.
 
 You must set `type = "webpack"` in your `wrangler.toml` file to use Wrangler's webpack integration. If you are encountering warnings about specifying `webpack_config`, refer to [backwards compatibility](#backwards-compatibility).
 
@@ -22,8 +28,8 @@ This is the default webpack configuration that Wrangler uses to build your Worke
 
 ```js
 module.exports = {
-  target: 'webworker',
-  entry: './index.js', // inferred from "main" in package.json
+  target: "webworker",
+  entry: "./index.js", // inferred from "main" in package.json
 };
 ```
 
@@ -167,4 +173,4 @@ module.exports = {
 
 If you are using `wrangler@1.6.0` or earlier, a `webpack.config.js` file at the root of your project is loaded automatically. This is not always obvious, which is why versions of Wrangler after `wrangler@1.6.0` require you to specify a `webpack_config` value in your `wrangler.toml` file.
 
-When [upgrading from `wrangler@1.6.0`](/workers/cli-wrangler/install-update/#update), you may encounter webpack configuration warnings. To resolve this, add `webpack_config = "webpack.config.js"` to your `wrangler.toml` file.
+When [upgrading from `wrangler@1.6.0`](/workers/wrangler/cli-wrangler/install-update/#update), you may encounter webpack configuration warnings. To resolve this, add `webpack_config = "webpack.config.js"` to your `wrangler.toml` file.

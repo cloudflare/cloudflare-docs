@@ -24,15 +24,15 @@ You will learn how to:
 
 ---
 
-## Generate a project
+## Create a project
 
-Start by using `wrangler generate` to create a Worker project in the command line:
+Start by using `wrangler init` to create a Worker project in the command line:
 
 ```sh
 ---
-header: Generate a project
+header: Create a project
 ---
-$ wrangler generate github-twilio-notifications
+$ wrangler init github-twilio-notifications
 $ cd github-twilio-notifications
 ```
 
@@ -169,8 +169,6 @@ async function checkSignature(formData, headers) {
 }
 ```
 
-Since our project relies on importing a library, use [webpack](/workers/cli-wrangler/webpack/) and update your `wrangler.toml` file to set `type = "webpack"`.
-
 Your `wrangler.toml` file should look like this:
 
 ```toml
@@ -178,8 +176,6 @@ Your `wrangler.toml` file should look like this:
 filename: "wrangler.toml"
 ---
 name = "nameless-bonus-1fdf"
-type = "webpack"
-account_id = "xxxxxxxxx"
 workers_dev = true
 route = ""
 zone_id = ""
@@ -225,7 +221,7 @@ async function sendText(message) {
 }
 ```
 
-To make this work, you need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with [`wrangler secret put`](/workers/cli-wrangler/commands/#put) in your command line.
+To make this work, you need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with [`wrangler secret put`](/workers/wrangler/cli-wrangler/commands/#put) in your command line.
 
 ```sh
 $ wrangler secret put ACCOUNT_SID
@@ -237,21 +233,23 @@ Modify your `githubWebhookHandler` to send a text message using the `sendText` f
 
 ```js
 async function githubWebhookHandler(request) {
-  if (request.method !== 'POST') {
-    return simpleResponse(200, 'Please send a POST request :)');
+  if (request.method !== "POST") {
+    return simpleResponse(200, "Please send a POST request :)");
   }
   try {
     const formData = await request.json();
     const headers = await request.headers;
-    const action = headers.get('X-GitHub-Event');
+    const action = headers.get("X-GitHub-Event");
     const repo_name = formData.repository.full_name;
     const sender_name = formData.sender.login;
 
     if (!checkSignature(formData, headers)) {
-      return simpleResponse(403, 'Wrong password, try again :P');
+      return simpleResponse(403, "Wrong password, try again :P");
     }
 
-    return await sendText(`${sender_name} casted spell: ${action} onto your repo ${repo_name}`);
+    return await sendText(
+      `${sender_name} casted spell: ${action} onto your repo ${repo_name}`
+    );
   } catch (e) {
     return simpleResponse(200, `Error:  ${e}`);
   }
@@ -275,5 +273,6 @@ By completing this tutorial, you have learned how to build webhooks using Worker
 ## Related resources
 
 <!-- - [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/) -->
+
 - [Build a JAMStack app](/workers/tutorials/build-a-jamstack-app/)
 - [Build a QR code generator](/workers/tutorials/build-a-qr-code-generator/)
