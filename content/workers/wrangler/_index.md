@@ -3,9 +3,9 @@ title: Wrangler
 pcx-content-type: navigation
 weight: 8
 meta:
-  title: Command-line (Wrangler)
+  title: Wrangler (command line)
 ---
 
-# Command-line (Wrangler)
+# Wrangler (command line)
 
 {{<directory-listing>}}

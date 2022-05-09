@@ -36,8 +36,7 @@ The first parameter passed to the class constructor contains state specific to t
 
 ```js
 export class DurableObjectExample {
-  constructor(state, env) {
-  }
+  constructor(state, env) {}
 }
 ```
 
@@ -47,11 +46,10 @@ Workers communicate with a Durable Object via the Fetch API. Like a Worker, a Du
 
 ```js
 export class DurableObjectExample {
-  constructor(state, env) {
-  }
+  constructor(state, env) {}
 
   async fetch(request) {
-    return new Response('Hello World');
+    return new Response("Hello World");
   }
 }
 ```
@@ -75,11 +73,11 @@ export class DurableObjectExample {
   }
 
   async fetch(request) {
-    let ip = request.headers.get('CF-Connecting-IP');
+    let ip = request.headers.get("CF-Connecting-IP");
     let data = await request.text();
     let storagePromise = this.state.storage.put(ip, data);
     await storagePromise;
-    return new Response(ip + ' stored ' + data);
+    return new Response(ip + " stored " + data);
   }
 }
 ```
@@ -112,7 +110,7 @@ export class Counter {
       let stored = await this.state.storage.get("value");
       // After initialization, future reads do not need to access storage.
       this.value = stored || 0;
-    })
+    });
   }
 
   // Handle HTTP requests from clients.
@@ -216,7 +214,7 @@ In the above example, you used a string-derived object ID by calling the `idFrom
 
 {{<Aside type="warning" header="Custom Wrangler installation instructions">}}
 
-You must use [Wrangler version 1.19.3 or greater](/workers/wrangler/getting-started/) in order to manage Durable Objects.
+You must use [Wrangler version 1.19.3 or greater](/workers/wrangler/get-started/) in order to manage Durable Objects.
 
 {{</Aside>}}
 
