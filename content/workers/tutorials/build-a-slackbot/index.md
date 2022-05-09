@@ -183,7 +183,7 @@ Note that you are able to use JavaScript features like async/await inside of you
 
 {{</Aside>}}
 
-If there is no matching route (for example, if someone requests the path `/admin`), the function should return a response with a status code of `404`. `router.all` catches any unhandled requests and returns a new `Response` with the body text “404, not found!”, and a status code of `404`.
+If there is no matching route (for example, if someone requests the path `/admin`), the function should return a response with a status code of `404`. `router.all` catches any unhandled requests and returns a new `Response` with the body text `“404, not found!”`, and a status code of `404`.
 
 This request/response pattern makes it really straightforward to understand how requests are routed in your Workers application. You are almost done with this file. To complete it, you need to define the corresponding function handlers for your routes. In this tutorial, you will define those handlers in `src/handlers`:
 
