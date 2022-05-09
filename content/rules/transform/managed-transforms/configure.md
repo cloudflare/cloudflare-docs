@@ -29,7 +29,7 @@ To enable a Managed Transform via API:
 
 ### 1. Get list of available Managed Transforms
 
-The following request obtains a list of available Managed Transforms, organized by request or response, with information about their current status (`enabled` field) and if you can update them, based on conflicts with other enabled Managed Transforms (`has_conflict` field). If there are conflicts preventing you from enabling a Managed Transform, the Managed Transform object will contain a `conflicts_with` array with the IDs of conflicting Managed Transforms.
+The following request obtains a list of available Managed Transforms, organized by request or response, with information about their current status (`enabled` field) and if you can update them, based on conflicts with other enabled Managed Transforms (`has_conflict` field). Each Managed Transform item will optionally contain a `conflicts_with` array with the IDs of Managed Transforms that will conflict with the current Managed Transform (if any).
 
 The response will only include available Managed Transforms according to your Cloudflare plan and product subscriptions.
 
@@ -85,7 +85,7 @@ header: Response
 
 ### 2. Change the status of Managed Transforms
 
-Add the Managed Transforms you wish to change to the request body, and update their status in the `enabled` field.
+Add the Managed Transforms you wish to change to the request body, and update their status in the `enabled` field. You cannot enable a Managed Transform that has a conflict with a currently enabled Managed Transform (that is, an item where `has_conflict` is `true`).
 
 Make sure you include the Managed Transforms you are updating in the correct JSON object (`managed_request_headers` or `managed_response_headers`).
 
