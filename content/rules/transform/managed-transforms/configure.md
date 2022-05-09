@@ -16,7 +16,7 @@ weight: 1
 
 3. Click **Managed Transforms**.
 
-4. In the pop-up dialog that appears, enable or disable the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) by clicking the toggle next to each entry. 
+4. In the pop-up dialog that appears, enable or disable the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) by clicking the toggle next to each entry. The Cloudflare dashboard will only list available Managed Transforms according to your Cloudflare plan and product subscriptions.
 
 5. Click **Close**.
 
@@ -29,7 +29,9 @@ To enable a Managed Transform via API:
 
 ### 1. Get list of available Managed Transforms
 
-The following request obtains a list of all Managed Transforms, organized by request or response, with information about their current status (`enabled` field) and if you can update them (`available` field):
+The following request obtains a list of available Managed Transforms, organized by request or response, with information about their current status (`enabled` field) and if you can update them, based on conflicts with other enabled Managed Transforms (`has_conflict` field). If there are conflicts preventing you from enabling a Managed Transform, the Managed Transform object will contain a `conflicts_with` array with the IDs of conflicting Managed Transforms.
+
+The response will only include available Managed Transforms according to your Cloudflare plan and product subscriptions.
 
 ```json
 ---
@@ -49,29 +51,29 @@ header: Response
       {
         "id": "add_bot_protection_headers",
         "enabled": false,
-        "available": false
+        "has_conflict": false
       },
       {
         "id": "add_visitor_location_headers",
         "enabled": false,
-        "available": true
+        "has_conflict": false
       },
       {
         "id": "remove_visitor_ip_headers",
         "enabled": false,
-        "available": true
+        "has_conflict": false
       }
     ],
     "managed_response_headers": [
       {
         "id": "remove_x-powered-by_header",
         "enabled": false,
-        "available": true
+        "has_conflict": false
       },
       {
         "id": "add_security_headers",
         "enabled": false,
-        "available": true
+        "has_conflict": false
       }
     ]
   },
@@ -83,7 +85,7 @@ header: Response
 
 ### 2. Change the status of Managed Transforms
 
-Add the Managed Transforms you wish to change to the request body, and update their status in the `enabled` field. 
+Add the Managed Transforms you wish to change to the request body, and update their status in the `enabled` field.
 
 Make sure you include the Managed Transforms you are updating in the correct JSON object (`managed_request_headers` or `managed_response_headers`).
 
@@ -123,29 +125,29 @@ header: Response
       {
         "id": "add_bot_protection_headers",
         "enabled": false,
-        "available": false
+        "has_conflict": false
       },
       {
         "id": "add_visitor_location_headers",
         "enabled": true,
-        "available": true
+        "has_conflict": false
       },
       {
         "id": "remove_visitor_ip_headers",
         "enabled": false,
-        "available": true
+        "has_conflict": false
       }
     ],
     "managed_response_headers": [
       {
         "id": "remove_x-powered-by_header",
         "enabled": true,
-        "available": true
+        "has_conflict": false
       },
       {
         "id": "add_security_headers",
         "enabled": false,
-        "available": true
+        "has_conflict": false
       }
     ]
   },
