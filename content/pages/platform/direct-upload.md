@@ -11,7 +11,7 @@ With Direct Uploads, you can bring your pre-built assets right to Pages. By usin
 
 Once you have your pre-built assets ready, there are two ways to begin uploading: 
 
-1. Using [Wrangler CLI](/workers/cli-wrangler/).
+1. Using [Wrangler CLI](/workers/wrangler/get-started/).
 2. Dragging and dropping.
 
 {{<Aside type= "note">}}
@@ -30,7 +30,7 @@ Below is the supported file types for each Direct Upload options:
 
 ### Set up Wrangler
 
-To begin, [install the latest version](/workers/cli-wrangler/install-update/) of Wrangler and [set up Wrangler](/workers/cli-wrangler/authentication/). Note that Pages integration with Wrangler relies on Wrangler 2.
+To begin, [install the latest version](/workers/wrangler/get-started/) of Wrangler and [set up Wrangler](/workers/wrangler/get-started/). Note that Pages integration with Wrangler relies on Wrangler 2.
 
 #### Deploy your project with Wrangler
 
