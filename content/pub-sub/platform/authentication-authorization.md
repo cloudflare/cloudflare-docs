@@ -19,7 +19,7 @@ To generate credentials scoped to a specific broker, you have two options:
 - Allow Pub/Sub to generate Client IDs for you.
 - Supply a list of Client IDs that Pub/Sub will use to generate tokens.
 
-**The recommended and simplest approach if you are starting from scratch is to have Pub/Sub generate Client IDs for you**, which ensures they are sufficiently random and that there are not conflicting Client IDs. Duplicate Client IDs can cause issues with clients bceause only one instance of a Client ID is allowed to connect to a broker. 
+The recommended and simplest approach if you are starting from scratch is to have Pub/Sub generate Client IDs for you, which ensures they are sufficiently random and that there are not conflicting Client IDs. Duplicate Client IDs can cause issues with clients because only one instance of a Client ID is allowed to connect to a broker. 
 
 ## Generate credentials
 

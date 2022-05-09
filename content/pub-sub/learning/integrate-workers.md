@@ -6,7 +6,7 @@ weight: 2
 
 # Integrate with Workers
 
-Once of the most powerful features of Pub/Sub is the ability to connect [Cloudflare Workers](/workers) — powerful serverless functions that run on the edge — and filter, aggregate and mutate every message published to that broker. Workers can also mirror those messages to other sources, including writing to Cloudflare R2 storage, external databases, or other cloud services beyond Cloudflare, making it easy to persist or analyze incoming message payloads and data at scale.
+Once of the most powerful features of Pub/Sub is the ability to connect [Cloudflare Workers](/workers) — powerful serverless functions that run on the edge — and filter, aggregate and mutate every message published to that broker. Workers can also mirror those messages to other sources, including writing to [Cloudflare R2 storage](/r2/), external databases, or other cloud services beyond Cloudflare, making it easy to persist or analyze incoming message payloads and data at scale.
 
 The Worker runs as a "post-publish" hook where messages are accepted by the broker, passed to the Worker, and messages are only sent to clients who subscribed to the topic after the Worker returns a valid HTTP response. If the Worker does not return a response (intentionally or not), or returns an HTTP status code other than HTTP 200, the message is dropped.
 
