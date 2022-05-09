@@ -31,7 +31,7 @@ npm install -g wrangler
 Then, run the `wrangler dev` command to generate a list of deprecation warnings or fields which need to be changed in order to build your Worker using Wrangler 2.
 
 ```sh
-npx wrangler dev
+wrangler dev
 ```
 
 This will return some deprecated warnings that you will need to fix in order to get it working.
