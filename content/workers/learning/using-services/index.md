@@ -84,3 +84,5 @@ Workers Service bindings allow you to:
 - Segment multiple use cases into separate Services that can be explicitly invoked from your code.
 - Achieve better composability on the Workers platform using Service-oriented architecture.
 - Create private microservices, to be conditionally invoked from other edge-facing Services.
+
+Read more about [Service bindings](../../platform/bindings/about-service-bindings).
