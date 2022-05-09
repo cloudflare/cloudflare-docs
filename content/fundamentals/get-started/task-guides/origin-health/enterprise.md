@@ -38,9 +38,7 @@ For passive monitoring, [create notifications](/fundamentals/notifications/creat
 
 ### Block traffic
 
-{{<render file="_origin-ddos.md">}}
-
-{{<render file="_origin-firewall-options.md">}}
+For more details, refer to [Secure your website](/fundamentals/get-started/task-guides/secure-your-website/).
 
 ### Increase caching
 

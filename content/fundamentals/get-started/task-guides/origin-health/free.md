@@ -24,14 +24,7 @@ meta:
 
 ### Block traffic
 
-{{<render file="_origin-ddos.md">}}
-
-Additionally, adjust various settings in **Security** to restrict potentially malicious traffic:
-
-- Set up customized [firewall rules](/firewall/cf-firewall-rules/)
-- Enable [bot protection](/bots/get-started/)
-- Block, challenge, or allow specific addresses with [IP access rules](https://support.cloudflare.com/hc/articles/217074967)
-- Create [rate limiting rules](https://support.cloudflare.com/hc/articles/115001635128) as a final defense against malicious traffic (usage-based billing)
+For more details, refer to [Secure your website](/fundamentals/get-started/task-guides/secure-your-website/).
 
 ### Increase caching
 
