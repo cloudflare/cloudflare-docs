@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Check that a policy is working
-weight: 1
+weight: 2
 ---
 
 # Check that a policy is working

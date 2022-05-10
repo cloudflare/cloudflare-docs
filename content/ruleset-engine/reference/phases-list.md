@@ -39,6 +39,7 @@ The phases execute in the order they appear in the table.
 | `http_request_firewall_managed` | [Web Application Firewall (WAF)](/waf/managed-rulesets/deploy-api/) |
 | `http_request_sbfm` | [Super Bot Fight Mode](/bots/get-started/pro/) |
 | `http_request_redirect` | [Bulk Redirects](/rules/bulk-redirects/create-api/) |
+| _N/A_ (internal phase) | [Managed Transforms](/rules/transform/managed-transforms/) |
 | `http_request_late_transform` | [HTTP Request Header Modification Rules](/rules/transform/request-header-modification/create-api/) |
 
 {{</table-wrap>}}
@@ -53,6 +54,7 @@ The phases execute in the order they appear in the table.
 
 | Phase name | Used in product/feature |
 |---|---|
+| _N/A_ (internal phase) | [Managed Transforms](/rules/transform/managed-transforms/) |
 | `http_response_headers_transform` | [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/create-api/) |
 | `http_response_firewall_managed` | [Cloudflare Sensitive Data Detection](/waf/managed-rulesets/) (Data Loss Prevention) |
 | `http_log_custom_fields` | [Logpush custom fields](/logs/reference/logpush-api-configuration/custom-fields/) |

@@ -20,6 +20,8 @@ Cloudflare will crawl your site when you have specific products enabled:
     * This crawler ignores your `robots.txt` file unless there are rules explicitly targeting the user agent.
 * [**Load balancing monitors**](/load-balancing/understand-basics/monitors/)
     * *User-Agent*: `Mozilla/5.0 (compatible; Cloudflare-Traffic-Manager/1.0; +https://www.cloudflare.com/traffic-manager/; pool-id: <POOLID>)`
+* [**Health checks**](https://support.cloudflare.com/hc/en-us/articles/4404867308429)
+    * *User-Agent*: `Mozilla/5.0 (compatible; Cloudflare-Traffic-Manager/1.0; +https://www.cloudflare.com/traffic-manager/; healthcheck-id: <HEALTHCHECK_ID>)`
 
 ### Other situations
 

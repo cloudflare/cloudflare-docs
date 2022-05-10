@@ -159,11 +159,11 @@ The React form is complete, however, when the user submits this form, they will 
 
 To create a Formspree form, sign up for [an account on Formspree](https://formspree.io/register). Then create a new form with the **+ New form** button. Name your new form `Contact-us form` and update the recipient email to an email where you wish to receive your form submissions. Finally, select **Create Form**.
 
-![Creating a Formspree form](./new-form-dialog.png)
+![Creating a Formspree form](/pages/tutorials/add-a-react-form-with-formspree/new-form-dialog.png)
 
 You will be presented with instructions on how to integrate your new form. Copy the form’s `hashid` (the last 8 alphanumeric characters from the URL) and paste it into the `useForm` function in the `ContactForm` component you created above.
 
-![Newly generated form endpoint that you can copy to use in the ContactForm component](./form-endpoint.png)
+![Newly generated form endpoint that you can copy to use in the ContactForm component](/pages/tutorials/add-a-react-form-with-formspree/form-endpoint.png)
 
 Your component should now have a line like this:
 
@@ -224,7 +224,7 @@ const [state, handleSubmit] = useForm(process.env.REACT_APP_FORM_ID);
 
 In your Cloudflare Pages project settings, add the `REACT_APP_FORM_ID` environment variable to both the Production and Preview environments. Use your original form's `hashid` for Production, and the new test form's `hashid` for the Preview environment:
 
-![Edit option for environment variables in your Production and Preview environments](./env-vars.png)
+![Edit option for environment variables in your Production and Preview environments](/pages/tutorials/add-a-react-form-with-formspree/env-vars.png)
 
 Now, when you commit and push changes to a branch of your git repository, a new preview app will be created with a form that submits to the test form URL. However, your production website will continue to submit to the original form URL.
 

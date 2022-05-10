@@ -9,7 +9,7 @@ weight: 7
 With Cloudflare Zero Trust, you can create:
 
 *   [**Secure Web Gateway**](/cloudflare-one/policies/filtering/) policies to inspect outbound traffic to the Internet, with [Cloudflare Gateway](/cloudflare-one/glossary/#cloudflare-gateway).
-*   [**Zero Trust**](/cloudflare-one/policies/zero-trust/) policies to secure inbound traffic to your applications with [Cloudflare Access](/cloudflare-one/glossary/#cloudflare-access).
+*   [**Access**](/cloudflare-one/policies/access/) policies to secure inbound traffic to your applications with [Cloudflare Access](/cloudflare-one/glossary/#cloudflare-access).
 *   [**Browser Isolation**](/cloudflare-one/policies/browser-isolation/) policies to protect your organization's devices from threats on the Internet, and to prevent data loss.
 
 ## Related tutorials
