@@ -52,7 +52,7 @@ Your custom headers can also be moved into a `_headers` file in your output dire
 
 ## Creating a new Pages project
 
-### Using git integration 
+### Using git provider 
 
 After you have recorded your **build command** and **build directory** in a separate location, remove everything else from your application, and push the new version of your project up to GitHub. Follow the ["Get started" guide](/pages/get-started/) to add your project to Cloudflare Pages, using the **build command** and **build directory** that you saved earlier.
 
