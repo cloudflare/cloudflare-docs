@@ -1,8 +1,6 @@
 ---
-title: R2 S3 XML API Compatibility
+title: S3 XML API Compatibility
 pcx-content-type: reference
-meta:
-  title: R2 S3 XML API Compatibility
 ---
 
 # S3 XML API compatibility
