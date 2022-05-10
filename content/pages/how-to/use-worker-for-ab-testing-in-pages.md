@@ -5,13 +5,13 @@ title: Use Pages Functions for A/B testing
 
 # Use Pages Functions for A/B testing
 
-In this guide, you will learn how to use [Page Functions](/pages/platform/functions/) for A/B testing in your Pages projects. A/B testing is a user experience research methodology applied when comparing two or more versions of a webpage or app. With A/B testing, you can serve two or more versions of a webpage to users and divide traffic to your site.
+In this guide, you will learn how to use [Page Functions](/pages/platform/functions/) for A/B testing in your Pages projects. A/B testing is a user experience research methodology applied when comparing two or more versions of a webpage or application. With A/B testing, you can serve two or more versions of a webpage to users and divide traffic to your site.
 
 # Overview 
 
-While setting up different versions of your application to determine the experience for your users with A/B testing is unique to your specific use case, the actual process of setting up a/b testing can be general.
+While setting up different versions of your application to determine the experience for your users with A/B testing is unique to your specific use case, the process of setting up A/B testing can be broken down into the same helpful principles.
 
-Depending on the number of versions you have(this guide uses two), you can assign your users into experimental groups. To ensure that a user remains in the group you have given, they will be set cookies stored in the browsers. Then, based on the value of the cookie, they will sever the route associated with that cookie.
+Depending on the number of versions you have(this guide uses two), you can assign your users into experimental groups. To ensure that a user remains in the group you have given, a cookie will be set and stored in the browsers. Then, based on the value of the cookie, they will sever the route associated with that cookie.
 
 {{<Aside type="Note">}}
 
@@ -23,15 +23,15 @@ After you have gotten the value from the cookie, you can then have a conditional
 
 # Settting up your Pages Function
 
-In your project, you can handle the logic for a/b testing using [Pages Functions](/pages/platform/functions/). Pages Functions allows you to handle server logic from within your Pages project. Create a `/functions` directory at the root of your project to get started. Your application server logic will live in the functions folder. 
+In your project, you can handle the logic for A/B testing using [Pages Functions](/pages/platform/functions/). Pages Functions allows you to handle server logic from within your Pages project. Create a `/functions` directory at the root of your project to get started. Your application server logic will live in the functions folder. 
 
 ## Adding middleware logic.
 
-Pages Functions have utility functions that allow you to reusable chunks of logic that can be executed before and/or after route handlers. These are called [middleware](/pages/platform/functions/#adding-middleware). In our A/B testing use case, we want to intercept the request before it gets to the server, which is perfect middleware use. In your `/functions` directory, create an `_middleware.js` file. 
+Pages Functions have utility functions that can reuse chunks of logic which are executed before and/or after route handlers. These are called [middleware](/pages/platform/functions/#adding-middleware). In our A/B testing use-case, we want to intercept the request before it gets to the server, which is perfect middleware use. In your `/functions` directory, create an `_middleware.js` file. 
 
 {{<Aside type="Note">}}
 
-Creating your middleware file at the base of your functions folder means that it will run for all routes on your project. Check out the documentation to learn more about [middleware routing](/pages/platform/functions/#middleware-routing)
+Creating your middleware file at the base of your functions folder means that it will run for all routes on your project. To learn more about [middleware routing](/pages/platform/functions/#middleware-routing) refer to the documentation.
 
 {{</Aside>}}
 
