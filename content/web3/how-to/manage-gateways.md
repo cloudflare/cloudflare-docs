@@ -6,9 +6,26 @@ weight: 1
 
 # Manage gateways
 
-You can interact with a Web3 gateway in several ways.
+A Cloudflare Web3 gateway provides HTTP-accessible interfaces to various Web3 networks. You can interact with a gateway in several ways.
 
 ## Create a gateway
+
+When you create a gateway, Cloudflare automatically creates and adds records to your Cloudflare DNS so your gateway can receive and route traffic appropriately.
+
+### Via the dashboard
+
+To create a gateway using the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select your account and website.
+3. Go to **Web3**.
+4. Click **Create Web3 Gateway**.
+5. Enter the following information:
+  - **Hostname**: Enter a hostname to use as your gateway, which has to be a subdomain of the current Cloudflare zone.
+  - **Gateway Description**: Enter a description to help distinguish between different gateways.
+  - **Gateway Type**: Select a gateway target of [IPFS]((/web3/ipfs-gateway/) or [Ethereum](/web3/ethereum-gateway/).
+  - **DNSLink**: Only applicable to IPFS gateways, more details at [DNSLink](/web3/ipfs-gateway/concepts/dnslink/).
+6. Click **Deploy**.
 
 ### Via the API
 
@@ -24,13 +41,11 @@ curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/web3/hostnames" \
 -H "Content-Type: application/json" \
 -d '{
-    "result": {
-        "name": "gateway.example.com",
-        "description":"This is my IPFS gateway.",
-        "target":"ipfs",
-        "dnslink":"/ipns/onboarding.ipfs.cloudflare.com"
-    }
-}'
+      "name": "gateway.example.com",
+      "description":"This is my IPFS gateway.",
+      "target":"ipfs",
+      "dnslink":"/ipns/onboarding.ipfs.cloudflare.com"
+  }'
 ```
 
 The response contains the complete definition of the new gateway.
@@ -44,7 +59,7 @@ header: Response
   "errors": [],
   "messages": [],
   "result": {
-    "id": "<WEB_3_GATEWAY_ID>",
+    "id": "<WEB3_GATEWAY_ID>",
     "name": "gateway.example.com",
     "description": "This is my IPFS gateway.",
     "status": "active",
@@ -60,13 +75,58 @@ header: Response
 
 ## Edit a gateway
 
+Once you have [created a gateway](#create-a-gateway), you can only edit the **Gateway Description** and — if it is an **IPFS** gateway — also edit the value for the [DNSLink](/web3/ipfs-gateway/concepts/dnslink/) field.
+
+If you need to edit other fields, [delete the gateway](#delete-a-gateway) and create a new one.
+
+### Via the dashboard
+
+To edit a gateway using the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select your account and website.
+3. Go to **Web3**.
+4. On a specific gateway, click **Edit**.
+5. Update the **Gateway Description** and — if editing an **IPFS** gateway — the value for the [DNSLink](/web3/ipfs-gateway/concepts/dnslink/).
+6. Click **Reapply**.
+
 ### Via the API
 
 To edit specific settings for a gateway, use a [PATCH](https://api.cloudflare.com/#web3-hostname-edit-web3-hostname) request.
 
 ---
 
+## Refresh a gateway
+
+When your gateway is stuck in an **Error** [status](/web3/reference/gateway-status/), you should try refreshing the gateway, which attempts to re-create the associated DNS records for the hostname.
+
+### Via the dashboard
+
+To refresh a gateway using the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select your account and website.
+3. Go to **Web3**.
+4. On a specific gateway, click **...** > **Refresh**.
+
+### Via the API
+
+To refresh a gateway using the API, send a [PATCH](https://api.cloudflare.com/#web3-hostname-edit-web3-hostname) request with an empty request body.
+---
+
 ## Delete a gateway
+
+When you delete a gateway, Cloudflare will automatically remove all associated hostname DNS records. This action will impact your traffic and cannot be undone.
+
+### Via the dashboard
+
+To delete a gateway using the dashboard: 
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select your account and website.
+3. Go to **Web3**.
+4. On a specific gateway, click **...** > **Remove**.
+5. Click **Delete hostname**.
 
 ### Via the API
 

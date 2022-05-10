@@ -1,6 +1,6 @@
 ---
 pcx-content-type: how-to
-title: 
+title: Subscribe to gateways
 weight: 2
 ---
 
