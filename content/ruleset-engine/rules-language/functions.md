@@ -218,6 +218,10 @@ You can only use the `to_string()` function in [rewrite expressions of Transform
     `uuidv4(cf.random_seed)` returns a UUIDv4 similar to `49887398-6bcf-485f-8899-f15dbef4d1d5`
     ```
 
+{{<Aside type="warning">}}
+You can only use the `uuidv4()` function in [rewrite expressions of Transform Rules](/rules/transform/).
+{{</Aside>}}
+
 {{</definitions>}}
 
 ## Magic Firewall Functions
