@@ -5,7 +5,7 @@ title: Bindings
 
 ## About Bindings
 
-Bindings allow your Workers to interact with resources on the Workers platform. Bindings can be configured in [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Settings**> **Variables**.
+Bindings allow your Workers to interact with resources on the Workers platform. Bindings can be configured by logging in to the Cloudflare dashboard > Account Home > [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Settings**> **Variables**.
 
 There are multiple types of bindings available today:
 

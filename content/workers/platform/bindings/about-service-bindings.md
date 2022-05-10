@@ -21,7 +21,7 @@ While the interface among Service bindings is HTTP, the networking is not. Unlik
 
 ## Set a Service binding
 
-To manage a Workers Service bindings:
+To manage a Workers Service binding:
 
 1. Log in to the Cloudflare dashboard > Account Home > [Workers](https://dash.cloudflare.com/?zone=workers). 
 2. Select your **Worker**.
