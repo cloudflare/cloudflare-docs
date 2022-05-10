@@ -11,7 +11,7 @@ Pub/Sub is currently in private beta. You can [sign up for the waitlist](https:/
 
 {{</Aside>}} 
 
-Pub/Sub is a flexible, scalable messaging service built on top of the MQTT messaging standard, allowing you to publish messages from tens of thousands of devices (or more), deploy code to filter, aggregate and transform messages using Cloudflare Workers, and/or subscribe to topics for fan-out messaging use-cases.
+Pub/Sub is a flexible, scalable messaging service built on top of the MQTT messaging standard, allowing you to publish messages from tens of thousands of devices (or more), deploy code to filter, aggregate and transform messages using Cloudflare Workers, and/or subscribe to topics for fan-out messaging use cases.
 
 This guide will:
 
@@ -19,13 +19,13 @@ This guide will:
 - Create a `<broker>.<namespace>.cloudflarepubsub.com` endpoint ready to publish and subscribe to using any MQTT v5.0 compatible client.
 - Help you send your first message to the Pub/Sub Broker.
 
-Before you begin, you should be familiar with using the command-line and the curl command for making HTTP requests. 
+Before you begin, you should be familiar with using the command line and the curl command for making HTTP requests. 
 
-In the future, we'll be adding support for Pub/Sub to wrangler (our developer CLI) and the Cloudflare dashboard to make creating and managing Pub/Sub Brokers easier.
+In the future, we will be adding support for Pub/Sub to [wrangler](/workers/wrangler/) (our developer CLI) and the Cloudflare dashboard to make creating and managing Pub/Sub Brokers easier.
 
 ## Prerequisite: Create a Cloudflare account
 
-In order to use Pub/Sub, you need a Cloudflare account. If you already have an account, you can skip this step.
+In order to use Pub/Sub, you need a [Cloudflare account](/fundamentals/get-started/setup/account-setup/). If you already have an account, you can skip this step.
 
 ## 1. Enable Pub/Sub
 
@@ -40,16 +40,16 @@ To make requests against the Pub/Sub API, retrieve your API key.
 3. On the **API Tokens** under **API Keys**, locate **Global API Key** and click **View**.
 4. Copy the key to your clipboard.
 
-In your terminal, configure environmental variables with these keys, so we don't have to type them out in each command:
+In your terminal, configure environmental variables with these keys, so you do not have to type them out in each command:
 
 ```bash
 $ export CF_API_EMAIL="<you@example.com>"
 $ export CF_API_KEY="<YOUR_API_KEY>"
 ```
 
-Note that these credentials should be kept secret and not committed to source code or placed in any client-side code.
+These credentials should be kept secret and not committed to source code or placed in any client-side code.
 
-Once you have your credentials, you will also need your Cloudflare Account ID, which you can find directly at dash.cloudflare.com once logged in. Click on "Workers", and copy your Account ID from the right-hand side.
+Once you have your credentials, you will also need your [Cloudflare Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
 
 Back in your terminal, add your Account ID as an environmental variable.
 
@@ -115,7 +115,7 @@ In the example above, a broker is created with a hostname of `my-broker.cloudfla
 
 ## 5. Create credentials for your broker
 
-In order to connect to a Pub/Sub Broker, you need to securely authenticate. Credentials are scoped to each broker, and credentials issued for `broker-a` cannot be used to connect to `broker-b`.
+In order to connect to a Pub/Sub Broker, you need to securely authenticate. Credentials are scoped to each broker and credentials issued for `broker-a` cannot be used to connect to `broker-b`.
 
 Note that:
 

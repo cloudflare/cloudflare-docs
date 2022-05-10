@@ -8,7 +8,7 @@ weight: 3
 
 {{<Aside type="note">}}
 
-Pub/Sub will continue to expand support for MQTT protocol features during the beta period. The documentation will be updated to reflect the expanded features, and you are encouraged to check back periodically.
+Pub/Sub will continue to expand support for MQTT protocol features during the beta period. The documentation will be updated to reflect the expanded features, so check these docs periodically.
 
 {{</Aside>}}
 
@@ -31,7 +31,7 @@ Pub/Sub supports the following MQTT protocol features.
 |Enhanced Authentication | Not supported| Commonly used to support Kerberos. |
 |Delivery: At Most Once (QoS 0)	        | Yes (default)     | This is the default QoS level in MQTT and relies on the underlying TCP connection and system for basic delivery guarantees and network-level re-transmissions. |
 | Delivery: At Least Once (QoS 1)	      | Not yet supported |	The broker will return a DISCONNECT with Reason Code 0x9B (QoS not supported) if a client attempts to send a message with an unsupported Quality of Service mode.|
-Delivery: Exactly Once (QoS 2)          | Not supported     | The broker will return a DISCONNECT with Reason Code 0x9B (QoS not supported) if a client attempts to send a message with an unsupported Quality of Service mode. |
+Delivery: Exactly Once (QoS 2)          | Not yet supported     | The broker will return a DISCONNECT with Reason Code 0x9B (QoS not supported) if a client attempts to send a message with an unsupported Quality of Service mode. |
 | Retain                                | Not yet supported | The Broker will return a DISCONNECT Reason Code of 0x9A (Retain not supported) if a client attempts to send a message with the Retain bit set to any value other than zero (0). |
 | Will Messages                         |	Not yet supported | Will messages (sometimes called "Last Will" messages) are not currently supported and will be ignored by a broker. |
 | Receive Maximum	                      | Not yet supported	| Only applies to QoS 1 and QoS 2 messages, which are not currently supported. |

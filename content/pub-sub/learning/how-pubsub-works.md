@@ -56,6 +56,6 @@ In Pub/Sub, which is based on MQTT v5.0, you can also set additional fields to i
 
 As a set of best practices when sending Pub/Sub messages, you should consider:
 
-- **Keep messages reasonably sized**. Buffering data on the client up to 1KB (or every 2-3 seconds) is a good way to optimize for message size, throughput, and overall system latency.
+- **Keep messages reasonably sized**. Buffering data on the client up to 1 KB (or every 2-3 seconds) is a good way to optimize for message size, throughput, and overall system latency.
 - **Set the `payloadFormatIndicator` property when publishing a message**. This gives your subscribers or Workers a hint about how to parse the message.
 - **Set the `contentType` property to the MIME type of the payload**. For example, `application/json ` or `application/x-msgpack`  as an additional hint, especially if clients are actively publishing messages in different formats.
