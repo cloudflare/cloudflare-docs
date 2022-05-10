@@ -23,21 +23,21 @@ Before starting this project, you should have some experience with HTML, CSS, an
 
 If you would like to see the finished code for this project, find the [project on GitHub](https://github.com/signalnerve/cloudflare-workers-todos) and refer to the [live demo](https://todos.signalnerve.workers.dev/) to review what you will be building.
 
-## Generate
+## Init
 
-Cloudflare offers a collection of pre-built examples for getting started with Workers. These are often referred to as templates, each of which emphasizes a particular use case or language. Wrangler, Cloudflare’s command-line tool for managing Worker projects, integrates with all templates so that it is even easier to start writing Workers. In this tutorial, you will use the default JavaScript template to generate a Workers project.
+Cloudflare offers a collection of pre-built examples for getting started with Workers. These are often referred to as templates, each of which emphasizes a particular use case or language. Wrangler, Cloudflare’s command-line tool for managing Worker projects, integrates with all templates so that it is even easier to start writing Workers. In this tutorial, you will use the default JavaScript template to create a Workers project.
 
-In your terminal, generate a Worker project with your desired project name; for example, `todos`:
+In your terminal, create a Worker project with your desired project name; for example, `todos`:
 
 ```sh
 ---
 header: Generate a project
 ---
-$ wrangler generate todos
+$ wrangler init todos
 $ cd todos
 ```
 
-Wrangler templates are Git repositories. You can create your own templates or use one from the [Template Gallery](/workers/examples/).
+Wrangler templates are Git repositories. You can create your own templates or use one from the [Template Gallery](/workers/get-started/quickstarts/#templates/).
 
 Wrangler’s default template includes support for building and deploying JavaScript-based projects, including Webpack support. Inside of your new `todos` directory, `index.js` represents the entry point to your Cloudflare Workers application.
 

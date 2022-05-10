@@ -3,20 +3,12 @@ title: Overview
 type: overview
 pcx-content-type: overview
 weight: 1
-layout: list
 meta:
   title: Cloudflare Web3 docs
 ---
 
 # Cloudflare Web3 docs
 
-{{<content-column>}}
+Web3, or the distributed web, is a set of technologies that enables hosting of content and web applications in a serverless manner by leveraging distributed systems and consensus protocols.
 
-View files stored on the InterPlanetary File System in your browser. Interact with the Ethereum blockchain. Explore Web3.
-
-{{<button-group>}}
-  {{<button type="primary" href="/web3/ipfs-gateway/">}}IPFS Gateway{{</button>}}
-  {{<button type="primary" href="/web3/ethereum-gateway/">}}Ethereum Gateway{{</button>}}
-{{</button-group>}}
-
-{{</content-column>}}
+Cloudflare offers gateways to the [IPFS](/web3/ipfs-gateway/) and [Ethereum](/web3/ethereum-gateway/) networks to help Web3 developers do what they do best: develop applications without having to worry about running infrastructure.

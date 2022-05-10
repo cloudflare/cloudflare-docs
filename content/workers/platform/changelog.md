@@ -5,6 +5,15 @@ title: Changelog
 
 # Changelog
 
+## 2022-04-29
+
+- Minor V8 update: 10.0 → 10.1.
+- R2 public beta bindings are the default regardless of compat date or flags. Internal beta bindings customers should transition to public beta bindings as soon as possible. A back compatibility flag is available if this is not immediately possible. After some lag, new scripts carrying the `r2_public_beta_bindings` compatibility flag will stop accepting to be published until that flag is removed.
+
+## 2022-04-22
+
+- Major V8 update: 9.9 → 10.0.
+
 ## 2022-04-14
 
 - Performance and stability improvements.

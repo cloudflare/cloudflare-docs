@@ -10,6 +10,12 @@ Currently, WordPress offers over 50,000 plugins for download. As a result, testi
 
 For questions about a specific plugin not shown in the list, create a thread in the [Cloudflare Community](https://community.cloudflare.com/) to begin the conversation.
 
+{{<Aside type="note">}}
+
+The Cloudflare APO Wordpress plugin does not support multisite WordPress installation.
+
+{{</Aside>}}
+
 ## Compatible plugins
 
 - [WP Rocket](https://community.cloudflare.com/t/cloudflares-apo-with-wp-rockets-minified-css/225906/3?u=yevgen) **version 3.8.6 or later**

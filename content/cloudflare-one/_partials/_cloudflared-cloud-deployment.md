@@ -54,4 +54,4 @@ systemctl start cloudflared
 systemctl status cloudflared
 ```
 
-Next, visit the Zero Trust dashboard and ensure your new tunnel shows as **active**. Optionally, begin creating [Zero Trust policies](/cloudflare-one/policies/zero-trust/) to secure your private resources.
+Next, visit the Zero Trust dashboard and ensure your new tunnel shows as **active**. Optionally, begin creating [Access policies](/cloudflare-one/policies/access/) to secure your private resources.

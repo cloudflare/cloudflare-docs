@@ -694,6 +694,29 @@ Investigate to confirm it is an expected change.
 </div>
 </details>
 
+<details>
+<summary>Script Monitor New Script Exceeds Max URL Length Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when a script's URL exceeds the maximum allowed length.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Business plans or higher.
+
+**What should you do if you receive one?**
+
+Manually check the script.
+
+</div>
+</details>
+
 ## Stream
 
 <details>

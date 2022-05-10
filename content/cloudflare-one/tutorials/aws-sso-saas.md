@@ -67,7 +67,7 @@ For this tutorial, you will need:
 
 1.  Click **Next**.
 
-1.  Now create a [Zero Trust policy](/cloudflare-one/policies/zero-trust/) to determine who has access to your application.
+1.  Now create an [Access policy](/cloudflare-one/policies/access/) to determine who has access to your application.
 
 1.  Save your policy and return to the AWS SSO dashboard.
 

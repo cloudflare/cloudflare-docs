@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Images dashboard
-weight: 3
+weight: 1
 meta:
   title: Images dashboard upload
 ---

@@ -7,7 +7,7 @@ title: Triggers and rules
 
 Triggers define the conditions under which [a tool will start an action](/zaraz/get-started/create-actions/). In most cases, your objective will be to create triggers that match specific website events that are relevant to your business. A trigger can be based on an event that happened on your website, like after clicking a button or loading a specific page.
 
-These website events can be passed to Cloudflare Zaraz in a number of ways. You can use the [Track](/zaraz/web-api/track/) method of the Web API or the [data layer](/zaraz/advanced/datalayer-compatibility/) call. Alternatively, if you do not want to write code to track events on your website, you can configure triggers to listen to browser-side website events, with different types of rules like Click Listeners or Form Submissions.
+These website events can be passed to Cloudflare Zaraz in a number of ways. You can use the [Track](/zaraz/web-api/track/) method of the Web API or the [`dataLayer`](/zaraz/advanced/datalayer-compatibility/) call. Alternatively, if you do not want to write code to track events on your website, you can configure triggers to listen to browser-side website events, with different types of rules like Click Listeners or Form Submissions.
 
 ## Rule types
 
