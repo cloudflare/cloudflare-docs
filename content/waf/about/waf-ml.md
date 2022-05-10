@@ -65,7 +65,7 @@ You can use the fields for these scores in expressions of [custom rules](/waf/cu
 Contact your account team to get access to WAF ML.
 {{</Aside>}}
 
-### 1. Create a firewall rule or custom rule
+### 1. Create a custom rule or firewall rule
 
 Create a [custom rule](/waf/custom-rules/create-dashboard/#create-a-custom-rule) or a [firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) that logs all requests with a WAF ML Attack Score below 40 (recommended initial threshold).
 
