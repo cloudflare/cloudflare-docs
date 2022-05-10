@@ -9,7 +9,7 @@ meta:
 # WAF ML
 
 {{<Aside type="note">}}
-This feature is available in early access to customers on an Enterprise plan.
+This feature is available in early access to customers on an Enterprise plan. To get access, contact your account team.
 {{</Aside>}}
 
 WAF ML (Machine Learning) is a feature that complements [WAF Managed Rulesets](/waf/managed-rulesets/).
@@ -62,7 +62,7 @@ You can use the fields for these scores in expressions of [custom rules](/waf/cu
 ## Start using the WAF ML Score
 
 {{<Aside type="note" header="Before you start">}}
-To get access to WAF ML (early access), contact your account team.
+Contact your account team to get access to WAF ML.
 {{</Aside>}}
 
 ### 1. Create a firewall rule
