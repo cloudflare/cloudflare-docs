@@ -91,7 +91,7 @@ Durable Objects are only available on the Workers Paid plan.
 
 1.  Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object stops receiving requests, it will be removed from memory and stop incurring duration charges. A WebSocket being connected to the Durable Object counts as the Object being active.
 2.  Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
-3.  Requests including all incoming HTTP requests and WebSocket messages. There is no charge for outgoing WebSocket messages.
+3.  Requests including all incoming HTTP requests, WebSocket messages, and alarm invocations. There is no charge for outgoing WebSocket messages.
 
 ### Durable Objects billing examples
 
@@ -152,6 +152,7 @@ The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transac
 2.  List operations are billed by read request units, based on the amount of data examined, for example, a list request that returns 80 KB of keys will be billed 20 request units.
 3.  Delete requests are unmetered, for example, deleting a 100 KB value will be charged one delete request.
 4.  Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
+5.  Each alarm write is billed as a single write request unit.
 
 Requests that hit the [Durable Objects in-memory cache](/workers/learning/using-durable-objects/#accessing-persistent-storage-from-a-durable-object) or that use the [multi-key versions of get/put/delete methods](/workers/runtime-apis/durable-objects/#transactional-storage-api) are billed the same as if they were a normal, individual request for each key.
 
