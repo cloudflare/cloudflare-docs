@@ -13,14 +13,14 @@ layout: list
 Quickstarts are GitHub repos that are designed to be a starting point for building a new Cloudflare Workers project. For the projects below, you simply run:
 
 ```sh
-$ wrangler generate <new-project-name> <github-repo-url>
+$ npm init cloudflare <new-project-name> <github-repo-url>
 ```
 
 {{<definitions>}}
 
 - `new-project-name`
 
-  - A folder with this name will be created with your new project inside, pre-configured to [your Workers account](/workers/cli-wrangler/configuration/).
+  - A folder with this name will be created with your new project inside, pre-configured to [your Workers account](/workers/wrangler/configuration/).
 
 - `github-repo-url`
   - This is the URL of the GitHub repo starter, as below.
@@ -54,13 +54,13 @@ $ wrangler generate <new-project-name> <github-repo-url>
 
 {{<worker-starter title="TypeScript Starter" repo="cloudflare/worker-typescript-template" description="A bare-bones Workers starter project, in TypeScript.">}}
 
-{{<worker-starter title="Worker Sites" repo="cloudflare/worker-sites-template" description="Easily deploy a static site or static assets to Cloudflare’s edge network.">}}
+{{<worker-starter title="Workers Sites" repo="cloudflare/worker-sites-template" description="Easily deploy a static site or static assets to Cloudflare’s edge network.">}}
 
 {{<worker-starter title="Router" repo="cloudflare/worker-template-router" description="Run different logic based on the URL and request method. Use this starter to Build REST APIs or apps that require routing logic.">}}
 
 {{<worker-starter title="Miniflare Example Project" repo="mrbbot/miniflare-typescript-esbuild-jest" description="An example Cloudflare Workers project that uses Miniflare for local development, TypeScript, esbuild for bundling, and Jest for testing, with Miniflare's custom Jest environment.">}}
 
-{{<worker-starter title="Sunder Starter (Typescript)" repo="sunderjs/sunder-worker-template" description="A complete starter template using Sunder, TypeScript, Miniflare, esbuild, Jest, and Sass. Uses Worker Sites for static assets.">}}
+{{<worker-starter title="Sunder Starter (Typescript)" repo="sunderjs/sunder-worker-template" description="A complete starter template using Sunder, TypeScript, Miniflare, esbuild, Jest, and Sass. Uses Workers Sites for static assets.">}}
 
 {{<worker-starter title="Hono Starter" repo="honojs/hono-minimal" description="Hono is an ultrafast web framework built for Cloudflare Workers. This is a minimal project using Hono, TypeScript, esbuild, Miniflare, and Jest.">}}
 
@@ -69,7 +69,7 @@ $ wrangler generate <new-project-name> <github-repo-url>
 ## Frameworks
 
 {{<worker-starter title="Apollo GraphQL Server" repo="signalnerve/workers-graphql-server" description="Lightning-fast, globally distributed Apollo GraphQL server, deployed at the edge using Cloudflare Workers.">}}
-  
+
 {{<worker-starter title="GraphQL Yoga" repo="the-guild-org/yoga-cloudflare-workers-template" description="The most flexible, fastest, and lightest GraphQL server for all environments, Cloudflare Workers included.">}}
 
 {{<worker-starter title="Flareact" repo="flareact/flareact" description="Flareact is an edge-rendered React framework built for Cloudflare Workers. It features file-based page routing with dynamic page paths and edge-side data fetching APIs.">}}

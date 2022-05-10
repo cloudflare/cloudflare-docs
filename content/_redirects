@@ -421,6 +421,7 @@
 /spectrum/how-to/cname-origins/ /spectrum/get-started/#create-a-spectrum-application-using-a-cname-record 301  
 /spectrum/how-to/create-load-balancer/ /spectrum/get-started/#create-a-spectrum-application-using-a-load-balancer 301
 /spectrum/proxy-protocol/ /spectrum/reference/simple-proxy-protocol-header/ 301
+
 # ssl
 /ssl/ssl-for-saas/certificate-signing-requests/ /ssl/ssl-for-saas/custom-certificates/certificate-signing-requests/ 301
 /ssl/advanced-certificate-manager/ /ssl/edge-certificates/advanced-certificate-manager/ 301
@@ -562,6 +563,18 @@
 /warp-client/warp-for-teams/teams/parameters/ /cloudflare-one/connections/connect-devices/warp/deployment/parameters/ 301
 /warp-client/warp-for-teams/teams/Windows-Teams/ /cloudflare-one/connections/connect-devices/warp/deployment/Windows-Teams/ 301
 
+# web3
+/web3/ethereum-gateway/about-eth/ /web3/ethereum-gateway/concepts/ethereum/ 301
+/web3/ethereum-gateway/connecting-your-website/ /web3/how-to/manage-gateways/ 301
+/web3/ethereum-gateway/getting-started/ /web3/ethereum-gateway/ 301
+/web3/ethereum-gateway/interacting-with-the-eth-gateway/ /web3/how-to/use-ethereum-gateway/ 301
+/web3/ethereum-gateway/kill-switches/ /web3/ethereum-gateway/reference/kill-switches/ 301
+/web3/ipfs-gateway/browsing-ipfs/ /web3/how-to/use-ipfs-gateway/ 301
+/web3/ipfs-gateway/connecting-website/ /web3/how-to/manage-gateways/ 301
+/web3/ipfs-gateway/setting-up-a-server/ /web3/ipfs-gateway/ 301
+/web3/ipfs-gateway/updating-for-ipfs/ /web3/ipfs-gateway/reference/updating-for-ipfs/ 301
+/web3/ipfs-gateway/automated-deployment/ /web3/ipfs-gateway/reference/automated-deployment/ 301
+
 # workers
 /workers/about/ /workers/learning/ 301
 /workers/about/how-it-works/ /workers/learning/how-workers-works/ 301
@@ -593,6 +606,12 @@
 /workers/archive/recipes/signed-requests/ /workers/examples/signed-request/ 301
 /workers/archive/recipes/static-site/ /workers/sites/ 301
 /workers/archive/writing-workers/debugging-tips/ /workers/about/tips/debugging/ 301
+/workers/cli-wrangler/ /workers/wrangler/ 301
+/workers/cli-wrangler/install-update/ /workers/wrangler/get-started/ 301
+/workers/cli-wrangler/authentication/ /workers/wrangler/get-started/ 301
+/workers/cli-wrangler/commands/* /workers/wrangler/commands/:splat 301
+/workers/cli-wrangler/configuration/* /workers/wrangler/configuration/:splat 301
+/workers/cli-wrangler/webpack/ /workers/wrangler/eject-webpack/ 301
 /workers/deploying-workers/ /workers/tooling/ 301
 /workers/deploying-workers/github-action/ /workers/tooling/integrations/ 301
 /workers/deploying-workers/serverless/ /workers/tooling/serverless/ 301
@@ -785,7 +804,7 @@
 /workers/templates/snippets/send_raw_html/ /workers/templates/pages/send_raw_html/ 301
 /workers/templates/snippets/signed_request/ /workers/templates/pages/signed_request/ 301
 /workers/test-redirect/ /workers/templates/ 301
-/workers/tooling/ /workers/cli-wrangler/ 301
+/workers/tooling/ /workers/wrangler/ 301
 /workers/tooling/api/ https://api.cloudflare.com/#worker-script-properties 301
 /workers/tooling/api/bindings/ /workers/platform/scripts/#resource-bindings 301
 /workers/tooling/api/requests/ https://api.cloudflare.com/#getting-started-requests 301
@@ -795,16 +814,16 @@
 /workers/tooling/playground/ /workers/learning/playground/ 301
 /workers/tooling/serverless/ /workers/learning/integrations/ 301
 /workers/tooling/terraform/ /workers/learning/integrations/ 301
-/workers/tooling/wrangler/ /workers/cli-wrangler/ 301
-/workers/tooling/wrangler/commands/ /workers/cli-wrangler/commands/ 301
-/workers/tooling/wrangler/configuration/ /workers/cli-wrangler/configuration/ 301
+/workers/tooling/wrangler/ /workers/wrangler/ 301
+/workers/tooling/wrangler/commands/ /workers/wrangler/commands/ 301
+/workers/tooling/wrangler/configuration/ /workers/wrangler/configuration/ 301
 /workers/tooling/wrangler/configuration/environments/ /workers/tooling/wrangler/environments/ 301
 /workers/tooling/wrangler/environments/ /workers/platform/environments/ 301
-/workers/tooling/wrangler/install/ /workers/cli-wrangler/install-update/ 301
-/workers/tooling/wrangler/kv_commands/ /workers/cli-wrangler/commands/ 301
-/workers/tooling/wrangler/secrets/ /workers/cli-wrangler/commands/ 301
+/workers/tooling/wrangler/install/ /workers/wrangler/install-update/ 301
+/workers/tooling/wrangler/kv_commands/ /workers/wrangler/commands/ 301
+/workers/tooling/wrangler/secrets/ /workers/wrangler/commands/ 301
 /workers/tooling/wrangler/sites/ /workerssites/config/ 301
-/workers/tooling/wrangler/webpack/ /workers/cli-wrangler/webpack/ 301
+/workers/tooling/wrangler/webpack/ /workers/wrangler/webpack/ 301
 /workers/tutorials/authorize-users-with-auth0/ /workers/ 301
 /workers/tutorials/build-an-application/ /workers/tutorials/build-a-slackbot/ 301
 /workers/tutorials/build-a-rustwasm-function/ /workers/templates/pages/rustwasm/ 301

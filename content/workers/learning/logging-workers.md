@@ -6,7 +6,7 @@ weight: 0
 
 # Logging from Workers
 
-You can access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/cli-wrangler/commands/#tail).
+You can access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).
 
 The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself. All of this can be viewed with either `wrangler tail` or on the dashboard through your **Account Home** > **Workers** > your **Workers script** > **Logs**.
 
@@ -15,7 +15,7 @@ The Workers platform captures all `console.log`'s and uncaught exceptions, in ad
 Any `console.log` statements within your Worker will appear within `wrangler tail` and the dashboard output. The following example demonstrates a custom `console.log` within a Worker request handler.
 
 ```js
-addEventListener('fetch', event => {
+addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request));
 });
 
@@ -29,8 +29,8 @@ async function handleRequest(request) {
 
   console.log(`Request came from city: ${city} in country: ${country}`);
 
-  return new Response('Hello worker!', {
-    headers: { 'content-type': 'text/plain' },
+  return new Response("Hello worker!", {
+    headers: { "content-type": "text/plain" },
   });
 }
 ```
@@ -47,7 +47,7 @@ After you deploy the above code, run `wrangler tail` in your terminal, and then 
 
 ## View logs using `wrangler tail`
 
-With your Workers application deployed, you may want to inspect incoming traffic. This may be useful in situations where a user is running into production issues that they cannot easily reproduce. In these instances, [`wrangler tail`](/workers/cli-wrangler/commands/#tail) allows developers to livestream their Workers application’s logs, giving real-time insight into their application's incoming requests.
+With your Workers application deployed, you may want to inspect incoming traffic. This may be useful in situations where a user is running into production issues that they cannot easily reproduce. In these instances, [`wrangler tail`](/workers/wrangler/commands/#tail) allows developers to livestream their Workers application’s logs, giving real-time insight into their application's incoming requests.
 
 To get started, run `wrangler tail` in your Workers project directory. This will log any incoming requests to your application available in your local terminal.
 
@@ -80,7 +80,7 @@ $ wrangler tail | jq .event.request.url
 "https://www.bytesized.xyz/page-data/app-data.json"
 ```
 
-You can customize how `wrangler tail` works to fit your needs: refer to [the `wrangler tail` documentation](/workers/cli-wrangler/commands/#tail) for available configuration options.
+You can customize how `wrangler tail` works to fit your needs: refer to [the `wrangler tail` documentation](/workers/wrangler/commands/#tail) for available configuration options.
 
 ## View logs from the dashboard
 
@@ -136,7 +136,7 @@ A Worker can make HTTP requests to any HTTP service on the public Internet. You 
 When using an external logging strategy, remember that outstanding asynchronous tasks are canceled as soon as a Worker finishes sending its main response body to the client. To ensure that a logging subrequest completes, pass the request promise to [`event.waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil). For example:
 
 ```js
-addEventListener('fetch', event => {
+addEventListener("fetch", (event) => {
   event.respondWith(handleEvent(event));
 });
 
@@ -149,8 +149,8 @@ async function handleEvent(event) {
 }
 
 function postLog(data) {
-  return fetch('https://log-service.example.com/', {
-    method: 'POST',
+  return fetch("https://log-service.example.com/", {
+    method: "POST",
     body: data,
   });
 }
@@ -161,7 +161,7 @@ function postLog(data) {
 By using [`event.passThroughOnException`](/workers/runtime-apis/fetch-event/#methods), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
 
 ```js
-addEventListener('fetch', event => {
+addEventListener("fetch", (event) => {
   event.passThroughOnException();
   event.respondWith(handleRequest(event.request));
 });

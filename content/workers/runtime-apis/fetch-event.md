@@ -77,7 +77,7 @@ export default {
 
 - `env` {{<type>}}object{{</type>}}
 
-  - The [bindings](/workers/platform/environment-variables/) assigned to the Worker.
+  - The [bindings](/workers/platform/environment-variables/) assigned to the Worker. As long as the environment has not changed, the same object (equal by identity) is passed to all requests.
 
 - {{<code>}}context.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 

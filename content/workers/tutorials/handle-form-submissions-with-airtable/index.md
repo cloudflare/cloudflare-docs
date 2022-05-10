@@ -90,9 +90,7 @@ Code is provided as an example below, including the first `<input>`, to show tha
 ```html
 <form action="SERVERLESS_FN_URL" method="POST" class="...">
   <div>
-    <label for="first_name" class="...">
-      First name
-    </label>
+    <label for="first_name" class="..."> First name </label>
     <div class="...">
       <input
         type="text"
@@ -108,9 +106,7 @@ Code is provided as an example below, including the first `<input>`, to show tha
 
   <!-- Rest of form -->
 
-  <button type="submit" class="...">
-    Submit
-  </button>
+  <button type="submit" class="...">Submit</button>
 </form>
 ```
 
@@ -120,13 +116,13 @@ If you would like to follow along with this example, you can directly copy the `
 
 In order to handle the form submission, you will create and deploy a Workers serverless function that parses the incoming form data and prepares it for submission to Airtable.
 
-To begin, use `wrangler` to generate a new function, called `airtable-form-handler`, and navigate to it in your terminal:
+To begin, use `wrangler` to create a new function, called `airtable-form-handler`, and navigate to it in your terminal:
 
 ```sh
 ---
-header: Generating a new Workers function
+header: Creating a new Workers function
 ---
-$ wrangler generate airtable-form-handler
+$ wrangler init airtable-form-handler
 $ cd airtable-form-handler
 ```
 
@@ -186,7 +182,7 @@ Further down the page, you will begin to see example requests, showing you how t
 
 ![An example request in Airtable's API documentation, with the Airtable API key highlighted](api-key.png)
 
-To make this API key available in your codebase, use the [`wrangler secret`](/workers/cli-wrangler/commands/#secret) command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users.
+To make this API key available in your codebase, use the [`wrangler secret`](/workers/wrangler/cli-wrangler/commands/#secret) command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users.
 
 Run `wrangler secret put`, passing `AIRTABLE_API_KEY` as the name of your secret:
 
@@ -301,7 +297,7 @@ const createAirtableRecord = body => {
 }
 ```
 
-To make an authenticated request to Airtable, you need to provide three constants that represent data about your Airtable account, base, and table name. You have already set `AIRTABLE_API_KEY` using `wrangler secret`, since it is a value that should be encrypted. The **Airtable base ID** and **table name** are values that can be publicly shared in places like GitHub. Use Wrangler's [`vars`](/workers/cli-wrangler/configuration/#vars) feature to pass public environment variables from your `wrangler.toml` file.
+To make an authenticated request to Airtable, you need to provide three constants that represent data about your Airtable account, base, and table name. You have already set `AIRTABLE_API_KEY` using `wrangler secret`, since it is a value that should be encrypted. The **Airtable base ID** and **table name** are values that can be publicly shared in places like GitHub. Use Wrangler's [`vars`](/workers/wrangler/cli-wrangler/configuration/#vars) feature to pass public environment variables from your `wrangler.toml` file.
 
 Add a `vars` table at the end of your `wrangler.toml` file:
 
@@ -336,8 +332,13 @@ $ wrangler publish
 You will notice that your function is deployed to a unique URL — for example, `https://workers-airtable-form.cloudflare.workers.dev`. This represents the first part of your front-end form's `action` attribute — the second part is the path for your form handler, which is `/submit`. In your front-end UI, configure your `form` tag as seen below:
 
 ```html
-<form action="https://workers-airtable-form.cloudflare.workers.dev/submit" method="POST" class="...">
-<!-- The rest of your HTML form -->
+<form
+  action="https://workers-airtable-form.cloudflare.workers.dev/submit"
+  method="POST"
+  class="..."
+>
+  <!-- The rest of your HTML form -->
+</form>
 ```
 
 After you have deployed your new form (refer to the [HTML forms](/pages/tutorials/forms) tutorial if you need help creating a form), you should be able to submit a new form submission and see the value show up immediately in Airtable:
@@ -352,7 +353,7 @@ You can find the source for this project — both the front-end UI and the serve
 
 ## Related resources
 
-*   [Build a Slackbot](/workers/tutorials/build-a-slackbot)
-*   [Build a To-Do List Jamstack App](/workers/tutorials/build-a-jamstack-app)
-*   [Build a blog using Nuxt.js and Sanity.io on Cloudflare Pages](/pages/tutorials/build-a-blog-using-nuxt-and-sanity)
-*   [James Quick's video on building a Cloudflare Workers + Airtable integration](https://www.youtube.com/watch?v=tFQ2kbiu1K4)
+- [Build a Slackbot](/workers/tutorials/build-a-slackbot)
+- [Build a To-Do List Jamstack App](/workers/tutorials/build-a-jamstack-app)
+- [Build a blog using Nuxt.js and Sanity.io on Cloudflare Pages](/pages/tutorials/build-a-blog-using-nuxt-and-sanity)
+- [James Quick's video on building a Cloudflare Workers + Airtable integration](https://www.youtube.com/watch?v=tFQ2kbiu1K4)

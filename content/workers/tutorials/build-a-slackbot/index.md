@@ -88,21 +88,21 @@ There are many different event types that can be enabled for your webhook. Selec
 
 When your webhook is created, it will attempt to send a test payload to your application. Since your application is not actually deployed yet, leave the configuration as it is. You will later return to your repository to create, edit, and close some issues to ensure that the webhook is working once your application is deployed.
 
-## Generate
+## Init
 
-Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. In this tutorial, you will use the [router template](https://github.com/cloudflare/worker-template-router) to generate a Workers project with a built-in router, so you can take incoming requests, and route them to the appropriate JavaScript code.
+Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. In this tutorial, you will use the [router template](https://github.com/cloudflare/worker-template-router) to create a Workers project with a built-in router, so you can take incoming requests, and route them to the appropriate JavaScript code.
 
-In the command line, generate your Worker project, passing in a project name (for example, `slack-bot`), and the [template](/workers/examples/) URL to base your project on:
+In the command line, create your Worker project, cloning the [router template](https://github.com/cloudflare/worker-template-router) URL and passing in a project name (for example, `slack-bot`):
 
 ```sh
 ---
-header: Generate a new project
+header: Create a new project
 ---
-$ wrangler generate slack-bot https://github.com/cloudflare/worker-template-router
+$ git clone https://github.com/cloudflare/worker-template-router slack-bot
 $ cd slack-bot
 ```
 
-Wrangler templates are just Git repositories, so if you want to create your own templates, or use one from the [Template Gallery](/workers/examples/), there is a variety of options to help you get started.
+Wrangler templates are just Git repositories, so if you want to create your own templates, or use one from the [Template Gallery](/workers/get-started/quickstarts/#templates), there is a variety of options to help you get started.
 
 Cloudflare’s `worker-template` includes support for building and deploying JavaScript-based projects. Inside of your new `slack-bot` directory, `index.js` represents the entry point to your Cloudflare Workers application.
 
@@ -135,7 +135,7 @@ To build your Slack bot on Cloudflare Workers, you will build up your applicatio
 
 The router template includes a class, `Router`, that is included to help developers with the common task of associating “routes” in your application (for instance, `/users`, or `/about`) with “functions”. In this tutorial, there are two routes/function handlers that you need to define:
 
-1.  The `lookup` function will take requests from Slack (sent when a user uses the `/issue` command), and look up the corresponding issue using the GitHub API. This function will be a `PUT` request to `/lookup`.
+1.  The `lookup` function will take requests from Slack (sent when a user uses the `/issue` command), and look up the corresponding issue using the GitHub API. This function will be a `POST` request to `/lookup`.
 
 2.  The `webhook` function will be called when an issue changes on GitHub, via a configured webhook. This function will be a `POST` request to `/webhook`.
 
@@ -596,7 +596,7 @@ Add a simple utility function, `compact`, which takes an array, and filters out 
 ```js
 ---
 filename: src/utils/slack.js
-highlight: [1, 24]
+highlight: [1, 20]
 ---
 const compact = array => array.filter(el => el);
 
@@ -663,7 +663,7 @@ Since this webhook allows developers to post directly to your Slack channel, kee
 
 {{</Aside>}}
 
-To use this constant inside of your codebase, use the [`wrangler secret`](/workers/cli-wrangler/commands/#secret) command:
+To use this constant inside of your codebase, use the [`wrangler secret`](/workers/wrangler/cli-wrangler/commands/#secret) command:
 
 ```sh
 ---
@@ -682,7 +682,7 @@ To do this, wrap the majority of the `webhook` function handler in a try/catch b
 ```js
 ---
 filename: src/handlers/webhook.js
-highlight: [4, 22, 23, 24, 25]
+highlight: [4, 18, 19, 20, 21]
 ---
 import { constructGhIssueSlackMessage } from '../utils/slack';
 
