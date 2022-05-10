@@ -153,7 +153,7 @@ With `PostsStore` set up, you can import it and use it in our handlers:
 ```ts
 ---
 filename: "src/handlers/posts.ts"
-highlight: [1, 4, 5]
+highlight: [1, 3, 4, 5]
 ---
 import Store from '../posts_store';
 
@@ -170,7 +170,7 @@ export default Posts;
 ```ts
 ---
 filename: "src/handlers/post.ts"
-highlight: [1, 4, 7]
+highlight: [1, 3, 4, 7]
 ---
 import Store from '../posts_store';
 
