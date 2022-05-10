@@ -14,6 +14,8 @@ Pub/Sub is currently in private beta. Browse the documentation to understand how
 
 Pub/Sub is Cloudflare's distributed MQTT messaging service. MQTT is one of the most popular messaging protocols used for consuming sensor data from thousands (or tens of thousands) of remote, distributed Internet of Things clients; publishing configuration data or remote commands to fleets of devices in the field; and even for building notification or messaging systems for online games and mobile apps.
 
+Pub/Sub is ideal for cases where you have many (from a handful to tens of thousands of) clients sending small, sub-1MB messages — such as event, telemetry or transaction data — into a centralized system for aggregation, or where you need to push configuration updates or remote commands to remote clients at scale.
+
 Pub/Sub:
 
 - Scales automatically. You do not have to provision "vCPUs" or "memory", or set autoscaling parameters to handle spikes in message rates.

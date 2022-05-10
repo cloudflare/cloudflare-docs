@@ -102,7 +102,7 @@ Broker names must be:
 To create a new MQTT Broker called `example-broker` in the `cloudflare` namespace from the example above:
 
 ```bash
-$ curl -H "X-Auth-Email: <$CF_API_EMAIL>" "X-Auth-Key: <$CF_API_KEY>" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/<$CF_ACCOUNT_ID>/pubsub/namespaces/<YOUR_NAMESPACE_NAME>/brokers --data '{"name": "example-broker", "authType": "TOKEN" }'
+$ curl -H "X-Auth-Email: <$CF_API_EMAIL>" -H "X-Auth-Key: <$CF_API_KEY>" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/<$CF_ACCOUNT_ID>/pubsub/namespaces/<YOUR_NAMESPACE_NAME>/brokers --data '{"name": "example-broker", "authType": "TOKEN" }'
 ```
 
 You should receive an HTTP 200 response that resembles the following:
@@ -127,7 +127,7 @@ To generate a token for your broker:
 
 ```bash
 # GET /accounts/:account_id/brokers/namespaces/:namespace_name/brokers/:broker_name/credentials
-$ curl -H "X-Auth-Email: $CF_API_EMAIL" "X-Auth-Key: $CF_API_KEY" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT_ID/brokers/namespaces/YOUR_NAMESPACE_NAME/brokers/example-broker/credentials?number=5&type=TOKEN&topicAcl="#"
+$ curl -H "X-Auth-Email: $CF_API_EMAIL" -H "X-Auth-Key: $CF_API_KEY" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT_ID/brokers/namespaces/YOUR_NAMESPACE_NAME/brokers/example-broker/credentials?number=5&type=TOKEN&topicAcl="#"
 ```
 
 You should receive a HTTP 200 response that resembles the example below, which is a map of Client IDs and their associated tokens:

@@ -6,10 +6,6 @@ weight: 5
 
 # FAQs
 
-## When would I use Pub/Sub?
-
-Pub/Sub is ideal for cases where you have many (from a handful to tens of thousands of) clients sending small, sub-1MB messages — such as event, telemetry or transaction data — into a centralized system for aggregation, or where you need to push configuration updates or remote commands to remote clients at scale.
-
 ## What messaging systems are similar?
 
 Messaging systems that also implement or strongly align to the "publish-subscribe" model include AWS SNS (Simple Notification Service), Google Cloud Pub/Sub, Redis' PUBLISH-SUBSCRIBE features, and RabbitMQ. If you have used one of these systems before, you will notice that Pub/Sub shares similar foundations (topics, subscriptions, fan-in/fan-out models) and is easy to migrate to.

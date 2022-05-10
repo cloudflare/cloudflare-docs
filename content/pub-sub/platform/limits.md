@@ -21,7 +21,7 @@ These limits are subject to change and many will increase over time.
 | Subscribers per topic          | 1000            | The maximum number of subscribers per MQTT topic.
 | Connections per Device                           | 1           | The number of simultaneous connections from a single client ID. |
 | Maximum Packets per Second per Client	           | 10          | The number of MQTT packets per second a client can send to the broker. <br/> Clients that exceed this rate will receive a DISCONNECT with Reason Code 0x96 (Message rate too high).|
-| Maximum Topic Length                             | 256 bytes	 | The maximum length of a topic, in bytes, including all slashes, prefixes, or wildcard symbols. |
+| Maximum Topic Length                             | 65k bytes	 | The maximum length of a topic, in bytes, including all slashes, prefixes, or wildcard symbols. |
 | Maximum Topic Depth	                             | 8           |	The maximum number of forward slashes (`/`) allowed in a topic. |
 | Maximum Message Size                             | 64KB        | Includes metadata such as client ID, additional metadata fields, and optional MQTT fields.|
 | Maximum Client ID Length                         | 23 bytes    | The maximum length of an MQTT Client Identifier in bytes.<br/> Client IDs must also be at least 1 byte long per the MQTT standard. Shorter client IDs are rejected with a CONNACK using Reason Code 0x85 (Client Identifier not valid).|

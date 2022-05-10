@@ -10,10 +10,10 @@ Cloudflare Pub/Sub is a powerful way to send (publish) messages to and from remo
 
 There are four major concepts to understand with Pub/Sub:
 
-1. Brokers and namespaces
-2. Authentication
-3. Topics and subscriptions
-4. Messages
+1. [Brokers and namespaces](#brokers-and-namespaces)
+2. [Authentication](#authentication)
+3. [Topics and subscriptions](#topics-and-subscriptions)
+4. [Messages](#messages)
 
 
 ## Brokers and namespaces

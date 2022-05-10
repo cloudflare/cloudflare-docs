@@ -10,7 +10,7 @@ Once of the most powerful features of Pub/Sub is the ability to connect [Cloudfl
 
 The Worker runs as a "post-publish" hook where messages are accepted by the broker, passed to the Worker, and messages are only sent to clients who subscribed to the topic after the Worker returns a valid HTTP response. If the Worker does not return a response (intentionally or not), or returns an HTTP status code other than HTTP 200, the message is dropped.
 
-To connect a Worker to a broker, you need to:
+## Connect a Worker to a broker
 
 1. Create a Cloudflare Worker (or expand an existing Worker) to handle incoming POST requests from the broker. 
 2. Configure the broker to send messages to the Worker.
@@ -163,7 +163,7 @@ Below is an example of a PubSub message sent over HTTP to a Worker:
 ]
 ```
 
-## Troubleshoot Workers Integrations
+## Troubleshoot Workers integrations
 
 Some common failure modes can result in messages not being sent to subscribed clients when a Worker is processing messages, including:
 

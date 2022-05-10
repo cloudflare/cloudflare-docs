@@ -12,7 +12,15 @@ Pub/Sub will continue to expand support for MQTT protocol features during the be
 
 {{</Aside>}}
 
+Pub/Sub supports the core parts of the [MQTT v5.0 specification](https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html), and any MQTT v5.0 compatible client should be able to connect to a Pub/Sub Broker.
+
+MQTT is one of the most pervasive “messaging protocols” deployed today. There are tens of millions (at least!) of devices that speak MQTT today, from connected payment terminals through to autonomous vehicles, cell phones, and even video games. Sensor readings, telemetry, financial transactions or mobile notifications and messages are all common use cases for MQTT, and the flexibility of the protocol allows developers to make trade-offs around reliability, topic hierarchy, and persistence specific to their use case.
+
+{{<Aside>}}
+
 In many cases, the MQTT specification mandates that a client is explicitly disconnected when attempting to use features not supported by a broker. Ensure that your client only uses supported features to avoid disconnection loops that prevent a client from sending messages to a broker.
+
+{{</Aside>}}
 
 Pub/Sub supports the following MQTT protocol features.
 
