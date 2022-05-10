@@ -13,7 +13,6 @@ Without any configuration required, you can choose to skip a build and deploymen
 
 However, if you would like to configure your project’s settings for automatic deployments without having to use CI Skip, go to your Pages project > **Settings** > **Build & deployments** and select the configuration option for either the production deployment or the preview deployment.
 
-
 ### Production branch control 
 
 To configure deployment options, go to your Pages project > **Settings** > **Builds & deployments** > **Configure Production deployments**. Pages will default to setting your production environment to the branch you first push, but you can set your production to another branch if you choose. 
