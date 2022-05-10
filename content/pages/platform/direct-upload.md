@@ -82,11 +82,11 @@ To begin the deployment process, on the **Create a Project** page, select **Uplo
 
 #### Create a new deployment
 
-After you have your project created, select **Create a new deployment** to begin a new version of your site. Next, choose whether your new deployment will be made to your production or preview environment. If choosing preview, you can create a new deployment target or enter an existing one. Deployment targets allow you to access all changes at one preview subdomain with the following convention `<DEPLOYMENT_TARGET>.<PROJECT_NAME>.pages.dev`. 
+After you have your project created, select **Create a new deployment** to begin a new version of your site. Next, choose whether your new deployment will be made to your production or preview environment. If choosing preview, you can create a new deployment target or enter an existing one. Deployment targets allow you to access all changes at one preview subdomain with the following convention: `<DEPLOYMENT_TARGET>.<PROJECT_NAME>.pages.dev`. 
 
 ## Troubleshoot
 
-There is a 1,000 file [limits](/pages/platform/limits/#files) in place for both drag and drop and Wrangler upload in regards to file count and a 25MiB limit in place for individual file size. 
+There is a 1,000 file [limits](/pages/platform/limits/#files) in place for both drag and drop and Wrangler upload in regards to file count and a 25 MiB limit in place for individual file size. 
 
 If using the drag and drop method, a red warning symbol will appear next to an asset if too large and thus unsuccessfully uploaded. In this case, you may choose to delete that asset but you cannot replace it. In order to do so, you must reupload the entire project.
 
