@@ -209,6 +209,18 @@ You can only use the `to_string()` function in [rewrite expressions of Transform
     any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
     ```
 
+- <code id="function-uuidv4">uuidv4({{<type>}}Bytes{{</type>}})</code> {{<type>}}String{{</type>}}
+
+  - Generates a random UUIDv4 (Universally Unique Identifier, version 4) based on the given argument (a source of randomness). To obtain an array of random bytes, use the <a href="/ruleset-engine/rules-language/fields/#field-cf-random_seed"><code class="InlineCode">cf.random_seed</code></a> field.
+
+  - <em>Example:</em>
+    <br />
+    `uuidv4(cf.random_seed)` returns a UUIDv4 similar to `49887398-6bcf-485f-8899-f15dbef4d1d5`
+
+{{<Aside type="warning">}}
+You can only use the `uuidv4()` function in [rewrite expressions of Transform Rules](/rules/transform/).
+{{</Aside>}}
+
 {{</definitions>}}
 
 ## Magic Firewall Functions
