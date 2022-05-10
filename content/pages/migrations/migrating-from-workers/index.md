@@ -21,7 +21,7 @@ When using a `_worker.js` file, the entire `/functions` directory is ignored –
 
 {{</Aside>}}
 
-By Migrating to Cloudflare Pages, you will be able to access features like [preview deployments](/pages/platform/preview-deployments/) and automatic branch deploys with no extra configuration needed.
+By migrating to Cloudflare Pages, you will be able to access features like [preview deployments](/pages/platform/preview-deployments/) and automatic branch deploys with no extra configuration needed.
 
 ## Removing unnecessary code
 
@@ -29,7 +29,7 @@ Workers Sites projects consist of the following pieces:
 
 1. An application built with a [static site tool](/pages/how-to/) or a static collection of HTML, CSS and JavaScript.
 2. If using a static site tool, a build directory (called `bucket` in `wrangler.toml`) where the static project builds HTML, CSS, and JavaScript.
-3. A Worker application for serving that build directory.
+3. A Worker application for serving that build directory. For most projects, this is likely to be the `workers-site` directory.
 
 When moving to Cloudflare Pages, remove the Workers application and any associated `wrangler.toml` configuration files or build output. Instead, note and record your `build` command (if you have one), and the `bucket` field, or build directory, from the `wrangler.toml` file in your project's directory.
 
