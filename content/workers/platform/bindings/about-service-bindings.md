@@ -71,7 +71,7 @@ export default {
 
 {{<Aside type="note">}}
 
-Note that [Requests](../../runtime-apis/request) can only be read once. If you need to use a Request object multiple times, clone your incoming Request objects.
+Note that [Requests](/workers/runtime-apis/request/) can only be read once. If you need to use a Request object multiple times, clone your incoming Request objects.
 
 {{</Aside>}}
 
