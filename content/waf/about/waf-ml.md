@@ -16,7 +16,7 @@ WAF ML (Machine Learning) is a feature that complements [WAF Managed Rulesets](/
 
 Managed Rulesets contain rules that are continuously updated to better detect malicious payloads. They target specific patterns of established attack vectors and have a very low rate of false positives. However, Managed Rulesets are not optimized for attacks based on variations of the original signature introduced, for example, by fuzzing techniques.
 
-WAF ML can identify these attack variations and their malicious payloads. It classifies each request using a machine learning algorithm, assigning a score from 1 to 99 based on the likelihood that the request is malicious. Just like [Bot Management](/bots/get-started/bm-subscription/), you can use this score to identify potentially malicious traffic that is not an exact match to any of the rules in the WAF Managed Rulesets.
+WAF ML can identify these attack variations and their malicious payloads. It classifies each request using a machine learning algorithm, assigning an attack score from 1 to 99 based on the likelihood that the request is malicious. Just like [Bot Management](/bots/get-started/bm-subscription/), you can use this score to identify potentially malicious traffic that is not an exact match to any of the rules in the WAF Managed Rulesets.
 
 To maximize protection, Cloudflare recommends that you use both Managed Rulesets and WAF ML.
 
@@ -65,9 +65,9 @@ You can use the fields for these scores in expressions of [custom rules](/waf/cu
 Contact your account team to get access to WAF ML.
 {{</Aside>}}
 
-### 1. Create a firewall rule
+### 1. Create a firewall rule or custom rule
 
-Create a firewall rule that logs all requests with a WAF ML attack score below 40 (recommended initial threshold).
+Create a [custom rule](/waf/custom-rules/create-dashboard/#create-a-custom-rule) or a [firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) that logs all requests with a WAF ML Attack Score below 40 (recommended initial threshold).
 
 For example, set the rule expression to `cf.waf.ml.score lt 40` and the rule action to `Log`.
 
@@ -83,5 +83,5 @@ After making sure that your rule is logging the correct requests, change the rul
 
 ## Additional remarks
 
-* The WAF ML (attack) score is different from Threat Score and Bot Score. WAF ML score identifies variation of attacks that WAF Managed Rulesets do not catch. Bot Score identifies bots, while Threat Score measures IP reputation across Cloudflare services.
-* The WAF ML score is not available yet in Firewall Events or in Logpush.
+* The WAF ML Attack Score is different from Threat Score and Bot Score. WAF ML Attack Score identifies variation of attacks that WAF Managed Rulesets do not catch. Bot Score identifies bots, while Threat Score measures IP reputation across Cloudflare services.
+* The WAF ML Attack Score is not available yet in Firewall Events or in Cloudflare Logpush.
