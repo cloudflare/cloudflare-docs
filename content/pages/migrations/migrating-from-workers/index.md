@@ -64,7 +64,7 @@ Before you deploy, you will need to delete your old Workers routes to start send
 
 {{</Aside>}}
 
-### Using Direct Uploads
+### Using Direct Upload
 
 If your Workers site has its custom build settings, you can bring your pre-built assets to Pages with [Direct uploads](/pages/platform/direct-upload/). In addition, you can serve your website's assets right to the Cloudflare edge network by either using the [Wrangler CLI](/workers/wrangler/get-started/) or the Drag and drop option. 
 
