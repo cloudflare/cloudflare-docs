@@ -74,7 +74,7 @@ We recommend adding the `{DATE}` parameter in the `destination_conf` to separate
 r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>
 ```
 
-- **dataset** - The category of logs you want to receive. Refer to [Log fields](https://developers.cloudflare.com/logs/reference/log-fields/) for the full list of supported datasets.
+- **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
 - **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](https://developers.cloudflare.com/logs/reference/logpush-api-configuration/#options).
 
 Example request using cURL:
