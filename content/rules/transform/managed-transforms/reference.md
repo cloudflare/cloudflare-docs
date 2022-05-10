@@ -29,7 +29,14 @@ layout: list
           <li><code>cf-threat-score</code>: Contains the threat score (0-100).</li>
           <li><code>cf-ja3-hash</code>: Contains the <a href="/bots/concepts/ja3-fingerprint/">JA3 fingerprint</a>.</li>
         </ul>
-        <p>This Managed Transform requires a Cloudflare Enterprise plan with <a href="/bots/get-started/bm-subscription/">Bot Management</a> enabled.</p>
+        <p>This Managed Transform requires a Enterprise plan with <a href="/bots/get-started/bm-subscription/">Bot Management</a> enabled.</p>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Add True-Client-IP</strong></td>
+      <td>
+        <p>Adds a <code>True-Client-IP</code> request header with the visitor's IP address.</p>
+        <p>Only available on Enterprise plans.</p>
       </td>
     </tr>
     <tr>

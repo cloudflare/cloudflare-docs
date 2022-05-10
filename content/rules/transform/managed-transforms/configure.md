@@ -29,7 +29,9 @@ To enable a Managed Transform via API:
 
 ### 1. Get list of available Managed Transforms
 
-The following request obtains a list of available Managed Transforms, organized by request or response, with information about their current status (`enabled` field) and if you can update them, based on conflicts with other enabled Managed Transforms (`has_conflict` field). Each Managed Transform item will optionally contain a `conflicts_with` array with the IDs of Managed Transforms that will conflict with the current Managed Transform (if any).
+The following request obtains a list of available Managed Transforms, organized by request or response, with information about their current status (`enabled` field) and if you can update them, based on conflicts with other enabled Managed Transforms (`has_conflict` field).
+
+Each Managed Transform item will optionally contain a `conflicts_with` array informing you about any Managed Transforms that will conflict with the current Managed Transform when enabled.
 
 The response will only include available Managed Transforms according to your Cloudflare plan and product subscriptions.
 
@@ -59,9 +61,20 @@ header: Response
         "has_conflict": false
       },
       {
+        "id": "add_true_client_ip_headers",
+        "enabled": false,
+        "has_conflict": false,
+        "conflicts_with": [
+          "remove_visitor_ip_headers"
+        ]
+      },
+      {
         "id": "remove_visitor_ip_headers",
         "enabled": false,
-        "has_conflict": false
+        "has_conflict": false,
+        "conflicts_with": [
+          "add_true_client_ip_headers"
+        ]
       }
     ],
     "managed_response_headers": [
@@ -133,9 +146,20 @@ header: Response
         "has_conflict": false
       },
       {
+        "id": "add_true_client_ip_headers",
+        "enabled": false,
+        "has_conflict": false,
+        "conflicts_with": [
+          "remove_visitor_ip_headers"
+        ]
+      },
+      {
         "id": "remove_visitor_ip_headers",
         "enabled": false,
-        "has_conflict": false
+        "has_conflict": false,
+        "conflicts_with": [
+          "add_true_client_ip_headers"
+        ]
       }
     ],
     "managed_response_headers": [
