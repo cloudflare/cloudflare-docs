@@ -71,7 +71,7 @@ Each environment in a Workers Service has its own version history. Every time th
 
 Workers Service bindings are an API that facilitate Worker-to-Worker communication.
 
-A Workers Service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. You can invoke other Workers directly from your code; Workers Service bindings allow for much more composability on the Workers platform.
+A Workers Service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. You can invoke other Workers directly from your code. Workers Service bindings allow for much more composability on the Workers platform.
 
 Workers Service bindings use the standard [Fetch API](/workers/runtime-apis/fetch/). You can continue to use your existing utilities and libraries. A Workers Service binding will trigger a `FetchEvent`. You can also change the environment of a Workers Service binding, so you can test a new version of a Service.
 
