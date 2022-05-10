@@ -37,7 +37,7 @@ Currently, WAF ML provides the following scores:
   <tr>
     <td><strong>WAF Attack Score</strong></td>
     <td><code>cf.waf.ml.score</code></td>
-    <td>A total score from 1 to 99 that combines the score of each attack vector into a single score.<br/>
+    <td>A global score from 1 to 99 that combines the score of each attack vector into a single score.<br/>
       This is the standard WAF ML score to detect variants of attack patterns.</td>
   </tr>
   <tr>
@@ -56,6 +56,8 @@ You can use the fields for these scores in expressions of [custom rules](/waf/cu
 
 * A score of `1` indicates that the request is almost certainly malicious.
 * A score of `99` indicates that the request is likely clean.
+
+The available scores are independent of each other. Namely, the WAF Attack Score is not a sum of the other scores.
 
 ---
 
