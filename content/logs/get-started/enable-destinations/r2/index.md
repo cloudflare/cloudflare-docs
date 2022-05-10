@@ -26,7 +26,7 @@ Before getting started:
 
     - R2 write, Logshare Edit.
 
-- Alternatively, create a token with the following permissions:
+- Alternatively, create a Cloudflare API token with the following permissions:
 
     - Zone scope, logs edit permissions.
 
@@ -87,7 +87,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs'
 -d '{
 "name": "<DOMAIN_NAME>",
 "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
-"destination_conf": "r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=R2_SECRET_ACCESS_KEY",
+"destination_conf": "r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>",
 "dataset": "http_requests",
 "enabled": true
 }'| jq .
