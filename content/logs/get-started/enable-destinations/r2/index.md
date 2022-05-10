@@ -14,7 +14,7 @@ Before getting started:
 
     1. Navigate to the R2 UI > **Create bucket**.
 
-    2. Click **Manage R2 API Tokens** on the right side of the dashboard.
+    2. Click **Manage R2 API Tokens**.
     
     3. Select **Create API token**.
 
