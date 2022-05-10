@@ -406,6 +406,8 @@ In particular, a Durable Object may be superseded in this way in the event of a 
 
 The Workers editor in [the Cloudflare dashboard](https://dash.cloudflare.com/) allows you to interactively edit and preview your Worker and Durable Objects. Note that in the editor Durable Objects can only be talked to by a preview request if the Worker being previewed both exports the Durable Object class and binds to it. Durable Objects exported by other Workers cannot be talked to in the editor preview.
 
+When a script containing a Durable Object implementation is previewed using [wrangler dev](https://developers.cloudflare.com/workers/wrangler/commands/#dev), the object instances accessed in the preview session will have read access to the storage used by real objects in the real version of the namespace, but writes will be kept in memory and won't affect production data. However, if a script binds to a Durable Object namespace implemented by a different script (or even if it's in the same script being previewed but the script_name is specified in the Durable Object binding), then any requests sent by the preview session to objects in that namespace will hit the real objects and any writes will modify the real prod data in that namespace.
+
 ### Object location
 
 Not all Cloudflare locations host Durable Objects, so Objects may not be created in the same data center where they are first requested.
