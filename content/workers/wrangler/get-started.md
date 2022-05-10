@@ -4,6 +4,12 @@ title: Get started
 weight: 1
 ---
 
+{{<Aside type="note">}}
+
+Wrangler has launched a new version. If you are looking for the Wrangler 1 docs, you can find them [here](/workers/wrangler/cli-wrangler/install-update/).
+
+{{</Aside>}}
+
 ## Get started with Wrangler
 
 `wrangler` is a command line tool for building [Cloudflare Workers](https://workers.cloudflare.com/).
