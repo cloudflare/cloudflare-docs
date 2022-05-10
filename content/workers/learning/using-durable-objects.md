@@ -141,23 +141,23 @@ For more information, refer to [Using WebSockets](/workers/learning/using-websoc
 
 ### Alarms in Durable Objects
 
-Alarms allow Durable Objects to wake themselves up by executing the `alarm()` handler at some point in the future. Alarms are modified using the [Transactional Storage API](/workers/runtime-apis/durable-objects/#transactional-storage-api), and so alarm operations follow the same rules as other storage operations. Each Durable Object instance is able to schedule a single alarm at a time by calling `setAlarm()`. Alarms have guaranteed at-least once execution and are retried automatically when the `alarm()` handler throws.
+Alarms allow Durable Objects to wake themselves up by executing the `alarm()` handler at some point in the future. Alarms are modified using the [Transactional Storage API](/workers/runtime-apis/durable-objects/#transactional-storage-api), and so alarm operations follow the same rules as other storage operations. Each Durable Object instance is able to schedule a single alarm at a time by calling `setAlarm()`. Alarms have guaranteed at-least-once execution and are retried automatically when the `alarm()` handler throws. Retries are performed using exponential backoff starting at a 2 second delay from the first failure with up to 6 retries allowed.
 
 {{<Aside type="note" header="How are alarms different from Cron Triggers?">}}
 
-Alarms are more fine-grained than Cron Triggers -- a Workers service can have up to three Cron Triggers configured at once, but it can have an unlimited amount of Durable Objects each of which can have an alarm set.
+Alarms are more fine grained than Cron Triggers. A Workers service can have up to three Cron Triggers configured at once, but it can have an unlimited amount of Durable Objects each of which can have an alarm set.
 
-Alarms are directly scheduled from within your Durable Object. Cron Triggers, on the other hand, are not programmatic — they execute based on their schedules, which have to be configured via the Cloudflare Dashboard or API.
+Alarms are directly scheduled from within your Durable Object. Cron Triggers, on the other hand, are not programmatic. Cron Triggers execute based on their schedules, which have to be configured through the Cloudflare dashboard or API.
 
 {{</Aside>}}
 
-To use alarms, you need to add the `durable_object_alarms` compatibility flag to your `wrangler.toml`
+To use alarms, you need to add the `durable_object_alarms` compatibility flag to your `wrangler.toml` file.
 
 ```toml
 compatibility_flags = ["durable_object_alarms"]
 ```
 
-Alarms can be used to build distributed primitives like queues and batching of work atop Durable Objects. They also provide a method for guaranteeing work within a Durable Object will complete without relying on incoming requests to keep the object alive. For more discussion about alarms, refer to the [annoucement blog post](https://blog.cloudflare.com/durable-object-alarms).
+Alarms can be used to build distributed primitives, like queues, and batching of work atop Durable Objects. They also provide a method for guaranteeing work within a Durable Object will complete without relying on incoming requests to keep the object alive. For more discussion about alarms, refer to the [annoucement blog post](https://blog.cloudflare.com/durable-object-alarms).
 
 ## Instantiating and communicating with a Durable Object
 

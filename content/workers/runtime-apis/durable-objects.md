@@ -260,7 +260,6 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
     **Supported options:** Like `get()` above, but without `noCache`.
 
-
 - {{<code>}}setAlarm(scheduledTime{{<param-type>}}Date | number{{</param-type>}}){{</code>}} {{<type>}}Promise{{</type>}}
 
   - Sets the current alarm time, accepting either a JS Date, or integer milliseconds since epoch.
@@ -280,6 +279,8 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 ### `alarm()` handler method
 
 The system calls the `alarm()` handler method when a scheduled alarm time is reached. The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 seconds delay for up to 6 retries. Retries will be performed if the method fails with an uncaught exception.
+
+The method takes no parameters and does not return a result.
 
 ### `fetch()` handler method
 
