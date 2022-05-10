@@ -50,8 +50,9 @@ In addition to an `_redirects` file, Cloudflare also offers [Bulk Redirects (bet
 Your custom headers can also be moved into a `_headers` file in your output directory. It is important to note that custom headers defined in the `_headers` file are not currently applied to responses from Functions, even if the Function route matches the URL pattern. To learn more about handling headers, refer to [Headers](/pages/platform/headers/).
 
 
-
 ## Creating a new Pages project
+
+### Using git integration 
 
 After you have recorded your **build command** and **build directory** in a separate location, remove everything else from your application, and push the new version of your project up to GitHub. Follow the ["Get started" guide](/pages/get-started/) to add your project to Cloudflare Pages, using the **build command** and **build directory** that you saved earlier.
 
@@ -62,6 +63,13 @@ If you choose to use a custom domain for your Pages project, you can set it to t
 Before you deploy, you will need to delete your old Workers routes to start sending requests to Cloudflare Pages.
 
 {{</Aside>}}
+
+### Using Direct Uploads
+
+If your Workers site has its custom build settings, you can bring your pre-built assets to Pages with [Direct uploads](/pages/platform/direct-upload/). In addition, you can serve your website's assets right to the Cloudflare edge network by either using the [Wrangler CLI](/workers/wrangler/get-started/) or the Drag and drop option. 
+
+These options allow you to create and name a new project from the CLI or dashboard. After your project deployment is complete, you can set the custom domain by following the [adding a custom domain](/pages/get-started/#adding-a-custom-domain) steps to your Pages project. 
+
 ## Cleaning up your old application and assigning the domain
 
 After you have deployed your application, navigate to [Workers](https://dash.cloudflare.com/?to=/:account/workers) and remove your old Workers project by going to your **Workers project** > **Settings** > **Delete**.
