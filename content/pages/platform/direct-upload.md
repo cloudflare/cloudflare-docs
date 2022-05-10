@@ -86,8 +86,16 @@ After you have your project created, select **Create a new deployment** to begin
 
 ## Troubleshoot
 
+### Limits
+
 There is a 1,000 file [limits](/pages/platform/limits/#files) in place for both drag and drop and Wrangler upload in regards to file count and a 25 MiB limit in place for individual file size. 
 
 If using the drag and drop method, a red warning symbol will appear next to an asset if too large and thus unsuccessfully uploaded. In this case, you may choose to delete that asset but you cannot replace it. In order to do so, you must reupload the entire project.
+
+### Using Functions
+
+Drag-and-drop deployments made from the Cloudflare dashboard do not currently support compiling a `functions` folder of Pages Functions. In order to deploy a `functions` folder, you must use Wrangler.
+
+However, note that a `_worker.js` file is supported by both Wrangler and drag-and-drop deployments made from the dashboard.
 
 
