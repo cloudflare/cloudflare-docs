@@ -9,7 +9,7 @@ Below you will find a few examples of configuring popular S3-oriented SDKs for u
 
 You must [generate an Access Key](/r2/platform/s3-compatibility/tokens/) before getting started. All examples will utilitize `access_key_id` and `access_key_secret` variables which represent the **Access Key ID** and **Secret Access Key** values you generated.
 
-Additionally, you will need your Cloudflare Account ID to construct your R2 endpoint URL, which is needed for every SDK configuration. An endpoint is constructed with the following format:
+Additionally, you will need your [Cloudflare Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) to construct your R2 endpoint URL, which is needed for every SDK configuration. An endpoint is constructed with the following format:
 
 ```js
 const r2endpoint = 'https://<accountid>.r2.cloudflarestorage.com';
@@ -99,7 +99,7 @@ endpoint = https://<accountid>.r2.cloudflarestorage.com
 acl = private
 ```
 
-You may then use the new `rclone` provider for any of your normal workflows!
+You may then use the new `rclone` provider for any of your normal workflows.
 
 ```sh
 $ rclone tree r2demo:
