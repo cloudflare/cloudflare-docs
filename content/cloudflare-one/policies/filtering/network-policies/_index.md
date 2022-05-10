@@ -1,7 +1,7 @@
 ---
 pcx-content-type: configuration
 title: Network policies
-weight: 4
+weight: 3
 layout: single
 ---
 

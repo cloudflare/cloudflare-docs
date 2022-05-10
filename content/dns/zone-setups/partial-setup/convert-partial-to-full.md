@@ -16,6 +16,12 @@ In the Cloudflare dashboard, either order an [advanced certificate](/ssl/edge-ce
 
 You also should verify that the [status](/ssl/ssl-tls/certificate-statuses/) of your SSL certificate is **Active**.
 
+{{<Aside type="note">}}
+
+Universal SSL only supports first-level subdomains. For more coverage and additional flexibility, you can purchase an Advanced Certificate or upload a Custom SSL certificate.
+
+{{</Aside>}}
+
 ## Step 2 — Update settings in authoritative DNS
 
 At your authoritative DNS provider, you need to delete the previous [zone activation TXT record](/dns/zone-setups/partial-setup/setup/#step-1--add-your-domain-to-cloudflare). To locate this value in the Cloudflare dashboard, go to **DNS** and find the **Verification TXT Record**.

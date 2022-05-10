@@ -4,61 +4,69 @@ title: Start from scratch
 weight: 2
 ---
 
-# Start from scratch
+# Start a Workers Sites project from scratch
 
-To start from scratch to create a Workers Site, follow these steps:
+{{<Aside type="note" header="Cloudflare Pages">}}
+Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
+{{</Aside>}}
 
-1.  Ensure you have the latest version of [Wrangler](/workers/cli-wrangler/install-update/#update) and Node.js installed.
+This guide shows how to quickly start a new Workers Sites project from scratch.
 
-2.  In your terminal, run `wrangler generate --site <project-name>`, replacing `<project-name>` with the name of your project. The following example creates a project called `my-site`:
+## Getting started
 
-```sh
-$ wrangler generate --site my-site
-```
+1.  Ensure you have the latest version of [git](https://git-scm.com/downloads) and [Node.js](https://nodejs.org/en/download/) installed.
 
-This command creates the following:
+2.  In your terminal, clone the `worker-sites-template` starter repository.
+    The following example creates a project called `my-site`:
 
-  - `public`: The static assets for your project. By default it contains an `index.html` and a `favicon.ico`.
-  - `workers-site`: The JavaScript for serving your assets. You do not need to edit this but if you want to see how it works or add more functionality to your Worker, you can edit `workers-site/index.js`.
-  - `wrangler.toml`: Your configuration file where you configure your account and project information.
-
-3. Add your `account_id` to your `wrangler.toml` file. You can find your `account_id` by logging into the Cloudflare dashboard **Account Home** > choose your **website** > **Overview** > **Account ID**. For more details on finding your `account_id`, refer to the [Get started guide](/workers/get-started/guide/#6a-obtaining-your-account-id-and-zone-id).
-
-4.  You can preview your site by running the [`wrangler dev`](/workers/cli-wrangler/commands/#dev) command:
-
-```sh
-$ wrangler dev
-```
-
-5.  Decide if you would like to publish your site to a [`*.workers.dev` subdomain](/workers/get-started/guide/#configure-for-deploying-to-workersdev) or a [custom domain](/workers/get-started/guide/#optional-configure-for-deploying-to-a-registered-domain) that you own and have already attached as a Cloudflare zone.Then update your `wrangler.toml` file:
-
-    **`*.workers.dev`**: Enable the `workers_dev` configuration.
-
-    ```toml
-    workers_dev = true
+    ```sh
+    $ git clone --depth=1 --branch=wrangler2 https://github.com/cloudflare/worker-sites-template my-site
     ```
 
-    And/Or
+3.  You can preview your site by running the [`wrangler dev`](/workers/wrangler/cli-wrangler/commands/#dev) command:
 
-    **Personal Domain**: Add your `zone_id` and a `route`.
-
-    ```toml
-    zone_id = "42ef.."
-    route = "https://example.com/*"
+    ```sh
+    $ wrangler dev
     ```
 
-    {{<Aside type="note">}}
+4.  Publish your site to Cloudflare:
 
-Refer to the documentation on [Routes](/workers/platform/routes/) to configure a `route` properly.
+    ```sh
+    $ wrangler publish
+    ```
 
-     {{</Aside>}}
+## Project layout
 
-    If you enable `workers_dev` and supply configuration for a personal domain, your Worker will deploy to both locations.
+The template project contains the following files and directories:
 
-    Learn more about [configuring your project](/workers/get-started/guide/#7-configure-your-project-for-deployment).
+- `public`: The static assets for your project. By default it contains an `index.html` and a `favicon.ico`.
+- `src`: The Worker configured for serving your assets. You do not need to edit this but if you want to see how it works or add more functionality to your Worker, you can edit `src/index.ts`.
+- `wrangler.toml`: The file containing project configuration.
+  The `bucket` property tells Wrangler where to find the static assets (e.g. `site = { bucket = "./public" }`).
+- `package.json`/`package-lock.json`: define the required Node.js dependencies.
 
-6.  Run:
+## Customize `wrangler.toml`:
 
-```sh
-$ wrangler publish
-```
+- Change the `name` property to the name of your project:
+
+  ```toml
+  name = "my-site"
+  ```
+
+- Consider updating`compatibility_date` to today's date to get access to the most recent Workers features:
+
+  ```toml
+  compatibility_date = "yyyy-mm-dd"
+  ```
+
+- Publish your site to a [custom domain](/workers/get-started/guide/#optional-configure-for-deploying-to-a-registered-domain) that you own and have already attached as a Cloudflare zone:
+
+  ```toml
+  route = "https://example.com/*"
+  ```
+
+  {{<Aside type="note">}}
+  Refer to the documentation on [Routes](/workers/platform/routes/) to configure a `route` properly.
+  {{</Aside>}}
+
+Learn more about [configuring your project](/workers/get-started/guide/#7-configure-your-project-for-deployment).

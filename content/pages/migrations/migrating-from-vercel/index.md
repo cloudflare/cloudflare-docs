@@ -21,15 +21,15 @@ To move your application to Cloudflare Pages, you will need to find your build c
 
 In your Vercel Dashboard, find the project that you want to deploy. It should be configured to deploy from a GitHub repository.
 
-![Selecting a site in the Vercel Dashboard](./vercel-deploy-1.png)
+![Selecting a site in the Vercel Dashboard](/pages/migrations/migrating-from-vercel/vercel-deploy-1.png)
 
 Inside of your site dashboard, select **Settings**.
 
-![Selecting Site Settings in site dashboard](./vercel-deploy-2.png)
+![Selecting Site Settings in site dashboard](/pages/migrations/migrating-from-vercel/vercel-deploy-2.png)
 
 Find the **Build & Development settings** panel, which will have the **Build Command** and **Output Directory** fields. If you are using a framework, these values may not be filled in, but will show the defaults used by the framework. Save these for deploying to Cloudflare Pages. In the below image, the **Build Command** is `npm run build`, and the **Output Directory** is `build`.
 
-![Finding the Build Command and Output Directory fields](./vercel-deploy-3.png)
+![Finding the Build Command and Output Directory fields](/pages/migrations/migrating-from-vercel/vercel-deploy-3.png)
 
 ## Creating a new Pages project
 

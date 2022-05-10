@@ -38,11 +38,7 @@ If you want to enable security features such as Browser Isolation, HTTP filterin
 
 5. **Log in to your organization's Cloudflare Zero Trust instance from your devices**. On your device, navigate to the Settings section in the WARP client and insert your organization's team name.
 
-6. **Enable the Proxy setting in the Zero Trust Dashboard.** Navigate to **Settings** > **Network** and enable the **Proxy** setting. This will allow you to create [Network policies](/cloudflare-one/policies/filtering/network-policies/).
-
-7. **Enable TLS decryption in the Zero Trust Dashboard.** In the **Settings** > **Network** page, enable the **TLS decryption** switch. This will allow you to start routing your HTTP traffic to Gateway. You can also choose to enable the [FIPS compliance](/cloudflare-one/connections/connect-devices/warp/warp-settings/#fips-compliance) setting.
-
-Your devices are now connected to Cloudflare Zero Trust through the WARP client, and you can start enforcing security measures on your traffic and access requests.
+Your devices are now connected to Cloudflare Zero Trust through the WARP client, and you can start [enforcing security measures](/cloudflare-one/policies/) on your traffic and access requests.
 
 ## Check your Zero Trust environment
 

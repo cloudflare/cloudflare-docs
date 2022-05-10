@@ -114,11 +114,11 @@ Next, create a new form with the **+ New form** button. Name it `Contact-us form
 
 <GatsbyImage image="./new-form-dialog.png" alt="Creating a Formspree form" />
 
-![Creating a Formspree form](./new-form-dialog.png)
+![Creating a Formspree form](/pages/tutorials/add-an-html-form-with-formspree/new-form-dialog.png)
 
 You will then be presented with instructions on how to integrate your new form.
 
-![Formspree endpoint](./form-endpoint.png)
+![Formspree endpoint](/pages/tutorials/add-an-html-form-with-formspree/form-endpoint.png)
 
 Copy the `Form Endpoint` URL and paste it into the `action` attribute of the form you created above.
 

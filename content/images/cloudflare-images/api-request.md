@@ -34,21 +34,22 @@ Once you have this information, you are ready to upload your first image to Clou
 curl -X POST \
   "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1" \
   -H "Authorization: Bearer <API_TOKEN>" \
-  -F file=@./<YOUR_IMAGE>
+  -F file=@./<YOUR_IMAGE.IMG>
 ```
 
-A successful response will look similar to this:
+Refer to [Upload images](/images/cloudflare-images/upload-images/) for a complete overview of the different options to upload images with the API.
+
+After uploading your images, a successful response will look similar to this:
 
 ```json
 {
   "result": {
-    "id": "083eb7b2-5392-4565-b69e-aff66acddd00",
-    "filename": "triceratops.jpg",
+    "id": "<IMAGE_ID>",
+    "filename": "<IMAGE.IMG>",
     "uploaded": "2021-09-14T05:52:14.767Z",
     "requireSignedURLs": false,
     "variants": [
-      "https://imagedelivery.net/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/test",
-      "https://imagedelivery.net/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/public"
+      "https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME>"
     ]
   },
   "result_info": null,
@@ -57,3 +58,29 @@ A successful response will look similar to this:
   "messages": []
 }
 ```
+
+The response has details regarding the image you uploaded, such as its ID as well as the default `public` variant URL. In the above example, the `public` variant would show as `https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/public`.
+
+After you [set up other variants](/images/cloudflare-images/resize-images/) in your account, the `"variants"` property in the response will show the URLs for them:
+
+```json
+{
+  "result": {
+    "id": "<IMAGE_ID>",
+    "filename": "<IMAGE.IMG>",
+    "uploaded": "2021-09-14T05:52:14.767Z",
+    "requireSignedURLs": false,
+    "variants": [
+      "https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/public",
+      "https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME_1>",
+      "https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME_2>"
+    ]
+  },
+  "result_info": null,
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+You can use the URLs in the `"variants"` property of the response to [serve images](/images/cloudflare-images/serve-images/) from your Cloudflare Images account.

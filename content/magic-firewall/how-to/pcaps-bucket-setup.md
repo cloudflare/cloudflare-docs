@@ -1,21 +1,22 @@
 ---
-title: PCAPs Bucket Setup
+title: PCAPs bucket setup
 pcx-content-type: how-to
 meta:
-    title: PCAPs Bucket Setup
+    title: PCAPs bucket setup
 ---
 
 
-# Setting up a bucket
+# Set up a bucket
+
 AWS and GCP buckets can be configured as targets when using the PCAP API.
 
-In order to use a bucket you will need to first Enable Destinations via API. Choose either [Amazon S3](https://developers.cloudflare.com/logs/get-started/enable-destinations/aws-s3/#manage-via-api) or [Google Cloud Storage](https://developers.cloudflare.com/logs/get-started/enable-destinations/google-cloud-storage/#manage-via-api) and follow the steps for those specific services.
+In order to use a bucket you will need to first Enable Destinations via API. Choose either [Amazon S3](/logs/get-started/enable-destinations/aws-s3/#manage-via-api) or [Google Cloud Storage](/logs/get-started/enable-destinations/google-cloud-storage/#manage-via-api) and follow the steps for those specific services.
 
 At this time you cannot manage this via the Cloudflare dashboard.
 
 Next you will need to validate the bucket with the PCAPs API.
 
-# Validating a bucket
+## Validate a bucket
 
 The first step is to send an ownership challenge to a bucket to confirm you own the bucket.
 The `bucket` field should be the URI of the bucket. For Amazon S3 it should be in the form `s3://<bucket-name>/<directory>?region=<bucket-region>` and for Google Cloud Storage in the form `gs://<bucket-name>/<directory>`.
@@ -82,7 +83,7 @@ This will show the following response:
 
 If status shows `success`, the bucket is configured and ready to use.
 
-# Listing Configured Buckets
+## List configured buckets
 
 To list which buckets are available for PCAPs, send a request as shown below:
 ```
