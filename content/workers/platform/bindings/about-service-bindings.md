@@ -19,22 +19,31 @@ While the interface among Service bindings is HTTP, the networking is not. Unlik
 
 ![Service bindings are a zero-cost abstraction](../media/service-bindings-comparison.png)
 
-## Setting a Service binding
-You can manage Workers Service bindings in [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Settings**> **Variables** > **Service bindings** > **Edit variables**. You can also change the environment of a Workers Service binding, so you can target a specific version of a Workers Service.
+## Set a Service binding
 
-![To configure a Service binding, head to your Worker's Settings tab](../media/service-bindings-config.png)
+To manage a Workers Service bindings:
 
-Workers bound to your Worker will be listed in the [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Triggers** tab, under **Bound Services**. Your team can easily view cross-service dependencies in this manner.
+1. Log in to the Cloudflare dashboard > Account Home > [Workers](https://dash.cloudflare.com/?zone=workers). 
+2. Select your **Worker**.
+3. Go to **Settings**> **Variables** > **Service bindings** > **Edit variables**. 
 
-![Your team can view cross-service dependencies in the Triggers tab](../media/service-bindings-triggers.png)
+You can also change the environment of a Workers Service binding, so you can target a specific version of a Workers Service.
 
-## Composing an example Worker
+![To configure a Service binding, go to your Worker > Settings > Variables and follow the steps above](../media/service-bindings-config.png)
 
-In the following example, we'll create a `gateway` Worker that invokes an `auth` Worker to handle authorization checks.
+Workers bound to your Worker will be listed in [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Triggers** > **Bound Services**. Your team can easily view cross-service dependencies in this manner.
+
+![Your team can view cross-service dependencies in the Cloudflare dashboard Account Home > Workers > Triggers](../media/service-bindings-triggers.png)
+
+## Compose an example Worker
+
+In the following example, you will create a `gateway` Worker that invokes an `auth` Worker to handle authorization checks.
 
 ### Gateway Worker and Service bindings usage
 
-First, we'll create both a `gateway` and `auth` Worker. Once they're set up, navigate to the `gateway` Worker. In order to bind and call the [authentication](#authentication-workers-service) Worker, the `gateway` Worker needs to set up a Service binding. You can manage Service bindings in [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Settings**> **Variables** > **Service bindings** > **Edit variables**.
+First, you will create both a `gateway` and `auth` Worker. Once they are set up, go to the `gateway` Worker. In order to bind and call the [authentication](#authentication-workers-service) Worker, the `gateway` Worker needs to set up a Service binding. 
+
+To manage Service bindings, go to Account Home > [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Settings**> **Variables** > **Service bindings** > **Edit variables**.
 
 ![Selecting Edit variables to create new bindings and edit existing bindings that enable Worker-to-Worker communication](../media/service-bindings.png)
 
@@ -66,11 +75,11 @@ Note that [Requests](../../runtime-apis/request) can only be read once. If you n
 
 {{</Aside>}}
 
-In this setup, only the `gateway` Worker is exposed to the Internet and privately communicating with the `auth` and `application` Workers using Service bindings. Read on to build the `auth` Worker.
+In this setup, only the `gateway` Worker is exposed to the Internet and privately communicating with the `auth` and `application` Workers using Service bindings. In the next section, you will build the `auth` Worker.
 
 ### Authentication Workers Service
 
-The following authentication Workers Service code responds with `200` in the case that `x-custom-token` in the incoming request matches a `SECRET_TOKEN` Secret binding. Note that we implement `fetch` here, since a Service binding will invoke FetchEvent on the target Worker.
+The following authentication Workers Service code responds with a status code `200` in the case that `x-custom-token` in the incoming request matches a `SECRET_TOKEN` secret binding. Note that you implement `fetch` here, since a Service binding will invoke FetchEvent on the target Worker.
 
 ```js
 export default {
@@ -85,8 +94,7 @@ export default {
 };
 ```
 
-This `auth` Workers Service does not need to have a `*.workers.dev` or other public endpoint; it is accessed through a Service binding from the `gateway` Worker directly. The authentication Worker is, effectively, a private Worker Service.
-
+This `auth` Workers Service does not need to have a `*.workers.dev` or other public endpoint. The `auth` Workers Service is accessed through a Service binding from the `gateway` Worker directly. The authentication Worker is, effectively, a private Worker Service.
 
 ## Related resources
 
