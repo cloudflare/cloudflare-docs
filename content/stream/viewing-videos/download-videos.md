@@ -77,6 +77,16 @@ header: Response
 }
 ```
 
+## Define download file name
+
+You can define the name of downloadable files by adding the `filename` query string parameter at the end of the URL. 
+
+In the example below, adding `?filename=MY_VIDEO.mp4` to the URL will change the file name to `MY_VIDEO.mp4`.
+
+`
+https://videodelivery.net/$VIDEOID/downloads/default.mp4?filename=MY_VIDEO.mp4
+`
+
 ## Retrieve downloads
 
 The generated MP4 download files can be retrieved via the link in the download API response.
