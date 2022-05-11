@@ -6,6 +6,12 @@ weight: 5
 
 # Displaying thumbnails
 
+{{<Aside>}}
+
+Stream thumbnails do not support non-square pixels. 
+
+{{</Aside>}}
+
 ## Use Case 1: Generating a thumbnail on-the-fly
 
 A thumbnail from your video can be generated using a special link where you specify the time from the video you'd like to get the thumbnail from.
