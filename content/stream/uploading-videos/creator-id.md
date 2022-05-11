@@ -128,7 +128,7 @@ highlight: [8]
 ## Get videos by Creator ID
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/023e105f4ecef8ad9ca31a8372d0c353/stream?after=2014-01-02T02:20:00Z&before=2014-01-02T02:20:00Z&include_counts=false&creator=some-creator-id&limit=undefined&asc=false&status=downloading,queued,inprogress,ready,error" \
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/023e105f4ecef8ad9ca31a8372d0c353/stream?after=2014-01-02T02:20:00Z&before=2014-01-02T02:20:00Z&include_counts=false&creator=<CREATOR_ID>&limit=undefined&asc=false&status=downloading,queued,inprogress,ready,error" \
      -H "X-Auth-Email: user@example.com" \
      -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
      -H "Content-Type: application/json"
