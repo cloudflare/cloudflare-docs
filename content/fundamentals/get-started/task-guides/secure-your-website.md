@@ -12,7 +12,7 @@ Cloudflare offers several tools to protect your website against malicious traffi
 
 ### Default protection
 
-So long as your traffic is [proxied by Cloudflare](/fundamentals/get-started/concepts/how-cloudflare-works/), Cloudflare automatically protects your application from [DDoS attacks](https://support.cloudflare.com/hc/articles/200172676).
+As long as your traffic is [proxied by Cloudflare](/fundamentals/get-started/concepts/how-cloudflare-works/), Cloudflare automatically protects your application from [DDoS attacks](https://support.cloudflare.com/hc/articles/200172676).
 
 Cloudflare also issues and renews free, unshared, publicly trusted [SSL/TLS certificates](/ssl/edge-certificates/universal-ssl/) to all Cloudflare domains.
 
@@ -30,7 +30,7 @@ All customers also have the options to adjust the following **Security** setting
 
 Based on additional knowledge about your website traffic and requirements, you can also:
 
-- Enable [bot protection](/bots/get-started/)
+- Enable [bot protection](/bots/get-started/).
 - Set up various **Security** rules:
     - [Firewall rules](/firewall/cf-firewall-rules/) block, challenge, or allow requests based on [several characteristics](/ruleset-engine/rules-language/fields/) (user agents, cookies, referrer, and more).
     - [Rate limiting rules](https://support.cloudflare.com/hc/articles/115001635128) (usage-based billing) block IP addresses based on a URL pattern and defined request threshold.
