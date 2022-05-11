@@ -12,6 +12,8 @@ For files smaller than 200MB you can use simple form based uploads. This is an e
 
 Make an HTTP request with content-type header set to `multipart/form-data` and include the media as an input with the name set to `file`.
 
+{{<render file="_upload-storage.md">}}
+
 ### cURL example
 
 ```bash

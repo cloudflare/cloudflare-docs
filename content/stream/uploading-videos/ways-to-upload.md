@@ -10,6 +10,8 @@ layout: list
 
 Stream provides four ways to upload videos to cover a diverse set of use cases.
 
+{{<render file="_upload-storage.md">}}
+
 {{<table-wrap>}}
 
 | Upload method                                                              | When to use                                                                                                                                                  |
