@@ -1600,6 +1600,7 @@ span.Tooltip---root {
   border-bottom-right-radius: 0;
   font-weight: 600;
   background: var(--code-block-background-color);
+  white-space: nowrap;
 }
 [theme="light"] .WorkerStarter--command-copy-button-wrapper button {
   background: var(--code-block-background-color-light-theme);
