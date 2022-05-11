@@ -71,55 +71,9 @@ Each environment in a Workers Service has its own version history. Every time th
 
 Workers Service bindings are an API that facilitate Worker-to-Worker communication.
 
-{{<Aside type="warning">}}
+A Workers Service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. You can invoke other Workers directly from your code. Workers Service bindings allow for much more composability on the Workers platform.
 
-Workers Service bindings are in closed beta as of January 2022. Go to the [Workers Service bindings closed beta signup page](https://www.cloudflare.com/en-gb/service-bindings-closed-beta-sign-up/) to request access.
-
-{{</Aside>}}
-
-A Workers Service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. You can invoke other Workers directly from your code; Workers Service bindings allow for much more composability on the Workers platform. In the example below, requests are validated by an authentication Workers Service.
-
-```js
-export default {
-  async fetch(request, env) {
-    // Fetch AUTH service and pass request
-    const response = await env.AUTH.fetch(request);
-
-    // Return response from the AUTH service if the response status is not 200
-    // It would return 403 'x-custom-token does not match, request not allowed' response in such case
-    if (response.status !== 200) {
-      return response;
-    }
-
-    // Request allowed
-    const data = ''; // For example, read data from KV, Durable Objects, or Database
-    return new Response(data);
-  },
-};
-```
-
-![HTTP requests are validated by an API service gateway and Workers authentication in the service bindings workflow](./media/app-workers-dev.png)
-
-Workers Service bindings use the standard [Fetch API](/workers/runtime-apis/fetch/). You can continue to use your existing utilities and libraries - a Workers Service binding will trigger a `FetchEvent`. You can also change the environment of a Workers Service binding, so you can test a new version of a Service.
-
-In the next example, 1% of requests are routed to a `CANARY` deployment of a Worker. If a request to the `CANARY` fails, it is sent to the production deployment for another chance.
-
-```js
-export default {
-  canRetry(request) {
-    return request.method === 'GET' || request.method === 'HEAD';
-  },
-  async fetch(request, environment) {
-    if (Math.random() < 0.01) {
-      const response = await environment.CANARY.fetch(request.clone());
-      if (response.status < 500 || !canRetry(request)) {
-        return response;
-      }
-    }
-    return environment.PRODUCTION.fetch(request);
-  },
-};
-```
+Workers Service bindings use the standard [Fetch API](/workers/runtime-apis/fetch/). You can continue to use your existing utilities and libraries. A Workers Service binding will trigger a `FetchEvent`. You can also change the environment of a Workers Service binding, so you can test a new version of a Service.
 
 While the interface among Workers Services is HTTP, the networking is not. Unlike the typical microservice architecture, where services communicate over a network and can suffer from latency or interruption, Workers Service bindings are a zero-cost abstraction. When one Worker invokes another, there is no network delay and the request is executed immediately.
 
@@ -131,64 +85,4 @@ Workers Service bindings allow you to:
 - Achieve better composability on the Workers platform using Service-oriented architecture.
 - Create private microservices, to be conditionally invoked from other edge-facing Services.
 
----
-
-## Composing an example Worker
-
-### Authentication Workers Service
-
-Following authentication Workers Service code responds with `200` in case `x-custom-token` request matches `SECRET_TOKEN` secret binding.
-
-```js
-export default {
-  async fetch(request, env) {
-    // Read x-custom-token header and make sure it matches SECRET_TOKEN
-    if (request.headers.get('x-custom-token') === env.SECRET_TOKEN) {
-      return new Response('Request allowed', { status: 200 });
-    } else {
-      return new Response('x-custom-token does not match, request not allowed', { status: 403 });
-    }
-  },
-};
-```
-
-This authentication Workers Service does not need to have a `*.workers.dev` or other domain endpoint, nor does it need an HTTP Route: it is accessed through a Workers Service binding from the other Worker directly. The authentication Worker is, effectively, a private Worker Service.
-
-### Gateway Worker and Service bindings usage
-
-In order to bind and call the [authentication Workers Service above](/workers/#authentication-service), the application Workers Service needs to set up a Workers Service binding. You can manage Workers Service bindings in **Workers** > select your **Worker** > **Settings**> **Variables** > **Service Bindings** > **Edit variables**.
-
-![Selecting Edit bindings to create new bindings and edit existing bindings that enable Worker-to-Worker communication](./media/service-bindings.png)
-
-Once added, the application Workers Service can access the Workers Service binding directly from the code, as in the example below.
-
-{{<Aside type="note">}}
-
-Note that [Requests](/workers/runtime-apis/request/) can only be read once. If you need to use a Request object multiple times, clone your incoming Request objects.
-
-{{</Aside>}}
-
-```js
-export default {
-  async fetch(request, env) {
-    // Fetch AUTH service and pass request
-    const response = await env.AUTH.fetch(request);
-
-    // Return response from the AUTH service if the response status is not 200
-    // It would return 403 'x-custom-token does not match, request not allowed' response in such case
-    if (response.status !== 200) {
-      return response;
-    }
-
-    // Request allowed
-    const data = ''; // For example, read data from KV, Durable Objects, or Database
-    return new Response(data);
-  },
-};
-```
-
-In this setup, only the Gateway Worker is exposed to the Internet and privately communicating with the authentication Workers Service using a Workers Service binding.
-
-## Related resources
-
-- [Services introduction blog post](https://blog.cloudflare.com/introducing-worker-services/)
+Read more about [Service bindings](../../platform/bindings/about-service-bindings).
