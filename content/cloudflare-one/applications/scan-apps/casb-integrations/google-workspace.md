@@ -51,7 +51,7 @@ The Google Workspace integration currently scans for the following types of secu
 
 ### Gmail
 
-* **Missing SPF and DMARC records** — Missing SPF and DMARC records make it easier for bad actors to spoof email, ensuring that your messages are delivered correctly and securely.
+* **Missing SPF and DMARC records** — Missing SPF and DMARC records make it easier for bad actors to spoof email.
 
 * **Google Workspace users forwarding their email externally** — When users in your Google Workspace domain set their email to be forwarded to an external email, this can either be a sign of unauthorized activity, or an employee unknowingly sending potentially sensitive information to a personal email.
 
