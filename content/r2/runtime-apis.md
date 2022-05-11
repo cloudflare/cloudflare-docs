@@ -100,7 +100,7 @@ async function handleRequest(request) {
 
 - {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}{{</type>}}{{</code>}}
 
-  - Returns a Promise that resolves to an ArrayBuffer containing the object's value.
+  - Returns a Promise that resolves to an `ArrayBuffer` containing the object's value.
 
 - {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}{{</code>}}
 
