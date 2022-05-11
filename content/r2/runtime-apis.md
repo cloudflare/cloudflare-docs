@@ -3,7 +3,7 @@ pcx-content-type: configuration
 title: Runtime APIs
 ---
 
-# Runtime APIs
+# R2
 
 The in-Worker R2 API is accessed by binding an R2 bucket to a [Worker](/workers). The Worker you write can expose external access to  buckets via a route, or manipulate R2 objects internally.
 
