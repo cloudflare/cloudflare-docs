@@ -1,8 +1,12 @@
 ---
-title: Examples
-type: examples
+type: overview
+hideChildren: true
 pcx-content-type: navigation
+title: Examples
+weight: 3
+layout: list
 ---
+
 # Examples
 
-{{<directory-listing>}}
+{{<list-examples>}}
