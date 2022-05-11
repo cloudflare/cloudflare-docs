@@ -7,7 +7,7 @@ pcx-content-type: reference
 
 Since R2 is built on top of Workers, it supports Unicode natively. One nuance of Unicode that is often overlooked is the issue of [filename interoperability](https://en.wikipedia.org/wiki/Filename#Encoding_indication_interoperability) due to [Unicode equivalence](https://en.wikipedia.org/wiki/Unicode_equivalence).
 
-Based on feedback from our users, we've chosen to NFC-normalize key names before storing by default. This means `Héllo` and `Héllo` are the same object in R2 but different objects in other storage providers.
+Based on feedback from our users, we have chosen to NFC-normalize key names before storing by default. This means `Héllo` and `Héllo` are the same object in R2 but different objects in other storage providers.
 
 R2 is encoding-preserving for display though. When you list the objects, you'll get back the last encoding you uploaded with.
 
