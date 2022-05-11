@@ -49,8 +49,4 @@ Cloudflare also offers dedicated products to increase the security of your websi
 - [Magic Firewall](/magic-firewall/): Use Cloudflare's firewall-as-a-service (FWaaS) to protect office networks and cloud infrastructure with advanced, scalable protection.
 - [Magic Transit](/magic-transit/): Delivers network functions at Cloudflare scale — DDoS protection, traffic acceleration, and much more from every Cloudflare data center — for on-premise, cloud-hosted, and hybrid networks.
 - [Magic WAN](/magic-wan/): Securely connect any traffic source - data centers, offices, devices, cloud properties - to Cloudflare’s network and configure routing policies to get the bits where they need to go, all within one SaaS solution.
-- [Page Shield](/page-shield/): Monitor third-party scripts on your application and receive notifications when they have been compromised or are exhibiting malicious behavior. 
-
-## Priority order
-
-Cloudflare's security tools evaluate HTTP requests in a specific order. For more details, refer to [Order and priority](/firewall/cf-firewall-rules/order-priority/).
+- [Page Shield](/page-shield/): Monitor third-party scripts on your application and receive notifications when they have been compromised or are exhibiting malicious behavior.
