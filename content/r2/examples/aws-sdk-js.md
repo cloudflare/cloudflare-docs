@@ -16,7 +16,7 @@ JavaScript or TypeScript users may continue to use the [`aws-sdk`](https://www.n
 import S3 from 'aws-sdk/clients/s3.js';
 
 const s3 = new S3({
-  endpoint: `https://${accountid}.r2-staging.cloudflarestorage.com`,
+  endpoint: `https://${accountid}.r2.cloudflarestorage.com`,
   accessKeyId: `${access_key_id}`,
   secretAccessKey: `${access_key_secret}`,
   s3DisableBodySigning: false,
