@@ -33,8 +33,8 @@ In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), navigate to *
 
 Findings, or security issues detected from an integration, are tagged with one of the following severity levels:
 
-* **Critical** suggests the finding is something the team should act on today.
-* **High** suggests the finding is something the team should act on this week.
+* **Critical** suggests the finding is something your team should act on today.
+* **High** suggests the finding is something your team should act on this week.
 * **Medium** suggests the finding should be reviewed sometime this month.
 * **Low** suggests the finding is informational or part of a scheduled review process.
 
