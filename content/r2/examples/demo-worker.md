@@ -1,9 +1,12 @@
 ---
+title: Using R2 in a Worker
+summary: A demo of how to use R2 in a Worker.
 pcx-content-type: configuration
-title: Demo Worker
+weight: 1001
+layout: example
 ---
 
-# Example Worker
+# Using R2 in a Worker
 
 We've provided an example Worker that exposes an R2 bucket to the Internet and demonstrates its functionality for storing and retrieving objects.
 
