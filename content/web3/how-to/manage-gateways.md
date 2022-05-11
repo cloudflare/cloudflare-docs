@@ -10,7 +10,10 @@ A Cloudflare Web3 gateway provides HTTP-accessible interfaces to various Web3 ne
 
 ## Create a gateway
 
-When you create a gateway, Cloudflare automatically creates and adds records to your Cloudflare DNS so your gateway can receive and route traffic appropriately.
+When you successfully create a gateway, Cloudflare automatically:
+- Creates and adds [records to your Cloudflare DNS](/web3/reference/gateway-dns-records/) so your gateway can receive and route traffic appropriately.
+- [Proxies](/dns/manage-dns-records/reference/proxied-dns-records/) traffic to that hostname so you can customize [caching, security, and other Cloudflare settings](/web3/how-to/customize-cloudflare-settings/).
+- Issues an SSL/TLS certificate to cover the specified hostname.
 
 ### Via the dashboard
 

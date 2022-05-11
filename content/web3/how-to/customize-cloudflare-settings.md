@@ -6,4 +6,4 @@ weight: 6
 
 # Customize Cloudflare settings
 
-TBD. SSL? Other settings customized per subdomain.
+{{<render file="_cloudflare-settings.md">}}

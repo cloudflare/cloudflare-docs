@@ -6,4 +6,4 @@ weight: 7
 
 # Migrate gateways from private beta
 
-TBD
+TBD.

@@ -3,8 +3,6 @@ title: Overview
 type: overview
 pcx-content-type: overview
 weight: 1
-meta:
-  title: Cloudflare Web3 docs
 ---
 
 # Cloudflare Web3 docs

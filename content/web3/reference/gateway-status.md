@@ -10,13 +10,11 @@ Once you [create a gateway](/web3/how-to/manage-gateways/#create-a-gateway), it 
 
 {{<table-wrap>}}
 
-| Status | Definition | Required actions |
-| --- | --- | --- |
-| **Active** | TBD | None |
-| **Pending** | TBD | Wait |
-| **Deleting** | TBD | Wait |
-| **Error** | TBD | Do something |
-| **Disabled** | TBD | Do something |
-| **Rate-limited**| TBD | Do something |
+| Status | Definition |
+| --- | --- |
+| **Active** | The DNS records for your gateway have been created and are functioning correctly. |
+| **Pending** | Your Web3 gateway is in the process of becoming **Active**. |
+| **Deleting** | Your Web3 gateway is being deleted. |
+| **Error** | The DNS records for your gateway are misconfigured or do not exist. To fix, try [refreshing the gateway](/web3/how-to/manage-gateways/#refresh-a-gateway).|
 
 {{</table-wrap>}}
