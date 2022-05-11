@@ -319,9 +319,25 @@ In a nutshell, this code receives HTTP requests for images on they original URLS
 
 Once the worker is deployed, our website now uses Cloudflare Images on its original, unchanged URLs. You can see it in effect at <https://imagejam.net/step-4/>.
 
-TODO:
-    * How to publish the worker
-    * set up route in Dashboard
+![](assets/step-04-url.jpg)
+
+[See our Workers documentation for instructions on how to publish a worker on your Cloudflare account](https://developers.cloudflare.com/workers/get-started/guide/).
+
+Note: For the worker to intercept trafic on your existing images URLs, it must be mapped to a route matching the URLs of your existing images. This is done in your Workers dashboard, under the tab "Triggers". [See our doc on Workers Routes](https://developers.cloudflare.com/workers/platform/routes/).
+
+In our case, the worker was set up to trigger on the route `imagejam.net/images/*`
+
+![](assets/step-04-worker-route.jpg)
+
+## Conclusion
+
+In this tutorial, we saw how to integrate Cloudflare Images in an existing website.
+
+We saw how low-profile Cloudflare Images can be, requiring zero change on your website HTML or URLs if necessary.
+
+We discovered how Cloudflare Images adapts the format and compression of Images upon delivery depending on the browser capabilities to ensure the best end-user experience possible.
+
+If you enjoyed this tutorial, refer to the [Cloudflare Images Documentation](https://developers.cloudflare.com/images/cloudflare-images/) to learn about the many more features Cloudflare Images has to offer.
 
 ## Aside: Obtain Cloudflare Images API credentials
 
@@ -352,43 +368,3 @@ Fill in the API token form as depicted below, and click on **Continue to summary
 ![](assets/step-02-custom-token-setup.jpg)
 
 Then confirm your API token, and copy paste the token value. ***Keep it secret, keep it safe!*** It grants access to your Cloudflare Images account.
-
-# draft below this line
-#########################
-
-* what are we doing
-* why are we importing; what does it mean to import
-* Showcase account, and variants
-* showcase Custom IDs and UTF8 support => image names are retained, great for ease of use, semantics and SEO
-## Steps 2 and 3: Use Cloudflare Images with default delivery URLs
-
-* What's the default delivery URL
-    * On default delivery domain
-    On custom delivery domain
-* Why it's great => zero setup
-* But: requires to change the existing image URLs
-
-## Step 4: Use Cloudflare Images without changing existing image URLs
-
-* Why it's great => zero impact on website HTML / images URLs
-* But: requires to change the existing image URLs 
-
-* How is it possible to serve on the same Image URL
-    * Intercept images URLs with a Cloudflare Worker
-
-* How to publish the worker
-    * Point your domain to Cloudflare
-    * Publish a custom image routing worker
-    * proxy image URLs to Cloudflare Images
-
-## Other features
-
-### Flexible Image transformation
-
-https://developers.cloudflare.com/images/cloudflare-images/resize-images/#flexible-variants
-
-How to use transformation parameters the delivery URL to transform an image on the fly
-
-### Adaptive Optimized Format Delivery
-
-How Cloudflare Images delivers Image Formats optimized to every browser, including WebP and AVIF
