@@ -29,7 +29,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-The Google Workspace integration currently scans for the following security risks, categorized by [severity level](/cloudflare-one/applications/scan-apps/#severity-levels).
+The Google Workspace integration currently scans for the following findings, or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/scan-apps/#severity-levels).
 
 ### User account settings
 
@@ -42,19 +42,14 @@ Users who did not enable two-factor authentication (2FA) or set a recovery email
 | Google Workspace User without Recovery Email  | Low      |
 | Google Workspace User without Recovery Phone  | Low      |
 
-### Inactive users
+### Inactive or suspended users
 
-Having inactive users in your Google Workspace account may present potential compliance violations related to employee offboarding. Inactive users also increase the risk of account misuse should someone else gain access to their account.
+Having inactive or suspended users in your Google Workspace account may present potential compliance violations (for example, employee offboarding violations). Inactive users also increase the risk of account misuse should someone else gain access to their account.
 
 | Finding                              | Severity |
 |--------------------------------------|----------|
 | Google Workspace Admin User Inactive | Medium   |
 | Google Workspace User Inactive       | Low      |
-
-### Suspended users
-
-| Finding                               | Severity |
-|---------------------------------------|----------|
 | Google Workspace Admin User Suspended | Medium   |
 | Google Workspace User Suspended       | Low      |
 
@@ -74,7 +69,7 @@ Get alerted when files, folders, and calendars in your Google Workspace have the
 
 ### Third-party apps
 
-Identify and get alerted about the third-party apps that have access to at least one service in your Google Workspace domain. Additionally, receive information about which services are being accessed and by who to get full visibility into Shadow IT.
+Identify and get alerted about the third-party apps that have access to at least one service in your Google Workspace domain. Additionally, receive information about which services are being accessed and by whom to get full visibility into Shadow IT.
 
 | Finding                                            | Severity |
 |----------------------------------------------------|----------|
@@ -98,7 +93,7 @@ Discover suspicious or insecure email configurations in your Google Workspace do
 | Google Workspace Domain DMARC Not Enforced for Subdomains | Medium   |
 | Google Workspace Domain DMARC Only Partially Enforced     | Medium   |
 
-### Automated email forwarding
+### Email forwarding
 
 Get alerted when users set their email to be forwarded externally. This can either be a sign of unauthorized activity, or an employee unknowingly sending potentially sensitive information to a personal email.
 
