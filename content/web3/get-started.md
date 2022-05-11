@@ -18,7 +18,25 @@ To get access to Web3 gateways for your account, you need to first [subscribe to
 
 ## Step 2 - Create a gateway
 
-After purchasing a gateway subscription, [create a gateway](/web3/how-to/manage-gateways/#create-a-gateway).
+After purchasing a gateway subscription, create a gateway.
+
+<details>
+<summary>Create via dashboard</summary>
+<div>
+
+{{<render file="_create-gateway-dashboard.md">}}
+
+</div>
+</details>
+
+<details>
+<summary>Create via API</summary>
+<div>
+
+{{<render file="_create-gateway-api.md">}}
+
+</div>
+</details>
 
 {{<render file="_post-creation-steps.md">}}
 
