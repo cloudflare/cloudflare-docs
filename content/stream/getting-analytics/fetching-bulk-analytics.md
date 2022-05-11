@@ -30,6 +30,7 @@ There is no limit on number of filters per query.
 *   Video UID
 *   Date/time
 *   Country
+*   CreatorID
 *   Device type
 *   Device operating system
 *   Device browser

@@ -209,4 +209,4 @@ Add the Creator ID via the `Upload-Creator` header. For more information, refer 
 
 ## Query by Creator ID with GraphQL
 
-After you set the creator property, you can use the [GraphQL API](/analytics/graphql-api/) to filter by a specific creator. 
+After you set the creator property, you can use the [GraphQL API](/analytics/graphql-api/) to filter by a specific creator. Refer to [Fetching bulk analytics](/stream/getting-analytics/fetching-bulk-analytics) for more information about available metrics and filters.
