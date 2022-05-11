@@ -33,7 +33,7 @@ You can also change the environment of a Workers Service binding, so you can tar
 
 Workers bound to your Worker will be listed in [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Triggers** > **Bound Services**. Your team can easily view cross-service dependencies in this manner.
 
-![Your team can view cross-service dependencies in the Cloudflare dashboard Account Home > Workers > Triggers]../media/service-bindings-triggers.png)
+![Your team can view cross-service dependencies in the Cloudflare dashboard Account Home > Workers > Triggers](./media/service-bindings-triggers.png)
 
 ## Compose an example Worker
 
