@@ -56,7 +56,7 @@ blur=x
 ---
 filename: Workers
 ---
-cf: {images: {blur: "x"}}
+cf: {images: {blur: x}}
 ```
 
 #### `brightness`
@@ -74,7 +74,7 @@ brightness=0.5
 ---
 filename: Workers
 ---
-cf: {images: {brightness: "0.5"}}
+cf: {images: {brightness: 0.5}}
 ```
 
 #### `contrast`
@@ -92,7 +92,7 @@ contrast=0.5
 ---
 filename: Workers
 ---
-cf: {images: {contrast: "0.5"}}
+cf: {images: {contrast: 0.5}}
 ```
 
 #### `dpr`
@@ -244,7 +244,7 @@ gamma=0.5
 ---
 filename: Workers
 ---
-cf: {images: {gamma: "0.5"}}
+cf: {images: {gamma: 0.5}}
 ```
 
 #### `gravity`
@@ -405,7 +405,7 @@ quality=50
 ---
 filename: Workers
 ---
-cf: {images: {quality: "50"}}
+cf: {images: {quality: 50}}
 ```
 
 #### `rotate`
@@ -423,7 +423,7 @@ rotate=90
 ---
 filename: Workers
 ---
-cf: {images: {rotate: "90"}}
+cf: {images: {rotate: 90}}
 ```
 
 #### `sharpen`
@@ -441,7 +441,7 @@ sharpen=x
 ---
 filename: Workers
 ---
-cf: {images: {sharpen: "x"}}
+cf: {images: {sharpen: x}}
 ```
 
 #### `trim`
