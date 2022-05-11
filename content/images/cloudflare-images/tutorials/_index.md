@@ -3,7 +3,7 @@ type: overview
 hideChildren: true
 pcx-content-type: navigation
 title: Tutorials
-weight: 4
+weight: 11
 
 layout: table
 column_text: Type

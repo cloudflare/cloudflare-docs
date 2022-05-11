@@ -1,61 +1,54 @@
 ---
+updated: 2022-05-11
+difficulty: Intermediate
+content_type: 📝 Tutorial
 pcx-content-type: tutorial
 title: Integrate Cloudflare Images on your website
 ---
-
 # Integrate Cloudflare Images on your website
 
-## Introduction
+## Overview
 
-In this tutorial, we will update a website in several iterative steps, to leverage the powerful features of [Cloudflare Images](https://developers.cloudflare.com/images/cloudflare-images/). Cloudflare Images is a great solution for a website as an easy-to-use image storage, transformation and optimized delivery service.
+In this tutorial, you will update a website in several iterative steps to leverage the powerful features of [Cloudflare Images](/images/cloudflare-images/). Cloudflare Images is a great solution for a website as an easy-to-use image storage, transformation and optimized delivery service.
 
-We will see:
+You will learn:
 
-* how to migrate the images of the website to Cloudflare images
+- How to migrate your website's images to Cloudflare images.
+- How to update your website [to serve images from Cloudflare Images](/images/cloudflare-images/serve-images/), ultimately without changing the existing image URLs.
+- How to use [variants](/images/cloudflare-images/resize-images/) to resize and transform delivered images.
 
-* how to update the website [to serve images from Cloudflare Images](https://developers.cloudflare.com/images/cloudflare-images/serve-images/), ultimately without changing the existing image URLs
+Other features you will learn about:
 
-* how to use [variants](https://developers.cloudflare.com/images/cloudflare-images/resize-images/) to resize and transform delivered images
-
-Other features we will learn about:
-
-* [Custom Domain Delivery](https://developers.cloudflare.com/images/cloudflare-images/serve-images/#serving-images-from-custom-domains): How to serve Cloudflare Images from your own domain name
-
-* [Custom IDs](https://developers.cloudflare.com/images/cloudflare-images/upload-images/custom-id/): How to store and serve your images under their own, SEO friendly Unicode name and path
-
-* [Flexible Image transformation](https://developers.cloudflare.com/images/cloudflare-images/resize-images/#flexible-variants): How to use transformation parameters the delivery URL to transform an image on the fly
-
-* Adaptive Optimized Format Delivery: How Cloudflare Images delivers Image Formats optimized to every browser, including WebP and AVIF
+- [Custom Domain Delivery](/images/cloudflare-images/serve-images/#serving-images-from-custom-domains): How to serve Cloudflare Images from your own domain name.
+- [Custom IDs](/images/cloudflare-images/upload-images/custom-id/): How to store and serve your images under their own, SEO friendly Unicode name and path.
+- [Flexible Image transformation](/images/cloudflare-images/resize-images/#flexible-variants): How to use transformation parameters in the delivery URL to transform an image on the fly.
+- Adaptive Optimized Format Delivery: How Cloudflare Images delivers image formats optimized to every browser, including WebP and AVIF.
 
 ### Demo website and source code
 
-For illustrative purposes, this tutorial uses the demo [Cloudflare Pages](https://developers.cloudflare.com/pages/) website <https://imagejam.net> as a basis for all examples; you can find the source code for this website on GitHub <https://github.com/netgusto/imagejam.net>
+For illustrative purposes, this tutorial uses the [Imagejam demo website](https://imagejam.net) build with [Cloudflare Pages](https://developers.cloudflare.com/pages/) as a basis for all examples. You can find the source code for this demo website on [GitHub](https://github.com/netgusto/imagejam.net).
 
 [Learn how to deploy your own Cloudflare Pages website](https://developers.cloudflare.com/pages/get-started/).
 
-## Step 1: Website not using Cloudflare Images
+## Website not using Cloudflare Images
 
-We're starting this tutorial with a demo website not (yet) using Cloudflare Images <https://imagejam.net/step-1/>.
+The demo website we are going to use for this tutorial is not (yet) using Cloudflare Images. If you [browse the cake gallery](https://imagejam.net/step-1/cakes/) page for Step 1, you can see many image thumbnails.
 
-Browsing the cake gallery page for step 1, <https://imagejam.net/step-1/cakes/> we can see many image thumbnails.
-
-![](assets/step-01-cakes.jpg)
+![The demo website has lots of thumbnail images of cakes.](/images/static/tutorials/integrate-cloudflare-images/step-01-cakes.jpg)
 
 Clicking on an image displays a bigger version of it, as well as its URL, real size and display size.
 
-![](assets/step-01-cake.jpg)
+![Clicking the thumnail shows a bigger version of the image, and its real size.](/images/static/tutorials/integrate-cloudflare-images/step-01-cake.jpg)
 
-On this example, the image we see has been served with a very high-resolution (`4288x2848`) but displayed at a much lower resolution, which means most of the pixels we downloaded were wasted upon display.
+On this example, the image was served with a very high-resolution of 4288x2848 pixels, but is displayed at a much lower resolution. This means most of the pixels we downloaded were wasted upon display.
 
-This is because at this step, the website serves unoptimized, unresized images, original images, stored in an online file storage (in our case, S3).
+This happens because, right now, the website is serving the original unoptimized and unresized images, stored in an online file storage (in our case, S3). On the other hand, although it cannot be inferred at a first glance, the image is being served in a fairly heavy JPG format that has not been optimized for the web - and that possibly come directly from a camera.
 
-Also, this can't be seen at a glance, but the image is served in a fairly heavy JPG format that's actually not adapted for web purposes, possibly coming straight out of a camera.
+Right now, images are being served from the website's domain. For instance, our original image `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg` is served from the URL `https://imagejam.net/images/public/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg`.
 
-In this step, images URLs are currently served on the website domain. For instance, our original image `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg` is served on this URL: <https://imagejam.net/images/public/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg>.
+In our Cloudflare Pages website demo, URLs for image delivery are defined in the file [`/config.js`](https://github.com/netgusto/imagejam.net/blob/production/config.js), in the build step configuration for Step 1.
 
-In our demo Cloudflare Pages website, URLs for image delivery are defined in [`/config.js`](https://github.com/netgusto/imagejam.net/blob/production/config.js), in the build step configuration for Step 1.
-
-Here's the relevant extract of this file (edited for brevity):
+Here is the relevant extract of this file (edited for brevity):
 
 ```js
 {
@@ -66,29 +59,25 @@ Here's the relevant extract of this file (edited for brevity):
 },
 ```
 
-As you can see, this configuration provides an `image_url` function used when building the HTML of the website to generate the URLs to our website images; in this case, served directly by the website, and **not** by Cloudflare Images.
+This configuration provides an `image_url` function used when building the HTML of the website, that generates the URLs to our website's images — in this case, served directly by the website and **not** by Cloudflare Images.
 
-The purpose of this tutorial is to showcase how Cloudflare Images can be integrated on a website to deliver resized and optimized images, adapted to their display on the website, and the capabilities of the browser displaying them.
+The purpose of this tutorial is to showcase how Cloudflare Images can be integrated on a website to deliver resized and optimized images, adapted to your display and the browser displaying them.
 
-👉 In step 2 we will integrate Cloudflare Images in our website, but before that we need to upload our images for Cloudflare Images to start serving them.
+👉 In Step 2 we will integrate Cloudflare Images in our website, but before that we need to upload our images for Cloudflare Images to start serving them.
 
-## Migration to Cloudflare Images
+## Step 1 - Migrate images to Cloudflare Images
 
-We are going to upload our website images on Cloudflare Images.
+You need to start by uploading your images to Cloudflare Images. For that, you need a Cloudflare Account with a Cloudflare Images subscription. Head over to the [Cloudflare Images sign-up page](https://dash.cloudflare.com/sign-up/images) to sign up.
 
-For this we need a Cloudflare Account with a Cloudflare Images Subscription. Head over to the [Cloudflare Images sign-up page](https://dash.cloudflare.com/sign-up/images) to sign up.
+After signing up, go to [the Cloudflare Images dashboard](https://dash.cloudflare.com/?to=/:account/images).
 
-Once signed up to the service, you'll have access to [the Cloudflare Images dashboard](https://dash.cloudflare.com/?to=/:account/images) inside of the Cloudflare Dashboard.
+![The Cloudflare Images dashboard.](/images/static/tutorials/integrate-cloudflare-images/step-02-images-dashboard.jpg)
 
-![](assets/step-02-images-dashboard.jpg)
+From there, you could upload all your website images manually using the dashboard UI. However, we have a lot of images on our website, so we are going to import them in bulk using the [API upload](/images/cloudflare-images/upload-images/custom-id/).
 
-From there we could upload all our website images manually using the dashboard UI.
+The demo website source code contains a NodeJS script with one way to achieve bulk upload to Cloudflare Images. You can find the script in [`scripts/migrate/bulkupload.js`](https://github.com/netgusto/imagejam.net/blob/production/scripts/migrate/bulkupload.js).
 
-It turns out that we have a lot of images on our website, so we are rather going to import them in bulk using the [API upload](https://developers.cloudflare.com/images/cloudflare-images/upload-images/custom-id/).
-
-The demo website source code contains a NodeJS script proposing one way to achieve bulk upload to Cloudflare Images in [`scripts/migrate/bulkupload.js`](https://github.com/netgusto/imagejam.net/blob/production/scripts/migrate/bulkupload.js).
-
-Here's a rendition of this script, slightly edited for illustrative purposes:
+Here is that script, slightly edited for illustrative purposes:
 
 ```js
 ---
@@ -149,60 +138,58 @@ async function upload(imageName, CF_IMAGES_ACCOUNT_ID, CF_IMAGES_API_KEY) {
 }
 ```
 
-In a nutshell, this script does 2 things:
+In a nutshell, this script does two things:
 
-* obtain the list of images to migrate to Cloudflare Images,
-* for every image, ask the Cloudflare Images API to import the image by URL, keeping its current name.
+- Obtains the list of images to migrate to Cloudflare Images;
+- For every image, ask the Cloudflare Images API to import the image by URL, keeping its current name.
 
 [Check out the instructions on how to install and run this script on the demo website GitHub repository](https://github.com/netgusto/imagejam.net#migrating-the-website-images-to-cloudflare-images).
 
-If you need Cloudflare Images API credentials, have a look at the section [Aside: Obtain Cloudflare Images API credentials](#aside-obtain-cloudflare-images-api-credentials) below.
+If you need Cloudflare Images API credentials, refer to [Obtain Cloudflare Images API credentials](#obtain-cloudflare-images-api-credentials) below.
 
 ## Step 2: Use Cloudflare Images on default delivery domain
 
-Now that our website images [have been imported](#migration-to-cloudflare-images), it turns out they already accessible on Cloudflare Images. Zero setup required!
+Now that your website images [have been imported](#migrate-images-to-cloudflare-images), they are already accessible on Cloudflare Images. Zero setup required!
 
-For instance, our original image `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg` is served on this URL: <https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public>
+For instance, our original image `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg` is served on the URL `https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
 
-![](
+![Cake with red fruits on top, and a fork on the side.](
 https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public
 )  
 (*Photo by Aditya Joshi - Unsplash*)
 
-Let's inspect that URL:
+If we inspect the URL:
 
-```
+```txt
 https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public
-<--  default domain   -->/<-- Account hash   -->/<--        our original image file         -->/<-??->
+<--  default domain   -->/<-- Account hash   -->/<--        our original image file        -->/<-variant->
 ```
 
-* The first part `https://imagedelivery.net` is the default delivery domain for Cloudflare Images.
+- `https://imagedelivery.net` is the default delivery domain for Cloudflare Images.
+- `-oMiRxTrr3JCvTMIzx4GvA` represents your Cloudflare Images account ID in an obfuscated way. You can get this value in [your Cloudflare Images dashboard](/images/cloudflare-images/serve-images/).
+- `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg` is the original file name. This is the image ID we need to serve it.
+- `public` [represents the variant](/images/cloudflare-images/resize-images/#supported-properties). This is how Cloudflare Images knows what image size should be served, [among many other transformation options](/images/cloudflare-images/resize-images/#supported-properties).
 
-* Then we have `-oMiRxTrr3JCvTMIzx4GvA`, representing your Cloudflare Images account ID in an obfuscated way; you can get this value in your Cloudflare Images dashboard.
+Cloudflare Images ships by default with a single variant named `public`, but you can create more variants to fit your needs.
 
-* Then there is our original file name `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg`; this is the ID of the image we need to be served.
+For this tutorial, we created a second variant named `thumb` with 200x200 pixels, with a `cover` crop.
 
-* The last part `public` [represents the variant](https://developers.cloudflare.com/images/cloudflare-images/resize-images/#supported-properties); this is how Cloudflare Images knows what size should the image be served in ([among many other transformation options](https://developers.cloudflare.com/images/cloudflare-images/resize-images/#supported-properties)).
+![The settings for the "thumb" variant created in Cloudflare Images dash](/images/static/tutorials/integrate-cloudflare-images/step-02-variant-thumb.jpg)
 
-Cloudflare Images ships by default with a single variant named `public`, but you can create many other to fit your needs.
+Using the same image as before but with the `thumb` variant, we get a [much smaller file](https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-%E3%83%84.jpg/thumb).
 
-For this tutorial, we created a second variant `thumb`, size `200x200`, fitted with a `cover` crop.
 
-![](assets/step-02-variant-thumb.jpg)
-
-Here is the same image but with the `thumb` variant applied: <https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-%E3%83%84.jpg/thumb>
-
-![](https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/thumb)
+![The previous cake image, but smaller due to the new variant applied](https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/thumb)
 
 This variant is used in the thumbnails pages of our website gallery.
 
 ### Update the website to use Cloudflare Images
 
-We have seen in the previous section that Cloudflare Images is ready to serve images without further setup.
+In the previous section we learned that Cloudflare Images is ready to serve images without any further setup.
 
-Let's now update our website to serve images using Cloudflare Images. In our demo Cloudflare Pages website, this is done in [`/config.js`](https://github.com/netgusto/imagejam.net/blob/production/config.js), by adding a build step configuration:
+Now, let us update our website to serve images using Cloudflare Images. In our demo Cloudflare Pages website, this is done in [`/config.js`](https://github.com/netgusto/imagejam.net/blob/production/config.js), by adding a build step to the configuration:
 
-Here's the relevant extract of this file (edited for brevity):
+Here is the relevant extract of this file (edited for brevity):
 
 ```js
 {
@@ -213,51 +200,44 @@ Here's the relevant extract of this file (edited for brevity):
 },
 ```
 
-This configuration provides an `image_url` function that used when building the HTML of the website to generate our image URLs; in this case, served by Cloudflare Images on the default delivery domain `https://imagedelivery.net`.
+This configuration provides an `image_url` function that is used when building the HTML of the website to generate our image URLs. In this case, the images are also served by Cloudflare Images on the default delivery domain `https://imagedelivery.net`.
 
-Once deployed, our website now features a Step 2 at <https://imagejam.net/step-2/>.
+Once deployed, your website will have [much smaller thumbnails](https://imagejam.net/step-2/), all resized and optimized by Cloudflare Images. Clicking on an image, will show that, as expected, they are being served by Cloudflare Images. Their URL will be similar to `https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
 
-Browsing the cake gallery page for step 2, <https://imagejam.net/step-2/cakes/>, we can see the thumbnails resized and optimized by Cloudflare Images.
-
-Clicking on an image shows that its URL is as expected <https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public>.
-
-![](assets/step-02-cake.jpg)
+![The URL for the image shows it's being served by Cloudflare images](/images/static/tutorials/integrate-cloudflare-images/step-02-cake.jpg)
 
 Note as well that the displayed size now matches the real size of the image much more closely, if not perfectly. No more wasted downloaded pixels!
 
 ### Adaptive Optimized Format Delivery
 
-Inspecting the details of this image in our browser reveals that Cloudflare Images recompressed our image as AVIF saving close than 50% weight compared to a JPG of the same resolution, while maintaining quality.
+Another great built-in feature of Cloudflare Images is [Adaptive Optimized Format Delivery](/images/cloudflare-images/serve-images/#adaptive-optimized-format-delivery). This feature allows Cloudflare Images to automatically serve the best image format to the browser.
 
-![](assets/step-02-avif.jpg)
+Inspecting the details of this image reveals that Cloudflare Images converted it to AVIF, shaving close to 50% in file size in the process, when compared to a JPG of the same resolution. This was made while maintaining the same quality.
 
-This is because our browser (Google Chrome in the previous screenshot) supports AVIF, and advertises it in the `Accept: image/avif` header it sends to Cloudflare Images while requesting the image.
+![Inspecting the image in Chrome show it was converted to AVIF.](/images/static/tutorials/integrate-cloudflare-images/step-02-avif.jpg)
 
-Another browser not advertising AVIF support (like Firefox) won't get AVIF, but WebP instead.
+This happens because the browser used (Google Chrome in the screenshot) supports AVIF. Chrome advertises its AVIF support in the `Accept: image/avif` header it sends to Cloudflare Images while requesting the image. If you use another browser that does not support AVIF (like Firefox), Cloudflare Images will, instead, serve the image in WebP.
 
-![](assets/step-02-webp-firefox.jpg)
-
-This is another great built-in feature of Cloudflare Images, Adaptive Optimized Format Delivery.
+![Inspecting the image in Firefox shows it was converted to WebP](/images/static/tutorials/integrate-cloudflare-images/step-02-webp-firefox.jpg)
 
 ## Step 3: Use Cloudflare Images on custom delivery domain
 
-In [step 2](#step-2-use-cloudflare-images-on-default-delivery-domain), we saw how Cloudflare Images serves images on its default delivery domain.
+In [step 2](#step-2-use-cloudflare-images-on-default-delivery-domain), you learned how Cloudflare Images serves images on its default delivery domain.
 
-It turns out that Cloudflare Images can also serve images on your own domain with its [Custom domain](https://developers.cloudflare.com/images/cloudflare-images/serve-images/#serving-images-from-custom-domains) feature, no setup required, provided the domain name is pointing on Cloudflare.
+However, Cloudflare Images can also serve images from [custom domains](/images/cloudflare-images/serve-images/#serving-images-from-custom-domains), no setup required — as long as the domain name is proxied by Cloudflare.
 
-For instance our original image `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg` can be already be served on this URL: <https://imagejam.net/cdn-cgi/imagedelivery/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public>
+For instance, our original image `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg` can be served from the URL `https://imagejam.net/cdn-cgi/imagedelivery/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
 
-This URL is similar to those of step 2, with these key differences:
+This URL is similar to those on Step 2, with these key differences:
 
-* the domain name is the one of our website `https://imagejam.net` instead of Cloudflare Images default domain `https://imagedelivery.net`
+- The domain name is our website's (`https://imagejam.net`) instead of the Cloudflare Images default domain (`https://imagedelivery.net`).
+- There is an extra `/cdn-cgi/imagedelivery/` at the beginning of the path, allowing Cloudflare to automatically identify this URL as a Cloudflare Image, and serve it accordingly.
 
-* we have an extra `/cdn-cgi/imagedelivery/` at the beginning of path, allowing Cloudflare to automatically identify this URL as a Cloudflare Image, and serve it accordingly.
+### Update the website to use your custom domain
 
-### Update the website to use our custom delivery domain
+In our Cloudflare Pages demo website, the custom domain options is done in [`/config.js`](https://github.com/netgusto/imagejam.net/blob/production/config.js), by adding a third build step configuration:
 
-In our demo Cloudflare Pages website, this is done in [`/config.js`](https://github.com/netgusto/imagejam.net/blob/production/config.js), by adding a third build step configuration:
-
-Here's the relevant extract of this file (edited for brevity):
+Here is the relevant extract of this file (edited for brevity):
 
 ```js
 {
@@ -268,23 +248,21 @@ Here's the relevant extract of this file (edited for brevity):
 },
 ```
 
-Once deployed, our website now features a Step 3 at <https://imagejam.net/step-3/>.
+Once deployed, every image will be served from the custom domain. You can check this by [browsing the cake gallery](https://imagejam.net/step-3/cakes/) page for step 3. Clicking any image will show that its URL is as expected `https://imagejam.net/cdn-cgi/imagedelivery/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
 
-Browsing the cake gallery page for step 3, <https://imagejam.net/step-3/cakes/> and clicking on an image shows that its URL is as expected <https://imagejam.net/cdn-cgi/imagedelivery/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public>.
-
-![](assets/step-03-cake.jpg)
+![The URL for the image shows that it is being served from a custom domain](/images/static/tutorials/integrate-cloudflare-images/step-03-cake.jpg)
 
 ## Step 4: Use Cloudflare Images without changing existing images URLs
 
-So far we integrated Cloudflare Images in our website by **changing** the images URLs to target the Cloudflare Images services.
+So far we have shown you how to integrate Cloudflare Images in your website by changing the images' URLs to target the Cloudflare Images services.
 
-While this is a great, zero-setup way to optimize your image delivery, you might prefer to have your URLs and website code **unchanged**, and still benefit from all the Cloudflare Images features.
+While this is a easy, zero-setup way to optimize your image delivery, you might prefer to have your own URLs and website code unchanged, and still benefit from all the Cloudflare Images features.
 
-This is possible by having a Cloudflare Worker intercepting the traffic of your unchanged image URLs, transparently relaying it to Cloudflare Images.
+This is possible by having a Cloudflare Worker intercepting the traffic of your unchanged image URLs, and transparently relaying it to Cloudflare Images.
 
-The code of our demo Cloudflare Pages website is shipped with such a Worker, [`/images-worker/index.js`](https://github.com/netgusto/imagejam.net/blob/production/images-worker/index.js):
+The code for our Cloudflare Pages demo website is shipped with such a Worker. You can find it in [`/images-worker/index.js`](https://github.com/netgusto/imagejam.net/blob/production/images-worker/index.js).
 
-Here's the relevant extract of this file (edited for brevity):
+Here is the relevant extract of this file (edited for brevity):
 
 ```js
 async function handleRequest(request) {
@@ -296,7 +274,7 @@ async function handleRequest(request) {
   }
 
   // Use Cloudflare Images to deliver image ✨
-  // by cosntructing the CF Images URL with parts extracted from
+  // by constructing the CF Images URL with parts extracted from
   // the original website image URLs that this worker intercepts
   return fetch("https://imagedelivery.net/" + config.cloudflare_images_account_hash + "/" + imageName + "/" + variant, {
     // relay request headers to Cloudflare Images,
@@ -315,56 +293,57 @@ function extractVariant(url) {
 }
 ```
 
-In a nutshell, this code receives HTTP requests for images on they original URLS, and relays them transparently to Cloudflare Images before responding to the HTTP client, effectively proxying traffic between your website and Cloudflare Images.
+In a nutshell, this code receives HTTP requests for images on they original URLs, and relays them transparently to Cloudflare Images before responding to the HTTP client, effectively proxying traffic between your website and Cloudflare Images.
 
-Once the worker is deployed, our website now uses Cloudflare Images on its original, unchanged URLs. You can see it in effect at <https://imagejam.net/step-4/>.
+Once the worker is deployed, your website will use Cloudflare Images with the original, unchanged URLs. Refer to [Step 4](https://imagejam.net/step-4/) in the demo website the check the result.
 
-![](assets/step-04-url.jpg)
+![The optimized image by Cloudflare Images, with an unchanged URL](/images/static/tutorials/integrate-cloudflare-images/step-04-url.jpg)
 
-[See our Workers documentation for instructions on how to publish a worker on your Cloudflare account](https://developers.cloudflare.com/workers/get-started/guide/).
+For more information about how to publish a Worker on your Cloudflare account, refer to Cloudflare's [Workers documentation](/workers/get-started/guide/).
 
-Note: For the worker to intercept trafic on your existing images URLs, it must be mapped to a route matching the URLs of your existing images. This is done in your Workers dashboard, under the tab "Triggers". [See our doc on Workers Routes](https://developers.cloudflare.com/workers/platform/routes/).
+Note, however, that for the Worker to intercept traffic on your existing images URLs, it must be mapped to a route matching the URLs of your existing images. This is done in your Workers dashboard, under the tab **Triggers**. For more information, refer to our documentation on [Workers Routes](/workers/platform/routes/).
 
-In our case, the worker was set up to trigger on the route `imagejam.net/images/*`
+In this case, the Worker was set up to trigger on the route `imagejam.net/images/*`
 
-![](assets/step-04-worker-route.jpg)
+![A Cloudflare Worker configured to intercept the proper images folder](/images/static/tutorials/integrate-cloudflare-images/step-04-worker-route.jpg)
 
 ## Conclusion
 
-In this tutorial, we saw how to integrate Cloudflare Images in an existing website.
+In this tutorial, you learned how to integrate Cloudflare Images in an existing website. You have also learned how low-profile Cloudflare Images can be, requiring zero changes on your website HTML or URLs if necessary.
 
-We saw how low-profile Cloudflare Images can be, requiring zero change on your website HTML or URLs if necessary.
+We discovered how Cloudflare Images adapts the format and compression of Images upon delivery depending on the browser capabilities, to ensure the best end-user experience possible.
 
-We discovered how Cloudflare Images adapts the format and compression of Images upon delivery depending on the browser capabilities to ensure the best end-user experience possible.
+If you enjoyed this tutorial, refer to the [Cloudflare Images Documentation](/images/cloudflare-images/) to learn more about the many more features Cloudflare Images has to offer.
 
-If you enjoyed this tutorial, refer to the [Cloudflare Images Documentation](https://developers.cloudflare.com/images/cloudflare-images/) to learn about the many more features Cloudflare Images has to offer.
+## Obtain Cloudflare Images API credentials
 
-## Aside: Obtain Cloudflare Images API credentials
+The bulk upload script featured in this tutorial needs Cloudflare Images API credentials in the form of two environment variables:
 
-The bulk upload script featured in this tutorial expects to be provided with Cloudflare Images API credentials in the form of 2 environment variables `CF_IMAGES_ACCOUNT_ID` and `CF_IMAGES_API_KEY`.
+- `CF_IMAGES_ACCOUNT_ID` 
+- `CF_IMAGES_API_KEY`.
 
-You can get them both in your Cloudflare dashboard; here's how 👇
+You can get them both in your Cloudflare dashboard 👇:
 
 #### `CF_IMAGES_ACCOUNT_ID`
 
-This is your Cloudflare Image account ID. Get this value in your Cloudflare Images dashboard:
+This refers to your Cloudflare Image account ID. You can get this value in your Cloudflare Images dashboard.
 
-![](assets/step-02-accountid.jpg)
+![Where to find your Cloudflare Images account ID](/images/static/tutorials/integrate-cloudflare-images/step-02-accountid.jpg)
 
 #### `CF_IMAGES_API_KEY`
 
-This value is a Cloudflare API token valid for the account, with Read and Update permissions on Cloudflare Images. See https://developers.cloudflare.com/api/tokens/create/.
+This value refers to a [Cloudflare API token](https://developers.cloudflare.com/api/tokens/create/), with `Read` and `Update` permissions for Cloudflare Images. If you do not have one yet:
 
-On the API tokens page, click on **create token**:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+2. Click **My Profile** > **API Tokens**.
+3. Click **Create Token**.
+4. In Custom token, click **Get started**.
+5. Give your custom token a name.
+6. In **Permissions**, click the _Select item..._ drop-down menu next to _Account_. Choose _Cloudflare Images_. In the next drp-down menu, choose _Edit_.
 
-![](assets/step-02-create-token.jpg)
+![How to create a custom token for Cloudflare images](/images/static/tutorials/integrate-cloudflare-images/step-02-custom-token-setup.jpg)
 
-Then click on the button next to **Custom token**:
+7. Click **Continue to summary** > **Create Token**.
 
-![](assets/step-02-custom-token.jpg)
+Your token is now created. Copy it and keep it in a safe place. It grants access to your Cloudflare Images account.
 
-Fill in the API token form as depicted below, and click on **Continue to summary**.
-
-![](assets/step-02-custom-token-setup.jpg)
-
-Then confirm your API token, and copy paste the token value. ***Keep it secret, keep it safe!*** It grants access to your Cloudflare Images account.
