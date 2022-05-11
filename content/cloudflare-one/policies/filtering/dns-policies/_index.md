@@ -182,7 +182,7 @@ Use this selector to match against only the hostname specified—for example, if
 
 ### Location
 
-Use this selector to apply DNS policies to a specific [Gateway location](/connections/connect-networks/locations/) or set of locations.
+Use this selector to apply DNS policies to a specific [Gateway location](/cloudflare-one/connections/connect-networks/locations/) or set of locations.
 
 | UI name | API example |
 | -- | -- |
