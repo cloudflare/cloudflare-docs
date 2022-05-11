@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 R2 implements some extensions on top of the basic S3 API. This page outlines these additional features that are available.
 
-## Extended Metadata Using Unicode
+## Extended metadata using Unicode
 
 The [Workers R2 API](/r2/api/) supports Unicode in keys and values natively without requiring any additional encoding or decoding for the `customMetadata` field. These fields map to the `x-amz-meta-`-prefixed headers used within the R2 S3-compatible API endpoint.
 
