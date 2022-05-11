@@ -112,23 +112,17 @@ All Cloudflare Workers applications start by listening for `fetch` events, which
 ---
 filename: index.js
 ---
-import { Router } from 'itty-router'
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
 
-// Create a new router
-const router = Router()
-
-/*
-Our index route, a simple hello world.
-*/
-router.get("/", () => {
-  return new Response("Hello, world! This is the root page of your Worker template.")
-})
-
-// additional examples...
-
-addEventListener('fetch', (e) => {
-  e.respondWith(router.handle(e.request))
-})
+/**
+ * Handle a request
+ * @param {Request} request
+ */
+async function handleRequest(request) {
+  return new Response('Hello worker!', { status: 200 });
+}
 ```
 
 In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text `“Hello worker!”`, as well as an explicit `200` status code.
