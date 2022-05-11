@@ -201,6 +201,6 @@ If you do not see the message you published, or you are receiving error messages
 
 What's next?
 
-- [Connect a worker to your broker](/pub-sub/learning/integrating-with-workers) to programmatically read, parse, and filter messages as they are published to a broker 
+- [Connect a worker to your broker](/pub-sub/learning/integrate-workers/) to programmatically read, parse, and filter messages as they are published to a broker 
 - [Learn how PubSub and the MQTT protocol work](/pub-sub/learning/how-pubsub-works)
 - [See example client code](/pub-sub/examples) for publishing or subscribing to a PubSub broker
