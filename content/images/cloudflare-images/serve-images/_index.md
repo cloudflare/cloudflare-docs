@@ -37,7 +37,7 @@ In this example:
 
 When a client requests an image, Cloudflare Images will pick the optimal format between WebP, PNG, JPEG and GIF. The format Cloudflare serves to the user is determined by client headers and the image type.
 
-## AVIF and WebP file formats
+## Adaptive optimized format delivery
 
 Cloudflare Images automatically serves AVIF and WebP when the browser supports these efficient image formats, regardless of the format you upload. 
 
