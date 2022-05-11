@@ -9,7 +9,7 @@ Since R2 is built on top of Workers, it supports Unicode natively. One nuance of
 
 Based on feedback from our users, we have chosen to NFC-normalize key names before storing by default. This means `Héllo` and `Héllo` are the same object in R2 but different objects in other storage providers.
 
-R2 is encoding-preserving for display though. When you list the objects, you'll get back the last encoding you uploaded with.
+R2 preserves the encoding for display though. When you list the objects, you will get back the last encoding you uploaded with.
 
 There are still some platform-specific differences to consider:
 
