@@ -24,7 +24,7 @@ Several Cloudflare features improve Search Engine site rankings. However, meanin
 
 Since at least 2010, Google has publicly stated that [site speed affects your Google ranking](https://webmasters.googleblog.com/2010/04/using-site-speed-in-web-search-ranking.html).
 
-Cloudflare offers multiple features to [optimize site performance](https://support.cloudflare.com/hc/articles/200172856).
+Cloudflare offers multiple features to [optimize site performance](/fundamentals/get-started/task-guides/optimize-site-speed/).
 
 ### Enable HTTPS
 
