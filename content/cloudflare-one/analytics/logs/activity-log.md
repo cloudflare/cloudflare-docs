@@ -142,7 +142,7 @@ To enable Logpush for Gateway Activity logs:
 6. In the **Advanced settings** card, choose the timestamp format you prefer, and whether you want to enable logs sampling.
 7. Click **Next**.
 8. Select the service you want to export your logs to.
-9. Follow the service-specific instructions on the Zero Trust UI to validate your destination.
+9. Follow the service-specific instructions on the Zero Trust dashboard to validate your destination.
 
 The setup of your Logpush integration is now complete. Logpush will send updated logs every five minutes to your selected destination.
 
