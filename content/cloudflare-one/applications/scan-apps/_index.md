@@ -21,7 +21,7 @@ Before you can integrate a SaaS application with CASB, your SaaS account must me
 2. Click **Add integration**.
 3. Browse the available SaaS integrations and click the application you would like to add.
 4. Follow the step-by-step integration instructions in the UI.
-5. To run your first scan, click **See findings**. You will be redirected to the Findings page to see an in-depth listing of issues found.
+5. To run your first scan, click **Save integration**. You will be redirected to the Findings page to see an in-depth listing of issues found.
 
 After the first scan, CASB will automatically scan your application on a frequent basis to keep up with any changes. Due to each application having their own set of requirements, scan intervals will vary, but the frequency is typically between every 1 hour and every 24 hours.
 
