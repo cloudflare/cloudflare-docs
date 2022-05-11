@@ -1,9 +1,9 @@
 ---
 pcx-content-type: tutorial
-title: Leverage Cloudflare Images on your Cloudflare Pages website
+title: Integrate Cloudflare Images on your website
 ---
 
-# Leverage Cloudflare Images on your Cloudflare Pages website
+# Integrate Cloudflare Images on your website
 
 ## Introduction
 
@@ -68,7 +68,7 @@ Here's the relevant extract of this file (edited for brevity):
 
 As you can see, this configuration provides an `image_url` function used when building the HTML of the website to generate the URLs to our website images; in this case, served directly by the website, and **not** by Cloudflare Images.
 
-The purpose of this tutorial is to showcase how Cloudflare Images can be leveraged on a website to deliver resized and optimized images, adapted to their display on the website, and the capabilities of the browser displaying them.
+The purpose of this tutorial is to showcase how Cloudflare Images can be integrated on a website to deliver resized and optimized images, adapted to their display on the website, and the capabilities of the browser displaying them.
 
 👉 In step 2 we will integrate Cloudflare Images in our website, but before that we need to upload our images for Cloudflare Images to start serving them.
 
