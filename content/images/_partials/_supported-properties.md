@@ -20,7 +20,7 @@ anim=false
 ---
 filename: Workers
 ---
-cf: {images: {anim: "false"}}
+cf: {images: {anim: false}}
 ```
 
 #### `background`
@@ -49,14 +49,14 @@ Blur radius between `1` (slight blur) and `250` (maximum). Be aware that you can
 ---
 filename: URL format
 ---
-blur=x
+blur=50
 ```
 
 ```js
 ---
 filename: Workers
 ---
-cf: {images: {blur: x}}
+cf: {images: {blur: 50}}
 ```
 
 #### `brightness`
@@ -103,14 +103,14 @@ Device Pixel Ratio. Default is `1`. Multiplier for `width`/`height` that makes i
 ---
 filename: URL format
 ---
-dpr=x
+dpr=1
 ```
 
 ```js
 ---
 filename: Workers
 ---
-cf: {images: {dpr: x}}
+cf: {images: {dpr: 1}}
 ```
 
 #### `fit`
@@ -303,14 +303,14 @@ Specifies maximum height of the image in pixels. Exact behavior depends on the `
 ---
 filename: URL format
 ---
-height=x
+height=250
 ```
 
 ```js
 ---
 filename: Workers
 ---
-cf: {images: {height: x}}
+cf: {images: {height: 250}}
 ```
 
 #### `metadata`
@@ -434,14 +434,14 @@ Specifies strength of sharpening filter to apply to the image. The value is a fl
 ---
 filename: URL format
 ---
-sharpen=x
+sharpen=2
 ```
 
 ```js
 ---
 filename: Workers
 ---
-cf: {images: {sharpen: x}}
+cf: {images: {sharpen: 2}}
 ```
 
 #### `trim`
@@ -470,12 +470,12 @@ Specifies maximum width of the image in pixels. Exact behavior depends on the `f
 ---
 filename: URL format
 ---
-width=x
+width=250
 ```
 
 ```js
 ---
 filename: Workers
 ---
-cf: {images: {width: x}}
+cf: {images: {width: 250}}
 ```
