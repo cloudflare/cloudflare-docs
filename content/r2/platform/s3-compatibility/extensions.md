@@ -30,7 +30,7 @@ These headers map to the `httpMetadata` field in the R2 bindings:
 | `Expires`             | `httpMetadata.expires`            |
 {{</table-wrap>}}
 
-If using Unicode in object key names, refer to the [Unicode Interoperability technical notes](/r2/platform/unicode-interoperability/).
+If using Unicode in object key names, refer to the [Unicode Interoperability technical notes](/r2/learning/unicode-interoperability/).
 
 ## CopyObject
 
