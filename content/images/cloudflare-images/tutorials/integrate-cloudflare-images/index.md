@@ -7,7 +7,7 @@ title: Integrate Cloudflare Images on your website
 
 ## Introduction
 
-In this tutorial, we will update a [Cloudflare Pages](https://developers.cloudflare.com/pages/) website in several iterative steps, to leverage the powerful features of [Cloudflare Images](https://developers.cloudflare.com/images/cloudflare-images/). Cloudflare Images is a great companion to your front-end applications on Cloudflare Pages as an easy-to-use image storage, transformation and optimized delivery service.
+In this tutorial, we will update a website in several iterative steps, to leverage the powerful features of [Cloudflare Images](https://developers.cloudflare.com/images/cloudflare-images/). Cloudflare Images is a great solution for a website as an easy-to-use image storage, transformation and optimized delivery service.
 
 We will see:
 
@@ -15,7 +15,7 @@ We will see:
 
 * how to update the website [to serve images from Cloudflare Images](https://developers.cloudflare.com/images/cloudflare-images/serve-images/), ultimately without changing the existing image URLs
 
-* how to leverage [variants](https://developers.cloudflare.com/images/cloudflare-images/resize-images/) to resize and transform delivered images
+* how to use [variants](https://developers.cloudflare.com/images/cloudflare-images/resize-images/) to resize and transform delivered images
 
 Other features we will learn about:
 
@@ -29,7 +29,7 @@ Other features we will learn about:
 
 ### Demo website and source code
 
-For illustrative purposes, this tutorial uses the demo Cloudflare Pages website <https://imagejam.net> as a basis for all examples; you can find the source code for this website on GitHub <https://github.com/netgusto/imagejam.net>
+For illustrative purposes, this tutorial uses the demo [Cloudflare Pages](https://developers.cloudflare.com/pages/) website <https://imagejam.net> as a basis for all examples; you can find the source code for this website on GitHub <https://github.com/netgusto/imagejam.net>
 
 [Learn how to deploy your own Cloudflare Pages website](https://developers.cloudflare.com/pages/get-started/).
 
