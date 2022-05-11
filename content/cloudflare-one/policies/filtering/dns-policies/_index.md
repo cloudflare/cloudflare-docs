@@ -60,7 +60,7 @@ When choosing the Block action, toggle the **Display custom block page** setting
 
 ### Override
 
-Policies with Override actions allow you to respond to all DNS queries for a given domain to another destination. For example, you can provide a custom response IP of `1.2.3.4` for all queries to www.example.com with the following policy:
+Policies with Override actions allow you to respond to all DNS queries for a given domain to another destination. For example, you can provide a custom response IP of `1.2.3.4` for all queries to `www.example.com` with the following policy:
 
 | Selector | Operator | Value | Action | Override Hostname |
 | --- | --- | --- | --- | --- |
