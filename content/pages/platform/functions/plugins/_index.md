@@ -11,13 +11,13 @@ A Pages Plugin is a Pages Functions distributable which includes built-in routin
 
 For example, a Pages Plugin could:
 
-- intercept HTML pages and inject in a third-party script
-- proxy a third-party service's API
-- validate authorization headers
-- provide a full admin web app experience
-- store data in KV or Durable Objects
-- SSR pages with data from a CMS
-- report errors and track performance
+- Intercept HTML pages and inject in a third-party script.
+- Proxy a third-party service's API.
+- Validate authorization headers.
+- Provide a full admin web app experience.
+- Store data in KV or Durable Objects.
+- Server-side render (SSR) webpages with data from a CMS.
+- Report errors and track performance.
 
 A Pages Plugin is essentially a library that developers can use to augment their existing Pages project with a deep integration to Functions.
 
@@ -71,7 +71,7 @@ Your Plugin should not use the mounted path anywhere in the file structure (for 
 
 {{</Aside>}}
 
-You are free to use as many different files as you need. The structure of a Plugin is exactly the same as Functions in a Pages project today, except that the handlers receive a new property of their parameter object, `pluginArgs`. This property is the initialization parameter that a developer passes when mounting a Plugin. You can use this to receive from developers API tokens, KV/Durable Object namespaces, or anything else that your Plugin needs to work.
+You are free to use as many different files as you need. The structure of a Plugin is exactly the same as Functions in a Pages project today, except that the handlers receive a new property of their parameter object, `pluginArgs`. This property is the initialization parameter that a developer passes when mounting a Plugin. You can use this to receive API tokens, KV/Durable Object namespaces, or anything else that your Plugin needs to work.
 
 Returning to your static form example, if you want to intercept requests and override the behavior of an HTML form, you need to create a `functions/_middleware.ts`. Developers could then mount your Plugin on a single route, or on their entire project.
 
@@ -136,15 +136,11 @@ export default function (args: PluginArgs): PagesFunction;
 
 ### 3. Test your Pages Plugin
 
-{{<Aside type="note">}}
-
-We're still working on creating a great testing experience for Pages Plugins authors. Please bear with us until all those pieces come together. In the meantime, you can create an example project and include your Plugin manually for testing.
-
-{{</Aside>}}
+We are still working on creating a great testing experience for Pages Plugins authors. Please be patient with us until all those pieces come together. In the meantime, you can create an example project and include your Plugin manually for testing.
 
 ### 4. Publish your Pages Plugin
 
-You can distribute your Plugin however you choose. Popular options include publishing on [npm](https://www.npmjs.com/), showcasing it in the #what-i-built or #pages-plugins channels in our [Developer Discord](https://discord.com/invite/cloudflaredev), and open-sourcing on [GitHub](https://github.com/). 
+You can distribute your Plugin however you choose. Popular options include publishing on [npm](https://www.npmjs.com/), showcasing it in the #what-i-built or #pages-plugins channels in our [Developer Discord](https://discord.com/invite/cloudflaredev), and open-sourcing on [GitHub](https://github.com/).
 
 Make sure you are including the generated `index.js` and your typings `index.d.ts` as well as a `README.md` with instructions on how developers can use your Plugin.
 
@@ -152,7 +148,7 @@ Make sure you are including the generated `index.js` and your typings `index.d.t
 
 ### 5. Install a Pages Plugin
 
-If you want to include a Pages Plugin in your application, you need to first install that Plugin to your project. 
+If you want to include a Pages Plugin in your application, you need to first install that Plugin to your project.
 
 If you are not yet using `npm` in your project, run `npm init` to create a `package.json` file. The Plugin's `README.md` will typically include an installation command (for example, `npm install --save @cloudflare/static-form-interceptor`).
 
@@ -232,7 +228,7 @@ If you experience any problems with Plugins in general, we would appreciate your
 
 A Pages Plugin can also bring along static assets to be included in a user's Pages project. This is useful if you want to build a full experience for your Plugin (for example, an admin interface for users to interact with).
 
-A Plugin can import an `onRequest` handler from a folder of static assets by appending `.static` to the path. For example, with a folder of static assets (`public`), a Plugin can serve these static assets with a `functions/[[path]].ts` Function:
+A Plugin can import an `onRequest` handler from a folder of static assets by prefixing with the `assets:` protocol to the import statement. For example, with a folder of static assets (`public`), a Plugin can serve these static assets with a `functions/[[path]].ts` Function:
 
 ```html
 ---
@@ -251,7 +247,7 @@ filename: public/index.html
 ---
 filename: functions/[[path]].ts
 ---
-export { onRequest } from '../public.static';
+export { onRequest } from 'assets:../public';
 ```
 
 Ensure you add the directory of static assets to your `package.json`'s `files` field so that they are included in your distribution:
@@ -261,7 +257,7 @@ Ensure you add the directory of static assets to your `package.json`'s `files` f
 filename: package.json
 ---
 {
-  "name": "@cloudflare/an-admin-plugin",
+  "name": "@cloudflare/a-fictional-admin-plugin",
   "main": "index.js",
   "types": "index.d.ts",
   "files": ["index.js", "index.d.ts", "tsconfig.json", "public"],
@@ -276,7 +272,7 @@ Again, there should be no reference to where this Plugin will eventually be moun
 
 ```typescript
 ---
-filename: functions/admin/[[path]].ts
+filename: functions/admin/_middleware.ts
 ---
 import adminDashboardPlugin from '@cloudflare/an-admin-plugin';
 
@@ -285,15 +281,15 @@ export const onRequest = adminDashboardPlugin();
 
 ## Chain a Plugin
 
-Finally, as with Pages Functions generally, it is possible to chain together Plugins in order to combine together different features. `_middleware`'s higher up in the filesystem will run before other handlers, and individual files can chain together Functions in an array like so:
+Finally, as with Pages Functions generally, it is possible to chain together Plugins in order to combine together different features. Middleware defined higher up in the filesystem will run before other handlers, and individual files can chain together Functions in an array like so:
 
 ```typescript
 ---
-filename: functions/admin/[[path]].ts
+filename: functions/admin/_middleware.ts
 ---
-import sentryPlugin from "@cloudflare/sentry-pages-plugin";
-import cloudflareAccessPlugin from "@cloudflare/cloudflare-access-pages-plugin";
-import adminDashboardPlugin from "@cloudflare/an-admin-plugin";
+import sentryPlugin from "@cloudflare/pages-plugin-sentry";
+import cloudflareAccessPlugin from "@cloudflare/pages-plugin-cloudflare-access";
+import adminDashboardPlugin from "@cloudflare/a-fictional-admin-plugin";
 
 export const onRequest = [
   // Initialize a Sentry Plugin to capture any errors
