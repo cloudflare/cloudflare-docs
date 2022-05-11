@@ -17,7 +17,7 @@ Service bindings allow you to:
 
 While the interface among Service bindings is HTTP, the networking is not. Unlike the typical microservice architecture, where services communicate over a network and can suffer from latency or interruption, Service bindings are a zero-cost abstraction. When one Worker invokes another, there is no network delay and the request is executed immediately.
 
-![Service bindings are a zero-cost abstraction](../media/service-bindings-comparison.png)
+![Service bindings are a zero-cost abstraction](/workers/platform/bindings/media/service-bindings-comparison.png)
 
 ## Set a Service binding
 
@@ -29,11 +29,11 @@ To manage a Workers Service binding:
 
 You can also change the environment of a Workers Service binding, so you can target a specific version of a Workers Service.
 
-![To configure a Service binding, go to your Worker > Settings > Variables and follow the steps above](../media/service-bindings-config.png)
+![To configure a Service binding, go to your Worker > Settings > Variables and follow the steps above](/workers/platform/bindings/media/service-bindings-config.png)
 
 Workers bound to your Worker will be listed in [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Triggers** > **Bound Services**. Your team can easily view cross-service dependencies in this manner.
 
-![Your team can view cross-service dependencies in the Cloudflare dashboard Account Home > Workers > Triggers](../media/service-bindings-triggers.png)
+![Your team can view cross-service dependencies in the Cloudflare dashboard Account Home > Workers > Triggers](/workers/platform/bindings/media/service-bindings-triggers.png)
 
 ## Compose an example Worker
 
@@ -45,7 +45,7 @@ First, you will create both a `gateway` and `auth` Worker. Once they are set up,
 
 To manage Service bindings, go to Account Home > [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Settings**> **Variables** > **Service bindings** > **Edit variables**.
 
-![Selecting Edit variables to create new bindings and edit existing bindings that enable Worker-to-Worker communication](../media/service-bindings.png)
+![Selecting Edit variables to create new bindings and edit existing bindings that enable Worker-to-Worker communication](/workers/platform/bindings/media/service-bindings.png)
 
 Once added, the `gateway` Worker can access the Workers Service binding directly from the code, as in the example below. It utilizes the `fetch` API.
 
