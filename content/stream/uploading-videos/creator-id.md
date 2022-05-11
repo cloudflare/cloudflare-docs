@@ -1,11 +1,11 @@
 ---
 pcx-content-type: how to
-title: Add a Creator ID
+title: Manage creators
 ---
 
-# Add a Creator ID
+# Associate videos with creators
 
-You can set the creator field with an internal user ID at the time a tokenized upload URL is requested. When the video is uploaded, the creator property is automatically set to the internal user ID which can be used for analytics data or for searching for videos by a specific creator.
+You can set the creator field with an internal user ID at the time a tokenized upload URL is requested. When the video is uploaded, the creator property is automatically set to the internal user ID which can be used for analytics data or when searching for videos by a specific creator.
 
 For basic uploads, you will need to add the Creator ID after you upload the video.
 
@@ -16,7 +16,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/023e105f4ecef8ad9ca3
      -H "X-Auth-Email: user@example.com" \
      -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
      -H "Content-Type: application/json" \
-     --data '{"url":"https://example.com/myvideo.mp4","creator": "some-creator-id","thumbnailTimestampPct":0.529241,"allowedOrigins":["example.com"],"requireSignedURLs":true,"watermark":{"uid":"ea95132c15732412d22c1476fa83f27a"}}'
+     --data '{"url":"https://example.com/myvideo.mp4","creator": "<CREATOR_ID>","thumbnailTimestampPct":0.529241,"allowedOrigins":["example.com"],"requireSignedURLs":true,"watermark":{"uid":"ea95132c15732412d22c1476fa83f27a"}}'
 ```
 
 **Response**
@@ -52,10 +52,10 @@ highlight: [35]
     "requireSignedURLs": true,
     "size": 4190963,
     "status": {
-      "state": "inprogress",
-      "pctComplete": 51,
-      "errorReasonCode": "ERR_NON_VIDEO",
-      "errorReasonText": "The file was not recognized as a valid video file."
+      "state": "ready",
+      "pctComplete": "100.000000",
+      "errorReasonCode": "",
+      "errorReasonText": ""
     },
     "thumbnail": "https://videodelivery.net/ea95132c15732412d22c1476fa83f27a/thumbnails/thumbnail.jpg",
     "thumbnailTimestampPct": 0.529241,
@@ -91,7 +91,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/023e105f4ecef8ad9ca3
      -H "X-Auth-Email: user@example.com" \
      -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
      -H "Content-Type: application/json" \
-     --data '{"maxDurationSeconds":300,"expiry":"2021-01-02T02:20:00Z","creator": "some-creator-id", "thumbnailTimestampPct":0.529241,"allowedOrigins":["example.com"],"requireSignedURLs":true,"watermark":{"uid":"ea95132c15732412d22c1476fa83f27a"}}'
+     --data '{"maxDurationSeconds":300,"expiry":"2021-01-02T02:20:00Z","creator": "<CREATOR_ID>", "thumbnailTimestampPct":0.529241,"allowedOrigins":["example.com"],"requireSignedURLs":true,"watermark":{"uid":"ea95132c15732412d22c1476fa83f27a"}}'
 ```
 
 **Response**
@@ -99,6 +99,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/023e105f4ecef8ad9ca3
 ```bash
 ---
 highlight: [8]
+---
 {
   "success": true,
   "errors": [],
@@ -167,10 +168,10 @@ highlight: [36]
       "requireSignedURLs": true,
       "size": 4190963,
       "status": {
-        "state": "inprogress",
-        "pctComplete": 51,
-        "errorReasonCode": "ERR_NON_VIDEO",
-        "errorReasonText": "The file was not recognized as a valid video file."
+        "state": "ready",
+        "pctComplete": "100.000000",
+        "errorReasonCode": "",
+        "errorReasonText": ""
       },
       "thumbnail": "https://videodelivery.net/ea95132c15732412d22c1476fa83f27a/thumbnails/thumbnail.jpg",
       "thumbnailTimestampPct": 0.529241,
