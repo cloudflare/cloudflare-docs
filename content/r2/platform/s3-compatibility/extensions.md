@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # Extensions
 
-R2 implements some extensions on top of the basic S3 API. This page outlines these additional features that are available.
+R2 implements some extensions on top of the basic S3 API. This page outlines these additional, available features.
 
 ## Extended metadata using Unicode
 
