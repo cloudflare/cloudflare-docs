@@ -22,7 +22,7 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
 
 {{<render file="_supported-properties.md">}}
 
-In your worker, where you would fetch the image using `fetch(request)`, add options like this:
+In your worker, where you would fetch the image using `fetch(request)`, add options like in the following example:
 
 ```js
 fetch(imageURL, {

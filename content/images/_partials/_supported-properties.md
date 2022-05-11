@@ -135,7 +135,7 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
   ```
 
   - `contain`  
-  Image will be resized (shrunk or enlarged) to be as large as possible within the given `width` or `height` while preserving the aspect ratio. If only a single dimension is given (for example, only `width`), the image will be shrunk or enlarged to exactly match that dimension. Example:
+  Image will be resized (shrunk or enlarged) to be as large as possible within the given `width` or `height` while preserving the aspect ratio. If you only provide a single dimension (for example, only `width`), the image will be shrunk or enlarged to exactly match that dimension. Example:
 
   ```js
   ---
@@ -206,12 +206,12 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
 
 {{<Aside type="note" header="Note">}}At the moment, this setting is ignored by Cloudflare Images.{{</Aside>}}
 
-Whith the `auto` option allows serving of the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used.
+The `auto` option will serve the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used.
 
 Workers integration also supports:
 - `avif`: Generate images in AVIF format if possible (with WebP as a fallback).
-- `webp`: Generate images in Google WebP format. Set quality to 100 to get the WebP lossless format.
-- `json`: Instead of generating an image, outputs information about the image in JSON format. The JSON object will contain image size (before and after resizing), source image’s MIME type, file size, etc.
+- `webp`: Generate images in Google WebP format. Set the quality to `100` to get the WebP lossless format.
+- `json`: Instead of generating an image, outputs information about the image in JSON format. The JSON object will contain data such as image size (before and after resizing), source image’s MIME type, and file size.
 
 Example:
 
@@ -271,7 +271,7 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
   - `side`  
   A side (`"left"`, `"right"`, `"top"`, `"bottom"`) or coordinates specified on a scale from `0.0` (top or left) to `1.0` (bottom or right), `0.5` being the center. The X and Y coordinates are separated by lowercase `x` in the URL format. For example, `0x1` means left and bottom, `0.5x0.5` is the center, `0.5x0.33` is a point in the top third of the image.
 
-    For the Workers integration, use as an object `{x, y}`. It contais focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image. Example:
+    For the Workers integration, use an object `{x, y}` to specify coordinates. It contains focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image. Example:
 
   ```js
   ---
@@ -292,7 +292,7 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
 
   or
 
-  cf: {images: {gravity: {x:0.5, y:0.2}}
+  cf: {images: {gravity: {x:0.5, y:0.2}}}
   ```
 
 #### `height`
@@ -315,7 +315,7 @@ cf: {images: {height: x}}
 
 #### `metadata`
 
-Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Note that if the Polish feature is enabled, all metadata may have been removed already and this option may have no effect. Options are:
+Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Note that if the Polish feature is enabled, all metadata may have been removed already and this option will have no effect. Options are:
 
   - `keep`  
   Preserves most of EXIF metadata, including GPS location if present. Example:
@@ -446,7 +446,7 @@ cf: {images: {sharpen: x}}
 
 #### `trim`
 
-Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account. For Image Resizing and Cloudflare Images, use as four numbers in pixels separated by a semicolon, in the form of `top;right;bottom;left`. For the Workers integration, use as an object with four properties: `{top, right, bottom, left}`. Example:
+Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account. For Image Resizing and Cloudflare Images, use as four numbers in pixels separated by a semicolon, in the form of `top;right;bottom;left`. For the Workers integration, specify an object with four properties: `{top, right, bottom, left}`. Example:
 
 ```js
 ---
@@ -459,7 +459,7 @@ trim=20;30;20;0
 ---
 filename: Workers
 ---
-cf: {images: {trim: "top": 12, "bottom": 34, "left": 56, "right": 78}}
+cf: {images: {trim: {"top": 12, "bottom": 34, "left": 56, "right": 78}}}
 ```
 
 #### `width`
