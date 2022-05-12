@@ -31,3 +31,5 @@ For example, the default DNSLink record for `www.example.com` would look like th
 | Record type | Name | Content |
 | --- | --- | --- |
 | TXT | `_dnslink.www.example.com` | `dnslink=/ipns/onboarding.ipfs.cloudflare.com` |
+
+For more details about the DNS records created by the IPFS gateway, refer to [Gateway DNS records](/web3/reference/gateway-dns-records/).
