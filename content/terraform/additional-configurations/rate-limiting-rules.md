@@ -14,7 +14,7 @@ This page provides an example of creating a rate limiting rule in a zone using T
 For more information on rate limiting rules, refer to [Rate limiting rules](/waf/rate-limiting-rules/) in the Cloudflare WAF documentation.
 
 {{<Aside type="note">}}
-For guidance on configuring the previous version of rate limiting rules in Terraform, refer to the [`cloudflare_rate_limit` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit) in the Terraform documentation.
+For more information on configuring the previous version of rate limiting rules in Terraform, refer to the [`cloudflare_rate_limit` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit) in the Terraform documentation.
 {{</Aside>}}
 
 ## Create a rate limiting rule
