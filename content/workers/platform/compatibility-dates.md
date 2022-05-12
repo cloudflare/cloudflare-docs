@@ -11,8 +11,8 @@ Compatibility dates (and flags) are how you, as a developer, opt into these chan
 
 ```toml
 # (in wrangler.toml)
-# Opt into backwards-incompatible changes through September 14, 2021.
-compatibility_date = "2021-09-14"
+# Opt into backwards-incompatible changes through April 5, 2022.
+compatibility_date = "2022-04-05"
 ```
 
 When you start your project, you should always set `compatibility_date` to the current date. You should occasionally update the `compatibility_date` field. When updating, you should refer to this page to find out what has changed, and you should be careful to test your Worker to see if the changes affect you, updating your code as necessary. The new compatibility date takes effect when you next run the `wrangler publish` command.
