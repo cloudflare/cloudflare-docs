@@ -6,17 +6,23 @@ meta:
   title: Get started guide
 ---
 
-# R2 (beta) get started guide
+# R2 get started guide
 
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
-{{<Aside type="note" header="Beta registration">}}
-
-As of February 2022, R2 is under development. You can [sign up to join the waitlist for access](https://www.cloudflare.com/r2-storage/).
-
-{{</Aside>}}
-
 This guide will instruct you through setting up Wrangler to deploying your first R2 bucket.
+
+## Purchase R2
+
+Before you create your first bucket, you must purchase R2 in the Cloudflare dashboard.
+
+To purchase R2:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+2. In **Account Home**, select **R2**.
+3. Select **Purchase R2 Plan**.
+4. Select **Proceed to Payment Details** to review your payment.
+5. Select **Return to R2** to go to the R2 dashboard.
 
 ## 1. Install Wrangler
 
@@ -25,19 +31,13 @@ To create your R2 bucket, install [Wrangler](/workers/get-started/guide/#2-insta
 To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
 ```sh
-$ npm install -g wrangler
+$ npm install -D wrangler
 ```
 
 or install with yarn:
 
 ```sh
-$ yarn global add wrangler
-```
-
-or install with cargo:
-
-```sh
-$ cargo install wrangler
+$ yarn add wrangler
 ```
 
 Refer to the Wrangler [Install/Update](/workers/wrangler/get-started/) page for more information.

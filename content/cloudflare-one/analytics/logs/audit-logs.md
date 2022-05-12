@@ -21,17 +21,14 @@ Access retains authentication logs for six months.
 
 ### Where to find Access Audit Logs
 
-Access audit logs are available in the Logs section of the Zero Trust dashboard.
-Access provides the following view types of the logs:
+Access audit logs are available in the **Logs** section of the Zero Trust dashboard.
+Access provides the following types of the logs:
 
 *   **User**: All unique users with at least one successful login during the current calendar month.
 *   **Access Audit Log**: Changes made to Access policies across the account.
 *   **Access Requests**: All authentication attempts. Details include the identity provider or login method and the IP address of the user.
 
-<!---->
-
-    https://api.cloudflare.com/client/v4/accounts/<account_id>/access/logs/access_requests?direction=desc&limit=15&page=1
-
+### Explanation of the fields
 Access authentication logs contain the following fields:
 
 | Field | Description |

@@ -8,11 +8,13 @@ weight: 1
 
 Cloudflare offers a variety of features designed to improve latency and page load time and — by extension — user experience and [SEO](/fundamentals/get-started/task-guides/improve-seo/).
 
-## Default optimizations
+## Optimization options
+
+### Default optimizations
 
 Cloudflare provides [lightning fast DNS resolution](https://www.cloudflare.com/dns/), so you likely will see speed improvements by [onboarding your domain to Cloudflare](/dns/zone-setups/full-setup/).
 
-## One-click optimizations
+### One-click optimizations
 
 Once your domain is onboarded and your DNS records are [proxied through Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/), Cloudflare offers the following one-click options for speeding up your site:
 
@@ -23,13 +25,13 @@ Once your domain is onboarded and your DNS records are [proxied through Cloudfla
 - [Polish](/images/polish/) and [Mirage](https://support.cloudflare.com/hc/articles/219178057): Resizes images hosted on your server (Polish) and lazy loads all images in a browser (Mirage).
 - [Argo Smart Routing](https://support.cloudflare.com/hc/articles/115000224552) (paid add-on): Routes requests across the fastest network path available.
 
-## Optimization with minimal setup
+### Optimization with minimal setup
 
 Simply by using [Bulk Redirects](/rules/bulk-redirects) or [Page Rules](https://support.cloudflare.com/hc/articles/4729826525965) for URL forwarding, you can perform redirects at Cloudflare's edge network instead of at your origin server.
 
 With a few clicks, you can also adjust your [cache settings](/cache/get-started/) to make resources more cacheable and improve cache hit rates.
 
-## Dedicated products
+### Dedicated products
 
 Cloudflare offers a several products dedicated to improving site speed and availability:
 

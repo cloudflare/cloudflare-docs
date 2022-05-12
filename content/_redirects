@@ -609,8 +609,6 @@
 /workers/cli-wrangler/ /workers/wrangler/ 301
 /workers/cli-wrangler/install-update/ /workers/wrangler/get-started/ 301
 /workers/cli-wrangler/authentication/ /workers/wrangler/get-started/ 301
-/workers/cli-wrangler/commands/* /workers/wrangler/commands/:splat 301
-/workers/cli-wrangler/configuration/* /workers/wrangler/configuration/:splat 301
 /workers/cli-wrangler/webpack/ /workers/wrangler/eject-webpack/ 301
 /workers/deploying-workers/ /workers/tooling/ 301
 /workers/deploying-workers/github-action/ /workers/tooling/integrations/ 301
@@ -929,6 +927,8 @@
 /warp-client/setting-up/macOS/* /warp-client/get-started/macos/:splat 301
 /warp-client/setting-up/windows/* /warp-client/get-started/windows/:splat 301
 /workers/about/metrics/* /workers/learning/metrics-and-analytics/:splat 301
+/workers/cli-wrangler/commands/* /workers/wrangler/commands/:splat 301
+/workers/cli-wrangler/configuration/* /workers/wrangler/configuration/:splat 301
 /workers/recipes/lambda@edge-conversion/* /workers/ 301
 /workers/recipes/vcl-conversion/* /workers/ 301
 /workers/reference/* /workers/:splat 301

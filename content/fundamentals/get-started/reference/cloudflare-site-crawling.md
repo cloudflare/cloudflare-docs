@@ -29,7 +29,7 @@ Cloudflare will also crawl your site in other, specific situations:
 
 * **Speed tests**
     * *User-Agent*: `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36 PTST/190628.140653`
-    * *Triggered when*: You launch a speed test from within [the Cloudflare dashboard](https://support.cloudflare.com/hc/articles/200172856) or at https://www.cloudflare.com/lp/can-your-website-be-faster/.
+    * *Triggered when*: You launch a speed test from within [the Cloudflare dashboard](https://support.cloudflare.com/hc/articles/5550125973005) or at https://www.cloudflare.com/lp/can-your-website-be-faster/.
 * **Support diagnostics**: 
     * *User-Agent*: `Cloudflare-diagnostics`
     * *Triggered when*: Cloudflare support engineers perform error checks and by continuous monitoring used to raise intelligent alerts in the Cloudflare dashboard.
