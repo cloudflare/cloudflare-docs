@@ -116,6 +116,30 @@ Use this selector to apply DNS policies to traffic directed to specific content 
 | -- | -- |
 | Content Categories | `any(dns.content_category[*] in {1})` |
 
+### DNS CNAME Record
+
+Use this selector to filter DNS responses by their `CNAME` records.
+
+| UI name | API example |
+| -- | -- |
+| DNS CNAME Response Value | `any(dns.response.cname[*] in {"www.apple.com.edgekey.net"})`|
+
+### DNS MX Record
+
+Use this selector to filter DNS responses by their `MX` records.
+
+| UI name | API example |
+| -- | -- |
+| DNS MX Response Value | `any(dns.response.mx[*] in {"gmail-smtp-in.l.google.com"})` |
+
+### DNS PTR Record
+
+Use this selector to filter DNS responses by their `PTR` records.
+
+| UI name | API example |
+| -- | -- |
+| DNS PTR Response Value  | `any(dns.response.ptr[*] in {"255.2.0.192.in-addr.arpa"})` |
+
 ### DNS Resolver IP
 
 Use this selector to apply policies to DNS queries that arrived to your Gateway Resolver IP address aligned with a registered location. For most Gateway customers, this is an IPv4 AnyCast address and policies created using this IPv4 address will apply to all locations. However, each location has a dedicated IPv6 address and some Gateway customers have been supplied with a dedicated IPv4 address — these both can be used to apply policies to specific registered locations.
@@ -123,6 +147,14 @@ Use this selector to apply policies to DNS queries that arrived to your Gateway 
 | UI name | API example |
 | -- | -- |
 | DNS Resolver IP | `any(dns.resolved_ip[*] == 198.51.100.0)` |
+
+### DNS TXT Record
+
+Use this selector to filter DNS responses by their `TXT` records.
+
+| UI name | API example |
+| -- | -- |
+| DNS TXT Response Value | `any(dns.response.txt[*] in {"your_text"})` |
 
 ### DOH Subdomain
 
@@ -150,7 +182,7 @@ Use this selector to match against only the hostname specified—for example, if
 
 ### Location
 
-Use this selector to apply DNS policies to a specific location or set of locations.
+Use this selector to apply DNS policies to a specific [Gateway location](/cloudflare-one/connections/connect-networks/locations/) or set of locations.
 
 | UI name | API example |
 | -- | -- |

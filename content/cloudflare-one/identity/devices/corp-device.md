@@ -19,7 +19,7 @@ weight: 6
 
 Cloudflare Zero Trust allows you to build Zero Trust rules based on device serial numbers. You can create these rules so that access to applications is granted only to users connecting from company devices.
 
-To create rules based on device serial numbers you'll need to create a list of numbers using the [Lists](/cloudflare-one/policies/lists/) functionality in the Zero Trust Dashboard.
+To create rules based on device serial numbers you'll need to create a list of numbers using the [Lists](/cloudflare-one/policies/filtering/lists/) functionality in the Zero Trust Dashboard.
 
 {{<Aside header="Important">}}
 
