@@ -7,13 +7,13 @@ summary: Connect to a Broker using a Rust-based MQTT client.
 
 # Connect with Rust
 
-Below is an example using the [paho.mqtt.rust)(https://github.com/eclipse/paho.mqtt.rust) create with the TOKEN authentication mode configured on a Broker. 
+Below is an example using the [paho.mqtt.rust](https://github.com/eclipse/paho.mqtt.rust) crate with the TOKEN authentication mode configured on a Broker. 
 
 The example below creates a simple subscriber, sends a message to the configured topic, and waits until the message is received before exiting.
 
 Make sure to set the `BROKER_URI` (e.g. `mqtts://YOUR-BROKER.YOUR-NAMESPACE.cloudflarepubsub.com`), `BROKER_TOKEN` (a valid auth token), and `BROKER_TOPIC` environmental variables before running the example program.
 
-```js
+```rust
 # in your Cargo.toml
 paho-mqtt = "0.11.1"
 
