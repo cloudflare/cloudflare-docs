@@ -583,7 +583,8 @@
 /workers/about/limits/ /workers/platform/limits/ 301
 /workers/about/metrics/ /workers/learning/metrics-and-analytics/ 301
 /workers/about/pricing/ /workers/platform/pricing/ 301
-/workers/about/routes/ /workers/platform/routes/ 301
+/workers/about/routes/ /workers/platform/routing/routes/ 301
+/workers/platform/routes/ /workers/platform/routing/routes/ 301
 /workers/about/security/ /workers/learning/security-model/ 301
 /workers/about/tips/debugging/ /workers/learning/debugging-workers/ 301
 /workers/about/tips/fetch-event-lifecycle/ /workers/learning/fetch-event-lifecycle/ 301
@@ -807,7 +808,7 @@
 /workers/tooling/api/ https://api.cloudflare.com/#worker-script-properties 301
 /workers/tooling/api/bindings/ /workers/platform/scripts/#resource-bindings 301
 /workers/tooling/api/requests/ https://api.cloudflare.com/#getting-started-requests 301
-/workers/tooling/api/routes/ /workers/platform/routes/ 301
+/workers/tooling/api/routes/ /workers/platform/routing/routes/ 301
 /workers/tooling/api/scripts/ /workers/platform/scripts/ 301
 /workers/tooling/integrations/ /workers/learning/integrations/ 301
 /workers/tooling/playground/ /workers/learning/playground/ 301

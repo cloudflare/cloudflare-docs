@@ -7,17 +7,15 @@ title: Routes
 
 ## Background
 
-Routes allow users to map a URL pattern to a Worker script to enable Workers to run on custom domains.
+Routes allow users to map a URL pattern to a Worker script to enable Workers to run in front of [Custom Domains](/workers/platform/routing/custom-domains) or their own application servers.
 
-## Custom routes
+## Customize your routes
 
-For zones proxied on Cloudflare, route patterns decide what (if any) script is matched based on the URL of that request. Requests are routed through a Workers script when the URL matches a route pattern assigned to that script.
+For zones proxied on Cloudflare, route patterns decide what (if any) script is matched based on the URL of that request. Requests are routed through a Workers script when the URL matches a route pattern assigned to that script. To add a Route, you need:
 
-{{<Aside type="warning">}}
-
-For any Worker script that you want to run on a custom domain, that custom domain must be proxied through Cloudflare prior to adding the route.
-
-{{</Aside>}}
+1. An active Cloudflare zone.
+2. A proxied (orange-clouded) DNS record.
+3. A Worker to invoke.
 
 Route patterns can be added with the Cloudflare API or in **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Add route** in the Cloudflare dashboard.
 
@@ -33,15 +31,13 @@ The Routes REST API documentation can be found [in the Workers API docs](https:/
 
 If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally. If your Worker acts as your origin (that is, the request terminates in a Worker), you must add a DNS record.
 
-You may enter a placeholder AAAA record pointing to [100::](https://datatracker.ietf.org/doc/html/rfc6666), which must be proxied through Cloudflare (orange-cloud in the DNS settings). This value specifically is the reserved IPv6 discard prefix but is not the only value allowed. For example, you may also use an A record pointed to 192.0.2.1 or a CNAME pointed to any resolvable target.
-
 * _A zone that you have registered with some registrar (not workers.dev) and setup Cloudflare to serve as [a reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)._
 
-## Routes with *.workers.dev
+## Routes with `*.workers.dev`
 
-Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is configurable in the Cloudflare dashboard. Your `*.workers.dev` subdomain allows you to deploy Workers scripts [without attaching a custom domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/).
+Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is configurable in the Cloudflare dashboard. Your `*.workers.dev` subdomain allows you to deploy Workers [without attaching your domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/).
 
-To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`, go to **Account Home** > **Workers** > **Overview** > **Your subdomain**. The `name` field in your Worker configuration is used as the secondary subdomain for the deployed script, (for example, `my-worker.my-subdomain.workers.dev.`).
+To claim a `*.workers.dev` subdomain, such as `<YOUR_SUBDOMAIN>.workers.dev`, go to **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **Your subdomain**. The `name` field in your Worker configuration is used as the secondary subdomain for the deployed script, (for example, `my-worker.<YOUR_SUBDOMAIN>.workers.dev.`).
 
 ### Matching Behavior
 
@@ -125,4 +121,8 @@ There is a well-known bug associated with path matching concerning wildcards (`*
 
 All subdomains must have a [DNS record](https://support.cloudflare.com/hc/en-us/articles/360019093151#h_60566325041543261564371) to be proxied on Cloudflare and used to invoke a Worker. For example, if you want to put a worker on `myname.example.com`, and you have added `example.com` to Cloudflare but have not added any DNS records for `myname.example.com`, any request to `myname.example.com` will result in the error `ERR_NAME_NOT_RESOLVED`.
 
-To support this, you should use the Cloudflare dashboard to add an `AAAA` record for `myname` to `example.com`, pointing to `100::` (the [reserved IPv6 discard prefix](https://tools.ietf.org/html/rfc6666)).
+{{<Aside type="warning">}}
+
+If you have previously used the Cloudflare dashboard to add an `AAAA` record for `myname` to `example.com`, pointing to `100::` (the [reserved IPv6 discard prefix](https://tools.ietf.org/html/rfc6666)), Cloudflare recommends creating a [Custom Domain](/workers/platform/routing/custom-domains) pointing to your Worker instead.
+
+{{</Aside>}}
