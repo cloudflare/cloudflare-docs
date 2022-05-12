@@ -6,7 +6,7 @@ weight: 1
 
 # Honeycomb Pages Plugin
 
-This Plugin automatically create
+The Honeycomb Pages Plugin automatically sends traces to Honeycomb for analysis and observability.
 
 ## Installation
 
