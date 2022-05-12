@@ -71,7 +71,7 @@ Worker script metrics can be inspected for up to three months in the past in max
 
 ## Zone analytics
 
-Aggregates request data for all scripts assigned to any [routes](/workers/platform/routes/) defined for a zone. Find Zone Metrics in **Analytics** > **Workers** in your [Cloudflare dashboard](https://dash.cloudflare.com/?zone=analytics/workers).
+Aggregates request data for all scripts assigned to any [routes](/workers/platform/routing/routes/) defined for a zone. Find Zone Metrics in **Analytics** > **Workers** in your [Cloudflare dashboard](https://dash.cloudflare.com/?zone=analytics/workers).
 
 Zone data can be scoped by time range within the last 30 days. The dashboard includes charts and information described below.
 

@@ -26,9 +26,9 @@ Other features you will learn about:
 
 ### Demo website and source code
 
-For illustrative purposes, this tutorial uses the [Imagejam demo website](https://imagejam.net) build with [Cloudflare Pages](https://developers.cloudflare.com/pages/) as a basis for all examples. You can find the source code for this demo website on [GitHub](https://github.com/netgusto/imagejam.net).
+For illustrative purposes, this tutorial uses the [Imagejam demo website](https://imagejam.net) build with [Cloudflare Pages](/pages/) as a basis for all examples. You can find the source code for this demo website on [GitHub](https://github.com/netgusto/imagejam.net).
 
-[Learn how to deploy your own Cloudflare Pages website](https://developers.cloudflare.com/pages/get-started/).
+[Learn how to deploy your own Cloudflare Pages website](/pages/get-started/).
 
 ## Website not using Cloudflare Images
 
@@ -301,7 +301,7 @@ Once the worker is deployed, your website will use Cloudflare Images with the or
 
 For more information about how to publish a Worker on your Cloudflare account, refer to Cloudflare's [Workers documentation](/workers/get-started/guide/).
 
-Note, however, that for the Worker to intercept traffic on your existing images URLs, it must be mapped to a route matching the URLs of your existing images. This is done in your Workers dashboard, under the tab **Triggers**. For more information, refer to our documentation on [Workers Routes](/workers/platform/routes/).
+Note, however, that for the Worker to intercept traffic on your existing images URLs, it must be mapped to a route matching the URLs of your existing images. This is done in your Workers dashboard, under the tab **Triggers**. For more information, refer to our documentation on [Workers Routes](/workers/platform/routing/routes/).
 
 In this case, the Worker was set up to trigger on the route `imagejam.net/images/*`
 
