@@ -15,8 +15,6 @@ Cloudflare Images allows developers to upload images using different methods, fo
 Upload method          | When to use
 ---------------------- | -----------
 Images dashboard       | Quick, one-time uploads where automation is not required.
-API                    | A preferred way to upload images from your back-end services.
-Direct Creator Uploads | Let your users upload images to Cloudflare Images without exposing your API key or token.
-Upload via URL         | When it is useful to use a URL of an image instead of uploading its data.
+API                    | A preferred way to upload images from your back-end services. The API includes features such as [Direct Creator Upload](/images/cloudflare-images/upload-images/direct-creator-upload/), [Upload via URL](/images/cloudflare-images/upload-images/upload-via-url/), or [Custom ID](/images/cloudflare-images/upload-images/custom-id/).
 
 {{</table-wrap>}}
