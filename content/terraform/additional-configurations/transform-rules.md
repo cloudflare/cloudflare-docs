@@ -43,7 +43,7 @@ resource "cloudflare_ruleset" "transform_url_rewrite" {
 }
 ```
 
-For more information on rewriting URLs, refer to [URL Rewrite Rules](https://developers.cloudflare.com/rules/transform/url-rewrite/).
+For more information on rewriting URLs, refer to [URL Rewrite Rules](/rules/transform/url-rewrite/).
 
 ## Create an HTTP Request Header Modification Rule
 
@@ -80,7 +80,7 @@ resource "cloudflare_ruleset" "transform_modify_request_headers" {
     }
     expression = "true"
     description = "Example HTTP Request Header Modification Rule"
-    enabled = false
+    enabled = true
   }
 }
 ```
