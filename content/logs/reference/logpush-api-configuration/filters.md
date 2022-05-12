@@ -1,7 +1,9 @@
 ---
 pcx-content-type: how-to
+type: overview
 title: Filters
 weight: 40
+layout: list
 ---
 
 # Filters
