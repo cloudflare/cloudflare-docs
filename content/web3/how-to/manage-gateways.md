@@ -61,6 +61,7 @@ To refresh a gateway using the dashboard:
 ### Via the API
 
 To refresh a gateway using the API, send a [PATCH](https://api.cloudflare.com/#web3-hostname-edit-web3-hostname) request with an empty request body.
+
 ---
 
 ## Delete a gateway
