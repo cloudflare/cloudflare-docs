@@ -15,13 +15,13 @@ You will learn:
 
 - How to migrate your website's images to Cloudflare images.
 - How to update your website [to serve images from Cloudflare Images](/images/cloudflare-images/serve-images/), ultimately without changing the existing image URLs.
-- How to use [variants](/images/cloudflare-images/resize-images/) to resize and transform delivered images.
+- How to use [variants](/images/cloudflare-images/transform/resize-images/) to resize and transform delivered images.
 
 Other features you will learn about:
 
 - [Custom Domain Delivery](/images/cloudflare-images/serve-images/#serving-images-from-custom-domains): How to serve Cloudflare Images from your own domain name.
 - [Custom IDs](/images/cloudflare-images/upload-images/custom-id/): How to store and serve your images under their own, SEO friendly Unicode name and path.
-- [Flexible Image transformation](/images/cloudflare-images/resize-images/#flexible-variants): How to use transformation parameters in the delivery URL to transform an image on the fly.
+- [Flexible Image transformation](/images/cloudflare-images/transform/flexible-variants/): How to use transformation parameters in the delivery URL to transform an image on the fly.
 - Adaptive Optimized Format Delivery: How Cloudflare Images delivers image formats optimized to every browser, including WebP and AVIF.
 
 ### Demo website and source code
@@ -168,7 +168,7 @@ https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-
 - `https://imagedelivery.net` is the default delivery domain for Cloudflare Images.
 - `-oMiRxTrr3JCvTMIzx4GvA` represents your Cloudflare Images account ID in an obfuscated way. You can get this value in [your Cloudflare Images dashboard](/images/cloudflare-images/serve-images/).
 - `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg` is the original file name. This is the image ID we need to serve it.
-- `public` [represents the variant](/images/cloudflare-images/resize-images/#supported-properties). This is how Cloudflare Images knows what image size should be served, [among many other transformation options](/images/cloudflare-images/resize-images/#supported-properties).
+- `public` [represents the variant](/images/cloudflare-images/transform/resize-images/). This is how Cloudflare Images knows what image size should be served, [among many other transformation options](/images/cloudflare-images/transform/flexible-variants/#supported-properties).
 
 Cloudflare Images ships by default with a single variant named `public`, but you can create more variants to fit your needs.
 

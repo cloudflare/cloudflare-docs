@@ -77,7 +77,7 @@ After uploading your images, a successful response will look similar to this:
 
 The response has details regarding the image you uploaded, such as its ID as well as the default `public` variant URL. In the above example, the `public` variant would show as `https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/public`.
 
-After you [set up other variants](/images/cloudflare-images/resize-images/) in your account, the `"variants"` property in the response will show the URLs for them:
+After you [set up other variants](/images/cloudflare-images/transform/resize-images/) in your account, the `"variants"` property in the response will show the URLs for them:
 
 ```json
 {
