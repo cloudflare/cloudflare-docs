@@ -16,7 +16,7 @@ curl -X PATCH https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/
     --data '{"flexible_variants": true}'
 ```
 
-Once activated it is possible to use resizing parameters on any Cloudflare Image. For example:
+Once activated, it is possible to use resizing parameters on any Cloudflare Image. For example:
 
 ```txt
 https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID/w=400,sharpen=3
