@@ -73,7 +73,7 @@ The continent that the request is destined for. Geolocation is determined from t
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
-| Destination Continent IP Geolocation | `net.dst.geo.continent == "Asia-Pacific"` |
+| Destination Continent IP Geolocation | `net.dst.geo.continent == "North America"` |
 
 ### Destination Country
 
@@ -139,19 +139,19 @@ The domain whose Server Name Indication (SNI) header Gateway will filter traffic
 
 ### Source Continent
 
-The continent of the user making the request. Geolocation is determined from the device's public IP address, typically assigned by the user's ISP.
+The continent of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP).
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
-| Source Continent IP Geolocation | `net.src.geo.continent == "10.0.0.0/8"` |
+| Source Continent IP Geolocation | `net.src.geo.continent == "North America"` |
 
 ### Source Country
 
-The country of the user making the request. Geolocation is determined from the device's public IP address, typically assigned by the user's ISP.
+The country of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP).
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
-| Source Country IP Geolocation | `net.dst.geo.country == "Russia"` |
+| Source Country IP Geolocation | `net.src.geo.country == "Russia"` |
 
 ### Source IP
 
