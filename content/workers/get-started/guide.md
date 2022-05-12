@@ -231,7 +231,7 @@ name = "my-worker"
 route = "example.com/*"
 ```
 
-The `route` key here is a [route pattern](/workers/platform/routes/), which can contain wildcards.
+The `route` key here is a [route pattern](/workers/platform/routing/routes/), which can contain wildcards.
 
 If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally. If your Worker acts as your origin (that is, the request terminates in a Worker), you must add a DNS record.
 
