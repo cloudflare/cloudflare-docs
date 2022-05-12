@@ -36,7 +36,7 @@ Create a POST request using the API to [Create IPsec tunnels](https://api.cloudf
 
 Create a POST request using the API to [Generate Pre Shared Key (PSK) for IPsec tunnels](https://api.cloudflare.com/#magic-ipsec-tunnels-generate-pre-shared-key-psk-for-ipsec-tunnels) and initiate your session.
 
-## 4. Set up static routes
+## 3. Set up static routes
 
 To set up your static routes, refer to [Configure static routes](/magic-wan/how-to/configure-static-routes/).
 
