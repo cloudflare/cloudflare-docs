@@ -10,7 +10,7 @@ title: Changelog
 - `Response.redirect(url)` will no longer coalesce multiple consecutive slash characters appearing in the URL’s path.
 - Fix generated types for Date.
 - Fix R2 bindings list without options to use the default list limit instead of never returning any results.
-- Fix R2 bindings didn’t correctly handle error messages from R2, resulting in “internal error” being thrown. Also fix behavior for get throwing an exception on a non-existent key instead of returning null. R2Error is removed for the time being and will be reinstated at some future time TBD.
+- Fix R2 bindings did not correctly handle error messages from R2, resulting in internal error being thrown. Also fix behavior for get throwing an exception on a non-existent key instead of returning null. `R2Error` is removed for the time being and will be reinstated at some future time TBD.
 
 ## 2022-04-29
 
