@@ -111,7 +111,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
     *   Whether [Cloudflare Apps](https://www.cloudflare.com/apps/) should be enabled for this request. Defaults to `true`.
 
-*   `avif` <Type>boolean</Type> <PropMeta>optional</PropMeta>
+*   `avif` {{<Type>}}boolean{{</Type>}} {{<PropMeta>}}optional{{</PropMeta>}}
 
     *   Enables or disables [AVIF](https://blog.cloudflare.com/generate-avif-images-with-image-resizing/) image format in [Polish](https://blog.cloudflare.com/introducing-polish-automatic-image-optimizati/).
 
@@ -132,7 +132,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
     *   This option is a version of the `cacheTtl` feature which chooses a TTL based on the response’s status code. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time and override cache instructives sent by the origin. For example: `{ "200-299": 86400, 404: 1, "500-599": 0 }`. The value can be any integer, including zero and negative integers. A value of `0` indicates that the cache asset expires immediately. Any negative value instructs Cloudflare not to cache at all. This option applies to `GET` and `HEAD` request methods only.
 
-*   `image` <Type>Object | null</Type> <PropMeta>optional</PropMeta>
+*   `image` {{<Type>}}Object | null{{</Type>}} {{<PropMeta>}}optional{{</PropMeta>}}
 
     *   Enables [Image Resizing](https://developers.cloudflare.com/images/) for this request. The possible values are described in [Image Resizing with Workers](https://developers.cloudflare.com/images/image-resizing/resize-with-workers) documentation.
 
@@ -156,7 +156,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
     *   Whether [ScrapeShield](https://blog.cloudflare.com/introducing-scrapeshield-discover-defend-dete/) should be enabled for this request, if otherwise configured for this zone. Defaults to `true`.
 
-*   `webp` <Type>boolean</Type> <PropMeta>optional</PropMeta>
+*   `webp` {{<Type>}}boolean{{</Type>}} {{<PropMeta>}}optional{{</PropMeta>}}
 
     *   Enables or disables [WebP](https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/) image format in [Polish](https://blog.cloudflare.com/introducing-polish-automatic-image-optimizati/). 
 
