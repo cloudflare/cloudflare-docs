@@ -83,7 +83,7 @@ jobs:
       # - name: Build
       #   run: npm install && npm run build
       - name: Publish
-        uses: cloudflare/pages-action@1.0.0
+        uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
