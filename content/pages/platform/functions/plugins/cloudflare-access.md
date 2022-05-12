@@ -6,7 +6,7 @@ weight: 1
 
 # Cloudflare Access Pages Plugin
 
-This Plugin is a middleware to validate Cloudflare Access JWT assertions. It also includes an API to lookup additional information about a given user's JWT.
+The Cloudflare Access Pages Plugin is a middleware to validate Cloudflare Access JWT assertions. It also includes an API to lookup additional information about a given user's JWT.
 
 ## Installation
 
@@ -28,11 +28,11 @@ export const onRequest: PagesFunction = cloudflareAccessPlugin({
 });
 ```
 
-The Plugin takes an object with two properties: the `domain` of your Cloudflare Access account, and the policy `aud` (audience) to validate against. Any requests which fail validation will be returned a 403.
+The Plugin takes an object with two properties: the `domain` of your Cloudflare Access account, and the policy `aud` (audience) to validate against. Any requests which fail validation will be returned a `403` status code.
 
-### Accessing the JWT payload
+### Access the JWT payload
 
-If you need to use the JWT payload in your application (e.g. you need the user's email address), this Plugin will make this available for you at `data.cloudflareAccess.JWT.payload`.
+If you need to use the JWT payload in your application (for example, you need the user's email address), this Plugin will make this available for you at `data.cloudflareAccess.JWT.payload`.
 
 For example:
 
@@ -51,11 +51,11 @@ export const onRequest: PagesFunction<unknown, any, PluginData> = async ({
 };
 ```
 
-The [entire JWT payload](https://developers.cloudflare.com/cloudflare-one/identity/users/validating-json/#payload) will be made available on `data.cloudflareAccess.JWT.payload`. Be aware that the fields available differ between identity authorizations (e.g. a user in a browser) and non-identity authorizations (e.g. a service token).
+The [entire JWT payload](https://developers.cloudflare.com/cloudflare-one/identity/users/validating-json/#payload) will be made available on `data.cloudflareAccess.JWT.payload`. Be aware that the fields available differ between identity authorizations (for example, a user in a browser) and non-identity authorizations (for example, a service token).
 
 ### Look up identity
 
-In order to get more information about a given user's identity, you can use the provided `getIdentity` API function:
+In order to get more information about a given user's identity, use the provided `getIdentity` API function:
 
 ```typescript
 ---
@@ -94,7 +94,7 @@ export const onRequest: PagesFunction<unknown, any, PluginData> = async ({
 
 ### Login and logout URLs
 
-If you want to force a login or logout, you can use these utility functions to generate URLs and redirect a user:
+If you want to force a login or logout, use these utility functions to generate URLs and redirect a user:
 
 ```typescript
 ---

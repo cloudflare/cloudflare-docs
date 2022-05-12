@@ -30,15 +30,15 @@ export const onRequest = honeycombPlugin({
 
 This Plugin is based on the `@cloudflare/workers-honeycomb-logger` and accepts the same [configuration options](https://github.com/cloudflare/workers-honeycomb-logger#config).
 
-Ensure that you enable the option to "Automatically unpack nested JSON" and set the "Maximum unpacking depth" to 5 in your Honeycomb dataset settings.
+Ensure that you enable the option to **Automatically unpack nested JSON** and set the **Maximum unpacking depth** to **5** in your Honeycomb dataset settings.
 
-![A screenshot of the dataset settings panel in the Honeycomb dashboard showing the "Automatically unpack nested JSON" setting toggled on and "Maximum unpacking depth" option set to 5](/pages/platform/functions/plugins/honeycomb.png)
+![Follow the instructions above to toggle on Automatically unpack nested JSON and set the Maximum unpacking depth option to 5 in the Honeycomb dashboard](/pages/platform/functions/plugins/honeycomb.png)
 
 ### Additional context
 
 `data.honeycomb.tracer` has two methods for attaching additional information about a given trace:
 
-- `data.honeycomb.tracer.log` which takes a single argument, a `String`
+- `data.honeycomb.tracer.log` which takes a single argument, a `String`.
 - `data.honeycomb.tracer.addData` which takes a single argument, an object of arbitrary data.
 
 More information about these methods can be seen on [`@cloudflare/workers-honeycomb-logger`'s documentation](https://github.com/cloudflare/workers-honeycomb-logger#adding-logs-and-other-data).

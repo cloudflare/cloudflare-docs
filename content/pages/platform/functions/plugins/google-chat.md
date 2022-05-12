@@ -6,7 +6,7 @@ weight: 1
 
 # Google Chat Pages Plugin
 
-This Plugin creates a Google Chat bot which can respond to messages. It also includes an API for interacting with Google Chat (for example, for creating messages) without the need for user input. This API is useful for situations such as alerts.
+The Google Chat Pages Plugin creates a Google Chat bot which can respond to messages. It also includes an API for interacting with Google Chat (for example, for creating messages) without the need for user input. This API is useful for situations such as alerts.
 
 ## Installation
 
@@ -31,11 +31,11 @@ export const onRequest: PagesFunction = googleChatPlugin(async (message) => {
 });
 ```
 
-The Plugin takes a function, which in turn takes an incoming message and returns a `Promise` of a response message (or `void` if there should not be any response).
+The Plugin takes a function, which in turn takes an incoming message, and returns a `Promise` of a response message (or `void` if there should not be any response).
 
 The Plugin only exposes a single route, which is the URL you should set in the Google Cloud Console when creating the bot.
 
-![A screenshot of the Google Cloud Console 'Connection Settings' for the Google Chat API. It shows 'App URL' selected and 'https://example.com/google-chat' entered into the 'App URL' text input.](/pages/platform/functions/plugins/google-chat.png)
+![Google Cloud Console's Connection Settings for the Google Chat API showing 'App URL' selected and 'https://example.com/google-chat' entered into the 'App URL' text input.](/pages/platform/functions/plugins/google-chat.png)
 
 ### API
 

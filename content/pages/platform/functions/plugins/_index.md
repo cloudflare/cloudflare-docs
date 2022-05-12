@@ -27,7 +27,7 @@ For example, a Pages Plugin could:
 
 A Pages Plugin is essentially a library that developers can use to augment their existing Pages project with a deep integration to Functions.
 
-## Using a Pages Plugin
+## Use a Pages Plugin
 
 Developers can enhance their projects by mounting a Pages Plugin at a route of their application. Plugins will provide instructions of where they should typically be mounted (for example, an admin interface might be mounted at `functions/admin/[[path]].ts`, and an error logger might be mounted at `functions/_middleware.ts`). Additionally, each Plugin may take some configuration (for example, with an API token).
 
@@ -43,7 +43,7 @@ The first Plugin should:
 - store the form submission in [KV](/workers/runtime-apis/kv/).
 - respond to submissions with a developer's custom response.
 
-### 1. Creating a new Pages Plugin
+### 1. Create a new Pages Plugin
 
 Create a `package.json` with the following:
 
@@ -122,7 +122,7 @@ export const onRequestPost = async ({ request, pluginArgs, waitUntil }) => {
 }
 ```
 
-### 2. Typing your Pages Plugin
+### 2. Type your Pages Plugin
 
 To create a good developer experience, you should consider adding TypeScript typings to your Plugin. This allows developers to use their IDE features for autocompletion, and also ensure that they include all the parameters you are expecting.
 
@@ -152,13 +152,13 @@ Make sure you are including the generated `index.js` and your typings `index.d.t
 
 ---
 
-### 5. Install a Pages Plugin
+### 5. Install your Pages Plugin
 
 If you want to include a Pages Plugin in your application, you need to first install that Plugin to your project.
 
 If you are not yet using `npm` in your project, run `npm init` to create a `package.json` file. The Plugin's `README.md` will typically include an installation command (for example, `npm install --save @cloudflare/static-form-interceptor`).
 
-### 6. Mount a Pages Plugin
+### 6. Mount your Pages Plugin
 
 The `README.md` of the Plugin will likely include instructions for how to mount the Plugin in your application. You will need to:
 
@@ -188,7 +188,7 @@ export const onRequest = (context) => {
 };
 ```
 
-### 7. Test a Pages Plugin
+### 7. Test your Pages Plugin
 
 You can use `wrangler pages dev` to test a Pages project, including any Plugins you have installed. Remember to include any KV bindings and environment variables that the Plugin is expecting.
 
@@ -285,7 +285,7 @@ import adminDashboardPlugin from '@cloudflare/an-admin-plugin';
 export const onRequest = adminDashboardPlugin();
 ```
 
-## Chain a Plugin
+## Chain your Plugin
 
 Finally, as with Pages Functions generally, it is possible to chain together Plugins in order to combine together different features. Middleware defined higher up in the filesystem will run before other handlers, and individual files can chain together Functions in an array like so:
 

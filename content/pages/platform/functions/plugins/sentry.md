@@ -27,7 +27,7 @@ export const onRequest: PagesFunction = sentryPlugin({
 });
 ```
 
-The Plugin uses [Toucan](https://github.com/robertcepa/toucan-js) behind-the-scenes, so can take any of [these following options](https://github.com/robertcepa/toucan-js#other-options). `context`, `request`, and `event` are automatically populated, so should not be manually configured.
+The Plugin uses [Toucan](https://github.com/robertcepa/toucan-js). Refer to the Toucan README to [review the options it can take](https://github.com/robertcepa/toucan-js#other-options). `context`, `request`, and `event` are automatically populated and should not be manually configured.
 
 If your [DSN](https://docs.sentry.io/product/sentry-basics/dsn-explainer/) is held as an environment variable or in KV, you can access it like so:
 
@@ -57,9 +57,9 @@ export const onRequest: PagesFunction<{
 };
 ```
 
-### Additional Context
+### Additional context
 
-If you need to set additional context for Sentry (e.g. user information or additional logs), you may use the `data.sentry` instance in any Function below the Plugin in the execution chain.
+If you need to set additional context for Sentry (for example, user information or additional logs), use the `data.sentry` instance in any Function below the Plugin in the execution chain.
 
 For example, you can access `data.sentry` and set user information like so:
 
