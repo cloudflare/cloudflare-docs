@@ -1,12 +1,10 @@
 ---
-title: Configure aws-sdk-jd for R2
-summary: Example of how to configure aws-sdk-js to use R2.
+title: Configure `aws-sdk-js` for R2
+summary: Example of how to configure `aws-sdk-js` to use R2.
 pcx-content-type: configuration
 weight: 1001
 layout: example
 ---
-
-# Configure `aws-sdk-jd` for R2
 
 You must [generate an Access Key](/r2/platform/s3-compatibility/tokens/) before getting started. All examples will utilitize `access_key_id` and `access_key_secret` variables which represent the **Access Key ID** and **Secret Access Key** values you generated.
 
