@@ -25,7 +25,7 @@ Filters can be connected using `AND`, `OR` logical operators.
    <tr>
       <th>Name</th>
       <th colspan="2" style="text-align:center">Operator Notation</th>
-      <th colspan="5" style="text-align:center">Supported Data Types</th>
+      <th colspan="5" style="text-align:center">Supported Field Types</th>
       <th></th>
    </tr>
    <tr>
