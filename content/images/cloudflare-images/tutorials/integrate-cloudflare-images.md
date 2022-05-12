@@ -332,18 +332,4 @@ This refers to your Cloudflare Image account ID. You can get this value in your 
 
 #### `CF_IMAGES_API_KEY`
 
-This value refers to a [Cloudflare API token](https://developers.cloudflare.com/api/tokens/create/), with `Read` and `Update` permissions for Cloudflare Images. If you do not have one yet:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Click **My Profile** > **API Tokens**.
-3. Click **Create Token**.
-4. In Custom token, click **Get started**.
-5. Give your custom token a name.
-6. In **Permissions**, click the _Select item..._ drop-down menu next to _Account_. Choose _Cloudflare Images_. In the next drp-down menu, choose _Edit_.
-
-![How to create a custom token for Cloudflare images](/images/static/tutorials/integrate-cloudflare-images/step-02-custom-token-setup.jpg)
-
-7. Click **Continue to summary** > **Create Token**.
-
-Your token is now created. Copy it and keep it in a safe place. It grants access to your Cloudflare Images account.
-
+This value refers to a Cloudflare API token, with `Read` and `Update` permissions for Cloudflare Images. If you do not have one yet, refer to [Make your first API request](/images/cloudflare-images/api-request/) to learn how to create a Cloudflare API token.
