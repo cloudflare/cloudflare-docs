@@ -11,7 +11,7 @@ Custom Domains allow your to connect your Worker to a hostname, without having t
 
 ## Build a Custom Domain
 
-In order to create a Custom Domain, you must have:
+To create a Custom Domain, you must have:
 
 1. An active Cloudflare zone on your target domain.
 2. A Worker to invoke.

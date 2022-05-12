@@ -20,11 +20,12 @@ Routes add Workers functionality to your existing proxied (orange-clouded) hostn
 Custom Domains can replace the proxy (orange-cloud) process entirely. Custom Domains automatically attach a Worker to your hostname by creating a DNS record and an SSL certificate on your behalf. Custom Domains can also be invoked within the same zone via `fetch()`, unlike Routes.
 
 ## Custom Domains
+
 [Custom Domains](/workers/platform/routing/custom-domains) allow you to attach a Worker to a hostname. Cloudflare will create DNS records and issue necessary certificates on your behalf. The DNS records will point directly to your Worker.
 
 Custom Domains are recommended if you want to connect your Worker to the Internet and do not have a default application server that you want to always communicate with.  If you do have external dependencies, you can create a `Request` object with the target URI, and call `fetch()`.
 
-Custom Domains can stack on top of each other. If you have Worker A attached to `app.example.com` and Worker B attached to `api.example.com`, Worker A can call `fetch()` on `api.example.com` and invoke Worker B.
+Custom Domains can stack on top of each other. For example, if you have Worker A attached to `app.example.com` and Worker B attached to `api.example.com`, Worker A can call `fetch()` on `api.example.com` and invoke Worker B.
 
 ![Custom Domains can stack on top of each other, like any external dependencies](./media/custom-domains-subrequest.png)
 
