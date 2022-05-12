@@ -30,7 +30,7 @@ To use Cloudflare Images you need to create a custom token with the correct `Rea
 3. In Custom token, click **Get started**.
 4. Give your custom token a name.
 5. Scroll to **Permissions**.
-6. Click the _Select item..._ drop-down menu next to _Account_ and choose _Cloudflare Images_.
+6. Click the _Select item..._ drop-down menu and choose _Cloudflare Images_.
 7. In the next drop-down menu, choose _Edit_.
 
 ![How to create a custom token for Cloudflare images](/images/static/tutorials/integrate-cloudflare-images/step-02-custom-token-setup.jpg)
