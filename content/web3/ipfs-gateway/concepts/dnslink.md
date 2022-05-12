@@ -16,8 +16,18 @@ The problem is solved the same way, via a DNS record. To make a website hosted o
 
 DNSLink records also help with content maintenance. When a new version of your website is ready to be published, you can update your DNSLink DNS record to point to the new CID and the gateway will start serving the new version automatically.
 
+{{<Aside type="note">}}
+For additional details, refer to the official [IPFS documentation](https://docs.ipfs.io/concepts/dnslink/).
+{{</Aside>}}
+
 ## How is it used with Cloudflare?
 
 You have the option to specify the DNS Link when you [create an IPFS gateway](/web3/how-to/manage-gateways/#create-a-gateway).
 
 By default, your DNSLink path is `/ipns/onboarding.ipfs.cloudflare.com`. If you choose to put your website in a different content folder, you will need to specify that value.
+
+For example, the default DNSLink record for `www.example.com` would look like this:
+
+| Record type | Name | Content |
+| --- | --- | --- |
+| TXT | `_dnslink.www.example.com` | `dnslink=/ipns/onboarding.ipfs.cloudflare.com` |
