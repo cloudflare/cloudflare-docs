@@ -146,32 +146,26 @@ Inside of `index.js`, import the `Router` class and use it to update the `handle
 ```js
 ---
 filename: index.js
-highlight: [1, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+highlight: [6, 7, 8, 9]
 ---
-import Router from './router';
+import { Router } from 'itty-router';
 
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
+// Create a new router
+const router = Router();
 
-async function handleRequest(request) {
-  const r = new Router();
-  r.post('/lookup', lookup);
-  r.post('/webhook', webhook);
+router.post("/lookup", lookup);
+router.post("/webhook", webhook);
 
-  let response = await r.route(request);
+router.all("*", () => new Response("404, not found!", { status: 404 }))
 
-  if (!response) {
-    response = new Response('Not found', { status: 404 });
-  }
-
-  return response;
-}
+addEventListener('fetch', (e) => {
+  e.respondWith(router.handle(e.request))
+})
 ```
 
-First, import the `Router` class from `router.js`.
+First, import the `Router` class from `itty-router`.
 
-In `handleRequest`, instantiate a new instance of `Router`, setting it to the variable `r`. The `Router` class makes use of a few functions to quickly and easily handle requests. The `post` method takes in a path string and a function handler. This indicates “when a client sends an HTTP `POST` to the path `/lookup`, call the `lookup` function”.
+The `Router` class makes use of a few functions to quickly and easily handle requests. The `post` method takes in a path string and a function handler. This indicates “when a client sends an HTTP `POST` to the path `/lookup`, call the `lookup` function”.
 
 There are two `POST` routes to handle: `/lookup` and `/webhook`. These new routes will point to corresponding functions, `lookup` and `webhook` — the two function handlers that you will set up soon.
 
@@ -183,9 +177,7 @@ Note that you are able to use JavaScript features like async/await inside of you
 
 {{</Aside>}}
 
-If there is no matching route (for example, if someone requests the path `/admin`), the function should return a response with a status code of `404`. `handleRequest` checks to see if `response` is `undefined`, and if it is, it sets `response` to a new `Response` with the body text “Not found”, and a status code of `404`.
-
-Finally, the function returns the `response`, whether it is a match from the router, or a `404`, back to the `fetch` event. The result will either be a handled API route, or a plain HTTP response.
+If there is no matching route (for example, if someone requests the path `/admin`), the function should return a response with a status code of `404`. `router.all` catches any unhandled requests and returns a new `Response` with the body text `“404, not found!”`, and a status code of `404`.
 
 This request/response pattern makes it really straightforward to understand how requests are routed in your Workers application. You are almost done with this file. To complete it, you need to define the corresponding function handlers for your routes. In this tutorial, you will define those handlers in `src/handlers`:
 
@@ -203,29 +195,23 @@ With those files created (you will fill them in soon), import them at the top of
 ```js
 ---
 filename: index.js
-highlight: [1, 2, 11, 12]
+highlight: [1, 2]
 ---
 import lookup from './src/handlers/lookup';
 import webhook from './src/handlers/webhook';
-import Router from './router';
+import { Router } from 'itty-router';
 
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
+// Create a new router
+const router = Router();
 
-async function handleRequest(request) {
-  const r = new Router();
-  r.post('/lookup', lookup);
-  r.post('/webhook', webhook);
+router.post("/lookup", lookup);
+router.post("/webhook", webhook);
 
-  let response = await r.route(request);
+router.all("*", () => new Response("404, not found!", { status: 404 }))
 
-  if (!response) {
-    response = new Response('Not found', { status: 404 });
-  }
-
-  return response;
-}
+addEventListener('fetch', (e) => {
+  e.respondWith(router.handle(e.request))
+})
 ```
 
 ### Creating the lookup route
