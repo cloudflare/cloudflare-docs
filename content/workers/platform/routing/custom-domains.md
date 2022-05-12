@@ -40,7 +40,7 @@ Custom Domains follow standard DNS ordering and matching logic. Custom Domains d
 
 ## Interaction with Routes
 
-Custom Domains are evaluated before Route rules, but take lower precedence. [Routes](/workers/platform/routing/routes) defined on your Custom Domain will run first, but can optionally call the Worker registered on your Custom Domain. In the example above, a Custom Domain for `api.example.com` can point to your Worker `api`. A Route added to `api.example.com/auth` can point to your Worker `auth`. Using `fetch(request)` within the Worker `auth` will invoke the Worker `api`, as if it was a normal application server.  This means you can run your Workers in series, creating layers of proxy Workers and application Workers.
+Custom Domains are evaluated before Route rules, but take lower precedence. [Routes](/workers/platform/routing/routes) defined on your Custom Domain will run first, but can optionally call the Worker registered on your Custom Domain. In the example above, a Custom Domain for `api.example.com` can point to your Worker `api`. A Route added to `api.example.com/auth` can point to your Worker `auth`. Using `fetch(request)` within the Worker `auth` will invoke the Worker `api`, as if it was a normal application server. This means you can run your Workers in series, creating layers of proxy Workers and application Workers.
 
 ![Routes can be run in front of Custom Domains](../media/routes-with-custom-domains.png)
 
