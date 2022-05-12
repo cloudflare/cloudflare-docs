@@ -233,4 +233,4 @@ Cloudflare does not support filtering on the following data types: objects, arra
 
 For the Firewall events dataset, Cloudflare does not support filtering on the following fields: Kind, MatchIndex, Metadata, OriginatorRayID, RuleID, Source.
 
-For the Gateway HTTP dataset, we do not support filtering on the following fields: Downloaded File Names, Uploaded File Names.
+For the Gateway HTTP dataset, Cloudflare does not support filtering on the following fields: Downloaded File Names, Uploaded File Names.
