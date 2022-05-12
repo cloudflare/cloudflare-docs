@@ -6,7 +6,7 @@ weight: 3
 
 # Blur images
 
-You can apply blur to your images from the Images Dashboard. Blur is applied to image variants. If you plan on blurring your images, you will have to create a specific variant for this effect first.
+You can apply blur to your images from the Images Dashboard. Blur is applied to image variants. If you plan on blurring your images, you will have to either create a specific variant for this effect first, or edit a previously created variant. Refer to [Resize images](/images/cloudflare-images/transform/resize-images/) to learn how to create variants.
 
 To apply blur to an image:
 
