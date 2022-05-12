@@ -23,7 +23,7 @@ Filters can be connected using `AND`, `OR` logical operators.
    <tr>
       <th>Name</th>
       <th colspan="2" style="text-align:center">Operator Notation</th>
-      <th colspan="3" style="text-align:center">Supported Data Types</th>
+      <th colspan="5" style="text-align:center">Supported Data Types</th>
       <th></th>
    </tr>
    <tr>
@@ -228,7 +228,7 @@ Filters can be connected using `AND`, `OR` logical operators.
 The filter field has limits of approximately 30 operators and 1000 bytes. Anything exceeding this value will return an error.
 
 {{<Aside type="note" header="Note">}}
-Cloudflare does not support filtering on the following data types: objects, array[int], array[object].
+Cloudflare does not support filtering on the following data types: `objects`, `array[int]`, `array[object]`.
 {{</Aside>}}
 
 For the Firewall events dataset, Cloudflare does not support filtering on the following fields: Kind, MatchIndex, Metadata, OriginatorRayID, RuleID, Source.
