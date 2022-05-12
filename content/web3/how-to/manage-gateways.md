@@ -56,7 +56,7 @@ To refresh a gateway using the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select your account and website.
 3. Go to **Web3**.
-4. On a specific gateway, click **...** > **Refresh**.
+4. On a specific gateway, click the dropdown then **Refresh**.
 
 ### Via the API
 
@@ -75,7 +75,7 @@ To delete a gateway using the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select your account and website.
 3. Go to **Web3**.
-4. On a specific gateway, click **...** > **Remove**.
+4. On a specific gateway, click the dropdown then **Remove**.
 5. Click **Delete hostname**.
 
 ### Via the API
