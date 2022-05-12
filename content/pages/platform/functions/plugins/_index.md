@@ -5,6 +5,12 @@ title: Pages Plugins
 
 # Pages Plugins
 
+Cloudflare maintains a number of official Pages Plugins for you to use in your Pages projects:
+
+{{<directory-listing>}}
+
+---
+
 ## Author a Pages Plugin
 
 A Pages Plugin is a Pages Functions distributable which includes built-in routing and functionality. Developers can include a Plugin as a part of their Pages project wherever they chose, and can pass it some configuration options. The full power of Functions is available to Plugins, including middleware, parameterized routes, and static assets.
