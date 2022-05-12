@@ -7,7 +7,7 @@ title: Functions (beta)
 
 {{<Aside type="note" header="Functions is currently in beta">}}
 
-You can track current issues that the Pages team is fixing in [Known Issues](/pages/platform/known-issues/). Let us know any unreported issues by posting in the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev).
+You can track current issues that the Pages team is fixing in [Known issues](/pages/platform/known-issues/). Let us know any unreported issues by posting in the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev).
 
 {{</Aside>}}
 
@@ -315,7 +315,7 @@ Workers KV is Cloudflare's globally replicated key-value storage solution. Withi
 
 ### KV namespace locally
 
-While developing locally you can interact with your KV namespace by add `-k, --kv [Namespace name]` to your run command. For example, if your namespace is called `TodoList`, you can access the KV namespace in your local dev by running `npx wrangler pages dev dist --kv TodoList`. The data from this namespace can be accessed using `context.env`.
+While developing locally, you can interact with your KV namespace by add `-k, --kv [Namespace Binding]` to your run command. For example, if your namespace is bound to `TodoList`, you can access the KV namespace in your local dev by running `npx wrangler pages dev dist --kv TodoList`. The data from this namespace can be accessed using `context.env`.
 
 ```js
 export async function onRequest({ env }) {
