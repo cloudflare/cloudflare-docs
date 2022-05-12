@@ -12,6 +12,17 @@ Cloudflare Stream lets you fetch usage data in bulk using the GraphQL API. Strea
 
 For additional information on using GraphQL, refer to [Get started with GraphQL Analytics API](/analytics/graphql-api/getting-started/).
 
+## Analytics in the dashboard
+
+To view analytics data from the Cloudflare dashboard:
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Click **Stream** > **Analytics**.
+3. From **Stream Analytics**, click **Add filter** to view data related to your filter.
+4. After selecting your filters, click **Apply**.
+
+You can also hover your cursor over interactive portions to view specific data points. 
+
 ## Client side analytics
 
 Stream has a GraphQL analytics API that can be used to get bulk analytics for every video in your account with one HTTP request.

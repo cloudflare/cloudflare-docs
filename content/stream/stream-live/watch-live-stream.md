@@ -99,9 +99,15 @@ The response will contain the HLS/DASH URL that can be used to play the current 
 }
 ```
 
-## View by live input uid
+## View by live input ID
 
-By using the live input uid in place of a video id in the hls/dash manifest URL, you get a static URL that will return a 200 with the manifest of the active livestream, or a 204 status code with no content if there is no active live stream.
+You can use one of the options below to view a live video by input ID:
+
+- Replace the video ID with the input ID.
+- Use the Embed code.
+- Use the Manifest URL.
+
+### Replace video ID with input ID
 
 Using the input ID in this manner is fully integrated in the Stream player, but may require some additional support for third party players. You can make a `GET` request to the `/lifecycle` endpoint to get additional data about a video id or live input uid for more information to make additional decisions.
 
@@ -132,9 +138,17 @@ Or if the input ID does not have an active live stream:
 }
 ```
 
-### Live input level viewing options
+When viewing a livestream via the live input ID, the `requireSignedURLs` and `allowedOrigins` options in the live input recording settings are used. These settings are independent of the video-level settings.
 
-When viewing a livestream via the live input id, the `requireSignedURLs` and `allowedOrigins` options in the live input recording settings are used. These settings are independent of the video-level settings.
+### Use the embed code or manifest URL
+
+To get the embed code or HLS Manifest URL for your video:
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Click **Stream** > **Live Inputs**.
+3. Click a live input from the list to select it. The page for your live input displays.
+4. Locate the **Embed** and **HLS Manifest URL** beneath the video.
+5. Determine which option to use and then click **Click to copy** beneath your choice.
 
 ## Replaying recordings
 
