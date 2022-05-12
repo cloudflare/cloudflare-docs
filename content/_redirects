@@ -232,6 +232,7 @@
 /http3/intro/ /http3/ 301
 
 # images
+/images/cloudflare-images/resize-images/ /images/cloudflare-images/transform/ 301
 /image-resizing/ /images/image-resizing/ 301
 /image-resizing/url-format/ /images/image-resizing/url-format/ 301
 /images/about/ /images/ 301
