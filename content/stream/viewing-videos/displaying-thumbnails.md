@@ -8,7 +8,7 @@ weight: 5
 
 {{<Aside>}}
 
-Stream thumbnails do not support non-square pixels. 
+Stream thumbnails are not supported for videos with non-square pixels. 
 
 {{</Aside>}}
 

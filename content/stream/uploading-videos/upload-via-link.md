@@ -10,8 +10,6 @@ If you have videos stored in a cloud storage bucket, you can simply pass a HTTP 
 
 By using [webhooks](/stream/uploading-videos/using-webhooks/) you can receive a notification when the video is ready to be played or if it errors.
 
-{{<render file="_upload-storage.md">}}
-
 ## Step 1: Make an API call with the link
 
 Make a HTTP request to the Stream API with the URL of the video.

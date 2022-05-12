@@ -77,9 +77,9 @@ header: Response
 }
 ```
 
-## Define download file name
+## Customize download file name
 
-You can define the name of downloadable files by adding the `filename` query string parameter at the end of the URL. 
+You can customize the name of downloadable files by adding the `filename` query string parameter at the end of the URL. 
 
 In the example below, adding `?filename=MY_VIDEO.mp4` to the URL will change the file name to `MY_VIDEO.mp4`.
 
