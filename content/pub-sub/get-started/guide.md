@@ -9,7 +9,7 @@ pcx-content-type: get-started
 
 Pub/Sub is currently in private beta. You can [sign up for the waitlist](https://www.cloudflare.com/cloudflare-pub-sub-lightweight-messaging-private-beta/) to register your interest.
 
-{{</Aside>}} 
+{{</Aside>}}
 
 Pub/Sub is a flexible, scalable messaging service built on top of the MQTT messaging standard, allowing you to publish messages from tens of thousands of devices (or more), deploy code to filter, aggregate and transform messages using Cloudflare Workers, and/or subscribe to topics for fan-out messaging use cases.
 
@@ -19,7 +19,7 @@ This guide will:
 - Create a `<broker>.<namespace>.cloudflarepubsub.com` endpoint ready to publish and subscribe to using any MQTT v5.0 compatible client.
 - Help you send your first message to the Pub/Sub Broker.
 
-Before you begin, you should be familiar with using the command line and the curl command for making HTTP requests. 
+Before you begin, you should be familiar with using the command line and the curl command for making HTTP requests.
 
 In the future, we will be adding support for Pub/Sub to [wrangler](/workers/wrangler/) (our developer CLI) and the Cloudflare dashboard to make creating and managing Pub/Sub Brokers easier.
 
@@ -83,7 +83,7 @@ You should receive a HTTP 200 response that resembles the following:
 { "name": "cloudflare", id: "ea0e37e2-7da7-4ed7-8c60-4eb0a7d00dbf", created_at: "2022-04-28T22:24:53+00:00" }
 ```
 
-If you receive an HTTP 403 (Forbidden) response, check that your credentials are correct and that you have not pasted erroneous spaces or characters. 
+If you receive an HTTP 403 (Forbidden) response, check that your credentials are correct and that you have not pasted erroneous spaces or characters.
 
 If you receive an HTTP 400 (Bad Request), make sure you have correctly quoted the `data` payload and that you are not missing any quotes.
 
@@ -123,7 +123,7 @@ Note that:
 - Credentials are associated with a specific Client ID and encoded as a signed JSON Web Token (JWT).
 - Each token has a unique identifier (a `jti` - or `JWT ID`) that you can use to revoke a specific token.
 
-To generate a token for your broker: 
+To generate a token for your broker:
 
 ```bash
 # GET /accounts/:account_id/brokers/namespaces/:namespace_name/brokers/:broker_name/credentials
@@ -144,7 +144,7 @@ Each token allows you to publish or subscribe to the associated broker.
 
 ## 6. Subscribe and publish messages to a topic
 
-Your broker is now created and ready to accept messages from authenticated clients. Because Pub/Sub is based on the MQTT protocol, there are client libraries for most popular programming languages. Refer to the list of [recommended client libraries](/pub-sub/examples/client-libraries).
+Your broker is now created and ready to accept messages from authenticated clients. Because Pub/Sub is based on the MQTT protocol, there are client libraries for most popular programming languages. Refer to the list of [recommended client libraries](/pub-sub/learning/client-libraries/).
 
 The example below uses [MQTT.js](https://github.com/mqttjs/MQTT.js) with Node.js to subscribe to a topic on a broker and publish a very basic "hello world" style message. You will need to have a [supported Node.js](https://nodejs.org/en/download/current/) version installed.
 
@@ -165,16 +165,16 @@ Create a file called `index.js ` and make sure to update the `brokerEndpoint` wi
 
 ```js
 const mqtt = require('mqtt')
- 
+
 const brokerEndpoint = "mqtts://my-broker.my-namespace.cloudflarepubsub.com"
 const options = {
   port: 8443,
   password: process.env.BROKER_TOKEN,
   protocolVersion: 5, // MQTT 5
 }
- 
+
 const client = mqtt.connect(brokerEndpoint, options)
- 
+
 client.subscribe("example-topic")
 client.publish("example-topic", `message from ${client.options.clientId}: hello at ${Date.now()`)
 client.on("message", function (topic, message) {
@@ -182,7 +182,7 @@ client.on("message", function (topic, message) {
 })
 ```
 
-Run the example. You should see the output written to your terminal (stdout). 
+Run the example. You should see the output written to your terminal (stdout).
 
 ```bash
 $ node index.js
@@ -201,6 +201,6 @@ If you do not see the message you published, or you are receiving error messages
 
 What's next?
 
-- [Connect a worker to your broker](/pub-sub/learning/integrate-workers/) to programmatically read, parse, and filter messages as they are published to a broker 
+- [Connect a worker to your broker](/pub-sub/learning/integrate-workers/) to programmatically read, parse, and filter messages as they are published to a broker
 - [Learn how PubSub and the MQTT protocol work](/pub-sub/learning/how-pubsub-works)
 - [See example client code](/pub-sub/examples) for publishing or subscribing to a PubSub broker
