@@ -835,6 +835,8 @@
 /workers/webassembly/ /workers/tutorials/build-a-rustwasm-function/ 301
 /workers/webassembly/tutorial/ /workers/tutorials/build-a-rustwasm-function/ 301
 /workers/workers/docs/ /workers/ 301
+/workers/wrangler/eject-webpack/ /workers/wrangler/migration/eject-webpack/ 301
+/wrangler/get-started/ /workers/wrangler/get-started/ 301
 /workers/writing-workers/ /workers/get-started/guide/ 301
 /workers/writing-workers/blog-posts/ /workers/ 301
 /workers/writing-workers/debugging-tips/ /workers/about/tips/debugging/ 301
