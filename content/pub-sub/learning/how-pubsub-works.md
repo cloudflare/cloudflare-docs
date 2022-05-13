@@ -43,8 +43,8 @@ A Pub/Sub client can be both a publisher and subscriber at once, and can publish
 
 As a set of best practices when constructing and naming your topics:
 
-- **Define topics as a consistent hierarchy such as /location/data-type/data-format/**. For example, a client in the EU publishing HTTP metrics data would publish to `/eu/metrics/request_count` so that subscribers can more easily identify the data.
-- **Ensure that you are consistent with your casing (lower vs. upper case) for topic names**. Topics are case-sensitive in the MQTT protocol and a client subscribed to `/eu/metrics/request_count` will never receive a message published to `/EU/metrics/request_count` (note the upper-cased "EU").
+- **Define topics as a consistent hierarchy such as location/data-type/data-format/**. For example, a client in the EU publishing HTTP metrics data would publish to `eu/metrics/request_count` so that subscribers can more easily identify the data.
+- **Ensure that you are consistent with your casing (lower vs. upper case) for topic names**. Topics are case-sensitive in the MQTT protocol and a client subscribed to `eu/metrics/request_count` will never receive a message published to `EU/metrics/request_count` (note the upper-cased "EU").
 - **Avoid overly long topic names (the MQTT specification supports up to 65K bytes)**. Long topic names will increase your payload size and the cost of message processing on both publishers and subscribers.
 - **Avoid a leading forward slash when naming topics**. `/us/metrics/transactions_processed` is a different topic from `us/metrics/transactions_processed`. The leading slash is unnecessary.
 
