@@ -32,7 +32,7 @@ Lossy attempts to strip most metadata and compresses images by approximately 15 
 
 ### WebP
 
-WebP is a modern image format providing superior lossless and lossy compression for images. WebP lossless images are approximately 26 percent smaller than PNGs, while lossy images are 25 to 34 percent smaller than JPEGs. WebP is supported in all browsers except for Internet Explorer, Safari on MacOS 11 Big Sur or later, and KaiOS. You can learn more in our [blog post](https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/).
+WebP is a modern image format providing superior lossless and lossy compression for images. WebP lossless images are approximately 26 percent smaller than PNGs, while lossy images are 25 to 34 percent smaller than JPEGs. WebP is supported in all browsers except for Internet Explorer, Safari on MacOS earlier than 11 (Big Sur), and KaiOS. You can learn more in our [blog post](https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/).
 
 Polish creates and caches a WebP version of the image and delivers it to the browser if the `Accept` header from the browser includes WebP, and the compressed image is significantly smaller than the lossy or lossless compression:
 
