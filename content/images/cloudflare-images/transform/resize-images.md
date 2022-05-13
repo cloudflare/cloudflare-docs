@@ -38,7 +38,7 @@ Variants allow you to choose what to do with your image's metadata information, 
 
 ## Override image-level access
 
-Clicking the `Always allow public access` option will make a particular variant always publicly accessible, even when [making images private](/images/cloudflare-images/make-an-image-private/). 
+Clicking the **Always allow public access** option will make a particular variant always publicly accessible, even when [making images private](/images/cloudflare-images/make-an-image-private/). 
 
 ## How to resize an image
 
