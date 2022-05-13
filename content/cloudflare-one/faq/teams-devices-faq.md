@@ -74,3 +74,28 @@ The most common places we see interference with WARP from these products are:
 ### As a last resort, does WARP or your configuration work on a clean machine?
 
 To eliminate issues related to a particular Cloudflare Zero Trust configuration or policy, you can try running WARP in consumer mode. This will allow you to ensure basic connectivity can be achieved. Once this is verified, you can slowly start applying additional complexity and testing along the way.
+
+## How do I retrieve WARP client logs?
+
+### macOS
+
+In the Terminal, type `warp-diag` (full path: `/usr/local/bin/warp-diag`) and press **Enter**. This will place a `warp-debugging-info.zip` on your Desktop.
+
+### Windows
+
+1. Open `C:\Program Files\Cloudflare\Cloudflare WARP` in Explorer.
+2. Double-click on `warp-diag.exe`. This will place a `warp-debugging-info.zip` on your Desktop.
+
+### Linux
+
+In the Terminal, type `sudo warp-diag` and press **Enter**. This will place a `warp-debugging-info.zip` in the same folder you ran the command from.
+
+### iOS
+
+1. Open **App** and navigate to **Settings** > **Advanced** > **Diagnostics** > **Console Logs**.
+2. Send the Extension Logs and Application Logs to Cloudflare support.
+
+### Android/ChromeOS
+
+1. Open **App** and navigate to **Settings** > **Advanced** > **Diagnostics**.
+2. Send the Console Logs and Boringtun Logs to Cloudflare support.

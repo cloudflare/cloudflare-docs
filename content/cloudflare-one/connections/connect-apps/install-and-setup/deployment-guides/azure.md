@@ -6,7 +6,7 @@ weight: 8
 
 # Deploy `cloudflared` in Azure
 
-The purpose of this guide is to walk through some best practices for accessing private resources on AWS by deploying Cloudflare's lightweight connector, `cloudflared`. 
+The purpose of this guide is to walk through some best practices for accessing private resources on Azure by deploying Cloudflare's lightweight connector, `cloudflared`. 
 
 We will walk through how to initialize a service on a Linux VM in Azure, and route to it from another VM running `cloudflared`. This deployment guide does not take into account routing beyond basic security groups and default VPCs.
 
@@ -35,7 +35,7 @@ Create two Ubuntu 20.04 LTS VMs, and make sure you record their internal IP addr
 
 ## Deploy `cloudflared`
 
-1. SSH into your AWS instance using the command line.
+1. SSH into your Azure instance using the command line.
 
     ```sh
     cd Downloads

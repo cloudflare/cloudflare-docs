@@ -30,7 +30,7 @@ Cloudflare Zero Trust enables you to restrict access to your applications to dev
 The process involves two steps:
 
 1.  Setting up **Require WARP** as a device posture check.
-1.  Adding the check to new or existing [Zero Trust policies](/cloudflare-one/policies/zero-trust/) to enforce the check for one or more of your applications.
+1.  Adding the check to new or existing [Access policies](/cloudflare-one/policies/access/) to enforce the check for one or more of your applications.
 
 ## Set up a device posture check
 

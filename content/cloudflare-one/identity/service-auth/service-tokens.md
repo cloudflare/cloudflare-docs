@@ -43,7 +43,7 @@ This section covers how to create, renew, and revoke a service token.
 
 1.  Click **Close**.
 
-You can now use the service token when you create [service auth policies](/cloudflare-one/policies/zero-trust/). When creating these policies, use the `Service Auth` action to ensure that the identity provider login screen is not required for end users.
+You can now use the service token when you create [Service Auth policies](/cloudflare-one/policies/access/). When creating these policies, use the `Service Auth` action to ensure that the identity provider login screen is not required for end users.
 
 ## Connect your service to Access
 

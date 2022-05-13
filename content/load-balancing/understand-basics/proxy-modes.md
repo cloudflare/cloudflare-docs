@@ -45,7 +45,7 @@ Cloudflare performs DNS-only load balancing when traffic to your hostname is **n
 
 ### Benefits
 
-If your load balancer is attached to a hostname used for an [MX, SRV, or TXT record](/load-balancing/additional-options/additional-dns-records/) — and not an A, AAAA, or CNAME record — its proxy mode should be **DNS-only**.
+If your load balancer is attached to a hostname used for an [MX, SRV, or TXT record](/load-balancing/additional-options/additional-dns-records/) — and not an `A`, `AAAA`, or `CNAME` record — its proxy mode should be **DNS-only**.
 
 ### Limitations
 

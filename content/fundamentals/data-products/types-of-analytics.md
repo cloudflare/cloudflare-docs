@@ -32,7 +32,7 @@ Cloudflare is committed to use 100% renewable energy sources, but also to [remov
 
 ## Analytics related to specific properties
 
-Access aggregated traffic, security, and performance metrics for each domain proxied through Cloudflare. To access these analytics, [log into the Cloudflare dashboard](https://dash.cloudflare.com/login), select your account and domain, and go to the **Analytics** application. 
+Access aggregated traffic, security, and performance metrics for each domain proxied through Cloudflare. To access these analytics, [log in to the Cloudflare dashboard](https://dash.cloudflare.com/login), select your account and domain, and go to the **Analytics** application. 
 
 Data available on the **Analytics** application includes:
 

@@ -1,7 +1,7 @@
 ---
 title: Tutorials
 pcx-content-type: navigation
-weight: 5
+weight: 6
 ---
 
 # Tutorials

@@ -16,12 +16,12 @@ In this tutorial, you will learn how to read and write to Workers KV directly fr
 
 To get started:
 
-1.  Run the following `wrangler` command to generate a basic project using the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/).
-2.  After running the `wrangler generate` command, `cd` into the new project.
+1.  Run the `git clone` command to create a basic project using the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/).
+2.  After running the `git clone` command, `cd` into the new project.
 3.  Use the current state of the git repository as the initial commit by running the `git add` and `git commit` commands in your terminal.
 
 ```sh
-$ wrangler generate workers-kv-from-rust https://github.com/cloudflare/rustwasm-worker-template/
+$ git clone https://github.com/cloudflare/rustwasm-worker-template/ workers-kv-from-rust
 $ cd workers-kv-from-rust
 $ git add -A
 $ git commit -m 'Initial commit'
@@ -321,7 +321,7 @@ pub async fn handle(kv: WorkersKvJs, req: JsValue) -> Result<Response, JsValue> 
 }
 ```
 
-You can use [`wrangler dev`](/workers/cli-wrangler/commands/#dev) to test the Worker:
+You can use [`wrangler dev`](/workers/wrangler/cli-wrangler/commands/#dev) to test the Worker:
 
 ```sh
 $ curl 'localhost:8787/foo'

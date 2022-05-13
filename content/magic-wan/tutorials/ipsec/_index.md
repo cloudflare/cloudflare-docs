@@ -47,6 +47,7 @@ To set up your static routes, refer to [Configure static routes](/magic-wan/how-
 
 - **Diffie-Hellman group**:
   - DH group 14 (2048-bit MODP group)
+  - DH group 15 (3072-bit MODP group)
 
 - **Pseudorandom function (PRF)** (not to be confused with PFS. PRF is often not a configurable setting):
   - SHA2-256
@@ -61,6 +62,7 @@ To set up your static routes, refer to [Configure static routes](/magic-wan/how-
 
 - **Integrity** (sometimes referred to as Authentication):
   - SHA2-256
+  - SHA-1
 
 - **PFS group** (sometimes referred to as "Phase 2 Diffie-Hellman Group"):
   - DH group 14 (2048-bit MODP group)

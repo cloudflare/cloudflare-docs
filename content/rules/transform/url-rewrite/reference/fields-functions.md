@@ -26,4 +26,4 @@ A rewrite expression (that is, the expression that defines the dynamic URL rewri
 
 Refer to [Fields](/ruleset-engine/rules-language/fields/) for reference information on these fields.
 
-The `concat()` and `regex_replace()` functions can appear only **once** in a rewrite expression. For more information on these functions, refer to [Transformation functions](/ruleset-engine/rules-language/functions/#transformation-functions).
+The [`concat()`](/ruleset-engine/rules-language/functions/#function-concat) and [`regex_replace()`](/ruleset-engine/rules-language/functions/#function-regex_replace) functions can appear only **once** in a rewrite expression.

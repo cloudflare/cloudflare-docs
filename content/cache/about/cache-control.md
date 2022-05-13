@@ -300,7 +300,7 @@ Review the examples below to learn which directives to use with the Cache-Contro
 <details>
   <summary>Cache assets in proxy caches but REQUIRE revalidation by the proxy when served</summary>
   <div>
-    <code>Cache-Control: public, no-cache, proxy-revalidate</code> or{' '}
+    <code>Cache-Control: public, no-cache, proxy-revalidate</code> or
     <code>Cache-Control: public, s-maxage=0</code>
   </div>
 </details>

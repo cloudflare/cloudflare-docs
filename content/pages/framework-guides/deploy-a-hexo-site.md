@@ -63,7 +63,7 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 
@@ -94,7 +94,7 @@ Some Hexo themes or plugins have additional requirements for different Node.js v
 2. Go to **Settings** > **Environment variables**. 
 3. Set the environment variable `NODE_VERSION` and a value of your required Node.js version (for example, `14.3`).
 
-![Follow the instructions above to set up an environment variable in the Pages dashboard](../media/node-version-pages.png)
+![Follow the instructions above to set up an environment variable in the Pages dashboard](/pages/framework-guides/media/node-version-pages.png)
 
 ## Related resources
 

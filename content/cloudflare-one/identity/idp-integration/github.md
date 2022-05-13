@@ -12,7 +12,7 @@ Cloudflare Zero Trust allows your to connect to your applications using their Gi
 
 To configure GitHub access in both GitHub and Cloudflare Zero Trust:
 
-1.  Log into GitHub.
+1.  Log in to GitHub.
 
 1.  Go to your account **Settings > Developer Settings**, select **OAuth Apps** and click **Register a new application**.
 

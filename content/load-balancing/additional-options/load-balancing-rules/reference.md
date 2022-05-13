@@ -10,7 +10,7 @@ The fields available for load balancing rules depend on whether Cloudflare proxi
 
 If you use the wrong type of fields, you might see unexpected behavior from load balancing rules. For best results, always use the fields associated with your traffic's proxy status.
 
-![select load balancer fields based on the proxy status header](/load-balancing/static/images/proxy-status.png)
+![Choose load balancer fields based on the proxy status header](/load-balancing/static/images/proxy-status.png)
 
 ## Fields supported regardless of proxy
 

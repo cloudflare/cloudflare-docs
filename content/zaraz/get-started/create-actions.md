@@ -13,7 +13,7 @@ Tools on Zaraz must have actions configured in order to do something. Every acti
 To start using actions, first create a trigger to determine when this action will start. If you have already [set up a trigger](/zaraz/get-started/create-trigger/), follow these steps to create an action.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
-2. Go to **Zaraz**.
+2. Go to **Zaraz** > **Tools**.
 3. Under **Third-party tools**, click **Edit** on the third-party tool you want to configure an action for.
 4. Click **Create action**.
 5. Give the action a descriptive name.

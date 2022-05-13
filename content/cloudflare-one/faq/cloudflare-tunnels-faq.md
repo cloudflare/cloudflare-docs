@@ -100,11 +100,11 @@ $ cloudflared tunnel run
 Tunnel credentials file '/root/.cloudflared/928655cc-7f95-43f2-8539-2aba6cf3592d.json' doesn't exist or is not a file
 ```
 
+## How do I contact support?
 
+### I am having an issue with a locally-managed tunnel.
 
-## I need help. How do I contact support?
-
-If you are having an issue with one or more tunnels, before contacting the Cloudflare support team:
+Before contacting the Cloudflare support team:
 
 - Take note of any specific error messages and/or problematic behaviors.
 
@@ -121,3 +121,7 @@ If you are having an issue with one or more tunnels, before contacting the Cloud
 - Make sure that the `cloudflared daemon` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
 
 - Gather any relevant error/access logs from your server.
+
+### End users are having issues connecting to private networks through the WARP client.
+
+If your end users are experiencing issues while accessing resources on private networks [exposed via Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/private-net/), ensure you include [WARP Client logs](/cloudflare-one/faq/teams-devices-faq/#how-do-i-retrieve-warp-client-logs) when contacting Cloudflare support. These logs will help Cloudflare support understand the overall architecture of your machine and networks.

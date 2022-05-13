@@ -1,16 +1,16 @@
 ---
 pcx-content-type: how-to
 title: Find zone and account IDs
-weight: 4
+weight: 1
 ---
 
 # Find zone and account IDs
 
-Once you [set up a new account](/fundamentals/get-started/basic-tasks/account-setup/) and [add your domain](https://support.cloudflare.com/hc/articles/201720164#2YulMb5YJTVnMxgAgNWdS2) to Cloudflare, you may need access to your zone and account IDs for API operations.
+Once you [set up a new account](/fundamentals/get-started/setup/account-setup/) and [add your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, you may need access to your zone and account IDs for API operations.
 
 To find your zone and account IDs:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. On the **Overview** page (the landing page for your domain), find the **API** section.
 
     ![Screenshot of the Overview page with the API section highlighted](/fundamentals/static/images/get-started/dash-overview-api-highlighted.png)

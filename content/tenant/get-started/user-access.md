@@ -56,7 +56,7 @@ Creating a user works as follows:
 curl -X POST https://api.cloudflare.com/client/v4/users -H 'Content-Type: application/json' -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>' -d '{ "email": "<identifier>@youremaildomain.com>" }'
 ```
 
-These type of users are service users, as no one will log into the dashboard with them. If you are planning to use this method, we will enable you to see the API key in order to make API calls as this user.
+These type of users are service users, as no one will log in to the dashboard with them. If you are planning to use this method, we will enable you to see the API key in order to make API calls as this user.
 
 An example response for a successful creation:
 

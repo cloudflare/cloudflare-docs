@@ -12,7 +12,7 @@ Yandex is a web search engine that also offers identity provider (IdP) services.
 
 To set up Yandex for Cloudflare Access:
 
-1.  Log into your Yandex account.
+1.  Log in to your Yandex account.
 
 1.  Select **Open a new OAuth Application**.
 

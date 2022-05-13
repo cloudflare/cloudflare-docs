@@ -46,11 +46,11 @@ You can also create a Firewall Cluster by sending a [POST request](https://api.c
 
 ### Update registrar settings
 
-Update the A/AAAA glue records for your nameserver hostnames at your registrar with your DNS Firewall cluster IP addresses.
+Update the `A/AAAA` glue records for your nameserver hostnames at your registrar with your DNS Firewall cluster IP addresses.
 
 ### Update DNS servers
 
-At your DNS servers, update the A/AAAA records for your nameserver hostnames in your DNS zone file with your DNS Firewall cluster IP addresses.
+At your DNS servers, update the `A/AAAA` records for your nameserver hostnames in your DNS zone file with your DNS Firewall cluster IP addresses.
 
 ### Test DNS resolution
 

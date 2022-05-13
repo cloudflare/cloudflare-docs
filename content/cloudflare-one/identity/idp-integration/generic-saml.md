@@ -36,6 +36,26 @@ The typical setup requirements are:
 1.  Enter the Single Sign on URL, IdP Entity ID or Issuer URL, and Signing certificate.
 1.  If you do not wish to enter any of the [additional SAML configurations](#additional-saml-configurations), click **Save**.
 
+## Download SP metadata (optional)
+
+Some IdPs allow administrators to upload metadata files from their SP (service provider).
+
+To get your Cloudflare metadata file:
+
+1.  Download your unique SAML metadata file at the following URL:
+
+    ```txt
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    ```
+
+    Replace `<your-team-name>` with your [team name](/cloudflare-one/glossary/#team-name).
+
+    The link returns a web page with your SAML SP data in XML format.
+
+2.  Save the file as an XML document.
+
+You can now upload the XML document to your identity provider account.
+
 ## Additional SAML configurations
 
 SAML integrations allow users to include additional headers or claims that can be passed to applications.
@@ -46,7 +66,7 @@ This optional configuration signs the Access JWT with the Cloudflare Access publ
 
 ### Email attribute name
 
-Many [Zero Trust policies](/cloudflare-one/policies/zero-trust/) depend on a user’s email address. Some identity providers have a different naming for the email address attribute (for example, `Email`, `e-mail`, `emailAddress`). This can typically be checked in the identity provider's SAML test option.
+Many [Access policies](/cloudflare-one/policies/access/) depend on a user’s email address. Some identity providers have a different naming for the email address attribute (for example, `Email`, `e-mail`, `emailAddress`). This can typically be checked in the identity provider's SAML test option.
 
 Example in Okta:
 

@@ -6,7 +6,7 @@ weight: 6
 
 # FAQ
 
-Below you will find answers to our most commonly asked questions on Cloudflare Registrar, namely about billing, domain transfers, and how to troubleshoot common issues you may come across. If you cannot find the answer you are looking for, heading over to our [community page](https://community.cloudflare.com/) is always a good idea.
+Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) to explore more resources.
 
 - [Domain transfers](#domain-transfers)
 - [Domain registrations](#domain-registrations)
@@ -37,7 +37,7 @@ Cloudflare Registrar only supports transfers of domains that are active on Cloud
 
 Once you initiate a domain transfer, your previous registrar has five days to release the domain. In most cases, they will send you an email to confirm you want to transfer. If you actively acknowledge that email (through a link or the registrar's dashboard), they can process it immediately.
 
-To see the progress of your transfer, log into the Cloudflare dashboard and select your account. Then, select **Registrar** > **Transfer** to see a list of domain transfers that are in progress. To accelerate the process, be sure to check with your old registrar how you can approve the transfer out.
+To see the progress of your transfer, log in to the Cloudflare dashboard and select your account. Then, select **Registrar** > **Transfer** to see a list of domain transfers that are in progress. To accelerate the process, be sure to check with your old registrar how you can approve the transfer out.
 
 Once successful, you will receive an email from Cloudflare and be able to manage the domain in the dashboard under **Overview** of that site.
 
@@ -158,7 +158,7 @@ Refer to [What is Cloudflare Registrar](https://www.cloudflare.com/learning/dns/
 
 ### When will I be billed?
 
-You will be billed when you input your authorization code and initiate the transfer of your domain to Cloudflare. Make sure to copy and paste the code to avoid mistakes. The transfer will not initiate if the code is incorrect.
+You will be billed when you input your authorization code and initiate the transfer of your domain to Cloudflare. Currently, Cloudflare Registrar only uses the primary payment method for any associated transaction. Make sure to copy and paste the code to avoid mistakes. The transfer will not initiate if the code is incorrect.
 
 ### Is there a fee to transfer a .UK domain?
 

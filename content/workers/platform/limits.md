@@ -145,7 +145,7 @@ Accounts using the Workers Free plan are subject to a burst rate limit of 1000 r
 
 ### Daily request
 
-Accounts using the Workers Free plan are subject to a daily request limit of 100,000 requests. Free plan daily requests counts reset at midnight UTC. A Worker that fails as a result of daily request limit errors can be configured by toggling its corresponding [route](/workers/platform/routes/) in two modes: 1) Fail open and 2) Fail closed.
+Accounts using the Workers Free plan are subject to a daily request limit of 100,000 requests. Free plan daily requests counts reset at midnight UTC. A Worker that fails as a result of daily request limit errors can be configured by toggling its corresponding [route](/workers/platform/routing/routes/) in two modes: 1) Fail open and 2) Fail closed.
 
 #### Fail open
 

@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-Cloudflare uses the `__cf_bm cookie` to identify bots. For more details, refer to [Cloudflare Cookies](/fundamentals/get-started/cloudflare-cookies/).
+Cloudflare uses the `__cf_bm cookie` to identify bots. For more details, refer to [Cloudflare Cookies](/fundamentals/get-started/reference/cloudflare-cookies/).

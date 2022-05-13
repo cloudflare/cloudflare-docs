@@ -19,6 +19,12 @@ The WordPress plugin may go undetected on your Cloudflare dashboard for a few re
 
 If your Cloudflare dashboard can't detect the WordPress plugin after trying the solutions above, ensure you completed all of the steps listed in [Activate the Cloudflare WordPress plugin](/automatic-platform-optimization/get-started/activate-cf-wp-plugin/).
 
+{{<Aside type="note">}}
+
+The Cloudflare APO Wordpress plugin does not support multisite WordPress installation.
+
+{{</Aside>}}
+
 ## WordPress returns stale content
 
 If WordPress is returning stale content, purge the cache when APO is enabled.
