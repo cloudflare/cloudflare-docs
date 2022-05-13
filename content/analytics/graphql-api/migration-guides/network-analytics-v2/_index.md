@@ -12,7 +12,7 @@ In early 2020, Cloudflare released the first version of the Network Analytics da
 
 ## Before you start
 
-Learn more about the [concepts introduced in Network Analytics v2](/analytics/graphql-api/migration-guides/network-analytics-v2/about/).
+Learn more about the [concepts introduced in Network Analytics v2](/analytics/network-analytics/understand/concepts/).
 
 ## Feature comparison
 
@@ -23,8 +23,8 @@ The following table compares the features of NAv1 and NAv2:
 | Feature | NAv1 | NAv2 |
 |---------|------|------|
 | Sampling rate | 1/8,192 packets | Varies between 1/100 and 1/1,000,000 packets,<br/> depending on the mitigation service. |
-| Sampling method | Core Sample Enrichment | [Edge Sample Enrichment](/analytics/graphql-api/migration-guides/network-analytics-v2/about/#edge-sample-enrichment) |
-| Historical data retention method | Aggregated roll-ups | [Adaptive Bitrate](/analytics/graphql-api/migration-guides/network-analytics-v2/about/#adaptive-bitrate-sampling) |
+| Sampling method | Core Sample Enrichment | [Edge Sample Enrichment](/analytics/network-analytics/understand/concepts/#edge-sample-enrichment) |
+| Historical data retention method | Aggregated roll-ups | [Adaptive Bit Rate](/analytics/network-analytics/understand/concepts/#adaptive-bit-rate-sampling) |
 | Retention period | 1-min roll-ups: 30 days<br/>1-hour roll-ups: 6 months<br/>1-day roll-ups: 1 year<br/>Attack roll-ups: 1 year | All nodes: 16 weeks |
 | Attack mitigation systems | dosd and gatebot | dosd, gatebot, flowtrackd\*, and Magic Firewall\* |
 | Examples of new fields | n/a | Rule ID<br/>GRE tunnel ID<br/>Packet size |
