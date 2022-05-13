@@ -8,7 +8,7 @@ layout: list
 
 # Filters
 
-The following table represents the comparison operators that are supported and example values. Filters are added as escaped JSON strings formatted as `{\"key\":\"<field>\",\"operator\":\"<comparison_operator>\",\"value\":\"<value>\"}`.
+The following table represents the comparison operators that are supported and example values. Filters are added as escaped JSON strings formatted as `{"key":"<field>","operator":"<comparison_operator>","value":"<value>"}`.
 
 - Refer to the [Log fields](/logs/reference/log-fields/) page for a list of fields related to each dataset.
 
@@ -16,15 +16,13 @@ The following table represents the comparison operators that are supported and e
 
 - Values represent the data associated with fields.
 
-- Filters can be connected using `AND`, `OR` logical operators.
-
 {{<table-wrap style="width:100%">}}
 
 <table style='width:100%'>
   <thead>
    <tr>
       <th>Name</th>
-      <th colspan="2" style="text-align:center">Operator Notation</th>
+      <th colspan="1" style="text-align:center">Operator Notation</th>
       <th colspan="5" style="text-align:center">Supported Field Types</th>
       <th></th>
    </tr>
@@ -221,6 +219,23 @@ Filtering is not supported on the following data types: `objects`, `array[int]`,
 For the Firewall events dataset, the following fields are not supported: Kind, MatchIndex, Metadata, OriginatorRayID, RuleID, Source.
 
 For the Gateway HTTP dataset, the following fields are not supported: Downloaded File Names, Uploaded File Names.
+
+## Logical Operators
+
+- Filters can be connected using `AND`, `OR` logical operators.
+
+- Logical operators can be nested.
+
+Here are some examples of how the logical operators can be implemented. `X`, `Y` and `Z` are used to represent filter criteria:
+
+- X AND Y AND Z - `{"where":{"and":[{X},{Y},{Z}]}}`
+
+- X OR Y OR Z - `{"where":{"or":[{X},{Y},{Z}]}}`
+
+- X AND (Y OR Z) - `{"where":{"and":[{X}, "or":[{Y},{Z}]]}}`
+
+- (X AND Y) OR Z - `{"where":{"and":[{X},{Y}] "or":[{Z}]}}`
+
 
 Example request using cURL:
 
