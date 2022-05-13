@@ -31,7 +31,6 @@ The following table represents the comparison operators that are supported and e
    <tr>
       <td></td>
       <th>English</th>
-      <th>C-like</th>
       <th>String</th>
       <th>Int</th>
       <th>Bool</th>
@@ -44,20 +43,18 @@ The following table represents the comparison operators that are supported and e
     <tr>
       <td>Equal</td>
       <td><code class="InlineCode">eq</code></td>
-      <td><code class="InlineCode">==</code></td>
       <td>&#x2705;</td>
       <td>&#x2705;</td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
       <td>&#10060;</td>
       <td>
-         <code class="InlineCode">{\"key\":\"ClientRequestHost\",\"operator\":\"<strong>eq</strong>\",\"value\":\"theburritobot.com\"}</code>
+         <code class="InlineCode">{\"key\":\"ClientRequestHost\",\"operator\":\"<strong>eq</strong>\",\"value\":\"example.com\"}</code>
       </td>
      </tr>
     <tr>
       <td>Not equal</td>
       <td><code class="InlineCode">!eq</code></td>
-      <td><code class="InlineCode">!=</code></td>
       <td>&#x2705;</td>
       <td>&#x2705;</td>
       <td>&#x2705;</td>
@@ -70,7 +67,6 @@ The following table represents the comparison operators that are supported and e
     <tr>
       <td>Less than</td>
       <td><code class="InlineCode">lt</code></td>
-      <td><code class="InlineCode">&lt;</code></td>
       <td>&#10060;</td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
@@ -83,7 +79,6 @@ The following table represents the comparison operators that are supported and e
    <tr>
       <td>Less than<br />or equal</td>
       <td><code class="InlineCode">lte</code></td>
-      <td><code class="InlineCode">&lt;=</code></td>
       <td>&#10060;</td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
@@ -96,7 +91,6 @@ The following table represents the comparison operators that are supported and e
     <tr>
       <td>Greater than</td>
       <td><code class="InlineCode">gt</code></td>
-      <td><code class="InlineCode">></code></td>
       <td>&#10060;</td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
@@ -109,7 +103,6 @@ The following table represents the comparison operators that are supported and e
     <tr>
       <td>Greater than<br />or equal</td>
       <td><code class="InlineCode">gte</code></td>
-      <td><code class="InlineCode">&gt;=</code></td>
       <td>&#10060;</td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
@@ -122,7 +115,6 @@ The following table represents the comparison operators that are supported and e
     <tr>
       <td>Starts<br />with</td>
       <td><code class="InlineCode">startsWith</code></td>
-      <td><code class="InlineCode"></code></td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
       <td>&#10060;</td>
@@ -135,7 +127,6 @@ The following table represents the comparison operators that are supported and e
     <tr>
       <td>Ends<br />with</td>
       <td><code class="InlineCode">endsWith</code></td>
-      <td><code class="InlineCode"></code></td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
       <td>&#10060;</td>
@@ -148,7 +139,6 @@ The following table represents the comparison operators that are supported and e
     <tr>
       <td>Does not<br />start with</td>
       <td><code class="InlineCode">!startsWith</code></td>
-      <td><code class="InlineCode"></code></td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
       <td>&#10060;</td>
@@ -161,7 +151,6 @@ The following table represents the comparison operators that are supported and e
     <tr>
       <td>Does not<br />end with</td>
       <td><code class="InlineCode">!endsWith</code></td>
-      <td><code class="InlineCode"></code></td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
       <td>&#10060;</td>
@@ -174,7 +163,6 @@ The following table represents the comparison operators that are supported and e
     <tr>
       <td>Contains</td>
       <td><code class="InlineCode">contains</code></td>
-      <td><code class="InlineCode">~</code></td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
       <td>&#10060;</td>
@@ -187,7 +175,6 @@ The following table represents the comparison operators that are supported and e
     <tr>
       <td>Does not<br />contain</td>
       <td><code class="InlineCode">!contains</code></td>
-      <td><code class="InlineCode"></code></td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
       <td>&#10060;</td>
@@ -200,7 +187,6 @@ The following table represents the comparison operators that are supported and e
     <tr>
       <td>Value is in<br />a set of values</td>
       <td><code class="InlineCode">in</code></td>
-      <td><code class="InlineCode"></code></td>
       <td>&#x2705;</td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
@@ -213,7 +199,6 @@ The following table represents the comparison operators that are supported and e
     <tr>
       <td>Value is not<br />in a set of values</td>
       <td><code class="InlineCode">!in</code></td>
-      <td><code class="InlineCode"></code></td>
       <td>&#x2705;</td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
@@ -245,10 +230,10 @@ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
 -H 'X-Auth-Email:<EMAIL>' \
 -H 'Content-Type: application/json' \
 -d '{
-"name":"Burritobot static assets",
- "logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
+"name":"example.com static assets",
+"logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
 "dataset": "http_requests",
-"filters":"{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"},{\"where\":{\"and\":[{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"theburritobot.com\"}]}}",
+"filters":"{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"},{\"where\":{\"and\":[{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"example.com\"}]}}",
 "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2/"
 }' | jq .
 ```
