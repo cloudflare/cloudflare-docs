@@ -248,7 +248,7 @@ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
 "name":"example.com static assets",
 "logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
 "dataset": "http_requests",
-"filter":"{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"},{\"where\":{\"and\":[{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"example.com\"}]}}",
+"filter":"{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"},{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"example.com\"}]}}",
 "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2/"
 }' | jq .
 ```
