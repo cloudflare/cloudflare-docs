@@ -12,7 +12,7 @@ You can require an image to only be accessible with a signed URL token. To make 
 curl --request POST \
   --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/direct_upload \
   --header 'Content-Type: application/json' \
-  --header 'Authorization: Bearer :token' \
+  --header 'Authorization: Bearer <API_TOKEN>' \
   --data '{
 	  "requireSignedURLs":"true"
    }'

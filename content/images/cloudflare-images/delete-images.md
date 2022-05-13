@@ -22,7 +22,7 @@ Here is an example of how to delete an image through an API call:
 
 ```bash
 curl -X DELETE https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/<IMAGE_ID> \
---header 'Authorization: Bearer :token'
+--header 'Authorization: Bearer <API_TOKEN>'
 ```
 
 You will receive a response similar to this:
