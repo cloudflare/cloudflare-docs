@@ -47,6 +47,8 @@ Clicking the `Always allow public access` option will make a particular variant 
 3. Name your variant and click **Add New Variant**.
 4. Define variables for your new variant, such as resizing options, type of fit and what do to with metadata.
 
+### Resize via API
+
 You can also create variants via API:
 
 ```bash
