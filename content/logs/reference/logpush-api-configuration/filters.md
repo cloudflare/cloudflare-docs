@@ -10,13 +10,13 @@ layout: list
 
 The following table represents the comparison operators that are supported and example values. Filters are added as escaped JSON strings formatted as `{\"key\":\"<field>\",\"operator\":\"<comparison_operator>\",\"value\":\"<value>\"}`.
 
-- Fields specify properties associated with an event.
+- Refer to the [Log fields](/logs/reference/log-fields/) page for a list of fields related to each dataset.
 
-- Comparison operators define how values must relate to actual request data for an expression to return true.
+- Comparison operators define how values must relate to fields in the log line for an expression to return true.
 
-- Values represent the data associated with fields. When evaluating a rule, Cloudflare compares these values with the actual data obtained from the request.
+- Values represent the data associated with fields.
 
-Filters can be connected using `AND`, `OR` logical operators.
+- Filters can be connected using `AND`, `OR` logical operators.
 
 {{<table-wrap style="width:100%">}}
 
@@ -230,9 +230,25 @@ Filters can be connected using `AND`, `OR` logical operators.
 The filter field has limits of approximately 30 operators and 1000 bytes. Anything exceeding this value will return an error.
 
 {{<Aside type="note" header="Note">}}
-Cloudflare does not support filtering on the following data types: `objects`, `array[int]`, `array[object]`.
+Filtering is not supported on the following data types: `objects`, `array[int]`, `array[object]`.
 {{</Aside>}}
 
-For the Firewall events dataset, Cloudflare does not support filtering on the following fields: Kind, MatchIndex, Metadata, OriginatorRayID, RuleID, Source.
+For the Firewall events dataset, the following fields are not supported: Kind, MatchIndex, Metadata, OriginatorRayID, RuleID, Source.
 
-For the Gateway HTTP dataset, Cloudflare does not support filtering on the following fields: Downloaded File Names, Uploaded File Names.
+For the Gateway HTTP dataset, the following fields are not supported: Downloaded File Names, Uploaded File Names.
+
+Example request using cURL:
+
+```bash
+curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/ \
+-H 'X-Auth-Key: <KEY> \
+-H 'X-Auth-Email:<EMAIL>' \
+-H 'Content-Type: application/json' \
+-d '{
+"name":"Burritobot static assets"
+ "logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
+"dataset": "http_requests",
+"filters":"{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"},{\"where\":{\"and\":[{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"theburritobot.com\"}]}}",
+"destination_conf": "s3://<BUCKET_PATH>?region=us-west-2/"
+}' | jq .
+```

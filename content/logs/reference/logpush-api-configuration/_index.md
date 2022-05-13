@@ -147,13 +147,13 @@ The options that you can customize are:
 The **CVE-2021-44228** parameter can only be set through the API at this time. Updating your Logpush job through the dashboard will set this option to false.
 {{</Aside>}}
 
-To check if the selected **options** are valid:
+To check if the selected **logpull_options** are valid:
 
 ```bash
 $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/origin 
 -d '{ "logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true”,
 "dataset": "http_requests", 
-"filter":"{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"},{\"where\":{\"and\":[{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"theburritobot.com\"}]}}"}' | jq .
+}' | jq .
 ```
 
 Response
