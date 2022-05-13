@@ -33,7 +33,7 @@ The **Fit** property describes how the width and height dimensions should be int
 Variants allow you to choose what to do with your image's metadata information, on the **Metadata** property:
 
 - Strip all metadata
-- Strip all except copyright
+- Strip all metadata except copyright
 - Kepp all metadata
 
 ## Override image-level access
