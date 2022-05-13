@@ -12,7 +12,7 @@ When you make edits in your primary DNS provider, those DNS records will be tran
 
 ## How to
 
-- [Initial setup](https://support.cloudflare.com/hc/articles/360001356152)
+- [Initial setup](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/)
 - [Proxy secondary traffic (secondary DNS override)](https://support.cloudflare.com/hc/articles/360042169091)
 
 ## Availability
