@@ -241,11 +241,11 @@ Example request using cURL:
 
 ```bash
 curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/ \
--H 'X-Auth-Key: <KEY> \
+-H 'X-Auth-Key: <KEY>' \
 -H 'X-Auth-Email:<EMAIL>' \
 -H 'Content-Type: application/json' \
 -d '{
-"name":"Burritobot static assets"
+"name":"Burritobot static assets",
  "logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
 "dataset": "http_requests",
 "filters":"{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"},{\"where\":{\"and\":[{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"theburritobot.com\"}]}}",
