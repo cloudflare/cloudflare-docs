@@ -16,7 +16,7 @@ Below is an example of the custom ID feature using upload via URL:
 
 ```bash
 curl --request POST https://api.cloudflare.com/client/v4/accounts/<​​ACCOUNT_ID>/images/v1 \
-  --header 'Authorization: Bearer :<API_TOKEN>' \
+  --header 'Authorization: Bearer <API_TOKEN>' \
   --form 'url=https://<REMOTE_PATH_TO_IMAGE>' \
   --form 'id=<PATH_TO_YOUR_IMAGE>'
 ```
@@ -26,7 +26,7 @@ You can also use the custom ID feature with direct file upload:
 ```bash
 curl --request POST \
   https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1 \
-  --header 'Authorization: Bearer :<API_TOKEN>' \
+  --header 'Authorization: Bearer <API_TOKEN>' \
   --form 'file=@./<PATH_TO_YOUR_IMAGE>' \
   --form 'id=<PATH_TO_YOUR_IMAGE>'
 ```

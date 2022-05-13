@@ -13,7 +13,7 @@ To request a one-time upload URL, call the [`direct_upload` endpoint](https://ap
 ```bash
 curl --request POST \
  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v2/direct_upload \
- --header 'Authorization: Bearer :<API_TOKEN>' \
+ --header 'Authorization: Bearer <API_TOKEN>' \
  --form 'requireSignedURLs=true' \
  --form 'metadata={"key":"value"}'
 ```
@@ -46,7 +46,7 @@ With version 2 of `direct_upload`, a new draft image record is created when you 
 ```bash
 curl  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/<IMAGE_ID> \
  --header 'Content-Type: application/json' \
- --header 'Authorization: Bearer :<API_TOKEN>'
+ --header 'Authorization: Bearer <API_TOKEN>'
 ```
 
 You will receive a response similar to this:

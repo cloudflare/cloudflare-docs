@@ -17,7 +17,7 @@ Below is an example of how to use the upload via URL feature:
 ```bash
 curl --request POST \
  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1 \
- --header 'Authorization: Bearer :<API_TOKEN>' \
+ --header 'Authorization: Bearer <API_TOKEN>' \
  --form 'url=https://[user:password@]example.com/<PATH_TO_IMAGE>' \
  --form 'metadata={"key":"value"}' \
  --form 'requireSignedURLs=false' 
