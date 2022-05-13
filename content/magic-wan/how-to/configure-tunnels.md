@@ -19,7 +19,7 @@ To configure the Anycast GRE or IPsec tunnels between Cloudflare and your locati
 
 For an example Anycast GRE or IPsec tunnel configuration, see [Anycast GRE configuration example](/magic-wan/reference/configuration-examples/#gre-tunnel-configuration-example).
 
-### Add GRE tunnels
+### Add tunnels
 
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic WAN**.
 2.  Next to **Manage Magic WAN configuration**, click **Configure**.
