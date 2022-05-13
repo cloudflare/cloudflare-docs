@@ -14,19 +14,13 @@ Before you begin, make sure you already have an Account ID and API Key.
 
 ## IPsec process
 
-Review the information below to learn more about phases for IPsec connections.
+Review the information below to learn more about phases to establish IPsec connections.
 
- - **Negotiation or IKE phase 1**: Endpoints use IPsec to negotiate the set of policies used in the connection and has two modes: main and aggressive. Some solutions, like [EdgeConnect](/magic-wan/partners/aruba-edgeconnect/), only offer an aggressive mode. 
+ - **Initial Exchange:** (sometimes called Phase 1) IPsec peers negotiate and establish a secure tunnel between them for exchanging further IKE messages, including those exchanged in the Auth Exchange. Security Associations (SAs), for example crypto policies, established in this phase are often referred to as IKE SAs.
 
-    {{<Aside type="note" header="Note:">}}
+- **Auth Exchange:**: (sometimes called Phase 2) Using the secure tunnel established in the Initial Exchange, the IPsec peers further negotiate and establish an ESP IPsec tunnel that encrypts user traffic. Security Associations (SAs) established in this phase are often referred to as IPsec SAs or sometimes Child SAs.
 
-  The IKE aggressive mode ensures security but does not allow room for negotiation. With the main mode, negotiations continue until a consensus is reached.
-
-    {{</Aside>}}
-
-- **IPSec circuit or IKE Phase 2**: An IPsec circuit is established based on the authentication and encryption methods agreed upon in IKE Phase 1. During this phase, authentication and encryption during the data transmission phase is determined and random, cryptographic numbers are exchanged to authenticate sessions.
-
-- **IPSec transmission**: Actual data transmission using authentication and encryption established in IKE Phase 2.
+- **IPsec user data transmission:** User traffic is securely – encrypted and authenticated – transmitted between the IPsec peers in the ESP IPsec tunnel established at the end of the Auth Exchange.
 
 ## 1. Create IPsec tunnels
 
