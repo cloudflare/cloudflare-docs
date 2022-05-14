@@ -9,6 +9,8 @@ title: Deploy a Hugo site
 
 In this guide, you will create a new Hugo application and deploy it using Cloudflare Pages. You will use the `hugo` CLI to create a new Hugo site.
 
+_NB_. Jump to the [Deploying with Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-a-hugo-site/#deploying-with-cloudflare-pages) section if you already have a (working) Hugo site in your [Git Provider](https://developers.cloudflare.com/pages/get-started/#connect-to-your-git-provider).
+
 ## Installing Hugo
 
 First, install the Hugo CLI, using the specific instructions for your operating system below:
