@@ -14,11 +14,11 @@ You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare Zero T
 
 2. Click **Azure Active Directory** in the Azure Services section.
 
-![Navigating to Azure Active Directory on the Azure dashboard](/cloudflare-one/static/documentation/identity/azure/pick-azure-ad.png)
+![Navigating to Azure Active Directory on the Azure dashboard](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/azure/pick-azure-ad.png)
 
 3. Navigate to **Manage** > **App registrations** and click **+ New registration**.
 
-![Adding a new app in Azure](/cloudflare-one/static/documentation/identity/azure/click-new-reg.png)
+![Adding a new app in Azure](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/azure/click-new-reg.png)
 
 4. Name your application and select _Web_ from the **Select a platform** dropdown.
 
@@ -30,29 +30,29 @@ You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare Zero T
 
 6. Click **Register**.
 
-![Registering an application in Azure](/cloudflare-one/static/documentation/identity/azure/name-app.png)
+![Registering an application in Azure](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/azure/name-app.png)
 
 7. Copy the `Application (client) ID` and `Directory (tenant) ID`. You will need to input these values into the Cloudflare dashboard.
 
-![Application and Directory IDs in Azure](/cloudflare-one/static/documentation/identity/azure/client-directory-ids.png)
+![Application and Directory IDs in Azure](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/azure/client-directory-ids.png)
 
 8. To create an Application Secret, navigate to **Certificates & Secrets** and click **+ New client secret**.
 
 9. Name the client secret and choose an expiration. Click **Add**.
 
-![Adding a client secret in Azure](/cloudflare-one/static/documentation/identity/azure/name-client-cert.png)
+![Adding a client secret in Azure](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/azure/name-client-cert.png)
 
 10. Copy the `Value` field of the client secret. Treat this value like a password. This example leaves the value visible so the values in Azure can be seen in the Access configuration.
 
-![Viewing client secret in Azure](/cloudflare-one/static/documentation/identity/azure/client-cert-value.png)
+![Viewing client secret in Azure](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/azure/client-cert-value.png)
 
 11. Navigate to **API permissions** and click **Add a permission**.
 
-![Adding an API permission in Azure](/cloudflare-one/static/documentation/identity/azure/api-perms.png)
+![Adding an API permission in Azure](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/azure/api-perms.png)
 
 12. Click **Microsoft Graph**.
 
-![Selecting Microsoft Graph API in Azure](/cloudflare-one/static/documentation/identity/azure/microsoft-graph.png)
+![Selecting Microsoft Graph API in Azure](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/azure/microsoft-graph.png)
 
 13. Select **Delegated permissions**. You will need to toggle 7 specific permissions in the next page. Once toggled, click **Add permissions**.
 
@@ -64,11 +64,11 @@ You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare Zero T
     - Directory.Read.All
     - Group.Read.All
 
-![Configuring Microsoft Graph API permissions in Azure](/cloudflare-one/static/documentation/identity/azure/request-perms.png)
+![Configuring Microsoft Graph API permissions in Azure](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/azure/request-perms.png)
 
 14. Click **Grant Admin Consent for <your-account>**.
 
-![Configured permissions list in Azure](/cloudflare-one/static/documentation/identity/azure/configured-perms.png)
+![Configured permissions list in Azure](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/azure/configured-perms.png)
 
 15. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Authentication**.
 
@@ -92,11 +92,11 @@ Azure AD exposes directory groups in a format that consists of random strings, t
 
 2. On your Azure dashboard, note the `Object Id` for the Azure group. In the example below, the group named Admins has an ID of `61503835-b6fe-4630-af88-de551dd59a2`.
 
-![Viewing the Azure group IDs on the Azure dashboard](/cloudflare-one/static/documentation/identity/azure/object-id.png)
+![Viewing the Azure group IDs on the Azure dashboard](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/azure/object-id.png)
 
 3. When you create a Zero Trust policy for an Azure group, you will be prompted to enter the **Azure group ID**. Enter the `Object Id` for the Azure group.
 
-![Entering an Azure group ID on the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/azure/configure-group-n.png)
+![Entering an Azure group ID on the Zero Trust dashboard](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/azure/configure-group-n.png)
 
 ## Example API Configuration
 

@@ -36,17 +36,17 @@ Next, create a rule to block any subdomain that uses a particular host. This exa
 
     .*espn\.com
 
-![Block ESPN](/cloudflare-one/static/secure-web-gateway/block-football/block-espn.png)
+![Block ESPN](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-football/block-espn.png)
 
 Next, click **+ Add condition** to apply this rule to a specific user or group of users. This example uses the user email address. You can also build rules using your identity provider's directory groups.
 
-![Block ESPN](/cloudflare-one/static/secure-web-gateway/block-football/block-espn-sam.png)
+![Block ESPN](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-football/block-espn-sam.png)
 
 You can now select **Block** as the action. You can add optional text to present to the user in the block page.
 
 Next, click **Create policy** to save the rule.
 
-![ESPN List](/cloudflare-one/static/secure-web-gateway/block-football/after-block-espn.png)
+![ESPN List](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-football/after-block-espn.png)
 
 ## Integrate your identity provider
 
@@ -64,11 +64,11 @@ Next, build a rule to decide which devices can enroll in your account.
 
 1.  Click **Add a rule**.
 
-    ![Device Enrollment](/cloudflare-one/static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
+    ![Device Enrollment](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
 
     Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
 
-    ![Allow Cloudflare users](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
+    ![Allow Cloudflare users](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
 
 1.  Click **Save**.
 
@@ -91,7 +91,7 @@ Once the certificate has been installed, you can configure Gateway to inspect HT
 
 Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
 
-![Policy settings](/cloudflare-one/static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
+![Policy settings](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
 
 ## Enroll a device
 
@@ -99,19 +99,19 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
 1.  Once the client is installed, click the gear icon.
 
-    ![WARP](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
+    ![WARP](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
 
 1.  Under the **Account** tab, click **Login with Cloudflare Zero Trust**.
 
-    ![Account View](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/account-view.png)
+    ![Account View](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/secure-dns-devices/account-view.png)
 
 1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 
-    ![Team Name](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
+    ![Team Name](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
 
 The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`. These settings can be configured globally for an organization through a device management platform.
 
-![Confirm WARP](/cloudflare-one/static/secure-web-gateway/block-football/warp-mode.png)
+![Confirm WARP](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-football/warp-mode.png)
 
 ## Confirm blocks
 
@@ -119,4 +119,4 @@ When users visit that section of Reddit (and any page within it), they will see 
 
 You can review the blog event in the HTTP logs. Navigate to the `Gateway` page in the `Logs` section of the Zero Trust dashboard. Filter for `Block` as the decision type.
 
-![Block Log](/cloudflare-one/static/secure-web-gateway/block-football/block-log.png)
+![Block Log](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-football/block-log.png)

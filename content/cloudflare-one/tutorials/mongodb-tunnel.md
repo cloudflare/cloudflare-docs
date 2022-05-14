@@ -37,11 +37,11 @@ You can build a rule in Cloudflare Access to control who can connect to your Mon
 
 4.  Create an application for a subdomain where users will connect to your deployment. Click **Next**.
 
-    ![Apps](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-app.png)
+    ![Apps](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-app.png)
 
 5.  Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](/cloudflare-one/tutorials/okta-u2f/), or [country](/cloudflare-one/tutorials/country-rules/).
 
-    ![Apps](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-rules.png)
+    ![Apps](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-rules.png)
 
 6.  Click **Next** again and add the application.
 
@@ -208,13 +208,13 @@ Once installed, run the following command to authenticate the instance of `cloud
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account.
 
-![Choose Site](/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
+![Choose Site](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
 
 Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
 You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
-![Download Cert](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
+![Download Cert](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
 
 ### Create a Tunnel
 
@@ -226,7 +226,7 @@ Run the following command to create a Tunnel. You can replace `mongodb` with any
 
 Cloudflare will create the Tunnel with that name and generate an ID and credentials file for that Tunnel.
 
-![New Tunnel](/cloudflare-one/static/secure-origin-connections/share-new-site/create.png)
+![New Tunnel](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/share-new-site/create.png)
 
 ### Delete the `cert.pem` file
 
@@ -326,4 +326,4 @@ This is a one-time step. When you next attempt to make an SSH connection to the 
 
 You can then set MongoDB Compass to connect to `localhost:27000`.
 
-![Compass Config](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/compass-config.png)
+![Compass Config](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/compass-config.png)

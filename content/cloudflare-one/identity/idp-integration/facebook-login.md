@@ -12,7 +12,7 @@ Use these steps to set up Facebook as your identity provider.
 
 1.  Click **Create App** at the top-right.
 
-    ![Facebook IdP Login page](/cloudflare-one/static/documentation/identity/facebook/fb1.png)
+    ![Facebook IdP Login page](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/facebook/fb1.png)
 
     The **Create a New App ID** card displays.
 
@@ -26,7 +26,7 @@ Use these steps to set up Facebook as your identity provider.
 
 1.  On the **Facebook Login** card, click **Set Up**.
 
-    ![Facebook Add a Product](/cloudflare-one/static/documentation/identity/facebook/fb3.png)
+    ![Facebook Add a Product](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/facebook/fb3.png)
 
     A Quickstart card displays offering platform choices.
 
@@ -40,7 +40,7 @@ Use these steps to set up Facebook as your identity provider.
 
 1.  Click **Settings > Basic** on the left-hand menu.
 
-    ![Facebook Settings](/cloudflare-one/static/documentation/identity/facebook/fb6.png)
+    ![Facebook Settings](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/facebook/fb6.png)
 
 1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 

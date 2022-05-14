@@ -26,7 +26,7 @@ You can use Cloudflare Gateway to block DNS queries a entire top level domain (T
 
 Visit the Zero Trust dashboard. Open the `Policies` page in the Gateway section and select the `DNS` tab.
 
-![Dashboard](/cloudflare-one/static/secure-web-gateway/block-tld/policies.png)
+![Dashboard](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-tld/policies.png)
 
 Click **Create a policy**. In the policy builder, name the policy and optionally provide a description.
 
@@ -36,13 +36,13 @@ Choose `Domain` in the Selector, `matches regex` in the Operator, and input the 
 
 Replacing `fail` with the TLD you intend to block.
 
-![Fail Policy](/cloudflare-one/static/secure-web-gateway/block-tld/block-fail.png)
+![Fail Policy](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-tld/block-fail.png)
 
 Choose `Block` as the action. Optionally, enable the block page to present a block page to users. Users must have the Cloudflare certificate installed to see the block page.
 
 Finish the policy by clicking **Create policy**.
 
-![Block Action](/cloudflare-one/static/secure-web-gateway/block-tld/block-action.png)
+![Block Action](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-tld/block-action.png)
 
 Input the TLD you need to block. If you need to block `.fail` remove the leading `.` and only input `fail`. Click **Add to policy** and save the policy.
 
@@ -56,8 +56,8 @@ For more information on how policies work with regular expressions, refer to [Ca
 
 You can test your policy by attempting to visit a domain with the blocked TLD. To review logs of the block, navigate to the `Logs` section of the Zero Trust dashboard, select `Gateway`, and choose the `DNS` tab.
 
-![Logs](/cloudflare-one/static/secure-web-gateway/block-tld/review-logs-start.png)
+![Logs](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-tld/review-logs-start.png)
 
 You can filter for events by policy. Select the name of the policy in the `Policy` drop down menu.
 
-![Logs](/cloudflare-one/static/secure-web-gateway/block-tld/review-logs-filter.png)
+![Logs](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-tld/review-logs-filter.png)

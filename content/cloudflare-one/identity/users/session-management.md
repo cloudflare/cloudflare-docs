@@ -31,7 +31,7 @@ When users log in to an application protected by Access, Access generates two se
 
 You can configure the duration of both tokens on the dashboard. When users log in, the global session token will default to the duration of the application token. You can configure the duration of the global session token to be shorter or longer than the application’s session token.
 
-![Global session](/cloudflare-one/static/documentation/identity/users/global-session.png)
+![Global session](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/users/global-session.png)
 
 - If the global session duration is **shorter** than an application’s session length, users will be required to re-authenticate each time the global session time elapses.
 
@@ -57,7 +57,7 @@ To immediately terminate all active sessions for a specific application:
 
 1.  In the Overview page, click **Revoke existing tokens**.
 
-![revoke-users](/cloudflare-one/static/documentation/identity/users/revoke-token.png)
+![revoke-users](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/users/revoke-token.png)
 
 Unless there are changes to rules in the policy, users can generate a new token during authentication if their profile in your identity provider is still active.
 
@@ -73,11 +73,11 @@ If you want to permanently revoke a user's access:
 
     Users who have authenticated in the current calendar month will be displayed. Search for or select the user you need to revoke.
 
-    ![revoke-users](/cloudflare-one/static/documentation/identity/users/connected-user-list.png)
+    ![revoke-users](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/users/connected-user-list.png)
 
 1.  Click **Revoke session** and confirm.
 
-![revoke-users](/cloudflare-one/static/documentation/identity/users/revoke-user-session.png)
+![revoke-users](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/users/revoke-user-session.png)
 
 ### Subsequent Logins
 
@@ -103,7 +103,7 @@ To reach the settings menu:
 
 1.  Select **Settings**.
 
-![Settings menu](/cloudflare-one/static/documentation/identity/users/cookies.png)
+![Settings menu](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/users/cookies.png)
 
 ### HTTP Only
 

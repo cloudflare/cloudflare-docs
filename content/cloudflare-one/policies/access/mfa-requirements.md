@@ -24,7 +24,7 @@ To enforce an MFA requirement to an application:
 
 1.  If your application already has a rule containing an identity requirement, find it and click **Edit**.
 
-![Identity rule](/cloudflare-one/static/documentation/applications/identity-rule.png)
+![Identity rule](https://developers.cloudflare.com/cloudflare-one/static/documentation/applications/identity-rule.png)
 
 The rule must contain an Include rule which defines an identity. For example, the Include rule should allow for users who are part of a user [group](/cloudflare-one/identity/users/groups/), email domain, or identity provider group.
 
@@ -32,7 +32,7 @@ The rule must contain an Include rule which defines an identity. For example, th
 
 1.  Select _Authentication Method_ and choose `mfa - multiple-factor authentication`.
 
-![MFA](/cloudflare-one/static/documentation/applications/mfa.png)
+![MFA](https://developers.cloudflare.com/cloudflare-one/static/documentation/applications/mfa.png)
 
 1.  Save the rule.
 

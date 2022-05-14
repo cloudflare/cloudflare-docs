@@ -111,7 +111,7 @@ If your IdP is not listed above, here is how you can determine which Gateway sel
 3. In the **Include** dropdown, select your IdP group.
 
     A text field will appear and prompt for either group names, group IDs, or SAML attributes. In the example below, we see that Okta groups will use the _User Group Names_ selector in Gateway.
-    ![Determining the Gateway selector for an Okta group](/cloudflare-one/static/documentation/policies/identity-selector-group-names.png)
+    ![Determining the Gateway selector for an Okta group](https://developers.cloudflare.com/cloudflare-one/static/documentation/policies/identity-selector-group-names.png)
 
 {{<Aside type="note">}}
 Gateway retrieves a user's IdP data at the time of login. Therefore, if you add or remove a user from a group in your IdP, Gateway will not detect these changes until the user re-authenticates to your Zero Trust instance. There are two ways a user can re-authenticate:

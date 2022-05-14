@@ -11,7 +11,7 @@ Magic WAN steers traffic along static routes based on priorities you define duri
 
 The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
 
-![Example route priorities](/magic-transit/static/mt-traffic-steering-ecmp-baseline.png)
+![Example route priorities](https://developers.cloudflare.com/magic-transit/static/mt-traffic-steering-ecmp-baseline.png)
 
 When there are multiple routes with equal priority and different next-hops, Cloudflare uses equal-cost multi-path (ECMP) routing. An example of multiple routes with equal priority would be Tunnel 1 and Tunnel 2.
 
@@ -39,7 +39,7 @@ This diagram illustrates how ECMP distributes traffic equally across 2 paths wit
 </summary>
   <div class="special-class" markdown="1">
 
-![ECMP diagram of health network](/magic-transit/static/mt-traffic-steering-ecmp-normal.png)
+![ECMP diagram of health network](https://developers.cloudflare.com/magic-transit/static/mt-traffic-steering-ecmp-normal.png)
 
 </div>
 </details>
@@ -52,7 +52,7 @@ When Magic WAN health checks determine that Tunnel 2 is unhealthy, that route is
 </summary>
   <div class="special-class" markdown="1">
 
-![ECMP diagram of unhealthy Tunnel 2](/magic-transit/static/mt-traffic-steering-ecmp-failure-1.png)
+![ECMP diagram of unhealthy Tunnel 2](https://developers.cloudflare.com/magic-transit/static/mt-traffic-steering-ecmp-failure-1.png)
 
 </div>
 </details>
@@ -65,7 +65,7 @@ When Magic WAN determines that Tunnel 1 is unhealthy as well, that route is also
 </summary>
   <div class="special-class" markdown="1">
 
-![ECMP diagram of unhealthy Tunnels 1 and 2](/magic-transit/static/mt-traffic-steering-ecmp-failure-2.png)
+![ECMP diagram of unhealthy Tunnels 1 and 2](https://developers.cloudflare.com/magic-transit/static/mt-traffic-steering-ecmp-failure-2.png)
 
 </div>
 </details>

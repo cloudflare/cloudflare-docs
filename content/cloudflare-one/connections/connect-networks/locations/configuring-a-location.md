@@ -26,7 +26,7 @@ If any of the above apply to your case, click **Delete** to the right of the IPv
 If you're using an Enterprise plan, you'll be able to manually change the IPv4 address.
 {{</Aside>}}
 
-![Add location](/cloudflare-one/static/documentation/connections/add-location.png)
+![Add location](https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/add-location.png)
 
 1.  Select any policies you want to apply to this location.
 
@@ -36,10 +36,10 @@ If you're using an Enterprise plan, you'll be able to manually change the IPv4 a
 
 1.  This will show you your location's details, and instructions on how to change DNS resolvers on your router, browser, or OS.
 
-    ![Location setup](/cloudflare-one/static/documentation/connections/location-setup-instructions.png)
+    ![Location setup](https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/location-setup-instructions.png)
 
 1.  Click **Done**.
 
 Your location is now listed under **Gateway > Locations**.
 
-![Location added](/cloudflare-one/static/documentation/connections/added-location.png)
+![Location added](https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/added-location.png)

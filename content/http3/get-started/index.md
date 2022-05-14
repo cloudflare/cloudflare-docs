@@ -30,4 +30,4 @@ HTTP/3 can easily be turned on for a domain in the dashboard.
 
 Enabling the toggle allows compatible clients to connect to it using HTTP/3 but does not affect existing clients using HTTP/1.1 or HTTP/2.
 
-![Enable HTTP/3 on the dashboard](/http3/static/enable-dashboard.png)
+![Enable HTTP/3 on the dashboard](https://developers.cloudflare.com/http3/static/enable-dashboard.png)

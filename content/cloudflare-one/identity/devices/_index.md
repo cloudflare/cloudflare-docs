@@ -34,4 +34,4 @@ On desktop clients, you can always verify which device posture checks are active
 
 This will show a list of active device posture checks.
 
-![Device posture attributes](/cloudflare-one/static/documentation/identity/devices/device-posture-client-ui.png)
+![Device posture attributes](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/devices/device-posture-client-ui.png)

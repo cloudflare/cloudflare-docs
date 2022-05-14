@@ -29,7 +29,7 @@ If you want to send your DNS queries over an encrypted connection, you can use t
 
 Gateway uses different ways to match a DNS query to locations depending on the type of request and network. This is how Gateway determines the location of a DNS query:
 
-![Determine location](/cloudflare-one/static/documentation/policies/gateway-determine-location-dns.png)
+![Determine location](https://developers.cloudflare.com/cloudflare-one/static/documentation/policies/gateway-determine-location-dns.png)
 
 1.  **Step 1**: Gateway checks whether the query was sent using DNS over HTTPS. If yes, Gateway looks up the location by its unique hostname.
 
@@ -53,13 +53,13 @@ Gateway uses the public source IPv4 address of your network to identify your loc
 
 Users on the Enterprise plan have the option of manually entering one or more IP addresses of their choice. This enables them to protect networks even if they're not connecting from any of those networks' IP addresses when creating the location on the Zero Trust dashboard.
 
-![Editable IP address](/cloudflare-one/static/documentation/policies/editable-ip-address.png)
+![Editable IP address](https://developers.cloudflare.com/cloudflare-one/static/documentation/policies/editable-ip-address.png)
 
 {{<Aside type="note" header="Your IPv4 address is taken">}}
 
 When trying to configure a location over IPv4, you may run into this error:
 
-![Source IP taken](/cloudflare-one/static/documentation/connections/source-ip-taken.png)
+![Source IP taken](https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/source-ip-taken.png)
 
 This may mean someone else in the same network signed up for Cloudflare Gateway before you did. If your network supports IPv6, you can still use Cloudflare Gateway's DNS filtering by sending DNS queries over IPv1. You can also use the DNS over HTTPS hostname to send queries using a DNS over HTTPS client.
 
@@ -81,7 +81,7 @@ Each location has a unique hostname for DNS over TLS.
 
 Cloudflare Gateway will identify your location based on the DNS over TLS hostname.
 
-![Get unique subdomain](/cloudflare-one/static/documentation/connections/get-unique-subdomain.png)
+![Get unique subdomain](https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/get-unique-subdomain.png)
 
 ### DNS over HTTPS
 
@@ -89,7 +89,7 @@ Each location has a unique hostname for DNS over HTTPS.
 
 Cloudflare Gateway will identify your location based on the DNS over HTTPS hostname.
 
-![DNS over HTTPS hostname](/cloudflare-one/static/documentation/policies/location-with-dns-over-https-hostname.png)
+![DNS over HTTPS hostname](https://developers.cloudflare.com/cloudflare-one/static/documentation/policies/location-with-dns-over-https-hostname.png)
 
 #### DoH subdomain
 

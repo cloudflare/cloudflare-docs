@@ -32,7 +32,7 @@ This Plugin is based on the `@cloudflare/workers-honeycomb-logger` and accepts t
 
 Ensure that you enable the option to **Automatically unpack nested JSON** and set the **Maximum unpacking depth** to **5** in your Honeycomb dataset settings.
 
-![Follow the instructions above to toggle on Automatically unpack nested JSON and set the Maximum unpacking depth option to 5 in the Honeycomb dashboard](/pages/platform/functions/plugins/honeycomb.png)
+![Follow the instructions above to toggle on Automatically unpack nested JSON and set the Maximum unpacking depth option to 5 in the Honeycomb dashboard](https://developers.cloudflare.com/pages/platform/functions/plugins/honeycomb.png)
 
 ### Additional context
 

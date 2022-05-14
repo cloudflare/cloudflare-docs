@@ -16,11 +16,11 @@ Cloudflare Browser Isolation complements the Secure Web Gateway and Zero Trust N
 
 Remote browsing is invisible to the user who continues to use their browser normally without changing their preferred browser and habits. Every open tab and window is automatically isolated.
 
-![Diagram of how Browser Isolation integrates with WARP and Gateway](/cloudflare-one/static/documentation/rbi/cloudflare-one-browser-diagram-background.png)
+![Diagram of how Browser Isolation integrates with WARP and Gateway](https://developers.cloudflare.com/cloudflare-one/static/documentation/rbi/cloudflare-one-browser-diagram-background.png)
 
 Just like Gateway allows you to define policies to filter traffic based on content categories or security threats, with Browser Isolation you can define policies to dynamically isolate websites based on identity, security threats, or content. To build Browser Isolation policies, navigate to **Policies** > **HTTP policies** on the Zero Trust Dashboard. In the rule builder, choose the *Isolate* or *Do not Isolate* actions to enable or disable isolation for certain websites or content.
 
-![Browser isolation policy](/cloudflare-one/static/documentation/policies/bi-policy.png)
+![Browser isolation policy](https://developers.cloudflare.com/cloudflare-one/static/documentation/policies/bi-policy.png)
 
 ## Prerequisites
 

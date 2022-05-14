@@ -12,7 +12,7 @@ To use an IP List in the [Expression Builder](/firewall/cf-dashboard/edit-expres
 
 1. Select _is in list_ or _is not in list_ from the **Operator** drop-down list.
 
-    ![Selecting an IP List from the Value drop-down list when configuring the expression of a firewall rule](/firewall/static/cf-open-proxies-list.png)
+    ![Selecting an IP List from the Value drop-down list when configuring the expression of a firewall rule](https://developers.cloudflare.com/firewall/static/cf-open-proxies-list.png)
 
 1. Select an IP List from the **Value** drop-down list.
 

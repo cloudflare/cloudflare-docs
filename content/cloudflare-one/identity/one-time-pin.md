@@ -20,7 +20,7 @@ This is the workflow for your guest user:
 
 1.  Then, they will enter their email address and click **Send me a code**.
 
-    ![Login page](/cloudflare-one/static/documentation/identity/otp/otp1.png)
+    ![Login page](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/otp/otp1.png)
 
     Access will send a one-time PIN they can use to authenticate. This secure PIN expires 10 minutes after the initial request.
 
@@ -28,7 +28,7 @@ This is the workflow for your guest user:
 
 1.  Next, they will paste the PIN in the login page and click **Sign in**.
 
-    ![PIN field](/cloudflare-one/static/documentation/identity/otp/otp2.png)
+    ![PIN field](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/otp/otp2.png)
 
 Access will then log them in.
 

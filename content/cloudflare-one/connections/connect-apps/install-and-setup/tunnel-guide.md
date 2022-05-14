@@ -38,7 +38,7 @@ Follow this step-by-step guide to get your first tunnel up and running using the
 
 6. Once the command has finished running, your connector will appear on the Zero Trust dashboard.
 
-    ![Connector appearing in the UI after cloudflared has run](/cloudflare-one/static/documentation/connections/connect-apps/connector.png)
+    ![Connector appearing in the UI after cloudflared has run](https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/connect-apps/connector.png)
 
 7. Click **Next**.
 
@@ -68,7 +68,7 @@ Follow these steps to connect a private network through your tunnel.
 
 Once you click **Save `<tunnel-name>`**, you will be redirected to the **Tunnels** page. Look for your new tunnel to be listed along with its active connector.
 
-![Tunnel appearing in the Tunnels table](/cloudflare-one/static/documentation/connections/connect-apps/tunnel-table.png)
+![Tunnel appearing in the Tunnels table](https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/connect-apps/tunnel-table.png)
 
 {{<Aside type="note" header="Troubleshooting">}}
  

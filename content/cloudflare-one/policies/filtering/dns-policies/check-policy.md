@@ -22,11 +22,11 @@ If you are using a policy to block `example.com`, you can do the following to se
 
 1.  If the Block page is **disabled** for the policy, then you should see `REFUSED` in the answer section:
 
-![Blocked when block page disabled](/cloudflare-one/static/documentation/faq/blocked-disabled.png)
+![Blocked when block page disabled](https://developers.cloudflare.com/cloudflare-one/static/documentation/faq/blocked-disabled.png)
 
 If the Block page is **enabled** for the policy, then you should see `NOERROR` in the answer section and `162.159.36.12` and `162.159.46.12` as the answers when the domain is successfully blocked.
 
-![Blocked when block page enabled](/cloudflare-one/static/documentation/faq/blocked-enabled.png)
+![Blocked when block page enabled](https://developers.cloudflare.com/cloudflare-one/static/documentation/faq/blocked-enabled.png)
 
 ## Test a DNS policy
 

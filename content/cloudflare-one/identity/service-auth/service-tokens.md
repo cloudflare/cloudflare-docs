@@ -28,7 +28,7 @@ This section covers how to create, renew, and revoke a service token.
 
     The name allows you to easily identify events related to the token in the logs and to revoke the token individually.
 
-    ![Name Service Token](/cloudflare-one/static/documentation/identity/users/service-token-name.png)
+    ![Name Service Token](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/users/service-token-name.png)
 
 1.  Click **Generate token**.
 
@@ -36,7 +36,7 @@ This section covers how to create, renew, and revoke a service token.
 
 1.  In the next page, copy the `Client Secret`.
 
-    ![Access Service Token card](/cloudflare-one/static/documentation/identity/users/detail-service-token.png)
+    ![Access Service Token card](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/users/detail-service-token.png)
 
     {{<Aside type="warning" header="Important">}}This is the **only time** Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
     {{</Aside>}}
@@ -92,7 +92,7 @@ To configure a service token expiration alert:
 
 1.  Enter a name for your alert, and an optional description.
 
-    ![Expiration notification](/cloudflare-one/static/documentation/identity/users/notification-token.png)
+    ![Expiration notification](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/users/notification-token.png)
 
 1.  If you'd like to add other recipients for the notification email, click _+Add email recipient_.
 

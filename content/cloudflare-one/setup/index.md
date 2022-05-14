@@ -22,7 +22,7 @@ Welcome to Cloudflare Zero Trust. This guide covers the main steps you need to t
 
 4. Welcome to the Zero Trust dashboard! Your account has been created. You can now explore a list of one-click actions we have designed to help you kickstart your experience with Cloudflare Zero Trust.
 
-    ![Cloudflare Zero Trust Dashboard Home](/cloudflare-one/static/documentation/quickstart/quickstart-page.png)
+    ![Cloudflare Zero Trust Dashboard Home](https://developers.cloudflare.com/cloudflare-one/static/documentation/quickstart/quickstart-page.png)
 
 ## Install the WARP client on your devices
 

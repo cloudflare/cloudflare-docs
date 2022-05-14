@@ -27,11 +27,11 @@ This walkthrough extends a [previous guide](/cloudflare-one/tutorials/gitlab/) t
 
 Navigate to the Access section of the Zero Trust dashboard and select the `Service Auth` page.
 
-![Service Auth Start](/cloudflare-one/static/zero-trust-security/ssh-tokens/service-auth-start.png)
+![Service Auth Start](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh-tokens/service-auth-start.png)
 
 Click **Create Service Token** and name the service token. Cloudflare Access will generate a `Client ID` and `Client Secret`. You must copy the `Client Secret` from this page - it will not be shown again.
 
-![Name and Detail](/cloudflare-one/static/zero-trust-security/ssh-tokens/name-and-detail.png)
+![Name and Detail](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh-tokens/name-and-detail.png)
 
 {{<Aside>}}
 
@@ -45,23 +45,23 @@ Next, find the application that should be available to services connecting with 
 
 Select the `Applications` page in the Access section of the Zero Trust dashboard. Locate the application and click **Edit**.
 
-![App List](/cloudflare-one/static/zero-trust-security/ssh-tokens/app-list.png)
+![App List](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh-tokens/app-list.png)
 
 The rule currently shown is the identity-based rule that allows team members to connect. Click **Add a Rule** to allow services.
 
-![Start App](/cloudflare-one/static/zero-trust-security/ssh-tokens/start-app.png)
+![Start App](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh-tokens/start-app.png)
 
 The dropdown for `Rule Action` defaults to `Allow`. To use a service token, you must select `Service Auth` instead.
 
-![Non ID Rule](/cloudflare-one/static/zero-trust-security/ssh-tokens/choose-service-auth.png)
+![Non ID Rule](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh-tokens/choose-service-auth.png)
 
 In the rule configuration card, select `Service Token` from the dropdown. Choose the name of one or more service tokens that can authenticate. Click **Save rule**.
 
-![Non ID Rule](/cloudflare-one/static/zero-trust-security/ssh-tokens/non-id-rule.png)
+![Non ID Rule](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh-tokens/non-id-rule.png)
 
 You should now see the `Service Auth` rule on a new line in the next page. Click **Save application** to save the changes made.
 
-![Non ID Rule](/cloudflare-one/static/zero-trust-security/ssh-tokens/rule-list.png)
+![Non ID Rule](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh-tokens/rule-list.png)
 
 ## Connect from `cloudflared`
 

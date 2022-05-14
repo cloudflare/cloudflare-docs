@@ -34,11 +34,11 @@ There are 2 branch offices each with distinct subnets.
 - The east branch office has a 10.3.0.0/16 network with an EdgeConnect terminating the Anycast GRE tunnel.
 - The west branch office has a 10.30.0.0/16 network with an EdgeConnect terminating the Anycast GRE tunnel.
 
-![Table of branch subnet information](/magic-wan/static/branch-subnets.png)
+![Table of branch subnet information](https://developers.cloudflare.com/magic-wan/static/branch-subnets.png)
 
 Below are examples of the **east_branch** deployment on the Orchestrator.
 
-![GCP East deployment configuraiton](/magic-wan/static/east-branch-deployment.png)
+![GCP East deployment configuraiton](https://developers.cloudflare.com/magic-wan/static/east-branch-deployment.png)
 
 The Deployment screenshot displays several different IP addresses and interfaces. From left to right:
 - **Next Hop 10.3.0.1**  - Our example uses Google Cloud. This IP defines the default gateway IP for the subnet and is built into GCP. 
@@ -60,7 +60,7 @@ To create the overlay policy:
 
 1. Create a compound application, which is a combination of all [Cloudflare public IPs](https://www.cloudflare.com/ips/) and ICMP packets.
 
-![Application definition screen with IP values](/magic-wan/static/app-definition.png)
+![Application definition screen with IP values](https://developers.cloudflare.com/magic-wan/static/app-definition.png)
 
 2. Create a breakout Business Intent Overlay (BIO) to bypass the GRE tunnel as the first policy and use this newly created application as the match criteria. 
 
@@ -68,22 +68,22 @@ To create the overlay policy:
 
 The service name used to send traffic through the tunnel created in the next step is **Cloudflare_GRE**. The example uses **Match Everything** to send all other traffic through the established tunnel (both private east-west traffic & Internet bound north-south traffic through Cloudflare’s Secure Web Gateway). 
 
-![Business Intent Overlay screen with breakout and CF overlays](/magic-wan/static/biz-intent-overlay.png)
+![Business Intent Overlay screen with breakout and CF overlays](https://developers.cloudflare.com/magic-wan/static/biz-intent-overlay.png)
 
 ## 3. Create tunnels on Cloudflare and EdgeConnect
 
-![Diagram of GCP, Aruba Orchestratror, and Cloudflare products](/magic-wan/static/gcp-edgeconnect-diagram.png)
+![Diagram of GCP, Aruba Orchestratror, and Cloudflare products](https://developers.cloudflare.com/magic-wan/static/gcp-edgeconnect-diagram.png)
 
 1. Create a tunnel on the EdgeConnect using Cloudflare’s assigned public Anycast IP and the service used in the overlay policy in the [previous step](#2-configure-overlay-policies). 
 2. Create a Virtual Tunnel Interface (VTI) using the private IP pair shared with CF GRE tunnel endpoint and the passthrough tunnel to match the newly created tunnel alias (**CF_GRE_east** in our example).
 
-![Modify Passthrough Tunnel screen](/magic-wan/static/modify-passthrough.png)
+![Modify Passthrough Tunnel screen](https://developers.cloudflare.com/magic-wan/static/modify-passthrough.png)
 
-![Edit Virtual Tunnel Interface screen](/magic-wan/static/edit-vti.png)
+![Edit Virtual Tunnel Interface screen](https://developers.cloudflare.com/magic-wan/static/edit-vti.png)
 
 3. Define a GRE tunnel on the Cloudflare dashboard using the EdgeConnect appliance’s public IP and the private IP pair /31 shared with the appliance. 
 
-![GRE tunnels information for each branch](/magic-wan/static/gre-tunnels-edgeconnect.png)
+![GRE tunnels information for each branch](https://developers.cloudflare.com/magic-wan/static/gre-tunnels-edgeconnect.png)
 
 ## 4. Create static routes on Cloudflare and EdgeConnect
 
@@ -91,13 +91,13 @@ The service name used to send traffic through the tunnel created in the next ste
 
     In the example below, the traffic to subnet 10.3.0.0/16 attached to the **east_branch** EdgeConnect appliance has a next hop of 10.40.8.10.
 
-![Static route information for each branch](/magic-wan/static/static-routes-cf.png)
+![Static route information for each branch](https://developers.cloudflare.com/magic-wan/static/static-routes-cf.png)
 
 2. Define static routes on the Orchestrator so Cloudflare can route traffic between sites. 
 
     In the example below, we create a route for the subnet 10.30.0.0/24 on the **west_branch** to be routed via the established GRE tunnel between the EdgeConnect appliance and Cloudflare.
 
-![Static route information for each branch](/magic-wan/static/static-routes-edgeconnect.png)
+![Static route information for each branch](https://developers.cloudflare.com/magic-wan/static/static-routes-edgeconnect.png)
 
 ## 5. Validate traffic flow
 
@@ -105,17 +105,17 @@ The service name used to send traffic through the tunnel created in the next ste
 
 To validate traffic flow from the local subnet through Cloudflare’s Secure Web Gateway, perform a curl as show in the example below.
 
-![Curl example for validating Secure Web Gateway](/magic-wan/static/validate-swg-curl.png)
+![Curl example for validating Secure Web Gateway](https://developers.cloudflare.com/magic-wan/static/validate-swg-curl.png)
 
 You can validate the request went through Gateway with the presence of the `Cf-Team` response header, or by looking at the logs in the dashboard under **Logs** > **Gateway** > **HTTP**.
 
-![Dashboard example for validating Secure Web Gateway](/magic-wan/static/dash-validate-swg.png)
+![Dashboard example for validating Secure Web Gateway](https://developers.cloudflare.com/magic-wan/static/dash-validate-swg.png)
 
 ### Validate east-west traffic
 
 To validate east-west traffic flow, perform a traceroute as shown in the example.
 
-![Traceroute example for verifying east-west traffic](/magic-wan/static/validate-traceroute.png)
+![Traceroute example for verifying east-west traffic](https://developers.cloudflare.com/magic-wan/static/validate-traceroute.png)
 
 The example shows a client in GCP East (10.3.0.3), which can ping the private IP of a client in GCP West (10.30.0.4). 
 

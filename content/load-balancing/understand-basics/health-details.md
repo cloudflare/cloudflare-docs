@@ -20,7 +20,7 @@ Dynamic load balancing happens through a combination of:
 - [**Monitors**](/load-balancing/understand-basics/monitors/): Are attached to individual origin servers and issue health checks at regular intervals.
 - **Health checks**: Are issued by a monitor at regular interval and — depending on the monitor settings — return a **pass** or **fail** value to make sure an origin is still able to receive traffic.
 
-![Dynamic load balancing involves pools, origins, monitors, and health checks](/load-balancing/static/images/load-balancer-components.png)
+![Dynamic load balancing involves pools, origins, monitors, and health checks](https://developers.cloudflare.com/load-balancing/static/images/load-balancer-components.png)
 
 ---
 

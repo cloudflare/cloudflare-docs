@@ -19,7 +19,7 @@ Both interfaces are available in the **Create firewall rule** page.
 
 The Expression Builder allows you to visually create rule expressions by using drop-down lists and entering field values to define one or multiple sub-expressions.
 
-![The Expression Builder interface used to visually define expressions](/firewall/static/firewall-rules-expression-builder-0.png)
+![The Expression Builder interface used to visually define expressions](https://developers.cloudflare.comhttps://developers.cloudflare.com/firewall/static/firewall-rules-expression-builder-0.png)
 
 The **Expression Preview** displays the expression in text:
 
@@ -31,7 +31,7 @@ The **Expression Preview** displays the expression in text:
 
 The **Expression Editor** is a text-only interface for defining rule expressions that supports the entire specification of Cloudflare's [Rules language](/ruleset-engine/rules-language/), including parentheses as grouping symbols.
 
-![The Expression Editor used to enter advanced expressions](/firewall/static/firewall-rules-expression-editor-0.png)
+![The Expression Editor used to enter advanced expressions](https://developers.cloudflare.com/firewall/static/firewall-rules-expression-editor-0.png)
 
 To access the Expression Editor, click **Edit expression** in the **Create firewall rule** page:
 

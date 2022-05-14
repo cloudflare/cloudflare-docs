@@ -21,7 +21,7 @@ Each Gateway location has a unique DoT hostname. Locations and corresponding DoT
 
 In the example below, the DoT hostname is: `9y65g5srsm.cloudflare-gateway.com`.
 
-![Getting the DoT hostname for a location from the dashboard](/cloudflare-one/static/documentation/connections/get-unique-subdomain.png)
+![Getting the DoT hostname for a location from the dashboard](https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/get-unique-subdomain.png)
 
 Next, configure your DoT client with the DoT hostname.
 

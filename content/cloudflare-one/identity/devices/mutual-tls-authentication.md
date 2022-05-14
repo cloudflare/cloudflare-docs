@@ -29,7 +29,7 @@ With a root certificate authority (CA) in place, Access only allows requests fro
 
 Currently, mTLS does not work with HTTP3 traffic.
 
-![mTLS Diagram](/cloudflare-one/static/documentation/identity/devices/mtls.png)
+![mTLS Diagram](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/devices/mtls.png)
 
 ## Add mTLS authentication to your Access configuration
 
@@ -59,7 +59,7 @@ To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.team
 
     The policy must be built with a hostname that was associated in the certificate upload modal. If this is for a client who does not need to log in through an IdP, select **Service Auth** from the drop-down for _Rule Action_. In the Include rule, you can pick from two options for mTLS authentication or both.
 
-    ![mTLS Policy](/cloudflare-one/static/documentation/identity/devices/create-mtls-rule.png)
+    ![mTLS Policy](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/devices/create-mtls-rule.png)
 
     | Option                | Result                                                                                    |
     | --------------------- | ----------------------------------------------------------------------------------------- |
@@ -70,7 +70,7 @@ To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.team
 9.  On the **Edit Application** page, navigate to **Application > Overview**.
 10. Set the application session duration to `no duration, expires immediately`. This ensures the certificate is checked on every request.
 
-![mTLS session duration](/cloudflare-one/static/documentation/identity/devices/mutual-tls-session-duration.png)
+![mTLS session duration](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/devices/mutual-tls-session-duration.png)
 
 {{<Aside type="warning">}}
 

@@ -14,7 +14,7 @@ Okta provides cloud software that helps companies manage and secure user authent
 2. Click **Create App Integration**.
 3. For the **Sign-in method**, select **OIDC - OpenID Connect**.
 
-![Creating an OIDC application in Okta](/cloudflare-one/static/documentation/identity/okta/okta-1.png)
+![Creating an OIDC application in Okta](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/okta/okta-1.png)
 
 4. For the **Application type**, select **Web Application**. Click **Next**.
 
@@ -30,13 +30,13 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 8. Scroll down to the **OpenID ConnectID Token** and click **Edit**.
 
-    ![Configuring the Groups claim filter in Okta](/cloudflare-one/static/documentation/identity/okta/okta-2.png)
+    ![Configuring the Groups claim filter in Okta](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/okta/okta-2.png)
 
 9. Set the **Groups claim filter** to _Matches regex_ and its value to `.*`.
 
 10. In the **General** tab, copy the **Client ID**, **Client secret**, and **Okta domain**.
 
-    ![Finding your Client credentials and Okta domain in Okta](/cloudflare-one/static/documentation/identity/okta/okta-3.png)
+    ![Finding your Client credentials and Okta domain in Okta](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/okta/okta-3.png)
 
 11. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Authentication**.
 

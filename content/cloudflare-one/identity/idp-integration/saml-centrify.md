@@ -14,7 +14,7 @@ To set up SAML with Centrify as your identity provider:
 
 1.  Log in to your **Centrify** admin portal and click **Apps**.
 
-    ![Centrify Apps page](/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-1.png)
+    ![Centrify Apps page](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-1.png)
 
 1.  Select **Add Web Apps**.
 
@@ -22,7 +22,7 @@ To set up SAML with Centrify as your identity provider:
 
 1.  Next to the **SAML** icon click **Add**.
 
-    ![Centrify Settings Add Application details page](/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-3.png)
+    ![Centrify Settings Add Application details page](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-3.png)
 
 1.  Enter the required information for your application.
 
@@ -46,17 +46,17 @@ To set up SAML with Centrify as your identity provider:
 
 1.  Click **Add**. The **Select Role** dialog displays.
 
-    ![Centrify Settings Select Role dialog](/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-6.png)
+    ![Centrify Settings Select Role dialog](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-6.png)
 
 1.  Complete your roles access assignments. The Role rules display on the **User Access** card.
 
-    ![Centrify Added Roles list](/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-7.png)
+    ![Centrify Added Roles list](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-7.png)
 
 1.  In the middle menu pane, select **SAML Response**.
 
 1.  Click **Active > Add** to create a new **Attribute Name**, **Email**.
 
-    ![Centrify Settings Email Attribute](/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-9.png)
+    ![Centrify Settings Email Attribute](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-9.png)
 
 1.  Enter the user email addresses in the **Attribute Value** field.
 

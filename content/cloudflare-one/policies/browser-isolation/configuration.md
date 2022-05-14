@@ -30,21 +30,21 @@ In Chrome, click the padlock to the left of your address bar and select **Certif
 
 **Non-Cloudflare Root CA**. Non-Cloudflare for Teams root certificate indicates that Cloudflare did not proxy this webpage.
 
-![Non-Cloudflare for Teams Root CA](/cloudflare-one/static/documentation/rbi/non-cloudflare-root-ca.png)
+![Non-Cloudflare for Teams Root CA](https://developers.cloudflare.com/cloudflare-one/static/documentation/rbi/non-cloudflare-root-ca.png)
 
 **Normal context menu**. Right-click context menu will have all normal options.
 
-![Normal right click menu](/cloudflare-one/static/documentation/rbi/non-isolated-browser.png)
+![Normal right click menu](https://developers.cloudflare.com/cloudflare-one/static/documentation/rbi/non-isolated-browser.png)
 
 ### Isolated Browsing
 
 **Cloudflare Root CA**. Cloudflare for Teams + Gateway Intermediate indicates traffic was proxied through Cloudflare Gateway.
 
-![Cloudflare for Teams Root CA](/cloudflare-one/static/documentation/rbi/cloudflare-gateway-root-ca.png)
+![Cloudflare for Teams Root CA](https://developers.cloudflare.com/cloudflare-one/static/documentation/rbi/cloudflare-gateway-root-ca.png)
 
 **Simplified context menu**. Right-click context menu be simplified.
 
-![Simplified right click menu](/cloudflare-one/static/documentation/rbi/isolated-browser.png)
+![Simplified right click menu](https://developers.cloudflare.com/cloudflare-one/static/documentation/rbi/isolated-browser.png)
 
 ## Disconnecting Browser Isolation
 

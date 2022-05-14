@@ -22,11 +22,11 @@ To set up Citrix ADC (SAML) as your identity provider:
     1. Navigate to **Traffic Management > SSL**.
     1. Select **Create and Install a Server Test Certificate**.
 
-    ![Citrix AD Configuration](/cloudflare-one/static/documentation/identity/citrixadc/citrixadc-saml-1.png)
+    ![Citrix AD Configuration](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/citrixadc/citrixadc-saml-1.png)
 
 1.  Select **Configuration** and enter a **Certificate File Name**, **Fully Qualified Domain Name**, and a select a **Country**.
 
-    ![Citrix AD Create and Install Test Certificate](/cloudflare-one/static/documentation/identity/citrixadc/citrixadc-saml-2.png)
+    ![Citrix AD Create and Install Test Certificate](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/citrixadc/citrixadc-saml-2.png)
 
 1.  Create a publicly accessible authentication vServer and configure the user identity source (like, local users, LDAP) by following this [Citrix documentation](https://docs.citrix.com/en-us/citrix-adc/12-1/aaa-tm/authentication-virtual-server/ns-aaa-setup-auth-vserver-tsk.html).
 
@@ -50,11 +50,11 @@ To set up Citrix ADC (SAML) as your identity provider:
 
     Cloudflare Access currently sends the IdP address in place of the *Service Provider ID* for the AuthN request.
 
-    ![Citrix AD Configure Authentication SAML IDP Profile](/cloudflare-one/static/documentation/identity/citrixadc/citrixadc-saml-3.png)
+    ![Citrix AD Configure Authentication SAML IDP Profile](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/citrixadc/citrixadc-saml-3.png)
 
 1.  Create an Authentication Policy that refers to the Profile just created, and bind it to the authentication vServer mentioned above.
 
-    ![Citrix AD Configure Authentication SAML IDP Policy](/cloudflare-one/static/documentation/identity/citrixadc/citrixadc-saml-4.png)
+    ![Citrix AD Configure Authentication SAML IDP Policy](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/citrixadc/citrixadc-saml-4.png)
 
     To configure all of the above using just the CLI, run the following:
 

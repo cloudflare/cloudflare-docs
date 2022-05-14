@@ -16,7 +16,7 @@ To set up Yandex for Cloudflare Access:
 
 1.  Select **Open a new OAuth Application**.
 
-    ![Yandex OAuth page](/cloudflare-one/static/documentation/identity/yandex/yandex-1.png)
+    ![Yandex OAuth page](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/yandex/yandex-1.png)
 
 1.  Select **New client**.
 
@@ -26,7 +26,7 @@ To set up Yandex for Cloudflare Access:
 
 1.  Select the **Access to email address**, **Access to user avatar,** and **Access to username, first name and surname, gender** options.
 
-    ![Yandex OAuth fields](/cloudflare-one/static/documentation/identity/yandex/yandex-2.png)
+    ![Yandex OAuth fields](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/yandex/yandex-2.png)
 
 1.  Select **Platform** and click **Web Services.**
 
@@ -36,7 +36,7 @@ To set up Yandex for Cloudflare Access:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    ![Yandex scopes](/cloudflare-one/static/documentation/identity/yandex/yandex-3.png)
+    ![Yandex scopes](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/yandex/yandex-3.png)
 
 1.  Click **Add**.
 
@@ -46,7 +46,7 @@ To set up Yandex for Cloudflare Access:
 
 1.  Copy the **ID** and **Password**.
 
-    ![Yandex Platform card](/cloudflare-one/static/documentation/identity/yandex/yandex-4.png)
+    ![Yandex Platform card](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/yandex/yandex-4.png)
 
 1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 

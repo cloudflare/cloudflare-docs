@@ -35,19 +35,19 @@ In order for your users to be able to authenticate, you must [deploy the WARP cl
 
 1.  Give your list a descriptive name, as this name will appear when configuring your Access policies.
 
-    ![Create List](/cloudflare-one/static/zero-trust-security/corp-device/list-create.png)
+    ![Create List](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/corp-device/list-create.png)
 
 1.  Set List Type to Serial Number.
 
 1.  Input the serial numbers of the devices your team manages, or upload your CSV file.
 
-    ![Add Serial Number](/cloudflare-one/static/zero-trust-security/corp-device/list-add-serial.png)
+    ![Add Serial Number](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/corp-device/list-add-serial.png)
 
 1.  Click **Save**.
 
 Once saved, the serial number list will appear in your list view.
 
-![List](/cloudflare-one/static/zero-trust-security/corp-device/list-saved.png)
+![List](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/corp-device/list-saved.png)
 
 Now you can create or update an existing Access policy to require that any device requesting access belongs to your list of serial numbers.
 

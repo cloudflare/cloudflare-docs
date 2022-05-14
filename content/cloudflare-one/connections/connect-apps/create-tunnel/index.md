@@ -27,7 +27,7 @@ This command will create a Tunnel with the name provided and associate it with a
 
 The created Tunnel can serve traffic for multiple hostnames in your Cloudflare account and send traffic to multiple services available to `cloudflared`, including SSH, RDP, and most arbitrary TCP connections.
 
-![Create a tunnel](/cloudflare-one/static/documentation/connections/ct1.png)
+![Create a tunnel](https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/ct1.png)
 
 Creating a Tunnel generates a credentials file for that specific Tunnel. This file is distinct from the cert.pem file. To run the Tunnel without managing DNS from `cloudflared`, you only need the credentials file.
 
@@ -54,7 +54,7 @@ $ cloudflared tunnel list
 
 Note: the command requires the `cert.pem` file.
 
-![List tunnels](/cloudflare-one/static/documentation/connections/connect-apps/create-tunnel/lt1.png)
+![List tunnels](https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/connect-apps/create-tunnel/lt1.png)
 
 ## Revoke and delete a Tunnel
 

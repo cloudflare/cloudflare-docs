@@ -32,25 +32,25 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
 3.  Click **Add application**.
 
-    ![App List](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
+    ![App List](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
 
 4.  Choose **Self-hosted** on the next page.
 
-    ![Add App](/cloudflare-one/static/zero-trust-security/ssh/add-app.png)
+    ![Add App](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh/add-app.png)
 
 5.  Input a subdomain where your application will be available to users.
 
-    ![Configure](/cloudflare-one/static/zero-trust-security/ssh/configure-app.png)
+    ![Configure](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh/configure-app.png)
 
 6.  Next, create rules that control who can reach the application.
 
-    ![Add Rules](/cloudflare-one/static/zero-trust-security/ssh/app-rules.png)
+    ![Add Rules](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh/app-rules.png)
 
 7.  Finally, click **Save** to save the policy.
 
     You can always edit the policy to change who should be allowed access to the application, or to change which authentication providers can be used to access the application.
 
-    ![Save](/cloudflare-one/static/zero-trust-security/ssh/save-app.png)
+    ![Save](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh/save-app.png)
 
 ## Install `cloudflared`
 
@@ -153,7 +153,7 @@ You can now [configure the Tunnel](/cloudflare-one/connections/connect-apps/conf
 <strong>IMPORTANT</strong>: Make sure you have enabled WebSockets in the "Network" section of your
 domain in the Cloudflare control panel:
 
-![Enable WebSockets](/cloudflare-one/static/zero-trust-security/ssh/enable-websockets.png)
+![Enable WebSockets](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh/enable-websockets.png)
 
 {{</Aside>}}
 
@@ -161,7 +161,7 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
 
 1.  Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
 
-    ![DNS List](/cloudflare-one/static/zero-trust-security/ssh/dns-list.png)
+    ![DNS List](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh/dns-list.png)
 
 2.  Select `CNAME` as the record type. For the target, input the ID of your Tunnel followed by `cfargotunnel.com`. In this example, the target would be:
 
@@ -171,7 +171,7 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
 
 3.  Click **Save**.
 
-    ![Add DNS](/cloudflare-one/static/zero-trust-security/ssh/add-dns.png)
+    ![Add DNS](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh/add-dns.png)
 
 ## Run the Tunnel
 

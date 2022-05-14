@@ -47,7 +47,7 @@ If you see this page, providing as much information as possible to the local IT 
 
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
-![Overview empty](/cloudflare-one/static/documentation/faq/gateway-dash-overview-empty.png)
+![Overview empty](https://developers.cloudflare.com/cloudflare-one/static/documentation/faq/gateway-dash-overview-empty.png)
 
 You may not see analytics on the Overview page for the following reasons:
 

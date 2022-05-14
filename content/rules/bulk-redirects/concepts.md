@@ -18,7 +18,7 @@ Bulk Redirects involve the following elements:
 
 A Bulk Redirect Rule enables a Bulk Redirect List, which contains one or more URL Redirects.
 
-![Diagram outlining the hierarchy relationship between Bulk Redirect Rules, Bulk Redirect Lists, and URL Redirects](/rules/static/bulk-redirects/concepts-diagram.png)
+![Diagram outlining the hierarchy relationship between Bulk Redirect Rules, Bulk Redirect Lists, and URL Redirects](https://developers.cloudflare.com/rules/static/bulk-redirects/concepts-diagram.png)
 
 The following example defines a Bulk Redirect List named `list_b` with two URL Redirects:
 

@@ -6,7 +6,7 @@ weight: 2
 
 # Main components
 
-![Diagram with the main components providing protection against DDoS attacks at Cloudflare: dosd, flowtrackd, and gatebot.](/ddos-protection/static/ddos-diagram.png)
+![Diagram with the main components providing protection against DDoS attacks at Cloudflare: dosd, flowtrackd, and gatebot.](https://developers.cloudflare.com/ddos-protection/static/ddos-diagram.png)
 
 ## Autonomous Edge
 

@@ -34,22 +34,22 @@ This tutorial skips inspection for additional applications beyond those in the l
 
 1.  Name the policy and, optionally, provide a description.
 
-    ![Name Policy](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/name-policy.png)
+    ![Name Policy](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/name-policy.png)
 
 1.  Under **Selector** choose **Application**. Select **in** in the **Operator field**. This example uses Microsoft 365, categorized as Productivity.
 
-    ![Selctor](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/select-microsoft.png)
+    ![Selctor](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/select-microsoft.png)
 
 1.  Scroll to the bottom of the page and select **Do Not Inspect** and click **Create rule**.
 
-    ![Action](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/select-action.png)
+    ![Action](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/select-action.png)
 
 ## Change rule precedence
 
 New rules are saved at the bottom of the rule list in Gateway. Gateway evaluates rules from top-to-bottom, except for do-not-inspect rules. Those are always evaluated first.
 
-![Rule Order](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/rules-first.png)
+![Rule Order](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/rules-first.png)
 
 We do recommend dragging the **Do Not Inspect** rule to the top of the list to reduce confusion.
 
-![Rule Order](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/rules-last.png)
+![Rule Order](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/rules-last.png)

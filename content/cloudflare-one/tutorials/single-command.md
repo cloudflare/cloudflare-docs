@@ -44,13 +44,13 @@ Once installed, run the following command in your Terminal to authenticate this 
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account. This will authenticate your instance of `cloudflared` to your Cloudflare account; you will be able to create a Tunnel for any site, not just the site selected.
 
-![Choose Site](/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
+![Choose Site](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
 
 Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
 You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
-![Download Cert](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
+![Download Cert](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
 
 ## Create and run a Tunnel
 
@@ -65,7 +65,7 @@ Run the following command to perform all of the functions listed above, replacin
 
 `cloudflared tunnel --hostname example.widgetcorp.tech --url localhost:3000 --name grafana`
 
-![Command Output](/cloudflare-one/static/secure-origin-connections/single-command/command-output.png)
+![Command Output](https://developers.cloudflare.comhttps://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/single-command/command-output.png)
 
 The command above will
 

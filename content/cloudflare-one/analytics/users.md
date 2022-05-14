@@ -20,7 +20,7 @@ Clicking the View button for any user will show you details for that user, such 
 
 - Their user details
 
-![User details](/cloudflare-one/static/documentation/logs/user-summary.png)
+![User details](https://developers.cloudflare.com/cloudflare-one/static/documentation/logs/user-summary.png)
 
 - Devices they have connected to Cloudflare Zero Trust
 - Their recent logins
@@ -37,6 +37,6 @@ Wokplace records show the amount of unique sessions the user has initiated from 
 
 1.  In the **User details** section, under the **Most recent location** field, click on the View all button.
 
-![Workplace records](/cloudflare-one/static/documentation/logs/workplace-records.png)
+![Workplace records](https://developers.cloudflare.com/cloudflare-one/static/documentation/logs/workplace-records.png)
 
 To change the granularity with which workplace records are shown, adjust your [global session duration](/cloudflare-one/identity/users/session-management/#global-session-duration). An informative threshold can be **24 hours**.

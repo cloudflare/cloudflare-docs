@@ -14,7 +14,7 @@ weight: 2
 
 The list of items displays sorted by IP address, ascending:
 
-![List interface in the Cloudflare dashboard displaying the ordered list items of an IP List](/firewall/static/lists-view-items-in-list.png)
+![List interface in the Cloudflare dashboard displaying the ordered list items of an IP List](https://developers.cloudflare.com/firewall/static/lists-view-items-in-list.png)
 
 {{<Aside type="note" header="Note">}}
 
@@ -118,7 +118,7 @@ When uploading CSV data, keep in mind that duplicate data is treated as follows:
 
 1. Select the checkboxes next to the items that you want to delete. To select all the items, use the checkbox in the column header:
 
-    ![Selecting individual list items to delete from an IP List](/firewall/static/lists-delete-items.png)
+    ![Selecting individual list items to delete from an IP List](https://developers.cloudflare.com/firewall/static/lists-delete-items.png)
 
 1. Click **Remove** to delete the selected items from the list.
 

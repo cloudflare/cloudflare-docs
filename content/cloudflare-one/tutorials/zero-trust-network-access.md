@@ -38,11 +38,11 @@ The first step is to enroll your devices into the WARP client. The WARP client i
 
     In this example, we require that users have a hard key inserted and are connecting from the United States.
 
-    ![Device enrollment rules](/cloudflare-one/static/zero-trust-security/ztna/device-enrollment-rules.png)
+    ![Device enrollment rules](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ztna/device-enrollment-rules.png)
 
 1.  Enroll your device into your Zero Trust account. To do that, click the WARP icon in your navigation bar, open **Settings** and select **Account > Login** with Cloudflare Zero Trust.
 
-    ![WARP preferences](/cloudflare-one/static/zero-trust-security/ztna/warp-preferences.png)
+    ![WARP preferences](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ztna/warp-preferences.png)
 
 1.  Enable the WARP client on the device to forward traffic to Cloudflare.
 
@@ -80,7 +80,7 @@ Next, you will need to configure your private network server to connect to Cloud
     {{<Aside>}}
     Tunnel ID can be found by running `cloudflared tunnel list`.
 
-    ![Tunnel ID](/cloudflare-one/static/zero-trust-security/ztna/tunnel-id.png)
+    ![Tunnel ID](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ztna/tunnel-id.png)
     {{</Aside>}}
 
 1.  Now run the tunnel:
@@ -89,7 +89,7 @@ Next, you will need to configure your private network server to connect to Cloud
 $ cloudflared tunnel run <TUNNEL NAME>
 ```
 
-![Run the Tunnel](/cloudflare-one/static/zero-trust-security/ztna/run-tunnel.png)
+![Run the Tunnel](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ztna/run-tunnel.png)
 
 ## Network configuration
 
@@ -106,15 +106,15 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
 
 1.  Open your Zero Trust dashboard to the **Gateway > Policies** tab.
 
-    ![First network policy](/cloudflare-one/static/zero-trust-security/ztna/first-network-policy.png)
+    ![First network policy](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ztna/first-network-policy.png)
 
 1.  [Create a network policy](/cloudflare-one/policies/filtering/network-policies/) to allow traffic from specific users to reach that application.
 
-    ![Second network policy](/cloudflare-one/static/zero-trust-security/ztna/second-network-policy.png)
+    ![Second network policy](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ztna/second-network-policy.png)
 
 1.  Create a second network policy to block all traffic to the IP range that was routed.
 
-    ![Create network policy](/cloudflare-one/static/zero-trust-security/ztna/create-network-policy.png)
+    ![Create network policy](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ztna/create-network-policy.png)
 
 1.  Verify that you do not have the desired target private IP range in the Split Tunnel configuration menu. This menu can be found at **Settings > Network > Split Tunnels**.
 

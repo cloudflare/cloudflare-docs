@@ -20,7 +20,7 @@ To set up OneLogin (SAML) as your identity provider:
 
 1.  Select the result sponsored by **Cloudflare, Inc**.
 
-    ![OneLogin SAML Find Applications](/cloudflare-one/static/documentation/identity/onelogin/onelogin-saml-2.png)
+    ![OneLogin SAML Find Applications](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/onelogin/onelogin-saml-2.png)
 
     You can customize the name or logo.
 
@@ -32,13 +32,13 @@ To set up OneLogin (SAML) as your identity provider:
 
 1.  Select the **Parameters** tab, click **Add Parameter** and enter your values for **Cloudflare Access Field**.
 
-    ![OneLogin SAML Application Parameters](/cloudflare-one/static/documentation/identity/onelogin/onelogin-saml-5.png)
+    ![OneLogin SAML Application Parameters](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/onelogin/onelogin-saml-5.png)
 
 1.  Select the **Access** tab
 
 1.  In Roles, use the mapping to programmatically and automatically assign users that can access the application.
 
-    ![OneLogin SAML Application Access](/cloudflare-one/static/documentation/identity/onelogin/onelogin-saml-6.png)
+    ![OneLogin SAML Application Access](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/onelogin/onelogin-saml-6.png)
 
 1.  Select the **SSO** tab.
 
@@ -48,7 +48,7 @@ To set up OneLogin (SAML) as your identity provider:
 
 1.  Copy the **X.509 Certificate** to the Cloudflare **Signing Certificate**.
 
-    ![OneLogin SAML Application SSO](/cloudflare-one/static/documentation/identity/onelogin/onelogin-saml-7.png)
+    ![OneLogin SAML Application SSO](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/onelogin/onelogin-saml-7.png)
 
 1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 

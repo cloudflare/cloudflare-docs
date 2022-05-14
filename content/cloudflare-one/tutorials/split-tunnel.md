@@ -28,7 +28,7 @@ You can configure domains to use the device's local resolver. Cloudflare Zero Tr
 
 1.  Scroll down to **Local Domain Fallback** and click **Manage**.
 
-    ![Network Settings](/cloudflare-one/static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
+    ![Network Settings](https://developers.cloudflare.comhttps://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
 
 By default, Cloudflare Zero Trust excludes common top-level domains used for local resolution. Everything listed will be excluded. To delete a default domain from this list, toggle the box to the left of the domain name and click **Confirm delete**.
 
@@ -48,7 +48,7 @@ By default, Cloudflare Zero Trust excludes IP addresses commonly used for privat
 
 To add IP addresses to the default list, input the address or CIDR in the **Selector** field. You can add an optional description and click **Add**.
 
-![Split Tunnel](/cloudflare-one/static/secure-web-gateway/split-tunnel/split-tunnel-entries.png)
+![Split Tunnel](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/split-tunnel/split-tunnel-entries.png)
 
 ## Enroll devices
 

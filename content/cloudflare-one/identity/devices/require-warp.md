@@ -36,7 +36,7 @@ The process involves two steps:
 
 1.  On your [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **My Team > Devices > Device Posture**.
 
-    ![Device Posture](/cloudflare-one/static/documentation/identity/devices/device-posture.png)
+    ![Device Posture](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/devices/device-posture.png)
 
 1.  Select **WARP**.
 

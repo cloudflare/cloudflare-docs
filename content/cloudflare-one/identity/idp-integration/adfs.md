@@ -33,7 +33,7 @@ To create a Relying Party Trust:
 
 1.  On the **Actions** sidebar, select **Add Relying Party Trust**. The **Add Relying Party Trust Wizard** launches.
 
-    ![Add Relying Party Trust Wizard](/cloudflare-one/static/documentation/identity/adfs/adfs-1.png)
+    ![Add Relying Party Trust Wizard](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/adfs/adfs-1.png)
 
 1.  In the left menu, choose **Select Data Source**.
 
@@ -53,7 +53,7 @@ To create a Relying Party Trust:
 
 1.  Click **Next**. The **Configure URL** step displays.
 
-    ![Configure URL](/cloudflare-one/static/documentation/identity/adfs/adfs-6.png)
+    ![Configure URL](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/adfs/adfs-6.png)
 
 1.  Select the **Enable support for the SAML 2.0 WebSSO protocol** option.
 
@@ -65,23 +65,23 @@ To create a Relying Party Trust:
 
 1.  Click **Next**. The **Configure Identifiers** step displays.
 
-    ![Configure Identifiers](/cloudflare-one/static/documentation/identity/adfs/adfs-7.png)
+    ![Configure Identifiers](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/adfs/adfs-7.png)
 
 1.  Paste your callback URL in the **Relying party trust identifier** field.
 
 1.  Click **Next**. In the **Configure Multi-factor Authentication Now?** step, you can configure multi-factor authentication. Our example does not configure multi-factor authentication.
 
-    ![Configure Multi-factor Authentication Now?](/cloudflare-one/static/documentation/identity/adfs/adfs-8.png)
+    ![Configure Multi-factor Authentication Now?](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/adfs/adfs-8.png)
 
 1.  Click **Next**. The **Choose Issuance Authorization Rules** step displays.
 
-    ![Choose Issuance Authorization Rules](/cloudflare-one/static/documentation/identity/adfs/adfs-9.png)
+    ![Choose Issuance Authorization Rules](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/adfs/adfs-9.png)
 
 1.  Select the **Permit all users to access this relying party** option.
 
 1.  Click **Next**. The **Ready to Add Trust** step displays.
 
-    ![Ready to Add Trust](/cloudflare-one/static/documentation/identity/adfs/adfs-10.png)
+    ![Ready to Add Trust](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/adfs/adfs-10.png)
 
 1.  Review your settings.
 
@@ -103,7 +103,7 @@ To create Claim Rules:
 
 1.  Click **Next**. The **Edit Rule — Send Email** step displays.
 
-    ![Edit Rule — Send Email](/cloudflare-one/static/documentation/identity/adfs/adfs-13.png)
+    ![Edit Rule — Send Email](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/adfs/adfs-13.png)
 
 1.  Enter a descriptive **Claim rule name**.
 
@@ -117,7 +117,7 @@ To create Claim Rules:
 
 1.  Click **Next**. The **Edit - Create Transient Name Identifier** window displays.
 
-    ![Edit - Create Transient Name Identifier](/cloudflare-one/static/documentation/identity/adfs/adfs-15.png)
+    ![Edit - Create Transient Name Identifier](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/adfs/adfs-15.png)
 
 1.  Enter a descriptive **Claim rule name**.
 
@@ -143,17 +143,17 @@ To export the certificate:
 
 1.  In the **Certificates** card, right-click on **Token-signing**, and select **View certificate**. The **Certificates** window displays.
 
-    ![Certificates card](/cloudflare-one/static/documentation/identity/adfs/adfs-16.png)
+    ![Certificates card](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/adfs/adfs-16.png)
 
 1.  Click the **Details** tab, and select the **Copy to File** option.
 
 1.  The **Certificate Export Wizard** displays.
 
-    ![Certificate Export Wizard](/cloudflare-one/static/documentation/identity/adfs/adfs-17.png)
+    ![Certificate Export Wizard](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/adfs/adfs-17.png)
 
 1.  Click **Next**. The **Export File Format** window displays.
 
-    ![Export File Format](/cloudflare-one/static/documentation/identity/adfs/adfs-18.png)
+    ![Export File Format](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/adfs/adfs-18.png)
 
 1.  Select the **Base-64 encoded X.509 (.CER)** option.
 

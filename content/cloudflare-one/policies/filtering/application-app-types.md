@@ -22,7 +22,7 @@ Gateway allows you to build DNS, Network, and HTTP policies based on application
 
 6.  In the _Value_ drop-down menu, check the applications or app types you would like to control with your policy.
 
-    ![Creating a policy for applications](/cloudflare-one/static/documentation/policies/applications-policy.png)
+    ![Creating a policy for applications](https://developers.cloudflare.com/cloudflare-one/static/documentation/policies/applications-policy.png)
 
 7.  Next, select an [**Action**](#supported-actions-for-applications) for your policy.
 
@@ -70,7 +70,7 @@ Gateway automatically groups applications incompatible with TLS decryption into 
 
 Gateway periodically updates the _Do Not Inspect_ app type to include new applications. By creating this _Do Not Inspect_ HTTP policy and selecting all applications within the _Do Not Inspect_ app type, you will ensure that your _Do Not Inspect_ policy will apply to any new applications added to the app type.
 
-![Creating an HTTP policy for the Do Not Inspect app type](/cloudflare-one/static/documentation/policies/do-not-inspect.png)
+![Creating an HTTP policy for the Do Not Inspect app type](https://developers.cloudflare.com/cloudflare-one/static/documentation/policies/do-not-inspect.png)
 
 {{<Aside>}}
 

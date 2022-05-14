@@ -35,13 +35,13 @@ Once installed, run the following command in your Terminal to authenticate this 
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account. This will authenticate your instance of `cloudflared` to your Cloudflare account; you will be able to create a Tunnel for any site, not just the site selected.
 
-![Choose Site](/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
+![Choose Site](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
 
 Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
 You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
-![Download Cert](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
+![Download Cert](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
 
 {{<Aside>}}
 If you already have `cloudflared` installed, make sure it's updated to the latest version before you continue with the tutorial. Some commands may not run with older versions of `cloudflared`.
@@ -57,7 +57,7 @@ Begin by [creating a Tunnel](/cloudflare-one/connections/connect-apps/create-tun
 cloudflared tunnel create grafana
 ```
 
-![Create Tunnel](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/create-tunnel.png)
+![Create Tunnel](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/create-tunnel.png)
 
 You can confirm the ID of the Tunnel by running the following command.
 
@@ -65,7 +65,7 @@ You can confirm the ID of the Tunnel by running the following command.
 cloudflared tunnel list
 ```
 
-![List Tunnel](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/list-tunnel.png)
+![List Tunnel](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/list-tunnel.png)
 
 Next, you will need to create a route. Routes map a Tunnel ID to a CIDR range that you specify. You can use private IP space specified by [RFC 1918](https://tools.ietf.org/html/rfc1918) or other routes. The private IP space specified should match the private IP space of your subnet or environment where Cloudflare Tunnel will send connections.
 
@@ -75,7 +75,7 @@ This example tells Cloudflare Tunnel that, for users in this organization, conne
 cloudflared tunnel route ip add 100.64.0.0/10 8e343b13-a087-48ea-825f-9783931ff2a5
 ```
 
-![Route Add](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/route-add.png)
+![Route Add](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/route-add.png)
 
 Similar to the `list` command, you can confirm the routes enrolled with the following command.
 
@@ -83,7 +83,7 @@ Similar to the `list` command, you can confirm the routes enrolled with the foll
 cloudflared tunnel route ip show
 ```
 
-![IP List](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/ip-list.png)
+![IP List](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/ip-list.png)
 
 ## Configure and run the Tunnel
 
@@ -104,7 +104,7 @@ cloudflared tunnel run grafana
 
 This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/#create-route-and-configure-the-tunnel) for long-lived connections.
 
-![Config File](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/config-file.png)
+![Config File](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/config-file.png)
 
 ## Route private IP ranges through WARP
 
@@ -122,7 +122,7 @@ By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certai
 
 1.  Click **Manage**. The IP ranges listed are those that Cloudflare excludes by default. Choose the range being used for this private connection and delete it.
 
-![Split Tunnel](/cloudflare-one/static/secure-web-gateway/split-tunnel/split-tunnel-entries.png)
+![Split Tunnel](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/split-tunnel/split-tunnel-entries.png)
 
 ## Integrate your identity provider
 
@@ -142,11 +142,11 @@ Next, build a rule to decide which devices can enroll in your account.
 
 1.  Click **Add a rule**.
 
-    ![Device Enrollment](/cloudflare-one/static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
+    ![Device Enrollment](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
 
     Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
 
-    ![Allow Cloudflare users](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
+    ![Allow Cloudflare users](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
 
 1.  Click **Save**.
 
@@ -167,7 +167,7 @@ Once the certificate has been installed, you can configure Gateway to inspect HT
 
 Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
 
-![Policy settings](/cloudflare-one/static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
+![Policy settings](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
 
 ## Enroll a device
 
@@ -175,22 +175,22 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
 1.  Once the client is installed, click the gear icon.
 
-    ![WARP](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
+    ![WARP](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
 
 1.  Under the **Account** tab, click **Login with Cloudflare for Teams**.
 
-    ![Account View](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/account-view.png)
+    ![Account View](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/secure-dns-devices/account-view.png)
 
 1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 
-    ![Team Name](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
+    ![Team Name](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
 
 The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`. These settings can be configured globally for an organization through a device management platform.
 
-![Confirm WARP](/cloudflare-one/static/secure-web-gateway/block-football/warp-mode.png)
+![Confirm WARP](https://developers.cloudflare.com/cloudflare-one/static/secure-web-gateway/block-football/warp-mode.png)
 
 ## Connect via WARP
 
 Once enrolled, they will be able to connect to the private IPs configured for HTTP traffic in this example or arbitrary TCP traffic.
 
-![Private IP](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/connect-private-ip.png)
+![Private IP](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/connect-private-ip.png)

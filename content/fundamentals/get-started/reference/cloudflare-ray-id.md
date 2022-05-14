@@ -15,11 +15,11 @@ Ray IDs are particularly useful when evaluating Firewall Events for patterns or 
 
 All customers can view Ray IDs and associated information — IP address, user agent, ASN, etc. — by looking through the [Activity Log](/waf/analytics/) of their Firewall Analytics.
 
-![Example list of events in the Activity log, with one of the events expanded to show its details](/waf/static/analytics-activity-log.png)
+![Example list of events in the Activity log, with one of the events expanded to show its details](https://developers.cloudflare.com/waf/static/analytics-activity-log.png)
 
 Additionally, you can [add filters](/waf/analytics/paid-plans/#adjusting-displayed-data) to look for specific Ray IDs.
 
-![Example of adding a new filter in Firewall Analytics for the Allow action](/waf/static/analytics-add-filter-free.png)
+![Example of adding a new filter in Firewall Analytics for the Allow action](https://developers.cloudflare.com/waf/static/analytics-add-filter-free.png)
 
 ### Logs
 

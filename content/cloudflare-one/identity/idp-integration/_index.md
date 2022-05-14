@@ -42,7 +42,7 @@ To test if an IdP is correctly configured, navigate to **Settings** > **Authenti
 
 If your provider is connected, another window will open in your browser, with this message:
 
-!["Your connection works!" message displayed for a successful IdP test](/cloudflare-one/static/documentation/identity/connected-idp.png)
+!["Your connection works!" message displayed for a successful IdP test](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/connected-idp.png)
 
 ### Your provider is not connected
 

@@ -36,7 +36,7 @@ You can use Cloudflare Tunnel to quickly share projects you are working on with 
 
 In this example, the new website is a [Hugo site](https://gohugo.io/getting-started/quick-start/). Hugo, a static site generator, provides a built-in server that can be used for testing changes. That server is available at `localhost:1313` - an address only available currently on the same machine as the server.
 
-![New Hugo](/cloudflare-one/static/secure-origin-connections/share-new-site/hugo-new.png)
+![New Hugo](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/share-new-site/hugo-new.png)
 
 To share this work-in-progress, start by [downloading and installing](/cloudflare-one/connections/connect-apps/install-and-setup/) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
 
@@ -48,11 +48,11 @@ Once installed, run the following command in your Terminal to authenticate this 
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your Cloudflare account. The website selected does not need to be the website where the environment will be made available.
 
-![Choose Site](/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
+![Choose Site](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
 
 Once you click one of the sites in your account, Cloudflare will download a certificate file to authenticate this instance of `cloudflared`. You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
-![Download Cert](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
+![Download Cert](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
 
 ## Create a Tunnel
 
@@ -64,7 +64,7 @@ Run the following command to create a Tunnel. You can replace `new-website` with
 
 Cloudflare will create the Tunnel with that name and generate an ID and credentials file for that Tunnel.
 
-![New Tunnel](/cloudflare-one/static/secure-origin-connections/share-new-site/create.png)
+![New Tunnel](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/share-new-site/create.png)
 
 ## Configure `cloudflared`
 
@@ -96,7 +96,7 @@ Click `+Add record` and choose `CNAME`. In the `Name` field, add the name of the
 
 `5157d321-5933-4b30-938b-d889ca87e11b.cfargotunnel.com`
 
-![Add DNS](/cloudflare-one/static/secure-origin-connections/share-new-site/add-dns.png)
+![Add DNS](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/share-new-site/add-dns.png)
 
 Once saved, you can share the subdomain created and visitors can reach your local web server environment.
 
@@ -118,11 +118,11 @@ Before you build the rule, you'll need to follow [these instructions](/cloudflar
 
 1.  In the policy builder, add the subdomain of your new DNS record that represents your Cloudflare Tunnel connection.
 
-    ![App Picker](/cloudflare-one/static/secure-origin-connections/share-new-site/configure-app.png)
+    ![App Picker](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/share-new-site/configure-app.png)
 
     You can then add rules to determine who can reach the site.
 
-    ![App Picker](/cloudflare-one/static/secure-origin-connections/share-new-site/add-rules.png)
+    ![App Picker](https://developers.cloudflare.com/cloudflare-one/static/secure-origin-connections/share-new-site/add-rules.png)
 
 ## Additional Materials
 

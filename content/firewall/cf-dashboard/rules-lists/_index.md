@@ -22,7 +22,7 @@ The **Lists** user interface displays.
 
 {{</content-column>}}
 
-![The Lists user interface in the Cloudflare dashboard where you can create and manage IP Lists](/firewall/static/lists-ui.png)
+![The Lists user interface in the Cloudflare dashboard where you can create and manage IP Lists](https://developers.cloudflare.com/firewall/static/lists-ui.png)
 
 ## Create your first IP List
 

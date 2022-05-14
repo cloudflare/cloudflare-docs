@@ -31,11 +31,11 @@ For example, `Include` rules work like `OR` operators - anything in the list wil
 
 Click `Add a Group`. In the next page, select `Country` from the `Include` dropdown and add two or more countries.
 
-![Add Countries](/cloudflare-one/static/zero-trust-security/country-rules/country-list.png)
+![Add Countries](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/country-rules/country-list.png)
 
 Click `Save`.
 
-![Full Groups](/cloudflare-one/static/zero-trust-security/country-rules/later-groups.png)
+![Full Groups](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/country-rules/later-groups.png)
 
 ## Build or edit a policy
 
@@ -47,6 +47,6 @@ You can now build [Access policies](/cloudflare-one/policies/access/) that will 
 1.  Click `+ Add require`.
 1.  In the dropdown, select `Access groups`. The existing groups will display and choose the name of the group with the approved countries list.
 
-![Edit](/cloudflare-one/static/zero-trust-security/country-rules/add-rule.png)
+![Edit](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/country-rules/add-rule.png)
 
 Cloudflare Access will follow the nesting of the group created. In this case, the `Require` rule will require that all of the conditions be met - like an `AND` operator. Since the group has multiple country options,because it was constructed with an `Include` rule like an `OR` operator, meeting at least one of them will be true and allow the user to proceed.

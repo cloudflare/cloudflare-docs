@@ -14,4 +14,4 @@ Any changes you make will be reflected in real time in the **Preview** card. Onc
 
 Your login page will now reflect your changes.
 
-![Customized Login](/cloudflare-one/static/documentation/identity/devices/customized-login.png)
+![Customized Login](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/devices/customized-login.png)

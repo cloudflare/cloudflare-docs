@@ -49,11 +49,11 @@ For this tutorial, you will need:
 
     {{</Aside>}}
 
-    ![Zendesk attributes](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-attributes.png)
+    ![Zendesk attributes](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-attributes.png)
 
 1.  Create an Access policy to determine who can access Zendesk.
 
-    ![Zendesk policy](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-policy.png)
+    ![Zendesk policy](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-policy.png)
 
 1.  Copy the Cloudflare IdP values and add them to the following Zendesk Fields:
 
@@ -72,10 +72,10 @@ For this tutorial, you will need:
 
     {{</Aside>}}
 
-    ![Zendesk fingerprint](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-fingerprint.png)
+    ![Zendesk fingerprint](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-fingerprint.png)
 
 1.  Go to `https://<yourdomain>.zendesk.com/admin/security/staff_members` and enable **External Authentication** > **Single Sign On**.
 
-    ![Zendesk external authentication](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-external-auth.png)
+    ![Zendesk external authentication](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-external-auth.png)
 
 Users should now be able to log in to Zendesk if their Email address exists in the Zendesk user list.

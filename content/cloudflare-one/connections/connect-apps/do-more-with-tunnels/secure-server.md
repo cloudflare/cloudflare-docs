@@ -18,7 +18,7 @@ Once you can successfully run a tunnel to proxy incoming traffic to any number o
 
 If you host your services on a Virtual Machine (VM) instance by a Cloud provider such as Google Cloud Platform (GCP), you may set up instance-level firewall rules to disallow all ingress traffic and allow only egress traffic. For example, on GCP, you may delete all ingress rules, leaving only the relevant egress rules. This is because GCP's firewall defaults to “Block” unless a rule explicitly allows certain traffic.
 
-![GCP firewall](/cloudflare-one/static/documentation/connections/gcp-firewall.png)
+![GCP firewall](https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/gcp-firewall.png)
 
 ## OS-level firewall
 

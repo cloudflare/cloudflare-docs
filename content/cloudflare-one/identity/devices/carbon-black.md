@@ -27,7 +27,7 @@ Before you start, make sure Carbon Black installed on your machine.
 
 1.  Select **+Add**.
 
-    ![Device posture attributes](/cloudflare-one/static/documentation/identity/devices/device-posture-partners.png)
+    ![Device posture attributes](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/devices/device-posture-partners.png)
 
 1.  Select **Carbon Black**.
 

@@ -29,23 +29,23 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 First, navigate to the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/) to create a new application. Select the `Applications` page from the sidebar. Click **Add application**.
 
-![App List](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
+![App List](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
 
 Choose **Self-hosted** on the next page.
 
-![Add App](/cloudflare-one/static/zero-trust-security/ssh/add-app.png)
+![Add App](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh/add-app.png)
 
 Input a subdomain where your application will be available to users.
 
-![Configure](/cloudflare-one/static/zero-trust-security/ssh/configure-app.png)
+![Configure](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh/configure-app.png)
 
 Next, create rules that control who can reach the application.
 
-![Add Rules](/cloudflare-one/static/zero-trust-security/ssh/app-rules.png)
+![Add Rules](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh/app-rules.png)
 
 Finally, click **Save** to save the policy. You can return to edit the policy to make changes to who should be allowed or to choose what authentication providers can be used.
 
-![Save](/cloudflare-one/static/zero-trust-security/ssh/save-app.png)
+![Save](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh/save-app.png)
 
 ## Install `cloudflared`
 
@@ -118,7 +118,7 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
 
 Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
 
-![DNS List](/cloudflare-one/static/zero-trust-security/ssh/dns-list.png)
+![DNS List](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh/dns-list.png)
 
 Select `CNAME` as the record type. For the target, input the ID of your Tunnel followed by `cfargotunnel.com`. In this example, the target would be:
 
@@ -126,7 +126,7 @@ Select `CNAME` as the record type. For the target, input the ID of your Tunnel f
 
 Click **Save**.
 
-![Add DNS](/cloudflare-one/static/zero-trust-security/ssh/add-dns.png)
+![Add DNS](https://developers.cloudflare.com/cloudflare-one/static/zero-trust-security/ssh/add-dns.png)
 
 ## Run the Tunnel
 

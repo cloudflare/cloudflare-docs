@@ -78,7 +78,7 @@ The refresh button is available on all responses to the `/dig` command, includin
 
 <div class="medium-img">
 
-![Refreshing dig domain: cloudflare.com](/1.1.1.1/static/dns-over-discord/dig-command-refresh.gif)
+![Refreshing dig domain: cloudflare.com](https://developers.cloudflare.com/1.1.1.1/static/dns-over-discord/dig-command-refresh.gif)
 
 </div>
 
@@ -169,7 +169,7 @@ As with the `/dig` command, any user can press the refresh button to refresh the
 
 <div class="medium-img">
 
-![Refreshing multi-dig domain: cloudflare.com types: A AAAA](/1.1.1.1/static/dns-over-discord/multi-dig-command-refresh.gif)
+![Refreshing multi-dig domain: cloudflare.com types: A AAAA](https://developers.cloudflare.com/1.1.1.1/static/dns-over-discord/multi-dig-command-refresh.gif)
 
 </div>
 

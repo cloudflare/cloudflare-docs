@@ -53,17 +53,17 @@ Integrate your Tanium deployment with Cloudflare Access using public keys genera
 
 1.  Select the **Device posture** tab.
 
-    ![Configuring Zero Trust Policy](/cloudflare-one/static/documentation/identity/devices/add-device-posture.png)
+    ![Configuring Zero Trust Policy](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/devices/add-device-posture.png)
 
 1.  Click _+Add_ to start configuring the Tanium integration.
 
 1.  Select **Tanium** from the list of providers.
 
-    ![Configuring Zero Trust Policy](/cloudflare-one/static/documentation/identity/devices/add-posture-tanium.png)
+    ![Configuring Zero Trust Policy](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/devices/add-posture-tanium.png)
 
 1.  In the next screen, give a name to the Tanium integration. _Tanium_ will work, or, if you prefer, you can choose a more specific name.
 
-    ![Configuring Zero Trust Policy](/cloudflare-one/static/documentation/identity/devices/tanium-setup.png)
+    ![Configuring Zero Trust Policy](https://developers.cloudflare.com/cloudflare-one/static/documentation/identity/devices/tanium-setup.png)
 
 1.  Input `17472` for the port value.
 

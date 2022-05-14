@@ -12,7 +12,7 @@ weight: 1
 
 2. Go to **Rules** > **Transform Rules**.
 
-    ![Access the Managed Transform settings from Rules > Transform Rules in the Cloudflare dashboard.](/rules/static/transform/managed-transforms-card.png)
+    ![Access the Managed Transform settings from Rules > Transform Rules in the Cloudflare dashboard.](https://developers.cloudflare.com/rules/static/transform/managed-transforms-card.png)
 
 3. Click **Managed Transforms**.
 
