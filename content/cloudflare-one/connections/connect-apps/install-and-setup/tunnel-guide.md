@@ -54,6 +54,10 @@ Follow these steps to connect an application through your tunnel. If you are loo
 
 3. Under **Additional application settings**, specify any parameters you would like to add to your tunnel configuration.
 
+{{<Aside type="note" header="SNI">}}
+  If your server uses [SNI](https://www.cloudflare.com/en-ca/learning/ssl/what-is-sni/) (for example, Caddy requires it) then you will need to provide the name that your server is expecting to see (such as `example.com`) in the `Origin Server Name` field under the `TLS` options.
+{{</Aside>}}
+
 4. Click **Save `<tunnel-name>`**.
 
 ### 3. Connect a network
@@ -207,6 +211,10 @@ url: http://localhost:8000
 tunnel: <Tunnel-UUID>
 credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
 ```
+
+{{<Aside type="note" header="SNI">}}
+  If your server uses [SNI](https://www.cloudflare.com/en-ca/learning/ssl/what-is-sni/) (for example, Caddy requires it) then you will need to provide the name that your server is expecting to see (for example, `example.com`) in the `originServerName` option under the `originRequest` [options](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/#originservername).
+{{</Aside>}}
 
 **If you are connecting a network**
 
