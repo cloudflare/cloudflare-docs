@@ -3,18 +3,20 @@ title: Concepts
 pcx-content-type: concept
 weight: 2
 meta:
-  title: Network Analytics concepts
+  title: Network Analytics v2 concepts
 ---
 
 # Concepts
 
 ## Adaptive Bit Rate sampling
 
-Network Analytics v2 (NAv2) uses [Adaptive Bit Rate (ABR) sampling](https://blog.cloudflare.com/explaining-cloudflares-abr-analytics/). With ABR, every analytics query that supports ABR will be calculated at a resolution matching the query. Depending on the size of your query, the ABR mechanism will choose the best sampling rate and fetch a response from one of the sample tables encapsulated behind each NAv2 node. The cardinality and accuracy are preserved even for historical data.
+With Adaptive Bit Rate (ABR) sampling, every analytics query that supports ABR will be calculated at a resolution matching the query. Depending on the size of your query, the ABR mechanism will choose the best sampling rate and fetch a response from one of the sample tables encapsulated behind each [Network Analytics v2 node](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/). The cardinality and accuracy are preserved even for historical data.
+
+For more background information on Adaptive Bit Rate sampling, refer to the [Explaining Cloudflare's ABR Analytics](https://blog.cloudflare.com/explaining-cloudflares-abr-analytics/) blog post.
 
 ## Edge Sample Enrichment
 
-Network Analytics v2 can provide accurate data due to the sample rate and to Edge Sample Enrichment.
+Network Analytics v2 (NAv2) can provide accurate data due to the sample rate and to Edge Sample Enrichment.
 
 NAv2 sample rates vary depending on the mitigation service. For example:
 
