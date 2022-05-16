@@ -12,7 +12,7 @@ Once you have an IPFS gateway — meaning that you [create a new gateway](/web3/
 
 Every time you access a piece of content through Cloudflare's IPFS Gateway, you need a URL with two parts: the gateway hostname and the request path.
 
-If you are using the Cloudflare IPFS Gateway, your gateway hostname will be `cloudflare-ipfs.com` and the request path will vary based on the type of content you are serving.
+If you are using the Cloudflare IPFS Gateway, your gateway hostname will be `ipfs.cloudflare.com` and the request path will vary based on the type of content you are serving.
 
 If a request path is `/ipfs/<CID_HASH>`, that tells the gateway that you want the content with the CID that immediately follows. Because the content is addressed by CID, the gateway's response is immutable and will never change. An example would be https://cloudflare-ipfs.com/ipfs/QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco/wiki/, which is a mirror of Wikipedia and an immutable `/ipfs/` link.
 
