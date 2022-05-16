@@ -5,15 +5,15 @@ title: Runtime APIs
 
 # R2
 
-The in-Worker R2 API is accessed by binding an R2 bucket to a [Worker](/workers). The Worker you write can expose external access to  buckets via a route, or manipulate R2 objects internally.
+The in-Worker R2 API is accessed by binding an R2 bucket to a [Worker](/workers). The Worker you write can expose external access to  buckets via a route or manipulate R2 objects internally.
 
-The R2 API includes some extensions and semantic differences from the S3 API.  If you need S3 compatibility, consider using the [S3 compatible API](/r2/platform/s3-compatibility/).
+The R2 API includes some extensions and semantic differences from the S3 API. If you need S3 compatibility, consider using the [S3-compatible API](/r2/platform/s3-compatibility/).
 
 ## Concepts
 
-R2 organizes the data you store, called objects, into containers, called buckets.  Buckets are the fundamental unit of performance scaling and access within R2.
+R2 organizes the data you store, called objects, into containers, called buckets. Buckets are the fundamental unit of performance, scaling, and access within R2.
 
-## Creating a binding
+## Create a binding
 
 {{<Aside type="note" header="Bindings">}}
 
@@ -33,12 +33,11 @@ bucket_name = '<YOUR_BUCKET_NAME>'
 
 Within your Worker, your bucket binding is now available under the `MY_BUCKET` variable and you can begin interacting with it using the [bucket methods](#bucket-methods) described below.
 
-
 ## Bucket method definitions
 
-The following methods are available on the bucket binding Object injected into your code.
+The following methods are available on the bucket binding object injected into your code.
 
-For example, to issue a PUT object request using the binding above:
+For example, to issue a `PUT` object request using the binding above:
 
 ```js
 addEventListener("fetch", (event) => {
@@ -60,22 +59,22 @@ async function handleRequest(request) {
 
 - {{<code>}}head(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2HeadOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
-  - Retrieves the R2Object for the given key containing only object metadata, if the key exists, and null if the key does not exist.
+  - Retrieves the `R2Object` for the given key containing only object metadata, if the key exists, and null if the key does not exist.
 
 - {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2GetOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
-  - Retrieves the R2Object for the given key containing object metadata and the object body as a {{<code>}}{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}, if the key exists, and null if the key does not exist.
+  - Retrieves the `R2Object` for the given key containing object metadata and the object body as a {{<code>}}{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}, if the key exists, and `null` if the key does not exist.
   - In the event that a precondition specified in {{<code>}}options{{</code>}} fails, {{<code>}}get(){{</code>}} returns an {{<code>}}{{<param-type>}}R2Object{{</param-type>}}{{</code>}} with {{<code>}}body{{</code>}} undefined.
 
 - {{<code>}}put(key{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}ReadableStream{{</param-type>}}|{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}ArrayBufferView{{</param-type>}}|{{<param-type>}}string{{</param-type>}}|{{<param-type>}}null{{</param-type>}}|{{<param-type>}}Blob{{</param-type>}}, options{{<param-type>}}R2PutOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}>{{</type>}}{{</code>}}
 
-  - Stores the given {{<code>}}value{{</code>}} and metadata under the associated {{<code>}}key{{</code>}}. Once the write succeeds, returns an R2Object containing metadata about the stored Object.
-  - R2 writes are strongly consistent.  Once the Promise resolves, all subsequent read operations will see this key value pair globally.
+  - Stores the given {{<code>}}value{{</code>}} and metadata under the associated {{<code>}}key{{</code>}}. Once the write succeeds, returns an `R2Object` containing metadata about the stored Object.
+  - R2 writes are strongly consistent. Once the Promise resolves, all subsequent read operations will see this key value pair globally.
 
 - {{<code>}}delete(key{{<param-type>}}string{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}void {{</param-type>}}>{{</type>}}{{</code>}}
 
   - Deletes the given {{<code>}}value{{</code>}} and metadata under the associated {{<code>}}key{{</code>}}. Once the delete succeeds, returns {{<code>}}void{{</code>}}.
-   - R2 deletes are strongly consistent.  Once the Promise resolves, all subsequent read operations will no longer see this key value pair globally.
+   - R2 deletes are strongly consistent. Once the Promise resolves, all subsequent read operations will no longer see this key value pair globally.
 
 - {{<code>}}list(options{{<param-type>}}R2ListOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Objects{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
@@ -83,7 +82,7 @@ async function handleRequest(request) {
 
 {{</definitions>}}
 
-## R2Object definition
+## `R2Object` definition
 
 {{<definitions>}}
 
@@ -101,7 +100,7 @@ async function handleRequest(request) {
 
 - {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}{{</type>}}{{</code>}}
 
-  - Returns a Promise that resolves to an ArrayBuffer containing the object's value.
+  - Returns a Promise that resolves to an `ArrayBuffer` containing the object's value.
 
 - {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}{{</code>}}
 
@@ -137,7 +136,7 @@ async function handleRequest(request) {
 
 - {{<code>}}httpMetadata{{<param-type>}}R2HTTPMetadata{{</param-type>}}{{</code>}}
 
-  - Various HTTP headers associated with the object.  See [HTTP Metadata](#http-metadata).
+  - Various HTTP headers associated with the object. Refer to [HTTP Metadata](#http-metadata).
 
 - {{<code>}}customMetadata{{<param-type>}}Record\<string, string>{{</param-type>}}{{</code>}}
 
@@ -153,13 +152,13 @@ async function handleRequest(request) {
 
 - {{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}{{</code>}}
 
-  - Specifies that the Object should only be returned given satisfaction of certain conditions in the R2Conditional.  See [Conditional Operations](#conditional-operations).
+  - Specifies that the object should only be returned given satisfaction of certain conditions in the `R2Conditional`. Refer to [Conditional operations](#conditional-operations).
 
 {{</definitions>}}
 
 ### Ranged reads
 
-R2GetOptions accepts a range parameter, which restricts data returned in {{<code>}}body{{</code>}} to be {{<code>}}range{{</code>}} bytes, starting from {{<code>}}offset{{</code>}}, inclusive.
+`R2GetOptions` accepts a `range` parameter, which restricts data returned in `body` to be `range` bytes, starting from `offset`, inclusive.
 
 {{<definitions>}}
 
@@ -179,7 +178,7 @@ R2GetOptions accepts a range parameter, which restricts data returned in {{<code
 
 - {{<code>}}httpMetadata{{<param-type>}}R2HTTPMetadata{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
 
-  - Various HTTP headers associated with the object.  See [HTTP Metadata](#http-metadata).
+  - Various HTTP headers associated with the object. Refer to [HTTP Metadata](#http-metadata).
 
 - {{<code>}}customMetadata{{<param-type>}}Record\<string, string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
 
@@ -200,23 +199,24 @@ R2GetOptions accepts a range parameter, which restricts data returned in {{<code
 {{<definitions>}}
 
 - {{<code>}}limit{{<param-type>}}number{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
-  - The number of results to return.  Defaults to 1000, with a maximum of 1000.
+  - The number of results to return. Defaults to `1000`, with a maximum of `1000`.
 
 - {{<code>}}prefix{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
-  - The prefix to match keys against.  Keys will only be returned if they start with given prefix. 
+  - The prefix to match keys against. Keys will only be returned if they start with given prefix. 
 
 - {{<code>}}cursor{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
-  - An opaque token that indicates where to continue listing objects from.  A cursor can be retrieved from a previous list operation.
+  - An opaque token that indicates where to continue listing objects from. A cursor can be retrieved from a previous list operation.
 
 - {{<code>}}delimiter{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
   - The character to use when grouping keys.
 
 - {{<code>}}include{{<param-type>}}Array\<string\>{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
-  - Can include `httpMetadata` and/or `customMetadata`.  If included, items returned by the list will include the specified metadata.
+  - Can include `httpMetadata` and/or `customMetadata`. If included, items returned by the list will include the specified metadata.
 
   - Note that there is a limit on the total amount of data that a single `list` operation can return. If you request data, you may recieve fewer than `limit` results in your response to accomodate metadata.
 
-  This means applications must be careful to **avoid** code like the following:
+  This means applications must be careful to avoid code like the following:
+
   ```js
     while (listed.length < limit) {
       listed = myBucket.list({ limit, include: ['customMetadata'] })
@@ -228,13 +228,13 @@ R2GetOptions accepts a range parameter, which restricts data returned in {{<code
 
 ### R2Objects
 
-An object containing an R2Object array, returned by BUCKET_BINDING.list().
+An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 
 {{<definitions>}}
 
 - {{<code>}}objects{{<param-type>}}Array\<{{<type>}}R2Object{{</type>}}\>{{</param-type>}}{{</code>}}
 
-  - An array of objects matching the {{<code>}}list{{</code>}} request.
+  - An array of objects matching the `list` request.
 
 - {{<code>}}truncated{{<param-type>}}boolean{{</param-type>}}{{</code>}}
 
@@ -242,7 +242,7 @@ An object containing an R2Object array, returned by BUCKET_BINDING.list().
 
 - {{<code>}}cursor{{<param-type>}}string{{</param-type>}}{{</code>}}
 
-  - A token that can be passed to future {{<code>}}list{{</code>}} calls to resume listing from that point. Only present if truncated is true.
+  - A token that can be passed to future `list` calls to resume listing from that point. Only present if truncated is true.
 
 - {{<code>}}cursor{{<param-type>}}delimitedPrefixes{{</param-type>}}{{</code>}}
 
@@ -254,7 +254,7 @@ An object containing an R2Object array, returned by BUCKET_BINDING.list().
 
 ### Conditional operations
 
-You can pass an R2Conditional object to R2GetOptions.  If the condition check fails, the body will not be returned. This will make `get()` have lower latency.
+You can pass an `R2Conditional` object to `R2GetOptions`.  If the condition check fails, the body will not be returned. This will make `get()` have lower latency.
 
 {{<definitions>}}
 
@@ -276,11 +276,11 @@ You can pass an R2Conditional object to R2GetOptions.  If the condition check fa
 
  {{</definitions>}}
 
-For more information about conditional requests, see RFC 7232.
+For more information about conditional requests, refer to [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
 
 ### HTTP Metadata
 
-Generally, these fields match the HTTP metadata passed when the object was created.  They can be overriden when issuing `get` requests, in which case the given values will be echoed back in the response.
+Generally, these fields match the HTTP metadata passed when the object was created.  They can be overriden when issuing `GET` requests, in which case, the given values will be echoed back in the response.
 
 {{<definitions>}}
 
