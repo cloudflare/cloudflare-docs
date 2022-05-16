@@ -60,7 +60,7 @@ The Plugin takes a single argument, an object with a number of properties:
 
 - `from` is also mandatory and should be set to either an object, or a function which returns an object. Again, if set to a function, it is passed a single object parameter which contains `request`, `formData` and `name`.
 
-- `subject` is an optional `String` or function which returns a string. It defaults to `New <name> form submission`.
+- `subject` is an optional `String` or function which returns a string. It defaults to `New <NAME> form submission`.
 
 - `content` is an optional array or function which returns an array. It defaults to a `text/html` and `text/plain` body array, detailing the form submission contents.
 
@@ -68,4 +68,4 @@ The Plugin takes a single argument, an object with a number of properties:
 
 The `method` and `action` attributes of the HTML form do not need to be set. The Plugin will automatically override them to allow it to intercept the submission.
 
-For more information about MailChannels and the options they support, check out [their documentation](https://mailchannels.zendesk.com/hc/en-us/articles/4565898358413-Sending-Email-from-Cloudflare-Workers-using-MailChannels-Send-API).
+For more information about MailChannels and the options they support, refer to [the documentation](https://mailchannels.zendesk.com/hc/en-us/articles/4565898358413-Sending-Email-from-Cloudflare-Workers-using-MailChannels-Send-API).
