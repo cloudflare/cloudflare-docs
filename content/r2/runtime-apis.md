@@ -143,6 +143,10 @@ async function handleRequest(request) {
 
   - A map of custom, user-defined metadata associated with the object.
 
+- {{<code>}}writeHttpMetadata(headers{{<param-type>}}Headers{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
+
+  -  Retrieves the `httpMetadata` from the R2Object and writes to a Headers object. Refer to [HTTP Metadata](#http-metadata).
+
 {{</definitions>}}
 
 ## Method-specific types
