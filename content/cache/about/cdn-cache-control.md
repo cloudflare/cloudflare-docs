@@ -49,7 +49,7 @@ Headers:
 
 - `Cache-Control: max-age=14400, s-maxage=84000`
 - `Cloudflare-CDN-Cache-Control: max-age=24400`
-- `CDN-Cache-Control: 18000`
+- `CDN-Cache-Control: max-age=18000`
 
 Cache behavior:
 
