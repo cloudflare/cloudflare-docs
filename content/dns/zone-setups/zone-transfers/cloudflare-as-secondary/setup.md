@@ -50,27 +50,15 @@ If you want [DNSSEC](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) av
 
 ## Step 1 - Create TSIG (optional)
 
-A Transaction Signature (TSIG) authenticates communication between a primary and secondary DNS server.
-
-While optional, this step is highly recommended.
+{{<render file="_tsig-definition.md">}}
 
 ### Using the dashboard
 
-To create a TSIG using the dashboard:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Manage Account** > **Configurations**.
-3. Click **DNS Zone Transfers**.
-4. For **TSIG**, click **Create**. 
-5. Enter the following information:
-    - **TSIG name**: Provide a descriptive name.
-    - **Secret (optional)**: Get a shared secret to add to your third-party nameservers. If left blank, this field generates a random secret.
-    - **Algorithm**: Choose a TSIG signing algorithm.
-6. Click **Create**.
+{{<render file="_tsig-create-dash.md">}}
 
 ### Using the API
 
-To create a TSIG using the API, send a [POST](https://api.cloudflare.com/#secondary-dns-tsig--create-tsig) request.
+{{<render file="_tsig-create-api.md">}}
 
 ## Step 2 - Create Peer Server
 
@@ -83,8 +71,9 @@ To create a peer server using the dashboard:
 3. Click **DNS Zone Transfers**.
 4. For **Peer DNS servers**, click **Create**. 
 5. Enter the following information, paying particular attention to:
-    - **Port**: Which needs to support traffic at your primary DNS provider.
-    - **Enable incremental (IXFR) zone transfers**: Which need to be supported by your primary DNS provider.
+    - **IP**: Specifies where Cloudflare sends transfer requests to.
+    - **Port**: Specifies the IP Port for the transfer IP.
+    - **Enable incremental (IXFR) zone transfers**: Specifies if Cloudflare sends IXFR requests in addition to the default AXFR requests.
     - **Link a an existing TSIG**: If desired, link the TSIG you [previously created](#step-1---create-tsig-optional). 
 6. Click **Create**.
 
