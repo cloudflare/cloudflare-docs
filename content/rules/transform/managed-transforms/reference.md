@@ -33,14 +33,6 @@ layout: list
       </td>
     </tr>
     <tr>
-      <td><strong>Add "True-Client-IP" header</strong></td>
-      <td>
-        <p>Adds a <code>True-Client-IP</code> request header with the visitor's IP address.</p>
-        <p>Only available on Enterprise plans.</p>
-        <p>Unavailable when <strong>Remove visitor IP headers</strong> is enabled.</p>
-      </td>
-    </tr>
-    <tr>
       <td><strong>Add visitor location headers</strong></td>
       <td>
         <p>Adds HTTP request headers with location information for the visitor's IP address. The added headers are:</p>
@@ -51,6 +43,14 @@ layout: list
           <li><code>cf-iplongitude</code>: The visitor's longitude (value from the <code>ip.src.lon</code> field).</li>
           <li><code>cf-iplatitude</code>: The visitor's latitude (value from the <code>ip.src.lat</code> field).</li>
         </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Add "True-Client-IP" header</strong></td>
+      <td>
+        <p>Adds a <code>True-Client-IP</code> request header with the visitor's IP address.</p>
+        <p>Only available on Enterprise plans.</p>
+        <p>Unavailable when <strong>Remove visitor IP headers</strong> is enabled.</p>
       </td>
     </tr>
     <tr>
