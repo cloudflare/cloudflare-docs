@@ -18,3 +18,7 @@ When you make edits in your primary DNS provider, those DNS records will be tran
 ## Availability
 
 Secondary DNS is only available to Enterprise customers. For more details on activation and pricing, contact your account team.
+
+## Limitations
+
+At this time, you cannot convert a secondary zone to a primary zone.
