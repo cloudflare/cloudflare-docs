@@ -20,7 +20,7 @@ For instructions, refer to [Set Maximum Segment Size](/magic-wan/prerequisites/#
 
 {{</Aside>}}
 
-## Anycast GRE
+## Anycast protocol
 
 Magic WAN uses [Anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) IP addresses for Cloudflare’s tunnel endpoints, meaning that any server in any data center is capable of encapsulating and decapsulating packets for the same tunnel.
 
