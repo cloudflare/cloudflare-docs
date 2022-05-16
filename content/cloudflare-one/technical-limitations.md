@@ -27,15 +27,15 @@ All values are per organization.
 
 ## Cloudflare Tunnel limitations
 
-All values are per account.
+All values are per account. Feature names which are followed by a `*` are soft limits which may be increased if necessary. 
 
 {{<table-wrap>}}
 
 | Feature                                  | Limit |
 | ---------------------------------------- | ----- |
-| Tunnels per account                      | 1000  |
-| IP routes per account                    | 1000  |
-| Active `cloudflared` replicas per tunnel | 25    |
+| Tunnels per account*                      | 1000  |
+| IP routes per account*                    | 1000  |
+| Active `cloudflared` replicas per tunnel* | 25    |
 
 {{</table-wrap>}}
 
