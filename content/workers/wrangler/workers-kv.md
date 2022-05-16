@@ -11,7 +11,7 @@ The Wrangler `kv:...` commands allow you to manage application data in the Cloud
 KV operations are scoped to your account, so in order to use any of these commands, you must:
 
 1. Configure an `account_id` in your project's `wrangler.toml` file or set the `CLOUDFLARE_ACCOUNT_ID` environment variable.
-2. Run all `wrangler kv:<command>` operations in your terminal from the project's root directory.
+2. Run all `wrangler kv:<COMMAND>` operations in your terminal from the project's root directory.
 
 ### Get started
 

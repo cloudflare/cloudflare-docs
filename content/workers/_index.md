@@ -62,10 +62,10 @@ async function handleRequest(request) {
 
 ## Popular pages
 
-- [Learning: How Workers works](/workers/learning/how-workers-works/) – learn how Cloudflare’s global network powers Workers
-- [Pricing](/workers/platform/pricing/) – learn about the Free and Bundled plans
-- [Reference: HTMLRewriter](/workers/runtime-apis/html-rewriter/) – parse and transform HTML from inside a Worker
-- [Limits](/workers/platform/limits/) – learn about plan limits (Free plans get 100,000 req/day)
+- [Learning: How Workers works](/workers/learning/how-workers-works/) – Learn how Cloudflare’s global network powers Workers
+- [Pricing](/workers/platform/pricing/) – Learn about the Free and Bundled plans
+- [Reference: HTMLRewriter](/workers/runtime-apis/html-rewriter/) – Parse and transform HTML from inside a Worker
+- [Limits](/workers/platform/limits/) – Learn about plan limits (Free plans get 100,000 req/day)
 
 ---
 
