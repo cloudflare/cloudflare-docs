@@ -13,5 +13,5 @@ meta:
   image: /cf-twitter-card.png
 
 externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com
+  - title: Web3 homepage
+    url: https://cloudflare.com/web3/

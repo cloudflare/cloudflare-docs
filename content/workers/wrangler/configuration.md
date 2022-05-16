@@ -6,7 +6,7 @@ weight: 3
 
 ## Configure `wrangler.toml`
 
-`wrangler` optionally uses a `wrangler.toml` configuration file to customise the development and publishing setup for a Worker. This document serves as a reference for all the fields and acceptable values in this configuration file.
+`wrangler` optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker. This document serves as a reference for all the fields and acceptable values in this configuration file.
 
 The configuration for a Worker can become complex when you can define different [environments](/workers/platform/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.

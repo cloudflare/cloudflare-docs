@@ -6,8 +6,7 @@ weight: 5
 
 ## Wrangler's module system
 
-Cloudflare Workers support the [ESM module syntax](/workers/learning/migrating-to-module-workers/).
-This means you can use the `import`/`export` syntax to add modules to your Worker.
+Cloudflare Workers support the [ESM module syntax](/workers/learning/migrating-to-module-workers/). This means you can use the `import`/`export` syntax to add modules to your Worker.
 
 As of Wrangler 2, `wrangler` has built-in support for importing modules.
 
@@ -25,7 +24,7 @@ As of Wrangler 2, `wrangler` has built-in support for importing modules.
 `wrangler` supports importing modules from external packages.
 Here is an example of creating a Worker project that has a dependency on the `meaning-of-life` package from `npm`:
 
-First create the project and install the dependencies.
+First, create the project and install the dependencies.
 
 ```sh
 $ mkdir new-project
