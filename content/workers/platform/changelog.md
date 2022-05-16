@@ -5,6 +5,15 @@ title: Changelog
 
 # Changelog
 
+## 2022-05-12
+
+- Fix R2 bindings saving cache-control under content-language and rendering cache-control under content-language.
+- Fix R2 bindings list without options to use the default list limit instead of never returning any results.
+- Fix R2 bindings which did not correctly handle error messages from R2, resulting in `internal error` being thrown. Also fix behavior for get throwing an exception on a non-existent key instead of returning null. `R2Error` is removed for the time being and will be reinstated at some future time TBD.
+- R2 bindings: if the onlyIf condition results in a precondition failure or a not modified result, the object is returned without a body instead of returning null.
+- R2 bindings: sha1 is removed as an option because it was not actually hooked up to anything. TBD on additional checksum options beyond md5.
+- Added `startAfter` option to the `list()` method in the Durable Object storage API.
+
 ## 2022-05-05
 
 - `Response.redirect(url)` will no longer coalesce multiple consecutive slash characters appearing in the URL’s path.
