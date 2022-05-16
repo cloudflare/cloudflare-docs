@@ -87,61 +87,61 @@ async function handleRequest(request) {
 
 {{<definitions>}}
 
-*   `key` {{<type>}}string{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
+* `key` {{<type>}}string{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
-  *  The object's key.
+  * The object's key.
 
-*   `body` {{<type>}}ReadableStream{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
+* `body` {{<type>}}ReadableStream{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
-  *  Stream of the body contents.
+  * Stream of the body contents.
 
-*   `bodyUsed` {{<type>}}Boolean{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
+* `bodyUsed` {{<type>}}Boolean{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
-  *  Declares whether the body has been used in a response yet.
+  * Declares whether the body has been used in a response yet.
 
-*   `arrayBuffer()` {{<type>}}Promise\<ArrayBuffer>{{</type>}}
+* `arrayBuffer()` {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
-  *  Returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) representation of the request body.
+  * Returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) representation of the request body.
 
-*   `text()` {{<type>}}Promise\<string>{{</type>}}
+* `text()` {{<type>}}Promise\<string>{{</type>}}
 
-  *  Returns a promise that resolves with a string (text) representation of the request body.
+  * Returns a promise that resolves with a string (text) representation of the request body.
 
-*   `json()` {{<type>}}Promise\<Object>{{</type>}}
+* `json()` {{<type>}}Promise\<Object>{{</type>}}
 
-  *  Returns a promise that resolves with a JSON representation of the request body.
+  * Returns a promise that resolves with a JSON representation of the request body.
 
-*   `blob()` {{<type>}}Promise\<Blob>{{</type>}}
+* `blob()` {{<type>}}Promise\<Blob>{{</type>}}
 
-  *  Returns a Promise that resolves to a binary Blob containing the object's value.
+  * Returns a Promise that resolves to a binary Blob containing the object's value.
 
-*  `version` {{<type>}}string{{</type>}}
+* `version` {{<type>}}string{{</type>}}
 
-  *  Random unique string associated with a specific upload of a key.
+  * Random unique string associated with a specific upload of a key.
 
-*  `size` {{<type>}}number{{</type>}}
+* `size` {{<type>}}number{{</type>}}
 
-  *  Size of the object in bytes.
+  * Size of the object in bytes.
 
-*  `etag` {{<type>}}string{{</type>}}
+* `etag` {{<type>}}string{{</type>}}
 
-  *  The etag associated with the object upload.
+  * The etag associated with the object upload.
 
-*  `httpEtag` {{<type>}}string{{</type>}}
+* `httpEtag` {{<type>}}string{{</type>}}
 
-  *  The object's etag, in quotes so as to be returned as a header.
+  * The object's etag, in quotes so as to be returned as a header.
 
-*  `uploaded` {{<type>}}Date{{</type>}}
+* `uploaded` {{<type>}}Date{{</type>}}
 
-  *  A `Date` object representing the time the object was uploaded.
+  * A `Date` object representing the time the object was uploaded.
 
-* `httpMetadata` {{<type>}}R2HTTPMetadata | Headers{{{</type>}}  {{<prop-meta>}}optional{{</prop-meta>}}
+* `httpMetadata` {{<type>}}R2HTTPMetadata | Headers{{</type>}}  {{<prop-meta>}}optional{{</prop-meta>}}
 
   *  Various HTTP headers associated with the object. See [HTTP Metadata](#http-metadata).
 
 * `customMetadata` {{<type>}}Record\<string, string>{{</type>}}  {{<prop-meta>}}optional{{</prop-meta>}}
 
-  *  A map of custom, user-defined metadata that will be stored with the object.
+  * A map of custom, user-defined metadata that will be stored with the object.
 
 {{</definitions>}}
 
@@ -151,9 +151,9 @@ async function handleRequest(request) {
 
 {{<definitions>}}
 
-*  `onlyIf` {{<type>}}R2Conditional{{</type>}}
+* `onlyIf` {{<type>}}R2Conditional{{</type>}}
 
-  *  Specifies that the Object should only be returned given satisfaction of certain conditions in the `R2Conditional`. See [Conditional Operations](#conditional-operations).
+  * Specifies that the Object should only be returned given satisfaction of certain conditions in the `R2Conditional`. See [Conditional Operations](#conditional-operations).
 
 {{</definitions>}}
 
@@ -163,13 +163,13 @@ async function handleRequest(request) {
 
 {{<definitions>}}
 
-*  `offset` {{<type>}}number{{</type>}}
+* `offset` {{<type>}}number{{</type>}}
 
-  *  The byte to begin returning data from, inclusive.
+  * The byte to begin returning data from, inclusive.
 
-*  `length` {{<type>}}number{{</type>}}
+* `length` {{<type>}}number{{</type>}}
 
-  *  The number of bytes to return. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
+  * The number of bytes to return. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
 
 {{</definitions>}}
 
@@ -177,21 +177,21 @@ async function handleRequest(request) {
 
 {{<definitions>}}
 
-* `httpMetadata` {{<type>}}R2HTTPMetadata | Headers{{{</type>}}  {{<prop-meta>}}optional{{</prop-meta>}}
+* `httpMetadata` {{<type>}}R2HTTPMetadata | Headers{{</type>}}  {{<prop-meta>}}optional{{</prop-meta>}}
 
-  *  Various HTTP headers associated with the object. See [HTTP Metadata](#http-metadata).
+  * Various HTTP headers associated with the object. See [HTTP Metadata](#http-metadata).
 
 * `customMetadata` {{<type>}}Record\<string, string>{{</type>}}  {{<prop-meta>}}optional{{</prop-meta>}}
 
-  *  A map of custom, user-defined metadata that will be stored with the object.
+  * A map of custom, user-defined metadata that will be stored with the object.
 
-*  `md5` {{<type>}}ArrayBuffer | string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `md5` {{<type>}}ArrayBuffer | string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  *  A md5 hash to use to check the received object's integrity.
+  * A md5 hash to use to check the received object's integrity.
 
-*  `sha1` {{<type>}}ArrayBuffer | string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `sha1` {{<type>}}ArrayBuffer | string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  *  A sha1 hash to use to check the received object's integrity.
+  * A sha1 hash to use to check the received object's integrity.
 
 {{</definitions>}}
 
@@ -199,36 +199,36 @@ async function handleRequest(request) {
 
 {{<definitions>}}
 
-*  `limit` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  *  The number of results to return. Defaults to 1000, with a maximum of 1000.
+* `limit` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* The number of results to return. Defaults to 1000, with a maximum of 1000.
 
-*  `prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  *  The prefix to match keys against. Keys will only be returned if they start with given prefix.
+  * The prefix to match keys against. Keys will only be returned if they start with given prefix.
 
-*  `cursor` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `cursor` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  *  An opaque token that indicates where to continue listing objects from. A cursor can be retrieved from a previous `list` operation.
+  * An opaque token that indicates where to continue listing objects from. A cursor can be retrieved from a previous `list` operation.
 
-*  `delimiter` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `delimiter` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  *  The character to use when grouping keys.
+  * The character to use when grouping keys.
 
-*  `include` {{<type>}}Array\<string\>{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `include` {{<type>}}Array\<string\>{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  *  Can include `httpMetadata` and/or `customMetadata`. If included, items returned by the `list` will include the specified metadata.
+  * Can include `httpMetadata` and/or `customMetadata`. If included, items returned by the `list` will include the specified metadata.
 
-  *  Note that there is a limit on the total amount of data that a single `list` operation can return. If you request data, you may receive fewer than `limit` results in your response to accommodate metadata.
+  * Note that there is a limit on the total amount of data that a single `list` operation can return. If you request data, you may receive fewer than `limit` results in your response to accommodate metadata.
 
-  This means applications must be careful to **avoid** code like the following:
+    This means applications must be careful to **avoid** code like the following:
 
-  ```js
-  while (listed.length < limit) {
-    listed = myBucket.list({ limit, include: ['customMetadata'] })
-  }
-  ```
+    ```js
+    while (listed.length < limit) {
+      listed = myBucket.list({ limit, include: ['customMetadata'] })
+    }
+    ```
 
-  Instead, use the `truncated` property to determine if the `list` request has more data to be returned.
+    Instead, use the `truncated` property to determine if the `list` request has more data to be returned.
 
 {{</definitions>}}
 
@@ -238,23 +238,23 @@ An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 
 {{<definitions>}}
 
-*   `objects` {{<type>}}Array\<R2Object\>{{</type>}}
+* `objects` {{<type>}}Array\<R2Object\>{{</type>}}
 
-  *  An array of objects matching the `list` request.
+  * An array of objects matching the `list` request.
 
-*   `truncated` {{<type>}}string{{</type>}}
+* `truncated` {{<type>}}string{{</type>}}
 
-  *  If true, indicates there are more results to be retrieved for the current `list` request.
+  * If true, indicates there are more results to be retrieved for the current `list` request.
 
-*   `cursor` {{<type>}}string{{</type>}}
+* `cursor` {{<type>}}string{{</type>}}
 
-  *   A token that can be passed to future `list` calls to resume listing from that point. Only present if truncated is true.
+  * A token that can be passed to future `list` calls to resume listing from that point. Only present if truncated is true.
 
-*   `delimitedPrefixes` {{<type>}}Array\<string\>{{</type>}}
+* `delimitedPrefixes` {{<type>}}Array\<string\>{{</type>}}
 
-  *   If a delimiter has been specified, contains all prefixes between the specified prefix and the next occurrence of the delimiter.
+  * If a delimiter has been specified, contains all prefixes between the specified prefix and the next occurrence of the delimiter.
 
-  *   For example, if no prefix is provided and the delimiter is '/', `foo/bar/baz` would return `foo` as a delimited prefix. If `foo/` was passed as a prefix with the same structure and delimiter, `foo/bar` would be returned as a delimited prefix.
+  * For example, if no prefix is provided and the delimiter is '/', `foo/bar/baz` would return `foo` as a delimited prefix. If `foo/` was passed as a prefix with the same structure and delimiter, `foo/bar` would be returned as a delimited prefix.
 
 {{</definitions>}}
 
@@ -264,23 +264,23 @@ You can pass an `R2Conditional` object to `R2GetOptions`. If the condition check
 
 {{<definitions>}}
 
-*   `etagMatches` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `etagMatches` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  *   Performs the operation if the object's etag matches the given string.
+  * Performs the operation if the object's etag matches the given string.
 
-*   `etagDoesNotMatch` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `etagDoesNotMatch` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  *   Performs the operation if the object's etag does not match the given string.
+  * Performs the operation if the object's etag does not match the given string.
 
-*   `uploadedBefore` {{<type>}}Date{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `uploadedBefore` {{<type>}}Date{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  *   Performs the operation if the object was uploaded before the given date.
+  * Performs the operation if the object was uploaded before the given date.
 
-*   `uploadedAfter` {{<type>}}Date{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `uploadedAfter` {{<type>}}Date{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  *   Performs the operation if the object was uploaded after the given date.
+  * Performs the operation if the object was uploaded after the given date.
 
- {{</definitions>}}
+{{</definitions>}}
 
 For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
 
@@ -290,16 +290,16 @@ Generally, these fields match the HTTP metadata passed when the object was creat
 
 {{<definitions>}}
 
-*   `contentType` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `contentType` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-*   `contentLanguage` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `contentLanguage` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-*   `contentDisposition` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `contentDisposition` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-*   `contentEncoding` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `contentEncoding` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-*   `cacheControl` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `cacheControl` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-*   `cacheExpiry` {{<type>}}Date{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+* `cacheExpiry` {{<type>}}Date{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
  {{</definitions>}}
