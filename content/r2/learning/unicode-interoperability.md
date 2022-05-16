@@ -5,9 +5,9 @@ pcx-content-type: reference
 
 ## Filename encoding and interoperability problems
 
-Since R2 is built on top of Workers, it supports Unicode natively. One nuance of Unicode that is often overlooked is the issue of [filename interoperability](https://en.wikipedia.org/wiki/Filename#Encoding_indication_interoperability) due to [Unicode equivalence](https://en.wikipedia.org/wiki/Unicode_equivalence).
+R2 is built on top of Workers and it supports Unicode natively. One nuance of Unicode that is often overlooked is the issue of [filename interoperability](https://en.wikipedia.org/wiki/Filename#Encoding_indication_interoperability) due to [Unicode equivalence](https://en.wikipedia.org/wiki/Unicode_equivalence).
 
-Based on feedback from our users, we have chosen to NFC-normalize key names before storing by default. This means `Héllo` and `Héllo` are the same object in R2 but different objects in other storage providers.
+Based on feedback from our users, we have chosen to NFC-normalize key names before storing by default. This means `Héllo` and `Héllo` are the same object in R2 but different objects in other storage providers. Though  `Héllo` and `Héllo` are different character keys, they are rendered the same.
 
 R2 preserves the encoding for display though. When you list the objects, you will get back the last encoding you uploaded with.
 
