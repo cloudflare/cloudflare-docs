@@ -20,7 +20,7 @@ Clicking one of the metrics in the sidebar will define the base unit (packets or
 
 ## Filters
 
-Under Network Analytics you can apply filters to the data displayed in the dashboard.
+Under **Network Analytics** you can apply filters to the data displayed in the dashboard.
 
 You can filter by the following parameters:
 
