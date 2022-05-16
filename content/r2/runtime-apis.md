@@ -244,7 +244,7 @@ An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 
   - A token that can be passed to future `list` calls to resume listing from that point. Only present if truncated is true.
 
-- {{<code>}}cursor{{<param-type>}}delimitedPrefixes{{</param-type>}}{{</code>}}
+- {{<code>}}delimitedPrefixes{{<param-type>}}Array\<{{<type>}}string{{</type>}}\>{{</param-type>}}{{</code>}}
 
   - If a delimiter has been specified, contains all prefixes between the specified prefix and the next occurence of the delimiter.
   
