@@ -33,10 +33,11 @@ layout: list
       </td>
     </tr>
     <tr>
-      <td><strong>Add True-Client-IP</strong></td>
+      <td><strong>Add "True-Client-IP" header</strong></td>
       <td>
         <p>Adds a <code>True-Client-IP</code> request header with the visitor's IP address.</p>
         <p>Only available on Enterprise plans.</p>
+        <p>Unavailable when <strong>Remove visitor IP headers</strong> is enabled.</p>
       </td>
     </tr>
     <tr>
@@ -61,6 +62,7 @@ layout: list
           <li><code>x-forwarded-for</code></li>
           <li><code>true-client-ip</code></li>
         </ul>
+        <p>Unavailable when <strong>Add "True-Client-IP" header</strong> is enabled.</p>
       </td>
     </tr>
   </tbody>
