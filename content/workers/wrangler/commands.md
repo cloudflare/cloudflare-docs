@@ -8,20 +8,20 @@ weight: 2
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
-- [`init`](#init) - create a skeleton Wrangler project, including the `wrangler.toml` file.
-- [`dev`](#dev) - start a local server for developing your Worker.
-- [`publish`](#publish) - publish your Worker to Cloudflare.
-- [`kv:namespace`](#kvnamespace) - manage Workers KV namespaces.
-- [`kv:key`](#kvkey) - manage key-value pairs within a Workers KV namespace.
-- [`kv:bulk`](#kvbulk) - manage multiple key-value pairs within a Workers KV namespace in batches.
-- [`secret`](#secret) - manage the secret variables for a Worker.
-- [`tail`](#tail) - start a session to livestream logs from a deployed Worker.
-- [`login`](#login) - authorize Wrangler with your Cloudflare account using OAuth.
-- [`logout`](#logout) - remove Wrangler’s authorization for accessing your account.
+- [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
+- [`dev`](#dev) - Start a local server for developing your Worker.
+- [`publish`](#publish) - Publish your Worker to Cloudflare.
+- [`kv:namespace`](#kvnamespace) - Manage Workers KV namespaces.
+- [`kv:key`](#kvkey) - Manage key-value pairs within a Workers KV namespace.
+- [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
+- [`secret`](#secret) - Manage the secret variables for a Worker.
+- [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
+- [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
+- [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 
 {{<Aside type="note">}}
 
-The following global flags work on every single command.
+The following global flags work on every command.
 
 Flags:
 
@@ -69,7 +69,7 @@ $ wrangler dev [SCRIPT] [OPTIONS]
 
 {{<Aside type="note">}}
 
-None of the options for this command are required. Also, many can be set in your `wrangler.toml` file.
+None of the options for this command are required. Many of these options can be set in your `wrangler.toml` file.
 Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) documentation for more information.
 
 {{</Aside>}}
@@ -117,8 +117,7 @@ Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) do
 
 {{</definitions>}}
 
-The `wrangler dev` command that establishes a connection between `localhost` and a Cloudflare server that hosts your Worker in development.
-This allows full access to Workers KV, Durable Objects, and more. This is a great way to easily test your Worker while developing.
+The `wrangler dev` command that establishes a connection between `localhost` and a Cloudflare server that hosts your Worker in development. This allows full access to Workers KV and Durable Objects. `wrangler dev` is a way to easily test your Worker while developing.
 
 ```sh
 
@@ -129,8 +128,7 @@ This allows full access to Workers KV, Durable Objects, and more. This is a grea
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
-With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected.
-You will also see `console.log` messages and exceptions appearing in your terminal.
+With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
 ---
 
@@ -144,8 +142,7 @@ $ wrangler publish [SCRIPT] [OPTIONS]
 
 {{<Aside type="note">}}
 
-None of the options for this command are required. Also, many can be set in your `wrangler.toml` file.
-Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) documentation for more information.
+None of the options for this command are required. Also, many can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration/) documentation for more information.
 
 {{</Aside>}}
 

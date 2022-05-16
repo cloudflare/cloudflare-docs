@@ -31,6 +31,12 @@ Now, install the latest version of Wrangler into your project, adding it to your
 $ npm install -D wrangler@latest
 ```
 
+To check that you have installed the correct Wrangler version, run:
+
+```sh
+npx wrangler --version
+```
+
 ### Build your Worker
 
 Run the `wrangler dev` command. This will show any warnings or errors that should be addressed.

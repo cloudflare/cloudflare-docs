@@ -10,8 +10,8 @@ The Wrangler `kv:...` commands allow you to manage application data in the Cloud
 
 KV operations are scoped to your account, so in order to use any of these commands, you must:
 
-- Configure an `account_id` in your project's `wrangler.toml` file or set the `CLOUDFLARE_ACCOUNT_ID` environment variable.
-- Run all `wrangler kv:<command>` operations in your terminal from the project's root directory.
+1. Configure an `account_id` in your project's `wrangler.toml` file or set the `CLOUDFLARE_ACCOUNT_ID` environment variable.
+2. Run all `wrangler kv:<command>` operations in your terminal from the project's root directory.
 
 ### Get started
 
@@ -35,7 +35,7 @@ Successful operations will print a new configuration block that should be copied
 let value = await MY_KV.get("my-key");
 ```
 
-To write a value to your KV namespace using Wrangler, run the `wrangler kv:key put` subcommand.
+To write a value to your KV namespace using Wrangler, run the `wrangler kv:key put` subcommand:
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV "key" "value"
