@@ -11,7 +11,7 @@ meta:
 Cloudflare Network Analytics v2 (beta) provides near real-time visibility into network and transport-layer traffic patterns and DDoS attacks. Network Analytics visualizes packet and bit-level data, the same data available via the Network Analytics v2 dataset of the GraphQL Analytics API.
 
 {{<Aside type="note">}}
-The Network Analytics v2 dashboard is available in beta. For guidance on the Network Analytics v1 dashboard, refer to [Understanding Cloudflare Network Analytics v1](https://support.cloudflare.com/hc/en-us/articles/360038696631-Understanding-Cloudflare-Network-Analytics) in the Support KB.
+The Network Analytics v2 dashboard is available in beta. For guidance on the Network Analytics v1 dashboard, refer to [Understanding Cloudflare Network Analytics v1](https://support.cloudflare.com/hc/articles/360038696631) in the Support KB.
 {{</Aside>}}
 
 ## Related resources
