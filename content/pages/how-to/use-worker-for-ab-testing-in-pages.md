@@ -21,11 +21,11 @@ It is helpful to use cookies because you want users to be served the same versio
 
 After you have gotten the value from the cookie, you can then have a conditional rendering set up that checks the value of the existing cookie and then assigns a group. Without a cookie, you will give one and set the URL. 
 
-# Settting up your Pages Function
+## Settting up your Pages Function
 
 In your project, you can handle the logic for A/B testing using [Pages Functions](/pages/platform/functions/). Pages Functions allows you to handle server logic from within your Pages project. Create a `/functions` directory at the root of your project to get started. Your application server logic will live in the functions folder. 
 
-## Adding middleware logic.
+## Adding middleware logic
 
 Pages Functions have utility functions that can reuse chunks of logic which are executed before and/or after route handlers. These are called [middleware](/pages/platform/functions/#adding-middleware). In our A/B testing use-case, we want to intercept the request before it gets to the server, which is perfect middleware use. In your `/functions` directory, create an `_middleware.js` file. 
 
@@ -41,14 +41,13 @@ Following the functions naming convention, the `_middleware.js` file export a si
 ---
 filename: /functions/_middleware.js
 ---
-  const abtest = async({request, next, env}) => {
+const abtest = async({request, next, env}) => {
   /*
   Todo: 
   1. Conditional statements to check for the cookie
   2. Assign cookies based on percentage, then sever 
-
   */
-  }
+}
 
 export const onRequest = [abtest]
 ```
@@ -63,14 +62,13 @@ highlight: [1,2]
 const cookieName = "ab-test-cookie"
 const newHomepagePathName = "/test"
 
-  const abtest = async({request, next, env}) => {
+const abtest = async({request, next, env}) => {
   /*
   Todo: 
   1. Conditional statements to check for the cookie
-  2. Assign cookie based on percentage then sever 
-
+  2. Assign cookie based on percentage then serve 
   */
-  }
+}
 
 export const onRequest = [abtest]
 ```
@@ -94,7 +92,7 @@ const abtest = async({request, next, env}) => {
 
   if (url.pathname === "/") {
     // if cookie ab-test-hp=new
-    // if no cookie set, pass xy% of traffic and set a cookie value (current|new)
+    // if no cookie set, pass x% of traffic and set a cookie value (current|new)
     
     let cookie = request.headers.get("cookie")
     // is cookie set?
@@ -107,8 +105,7 @@ const abtest = async({request, next, env}) => {
   }
     /*
     Todo: 
-    1. Conditional statements to check for the cookie
-    2. Assign cookies based on percentage, then sever 
+    1. Assign cookies based on randomly genrated percentage, then serve
 
     */
 }
@@ -174,7 +171,7 @@ export const onRequest = [abtest];
 
 # Deploy to Cloudflare Pages
 
-Now that you have set up your `functions/_middleware.js` file in your project. Deploy your site to Pages by logging in to the Cloudflare dashboard > Account Home > Pages and selecting Create a project. Select the new  GitHub repository that you created and, in the Set upbuilds and deployments section, provide the following information:
+Now that you have set up your `functions/_middleware.js` file in your project. Deploy your site to Pages by logging in to the Cloudflare dashboard > Account Home > Pages and selecting Create a project. Select the new  GitHub repository that you created and, in the Set up builds and deployments section, provide the following information:
 
 <div>
 
@@ -186,4 +183,4 @@ Now that you have set up your `functions/_middleware.js` file in your project. D
 
 </div>
 
-After you have deployed your application, you will see your middleware Function under Functions > Configuration in the current build.  
+After you have deployed your application, you will see your middleware Function under Functions > Configuration in the current build. 
