@@ -145,7 +145,7 @@ async function handleRequest(request) {
 
 - {{<code>}}writeHttpMetadata(headers{{<param-type>}}Headers{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
-  -  Retrieves the `httpMetadata` from the R2Object and writes to a Headers object. Refer to [HTTP Metadata](#http-metadata).
+  -  Retrieves the `httpMetadata` from the `R2Object` and writes to a `Headers` object. Refer to [HTTP Metadata](#http-metadata).
 
 {{</definitions>}}
 
