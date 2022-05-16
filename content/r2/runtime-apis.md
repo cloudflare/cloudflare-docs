@@ -115,33 +115,35 @@ async function handleRequest(request) {
 
   * Returns a Promise that resolves to a binary Blob containing the object's value.
 
-* `version` {{<type>}}string{{</type>}}
+* `version` {{<type>}}string{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
   * Random unique string associated with a specific upload of a key.
 
-* `size` {{<type>}}number{{</type>}}
+* `size` {{<type>}}number{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
   * Size of the object in bytes.
 
-* `etag` {{<type>}}string{{</type>}}
+* `etag` {{<type>}}string{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
   * The etag associated with the object upload.
 
-* `httpEtag` {{<type>}}string{{</type>}}
+* `httpEtag` {{<type>}}string{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
   * The object's etag, in quotes so as to be returned as a header.
 
-* `uploaded` {{<type>}}Date{{</type>}}
+* `uploaded` {{<type>}}Date{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
   * A `Date` object representing the time the object was uploaded.
 
-* `httpMetadata` {{<type>}}R2HTTPMetadata | Headers{{</type>}}  {{<prop-meta>}}optional{{</prop-meta>}}
+* `httpMetadata` {{<type>}}R2HTTPMetadata | Headers{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
   *  Various HTTP headers associated with the object. See [HTTP Metadata](#http-metadata).
 
-* `customMetadata` {{<type>}}Record\<string, string>{{</type>}}  {{<prop-meta>}}optional{{</prop-meta>}}
+* `customMetadata` {{<type>}}Record\<string, string>{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
   * A map of custom, user-defined metadata that will be stored with the object.
+
+* `writeHttpMetadata{{<type>}}Record\<test, test>{{</type>}}`
 
 {{</definitions>}}
 
@@ -200,7 +202,8 @@ async function handleRequest(request) {
 {{<definitions>}}
 
 * `limit` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-* The number of results to return. Defaults to 1000, with a maximum of 1000.
+
+  * The number of results to return. Defaults to 1000, with a maximum of 1000.
 
 * `prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
