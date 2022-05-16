@@ -58,6 +58,21 @@ An incoming request which matches multiple rules' URL patterns will inherit all 
 
 If a header is applied twice in the `_headers` file, the values are joined with a comma separator. Headers defined in the `_headers` file override what Cloudflare Pages ordinarily sends, so be aware when setting security headers. Cloudflare reserves the right to attach new headers to Pages projects at any time in order to improve performance or harden the security of your deployments.
 
+### Detaching
+
+You may wish to remove a header which has been added by a more pervasive rule. This can be done by prepending an exclamation mark `!`.
+
+```txt
+---
+filename: _headers
+---
+/*
+  Content-Security-Policy: default-src 'self';
+
+/*.jpg
+  ! Content-Security-Policy
+```
+
 ### Matching
 
 The same URL matching features that [`_redirects`](/pages/platform/redirects/) offers is also available to the `_headers` file. Note, however, that redirects are applied before headers, when a request matches both a redirect and a header, the redirect takes priority.
