@@ -18,6 +18,12 @@ Refer the feature column of each table to review which features of an API have b
 ✅ Feature Implemented  
 ❌ Feature Not Implemented
 
+## Bucket region
+
+When using the S3 API, the region for an R2 bucket is `auto`. For compatibility with tools that do not allow you to specify a region, an empty value and `us-east-1` will alias to the `auto` region.
+
+This also applies to the `LocationConstraint` for the `CreateBucket` API.
+
 ## Bucket-level operations
 
 The following tables are related to bucket-level operations.
