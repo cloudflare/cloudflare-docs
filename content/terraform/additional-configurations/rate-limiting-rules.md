@@ -32,7 +32,7 @@ resource "cloudflare_ruleset" "zone_rl" {
   rules {
     action = "block"
     ratelimit {
-      characteristics = ["cf.colo.id", "ip.src", "http.request.headers[\"x-api-key\"]"]
+      characteristics = ["cf.colo.id", "ip.src"]
       period = 60
       requests_per_period = 100
       mitigation_timeout = 600
