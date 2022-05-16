@@ -28,5 +28,5 @@ npx wrangler publish
 ## Installation
 
 ```bash
-$ npm install wrangler --save-dev
+$ npm install -g wrangler
 ```

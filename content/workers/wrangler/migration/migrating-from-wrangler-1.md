@@ -28,13 +28,13 @@ $ npm uninstall -g @cloudflare/wrangler
 Now, install the latest version of Wrangler into your project, adding it to your `devDependencies`:
 
 ```sh
-$ npm install -D wrangler@latest
+$ npm install -g wrangler
 ```
 
 To check that you have installed the correct Wrangler version, run:
 
 ```sh
-npx wrangler --version
+$ wrangler --version
 ```
 
 ### Build your Worker
@@ -47,7 +47,7 @@ Note that in most cases, the messages will include actionable instructions on ho
   These do not stop Wrangler from building your Worker, but consider updating the configuration to remove them.
 
 ```sh
-$ npx wrangler dev
+$ wrangler dev
 ```
 
 Here is an example of some warnings and errors:

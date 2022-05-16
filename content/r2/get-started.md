@@ -31,13 +31,13 @@ To create your R2 bucket, install [Wrangler](/workers/get-started/guide/#2-insta
 To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
 ```sh
-$ npm install -D wrangler
+$ npm install -g wrangler
 ```
 
 or install with yarn:
 
 ```sh
-$ yarn add wrangler
+$ yarn global add wrangler
 ```
 
 Refer to the Wrangler [Install/Update](/workers/wrangler/get-started/) page for more information.
