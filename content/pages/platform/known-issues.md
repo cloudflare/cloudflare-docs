@@ -7,13 +7,13 @@ title: Known issues
 
 Here are some known bugs and issues with Cloudflare Pages:
 
-- GitHub and GitLab are currently the only supported source code hosting tools.
-- Pages currently only supports a single project per repository. Monorepos or repositories with multiple codebases/applications currently cannot deploy more than one project to Pages at a time.
+- GitHub and GitLab are currently the only supported platforms for automatic CI/CD builds. [Direct uploads](https://developers.cloudflare.com/pages/platform/direct-upload/) allow you to integrate your own build platform or upload from your local computer.
+- Monorepos or repositories with multiple codebases/applications currently cannot use the automatic GitHub/GitLab integration to build multiple sites from the same repository. However, [Direct Uploads](https://developers.cloudflare.com/pages/platform/direct-upload/) can be used to upload a monorepo as separate Pages projects from your own computer.
 - After you have selected a GitHub/GitLab repository for your Pages application, it cannot be changed. Remove/delete your Pages project and create a new one pointing at a different repository if you need to update it.
 - `*.pages.dev` subdomains currently cannot be changed. If you need to change your `*.pages.dev` subdomain, delete your project and create a new one.
 - Hugo builds automatically run an old version. To run the latest version of Hugo (for example, `0.80.0`), you will need to set an environment variable. Set `HUGO_VERSION` to `0.80.0` or the Hugo version of your choice.
 - By default, Cloudflare uses Node `12.18.0` in the Pages build environment. If you need to use a newer Node version, refer to the [Build configuration page](/pages/platform/build-configuration/) for configuration options.
-- For users migrating from Netlify, Cloudflare does not support Netlify's Forms and Serverless Functions features.
+- For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. An [equivalent](https://developers.cloudflare.com/pages/platform/functions/) to Netlify's Serverless Functions is currently in beta.
 - It is currently not possible to add a custom domain with a wildcard, for example, `*.domain.com`.
 - It is currently not possible to add a custom domain with a Worker already routed on that domain.
 - It is currently not possible to add a custom domain with a Cloudflare Access policy already enabled on that domain.
