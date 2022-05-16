@@ -63,7 +63,7 @@ async function handleRequest(request) {
 
 - {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2GetOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
-  - Retrieves the `R2Object` for the given key containing object metadata and the object body as a {{<code>}}{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}, if the key exists, and null if the key does not exist.
+  - Retrieves the `R2Object` for the given key containing object metadata and the object body as a {{<code>}}{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}, if the key exists, and `null` if the key does not exist.
   - In the event that a precondition specified in {{<code>}}options{{</code>}} fails, {{<code>}}get(){{</code>}} returns an {{<code>}}{{<param-type>}}R2Object{{</param-type>}}{{</code>}} with {{<code>}}body{{</code>}} undefined.
 
 - {{<code>}}put(key{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}ReadableStream{{</param-type>}}|{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}ArrayBufferView{{</param-type>}}|{{<param-type>}}string{{</param-type>}}|{{<param-type>}}null{{</param-type>}}|{{<param-type>}}Blob{{</param-type>}}, options{{<param-type>}}R2PutOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}>{{</type>}}{{</code>}}
@@ -216,6 +216,7 @@ async function handleRequest(request) {
   - Note that there is a limit on the total amount of data that a single `list` operation can return. If you request data, you may recieve fewer than `limit` results in your response to accomodate metadata.
 
   This means applications must be careful to avoid code like the following:
+
   ```js
     while (listed.length < limit) {
       listed = myBucket.list({ limit, include: ['customMetadata'] })
@@ -275,7 +276,7 @@ You can pass an `R2Conditional` object to `R2GetOptions`.  If the condition chec
 
  {{</definitions>}}
 
-For more information about conditional requests, refer to RFC 7232. <!-- what is this?>
+For more information about conditional requests, refer to [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
 
 ### HTTP Metadata
 
