@@ -139,34 +139,32 @@ Within your Worker code, your bucket is now available under the `MY_BUCKET` vari
 An R2 bucket is able to READ, LIST, WRITE, and DELETE objects. You can see an example of all operations below using the Service Worker syntax. Add the following snippet into your project's `index.js` file:
 
 ```js
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
-});
+export default {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+    const key = url.pathname.slice(1);
 
-async function handleRequest(request) {
-  const url = new URL(request.url);
-  const key = url.pathname.slice(1);
+    switch (request.method) {
+      case "PUT":
+        await env.MY_BUCKET.put(key, request.body);
+        return new Response(`Put ${key} successfully!`);
+      case "GET":
+        const object = await env.MY_BUCKET.get(key);
 
-  switch (request.method) {
-    case "PUT":
-      await MY_BUCKET.put(key, request.body);
-      return new Response(`Put ${key} successfully!`);
-    case "GET":
-      const object = await MY_BUCKET.get(key);
+        if (!object) {
+          return new Response("Object Not Found", { status: 404 });
+        }
 
-      if (!object) {
-        return new Response("Object Not Found", { status: 404 });
-      }
+        return new Response(object.body);
+      case "DELETE":
+        await env.MY_BUCKET.delete(key);
+        return new Response("Deleted!", { status: 200 });
 
-      return new Response(object.body);
-    case "DELETE":
-      await MY_BUCKET.delete(key);
-      return new Response("Deleted!", { status: 200 });
-
-    default:
-      return new Response("Route Not Found.", { status: 404 });
+      default:
+        return new Response("Method Not Allowed", { status: 405 });
+    }
   }
-}
+};
 ```
 
 ## 6. Bucket access and privacy
@@ -187,16 +185,17 @@ For `GET` requests, you will ensure that only a specific file can be requested. 
 
 ```js
 const ALLOW_LIST = ['cat-pic.jpg'];
+
 // Check requests for a pre-shared secret
-const hasValidHeader = request => {
-  return request.headers.get('X-Custom-Auth-Key') === AUTH_KEY_SECRET;
+const hasValidHeader = (request, env) => {
+  return request.headers.get('X-Custom-Auth-Key') === env.AUTH_KEY_SECRET;
 };
 
-function authorizeRequest(request, key) {
+function authorizeRequest(request, env, key) {
   switch (request.method) {
     case 'PUT':
     case 'DELETE':
-      return hasValidHeader(request);
+      return hasValidHeader(request, env);
     case 'GET':
       return ALLOW_LIST.includes(key);
     default:
@@ -204,14 +203,18 @@ function authorizeRequest(request, key) {
   }
 }
 
-async function handleRequest(request) {
-  const url = new URL(request.url);
-  const key = url.pathname.slice(1);
+export default {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+    const key = url.pathname.slice(1);
 
-  if (!authorizeRequest(request, key)) {
-    return new Response('Forbidden', { status: 403 });
+    if (!authorizeRequest(request, env, key)) {
+      return new Response('Forbidden', { status: 403 });
+    }
+
+    // ...
   }
-  // ...
+};
 ```
 
 For this to work, you need to create a secret via Wrangler:
