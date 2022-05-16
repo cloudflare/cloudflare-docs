@@ -34,7 +34,7 @@ Variants allow you to choose what to do with your image's metadata information, 
 
 - Strip all metadata
 - Strip all metadata except copyright
-- Kepp all metadata
+- Keep all metadata
 
 ## Override image-level access
 
