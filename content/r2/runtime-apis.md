@@ -87,61 +87,61 @@ async function handleRequest(request) {
 
 {{<definitions>}}
 
-- {{<code>}}key{{<param-type>}}string{{</param-type>}}{{</code>}}
+*   `key` {{<type>}}string{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
-  - The object's key.
+  *  The object's key.
 
-- {{<code>}}body{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}
+*   `body` {{<type>}}ReadableStream{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
-  - The object's value.
+  *  Stream of the body contents.
 
-- {{<code>}}bodyUsed{{<param-type>}}boolean{{</param-type>}}{{</code>}}
+*   `bodyUsed` {{<type>}}Boolean{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
-  - Whether the object's value has been consumed or not.
+  *  Declares whether the body has been used in a response yet.
 
-- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}{{</type>}}{{</code>}}
+*   `arrayBuffer()` {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
-  - Returns a Promise that resolves to an ArrayBuffer containing the object's value.
+  *  Returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) representation of the request body.
 
-- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}{{</code>}}
+*   `text()` {{<type>}}Promise\<string>{{</type>}}
 
-  - Returns a Promise that resolves to an string containing the object's value.
+  *  Returns a promise that resolves with a string (text) representation of the request body.
 
-- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}{{</code>}}
+*   `json()` {{<type>}}Promise\<Object>{{</type>}}
 
-  - Returns a Promise that resolves to the given object containing the object's value.
+  *  Returns a promise that resolves with a JSON representation of the request body.
 
-- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}{{</code>}}
+*   `blob()` {{<type>}}Promise\<Blob>{{</type>}}
 
-  - Returns a Promise that resolves to a binary Blob containing the object's value.
+  *  Returns a Promise that resolves to a binary Blob containing the object's value.
 
-- {{<code>}}version{{<param-type>}}string{{</param-type>}}{{</code>}}
+*  `version` {{<type>}}string{{</type>}}
 
-  - Random unique string associated with a specific upload of a key.
+  *  Random unique string associated with a specific upload of a key.
 
-- {{<code>}}size{{<param-type>}}number{{</param-type>}}{{</code>}}
+*  `size` {{<type>}}number{{</type>}}
 
-  - Size of the object in bytes.
+  *  Size of the object in bytes.
 
-- {{<code>}}etag{{<param-type>}}string{{</param-type>}}{{</code>}}
+*  `etag` {{<type>}}string{{</type>}}
 
-  - The etag associated with the object upload.
+  *  The etag associated with the object upload.
 
-- {{<code>}}httpEtag{{<param-type>}}string{{</param-type>}}{{</code>}}
+*  `httpEtag` {{<type>}}string{{</type>}}
 
-  - The object's etag, in quotes so as to be returned as a header.
+  *  The object's etag, in quotes so as to be returned as a header.
 
-- {{<code>}}uploaded{{<param-type>}}Date{{</param-type>}}{{</code>}}
+*  `uploaded` {{<type>}}Date{{</type>}}
 
-  - A Date object representing the time the object was uploaded.
+  *  A `Date` object representing the time the object was uploaded.
 
-- {{<code>}}httpMetadata{{<param-type>}}R2HTTPMetadata{{</param-type>}}{{</code>}}
+* `httpMetadata` {{<type>}}R2HTTPMetadata | Headers{{{</type>}}  {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Various HTTP headers associated with the object.  See [HTTP Metadata](#http-metadata).
+  *  Various HTTP headers associated with the object. See [HTTP Metadata](#http-metadata).
 
-- {{<code>}}customMetadata{{<param-type>}}Record\<string, string>{{</param-type>}}{{</code>}}
+* `customMetadata` {{<type>}}Record\<string, string>{{</type>}}  {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A map of custom, user-defined metadata associated with the object.
+  *  A map of custom, user-defined metadata that will be stored with the object.
 
 {{</definitions>}}
 
@@ -151,25 +151,25 @@ async function handleRequest(request) {
 
 {{<definitions>}}
 
-- {{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}{{</code>}}
+*  `onlyIf` {{<type>}}R2Conditional{{</type>}}
 
-  - Specifies that the Object should only be returned given satisfaction of certain conditions in the R2Conditional.  See [Conditional Operations](#conditional-operations).
+  *  Specifies that the Object should only be returned given satisfaction of certain conditions in the `R2Conditional`. See [Conditional Operations](#conditional-operations).
 
 {{</definitions>}}
 
 ### Ranged reads
 
-R2GetOptions accepts a range parameter, which restricts data returned in {{<code>}}body{{</code>}} to be {{<code>}}range{{</code>}} bytes, starting from {{<code>}}offset{{</code>}}, inclusive.
+`R2GetOptions` accepts a `length` parameter, which restricts data returned in `body` to be `length` bytes, starting from `offset`, inclusive.
 
 {{<definitions>}}
 
-- {{<code>}}offset{{<param-type>}}number{{</param-type>}}{{</code>}}
+*  `offset` {{<type>}}number{{</type>}}
 
-  - The byte to begin returning data from, inclusive.
+  *  The byte to begin returning data from, inclusive.
 
-- {{<code>}}range{{<param-type>}}number{{</param-type>}}{{</code>}}
+*  `length` {{<type>}}number{{</type>}}
 
-  - The number of bytes to return. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
+  *  The number of bytes to return. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
 
 {{</definitions>}}
 
@@ -177,21 +177,21 @@ R2GetOptions accepts a range parameter, which restricts data returned in {{<code
 
 {{<definitions>}}
 
-- {{<code>}}httpMetadata{{<param-type>}}R2HTTPMetadata{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+* `httpMetadata` {{<type>}}R2HTTPMetadata | Headers{{{</type>}}  {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Various HTTP headers associated with the object.  See [HTTP Metadata](#http-metadata).
+  *  Various HTTP headers associated with the object. See [HTTP Metadata](#http-metadata).
 
-- {{<code>}}customMetadata{{<param-type>}}Record\<string, string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+* `customMetadata` {{<type>}}Record\<string, string>{{</type>}}  {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A map of custom, user-defined metadata that will be stored with the object.
+  *  A map of custom, user-defined metadata that will be stored with the object.
 
-- {{<code>}}md5{{<param-type>}}ArrayBuffer{{</param-type>}}{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+*  `md5` {{<type>}}ArrayBuffer | string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A md5 hash to use to check the recieved object's integrity.
+  *  A md5 hash to use to check the received object's integrity.
 
-- {{<code>}}sha1{{<param-type>}}ArrayBuffer{{</param-type>}}{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+*  `sha1` {{<type>}}ArrayBuffer | string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A sha1 hash to use to check the recieved object's integrity.
+  *  A sha1 hash to use to check the received object's integrity.
 
 {{</definitions>}}
 
@@ -199,101 +199,107 @@ R2GetOptions accepts a range parameter, which restricts data returned in {{<code
 
 {{<definitions>}}
 
-- {{<code>}}limit{{<param-type>}}number{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
-  - The number of results to return.  Defaults to 1000, with a maximum of 1000.
+*  `limit` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  *  The number of results to return. Defaults to 1000, with a maximum of 1000.
 
-- {{<code>}}prefix{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
-  - The prefix to match keys against.  Keys will only be returned if they start with given prefix. 
+*  `prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-- {{<code>}}cursor{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
-  - An opaque token that indicates where to continue listing objects from.  A cursor can be retrieved from a previous list operation.
+  *  The prefix to match keys against. Keys will only be returned if they start with given prefix.
 
-- {{<code>}}delimiter{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
-  - The character to use when grouping keys.
+*  `cursor` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-- {{<code>}}include{{<param-type>}}Array\<string\>{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
-  - Can include `httpMetadata` and/or `customMetadata`.  If included, items returned by the list will include the specified metadata.
+  *  An opaque token that indicates where to continue listing objects from. A cursor can be retrieved from a previous `list` operation.
 
-  - Note that there is a limit on the total amount of data that a single `list` operation can return. If you request data, you may recieve fewer than `limit` results in your response to accomodate metadata.
+*  `delimiter` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  *  The character to use when grouping keys.
+
+*  `include` {{<type>}}Array\<string\>{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  *  Can include `httpMetadata` and/or `customMetadata`. If included, items returned by the `list` will include the specified metadata.
+
+  *  Note that there is a limit on the total amount of data that a single `list` operation can return. If you request data, you may receive fewer than `limit` results in your response to accommodate metadata.
 
   This means applications must be careful to **avoid** code like the following:
+
   ```js
-    while (listed.length < limit) {
-      listed = myBucket.list({ limit, include: ['customMetadata'] })
-    }
+  while (listed.length < limit) {
+    listed = myBucket.list({ limit, include: ['customMetadata'] })
+  }
   ```
+
   Instead, use the `truncated` property to determine if the `list` request has more data to be returned.
 
 {{</definitions>}}
 
 ### R2Objects
 
-An object containing an R2Object array, returned by BUCKET_BINDING.list().
+An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 
 {{<definitions>}}
 
-- {{<code>}}objects{{<param-type>}}Array\<{{<type>}}R2Object{{</type>}}\>{{</param-type>}}{{</code>}}
+*   `objects` {{<type>}}Array\<R2Object\>{{</type>}}
 
-  - An array of objects matching the {{<code>}}list{{</code>}} request.
+  *  An array of objects matching the `list` request.
 
-- {{<code>}}truncated{{<param-type>}}boolean{{</param-type>}}{{</code>}}
+*   `truncated` {{<type>}}string{{</type>}}
 
-  - If true, indicates there are more results to be retrieved for the current `list` request.
+  *  If true, indicates there are more results to be retrieved for the current `list` request.
 
-- {{<code>}}cursor{{<param-type>}}string{{</param-type>}}{{</code>}}
+*   `cursor` {{<type>}}string{{</type>}}
 
-  - A token that can be passed to future {{<code>}}list{{</code>}} calls to resume listing from that point. Only present if truncated is true.
+  *   A token that can be passed to future `list` calls to resume listing from that point. Only present if truncated is true.
 
-- {{<code>}}cursor{{<param-type>}}delimitedPrefixes{{</param-type>}}{{</code>}}
+*   `delimitedPrefixes` {{<type>}}Array\<string\>{{</type>}}
 
-  - If a delimiter has been specified, contains all prefixes between the specified prefix and the next occurence of the delimiter.
-  
-  - For example, if no prefix is provided and the delimiter is '/', `foo/bar/baz` would return `foo` as a delimited prefix. If `foo/` was passed as a prefix with the same structure and delimiter, `foo/bar` would be returned as a delimited prefix. 
+  *   If a delimiter has been specified, contains all prefixes between the specified prefix and the next occurrence of the delimiter.
+
+  *   For example, if no prefix is provided and the delimiter is '/', `foo/bar/baz` would return `foo` as a delimited prefix. If `foo/` was passed as a prefix with the same structure and delimiter, `foo/bar` would be returned as a delimited prefix.
 
 {{</definitions>}}
 
 ### Conditional operations
 
-You can pass an R2Conditional object to R2GetOptions.  If the condition check fails, the body will not be returned. This will make `get()` have lower latency.
+You can pass an `R2Conditional` object to `R2GetOptions`. If the condition check fails, the body will not be returned. This will make `get` requests have lower latency.
 
 {{<definitions>}}
 
-- {{<code>}}etagMatches{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+*   `etagMatches` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Performs the operation if the object's etag matches the given string.
+  *   Performs the operation if the object's etag matches the given string.
 
-- {{<code>}}etagDoesNotMatch{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+*   `etagDoesNotMatch` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Performs the operation if the object's etag does not match the given string.
+  *   Performs the operation if the object's etag does not match the given string.
 
-- {{<code>}}uploadedBefore{{<param-type>}}Date{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+*   `uploadedBefore` {{<type>}}Date{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Performs the operation if the object was uploaded before the given date.
+  *   Performs the operation if the object was uploaded before the given date.
 
-- {{<code>}}uploadedAfter{{<param-type>}}Date{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+*   `uploadedAfter` {{<type>}}Date{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Performs the operation if the object was uploaded after the given date.
+  *   Performs the operation if the object was uploaded after the given date.
 
  {{</definitions>}}
 
-For more information about conditional requests, see RFC 7232.
+For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
 
 ### HTTP Metadata
 
-Generally, these fields match the HTTP metadata passed when the object was created.  They can be overriden when issuing `get` requests, in which case the given values will be echoed back in the response.
+Generally, these fields match the HTTP metadata passed when the object was created. They can be overriden when issuing `get` requests, in which case the given values will be echoed back in the response.
 
 {{<definitions>}}
 
-- {{<code>}}contentType{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+*   `contentType` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-- {{<code>}}contentLanguage{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+*   `contentLanguage` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-- {{<code>}}contentDisposition{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+*   `contentDisposition` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-- {{<code>}}contentEncoding{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+*   `contentEncoding` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-- {{<code>}}cacheControl{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+*   `cacheControl` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-- {{<code>}}cacheExpiry{{<param-type>}}Date{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+*   `cacheExpiry` {{<type>}}Date{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
  {{</definitions>}}
