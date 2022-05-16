@@ -159,7 +159,7 @@ async function handleRequest(request) {
 
 ### Ranged reads
 
-R2GetOptions accepts a range parameter, which restricts data returned in {{<code>}}body{{</code>}} to be {{<code>}}range{{</code>}} bytes, starting from {{<code>}}offset{{</code>}}, inclusive.
+R2GetOptions accepts a `length` parameter, which restricts data returned in {{<code>}}body{{</code>}} to be {{<code>}}length{{</code>}} bytes, starting from {{<code>}}offset{{</code>}}, inclusive.
 
 {{<definitions>}}
 
@@ -167,7 +167,7 @@ R2GetOptions accepts a range parameter, which restricts data returned in {{<code
 
   - The byte to begin returning data from, inclusive.
 
-- {{<code>}}range{{<param-type>}}number{{</param-type>}}{{</code>}}
+- {{<code>}}length{{<param-type>}}number{{</param-type>}}{{</code>}}
 
   - The number of bytes to return. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
 
