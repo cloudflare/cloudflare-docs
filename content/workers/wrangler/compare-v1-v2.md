@@ -52,7 +52,7 @@ weight: 11
 
 | Property              | 1   | 2   | Notes                                                                          |
 | --------------------- | --- | --- | ------------------------------------------------------------------------------ |
-| `type = "webpack"`    | ✅  | ❌  | Removed, look at this guide to migrate.                                        |
+| `type = "webpack"`    | ✅  | ❌  | Removed, look at [this guide](/workers/wrangler/migration/eject-webpack/#migrate-webpack-projects-from-wrangler-version-1) to migrate.                                        |
 | `type = "rust"`       | ✅  | ❌  | Removed, use [`workers-rs`](https://github.com/cloudflare/workers-rs) instead. |
 | `type = "javascript"` | ✅  | 🚧  | No longer required, can be omitted.                                            |
 
