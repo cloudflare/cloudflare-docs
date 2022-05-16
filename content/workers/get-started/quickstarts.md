@@ -58,6 +58,10 @@ $ npm init cloudflare <new-project-name> <github-repo-url>
 
 {{<worker-starter title="Router" repo="cloudflare/worker-template-router" description="Run different logic based on the URL and request method. Use this starter to Build REST APIs or apps that require routing logic.">}}
 
+{{<worker-starter title="GraphQL and Relay Starter Kit" repo="kriasoft/relay-starter-kit" description="A full-stack project template utilizing Cloudflare Workers for partial HTML rendering of a React/Relay app at CDN level using HTMLRewriter; deploying the app to Workers Sites using Wrangler CLI (v2).">}}
+
+{{<worker-starter title="Cloudflare Workers Starter Kit" repo="kriasoft/cloudflare-starter-kit" description="A complete project template supporting multiple worker scripts; pre-configured with TypeScript, Rollup (bundler), Babel (compiler), ESLint, Jest, Prettier, as well as CI/CD workflows and the deployment script utilizing Wrangler CLI (v2).">}}
+
 {{<worker-starter title="Miniflare Example Project" repo="mrbbot/miniflare-typescript-esbuild-jest" description="An example Cloudflare Workers project that uses Miniflare for local development, TypeScript, esbuild for bundling, and Jest for testing, with Miniflare's custom Jest environment.">}}
 
 {{<worker-starter title="Sunder Starter (Typescript)" repo="sunderjs/sunder-worker-template" description="A complete starter template using Sunder, TypeScript, Miniflare, esbuild, Jest, and Sass. Uses Workers Sites for static assets.">}}
