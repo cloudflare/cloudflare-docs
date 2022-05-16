@@ -45,7 +45,7 @@ $ npm install -D wrangler
 or install with yarn:
 
 ```sh
-$ yarn add wrangler
+$ yarn add -D wrangler
 ```
 
 ---
