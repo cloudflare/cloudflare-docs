@@ -17,7 +17,7 @@ Network Analytics v2 requires the following:
 ## View the Network Analytics dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select an account that has access to Magic Transit or Spectrum.
-2. On the account’s **Home** page, click **Network Analytics**.
+2. On the account’s **Home** page, navigate to **Analytics** > **Network Analytics**.
 
 ## Get Network Analytics data via API
 
