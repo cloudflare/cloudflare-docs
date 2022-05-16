@@ -157,7 +157,7 @@ To use alarms, you need to add the `durable_object_alarms` compatibility flag to
 compatibility_flags = ["durable_object_alarms"]
 ```
 
-Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. They also provide a method for guaranteeing work within a Durable Object will complete without relying on incoming requests to keep the object alive. For more discussion about alarms, refer to the [announcement blog post](https://blog.cloudflare.com/durable-object-alarms).
+Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. They also provide a method for guaranteeing work within a Durable Object will complete without relying on incoming requests to keep the object alive. For more discussion about alarms, refer to the [announcement blog post](https://blog.cloudflare.com/durable-objects-alarms).
 
 ## Instantiating and communicating with a Durable Object
 
