@@ -18,7 +18,7 @@ Before you create your first bucket, you must purchase R2 in the Cloudflare dash
 
 To purchase R2:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/sign-up/r2).
 2. In **Account Home**, select **R2**.
 3. Select **Purchase R2 Plan**.
 4. Select **Proceed to Payment Details** to review your payment.
