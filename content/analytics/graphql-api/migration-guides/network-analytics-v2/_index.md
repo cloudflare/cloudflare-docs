@@ -56,6 +56,10 @@ Each row represents one packet sample. The data is sampled at Cloudflare’s edg
 
 For reference information on NAv2 nodes, refer to the [NAv2 node reference](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/).
 
+{{<Aside type="note" header="Obtaining data for ingress traffic only">}}
+All the NAv2 `*AnalyticsAdaptiveGroups` nodes include data for ingress and egress traffic. To obtain data about ingress traffic only, include `direction: "ingress"` in your [GraphQL query filter](/analytics/graphql-api/features/filtering/).
+{{</Aside>}}
+
 ## Schema comparison
 
 Refer to [NAv1 to NAv2 schema map](/analytics/graphql-api/migration-guides/network-analytics-v2/schema-map/) for a mapping of schema fields from NAv1 nodes to NAv2 nodes. Follow this recommended mapping when migrating to NAv2.
