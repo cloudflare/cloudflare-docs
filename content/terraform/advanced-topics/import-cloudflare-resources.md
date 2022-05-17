@@ -35,12 +35,13 @@ To view the help file, run `cf-terraforming` or `cf-terraforming -h`.
 
 ### Basic usage
 
-To use `cf-terraforming`, specify the four items below:
+To use `cf-terraforming`, specify the items below:
 
-1. Your Cloudflare user email - `--email` or `-e`.
-2. Your Cloudflare API token - `--token` or `-t`.
-3. The account and/or zone to pull resources from - `--account`/`--zone` or `-a`/`-z`.
-4. The Cloudflare resources to generate config.
+1. The command to execute (for example, `generate` or `import`).
+2. Your Cloudflare user email - `--email` or `-e`.
+3. Your Cloudflare API token - `--token` or `-t`.
+4. The account and/or zone to pull resources from - `--account`/`--zone` or `-a`/`-z`.
+5. The Cloudflare resources to generate config.
 
 The list of supported resources is available in the [Terraform README](https://github.com/cloudflare/cf-terraforming#supported-resources).
 
