@@ -69,8 +69,7 @@ $ wrangler dev [SCRIPT] [OPTIONS]
 
 {{<Aside type="note">}}
 
-None of the options for this command are required. Many of these options can be set in your `wrangler.toml` file.
-Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) documentation for more information.
+None of the options for this command are required. Many of these options can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) documentation for more information.
 
 {{</Aside>}}
 
@@ -821,7 +820,6 @@ $ wrangler logout
 If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by deleting your API token in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-
-- Go to **Overview** > **Get your API token** in the right-side menu.
-- Select the three-dot menu on your Wrangler token.
-- Select **Delete**.
+2. Go to **Overview** > **Get your API token** in the right-side menu.
+3. Select the three-dot menu on your Wrangler token.
+4. Select **Delete**.

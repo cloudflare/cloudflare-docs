@@ -30,7 +30,7 @@ main = "./some-entrypoint"
 account_id = ""
 
 # Whether you use `<NAME>.<SUBDOMAIN>.workers.dev` to
-# test and deploy your worker.
+# test and deploy your Worker.
 # @default `true`
 workers_dev = true
 
@@ -43,15 +43,15 @@ workers_dev = true
 # set to the Usage Model configured in the Cloudflare dashboard for that Worker.
 usage_model = "bundled" | "unbound"
 
-# A list of routes that your worker should be published to.
+# A list of routes that your Worker should be published to.
 # Only one of `routes` or `route` is required.
-# Only required when `workers_dev` is false, and there is no scheduled worker (refer to `triggers`)
+# Only required when `workers_dev` is false, and there is no scheduled Worker (refer to `triggers`)
 routes = ["routes"] | [{ pattern = "*", zone_id = "ZONE_ID" }] | [{ pattern = "*", zone_name = "ZONE_NAME" }]
 
 # The same as routes, but only one.
 route = "routes" | { pattern = "*", zone_id = "ZONE_ID" } | { pattern = "*", zone_name = "ZONE_NAME" }
 
-# Lets you call workers periodically, much like a cron job.
+# Lets you call Workers periodically, much like a cron job.
 # More details: https://developers.cloudflare.com/workers/platform/cron-triggers
 # @default `{crons:[]}`
 [triggers]
@@ -79,7 +79,7 @@ kv_namespaces = [{
   }]
 
 # A list of Durable Objects that your Worker should be bound to.
-# To learn more about durable objects, refer to:
+# To learn more about Durable Objects, refer to:
 # https://developers.cloudflare.com/workers/learning/using-durable-objects
 # @default `{bindings:[]}`
 # not inherited
@@ -110,7 +110,7 @@ kv_namespaces = [{
 # @default `[]`
 # not inherited
 r2_buckets  = [{
-  # The binding name used to refer to the R2 bucket in the worker.
+  # The binding name used to refer to the R2 bucket in the Worker.
   binding = "TEST_BUCKET",
   # The name of this R2 bucket at the edge.
   bucket_name = "",
@@ -128,32 +128,32 @@ r2_buckets  = [{
   command = "npm run build"
   # The directory in which the command is executed.
   cwd = "build_cwd"
-  # The directory to watch for changes while using wrangler dev, defaults to the current working directory
+  # The directory to watch for changes while using `wrangler dev`, defaults to the current working directory
   watch_dir = "build_watch_dir"
 
 # An ordered list of rules that define which modules to import,
 # and what type to import them as. You will need to specify rules
-# to use Text, Data, and CompiledWasm modules, or when you wish to
+# to use `Text`, `Data`, and `CompiledWasm` modules, or when you wish to
 # have a .js file be treated as an ESModule instead of CommonJS.
 [[rules]]
   type = "Text"
   globs = ["**/*.md"]
   fallthrough = true
 
-# A list of text files that your worker should be bound to. This is
-# the legacy way of binding to a text file. ES module workers should
+# A list of text files that your Worker should be bound to. This is
+# the legacy way of binding to a text file. ES module Workers should
 # do proper module imports.
 [text_blobs]
   TEXT = ""
 
-# A list of wasm modules that your worker should be bound to. This is
-# the legacy way of binding to a wasm module. ES module workers should
+# A list of wasm modules that your Worker should be bound to. This is
+# the legacy way of binding to a wasm module. ES module Workers should
 # do proper module imports.
 [wasm_modules]
   MODULE = "module.wasm"
 
-# A list of data files that your worker should be bound to. This is
-# the legacy way of binding to a data file. ES module workers should
+# A list of data files that your Worker should be bound to. This is
+# the legacy way of binding to a data file. ES module Workers should
 # do proper module imports.
 [data_blobs]
   DATA = ""
