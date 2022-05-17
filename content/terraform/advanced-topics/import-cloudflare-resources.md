@@ -194,15 +194,37 @@ Plan: 4 to add, 0 to change, 0 to destroy.
 ------------------------------------------------------------------------
 ```
 
-To fix this, import the real state of those resources from Cloudflare into the Terraform state file (`.tfstate`) via Terraform import.
+To fix this, you must import the real state of those resources from Cloudflare into the Terraform state file (`.tfstate`).
 
 ### Import resources into Terraform state
 
-Soon, `cf-terraforming` will also allow you to import local state (`.tfstate` file) for the same resources you imported during configuration. For now, use the standard Terraform `import` call to get the proper Terraform state imported. Below, each resource is imported individually, specifying the name of the resource and the `<zone_name>/<resource_id>` returned by `api.cloudflare.com`.
+`cf-terraforming` allows you to import local state (`.tfstate` file) for the same resources you imported during configuration.
+
+When you run `cf-terraforming import ...`, you will obtain a list of `terraform import ...` commands that you must run manually afterward to import those resources into Terraform state. This is currently a manual process, but it may be automated in the future.
+
+1. Run the following command:
+
+    ```sh
+    $ cf-terraforming import --resource-type "cloudflare_record" --email $CLOUDFLARE_EMAIL --key $CLOUDFLARE_API_KEY --zone $CLOUDFLARE_ZONE_ID
+    ```
+
+2. Copy each `terraform import ...` command included in the output and run it. Terraform will import each resource individually into Terraform state.
 
 {{<Aside type="note" header="Tip">}}
+You can run To obtain Cloudflare resource IDs
 Running `cf-terraforming -v` will log Cloudflare resource IDs to standard output, which can help with running Terraform `import`.
 {{</Aside>}}
+
+For example, if the output of the first command (`cf-terraforming import ...`) contained the following `terraform` commands:
+
+```txt
+terraform import cloudflare_record.mitigateddos_net_mitigateddos_net mitigateddos.net/6702ceac85496311b1fa86a4ecc2fd47
+terraform import cloudflare_record.mitigateddos_net_www_mitigateddos_net mitigateddos.net/d09d916d059aa9fc8cb54bdd49deea5f
+terraform import cloudflare_record.mitigateddos_net_a123_mitigateddos_net mitigateddos.net/8d6ec0d02c5b22212ff673782c816ef8
+terraform import cloudflare_record.mitigateddos_net_a123_mitigateddos_net_2 mitigateddos.net/3766b952a2dda4c47e71952aeef33c77
+```
+
+You would run each command individually in the terminal:
 
 ```sh
 $ terraform import cloudflare_record.mitigateddos_net_mitigateddos_net mitigateddos.net/6702ceac85496311b1fa86a4ecc2fd47
