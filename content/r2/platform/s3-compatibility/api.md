@@ -54,6 +54,10 @@ Below is a list of unimplemented bucket-level operations.
 
 | API Name                                                                                         | Feature                           |
 | ------------------------------------------------------------------------------------------------ | --------------------------------- |
+| ❌ [GetBucketAccelerateConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAccelerateConfiguration.html)  | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketAccelerateConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAccelerateConfiguration.html)  | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner <br> ❌ x-amz-sdk-checksum-algorithm |
+| ❌ [GetBucketAcl](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html)  | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketAcl](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAcl.html)  | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner <br> ❌ x-amz-sdk-checksum-algorithm |
 
 {{</table-wrap>}}
 
