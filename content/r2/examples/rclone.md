@@ -16,6 +16,10 @@ It is recommended that you choose a unique provider name and then rely on all de
 This will create a `rclone` configuration file, which you can then modify with the preset configuration given below.
 {{</Aside>}}
 
+{{<Aside type="note">}}
+Ensure you are running `rclone` v1.59 or greater ([rclone downloads](https://beta.rclone.org/)). Versions prior to v1.59 may return `HTTP 401: Unauthorized` errors, as earlier versions of `rclone` do not strictly align to the S3 specification in all cases.
+{{</Aside>}}
+
 If you have already configured `rclone` in the past, you may run `rclone config file` to print the location of your `rclone` configuration file:
 
 ```sh
