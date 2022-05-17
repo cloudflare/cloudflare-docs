@@ -8,6 +8,8 @@ weight: 6
 
 {{<render file="_cloudflared-new-ui.md">}}
 
+Review terminology for tunnels setup locally through the CLI.
+
 ## Tunnel
 
 A tunnel is a secure, outbound-only pathway you can establish between your origin and the Cloudflare edge. Each tunnel you create will be assigned a [name](#tunnel-name) and a [UUID](#tunnel-uuid).
@@ -22,7 +24,7 @@ The `cloudflared tunnel create <NAME>` command creates a tunnel and assigns it a
 
 ## Connector
 
-Users can create and configure a tunnel once and run it as multiple different `cloudflared` processes. These processes are known as connectors, or replicas. DNS records and Cloudflare Load Balancers can still point to the tunnel and its UUID, while that tunnel sends traffic to the multiple instances of cloudflared that run through it. Using multiple connectors provides tunnels with high availability, scalability, and elasticity.
+You can create and configure a tunnel once and run it as multiple different `cloudflared` processes. These processes are known as connectors, or replicas. DNS records and Cloudflare Load Balancers can still point to the tunnel and its UUID, while that tunnel sends traffic to the multiple instances of cloudflared that run through it. Using multiple connectors provides tunnels with high availability, scalability, and elasticity.
 
 ## Default `cloudflared` directory
 
@@ -39,7 +41,7 @@ This is a `.yaml` file that functions as the operating manual for `cloudflared`.
 
 ## Ingress rule
 
-[Ingress rules](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/) let users specify which local services traffic should be proxied to. If a rule does not specify a path, all paths will be matched. Ingress rules can be listed in your [configuration file](#configuration-file) or when running `cloudflared tunnel ingress`.
+[Ingress rules](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/) let you specify which local services traffic should be proxied to. If a rule does not specify a path, all paths will be matched. Ingress rules can be listed in your [configuration file](#configuration-file) or when running `cloudflared tunnel ingress`.
 
 ## Cert.pem
 
@@ -54,3 +56,7 @@ This file is created when you run `cloudflared tunnel create <NAME>`. It stores 
 ## Quick tunnels
 
 Quick tunnels, when run, will generate a URL that consists of a random subdomain of the website `trycloudflare.com`, and point traffic to localhost on port 8080. If you have a web service running at that address, users who visit the generated subdomain will be able to visit your web service through Cloudflare’s network. Refer to [TryCloudflare](/cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare/) for more information on how to run quick tunnels.
+
+## Virtual Networks
+
+A software abstraction that allows you to logically segregate resources on your private network.  [Tunnel Virtual Networks](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/) are especially useful for exposing resources which have overlapping IP routes. To connect to a resource, end users would select a virtual network in their WARP client settings before entering the destination IP.
