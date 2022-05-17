@@ -6,7 +6,7 @@ weight: 4
 
 # Microsoft Intune
 
-Cloudflare Zero Trust can integrate with Microsoft Intune to require that users connect to certain applications from managed devices.
+Cloudflare Zero Trust can integrate with Microsoft Intune to require that users connect to certain applications from managed devices. Our service-to-service posture check identifies devices based on their serial numbers.
 
 ## Prerequisites
 
@@ -15,8 +15,6 @@ Device posture with Microsoft Intune requires:
 - An Intune license
 - Microsoft Endpoint Manager managing the device
 - Cloudflare WARP client deployed on the device
-
-Our service-to-service posture check matches the device serial number in the WARP client to the serial number in Microsoft Endpoint Manager.
 
 ## Obtain Microsoft Graph settings
 
