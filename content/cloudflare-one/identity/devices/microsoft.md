@@ -1,31 +1,52 @@
 ---
 pcx-content-type: how-to
-title: Microsoft
+title: Microsoft Intune
 weight: 4
-hidden: true
 ---
 
-# Microsoft Graph
+# Microsoft Intune
 
-Device posture with Microsoft Graph and Intune requires an Intune license, the device to be managed by Microsoft Endpoint Management and the Cloudflare WARP client to be deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial_number** being the same in both clients. Follow the instructions below to set up he integration.
+Cloudflare Zero Trust can integrate with Microsoft Intune to require that users connect to certain applications from managed devices. Our service-to-service posture check identifies devices based on their serial numbers.
 
-## Obtain Microsoft Graph Settings
+## Prerequisites
+
+Device posture with Microsoft Intune requires:
+
+- An Intune license
+- Microsoft Endpoint Manager managing the device
+- Cloudflare WARP client deployed on the device
+
+## Obtain Microsoft Graph settings
 
 The following values are required:
 
-- TBD
+- Client secret
+- Application (client) ID
+- Direct (tenant) ID
 
 To retrieve those values:
 
-1.  TBD
+1. Log in to your Microsoft Dashboard.
+1. Go to **App Registrations** and click **New Registrations**.
+1. Copy the `Application (client) ID` value to a safe place. This will be your Client ID.
+1. Copy the `Directory (tenant) ID` value to a safe place. This will be your Customer ID.
+1. Go to **Certificates & Secrets** and click **New client secret**.
+1. Fill in a description and how long the secret should be valid.
+1. After completing the form, immediately copy the resulting secret. This will be your Client Secret.
+1. Go to **API Permissions** and click **Add permission**.
+1. Select **Application permissions**.
+1. Search for `DeviceManagementManagedDevices` and select the `Read` permission.
 
-## Configure the provider on the Zero Trust dashboard
+## Set up Intune on the Zero Trust dashboard
 
-1.  Go to **Settings** > **Devices** > **Device posture providers** and click **Add new**.
-1.  Select **Microsoft**.
-1.  Give your provider a name. This name will be used throughout the dashboard to reference this connection.
-1.  TBD
+1. Go to **Settings** > **Devices** > **Device posture providers** and click **Add new**.
+1. Select **Intune**.
+1. Give your provider a name. This name will be used throughout the dashboard to reference this connection.
+1. Enter the Client ID, Client Secret and Customer ID as you noted down above.
+1. Select a polling frequency for how often Cloudflare Zero Trust should query Microsoft Graph API for information.
+1. Click **Save**.
+1. Click **Test Provider** to ensure the values have been entered correctly.
 
-## What is checked
+## Device properties
 
-This check relies on information from the Microsoft Graph API. Please reference Microsoft's [ComplianceState](https://docs.microsoft.com/en-us/graph/api/resources/intune-devices-compliancestate?view=graph-rest-1.0) and [windowsDefenderScanActionResult](https://docs.microsoft.com/en-us/graph/api/resources/intune-devices-windowsdefenderscanactionresult?view=graph-rest-1.0) documentation for more information on what each field means.
+The Intune device posture check relies on information from the Microsoft Graph API. Refer to Microsoft's [ComplianceState](https://docs.microsoft.com/en-us/graph/api/resources/intune-devices-compliancestate?view=graph-rest-1.0) and [List managedDevices](https://docs.microsoft.com/en-us/graph/api/intune-devices-manageddevice-list?view=graph-rest-1.0) documentation for a list of properties returned by the API.
