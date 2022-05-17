@@ -29,7 +29,7 @@ Before sending your Cloudflare log data to New Relic, make sure that you:
 
 ## Task 2 - View the Cloudflare Dashboards
 
-You can view your dashboards on the New Relic dashboard page. They include:
+You can view your dashboards on the New Relic dashboard page. The dashboards include the following information:
 
 ### Overview
 
