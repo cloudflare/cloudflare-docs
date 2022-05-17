@@ -74,40 +74,40 @@ $ cf-terraforming --email $CLOUDFLARE_EMAIL --token $CLOUDFLARE_API_TOKEN -z 110
 If you had not redirected the output to the `importing-example.tf` file, the result displayed in the standard output (your terminal window) would look like the following:
 
 ```tf
-resource "cloudflare_record" "mitigateddos_net_mitigateddos_net" {
-    zone_id = var.zone_id
+resource "cloudflare_record" "terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31" {
     name    = "@"
     type    = "A"
-    ttl     = "1"
-    proxied = "true"
+    ttl     = 1
+    proxied = true
     value   = "192.0.2.1"
+    zone_id = "1109d899a5ff5fd74bc01e581693685b"
 }
 
-resource "cloudflare_record" "mitigateddos_net_www_mitigateddos_net" {
-    zone_id = var.zone_id
+resource "cloudflare_record" "terraform_managed_resource_5e10399a590a45279f09aa8fb1163354" {
     name    = "www"
     type    = "CNAME"
-    ttl     = "1"
-    proxied = "true"
+    ttl     = 1
+    proxied = true
     value   = "mitigateddos.net"
+    zone_id = "1109d899a5ff5fd74bc01e581693685b"
 }
 
-resource "cloudflare_record" "mitigateddos_net_a123_mitigateddos_net" {
-    zone_id = var.zone_id
+resource "cloudflare_record" "terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248" {
     name    = "a123"
     type    = "NS"
-    ttl     = "300"
-    proxied = "false"
+    ttl     = 300
+    proxied = false
     value   = "rafe.ns.cloudflare.com"
+    zone_id = "1109d899a5ff5fd74bc01e581693685b"
 }
 
-resource "cloudflare_record" "mitigateddos_net_a123_mitigateddos_net_2" {
-    zone_id = var.zone_id
+resource "cloudflare_record" "terraform_managed_resource_5799bb01054843eea726758f935d2aa2" {
     name    = "a123"
     type    = "NS"
-    ttl     = "300"
-    proxied = "false"
+    ttl     = 300
+    proxied = false
     value   = "terin.ns.cloudflare.com"
+    zone_id = "1109d899a5ff5fd74bc01e581693685b"
 }
 ```
 
@@ -115,83 +115,85 @@ Calling `terraform plan` at this point will try to create these resources as if 
 
 ```sh
 $ terraform plan
-Refreshing Terraform state in-memory prior to plan...
-The refreshed state will be used to calculate this plan, but will not be
-persisted to local or remote state storage.
 
-
-------------------------------------------------------------------------
-
-An execution plan has been generated and is shown below.
-Resource actions are indicated with the following symbols:
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
 
 Terraform will perform the following actions:
 
-  + cloudflare_record.mitigateddos_net_a123_mitigateddos_net
-      id:          <computed>
-      created_on:  <computed>
-      domain:      "mitigateddos.net"
-      hostname:    <computed>
-      metadata.%:  <computed>
-      modified_on: <computed>
-      name:        "a123.mitigateddos.net"
-      proxiable:   <computed>
-      proxied:     "false"
-      ttl:         "300"
-      type:        "NS"
-      value:       "rafe.ns.cloudflare.com"
-      zone_id:     <computed>
+  # cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31 will be created
+  + resource "cloudflare_record" "terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31" {
+      + id:          (known after apply)
+      + created_on:  (known after apply)
+      + domain:      "mitigateddos.net"
+      + hostname:    (known after apply)
+      + metadata.%:  (known after apply)
+      + modified_on: (known after apply)
+      + name:        "mitigateddos.net"
+      + proxiable:   (known after apply)
+      + proxied:     true
+      + ttl:         1
+      + type:        "A"
+      + value:       "192.0.2.1"
+      + zone_id:     "1109d899a5ff5fd74bc01e581693685b"
+    }
 
-  + cloudflare_record.mitigateddos_net_a123_mitigateddos_net_2
-      id:          <computed>
-      created_on:  <computed>
-      domain:      "mitigateddos.net"
-      hostname:    <computed>
-      metadata.%:  <computed>
-      modified_on: <computed>
-      name:        "a123.mitigateddos.net"
-      proxiable:   <computed>
-      proxied:     "false"
-      ttl:         "300"
-      type:        "NS"
-      value:       "terin.ns.cloudflare.com"
-      zone_id:     <computed>
+  # cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354 will be created
+  + resource "cloudflare_record" "terraform_managed_resource_5e10399a590a45279f09aa8fb1163354" {
+      + id:          (known after apply)
+      + created_on:  (known after apply)
+      + domain:      "mitigateddos.net"
+      + hostname:    (known after apply)
+      + metadata.%:  (known after apply)
+      + modified_on: (known after apply)
+      + name:        "www.mitigateddos.net"
+      + proxiable:   (known after apply)
+      + proxied:     true
+      + ttl:         1
+      + type:        "CNAME"
+      + value:       "mitigateddos.net"
+      + zone_id:     "1109d899a5ff5fd74bc01e581693685b"
+    }
 
-  + cloudflare_record.mitigateddos_net_mitigateddos_net
-      id:          <computed>
-      created_on:  <computed>
-      domain:      "mitigateddos.net"
-      hostname:    <computed>
-      metadata.%:  <computed>
-      modified_on: <computed>
-      name:        "mitigateddos.net"
-      proxiable:   <computed>
-      proxied:     "true"
-      ttl:         "1"
-      type:        "A"
-      value:       "192.0.2.1"
-      zone_id:     <computed>
+  # cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248 will be created
+  + resource "cloudflare_record" "terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248" {
+      + id:          (known after apply)
+      + created_on:  (known after apply)
+      + domain:      "mitigateddos.net"
+      + hostname:    (known after apply)
+      + metadata.%:  (known after apply)
+      + modified_on: (known after apply)
+      + name:        "a123.mitigateddos.net"
+      + proxiable:   (known after apply)
+      + proxied:     false
+      + ttl:         300
+      + type:        "NS"
+      + value:       "rafe.ns.cloudflare.com"
+      + zone_id:     "1109d899a5ff5fd74bc01e581693685b"
+    }
 
-  + cloudflare_record.mitigateddos_net_www_mitigateddos_net
-      id:          <computed>
-      created_on:  <computed>
-      domain:      "mitigateddos.net"
-      hostname:    <computed>
-      metadata.%:  <computed>
-      modified_on: <computed>
-      name:        "www.mitigateddos.net"
-      proxiable:   <computed>
-      proxied:     "true"
-      ttl:         "1"
-      type:        "CNAME"
-      value:       "mitigateddos.net"
-      zone_id:     <computed>
-
+  # cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2 will be created
+  + resource "cloudflare_record" "terraform_managed_resource_5799bb01054843eea726758f935d2aa2" {
+      + id:          (known after apply)
+      + created_on:  (known after apply)
+      + domain:      "mitigateddos.net"
+      + hostname:    (known after apply)
+      + metadata.%:  (known after apply)
+      + modified_on: (known after apply)
+      + name:        "a123.mitigateddos.net"
+      + proxiable:   (known after apply)
+      + proxied:     false
+      + ttl:         300
+      + type:        "NS"
+      + value:       "terin.ns.cloudflare.com"
+      + zone_id:     "1109d899a5ff5fd74bc01e581693685b"
+    }
 
 Plan: 4 to add, 0 to change, 0 to destroy.
 
 ------------------------------------------------------------------------
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
 ```
 
 To fix this, you must import the real state of those resources from Cloudflare into the Terraform state file (`.tfstate`).
@@ -218,53 +220,53 @@ Running `cf-terraforming -v` will log Cloudflare resource IDs to standard output
 For example, if the output of the first command (`cf-terraforming import ...`) contained the following `terraform` commands:
 
 ```txt
-terraform import cloudflare_record.mitigateddos_net_mitigateddos_net mitigateddos.net/6702ceac85496311b1fa86a4ecc2fd47
-terraform import cloudflare_record.mitigateddos_net_www_mitigateddos_net mitigateddos.net/d09d916d059aa9fc8cb54bdd49deea5f
-terraform import cloudflare_record.mitigateddos_net_a123_mitigateddos_net mitigateddos.net/8d6ec0d02c5b22212ff673782c816ef8
-terraform import cloudflare_record.mitigateddos_net_a123_mitigateddos_net_2 mitigateddos.net/3766b952a2dda4c47e71952aeef33c77
+terraform import cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31 1109d899a5ff5fd74bc01e581693685b/3c0b456bc2aa443089c5f40f45f51b31
+terraform import cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354 1109d899a5ff5fd74bc01e581693685b/d09d916d059aa9fc8cb54bdd49deea5f
+terraform import cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248 1109d899a5ff5fd74bc01e581693685b/8d6ec0d02c5b22212ff673782c816ef8
+terraform import cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2 1109d899a5ff5fd74bc01e581693685b/3766b952a2dda4c47e71952aeef33c77
 ```
 
 You would run each command individually in the terminal:
 
 ```sh
-$ terraform import cloudflare_record.mitigateddos_net_mitigateddos_net mitigateddos.net/6702ceac85496311b1fa86a4ecc2fd47
-cloudflare_record.mitigateddos_net_mitigateddos_net: Importing from ID "mitigateddos.net/6702ceac85496311b1fa86a4ecc2fd47"...
-cloudflare_record.mitigateddos_net_mitigateddos_net: Import complete!
-  Imported cloudflare_record (ID: 6702ceac85496311b1fa86a4ecc2fd47)
-cloudflare_record.mitigateddos_net_mitigateddos_net: Refreshing state... (ID: 6702ceac85496311b1fa86a4ecc2fd47)
+$ terraform import cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31 1109d899a5ff5fd74bc01e581693685b/3c0b456bc2aa443089c5f40f45f51b31
+cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Importing from ID "1109d899a5ff5fd74bc01e581693685b/3c0b456bc2aa443089c5f40f45f51b31"...
+cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Import complete!
+  Imported cloudflare_record (ID: 3c0b456bc2aa443089c5f40f45f51b31)
+cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Refreshing state... (ID: 3c0b456bc2aa443089c5f40f45f51b31)
 
 Import successful!
 
 The resources that were imported are shown above. These resources are now in
 your Terraform state and will henceforth be managed by Terraform.
 
-$ terraform import cloudflare_record.mitigateddos_net_www_mitigateddos_net mitigateddos.net/d09d916d059aa9fc8cb54bdd49deea5f
-cloudflare_record.mitigateddos_net_www_mitigateddos_net: Importing from ID "mitigateddos.net/d09d916d059aa9fc8cb54bdd49deea5f"...
-cloudflare_record.mitigateddos_net_www_mitigateddos_net: Import complete!
+$ terraform import cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354 1109d899a5ff5fd74bc01e581693685b/d09d916d059aa9fc8cb54bdd49deea5f
+cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354: Importing from ID "1109d899a5ff5fd74bc01e581693685b/d09d916d059aa9fc8cb54bdd49deea5f"...
+cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354: Import complete!
   Imported cloudflare_record (ID: d09d916d059aa9fc8cb54bdd49deea5f)
-cloudflare_record.mitigateddos_net_www_mitigateddos_net: Refreshing state... (ID: d09d916d059aa9fc8cb54bdd49deea5f)
+cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354: Refreshing state... (ID: d09d916d059aa9fc8cb54bdd49deea5f)
 
 Import successful!
 
 The resources that were imported are shown above. These resources are now in
 your Terraform state and will henceforth be managed by Terraform.
 
-$ terraform import cloudflare_record.mitigateddos_net_a123_mitigateddos_net mitigateddos.net/8d6ec0d02c5b22212ff673782c816ef8
-cloudflare_record.mitigateddos_net_a123_mitigateddos_net: Importing from ID "mitigateddos.net/8d6ec0d02c5b22212ff673782c816ef8"...
-cloudflare_record.mitigateddos_net_a123_mitigateddos_net: Import complete!
+$ terraform import cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248 1109d899a5ff5fd74bc01e581693685b/8d6ec0d02c5b22212ff673782c816ef8
+cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248: Importing from ID "1109d899a5ff5fd74bc01e581693685b/8d6ec0d02c5b22212ff673782c816ef8"...
+cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248: Import complete!
   Imported cloudflare_record (ID: 8d6ec0d02c5b22212ff673782c816ef8)
-cloudflare_record.mitigateddos_net_a123_mitigateddos_net: Refreshing state... (ID: 8d6ec0d02c5b22212ff673782c816ef8)
+cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248: Refreshing state... (ID: 8d6ec0d02c5b22212ff673782c816ef8)
 
 Import successful!
 
 The resources that were imported are shown above. These resources are now in
 your Terraform state and will henceforth be managed by Terraform.
 
-$ terraform import cloudflare_record.mitigateddos_net_a123_mitigateddos_net_2 mitigateddos.net/3766b952a2dda4c47e71952aeef33c77
-cloudflare_record.mitigateddos_net_a123_mitigateddos_net_2: Importing from ID "mitigateddos.net/3766b952a2dda4c47e71952aeef33c77"...
-cloudflare_record.mitigateddos_net_a123_mitigateddos_net_2: Import complete!
+$ terraform import cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2 1109d899a5ff5fd74bc01e581693685b/3766b952a2dda4c47e71952aeef33c77
+cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2: Importing from ID "1109d899a5ff5fd74bc01e581693685b/3766b952a2dda4c47e71952aeef33c77"...
+cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2: Import complete!
   Imported cloudflare_record (ID: 3766b952a2dda4c47e71952aeef33c77)
-cloudflare_record.mitigateddos_net_a123_mitigateddos_net_2: Refreshing state... (ID: 3766b952a2dda4c47e71952aeef33c77)
+cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2: Refreshing state... (ID: 3766b952a2dda4c47e71952aeef33c77)
 
 Import successful!
 
