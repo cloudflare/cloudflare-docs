@@ -24,7 +24,7 @@ For additional details, refer to the official [IPFS documentation](https://docs.
 
 You have the option to specify the DNS Link when you [create an IPFS gateway](/web3/how-to/manage-gateways/#create-a-gateway), which serves as a custom hostname that directs users to a website already hosted on IPFS.
 
-By default, your DNSLink path is `/ipns/onboarding.ipfs.cloudflare.com`. If you choose to put your website in a different content folder at your IPFS, you will need to specify that value.
+By default, your DNSLink path is `/ipns/onboarding.ipfs.cloudflare.com`. If you choose to put your website in a different content folder hosted at your own IPFS node, you will need to specify that value.
 
 For example, the default DNSLink record for `www.example.com` would look like this:
 
