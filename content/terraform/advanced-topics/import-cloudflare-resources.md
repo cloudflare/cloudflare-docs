@@ -58,10 +58,10 @@ provider 'cloudflare' {
 
 Remember to keep your credentials saved in environment variables or terraform autovars that are not checked into your source files.
 
-Start by making a call to cf-Terraforming to enumerate the Terraform configuration for the DNS records for the zone you want to manage with Terraform.
+Start by making a call to `cf-terraforming` to enumerate the Terraform configuration for the DNS records for the zone you want to manage with Terraform.
 
 ```sh
-$ go run cmd/cf-terraforming/main.go --email $CLOUDFLARE_EMAIL --token $CLOUDFLARE_API_TOKEN -z 1109d899a5ff5fd74bc01e581693685a --resource-type cloudflare_record > importing-example.tf
+$ cf-terraforming --email $CLOUDFLARE_EMAIL --token $CLOUDFLARE_API_TOKEN -z 1109d899a5ff5fd74bc01e581693685a --resource-type cloudflare_record > importing-example.tf
 ```
 
 {{<Aside type="note" header="Note">}}

@@ -95,7 +95,7 @@ resource "cloudflare_ruleset" "account_level_network_ddos_config" {
         }
       }
     }
-    expression = "ip.dst in { 1.1.1.0/24 }"
+    expression = "ip.dst in { 192.0.2.0/24 }"
     description = "Override the HTTP DDoS Attack Protection Managed Ruleset"
     enabled = true
   }
