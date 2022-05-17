@@ -71,12 +71,6 @@ Start by making a call to `cf-terraforming` to enumerate the Terraform configura
 $ cf-terraforming --email $CLOUDFLARE_EMAIL --token $CLOUDFLARE_API_TOKEN -z 1109d899a5ff5fd74bc01e581693685a --resource-type cloudflare_record > importing-example.tf
 ```
 
-{{<Aside type="note" header="Note">}}
-The previous command assumes that your current folder when running the command is `{GOPATH}/src/github.com/cloudflare/cf-terraforming`.
-
-If you used `go get` to install `cf-terraforming` and if `$GOPATH/bin` is in your `PATH`, you can use a simplified command — instead of running `go run cmd/cf-terraforming/main.go <parameters>` you can run `cf-terraforming <parameters>`.
-{{</Aside>}}
-
 If you had not redirected the output to the `importing-example.tf` file, the result displayed in the standard output (your terminal window) would look like the following:
 
 ```tf
