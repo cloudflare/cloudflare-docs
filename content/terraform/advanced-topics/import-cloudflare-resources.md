@@ -54,7 +54,7 @@ To start managing existing Cloudflare resources in Terraform, for example, DNS r
 
 ### Generate Terraform configuration with `cf-terraforming`
 
-If you do not have a Terraform configuration file defined, you need the provider blocked defined as follows:
+If you do not have a Terraform configuration file defined, you need the `provider` block defined as follows:
 
 ```hcl
 provider 'cloudflare' {
