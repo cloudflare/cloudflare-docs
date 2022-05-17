@@ -156,6 +156,12 @@ Note that:
 - Each token has a unique identifier (a `jti` - or `JWT ID`) that you can use to revoke a specific token.
 - Tokens are prefixed with the broker name they are associate with (for example, `my-broker`) to make identifying tokens across multiple Pub/Sub brokers easier.
 
+{{<Aside type="note">}}
+
+Ensure you do not commit your credentials to source control, such as GitHub. A valid token allows anyone to connect to your broker and publish or subscribe to messages. Treat credentials as secrets.
+
+{{</Aside>}}
+
 To generate two tokens for your broker:
 
 ```bash
@@ -171,8 +177,8 @@ You should receive a HTTP 200 response that resembles the example below, which i
 {
   "result": {
     "my-broker01G3A5GBJE5P3GPXJZ72X4X8SA": "eyJhbGciOiJFZERTQSIsImtpZCI6IkpEUHVZSnFIT3Zxemxha2tORlE5a2ZON1dzWXM1dUhuZHBfemlSZG1PQ1UifQ.
-    abc.ZZL7PNittVwJOeMpFMn2CnVTgIz4AcaWXP9NqMQK0D_iavcRv_p2DVshg6FPe5xCdlhIzbatT6gMyjMrOA2wBg",
-    "my-broker01G3A5GBJECX5DX47P9RV1C5TV": "eyJhbGciOiJFZERTQSIsImtpZCI6IkpEUHVZSnFIT3Zxemxha2tORlE5a2ZON1dzWXM1dUhuZHBfemlSZG1PQ1UifQ.xyz.WrhK-VTs_IzOEALB-T958OojHK5AjYBC5ZT9xiI_6ekdQrKz2kSPGnvZdUXUsTVFDf9Kce1Smh-mw1sF2rSQAQ",
+    not-a-real-token.ZZL7PNittVwJOeMpFMn2CnVTgIz4AcaWXP9NqMQK0D_iavcRv_p2DVshg6FPe5xCdlhIzbatT6gMyjMrOA2wBg",
+    "my-broker01G3A5GBJECX5DX47P9RV1C5TV": "eyJhbGciOiJFZERTQSIsImtpZCI6IkpEUHVZSnFIT3Zxemxha2tORlE5a2ZON1dzWXM1dUhuZHBfemlSZG1PQ1UifQ.also-not-a-real-token.WrhK-VTs_IzOEALB-T958OojHK5AjYBC5ZT9xiI_6ekdQrKz2kSPGnvZdUXUsTVFDf9Kce1Smh-mw1sF2rSQAQ",
   },
   "success": true,
   "errors": [],
