@@ -20,7 +20,7 @@ When building expressions for Load Balancing rules, refer to [Supported fields a
 
 ## Availability
 
-By default, non-Enterprise customers have **one** Load Balancing rule **per domain**. For more rules, upgrade to [Enterprise](https://www.cloudflare.com/enterprise/).
+By default, non-Enterprise customers have **one** Load Balancing rule **per load balancer hostname**. For more rules, upgrade to [Enterprise](https://www.cloudflare.com/enterprise/).
 
 ## Limitations
 
