@@ -18,7 +18,7 @@ This will create a `rclone` configuration file, which you can then modify with t
 
 {{<Aside type="note">}}
 Ensure you are running `rclone` v1.59 or greater ([rclone downloads](https://beta.rclone.org/)). Versions prior to v1.59 may return `HTTP 401: Unauthorized` errors, as earlier versions of `rclone` do not strictly align to the S3 specification in all cases.
-{{</Aside}}
+{{</Aside>}}
 
 If you have already configured `rclone` in the past, you may run `rclone config file` to print the location of your `rclone` configuration file:
 
