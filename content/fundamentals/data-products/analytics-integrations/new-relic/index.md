@@ -51,6 +51,6 @@ Identify and address performance issues and caching misconfigurations. Metrics i
 
 ### Reliability
 
-Get insights on the availability of your websites and Applications. Metrics include, edge response status over time, percentage of 3xx/4xx/5xx errors over time, and more.
+Get insights on the availability of your websites and Applications. Metrics include, edge response status over time, percentage of `3xx`/`4xx`/`5xx` errors over time, and more.
 
 ![Cloudflare Network Logs reliability metrics screen](/fundamentals/static/images/new-relic/dashboard/dash-4.png)
