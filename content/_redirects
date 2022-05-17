@@ -354,6 +354,8 @@
 /pages/how-to/deploy-a-zola-site/ /pages/framework-guides/deploy-a-zola-site/ 301
 /pages/how-to/elderjs/ /pages/framework-guides/elderjs/ 301
 /pages/platform/github-integration/ /pages/platform/git-integration/ 301
+/pages/platform/direct-uploads/ /pages/platform/direct-upload/ 301
+/pages/platform/direct-uploads /pages/platform/direct-upload/ 301
 
 # page-shield
 /page-shield/script-monitor/ /page-shield/ 301
