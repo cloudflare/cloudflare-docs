@@ -29,7 +29,7 @@ First, create the project and install the dependencies.
 ```sh
 $ mkdir new-project
 $ cd new-project
-$ npx wrangler init -y
+$ wrangler init -y
 $ npm i meaning-of-life
 ```
 
@@ -45,7 +45,7 @@ export default {
 };
 ```
 
-Now, run `npx wrangler dev` and hit `b` to open the app in your browser.
+Now, run `wrangler dev` and hit `b` to open the app in your browser.
 
 You should get a blank page with the number `42` on it.
 The page is served by your Worker which is consuming the `meaning-of-life` package.

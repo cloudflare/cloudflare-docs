@@ -120,4 +120,4 @@ command = "npm run build" # or "yarn build"
 
 5. Test
 
-Try running `npx wrangler publish` to test that your configuration works as expected.
+Try running `wrangler publish` to test that your configuration works as expected.

@@ -39,13 +39,13 @@ Installing `wrangler`, the Workers CLI, gives you the freedom to [`init`](/worke
 To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
 ```sh
-$ npm install -D wrangler
+$ npm install -g wrangler
 ```
 
 or install with yarn:
 
 ```sh
-$ yarn add -D wrangler
+$ yarn global add wrangler
 ```
 
 ---

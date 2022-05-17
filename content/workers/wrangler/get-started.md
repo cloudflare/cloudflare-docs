@@ -27,6 +27,18 @@ npx wrangler publish
 
 ## Installation
 
+{{<Aside>}}
+
+If you previously had [Wrangler 1](/workers/wrangler/cli-wrangler/) installed globally, uninstall it first by running:
+
 ```bash
-$ npm install wrangler --save-dev
+$ npm uninstall -g @cloudflare/wrangler
+```
+
+{{</Aside>}}
+
+Install Wrangler globally:
+
+```bash
+$ npm install -g wrangler
 ```
