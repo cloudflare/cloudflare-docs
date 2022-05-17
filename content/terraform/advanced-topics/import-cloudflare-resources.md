@@ -274,7 +274,7 @@ The resources that were imported are shown above. These resources are now in
 your Terraform state and will henceforth be managed by Terraform.
 ```
 
-If you now run `terraform plan`, it will no longer try to re-create the `cloudflare_record` resources:
+If you now run `terraform plan`, you will notice that Terraform will no longer try to re-create the `cloudflare_record` resources:
 
 ```sh
 $ terraform plan | grep changes
