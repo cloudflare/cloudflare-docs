@@ -101,7 +101,7 @@ A list of supported applications and their ID numbers is available through the [
 
 ### Destination Continent
 
-The continent that the request is destined for. Geolocation is determined from the target IP address.
+The continent to which the request is destined. Geolocation is determined from the target IP address.
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
