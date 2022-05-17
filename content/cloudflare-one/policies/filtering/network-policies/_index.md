@@ -67,6 +67,22 @@ You can apply Network policies to a growing list of popular web applications. Re
 
 A list of supported applications and their ID numbers is available through the [Gateway API endpoint](https://api.cloudflare.com/#zero-trust-gateway-application-and-application-type-mappings-properties).
 
+### Destination Continent
+
+The continent that the request is destined for. Geolocation is determined from the target IP address.
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Destination Continent IP Geolocation | `net.dst.geo.continent == "North America"` |
+
+### Destination Country
+
+The country that the request is destined for. Geolocation is determined from the target IP address.
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Destination Country IP Geolocation | `net.dst.geo.country == "Russia"` |
+
 ### Destination IP
 
 The IP address of the request’s target.
@@ -115,11 +131,27 @@ The host whose Server Name Indication (SNI) header Gateway will filter traffic a
 
 ### SNI Domain
 
-The domain whose Server Name Indication (SNI) header Gateway will filter traffic against. This will match against the hostname and sub-domains.
+The domain whose Server Name Indication (SNI) header Gateway will filter traffic against. For example, a rule for `example.com` will match `example.com`, `www.example.com`, and `my.test.example.com`.
 
 | UI name    | API example                       |
 | ---------- | --------------------------------- |
-| SNI Domain | `net.sni.host == "a.example.com"` |
+| SNI Domain | `net.sni.domains == "example.com"` |
+
+### Source Continent
+
+The continent of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP).
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Source Continent IP Geolocation | `net.src.geo.continent == "North America"` |
+
+### Source Country
+
+The country of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP).
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Source Country IP Geolocation | `net.src.geo.country == "Russia"` |
 
 ### Source IP
 

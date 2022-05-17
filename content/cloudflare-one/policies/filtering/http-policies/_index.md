@@ -99,11 +99,27 @@ A list of supported applications and their ID numbers is available through the [
 | -- | -- |
 | Content Categories | `not(any(http.request.uri.content_category[*] in {1}))` |
 
+### Destination Continent
+
+The continent to which the request is destined. Geolocation is determined from the target IP address.
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Destination Continent IP Geolocation | `http.dst.geo.continent == "North America"` |
+
+### Destination Country
+
+The country that the request is destined for. Geolocation is determined from the target IP address.
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Destination Country IP Geolocation | `http.dst.geo.country == "Russia"` |
+
 ### Destination IP
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
-| Destination IP | `net.dst.ip == "10.0.0.0/8"` |
+| Destination IP | `http.dst.ip == "10.0.0.0/8"` |
 
 ### Domain
 
@@ -161,11 +177,27 @@ With the Device Posture selector, admins can use signals from end-user devices t
 | -- | -- |
 | Security Categories | `any(http.request.uri.category[*] in {1})` |
 
+### Source Continent
+
+The continent of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP).
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Source Continent IP Geolocation | `http.src.geo.continent == "North America"` |
+
+### Source Country
+
+The country of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP).
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Source Country IP Geolocation | `http.src.geo.country == "Russia"` |
+
 ### Source IP
 
 | UI name   | API example                  |
 | --------- | ---------------------------- |
-| Source IP | `net.src.ip == "10.0.0.0/8"` |
+| Source IP | `http.src.ip == "10.0.0.0/8"` |
 
 ### URL
 
