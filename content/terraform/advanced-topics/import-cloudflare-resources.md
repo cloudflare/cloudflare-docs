@@ -123,14 +123,14 @@ Terraform will perform the following actions:
 
   # cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31 will be created
   + resource "cloudflare_record" "terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31" {
-      + id:          (known after apply)
-      + created_on:  (known after apply)
+      + id:          <computed>
+      + created_on:  <computed>
       + domain:      "mitigateddos.net"
-      + hostname:    (known after apply)
-      + metadata.%:  (known after apply)
-      + modified_on: (known after apply)
+      + hostname:    <computed>
+      + metadata.%:  <computed>
+      + modified_on: <computed>
       + name:        "mitigateddos.net"
-      + proxiable:   (known after apply)
+      + proxiable:   <computed>
       + proxied:     true
       + ttl:         1
       + type:        "A"
@@ -140,14 +140,14 @@ Terraform will perform the following actions:
 
   # cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354 will be created
   + resource "cloudflare_record" "terraform_managed_resource_5e10399a590a45279f09aa8fb1163354" {
-      + id:          (known after apply)
-      + created_on:  (known after apply)
+      + id:          <computed>
+      + created_on:  <computed>
       + domain:      "mitigateddos.net"
-      + hostname:    (known after apply)
-      + metadata.%:  (known after apply)
-      + modified_on: (known after apply)
+      + hostname:    <computed>
+      + metadata.%:  <computed>
+      + modified_on: <computed>
       + name:        "www.mitigateddos.net"
-      + proxiable:   (known after apply)
+      + proxiable:   <computed>
       + proxied:     true
       + ttl:         1
       + type:        "CNAME"
@@ -157,14 +157,14 @@ Terraform will perform the following actions:
 
   # cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248 will be created
   + resource "cloudflare_record" "terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248" {
-      + id:          (known after apply)
-      + created_on:  (known after apply)
+      + id:          <computed>
+      + created_on:  <computed>
       + domain:      "mitigateddos.net"
-      + hostname:    (known after apply)
-      + metadata.%:  (known after apply)
-      + modified_on: (known after apply)
+      + hostname:    <computed>
+      + metadata.%:  <computed>
+      + modified_on: <computed>
       + name:        "a123.mitigateddos.net"
-      + proxiable:   (known after apply)
+      + proxiable:   <computed>
       + proxied:     false
       + ttl:         300
       + type:        "NS"
@@ -174,14 +174,14 @@ Terraform will perform the following actions:
 
   # cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2 will be created
   + resource "cloudflare_record" "terraform_managed_resource_5799bb01054843eea726758f935d2aa2" {
-      + id:          (known after apply)
-      + created_on:  (known after apply)
+      + id:          <computed>
+      + created_on:  <computed>
       + domain:      "mitigateddos.net"
-      + hostname:    (known after apply)
-      + metadata.%:  (known after apply)
-      + modified_on: (known after apply)
+      + hostname:    <computed>
+      + metadata.%:  <computed>
+      + modified_on: <computed>
       + name:        "a123.mitigateddos.net"
-      + proxiable:   (known after apply)
+      + proxiable:   <computed>
       + proxied:     false
       + ttl:         300
       + type:        "NS"
