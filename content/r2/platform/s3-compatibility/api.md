@@ -42,6 +42,7 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 |                                                                                         | ❌ Object Locking: <br> ❌ x-amz-bucket-object-lock-enabled  |
 |                                                                                         | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner                     |
 | [DeleteBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html)   | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner    |
+| [GetBucketLocation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html)  | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
 
 {{</table-wrap>}}
 
@@ -53,7 +54,6 @@ Below is a list of unimplemented bucket-level operations.
 
 | API Name                                                                                         | Feature                           |
 | ------------------------------------------------------------------------------------------------ | --------------------------------- |
-| ❌ [GetBucketLocation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html)  | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
 
 {{</table-wrap>}}
 
