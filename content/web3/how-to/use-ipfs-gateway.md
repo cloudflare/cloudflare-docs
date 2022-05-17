@@ -14,11 +14,7 @@ Every time you access a piece of content through Cloudflare's IPFS Gateway, you 
 
 ### Gateway hostname
 
-The gateway hostname you use depends on the type of gateway you are accessing.
-
-If you are using the whitelabeled Cloudflare IPFS Gateway, your gateway hostname will be `ipfs.cloudflare.com`.
-
-If you are using a custom gateway, your gateway hostname will be the **Hostname** value you supplied when you [created the gateway](/web3/how-to/manage-gateways/#create-a-gateway).
+Your gateway hostname will be the **Hostname** value you supplied when you [created the gateway](/web3/how-to/manage-gateways/#create-a-gateway).
 
 ### Request path
 
