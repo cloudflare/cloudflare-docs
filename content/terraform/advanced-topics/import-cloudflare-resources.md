@@ -212,11 +212,6 @@ When you run `cf-terraforming import ...`, you will obtain a list of `terraform 
 
 2. Copy each `terraform import ...` command included in the output and run it. Terraform will import each resource individually into Terraform state.
 
-{{<Aside type="note" header="Tip">}}
-You can run To obtain Cloudflare resource IDs
-Running `cf-terraforming -v` will log Cloudflare resource IDs to standard output, which can help with running Terraform `import`.
-{{</Aside>}}
-
 For example, if the output of the first command (`cf-terraforming import ...`) contained the following `terraform` commands:
 
 ```txt
