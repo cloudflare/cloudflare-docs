@@ -39,7 +39,7 @@ Get a quick overview of the most important metrics from your websites and applic
 
 ### Security
 
-Get insights on threats to your websites and applications, including number of threats taken action on by the WAF, threats over time, top threat countries, and more.
+Get insights on threats to your websites and applications, including number of threats taken action on by the Web Application Firewall (WAF), threats over time, top threat countries, and more.
 
 ![Cloudflare Network security metrics screen](/fundamentals/static/images/new-relic/dashboard/dash-2.png)
 
