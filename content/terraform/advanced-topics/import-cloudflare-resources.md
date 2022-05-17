@@ -16,25 +16,31 @@ If you configured Cloudflare through other means, for example, by logging in to 
 
 ## `cf-terraforming`
 
-The goal with [`cf-terraforming`](https://github.com/cloudflare/cf-terraforming) is to help existing Cloudflare customers get started with Terraform. Currently, `cf-terraforming` helps to generate the Terraform config state by fetching all the resources of a specified type from the account and/or domain of your choosing.
+[`cf-terraforming`](https://github.com/cloudflare/cf-terraforming) helps existing Cloudflare customers get started with Terraform. Currently, `cf-terraforming` helps to generate the Terraform config state by fetching all the resources of a specified type from the account and/or zone of your choosing.
 
-First, install `cf-terraforming` using `go get` by running the following command:
+### Installation
+
+Before you start, you must install `cf-terraforming`.
+
+If you use Homebrew on MacOS, open a terminal and run the following commands:
 
 ```sh
-$ GO111MODULE=on go get -u github.com/cloudflare/cf-terraforming/...`
+$ brew tap cloudflare/cloudflare
+$ brew install --cask cloudflare/cloudflare/cf-terraforming
 ```
 
+If you are using a different OS, [download the latest release](https://github.com/cloudflare/cf-terraforming/releases) from the `cf-terraforming` GitHub repository.
+
 To view the help file, run `cf-terraforming` or `cf-terraforming -h`.
+
+### Basic usage
 
 To use `cf-terraforming`, specify the four items below:
 
 1. Your Cloudflare user email - `--email` or `-e`.
 2. Your Cloudflare API token - `--token` or `-t`.
 3. The account and/or zone to pull resources from - `--account`/`--zone` or `-a`/`-z`.
-
-    * Specifying an account will generate configuration for all resources from all zones in that account.
-
-4.  The Cloudflare resources to generate config.
+4. The Cloudflare resources to generate config.
 
 The list of supported resources is available in the [Terraform README](https://github.com/cloudflare/cf-terraforming#supported-resources).
 
