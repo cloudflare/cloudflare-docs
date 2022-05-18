@@ -120,7 +120,7 @@ Response
 ```
 
 {{<Aside type="note" header="Note">}}
-As of May 2022, defining an unique destination for a Logpush job will no longer required. As this constraint has been removed, you can now have more than one job writing to the same destination.
+As of May 2022, defining a unique destination for a Logpush job will no longer be required. As this constraint has been removed, you can now have more than one job writing to the same destination.
 {{</Aside>}}
 
 ## Job object
