@@ -13,6 +13,11 @@ The following are some of the community-maintained Pages Plugins. If you have cr
 
   Given a folder of assets in multiple formats, this Plugin will automatically negotiate with a client to serve an optimized version of a requested asset.
 
+
+- [pages-plugin-trpc](https://github.com/toyamarinyon/cloudflare-pages-plugin-trpc)
+
+    It allows developers to create tRPC server on Cloudflare Page Function rapidly.
+
 - [pages-plugin-twind](https://github.com/helloimalastair/twind-plugin)
 
   Automatically injects Tailwind CSS styles into HTML pages after analyzing which classes are used.
