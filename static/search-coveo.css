@@ -67,12 +67,12 @@
   --border-bottom-color-rgb: var(--orange-rgb) !important;
   --border-bottom-color-alpha: 0.35 !important;
   color: var(--code-orange) !important;
-  margin-right: 5px;
 }
 
 .coveo-result-cell .CoveoFieldValue {
   font-style: italic;
   font-size: 85%;
+  margin-right: 15px;
 }
 
 .DocsMarkdown ul {
