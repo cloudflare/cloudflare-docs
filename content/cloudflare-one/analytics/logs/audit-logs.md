@@ -15,20 +15,16 @@ Cloudflare Access generates two types of audit logs:
 
 Cloudflare logs an Access authentication event whenever a user or service attempts to log in to an application, whether the attempt succeeds or not.
 
-Authentication events do not capture actions the user takes once they have authenticated.
+To view authentication logs, navigate to the **Logs** > **Access** section of the Zero Trust dashboard. You can expand each row to view details such as the login method, the IP address of the user, and more. If a login attempt was blocked, click **View** for information about why Access denied the user access. Block policy decisions are retained for a week. Authentication logs are retained for six months.
 
-Access retains authentication logs for six months.
+{{<Aside>}}
 
-### Where to find Access Audit Logs
+Authentication audit logs do not capture actions the user takes once they have authenticated.
 
-Access audit logs are available in the **Logs** section of the Zero Trust dashboard.
-Access provides the following types of the logs:
-
-*   **User**: All unique users with at least one successful login during the current calendar month.
-*   **Access Audit Log**: Changes made to Access policies across the account.
-*   **Access Requests**: All authentication attempts. Details include the identity provider or login method and the IP address of the user.
+{{</Aside>}}
 
 ### Explanation of the fields
+
 Access authentication logs contain the following fields:
 
 | Field | Description |
