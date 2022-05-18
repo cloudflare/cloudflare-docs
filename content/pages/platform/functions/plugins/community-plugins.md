@@ -16,7 +16,7 @@ The following are some of the community-maintained Pages Plugins. If you have cr
 
 - [pages-plugin-trpc](https://github.com/toyamarinyon/cloudflare-pages-plugin-trpc)
 
-    It allows developers to create tRPC server on Cloudflare Page Function rapidly.
+    Allows developers to quickly create a tRPC server with a Cloudflare Pages Function.
 
 - [pages-plugin-twind](https://github.com/helloimalastair/twind-plugin)
 
