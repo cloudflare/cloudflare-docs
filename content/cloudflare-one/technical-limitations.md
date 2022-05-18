@@ -27,7 +27,7 @@ All values are per organization.
 
 ## Cloudflare Tunnel limitations
 
-All values are per account. Feature names which are followed by a `*` are soft limits which may be increased if necessary. 
+All values are per account.
 
 {{<table-wrap>}}
 
@@ -38,6 +38,8 @@ All values are per account. Feature names which are followed by a `*` are soft l
 | Active `cloudflared` replicas per tunnel* | 25    |
 
 {{</table-wrap>}}
+
+Features marked by a `*` are soft limits which may be increased on Enterprise accounts. To request a limit increase, contact your account team.
 
 ## Account defaults
 
