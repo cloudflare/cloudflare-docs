@@ -10,16 +10,18 @@ HTTP Applications work through a combination of **applications**, **versions**, 
 
 ![Diagram illustrating how applications, versions, and routing rules interact. For more details, read further.](/http-applications/static/http-application-version-flow.png)
 
-## Application versions
+## Applications and versions
 
-When you [create a new application](/http-applications/how-to/manage-applications-and-versions/#create-new-http-application), Cloudflare automatically copies over configuration settings from an existing zone. This creates a new *application*, as well as the first *version* of that application.
+An *application* is a collection of configuration settings associated with your zone, usually defined for a specific purpose. When you [create a new application](/http-applications/how-to/manage-applications-and-versions/#create-new-http-application), Cloudflare automatically copies over configuration settings from an existing zone.
 
-In that first version, you can [update](/http-applications/how-to/manage-applications-and-versions/#edit-a-version) the associated zone configuration settings (SSL Encryption mode, Page Rules, and more). 
+For each application, you manage various configuration settings through a series of *versions*. Your application starts at Version 1. Each version represents a snapshot of your settings for managing traffic (Page Rules, Fiewall Rules, Cache settings, and more). All versions are independent of the others, but when you [create a new version](/http-applications/how-to/manage-applications-and-versions/#create-new-version-of-application), it is initialized as a copy of the version that preceded it.
 
-You can also [create a new version](/http-applications/how-to/manage-applications-and-versions/#create-new-version-of-application) as a copy of a previous version if you wanted to make gradual changes.
+Within each version, you can [update](/http-applications/how-to/manage-applications-and-versions/#edit-a-version) settings as needed.
 
 ## Routing rules
 
-Once you have one or more versions, you would then [adjust the routing rules](/http-applications/how-to/manage-routing-rules/#update-routing-rules) for your application.
+With one or more versions, you can [set up routing rules](/http-applications/how-to/manage-routing-rules/#create-routing-rules) to start directing hostname traffic to a specific version of your application.
 
-These routing rules determine which version of your application is used for specific environments (staging or production).
+Routing rules support two types of rules: staging rules and production rules. Though both apply to a list of hostnames, staging rules have an extra filter applied. Staging rules only affect traffic sent to specific IP addresses at the Cloudflare edge, meaning you can safely test changes without affecting end users.
+
+Once you finish testing your changes in staging, you can then create a production routing rule to apply your version's configurations to your live traffic.
