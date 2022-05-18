@@ -16,6 +16,7 @@ To configure the GRE tunnel(s) between Cloudflare and your data centers, you mus
   - 10.0.0.0–10.255.255.255
   - 172.16.0.0–172.31.255.255
   - 192.168.0.0–192.168.255.255
+  - 169.254.244.0/20
 - **TTL** — Time to Live (TTL) in number of hops for the GRE tunnel. The default value is 64.
 - **MTU** — Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The default value is 1476.
 

@@ -15,6 +15,7 @@ To configure the Anycast GRE or IPsec tunnels between Cloudflare and your locati
   - 10.0.0.0–10.255.255.255
   - 172.16.0.0–172.31.255.255
   - 192.168.0.0–192.168.255.255
+  - 169.254.244.0/20
 - **Private IP addresses** — The private IP address assigned to the **Cloudflare** and **customer** sides of the tunnel
 
 For an example Anycast GRE or IPsec tunnel configuration, see [Anycast GRE configuration example](/magic-wan/reference/configuration-examples/#gre-tunnel-configuration-example).
