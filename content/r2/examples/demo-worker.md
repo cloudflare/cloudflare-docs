@@ -66,8 +66,9 @@ export default {
       }
 
       if (request.method === 'GET') {
+        const range = parseRange(request.headers.get('range'))
         const object = await env.BUCKET.get(objectName, {
-          range: parseRange(request.headers.get('range')),
+          range,
           onlyIf: request.headers,
         })
 
@@ -78,8 +79,10 @@ export default {
         const headers = new Headers()
         object.writeHttpMetadata(headers)
         headers.set('etag', object.httpEtag)
+        const status = object.body ? (range ? 206 : 200) : 304
         return new Response(object.body, {
           headers,
+          status
         })
       }
 
