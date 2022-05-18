@@ -92,6 +92,7 @@
 
 # analytics
 /analytics/web-analytics/change-log/ /analytics/web-analytics/changelog/ 301
+/analytics/graphql-api/migration-guides/network-analytics-v2/about/ /analytics/graphql-api/migration-guides/network-analytics-v2/differences/ 301
 
 # argo-tunnel
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
@@ -421,7 +422,7 @@
 /spectrum/getting-started/byoip/ /spectrum/about/byoip/ 301
 /spectrum/getting-started/getting-started/ /spectrum/get-started/ 301
 /spectrum/getting-started/proxy-protocol/ /spectrum/how-to/enable-proxy-protocol/ 301
-/spectrum/how-to/cname-origins/ /spectrum/get-started/#create-a-spectrum-application-using-a-cname-record 301  
+/spectrum/how-to/cname-origins/ /spectrum/get-started/#create-a-spectrum-application-using-a-cname-record 301
 /spectrum/how-to/create-load-balancer/ /spectrum/get-started/#create-a-spectrum-application-using-a-load-balancer 301
 /spectrum/proxy-protocol/ /spectrum/reference/simple-proxy-protocol-header/ 301
 

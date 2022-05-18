@@ -1,22 +1,22 @@
 ---
-title: About NAv2
+title: Main differences
 pcx-content-type: concept
 weight: 3
 meta:
-  title: About Network Analytics v2
+  title: Main differences between Network Analytics v1 and Network Analytics v2
 ---
 
-# About Network Analytics v2
+# Main differences between Network Analytics v1 and v2
 
-## Adaptive Bitrate Sampling
+## Aggregated roll-ups versus Adaptive Bit Rate
 
 In Network Analytics v1 (NAv1), the data is rolled up into one minute roll-up tables, then one hour roll-ups, and finally one day roll-ups. Users can then query either the `ipFlows1mGroups` node for high-resolution data on traffic and attacks in the past 30 days, or query the `ipFlows1hGroups` or `ipFlows1dGroups` nodes for historical data. However, the data available through these nodes is aggregate data, and that means that the accuracy and cardinality of the results are limited. For example, short traffic spikes will not be visible in the data obtained from these nodes due to the aggregation of samples in the roll-ups.
 
-On the other hand, Network Analytics v2 (NAv2) uses **Adaptive Bitrate (ABR)** sampling. This means that users do not need to choose a node based on their query timeframe. Furthermore, the cardinality and accuracy is preserved even for historical data. Depending on the size of the query, the ABR mechanism will choose the best sampling rate and fetch a response from one of the sample tables encapsulated behind each node.
+On the other hand, Network Analytics v2 (NAv2) uses [Adaptive Bit Rate (ABR)](/analytics/network-analytics/understand/concepts/#adaptive-bit-rate-sampling) sampling. This means that users do not need to choose a node based on their query timeframe. Furthermore, the cardinality and accuracy is preserved even for historical data. Depending on the size of the query, the ABR mechanism will choose the best sampling rate and fetch a response from one of the sample tables encapsulated behind each node.
 
-## Edge Sample Enrichment
+## Sampling improvements
 
-Network Analytics v2 provides more accurate data due to the better sample rate and **Edge Sample Enrichment**. NAv1 samples 1/8,192 packets (that is, one in every 8,192 packets), while NAv2 sample rates vary depending on the mitigation service. For example:
+Network Analytics v2 provides more accurate data due to the better sample rate and [Edge Sample Enrichment](/analytics/network-analytics/understand/concepts/#edge-sample-enrichment). NAv1 samples 1/8,192 packets (that is, one in every 8,192 packets), while NAv2 sample rates vary depending on the mitigation service. For example:
 
 * The sample rate for dosd is 1/10,000 packets.
 * The sample rate for Magic Firewall events changes dynamically from 1/100 to 1/1,000,000 packets based on the number of packets.
