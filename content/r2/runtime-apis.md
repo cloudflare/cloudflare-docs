@@ -192,10 +192,6 @@ async function handleRequest(request) {
 
   - A md5 hash to use to check the recieved object's integrity.
 
-- {{<code>}}sha1{{<param-type>}}ArrayBuffer{{</param-type>}}{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
-
-  - A sha1 hash to use to check the recieved object's integrity.
-
 {{</definitions>}}
 
 ### R2ListOptions
