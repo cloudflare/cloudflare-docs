@@ -65,10 +65,10 @@ To display event details, click the expansion widget associated with the events.
 
 The **Source country** / **Source data center**, **Source**, and **Destination** panels display the top items in each view.
 
-To see the top data centers, select _Data center_ from the drop-down list in the **Source country** view. The **Source data center** view replaces the **Source country** view.
+To display the top data centers, select _Data center_ from the drop-down list in the **Source country** view. The **Source data center** view replaces the **Source country** view.
 
 To select the number of items to display, use the drop-down list associated with the view.
 
-## TCP Flag
+## TCP flag
 
-This panel displays the TCP flags set for all the traffic currently displayed in the dashboard, including both allowed and mitigated traffic.
+The **TCP Flag** panel displays the TCP flags set for all the traffic currently displayed in the dashboard, including both allowed and mitigated traffic.
