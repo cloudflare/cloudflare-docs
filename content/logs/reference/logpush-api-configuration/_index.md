@@ -119,7 +119,9 @@ Response
 }
 ```
 
-There can be only one job writing to each unique destination. For S3 and GCS, a destination is defined as bucket + path. This means two jobs can write to the same bucket, but must write to different subdirectories in that bucket.
+{{<Aside type="note" header="Note">}}
+As of May 2022, defining an unique destination for a Logpush job will no longer required. As this constraint has been removed, you can now have more than one job writing to the same destination.
+{{</Aside>}}
 
 ## Job object
 
