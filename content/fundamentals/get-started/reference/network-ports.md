@@ -79,6 +79,9 @@ Ports 80 and 443 are the only ports compatible with:
 - HTTP/HTTPS traffic within China data centers for domains that have the **China Network** enabled, and
 - Proxying of [Cloudflare Apps](https://www.cloudflare.com/apps/developer/docs/getting-started)
 
+
+By using this WAF rule, Cloudflare will not forward any data on non standard ports. This action will virtually close the ports, depiste the ports will still visible using a network tool like Netcat.
+
 {{<Aside type="note">}}
 
 [Cloudflare Access](/cloudflare-one/) does not support port numbers in URLs. Port numbers are stripped from requests for URLs protected through Cloudflare Access.
