@@ -34,7 +34,7 @@ The following example deletes a variant through an API call:
 
 ```bash
 curl -X DELETE https://api.cloudflare.com/client/v4/account/<ACCOUNT_ID>/images/v1/variants/<VARIANT_NAME> \
---header 'Authorization: Bearer :token'
+--header 'Authorization: Bearer <API_TOKEN>'
 ```
 
 You will receive a response similar to this:

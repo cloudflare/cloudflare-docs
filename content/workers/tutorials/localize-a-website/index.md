@@ -24,12 +24,12 @@ This tutorial is designed to use an existing website. To simplify this process, 
 
 If you would like to deploy your own version of the site, you can find the source [on GitHub](https://github.com/signalnerve/i18n-example-workers). Instructions on how to deploy this application can be found in the project’s README.
 
-## Generate a project
+## Create a project
 
-To generate a new project, use `wrangler generate --site` to create a new application, calling it `i18n-example`:
+Create a new project by cloning the [Workers Sites](https://github.com/cloudflare/worker-sites-template) template on GitHub and pass `i18n-example` as the project name.
 
 ```sh
-~/ $ wrangler generate i18n-example --site
+~/ $ git clone https://github.com/cloudflare/worker-sites-template i18n-example
 ~/ $ cd i18n-example
 ~/i18n-example $
 ```
@@ -152,7 +152,7 @@ class ElementHandler {
 }
 ```
 
-To review that everything looks as expected, use the preview functionality built into Wrangler. Call [`wrangler dev`](/workers/cli-wrangler/commands/#dev) to open up a live preview of your project. `wrangler dev` is refreshed after every code change that you make.
+To review that everything looks as expected, use the preview functionality built into Wrangler. Call [`wrangler dev`](/workers/wrangler/cli-wrangler/commands/#dev) to open up a live preview of your project. `wrangler dev` is refreshed after every code change that you make.
 
 You can expand on this simple translation functionality to provide country-specific translations, based on the incoming request’s `Accept-Language` header. By taking this header, parsing it, and passing the parsed language into your `ElementHandler`, you can retrieve a translated string in your user’s home language, provided that it is defined in `strings`.
 

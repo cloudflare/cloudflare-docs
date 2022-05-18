@@ -101,6 +101,7 @@ To create a complete tracking event, you need to add an event and one or more pa
 | `currency`               | String | Currency code for the transaction.                                                          |
 | `value`                  | Number | Total value of the product after quantity.                                                  |
 | `creative`               | String | Label for creative asset of promotion being tracked.                                        |
+| `query`                  | String | Product search term.                                                                        |
 
 {{</table-wrap>}}
 

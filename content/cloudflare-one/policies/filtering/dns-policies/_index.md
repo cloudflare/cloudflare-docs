@@ -2,7 +2,7 @@
 pcx-content-type: configuration
 title: DNS policies
 layout: single
-weight: 1
+weight: 2
 ---
 
 # DNS policies
@@ -60,11 +60,11 @@ When choosing the Block action, toggle the **Display custom block page** setting
 
 ### Override
 
-Policies with Override actions allow you to respond to all DNS queries for a given domain to another destination. For example, you can provide a custom response IP of `1.2.3.4` for all queries to www.example.com with the following policy:
+Policies with Override actions allow you to respond to all DNS queries for a given domain to another destination. For example, you can provide a custom response IP of `1.2.3.4` for all queries to `www.example.com` with the following policy:
 
-| Selector | Operator | Value | Action |
-| --- | --- | --- | --- |
-| Hostname | Is | `1.2.3.4` | Override |
+| Selector | Operator | Value | Action | Override Hostname |
+| --- | --- | --- | --- | --- |
+| Hostname | Is | `www.example.com` | Override |`1.2.3.4` |
 
 ### SafeSearch
 
@@ -116,6 +116,30 @@ Use this selector to apply DNS policies to traffic directed to specific content 
 | -- | -- |
 | Content Categories | `any(dns.content_category[*] in {1})` |
 
+### DNS CNAME Record
+
+Use this selector to filter DNS responses by their `CNAME` records.
+
+| UI name | API example |
+| -- | -- |
+| DNS CNAME Response Value | `any(dns.response.cname[*] in {"www.apple.com.edgekey.net"})`|
+
+### DNS MX Record
+
+Use this selector to filter DNS responses by their `MX` records.
+
+| UI name | API example |
+| -- | -- |
+| DNS MX Response Value | `any(dns.response.mx[*] in {"gmail-smtp-in.l.google.com"})` |
+
+### DNS PTR Record
+
+Use this selector to filter DNS responses by their `PTR` records.
+
+| UI name | API example |
+| -- | -- |
+| DNS PTR Response Value  | `any(dns.response.ptr[*] in {"255.2.0.192.in-addr.arpa"})` |
+
 ### DNS Resolver IP
 
 Use this selector to apply policies to DNS queries that arrived to your Gateway Resolver IP address aligned with a registered location. For most Gateway customers, this is an IPv4 AnyCast address and policies created using this IPv4 address will apply to all locations. However, each location has a dedicated IPv6 address and some Gateway customers have been supplied with a dedicated IPv4 address — these both can be used to apply policies to specific registered locations.
@@ -123,6 +147,14 @@ Use this selector to apply policies to DNS queries that arrived to your Gateway 
 | UI name | API example |
 | -- | -- |
 | DNS Resolver IP | `any(dns.resolved_ip[*] == 198.51.100.0)` |
+
+### DNS TXT Record
+
+Use this selector to filter DNS responses by their `TXT` records.
+
+| UI name | API example |
+| -- | -- |
+| DNS TXT Response Value | `any(dns.response.txt[*] in {"your_text"})` |
 
 ### DOH Subdomain
 
@@ -150,7 +182,7 @@ Use this selector to match against only the hostname specified—for example, if
 
 ### Location
 
-Use this selector to apply DNS policies to a specific location or set of locations.
+Use this selector to apply DNS policies to a specific [Gateway location](/cloudflare-one/connections/connect-networks/locations/) or set of locations.
 
 | UI name | API example |
 | -- | -- |
@@ -163,6 +195,22 @@ Use this selector to choose the DNS resource record type that you would like to 
 | UI name | API example |
 | -- | -- |
 | Query Record Type | `dns.query_rtype == "TXT"` |
+
+### Resolved Continent
+
+Use this seletor to filter based on the continent that the query resolves to. Geolocation is determined from the IP address in the response.
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Resolved Continent IP Geolocation | `dns.dst.geo.continent == "North America"` |
+
+### Resolved Country
+
+Use this selector to filter based on the country that the query resolves to. Geolocation is determined from the IP address in the response.
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Resolved Country IP Geolocation | `dns.dst.geo.country == "Russia"` |
 
 ### Resolved IP
 
@@ -179,6 +227,22 @@ Use this selector to block traffic directed to specific security categories.
 | UI name | API example |
 | -- | -- |
 | Security Categories | `any(dns.security_category[*] in {1})` |
+
+### Source Continent
+
+Use this selector to filter based on the continent where the query arrived to Gateway from. Geolocation is determined from the source IP address.
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Source Continent IP Geolocation | `dns.src.geo.continent == "North America"` |
+
+### Source Country
+
+Use this selector to filter based on the country where the query arrived to Gateway from. Geolocation is determined from the source IP address.
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Source Country IP Geolocation | `dns.src.geo.country == "Russia"` |
 
 ### Source IP
 

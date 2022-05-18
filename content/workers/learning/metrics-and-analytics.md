@@ -47,7 +47,7 @@ Worker invocation statuses indicate whether a Worker script executed successfull
 
 ² The Internal Error status may appear when the Workers runtime fails to process a request due to an internal failure in our system. These errors are not caused by any issue with the Worker code nor any resource limit. While requests with Internal Error status are rare, some may appear during normal operation. These requests are not counted towards usage for billing purposes. If you notice an elevated rate of requests with Internal Error status, review [www.cloudflarestatus.com](https://www.cloudflarestatus.com/).
 
-To further investigate exceptions, use [wrangler tail](/workers/cli-wrangler/commands/#tail).
+To further investigate exceptions, use [wrangler tail](/workers/wrangler/commands/#tail).
 
 ### CPU Time per execution
 
@@ -71,7 +71,7 @@ Worker script metrics can be inspected for up to three months in the past in max
 
 ## Zone analytics
 
-Aggregates request data for all scripts assigned to any [routes](/workers/platform/routes/) defined for a zone. Find Zone Metrics in **Analytics** > **Workers** in your [Cloudflare dashboard](https://dash.cloudflare.com/?zone=analytics/workers).
+Aggregates request data for all scripts assigned to any [routes](/workers/platform/routing/routes/) defined for a zone. Find Zone Metrics in **Analytics** > **Workers** in your [Cloudflare dashboard](https://dash.cloudflare.com/?zone=analytics/workers).
 
 Zone data can be scoped by time range within the last 30 days. The dashboard includes charts and information described below.
 

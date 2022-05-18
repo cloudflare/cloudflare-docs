@@ -115,7 +115,7 @@ The default URL class behavior differs from the URL Spec documented above.
 
 A new spec-compliant implementation of the URL class can be enabled using the `url_standard` [compatibility flag](/workers/platform/compatibility-dates/#compatibility-flags).
 
-If you would like to use another URL implementation, you can [shim the URL class using webpack](/workers/cli-wrangler/webpack/#shimming-globals).
+If you would like to use another URL implementation, you can [shim the URL class using webpack](/workers/wrangler/cli-wrangler/webpack/#shimming-globals).
 
 {{</Aside>}}
 

@@ -128,6 +128,7 @@ This is not an exhaustive list of provider-specific instructions, but the follow
 - [GoDaddy](https://www.godaddy.com/help/change-nameservers-for-your-domain-names-664)
 - [Google Domains](https://support.google.com/domains/answer/3290309?hl%3Den)
 - [HostGator](http://support.hostgator.com/articles/hosting-guide/lets-get-started/dns-name-servers/how-do-i-change-my-dns-or-name-servers)
+- [Hostico](https://hostico.ro/docs/setarea-nameserverelor-din-contul-de-client-hostico/)
 - [HostMonster](https://my.hostmonster.com/cgi/help/222)
 - [Internetdbs](https://internetbs.net/faq/content/1/13/en/how-to-update-the-list-of-dns-nameservers-linked-to-a-domain.html?highlight%3Dnameservers)
 - [iPage](https://www.ipage.com/help/article/domain-management-how-to-update-nameservers)
