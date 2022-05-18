@@ -80,7 +80,7 @@ Ports 80 and 443 are the only ports compatible with:
 - Proxying of [Cloudflare Apps](https://www.cloudflare.com/apps/developer/docs/getting-started)
 
 
-By using this WAF rule, Cloudflare will not forward any data on non standard ports. This action will virtually close the ports, depiste the ports will still visible using a network tool like Netcat.
+By using this WAF rule, Cloudflare will not forward any data on non standard ports. The ports will remain visible using a network tool like Netcat, but Cloudflare will stop the traffic from being forwarded to the origin at the HTTP layer.
 
 {{<Aside type="note">}}
 
