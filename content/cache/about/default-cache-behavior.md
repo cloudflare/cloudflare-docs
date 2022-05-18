@@ -144,5 +144,13 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
         custom caching options.
       </td>
     </tr>
+        <tr>
+      <td colspan="5" rowspan="1">
+        DEFERRED
+      </td>
+      <td colspan="5" rowspan="1">
+        Cloudflare considers these requests eligible for cache, but they need to be seen more times before they are written to cache. For example, Cloudflare must see a specific query string three times before it is written to cache.
+      </td>
+    </tr>
   </tbody>
 </table>
