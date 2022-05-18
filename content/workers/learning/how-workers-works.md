@@ -56,7 +56,7 @@ When a request to your `*.workers.dev` subdomain or to your Cloudflare-managed d
 
 Isolates are resilient and continuously available for the duration of a request, but in rare instances isolates may be evicted. When a script hits official [limits](/workers/platform/limits/) or when resources are exceptionally tight on the machine the request is running on, the runtime will selectively evict isolates after their events are properly resolved.
 
-Like all other JavaScript platforms, a single Workers instance may handle multiple requests including concurrent requests in a single-threaded event loop. For example, if Cloudflare receives 10 HTTP requests for the same Worker at exactly the same time, the Cloudflare runtime will start 10 instances of that Worker. Any single Worker instance will never receive more than one request at the same time but may do so one after another.
+Like all other JavaScript platforms, a single Workers instance may handle multiple requests including concurrent requests in a single-threaded event loop. For example, if Cloudflare receives 10 HTTP requests for the same Worker at exactly the same time, the Workers runtime will start 10 instances of that Worker. Any single Worker instance will never receive more than one request at the same time but may do so one after another.
   
 Because of this, there is no guarantee whatsoever whether any two requests will land in the same instance; therefore it is inadvisable to set or mutate global state within the event handler.
   
