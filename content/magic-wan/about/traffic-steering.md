@@ -29,6 +29,9 @@ Using ECMP has a number of consequences:
 
 - Routing changes in the number of equal-cost next hops can cause traffic to use different tunnels. For example, dynamic prioritization triggered by health check events can cause traffic to use different tunnels.
 
+{{<render file="../../magic-transit/_partials/_ecmp-flow-hashing.md">}}
+
+
 ### Examples
 
 This diagram illustrates how ECMP distributes traffic equally across 2 paths with the same priority.
