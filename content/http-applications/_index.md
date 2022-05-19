@@ -23,8 +23,8 @@ HTTP Applications are in an open Beta for Enterprise customers. For access, cont
 
 ## Limitations
 
-To use HTTP applications, your zone must:
+To create an HTTP application from an existing zone, the following must be true:
 
-- Use [WAF Managed Rulesets](https://support.cloudflare.com/hc/en-us/articles/5995821690637).
-- Be in an **Active** [status](/dns/zone-setups/reference/domain-status/).
-- Have **New Navigation** enabled (visible from your profile dropdown).
+- Your zone uses [WAF Managed Rulesets](https://support.cloudflare.com/hc/en-us/articles/5995821690637).
+- Your zone is in an **Active** [status](/dns/zone-setups/reference/domain-status/).
+- Your zone has the **New Navigation** enabled (visible from your profile dropdown).
