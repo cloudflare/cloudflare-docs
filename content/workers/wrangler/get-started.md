@@ -6,7 +6,7 @@ weight: 1
 
 {{<Aside type="note">}}
 
-Wrangler has launched a new version. If you are looking for the Wrangler 1 documentation, you can find them [here](/workers/wrangler/cli-wrangler/install-update/).
+Wrangler has launched a new version. If you are looking for the Wrangler 1 documentation, you can find it [here](/workers/wrangler/cli-wrangler/install-update/).
 
 {{</Aside>}}
 
