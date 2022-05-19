@@ -116,7 +116,7 @@ To disable HSTS on your website:
       <td>No</td>
       <td>
         Permits browsers to automatically preload HSTS configuration. Prevents an attacker from
-        downgrading a first request form HTTPS to HTTP. Preload can make a website without HTTPS
+        downgrading a first request from HTTPS to HTTP. Preload can make a website without HTTPS
         completely inaccessible.
       </td>
       <td>Off / On</td>
