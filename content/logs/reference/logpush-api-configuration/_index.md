@@ -83,6 +83,10 @@ When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.
 
 You can specify your cloud service provider destination via the required **destination\_conf** parameter.
 
+{{<Aside type="note" header="Note">}}
+As of May 2022, defining a unique destination for a Logpush job will no longer be required. As this constraint has been removed, you can now have more than one job writing to the same destination.
+{{</Aside>}}
+
 *   **AWS S3**: bucket + optional directory + region + optional encryption parameter (if required by your policy); for example: `s3://bucket/[dir]?region=<REGION>[&sse=AES256]`
 *   **Datadog**: Datadog endpoint URL + Datadog API key + optional parameters; for example: `datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>`
 *   **Google Cloud Storage**: bucket + optional directory; for example: `gs://bucket/[dir]`
@@ -118,8 +122,6 @@ Response
   "success": true
 }
 ```
-
-There can be only one job writing to each unique destination. For S3 and GCS, a destination is defined as bucket + path. This means two jobs can write to the same bucket, but must write to different subdirectories in that bucket.
 
 ## Job object
 
