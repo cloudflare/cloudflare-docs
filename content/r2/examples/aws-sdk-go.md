@@ -69,12 +69,12 @@ func main() {
 	//  	"StorageClass": "STANDARD"
 	//  }
 
-	ListBucketsOutput, err := client.ListBuckets(context.TODO(), &s3.ListBucketsInput{})
+	listBucketsOutput, err := client.ListBuckets(context.TODO(), &s3.ListBucketsInput{})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	for _, object := range ListBucketsOutput.Buckets {
+	for _, object := range listBucketsOutput.Buckets {
 		obj, _ := json.MarshalIndent(object, "", "\t")
 		fmt.Println(string(obj))
 	}
