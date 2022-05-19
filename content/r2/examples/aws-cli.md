@@ -35,7 +35,7 @@ $ aws s3api list-buckets --endpoint-url https://<accountid>.r2.cloudflarestorage
 #     }
 # }
 
-$ aws s3api list-objects-v2 --endpoint-url https://134a5a2c0ba47b38eada4b9c8ead10b6.r2.cloudflarestorage.com --bucket sdk-example
+$ aws s3api list-objects-v2 --endpoint-url https://<accountid>.r2.cloudflarestorage.com --bucket sdk-example
 # {
 #     "Contents": [
 #         {
