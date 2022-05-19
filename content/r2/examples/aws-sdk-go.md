@@ -47,14 +47,14 @@ func main() {
 
 	client := s3.NewFromConfig(cfg)
 
-	ListObjectsOutput, err := client.ListObjectsV2(context.TODO(), &s3.ListObjectsV2Input{
-		Bucket: aws.String(BucketName),
+	listObjectsOutput, err := client.ListObjectsV2(context.TODO(), &s3.ListObjectsV2Input{
+		Bucket: &bucketName,
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	for _, object := range ListObjectsOutput.Contents {
+	for _, object := range listObjectsOutput.Contents {
 		obj, _ := json.MarshalIndent(object, "", "\t")
 		fmt.Println(string(obj))
 	}
