@@ -6,7 +6,7 @@ weight: 2
 
 # Get started
 
-In this guide, you will get started with Cloudflare Pages, and deploy your first website to the Pages platform.
+In this guide, you will get started with Cloudflare Pages, and deploy your first website to the Pages platform. Currently, you can set up a Pages project by [connecting your git provider](/pages/get-started/#connecting-your-git-provider-to-pages) to pages or by deploying your pre-built assets right to Pages with [Direct Uploads](/pages/platform/direct-upload/), which allows you drag and drop your project to the dashboard or use [Wrangler](/workers/wrangler/get-started/) from the CLI.
 
 {{<Aside type="note">}}
 
@@ -34,7 +34,7 @@ If you are using GitLab, you must have the **Maintainer** role or higher on the 
 
 {{</Aside>}}
 
-## Configuration and deployment
+### Configuration and deployment
 
 ### Selecting your GitHub repository
 
@@ -99,13 +99,41 @@ Environment variables are a common way of providing configuration to your build 
 
 After you have chosen your _Framework preset_ or left this field blank if you are working without a framework, configured **Root directory (advanced)**, and customized your **Environment variables (optional)**, you are ready to deploy.
 
-## Your first deploy
+### Your first deploy
 
 Once you have finished setting your build configuration, select **Save and Deploy**. Your project build logs will output as Cloudflare Pages installs your project dependencies, builds the project, and deploys it to Cloudflare's global network.
 
 ![Deployment details in the Cloudflare dashboard](/pages/get-started/images/deploy-log.png)
 
 When your project has finished deploying, you will receive a unique URL to view your deployed site.
+
+## Create a project with Direct Uploads
+
+### Using Drag and drop 
+
+To begin the deployment process, on the Create a Project page, select Upload Assets and enter your project name in the provided field. Your project will be served from `<PROJECT_NAME>.pages.dev`. Next drag and drop your build output directory into the uploading frame. Once your files have been successfully uploaded, select Save and Deploy and continue to your newly deployed project.
+
+### Create a new deployment
+After you have your project created, select Create a new deployment to begin a new version of your site. Next, choose whether your new deployment will be made to your production or preview environment. If choosing preview, you can create a new deployment target or enter an existing one. Deployment targets allow you to access all changes at one preview subdomain with the following convention: `<DEPLOYMENT_TARGET>.<PROJECT_NAME>.pages.dev`.
+
+### Using Wrangler
+
+To begin, [install the latest version of Wrangler](/workers/wrangler/get-started/) and set up Wrangler . Note that Pages integration with Wrangler relies on Wrangler 2.
+
+​​Deploy your project with Wrangler
+Run the following Wrangler command to create a project:
+
+```sh
+wrangler pages publish <project directory>
+```
+
+After running `wrangler pages publish`, you will be prompted to choose whether you would like to publish assets for an existing project or if you would like to create a new one. To begin a new project, select create a new project, continue to name your project, and deploy. Subsequent deployments will reuse these values (saved in your `node_modules/.cache/wrangler` folder).
+
+After you deploy your Project, go to your newly created Pages project in the Cloudflare dashboard to access deployment details, including its shareable and unique preview URL.
+###  Create a new deployment
+
+After you have deployed your project, you can continue to add new deployments to that project. Deployments will be available at the following convention: `<DEPLOYMENT>.<PROJECT_NAME>.pages.dev`.
+
 
 ## Managing your site
 
