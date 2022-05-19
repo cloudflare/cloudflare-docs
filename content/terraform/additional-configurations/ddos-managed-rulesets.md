@@ -9,7 +9,7 @@ layout: list
 
 # Configure DDoS Managed Rulesets
 
-This page provides examples of configure DDoS Managed Rulesets in your zone or account using Terraform. It covers the following configurations:
+This page provides examples of configuring DDoS Managed Rulesets in your zone or account using Terraform. It covers the following configurations:
 
 * [Configure HTTP DDoS Attack Protection](#configure-http-ddos-attack-protection)
 * [Configure Network-layer DDoS Attack Protection](#configure-network-layer-ddos-attack-protection)
