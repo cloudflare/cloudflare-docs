@@ -25,21 +25,20 @@ import (
 )
 
 func main() {
-	var BucketName = "sdk-example"
-	var AccountId = "<accountid>"
-	var AccessKeyId = "<access_key_id>"
-	var AccessKeySecret = "<access_key_secret>"
+	var bucketName = "sdk-example"
+	var accountId = "<accountid>"
+	var accessKeyId = "<access_key_id>"
+	var accessKeySecret = "<access_key_secret>"
 
-	R2Resolver := aws.EndpointResolverWithOptionsFunc(func(service, region string, options ...interface{}) (aws.Endpoint, error) {
+	r2Resolver := aws.EndpointResolverWithOptionsFunc(func(service, region string, options ...interface{}) (aws.Endpoint, error) {
 		return aws.Endpoint{
-			URL:           fmt.Sprintf("https://%s.r2.cloudflarestorage.com", AccountId),
-			SigningRegion: "auto",
+			URL: fmt.Sprintf("https://%s.r2.cloudflarestorage.com", accountId),
 		}, nil
 	})
 
 	cfg, err := config.LoadDefaultConfig(context.TODO(),
-		config.WithEndpointResolverWithOptions(R2Resolver),
-		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(AccessKeyId, AccessKeySecret, "")),
+		config.WithEndpointResolverWithOptions(r2Resolver),
+		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(accessKeyId, accessKeySecret, "")),
 	)
 	if err != nil {
 		log.Fatal(err)
