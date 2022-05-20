@@ -7,7 +7,7 @@ title: Refactor a Worker to a Pages Function
 
 In this guide, you will learn how to refactor a Worker to a Pages Function that can be hosted with your application on Cloudflare Pages. You may want to do this if you manage a serverless function that your application depends on and wish to ship the logic without managing a Worker as a separate service.
 
-# Handle form submissions in an application 
+## Handle form submissions in an application 
 
 An example of a functionality that can be handled by a Worker but can also be a good use case for Pages Functions is a simple form. This is because forms are most times specific to a particular application. 
 
@@ -15,9 +15,9 @@ Assuming you are already using a Worker to handle your form, you would have depl
 
 However, it can be beneficial to use a [Pages Function](/pages/platform/functions/), which is a serverless function that lives within the same filesystem as your application and is deployed with Cloudflare Pages. Building your application this way can help you manage your client and serverless logic from the same place and make it easier to use and debug your code. 
 
-# Handling form entries with Airtable with a Worker
+## Handling form entries with Airtable with a Worker
 
- An [Airtable](https://airtable.com/) is a low-code platform for building collaborative applications. It helps customize your workflow, collaborate, and handle form submissions. For this example, you will utilize Airtable's form submission feature.
+An [Airtable](https://airtable.com/) is a low-code platform for building collaborative applications. It helps customize your workflow, collaborate, and handle form submissions. For this example, you will utilize Airtable's form submission feature.
 
 [Airtables](https://airtable.com/) can be used to store entries of information in different tables for the same account. When creating a Worker for handling the submission logic, the first step is to use [Wrangler](/workers/cli-wrangler/install-update/) to initialize a new Worker within a specific folder or at the root of your application. 
 
@@ -89,13 +89,13 @@ const HandleAirtableData = (body) => {
 ```
 
 
-# Using Pages Functions
+## Using Pages Functions
 
 [Pages Functions](/pages/platform/functions/) are serverless functions that run on Cloudflare Pages together with your application. They enable you to run server-side code to enable dynamic functionality without running a dedicated server. While the above code works perfectly, you can handle the form submission logic for your client in the same application with Pages Functions.
 
 You can refactor your Airtable Worker to Pages Functions by doing the following. First, you will create a `functions` folder at the base of your application, and within this folder, you can create a `form.js` file to handle form submissions. Next, you will refactor the Worker code to fit the Pages Function syntax in this file.
 
-## Refactoring your Worker
+### Refactoring your Worker
 
 Every Worker has an `addEventListener` to listen for `fetch` events, but you will not need this in a Pages Function. Instead, you will `export` a single `OnRequest` function, and depending on the HTTPS request it handles, you will name it accordingly.  
 
@@ -163,7 +163,7 @@ const HandleAirtableData = async function onRequest({ body, env }) {
 
 You can test your function [locally using Wrangler 2](/pages/platform/functions/#develop-and-preview-locally).
 
-# General refactoring steps 
+## General refactoring steps 
 
 1. Remove the `addEventListener()` method and its event response and replace it with the appropriate `OnRequest` method. 
 2. Pass the `context` object as an argument to your new `OnRequest` method to access the properties of the context parameter: `request`,`env`,`params` and `next`.
