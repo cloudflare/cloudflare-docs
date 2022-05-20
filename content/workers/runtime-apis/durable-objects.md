@@ -159,6 +159,10 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
     **Supported options:**
 
+    - {{<code>}}allowConcurrency{{<param-type>}}boolean{{</param-type>}}{{</code>}}
+
+      - By default, the system will pause delivery of I/O events to the object while a storage operation is in progress, in order to avoid unexpected race conditions. Pass `allowConcurrency: true` to opt out of this behavior and allow concurrent events to be delivered.
+
     - {{<code>}}allowUnconfirmed{{<param-type>}}boolean{{</param-type>}}{{</code>}}
 
       - By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. In the unlikely event that the write fails, the system will reset the Object, discard all outgoing messages, and respond to any clients with errors instead. This way, Durable Objects can continue executing in parallel with a write operation, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the Object's actions unless the write actually succeeds. However, this does mean that after any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes and may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed` to `true` to opt out of the default behavior. Refer to [this blog post for an in-depth discussion](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
