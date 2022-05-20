@@ -76,13 +76,13 @@ Use _IP with NAT support_ to handle situations such as requests under NAT sharin
   - Only available in the Cloudflare dashboard when you enable **Use custom counting expression**.
   - Defines the criteria used for determining the request rate. By default, the counting expression is the same as the rule expression. This default is also applied when you set this field to an empty string (`""`).
   - The counting expression can include [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields). When there are response fields in the counting expression, the counting will happen after the response is sent.
-  - In some cases you cannot include HTTP response fields in the counting expression, due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
+  - In some cases, you cannot include HTTP response fields in the counting expression due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 
 - **Also apply rate limiting to cached assets** {{<type>}}Boolean{{</type>}}
 
   - Field name in the API: `requests_to_origin` (optional, with the opposite meaning of the Cloudflare dashboard option).
   - If this parameter is disabled (or when the `requests_to_origin` API field is set to `true`), only the requests going to the origin (that is, requests that are not cached) will be considered when determining the request rate.
-  - In some cases you cannot disable the **Also apply rate limiting to cached assets** parameter, due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
+  - In some cases, you cannot disable the **Also apply rate limiting to cached assets** parameter due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 
 - **With response type** {{<type>}}String{{</type>}}
 
