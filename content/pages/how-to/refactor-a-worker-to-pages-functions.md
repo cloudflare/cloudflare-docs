@@ -5,15 +5,27 @@ title: Refactor a Worker to a Pages Function
 
 # Refactor a Worker to a Pages Function
 
-In this guide, you will learn how to refactor a Worker to a Pages Function that can be hosted with your application on Cloudflare Pages. You may want to do this if you manage a serverless function that your application depends on and wish to ship the logic without managing a Worker as a separate service.
+In this guide, you will learn how to refactor a Worker to a Pages Function that can be hosted with your application on Cloudflare Pages. You may want to do this for one of these reasons: 
+1. If you manage a serverless function that your application depends on and wish to ship the logic without managing a Worker as a separate service.
+2. If you are migrating your Worker to Pages Functions and want to leverage on the routing and middleware capabilities of Pages Functions.
 
-## Handle form submissions in an application 
+{{<Aside type= "note">}}
 
-An example of a functionality that can be handled by a Worker but can also be a good use case for Pages Functions is a simple form. This is because forms are most times specific to a particular application. 
+You can import your Worker to a Pages project without using Functions by creating a `_worker.js` file in the in the output directory of your Pages project. This [Advanced mode](/pages/platform/functions/#advanced-mode) requires writing your worker with [Module syntax](/workers/learning/migrating-to-module-workers/). 
 
-Assuming you are already using a Worker to handle your form, you would have deployed this Worker and then pointed your form action to the URL of the Worker. When you change how the Worker handles your submissions, you do so separately from your client. If the logic in your Worker is used by more than one application, it makes sense to leave it this way.  
+However, when using the `_worker.js` file in Pages, the entire `/functions` directory is ignored – including its routing and middleware characteristics.
 
-However, it can be beneficial to use a [Pages Function](/pages/platform/functions/), which is a serverless function that lives within the same filesystem as your application and is deployed with Cloudflare Pages. Building your application this way can help you manage your client and serverless logic from the same place and make it easier to use and debug your code. 
+{{</Aside>}}
+
+## Handle form submission example 
+
+To explain the process of refactoring, this guide uses a simple form submission example. This is a functionality that can be handled by a Worker but can also be a good use case for Pages Functions, since forms are most times specific to a particular application. 
+
+Assuming you are already using a Worker to handle your form, you would have deployed this Worker and then added the URL to your form action in your HTML form. This means that when you change how the Worker handles your submissions, you do so separately from your client. If the logic in your Worker is used by more than one application, it makes sense to leave it this way.  
+
+However, it can be beneficial to use a [Pages Function](/pages/platform/functions/), which is a serverless function that lives within the same filesystem as your application and is deployed with Cloudflare Pages, when scoping logic that is needed in the same filesystem. 
+
+Building your application this way, can help you manage your client and serverless logic from the same place and make it easier to use and debug your code. 
 
 ## Handling form entries with Airtable with a Worker
 
