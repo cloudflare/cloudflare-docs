@@ -26,4 +26,4 @@ You will not be able to access your **Secret Access Key** again after this step.
 
 {{</Aside>}}
 
-
+The S3 endpoint is available via `https://<account>.r2.cloudflarestorage.com`.
