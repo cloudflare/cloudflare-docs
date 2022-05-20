@@ -1,0 +1,62 @@
+---
+title: Configure `aws-sdk-ruby` for R2
+summary: Example of how to configure `aws-sdk-ruby` to use R2.
+pcx-content-type: configuration
+weight: 1001
+layout: example
+---
+
+You must [generate an Access Key](/r2/platform/s3-compatibility/tokens/) before getting started. All examples will utilities `access_key_id` and `access_key_secret` variables which represent the **Access Key ID** and **Secret Access Key** values you generated. Many Ruby projects also store these credentials in environment variables instead.
+
+Add the following dependency to your `Gemfile`:
+
+```ruby
+gem "aws-sdk-s3"
+```
+
+Then you can use Ruby to operate on R2 buckets:
+
+```ruby
+require "aws-sdk-s3"
+
+@r2 = Aws::S3::Client.new(
+  access_key_id: "#{access_key_id}",
+  secret_access_key: "#{secret_access_key}",
+  endpoint: "https://#{cloudflare_account_id}.r2.cloudflarestorage.com",
+  region: "auto",
+  force_path_style: true,
+)
+
+# List all buckets on your account
+puts @r2.list_buckets
+
+#=> {
+#=>   :buckets => [{
+#=>     :name => "your-bucket",
+#=>     :creation_date => "…",
+#=>   }],
+#=>   :owner => {
+#=>     :display_name => "…",
+#=>     :id => "…"
+#=>   }
+#=> }
+
+# List the first 20 items in a bucket
+puts @r2.list_objects(bucket:"your-bucket", max_keys:20)
+
+#=> {
+#=>   :is_truncated => false, 
+#=>   :marker => nil, 
+#=>   :next_marker => nil, 
+#=>   :name => "your-bucket", 
+#=>   :prefix => nil, 
+#=>   :delimiter =>nil, 
+#=>   :max_keys => 20, 
+#=>   :common_prefixes => [], 
+#=>   :encoding_type => nil
+#=>   :contents => [
+#=>     …,
+#=>     …,
+#=>     …,
+#=>   ]
+#=> }
