@@ -1,6 +1,3 @@
-# Set up PCX as default codeowners (unless overruled by a more specific policy)
-@cloudflare/PCX
-
 # 1.1.1.1
 content/1.1.1.1/ @cloudflare/PCX @cloudflare/dns
 
@@ -42,9 +39,6 @@ content/firewall/ @cloudflare/firewall @cloudflare/PCX
 
 # Fundamentals
 content/fundamentals/ @cloudflare/PCX
-
-# HTTP Applications
-content/http-applications/ @cloudflare/PCX
 
 # HTTP/3
 content/http3/ @ConzorKingKong @cloudflare/PCX

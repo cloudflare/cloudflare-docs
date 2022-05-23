@@ -18,7 +18,7 @@ Follow this tutorial to start testing and deploying edge configuration changes w
 
 ## Step 3 - Create a routing rule for staging
 
-You next want to create a routing rule that sends traffic to your **Staging** environment to the new version of your application.
+You next want to create a routing rule that sends traffic to your **Staging** environment using the new version of your application.
 
 {{<render file="_create-routing-rule.md">}}
 
