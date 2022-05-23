@@ -1,7 +1,8 @@
 ---
-title: Random migration folder
-pcx-content-type: navigation
-weight: 1
+_build:
+  publishResources: false
+  render: never
+  list: never
 ---
 
 # Random migration folder
