@@ -26,7 +26,7 @@ During the open Beta, you can only interact with applications and versions using
 
 When you create a new version of your HTTP application, Cloudflare copies all the configuration settings from an existing application version and creates a new version:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account.
 3. Go to **HTTP Applications**.
 4. Select an existing application.
