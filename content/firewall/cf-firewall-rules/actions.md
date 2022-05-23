@@ -51,9 +51,7 @@ For reference information on rule actions available for Cloudflare products powe
           <ul>
             <li>Records matching requests in the Cloudflare Logs.</li>
             <li>Only available for Enterprise plans.</li>
-            <li>
-              Recommended for validating rules before committing to a more severe action.
-            </li>
+            <li>Recommended for validating rules before committing to a more severe action.</li>
           </ul>
         </td>
         <td>1</td>
@@ -66,9 +64,7 @@ For reference information on rule actions available for Cloudflare products powe
         </td>
         <td>
           <ul>
-            <li>
-              Allows user to dynamically disable Cloudflare security features for a request.
-            </li>
+            <li>Allows user to dynamically disable Cloudflare security features for a request.</li>
             <li>Available to all plans.</li>
             <li>
               <p>Matching requests exempt from evaluation by a user-defined list containing one or more of the following Cloudflare security features:</p>
@@ -88,9 +84,7 @@ For reference information on rule actions available for Cloudflare products powe
               </ul>
               <p></p>
             </li>
-            <li>
-              Requests which match the <em>Bypass</em> action are still subject to evaluation (and thus a challenge or block) within Firewall Rules, based on the order of execution.
-            </li>
+            <li>Requests which match the <em>Bypass</em> action are still subject to evaluation (and thus a challenge or block) within Firewall Rules, based on the order of execution.</li>
           </ul>
         </td>
         <td>2</td>
