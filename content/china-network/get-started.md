@@ -20,7 +20,7 @@ Contact your sales team for more information on these steps.
 
 1. Present valid [ICP (Internet Content Provider) filings or licenses](/china-network/concepts/icp/) for all root domains that you wish to onboard.
 
-1. Prepare the required information for content vetting. The JD Cloud partner requires content vetting for all domains on their network before enabling them. You will need to provide the following information:
+2. Prepare the required information for content vetting. The JD Cloud partner requires content vetting for all domains on their network before enabling them. You will need to provide the following information:
 
     * Customer and company name.
     * Domain name.
