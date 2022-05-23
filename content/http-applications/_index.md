@@ -14,7 +14,7 @@ Cloudflare **HTTP Applications** allow you to safely test, deploy, and roll back
 By using HTTP Applications, you can:
 
 - Manage edge configuration by use case, rather than hostname.
-- Update staging configurations without having to manually re-copy settings between subdomains.
+- Update staging configurations without having to manually recopy settings between subdomains.
 - Test, deploy, and rollback changes as needed and without additional deployments.
 
 ## Availability
