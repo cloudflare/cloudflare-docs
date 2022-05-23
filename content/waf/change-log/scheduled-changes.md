@@ -28,7 +28,7 @@ layout: list
       <td>2022-05-30</td>
       <td>Cloudflare Specials</td>
       <td>...f0c856b4</td>
-      <td>100054BETA</td>
+      <td>100054_BETA</td>
       <td>Apache Struts - Command Injection - CVE:CVE-2017-5638</td>
       <td>N/A</td>
       <td>Block</td>
