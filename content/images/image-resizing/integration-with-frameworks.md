@@ -41,7 +41,7 @@ const MyImage = props => {
 
 {{<Aside type="note">}}
 
-For local development, you can enable [Resize images from any origin checkbox](/images/image-resizing/enable-image-resizing/) against your zone. Then, replace `/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}` with an absolute URL path:
+For local development, you can enable [Resize images from any origin checkbox](/images/image-resizing/enable-image-resizing/) for your zone. Then, replace `/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}` with an absolute URL path:
 
 `https://<YOUR_DOMAIN.COM>/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`
 
