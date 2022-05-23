@@ -39,9 +39,8 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 | -------------------------------------------------------------------------------------   |---------------------------------- |
 | ✅ [ListBuckets](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBuckets.html)     |                                    |
 | ✅ [HeadBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html)       | ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
-| ✅ [CreateBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html)   | ❌ ACL: <br> &emsp;  ❌ x-amz-acl <br> &emsp;  ❌ x-amz-grant-full-control <br> &emsp;  ❌ x-amz-grant-read <br> &emsp;  ❌ x-amz-grant-read-acp  <br> &emsp;  ❌ x-amz-grant-write <br> &emsp;  ❌ x-amz-grant-write-acp <br> ❌ 
-Object Locking: <br> &emsp;  ❌ x-amz-bucket-object-lock-enabled <br>  ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner                     |
-| ✅ [DeleteBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html)   | ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner    |
+| ✅ [CreateBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html)   | ❌ ACL: <br> &emsp;  ❌ x-amz-acl <br> &emsp;  ❌ x-amz-grant-full-control <br> &emsp;  ❌ x-amz-grant-read <br> &emsp;  ❌ x-amz-grant-read-acp  <br> &emsp;  ❌ x-amz-grant-write <br> &emsp;  ❌ x-amz-grant-write-acp <br> ❌ Object Locking: <br> &emsp;  ❌ x-amz-bucket-object-lock-enabled <br>  ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
+| ✅ [DeleteBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html)   | ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
 
 {{</table-wrap>}}
 
