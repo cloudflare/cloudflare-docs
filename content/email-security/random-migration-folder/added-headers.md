@@ -1,8 +1,7 @@
 ---
-_build:
-  publishResources: false
-  render: never
-  list: never
+title: Added X-headers
+pcx-content-type: reference
+weight: 1
 ---
 
 # Added X-Headers
