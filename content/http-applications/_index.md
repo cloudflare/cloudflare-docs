@@ -7,7 +7,7 @@ weight: 1
 
 # Overview
 
-Cloudflare **HTTP Applications** allow you to safely test, deploy, and roll back changes to your zone configuration settings.
+Cloudflare **HTTP Applications** allow you to safely test, deploy, and roll back changes to your edge configuration settings.
 
 ## Benefits
 

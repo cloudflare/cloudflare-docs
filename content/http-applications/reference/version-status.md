@@ -11,4 +11,4 @@ When you create a [new application](/http-applications/how-to/manage-application
 | Status | Next steps |
 | --- | --- |
 | ✅ | None required |
-| ❌ | If you experience errors when creating an application or a new version, [contact Cloudflare support](https://support.cloudflare.com/hc/en-us/articles/200172476). |
+| Failed ❌ | If you experience errors when creating an application or a new version, [contact Cloudflare support](https://support.cloudflare.com/hc/en-us/articles/200172476). |

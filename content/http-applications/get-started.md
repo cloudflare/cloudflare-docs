@@ -6,7 +6,7 @@ weight: 3
 
 # Get started
 
-Follow this tutorial to start testing and deploying zone configuration changes with HTTP Applications.
+Follow this tutorial to start testing and deploying edge configuration changes with HTTP Applications.
 
 ## Step 1 - Create an application
 

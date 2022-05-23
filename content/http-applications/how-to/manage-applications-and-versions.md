@@ -38,6 +38,10 @@ When you create a new version of your HTTP application, Cloudflare copies all th
 
 {{<render file="_edit-version.md">}}
 
+You can also leave **Edit** mode by clicking the back arrow next to HTTP Applications in your navigation menu.
+
+![Leave edit mode by clicking the back arrow](/http-applications/static/exit-edit-mode.png)
+
 ---
 
 ## Delete HTTP application

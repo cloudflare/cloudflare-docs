@@ -8,7 +8,7 @@ product:
 
 meta:
   title: Cloudflare HTTP Application docs
-  description: Cloudflare HTTP Applications let you safely test, deploy, and roll back changes to your zone configuration settings.
+  description: Cloudflare HTTP Applications let you safely test, deploy, and roll back changes to your edge configuration settings.
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
