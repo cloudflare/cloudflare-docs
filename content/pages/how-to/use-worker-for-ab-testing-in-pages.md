@@ -5,37 +5,39 @@ title: Use Pages Functions for A/B testing
 
 # Use Pages Functions for A/B testing
 
-In this guide, you will learn how to use [Page Functions](/pages/platform/functions/) for A/B testing in your Pages projects. A/B testing is a user experience research methodology applied when comparing two or more versions of a webpage or application. With A/B testing, you can serve two or more versions of a webpage to users and divide traffic to your site.
+In this guide, you will learn how to use [Pages Functions](/pages/platform/functions/) for A/B testing in your Pages projects. A/B testing is a user experience research methodology applied when comparing two or more versions of a webpage or application. With A/B testing, you can serve two or more versions of a webpage to users and divide traffic to your site.
 
 # Overview 
 
-While setting up different versions of your application to determine the experience for your users with A/B testing is unique to your specific use case, the process of setting up A/B testing can be broken down into the same helpful principles.
+Configuring different versions of your application for A/B testing will be unique to your specific use case. For all developers, A/B testing setup can be simplified into a few helpful principles.
 
-Depending on the number of versions you have(this guide uses two), you can assign your users into experimental groups. To ensure that a user remains in the group you have given, a cookie will be set and stored in the browsers. Then, based on the value of the cookie, they will sever the route associated with that cookie.
+Depending on the number of application versions you have (this guide uses two), you can assign your users into experimental groups. To ensure that a user remains in the group you have given, a cookie will be set and stored in the browser. Then, based on the value of the cookie, the browser will sever the route associated with that cookie.
 
 {{<Aside type="Note">}}
 
-It is helpful to use cookies because you want users to be served the same version every time they come to your application, even when they refresh. This will help keep things consistent for future rollouts. 
+Cookies are helpful because they allow users to be served the same version of your application every time they visit and when they refresh the site. This will help keep the version served consistent for future rollouts. 
 
 {{</Aside>}}
 
 After you have gotten the value from the cookie, you can then have a conditional rendering set up that checks the value of the existing cookie and then assigns a group. Without a cookie, you will give one and set the URL. 
 
-## Settting up your Pages Function
+## Set up your Pages Function
 
-In your project, you can handle the logic for A/B testing using [Pages Functions](/pages/platform/functions/). Pages Functions allows you to handle server logic from within your Pages project. Create a `/functions` directory at the root of your project to get started. Your application server logic will live in the functions folder. 
+In your project, you can handle the logic for A/B testing using [Pages Functions](/pages/platform/functions/). Pages Functions allows you to handle server logic from within your Pages project. 
 
-## Adding middleware logic
+To begin, go to your Pages project and create a `/functions` directory. Your application server logic will live in the `/functions` folder. 
 
-Pages Functions have utility functions that can reuse chunks of logic which are executed before and/or after route handlers. These are called [middleware](/pages/platform/functions/#adding-middleware). In our A/B testing use-case, we want to intercept the request before it gets to the server, which is perfect middleware use. In your `/functions` directory, create an `_middleware.js` file. 
+## Add middleware logic
+
+Then, in your `/functions` directory, create a `_middleware.js` file. Pages Functions have utility functions that can reuse chunks of logic which are executed before and/or after route handlers. These are called [middleware](/pages/platform/functions/#adding-middleware). Following this guide, you want to intercept the request before it gets to the server, making ideal use of middleware.
 
 {{<Aside type="Note">}}
 
-Creating your middleware file at the base of your functions folder means that it will run for all routes on your project. To learn more about [middleware routing](/pages/platform/functions/#middleware-routing) refer to the documentation.
+When you create your `_middleware.js` file at the base of your `/functions` folder, the middleware will run for all routes on your project. Learn more about [middleware routing](/pages/platform/functions/#middleware-routing).
 
 {{</Aside>}}
 
-Following the functions naming convention, the `_middleware.js` file export a single async `OnRequest` function that accepts a `request`, `env` and `next`  as an argument. 
+Following the Functions naming convention, the `_middleware.js` file exports a single async `OnRequest` function that accepts a `request`, `env` and `next`  as an argument. 
 
 ```js
 ---
@@ -52,7 +54,7 @@ const abtest = async({request, next, env}) => {
 export const onRequest = [abtest]
 ```
 
-To identify the cookie, we assign it in the browser. We will give it a unique name; for this example, create a variable above your async function. You can also define your routes. We will call the second route `/test` in this guide.
+To identify the cookie, assign it in the browser and give it a unique name. For this example, create a variable above your async function. You can also define your routes. Following this guide, call the second route `/test`.
 
 ```js
 ---
@@ -75,9 +77,9 @@ export const onRequest = [abtest]
 
 ## Set up conditional logic
 
-In our A/B testing, we want to be able to send a user to particular routes based on the presence of a cookie value. First, we need to intercept the URL request. 
+In your A/B testing, you want to be able to send a user to particular routes based on the presence of a cookie value. To do this, you must first intercept the URL request. 
 
-Based on the URL pathname, we will check what cookie value is present in the header, and based on the value; we will either set the base route or the `/test` route and fetch the assets for that route. 
+Based on the URL pathname, check what cookie value is present in the header. Based on the value, you will either set the base route or the `/test` route and fetch the assets for that route. 
 
 ```js
 ---
@@ -114,7 +116,7 @@ export const onRequest = [abtest]
 
 ```
 
-On the other hand, if the cookie isn't present, you will have to assign one. You can generate numbers randomly by using the `Math.random()` Javascript method and getting whole numbers by calling a `Math.floor()` on the function.
+If the cookie value is not present, you will have to assign one. You can generate numbers randomly by using the `Math.random()` Javascript method and getting whole numbers by calling a `Math.floor()` on the function.
 
 To make the values into percentages, multiple `Math.random()` by 100 and call`Math.floor()` so that all the percentages can be whole numbers. Our default version is given a value of `current`.
 
@@ -168,10 +170,9 @@ const abtest = async ({ request, next, env }) => {
 export const onRequest = [abtest];
 ```
 
+## Deploy to Cloudflare Pages
 
-# Deploy to Cloudflare Pages
-
-Now that you have set up your `functions/_middleware.js` file in your project. Deploy your site to Pages by logging in to the Cloudflare dashboard > Account Home > Pages and selecting Create a project. Select the new  GitHub repository that you created and, in the Set up builds and deployments section, provide the following information:
+Now that you have set up your `functions/_middleware.js` file in your project you are ready to deploy your project. Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Account Home** > **Pages** and selecting **Create a project**. Select your git repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 
@@ -183,4 +184,4 @@ Now that you have set up your `functions/_middleware.js` file in your project. D
 
 </div>
 
-After you have deployed your application, you will see your middleware Function under Functions > Configuration in the current build. 
+After you have deployed your application, you will see your middleware Function under **Pages** > **Settings** > **Functions** > Configuration. 
