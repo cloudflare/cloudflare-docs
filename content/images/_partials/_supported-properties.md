@@ -31,7 +31,7 @@ Background color to add underneath the image. Applies only to images with transp
 ---
 filename: URL format
 ---
-background=#RRGGBB
+background=%23RRGGBB
 ```
 
 ```js
