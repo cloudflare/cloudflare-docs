@@ -8,15 +8,15 @@ meta:
 
 # Cloudflare China Network
 
-The Cloudflare China Network is a package of selected Cloudflare’s performance and security products running on data centers located in mainland China and operated by Cloudflare's partner JD Cloud.
+The [Cloudflare China Network](https://www.cloudflare.com/china-network/) is a package of selected Cloudflare’s performance and security products running on data centers located in mainland China and operated by Cloudflare's partner JD Cloud.
 
 The data centers cover most populated regions in China. Combining Cloudflare’s technological leadership and JD Cloud’s local operations expertise, the Cloudflare China Network is designed to meet the needs for secure, reliable, and fast-performing content delivery in China. You can use the same configurations that you use with Cloudflare everywhere else in the world and manage your global services from a single dashboard.
 
-The Cloudflare China Network is only available for customers on an Enterprise plan and requires a separate subscription.
+The Cloudflare China Network is available as a separate subscription for customers on an Enterprise plan.
 
 ## Main features
 
-Cloudflare China Network provides:
+The Cloudflare China Network provides:
 
 * A single solution for both performance improvement and security services such as WAF, DDoS, and bot management.
 * An unified experience for managing network traffic and security posture. You can manage all configurations on the same dashboard.
