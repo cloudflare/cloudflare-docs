@@ -63,7 +63,7 @@ We review these submissions to improve Cloudflare’s categorization.
 After configuring 1.1.1.1 for Families, you can test if it is working as intended with the following URLs:
 
 - https://malware.testcategory.com/: Use this to test if 1.1.1.1 for Families is blocking known malware addresses correctly.
-- https://nudity.testcategory.com/: Use this to test if 1.1.1.1 for Families is blocking known adult and malware addresses correctly.
+- https://nudity.testcategory.com/: Use this to test if 1.1.1.1 for Families is blocking known adult content and malware addresses correctly.
 
 ## DNS over HTTPS (DoH)
 
