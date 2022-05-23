@@ -14,11 +14,11 @@ title: Build a Slackbot
 
 In this tutorial, you will build a [Slack](https://slackhq.com) bot using [Cloudflare Workers](https://workers.cloudflare.com). Your bot will make use of GitHub webhooks to send messages to a Slack channel when issues are updated or created, and allow users to write a command to look up GitHub issues from inside Slack.
 
-![Build a Slack Application](./media/issue-command.png)
+![After following this tutorial, you will be able to create a Slackbot like the one in this example. Continue reading to build your Slackbot.](./media/issue-command.png)
 
 This tutorial is recommended for people who are familiar with writing web applications. If you have built an application with tools like [Node](https://nodejs.org) and [Express](https://expressjs.com), this project will feel very familiar to you. If you are new to writing web applications or have wanted to build something like a Slack bot in the past, but were intimidated by deployment or configuration, Workers will be an easy way for you to focus on writing code and shipping projects.
 
-If you would like to see the code or how the bot works in an actual Slack channel before proceeding with this tutorial, you can access the final version of the codebase [on GitHub](https://github.com/signalnerve/workers-slack-bot). From GitHub, you can add your own Slack API keys and deploy it to your own Slack channels for testing.
+If you would like to review the code or how the bot works in an actual Slack channel before proceeding with this tutorial, you can access the final version of the codebase [on GitHub](https://github.com/signalnerve/workers-slack-bot). From GitHub, you can add your own Slack API keys and deploy it to your own Slack channels for testing.
 
 ## Set up Slack
 
@@ -28,7 +28,7 @@ This tutorial assumes that you already have a Slack account, and the ability to 
 
 To post messages from your Cloudflare Worker into a Slack channel, you will need to create an application in Slack’s UI. To do this, go to Slack’s API section, at [api.slack.com/apps](https://api.slack.com/apps), and select **Create New App**.
 
-![Create a Slack App](./media/create-a-slack-app.png)
+![To create a Slackbot, first create a Slack App](./media/create-a-slack-app.png)
 
 Slack applications have many features. You will make use of two of them, Incoming Webhooks and Slash Commands, to build your Worker-powered Slack bot.
 
@@ -38,23 +38,23 @@ Incoming Webhooks are URLs that you can use to send messages to your Slack chann
 
 1.  On the sidebar of Slack's UI, select **Incoming Webhooks**.
 2.  In **Webhook URLs for your Workspace**, select **Add New Webhook to Workspace**.
-3.  On the following screen, select the channel that you want your webhook to send messages to (you can select a room, like #general or #code, or be messaged directly by our Slack bot when the webhook is called.)
+3.  On the following screen, select the channel that you want your webhook to send messages to (you can select a room, like #general or #code, or be messaged directly by your Slack bot when the webhook is called.)
 4.  Authorize the new webhook URL.
 
-After authorizing your webhook URL, you will be returned to the **Incoming Webhooks** page and can view your new webhook URL. You will add this into our Workers code later. Next, you will add the second component to your Slack bot: a Slash Command.
+After authorizing your webhook URL, you will be returned to the **Incoming Webhooks** page and can view your new webhook URL. You will add this into your Workers code later. Next, you will add the second component to your Slack bot: a Slash Command.
 
-![Slack Incoming Webhook](./media/slack-incoming-webhook.png)
+![Select Add New Webhook to Workspace to add a new Webhook URL in Slack's dashboard](./media/slack-incoming-webhook.png)
 
 #### Slash Command
 
-A Slash Command in Slack is a custom-configured command that can be attached to a URL request. For example, if you configured `/weather <zip>`, Slack would make an HTTP POST request to a configured URL, passing the text `<zip>` to get the weather for a specified zip code. In your application, you will use the `/issue` command to look up GitHub issues using the [GitHub API](https://developer.github.com). Typing `/issue cloudflare/wrangler#1` will send the text `cloudflare/wrangler#1` in a HTTP POST request to our application, which the application will use to find the [relevant GitHub issue](https://github.com/cloudflare/wrangler/issues/1).
+A Slash Command in Slack is a custom-configured command that can be attached to a URL request. For example, if you configured `/weather <zip>`, Slack would make an HTTP POST request to a configured URL, passing the text `<zip>` to get the weather for a specified zip code. In your application, you will use the `/issue` command to look up GitHub issues using the [GitHub API](https://developer.github.com). Typing `/issue cloudflare/wrangler#1` will send the text `cloudflare/wrangler#1` in a HTTP POST request to your application, which the application will use to find the [relevant GitHub issue](https://github.com/cloudflare/wrangler/issues/1).
 
 1.  On the Slack sidebar, select **Slash Commands**.
 2.  Create your first slash command.
 
-For our example, you will use the command `/issue`. The request URL should be the `/lookup` path on your application URL: for instance, if your application will be hosted at `https://myworkerurl.com`, the Request URL should be `https://myworkerurl.com/lookup`.
+For this tutorial, you will use the command `/issue`. The request URL should be the `/lookup` path on your application URL: for example, if your application will be hosted at `https://myworkerurl.com`, the Request URL should be `https://myworkerurl.com/lookup`.
 
-![Create Slack Command](./media/create-slack-command.png)
+![You must create a Slash Command in Slack's dashboard and attach it to a Request URL](./media/create-slack-command.png)
 
 ### Configure your GitHub Webhooks
 
@@ -72,7 +72,7 @@ For example, if your Worker will be hosted at `https://myworkerurl.com`, the Pay
 
 3.  In the **Content type** dropdown, select **application/json**.
 
-The **Content type** for your payload can either be a URL-encoded payload (`application/x-www-form-urlencoded`) or JSON (`application/json`). For the purpose of this tutorial and to make parsing the payload sent to our application, select JSON.
+The **Content type** for your payload can either be a URL-encoded payload (`application/x-www-form-urlencoded`) or JSON (`application/json`). For the purpose of this tutorial and to make parsing the payload sent to your application, select JSON.
 
 4.  In **Which events would you like to trigger this webhook?**, select **Let me select individual events**.
 
@@ -84,25 +84,25 @@ There are many different event types that can be enabled for your webhook. Selec
 
 6.  Select **Add webhook**.
 
-![Create a GitHub Webhook](./media/new-github-webhook.png)
+![Create a GitHub Webhook in the GitHub dashboard](./media/new-github-webhook.png)
 
 When your webhook is created, it will attempt to send a test payload to your application. Since your application is not actually deployed yet, leave the configuration as it is. You will later return to your repository to create, edit, and close some issues to ensure that the webhook is working once your application is deployed.
 
-## Generate
+## Init
 
-Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. In this tutorial, you will use the [router template](https://github.com/cloudflare/worker-template-router) to generate a Workers project with a built-in router, so you can take incoming requests, and route them to the appropriate JavaScript code.
+Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. In this tutorial, you will use the [router template](https://github.com/cloudflare/worker-template-router) to create a Workers project with a built-in router, so you can take incoming requests, and route them to the appropriate JavaScript code.
 
-In the command line, generate your Worker project, passing in a project name (for example, `slack-bot`), and the [template](/workers/examples/) URL to base your project on:
+In the command line, create your Worker project, cloning the [router template](https://github.com/cloudflare/worker-template-router) URL and passing in a project name (for example, `slack-bot`):
 
 ```sh
 ---
-header: Generate a new project
+header: Create a new project
 ---
-$ wrangler generate slack-bot https://github.com/cloudflare/worker-template-router
+$ git clone https://github.com/cloudflare/worker-template-router slack-bot
 $ cd slack-bot
 ```
 
-Wrangler templates are just Git repositories, so if you want to create your own templates, or use one from the [Template Gallery](/workers/examples/), there is a variety of options to help you get started.
+Wrangler templates are just Git repositories, so if you want to create your own templates, or use one from the [Template Gallery](/workers/get-started/quickstarts/#templates), there is a variety of options to help you get started.
 
 Cloudflare’s `worker-template` includes support for building and deploying JavaScript-based projects. Inside of your new `slack-bot` directory, `index.js` represents the entry point to your Cloudflare Workers application.
 
@@ -125,7 +125,7 @@ async function handleRequest(request) {
 }
 ```
 
-In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text “Hello worker”, as well as an explicit `200` status code.
+In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text `“Hello worker!”`, as well as an explicit `200` status code.
 
 When a Worker receives a `fetch` event, the script must use `event.respondWith` to return the newly constructed response to the client. Your Cloudflare Worker script will serve new responses directly from [Cloudflare's edge network](https://www.cloudflare.com/network) instead of continuing to your origin server. A standard server would accept requests and return responses. Cloudflare Workers allows you to respond quickly by constructing responses directly on the Cloudflare edge network.
 
@@ -135,7 +135,7 @@ To build your Slack bot on Cloudflare Workers, you will build up your applicatio
 
 The router template includes a class, `Router`, that is included to help developers with the common task of associating “routes” in your application (for instance, `/users`, or `/about`) with “functions”. In this tutorial, there are two routes/function handlers that you need to define:
 
-1.  The `lookup` function will take requests from Slack (sent when a user uses the `/issue` command), and look up the corresponding issue using the GitHub API. This function will be a `PUT` request to `/lookup`.
+1.  The `lookup` function will take requests from Slack (sent when a user uses the `/issue` command), and look up the corresponding issue using the GitHub API. This function will be a `POST` request to `/lookup`.
 
 2.  The `webhook` function will be called when an issue changes on GitHub, via a configured webhook. This function will be a `POST` request to `/webhook`.
 
@@ -146,32 +146,26 @@ Inside of `index.js`, import the `Router` class and use it to update the `handle
 ```js
 ---
 filename: index.js
-highlight: [1, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+highlight: [6, 7, 8, 9]
 ---
-import Router from './router';
+import { Router } from 'itty-router';
 
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
+// Create a new router
+const router = Router();
 
-async function handleRequest(request) {
-  const r = new Router();
-  r.post('/lookup', lookup);
-  r.post('/webhook', webhook);
+router.post("/lookup", lookup);
+router.post("/webhook", webhook);
 
-  let response = await r.route(request);
+router.all("*", () => new Response("404, not found!", { status: 404 }))
 
-  if (!response) {
-    response = new Response('Not found', { status: 404 });
-  }
-
-  return response;
-}
+addEventListener('fetch', (e) => {
+  e.respondWith(router.handle(e.request))
+})
 ```
 
-First, import the `Router` class from `router.js`.
+First, import the `Router` class from `itty-router`.
 
-In `handleRequest`, instantiate a new instance of `Router`, setting it to the variable `r`. The `Router` class makes use of a few functions to quickly and easily handle requests. The `post` method takes in a path string and a function handler. This indicates “when a client sends an HTTP `POST` to the path `/lookup`, call the `lookup` function”.
+The `Router` class makes use of a few functions to quickly and easily handle requests. The `post` method takes in a path string and a function handler. This indicates “when a client sends an HTTP `POST` to the path `/lookup`, call the `lookup` function”.
 
 There are two `POST` routes to handle: `/lookup` and `/webhook`. These new routes will point to corresponding functions, `lookup` and `webhook` — the two function handlers that you will set up soon.
 
@@ -183,9 +177,7 @@ Note that you are able to use JavaScript features like async/await inside of you
 
 {{</Aside>}}
 
-If there is no matching route (for example, if someone requests the path `/admin`), the function should return a response with a status code of `404`. `handleRequest` checks to see if `response` is `undefined`, and if it is, it sets `response` to a new `Response` with the body text “Not found”, and a status code of `404`.
-
-Finally, the function returns the `response`, whether it is a match from the router, or a `404`, back to the `fetch` event. The result will either be a handled API route, or a plain HTTP response.
+If there is no matching route (for example, if someone requests the path `/admin`), the function should return a response with a status code of `404`. `router.all` catches any unhandled requests and returns a new `Response` with the body text `“404, not found!”`, and a status code of `404`.
 
 This request/response pattern makes it really straightforward to understand how requests are routed in your Workers application. You are almost done with this file. To complete it, you need to define the corresponding function handlers for your routes. In this tutorial, you will define those handlers in `src/handlers`:
 
@@ -203,32 +195,26 @@ With those files created (you will fill them in soon), import them at the top of
 ```js
 ---
 filename: index.js
-highlight: [1, 2, 11, 12]
+highlight: [1, 2]
 ---
 import lookup from './src/handlers/lookup';
 import webhook from './src/handlers/webhook';
-import Router from './router';
+import { Router } from 'itty-router';
 
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
+// Create a new router
+const router = Router();
 
-async function handleRequest(request) {
-  const r = new Router();
-  r.post('/lookup', lookup);
-  r.post('/webhook', webhook);
+router.post("/lookup", lookup);
+router.post("/webhook", webhook);
 
-  let response = await r.route(request);
+router.all("*", () => new Response("404, not found!", { status: 404 }))
 
-  if (!response) {
-    response = new Response('Not found', { status: 404 });
-  }
-
-  return response;
-}
+addEventListener('fetch', (e) => {
+  e.respondWith(router.handle(e.request))
+})
 ```
 
-### Creating the “lookup” route
+### Creating the lookup route
 
 In `src/handlers/lookup.js`, define your first route handler. The `lookup` handler is a function with one argument, the `request` being passed from the `fetch` event in `index.js`:
 
@@ -368,15 +354,15 @@ export default async request => {
 
 #### Constructing a Slack message
 
-After you have gotten a response back from GitHub’s API, the final step is to construct a Slack message with the issue data, and return it to the user. The final result will look something like this:
+After you have received a response back from GitHub’s API, the final step is to construct a Slack message with the issue data, and return it to the user. The final result will look something like this:
 
-![Example Slack Message with GitHub Issue](./media/issue-slack-message.png)
+![A successful Slack Message will have the components listed below](./media/issue-slack-message.png)
 
 You can see four different pieces in the above screenshot:
 
 1.  The first line (bolded) links to the issue, and shows the issue title
 2.  The following lines (including code snippets) are the issue body
-3.  The last line of text shows the issue status, the issue creator\_(with a link to the user’s GitHub profile), and the creation date for the issue
+3.  The last line of text shows the issue status, the issue creator (with a link to the user’s GitHub profile), and the creation date for the issue
 4.  The profile picture of the issue creator, on the right-hand side
 
 The previously mentioned [Block Kit](https://api.slack.com/block-kit) framework will help take the issue data (in the structure lined out in [GitHub’s REST API documentation](https://developer.github.com/v3/issues/)) and format it into something like the above screenshot.
@@ -410,7 +396,7 @@ Finally, parse `issue.created_at`, an ISO 8601 string, convert it into an instan
 
 With those variables in place, `text_lines` is an array of each line of text for the Slack message. The first line is the **issue title** and the **issue link**, the second is the **issue body**, and the final line is the **issue state** (for example, open or closed), the **user link**, and the **creation date**.
 
-With the text constructed, you can finally construct our Slack message, returning an array of blocks for Slack’s [Block Kit](https://api.slack.com/block-kit). In this case, there is only have one block: a [section](https://api.slack.com/reference/messaging/blocks#section) block with Markdown text, and an accessory image of the user who created the issue. Return that single block inside of an array, to complete the `constructGhIssueSlackMessage` function:
+With the text constructed, you can finally construct your Slack message, returning an array of blocks for Slack’s [Block Kit](https://api.slack.com/block-kit). In this case, there is only have one block: a [section](https://api.slack.com/reference/messaging/blocks#section) block with Markdown text, and an accessory image of the user who created the issue. Return that single block inside of an array, to complete the `constructGhIssueSlackMessage` function:
 
 ```js
 ---
@@ -525,9 +511,9 @@ export default async request => {
 };
 ```
 
-### Creating the “webhook” route
+### Creating the webhook route
 
-You are now halfway through implementing the route handlers for your Workers application. In implementing the next handler, `src/handlers/webhook.js`, you will re-use a lot of the code that you have already written for the “lookup” route.
+You are now halfway through implementing the route handlers for your Workers application. In implementing the next handler, `src/handlers/webhook.js`, you will re-use a lot of the code that you have already written for the lookup route.
 
 At the beginning of this tutorial, you configured a GitHub webhook to track any events related to issues in your repository. When an issue is opened, for example, the function corresponding to the path `/webhook` on your Workers application should take the data sent to it from GitHub, and post a new message in the configured Slack channel.
 
@@ -540,11 +526,11 @@ filename: src/handlers/webhook.js
 export default async request => {};
 ```
 
-Much like with the `lookup` function handler, you will need to parse the incoming payload inside of `request`, get the relevant issue data from it (see [the GitHub API documentation on `IssueEvent`](https://developer.github.com/v3/activity/events/types/#issuesevent) for the full payload schema), and send a formatted message to Slack to indicate what has changed. The final version will look something like this:
+Much like with the `lookup` function handler, you will need to parse the incoming payload inside of `request`, get the relevant issue data from it (refer to [the GitHub API documentation on `IssueEvent`](https://developer.github.com/v3/activity/events/types/#issuesevent) for the full payload schema), and send a formatted message to Slack to indicate what has changed. The final version will look something like this:
 
-![Example Webhook Message](./media/webhook_example.png)
+![A successful Webhook Message example](./media/webhook_example.png)
 
-Compare this message format to the format returned when a user uses the `/issue` slash command. You will see that there is only one actual difference between the two: the addition of an “action” text on the first line, in the format `An issue was $action:`. This action, which is sent as part of the `IssueEvent` from GitHub, will be used as you construct a very familiar looking collection of blocks using Slack’s Block Kit.
+Compare this message format to the format returned when a user uses the `/issue` slash command. You will see that there is only one actual difference between the two: the addition of an action text on the first line, in the format `An issue was $action:`. This action, which is sent as part of the `IssueEvent` from GitHub, will be used as you construct a very familiar looking collection of blocks using Slack’s Block Kit.
 
 #### Parsing event data
 
@@ -596,7 +582,7 @@ Add a simple utility function, `compact`, which takes an array, and filters out 
 ```js
 ---
 filename: src/utils/slack.js
-highlight: [1, 24]
+highlight: [1, 20]
 ---
 const compact = array => array.filter(el => el);
 
@@ -663,7 +649,7 @@ Since this webhook allows developers to post directly to your Slack channel, kee
 
 {{</Aside>}}
 
-To use this constant inside of your codebase, use the [`wrangler secret`](/workers/cli-wrangler/commands/#secret) command:
+To use this constant inside of your codebase, use the [`wrangler secret`](/workers/wrangler/cli-wrangler/commands/#secret) command:
 
 ```sh
 ---
@@ -682,7 +668,7 @@ To do this, wrap the majority of the `webhook` function handler in a try/catch b
 ```js
 ---
 filename: src/handlers/webhook.js
-highlight: [4, 22, 23, 24, 25]
+highlight: [4, 18, 19, 20, 21]
 ---
 import { constructGhIssueSlackMessage } from '../utils/slack';
 
@@ -714,11 +700,11 @@ By completing the preceding steps, you have finished writing the code for your S
 
 Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `wrangler publish`, which will build and publish your code:
 
-![Verify Wrangler Installation](./media/publish.gif)
+![Animated gif of running the `wrangler publish` command to deploy your Workers application](./media/publish.gif)
 
 Publishing your Workers application should now cause issue updates to start appearing in your Slack channel, as the GitHub webhook can now successfully reach your Workers webhook route:
 
-![Create New Issue](./media/create-new-issue.gif)
+![When you create new issue, a Slackbot will now appear in your Slack channel](./media/create-new-issue.gif)
 
 ## Related resources
 

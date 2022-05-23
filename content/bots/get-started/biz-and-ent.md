@@ -25,6 +25,10 @@ Super Bot Fight Mode is included in your Business or Enterprise subscription. Wh
 
 {{<render file="_get-started-pro-biz-steps.md">}}
 
+## Disable Super Bot Fight Mode
+
+{{<render file="_disable-sbfm.md">}}
+
 ## Analytics
 
 For more on analytics, see [Bot Analytics](/bots/bot-analytics/biz-and-ent/).

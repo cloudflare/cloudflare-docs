@@ -1,0 +1,87 @@
+name: Request content addition
+description: Request NEW documentation content.
+labels: ["documentation", "content:new"]
+body:
+  - type: dropdown
+    id: products
+    validations:
+      required: true
+    attributes:
+      label: Which Cloudflare product(s) does this pertain to?
+      multiple: true
+      options:
+        - "1.1.1.1"
+        - Analytics
+        - API
+        - API Shield
+        - Automatic Platform Optimization
+        - Bots
+        - BYOIP
+        - Cache
+        - Client IP Geolocation
+        - Cloudflare One
+        - DDoS Protection
+        - DNS
+        - Email Routing
+        - Firewall
+        - Fundamentals
+        - HTTP/3
+        - Image Optimization
+        - Load Balancing
+        - Logs
+        - Magic Firewall
+        - Magic Transit
+        - Magic WAN
+        - Network Error Logging
+        - Network Interconnect
+        - Page Shield
+        - Pages
+        - Partners
+        - Pub/Sub
+        - R2
+        - Railgun
+        - Randomness Beacon
+        - Registrar
+        - Rules
+        - Ruleset Engine
+        - Security Center
+        - Spectrum
+        - SSL
+        - Stream
+        - Tenant
+        - Terraform
+        - Time Services
+        - WAF
+        - Waiting Room
+        - WARP Client
+        - Web3
+        - Workers
+        - Zaraz
+
+  - type: input
+    id: subject
+    validations:
+      required: true
+    attributes:
+      label: Subject Matter
+      description: What needs to be documented?
+
+  - type: textarea
+    id: location
+    validations:
+      required: true
+    attributes:
+      label: Content Location
+      placeholder: Should this be a new document, a new section within an existing document, or a call-out within a section?
+      description: |
+        Where would you expect this addition to be placed?
+        Please provide any URLs to existing documents.
+
+
+  - type: textarea
+    id: extra
+    validations:
+      required: false
+    attributes:
+      label: Additional information
+      description: Any other details or screenshots that may be relevant.

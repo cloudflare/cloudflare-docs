@@ -14,8 +14,6 @@ Many applications for the web are built using industry standards like [PostgreSQ
 
 In this tutorial, you will explore how to integrate with PostgREST and PostgreSQL using Workers.
 
-![Example GIF](example.gif)
-
 ## Prerequisites
 
 To effectively learn from this tutorial, you should have an instance of PostgreSQL configured. In addition, you will need to install PostgREST, a separate service that provides REST API access to your Postgres database.
@@ -26,13 +24,13 @@ In order to continue with the tutorial, ensure that you have a publicly accessib
 
 ## Create a Workers function
 
-Begin by creating a new Workers function, running `wrangler generate`:
+Begin by creating a new Workers function, running `wrangler init`:
 
 ```sh
 ---
 header: Create a Workers function
 ---
-$ wrangler generate postgrest-example
+$ wrangler init postgrest-example
 $ cd postgrest-example
 ```
 
@@ -144,7 +142,7 @@ $ wrangler publish
  https://postgrest-worker-example.signalnerve.workers.dev
 ```
 
-To correctly configure the function, set a `POSTGREST_ENDPOINT` secret, which tells Workers where to actually route requests to. [`wrangler secret`](/workers/cli-wrangler/commands/#secret) is a command that sets an encrypted value, or a secret, that is [only available inside of the Workers function](/workers/platform/environment-variables/#adding-secrets-via-wrangler):
+To correctly configure the function, set a `POSTGREST_ENDPOINT` secret, which tells Workers where to actually route requests to. [`wrangler secret`](/workers/wrangler/cli-wrangler/commands/#secret) is a command that sets an encrypted value, or a secret, that is [only available inside of the Workers function](/workers/platform/environment-variables/#adding-secrets-via-wrangler):
 
 ```sh
 $ wrangler secret put POSTGREST_ENDPOINT
@@ -381,6 +379,7 @@ In this tutorial, you have used PostgREST, `postgrest-js`, and Cloudflare Worker
 
 If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below.
 
-*   [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/)
-*   [Build a Slackbot](/workers/tutorials/build-a-slackbot/)
-*   [GitHub SMS notifications using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)
+<!-- *   [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/) -->
+
+- [Build a Slackbot](/workers/tutorials/build-a-slackbot/)
+- [GitHub SMS notifications using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)

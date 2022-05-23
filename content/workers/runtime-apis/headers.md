@@ -34,7 +34,7 @@ headers.get('x-foo'); //=> "hello, world"
 
 ## Cloudflare headers
 
-Cloudflare sets a number of [its own custom headers on incoming requests](/fundamentals/get-started/http-request-headers) and outgoing responses. While some may be used for its own tracking and bookkeeping, many of these can be useful to your own applications – or Workers – too.
+Cloudflare sets a number of [its own custom headers on incoming requests](/fundamentals/get-started/reference/http-request-headers/) and outgoing responses. While some may be used for its own tracking and bookkeeping, many of these can be useful to your own applications – or Workers – too.
 
 ### Request headers
 
@@ -65,7 +65,7 @@ The intended purpose of this header is to provide a means for recipients (for ex
 
 {{<Aside type="note">}}
 
-When configuring Cloudflare Firewall Rules, do not match on this header. Firewall Rules are applied before Cloudflare adds the `CF-Worker` header. Instead, use the `cf.worker.upstream_zone`(https://tinyurl.com/2wx4senh) dynamic field, which contains the same value and exists for the same purpose.
+When configuring firewall rules, do not match on this header. Firewall rules are applied before Cloudflare adds the `CF-Worker` header. Instead, use the `cf.worker.upstream_zone`(https://tinyurl.com/2wx4senh) dynamic field, which contains the same value and exists for the same purpose.
 
 {{</Aside>}}
 

@@ -56,7 +56,7 @@ Creating a user works as follows:
 curl -X POST https://api.cloudflare.com/client/v4/users -H 'Content-Type: application/json' -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>' -d '{ "email": "<identifier>@youremaildomain.com>" }'
 ```
 
-These type of users are service users, as no one will log into the dashboard with them. If you are planning to use this method, we will enable you to see the API key in order to make API calls as this user.
+These type of users are service users, as no one will log in to the dashboard with them. If you are planning to use this method, we will enable you to see the API key in order to make API calls as this user.
 
 An example response for a successful creation:
 
@@ -90,4 +90,4 @@ An example response for a successful creation:
 
 Now that the customer has access to the account, in the next step we will look at how to enable paid services for customers.
 
-<p>{{<button type="primary" href="/tenant/get-started/enabling-services">}}Step 3: Enabling services{{</button>}}</p>
+<p>{{<button type="primary" href="/tenant/get-started/enabling-services/">}}Step 3: Enabling services{{</button>}}</p>

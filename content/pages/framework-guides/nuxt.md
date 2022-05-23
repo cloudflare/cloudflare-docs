@@ -15,7 +15,15 @@ Create a new project using `npx`, giving it the title `my-nuxt-app` in your term
 
 ```sh
 $ npx create-nuxt-app my-nuxt-app
+```
+
+You will be prompted to fill in various fields, such as `Project name`, `UI option`, `Linting tools`, and `Testing framework`, in your terminal. When asked which deployment target to use, you will be given two options: **Server** and **Static**. Select **Static** as your option for hosting.
+
+Next, navigate to the project and run it using the command:
+
+```sh
 $ cd my-nuxt-app
+$ npm run dev
 ```
 
 {{<render file="_tutorials-before-you-start.md">}}
@@ -40,7 +48,7 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**.
+Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**.
 
 You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer; however, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
 

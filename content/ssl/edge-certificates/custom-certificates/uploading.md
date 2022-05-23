@@ -47,7 +47,7 @@ To upload a custom SSL certificate in the dashboard:
 
 7.  Select a value for [**Private Key Restriction**](/ssl/edge-certificates/custom-certificates/#geo-key-manager-private-key-restriction).
 
-8.  Select a value for **Legacy Client Support**, which toggles [Server Name Indication (SNI)](/fundamentals/glossary#server-name-indication-sni) support:
+8.  Select a value for **Legacy Client Support**, which toggles [Server Name Indication (SNI)](/fundamentals/glossary/#server-name-indication-sni) support:
 
     - **Modern (recommended)**: SNI only
     - **Legacy**: Supports non-SNI

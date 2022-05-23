@@ -8,7 +8,7 @@ weight: 15
 
 Use load shedding to prevent an at-risk origin from [becoming unhealthy](/load-balancing/understand-basics/health-details/) and starting the failover process.
 
-Once you configure load shedding on a pool, that pool will begin diverting traffic to other pools according to your load shedding settings and the load balancer's [steering policy](/load-balancing/understand-basics/traffic-steering/pool-level-steering/).
+Once you configure load shedding on a pool, that pool will begin diverting traffic to other pools according to your load shedding settings and the load balancer's [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/).
 
 ## Step 1 — Identify at-risk origins
 
@@ -41,7 +41,7 @@ To enable load shedding for a specific pool via the dashboard:
     *   **Random**: Randomly sheds the percentage of requests specified in the *Shed %*. Distributes traffic more accurately, but may cause requests from the same IP to hit different origins.
     *   **IP hash**: Sheds the percentage of IP address hash space specified in the *Shed %*. Ensures requests from the same IP will hit the same origin, but may shed a significantly higher or lower percentage of requests.
 
-    For more guidance on choosing a policy, see [Shedding policies](#shedding-policies).
+    For more guidance on choosing a policy, refer to [Shedding policies](#shedding-policies).
 
      </div>
      </details>
@@ -49,7 +49,9 @@ To enable load shedding for a specific pool via the dashboard:
      <details>
      <summary>Shed %</summary>
      <div>
-     When choosing a <strong>Shed %</strong>, start with a small percentage and increase gradually. Particularly if you choose the <a href="#shedding-policies">IP hash</a> shedding policy, you might shed more traffic than expected.
+
+     When choosing a **Shed %**, start with a small percentage and increase gradually. Particularly if you choose the [IP hash shedding policy](#shedding-policies), you might shed more traffic than expected.
+     
      </div>
      </details>
 

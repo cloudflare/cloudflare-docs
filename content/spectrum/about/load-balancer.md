@@ -28,7 +28,7 @@ The example below shows a TCP health check configuration for an application runn
 </summary>
 <div class="special-class" markdown="1">
 
-![Health Check UI](/spectrum/img/load-balancing/spectrum-tcp-check.png)
+![Manage monitors dialog with TCP health check running on port 2408 and a 30 second refresh rate](/spectrum/img/load-balancing/spectrum-tcp-check.png)
 
 </div>
 </details>
@@ -64,21 +64,21 @@ curl 'https://api.cloudflare.com/client/v4/organizations/{ORG_ID}/load_balancers
 
 ## Weights
 
-[Origin Weights](/load-balancing/understand-basics/traffic-steering/origin-level-steering#weights) allow you to have origins without the same capacity or allow you to split traffic amongst hosts for any other reason.
+[Origin Weights](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) allow you to have origins without the same capacity or allow you to split traffic amongst hosts for any other reason.
 
 Weight configured within a load balancer pool will be honored with load balancing through Spectrum. If configured, Cloudflare will distribute traffic amongst the available origins within a pool according to the relative weights assigned to each origin.
 
-## Pool-level steering
+## Traffic steering policies
 
 All pool steering modes are available for transport load balancing through Spectrum:
 
-- [Standard failover](/load-balancing/understand-basics/traffic-steering/pool-level-steering#off---standard-failover): Traffic goes from unhealthy pools to the next healthy pool in your configuration.
-- [Dynamic steering](/load-balancing/understand-basics/traffic-steering/pool-level-steering#dynamic-steering): Traffic goes to the fastest pool for a given user.
-- [Geo steering](/load-balancing/understand-basics/traffic-steering/pool-level-steering#geo-steering): Traffic goes to a specific geographic region or — for Enterprise customers only — specific data centers.
-- [Proximity steering](/load-balancing/understand-basics/traffic-steering/pool-level-steering#proximity-steering): Traffic goes to the closest physical data center.
+- [Standard failover](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#off---failover): Traffic goes from unhealthy pools to the next healthy pool in your configuration.
+- [Dynamic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/dynamic-steering/): Traffic goes to the fastest pool for a given user.
+- [Geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/): Traffic goes to a specific geographic region or — for Enterprise customers only — specific data centers.
+- [Proximity steering](/load-balancing/understand-basics/traffic-steering/steering-policies/proximity-steering/): Traffic goes to the closest physical data center.
 
 ## Load balancing rules
 
-Currently, you cannot use [load balancing custom rules](/load-balancing/additional-options/load-balancing-rules) with Cloudflare Spectrum.
+Currently, you cannot use [load balancing custom rules](/load-balancing/additional-options/load-balancing-rules/) with Cloudflare Spectrum.
 
-For more information about setting up a Load Balancer to use with Spectrum, refer to [Create a Load Balance](/spectrum/how-to/create-load-balancer/).
+For more information about how to use Load Balancer with Spectrum, refer to [Create a Load Balance](/spectrum/get-started//#create-a-spectrum-application-using-a-load-balancer).

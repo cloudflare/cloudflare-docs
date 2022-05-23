@@ -57,7 +57,7 @@ console.log(STRIPE_TOKEN);
 
 ### Adding secrets via wrangler
 
-Secrets are defined by running [`wrangler secret put <NAME>`](/workers/cli-wrangler/commands/#secret) in your terminal, where `<NAME>` is the name of your binding. You may assign environment-specific secrets by re-running the command `wrangler secret put <NAME> -e` or `wrangler secret put <NAME> --env`. Keep a list of the secrets used in your code in your `wrangler.toml` file, like the example under `[secrets]`:
+Secrets are defined by running [`wrangler secret put <NAME>`](/workers/wrangler/commands/#secret) in your terminal, where `<NAME>` is the name of your binding. You may assign environment-specific secrets by re-running the command `wrangler secret put <NAME> -e` or `wrangler secret put <NAME> --env`. Keep a list of the secrets used in your code in your `wrangler.toml` file, like the example under `[secrets]`:
 
 ```toml
 ---
@@ -77,13 +77,13 @@ workers_dev = true
 
 {{<Aside type="warning">}}
 
-\* **Warning:** Do not use plaintext environment variables to store sensitive information. Use [`wrangler secret put`](/workers/cli-wrangler/commands/#secret) instead.
+\* **Warning:** Do not use plaintext environment variables to store sensitive information. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) instead.
 
 {{</Aside>}}
 
 ### Adding KV namespaces via wrangler
 
-KV namespaces are defined via the [`kv_namespaces`](/workers/cli-wrangler/configuration/#kv_namespaces) configuration in your `wrangler.toml` and are always provided as [KV runtime instances](/workers/runtime-apis/kv/).
+KV namespaces are defined via the [`kv_namespaces`](/workers/wrangler/configuration/#kv_namespaces) configuration in your `wrangler.toml` and are always provided as [KV runtime instances](/workers/runtime-apis/kv/).
 
 ```toml
 ---
@@ -111,7 +111,7 @@ id = "<PRODUCTION KV NAMESPACEID>"
 
 ### Adding environment variables via the dashboard
 
-Add environment variables by logging into [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Workers** and select your **Workers script**.
+Add environment variables by logging in to [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Workers** and select your **Workers script**.
 
 To add environment variables, such as `vars` and `secret`:
 
@@ -121,7 +121,7 @@ To add environment variables, such as `vars` and `secret`:
 4.  (Optional) To add multiple environment variables, select **Add variable**.
 5.  Select **Save** to implement your changes.
 
-![env variables dash](../media/env_variables_dash.png)
+![After selecting Add variable, you will be directed to an environment variables configuration page to set up your environment variable name and value](../media/env_variables_dash.png)
 
 {{<Aside type="warning" header="Plaintext strings and secrets">}}
 
@@ -139,11 +139,11 @@ To add KV namespace bindings:
 4.  Select **Add binding** to add multiple bindings.
 5.  When you are finished, select **Save** to implement your changes.
 
-![kv namespace bindings](../media/kv_namespace_bindings.png)
+![After selecting add binding, you will be directed to a configuration page to specify your Variable name and KV namespace to create your binding](../media/kv_namespace_bindings.png)
 
 Your completed Workers dashboard, with environment variables and KV namespace bindings added, will look like the following example reference.
 
-![env vars secret](../media/envvarssecret-detail-page.jpeg)
+![After creating your environment variable and KV namespace binding, your dashboard will show a summary of variables and bindings you configured](../media/envvarssecret-detail-page.jpeg)
 
 ## Comparing secrets and environment variables
 

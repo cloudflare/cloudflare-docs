@@ -127,7 +127,7 @@ When the toggle is enabled, users are prevented from turning off the connected s
 </div>
 </details>
 
-When the toggle is enabled, users who manually logged into their organization on WARP are prevented from leaving that organization. This disables the **Logout from Zero Trust** and **Reset All Settings** button in the WARP client interface. If the WARP client has been deployed with a management tool and a local policy exists, then this switch is bypassed and clients are always prevented from leaving.
+When the toggle is enabled, users who manually logged in to their organization on WARP are prevented from leaving that organization. This disables the **Logout from Zero Trust** and **Reset All Settings** button in the WARP client interface. If the WARP client has been deployed with a management tool and a local policy exists, then this switch is bypassed and clients are always prevented from leaving.
 
 ## Allow updates
 

@@ -1,5 +1,4 @@
 ---
-weight: 0
 pcx-content-type: tutorial
 title: DNS over Tor
 ---

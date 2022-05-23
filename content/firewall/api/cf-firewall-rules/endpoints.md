@@ -1,8 +1,7 @@
 ---
 pcx-content-type: reference
-type: overview
 title: Endpoints
-weight: 416
+weight: 2
 layout: list
 ---
 
@@ -20,11 +19,11 @@ For authentication instructions, refer to [Getting Started: Requests](https://ap
 
 For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://api.cloudflare.com/#getting-started-endpoints).
 
-{{<Aside type="warning" header="Important">}}
+{{<Aside type="note">}}
 
 The Firewall Rules API endpoints require a value for `<ZONE_ID>`.
 
-To retrieve a list of zones associated with your account, use the [List Zones](https://api.cloudflare.com/#zone-list-zones) operation and note the zone ID associated with the domain whose Firewall Rules you want to manage.
+To retrieve a list of zones associated with your account, use the [List Zones](https://api.cloudflare.com/#zone-list-zones) operation and note the zone ID associated with the domain whose firewall rules you want to manage.
 
 {{</Aside>}}
 
@@ -44,7 +43,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
     <tr>
       <td>
         <a href="https://api.cloudflare.com/#firewall-rules-create-firewall-rules">
-          Create Firewall Rules
+          Create firewall rules
         </a>
       </td>
       <td>
@@ -55,20 +54,20 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
     <tr>
       <td>
         <a href="https://api.cloudflare.com/#firewall-rules-list-of-firewall-rules">
-          List Firewall Rules
+          List firewall rules
         </a>
       </td>
       <td>
         <code class="InlineCode">GET&nbsp;zones/&lt;ZONE_ID&gt;/firewall/rules</code>
       </td>
       <td>
-        Lists all current Firewall Rules. Results return paginated with 25 items per page by default. Use optional parameters to narrow results.
+        Lists all current firewall rules. Results return paginated with 25 items per page by default. Use optional parameters to narrow results.
       </td>
     </tr>
     <tr>
       <td>
         <a href="https://api.cloudflare.com/#firewall-rules-get-individual-firewall-rule">
-          Get a Firewall Rule
+          Get a firewall rule
         </a>
       </td>
       <td>
@@ -76,12 +75,12 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
           GET&nbsp;zones/&lt;ZONE_ID&gt;/firewall/rules/&lt;RULE_ID&gt;
         </code>
       </td>
-      <td>Retrieve a single Firewall Rule by ID.</td>
+      <td>Retrieve a single firewall rule by ID.</td>
     </tr>
     <tr>
       <td>
         <a href="https://api.cloudflare.com/#firewall-rules-update-firewall-rules">
-          Update Firewall Rules
+          Update firewall rules
         </a>
       </td>
       <td>
@@ -95,7 +94,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
     <tr>
       <td>
         <a href="https://api.cloudflare.com/#firewall-rules-update-individual-firewall-rule">
-          Update a Firewall Rule
+          Update a firewall rule
         </a>
       </td>
       <td>
@@ -103,19 +102,19 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
           PUT&nbsp;zones/&lt;ZONE_ID&gt;/firewall/rules/&lt;RULE_ID&gt;
         </code>
       </td>
-      <td>Update a single Firewall Rule by ID.</td>
+      <td>Update a single firewall rule by ID.</td>
     </tr>
     <tr>
       <td>
         <a href="https://api.cloudflare.com/#firewall-rules-delete-firewall-rules">
-          Delete Firewall Rules
+          Delete firewall rules
         </a>
       </td>
       <td>
         <code class="InlineCode">DELETE&nbsp;zones/&lt;ZONE_ID&gt;/firewall/rules</code>
       </td>
       <td>
-        <p>Delete existing Firewall Rules. Must specify list of Firewall Rule IDs.</p>
+        <p>Delete existing firewall rules. Must specify list of firewall rule IDs.</p>
         <p>
           Empty requests result in no deletion. Returns HTTP status code 200 if a specified rule
           does not exist.
@@ -125,7 +124,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
     <tr>
       <td>
         <a href="https://api.cloudflare.com/#firewall-rules-delete-individual-firewall-rules">
-          Delete a Firewall Rule
+          Delete a firewall rule
         </a>
       </td>
       <td>
@@ -134,7 +133,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
         </code>
       </td>
       <td>
-        <p>Delete a Firewall Rule by ID.</p>
+        <p>Delete a firewall rule by ID.</p>
       </td>
     </tr>
   </tbody>

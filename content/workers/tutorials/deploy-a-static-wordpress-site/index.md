@@ -33,7 +33,7 @@ This tutorial assumes that you are:
 
 To start, install the [WP2Static](https://wordpress.org/plugins/static-html-output-plugin/) plugin to export your WordPress site to a ZIP file. In your WordPress admin, go to the **Add Plugins** page, by default at `/wp-admin/plugin-install.php`. In the search bar, search for `WP2Static` and confirm that the resulting plugin that you will be installing matches the plugin below.
 
-![Installing the plugin](./media/wordpress--install-plugin.png)
+![Installing the WP2Static plugin on the WordPress dashboard](./media/wordpress--install-plugin.png)
 
 Select **Install** on the plugin. After it has finished installing, select **Activate**.
 
@@ -45,22 +45,20 @@ From the **Where will you host...** dropdown on the page, select _ZIP archive (.
 
 To do your first export, select **Start static site export** (this operation may take a while), and when it completes, save the ZIP file somewhere you can easily find later.
 
-![Exporting your WordPress site](./media/wordpress--export.png)
+![Exporting your WordPress site by selecting Start static site export in the WordPress dashboard](./media/wordpress--export.png)
 
 ## Creating the Workers project
 
 With an export ready of your site, it is time to deploy. To do this, use [Wrangler](https://github.com/cloudflare/wrangler), the command-line tool for Cloudflare Workers. If you have not yet installed and configured Wrangler, refer to the [Get started](/workers/get-started/guide/) guide.
 
-Once Wrangler is installed and configured, create a new project for deploying your static WordPress site to Workers. To generate a new project, run:
+Once Wrangler is installed and configured, create a new project for deploying your static WordPress site to Workers. To create a new project, run:
 
 ```sh
 ---
-header: Generate a new project
+header: Create a new project
 ---
-$ wrangler generate --site wp-static
+$ git clone https://github.com/cloudflare/worker-sites-template wp-static
 ```
-
-The [`--site`](/workers/platform/sites/configuration/) flag indicates that you want to deploy a static site: your static WordPress site.
 
 ### Port the WordPress site
 
@@ -102,13 +100,11 @@ $ tree wp-static
 
 ## Deploying
 
-To preview and deploy your application, fill out the fields in your `wrangler.toml` file — the configuration file for this project. Fill out the [`account_id`](/workers/get-started/guide/#6a-obtaining-your-account-id-and-zone-id) field in `wrangler.toml` with your Cloudflare account ID.
+To preview and deploy your application, fill in the necessary fields in your `wrangler.toml` file — the configuration file for this project. Fill in the [`account_id`](/workers/get-started/guide/#6a-obtaining-your-account-id-and-zone-id) field in `wrangler.toml` with your Cloudflare account ID.
 
 Using Wrangler’s preview feature, you can quickly upload a version of your site to the Cloudflare Workers preview service and review that the static export looks as expected. Running `wrangler dev` will upload your static site and preview it in a browser window.
 
-When your site looks correct in Wrangler’s preview, you can move onto publishing your project to a domain. For a guide on how to do this, refer to [Get started](/workers/get-started/guide/#6-configure-your-project-for-deployment).
-
-[![Demo site](./media/wordpress--demo.png)](https://wp-static.signalnerve.workers.dev)
+When your site looks correct in Wrangler’s preview, publish your project to a domain. For a guide on how to do this, refer to [Get started](/workers/get-started/guide/#6-configure-your-project-for-deployment).
 
 ## Limitations
 

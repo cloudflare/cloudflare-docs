@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: DNS record types
-weight: 0
+weight: 2
 ---
 
 # DNS record types
@@ -16,7 +16,7 @@ At least one **IP address resolution** record is required for each domain on Clo
 
 ### A and AAAA
 
-[A and AAAA records](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record/) direct browser requests to an origin web server (A for IPv4 addresses and AAAA for IPv6 addresses).
+[A and AAAA records](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record/) direct browser requests to an origin web server (`A` for IPv4 addresses and `AAAA` for IPv6 addresses).
 
 These records include the following fields:
 
@@ -32,7 +32,7 @@ These records include the following fields:
 
 ### CNAME
 
-[CNAME records](https://www.cloudflare.com/learning/dns/dns-records/dns-cname-record/) direct browser requests to an origin web server, but — unlike an A or AAA record — do so via a hostname like `example.com` instead of an IP address.
+[CNAME records](https://www.cloudflare.com/learning/dns/dns-records/dns-cname-record/) direct browser requests to an origin web server, but — unlike an `A` or `AAAA` record — do so via a hostname like `example.com` instead of an IP address.
 
 These records include the following fields:
 
@@ -46,7 +46,7 @@ These records include the following fields:
   - If the **Proxy Status** is **DNS Only**, you can customize the value.
 - **Proxy status**: For more details, refer to [Proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/).
 
-You can use CNAME records to point to other CNAME records (`www.example2.com` --> `www.example1.com` --> `www.example.com`), but the final record must point to a hostname with a valid IP address (and therefore a valid A or AAAA record) if this hostname is meant to proxy traffic.
+You can use `CNAME` records to point to other `CNAME` records (`www.example2.com` --> `www.example1.com` --> `www.example.com`), but the final record must point to a hostname with a valid IP address (and therefore a valid `A` or `AAAA` record) if this hostname is meant to proxy traffic.
 
 ---
 
@@ -92,7 +92,7 @@ A Domain-based Message Authentication Reporting and Conformance (DMARC) record h
 
 A [text (TXT) record](https://www.cloudflare.com/learning/dns/dns-records/dns-txt-record/) lets you enter text into the DNS system.
 
-At Cloudflare, these are most commonly used to demonstrate domain ownership prior to issuing SSL/TLS certificates for [your domain](/ssl/edge-certificates/changing-dcv-method) or an [SSL for SaaS domain](/ssl/ssl-for-saas/common-tasks/certificate-validation-methods).
+At Cloudflare, these are most commonly used to demonstrate domain ownership prior to issuing SSL/TLS certificates for [your domain](/ssl/edge-certificates/changing-dcv-method/) or an [SSL for SaaS domain](/ssl/ssl-for-saas/common-tasks/certificate-validation-methods/).
 
 You could also use these to create email authentication records, but we recommend that you use our [Email Security Wizard](/dns/manage-dns-records/how-to/email-records/#prevent-domain-spoofing) instead.
 
@@ -104,7 +104,7 @@ The **Content** for TXT records at Cloudflare must be 2048 characters or less.
 
 ### CAA
 
-A [Certificate Authority Authorization (CAA) record](/ssl/edge-certificates/custom-certificates/caa-records) specifies which Certificate Authorities (CAs) are allowed to issue certificates for a domain.
+A [Certificate Authority Authorization (CAA) record](/ssl/edge-certificates/custom-certificates/caa-records/) specifies which Certificate Authorities (CAs) are allowed to issue certificates for a domain.
 
 ### SRV
 

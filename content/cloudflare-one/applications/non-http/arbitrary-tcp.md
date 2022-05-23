@@ -22,7 +22,7 @@ Cloudflare Access provides a mechanism for end users to authenticate with their 
 
 ### 1. Install the Cloudflare daemon on the host machine
 
-The Cloudflare daemon, `cloudflared`, will maintain a secure, persistent, outbound-only connection from the machine to Cloudflare. Arbitrary TCP traffic will be proxied over this connection using [Cloudflare Argo Tunnel](https://www.cloudflare.com/products/tunnel/).
+The Cloudflare daemon, `cloudflared`, will maintain a secure, persistent, outbound-only connection from the machine to Cloudflare. Arbitrary TCP traffic will be proxied over this connection using [Cloudflare Tunnel](https://www.cloudflare.com/products/tunnel/).
 
 Follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) to download and install `cloudflared` on the machine hosting the resource.
 
@@ -42,7 +42,7 @@ Once selected, `cloudflared` will download a wildcard certificate for the site. 
 
 ### 3. Secure the subdomain with Cloudflare Access
 
-Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/cloudflare-one/policies/zero-trust/) to build a new policy to control who can connect to the resource.
+Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/cloudflare-one/policies/access/) to build a new policy to control who can connect to the resource.
 
 For example, if you share the resource at `tcp.site.com`, build a policy to only allow your team members to connect to that subdomain.
 

@@ -85,7 +85,7 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
 1.  Create a tunnel.
 
     ```sh
-    $ cloudflared tunnel create GCP-01`
+    $ cloudflared tunnel create GCP-01
     ```
 
 1.  Route your tunnel. In this example, we will expose the smallest range available. We can add more IP routes later if necessary.

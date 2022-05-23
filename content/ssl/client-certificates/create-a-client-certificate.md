@@ -8,14 +8,14 @@ weight: 3
 
 To create a client certificate in the Cloudflare dashboard:
 
-1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
 2.  Navigate to **SSL** > **Client Certificates**.
 3.  Click **Create Certificate**.
 
 {{<Aside type="warning" header="Important">}}
-You can only use API Shield with a certificate authority (CA) that is fully managed by Cloudflare. Cloudflare generates a unique CA for each zone.
+You can only use API Shield with a certificate authority (CA) that is fully managed by Cloudflare. Cloudflare generates a unique CA for each account.
 
-If you need to use certificates issued by another CA, use [Cloudflare Access](/cloudflare-one/identity/devices/mutual-tls-authentication) to upload your own CA.
+If you need to use certificates issued by another CA, use [Cloudflare Access](/cloudflare-one/identity/devices/mutual-tls-authentication/) to upload your own CA.
 {{</Aside>}}
 
 1.  For **Private key type**, select a value.

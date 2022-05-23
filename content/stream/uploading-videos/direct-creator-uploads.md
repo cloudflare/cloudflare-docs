@@ -10,6 +10,12 @@ Direct creator uploads allow users to upload videos without API tokens. A common
 use Direct creator uploads is on web apps, client side applications, or on mobile apps
 where users upload content directly to Stream.
 
+{{<Aside>}}
+
+Pending uploads count towards your storage limit.
+
+{{</Aside>}}
+
 ## Generate a unique one-time upload URL
 
 To give users the ability to directly upload their videos, first generate and
@@ -227,7 +233,7 @@ async function handleRequest(request) {
 }
 ```
 
-Once you have an endpoint that returns the tokenized upload URL from the `location` header, you can use it by setting the tus client to make a request to _your_ endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article.
+Once you have an endpoint that returns the tokenized upload URL from the `location` header, you can use it by setting the tus client to make a request to _your_ endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](/stream/uploading-videos/upload-video-file/#resumable-uploads-with-tus-for-large-files) article.
 
 ### Testing your Direct Creator Upload Endpoint
 

@@ -1,14 +1,15 @@
 ---
 pcx-content-type: navigation
 title: Rules Lists API
-weight: 486
+weight: 3
+layout: single
 ---
 
 # Rules Lists API
 
 The Rules Lists API supports different types of lists:
 
-*   Use [IP Lists](/firewall/cf-firewall-rules/rules-lists/) to create a group of IP addresses and refer to them collectively, by name, in your Firewall Rule expressions.
+*   Use [IP Lists](/firewall/cf-firewall-rules/rules-lists/) to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions.
 
 *   Use [Bulk Redirect Lists](/rules/bulk-redirects/) to define lists of redirects that you enable by creating a Bulk Redirect Rule.
 

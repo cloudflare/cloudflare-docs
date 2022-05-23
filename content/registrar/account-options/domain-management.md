@@ -5,11 +5,12 @@ title: Domain management
 
 # Domain management
 
-You can manage your domain from the **Overview** page. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-
 ## Domain status
 
-When your domain is registered with Cloudflare, you can review your domain status in the **Overview** pane. Scroll down to **Domain Registration** to review the current expiration date. Click **Manage domain** to review the Auto-Renew status for your domain.
+When your domain is registered with Cloudflare, you can review your domain status in the **Overview** pane. 
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+2. From **Overview**, scroll down to **Domain Registration** to review the current expiration date. Click **Manage domain** to review the Auto-Renew status for your domain.
 
 ## Edit WHOIS records
 
@@ -30,7 +31,7 @@ To edit the Default Contact information:
 
 1. Make sure you are [logged in to the Cloudflare dashboard](https://dash.cloudflare.com/login) and have selected your account and domain.
 2. From **Overview**, scroll down to **Manage domain**.
-3. In the **Default Contact** card, click **Edit**.
+3. In the **Default Contact** card, click **Edit**, and make the necessary changes.
 
 ## Automatic renewal of domain
 

@@ -39,7 +39,7 @@ To connect a private network to Cloudflare's edge, follow the guide below. You c
 1.  Finally, configure your tunnel with the IP/CIDR range of your private network. By doing this, you are creating a private network and making the WARP client aware that any requests to this IP range need to be routed to your new tunnel.
 
     ```bash
-    $ cloudflared tunnel route ip add 10.0.0.0/8
+    $ cloudflared tunnel route ip add 10.0.0.0/8 acme-network
     ```
 
 1.  Confirm the routes enrolled with the following command:
@@ -48,7 +48,7 @@ To connect a private network to Cloudflare's edge, follow the guide below. You c
     $ cloudflared tunnel route ip show
     ```
 
-1.  Next, create a [configuration file](/cloudflare-one/connections/connect-apps/configuration/configuration-file/) for the tunnel. The configuration file will be structured as follows:
+1.  Next, create a [configuration file](/cloudflare-one/connections/connect-apps/configuration/local-management/configuration-file/) for the tunnel. The configuration file will be structured as follows:
 
     ```txt
     tunnel: <Tunnel-UUID>

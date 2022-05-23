@@ -45,7 +45,7 @@ $ sanity start
 
 The Sanity studio is where you can create new records for your dataset. By default, running the studio locally makes it available at `localhost:3333`– go there now and create your author record. You can also create blog posts here.
 
-![Sanity studio preview](./sanity-studio.png)
+![Creating a blog post in the Sanity Project dashboard](/pages/tutorials/build-a-blog-using-nuxt-and-sanity/sanity-studio.png)
 
 ### Deploying your dataset
 
@@ -67,7 +67,7 @@ Once you have deployed your Sanity studio:
 
 This means that requests that come to your Sanity dataset from your Nuxt application will be whitelisted.
 
-![CORS settings](./cors.png)
+![Your Sanity project's CORS settings](/pages/tutorials/build-a-blog-using-nuxt-and-sanity/cors.png)
 
 ## Creating a new Nuxt.js project
 
@@ -417,15 +417,15 @@ There are many other things inside of your blog schema that you can add to your 
 
 Publishing your project with Cloudflare Pages is an easy, two-step process: first, push your project to GitHub, and then in the Cloudflare Pages dashboard, set up a new project based on that GitHub repository. Pages will deploy a new version of your site each time you publish, and will even set up preview deployments whenever you open a new pull request.
 
-To push your project to GitHub, [create a new repo](https://repo.new), and follow the instructions to push your local Git repository to GitHub.
+To push your project to GitHub, [create a new repository] (https://repo.new), and follow the instructions to push your local Git repository to GitHub.
 
-After you've pushed your project to GitHub, deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, choose _Nuxt_. Pages will set the correct fields for you automatically.
+After you've pushed your project to GitHub, deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, choose _Nuxt_. Pages will set the correct fields for you automatically.
 
 When your site has been deployed, you will receive a unique URL to view it in production.
 
 In order to automatically deploy your project when your Sanity.io data changes, you can use [Deploy Hooks](/pages/platform/deploy-hooks/). Create a new Deploy Hook URL in your **Pages project** > **Settings**. In your Sanity project's Settings page, find the **Webhooks** section, and add the Deploy Hook URL, as seen below:
 
-![Creating a deploy hook in Sanity.io](./hooks.png)
+![Adding a Deploy Hook URL on Sanity's dashboard](/pages/tutorials/build-a-blog-using-nuxt-and-sanity/hooks.png)
 
 Now, when you make a change to your Sanity.io dataset, Sanity will make a request to your unique Deploy Hook URL, which will begin a new Cloudflare Pages deploy. By doing this, your Pages application will remain up-to-date as you add new blog posts, or edit existing ones.
 
@@ -436,4 +436,4 @@ By completing this guide, you have successfully deployed your own blog, powered 
 - Blog front end: https://github.com/signalnerve/nuxt-sanity-blog
 - Sanity dataset: https://github.com/signalnerve/sanity-blog-schema
 
-If you enjoyed this tutorial, you may be interested in learning how you can use Cloudflare Workers, our powerful serverless function platform, to augment your existing site. [Refer to the tutorial to learn more.](/pages/tutorials/build-an-api-with-workers/)
+If you enjoyed this tutorial, you may be interested in learning how you can use Cloudflare Workers, our powerful serverless function platform, to augment your existing site. [Refer to the tutorial to learn more](/pages/tutorials/build-an-api-with-workers/).

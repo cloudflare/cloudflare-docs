@@ -38,7 +38,7 @@ The following values are **examples** of what may be present in the `BotTags` lo
 
 ## Enable bot tags
 
-To enable bot tags, include the `BotTags` log field when using our [Logpush service](/logs/about).
+To enable bot tags, include the `BotTags` log field when using our [Logpush service](/logs/about/).
 
 ## Limitations
 

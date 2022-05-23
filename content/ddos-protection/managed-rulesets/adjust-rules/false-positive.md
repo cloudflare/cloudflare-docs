@@ -20,7 +20,7 @@ To remedy a false positive:
 
     1\. Select the zone that is experiencing DDoS attack false positives.
 
-    1\. Navigate to **Firewall** > **Overview**.
+    1\. Navigate to **Security** > **Overview**.
 
     2\. Click **Add filter** and filter by `Service equals HTTP DDoS`.
 
@@ -40,7 +40,7 @@ To remedy a false positive:
 
 1. Copy the rule ID from one of the DDoS log entries.
 
-1. Navigate to **Firewall** > **DDoS** and click **Configure** next to the Managed Ruleset containing the rule you will adjust.
+1. Navigate to **Security** > **DDoS** and click **Configure** next to the Managed Ruleset containing the rule you will adjust.
 
 1. Click **Browse rules** and paste the Rule ID in the search field.
 

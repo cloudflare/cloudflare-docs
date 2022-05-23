@@ -16,7 +16,7 @@ The [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) class built into the 
 
 In this tutorial, you will build an example internationalization and localization engine (commonly referred to as **i18n** and **l10n**) for your application, serve the content of your site, and automatically translate the content based your visitors’ location in the world.
 
-![Demo Image](./media/i18n.jpg)
+![An example site that has been successfully localized in Japanese, German and English](./media/i18n.jpg)
 
 ## Setup
 
@@ -24,12 +24,12 @@ This tutorial is designed to use an existing website. To simplify this process, 
 
 If you would like to deploy your own version of the site, you can find the source [on GitHub](https://github.com/signalnerve/i18n-example-workers). Instructions on how to deploy this application can be found in the project’s README.
 
-## Generate a project
+## Create a project
 
-To generate a new project, use `wrangler generate --site` to create a new application, calling it `i18n-example`:
+Create a new project by cloning the [Workers Sites](https://github.com/cloudflare/worker-sites-template) template on GitHub and pass `i18n-example` as the project name.
 
 ```sh
-~/ $ wrangler generate i18n-example --site
+~/ $ git clone https://github.com/cloudflare/worker-sites-template i18n-example
 ~/ $ cd i18n-example
 ~/i18n-example $
 ```
@@ -54,7 +54,7 @@ The `HTMLRewriter` class provided in the Workers runtime allows developers to pa
 
 The example website in this tutorial is a basic single-page HTML project that lives in the `public` directory. It includes an `h1` element with the text `Example Site` and a number of `p` elements with different text:
 
-![Demo Code](./media/code-example.png)
+![Demo code shown in Chrome DevTools with the elements described above](./media/code-example.png)
 
 What is unique about this page is the addition of [data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) in the HTML – custom attributes defined on a number of elements on this page. The `data-i18n-key` on the `h1` tag on this page, as well as many of the `p` tags, indicates that there is a corresponding internationalization key, which should be used to look up a translation for this text:
 
@@ -152,7 +152,7 @@ class ElementHandler {
 }
 ```
 
-To review that everything looks as expected, use the preview functionality built into Wrangler. Call [`wrangler dev`](/workers/cli-wrangler/commands/#dev) to open up a live preview of your project. `wrangler dev` is refreshed after every code change that you make.
+To review that everything looks as expected, use the preview functionality built into Wrangler. Call [`wrangler dev`](/workers/wrangler/cli-wrangler/commands/#dev) to open up a live preview of your project. `wrangler dev` is refreshed after every code change that you make.
 
 You can expand on this simple translation functionality to provide country-specific translations, based on the incoming request’s `Accept-Language` header. By taking this header, parsing it, and passing the parsed language into your `ElementHandler`, you can retrieve a translated string in your user’s home language, provided that it is defined in `strings`.
 
@@ -294,7 +294,7 @@ theme: dark
 ~/i18n-example $ wrangler publish
 ```
 
-![Demo Image](./media/i18n.jpg)
+![An example site that has been successfully localized in Japanese, German and English](./media/i18n.jpg)
 
 ## Related resources
 

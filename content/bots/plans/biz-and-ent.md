@@ -34,7 +34,7 @@ The ML engine identifies **likely automated** traffic.
 
 {{<render file="_bots-jsd.md">}}
 
-JSD is completely optional. To adjust your settings, configure Super Bot Fight Mode from **Firewall** > **Bots**.
+JSD is completely optional. To adjust your settings, configure Super Bot Fight Mode from **Security** > **Bots**.
 
 ### Notes on detection
 

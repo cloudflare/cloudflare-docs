@@ -14,17 +14,17 @@ Create URL Rewrite Rules in the **Transform Rules** tab under Rules. Refer to [U
 
 2.  Go to **Rules** > **Transform Rules**.
 
-    ![Transform Rules tab](/rules/static/transform/overview.png)
+    ![The Transform Rules tab in the Cloudflare dashboard displaying the several types of Transform Rules you can configure.](/rules/static/transform/overview.png)
 
 3.  Click **Create transform rule** > **Rewrite URL**.
 
-    ![Create Transform Rule page](/rules/static/transform/create-url-rewrite-rule.png)
+    ![The URL Rewrite Rule creation page in the Cloudflare dashboard.](/rules/static/transform/create-url-rewrite-rule.png)
 
 4.  In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
 5.  Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
-    The **Expression Preview** area displays a text-only version of your expression. For more information on entering a rule expression manually using the Expression Editor, refer to [Edit rule expressions](/firewall/cf-dashboard/expression-preview-editor/) in the Firewall documentation.
+    The **Expression Preview** area displays a text-only version of your expression. For more information on entering a rule expression manually using the Expression Editor, refer to [Edit rule expressions](/firewall/cf-dashboard/edit-expressions/) in the Firewall documentation.
 
 6.  Select a comparison operator in the **Operator** drop-down list.
 

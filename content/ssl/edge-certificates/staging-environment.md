@@ -57,11 +57,12 @@ If there were issues with your certificate, you can keep it in your staging envi
 
 ### Step 4 (optional) — Push certificate back to staging
 
-If you roll out a custom (modern) certificate to production and encounter issues, you can push that certificate back to your staging environment for additional testing:
+If you roll out a custom (modern) certificate to production and encounter issues, you can deactivate that certificate to delete the certificate from the edge and then push the certificate back to your staging environment for additional testing:
 
 1.  Navigate to **SSL/TLS** > **Edge Certificates**.
 2.  Click a custom certificate.
-3.  Click **Push to Staging**.
+3.  Click **Deactivate**.
+4.  Click **Push to Staging**.
 
 ---
 

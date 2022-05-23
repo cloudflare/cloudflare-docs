@@ -10,7 +10,7 @@ meta:
 
 Use the GraphQL Analytics API to review data for Magic Firewall network traffic related to your configured firewall rules. 
 
-Before you begin, you must have an [API token](/analytics/graphql-api/getting-started/authentication). For additional help getting started with GraphQL Analytics, refer to [GraphQL Analytics API](/analytics/graphql-api).
+Before you begin, you must have an [API token](/analytics/graphql-api/getting-started/authentication/). For additional help getting started with GraphQL Analytics, refer to [GraphQL Analytics API](/analytics/graphql-api/).
 
 ## Obtain Cloudflare Account ID and Magic Firewall rule ID
 
@@ -18,7 +18,7 @@ To construct a Magic Firewall GraphQL query for an object, you will need a Cloud
 
 ### Obtain your Cloudflare Account ID
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 2. From the **Accounts** page, click your account.
 
 In your browser's address bar, the URL should show `https://dash.cloudflare.com/` followed by a hex string. The hex string is your Cloudflare Account ID.

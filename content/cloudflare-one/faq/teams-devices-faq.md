@@ -41,17 +41,17 @@ In addition to ensuring the root certificate is trusted at the device level, man
 
 If you ever see an error like _Certificate not trusted_ or _Not trusted identity_ or _SSL Error_, it is likely related to our root certificates.
 
-As a last resort, add the application to a **Do Not Decrypt** policy in Gateway.
+As a last resort, add the application to a **Do Not Inspect** policy in Gateway.
 
 ### Have you set up a Do Not Inspect policy for applications not compatible with TLS decryption?
 
-You may need to set up a Do Not Inspect policy to exclude some applications that do not support SSL inspection, or are otherwise incompatible with TLS decryption, from Gateway inspection. These applications could show errors once the WARP client is connected. For more information, refer to our documentation on [Do Not Decrypt applications](/cloudflare-one/policies/filtering/http-policies/application-app-types/#do-not-decrypt-applications).
+You may need to set up a Do Not Inspect policy to exclude some applications that do not support SSL inspection, or are otherwise incompatible with TLS decryption, from Gateway inspection. These applications could show errors once the WARP client is connected. For more information, refer to our documentation on [Do Not Inspect applications](/cloudflare-one/policies/filtering/application-app-types/#do-not-inspect-applications).
 
 ### Do you, your ISP, or your country have policies in place that would block the WARP client?
 
 Ensure that you do not have policies or firewall rules in place that block communication to the transport mechanisms or IP addresses required for WARP. Check the requirements at [this page](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
 
-In particular, Microsoft Intune’s default security policy creates a Firewall rule that will block WARP by default. Refer to the page linked above for instructions on which IP addresses you need to add.
+In particular, Microsoft Intune’s default security policy creates a firewall rule that will block WARP by default. Refer to the page linked above for instructions on which IP addresses you need to add.
 
 Some countries explicitly block the use of VPN or VPN-like software that intentionally encrypts traffic. If you suspect your country may be blocking this traffic, please work with your ISP to verify.
 
@@ -74,3 +74,28 @@ The most common places we see interference with WARP from these products are:
 ### As a last resort, does WARP or your configuration work on a clean machine?
 
 To eliminate issues related to a particular Cloudflare Zero Trust configuration or policy, you can try running WARP in consumer mode. This will allow you to ensure basic connectivity can be achieved. Once this is verified, you can slowly start applying additional complexity and testing along the way.
+
+## How do I retrieve WARP client logs?
+
+### macOS
+
+In the Terminal, type `warp-diag` (full path: `/usr/local/bin/warp-diag`) and press **Enter**. This will place a `warp-debugging-info.zip` on your Desktop.
+
+### Windows
+
+1. Open `C:\Program Files\Cloudflare\Cloudflare WARP` in Explorer.
+2. Double-click on `warp-diag.exe`. This will place a `warp-debugging-info.zip` on your Desktop.
+
+### Linux
+
+In the Terminal, type `sudo warp-diag` and press **Enter**. This will place a `warp-debugging-info.zip` in the same folder you ran the command from.
+
+### iOS
+
+1. Open **App** and navigate to **Settings** > **Advanced** > **Diagnostics** > **Console Logs**.
+2. Send the Extension Logs and Application Logs to Cloudflare support.
+
+### Android/ChromeOS
+
+1. Open **App** and navigate to **Settings** > **Advanced** > **Diagnostics**.
+2. Send the Console Logs and Boringtun Logs to Cloudflare support.

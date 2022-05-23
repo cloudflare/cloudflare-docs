@@ -37,21 +37,21 @@ your-bucket
 
 Finally, to ensure that you can access the objects from your Workers function, your Google Cloud Storage bucket should be publicly accessible. To ensure this, follow the [Making groups of objects publicly readable guide in the Google Cloud Storage documentation](https://cloud.google.com/storage/docs/access-control/making-data-public#buckets).
 
-## Generate
+## Init
 
 Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. You will make use of the default JavaScript template to start building your project.
 
-In the command line, generate your Workers project, and pass the project name `serve-cdn-assets`:
+In the command line, create your Worker project, cloning the [worker-template](https://github.com/cloudflare/worker-template) URL and passing in a project name (for example, `serve-cdn-assets`):
 
 ```sh
 ---
-header: Generate a new project
+header: Create a new project
 ---
-$ wrangler generate serve-cdn-assets
+$ git clone https://github.com/cloudflare/worker-template serve-cdn-assets
 $ cd serve-cdn-assets
 ```
 
-By default, Wrangler will use our [`worker-template`](https://github.com/cloudflare/worker-template). Wrangler templates are git repositories, so if you want to create your own templates, or use one from our [Template Gallery](/workers/examples/), there is a variety of options to help you get started.
+By default, Wrangler will use our [`worker-template`](https://github.com/cloudflare/worker-template). Wrangler templates are git repositories, so if you want to create your own templates, or use one from our [Template Gallery](/workers/get-started/quickstarts/#templates), there is a variety of options to help you get started.
 
 Cloudflare’s `worker-template` includes support for building and deploying JavaScript-based projects. Inside of your new `serve-cdn-assets` directory, `index.js` represents the entry point to your Cloudflare Workers application.
 
@@ -262,7 +262,7 @@ $ wrangler publish
 
 After deploying your project, open your browser to test retrieving your assets. For example, if your Workers project is deployed to the route `myassets.com`, going to the URL `myassets.com/faces/1.jpg` should show an uploaded asset. In addition, you can inspect the request in your browser to confirm that it is being cached. Cloudflare’s CDN will send a `cf-cache-status` header, with `HIT` or `MISS`, to indicate whether the content was cached or not:
 
-![Result](./media/result.png)
+![Chrome DevTools showing a cache-hit-status response header value of HIT to indicate that the content was cached](./media/result.png)
 
 ## Related resources
 

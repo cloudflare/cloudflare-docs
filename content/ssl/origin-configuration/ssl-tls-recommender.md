@@ -20,7 +20,7 @@ For more background, refer to the [introductory blog post](https://blog.cloudfla
 
 To enable SSL/TLS recommendations:
 
-1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
 2.  Navigate to **SSL/TLS**.
 3.  For **SSL/TLS Recommender**, switch the toggle to **On**.
 

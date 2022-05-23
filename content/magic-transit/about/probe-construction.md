@@ -24,7 +24,7 @@ To avoid control plane policies enforced by the origin network, tunnel health ch
 </summary>
   <div class="special-class" markdown="1">
 
-![Magic Transit Tunnel health check packets](/magic-transit/static/tunnel-health-check-packets.png)
+![Wireshark example for tunnel health checks with ICMP reply packet](/magic-transit/static/tunnel-health-check-packets.png)
 
 </div>
 </details>
@@ -35,7 +35,7 @@ There are three tunnel health states: **Healthy**, **Degraded**, and **Down**.
 
 **Healthy** tunnels are preferred to **Degraded** tunnels, and Degraded tunnels are preferred to those that are **Down**.
 
-Magic Transit steers traffic to tunnels based on priorities you set when you [assign tunnel route priorities](/magic-transit/get-started/configure-tunnels/assign-tunnel-route-priorities/) during onboarding. Tunnel routes with lower values have priority over those with higher values.
+Magic Transit steers traffic to tunnels based on priorities you set when you [assign tunnel route priorities](/magic-transit/how-to/configure-static-routes/) during onboarding. Tunnel routes with lower values have priority over those with higher values.
 
 {{<Aside type="note" header="Note">}}
 
@@ -56,7 +56,7 @@ When Magic Transit identifies a route that is not healthy, it applies the these 
 - Degraded: Add 500,000 to priority.
 - Down: Add 1,000,000 to priority.
 
-The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration](/magic-transit/get-started/configure-tunnels/assign-tunnel-route-priorities/).
+The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration](/magic-transit/how-to/configure-static-routes/).
 
 Applying a penalty instead of removing the route altogether preserves redundancy and maintains options for customers with only one tunnel. Penalties also support the case when multiple tunnels are unhealthy.
 

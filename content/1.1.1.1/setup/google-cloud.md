@@ -1,7 +1,9 @@
 ---
 weight: 6
-title: Google Cloud
 pcx-content-type: how-to
+title: Google Cloud
+meta:
+    title: Set up 1.1.1.1 on Google Cloud
 ---
 
 # Set up 1.1.1.1 - Google Cloud
@@ -10,7 +12,7 @@ Google Cloud supports configuring [outbound server policy](https://cloud.google.
 
 {{<Aside type="note">}}
 
-If you are using [Cloudflare Zero Trust](/cloudflare-one/), you can choose assigned [locations](/cloudflare-one/connections/connect-networks/locations/) to apply custom [DNS policies](/cloudflare-one/policies/filtering/dns-policies-builder/) via Gateway.
+If you are using [Cloudflare Zero Trust](/cloudflare-one/), you can choose assigned [locations](/cloudflare-one/connections/connect-networks/locations/) to apply custom [DNS policies](/cloudflare-one/policies/filtering/dns-policies/) via Gateway.
 
 {{</Aside>}}
 

@@ -1,7 +1,9 @@
 ---
 weight: 4
-title: Azure
 pcx-content-type: how-to
+title: Azure
+meta:
+    title: Set up 1.1.1.1 on Azure
 ---
 
 # Set up 1.1.1.1 - Azure

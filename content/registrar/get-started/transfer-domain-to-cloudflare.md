@@ -12,7 +12,11 @@ Transferring a domain to a new registrar informs the registry that they should i
 
 This section contains generic instructions on how to transfer your domain to Cloudflare from most registrars.
 
+---
+
 {{<render file="_before-you-begin.md">}}
+
+---
 
 {{<render file="_restrictions.md">}}
 
@@ -22,7 +26,7 @@ This section contains generic instructions on how to transfer your domain to Clo
 
 To begin, complete the following steps in your current registrar to transfer your domain to Cloudflare. Below, you will find links for detailed transfer instructions from some of the most popular registrars:
 
-- [Enom](http://enom.help/outgoing)
+- [Enom](https://help.enom.com/hc/articles/360040309012)
 - [GoDaddy](https://www.godaddy.com/help/transfer-my-domain-away-from-godaddy-3560)
 - [Namecheap](https://www.namecheap.com/support/knowledgebase/article.aspx/258/84/what-should-i-do-to-transfer-a-domain-from-namecheap/)
 - [Network Solutions](https://customerservice.networksolutions.com/prweb/PRAuth/webkm/help/article/KC-474/networksolutions)
@@ -60,15 +64,16 @@ You will be presented with the price for each transfer. When you transfer a doma
 
 If you do not have a payment method on file, add one at this step before proceeding.
 
-![Cloudflare checkout screenshot](/registrar/static/checkout-page.png)
+![Cloudflare checkout interface](/registrar/static/checkout-page.png)
 
 Sites can be unavailable for a few reasons, including:
 
+- You did not [add your domain](/fundamentals/get-started/setup/add-site/) to your Cloudflare.
 - The site was registered in the last 60 days.
 - Cloudflare does not yet support the TLD.
 - The domain is designated as a premium domain by the registry.
 - The domain has a status that does not allow for a transfer.
-- You failed to follow the steps highlighted above in [creating an account with your domain](https://support.cloudflare.com/hc/articles/201720164) and [changing your DNS nameservers to Cloudflare](/dns/zone-setups/full-setup).
+- You failed to follow the steps highlighted above in [creating an account with your domain](https://support.cloudflare.com/hc/articles/201720164) and [changing your DNS nameservers to Cloudflare](/dns/zone-setups/full-setup/).
 
 You will not be billed at this step. Cloudflare will only bill your card when you input the auth code and confirm the contact information at the conclusion of your transfer request.
 

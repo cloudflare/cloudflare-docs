@@ -38,6 +38,6 @@ To retrieve your API key:
 
     {{<Aside type="note">}}
 
-To access your Host API Key (needed for the Hosting Partner API), log into the [partners dashboard](https://partners.cloudflare.com/login). If you would like to become a Hosting partner, [contact our hosting partner team](https://www.cloudflare.com/certified-partners).
+To access your Host API Key (needed for the Hosting Partner API), log in to the [partners dashboard](https://partners.cloudflare.com/login). If you would like to become a Hosting partner, [contact our hosting partner team](https://www.cloudflare.com/certified-partners).
 
      {{</Aside>}}

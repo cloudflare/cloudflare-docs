@@ -14,11 +14,11 @@ Create HTTP Request Header Modification Rules in the **Transform Rules** tab und
 
 2.  Go to **Rules** > **Transform Rules**.
 
-    ![Transform Rules tab](/rules/static/transform/overview.png)
+    ![The Transform Rules tab in the Cloudflare dashboard displaying the several types of Transform Rules you can configure.](/rules/static/transform/overview.png)
 
 3.  Click **Create transform rule** > **Modify Request Header**.
 
-    ![Create HTTP Request Header Modification rule page](/rules/static/transform/create-request-header-modification-rule.png)
+    ![The HTTP Request Header Modification Rule creation page in the Cloudflare dashboard.](/rules/static/transform/create-request-header-modification-rule.png)
 
 4.  Enter a descriptive name for the HTTP Request Header Modification Rule in **Rule name**.
 
@@ -40,7 +40,7 @@ Check the [available fields and functions](/rules/transform/request-header-modif
 
     The following example includes the modification of three headers using the available actions:
 
-    ![HTTP request header modification examples](/rules/static/transform/request-header-modification-example.png)
+    ![Example configuration performing three request header modifications: set a dynamic header value, set a static header value, and remove an existing header.](/rules/static/transform/request-header-modification-example.png)
 
     {{<Aside type="note">}}
 You can modify up to 30 HTTP request headers in a single rule.

@@ -66,7 +66,7 @@ Cache-tag purging makes multi-file purging easier because you can bulk purge by 
 ### General workflow for cache-tags
 
 1.  Add tags to the `Cache-Tag HTTP` response header from your origin web server for your web content, such as pages, static assets, etc.
-2.  [Ensure your web traffic is proxied](/dns/manage-dns-records/reference/proxied-dns-records) through Cloudflare.
+2.  [Ensure your web traffic is proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare.
 3.  Cloudflare associates the tags in the `Cache-Tag HTTP` header with the content being cached.
 4.  Use specific cache-tags to purge your Cloudflare CDN cache of all content containing that cache-tag from your dashboard or [using our API](https://api.cloudflare.com/#zone-purge-files-by-cache-tags-or-host).
 5.  Cloudflare forces a [cache miss](/cache/about/default-cache-behavior/#cloudflare-cache-responses) on content with the purged cache-tag.
@@ -102,7 +102,7 @@ When your content reaches our edge network, Cloudflare:
 1.  Log in to your Cloudflare dashboard.
 2.  Click **Caching** > **Configuration**.
 3.  Under **Purge Cache**, click **Custom Purge**. The **Custom Purge** window appears.
-4.  Under **Purge by**, select **URL**.
+4.  Under **Purge by**, select **Tag**.
 5.  In the text box, enter your tags to use to purge the cached resources. To purge multiple cache-tagged resources, separate each tag with a comma or have one tag per line.
 6.  Click **Purge**.
 

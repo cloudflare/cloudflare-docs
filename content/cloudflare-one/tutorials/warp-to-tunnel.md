@@ -87,7 +87,7 @@ cloudflared tunnel route ip show
 
 ## Configure and run the Tunnel
 
-Next, create a configuration file for the Tunnel. The following template contains the required fields but can be further modified as needed.
+Next, create a configuration file for the tunnel in the `.cloudflared` default directory. The following template contains the required fields but can be further modified as needed.
 
 ```yaml
 tunnel: 8e343b13-a087-48ea-825f-9783931ff2a5
@@ -114,7 +114,7 @@ Make sure **HTTP traffic filtering** is enabled. This lets Cloudflare proxy your
 
 {{</Aside>}}
 
-Users can reach this private service by logging into their Zero Trust account and the WARP agent.
+Users can reach this private service by logging in to their Zero Trust account and the WARP agent.
 
 By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certain other routes as part of its [Split Tunnel feature](/cloudflare-one/tutorials/split-tunnel/). To use this feature the IPs that you specified for your Tunnel must be included which will send traffic for those destinations through the WARP agent and to the Tunnel.
 

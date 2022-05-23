@@ -1,20 +1,20 @@
 ---
 title: DELETE examples
 pcx-content-type: reference
-weight: 436
+weight: 6
 ---
 
 # DELETE examples
 
 {{<Aside type="note" header="Note">}}
 
-The `DELETE` operation does not delete any filter related to the Firewall Rule. To delete the filter, use the [Filters API](/firewall/api/cf-filters/).
+The `DELETE` operation does not delete any filter related to the firewall rule. To delete the filter, use the [Filters API](/firewall/api/cf-filters/).
 
 {{</Aside>}}
 
 ## Delete multiple rules
 
-This example deletes Firewall Rules with IDs `<RULE_ID_1>` and `<RULE_ID_2>`.
+This example deletes firewall rules with IDs `<RULE_ID_1>` and `<RULE_ID_2>`.
 
 ```bash
 ---

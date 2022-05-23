@@ -5,20 +5,20 @@ title: Challenge bad bots
 
 # Challenge bad bots
 
-{{<Aside type="warning" header="Important">}}
+Cloudflare’s Bot Management feature scores the likelihood that a request originates from a bot.
+
+{{<Aside type="warning">}}
 
 Access to [Bot Management](/bots/get-started/bm-subscription/) requires a Cloudflare Enterprise plan with Bot Management enabled.
 
 {{</Aside>}}
 
-Cloudflare’s Bot Management feature scores the likelihood that a request originates from a bot.
-
 Scores range from 1 through 99. Low scores indicate the request comes from a script, API service, or an automated agent. High scores indicate that a human issued the request from a standard desktop or mobile web browser.
 
 These examples use:
 
-- `cf.bot_management.score` [dynamic field](/ruleset-engine/rules-language/fields/#dynamic-fields) to target requests from bots
-- `cf.bot_management.verified_bot` to identify requests from [known good bots](/firewall/known-issues-and-faq/#bots-currently-detected)
+- [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/#field-cf-bot_management-score) dynamic field to target requests from bots
+- `cf.bot_management.verified_bot` to identify requests from [known good bots](https://radar.cloudflare.com/verified-bots)
 - `cf.bot_management.ja3_hash` to target specific [JA3 Fingerprints](/bots/concepts/ja3-fingerprint/)
 
 ## Suggested rules
@@ -28,7 +28,7 @@ For best results:
 - Use [Bot Analytics](/bots/get-started/bm-subscription/#enable-bot-management-for-enterprise) to learn about your traffic before applying rules
 - Start small and increase your bot threshold over time
 
-Your rules may also vary based on the [nature of your site](/bots/get-started/bm-subscription/#5-create-additional-firewall-rules) and your tolerance for false positives.
+Your rules may also vary based on the [nature of your site](/bots/get-started/bm-subscription/#step-4--create-additional-firewall-rules) and your tolerance for false positives.
 
 ### Protect browser endpoints
 
@@ -150,12 +150,12 @@ If your domain saw mobile, browser, and API traffic, you would want to arrange t
 
 ### Static resource protection
 
-Static resources are protected by default when you create **Firewall Rules** using `cf.bot_management.score`.
+Static resources are protected by default when you create **firewall rules** using `cf.bot_management.score`.
 
-To exclude static resources, include <code class="InlineCode">not (cf.botManagement.staticResource)</code> as part of your Firewall Rule. For more details, refer to [Static resource protection](/bots/reference/static-resources/).
+To exclude static resources, include <code class="InlineCode">not (cf.botManagement.staticResource)</code> as part of your firewall rule. For more details, refer to [Static resource protection](/bots/reference/static-resources/).
 
 ### Additional considerations
 
-From there, you could customize your Firewall Rules based on specific request paths (`/login` or `/signup`), common traffic patterns, or many other characteristics.
+From there, you could customize your firewall rules based on specific request paths (`/login` or `/signup`), common traffic patterns, or many other characteristics.
 
 Just make sure to set aside time to review [Bot Analytics](/bots/bot-analytics/bm-subscription/) and [Firewall Events](/waf/analytics/) to check if your rules need additional tuning.

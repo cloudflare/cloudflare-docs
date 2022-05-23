@@ -12,16 +12,26 @@ Bot Fight Mode is a simple, free product that helps detect and mitigate bot traf
 
 - Identifies traffic matching patterns of known bots
 - Issues computationally expensive challenges in response to these bots
-- Notifies [Bandwidth Alliance](https://support.cloudflare.com/hc/articles/360016143912) partners (if applicable) to disable bots
+- Notifies [Bandwidth Alliance](https://cloudflare.com/bandwidth-alliance/) partners (if applicable) to disable bots
 
 ## Enable Bot Fight Mode
 
 To start using Bot Fight Mode:
 
-1.  Go to **Firewall**.
-2.  Select **Bots**.
-3.  For **Bot Fight Mode**, select **On**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+2. Go to **Security** > **Bots**.
+3. For **Bot Fight Mode**, select **On**.
+
+## Disable Bot Fight Mode
+
+If you find that **Bot Fight Mode** is causing problems with your application traffic, you may want to disable it.
+
+To disable Bot Fight Mode:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+2. Go to **Security** > **Bots**.
+3. For **Bot Fight Mode**, select **Off**.
 
 ## Visibility
 
-You can see bot-related actions by going to **Firewall** > **Overview**. Any requests challenged by this product will be labeled **Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.
+You can see bot-related actions by going to **Security** > **Overview**. Any requests challenged by this product will be labeled **Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.

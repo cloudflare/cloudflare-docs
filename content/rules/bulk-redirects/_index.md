@@ -2,11 +2,13 @@
 pcx-content-type: concept
 title: Bulk Redirects (beta)
 weight: 5
+meta:
+  title: URL forwarding with Bulk Redirects (beta)
 ---
 
-# Bulk Redirects (beta)
+# URL forwarding with Bulk Redirects (beta)
 
-Bulk Redirects allow you to define a large number of redirects at the account level. These redirects navigate the user from a source URL to a target URL using a given HTTP status code.
+Bulk Redirects allow you to define a large number of redirects at the account level. These redirects navigate the user from a source URL to a target URL using a given HTTP status code. URL redirection is also known as URL forwarding.
 
 Bulk Redirects are essentially static — they do not support any string replacement operations or regular expressions. However, you can configure URL Redirect parameters that affect their URL matching behavior and their runtime behavior.
 

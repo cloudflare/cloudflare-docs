@@ -4,151 +4,43 @@ title: Jamf
 weight: 2
 ---
 
-# Jamf
+# Deploy WARP using Jamf
 
 ## macOS
 
-The Cloudflare WARP client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally, this plist can be wrapped in a `.mobileconfig`.
+### Prerequisites
 
-Here is an example plist file with the accepted arguments:
+- [Download the `Cloudflare_WARP.pkg` file](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos)
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-  <dict>
-    <key>organization</key>
-    <string>yourorganization</string>
-    <key>auto_connect</key>
-    <integer>1</integer>
-    <key>switch_locked</key>
-    <false />
-    <key>service_mode</key>
-    <string>warp</string>
-    <key>support_url</key>
-    <string>https://support.example.com</string>
-  </dict>
-</plist>
-```
+- [Create a `plist` file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#create-plist-file)
 
-Here is an example `.mobileconfig` file with the accepted arguments:
+### 1. Upload the WARP package
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-  <dict>
-    <key>PayloadContent</key>
-    <array />
-    <key>PayloadDisplayName</key>
-    <string>Cloudflare WARP</string>
-    <key>PayloadIdentifier</key>
-    <string>cloudflare_warp</string>
-    <key>PayloadOrganization</key>
-    <string>Cloudflare, Ltd.</string>
-    <key>PayloadRemovalDisallowed</key>
-    <false />
-    <key>PayloadType</key>
-    <string>Configuration</string>
-    <key>PayloadUUID</key>
-    <string>F5046847-2B1C-4DA0-A872-F6E040B1B20E</string>
-    <key>PayloadVersion</key>
-    <integer>1</integer>
-    <key>PayloadContent</key>
-    <array>
-      <dict>
-        <key>PayloadDisplayName</key>
-        <string>Custom</string>
-        <key>PayloadIdentifier</key>
-        <string>com.cloudflare.warp</string>
-        <key>PayloadOrganization</key>
-        <string>Cloudflare Ltd.</string>
-        <key>PayloadType</key>
-        <string>com.apple.ManagedClient.preferences</string>
-        <key>PayloadUUID</key>
-        <string>C2575334-358E-4925-8B29-30B4348D31E3</string>
-        <key>PayloadVersion</key>
-        <integer>1</integer>
-        <key>PayloadEnabled</key>
-        <true />
-        <key>PayloadContent</key>
-        <dict>
-          <key>com.cloudflare.warp</key>
-          <dict>
-            <key>Forced</key>
-            <array>
-              <dict>
-                <key>mcx_preference_settings</key>
-                <dict>
-                  <key>organization</key>
-                  <string>yourorganization</string>
-                  <key>auto_connect</key>
-                  <integer>1</integer>
-                  <key>switch_locked</key>
-                  <false />
-                  <key>service_mode</key>
-                  <string>warp</string>
-                  <key>support_url</key>
-                  <string>https://support.example.com</string>
-                </dict>
-              </dict>
-            </array>
-          </dict>
-        </dict>
-      </dict>
-    </array>
-  </dict>
-</plist>
-```
+1. Log in to your [Jamf](https://www.jamf.com/) account.
+2. Navigate to **Computer** > **All Settings** (gear icon).
+3. Click **Computer Management** > **Packages** > **New**.
+4. Upload the `Cloudflare_WARP.pkg` file.
+    For the Display name, we recommend entering the version number of the package being uploaded.
+5. Click **Save** to complete the upload.
 
-For a description of each argument and what it means, see [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
+### 2. Create the policy
 
-[Click here to download](/cloudflare-one/static/documentation/connections/com.cloudflare.warp.plist) this example `plist`. If you manually plan to download the plist file and place it in `/Library/Managed Preferences`, convert the plist into into binary format first. To do that:
+1. Navigate to **Computers** > **Policies** > **+ New**.
+2. Enter a Display name such as `Cloudflare WARP Client`.\
+    For **Triggers**, our recommendation is to select _Startup_, _Login_, _Enrollment Complete_ and _Recurring Check-in_, but you can select the value that works best for your organization.
+3. Click **Packages** > **Configure**.
+4. Click **Add** next to the `Cloudflare_WARP.pkg` file you previously uploaded.
+5. Click **Save**.
 
-1.  Open a Terminal window.
-1.  Run the following command:
+### 3. Add a Configuration Profile
 
-```bash
-% plutil -convert binary1 com.cloudflare.warp.plist
-```
-
-[Click here to download](/cloudflare-one/static/documentation/connections/CloudflareWARP.mobileconfig) this example `.mobileconfig`. Before doing so, you may need to run `uuidgen` from your macOS terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID` in the example above.
-
-### Upload the package
-
-1.  Log in to your `jamfcloud.com` account.
-1.  Navigate to **Computer**.
-1.  Click **All Settings** (gear) in the upper right corner.
-1.  Click **Computer Management**.
-1.  Click **Packages**.
-1.  Select **New**.
-1.  Upload the `Cloudflare_WARP.pkg` file.
-    For _Display name_, we recommend entering the version number of the package being uploaded.
-1.  Click **Save** to complete the upload.
-
-### Create the policy
-
-1.  Select **Computers** > **Policies** on the menu on the left side.
-1.  Click **+ New**.
-1.  Enter a Display name such as `Cloudflare WARP Client`.\
-    For _Triggers_, our recommendation is to select _Startup_, _Login_, _Enrollment Complete_ and _Recurring Check-in_, but you can select the value that works best for your organization.
-1.  Navigate to **Packages**.
-1.  Click **Configure**.
-1.  Click **Add** next to the package you previously uploaded.
-1.  Click **Save**.
-
-### Add a Configuration Profile
-
-1.  Navigate to **Configuration Profiles**.
-1.  Click **New**.
-1.  Enter a name for your new profile, such as _Cloudflare Zero Trust_.
-1.  Scroll through the options list and click on **Application & Custom Settings**.
-1.  Click **Configure**.
-1.  In _Preference Domain_, enter `com.cloudflare.warp`.
-1.  Upload a valid plist file. You can start with our example above and modify it for your organization.
-1.  Click **Save**.
-1.  Navigate to **Scope** to configure which devices in your organization will receive this profile.
-1.  Click **Save**.
+1. Navigate to **Configuration Profiles** > **New**.
+2. Enter a name for your new profile, such as `Cloudflare Zero Trust`.
+3. Scroll through the options list and click **Application & Custom Settings** > **Configure**.
+4. In **Preference Domain**, enter `com.cloudflare.warp`.
+5. Upload your `plist` file and click **Save**.
+6. Navigate to **Scope** to configure which devices in your organization will receive this profile.
+7. Click **Save**.
 
 Jamf is now configured to deploy the Cloudflare WARP client.
 
@@ -156,38 +48,19 @@ Jamf is now configured to deploy the Cloudflare WARP client.
 
 The WARP client, known in the App Store as [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), allows for an automated install via Jamf.
 
-To proceed with the installation, here is an example of the XML code you will need, with the accepted arguments:
+### Prerequisites
 
-```xml
-<dict>
-  <key>organization</key>
-  <string>yourorganization</string>
-  <key>auto_connect</key>
-  <integer>1</integer>
-  <key>switch_locked</key>
-  <false />
-  <key>service_mode</key>
-  <string>warp</string>
-  <key>support_url</key>
-  <string>https://support.example.com</string>
-</dict>
-```
+Create an [XML file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#install-warp-on-ios) with your custom deployment preferences.
 
-For a description of each argument and what it means, see [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
+### Configure Jamf for iOS
 
-1.  Log in to your `jamfcloud.com` account.
-1.  Navigate to **Devices**.
-1.  Click **Mobile Device Apps**.
-1.  Click **+ New**.
-1.  Select _App store app or apps purchased in volume_.
-1.  Click **Next**.
-1.  In the search box, enter: `1.1.1.1: Faster Internet`.
-1.  Click **Next**.
-1.  Click **Add** in the row for _1.1.1.1: Faster Internet by Cloudflare Inc._. To verify that it is the correct application, [click on this App Store link](https://apps.apple.com/us/app/id1423538627).
-1.  Navigate to **Scope**.
-1.  Specify the devices in your organization that will receive the application.
-1.  Navigate to **App Configuration** and copy/paste the XML from above.
-1.  Make sure you modify the default XML values to match your Cloudflare for Teams deployment.
-1.  Click **Save**.
+1. Log in to your [Jamf](https://www.jamf.com/) account.
+2. Navigate to **Devices** > **Mobile Device Apps** > **+ New**.
+3. Select _App store app or apps purchased in volume_ and click **Next**.
+4. In the search box, enter `1.1.1.1: Faster Internet`. Click **Next**.
+5. In the row for _1.1.1.1: Faster Internet by Cloudflare Inc._, click **Add**. To verify that it is the correct application, click [this App Store link](https://apps.apple.com/us/app/id1423538627).
+6. Navigate to **Scope** and specify the devices in your organization that will receive the application.
+7. Navigate to **App Configuration** and copy/paste your XML file.
+8. Click **Save**.
 
 Jamf is now configured to deploy the WARP client.

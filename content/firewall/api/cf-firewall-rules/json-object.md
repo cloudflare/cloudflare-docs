@@ -1,12 +1,12 @@
 ---
 title: JSON object
 pcx-content-type: reference
-weight: 411
+weight: 1
 meta:
-  title: Firewall Rules JSON object
+  title: Firewall rules JSON object
 ---
 
-# Firewall Rules JSON object
+# Firewall rules JSON object
 
 ## Firewall rule example JSON response
 
@@ -59,16 +59,7 @@ This table summarizes the object properties:
       <tr>
         <td><code>action</code><br />{{<type>}}String{{</type>}}</td>
         <td>The action to take when a request satisfies the filter expression for this rule.</td>
-        <td>
-          <em>
-            log<br />
-            bypass<br />
-            allow<br />
-            challenge<br />
-            js_challenge<br />
-            managed_challenge<br />
-            block<br /></em>
-        </td>
+        <td>Refer to <a href="/firewall/cf-firewall-rules/actions/">Firewall rules actions</a> for a list of supported values.</td>
       </tr>
       <tr>
         <td><code>priority</code><br />{{<type>}}Number{{</type>}}</td>
@@ -99,12 +90,12 @@ This table summarizes the object properties:
 
 ## Avoiding priority conflicts
 
-Priority plays a key role in configuring Firewall Rules. With Cloudflare Filters, it is possible to construct conflicting rules such as:
+Priority plays a key role in configuring firewall rules. With Cloudflare Filters, it is possible to construct conflicting rules such as:
 
 - Allow requests from the office IP range, and
 - Block requests with a specific user agent.
 
-Requests from the office IP range using the user agent to block would trigger both rules, but we cannot both allow and block the request. To solve this problem, Firewall Rules follows a strict ordering depending on action and priority.
+Requests from the office IP range using the user agent to block would trigger both rules, but we cannot both allow and block the request. To solve this problem, firewall rules follows a strict ordering depending on action and priority.
 
 Cloudflare prioritizes rules in descending order, such that priority 1 is first and rules with no priority are last. For rules of equal priority, Cloudflare orders them by action according to their [order of precedence](/firewall/cf-firewall-rules/actions/#supported-actions). In the example above, if no priority is set, the rule `allow request from the office IP range` would apply because the _allow_ action has a higher precedence than _block_.
 

@@ -19,12 +19,12 @@ Cloudflare designed [Cloudflare WARP](/warp-client/) and [1.1.1.1](/1.1.1.1/) to
 However, unlike legacy VPN applications, we never designed WARP or 1.1.1.1 to hide user locations or allow users to misrepresent their true geographic location. As a web property operator, you can use **Client IP Geolocation** to map Cloudflare egress IP addresses to specific geolocations.
 
 {{<button-group>}}
-  {{<button type="primary" href="/client-ip-geolocation/get-started">}}Get started{{</button>}}
-  {{<button type="secondary" href="/client-ip-geolocation/about">}}Learn more{{</button>}}
+  {{<button type="primary" href="/client-ip-geolocation/get-started/">}}Get started{{</button>}}
+  {{<button type="secondary" href="/client-ip-geolocation/about/">}}Learn more{{</button>}}
 {{</button-group>}}
 
 {{<Aside type="note">}}
 
-Client IP Geolocation is different from the <strong>Cloudflare IP Geolocation</strong> setting in the <strong>Network</strong> app. For more details about Cloudflare IP Geolocation — which helps you capture country codes for visitors — see <a href="https://support.cloudflare.com/hc/articles/200168236">our Support documentation</a>.
+Client IP Geolocation is different from the <strong>Cloudflare IP Geolocation</strong> setting in the <strong>Network</strong> app. For more details about Cloudflare IP Geolocation — which helps you capture country codes for visitors — refer to [our Support documentation](https://support.cloudflare.com/hc/articles/200168236).
 
 {{</Aside>}}

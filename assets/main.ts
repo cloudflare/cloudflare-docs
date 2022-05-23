@@ -7,6 +7,7 @@ declare global {
   interface Window {
     // algolia; @see search.ts
     docsearch?(options: any): any;
+    Coveo?: any;
   }
 }
 
@@ -14,6 +15,7 @@ declare global {
   navs.init();
   timeago.init();
 
+  events.load();
   events.focus();
   events.mobile();
   events.dropdowns();

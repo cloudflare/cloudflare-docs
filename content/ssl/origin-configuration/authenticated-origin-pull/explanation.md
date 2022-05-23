@@ -24,8 +24,12 @@ Cloudflare enforces authenticated origin pulls by adding an extra layer of TLS c
 
 **Standard TLS handshake**
 
-![Standard TLS handshake](/ssl/static/client-auth-tls-standard.png)
+![Diagram showing the Standard TLS handshake](/ssl/static/client-auth-tls-standard.png)
+
+For more details, refer to [What is a TLS handshake?](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/).
 
 **TLS handshake with authenticated origin pulls**
 
-![Client authenticated TLS handshake](/ssl/static/client-auth-tls-handshake.png)
+![Diagram showing the client authenticated TLS handshake](/ssl/static/client-auth-tls-handshake.png)
+
+For more details, refer to the [introductory blog post](https://blog.cloudflare.com/protecting-the-origin-with-tls-authenticated-origin-pulls/).

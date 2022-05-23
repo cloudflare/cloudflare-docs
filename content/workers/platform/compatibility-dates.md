@@ -5,14 +5,14 @@ title: Compatibility dates
 
 # Compatibility dates
 
-Cloudflare regularly updates the Workers runtime. These updates apply to all Workers globally and should never cause a Worker that is already deployed to stop functioning. Sometimes, though, some changes may be backwards-incompatible. In particular, there might bugs in the runtime API that existing Workers may inadvertently depend. Cloudflare implements bug fixes that new Workers can opt into while existing Workers will continue to see the buggy behavior to prevent breaking deployed Workers.
+Cloudflare regularly updates the Workers runtime. These updates apply to all Workers globally and should never cause a Worker that is already deployed to stop functioning. Sometimes, though, some changes may be backwards-incompatible. In particular, there might be bugs in the runtime API that existing Workers may inadvertently depend upon. Cloudflare implements bug fixes that new Workers can opt into while existing Workers will continue to see the buggy behavior to prevent breaking deployed Workers.
 
 Compatibility dates (and flags) are how you, as a developer, opt into these changes. By specifying a `compatibility_date` in your `wrangler.toml` file, that Worker enables all changes that were made before the given date.
 
 ```toml
 # (in wrangler.toml)
-# Opt into backwards-incompatible changes through September 14, 2021.
-compatibility_date = "2021-09-14"
+# Opt into backwards-incompatible changes through April 5, 2022.
+compatibility_date = "2022-04-05"
 ```
 
 When you start your project, you should always set `compatibility_date` to the current date. You should occasionally update the `compatibility_date` field. When updating, you should refer to this page to find out what has changed, and you should be careful to test your Worker to see if the changes affect you, updating your code as necessary. The new compatibility date takes effect when you next run the `wrangler publish` command.
@@ -43,6 +43,41 @@ Most developers will not need to use `compatibility_flags`; instead, Cloudflare 
 ## Change history
 
 Newest changes are listed first.
+
+### Minimal subrequests
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Default as of</strong>
+      </td>
+      <td>2022-04-05</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Flag to enable</strong>
+      </td>
+      <td>
+        <code>minimal_subrequests</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Flag to disable</strong>
+      </td>
+      <td>
+        <code>no_minimal_subrequests</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+With the `minimal_subrequests` flag set, `fetch()` subrequests sent to endpoints on the Worker's own zone (also called same-zone subrequests) have a reduced set of features applied to them. In general, these features should not have been applied to same-zone subrequests in the first place, and very few user-facing behavior changes are anticipated. Specifically, Workers might observe the following behavior changes with the new flag:
+
+* Response bodies will not be opportunistically gzipped before being transmitted to the Workers runtime. If a Worker reads the response body, it will read it in plaintext, as has always been the case, so disabling this prevents unnecessary decompression. Meanwhile, if the Worker passes the response through to the client, Cloudflare's HTTP proxy will opportunistically gzip the response body on that side of the Workers runtime instead. The behavior change observable by a Worker script should be that some `Content-Encoding: gzip` headers will no longer appear.
+* Automatic Platform Optimization may previously have been applied on both the Worker's initiating request and its subrequests in some circumstances. It will now only apply to the initiating request.
+* Link prefetching will now only apply to the Worker's response, not responses to the Worker's subrequests.
 
 ### Global `navigator`
 

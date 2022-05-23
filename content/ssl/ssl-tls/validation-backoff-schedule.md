@@ -4,11 +4,13 @@ title: Validation backoff schedule
 weight: 8
 ---
 
-# Validation backoff schedule
+# Domain control validation backoff schedule
 
-Domain validation happens with our CA partners according to the following schedule:
+Domain control validation (DCV) has to happen before a Certificate Authority (CA) will issue a certificate for a domain.
 
-- Digicert - 14 days
+DCV happens with Cloudflare's CA partners according to the following schedule:
+
+- Digicert - 30 days
 - Let's Encrypt - 7 days
 
 Afterward, DCV tokens expire as dictated by the CA/B Baseline Requirements, which govern issuance of publicly trusted SSL certificates.

@@ -1,0 +1,91 @@
+.CoveoSearchInterface {
+  min-width: inherit !important;
+}
+
+.coveo-modal-content {
+  top: 50px;
+}
+
+.CoveoSearchInterface svg {
+  display: inline-block !important;
+}
+
+.CoveoSearchInterface p {
+  margin-bottom: 0 !important;
+}
+
+.CoveoSearchInterface .magic-box .magic-box-input,
+.CoveoSearchInterface .magic-box .magic-box-clear,
+.CoveoDynamicFacet,
+.CoveoDynamicFacetRange, 
+.CoveoDynamicHierarchicalFacet,
+.CoveoSearchInterface input,
+.CoveoSearchInterface.coveo-small-facets .coveo-facet-dropdown-header {
+  background: transparent !important;
+}
+
+.CoveoSearchInterface, .CoveoSearchInterface input[type=text],
+.CoveoSearchInterface .magic-box,
+.CoveoSearchInterface .magic-box-clear-svg,
+.CoveoSearchInterface .coveo-search-button-svg,
+.CoveoSearchButton,
+.CoveoFieldValue .coveo-field-caption,
+.coveo-checkbox-label,
+.coveo-dynamic-facet-value .coveo-checkbox-span-label-suffix,
+.coveo-dynamic-facet-header-title,
+.coveo-dynamic-facet-header-btn,
+.coveo-dynamic-facet-show-more,
+
+.coveo-dynamic-facet-breadcrumb-collapse,
+.coveo-dynamic-facet-breadcrumb-value
+{
+  color: inherit !important;
+}
+
+[theme="dark"] .coveo-combobox-values {
+  background-color: var(--gray-05) !important;
+}
+[theme="dark"] .coveo-combobox-values li:hover {
+  background-color: var(--gray-00) !important;
+}
+
+[theme="dark"] .coveo-modal-backdrop {
+  background-color: var(--gray-05) !important;
+}
+
+[theme="dark"] .coveo-modal-body,
+[theme="dark"] .coveo-modal-header {
+  background-color: var(--gray-00) !important;
+}
+
+[theme="dark"] .CoveoResult a.CoveoResultLink, 
+[theme="dark"] .CoveoResultLink, 
+[theme="dark"] a.CoveoResultLink,
+[theme="dark"] .coveo-accessible-button.coveo-clickable
+{
+  --background-color-alpha: 0.03 !important;
+  --border-bottom-color-rgb: var(--orange-rgb) !important;
+  --border-bottom-color-alpha: 0.35 !important;
+  color: var(--code-orange) !important;
+}
+
+.coveo-result-cell .CoveoFieldValue {
+  font-style: italic;
+  font-size: 85%;
+  margin-right: 15px;
+}
+
+.DocsMarkdown ul {
+  list-style: none !important;
+}
+
+.coveo-dynamic-facet-header h2 {
+  margin-top: 0 !important;
+  line-height: 35px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+.CoveoQueryDuration::before {
+  content: " ";
+}

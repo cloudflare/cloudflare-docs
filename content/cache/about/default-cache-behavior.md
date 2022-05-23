@@ -40,7 +40,7 @@ To cache additional content, see [Page Rules](/cache/how-to/create-page-rules/) 
 Cloudflare’s CDN provides several cache customization options:
 
 - Caching behavior for individual URLs via [Cloudflare Page Rules](/cache/how-to/create-page-rules/)
-- Customize caching with [Cloudflare Workers](/workers/learning/how-the-cache-works)
+- Customize caching with [Cloudflare Workers](/workers/learning/how-the-cache-works/)
 - Adjust caching level, cache TTL, and more via the Cloudflare Caching app
 
 Cloudflare limits the upload size (HTTP POST request size) per plan type:
@@ -49,7 +49,7 @@ Cloudflare limits the upload size (HTTP POST request size) per plan type:
 - 200MB Business
 - 500MB Enterprise by default. Contact [Customer Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit increase.
 
-If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through an [unproxied (grey-clouded) DNS record](/dns/manage-dns-records/reference/proxied-dns-records).
+If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through an [unproxied (grey-clouded) DNS record](/dns/manage-dns-records/reference/proxied-dns-records/).
 
 ## Cloudflare cache responses
 

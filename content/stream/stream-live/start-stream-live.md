@@ -6,18 +6,16 @@ weight: 7
 
 # Start a live stream
 
-You can start a live stream using the Stream Dashboard or the API. After you subscribe to Stream, you can create Live Inputs and begin sending your live video to Cloudflare Stream using RTMPS.
+You can start a live stream using the Stream Dashboard or the API. After you subscribe to Stream, you can create Live Inputs and begin sending your live video to Cloudflare Stream using RTMPS or SRT. SRT supports newer video codecs and makes using accessibility features, such as captions and multiple audio tracks, easier.
 
 ## Using the Dashboard
 
-1.  To start a live stream using the Stream Dashboard, click the **Live Inputs** tab.
-1.  Click **Create Live Input**.
-1.  Enter a name for your Live Input and click **Create Live Input**.
-1.  After you have created a Live Input, you can retrieve the RTMPS URL and Key.
+1. To start a live stream using the Stream Dashboard, click the **Live Inputs** tab.
+2. Click **Create Live Input**.
+3. Enter a name for your Live Input and click **Create Live Input**.
+4. Under **Connection Information** > **Protocol**, choose **RTMPS** or **SRT**.
 
-![Your Live Input's RTMPS URL and key](../rtmps-key.png)
-
-Within seconds of you pushing your live stream to Cloudflare Stream, you should see the live video stream:
+After you have created a Live Input, you can retrieve the RTMPS URL and Key, or if you used the SRT protocol, you can view the SRT URL. Within seconds of you pushing your live stream to Cloudflare Stream, you should see the live video stream.
 
 ## Using the API
 
@@ -32,7 +30,7 @@ curl -X POST \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/cli
 - The `requireSignedURLs` property indicates if signed URLs are required to view the video. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
 - The `allowedOrigins` property can optionally be invoked to provide a list of allowed origins. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
 
-A successful response will return information about the live input:
+A successful response will return information about the live input.
 
 ```json
 {
@@ -76,7 +74,7 @@ curl -X DELETE \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/c
 - Stream Live currently only supports HLS (HTTP Live Streaming), and recordings are only kept for the last seven days of the stream.
 - Stream Live requires input GOP duration (keyframe interval) to be between 4 to 10 seconds.
 - Closed GOPs required. This means that if there are any B frames in the video, they should always refer to frames within the same GOP. This setting is default in most encoder software such as OBS.
-- Stream Live only supports H.264 video and AAC audio codecs as inputs. This requirement does not apply to inputs that are relayed to Stream Connect outputs.
+- Stream Live only supports H.264 video and AAC audio codecs as inputs. This requirement does not apply to inputs that are relayed to Stream Connect outputs. Stream Live supports ADTS but does not presently support LATM.
 - Clients must be configured to reconnect when a disconnection occurs. Stream Live is designed to handle reconnection gracefully by continuing the live stream.
 
 ### Known limitations:

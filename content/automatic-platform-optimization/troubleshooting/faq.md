@@ -40,3 +40,11 @@ Yes, Google Fonts are also optimized when APO is activated. You can confirm the 
 ## Can I customize query string caching with APO?
 
 For more information on query parameters, see [Query parameters and cached responses](/automatic-platform-optimization/reference/query-parameters/).
+
+## Why are my font URLs not being transformed?
+
+APO will skip URL font transformation when the `content-security-policy` response header is present but missing the values described below.
+
+To fix the problem, the `content-security-policy` header value must allow for `unsafe-inline` on either the `style-src` or '`default-src`' directive. For example, `Content-Security-Policy: style-src unsafe-inline;`.
+
+The header must allow for `self` on either the `font-src` or `default-src` directive. For example, `Content-Security-Policy: font-src self;`.

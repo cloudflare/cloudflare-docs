@@ -25,7 +25,7 @@ If you already own a domain and want to use Cloudflare for your authoritative DN
 <summary>No</summary>
 <div>
 
-If you do not already own a domain name and plan to use Cloudflare for your authoritative DNS, we highly recommend purchasing your domain name through [Cloudflare Registrar](/registrar/get-started/register-domain).
+If you do not already own a domain name and plan to use Cloudflare for your authoritative DNS, we highly recommend purchasing your domain name through [Cloudflare Registrar](/registrar/get-started/register-domain/).
 
 Using Cloudflare Registrar simplifies your setup process by automatically using Cloudflare for authoritative DNS.
 
@@ -36,7 +36,7 @@ Using Cloudflare Registrar simplifies your setup process by automatically using 
 
 ### Create an account
 
-Before you can complete your domain setup, you need to create an account and [add your domain](https://support.cloudflare.com/hc/articles/201720164) to Cloudflare.
+Before you can complete your domain setup, you need to create an account and [add your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare.
 
 ### Disable DNSSEC
 
@@ -53,6 +53,20 @@ However, having a single set of signed records also prevents Cloudflare from iss
 </div>
 </details>
 
+### Review DNS records in Cloudflare
+
+When you start using Cloudflare's nameservers for authoritative DNS, Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
+
+If you [added your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, Cloudflare automatically scans for common records and adds them to your account’s DNS page. This scan is not guaranteed to find all existing DNS records, so you may want to pay special attention to the following record types:
+
+- [Root domain records (`example.com`)](/dns/manage-dns-records/how-to/create-root-domain/)
+- [Subdomain records (`www.example.com` or `blog.example.com`)](/dns/manage-dns-records/how-to/create-subdomain/)
+- [Email records](/dns/manage-dns-records/how-to/email-records/)
+
+{{<Aside type="note">}}
+If you activate your domain on Cloudflare *without* setting up the correct DNS records for your domain and subdomain, your visitors may experience [DNS_PROBE_FINISHED_NXDOMAIN](/dns/zone-setups/troubleshooting/dns-probe-finished-nxdomain/) errors.
+{{</Aside>}}
+
 ## Step 3 — Update your nameservers
 
 Once you have added a domain (also known as a _zone_) to Cloudflare, that domain will receive two assigned authoritative nameservers.
@@ -62,11 +76,15 @@ Once you have added a domain (also known as a _zone_) to Cloudflare, that domain
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2.  On **Overview**, copy the information from **Replace with Cloudflare's nameservers**.
 
-    ![get nameserver names from the Overview page of your domain](/dns/static/nameserver-names.png)
+    ![Find nameserver names on the Overview page of your domain](/dns/static/nameserver-names.png)
+
+{{<Aside type="note">}}
+Cloudflare automatically assigns nameservers to a domain and these assignments cannot be changed. For more details, refer to [Nameserver assignments](/dns/zone-setups/reference/nameserver-assignment/).
+{{</Aside>}}
 
 ### Update your registrar
 
-1.  Log into the admin account for your domain registrar. If you do not know your provider, use [ICANN WHOIS](https://whois.icann.org/).
+1.  Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN WHOIS](https://whois.icann.org/).
 
 2.  Disable **DNSSEC** for your domain.
 
@@ -80,7 +98,7 @@ Once you have added a domain (also known as a _zone_) to Cloudflare, that domain
 
 To check whether you correctly changed your nameservers, you can log in to the [Cloudflare dashboard](https://dash.cloudflare.com) or use a [third-party tool](https://www.whatsmydns.net/).
 
-If you see unexpected results, refer to [Nameserver FAQs](/dns/zone-setups/troubleshooting/#nameservers).
+If you see unexpected results, refer to our [troubleshooting information](/dns/zone-setups/troubleshooting/).
 
 ## Step 4 — Re-enable DNSSEC using Cloudflare
 
@@ -110,6 +128,7 @@ This is not an exhaustive list of provider-specific instructions, but the follow
 - [GoDaddy](https://www.godaddy.com/help/change-nameservers-for-your-domain-names-664)
 - [Google Domains](https://support.google.com/domains/answer/3290309?hl%3Den)
 - [HostGator](http://support.hostgator.com/articles/hosting-guide/lets-get-started/dns-name-servers/how-do-i-change-my-dns-or-name-servers)
+- [Hostico](https://hostico.ro/docs/setarea-nameserverelor-din-contul-de-client-hostico/)
 - [HostMonster](https://my.hostmonster.com/cgi/help/222)
 - [Internetdbs](https://internetbs.net/faq/content/1/13/en/how-to-update-the-list-of-dns-nameservers-linked-to-a-domain.html?highlight%3Dnameservers)
 - [iPage](https://www.ipage.com/help/article/domain-management-how-to-update-nameservers)

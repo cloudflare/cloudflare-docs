@@ -10,7 +10,7 @@ Created by the Cloudflare security team, this ruleset provides fast and effectiv
 
 Cloudflare recommends that you enable the rules whose tags correspond to your technology stack. For example, if you use WordPress, enable the rules tagged with `wordpress`.
 
-Cloudflare’s [WAF change log](/waf/change-log/) allows you to monitor ongoing changes to the WAF's Managed Rulesets.
+Cloudflare’s [WAF changelog](/waf/change-log/) allows you to monitor ongoing changes to the WAF's Managed Rulesets.
 
 ## Configure in the dashboard
 
@@ -26,11 +26,11 @@ For details on configuring a Managed Ruleset in the dashboard, refer to [Configu
 
 ## Configure via API
 
-To enable the Cloudflare Managed Ruleset for a given zone via API, create a rule with `execute` action in the entry point ruleset for the `http_request_firewall_managed` phase. For more information on deploying a Managed Ruleset, refer to [Deploy a Managed Ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset).
+To enable the Cloudflare Managed Ruleset for a given zone via API, create a rule with `execute` action in the entry point ruleset for the `http_request_firewall_managed` phase. For more information on deploying a Managed Ruleset, refer to [Deploy a Managed Ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/).
 
-To configure the Cloudflare Managed Ruleset via API, create [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset) using the Rulesets API. You can perform the following configurations:
+To configure the Cloudflare Managed Ruleset via API, create [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) using the Rulesets API. You can perform the following configurations:
 
 - Specify the action to perform for all the rules in the ruleset by creating a ruleset override.
 - Disable or customize the action of individual rules by creating rule overrides for those rules.
 
-For examples of creating overrides using the API, refer to [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset).
+For examples of creating overrides using the API, refer to [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/).

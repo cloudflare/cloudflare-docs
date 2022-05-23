@@ -13,10 +13,14 @@ meta:
 To enable Page Shield:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2.  Go to **Firewall** > **Page Shield**.
+2.  Go to **Security** > **Page Shield**.
 3.  Click **Enable Page Shield**.
 
-For guidance on using Page Shield's Script Monitor dashboard, refer to [Monitor scripts](/page-shield/use-dashboard/monitor-scripts/).
+## Review detected scripts
+
+When you enable Page Shield, it may take a while to get the list of detected scripts in your domain.
+
+Review the scripts displayed in the [**Active Scripts** dashboard](/page-shield/use-dashboard/monitor-scripts/#use-the-active-scripts-dashboard), checking them for signs of malicious activity.
 
 ## Configure alerts
 

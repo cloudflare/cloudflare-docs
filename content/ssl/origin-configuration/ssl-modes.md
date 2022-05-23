@@ -24,7 +24,7 @@ If you are not sure which encryption mode to use, enable the [SSL/TLS Recommende
 
 To change your encryption mode:
 
-1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
 2.  Navigate to **SSL/TLS**.
 3.  Choose a new encryption mode.
 
@@ -50,7 +50,7 @@ When you set your encryption mode to **Off**, your application:
 - Will be marked as "not secure" by Chrome and other browsers, reducing visitor trust.
 - Will be penalized in [SEO rankings](https://webmasters.googleblog.com/2014/08/https-as-ranking-signal.html).
 
-![SSL Encryption set to off](/ssl/static/ssl-encryption-mode-off.png)
+![With an encryption mode of Off, your application does not encrypt traffic between the visitor and Cloudflare or between Cloudflare and your server.](/ssl/static/ssl-encryption-mode-off.png)
 
 {{<Aside type="note">}}
 
@@ -74,9 +74,11 @@ Choose this option when you cannot set up an SSL certificate on your origin or y
 
 ### Limitations
 
+Flexible mode is only supported for HTTPS connections on port 443 (default port). Other ports using HTTPS will fall back to [**Full** mode](#full).
+
 If your application contains sensitive information (personalized data, user login), use [**Full**](#full) or [**Full (Strict)**](#full-strict) modes instead.
 
-![SSL Encryption set to Flexible](/ssl/static/ssl-encryption-mode-flexible.png)
+![With an encryption mode of Flexible, your application encrypts traffic between the visitor and Cloudflare, but not between Cloudflare and your server.](/ssl/static/ssl-encryption-mode-flexible.png)
 
 ---
 
@@ -100,7 +102,7 @@ The certificate presented by the origin will **not be validated in any way**. It
 
 Without using [**Full (strict)**](#full-strict), a malicious party could technically hijack the connection and present their own certificate.
 
-![SSL Encryption set to Full](/ssl/static/ssl-encryption-mode-full.png)
+![With an encryption mode of Full, your application encrypts traffic going to and coming from Cloudflare but does not validate your origin certificate.](/ssl/static/ssl-encryption-mode-full.png)
 
 ---
 
@@ -110,7 +112,7 @@ When you set your encryption mode to **Full (strict)**, Cloudflare does everythi
 
 ### Use when
 
-For the best security, choose **Full (strict)** mode whenever possible (unless your are an [Enterprise customer](#strict-ssl-only-origin-pull)).
+For the best security, choose **Full (strict)** mode whenever possible (unless you are an [Enterprise customer](#strict-ssl-only-origin-pull)).
 
 Your origin needs to be able to support an SSL certificate that is:
 
@@ -126,7 +128,7 @@ Before enabling **Full (strict)** mode, make sure your origin allows HTTPS conne
 
 {{<render file="_ssl-mode-errors.md">}}
 
-![SSL Encryption set to Full (strict)](/ssl/static/ssl-encryption-mode-full-strict.png)
+![With an encryption mode of Full (strict), your application encrypts traffic going to and coming from Cloudflare.](/ssl/static/ssl-encryption-mode-full-strict.png)
 
 ---
 

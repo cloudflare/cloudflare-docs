@@ -6,6 +6,8 @@ weight: 11
 
 # Glossary
 
+Review definitions for Cloudflare Zero Trust terms.
+
 ## [Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/)
 
 Cloudflare Zero Trust the power of Cloudflare’s global network to your internal teams and infrastructure. Cloudflare Zero Trust empowers users with secure, fast and seamless access to any device on the Internet.
@@ -42,7 +44,7 @@ The resource being protected by Cloudflare Zero Trust. An application can be a s
 
 ## Authenticated Origin Pulls
 
-[Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull) let origin web servers validate that a web request came from Cloudflare. Cloudflare uses TLS client certificate authentication, a feature supported by most web servers, to present a Cloudflare certificate when establishing a connection between Cloudflare and the origin web server.
+[Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) let origin web servers validate that a web request came from Cloudflare. Cloudflare uses TLS client certificate authentication, a feature supported by most web servers, to present a Cloudflare certificate when establishing a connection between Cloudflare and the origin web server.
 
 ## certificate pinning
 
@@ -124,11 +126,11 @@ A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to v
 
 ## origin certificate
 
-[Cloudflare Origin Certificates](/ssl/origin-configuration/origin-ca) are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
+[Cloudflare Origin Certificates](/ssl/origin-configuration/origin-ca/) are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
 
 ## [policy](/cloudflare-one/policies/)
 
-A set of rules that regulate your network activity, such as who logs into your applications, or which websites your users can reach.
+A set of rules that regulate your network activity, such as who logs in to your applications, or which websites your users can reach.
 
 ## RDP
 
@@ -136,7 +138,7 @@ _Remote Desktop Protocol_
 
 A protocol, or technical standard, for using a desktop computer remotely. RDP was initially released by Microsoft and is available for most Windows operating systems, but it can be used with Mac operating systems too.
 
-## [SafeSearch](/cloudflare-one/policies/filtering/dns-policies-builder/)
+## [SafeSearch](/cloudflare-one/policies/filtering/dns-policies/#safesearch)
 
 A feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
 

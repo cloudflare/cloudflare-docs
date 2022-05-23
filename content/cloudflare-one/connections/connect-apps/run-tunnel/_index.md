@@ -26,7 +26,7 @@ You can also specify the Tunnel name or UUID inside of the configuration file, i
 
 If you do not specify a configuration file location, `cloudflared` will attempt to read a configuration file in `~/.cloudflared/config.yaml`.
 
-When `cloudflared` receives a HTTP request from the internet it matches the incoming request to an ingress rule from the config file. The ingress rules specify which traffic should go to which local services. See the section on [ingress rules](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/).
+When `cloudflared` receives a HTTP request from the internet it matches the incoming request to an ingress rule from the config file. The ingress rules specify which traffic should go to which local services. See the section on [ingress rules](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
 
 You can also run the Tunnel without a configuration file by appending the flags after the `run` command and before the name or UUID. Running your tunnel this way will route *all* traffic to the given URL.
 

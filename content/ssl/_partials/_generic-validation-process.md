@@ -5,4 +5,6 @@ _build:
   list: never
 ---
 
-Once you [create an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/#create-a-certificate-in-the-dashboard) or [edit the `validation_method`](https://api.cloudflare.com/#ssl-verification-edit-ssl-certificate-pack-validation-method) via the API and use this validation method, you will see the following values after a few seconds:
+If you want to use a [Universal SSL certificate](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/), you will need to edit the `validation_method` [via the API](https://api.cloudflare.com/#ssl-verification-edit-ssl-certificate-pack-validation-method) and specify your chosen validation method.
+
+Alternatively, you could [order an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) via the dashboard or the API.

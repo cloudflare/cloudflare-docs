@@ -171,7 +171,7 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 
@@ -196,9 +196,9 @@ Every time you commit new code to your Hugo site, Cloudflare Pages will automati
 
 ## Using a specific Hugo version
 
-You can set the environment variable `HUGO_VERSION` under Settings to use a specific version of Hugo.
+You can set the environment variable `HUGO_VERSION` in your Worker > **Settings** to use a [specific version of Hugo](https://github.com/gohugoio/hugo/releases).
 
-For example, `HUGO_VERSION`: `0.92.1`
+For example, `HUGO_VERSION`: `0.98.0`
 
 ## Learn more
 

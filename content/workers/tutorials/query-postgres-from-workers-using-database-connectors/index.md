@@ -221,6 +221,6 @@ $ docker compose down
 
 If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below.
 
-- [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/)
+<!-- - [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/) -->
 - [Build a Slackbot](/workers/tutorials/build-a-slackbot/)
 - [GitHub SMS notifications using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)

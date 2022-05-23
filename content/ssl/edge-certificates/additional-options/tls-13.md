@@ -21,7 +21,7 @@ TLS 1.3 requires a two-step activation: in the Cloudflare dashboard and in the b
 
 ### Enable TLS 1.3 in the Cloudflare dashboard
 
-1.  Log into your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
+1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
 2.  Navigate to **SSL/TLS** > **Edge Certificates**.
 3.  For **TLS 1.3**, switch the toggle to **On**.
 

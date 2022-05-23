@@ -24,23 +24,19 @@ The fallback origin is where Cloudflare will route traffic sent to your custom h
 
 The CNAME target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#step-5--have-customer-create-a-cname-record).
 
-1.  Create a [new application](https://support.cloudflare.com/hc/articles/201720164) and select the **Free** plan.
+1.  Create a [new application](/fundamentals/get-started/setup/add-site/) and select the **Free** plan.
 
 2.  Navigate to **DNS**.
 
 3.  Create two DNS records:
 
-        *   A proxied *A* or *AAAA* record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
-        *   A *CNAME* record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
+  *   A proxied *A* or *AAAA* record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
+  *   A *CNAME* record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
 
-         {{<example>}}
-
-    | Record          | Type  | Name                              | Content                           |
-    | --------------- | ----- | --------------------------------- | --------------------------------- |
-    | Fallback origin | A     | `proxy-fallback.saasprovider.com` | 192.0.2.1                         |
-    | CNAME target    | CNAME | `*.customers.saasprovider.com`    | `proxy-fallback.saasprovider.com` |
-
-         {{</example>}}
+  | Record          | Type  | Name                              | Content                           |
+  | --------------- | ----- | --------------------------------- | --------------------------------- |
+  | Fallback origin | A     | `proxy-fallback.saasprovider.com` | 192.0.2.1                         |
+  | CNAME target    | CNAME | `*.customers.saasprovider.com`    | `proxy-fallback.saasprovider.com` |
 
 4.  Enable **Custom Hostnames** for your zone:
 

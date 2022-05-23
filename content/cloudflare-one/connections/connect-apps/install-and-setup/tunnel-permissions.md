@@ -6,6 +6,8 @@ weight: 5
 
 # Tunnel permissions
 
+{{<render file="_cloudflared-new-ui.md">}}
+
 Cloudflare Tunnel requires two files:
 
 - An [account certificate](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#cert-pem) (the `cert.pem`)
@@ -28,7 +30,7 @@ Refer to the table below for a comparison between the two files and the purposes
 | **Stored in**           | [Default directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory) | [Default directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory) |
 | **Issued when running** | `cloudflared tunnel login`                                                                                                         | `cloudflared tunnel create <NAME>`                                                                                                 |
 | **Valid for**           | At least 10 years, and the service token it contains is valid until revoked                                                        | Does not expire                                                                                                                    |
-| **Needed to**           | Manage tunnels (for example, create, delete and list tunnels)                                                                      | Run a tunnel. Create a config file.                                                                                                |
+| **Needed to**           | Manage tunnels (for example, create, route, delete and list tunnels)                                                                      | Run a tunnel. Create a config file.                                                                                                |
 
 {{</table-wrap>}}
 

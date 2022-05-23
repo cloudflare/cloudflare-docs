@@ -37,13 +37,13 @@ When you choose the names for your account-level nameservers, each hostname must
 
 ### Cloudflare Registrar
 
-If you are using [Cloudflare Registrar](/registrar) for the zone that provides the hostnames for the account-level custom nameservers, you have a simpler setup process.
+If you are using [Cloudflare Registrar](/registrar/) for the zone that provides the hostnames for the account-level custom nameservers, you have a simpler setup process.
 
 #### Add account nameservers
 
 1.  Create between two and five account-level nameservers with a [POST command](https://api.cloudflare.com/#account-level-custom-nameservers-add-account-custom-nameserver).
-2.  Cloudflare creates the [glue records](https://www.ietf.org/rfc/rfc1912.txt) automatically.
-3.  To enable the custom nameservers on existing zones, use a [PUT command](https://api.cloudflare.com/#account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) on each zone. Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated **A** or **AAAA** records.
+2. Open a ticket with [customer support](https://support.cloudflare.com/hc/articles/200172476) to add glue records to your account nameservers and have your nameservers updated.
+3.  To enable the custom nameservers on existing zones, use a [PUT command](https://api.cloudflare.com/#account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) on each zone. Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated `A` or `AAAA` records.
 
 To make this custom nameserver the default for all new zones, use a [PUT command](https://api.cloudflare.com/#accounts-update-account) on an account and set the value of `use_account_custom_ns_by_default` to `true`.
 
@@ -53,7 +53,7 @@ To remove account-level nameservers and their associated DNS records from a zone
 
 ### Non-Cloudflare Registrar
 
-If you are **not** using [Cloudflare Registrar](/registrar) for the zone that provides the hostnames for the account-level custom nameservers, your setup is a bit more complicated.
+If you are **not** using [Cloudflare Registrar](/registrar/) for the zone that provides the hostnames for the account-level custom nameservers, your setup is a bit more complicated.
 
 #### Add account nameservers
 
@@ -62,9 +62,9 @@ If you are **not** using [Cloudflare Registrar](/registrar) for the zone that pr
 3.  Use a [POST command](https://api.cloudflare.com/#account-level-custom-nameservers-verify-account-custom-nameserver-glue-records) to verify that the glue records are active.
 4.  To enable the custom nameservers on existing zones:
 
-    1.  Use a [PUT command](https://api.cloudflare.com/#account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) on each zone. Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated **A** or **AAAA** records.
+    1.  Use a [PUT command](https://api.cloudflare.com/#account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) on each zone. Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated `A` or `AAAA` records.
 
-    2.  Modify the zone's registrar to use the custom nameserver names.
+    2.  Update the name servers at the registrar to use the custom nameserver names.
 
 To make this custom nameserver the default for all new zones added to your account from now on, use a [PUT command](https://api.cloudflare.com/#accounts-update-account) on an account and set the value of `use_account_custom_ns_by_default` to `true`.
 
@@ -87,8 +87,8 @@ To add custom nameservers to a specific zone:
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2.  Go to **DNS**.
 3.  On **Custom Nameservers**, click **Add Custom Nameservers** and enter the subdomains used for the nameserver hostnames (like ns1, ns2, ns3).
-4.  Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated **A** or **AAAA** records (visible after you refresh the page).
-5.  The next step depends on whether you are using [Cloudflare Registrar](/registrar) for your domain:
+4.  Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated `A` or `AAAA` records (visible after you refresh the page).
+5.  The next step depends on whether you are using [Cloudflare Registrar](/registrar/) for your domain:
     - If you are using Cloudflare Registrar for your domain, no further action is required. Glue records will be added automatically on your behalf.
     - If you are not using Cloudflare Registrar for your domain, add the **Custom Nameservers** and IP addresses to your domain's registrar as [glue (A and AAAA) records](https://www.ietf.org/rfc/rfc1912.txt). If you do not add these records, DNS lookups for your domain will fail.
 
@@ -109,7 +109,7 @@ To remove zone-level nameservers (and their associated, read-only DNS records) u
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2.  Go to **DNS**.
 3.  On **Custom Nameservers**, click **Remove Custom Nameservers**.
-4.  Cloudflare will remove your nameservers and their associated read-only **A** or **AAAA** records.
+4.  Cloudflare will remove your nameservers and their associated read-only `A` or `AAAA` records.
 
 #### Using the API
 

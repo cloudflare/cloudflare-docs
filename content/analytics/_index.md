@@ -6,11 +6,15 @@ weight: 1
 
 # Overview
 
-Cloudflare visualizes the metadata collected by our products in the Cloudflare dashboard. Refer to [Accessing the data Cloudflare collects](/fundamentals/data-products/accessing-cf-data) for more information about the various types of analytics and where they exist in the dashboard.
+Cloudflare visualizes the metadata collected by our products in the Cloudflare dashboard. Refer to [Types of analytics](/fundamentals/data-products/types-of-analytics/) for more information about the various types of analytics and where they exist in the dashboard.
 
 ## Cloudflare Web Analytics
 
 [Cloudflare Web Analytics](/analytics/web-analytics/) provides free, privacy-first analytics for your website without changing your DNS or using Cloudflare’s proxy.
+
+## Cloudflare Network Analytics
+
+[Cloudflare Network Analytics](/analytics/network-analytics/) provides near real-time visibility into network and transport-layer traffic patterns and DDoS attacks.
 
 ## GraphQL Analytics API
 

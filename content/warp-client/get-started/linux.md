@@ -10,7 +10,9 @@ meta:
 
 You have two ways of installing WARP on Linux, depending on the distro you are using:
 
-- Find the latest WARP client on our [package repository](https://pkg.cloudflareclient.com/).
+- Find the latest WARP client.
+  - [Package repository](https://pkg.cloudflareclient.com/packages/cloudflare-warp).
+  - [APT/YUM repository](https://pkg.cloudflareclient.com/install).
 - Install the `cloudflare-warp` package that suits your distro:
   - **apt-based OS** (like Ubuntu): `sudo apt install cloudflare-warp`.
   - **yum-based OS** (like CentOS or RHEL): `sudo yum install cloudflare-warp`.
@@ -29,9 +31,9 @@ The command line interface is the primary way to use WARP.
 
 To connect for the very first time you must call `register` first:
 
-1.  Register the client `warp-cli register`.
-2.  Connect `warp-cli connect`.
-3.  Run `curl https://www.cloudflare.com/cdn-cgi/trace/` and verify that `warp=on`.
+1. Register the client `warp-cli register`.
+2. Connect `warp-cli connect`.
+3. Run `curl https://www.cloudflare.com/cdn-cgi/trace/` and verify that `warp=on`.
 
 ### Always stay connected
 

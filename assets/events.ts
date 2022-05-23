@@ -29,6 +29,20 @@ export function $tabbable(links: NodeListOf<Element>, bool: boolean) {
   }
 }
 
+// scroll to section header
+// but only on load if `#hash` in URL
+export function load() {
+  let hash = location.hash.substring(1);
+  let item = hash && document.getElementById(hash);
+  let timer = item && setInterval(() => {
+    if (document.readyState !== 'complete') return;
+    clearInterval(timer);
+    setTimeout(() => {
+      item.scrollIntoView({ behavior: 'smooth'});
+    }, 250);
+  }, 10);
+}
+
 // mobile sidebar toggle
 export function mobile() {
   let root = document.documentElement;

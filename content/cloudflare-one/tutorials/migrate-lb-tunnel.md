@@ -7,15 +7,15 @@ title: Migrate to Named Tunnels with Load Balancer
 
 # Migrate to Named Tunnels with Load Balancer
 
-Cloudflare Tunnel is available in two deployment modes: "Legacy" Tunnel and "Named" Argo Tunnel. [Named Tunnel](https://blog.cloudflare.com/argo-tunnels-that-live-forever/) mode improves maintainability and stability by distinguishing between routing and configuration.
+Cloudflare Tunnel is available in two deployment modes: "Legacy" Tunnel and "Named" Tunnel. [Named Tunnel](https://blog.cloudflare.com/argo-tunnels-that-live-forever/) mode improves maintainability and stability by distinguishing between routing and configuration.
 
-Unlike Legacy mode, Named Argo Tunnels give users the ability to manage routing in the Cloudflare dashboard and to run `cloudflared` once for [multiple services](https://blog.cloudflare.com/many-services-one-cloudflared/).
+Unlike Legacy mode, Named Tunnels give users the ability to manage routing in the Cloudflare dashboard and to run `cloudflared` once for [multiple services](https://blog.cloudflare.com/many-services-one-cloudflared/).
 
-If you are using Legacy Argo Tunnel today you can migrate to Named Argo Tunnel deployment in less than 10 minutes.
+If you are using Legacy Tunnel today you can migrate to Named Tunnel deployment in less than 10 minutes.
 
 **🗺️ This tutorial covers how to:**
 
-- Migrate a Legacy Argo Tunnel deployment to Named Argo Tunnel model
+- Migrate a Legacy Tunnel deployment to Named Tunnel model
 - Use Cloudflare Load Balancer to perform a zero downtime migration
 
 **⏲️ Time to complete:**
@@ -26,15 +26,15 @@ See additional documentation for working with [Kubernetes](/cloudflare-one/conne
 
 ---
 
-## Creating a Legacy Argo Tunnel with Cloudflare Load Balancer
+## Creating a Legacy Tunnel with Cloudflare Load Balancer
 
-This tutorial starts by documenting the steps to create a Legacy Argo Tunnel with Cloudflare Load Balancer so that those can be compared to the migration steps. If you would prefer to start the migration now, please [skip ahead](#create-a-named-tunnel).
+This tutorial starts by documenting the steps to create a Legacy Tunnel with Cloudflare Load Balancer so that those can be compared to the migration steps. If you would prefer to start the migration now, please [skip ahead](#create-a-named-tunnel).
 
 In both modes, the first step is to create a Load Balancer and Origin Pool. Navigate to the `Traffic` tab of the Cloudflare dashboard. Input a public-facing DNS hostname for a domain in your Cloudflare account.
 
 ![Create LB](/cloudflare-one/static/secure-origin-connections/migrate-lb-tunnel/create-lb.png)
 
-Next, create an origin pool for the load balancer. This will be a group of origins, whether Argo Tunnel connections or traditional IP addresses, used by the load balancer.
+Next, create an origin pool for the load balancer. This will be a group of origins, whether Cloudflare Tunnel connections or traditional IP addresses, used by the load balancer.
 
 ![Create LB](/cloudflare-one/static/secure-origin-connections/migrate-lb-tunnel/add-pool.png)
 
@@ -46,7 +46,7 @@ $ cloudflared tunnel --hostname app.widgetcorp.tech --url http://localhost:8000 
 
 ![Create LB](/cloudflare-one/static/secure-origin-connections/migrate-lb-tunnel/classic-tunnel-lb-ui.png)
 
-However, the Legacy Argo Tunnel mode has some downsides, including:
+However, the Legacy Tunnel mode has some downsides, including:
 
 - You cannot manage these connections from the Cloudflare dashboard.
 - When `cloudflared` restarts, it will attempt to register these connections as new connections which can lead to service disruption.

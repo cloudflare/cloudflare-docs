@@ -1,0 +1,102 @@
+name: Request content update
+description: Request documentation content edits and/or clarifications.
+labels: ["documentation", "content:edit"]
+body:
+  - type: dropdown
+    id: products
+    validations:
+      required: true
+    attributes:
+      label: Which Cloudflare product does this pertain to?
+      options:
+        - "1.1.1.1"
+        - Analytics
+        - API
+        - API Shield
+        - Automatic Platform Optimization
+        - Bots
+        - BYOIP
+        - Cache
+        - Client IP Geolocation
+        - Cloudflare One
+        - DDoS Protection
+        - DNS
+        - Email Routing
+        - Firewall
+        - Fundamentals
+        - HTTP/3
+        - Image Optimization
+        - Load Balancing
+        - Logs
+        - Magic Firewall
+        - Magic Transit
+        - Magic WAN
+        - Network Error Logging
+        - Network Interconnect
+        - Page Shield
+        - Pages
+        - Partners
+        - Pub/Sub
+        - R2
+        - Railgun
+        - Randomness Beacon
+        - Registrar
+        - Rules
+        - Ruleset Engine
+        - Security Center
+        - Spectrum
+        - SSL
+        - Stream
+        - Tenant
+        - Terraform
+        - Time Services
+        - WAF
+        - Waiting Room
+        - WARP Client
+        - Web3
+        - Workers
+        - Zaraz
+
+  - type: textarea
+    id: location-urls
+    validations:
+      required: true
+    attributes:
+      label: Existing documentation URL(s)
+      description: Please provide links to existing `https://developers.cloudflare.com/` pages.
+      placeholder: |
+        - https://developers.cloudflare.com/...
+        - https://developers.cloudflare.com/...
+
+  - type: textarea
+    id: location-section
+    validations:
+      required: true
+    attributes:
+      label: Section that requires update
+      description: Please specify which section requires the update.
+      placeholder: Please name or describe the section as not all page sections have header-links and section IDs may change over time.
+
+  - type: textarea
+    id: subject-what
+    validations:
+      required: true
+    attributes:
+      label: What needs to change?
+      description: Explain the issue with the content, including any confusion it may be causing.
+
+  - type: textarea
+    id: subject-how
+    validations:
+      required: true
+    attributes:
+      label: How should it change?
+      description: For content clarification requests, please propose a way forward that would have helped you avoid any confusion.
+
+  - type: textarea
+    id: extra
+    validations:
+      required: false
+    attributes:
+      label: Additional information
+      description: Any other details or screenshots that may be relevant.

@@ -1,8 +1,7 @@
 ---
 pcx-content-type: reference
-type: table
 title: Expression validation
-weight: 481
+weight: 8
 layout: list
 ---
 
@@ -27,14 +26,14 @@ The Cloudflare Filters API supports an endpoint for validating expressions.
     </thead>
     <tbody>
         <tr>
-            <td style='width:25%; word-wrap:break-word; white-space:normal'>Validate expression via query string (<em>?expression=</em>) </td>
+            <td style='width:25%; word-wrap:break-word; white-space:normal'>Validate expression via query string<br/> (<code class="InlineCode">?expression=</code>) </td>
             <td><code class='InlineCode'>GET /filters/validate-expr</code></td>
-            <td>Allows testing and validating expressions without changing anything</td>
+            <td>Allows testing and validating expressions without changing your configuration.</td>
         </tr>
         <tr>
             <td style='width:25%; word-wrap:break-word; white-space:normal'>Validate expression via JSON object</td>
             <td><code class='InlineCode'>POST /filters/validate-expr</code></td>
-            <td>Allows testing and validating expressions without changing anything</td>
+            <td>Allows testing and validating expressions without changing your configuration.</td>
         </tr>
     </tbody>
   </table>

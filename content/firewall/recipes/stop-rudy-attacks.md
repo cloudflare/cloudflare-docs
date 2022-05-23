@@ -5,11 +5,11 @@ title: Stop R-U-Dead-Yet? (R.U.D.Y.) attacks
 
 # Stop R-U-Dead-Yet? (R.U.D.Y.) attacks
 
-R-U-Dead-Yet (R.U.D.Y.) attacks accomplish denial of service (DoS) by submitting long form fields. Use Firewall Rules to stop these attacks by blocking requests that do not have a legitimate session cookie.
+R-U-Dead-Yet (R.U.D.Y.) attacks accomplish denial of service (DoS) by submitting long form fields. Use firewall rules to stop these attacks by blocking requests that do not have a legitimate session cookie.
 
 This example combines three expressions to target HTTP POST requests that do not contain a legitimate authenticated session cookie.
 
-The first expression uses the `http.request.uri.path` [field](/ruleset-engine/rules-language/fields/#standard-fields) to target the paths to secure from R.U.D.Y.:
+The first expression uses the [`http.request.uri.path`](/ruleset-engine/rules-language/fields/#field-http-request-uri-path) field to target the paths to secure from R.U.D.Y.:
 
 ```bash
 http.request.uri.path matches "(comment|conversation|event|poll)/create"

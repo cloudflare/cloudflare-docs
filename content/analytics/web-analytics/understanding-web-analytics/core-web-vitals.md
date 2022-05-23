@@ -19,8 +19,8 @@ Core Web Vitals is currently only supported in Chromium browsers, with Safari an
 Vitals Explorer enables you to easily pinpoint which elements in a web page are affecting the user’s experience while browsing your website, in a visual form.
 To find Vitals Explorer:
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Web Analytics**.
-2.  Select your website and click **Core Web Vitals**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Web Analytics**.
+2. Select your website and click **Core Web Vitals**.
 
 Vitals Explorer is divided into three main sections, each one with information about a specific feature that affects user experience:
 
@@ -38,7 +38,7 @@ Each table — LCP, FID, and CLS — also shows you the performance of these ele
 
 These numbers refer to how an element performs relatively to others in your page. For example, if an element takes 3,900 ms to load and is in the 75 percentile, this means that it is slower to load than 75% of the elements in your page.
 
-![Debug view](/analytics/static/images/core-web-vitals-debug-view.png)
+![Debug View page](/analytics/static/images/core-web-vitals-debug-view.png)
 
 ## Information collected
 

@@ -17,20 +17,10 @@ Cloudflare’s WHOIS service can be found at https://rdap.cloudflare.com/. Selec
 
 WHOIS redaction removes most contact information categorized as personal data (such as registrant name, email address, postal address) from the published WHOIS record for a domain. These fields will read `Data Redacted`. The nameserver, domain lock information, and date records for a domain are still available publicly. The following fields will continue to show in WHOIS, due to ICANN policy:
 
-- Registrant state/province.
-- Registrant country.
+- Registrant state/province
+- Registrant country
 
-Cloudflare still maintains the authoritative, unredacted, record of your WHOIS data. You can modify this information at any time in. To access it:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Select **Registrar**.
-3. Under **Manage** > **Default Contact**, select **Edit** to update your information.
-
-{{<Aside type="note" header="Note">}}
-
-WHOIS redaction is not the same as WHOIS privacy. WHOIS privacy replaces your information with proxy contact information, while redaction removes it altogether.
-
-{{</Aside>}}
+Cloudflare still maintains the authoritative, unredacted, record of your WHOIS data. You can modify this information at any time. Refer to [Registrant contact updates](/registrar/account-options/domain-contact-updates) for more information.
 
 ## What is RDAP?
 

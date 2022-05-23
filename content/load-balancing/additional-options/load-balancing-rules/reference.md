@@ -10,52 +10,17 @@ The fields available for load balancing rules depend on whether Cloudflare proxi
 
 If you use the wrong type of fields, you might see unexpected behavior from load balancing rules. For best results, always use the fields associated with your traffic's proxy status.
 
-![select load balancer fields based on the proxy status header](/load-balancing/static/images/proxy-status.png)
+![Choose load balancer fields based on the proxy status header](/load-balancing/static/images/proxy-status.png)
 
 ## Fields supported regardless of proxy
 
 Regardless of whether your traffic is proxied, you have access to the following fields:
 
-<table style="width:100%">
-  <thead>
-    <tr>
-      <th style="width:20%">Name in Expression Builder</th>
-      <th style="width:40%">Field</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-   <tr>
-      <td>IP address</td>
-      <td valign="top"><code>ip.src</code><br />{{<type>}}IP&nbsp;address{{</type>}}</td>
-      <td>
-         <p>The client TCP IP address, which may be adjusted to reflect the actual address of the client by using HTTP headers such as
-         <code class="InlineCode">X-Forwarded-For</code> or <code class="InlineCode">X-Real-IP</code>.
-         </p>
-         <p>Example value:
-         <br /><code class="InlineCode">192.0.2.1</code>
-         </p>
-      </td>
-    </tr>
-    <tr>
-      <td>Load Balancer Region</td>
-      <td valign="top"><code>cf.load_balancer.region</code><br />{{<type>}}bytes{{</type>}}</td>
-      <td>
-        <p>The <a href="/load-balancing/understand-basics/traffic-steering/pool-level-steering#geo-steering">region name</a> of the data center processing the request.</p>
-      </td>
-    </tr>
-    <tr>
-      <td>Load Balancer Name</td>
-      <td valign="top"><code>cf.load_balancer.name</code><br />{{<type>}}bytes{{</type>}}</td>
-      <td>
-        <p>The name of the load balancer executing these rules.</p>
-        <p>Example value:
-         <br /><code class="InlineCode">lb.example.com</code>
-         </p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+- **IP address** (`ip.src`) {{<type>}}IP&nbsp;address{{</type>}}: Varies based on whether your traffic is proxied:
+  - *Proxied*: Provides the client TCP IP address, which may be adjusted to reflect the actual address of the client by using HTTP headers such as `X-Forwarded-For` or `X-Real-IP`.
+  - *DNS-only*: Provides the ECS source address, if available. If not available, then provides the client resolver IP.
+- **Load Balancer Region** (`cf.load_balancer.region`) {{<type>}}bytes{{</type>}}: Provides the [region name](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) of the data center processing the request.
+- **Load Balancer Name** (`cf.load_balancer.name`) {{<type>}}bytes{{</type>}}: Provides the name of the load balancer executing these rules.
 
 ## Proxied traffic
 
@@ -68,7 +33,7 @@ If your traffic is proxied, you have access to all the fields listed under **Pro
 
 For the most up to date list of these fields, [create a load balancing rule](/load-balancing/additional-options/load-balancing-rules/create-rules/) in the UI.
 
-For more details about the field type or properties, refer to the [Rules language documentation](/ruleset-engine/rules-language/fields).
+For more details about the field type or properties, refer to the [Rules language documentation](/ruleset-engine/rules-language/fields/).
 
 ## Unproxied traffic
 
@@ -133,4 +98,4 @@ Cloudflare Load Balancers support the following unproxied fields:
 
 - **Grouping symbols** allow you to organize expressions, enforce operator precedence, and nest expressions.
 
-For examples and usage, refer to [Operators and grouping symbols](/ruleset-engine/rules-language/operators) in the Rules language documentation.
+For examples and usage, refer to [Operators and grouping symbols](/ruleset-engine/rules-language/operators/) in the Rules language documentation.

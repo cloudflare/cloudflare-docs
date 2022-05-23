@@ -5,4 +5,6 @@ _build:
   list: never
 ---
 
-[Set up load balancing](/load-balancing/) (add-on service) to spread traffic across multiple servers, reducing server strain and improving the experience for end users.
+To randomly distribute traffic across multiple servers, [set up multiple DNS records](/dns/manage-dns-records/how-to/dns-load-balancing/).
+
+For more fine-grained control over traffic distribution — including automatic failover, intelligent routing, and more — set up our [add-on load balancing service](/load-balancing/).
