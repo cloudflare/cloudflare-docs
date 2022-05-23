@@ -9,7 +9,7 @@ In this guide, you will learn how to refactor a Worker to a Pages Function that 
 1. If you manage a serverless function that your application depends on and wish to ship the logic without managing a Worker as a separate service.
 2. If you are migrating your Worker to Pages Functions and want to leverage on the routing and middleware capabilities of Pages Functions.
 
-{{<Aside type= "note">}}
+{{<Aside type= "note" header="Note">}}
 
 You can import your Worker to a Pages project without using Functions by creating a `_worker.js` file in the in the output directory of your Pages project. This [Advanced mode](/pages/platform/functions/#advanced-mode) requires writing your worker with [Module syntax](/workers/learning/migrating-to-module-workers/). 
 
@@ -17,17 +17,25 @@ However, when using the `_worker.js` file in Pages, the entire `/functions` dire
 
 {{</Aside>}}
 
+## General refactoring steps 
+
+1. Remove the `addEventListener()` method and its event response and replace it with the appropriate `OnRequest` method. Refer to [Function documentation](/pages/platform/functions/#writing-your-first-function) to select the appropriate method for your function.
+2. Pass the `context` object as an argument to your new `OnRequest` method to access the properties of the context parameter: `request`,`env`,`params` and `next`.
+3. Handle logic that must be executed before or after route handles with middleware. Learn more about [using Middleware](/pages/platform/functions/#adding-middleware) in the Functions documentation.
+
 ## Handle form submission example 
 
-To explain the process of refactoring, this guide uses a simple form submission example. This is a functionality that can be handled by a Worker but can also be a good use case for Pages Functions, since forms are most times specific to a particular application. 
+To explain the process of refactoring, this guide uses a simple form submission example. 
 
-Assuming you are already using a Worker to handle your form, you would have deployed this Worker and then added the URL to your form action in your HTML form. This means that when you change how the Worker handles your submissions, you do so separately from your client. If the logic in your Worker is used by more than one application, it makes sense to leave it this way.  
+Form submissions can be handled by Workers but can also be a good use case for Pages Functions, since forms are most times specific to a particular application. 
 
-However, it can be beneficial to use a [Pages Function](/pages/platform/functions/), which is a serverless function that lives within the same filesystem as your application and is deployed with Cloudflare Pages, when scoping logic that is needed in the same filesystem. 
+Assuming you are already using a Worker to handle your form, you would have deployed this Worker and then added the URL to your form action attribute in your HTML form. This means that when you change how the Worker handles your submissions, you do so separately from your client. If the logic in your Worker is used by more than one application, it makes sense to leave it this way.  
+
+However, it can be beneficial to use a [Pages Function](/pages/platform/functions/), which is a serverless function that lives within the same filesystem as your application and is deployed with Cloudflare Pages, when scoping logic that is needed in the same project. 
 
 Building your application this way, can help you manage your client and serverless logic from the same place and make it easier to use and debug your code. 
 
-## Handling form entries with Airtable with a Worker
+## Handling form entries with Airtable and Workers
 
 An [Airtable](https://airtable.com/) is a low-code platform for building collaborative applications. It helps customize your workflow, collaborate, and handle form submissions. For this example, you will utilize Airtable's form submission feature.
 
@@ -103,13 +111,13 @@ const HandleAirtableData = (body) => {
 
 ## Using Pages Functions
 
-[Pages Functions](/pages/platform/functions/) are serverless functions that run on Cloudflare Pages together with your application. They enable you to run server-side code to enable dynamic functionality without running a dedicated server. While the above code works perfectly, you can handle the form submission logic for your client in the same application with Pages Functions.
+[Pages Functions](/pages/platform/functions/) are serverless functions that run on Cloudflare Pages together with your application. They enable you to run server-side code that add dynamic functionality without running a dedicated server. While the above code works perfectly, you can handle the form submission logic for your client in the same application with Pages Functions.
 
-You can refactor your Airtable Worker to Pages Functions by doing the following. First, you will create a `functions` folder at the base of your application, and within this folder, you can create a `form.js` file to handle form submissions. Next, you will refactor the Worker code to fit the Pages Function syntax in this file.
+You can refactor your Airtable Worker to Pages Functions by first creating a `functions` folder at the base of your application. Within this folder, you can create a `form.js` file to handle form submissions. Next, you will refactor the Worker code to fit the Pages Function syntax in this file.
 
 ### Refactoring your Worker
 
-Every Worker has an `addEventListener` to listen for `fetch` events, but you will not need this in a Pages Function. Instead, you will `export` a single `OnRequest` function, and depending on the HTTPS request it handles, you will name it accordingly.  
+Every Worker has an `addEventListener` to listen for `fetch` events, but you will not need this in a Pages Function. Instead, you will `export` a single `OnRequest` function, and depending on the HTTPS request it handles, you will name it accordingly. Refer to [Function documentation](/pages/platform/functions/#writing-your-first-function) to select the appropriate method for your function.
 
 In the case of accepting form submissions and posting to an Airtable, you will export a single `OnRequestPost` function like the example below:
 
@@ -128,7 +136,12 @@ The above code takes a `request` and `env` as arguments which passes these props
 ```js
 ---
 filename: functions/form.js
+highlight: [4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]
 ---
+export async function onRequestPost({ request, env }) {
+	return await submitHandler({ request, env });
+}
+
 async function submitHandler({ request, env }) {
   const body = await request.formData();
 
@@ -156,6 +169,8 @@ The code block above shows that you pass the `env` parameter as props so we can 
 ---
 filename: functions/form.js
 ---
+
+// ..
 const HandleAirtableData = async function onRequest({ body, env }) {
   return fetch(
     `https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/${encodeURIComponent(
@@ -173,12 +188,16 @@ const HandleAirtableData = async function onRequest({ body, env }) {
 };
 ```
 
-You can test your function [locally using Wrangler 2](/pages/platform/functions/#develop-and-preview-locally).
+You can test your function [locally using Wrangler](/pages/platform/functions/#develop-and-preview-locally).
 
-## General refactoring steps 
+## Related resources
 
-1. Remove the `addEventListener()` method and its event response and replace it with the appropriate `OnRequest` method. 
-2. Pass the `context` object as an argument to your new `OnRequest` method to access the properties of the context parameter: `request`,`env`,`params` and `next`.
-3. Handle logic that must be executed before or after route handles with middleware. Learn more about [using Middleware](/pages/platform/functions/#adding-middleware) in the Functions documentation.
+Now that you have seen Pages Functions in a production example. You can refer the [documentation](/pages/platform/functions/) to learn more. You can also check out these tutorials and documentaion for more examples:
+
+- [HTML forms](/pages/tutorials/forms/)
+- [Plugins documentation](/pages/platform/functions/plugins/)
+- [Functions documentation](/pages/platform/functions/)
+
+
 
 
