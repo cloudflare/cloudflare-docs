@@ -40,6 +40,9 @@ content/firewall/ @cloudflare/firewall @cloudflare/PCX
 # Fundamentals
 content/fundamentals/ @cloudflare/PCX
 
+# HTTP Applications
+content/http-applications/ @cloudflare/PCX
+
 # HTTP/3
 content/http3/ @ConzorKingKong @cloudflare/PCX
 
