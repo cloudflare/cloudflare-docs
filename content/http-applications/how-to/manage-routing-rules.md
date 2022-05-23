@@ -39,7 +39,7 @@ To edit a routing rule:
 
 To delete a routing rule:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account.
 3. Go to **HTTP Applications**.
 4. Select an existing application.
