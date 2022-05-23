@@ -7,7 +7,7 @@ _build:
 
 When you create a new HTTP application, Cloudflare copies all the configuration settings from an existing zone and creates the first version of your application:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account.
 3. Go to **HTTP Applications**.
 4. Click **Create an Application**.
