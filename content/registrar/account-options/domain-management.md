@@ -12,6 +12,15 @@ When your domain is registered with Cloudflare, you can review your domain statu
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2. From **Overview**, scroll down to **Domain Registration** to review the current expiration date. Click **Manage domain** to review the Auto-Renew status for your domain.
 
+## Billing information
+
+Domain registrations will not appear in the **Active Subscriptions** section of the dashboard, as Registrar is not subscription based. To check information related to your domain billing:
+
+1. From your [dashboard home page](https://dash.cloudflare.com/login), select your account.
+2. Click **Registrar**.
+3. Find the domain you want to check and click **Manage**.
+4. Refer to **Registration** for information regarding your domain fees. From here, you can also opt to [renew or extend](/registrar/account-options/renew-domains/) your domain registration.
+
 ## Edit WHOIS records
 
 Cloudflare redacts WHOIS information from your domain by default. However, we do store the authentic WHOIS record for your domain. You may edit the WHOIS contact data for any domain. To do that:
@@ -32,21 +41,3 @@ To edit the Default Contact information:
 1. Make sure you are [logged in to the Cloudflare dashboard](https://dash.cloudflare.com/login) and have selected your account and domain.
 2. From **Overview**, scroll down to **Manage domain**.
 3. In the **Default Contact** card, click **Edit**, and make the necessary changes.
-
-## Automatic renewal of domain
-
-Cloudflare Registrar enrolls your domain to auto-renew by default. Unlike other registrars, your domain will only renew at the list price set by the registry. When a domain has the auto-renew setting turned on, Cloudflare will attempt to automatically renew the domain prior to expiration.
-
-There is no guarantee that the renewal will succeed. Renewals may fail for various reasons, including billing failures and registry downtime. While we will make several attempts to renew, we strongly recommend you frequently review your account to ensure your domains have been renewed.
-
-If you decide you no longer need the domain, [disable auto-renew for your domain](/registrar/account-options/renew-domains/#set-up-automatic-renewals). Once disabled, your domain will not renew upon expiration.
-
-{{<Aside type="note" header="Note">}}
-
-The first auto-renew attempt will occur approximately 30 days prior to expiration. If you wish to disable auto-renew, do so at least 30 days prior to the expiration date.
-
-{{</Aside>}}
-
-You can continue to keep your domain registered with Cloudflare for the time remaining on the expiration date. If you decide you want to keep the domain, enable auto-renew at any time prior to your expiration.
-
-For more details on renewals, refer to [Renew domains](/registrar/account-options/renew-domains/).

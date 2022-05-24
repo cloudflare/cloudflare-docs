@@ -39,6 +39,34 @@ If you do not have an ASN or do not want to bring your ASN to Cloudflare, you ca
 
 {{</Aside>}}
 
+## Add an IP prefix
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
+2. From the **IP Prefixes** tab, click **Add IP Prefix**. 
+3. Fill out the information for your prefix and click **Add IP Prefix**.
+
+After you add the prefix, you can edit its status.
+
+## Edit the status of a prefix
+
+1. From the **IP Prefixes** tab, locate the prefix you want to modify and click **Edit**.
+2. On the **Edit IP Prefix** page under **Status**, choose a status.
+3. *(Optional)* Edit the description for your prefix.
+4. Click **Edit IP Prefix** to save your changes.
+
+{{<Aside type="note" header="Note:">}}
+
+To avoid latency and potentially dropped routes, enable prefix advertisement from Cloudflare before withdrawing the advertisement from your data center.
+
+{{</Aside>}}
+
+## Delete a prefix
+
+You can only delete a prefix with an **Unapproved** status. To delete prefixes with a different status, contact your administrator or account manager.
+
+1. From the **IP Prefixes** tab, locate the prefix you want to modify and click **Delete**.
+2. Confirm your choice from the modal by clicking **Delete**.
+
 ## Border Gateway Protocol (BGP) control for advertisements
 
 Use BGP to control the status of your prefix — advertised or withdrawn — from Cloudflare's edge for more flexibility and control over your routes. The BGP controlled advertisement system works by establishing BGP sessions to Cloudflare's routing endpoints, which propagate BGP routes globally across all the locations at Cloudflare's edge.

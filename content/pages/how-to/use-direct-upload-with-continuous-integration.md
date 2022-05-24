@@ -13,7 +13,7 @@ In your project directory, install [Wrangler](/workers/wrangler/get-started/) so
 
 ```sh
 # Publish created project
-CF_ACCOUNT_ID=<ACCOUNT_ID> npx wrangler pages publish <DIRECTORY> --project-name=<PROJECT_NAME>
+$ CF_ACCOUNT_ID=<ACCOUNT_ID> npx wrangler pages publish <DIRECTORY> --project-name=<PROJECT_NAME>
 ```
 
 ## Get credentials from Cloudflare
