@@ -9,7 +9,7 @@ layout: list
 
 When you [create a gateway](/web3/how-to/manage-gateways/#create-a-gateway), Cloudflare automatically creates and adds specific [DNS records](/web3/reference/gateway-dns-records/) to your Cloudflare account.
 
-When your gateway hostname receives requests, its DNS records route these requests to a Cloudflare Workers script.
+When the hostname associated with your gateway receives requests, its DNS records route these requests to a Cloudflare Workers script.
 
 ![Cloudflare's Web3 gateways provide HTTP-accessible interfaces to the IPFS and Ethereum networks. For more details, continue reading.](/web3/static/web3-gateway-flow-diagram.png)
 
