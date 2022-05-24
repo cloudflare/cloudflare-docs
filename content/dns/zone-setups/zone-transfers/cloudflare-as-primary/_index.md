@@ -6,7 +6,7 @@ weight: 1
 
 # Primary DNS - Outgoing Zone Transfers
 
-With outgoing zone transfers, you can use Cloudlare as your primary DNS provider and configure another, secondary DNS provider.
+With outgoing zone transfers, you can use Cloudflare as your primary DNS provider and configure one or more peer DNS servers as secondary DNS providers.
 
 When you [make edits](/dns/manage-dns-records/how-to/create-dns-records/) to Cloudflare DNS, those DNS records will be transferred from Cloudflare to your secondary provider via zone transfer using [AXFR](https://datatracker.ietf.org/doc/html/rfc5936) or [IXFR](https://datatracker.ietf.org/doc/html/rfc1995)
 
