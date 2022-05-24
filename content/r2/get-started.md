@@ -151,14 +151,14 @@ export default {
       case "GET":
         const object = await env.MY_BUCKET.get(key);
 
-        if (!object) {
+        if (!object || !object.value) {
           return new Response("Object Not Found", { status: 404 });
         }
 
-        return new Response(object.body);
+        return new Response(object.value);
       case "DELETE":
         await env.MY_BUCKET.delete(key);
-        return new Response("Deleted!", { status: 200 });
+        return new Response("Deleted!");
 
       default:
         return new Response("Method Not Allowed", { status: 405 });
