@@ -44,6 +44,10 @@ After purchasing a gateway subscription, create a gateway.
 
 {{<render file="_cloudflare-settings.md">}}
 
+## Step 4 - Restrict gateway access (optional)
+
+If you are using your gateway for backend services, you may want to use Cloudflare Zero Trust to [restrict gateway access](/web3/how-to/restrict-gateway-access/).
+
 ## Step 4 - Use the gateway
 
 Once you have created a gateway and updated your Cloudflare settings, you can start using your [IPFS](/web3/how-to/use-ipfs-gateway/) or [Ethereum](/web3/how-to/use-ethereum-gateway/) gateway.
