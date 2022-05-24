@@ -18,7 +18,6 @@ CLOUDFLARE_EMAIL=<CLOUDFLARE_EMAIL>
 CLOUDFLARE_API_KEY=<CLOUDFLARE_API_KEY>
 PAYLOAD='{ "query":
   "query GetTunnelHealthCheckResults($accountTag: string, $datetimeStart: string, $datetimeEnd: string) {
-    {
       viewer {
         accounts(filter: {accountTag: $accountTag}) {
           magicTransitTunnelHealthChecksAdaptiveGroups(
@@ -38,7 +37,6 @@ PAYLOAD='{ "query":
           }
         }
       }
-    }
   }",
     "variables": {
       "accountTag": "90f518ca7113dc0a91513972ba243ba5",
@@ -47,11 +45,20 @@ PAYLOAD='{ "query":
     }
   }'
 
+# With an API Key
 curl \
   -X POST \
   -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
+  -H "X-Auth-Email: ${CLOUDFLARE_EMAIL}" \
+  -H "X-Auth-key: ${CLOUDFLARE_API_KEY}" \
+  --data "$(echo $PAYLOAD)" \
+  https://api.cloudflare.com/client/v4/graphql/
+
+# With an API Token
+curl \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${CLOUDFLARE_API_KEY}" \
   --data "$(echo $PAYLOAD)" \
   https://api.cloudflare.com/client/v4/graphql/
 ```
