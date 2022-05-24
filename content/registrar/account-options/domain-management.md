@@ -16,9 +16,10 @@ When your domain is registered with Cloudflare, you can review your domain statu
 
 Domain registrations will not appear in the **Active Subscriptions** section of the dashboard, as Registrar is not subscription based. To check information related to your domain billing:
 
-1. From your [dashboard home page](https://dash.cloudflare.com/login), click **Registrar**.
-2. Find the domain you want to check and click **Manage**.
-3. Refer to **Registration** for information regarding your domain fees. From here, you can also opt to [renew or extend](/registrar/account-options/renew-domains/) your domain registration.
+1. From your [dashboard home page](https://dash.cloudflare.com/login), select your account.
+2. Click **Registrar**.
+3. Find the domain you want to check and click **Manage**.
+4. Refer to **Registration** for information regarding your domain fees. From here, you can also opt to [renew or extend](/registrar/account-options/renew-domains/) your domain registration.
 
 ## Edit WHOIS records
 
