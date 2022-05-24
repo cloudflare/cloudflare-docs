@@ -1,0 +1,22 @@
+---
+pcx-content-type: reference
+title: Unregistered domains
+weight: 1
+---
+
+# Unregistered domains
+
+When you [add a new domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, you might experience `not a registered domain` errors.
+
+This means that Cloudflare does not recognize your domain as being registered with a domain registrar.
+
+## No existing domain
+
+If the domain is actually unregistered — meaning that no one owns it — you can purchase that domain name through [Cloudflare Registrar](/registrar/get-started/register-domain/).
+
+## Existing domain
+
+If you have already own your domain but Cloudflare does not recognize your domain as registered:
+
+- **Wait and retry**: If you purchased your domain within the past few hours, you may need to wait a few hours and try again.
+- **Verify DNS records**: Before a domain can be added to Cloudflare, it must return a valid `SOA` record and `NS` records for valid, working nameservers. These records can be checked by third-party online tools such as https://www.whatsmydns.net/ or via a command-line terminal using a [`dig` command](https://en.wikipedia.org/wiki/Dig_(command)).
