@@ -122,9 +122,9 @@ export const onRequest = [abtest]
 
 If the cookie value is not present, you will have to assign one. You can generate numbers randomly by using the `Math.random()` Javascript method and getting whole numbers by calling a `Math.floor()` on the function.
 
-To make the values into percentages, multiple `Math.random()` by 100 and call`Math.floor()` so that all the percentages can be whole numbers. Our default version is given a value of `current`.
+To make the number genrated into percentages, multiple `Math.random()` by 100 and call `Math.floor()` so that all the percentages can be whole numbers. Your default cookie version is given a value of `current`.
 
-If the percentage is lower than 50, you will assign the version to `new` and based on the value randomly generated; we will set the cookie and serve the assets. After the conditional block pass the request to `next()`, this will pass the request back to the browser.
+If the percentage of the number generated is lower than 50, you will assign the cookie version to `new` and based on the percentage randomly generated; we will set the cookie and serve the assets. After the conditional block pass the request to `next()`, this will pass the request back to the browser.
 
 ```js
 ---
