@@ -8,7 +8,7 @@ layout: example
 
 We've provided an example Worker that exposes an R2 bucket to the Internet and demonstrates its functionality for storing and retrieving objects.
 
-```js
+```ts
 interface Env {
   BUCKET: R2Bucket
 }
