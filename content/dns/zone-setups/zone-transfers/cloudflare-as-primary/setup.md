@@ -18,6 +18,12 @@ If you are using Cloudflare as your [primary DNS provider](/dns/zone-setups/full
 
 If you take advantage of this behavior within Cloudflare (using a `CNAME` record on your zone apex), Cloudflare will also transfer out the `CNAME` value during outgoing zone transfers. This setup can lead to issues if your secondary DNS provider does not support `CNAME` flattening or cannot handle `CNAME` records on the zone apex.
 
+{{<Aside type="note">}}
+
+Cloudflare is actively working to transfer flattened IPs to the secondary DNS provider.
+
+{{</Aside>}}
+
 ### Proxied records
 
 If your zone has [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/), you may also experience issues with outgoing zone transfers.
@@ -26,7 +32,7 @@ When Cloudflare performs outgoing transfers, we also transfer out the IP or host
 
 {{<Aside type="note">}}
 
-Cloudflare is actively working to address this limitation.
+Cloudflare is actively working to support outgoing zone transfers of proxied records.
 
 {{</Aside>}}
 
