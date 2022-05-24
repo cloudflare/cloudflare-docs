@@ -1,7 +1,7 @@
 ---
-title: Setup
+title: Setup options
 pcx-content-type: navigation
-weight: 1
+weight: 3
 ---
 
 # Setup

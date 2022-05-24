@@ -2,21 +2,22 @@
 title: Inline
 pcx-content-type: concept
 weight: 1
+layout: single
 meta:
    title: Inline deployment
 ---
 
 # Inline deployment
 
-With an **Inline deployment** for your [Area 1 setup](/email-security/deployment/), Area 1 receives email messages before they reach a user's inbox.
+With an **Inline deployment** for your [Area 1 setup](/email-security/setup/), Area 1 receives email messages before they reach a user's inbox.
 
 More technically, Area 1 becomes a hop in the SMTP processing chain and physically interacts with incoming email messages. Based on your policies, various messages are blocked before reaching the inbox.
 
-![With inline deployment, messages travel through Area 1's email filter before reaching your users.](/email-security/static/api-deployment-diagram.png)
+![With inline deployment, messages travel through Area 1's email filter before reaching your users.](/email-security/static/inline-deployment-diagram.png)
 
 ## Benefits
 
-When you choose inline deployment, you get the following benefits:
+When you choose an inline deployment, you get the following benefits:
 
 - Messages are processed and physically blocked before delivery to a user's mailbox.
 - Your deployment is simpler, because any complex processing can happen downstream and without modification.
