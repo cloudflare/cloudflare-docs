@@ -11,7 +11,11 @@ In this guide, you will learn how to use [Pages Functions](/pages/platform/funct
 
 Configuring different versions of your application for A/B testing will be unique to your specific use case. For all developers, A/B testing setup can be simplified into a few helpful principles.
 
-Depending on the number of application versions you have (this guide uses two), you can assign your users into experimental groups. To ensure that a user remains in the group you have given, a cookie will be set and stored in the browser. Then, based on the value of the cookie, the browser will sever the route associated with that cookie.
+Depending on the number of application versions you have (this guide uses two), you can assign your users into experimental groups. The experimental groups in this guide are the base route `/` and the test route `/test`.
+
+To ensure that a user remains in the group you have given, a cookie will be set and stored in the browser and depending on cookie value the corresponding route will be served.
+
+You can use any cookie library for example, [Js cookie](https://www.npmjs.com/package/js-cookie) to generate cookies. This guide assigns a local value to a `cookieName` variable and uses that as the cookie value. Depending on the cookie value a route is served. The cookie assignment is done randomly by using `Math.random()` which gernerates a list of random decimal numbers, you can make the numbers a whole number by calling the `Math.floor()` method on `Math.random()` like this:  `Math.floor(Math.random())` and to make sure that you have a maximum range of numbers you can multiple by 100. This means that you can now think of your assignments in terms of percentages. `Math.floor(Math.random() * 100)`
 
 {{<Aside type="Note">}}
 
