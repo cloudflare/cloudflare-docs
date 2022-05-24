@@ -18,7 +18,7 @@ Domain registrations will not appear in the **Active Subscriptions** section of 
 
 1. From your [dashboard home page](https://dash.cloudflare.com/login), click **Registrar**.
 2. Find the domain you want to check and click **Manage**.
-3. Refer to the **Registration** for information regarding your domain fees. From here, you can also opt to [renew or extend](/registrar/account-options/renew-domains/) your domain registration.
+3. Refer to **Registration** for information regarding your domain fees. From here, you can also opt to [renew or extend](/registrar/account-options/renew-domains/) your domain registration.
 
 ## Edit WHOIS records
 

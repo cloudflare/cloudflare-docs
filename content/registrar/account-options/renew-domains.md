@@ -11,7 +11,7 @@ meta:
 
 Cloudflare Registrar enrolls your domain to auto-renew by default. Unlike other registrars, your domain will only renew at the list price set by the registry. When a domain has the auto-renew setting turned on, Cloudflare will attempt to automatically renew the domain prior to expiration.
 
-There is no guarantee that the renewal will succeed. Renewals may fail for various reasons, including billing failures and registry downtime. While we will make several attempts to renew, we strongly recommend you frequently review your account to ensure your domains have been renewed.
+There is no guarantee that the renewal will succeed. Renewals may fail for various reasons, including billing failures and registry downtime. While Cloudflare will make several attempts to renew, it is strongly recommended you frequently review your account to ensure your domains have been renewed.
 
 If you decide you no longer need the domain, [disable auto-renew for your domain](#set-up-automatic-renewals). Once disabled, your domain will not renew upon expiration.
 
@@ -21,14 +21,14 @@ The first auto-renew attempt will occur approximately 30 days prior to expiratio
 
 {{</Aside>}}
 
-You can continue to keep your domain registered with Cloudflare for the time remaining on the expiration date. If you decide you want to keep the domain, enable auto-renew at any time prior to your expiration.
+You can continue to keep your domain registered with Cloudflare for the time remaining until the expiration date. If you decide you want to keep the domain, enable auto-renew at any time prior to expiration.
 
 ## Set up automatic renewals
 
 If you want your domains to renew automatically, keep the default settings for your domain (**Auto Renew** should be set to **On**). To find this setting:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and click **Registrar**.
-2. Find the domain you want to auto renew, and make sure the **Auto-Renew** toggle is enabled.
+2. Find the domain you want to auto renew, and make sure the **Auto-renew** toggle is enabled.
 
 Cloudflare attempts to renew these domains automatically 30 days before their expiration date. Several more attempts are made if the first attempt fails. The last attempt to renew is made on the day before expiration. You can also [manually renew](#renew-a-domain-manually) a domain at any time.
 
@@ -48,7 +48,7 @@ You can renew a domain at any time. To renew a domain registered with Cloudflare
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and click **Registrar**.
 2. Find the domain you want to renew and click **Manage**.
-3. In **Registration** click **Renew/Extend domain**.
+3. In **Registration** click **Renew/Extend Domain**.
 4. In the **Renew for** drop-down menu, choose a number of years to renew your domain (up to 10 years).
 5. Select **Renew** > **Purchase**.
 
