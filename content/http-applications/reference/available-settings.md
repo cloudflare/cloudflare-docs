@@ -6,7 +6,7 @@ weight: 2
 
 # Available settings
 
-When you use HTTP applications, you can edit various configuration settings for your zone, including Page Rules, Firewall Rules, Cache settings, and more.
+When you use HTTP applications, you can edit various configuration settings, including Page Rules, Firewall Rules, Cache settings, and more.
 
 Generally, you are allowed to edit all of the zone-level configurations except for the following:
 
