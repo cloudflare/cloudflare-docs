@@ -204,11 +204,11 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
 
 #### `format`
 
-{{<Aside type="note" header="Note">}}At the moment, this setting is ignored by Cloudflare Images.{{</Aside>}}
+{{<Aside type="note" header="Note">}}At the moment, this setting only works directly with [Image Resizing URL format](/images/image-resizing/url-format/).{{</Aside>}}
 
 The `auto` option will serve the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used.
 
-Workers integration also supports:
+Workers integration supports:
 - `avif`: Generate images in AVIF format if possible (with WebP as a fallback).
 - `webp`: Generate images in Google WebP format. Set the quality to `100` to get the WebP lossless format.
 - `json`: Instead of generating an image, outputs information about the image in JSON format. The JSON object will contain data such as image size (before and after resizing), source image’s MIME type, and file size.
@@ -226,7 +226,25 @@ format=auto
 ---
 filename: Workers
 ---
-cf: {images: {format: "auto"}}
+cf: {images: {format: "avif"}}
+```
+
+In order for the `format:auto` option to work with a custom Worker, you need to pass the `Accept` header. Refer to [this example Worker](/images/image-resizing/resize-with-workers/#an-example-worker) for a complete overview of how to set up a Image Resizing Worker.
+
+```js
+---
+filename: Custom Worker for Image Resizing with `format:auto`
+---
+const accept = request.headers.get("accept");
+let image = {};
+
+if (/image\/avif/.test(accept)) {
+    image.format = "avif";
+} else if (/image\/webp/.test(accept)) {
+    image.format = "webp";
+}
+
+return fetch(url, {cf:{image}});
 ```
 
 #### `gamma`
