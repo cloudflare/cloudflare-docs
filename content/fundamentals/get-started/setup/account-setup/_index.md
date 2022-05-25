@@ -14,7 +14,7 @@ If you need help setting up and securing a new Cloudflare account, refer to the 
   - [Enable two-factor authentication (2FA)](https://support.cloudflare.com/hc/articles/200167906)
   - [Create an API token](/api/tokens/create/)
   - [Set up notifications](/fundamentals/notifications/)
-  - [Add account members](https://support.cloudflare.com/hc/articles/200167946)
+  - [Add account members](/fundamentals/get-started/setup/account-setup/manage-account-members/)
   - [Set up payment methods](https://support.cloudflare.com/hc/articles/4402711553165)
 
 - **Post-setup security**:
