@@ -5,7 +5,7 @@ title: Use Pages Functions for A/B testing
 
 # Use Pages Functions for A/B testing
 
-In this guide, you will learn how to use [Pages Functions](/pages/platform/functions/) for A/B testing in your Pages projects. A/B testing is a user experience research methodology applied when comparing two or more versions of a webpage or application. With A/B testing, you can serve two or more versions of a webpage to users and divide traffic to your site.
+In this guide, you will learn how to use [Pages Functions](/pages/platform/functions/) for A/B testing in your Pages projects. A/B testing is a user experience research methodology applied when comparing two or more versions of a web page or application. With A/B testing, you can serve two or more versions of a webpage to users and divide traffic to your site.
 
 # Overview 
 
@@ -19,11 +19,11 @@ You can use any cookie library for example, [Js cookie](https://www.npmjs.com/pa
 
 {{<Aside type="Note">}}
 
-Cookies are helpful because they allow users to be served the same version of your application every time they visit and when they refresh the site. This will help keep the version served consistent for future rollouts. 
+Cookies are helpful because they allow users to be served the same version of your application every time they visit and refresh your site. This will help keep the served version consistent for future rollouts. 
 
 {{</Aside>}}
 
-After you have gotten the value from the cookie, you can then have a conditional rendering set up that checks the value of the existing cookie and then assigns a group. Without a cookie, you will give one and set the URL. 
+After you have set the value from the cookie, you can then have a conditional rendering set up that checks the value of the existing cookie and then assigns a group. Without a cookie, you will give one and set the URL. 
 
 ## Set up your Pages Function
 
@@ -33,7 +33,11 @@ To begin, go to your Pages project and create a `/functions` directory. Your app
 
 ## Add middleware logic
 
-Then, in your `/functions` directory, create a `_middleware.js` file. Pages Functions have utility functions that can reuse chunks of logic which are executed before and/or after route handlers. These are called [middleware](/pages/platform/functions/#adding-middleware). Following this guide, you want to intercept the request before it gets to the server, making ideal use of middleware.
+Pages Functions have utility functions that can reuse chunks of logic which are executed before and/or after route handlers. These are called [middleware](/pages/platform/functions/#adding-middleware). Following this guide, you will want to intercept requests before they get to your origin server, making ideal use of middleware.
+
+In your `/functions` directory, create a `_middleware.js` file. 
+
+
 
 {{<Aside type="Note">}}
 
@@ -58,7 +62,7 @@ const abtest = async({request, next, env}) => {
 export const onRequest = [abtest]
 ```
 
-To identify the cookie, assign it in the browser and give it a unique name. For this example, create a variable above your async function. You can also define your routes. Following this guide, call the second route `/test`.
+To identify the cookie, assign it in the browser and give it a unique name. Create a variable above your async function. Here, you can define the second route as `newHomepagePathName` and assign it to the`/test. As seen in the code below:
 
 ```js
 ---
@@ -120,11 +124,11 @@ export const onRequest = [abtest]
 
 ```
 
-If the cookie value is not present, you will have to assign one. You can generate numbers randomly by using the `Math.random()` Javascript method and getting whole numbers by calling a `Math.floor()` on the function.
+If the cookie value is not present, you will have to assign one. You can generate numbers randomly by using the `Math.random()` method and getting whole numbers by calling a `Math.floor()` on the function.
 
 To make the number genrated into percentages, multiple `Math.random()` by 100 and call `Math.floor()` so that all the percentages can be whole numbers. Your default cookie version is given a value of `current`.
 
-If the percentage of the number generated is lower than 50, you will assign the cookie version to `new` and based on the percentage randomly generated; we will set the cookie and serve the assets. After the conditional block pass the request to `next()`, this will pass the request back to the browser.
+If the percentage of the number generated is lower than 50, you will assign the cookie version to `new`. Based on the percentage randomly generated, you will set the cookie and serve the assets. After the conditional block, pass the request to `next()`. This will pass the request back to the browser.
 
 ```js
 ---
@@ -176,7 +180,7 @@ export const onRequest = [abtest];
 
 ## Deploy to Cloudflare Pages
 
-Now that you have set up your `functions/_middleware.js` file in your project you are ready to deploy your project. Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Account Home** > **Pages** and selecting **Create a project**. Select your git repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+Now that you have set up your `functions/_middleware.js` file in your project you are ready to deploy with Pages. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Account Home** > **Pages** and select **Create a project**. Select your git repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 
