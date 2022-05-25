@@ -10,7 +10,7 @@ If you need help setting up and securing a new Cloudflare account, refer to the 
 
 - **Account setup**:
 
-  - [Create a Cloudflare account](/fundamentals/get-started/create-account/)
+  - [Create a Cloudflare account](/fundamentals/get-started/account-setup/create-account/)
   - [Enable two-factor authentication (2FA)](https://support.cloudflare.com/hc/articles/200167906)
   - [Create an API token](/api/tokens/create/)
   - [Set up notifications](/fundamentals/notifications/)
