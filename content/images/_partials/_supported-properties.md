@@ -204,7 +204,7 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
 
 #### `format`
 
-{{<Aside type="note" header="Note">}}At the moment, this setting only works directly with [Image Resizing URL format](/images/image-resizing/url-format/).{{</Aside>}}
+{{<Aside type="note" header="Note">}}At the moment, this setting only works directly with [Image Resizing](/images/image-resizing/url-format/).{{</Aside>}}
 
 The `auto` option will serve the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used.
 
