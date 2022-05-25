@@ -34,8 +34,8 @@ To get audit logs from the Cloudflare API, send a [GET request](https://api.clou
 
 We recommending using the API for downloading historical audit log data.
 
-To maintain Audit Logs query performance, the Audit Logs API was modified on Jun 30 2019 to return records with a maximum age of 18 months.
+To maintain Audit Logs query performance, the Audit Logs API was modified on 2019-06-30 to return records with a maximum age of 18 months.
 
 ## Retention
 
-Cloudflare will maintain full Audit Logs for the life of a Customer's account and potentially longer if required by law or to otherwise comply with regulatory obligations.
+Cloudflare will maintain full Audit Logs for the life of a customer's account and potentially longer if required by law or to otherwise comply with regulatory obligations.
