@@ -51,4 +51,4 @@ To retrieve those values:
 
 The Intune device posture check relies on information from the Microsoft Graph API. Refer to Microsoft's [ComplianceState](https://docs.microsoft.com/en-us/graph/api/resources/intune-devices-compliancestate?view=graph-rest-1.0) and [List managedDevices](https://docs.microsoft.com/en-us/graph/api/intune-devices-manageddevice-list?view=graph-rest-1.0) documentation for a list of properties returned by the API.
 
-You can read more about how to control ComplianceState in Microsofts [How-To Compliance documentation](https://docs.microsoft.com/en-us/mem/intune/protect/device-compliance-get-started)
+To learn more about how to control ComplianceState, refer to Microsoft's [compliance policies guide](https://docs.microsoft.com/en-us/mem/intune/protect/device-compliance-get-started).
