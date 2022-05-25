@@ -6,13 +6,13 @@ weight: 2
 
 # Manage account access
 
-Customers in all plans can share account access with other members. However, the roles available to your account depend on your plan.
+Customers on all plans can share account access with other members. However, the roles available to your account depend on your plan.
 
 ## Add account members
 
 To add a member to your account:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a Super Administrator).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator**).
 2. Go to **Manage Account** > **Members**.
 3. For **Invite members**, enter one or more email addresses.
 4. Choose the associated roles.
@@ -56,7 +56,7 @@ To add a member to your account:
 
 To revoke a member's access to your account:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a Super Administrator).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator**).
 2. Go to **Manage Account** > **Members**.
 3. Locate an account member and expand their record.
 4. Click **Revoke**.
@@ -86,7 +86,7 @@ By default, Cloudflare Support does not have edit access to your account.
 
 To enable editing access by Cloudflare Support:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a Super Administrator).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator**).
 2. Go to **Manage Account** > **Configurations**.
 3. For **Editing Permission**, switch the toggle to **On**.
 4. Select a duration.
