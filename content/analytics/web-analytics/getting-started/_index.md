@@ -8,16 +8,22 @@ meta:
 
 # Enabling Cloudflare Web Analytics
 
+{{<Aside type="note" header="Prerequisites">}}
+
+Before yo can start using Web Analytics, you have to [create a Cloudflare account](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) and [add your site](/fundamentals/get-started/setup/add-site/) to Cloudflare.
+
+{{</Aside>}}
+
+--- 
+
 ## Sites not proxied through Cloudflare
 
 1. Go to [Get started with Web Analytics](https://dash.cloudflare.com/sign-up/web-analytics).
-2. Enter an Email address and password.
-3. Click **Create Account**.
-4. Enter your website’s hostname.
-5. Copy the JS snippet.
-6. Add the JS snippet to any of your website’s HTML pages before the ending body tag.
-7. Click **Done**.
-8. Wait for the redirect to the Web Analytics page or click **View Analytics**. It may take a few minutes for Web Analytics data to appear.
+2. Enter your website’s hostname and click **Done**.
+3. Copy the JS snippet.
+4. Add the JS snippet to any of your website’s HTML pages before the ending body tag.
+5. Click **Done**.
+6. Wait for the redirect to the Web Analytics page or click **View Analytics**. It may take a few minutes for Web Analytics data to appear.
 
 Repeat steps 4-8 for all of the websites you want to track with Web Analytics by going to **Quick Actions** > **Add a site** from the Web Analytics Sites page. From this page you can also click **Manage site** inside each website's card to adjust Web Analytics for your site at any time.
 
