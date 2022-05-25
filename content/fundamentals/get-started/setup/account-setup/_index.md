@@ -1,6 +1,6 @@
 ---
-pcx-content-type: reference
-title: Set up account
+pcx-content-type: navigation
+title: Account setup
 weight: 1
 ---
 
@@ -10,7 +10,7 @@ If you need help setting up and securing a new Cloudflare account, refer to the 
 
 - **Account setup**:
 
-  - [Create a Cloudflare account](https://support.cloudflare.com/hc/articles/201720164#6NswogCXqM6TSaxqEf5Bz4)
+  - [Create a Cloudflare account](/fundamentals/get-started/setup/account-setup/create-account/)
   - [Enable two-factor authentication (2FA)](https://support.cloudflare.com/hc/articles/200167906)
   - [Create an API token](/api/tokens/create/)
   - [Set up notifications](/fundamentals/notifications/)
@@ -18,5 +18,6 @@ If you need help setting up and securing a new Cloudflare account, refer to the 
   - [Set up payment methods](https://support.cloudflare.com/hc/articles/4402711553165)
 
 - **Post-setup security**:
-  - [Understand Cloudflare audit logs](https://support.cloudflare.com/hc/articles/115002833612)
+
+  - [Review Cloudflare audit logs](/fundamentals/get-started/basic-tasks/review-audit-logs/)
   - [View and revoke active sessions](https://support.cloudflare.com/hc/articles/360033455752)
