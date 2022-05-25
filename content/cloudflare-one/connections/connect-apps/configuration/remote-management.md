@@ -36,9 +36,9 @@ On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl
     RestartSec=5s
     ```
 
-## MacOS
+## macOS
 
-On MacOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`. By default, the agent will be called `com.cloudflare.cloudflared`. To configure your tunnel on MacOS:
+On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`. By default, the agent will be called `com.cloudflare.cloudflared`. To configure your tunnel on macOS:
 
 1. Stop the `cloudflared` service.
 

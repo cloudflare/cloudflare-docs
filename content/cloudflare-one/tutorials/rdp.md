@@ -229,7 +229,7 @@ You can help end users connect without requiring the command line by providing t
 
 - Ensure that RDP is enabled on the target Windows machine. If not, you may encounter an error: `No connection could be made because the target machine actively refused it`.
 
-### MacOS
+### macOS
 
 {{<Aside type="note">}}
 
@@ -237,7 +237,7 @@ Before you start, make sure you download an RDP client for macOS.
 
 {{</Aside>}}
 
-MacOS users can save a command shortcut that will launch the RDP flow.
+macOS users can save a command shortcut that will launch the RDP flow.
 
 1.  The command below can be saved as a `.command` file that can be launched on login:
 
@@ -267,4 +267,4 @@ MacOS users can save a command shortcut that will launch the RDP flow.
 
 5.  Double click on the previously created `CF-RDP-Tunnel.command` file.
 
-    The default behavior in MacOS is for the Terminal window to stay open. You can configure it to close automatically.
+    The default behavior in macOS is for the Terminal window to stay open. You can configure it to close automatically.

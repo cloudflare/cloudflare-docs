@@ -13,7 +13,7 @@ The list of client libraries are not formally supported by Cloudflare but have b
 
 |      Platform/Language          |    Source                                 |
 |---------------------------------|-------------------------------------------|
-| MacOS, Windows, Linux           | https://mqttx.app/ (GUI tool)             |
+| macOS, Windows, Linux           | https://mqttx.app/ (GUI tool)             |
 | JavaScript (Node.js, TypeScript)| https://github.com/mqttjs/MQTT.js         |
 | Go (MQTT v5.0 specific library) | https://github.com/eclipse/paho.golang    |
 | Python                          | https://pypi.org/project/paho-mqtt/       |
