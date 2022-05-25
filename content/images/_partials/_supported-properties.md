@@ -11,14 +11,14 @@ Whether to preserve animation frames from input files. Default is `true`. Settin
 
 ```js
 ---
-filename: URL format
+header: URL format
 ---
 anim=false
 ```
 
 ```js
 ---
-filename: Workers
+header: Workers
 ---
 cf: {images: {anim: false}}
 ```
@@ -29,14 +29,14 @@ Background color to add underneath the image. Applies only to images with transp
 
 ```js
 ---
-filename: URL format
+header: URL format
 ---
 background=%23RRGGBB
 ```
 
 ```js
 ---
-filename: Workers
+header: Workers
 ---
 cf: {images: {background: "#RRGGBB"}}
 ```
@@ -47,14 +47,14 @@ Blur radius between `1` (slight blur) and `250` (maximum). Be aware that you can
 
 ```js
 ---
-filename: URL format
+header: URL format
 ---
 blur=50
 ```
 
 ```js
 ---
-filename: Workers
+header: Workers
 ---
 cf: {images: {blur: 50}}
 ```
@@ -65,14 +65,14 @@ Increase brightness by a factor. A value of `1.0` equals no change, a value of `
 
 ```js
 ---
-filename: URL format
+header: URL format
 ---
 brightness=0.5
 ```
 
 ```js
 ---
-filename: Workers
+header: Workers
 ---
 cf: {images: {brightness: 0.5}}
 ```
@@ -83,14 +83,14 @@ Increase contrast by a factor. A value of `1.0` equals no change, a value of `0.
 
 ```js
 ---
-filename: URL format
+header: URL format
 ---
 contrast=0.5
 ```
 
 ```js
 ---
-filename: Workers
+header: Workers
 ---
 cf: {images: {contrast: 0.5}}
 ```
@@ -101,14 +101,14 @@ Device Pixel Ratio. Default is `1`. Multiplier for `width`/`height` that makes i
 
 ```js
 ---
-filename: URL format
+header: URL format
 ---
 dpr=1
 ```
 
 ```js
 ---
-filename: Workers
+header: Workers
 ---
 cf: {images: {dpr: 1}}
 ```
@@ -122,14 +122,14 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
 
   ```js
   ---
-  filename: URL format
+  header: URL format
   ---
   fit=scale-down
   ```
 
   ```js
   ---
-  filename: Workers
+  header: Workers
   ---
   cf: {images: {fit: "scale-down"}}
   ```
@@ -139,14 +139,14 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
 
   ```js
   ---
-  filename: URL format
+  header: URL format
   ---
   fit=contain
   ```
 
   ```js
   ---
-  filename: Workers
+  header: Workers
   ---
   cf: {images: {fit: "contain"}}
   ```
@@ -156,14 +156,14 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
 
   ```js
   ---
-  filename: URL format
+  header: URL format
   ---
   fit=cover
   ```
 
   ```js
   ---
-  filename: Workers
+  header: Workers
   ---
   cf: {images: {fit: "cover"}}
   ```
@@ -173,14 +173,14 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
 
   ```js
   ---
-  filename: URL format
+  header: URL format
   ---
   fit=crop
   ```
 
   ```js
   ---
-  filename: Workers
+  header: Workers
   ---
   cf: {images: {fit: "crop"}}
   ```
@@ -190,14 +190,14 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
 
   ```js
   ---
-  filename: URL format
+  header: URL format
   ---
   fit=pad
   ```
 
   ```js
   ---
-  filename: Workers
+  header: Workers
   ---
   cf: {images: {fit: "pad"}}
   ```
@@ -217,14 +217,14 @@ Example:
 
 ```js
 ---
-filename: URL format
+header: URL format
 ---
 format=auto
 ```
 
 ```js
 ---
-filename: Workers
+header: Workers
 ---
 cf: {images: {format: "avif"}}
 ```
@@ -253,14 +253,14 @@ Increase exposure by a factor. A value of `1.0` equals no change, a value of `0.
 
 ```js
 ---
-filename: URL format
+header: URL format
 ---
 gamma=0.5
 ```
 
 ```js
 ---
-filename: Workers
+header: Workers
 ---
 cf: {images: {gamma: 0.5}}
 ```
@@ -274,14 +274,14 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
 
   ```js
   ---
-  filename: URL format
+  header: URL format
   ---
   gravity=auto
   ```
 
   ```js
   ---
-  filename: Workers
+  header: Workers
   ---
   cf: {images: {gravity: "auto"}}
   ```
@@ -293,7 +293,7 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
 
   ```js
   ---
-  filename: URL format
+  header: URL format
   ---
   gravity=left
 
@@ -304,7 +304,7 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
 
   ```js
   ---
-  filename: Workers
+  header: Workers
   ---
   cf: {images: {gravity: "right"}}
 
@@ -319,14 +319,14 @@ Specifies maximum height of the image in pixels. Exact behavior depends on the `
 
 ```js
 ---
-filename: URL format
+header: URL format
 ---
 height=250
 ```
 
 ```js
 ---
-filename: Workers
+header: Workers
 ---
 cf: {images: {height: 250}}
 ```
@@ -340,14 +340,14 @@ Controls amount of invisible metadata (EXIF data) that should be preserved. Colo
 
   ```js
   ---
-  filename: URL format
+  header: URL format
   ---
   metadata=keep
   ```
 
   ```js
   ---
-  filename: Workers
+  header: Workers
   ---
   cf: {images: {metadata: "keep"}}
   ```
@@ -357,14 +357,14 @@ Controls amount of invisible metadata (EXIF data) that should be preserved. Colo
 
   ```js
   ---
-  filename: URL format
+  header: URL format
   ---
   metadata=copyright
   ```
 
   ```js
   ---
-  filename: Workers
+  header: Workers
   ---
   cf: {images: {metadata: "copyright"}}
   ```
@@ -374,14 +374,14 @@ Controls amount of invisible metadata (EXIF data) that should be preserved. Colo
 
   ```js
   ---
-  filename: URL format
+  header: URL format
   ---
   metadata=none
   ```
 
   ```js
   ---
-  filename: Workers
+  header: Workers
   ---
   cf: {images: {metadata: "none"}}
   ```
@@ -394,14 +394,14 @@ In case of a fatal error that prevents the image from being resized, redirects t
 
 ```js
 ---
-filename: URL format
+header: URL format
 ---
 onerror=redirect
 ```
 
 ```js
 ---
-filename: Workers
+header: Workers
 ---
 cf: {images: {onerror: "redirect"}}
 ```
@@ -414,14 +414,14 @@ Specifies quality for images in JPEG, WebP, and AVIF formats. The quality is in 
 
 ```js
 ---
-filename: URL format
+header: URL format
 ---
 quality=50
 ```
 
 ```js
 ---
-filename: Workers
+header: Workers
 ---
 cf: {images: {quality: 50}}
 ```
@@ -432,14 +432,14 @@ Number of degrees (`90`, `180`, or `270`) to rotate the image by. `width` and `h
 
 ```js
 ---
-filename: URL format
+header: URL format
 ---
 rotate=90
 ```
 
 ```js
 ---
-filename: Workers
+header: Workers
 ---
 cf: {images: {rotate: 90}}
 ```
@@ -450,14 +450,14 @@ Specifies strength of sharpening filter to apply to the image. The value is a fl
 
 ```js
 ---
-filename: URL format
+header: URL format
 ---
 sharpen=2
 ```
 
 ```js
 ---
-filename: Workers
+header: Workers
 ---
 cf: {images: {sharpen: 2}}
 ```
@@ -468,14 +468,14 @@ Specifies a number of pixels to cut off on each side. Allows removal of borders 
 
 ```js
 ---
-filename: URL format
+header: URL format
 ---
 trim=20;30;20;0
 ```
 
 ```js
 ---
-filename: Workers
+header: Workers
 ---
 cf: {images: {trim: {"top": 12, "bottom": 34, "left": 56, "right": 78}}}
 ```
@@ -486,14 +486,14 @@ Specifies maximum width of the image in pixels. Exact behavior depends on the `f
 
 ```js
 ---
-filename: URL format
+header: URL format
 ---
 width=250
 ```
 
 ```js
 ---
-filename: Workers
+header: Workers
 ---
 cf: {images: {width: 250}}
 ```
