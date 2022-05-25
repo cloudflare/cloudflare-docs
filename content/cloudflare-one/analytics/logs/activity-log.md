@@ -48,18 +48,18 @@ By default, Gateway logs all events, including DNS queries and HTTP requests tha
 
 {{<table-wrap>}}
 
-| **Resolver decision**      | **Explanation**                                                       |
-|----------------------------|-----------------------------------------------------------------------|
-| Allowed by Query Name      | Domain or hostname in the query matched an Allow policy.                         |
-| Blocked by Query Name      | Domain or hostname in the query matched a Block policy.                         |
-| Allowed Rule               | IP address in the response matched an Allow policy.  |
-| Blocked Rule               | IP address in the response matched a Block policy. |
-| Blocked by Category        | Domain or hostname matched a category in a Block policy.                           |
-| Blocked Always Category    | Domain or hostname is always blocked by Cloudflare.               |
-| Allowed on No Location     | Allowed because query did not match a Gateway location. |
-| Allowed on No Policy Match | Allowed because query did not match a policy.                              |
-| Override for Safe Search   | Response was overridden by a SafeSearch policy.                               |
-| Override Applied           | Response was overridden by an Override policy.              |
+| **Value**  |  **Description** |
+|--------------| ----------------|
+| allowedByQueryName | Domain or hostname in the query matched an Allow policy.  |
+| blockedByQueryName | Domain or hostname in the query matched a Block policy.                         |
+| allowedRule              | IP address in the response matched an Allow policy.  |
+| blockedRule               | IP address in the response matched a Block policy. |
+| blockedByCategory |Domain or hostname matched a category in a Block policy.                           |
+| blockedAlwaysCategory    | Domain or hostname is always blocked by Cloudflare.               |
+| allowedOnNoLocation     | Allowed because query did not match a Gateway location. |
+| allowedOnNoPolicyMatch | Allowed because query did not match a policy.                              |
+| overrideForSafeSearch  | Response was overridden by a SafeSearch policy.                               |
+| overrideApplied            | Response was overridden by an Override policy.              |
 
 {{</table-wrap>}}
 
