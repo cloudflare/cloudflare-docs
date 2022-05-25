@@ -1,26 +1,31 @@
 ---
 pcx-content-type: concept
-title: Dedicated destination IPv4 and IPv6 addresses
+title: Dedicated DNS resolver IPs
 weight: 2
 ---
 
-# Dedicated destination IPv4 and IPv6 addresses
+# Dedicated DNS resolver IPs
 
-When you create a location, default destination IP addresses are assigned to the location that users can use to forward queries.
+When you create a location, Gateway assigns IPv4 and IPv6 addresses to that location. These are the IP addresses you send your DNS queries to for Gateway to resolve.
 
-A unique, dedicated destination IPv6 address is provisioned for every location you create. That destination address is how Gateway will identify which account and location to apply DNS filtering rules.
+## IPv6 address
 
-For queries over IPv4, the default destination addresses are anycast IP addresses, and they are shared across every Cloudflare Gateway account. The source IPv4 address the query came from is used to determine which account and location should apply DNS policies to the query. Enterprise customers can request a dedicated IPv4 address to be provisioned for a location in lieu of the default anycast addresses. Like IPv6, queries forwarded to that address will be identified using the dedicated destination IPv4 address.
+A unique, dedicated DNS resolver IPv6 address is provisioned for every location you create. This IPv6 address is how Gateway will identify which account and location to apply DNS filtering rules.
 
-By default, DNS queries forwarded to a dedicated destination IPv4 or IPv6 address are correlated to an account and the DNS filtering policy applied. Follow these steps if you would like to restrict which IPv4 and IPv6 networks can send queries to your dedicated addresses:
+## IPv4 address
 
-1.  [Create a location](/cloudflare-one/connections/connect-networks/locations/configuring-a-location/) and take note of the destination address. Enterprise customers can obtain a dedicated IPv4 address for a location.
-1.  [Create an IP list](/cloudflare-one/policies/filtering/lists/) with the IPv4 and/or IPv6 addresses that your organization will source queries from.
-1.  Create your DNS policies with an added condition to match where the query came from using the “Source IP” selector.
+For queries over IPv4, the default DNS resolver IP addresses are anycast IP addresses, and they are shared across every Cloudflare Gateway account. The source IPv4 address the query came from is used to determine which account and location should apply DNS policies to the query.
 
-If you want to block security threats and only allow queries from specific networks to a dedicated IPv4 or IPv6 address, you could create the following policy:
+Enterprise customers can request a dedicated IPv4 address to be provisioned for a location in lieu of the default anycast addresses. Like IPv6, queries forwarded to that address will be identified using the dedicated DNS resolver IPv4 address.
 
-**Policy name**: for example, `Block security threats`
+## Send queries to the dedicated IP
+
+By default, all queries from a configured location will be sent to the location's assigned IP address and filtered by Gateway. You can configure Gateway to only filter queries originating from specific networks within a location:
+
+1. [Create an IP list](/cloudflare-one/policies/filtering/lists/) with the IPv4 and/or IPv6 addresses that your organization will source queries from.
+2. Add a [Source IP](/cloudflare-one/policies/filtering/dns-policies/#source-ip) condition to your DNS policies.
+
+For example, if you want to block security threats and only allow queries from specific networks to a dedicated IPv4 or IPv6 address, you could create the following policy:
 
 **Condition 1**:
 
@@ -36,4 +41,4 @@ If you want to block security threats and only allow queries from specific netwo
 
 **Action**: Block
 
-DNS queries made to the destination addresses but from IP addresses not included in the IP list will not be filtered or populate your organization’s [Gateway activity logs](/cloudflare-one/analytics/logs/activity-log/).
+DNS queries made from IP addresses that are not in your IP list will not be filtered or populate your organization’s [Gateway activity logs](/cloudflare-one/analytics/logs/activity-log/).
