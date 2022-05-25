@@ -188,4 +188,4 @@ Now that you have set up your `functions/_middleware.js` file in your project yo
 
 </div>
 
-After you have deployed your application, you will see your middleware Function under **Pages** > **Settings** > **Functions** > Configuration. 
+After you have deployed your application, you will see your middleware Function in the Cloudflare dashboard under **Pages** > **Settings** > **Functions** > **Configuration**. 
