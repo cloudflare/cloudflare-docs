@@ -111,9 +111,9 @@ For more details, refer to [create an ACL](/dns/zone-setups/zone-transfers/acces
 
 ## Step 5 - Update your secondary DNS provider
 
-Your secondary DNS provider should send zone transfer requests (via AXFR or IXFR) to [this IP](/dns/zone-setups/zone-transfers/access-control-lists/default-values/#transfer-ip) on port 53 and from the IP address specified in your [peer configuration](#step-2---create-peer-dns-server-optional).
+Your secondary DNS provider should send zone transfer requests (via AXFR or IXFR) to [this IP](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#transfer-ip) on port 53 and from the IP address specified in your [peer configuration](#step-2---create-peer-dns-server-optional).
 
-It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/default-values/#allow-range) to prevent NOTIFY messages sent from Cloudflare IP ranges from being blocked.
+It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#allow-range) to prevent NOTIFY messages sent from Cloudflare IP ranges from being blocked.
 
 ## Step 6 - Add secondary nameservers within Cloudflare
 

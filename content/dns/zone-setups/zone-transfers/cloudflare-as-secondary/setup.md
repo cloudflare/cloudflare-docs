@@ -20,7 +20,7 @@ Make sure you have completed the following tasks before setting up incoming zone
 
 Your primary DNS provider should allow traffic from the port specified in your [peer server configuration](#step-2---create-peer-server).
 
-It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/default-values/#cloudflare-as-secondary) to prevent zone transfers from being blocked.
+It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#cloudflare-as-secondary) to prevent zone transfers from being blocked.
 
 You will also need the following information from your Primary DNS provider:
 
@@ -96,7 +96,7 @@ To create a secondary zone using the dashboard:
 7. Select the peer server you [previously created](#step-2---create-peer-server). If needed, you can link more than one peer server to a zone.
 8. Click **Continue**.
 9. Review the list of transferred records and click **Continue**.
-    {{<Aside type="note">}} If no records appear, you may have misconfigured the TSIG or the IP address of the peer server or the [Access Control List](/dns/zone-setups/zone-transfers/access-control-lists/default-values/#cloudflare-as-secondary) was improperly configured at your primary DNS provider.
+    {{<Aside type="note">}} If no records appear, you may have misconfigured the TSIG or the IP address of the peer server or the [Access Control List](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#cloudflare-as-secondary) was improperly configured at your primary DNS provider.
     {{</Aside>}}
 10. Click **Initiate zone transfer**.
 

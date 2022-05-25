@@ -19,6 +19,16 @@ With zone transfers, you have two configuration options:
 
 Peer DNS servers can be used as primary and secondary external DNS servers. The same peer can be linked to multiple primary and secondary zones. Each peer can be associated with only one Transaction Signature (TSIG).
 
+Each peer has the following field options:
+
+| Field | Required? | Cloudflare as Primary (Outgoing) | Cloudflare as Secondary (Incoming) |
+| --- | --- | --- | --- |
+| Name | Yes | Human readable name of peer | Human readable name of peer. |
+| IP | No | If configured, where Cloudflare sends the NOTIFY to | Where Cloudflare sends the AXFR/IXFR transfer request to |
+| Port | No | IP Port for NOTIFY IP | IP Port for transfer IP |
+| TSIG ID | No | Attached TSIG object | Attached TSIG object |
+| IXFR enabled | No (default is false) | (not used) | Specifies if Cloudflare only sends AXFR or AXFR and IXFR |
+
 ## Availability
 
 Zone transfers are only available to customers on an Enterprise plan.

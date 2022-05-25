@@ -1,20 +1,18 @@
 ---
 pcx-content-type: reference
-title: Default values
+title: Cloudflare IP addresses
 weight: 4
 meta:
-    title: Default values - Access Control Lists (ACLs)
+    title: Cloudflare IP addresses - Access Control Lists (ACLs)
 ---
 
-# Default values - Access Control Lists (ACLs)
+# Cloudflare IP addresses
 
-Access Control Lists (ACLs) are used to filter incoming or outgoing traffic to your DNS server.
+Access Control Lists (ACLs) define allowed source IP addresses from where servers accept incoming data or control messages.
 
-When setting up a new zone transfer, you will need to update the ACLs at your other DNS provider to prevent those requests from being blocked.
+When setting up new DNS zone transfers (incoming or outgoing), you will need to update the ACLs at your other DNS provider to prevent communication from Cloudflare from being blocked.
 
-{{<Aside type="note">}}
-To specify additional NOTIFY IPs for Cloudflare as secondary zones or Allow ranges for Cloudflare as primary zones, [create a new ACL](/dns/zone-setups/zone-transfers/access-control-lists/create-new-list/).
-{{</Aside>}}
+Depending on the setup ([Cloudflare as Primary](#cloudflare-as-primary) or [Cloudflare as Secondary](#cloudflare-as-secondary)), you need to configure slightly different Cloudflare IP addresses at your other DNS provider.
 
 ## Cloudflare as Primary
 
