@@ -199,7 +199,7 @@ Yes. Use the [Fetch API](/workers/runtime-apis/fetch/) to make arbitrary request
 
 ### How many subrequests can I make?
 
-The limit for subrequests a Worker can make is 50 per request on the Bundled usage model, or 1000 per request on the Unbound usage model. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
+The limit for subrequests a Worker can make is 50 per request on the Bundled usage model or 1000 per request on the Unbound usage model. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
 
 For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1000 per request, regardless of usage model.
 
