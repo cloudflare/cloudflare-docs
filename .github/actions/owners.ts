@@ -5,7 +5,7 @@
  * Products w/o any GitHub username(s) will ping `haleycodes` for assignment.
  * This PCX OWNERSHIP mapping is used for:
  *   - the "issues.opened" event to assign GitHub Issues to PCX member
- *   - TODO(future) the "pull_request.created" event to request review(s) instead of CODEOWNERS usage
+ *   - the "pull_request.opened" event to request review(s) instead of CODEOWNERS usage
  */
 export const OWNERS: Record<string, string[]> = {
   '1.1.1.1': ['marciocloudflare'],
