@@ -9,7 +9,7 @@ weight: 2
 
 When you create a location, Gateway assigns IPv4/IPv6 addresses and DoT/DoH hostnames to that location. These are the IP addresses and hostnames you send your DNS queries to for Gateway to resolve.
 
-To view the DNS resolver IPs for a location, navigate to **Gateway**>**Locations** and expand its location card.
+To view the DNS resolver IPs for a location, navigate to **Gateway** > **Locations** and expand its location card.
 
 ![View IP addresses and hostnames assigned to a Gateway location](/cloudflare-one/static/documentation/policies/location-ips.png)
 
