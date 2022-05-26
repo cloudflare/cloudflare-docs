@@ -26,8 +26,6 @@ Cloudflare requires that you have a valid [ICP (Internet Content Provider)](/chi
 
 Cloudflare has taken numerous steps to ensure your security and the integrity of your data in China. Your identification information such as email addresses, password hashes, and billing information are never stored on the Cloudflare China Network or shared with the Cloudflare partner.
 
-Website configurations such as origin IP addresses, Page Rules, and WAF settings are propagated in China PoPs. However, only Cloudflare can read this information — the Cloudflare partner does not have the required permissions to access such information.
-
 ## Licensing and onboarding
 
 ### Does Cloudflare have an MIIT license to provide CDN services in China?
@@ -47,9 +45,9 @@ The application and revocation of ICP filings or licenses is managed by China's 
 Cloudflare's partner JD Cloud and the local authorities continuously track the status of the ICP. If your ICP gets revoked, JD Cloud may terminate or suspend your access to the China Service at any time and without liability, in accordance with China local regulations.
 To mitigate the impact on your Internet properties, Cloudflare would reroute the traffic for the affected domains to the nearest data centers outside of China.
 
-### What is content vetting and why do I need content vetting for my domain before onboarding?
+### What is content vetting and why do I need JD Cloud to vet my domain's content before onboarding?
 
-Cloudflare is proxying content inside of China using the JD Cloud network for customers who have purchased the Cloudflare China Network subscription. To ensure compliance with China's regulation on Internet information services and with [JD Cloud's service terms](https://docs.jdcloud.com/cn/product-service-agreement/starshield-terms-of-service), JD Cloud must review the content of all the domains before onboarding those domains to their network. They can approve or reject any domain based on the nature of its content. For more information, contact your sales team.
+The JD Cloud network is proxying content inside of China for customers who have purchased the Cloudflare China Network subscription. To ensure compliance with China’s regulation on Internet information services and with [JD Cloud's service terms](https://docs.jdcloud.com/cn/product-service-agreement/starshield-terms-of-service), JD Cloud must review the content of all the domains before onboarding those domains to their network. They can approve or reject any domain based on the nature of its content. For more information, contact your sales team.
 
 ## Technical questions
 

@@ -18,9 +18,9 @@ Contact your sales team for more information on these steps.
 
 ## Step 2 — Validate ICP and vet domain content
 
-1. Present valid [ICP (Internet Content Provider) filings or licenses](/china-network/concepts/icp/) for all root domains that you wish to onboard.
+1. Present valid [ICP (Internet Content Provider) filings or licenses](/china-network/concepts/icp/) for all root domains that you wish to onboard. You must display the ICP number [in the footer of your website](/china-network/concepts/icp/#displaying-your-icp-number).
 
-2. Prepare the required information for content vetting. The JD Cloud partner requires content vetting for all domains on their network before enabling them. You will need to provide the following information:
+2. Prepare the required information for JD Cloud to review the content on your domain. JD Cloud, a Cloudflare partner, is required to review and vet the content of all domains on their network before enabling them. You will need to provide the following information:
 
     * Customer and company name.
     * Domain name.

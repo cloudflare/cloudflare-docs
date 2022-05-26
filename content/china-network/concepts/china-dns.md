@@ -1,16 +1,16 @@
 ---
-title: China DNS
+title: China Authoritative DNS
 pcx-content-type: concept
 weight: 4
 ---
 
-# China DNS
+# China Authoritative DNS
 
-Cloudflare is able to deploy DNS service in mainland China to improve the Time to First Byte (TTFB) performance. With this deployment, the DNS query will be resolved in mainland China instead of global DNS servers, with over 70% improvement in DNS query time for visitors in China.
+Cloudflare is able to deploy DNS service in mainland China to improve the Time to First Byte (TTFB) performance. With this deployment, the DNS query will be resolved in mainland China instead of global DNS servers.
 
 ## When to use
 
-Before you enable China DNS, you should identify that over 90% of the traffic is coming from China. After you enable China DNS, all the global DNS requests will be routed to Cloudflare's servers in China.
+Before you enable China Authoritative DNS, you should identify that over 90% of the traffic is coming from China. After you enable China Authoritative DNS, all the global DNS requests will be routed to Cloudflare's servers in China.
 
 ## General setup
 
