@@ -51,18 +51,6 @@ routes = ["routes"] | [{ pattern = "*", zone_id = "ZONE_ID" }] | [{ pattern = "*
 # The same as routes, but only one.
 route = "routes" | { pattern = "*", zone_id = "ZONE_ID" } | { pattern = "*", zone_name = "ZONE_NAME" }
 
-# Lets you call Workers periodically, much like a cron job.
-# More details: https://developers.cloudflare.com/workers/platform/cron-triggers
-# @default `{crons:[]}`
-[triggers]
-crons = ["1 * * * *"]
-
-# A map of environment variables to set when deploying your Worker.
-# @default `{}`
-# not inherited
-[vars]
-KEY = "value"
-
 # These specify any Workers KV Namespaces you want to
 # access from inside your Worker.
 # To learn more about KV namespaces, refer to:
@@ -77,6 +65,18 @@ kv_namespaces = [{
   # The ID of the KV namespace used during `wrangler dev`
   preview_id = ""
   }]
+
+# Lets you call Workers periodically, much like a cron job.
+# More details: https://developers.cloudflare.com/workers/platform/cron-triggers
+# @default `{crons:[]}`
+[triggers]
+crons = ["1 * * * *"]
+
+# A map of environment variables to set when deploying your Worker.
+# @default `{}`
+# not inherited
+[vars]
+KEY = "value"
 
 # A list of Durable Objects that your Worker should be bound to.
 # To learn more about Durable Objects, refer to:
