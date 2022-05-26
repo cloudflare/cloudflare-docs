@@ -229,7 +229,7 @@ header: Workers
 cf: {images: {format: "avif"}}
 ```
 
-For the `format:auto` option to work with a custom Worker, you need to pass the `Accept` header. Refer to [this example Worker](/images/image-resizing/resize-with-workers/#an-example-worker) for a complete overview of how to set up an Image Resizing Worker.
+For the `format:auto` option to work with a custom Worker, you need to parse the `Accept` header. Refer to [this example Worker](/images/image-resizing/resize-with-workers/#an-example-worker) for a complete overview of how to set up an Image Resizing Worker.
 
 ```js
 ---
