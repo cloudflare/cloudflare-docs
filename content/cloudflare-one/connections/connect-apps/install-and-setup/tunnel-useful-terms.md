@@ -33,7 +33,7 @@ You can create and configure a tunnel once and run it as multiple different `clo
 | OS                          | Path to default directory                                                              |
 | --------------------------- | -------------------------------------------------------------------------------------- |
 | Windows                     | `%USERPROFILE%\.cloudflared`                                                           |
-| MacOS and Unix-like systems | `~/.cloudflared`, `/etc/cloudflared`, and `/usr/local/etc/cloudflared`, in this order. |
+| macOS and Unix-like systems | `~/.cloudflared`, `/etc/cloudflared`, and `/usr/local/etc/cloudflared`, in this order. |
 
 ## Configuration file
 

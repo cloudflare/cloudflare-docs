@@ -22,7 +22,7 @@ If you configured Cloudflare through other means, for example, by logging in to 
 
 Before you start, you must install `cf-terraforming`.
 
-If you use Homebrew on MacOS, open a terminal and run the following commands:
+If you use Homebrew on macOS, open a terminal and run the following commands:
 
 ```sh
 $ brew tap cloudflare/cloudflare
