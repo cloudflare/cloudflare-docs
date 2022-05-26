@@ -94,6 +94,6 @@ To enable editing access by Cloudflare Support:
 
 {{<Aside type="note">}}
 
-In an emergency, Cloudflare Support can override your **Editing Permissions** and make updates to your account, but your Super Administrator will receive an email and the action will be recorded in your [Audit Logs](/fundamentals/get-started/basic-tasks/review-audit-logs/) with an **Action** of **Break glass**.
+In an emergency, Cloudflare Support can override your **Editing Permissions** and make updates to your account, but your Super Administrator will receive an email and the action will be recorded in your [Audit Logs](/fundamentals/get-started/basic-tasks/account-security/review-audit-logs/) with an **Action** of **Break glass**.
 
 {{</Aside>}}
