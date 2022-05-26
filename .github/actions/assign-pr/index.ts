@@ -98,12 +98,6 @@ function parse(filename: string): string | void {
       users.delete(u.login);
     }
 
-    const teams = await client.rest.teams.list({
-      org: 'cloudflare',
-      per_page: 100
-    });
-
-    console.log({ teams });
     console.log({ products, users });
 
     // is PR author the assigned PCX owner?
