@@ -107,7 +107,9 @@ function parse(filename: string): string | void {
         repo: repository.name,
         owner: repository.owner.login,
         pull_number: prnumber,
-        team_reviewers: ['@cloudflare/PCX'],
+        // uses the team `slug` value
+        // ~> @cloudflare/pcx alias
+        team_reviewers: ['pcx'],
       });
     } else {
       // cannot self-review
