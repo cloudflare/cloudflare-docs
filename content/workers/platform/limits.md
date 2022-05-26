@@ -9,7 +9,7 @@ title: Limits
 
 {{<table-wrap>}}
 
-| Feature                                                                         | Free      | Paid      |
+| Feature                                                                         | Free      | Paid (Bundled and Unbound)      |
 | ------------------------------------------------------------------------------- | --------- | --------- |
 | [Subrequests](#subrequests)                                                     | 50        | 50 Bundled, 1000 Unbound        |
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
