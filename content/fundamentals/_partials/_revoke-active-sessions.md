@@ -10,7 +10,6 @@ When there is more than one active session associated with your email account, y
 To revoke a session:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Go to **My Profile**.
-3. Go to **Sessions**.
-4. On a specific section, click **Revoke**.
-5. You will be prompted to enter your password before revoking the session.
+2. Go to **My Profile** > **Sessions**.
+3. On a specific section, click **Revoke**.
+4. You will be prompted to enter your password before revoking the session.

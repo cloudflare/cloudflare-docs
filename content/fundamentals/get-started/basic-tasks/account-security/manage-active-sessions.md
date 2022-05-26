@@ -8,7 +8,7 @@ weight: 4
 
 In the Cloudflare dashboard, you can view a list of active sessions associated with your email address.
 
-Each time your email is used to log in to your Cloudflare account, a session begins. You will see session information including if the device is currently viewing the dashboard, the IP address, location, device type, browser type, and last active login.
+Each time your email is used to log in to your Cloudflare account, a session begins. The Cloudflare dashboard provides session information including if the device is currently viewing the dashboard, the IP address, location, device type, browser type, and last active login.
 
 If you notice any suspicious activity, you can also revoke any active sessions.
 
@@ -23,8 +23,7 @@ By default, the session timeout for the [Cloudflare dashboard](https://dash.clou
 To view the active sessions associated with your email address:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Go to **My Profile**.
-3. Go to **Sessions**.
+2. Go to **My Profile** > **Sessions**.
 
 ## Revoke active sessions
 
