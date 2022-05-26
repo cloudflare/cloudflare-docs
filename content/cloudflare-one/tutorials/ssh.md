@@ -21,7 +21,7 @@ You can connect to machines over SSH using Cloudflare's Zero Trust platform.
 
 ## Before you start
 
-1.  [Add a website to Cloudflare](/fundamentals/get-started/setup/account-setup/create-account/)
+1.  [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/)
 
 ---
 

@@ -6,7 +6,7 @@ weight: 2
 
 # Get started
 
-Before being able to use Zaraz, it is recommended that you proxy your website through Cloudflare. Refer to [Creating a Cloudflare account and adding a website](/fundamentals/get-started/setup/account-setup/create-account/) for more information. If you do not want to proxy your website through Cloudflare, refer to [Use Zaraz on domains not proxied by Cloudflare](/zaraz/advanced/domains-not-proxied/).
+Before being able to use Zaraz, it is recommended that you proxy your website through Cloudflare. Refer to [Creating a Cloudflare account and adding a website](/fundamentals/get-started/setup/) for more information. If you do not want to proxy your website through Cloudflare, refer to [Use Zaraz on domains not proxied by Cloudflare](/zaraz/advanced/domains-not-proxied/).
 
 ## Events, triggers, actions and tools
 

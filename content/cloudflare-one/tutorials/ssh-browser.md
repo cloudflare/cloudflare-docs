@@ -21,7 +21,7 @@ Administrators can deploy Cloudflare Tunnel to connect one or more machines avai
 
 ## Before you start
 
-1.  [Add a website to Cloudflare](/fundamentals/get-started/setup/account-setup/create-account/)
+1.  [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/)
 1.  [Connect your machine to Cloudflare](/cloudflare-one/tutorials/ssh/) and apply Zero Trust rules
 
 ---
