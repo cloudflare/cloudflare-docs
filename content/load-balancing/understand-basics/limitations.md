@@ -1,13 +1,14 @@
 ---
-pcx-content-type: concept
+pcx-content-type: reference
 title: Limitations
 weight: 18
 ---
+
 # Limitations
-| Name | Non-Enterprise | Enterprise | Maximum/Minimum Value for Enterprise |
+| Name | Non-Enterprise | Enterprise | 
 | --- | --- | --- | --- |
-| Load balancers | 20 | 20 | 100 |
-| Monitor intervals | 60, 3600 | 10, 3600 | 10, 3600 |
-| Monitors | N/A | N/A | N/A |
-| Origin pools | 2 | 1 | 250 |
-| Pools | 20 | 20 | 100 |
+| Load balancers | 20 | 100 |
+| Monitor intervals | 60 (min), 3600 (max) | 10 (min), 3600 (max) |
+| Monitors | 1.5x the number of pools | 1.5x the number of pools | 
+| Origin servers | 20 | 250 |
+| Pools | 20 | 100 |
