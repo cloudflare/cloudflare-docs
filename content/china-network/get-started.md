@@ -2,8 +2,6 @@
 title: Get started
 pcx-content-type: how-to
 weight: 2
-meta:
-  title: Get started with Cloudflare China Network
 ---
 
 # Get started
