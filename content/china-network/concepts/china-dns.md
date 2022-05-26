@@ -10,7 +10,7 @@ Cloudflare is able to deploy DNS service in mainland China to improve the Time t
 
 ## When to use
 
-Before you enable China Authoritative DNS, you should identify that over 90% of the traffic is coming from China. After you enable China Authoritative DNS, all the global DNS requests will be routed to Cloudflare's servers in China.
+Before you enable China Authoritative DNS, you should confirm that over 90% of the traffic is coming from China. After you enable China Authoritative DNS, all the global DNS requests will be routed to Cloudflare's servers in China.
 
 ## General setup
 

@@ -16,7 +16,7 @@ The data centers cover most populated regions in China. Combining Cloudflare’s
 
 The Cloudflare China Network provides:
 
-* A single solution for both performance improvement and security services such as WAF, DDoS, and bot management.
+* A single solution for both performance improvement and security services such as [WAF](/waf/), [DDoS](/ddos-protection/), and [bot management](/bots/).
 * An unified experience for managing network traffic and security posture. You can manage all configurations on the same dashboard.
 * The same customer support as Cloudflare’s global network. You may also have access to premium service and local language support.
 
