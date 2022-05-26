@@ -5,6 +5,11 @@ title: Changelog
 
 # Changelog
 
+## 2022-05-26
+
+- The static `Response.json()` method can be used to initialize a Response object with a JSON-serialized payload (refer to [whatwg/fetch #1392](https://github.com/whatwg/fetch/pull/1392).
+- R2 exceptions being thrown now have the `error` code appended in the message in parenthesis. This is a stop-gap until we’re able to explicitly add the code property on the thrown `Error` object.
+
 ## 2022-05-19
 
 - R2 bindings: `contentEncoding`, `contentLanguage`, and `cacheControl` are now correctly rendered.
