@@ -16,7 +16,7 @@ type Options = {
 };
 
 // @see https://octokit.github.io/rest.js/v18#pulls-list-files
-async function list(client: Octokit, options: Options, products?: Set<string>) {
+async function list(client: Octokit, options: Options, products?: Set<string>): Promise<Set<string>> {
   products = products || new Set;
   options.page = options.page || 1;
 
@@ -121,7 +121,7 @@ const ACTIONS = new Set(['ready_for_review', 'reopened', 'opened']);
       if (owners.size === 0) {
         if (requested.size > 0) {
           console.log('~> had reviewers at creation');
-        } else {
+        } else if (products.size > 0) {
           console.log('~> ping "haleycode" for assignment');
           await client.rest.issues.addAssignees({
             repo: repository.name,
@@ -129,6 +129,8 @@ const ACTIONS = new Set(['ready_for_review', 'reopened', 'opened']);
             issue_number: prnumber,
             assignees: ['haleycode'],
           });
+        } else {
+          console.log('~> no products changed; engineering?');
         }
       } else {
         console.log('~> request individual reviews');
