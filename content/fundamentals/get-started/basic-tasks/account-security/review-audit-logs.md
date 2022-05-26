@@ -1,8 +1,7 @@
 ---
 title: Review audit logs
 pcx-content-type: how-to
-layout: list
-weight: 5
+weight: 3
 ---
 
 # Review audit logs
@@ -21,10 +20,7 @@ Most beta features will not appear in audit logs until they are out of beta.
 
 ### Using the dashboard
 
-To access audit logs in the Cloudflare dashboard:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Manage Account** > **Audit Log**.
+{{<render file="_view-audit-log.md">}}
 
 You can search these audit logs by user email or domain and filter by date range. To download audit logs, click **Download CSV**.
 

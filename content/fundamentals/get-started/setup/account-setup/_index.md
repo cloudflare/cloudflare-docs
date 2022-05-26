@@ -19,5 +19,5 @@ If you need help setting up and securing a new Cloudflare account, refer to the 
 
 - **Post-setup security**:
 
-  - [Review Cloudflare audit logs](/fundamentals/get-started/basic-tasks/review-audit-logs/)
-  - [View and revoke active sessions](https://support.cloudflare.com/hc/articles/360033455752)
+  - [Review Cloudflare audit logs](/fundamentals/get-started/basic-tasks/account-security/review-audit-logs/)
+  - [View and revoke active sessions](/fundamentals/get-started/basic-tasks/account-security/manage-active-sessions/)

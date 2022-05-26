@@ -201,6 +201,7 @@
 
 # fundamentals
 /fundamentals/data-products/accessing-cf-data/ /fundamentals/data-products/types-of-analytics/ 301
+/fundamentals/get-started/basic-tasks/review-audit-logs/ /fundamentals/get-started/basic-tasks/account-security/review-audit-logs/ 301
 /fundamentals/get-started/cdn/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/how-cloudflare-works/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/cloudflare-cookies/ /fundamentals/get-started/reference/cloudflare-cookies/ 301
