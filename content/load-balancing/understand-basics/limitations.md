@@ -1,5 +1,10 @@
+---
+pcx-content-type: concept
+title: Limitations
+weight: 18
+---
 # Limitations
-| Name | Free | Enterprise | Maximum/Minimum Value for Enterprise |
+| Name | Non-Enterprise | Enterprise | Maximum/Minimum Value for Enterprise |
 | --- | --- | --- | --- |
 | Load balancers | 20 | 20 | 100 |
 | Monitor intervals | 60, 3600 | 10, 3600 | 10, 3600 |
