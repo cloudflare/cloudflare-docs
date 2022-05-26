@@ -63,7 +63,9 @@ function parse(filename: string): string | void {
     if (!pull_request) throw new Error('Missing "pull_request" object!');
 
     // TODO: may also want to do "edited" event & recompute -> apply differences
-    if (action !== 'opened') throw new Error('Must be "pull_request.opened" event!');
+    if (action !== 'opened' && action !== 'reopened') {
+      throw new Error('Must be "pull_request.opened" or "pull_request.reopened" event!');
+    }
 
     const users = new Set<string>();
     const prnumber = pull_request.number;
