@@ -11,7 +11,7 @@ title: Limits
 
 | Feature                                                                         | Free      | Paid      |
 | ------------------------------------------------------------------------------- | --------- | --------- |
-| [Subrequests](#subrequests)                                                     | 50        | 50        |
+| [Subrequests](#subrequests)                                                     | 50        | 50 Bundled, 1000 Unbound        |
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
 | [Environment variables](#environment-variables)                                 | 64/worker | 64/worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
@@ -193,9 +193,9 @@ Yes. Use the [Fetch API](/workers/runtime-apis/fetch/) to make arbitrary request
 
 ### How many subrequests can I make?
 
-The limit for subrequests a Workers script can make is 50 per request. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Workers script makes could be greater than the number of `fetch(request)` calls in the script.
+The limit for subrequests a Workers script can make is 50 per request on the Bundled usage model, or 1000 per request on the Unbound usage model. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Workers script makes could be greater than the number of `fetch(request)` calls in the script.
 
-For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1000 per request.
+For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1000 per request, regardless of usage model.
 
 ### How long can a subrequest take?
 
@@ -216,6 +216,12 @@ While handling a request, each Worker script is allowed to have up to six connec
 Once a Worker has six connections open, it can still attempt to open additional connections. However, these attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed. Since earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
 
 If the system detects that a Worker is deadlocked on open connections — for example, if the Worker has pending connection attempts but has no in-progress reads or writes on the connections that it already has open — then the least-recently-used open connection will be canceled to unblock the Worker. If the Worker later attempts to use a canceled connection, an exception will be thrown. These exceptions should rarely occur in practice, though, since it is uncommon for a Worker to open a connection that it does not have an immediate use for.
+
+{{<Aside type="note">}}
+
+Simultaneous Open Connections are measured from the top-level request, meaning any connections open from Workers sharing resources (e.g. Workers triggered via [Service Bindings](/workers/runtime-apis/service-bindings/)) will share the simultaneous open connection limit.
+
+{{</Aside>}}
 
 ---
 
