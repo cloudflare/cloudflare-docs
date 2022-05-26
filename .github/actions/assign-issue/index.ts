@@ -59,7 +59,7 @@ function slugify(input: string): string {
         list.forEach(x => users.add(x));
       } else {
         // ping Haley for assignment
-        users.add('haleycodes');
+        users.add('haleycode');
       }
     }
 

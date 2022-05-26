@@ -122,12 +122,12 @@ const ACTIONS = new Set(['ready_for_review', 'reopened', 'opened']);
         if (requested.size > 0) {
           console.log('~> had reviewers at creation');
         } else {
-          console.log('~> ping "haleycodes" for assignment');
+          console.log('~> ping "haleycode" for assignment');
           await client.rest.issues.addAssignees({
             repo: repository.name,
             owner: repository.owner.login,
             issue_number: prnumber,
-            assignees: ['haleycodes', 'lukeed'],
+            assignees: ['haleycode'],
           });
         }
       } else {
