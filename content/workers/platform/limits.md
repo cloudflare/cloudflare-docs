@@ -172,8 +172,9 @@ Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to
 Most Workers requests consume less than a millisecond. It is rare to find a normally operating Workers script that exceeds the CPU time limit. CPU time is capped at various limits depending on your plan, usage model, and Worker type. 
 
 * A Worker may consume up to **10 ms** on the Free plan.
-* A Worker may consume up to **50 ms** with the Bundled usage model on the Paid Plan.
+* A Worker or [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **50 ms** with the Bundled usage model on the Paid Plan.
 * A Worker may consume up to **30 seconds** with the Unbound usage model on the Paid Plan.
+* A [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **30 seconds** with the Unbound usage model on the Paid Plan, when the schedule interval is less than 1 hour.
 * A [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **15 minutes** with the Unbound usage model on the Paid Plan, when the schedule interval is greater than 1 hour.
 
 There is no limit on the real runtime for a Workers script. As long as the client that sent the request remains connected, the Workers script can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/workers/runtime-apis/fetch-event/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
