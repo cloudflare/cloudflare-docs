@@ -53,7 +53,7 @@ function parse(filename: string): string | void {
 }
 
 // https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#webhook-payload-object-34
-const ACTIONS = new Set(['ready_for_review', 'reopened', 'opened']);
+// const ACTIONS = new Set(['ready_for_review', 'reopened', 'opened']);
 
 (async function () {
   try {
@@ -62,11 +62,12 @@ const ACTIONS = new Set(['ready_for_review', 'reopened', 'opened']);
     const payload = github.context.payload;
     console.log('event payload:', JSON.stringify(payload, null, 2));
 
-    const { action, repository, pull_request } = payload;
+    const { repository, pull_request } = payload;
     if (!pull_request) throw new Error('Missing "pull_request" object!');
 
+    // @see https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
     // TODO: may also want to do "edited" event & recompute -> apply differences
-    if (!ACTIONS.has(action)) throw new Error('Invalid "pull_request" action event!');
+    // if (!ACTIONS.has(payload.action)) throw new Error('Invalid "pull_request" action event!');
 
     const owners = new Set<string>();
     const prnumber = pull_request.number;
