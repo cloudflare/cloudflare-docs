@@ -38,9 +38,9 @@ You may change the Usage Model for individual Workers without affecting your acc
 
 ### Same features
 
-Script size, number of scripts, subrequests, and available memory are not affected by plan type.
+See [Limits](/workers/platform/limits/). Script size, number of scripts, and available memory are not affected by plan type. The Unbound usage model includes a higher number of subrequests.
 
-### Workers billing examples
+### Workers Unbound billing examples
 
 #### Example 1
 
