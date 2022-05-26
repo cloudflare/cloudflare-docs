@@ -5,7 +5,7 @@ layout: single
 weight: 3
 ---
 
-# Add DNS resolver locations
+# Add locations
 
 Locations are usually physical entities like offices, homes, retail stores, movie theatres, or data centers. The fastest way to start filtering DNS queries from a location is by changing the DNS resolvers at the router.
 
@@ -29,7 +29,7 @@ To add a location to Gateway:
 
 When trying to configure a location over IPv4, you may run into this error:
 
-![Source IP taken](/cloudflare-one/static/documentation/policies/source-ip-taken.png)
+![Error message when Source IPv4 address is taken](/cloudflare-one/static/documentation/policies/source-ip-taken.png)
 
 This may mean someone else in the same network signed up for Cloudflare Gateway before you did. If your network supports IPv6, you can still use Cloudflare Gateway's DNS filtering by sending DNS queries over IPv6. You can also use the DNS over HTTPS hostname to send queries using a DNS over HTTPS client.
 
