@@ -52,6 +52,9 @@ function parse(filename: string): string | void {
   return (/^data[/](.*).ya?ml$/.exec(filename) || /^content[/]([^\/]+)[/]/.exec(filename) || [])[1];
 }
 
+// https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#webhook-payload-object-34
+const ACTIONS = new Set(['ready_for_review', 'reopened', 'opened']);
+
 (async function () {
   try {
     const token = core.getInput('GITHUB_TOKEN', { required: true });
@@ -63,11 +66,9 @@ function parse(filename: string): string | void {
     if (!pull_request) throw new Error('Missing "pull_request" object!');
 
     // TODO: may also want to do "edited" event & recompute -> apply differences
-    if (action !== 'opened' && action !== 'reopened') {
-      throw new Error('Must be "pull_request.opened" or "pull_request.reopened" event!');
-    }
+    if (!ACTIONS.has(action)) throw new Error('Invalid "pull_request" action event!');
 
-    const users = new Set<string>();
+    const owners = new Set<string>();
     const prnumber = pull_request.number;
     const author = pull_request.user.login;
 
@@ -88,7 +89,7 @@ function parse(filename: string): string | void {
       }
 
       if (list.length > 0) {
-        list.forEach(x => users.add(x));
+        list.forEach(x => owners.add(x));
       }
     }
 
@@ -97,14 +98,14 @@ function parse(filename: string): string | void {
     // will throw if already assigned
     for (const u of pull_request.requested_reviewers) {
       requested.add(u.login);
-      users.delete(u.login);
+      owners.delete(u.login);
     }
 
-    console.log({ products, users });
+    console.log({ products, owners, requested });
 
     // is PR author the assigned PCX owner?
-    if (users.size === 1 && users.has(author)) {
-      // initiate "@cloudflare/pcx" team review
+    if (owners.size === 1 && owners.has(author)) {
+      console.log('~> request "@cloudflare/pcx" team review');
       await client.rest.pulls.requestReviewers({
         repo: repository.name,
         owner: repository.owner.login,
@@ -115,23 +116,27 @@ function parse(filename: string): string | void {
       });
     } else {
       // cannot self-review
-      users.delete(author);
+      owners.delete(author);
 
-      if (users.size === 0 && requested.size === 0) {
-        // ping haley for assignment
-        await client.rest.issues.addAssignees({
-          repo: repository.name,
-          owner: repository.owner.login,
-          issue_number: prnumber,
-          assignees: ['haleycodes'],
-        });
+      if (owners.size === 0) {
+        if (requested.size > 0) {
+          console.log('~> had reviewers at creation');
+        } else {
+          console.log('~> ping "haleycodes" for assignment');
+          await client.rest.issues.addAssignees({
+            repo: repository.name,
+            owner: repository.owner.login,
+            issue_number: prnumber,
+            assignees: ['haleycodes', 'lukeed'],
+          });
+        }
       } else {
-        // request individual reviews
+        console.log('~> request individual reviews');
         await client.rest.pulls.requestReviewers({
           repo: repository.name,
           owner: repository.owner.login,
           pull_number: prnumber,
-          reviewers: [...users],
+          reviewers: [...owners],
         });
       }
     }
