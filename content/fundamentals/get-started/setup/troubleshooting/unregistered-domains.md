@@ -26,5 +26,7 @@ If you have already own your domain but Cloudflare does not recognize your domai
 If you add Cloudflare's nameservers at your registrar **before** [adding that domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, your `NS` records will be considered invalid.
 
 You need to add your domain to Cloudflare first, and only then add our nameservers at your registrar.
+  
+If you've already changed your nameservers to Cloudflare's and are now getting this error, resetting them to your registrar's default ones, waiting for a few hours, and then [adding that domain](/fundamentals/get-started/setup/add-site/) should work.
 
 {{</Aside>}}
