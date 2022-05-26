@@ -44,20 +44,22 @@ Script size, number of scripts, subrequests, and available memory are not affect
 
 #### Example 1
 
-If an Unbound Worker executed 1.5 million times and used a total of 200,000 GB-s, the estimated cost in a month would be:
+If an Unbound Worker executed 1.5 million times and was active a total of 200,000 seconds, the estimated cost in a month would be:
 
 Total = ~$0.08 USD + Minimum $5/mo usage = $5.08
 
 - (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = $0.075
-- (200,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $0.00
+- (200,000 seconds) \* 128 MB / 1 GB = 25,000 GB-seconds
+- (25,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $0.00
 
 #### Example 2
 
-If an Unbound Worker executed 5 million times and used a total of 800,000 GB-s the estimated cost in a month would be:
+If an Unbound Worker executed 10 million times and was active a total of 6,400,000 seconds the estimated cost in a month would be:
 
-Total = ~$5.60 + Minimum $5/mo usage = $10.60
+Total = ~$6.35 + Minimum $5/mo usage = $11.35
 
-- (5 million requests - included 1 million requests) x $0.15 / 1,000,000 requests = $0.60
+- (10 million requests - included 1 million requests) x $0.15 / 1,000,000 requests = $1.35
+- (6,4000,000 seconds) \* 128 MB / 1 GB = 800,000 GB-seconds
 - (800,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 GB-s = $5.00
 
 ## Workers KV
