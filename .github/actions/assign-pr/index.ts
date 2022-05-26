@@ -105,7 +105,7 @@ function parse(filename: string): string | void {
     console.log({ products, owners, requested });
 
     // is PR author the assigned PCX owner?
-    if (owners.size === 1 && owners.has(author)) {
+    if (owners.size === 1 && owners.has(author) && requested.size === 0) {
       console.log('~> request "@cloudflare/pcx" team review');
       await client.rest.pulls.requestReviewers({
         repo: repository.name,
