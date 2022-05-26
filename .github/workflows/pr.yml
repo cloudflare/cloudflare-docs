@@ -1,0 +1,15 @@
+name: PR Opened
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  compile:
+    name: Assign PCX
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/assign-pr
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
