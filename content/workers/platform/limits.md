@@ -13,7 +13,7 @@ title: Limits
 | ------------------------------------------------------------------------------- | --------- | --------- |
 | [Subrequests](#subrequests)                                                     | 50        | 50 Bundled, 1000 Unbound        |
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
-| [Environment variables](#environment-variables)                                 | 64/worker | 64/worker |
+| [Environment variables](#environment-variables)                                 | 64/Worker | 64/Worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
 | [Script size](#script-size)                                                     | 1 MB      | 1 MB      |
 | [Number of scripts](#number-of-scripts)                                         | 30        | 100       |
@@ -171,8 +171,8 @@ Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to
 
 Most Workers requests consume less than a millisecond. It is rare to find a normally operating Workers script that exceeds the CPU time limit. CPU time is capped at various limits depending on your plan, usage model, and Worker type. 
 
-* A Worker may consume up to **10 ms** on the Free plan.
-* A Worker or [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **50 ms** with the Bundled usage model on the Paid Plan.
+* A Worker may consume up to **10 milliseconds** on the Free plan.
+* A Worker or [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **50 milliseconds** with the Bundled usage model on the Paid Plan.
 * A Worker may consume up to **30 seconds** with the Unbound usage model on the Paid Plan.
 * A [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **30 seconds** with the Unbound usage model on the Paid Plan, when the schedule interval is less than 1 hour.
 * A [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **15 minutes** with the Unbound usage model on the Paid Plan, when the schedule interval is greater than 1 hour.
@@ -225,7 +225,7 @@ If the system detects that a Worker is deadlocked on open connections — for ex
 
 {{<Aside type="note">}}
 
-Simultaneous Open Connections are measured from the top-level request, meaning any connections open from Workers sharing resources (e.g. Workers triggered via [Service Bindings](/workers/runtime-apis/service-bindings/)) will share the simultaneous open connection limit.
+Simultaneous Open Connections are measured from the top-level request, meaning any connections open from Workers sharing resources (for example, Workers triggered via [Service bindings](/workers/runtime-apis/service-bindings/)) will share the simultaneous open connection limit.
 
 {{</Aside>}}
 
