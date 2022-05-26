@@ -29,9 +29,8 @@ For these reasons, API Keys are not recommended for new customers. Current custo
 To retrieve your API key:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2.  Go to **Profile**.
-3.  Go to **API Tokens**.
-4.  In the **API Keys** section, view or change either of your API keys:
+2.  Go to **User Profile** > **API Tokens**.
+3.  In the **API Keys** section, view or change either of your API keys:
 
     - **Global API Key**: Serves as your main API key.
     - **Origin CA Key**: Only used when creating origin certificates using the API.
