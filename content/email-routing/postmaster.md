@@ -114,7 +114,7 @@ This has no effect to the end user's experience, though. The message headers wil
 Handling spam and abusive traffic is essential to any email provider. Below is a list of how Email Routing tackles this issue:
 
 - Email Routing provides reverse DNS PTR records to all of its SMTP egress ranges. PTR records are often used as a reputation parameter.
-- Email Routing rejects emails whose SPF validation fails (hard fail only).
+- Email Routing rejects emails whose SPF validation results in a hard fail.
 - Email Routing refuses to send email to poorly configured SMTP servers — for example, servers with broken TLS certificates.
 - Email Routing requires double opt-in to confirm ownership of new destination addresses. Email Routing sends an email with a timed verification link to the new address specified by the user. The destination address is only usable after the customer clicks that link.
 
