@@ -6,7 +6,7 @@ weight: 2
 
 # Use the Ethereum gateway
 
-Once you have an Ethereum gateway — meaning that you [create a new gateway](/web3/how-to/manage-gateways/#create-a-gateway) with a `target` of **Ethereum** — you can interact with the Ethereum network by specifying the correct JSON blob for your query.
+Once you have an Ethereum gateway — meaning that you [create a new gateway](/web3/how-to/manage-gateways/#create-a-gateway) with a `target` of **Ethereum** — you can interact with [different Ethereum networks](/web3/ethereum-gateway/reference/supported-networks/) by specifying the correct JSON blob for your query.
 
 ## Read from the network
 
@@ -21,17 +21,19 @@ your JSON blob takes the form:
 
 Each blob use a valid [`method` parameter](/web3/ethereum-gateway/reference/supported-api-methods/). The `params` array here contains the block number that we would like to locate and a boolean expressing whether each individual transaction in the block should be shown in their entirety (`true`) or as stubs (`false`).
 
-To send this query to the Ethereum Gateway, you could use a cURL command:
+To send this query to the public Ethereum Gateway, you could use a cURL command:
 
 ```bash
-curl https://cloudflare-eth.com -H 'Content-Type: application/json' --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x2244", true],"id":1}'
+curl http://cloudflare-eth.com/v1/mainnet -H 'Content-Type: application/json' --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x2244", true],"id":1}'
 ```
+
+In practice, you would want to send requests to the hostname of your [custom gateway](/web3/how-to/manage-gateways/).
 
 You can also write the same query using the JS Fetch API:
 
 ```js
 await fetch(
-  new Request('https://cloudflare-eth.com', {
+  new Request('http://cloudflare-eth.com/v1/mainnet', {
     method: 'POST',
     body: JSON.stringify({
       jsonrpc: '2.0',
@@ -92,14 +94,16 @@ Once you have a wallet set up and a method of signing your own transactions, you
 Then you can use the Gateway to send the transaction to the network with a cURL command:
 
 ```bash
-curl https://cloudflare-eth.com -H 'Content-Type: application/json' --data '{"jsonrpc":"2.0","method":"eth_sendRawTransaction","params":["0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"],"id":1}'
+curl http://ethereum.cloudflare.com/v1/mainnet -H 'Content-Type: application/json' --data '{"jsonrpc":"2.0","method":"eth_sendRawTransaction","params":["0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"],"id":1}'
 ```
+
+In practice, you would want to send requests to the hostname of your [custom gateway](/web3/how-to/manage-gateways/).
 
 You could also use a JS Fetch API request:
 
 ```js
 await fetch(
-  new Request('https://cloudflare-eth.com', {
+  new Request('http://ethereum.cloudflare.com/v1/mainnet', {
     method: 'POST',
     body: JSON.stringify({
       jsonrpc: '2.0',

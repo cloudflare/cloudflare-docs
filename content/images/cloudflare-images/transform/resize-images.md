@@ -6,11 +6,13 @@ weight: 1
 
 # Resize images
 
-Cloudflare Images supports variants that specify how images should be resized for different use cases. You can configure up to 20 variants.
+Resizing images in Cloudflare Images works by creating variants of your image. Variants let you specify how images should be resized for different use cases. Cloudflare Images ships with a default `public` variant, but you can create up to 20 variants to fit your needs.
 
-Each variant has properties including the width and height of resized images.
+Each variant has several properties, including the width and height of resized images.
 
 ![Configure variants in Cloudflare Images](/images/static/variants.png)
+
+## Fit options
 
 The **Fit** property describes how the width and height dimensions should be interpreted. The chart below describes each of the options:
 
@@ -25,6 +27,27 @@ The **Fit** property describes how the width and height dimensions should be int
 | Pad         | Image will be resized (shrunk or enlarged) to be as large as possible within the given width or height while preserving the aspect ratio, and the extra area will be filled with a background color (white by default). |
 
 {{</table-wrap>}}
+
+## Metadata options
+
+Variants allow you to choose what to do with your image's metadata information, on the **Metadata** property:
+
+- Strip all metadata
+- Strip all metadata except copyright
+- Keep all metadata
+
+## Override image-level access
+
+Clicking the **Always allow public access** option will make a particular variant always publicly accessible, even when [making images private](/images/cloudflare-images/make-an-image-private/). 
+
+## How to resize an image
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Click **Images** > **Variants**.
+3. Name your variant and click **Add New Variant**.
+4. Define variables for your new variant, such as resizing options, type of fit and what do to with metadata.
+
+### Resize via API
 
 You can also create variants via API:
 

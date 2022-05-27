@@ -32,6 +32,8 @@ Using ECMP has a number of consequences:
 
 As a result, ECMP provides load balancing across tunnels with the same priority.
 
+{{<render file="_ecmp-flow-hashing.md">}}
+
 ### Examples
 
 This diagram illustrates how ECMP distributes traffic equally across 2 paths with the same priority.

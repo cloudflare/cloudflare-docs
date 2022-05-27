@@ -182,7 +182,7 @@ Use this selector to match against only the hostname specified—for example, if
 
 ### Location
 
-Use this selector to apply DNS policies to a specific [Gateway location](/cloudflare-one/connections/connect-networks/locations/) or set of locations.
+Use this selector to apply DNS policies to a specific [Gateway location](/cloudflare-one/policies/filtering/dns-policies/locations/) or set of locations.
 
 | UI name | API example |
 | -- | -- |
@@ -195,6 +195,31 @@ Use this selector to choose the DNS resource record type that you would like to 
 | UI name | API example |
 | -- | -- |
 | Query Record Type | `dns.query_rtype == "TXT"` |
+
+### Resolved Continent
+
+Use this selector to filter based on the continent that the query resolves to. Geolocation is determined from the IP address in the response. To specify a continent, enter its two-letter code into the **Value** field:
+
+- AF – Africa
+- AN – Antarctica
+- AS – Asia
+- EU – Europe
+- NA – North America
+- OC – Oceania
+- SA – South America
+- T1 – Tor network
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Resolved Continent IP Geolocation | `dns.dst.geo.continent == "EU"` |
+
+### Resolved Country
+
+Use this selector to filter based on the country that the query resolves to. Geolocation is determined from the IP address in the response. To specify a country, enter its [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) in the **Value** field.
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Resolved Country IP Geolocation | `dns.dst.geo.country == "RU"` |
 
 ### Resolved IP
 
@@ -211,6 +236,31 @@ Use this selector to block traffic directed to specific security categories.
 | UI name | API example |
 | -- | -- |
 | Security Categories | `any(dns.security_category[*] in {1})` |
+
+### Source Continent
+
+Use this selector to filter based on the continent where the query arrived to Gateway from. Geolocation is determined from the source IP address. To specify a continent, enter its two-letter code into the **Value** field:
+
+- AF – Africa
+- AN – Antarctica
+- AS – Asia
+- EU – Europe
+- NA – North America
+- OC – Oceania
+- SA – South America
+- T1 – Tor network
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Source Continent IP Geolocation | `dns.src.geo.continent == "EU"` |
+
+### Source Country
+
+Use this selector to filter based on the country where the query arrived to Gateway from. Geolocation is determined from the source IP address. To specify a country, enter its [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) in the **Value** field.
+
+| UI name        | API example                  |
+| -------------- | ---------------------------- |
+| Source Country IP Geolocation | `dns.src.geo.country == "RU"` |
 
 ### Source IP
 

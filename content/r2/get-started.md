@@ -18,7 +18,7 @@ Before you create your first bucket, you must purchase R2 in the Cloudflare dash
 
 To purchase R2:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/sign-up/r2).
 2. In **Account Home**, select **R2**.
 3. Select **Purchase R2 Plan**.
 4. Select **Proceed to Payment Details** to review your payment.
@@ -31,13 +31,13 @@ To create your R2 bucket, install [Wrangler](/workers/get-started/guide/#2-insta
 To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
 ```sh
-$ npm install -D wrangler
+$ npm install -g wrangler
 ```
 
 or install with yarn:
 
 ```sh
-$ yarn add wrangler
+$ yarn global add wrangler
 ```
 
 Refer to the Wrangler [Install/Update](/workers/wrangler/get-started/) page for more information.
@@ -70,13 +70,13 @@ R2 requires a Wrangler version of `1.19.8` or higher. To check your Wrangler ver
 Create your bucket by running:
 
 ```sh
-wrangler r2 bucket create <YOUR_BUCKET_NAME>
+$ wrangler r2 bucket create <YOUR_BUCKET_NAME>
 ```
 
 To check that your bucket was created, run:
 
 ```sh
-wrangler r2 bucket list
+$ wrangler r2 bucket list
 ```
 
 After running the `list` command, you will see all bucket names, including the one you have just created.
@@ -96,7 +96,7 @@ A binding is defined in the `wrangler.toml` file of your Worker project's direct
 Create a Worker using a [template](/workers/get-started/quickstarts/#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project.
 
 ```sh
-wrangler init <YOUR_WORKER_NAME>
+$ wrangler init <YOUR_WORKER_NAME>
 ```
 
 Next, find your newly generated `wrangler.toml` file in your project's directory and update `account_id` with your Cloudflare Account ID.
@@ -139,34 +139,32 @@ Within your Worker code, your bucket is now available under the `MY_BUCKET` vari
 An R2 bucket is able to READ, LIST, WRITE, and DELETE objects. You can see an example of all operations below using the Service Worker syntax. Add the following snippet into your project's `index.js` file:
 
 ```js
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
-});
+export default {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+    const key = url.pathname.slice(1);
 
-async function handleRequest(request) {
-  const url = new URL(request.url);
-  const key = url.pathname.slice(1);
+    switch (request.method) {
+      case "PUT":
+        await env.MY_BUCKET.put(key, request.body);
+        return new Response(`Put ${key} successfully!`);
+      case "GET":
+        const object = await env.MY_BUCKET.get(key);
 
-  switch (request.method) {
-    case "PUT":
-      await MY_BUCKET.put(key, request.body);
-      return new Response(`Put ${key} successfully!`);
-    case "GET":
-      const object = await MY_BUCKET.get(key);
+        if (!object) {
+          return new Response("Object Not Found", { status: 404 });
+        }
 
-      if (!object) {
-        return new Response("Object Not Found", { status: 404 });
-      }
+        return new Response(object.body);
+      case "DELETE":
+        await env.MY_BUCKET.delete(key);
+        return new Response("Deleted!", { status: 200 });
 
-      return new Response(object.body);
-    case "DELETE":
-      await MY_BUCKET.delete(key);
-      return new Response("Deleted!", { status: 200 });
-
-    default:
-      return new Response("Route Not Found.", { status: 404 });
+      default:
+        return new Response("Method Not Allowed", { status: 405 });
+    }
   }
-}
+};
 ```
 
 ## 6. Bucket access and privacy
@@ -187,16 +185,17 @@ For `GET` requests, you will ensure that only a specific file can be requested. 
 
 ```js
 const ALLOW_LIST = ['cat-pic.jpg'];
+
 // Check requests for a pre-shared secret
-const hasValidHeader = request => {
-  return request.headers.get('X-Custom-Auth-Key') === AUTH_KEY_SECRET;
+const hasValidHeader = (request, env) => {
+  return request.headers.get('X-Custom-Auth-Key') === env.AUTH_KEY_SECRET;
 };
 
-function authorizeRequest(request, key) {
+function authorizeRequest(request, env, key) {
   switch (request.method) {
     case 'PUT':
     case 'DELETE':
-      return hasValidHeader(request);
+      return hasValidHeader(request, env);
     case 'GET':
       return ALLOW_LIST.includes(key);
     default:
@@ -204,26 +203,30 @@ function authorizeRequest(request, key) {
   }
 }
 
-async function handleRequest(request) {
-  const url = new URL(request.url);
-  const key = url.pathname.slice(1);
+export default {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+    const key = url.pathname.slice(1);
 
-  if (!authorizeRequest(request, key)) {
-    return new Response('Forbidden', { status: 403 });
+    if (!authorizeRequest(request, env, key)) {
+      return new Response('Forbidden', { status: 403 });
+    }
+
+    // ...
   }
-  // ...
+};
 ```
 
 For this to work, you need to create a secret via Wrangler:
 
 ```sh
-wrangler secret put AUTH_KEY_SECRET
+$ wrangler secret put AUTH_KEY_SECRET
 ```
 
 This command will prompt you to enter a secret in your terminal:
 
 ```sh
-wrangler secret put AUTH_KEY_SECRET
+$ wrangler secret put AUTH_KEY_SECRET
 Enter the secret text you'd like assigned to the variable AUTH_KEY_SECRET on the script named <YOUR_WORKER_NAME>:
 *********
 🌀  Creating the secret for script name <YOUR_WORKER_NAME>
@@ -237,7 +240,7 @@ This secret is now available as the global variable `AUTH_KEY_SECRET` in your Wo
 With your Worker and bucket set up, run the `wrangler publish` [command](/workers/wrangler/cli-wrangler/commands/#publish) to deploy to Cloudflare's global network:
 
 ```sh
-wrangler publish
+$ wrangler publish
 ```
 
 You can verify your authorization logic is working through the following commands, using your deployed Worker endpoint:

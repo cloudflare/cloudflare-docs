@@ -8,7 +8,7 @@ weight: 4
 
 {{<Aside type="note">}}
 
-Wrangler has launched a new version. This is documentation for Wrangler version 1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
+Wrangler has launched a new version. This is documentation for Wrangler 1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
 
 {{</Aside>}}
 
@@ -46,7 +46,7 @@ routes = ["example.com/*"]
 
 Environment configuration {{<prop-meta>}}(optional){{</prop-meta>}}: the configuration values you specify under an `[env.name]` in your `wrangler.toml` file.
 
-Environments allow you to deploy the same project to multiple places under multiple names. These environments are utilized with the `--env` or `-e` flag on the [commands](/workers/wrangler/cli-wrangler/commands/) that are deploying live Worker scripts:
+Environments allow you to deploy the same project to multiple places under multiple names. These environments are utilized with the `--env` or `-e` flag on the [commands](/workers/wrangler/cli-wrangler/commands/) that are deploying live Workers:
 
 - `build`
 - `dev`

@@ -13,7 +13,7 @@ In your project directory, install [Wrangler](/workers/wrangler/get-started/) so
 
 ```sh
 # Publish created project
-CF_ACCOUNT_ID=<ACCOUNT_ID> npx wrangler pages publish <DIRECTORY> --project-name=<PROJECT_NAME>
+$ CF_ACCOUNT_ID=<ACCOUNT_ID> npx wrangler pages publish <DIRECTORY> --project-name=<PROJECT_NAME>
 ```
 
 ## Get credentials from Cloudflare
@@ -83,7 +83,7 @@ jobs:
       # - name: Build
       #   run: npm install && npm run build
       - name: Publish
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/pages-action@1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

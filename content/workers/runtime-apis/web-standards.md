@@ -7,7 +7,7 @@ meta:
 
 # JavaScript and web standards
 
-The Workers runtime provides the following standardized APIs for use by scripts running at the edge.
+The Workers runtime provides the following standardized APIs for use by Workers running at the edge.
 
 ---
 

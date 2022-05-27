@@ -6,7 +6,7 @@ weight: 1
 
 {{<Aside type="note">}}
 
-Wrangler has launched a new version. If you are looking for the Wrangler 1 docs, you can find them [here](/workers/wrangler/cli-wrangler/install-update/).
+Wrangler has launched a new version. If you are looking for the Wrangler 1 documentation, you can find it [here](/workers/wrangler/cli-wrangler/install-update/).
 
 {{</Aside>}}
 
@@ -27,6 +27,18 @@ npx wrangler publish
 
 ## Installation
 
+{{<Aside>}}
+
+If you previously had [Wrangler 1](/workers/wrangler/cli-wrangler/) installed globally, uninstall it first by running:
+
 ```bash
-$ npm install wrangler --save-dev
+$ npm uninstall -g @cloudflare/wrangler
+```
+
+{{</Aside>}}
+
+Install Wrangler globally:
+
+```bash
+$ npm install -g wrangler
 ```

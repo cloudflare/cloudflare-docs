@@ -107,7 +107,7 @@ To reach the settings menu:
 
 ### HTTP Only
 
-The HTTP Only flag is a cookie attribute that prevents the cookie from being accessed by any client-side scripts, reducing the likelihood of XSS attacks.
+The HTTP Only flag is a cookie attribute that prevents the cookie from being accessed by any client-side scripts, reducing the likelihood of XSS attacks. This flag is enabled by default.
 
 #### When not to use HttpOnly
 

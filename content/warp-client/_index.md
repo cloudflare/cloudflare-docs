@@ -8,6 +8,8 @@ meta:
 
 # Cloudflare WARP client
 
-The Cloudflare WARP client allows individuals and organizations to have a faster, more secure, and more private experience online. The WARP client has several modes, to better suit different connection needs. To learn more about WARP and the several modes, refer to [WARP modes](/warp-client/warp-modes/).
+The Cloudflare WARP client allows individuals and organizations to have a faster, more secure, and more private experience online. The WARP client sits between your device and the Internet, and has [several connection modes](/warp-client/warp-modes/) to better suit different needs.
 
-For more information on how to use WARP to enhance your Zero Trust experience, refer to the [Cloudflare Zero Trust documentation](/cloudflare-one/connections/connect-devices/warp/).
+Refer to [Get Started](/warp-client/get-started/) to learn more about which WARP version your should download for your operating system. 
+
+If you are looking for the enterprise version of WARP, refer to the [Cloudflare Zero Trust documentation](/cloudflare-one/connections/connect-devices/warp/).

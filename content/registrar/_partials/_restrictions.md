@@ -14,7 +14,7 @@ To transfer to a new registrar, your domain must meet a few requirements:
 {{<Aside type="warning">}}
 The transfer of an expired domain may result in an additional year NOT being added during the transfer.
 {{</Aside>}}
-* Cloudflare does not currently support premium domains. Some registries designate a domain name as premium and charge higher wholesale rates for these domains.
+* Cloudflare does not currently support premium domains. Some registries designate a domain name as premium and charge higher wholesale rates for these domains. In most cases Cloudflare is able to identify premium (non-standard priced) domains during the transfer eligibility step. However, this check might fail. When this happens, Cloudflare will not be able to determine the domain's premium status until the transfer is initiated.
 * Cloudflare does not currently support internationalized domain names (IDNs), also known as unicode.
 * Domains that have a status of `serverHold`, `serverTransferProhibited`, `pendingDelete`, `pendingTransfer`, or `RedemptionPeriod` may not be transferred.
 * Domains that have a status of `clientTransferProhibited` (Transfer Lock) will show as available for transfer. However, the Transfer Lock must be removed at your current registrar before the transfer can begin.

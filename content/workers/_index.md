@@ -26,13 +26,13 @@ Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/s
 To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
 ```sh
-$ npm install -D wrangler
+$ npm install -g wrangler
 ```
 
 or install with yarn:
 
 ```sh
-$ yarn add wrangler
+$ yarn global add wrangler
 ```
 
 Read more about [installing `wrangler`](/workers/wrangler/get-started/).
@@ -62,10 +62,10 @@ async function handleRequest(request) {
 
 ## Popular pages
 
-- [Learning: How Workers works](/workers/learning/how-workers-works/) – learn how Cloudflare’s global network powers Workers
-- [Pricing](/workers/platform/pricing/) – learn about the Free and Bundled plans
-- [Reference: HTMLRewriter](/workers/runtime-apis/html-rewriter/) – parse and transform HTML from inside a Worker
-- [Limits](/workers/platform/limits/) – learn about plan limits (Free plans get 100,000 req/day)
+- [Learning: How Workers works](/workers/learning/how-workers-works/) – Learn how Cloudflare’s global network powers Workers
+- [Pricing](/workers/platform/pricing/) – Learn about the Free and Bundled plans
+- [Reference: HTMLRewriter](/workers/runtime-apis/html-rewriter/) – Parse and transform HTML from inside a Worker
+- [Limits](/workers/platform/limits/) – Learn about plan limits (Free plans get 100,000 req/day)
 
 ---
 

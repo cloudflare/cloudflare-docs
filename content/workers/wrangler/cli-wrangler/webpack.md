@@ -8,7 +8,7 @@ weight: 5
 
 {{<Aside type="note">}}
 
-Wrangler has launched a new version. This is documentation for Wrangler version 1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
+Wrangler has launched a new version. This is documentation for Wrangler 1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
 
 {{</Aside>}}
 

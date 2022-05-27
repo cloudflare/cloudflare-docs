@@ -5,7 +5,7 @@ title: Curl + Quiche
 
 # Curl + Quiche
 
-Follow the guidelines below to build and test HTTP/3 on MacOS.
+Follow the guidelines below to build and test HTTP/3 on macOS.
 
 ## Requirements
 

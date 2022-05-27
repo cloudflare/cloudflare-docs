@@ -6,14 +6,14 @@ weight: 2
 
 # Direct Creator Upload
 
-The Direct Creator Upload feature in Cloudflare Images lets your users upload pictures with a one-time upload URL. By using Direct Creator Upload, you can accept uploads without exposing your API key or token to the client. It also eliminates the need for an intermediary storage bucket and the storage/egress costs associated with it.
+The Direct Creator Upload feature in Cloudflare Images lets your users upload pictures with a one-time upload URL. By using Direct Creator Upload, you can accept uploads without exposing [your API key or token](/images/cloudflare-images/api-request/) to the client. It also eliminates the need for an intermediary storage bucket and the storage/egress costs associated with it.
 
 To request a one-time upload URL, call the [`direct_upload` endpoint](https://api.cloudflare.com/#cloudflare-images-create-authenticated-direct-upload-url-v2) in your back-end (or Worker script):
 
 ```bash
 curl --request POST \
  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v2/direct_upload \
- --header 'Authorization: Bearer :token' \
+ --header 'Authorization: Bearer <API_TOKEN>' \
  --form 'requireSignedURLs=true' \
  --form 'metadata={"key":"value"}'
 ```
@@ -46,7 +46,7 @@ With version 2 of `direct_upload`, a new draft image record is created when you 
 ```bash
 curl  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/<IMAGE_ID> \
  --header 'Content-Type: application/json' \
- --header 'Authorization: Bearer :token'
+ --header 'Authorization: Bearer <API_TOKEN>'
 ```
 
 You will receive a response similar to this:
