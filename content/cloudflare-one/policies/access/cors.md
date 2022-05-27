@@ -22,7 +22,7 @@ When you protect a site with Cloudflare Access, Cloudflare checks every HTTP req
 
 {{</Aside>}}
 
-## Allow Simple Requests
+## Allow simple requests
 
 If you make a simple cross-origin request to an Access-protected domain and have not yet logged in, the request will return a `CORS error`. There are two ways you can resolve this error:
 
