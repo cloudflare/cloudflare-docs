@@ -1,19 +1,19 @@
 ---
-title: Supported products and features
+title: Available products and features
 pcx-content-type: reference
 weight: 2
 layout: list
 ---
 
-# Supported products and features
+# Available products and features
 
-The Cloudflare China Network supports the following products and features:
+The following products and features are available on the Cloudflare China Network operated by JD Cloud:
 
 ## Application services
 
 | Product | Feature | Description |
 |---|---|---|
-| DNS | [DNS resolution service](/china-network/concepts/china-dns/) | DNS resolution inside mainland China. |
+| DNS | [DNS resolution service](/china-network/concepts/china-dns/) | Authoritative DNS resolution inside mainland China. |
 | CDN | [Caching](/cache/) | Core cache features. Static cache only. |
 | CDN | [Image Resizing](/images/) | Optimize image format at the edge to fit a domain’s layout. |
 | [DDoS Protection](/ddos-protection/) | Layer 7 (HTTP/HTTPS) DDoS protection | Layer 7 (application layer) protection against DDoS attacks such as HTTP flood attacks, WordPress Pingback attacks, HULK attacks, and LOIC attacks. |

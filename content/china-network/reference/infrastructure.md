@@ -8,7 +8,7 @@ weight: 3
 
 ## China data centers
 
-As of March 2022, there are more than 40 data centers spanning over 35 cities across mainland China.
+As of March 2022, there are more than 40 data centers operated by JD Cloud spanning over 35 cities across mainland China.
 
 For up-to-date information, refer to the [Cloudflare China Network](https://www.cloudflare.com/china-network/) page.
 

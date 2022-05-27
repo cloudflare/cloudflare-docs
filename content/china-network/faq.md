@@ -30,7 +30,7 @@ Cloudflare has taken numerous steps to ensure your security and the integrity of
 
 ### Does Cloudflare have an MIIT license to provide CDN services in China?
 
-As a US company, Cloudflare does not have a license from MIIT (Chinese Ministry of Industry and Information Technology). However, Cloudflare's partner JD Cloud has all the licenses required by MIIT to operate and provide CDN services in China.
+As a US company, Cloudflare does not have a license from China's Ministry of Industry and Information Technology (MIIT). However, Cloudflare's partner JD Cloud has all the licenses required by the MIIT to operate and provide CDN services in China.
 
 ### Can Cloudflare or JD Cloud help me to get the ICP?
 
