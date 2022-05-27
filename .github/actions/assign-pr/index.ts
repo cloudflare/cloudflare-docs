@@ -84,14 +84,21 @@ function parse(filename: string): string | void {
 
     // TODO(debug): lukeed temporary
     if (author === 'lukeed' || PCX.has(author)) {
+      PCX.delete(author); // no self-review
       console.log('~> request PCX team review');
       return await client.rest.pulls.requestReviewers({
         repo: repository.name,
         owner: repository.owner.login,
         pull_number: prnumber,
-        // uses the team `slug` value
-        // ~> @cloudflare/pcx alias
-        team_reviewers: ['PCX'],
+        /**
+         * We SKIP the "@cloudflare/pcx" handle because of
+         * stupid GITHUB_TOKEN/PAT permission issues. Assign all
+         * PCX team members manually instead, effectively the same.
+         * @note Allowed up to 10 reviewers
+         * @see https://docs.github.com/en/issues/tracking-your-work-with-issues/assigning-issues-and-pull-requests-to-other-github-users
+         * @todo figure out how to use `team_reviewers: ['pcx']` instead.
+         */
+        reviewers: [...PCX].slice(0, 10)
       });
     }
 
