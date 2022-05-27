@@ -16,6 +16,7 @@ export const OWNERS: Record<string, string[]> = {
   'bots': ['kodster28'],
   'byoip': [], // TODO
   'cache': ['angelampcosta'],
+  'china-network': [], // TODO
   'client-ip-geolocation': ['pedrosousa'],
   'cloudflare-one': ['ranbel'],
   'ddos-protection': ['pedrosousa'],

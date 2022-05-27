@@ -22,6 +22,9 @@ content/byoip/ @ConzorKingKong @dinasaur404 @cloudflare/PCX
 # Cache
 content/cache/ @cloudflare/PCX
 
+# Cloudflare China Network
+content/china-network/ @cloudflare/PCX
+
 # Client IP Geolocation
 content/client-ip-geolocation/ @cloudflare/PCX
 
