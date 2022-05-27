@@ -62,7 +62,6 @@ Create [device enrollment rules](/cloudflare-one/connections/connect-devices/war
 
 The WARP client will direct DoH queries to a default DNS endpoint when enrolled to your Zero Trust organization. If you need to direct these queries to a separate DNS endpoint, [add a location](/cloudflare-one/policies/filtering/dns-policies/locations/) to Gateway. Gateway will assign a [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain) to that location, which you can add when deploying the WARP client to your devices.
 
-Add your office as a location on Gateway. Gateway will assign a [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain) to that location — you will then need this value when deploying the WARP client to your devices.
 
 ### 5. Download and deploy the WARP client to your devices.
 
