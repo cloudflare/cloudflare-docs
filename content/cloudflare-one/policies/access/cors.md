@@ -44,7 +44,7 @@ There are two ways you can resolve this error:
 - **Option 1** — [Configure Cloudflare to respond to the OPTIONS request](#configure-response-to-preflight-request).
 - **Option 2** — [Create a Cloudflare Worker which automatically sends an authentication token](#send-authentication-token-with-cloudflare-worker). This method only works if both sites involved in the CORS exchange are behind Access.
 
-### Configure response to preflight request
+### Configure response to preflight requests
 
 You can configure Cloudflare to respond to the OPTIONS request on your behalf. The OPTIONS request never reaches your origin. After the preflight exchange resolves, the browser will then send the main request which does include the authentication cookie (assuming you have logged into the Access-protected domain).
 
