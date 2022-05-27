@@ -127,7 +127,7 @@ Follow [these instructions](/cloudflare-one/identity/service-auth/service-tokens
 
 ### 3. Create a new Worker
 
-1. Open a terminal and create a new worker project.
+1. Open a terminal and create a new Workers project.
 
     ```sh
     wrangler generate redirect-worker
