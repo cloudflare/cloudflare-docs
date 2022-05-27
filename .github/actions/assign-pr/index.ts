@@ -69,11 +69,36 @@ function parse(filename: string): string | void {
     // TODO: may also want to do "edited" event & recompute -> apply differences
     // if (!ACTIONS.has(payload.action)) throw new Error('Invalid "pull_request" action event!');
 
+    // the pcx team member usernames
+    const PCX = new Set<string>();
+
+    for (let p in OWNERS) {
+      OWNERS[p].forEach(x => PCX.add(x));
+    }
+
     const owners = new Set<string>();
     const prnumber = pull_request.number;
     const author = pull_request.user.login;
 
     const client = github.getOctokit(token);
+
+    // TODO(debug): lukeed temporary
+    if (author === 'lukeed' || PCX.has(author)) {
+      console.log('~> request PCX team review');
+      return await client.rest.pulls.requestReviewers({
+        repo: repository.name,
+        owner: repository.owner.login,
+        pull_number: prnumber,
+        // uses the team `slug` value
+        // ~> @cloudflare/pcx alias
+        team_reviewers: ['PCX'],
+      });
+    }
+
+    // ---
+    // At this point, author is external and/or not PCX member.
+    // ~> determine PCX codeowners based on files in PR diff.
+    // ---
 
     // https://octokit.github.io/rest.js/v18#pulls-list-files
     const products = await list(client, {
@@ -102,46 +127,33 @@ function parse(filename: string): string | void {
       owners.delete(u.login);
     }
 
+    // cannot self-review
+    owners.delete(author);
+
     console.log({ products, owners, requested });
 
-    // is PR author the assigned PCX owner?
-    if (owners.size === 1 && owners.has(author) && requested.size === 0) {
-      console.log('~> request "@cloudflare/pcx" team review');
+    if (owners.size === 0) {
+      if (requested.size > 0) {
+        console.log('~> had reviewers at creation');
+      } else if (products.size > 0) {
+        console.log('~> ping "haleycode" for assignment');
+        await client.rest.issues.addAssignees({
+          repo: repository.name,
+          owner: repository.owner.login,
+          issue_number: prnumber,
+          assignees: ['haleycode'],
+        });
+      } else {
+        console.log('~> no products changed; engineering?');
+      }
+    } else {
+      console.log('~> request individual reviews');
       await client.rest.pulls.requestReviewers({
         repo: repository.name,
         owner: repository.owner.login,
         pull_number: prnumber,
-        // uses the team `slug` value
-        // ~> @cloudflare/pcx alias
-        team_reviewers: ['pcx'],
+        reviewers: [...owners],
       });
-    } else {
-      // cannot self-review
-      owners.delete(author);
-
-      if (owners.size === 0) {
-        if (requested.size > 0) {
-          console.log('~> had reviewers at creation');
-        } else if (products.size > 0) {
-          console.log('~> ping "haleycode" for assignment');
-          await client.rest.issues.addAssignees({
-            repo: repository.name,
-            owner: repository.owner.login,
-            issue_number: prnumber,
-            assignees: ['haleycode'],
-          });
-        } else {
-          console.log('~> no products changed; engineering?');
-        }
-      } else {
-        console.log('~> request individual reviews');
-        await client.rest.pulls.requestReviewers({
-          repo: repository.name,
-          owner: repository.owner.login,
-          pull_number: prnumber,
-          reviewers: [...owners],
-        });
-      }
     }
 
     console.log('DONE~!');
