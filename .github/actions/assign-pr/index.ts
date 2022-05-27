@@ -82,8 +82,7 @@ function parse(filename: string): string | void {
 
     const client = github.getOctokit(token);
 
-    // TODO(debug): lukeed temporary
-    if (author === 'lukeed' || PCX.has(author)) {
+    if (PCX.has(author)) {
       PCX.delete(author); // no self-review
       console.log('~> request PCX team review');
       return await client.rest.pulls.requestReviewers({
