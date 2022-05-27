@@ -70,13 +70,13 @@ R2 requires a Wrangler version of `1.19.8` or higher. To check your Wrangler ver
 Create your bucket by running:
 
 ```sh
-wrangler r2 bucket create <YOUR_BUCKET_NAME>
+$ wrangler r2 bucket create <YOUR_BUCKET_NAME>
 ```
 
 To check that your bucket was created, run:
 
 ```sh
-wrangler r2 bucket list
+$ wrangler r2 bucket list
 ```
 
 After running the `list` command, you will see all bucket names, including the one you have just created.
@@ -96,7 +96,7 @@ A binding is defined in the `wrangler.toml` file of your Worker project's direct
 Create a Worker using a [template](/workers/get-started/quickstarts/#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project.
 
 ```sh
-wrangler init <YOUR_WORKER_NAME>
+$ wrangler init <YOUR_WORKER_NAME>
 ```
 
 Next, find your newly generated `wrangler.toml` file in your project's directory and update `account_id` with your Cloudflare Account ID.
@@ -220,13 +220,13 @@ export default {
 For this to work, you need to create a secret via Wrangler:
 
 ```sh
-wrangler secret put AUTH_KEY_SECRET
+$ wrangler secret put AUTH_KEY_SECRET
 ```
 
 This command will prompt you to enter a secret in your terminal:
 
 ```sh
-wrangler secret put AUTH_KEY_SECRET
+$ wrangler secret put AUTH_KEY_SECRET
 Enter the secret text you'd like assigned to the variable AUTH_KEY_SECRET on the script named <YOUR_WORKER_NAME>:
 *********
 🌀  Creating the secret for script name <YOUR_WORKER_NAME>
@@ -240,7 +240,7 @@ This secret is now available as the global variable `AUTH_KEY_SECRET` in your Wo
 With your Worker and bucket set up, run the `wrangler publish` [command](/workers/wrangler/cli-wrangler/commands/#publish) to deploy to Cloudflare's global network:
 
 ```sh
-wrangler publish
+$ wrangler publish
 ```
 
 You can verify your authorization logic is working through the following commands, using your deployed Worker endpoint:

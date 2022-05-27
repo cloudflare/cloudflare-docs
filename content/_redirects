@@ -86,6 +86,7 @@
 /access/setting-up-access/access-groups/ /cloudflare-one/identity/users/groups/ 301
 /access/setting-up-access/audit-logs/ /cloudflare-one/analytics/logs/audit-logs/ 301
 /access/setting-up-access/configuring-access-policies/ /cloudflare-one/policies/zero-trust/policy-management/ 301
+/access/setting-up-access/validate-jwt-tokens/ /cloudflare-one/identity/service-auth/service-tokens/ 301
 /access/ssh/ /cloudflare-one/tutorials/ssh/ 301
 /access/ssh/short-live-cert-server/ /cloudflare-one/tutorials/ssh-cert-bastion/ 301
 /access/ssh/ssh-guide/ /cloudflare-one/tutorials/ssh/ 301
@@ -200,6 +201,7 @@
 
 # fundamentals
 /fundamentals/data-products/accessing-cf-data/ /fundamentals/data-products/types-of-analytics/ 301
+/fundamentals/get-started/basic-tasks/review-audit-logs/ /fundamentals/get-started/basic-tasks/account-security/review-audit-logs/ 301
 /fundamentals/get-started/cdn/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/how-cloudflare-works/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/cloudflare-cookies/ /fundamentals/get-started/reference/cloudflare-cookies/ 301
@@ -630,6 +632,7 @@
 /workers/docs-engine/example-pages/example/ /docs-engine/examples/pages/example/ 301
 /workers/docs-engine/site-configuration/ /docs-engine/reference/configuration/ 301
 /workers/examples/conditional_response/ /workers/examples/conditional-response/ 301
+/workers/examples/rustwasm/ /workers/tutorials/hello-world-rust/ 301
 /workers/faq/ /workers/ 301
 /workers/kv/ /workers/reference/storage/ 301
 /workers/kv/api/ /workers/reference/storage/api/ 301
@@ -908,7 +911,7 @@
 /cloudflare-one/policies/filtering/http-policies/application-app-types/ /cloudflare-one/policies/filtering/application-app-types/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/ /cloudflare-one/policies/filtering/dns-policies/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/categories/ /cloudflare-one/policies/filtering/dns-policies/dns-categories/ 301
-
+/cloudflare-one/tutorials/corp-device-tag/ /cloudflare-one/identity/devices/ 301
 
 
 # new_doc_redirects

@@ -21,6 +21,10 @@ Using Cloudflare Registrar simplifies your setup process by automatically using 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. In the top navigation bar, click **Add site**.
 3. Enter your website’s root domain (`example.com`) and then click **Add Site**.
+    
+    {{<Aside type="note">}}For help with `not a registered domain` errors, refer to [Unregistered domains](/fundamentals/get-started/setup/troubleshooting/unregistered-domains/).
+    {{</Aside>}}
+    
 4. Select your plan level. For more details on features and pricing, refer to [our Plans page](https://www.cloudflare.com/plans/#compare-features).
 5. Cloudflare will then automatically scan for your DNS records.
     1. Since this scan is not guaranteed to find all existing DNS records, you need to review your records, paying special attention to the following record types:
