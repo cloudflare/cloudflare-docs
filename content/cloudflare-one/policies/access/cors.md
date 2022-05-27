@@ -24,7 +24,7 @@ When you protect a site with Cloudflare Access, Cloudflare checks every HTTP req
 
 ## Allow simple requests
 
-If you make a simple cross-origin request to an Access-protected domain and have not yet logged in, the request will return a `CORS error`. There are two ways you can resolve this error:
+If you make a simple CORS request to an Access-protected domain and have not yet logged in, the request will return a `CORS error`. There are two ways you can resolve this error:
 
 - **Option 1** — [Log in and refresh the page](#authenticate-manually).
 - **Option 2** — [Create a Cloudflare Worker which automatically sends an authentication token](#send-authentication-token-with-cloudflare-worker). This method only works if both sites involved in the CORS exchange are behind Access.
