@@ -56,6 +56,8 @@ An incoming request which matches multiple rules' URL patterns will inherit all 
 
 {{</table-wrap>}}
 
+A project is limited to 100 header rules. Each header declaration has a 1,000-character limit.
+
 If a header is applied twice in the `_headers` file, the values are joined with a comma separator. Headers defined in the `_headers` file override what Cloudflare Pages ordinarily sends, so be aware when setting security headers. Cloudflare reserves the right to attach new headers to Pages projects at any time in order to improve performance or harden the security of your deployments.
 
 ### Matching
