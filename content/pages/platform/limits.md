@@ -29,6 +29,8 @@ The maximum file size for a single Cloudflare Pages site asset is 25 MiB.
 
 A `_headers` file can have a maximum of 100 header rules.
 
+The maximum length for a header is 1000 characters.
+
 ## Preview deployments
 
 You can have an unlimited number of [preview deployments](/pages/platform/preview-deployments/) active on your project at a time.
