@@ -38,4 +38,3 @@ For security reasons, domains transferred to Cloudflare Registrar are locked for
 
 - The domain is locked or suspended.
 - The nameservers were updated after the checkout process.
-- The IPS tag update was made more than seven days after the checkout process.
