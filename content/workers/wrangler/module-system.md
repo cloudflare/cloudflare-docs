@@ -15,7 +15,7 @@ As of Wrangler 2, `wrangler` has built-in support for importing modules.
 `wrangler` supports importing modules in the following formats:
 
 - JSX
-- Typescript
+- TypeScript
 - WebAssembly
 - HTML files
 
