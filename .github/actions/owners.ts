@@ -52,7 +52,7 @@ export const OWNERS: Record<string, string[]> = {
   'time-services': [], // TODO
   'waf': ['pedrosousa'],
   'waiting-room': ['angelampcosta'],
-  'warp-client': ['ranbel'],
+  'warp-client': ['marciocloudflare'],
   'web3': ['kodster28'],
   'workers': ['deadlypants1973'],
   'zaraz': ['marciocloudflare'],
