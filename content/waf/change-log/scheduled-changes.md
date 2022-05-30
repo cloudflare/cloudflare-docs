@@ -37,7 +37,7 @@ layout: list
       <td>2022-05-30</td>
       <td>2022-06-06</td>
       <td>Cloudflare Specials</td>
-      <td>...N/A</td>
+      <td>...e184d050</td>
       <td>100701</td>
       <td>Command Injection - CVE:CVE-2022-30525</td>
       <td>N/A</td>
