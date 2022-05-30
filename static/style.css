@@ -4395,6 +4395,19 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   color: #1d1f20;
 }
 
+.DocsContent
+  > article
+  > div
+  > div
+  > table
+  > tbody
+  > tr:nth-child(4)
+  > td:nth-child(1)
+  > a {
+  background-color: #f3802014;
+  color: #1d1f20;
+}
+
 [theme="light"]
   .DocsMarkdown--aside
   > .DocsMarkdown--link
@@ -4403,7 +4416,14 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   color: var(--code--orange);
 }
 
-[theme="light"] .DocsMarkdown--aside > .DocsMarkdown--link {
+[theme="dark"] .InlineCodeLink .InlineCode {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+[theme="light"] .atry .InlineCode {
+  background-color: var(--background-color);
+  color: var(--code-orange);
 }
 
 [theme="dark"] .DocsMarkdown--aside > p > a {
