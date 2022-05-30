@@ -10,7 +10,7 @@ If you created a Cloudflare Tunnel from the Zero Trust Dashboard, the tunnel [ru
 
 ## Linux
 
-On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl`. By default, the service will be named `cloudfared.service`. To configure your tunnel on Linux:
+On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl`. By default, the service will be named `cloudflared.service`. To configure your tunnel on Linux:
 
 1. Open `cloudflared.service`.
 
@@ -90,7 +90,7 @@ On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`.
 
 ## Windows
 
-On Windows, Cloudflare Tunnel installs itself as a system service using the Registry Editor. By default, the service will be named `cloudfared`. To configure your tunnel on Windows:
+On Windows, Cloudflare Tunnel installs itself as a system service using the Registry Editor. By default, the service will be named `cloudflared`. To configure your tunnel on Windows:
 
 1. Open the Registry Editor.
 
