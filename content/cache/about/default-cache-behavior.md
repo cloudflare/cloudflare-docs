@@ -54,7 +54,7 @@ If you require a larger upload, group requests smaller than the upload threshold
 Cloudflare cacheable file limits:
 
 - Free, Pro and Business customers have a limit of 512MB.
-- For Enterprise customers the default maximum cacheable file size is 5GB. Contact [Customer Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit increase.
+- For Enterprise customers the default maximum cacheable file size is 5GB. Contact your account team to request a limit increase.
 
 ## Cloudflare cache responses
 
