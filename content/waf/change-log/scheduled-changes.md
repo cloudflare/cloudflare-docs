@@ -24,12 +24,62 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-05-23</td>
       <td>2022-05-30</td>
+      <td>2022-06-06</td>
       <td>Cloudflare Specials</td>
-      <td>...f0c856b4</td>
-      <td>100054_BETA</td>
-      <td>Apache Struts - Command Injection - CVE:CVE-2017-5638</td>
+      <td>...N/A</td>
+      <td>100702</td>
+      <td>Command Injection - CVE:CVE-2022-24108</td>
+      <td>N/A</td>
+      <td>Block</td>
+    </tr>
+    <tr>
+      <td>2022-05-30</td>
+      <td>2022-06-06</td>
+      <td>Cloudflare Specials</td>
+      <td>...N/A</td>
+      <td>100701</td>
+      <td>Command Injection - CVE:CVE-2022-30525</td>
+      <td>N/A</td>
+      <td>Block</td>
+    </tr>
+    <tr>
+      <td>2022-05-30</td>
+      <td>2022-06-06</td>
+      <td>Cloudflare Specials</td>
+      <td>...N/A</td>
+      <td>N/A</td>
+      <td>DotNetNuke - File Inclusion - CVE:CVE-2018-9126, CVE:CVE-2011-1892 2</td>
+      <td>N/A</td>
+      <td>Block</td>
+    </tr>
+    <tr>
+      <td>2022-05-30</td>
+      <td>2022-06-06</td>
+      <td>Cloudflare Specials</td>
+      <td>...N/A</td>
+      <td>N/A</td>
+      <td>XXE 2</td>
+      <td>N/A</td>
+      <td>Block</td>
+    </tr>
+    <tr>
+      <td>2022-05-30</td>
+      <td>2022-06-06</td>
+      <td>Cloudflare Specials</td>
+      <td>...N/A</td>
+      <td>100005_BETA</td>
+      <td>DotNetNuke - File Inclusion - CVE:CVE-2018-9126, CVE:CVE-2011-1892</td>
+      <td>N/A</td>
+      <td>Block</td>
+    </tr>
+    <tr>
+      <td>2022-05-30</td>
+      <td>2022-06-06</td>
+      <td>Cloudflare Specials</td>
+      <td>...N/A</td>
+      <td>100045B</td>
+      <td>Anomaly:Header, Directory Traversal - Multiple Slashes, Relative Paths, CR, LF or NULL</td>
       <td>N/A</td>
       <td>Block</td>
     </tr>
