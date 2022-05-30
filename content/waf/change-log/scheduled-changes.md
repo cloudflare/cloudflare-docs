@@ -59,7 +59,7 @@ layout: list
       <td>Cloudflare Specials</td>
       <td>...N/A</td>
       <td>N/A</td>
-      <td>XXE 2</td>
+      <td>XXE - System Function</td>
       <td>N/A</td>
       <td>Block</td>
     </tr>
