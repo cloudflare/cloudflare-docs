@@ -47,7 +47,7 @@ layout: list
       <td>2022-05-30</td>
       <td>2022-06-06</td>
       <td>Cloudflare Specials</td>
-      <td>...N/A</td>
+      <td>...56c390a1</td>
       <td>N/A</td>
       <td>DotNetNuke - File Inclusion - CVE:CVE-2018-9126, CVE:CVE-2011-1892 2</td>
       <td>N/A</td>
