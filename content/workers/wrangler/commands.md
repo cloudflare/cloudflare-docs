@@ -14,6 +14,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`kv:namespace`](#kvnamespace) - Manage Workers KV namespaces.
 - [`kv:key`](#kvkey) - Manage key-value pairs within a Workers KV namespace.
 - [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
+- [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
@@ -659,6 +660,54 @@ y
 ```
 
 {{</Aside>}}
+
+---
+
+## r2 bucket
+
+Interact with buckets in an R2 store.
+
+{{<Aside type="note">}}
+The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers R2](https://developers.cloudflare.com/workers/runtime-apis/r2/).
+{{</Aside>}}
+
+### `create`
+
+Create a new R2 bucket.
+
+```sh
+$ wrangler r2 bucket create <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the new R2 bucket.
+
+{{</definitions>}}
+
+### `delete`
+
+Delete an R2 bucket.
+
+```sh
+$ wrangler r2 bucket delete <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to delete.
+
+{{</definitions>}}
+
+### `list`
+
+List R2 bucket in the current account.
+
+```sh
+$ wrangler r2 bucket list
+```
 
 ---
 
