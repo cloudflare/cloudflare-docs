@@ -8,7 +8,7 @@ weight: 2
 
 Use IP Lists to refer to a group of IP addresses collectively, by name, in your firewall rule expression. You can choose to create your own custom list of IP addresses or use a list managed by Cloudflare.
 
-For example, use a list of known office IP addresses in a firewall rule that allows requests from the addresses on the list to bypass security features. Or you may want to block requests that don't come from the known office addresses.
+For example, use a list of known office IP addresses in a firewall rule that allows requests from the addresses on the list to bypass security features. Or you may want to block requests that do not come from the known office addresses.
 
 When you update the content of a list, any rules that use the list are automatically updated, so you can make a single change to your firewall rules list rather than modify rules individually.
 
@@ -24,9 +24,9 @@ Using IP Lists has these advantages:
 
 ## Managed IP lists
 
-Use Managed IP Lists to access Cloudflare's IP threat intelligence.
+Use managed IP lists to access Cloudflare's IP threat intelligence. The available managed IP lists depend on your Cloudflare plan.
 
-Depending on your plan, you may have access to the following managed IP lists:
+Cloudflare provides the following managed IP lists:
 
 <table>
   <thead>
@@ -69,7 +69,7 @@ Depending on your plan, you may have access to the following managed IP lists:
 
 The number of IP lists you can create depends on the Cloudflare plans associated with the zones in your account. You can store up to a total of 10,000 items across all your lists, regardless of your plan.
 
-The available managed IP lists also depend on your Cloudflare plan.
+The available managed IP lists depend on your Cloudflare plan.
 
 Feature                                   | Free | Pro | Business | Enterprise Core | Enterprise Advanced
 ------------------------------------------|------|-----|----------|-----------------|--------------------
@@ -79,7 +79,7 @@ All [managed IP lists](#managed-ip-lists) | –    | –   | –        | –   
 
 ## User role requirements
 
-The following user roles have access to the List management functionality:
+The following user roles have access to the list management functionality:
 
 - Super Administrator
 - Administrator
