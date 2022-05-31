@@ -5,7 +5,17 @@ pcx-content-type: concept
 
 # Vary for images
 
-`Vary` is an HTTP response header that allows origins to serve variants of the same content that can be used depending on the browser sending the request. Vary for Images reduces the content-negotiation process by parsing a request’s `Accept` header, which is sent to the origin to deliver the correct content to the browser.
+`Vary` is an HTTP response header that allows origins to serve variants of the same content that can be used depending on the browser sending the request.
+
+Cloudflare sits in between the browser and the origin. When Cloudflare receives the origin’s response, the specific image variant is cached so that subsequent requests from browsers with the same image preferences can be served from cache. This also means that serving multiple image variants for the same asset will create distinct cache entries.
+
+Vary for Images reduces the content-negotiation process by parsing a request’s `Accept` header, which is sent to the origin to deliver the correct content to the browser.
+
+{{<Aside type="note" header="Note">}}
+
+Vary should be used if the vary value is dynamic/vary across requests. If you already know which header(s) you want to vary on, you should include those headers in a [Custom cache key](/cache/how-to/create-cache-keys/).
+
+{{</Aside>}}
 
 Vary for images is available for Pro, Business, and Enterprise customers.
 
