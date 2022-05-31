@@ -22,11 +22,11 @@ Using IP Lists has these advantages:
 - When updating a set of firewall rules that target the same group of IP addresses, using an IP List is easier and less error prone than editing multiple firewall rules.
 - IP Lists are easier to read and more informative, particularly when you use descriptive names for your lists.
 
-## Managed IP lists
+## Managed IP Lists
 
-Use managed IP lists to access Cloudflare's IP threat intelligence. The available managed IP lists depend on your Cloudflare plan.
+Use Managed IP Lists to access Cloudflare's IP threat intelligence. The available Managed IP Lists depend on your Cloudflare plan.
 
-Cloudflare provides the following managed IP lists:
+Cloudflare provides the following Managed IP Lists:
 
 <table>
   <thead>
@@ -67,15 +67,15 @@ Cloudflare provides the following managed IP lists:
 
 ## Availability
 
-The number of IP lists you can create depends on the Cloudflare plans associated with the zones in your account. You can store up to a total of 10,000 items across all your lists, regardless of your plan.
+The number of IP Lists you can create depends on the Cloudflare plans associated with the zones in your account. You can store up to a total of 10,000 items across all your lists, regardless of your plan.
 
-The available managed IP lists depend on your Cloudflare plan.
+The available Managed IP Lists depend on your Cloudflare plan.
 
 Feature                                   | Free | Pro | Business | Enterprise Core | Enterprise Advanced
 ------------------------------------------|------|-----|----------|-----------------|--------------------
-Number of IP lists                        | 1    | 10  | 10       | 10              | 10
-Cloudflare Open Proxies managed IP list   | –    | –   | –        | Yes             | Yes
-All [managed IP lists](#managed-ip-lists) | –    | –   | –        | –               | Yes
+Number of IP Lists                        | 1    | 10  | 10       | 10              | 10
+Cloudflare Open Proxies Managed IP List   | –    | –   | –        | Yes             | Yes
+All [Managed IP Lists](#managed-ip-lists) | –    | –   | –        | –               | Yes
 
 ## User role requirements
 
