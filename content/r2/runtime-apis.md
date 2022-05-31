@@ -280,7 +280,7 @@ For more information about conditional requests, refer to [RFC 7232](https://dat
 
 ### HTTP Metadata
 
-Generally, these fields match the HTTP metadata passed when the object was created.  They can be overriden when issuing `GET` requests, in which case, the given values will be echoed back in the response.
+Generally, these fields match the HTTP metadata passed when the object was created.  They can be overridden when issuing `GET` requests, in which case, the given values will be echoed back in the response.
 
 {{<definitions>}}
 
