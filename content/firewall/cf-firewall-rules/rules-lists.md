@@ -6,7 +6,7 @@ weight: 2
 
 # IP Lists
 
-Use IP Lists to refer to a group of IP addresses collectively, by name, in your firewall rule expression. You can choose to create your own custom list of IP addresses or use a list managed by Cloudflare.
+Use IP Lists to refer to a group of IP addresses collectively, by name, in your firewall rule expression. You can create your own custom lists of IP addresses or [use lists managed by Cloudflare](#managed-ip-lists).
 
 For example, use a list of known office IP addresses in a firewall rule that allows requests from the addresses on the list to bypass security features. Or you may want to block requests that do not come from the known office addresses.
 
