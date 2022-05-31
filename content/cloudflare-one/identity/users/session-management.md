@@ -127,7 +127,7 @@ Do not enable SameSite restrictions if you have additional sites or applications
 
 ### HttpOnly
 
-The HttpOnly flag is a cookie attribute that prevents the cookie from being accessed by any client-side scripts, reducing the likelihood of XSS attacks. This flag is enabled by default.
+The HttpOnly flag is a cookie attribute that prevents the cookie from being accessed by any client-side scripts, reducing the likelihood of Cross-Site Scripting (XSS) attacks. This flag is enabled by default.
 
 #### When not to use HttpOnly
 
