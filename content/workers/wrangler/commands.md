@@ -841,7 +841,7 @@ Configure Cloudflare Pages.
 
 {{<Aside type="warning">}}
 The `wrangler pages ...` commands are in beta.<br>
-Please report any issues to https://github.com/cloudflare/wrangler2/issues/new/choose.
+Report any issues to https://github.com/cloudflare/wrangler2/issues/new/choose.
 {{</Aside>}}
 
 ### `dev`
