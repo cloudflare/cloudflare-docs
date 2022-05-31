@@ -71,11 +71,11 @@ The number of IP Lists you can create depends on the Cloudflare plans associated
 
 The available Managed IP Lists depend on your Cloudflare plan.
 
-Feature                                   | Free | Pro | Business | Enterprise Core | Enterprise Advanced
-------------------------------------------|------|-----|----------|-----------------|--------------------
-Number of IP Lists                        | 1    | 10  | 10       | 10              | 10
-Cloudflare Open Proxies Managed IP List   | –    | –   | –        | Yes             | Yes
-All [Managed IP Lists](#managed-ip-lists) | –    | –   | –        | –               | Yes
+Feature                                   | Free | Pro | Business | Enterprise | Enterprise Advanced
+------------------------------------------|------|-----|----------|------------|--------------------
+Number of IP Lists                        | 1    | 10  | 10       | 10         | 10
+Cloudflare Open Proxies Managed IP List   | –    | –   | –        | Yes        | Yes
+All [Managed IP Lists](#managed-ip-lists) | –    | –   | –        | –          | Yes
 
 ## User role requirements
 
