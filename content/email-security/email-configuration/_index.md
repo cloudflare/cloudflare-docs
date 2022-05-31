@@ -1,9 +1,9 @@
 ---
-title: Additional configuration
+title: Email configuration
 pcx-content-type: navigation
 weight: 4
 ---
 
-# Additional configuration
+# Email configuration
 
 {{<directory-listing>}}
