@@ -6,7 +6,7 @@ weight: 4
 
 # Manage user seats
 
-When an end user authenticates to an application protected by Cloudflare Access or enrolls their device into Cloudflare Gateway, the user consumes one seat. The user continues to occupy that seat regardless of the number of applications accessed or login events. Once the total amount of seats in the subscription has been consumed, additional users who attempt to login are blocked.
+When an end user authenticates to an application protected by Cloudflare Access or enrolls their device into Cloudflare Gateway, the user consumes one seat. The user continues to occupy that seat regardless of the number of applications accessed or login events. Once the total amount of seats in the subscription has been consumed, additional users who attempt to log in are blocked.
 
 A user who authenticates will hold their seat until you remove the user from your account. You can remove a single user or all users at any time, and those users will immediately stop counting against your subscription.
 
