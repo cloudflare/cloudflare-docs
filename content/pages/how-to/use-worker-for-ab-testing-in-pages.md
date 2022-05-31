@@ -17,7 +17,7 @@ To ensure that a user remains in the group you have given, a cookie will be set 
 
 You can use any cookie library (for example, [`js-cookie`](https://www.npmjs.com/package/js-cookie)) to generate cookies. This guide assigns a local value to a `cookieName` variable and uses that as the cookie value. Depending on the cookie value, a route is served. 
 
-The cookie assignment is done randomly by using `Math.random()` which generates a list of random decimal numbers. You can make the numbers a whole number by calling the `Math.floor()` method on `Math.random()` like this: `Math.floor(Math.random())` and to make sure that you have a maximum range of numbers you can multiply by 100. This means that you can now think of your assignments in terms of percentages.
+The cookie assignment is done randomly by using `Math.random()` which generates a list of random decimal numbers. You can make the numbers a whole number by calling the `Math.floor()` method on `Math.random()` like this: `Math.floor(Math.random())` and to make sure that you have a maximum range of numbers you can multiply by `100`. This means that you can now think of your assignments in terms of percentages.
 
 Your percentage generator code should look like this `Math.floor(Math.random() * 100)`.
 
@@ -41,15 +41,13 @@ Pages Functions have utility functions that can reuse chunks of logic which are 
 
 In your `/functions` directory, create a `_middleware.js` file. 
 
-
-
 {{<Aside type="Note">}}
 
 When you create your `_middleware.js` file at the base of your `/functions` folder, the middleware will run for all routes on your project. Learn more about [middleware routing](/pages/platform/functions/#middleware-routing).
 
 {{</Aside>}}
 
-Following the Functions naming convention, the `_middleware.js` file exports a single async `OnRequest` function that accepts a `request`, `env` and `next`  as an argument. 
+Following the Functions naming convention, the `_middleware.js` file exports a single async `OnRequest` function that accepts a `request`, `env` and `next` as an argument. 
 
 ```js
 ---
@@ -66,7 +64,7 @@ const abtest = async({request, next, env}) => {
 export const onRequest = [abtest]
 ```
 
-To identify the cookie, assign it in the browser and give it a unique name. Create a variable above your async function. Here, you can define the second route as `newHomepagePathName` and assign it to the`/test. As seen in the code below:
+To identify the cookie, assign it in the browser and give it a unique name. Create a variable above your async function. Here, you can define the second route as `newHomepagePathName` and assign it to`/test`:
 
 ```js
 ---
@@ -130,9 +128,9 @@ export const onRequest = [abtest]
 
 If the cookie value is not present, you will have to assign one. You can generate numbers randomly by using the `Math.random()` method and getting whole numbers by calling a `Math.floor()` on the function.
 
-To make the number genrated into percentages, multiple `Math.random()` by 100 and call `Math.floor()` so that all the percentages can be whole numbers. Your default cookie version is given a value of `current`.
+To make the number genrated into percentages, multiply `Math.random()` by `100` and call `Math.floor()` so that all the percentages can be whole numbers. Your default cookie version is given a value of `current`.
 
-If the percentage of the number generated is lower than 50, you will assign the cookie version to `new`. Based on the percentage randomly generated, you will set the cookie and serve the assets. After the conditional block, pass the request to `next()`. This will pass the request back to the browser.
+If the percentage of the number generated is lower than `50`, you will assign the cookie version to `new`. Based on the percentage randomly generated, you will set the cookie and serve the assets. After the conditional block, pass the request to `next()`. This will pass the request back to the browser.
 
 ```js
 ---
