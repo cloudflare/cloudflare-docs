@@ -8,7 +8,10 @@ meta:
 
 # Create a new Access Control List
 
-You need to create an Access Control List (ACL) if you want to specify additional NOTIFY IPs that Cloudflare should listen to (Cloudflare as secondary) or additional IPs Cloudflare should accept zone transfer requests from (Cloudflare as primary).
+You need to create an Access Control List (ACL) in certain situations:
+
+- If Cloudflare is your [primary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-primary/), create an ACL to specify additional IPs Cloudflare should accept zone transfer requests from.
+- If Cloudflare is your [secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), create an ACL to specify additional NOTIFY IPs that Cloudflare should listen to.
 
 An ACL is configured at the account level, which means that it will apply to every primary and secondary zone in your account.
 

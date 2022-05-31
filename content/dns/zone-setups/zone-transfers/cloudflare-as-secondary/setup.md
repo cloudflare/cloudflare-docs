@@ -18,16 +18,16 @@ Make sure you have completed the following tasks before setting up incoming zone
 
 ### At your primary DNS provider
 
-Your primary DNS provider should allow traffic from the port specified in your [peer server configuration](#step-2---create-peer-server).
+Your primary DNS provider should allow traffic from the IP address and port specified in your [peer server configuration](#step-2---create-peer-server).
 
 It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#cloudflare-as-secondary) to prevent zone transfers from being blocked.
 
 You will also need the following information from your Primary DNS provider:
 
-- **Primary IP address**: The IP address that Cloudflare should accept zone transfers from.
+- **Primary IP address**: The IP address that Cloudflare sends zone transfer requests to (via AXFR or IXFR).
 - **Zone transfer type**: Will zone transfers be full (AXFR) or incremental (IXFR)?
 - **TSIG secret** (optional): The secret string used to authenticate zone transfers.
-- **TSIF Algorithm** (optional): The algorithm used to authenticate zone transfers.
+- **TSIG Algorithm** (optional): The algorithm used to authenticate zone transfers.
 
 ### At Cloudflare
 
@@ -42,9 +42,9 @@ Get the following values from your Cloudflare account:
 
 If you want [DNSSEC](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) available for your secondary zone, you will need one of the following setups (reach out to your account team for more details):
 
-- **Hidden primary**: Since Cloudflare secondary nameservers are the only nameservers listed at your registrar, Cloudflare can sign records as needed.
-- **Pre-signed zones**: If your primary DNS provider signs records and transfers them, Cloudflare serves records and does not do any signing. Cloudflare only supports NSEC records (and not NSEC3 records) and this setup does not support [Secondary Overrides](https://support.cloudflare.com/hc/articles/360042169091).
-- **Multi-signer DNSSEC**: Both Cloudflare and your primary DNS provider know the signing keys of the other provider and perform their own online signing.
+- **Hidden primary**: Since Cloudflare secondary nameservers are the only nameservers authoritatively responding to DNS queries, Cloudflare can sign records on the fly.
+- **Pre-signed zones**: If your primary DNS provider signs records and transfers out the signatures, Cloudflare serves records and DNSSEC signatures as is without doing any signing. Cloudflare only supports NSEC records (and not NSEC3 records) and this setup does not support [Secondary Overrides](https://support.cloudflare.com/hc/articles/360042169091).
+- **Multi-signer DNSSEC**: Both Cloudflare and your primary DNS provider know the signing keys of the other provider and perform their own online signing in accordance with [RFC 8901](https://datatracker.ietf.org/doc/html/rfc8901).
 
 ---
 
@@ -92,7 +92,9 @@ To create a secondary zone using the dashboard:
 3. Enter your zone name and choose **Secondary DNS** (if this option is not available, contact your account team).
 4. Click **Add site**.
 5. Select your plan type.
-6. Choose a value for **Zone refresh**, which controls the number of seconds between zone updates from your primary DNs server.
+6. Choose a value for **Zone refresh**, which controls the number of seconds between zone updates from your primary DNS server.
+    {{<Aside type="warning">}}Cloudflare will not use the REFRESH value inside the SOA record that is served by your primary provider. Instead the value of zone refresh configured for your secondary zone on Cloudflare will be used to determine the interval after which the SOA serial of the primary zone will be checked for changes.
+    {{</Aside>}}
 7. Select the peer server you [previously created](#step-2---create-peer-server). If needed, you can link more than one peer server to a zone.
 8. Click **Continue**.
 9. Review the list of transferred records and click **Continue**.

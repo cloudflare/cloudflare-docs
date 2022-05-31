@@ -22,16 +22,20 @@ If you are using Cloudflare for Primary DNS — meaning that you are setting up 
 
 Cloudflare's NOTIFY messages originate from the following IP prefixes. These ranges need to be allowed at your Secondary DNS servers.
 
-- 198.41.144.240/28
-- 198.41.150.240/28
-- 2a06:98c0:3601::/48
-- 2a06:98c0:1401::/48
+```txt
+198.41.144.240/28
+198.41.150.240/28
+2a06:98c0:3601::/48
+2a06:98c0:1401::/48
+```
 
 ### Transfer IP
 
 Cloudflare will listen to AXFR/IXFR zone transfer requests and SOA queries from your Secondary DNS server on this IP address.
 
-- 172.65.64.6
+```txt
+172.65.64.6
+```
 
 ## Cloudflare as Secondary
 
@@ -41,19 +45,23 @@ If you are using Cloudflare for Secondary DNS — meaning that you are setting u
 
 Cloudflare's AXFR/IXFR zone transfer requests originate from the following IP prefixes. These ranges need to be allowed at your Primary DNS servers.
 
-- 198.41.144.240/28
-- 198.41.150.240/28
-- 2a06:98c0:3601::/48
-- 2a06:98c0:1401::/48
+```txt
+198.41.144.240/28
+198.41.150.240/28
+2a06:98c0:3601::/48
+2a06:98c0:1401::/48
+```
 
 ### Notify IPs
 
 Notify IPs are the IP addresses where you notify Cloudflare's Secondary DNS to initiate a pull of new zone information from your Primary DNS servers:
 
-- 172.65.30.82
-- 172.65.50.145
-- 2606:4700:60:0:317:26ee:3bdf:5774
-- 2606:4700:60:0:35a:4be3:4144:c5ee
+```txt
+172.65.30.82
+172.65.50.145
+2606:4700:60:0:317:26ee:3bdf:5774
+2606:4700:60:0:35a:4be3:4144:c5ee
+```
 
 ### Bind server configuration
 
