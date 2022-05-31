@@ -1,7 +1,7 @@
 ---
 title: Email policies
 pcx-content-type: navigation
-weight: 4
+weight: 2
 ---
 
 # Email policies
