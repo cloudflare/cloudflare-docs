@@ -18,7 +18,9 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 {{</Aside>}}
 
-This guide will instruct you through setting up a Cloudflare account to deploying your first Worker script. This guide assumes that you have have a Cloudflare account. If you do not have a Cloudflare account, create one before continuing.
+This guide will instruct you through setting up a Cloudflare account to deploying your first Worker script. This guide assumes that you have have a Cloudflare account. If you do not have a Cloudflare account, sign up before continuing with this guide:
+
+<p>{{<button type="primary" href="https://dash.cloudflare.com/sign-up/workers">}}Sign up{{</button>}}</p>
 
 ---
 
@@ -50,19 +52,21 @@ $ wrangler login
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
 
+
+
 ---
 
 ## 3. Start a new project
 
 With Wrangler installed, you are ready to create your Worker project.
 
-Run `wrangler init` follow by your project name:
+Run `wrangler init` followed by your project name:
 
 ```sh
 $ wrangler init <YOUR_WORKER>
 ```
 
-You will be asked `“Would you like to use git to manage this Worker? (y/n)”` and `Would you like to use TypeScript? (y/n)`. For the purpose of this guide, respond with `y`. If you run:
+You will be asked `“Would you like to use git to manage this Worker? (y/n)”` and `Would you like to use TypeScript? (y/n)`. For the purpose of this guide, respond with `y` to both questions. If you run:
 
 ```sh
 $ wrangler init <YOUR_WORKER> -y
