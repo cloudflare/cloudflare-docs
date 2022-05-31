@@ -100,4 +100,4 @@ To refer to a List in a rule expression, use `$<list_name>` and specify the `in`
 (ip.src in $office_network)
 ```
 
-Note that list names can only include lowercase letters, numbers, and the underscore (`_`) character. For guidance on creating and managing Lists, refer to [Use Lists: Manage Lists](/firewall/cf-dashboard/rules-lists/manage-lists/).
+Note that list names can only include lowercase letters, numbers, and the underscore (`_`) character. For guidance on creating and managing Lists, refer to [Work with lists](/firewall/cf-dashboard/rules-lists/manage-lists/).

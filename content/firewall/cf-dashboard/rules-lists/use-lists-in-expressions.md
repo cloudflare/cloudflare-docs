@@ -30,7 +30,7 @@ This expression filters requests from IP addresses that are in an IP List named 
 
 Note that names for IP Lists can only include lowercase letters, numbers, and the underscore (`_`) character.
 
-For more on creating lists, refer to [Manage lists](/firewall/cf-dashboard/rules-lists/manage-lists/).
+For more on creating lists, refer to [Work with lists](/firewall/cf-dashboard/rules-lists/manage-lists/).
 
 To create a new rule via API using a Managed IP List — for example, `cf.open_proxies` — use the following expression:
 
