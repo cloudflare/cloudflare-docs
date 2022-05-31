@@ -17,7 +17,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
-- [`pages`](#pages) - Configure Cloudflare Pages
+- [`pages`](#pages) - Configure Cloudflare Pages.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 
@@ -669,7 +669,7 @@ y
 Interact with buckets in an R2 store.
 
 {{<Aside type="note">}}
-The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers R2](https://developers.cloudflare.com/workers/runtime-apis/r2/).
+The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](https://developers.cloudflare.com/workers/runtime-apis/r2/).
 {{</Aside>}}
 
 ### `create`
@@ -840,13 +840,13 @@ After starting `wrangler tail`, you will receive a live feed of console and exce
 Configure Cloudflare Pages.
 
 {{<Aside type="warning">}}
-The `wrangler pages` commands are in beta.<br>
+The `wrangler pages ...` commands are in beta.<br>
 Please report any issues to https://github.com/cloudflare/wrangler2/issues/new/choose.
 {{</Aside>}}
 
 ### `dev`
 
-Develop your full-stack Pages application locally.
+Develop your full stack Pages application locally.
 
 ```sh
 $ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND..>]
