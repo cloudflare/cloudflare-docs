@@ -1,7 +1,7 @@
 ---
 title: Partners
 pcx-content-type: navigation
-weight: 7
+weight: 8
 ---
 
 # Partners
