@@ -1,7 +1,7 @@
 ---
 pcx-content-type: navigation
-title: Agentless DNS filtering
-weight: 3
+title: DNS
+weight: 1
 ---
 
 # Agentless DNS filtering
