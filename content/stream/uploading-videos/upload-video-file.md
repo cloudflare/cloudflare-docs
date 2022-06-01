@@ -203,7 +203,6 @@ var options = {
     Authorization: 'Bearer $TOKEN',
   },
   chunkSize: 50 * 1024 * 1024, // Required a minimum chunk size of 5MB, here we use 50MB.
-  resume: true,
   metadata: {
     filename: 'test.mp4',
     filetype: 'video/mp4',
