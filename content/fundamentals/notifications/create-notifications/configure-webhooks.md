@@ -17,8 +17,8 @@ There are a variety of services you can connect to Cloudflare using webhooks to 
   <thead>
     <tr>
       <th style="width:20%">Service</th>
-      <th style="width:50%">Secret</th>
-      <th style="width:30%">URL</th>
+      <th style="width:45%">Secret</th>
+      <th style="width:35%">URL</th>
     </tr>
   </thead>
   <tbody>
