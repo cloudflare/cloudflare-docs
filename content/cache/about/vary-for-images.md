@@ -13,7 +13,7 @@ Cloudflare sits in between the browser and the origin. When Cloudflare receives 
 
 {{<Aside type="note" header="Note">}}
 
-You should use `Vary` when the vary value is dynamic/vary across requests. If you already know which headers you want to vary on, you should include those headers in a [Custom cache key](/cache/how-to/create-cache-keys/).
+You should use `Vary` when the vary value is dynamic/varies across requests. If you already know which request headers will vary, meaning that you know which image variants will be requested, you should include those headers in a [Custom cache key](/cache/how-to/create-cache-keys/).
 
 {{</Aside>}}
 
