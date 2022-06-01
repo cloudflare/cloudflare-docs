@@ -61,3 +61,7 @@ If your domain is particularly sensitive to downtime, review our suggestions to 
 ## Step 3 — Complete SSL/TLS setup
 
 To prevent insecure connections and visitor browser errors, [enable SSL/TLS protection](/ssl/get-started/).
+
+## Step 4 - Go beyond the basics
+
+For suggestions and guidance about getting the most out of your Cloudflare account, refer to our [Solution guides](/fundamentals/get-started/task-guides/).
