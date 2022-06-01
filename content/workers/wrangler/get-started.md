@@ -16,7 +16,7 @@ Wrangler has launched a new version. If you are looking for the Wrangler 1 docum
 
 ## 1. Install the Workers CLI
 
-Installing `wrangler`, the Workers CLI, gives you the freedom to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects from the comfort of your development environment.
+Installing `wrangler`, the Workers CLI, allows you to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects.
 
 To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
@@ -32,7 +32,7 @@ $ yarn global add wrangler
 
 {{<Aside type="note">}}
 
-If you previously had Wrangler 1 installed or were working on a Wrangler 1 project, please see the [migration guide](/workers/wrangler/migration/migrating-from-wrangler-1/).
+If you previously had Wrangler 1 installed or were working on a Wrangler 1 project, refer to the [Migration guide](/workers/wrangler/migration/migrating-from-wrangler-1/).
 
 {{</Aside>}}
 
