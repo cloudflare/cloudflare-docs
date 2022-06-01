@@ -12,7 +12,7 @@ For example, an organization may want to expose two distinct virtual private clo
 
 ## Prerequisites
 
-Complete these [getting started procedures](/cloudflare-one/connections/connect-networks/private-net/#before-you-start), making sure to install `cloudflared` on each private network.
+Complete these [getting started procedures](/cloudflare-one/connections/connect-apps/private-net/#before-you-start), making sure to install `cloudflared` on each private network.
 
 ## Route IPs over Virtual Networks
 
