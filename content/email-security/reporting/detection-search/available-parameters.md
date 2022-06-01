@@ -1,14 +1,12 @@
 ---
-title: Available data and parameters
+title: Available parameters
 pcx-content-type: reference
-weight: 1
+weight: 2
 ---
 
-# Available data and parameters
+# Available parameters
 
-All messages include the raw message with its headers, as well as any associated Area 1 dispositions and processing information.
-
-You can pull information for a message using the following parameters:
+You can pull information for a message in [search detections](/email-security/reporting/detection-search/) using the following parameters:
 
 - From (`envelope_from`)
 - From Name
@@ -33,8 +31,8 @@ You can pull information for a message using the following parameters:
 
 ## Data retention
 
-For Area 1 Horizon Enterprise customers, detections search and mailtrace would index for a
+For Area 1 Horizon Enterprise customers, detections search would index for a
 period of 12 months and rotate over to a rolling 12-month period.
 
-For Area 1 Horizon Advantage customers, detections search and mailtrace would index for 3
+For Area 1 Horizon Advantage customers, detections search would index for 3
 months and rotate over to a rolling 3-month period.
