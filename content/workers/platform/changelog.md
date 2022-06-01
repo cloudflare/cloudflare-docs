@@ -5,6 +5,19 @@ title: Changelog
 
 # Changelog
 
+## 2022-05-26
+
+- The static `Response.json()` method can be used to initialize a Response object with a JSON-serialized payload (refer to [whatwg/fetch #1392](https://github.com/whatwg/fetch/pull/1392)).
+- R2 exceptions being thrown now have the `error` code appended in the message in parenthesis. This is a stop-gap until we are able to explicitly add the code property on the thrown `Error` object.
+
+## 2022-05-19
+
+- R2 bindings: `contentEncoding`, `contentLanguage`, and `cacheControl` are now correctly rendered.
+- ReadableStream `pipeTo` and `pipeThrough` now support cancelation using `AbortSignal`.
+- Calling `setAlarm()` in a DO with no `alarm()` handler implemented will now throw instead of failing silently. Calling `getAlarm()` when no `alarm()` handler is currently implemented will return null, even if an alarm was previously set on an old version of the DO class, as no execution will take place.
+- R2: Better runtime support for additional ranges.
+- R2 bindings now support ranges that have an `offset` and an optional `length`, a `length` and an optional `offset`, or a `suffix` (returns the last `N` bytes of a file).
+
 ## 2022-05-12
 
 - Fix R2 bindings saving cache-control under content-language and rendering cache-control under content-language.
