@@ -1,9 +1,9 @@
 ---
-title: Partners
+title: Reporting
 pcx-content-type: navigation
-weight: 7
+weight: 6
 ---
 
-# Partners
+# Reporting
 
 {{<directory-listing>}}
