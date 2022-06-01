@@ -11,7 +11,7 @@ weight: 1
 You would commonly use detection search to get visibility into *why* and *when* Area 1 marked a message as such. 
 
 {{<Aside type="note">}}
-To review all emails — not just those marked with a disposition — use [Mailtrace](/email-security/reporting/mailtrace/).
+To review all emails — not just those marked with a disposition — use [Mail Trace](/email-security/reporting/mailtrace/).
 {{</Aside>}}
 
 ## Use detection search
