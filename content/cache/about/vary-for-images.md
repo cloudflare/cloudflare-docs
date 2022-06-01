@@ -13,7 +13,7 @@ Vary for Images reduces the content-negotiation process by parsing a request’s
 
 {{<Aside type="note" header="Note">}}
 
-You should use Vary when the vary value is dynamic/vary across requests. If you already know which headers you want to vary on, you should include those headers in a [Custom cache key](/cache/how-to/create-cache-keys/).
+You should use `Vary` when the vary value is dynamic/vary across requests. If you already know which headers you want to vary on, you should include those headers in a [Custom cache key](/cache/how-to/create-cache-keys/).
 
 {{</Aside>}}
 
