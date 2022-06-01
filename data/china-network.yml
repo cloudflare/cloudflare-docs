@@ -4,7 +4,6 @@ logo: <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24.3
 product:
   title: China Network
   url: /china-network/
-  wrap: true
 
 meta:
   title: Cloudflare China Network docs
