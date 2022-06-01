@@ -84,6 +84,8 @@ async function handleRequest(request) {
 
 ## `R2Object` definition
 
+`R2Object` is created when you `PUT` an object into an R2 bucket. It represents the metadata of an object based on the information provided by the uploader. Every object that you `PUT` into an R2 bucket will have an `R2Object` created.
+
 {{<definitions>}}
 
 - {{<code>}}key{{<param-type>}}string{{</param-type>}}{{</code>}}
