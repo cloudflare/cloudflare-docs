@@ -22,6 +22,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 - [Functions (beta)](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, Webpack) may not run.
 - When adding a custom domain, the domain may get stuck verifying due to being unable to validate a request for an SSL on that hostname. In order for the SSL to validate, ensure Cloudflare Access or a Cloudflare Worker is allowing requests to the validation path: `http://{domain_name}/.well-known/pki-validation/*`.
 - Incremental builds are currently not supported in Cloudflare Pages.
+- Direct Upload of `/functions` directory does not work (see [Using Functions in DirectUpload](https://developers.cloudflare.com/pages/platform/direct-upload/#using-functions))
 
 ## Enabling Access on your `*.pages.dev` domain
 
