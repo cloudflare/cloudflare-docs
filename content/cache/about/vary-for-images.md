@@ -9,7 +9,7 @@ pcx-content-type: concept
 
 Cloudflare sits in between the browser and the origin. When Cloudflare receives the origin’s response, the specific image variant is cached so that subsequent requests from browsers with the same image preferences can be served from cache. This also means that serving multiple image variants for the same asset will create distinct cache entries.
 
-Vary for Images reduces the content-negotiation process by parsing a request’s `Accept` header, which is sent to the origin to deliver the correct content to the browser.
+`Vary` for Images reduces the content-negotiation process by parsing a request’s `Accept` header, which is sent to the origin to deliver the correct content to the browser.
 
 {{<Aside type="note" header="Note">}}
 
