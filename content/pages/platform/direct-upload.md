@@ -5,7 +5,7 @@ title: Direct Uploads
 
 # Direct Uploads
 
-With Direct Uploads, you can bring your pre-built assets right to Pages. By using your own continuous integration (CI) tooling to handle the build, deploy your website's assets right to the Cloudflare edge network.
+With Direct Uploads, you can bring your prebuilt assets right to Pages. By using your own continuous integration (CI) tooling to handle the build, deploy your website's assets right to the Cloudflare edge network.
 
 ## Methods to uploading
 
