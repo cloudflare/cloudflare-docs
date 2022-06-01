@@ -1,7 +1,7 @@
 ---
 title: Dispositions and attributes
 pcx-content-type: reference
-weight: 1
+weight: 2
 ---
 
 # Dispositions and attributes

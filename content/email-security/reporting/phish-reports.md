@@ -10,7 +10,7 @@ Area 1 automatically generates phish reports to provide an overview of your emai
 
 ## In the dashboard
 
-To view reports in the Area 1 dashboard, just [log in](https://horizon.area1security.com/) and explore the non-Settings areas of the dashboard (**Home**, **Email**, and **Web**).
+To view phishing reports in the Area 1 dashboard, just [log in](https://horizon.area1security.com/) and explore the non-Settings areas of the dashboard (**Home**, **Email**, **Web**, and **Detection Details**).
 
 ## Through an email subscription
 
