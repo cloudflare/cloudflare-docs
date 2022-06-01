@@ -36,7 +36,6 @@ However, API deployment also has the following disadvantages:
 - Messages cannot be modified or quarantined.
 - Certain URL rewrite schemes cannot be decoded (for example, Mimecast).
 
+## Get started
 
-## Deployment guides
-
-TBD
+For help getting started, refer to our [setup guides](/email-security/deployment/api/setup/).

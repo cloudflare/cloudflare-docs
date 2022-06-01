@@ -31,6 +31,6 @@ Inline deployments are not without their disadvantages. If you deploy Area 1 as 
 
 Additionally, this setup may require policy duplication on multiple solutions and the Mail Transfer Agent (MTA).
 
-## Deployment guides
+## Get started
 
-TBD
+For help getting started, refer to our [setup guides](/email-security/deployment/inline/setup/).
