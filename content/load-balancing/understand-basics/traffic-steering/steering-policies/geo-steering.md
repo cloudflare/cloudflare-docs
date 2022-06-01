@@ -82,6 +82,9 @@ To get a list of country codes, use the [Region API](/load-balancing/reference/r
 
 Any country not explicitly defined will fall back to using the corresponding `region_pool` mapping (if it exists), then to the associated default pools.
 
+{{<Aside type="note">}}
+Currently, China is not supported for Geo steering.{{</Aside>}}
+
 ### PoP steering
 
 When creating a load balancer [via the API](https://api.cloudflare.com/#load-balancers-create-load-balancer), include the `pop_pools` object to map Cloudflare data centers to a list of pool IDs (ordered by their failover priority).
