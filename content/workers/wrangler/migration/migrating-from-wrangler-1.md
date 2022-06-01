@@ -44,8 +44,6 @@ $ wrangler --version
 
 ### Test Wrangler 2 on your previous projects
 
-Now you TODO
-
 Run the `wrangler dev` command. This will show any warnings or errors that should be addressed.
 Note that in most cases, the messages will include actionable instructions on how to resolve the issue.
 
