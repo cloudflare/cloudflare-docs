@@ -46,7 +46,7 @@ There are a variety of services you can connect to Cloudflare using webhooks to 
    <tr>
       <td valign="top"> <a target="_blank" rel="noopener noreferrer" href="https://docs.datadoghq.com/api/latest/events/#post-an-event">DataDog</a></td>
       <td>
-         <p>The secret is required and has to be entered by the user. This is what DataDog <a target="_blank" rel="noopener noreferrer" href="https://app.datadoghq.com/account/settings#api">refers to as <code>API Key</code></a>
+         <p>The secret is required and has to be entered by the user. This is what DataDog <a target="_blank" rel="noopener noreferrer" href="https://app.datadoghq.com/account/settings#api">refers to as <code>API Key</code></a>.
          </p>         
       </td>
       <td>
@@ -80,9 +80,9 @@ There are a variety of services you can connect to Cloudflare using webhooks to 
          <p>The secret is required and has to be entered by the user. This is what Splunk refers to as <code>token</code>. Refer to <a target="_blank" rel="noopener noreferrer" href="https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector#How_the_Splunk_platform_uses_HTTP_Event_Collector_tokens_to_get_data_in">Splunk’s documentation</a> for details.</p>         
       </td>
       <td>
-         <p>1. We only support three Splunk endpoints: <code>services/collector</code>, <code>services/collector/raw</code>, and <code>services/collector/event</code>.
+         <p>1. We only support three Splunk endpoints: <code>services/collector</code>, <code>services/collector/raw</code>, and <code>services/collector/event</code>.</p>
          <p>2. If SSL is enabled on the token, the port must be 443. If SSL is not enabled on the token, the port must be 8088.</p>
-         <p> 3. SSL must be enabled on the server.</p>         
+         <p>3. SSL must be enabled on the server.</p>         
       </td>
    </tr>   
    <!-- generic webhook    -->
