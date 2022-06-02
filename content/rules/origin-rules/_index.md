@@ -10,8 +10,8 @@ layout: single
 Origin Rules allow you to customize where the incoming traffic will go and with which parameters. Currently you can perform the following overrides:
 
 * [Host Header Override](/rules/origin-rules/features/#host-header-override): Overrides the `Host` header of incoming requests.
-* [Resolve Override](/rules/origin-rules/features/#resolve-override): Overrides the resolved host of incoming requests.
-* [Destination Port Override](/rules/origin-rules/features/#destination-port-override): Overrides the resolved port of incoming requests.
+* [Resolve Override](/rules/origin-rules/features/#resolve-override): Overrides the resolved hostname of incoming requests.
+* [Destination Port Override](/rules/origin-rules/features/#destination-port-override): Overrides the resolved destination port of incoming requests.
 
 The Origin Rule expression will determine when these overrides are applied.
 
