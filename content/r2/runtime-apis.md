@@ -242,7 +242,7 @@ An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 
   - If true, indicates there are more results to be retrieved for the current `list` request.
 
-- {{<code>}}cursor{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}cursor{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
 
   - A token that can be passed to future `list` calls to resume listing from that point. Only present if truncated is true.
 
