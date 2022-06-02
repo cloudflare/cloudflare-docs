@@ -82,7 +82,7 @@ If curl returns a `401` code, it means the public IP of your device does not mat
 
 ## 3. Create a PAC file
 
-A PAC file is just a text file that specifies which traffic should redirect to the proxy server. You can use the default PAC file or create your own.
+A PAC file is a text file that specifies which traffic should redirect to the proxy server. You can use the default PAC file or create your own.
 
 ### Default PAC file
 
