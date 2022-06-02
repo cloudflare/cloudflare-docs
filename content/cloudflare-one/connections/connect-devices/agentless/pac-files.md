@@ -77,7 +77,7 @@ Proxy endpoints are generated using the Cloudflare API.
     ```
 
 {{<Aside type="note">}}
-If curl returns a `401` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that Warp is turned off on your device and double check that curl is not using IPv6 (force the option `-4`).
+If curl returns a `401` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double check that curl is not using IPv6 (force the option `-4`).
 {{</Aside>}}
 
 ## 3. Create a PAC file
