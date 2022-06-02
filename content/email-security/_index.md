@@ -13,3 +13,7 @@ With globally distributed sensors & comprehensive attack analytics, Area 1 Horiz
 ## Availability
 
 Cloudflare Area 1 Email Security is available as a standalone product purchase.
+
+## Related products
+
+Cloudflare [**Email Routing**](/email-routing/) simplifies the way you create and manage custom email addresses, whereas Cloudflare Area 1 helps secure your mail infrastructure from phishing attacks.

@@ -23,7 +23,7 @@ To create a webhook in Area 1 and send data into a SIEM tool:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
-3. Go to **Email Configuration** > **Alert Webhooks**.
+3. Go to **Email Configuration** > **Domains & Routing** > **Alert Webhooks**.
 4. Click **New Webhook**.
 5. For **App Type**, select **SIEM**.
 6. Choose **Splunk** or **Sumologic**.
