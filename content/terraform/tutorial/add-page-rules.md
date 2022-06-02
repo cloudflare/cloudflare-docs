@@ -1,14 +1,14 @@
 ---
-title: 6 – Add exceptions with Page Rules
+title: 5 – Add exceptions with Page Rules
 pcx-content-type: tutorial
-weight: 7
+weight: 6
 meta:
   title: Add exceptions with Page Rules
 ---
 
 # Add exceptions with Page Rules
 
-In [step 3](/terraform/tutorial/configure-https-settings/), you configured zone settings that apply to all of example.com. In this tutorial, you will add an exception to these settings using [Page Rules](https://support.cloudflare.com/hc/articles/218411427).
+In the [Configure HTTPS settings](/terraform/tutorial/configure-https-settings/) tutorial, you configured zone settings that apply to all of `example.com`. In this tutorial, you will add an exception to these settings using [Page Rules](https://support.cloudflare.com/hc/articles/218411427).
 
 Specifically, you will increase the security level for a URL known to be expensive to render and cannot be cached: `https://www.example.com/expensive-db-call`. Additionally, you will add a redirect from the previous URL used to host this page.
 
@@ -16,7 +16,7 @@ Specifically, you will increase the security level for a URL known to be expensi
 
 Create a new branch and append the configuration.
 
-```sh
+```bash
 $ git checkout -b step6-pagerule
 Switched to a new branch 'step6-pagerule'
 
@@ -48,7 +48,7 @@ EOF
 
 ## 2. Preview and merge the changes
 
-Preview the changes Terraform will make and then merge them into the master branch.
+Preview the changes Terraform will make and then merge them into the `master` branch.
 
 ```sh
 $ terraform plan
@@ -56,7 +56,6 @@ Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
 persisted to local or remote state storage.
 
-cloudflare_rate_limit.login-limit: Refreshing state... (ID: 8d518c5d6e63406a9466d83cb8675bb6)
 cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab992864)
 cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)
 cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
@@ -145,7 +144,6 @@ cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab9
 cloudflare_load_balancer_monitor.get-root-https: Refreshing state... (ID: 4238142473fcd48e89ef1964be72e3e0)
 cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
 cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)
-cloudflare_rate_limit.login-limit: Refreshing state... (ID: 8d518c5d6e63406a9466d83cb8675bb6)
 cloudflare_load_balancer_pool.www-servers: Refreshing state... (ID: 906d2a7521634783f4a96c062eeecc6d)
 cloudflare_load_balancer.www-lb: Refreshing state... (ID: cb94f53f150e5c1a65a07e43c5d4cac4)
 cloudflare_page_rule.redirect-to-new-db-page: Creating...
@@ -180,15 +178,15 @@ cloudflare_page_rule.increase-security-on-expensive-page: Creation complete afte
 Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 ```
 
-With the Page Rules in place, try that call again along with the I'm Under Attack Mode test:
+With the Page Rules in place, try that call again, along with a test for the "I Am Under Attack" mode:
 
 ```sh
 $ curl -vso /dev/null https://www.example.com/old-location.php 2>&1 | grep "< HTTP\|Location"
 < HTTP/1.1 301 Moved Permanently
-< Location: https://www.upinatoms.com/expensive-db-call
+< Location: https://www.example.com/expensive-db-call
 
-$ curl -vso /dev/null https://www.upinatoms.com/expensive-db-call 2>&1 | grep "< HTTP"
+$ curl -vso /dev/null https://www.example.com/expensive-db-call 2>&1 | grep "< HTTP"
 < HTTP/1.1 503 Service Temporarily Unavailable
 ```
 
-The call works as expected. In the first case, the Cloudflare edge responds with a `301` redirecting the browser to the new location. In the second case, the Cloudflare edge initially responds with a `503` which is consistent with the "I Am Under Attack" mode.
+The call works as expected. In the first case, the Cloudflare edge responds with a `301` redirecting the browser to the new location. In the second case, the Cloudflare edge initially responds with a `503`, which is consistent with the "I Am Under Attack" mode.

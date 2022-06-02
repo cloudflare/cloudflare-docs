@@ -9,11 +9,10 @@ layout: single
 
 Managed Transforms allow you to perform common adjustments to HTTP request and response headers with the click of a button. The available adjustments include:
 
-* Add bot protection request headers
-* Add visitor location request headers
-* Remove visitor IP headers
-* Add security response headers
-* Remove "X-Powered-By" response headers
+* Add bot protection request headers.
+* Remove or add headers related to the visitor's IP address.
+* Add security-related response headers.
+* Remove "X-Powered-By" response headers.
 
 For a complete list, refer to [Available Managed Transforms](/rules/transform/managed-transforms/reference/).
 

@@ -7,7 +7,7 @@ title: Traffic steering
 
 Magic WAN uses a static configuration to route traffic through [Anycast tunnels](/magic-wan/about/tunnels-and-encapsulation/) from Cloudflare’s edge to your network and from your network to Cloudflare's edge.
 
-Magic WAN steers traffic along static routes based on priorities you define during the onboarding process.
+Magic WAN steers traffic along tunnel routes based on priorities you define during the onboarding process.
 
 The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
 
@@ -28,6 +28,9 @@ Using ECMP has a number of consequences:
 - Packets in the same session (or flow) with the same source and destination have the same hash. The packets also use the same next hop.
 
 - Routing changes in the number of equal-cost next hops can cause traffic to use different tunnels. For example, dynamic prioritization triggered by health check events can cause traffic to use different tunnels.
+
+{{<render file="../../magic-transit/_partials/_ecmp-flow-hashing.md">}}
+
 
 ### Examples
 

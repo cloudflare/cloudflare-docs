@@ -5,6 +5,28 @@ title: Changelog
 
 # Changelog
 
+## 2022-05-26
+
+- The static `Response.json()` method can be used to initialize a Response object with a JSON-serialized payload (refer to [whatwg/fetch #1392](https://github.com/whatwg/fetch/pull/1392)).
+- R2 exceptions being thrown now have the `error` code appended in the message in parenthesis. This is a stop-gap until we are able to explicitly add the code property on the thrown `Error` object.
+
+## 2022-05-19
+
+- R2 bindings: `contentEncoding`, `contentLanguage`, and `cacheControl` are now correctly rendered.
+- ReadableStream `pipeTo` and `pipeThrough` now support cancelation using `AbortSignal`.
+- Calling `setAlarm()` in a DO with no `alarm()` handler implemented will now throw instead of failing silently. Calling `getAlarm()` when no `alarm()` handler is currently implemented will return null, even if an alarm was previously set on an old version of the DO class, as no execution will take place.
+- R2: Better runtime support for additional ranges.
+- R2 bindings now support ranges that have an `offset` and an optional `length`, a `length` and an optional `offset`, or a `suffix` (returns the last `N` bytes of a file).
+
+## 2022-05-12
+
+- Fix R2 bindings saving cache-control under content-language and rendering cache-control under content-language.
+- Fix R2 bindings list without options to use the default list limit instead of never returning any results.
+- Fix R2 bindings which did not correctly handle error messages from R2, resulting in `internal error` being thrown. Also fix behavior for get throwing an exception on a non-existent key instead of returning null. `R2Error` is removed for the time being and will be reinstated at some future time TBD.
+- R2 bindings: if the onlyIf condition results in a precondition failure or a not modified result, the object is returned without a body instead of returning null.
+- R2 bindings: sha1 is removed as an option because it was not actually hooked up to anything. TBD on additional checksum options beyond md5.
+- Added `startAfter` option to the `list()` method in the Durable Object storage API.
+
 ## 2022-05-05
 
 - `Response.redirect(url)` will no longer coalesce multiple consecutive slash characters appearing in the URL’s path.

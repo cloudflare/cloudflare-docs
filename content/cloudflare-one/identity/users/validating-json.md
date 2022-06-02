@@ -132,6 +132,7 @@ func main() {
 - flask
 - requests
 - PyJWT
+- cryptography
 
 ```python
 from flask import Flask, request

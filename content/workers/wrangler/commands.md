@@ -8,20 +8,22 @@ weight: 2
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
-- [`init`](#init) - create a skeleton Wrangler project, including the `wrangler.toml` file.
-- [`dev`](#dev) - start a local server for developing your Worker.
-- [`publish`](#publish) - publish your Worker to Cloudflare.
-- [`kv:namespace`](#kvnamespace) - manage Workers KV namespaces.
-- [`kv:key`](#kvkey) - manage key-value pairs within a Workers KV namespace.
-- [`kv:bulk`](#kvbulk) - manage multiple key-value pairs within a Workers KV namespace in batches.
-- [`secret`](#secret) - manage the secret variables for a Worker.
-- [`tail`](#tail) - start a session to livestream logs from a deployed Worker.
-- [`login`](#login) - authorize Wrangler with your Cloudflare account using OAuth.
-- [`logout`](#logout) - remove Wrangler’s authorization for accessing your account.
+- [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
+- [`dev`](#dev) - Start a local server for developing your Worker.
+- [`publish`](#publish) - Publish your Worker to Cloudflare.
+- [`kv:namespace`](#kvnamespace) - Manage Workers KV namespaces.
+- [`kv:key`](#kvkey) - Manage key-value pairs within a Workers KV namespace.
+- [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
+- [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
+- [`secret`](#secret) - Manage the secret variables for a Worker.
+- [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
+- [`pages`](#pages) - Configure Cloudflare Pages.
+- [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
+- [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 
 {{<Aside type="note">}}
 
-The following global flags work on every single command.
+The following global flags work on every command.
 
 Flags:
 
@@ -69,8 +71,7 @@ $ wrangler dev [SCRIPT] [OPTIONS]
 
 {{<Aside type="note">}}
 
-None of the options for this command are required. Also, many can be set in your `wrangler.toml` file.
-Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) documentation for more information.
+None of the options for this command are required. Many of these options can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) documentation for more information.
 
 {{</Aside>}}
 
@@ -117,8 +118,7 @@ Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) do
 
 {{</definitions>}}
 
-The `wrangler dev` command that establishes a connection between `localhost` and a Cloudflare server that hosts your Worker in development.
-This allows full access to Workers KV, Durable Objects, and more. This is a great way to easily test your Worker while developing.
+The `wrangler dev` command that establishes a connection between `localhost` and a Cloudflare server that hosts your Worker in development. This allows full access to Workers KV and Durable Objects. `wrangler dev` is a way to easily test your Worker while developing.
 
 ```sh
 
@@ -129,8 +129,7 @@ This allows full access to Workers KV, Durable Objects, and more. This is a grea
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
-With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected.
-You will also see `console.log` messages and exceptions appearing in your terminal.
+With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
 ---
 
@@ -144,8 +143,7 @@ $ wrangler publish [SCRIPT] [OPTIONS]
 
 {{<Aside type="note">}}
 
-None of the options for this command are required. Also, many can be set in your `wrangler.toml` file.
-Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) documentation for more information.
+None of the options for this command are required. Also, many can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration/) documentation for more information.
 
 {{</Aside>}}
 
@@ -666,6 +664,54 @@ y
 
 ---
 
+## r2 bucket
+
+Interact with buckets in an R2 store.
+
+{{<Aside type="note">}}
+The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](https://developers.cloudflare.com/workers/runtime-apis/r2/).
+{{</Aside>}}
+
+### `create`
+
+Create a new R2 bucket.
+
+```sh
+$ wrangler r2 bucket create <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the new R2 bucket.
+
+{{</definitions>}}
+
+### `delete`
+
+Delete an R2 bucket.
+
+```sh
+$ wrangler r2 bucket delete <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to delete.
+
+{{</definitions>}}
+
+### `list`
+
+List R2 bucket in the current account.
+
+```sh
+$ wrangler r2 bucket list
+```
+
+---
+
 ## secret
 
 Manage the secret variables for a Worker.
@@ -789,6 +835,144 @@ After starting `wrangler tail`, you will receive a live feed of console and exce
 
 ---
 
+## pages
+
+Configure Cloudflare Pages.
+
+{{<Aside type="warning">}}
+The `wrangler pages ...` commands are in beta.<br>
+Report any issues to https://github.com/cloudflare/wrangler2/issues/new/choose.
+{{</Aside>}}
+
+### `dev`
+
+Develop your full stack Pages application locally.
+
+```sh
+$ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND..>]
+```
+
+{{<definitions>}}
+
+- `DIRECTORY` {{<type>}}string{{</type>}}
+  - The directory of static assets to serve.
+- `COMMAND..` {{<type>}}string{{</type>}}
+  - The proxy command(s) to run.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
+  - Run on my machine.
+- `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}(default: 8788){{</prop-meta>}}
+  - The port to listen on (serve from).
+- `--proxy` {{<type>}}number{{</type>}}
+  - The port to proxy (where the static assets are served).
+- `--script-path` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: "\_worker.js"){{</prop-meta>}}
+  - The location of the single Worker script if not using functions.
+- `--binding` {{<type>}}string[]{{</type>}}
+  - Bind variable/secret (KEY=VALUE).
+- `--kv` {{<type>}}string[]{{</type>}}
+  - KV namespace to bind.
+- `--do` {{<type>}}string[]{{</type>}}
+  - Durable Object to bind (NAME=CLASS).
+- `--live-reload` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Auto reload HTML pages when change is detected.
+
+{{</definitions>}}
+
+### `project`
+
+#### `list`
+
+List your Pages projects.
+
+```sh
+$ wrangler pages project list
+```
+
+#### `create`
+
+Create a new Cloudflare Pages project.
+
+```sh
+$ wrangler pages project create [PROJECT-NAME] [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `PROJECT-NAME` {{<type>}}string{{</type>}}
+  - The name of your Pages project.
+- `--production-branch` {{<type>}}string{{</type>}}
+  - The name of the production branch of your project.
+
+{{</definitions>}}
+
+### `deployment`
+
+#### `list`
+
+List deployments in your Cloudflare Pages project.
+
+```sh
+$ wrangler pages deployment list [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `--project-name` {{<type>}}string{{</type>}}
+  - The name of the project you would like to list deployments for.
+
+{{</definitions>}}
+
+#### `create`
+
+Publish a directory of static assets as a Pages deployment.
+
+```sh
+$ wrangler pages deployment create [DIRECTORY] [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DIRECTORY` {{<type>}}string{{</type>}}
+  - The directory of static files to upload.
+- `--project-name` {{<type>}}string{{</type>}}
+  - The name of the project you want to deploy to.
+- `--branch` {{<type>}}string{{</type>}}
+  - The name of the branch you want to deploy to.
+- `--commit-hash` {{<type>}}string{{</type>}}
+  - The SHA to attach to this deployment.
+- `--commit-message` {{<type>}}string{{</type>}}
+  - The commit message to attach to this deployment.
+- `--commit-dirty` {{<type>}}boolean{{</type>}}
+  - Whether or not the workspace should be considered dirty for this deployment.
+
+{{</definitions>}}
+
+### `publish`
+
+Publish a directory of static assets as a Pages deployment.
+
+```sh
+$ wrangler pages publish [DIRECTORY] [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DIRECTORY` {{<type>}}string{{</type>}}
+  - The directory of static files to upload.
+- `--project-name` {{<type>}}string{{</type>}}
+  - The name of the project you want to deploy to.
+- `--branch` {{<type>}}string{{</type>}}
+  - The name of the branch you want to deploy to.
+- `--commit-hash` {{<type>}}string{{</type>}}
+  - The SHA to attach to this deployment.
+- `--commit-message` {{<type>}}string{{</type>}}
+  - The commit message to attach to this deployment.
+- `--commit-dirty` {{<type>}}boolean{{</type>}}
+  - Whether or not the workspace should be considered dirty for this deployment.
+
+{{</definitions>}}
+
+---
+
 ## login
 
 Authorize Wrangler with your Cloudflare account using OAuth. This will open a login page in your browser and request your account access permissions.
@@ -824,7 +1008,6 @@ $ wrangler logout
 If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by deleting your API token in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-
-- Go to **Overview** > **Get your API token** in the right-side menu.
-- Select the three-dot menu on your Wrangler token.
-- Select **Delete**.
+2. Go to **Overview** > **Get your API token** in the right-side menu.
+3. Select the three-dot menu on your Wrangler token.
+4. Select **Delete**.

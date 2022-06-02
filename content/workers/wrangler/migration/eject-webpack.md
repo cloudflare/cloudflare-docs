@@ -1,6 +1,6 @@
 ---
 pcx-content-type: how-to
-title: Ejecting Webpack
+title: Ejecting webpack
 weight: 3
 ---
 
@@ -10,13 +10,13 @@ Previous versions of `wrangler` offered rudimentary support for [webpack](https:
 
 As a developer using webpack with Workers, you may be in one of four categories:
 
-1. [I use `[build]` to run webpack (or another bundler) external to `wrangler`.](#i-use-build-to-run-webpack-or-another-bundler-external-to-wrangler)
+1. [I use `[build]` to run webpack (or another bundler) external to `wrangler`.](#i-use-build-to-run-webpack-or-another-bundler-external-to-wrangler).
 
-2. [I use `type = webpack`, but do not provide my own configuration and let `wrangler` take care of it.](#i-use-type--webpack-but-dont-provide-my-own-configuration-and-let-wrangler-take-care-of-it)
+2. [I use `type = webpack`, but do not provide my own configuration and let `wrangler` take care of it.](#i-use-type--webpack-but-dont-provide-my-own-configuration-and-let-wrangler-take-care-of-it).
 
-3. [I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to handle JSX, Typescript, WebAssembly, HTML files, and other non-standard filetypes.](#i-use-type--webpack-and-webpack_config--pathtowebpackconfigjs-to-handle-jsx-typescript-webassembly-html-files-and-other-non-standard-filetypes)
+3. [I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to handle JSX, Typescript, WebAssembly, HTML files, and other non-standard filetypes.](#i-use-type--webpack-and-webpack_config--pathtowebpackconfigjs-to-handle-jsx-typescript-webassembly-html-files-and-other-non-standard-filetypes).
 
-4. [I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to perform code-transforms and/or other code-modifying functionality.](#i-use-type--webpack-and-webpack_config--pathtowebpackconfigjs-to-perform-code-transforms-andor-other-code-modifying-functionality)
+4. [I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to perform code-transforms and/or other code-modifying functionality.](#i-use-type--webpack-and-webpack_config--pathtowebpackconfigjs-to-perform-code-transforms-andor-other-code-modifying-functionality).
 
 If you do not see yourself represented, [file an issue](https://github.com/cloudflare/wrangler2/issues/new/choose) and we can assist you with your specific situation and improve this guide for future readers.
 
@@ -40,7 +40,7 @@ You should remove the `type` and `webpack_config` keys from your `wrangler.toml`
 
 `wrangler` 2 drops support for project types, including `type = webpack` and configuration via the `webpack_config` key. If your webpack configuration performs operations beyond adding loaders (for example, for Typescript) you will need to maintain your custom webpack configuration. In the long term, you should [migrate to an external `[build]` process](/workers/wrangler/custom-builds/). In the short term, it is still possible to reproduce `wrangler` 1's build steps in newer versions of `wrangler` by following the instructions below.
 
-1. Add [wranglerjs-compat-webpack-plugin](https://www.npmjs.com/package/wranglerjs-compat-webpack-plugin) as a `devDependency`
+1. Add [wranglerjs-compat-webpack-plugin](https://www.npmjs.com/package/wranglerjs-compat-webpack-plugin) as a `devDependency`.
 
 [wrangler-js](https://www.npmjs.com/package/wrangler-js), shipped as a separate library from [wrangler 1](https://www.npmjs.com/package/@cloudflare/wrangler/v/1.19.11), is a Node script that configures and executes [webpack 4](https://unpkg.com/browse/wrangler-js@0.1.11/package.json) for you. When you set `type = webpack`, wrangler 1 would execute this script for you. We have ported the functionality over to a new package, [wranglerjs-compat-webpack-plugin](https://www.npmjs.com/package/wranglerjs-compat-webpack-plugin), which you can use as a [webpack plugin](https://v4.webpack.js.org/configuration/plugins/).
 
@@ -68,7 +68,7 @@ You should see this reflected in your `package.json` file:
 }
 ```
 
-2. Add [wranglerjs-compat-webpack-plugin] to `webpack.config.js`
+2. Add `wranglerjs-compat-webpack-plugin` to `webpack.config.js`.
 
 Modify your `webpack.config.js` file to include the plugin you just installed.
 
@@ -83,7 +83,7 @@ module.exports = {
 };
 ```
 
-2. Add a build script your `package.json`
+3. Add a build script your `package.json`.
 
 ```json
 {
@@ -97,7 +97,7 @@ module.exports = {
 }
 ```
 
-3. Remove unsupported entries from your `wrangler.toml`
+4. Remove unsupported entries from your `wrangler.toml`.
 
 Remove the `type` and `webpack_config` keys from your `wrangler.toml` file, as they are not supported anymore.
 
@@ -107,7 +107,7 @@ type = "webpack"
 webpack_config = "webpack.config.js"
 ```
 
-4. Tell `wrangler` how to bundle your Worker
+5. Tell `wrangler` how to bundle your Worker.
 
 `wrangler` no longer has any knowledge of how to build your Worker. You will need to tell it how to call webpack and where to look for webpack's output. This translates into two fields:
 
@@ -118,6 +118,6 @@ command = "npm run build" # or "yarn build"
 # ...
 ```
 
-5. Test
+6. Test your project.
 
-Try running `npx wrangler publish` to test that your configuration works as expected.
+Try running `wrangler publish` to test that your configuration works as expected.

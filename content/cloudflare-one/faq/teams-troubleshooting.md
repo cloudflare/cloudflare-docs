@@ -89,7 +89,7 @@ This means the origin is using a certificate that `cloudflared` does not trust. 
 An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First, run `cloudflared tunnel list` to see whether your tunnel is listed as active. If it isn't, check the following:
 
 1.  Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
-2.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#6-run-the-tunnel).
+2.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#6-run-the-tunnel)).
 
 For more information, here is a [comprehensive list](https://support.cloudflare.com/hc/en-us/articles/360029779472-Troubleshooting-Cloudflare-1XXX-errors#h_W81O7hTPalZtYqNYkIHgH) of Cloudflare 1xxx errors.
 

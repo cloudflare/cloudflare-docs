@@ -54,7 +54,7 @@ ingress:
     service: https://localhost:8000
   # Rules can match the request's path to a regular expression:
   - hostname: static.example.com
-    path: /*.(jpg|png|css|js)
+    path: \.(jpg|png|css|js)$
     service: https://localhost:8001
   # Rules can match the request's hostname to a wildcard character:
   - hostname: '*.example.com'

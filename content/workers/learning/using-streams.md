@@ -8,12 +8,12 @@ weight: 0
 
 The [Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API) is a web standard API that allows JavaScript to programmatically access and process streams of data.
 
-Workers scripts do not need to prepare an entire response body before delivering it to `event.respondWith()`. You can use [`TransformStream`](/workers/runtime-apis/streams/transformstream/) to stream a response body after sending the front matter (that is, HTTP status line and headers). This allows you to minimize:
+Workers do not need to prepare an entire response body before delivering it to `event.respondWith()`. You can use [`TransformStream`](/workers/runtime-apis/streams/transformstream/) to stream a response body after sending the front matter (that is, HTTP status line and headers). This allows you to minimize:
 
 - The visitor’s time-to-first-byte.
-- The buffering done in the Workers script.
+- The buffering done in the Worker.
 
-Minimizing buffering is especially important for processing or transforming response bodies larger than the Workers script memory limit. For these cases, streaming is the only implementation strategy.
+Minimizing buffering is especially important for processing or transforming response bodies larger than the Worker's memory limit. For these cases, streaming is the only implementation strategy.
 
 {{<Aside type="note">}}
 

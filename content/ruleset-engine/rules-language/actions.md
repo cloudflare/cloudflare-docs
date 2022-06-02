@@ -75,7 +75,7 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
       <td>
         <p>Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet.</p>
         <p>
-          Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge from one of the following rotating actions:
+          Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge from the following actions based on specific criteria:
         </p>
         <ul>
           <li>Show a non-interactive challenge page (similar to the current JS Challenge).</li>

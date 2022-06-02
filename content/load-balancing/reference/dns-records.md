@@ -59,4 +59,12 @@ Due to internal limitations, Cloudflare [Universal SSL certificates](/ssl/edge-c
 
 As a current workaround for a domain or first-level subdomain (`lb.example.com`), create a [proxied `CNAME`/`A`/`AAAA` record](/dns/manage-dns-records/how-to/create-dns-records/) for that hostname.
 
+For example, if your load balancer hostname was `lb.example.com`, you could create the following record solely for the purpose of SSL/TLS coverage.
+
+| Type |   LB  | IPv4 address | Proxy status |
+| ---- | ----- | ------------ | ------------ |
+| A    | `www` | `192.0.2.1`  | Proxied      |
+
+Based on the [priority order](#priority-order), it would not receive any traffic because it is as equally specific as the LB hostname.
+
 To get coverage for any deeper subdomain (`lb.dev.example.com`), purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).

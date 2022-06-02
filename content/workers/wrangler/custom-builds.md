@@ -1,6 +1,6 @@
 ---
 pcx-content-type: how-to
-title: Custom Builds
+title: Custom builds
 weight: 4
 ---
 

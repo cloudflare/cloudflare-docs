@@ -8,7 +8,9 @@ meta:
 
 # Install Terraform
 
-The installation process for Terraform ships as a single binary file. For official instructions for installing Terraform, refer to [Install Terraform](https://learn.hashicorp.com/terraform). The examples below include installation information for popular operating systems.
+Terraform ships as a single binary file. The examples below include installation information for popular operating systems.
+
+For official instructions on installing Terraform, refer to [Install Terraform](https://learn.hashicorp.com/terraform).
 
 ## Mac
 
@@ -28,7 +30,7 @@ Terraform v0.11.6
 
 ## Linux
 
-On Linux, download and place the binary in your $PATH.
+On Linux, download and place the binary in your `PATH`.
 
 ```sh
 $ wget -q https://releases.hashicorp.com/terraform/0.11.6/terraform_0.11.6_linux_amd64.zip
@@ -45,9 +47,9 @@ Terraform v0.11.6
 
 ## Windows
 
-1.  Download the 32 or 64-bit executable from the [Terraform Download](https://www.terraform.io/downloads.html) page.
+1.  Download the 32 or 64-bit executable from the [Download Terraform](https://www.terraform.io/downloads) page.
 2.  Unzip and place `terraform.exe` somewhere in your path.
 
 ## Other
 
-Additional installers can be found at https://www.terraform.io/downloads.html.
+For additional installers, refer to the [Download Terraform](https://www.terraform.io/downloads) page.

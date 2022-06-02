@@ -25,5 +25,6 @@ To enable Cache Deception Armor, refer to [Enable Cache Deception Armor](/cache/
 
 ### Exceptions
 
-- If the returned `Content-Type` is `application/octet-stream`, the extension does not matter because that's typically a signal to instruct the browser to save the asset instead of to display it.
+- If the returned `Content-Type` is `application/octet-stream`, the extension does not matter because that is typically a signal to instruct the browser to save the asset instead of to display it.
 - Cloudflare allows `.jpg` to be served as `image/webp` or `.gif` as `video/webm` and other cases that we think are unlikely to be attacks.
+- Keep in mind that Cache Deception Armor depends upon [Origin Cache Control](/cache/about/cache-control/). A `Cache-Control` header from the origin or [Edge Cache TTL Page Rule](/cache/about/edge-browser-cache-ttl/) will override the protection.

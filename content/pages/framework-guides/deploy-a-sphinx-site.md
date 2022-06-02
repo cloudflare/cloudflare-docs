@@ -33,7 +33,7 @@ Refer to the official Python documentation for installation guidance:
 
 - [Windows](https://www.python.org/downloads/windows/)
 - [Linux/UNIX](https://www.python.org/downloads/source/)
-- [Mac OS X](https://www.python.org/downloads/mac-osx/)
+- [macOS](https://www.python.org/downloads/macos/)
 - [Other](https://www.python.org/download/other/)
 
 ### Installing Pipenv

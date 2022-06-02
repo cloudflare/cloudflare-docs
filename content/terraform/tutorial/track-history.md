@@ -18,13 +18,13 @@ provider "cloudflare" {
 }
 ```
 
-In this tutorial, you will store your configuration in GitHub where it can be tracked, peer-reviewed, and rolled back to as needed. But first, you will remove your credentials from the Terraform config file to prevent committing it to a repository.
+In this tutorial, you will store your configuration in GitHub where it can be tracked, peer-reviewed, and rolled back to as needed. First, you will remove your credentials from the Terraform config file to prevent committing them to a repository.
 
 ## 1. Use environment variables for authentication
 
-As a good security practice, remove your Cloudflare credentials from anything that will be committed to a repository. The Cloudflare Terraform provider supports reading these values from the `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_TOKEN` environment variables in the example below.
+As a good security practice, remove your Cloudflare credentials from anything that will be committed to a repository. The Cloudflare Terraform provider supports reading these values from the `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_TOKEN` environment variables, as in the following example:
 
-```sh
+```bash
 $ sed -ie 's/^.*email =.*$/  # email pulled from $CLOUDFLARE_EMAIL/' cloudflare.tf
 $ sed -ie 's/^.*api_token =.*$/  # token pulled from $CLOUDFLARE_API_TOKEN/' cloudflare.tf
 
@@ -38,7 +38,7 @@ $ export CLOUDFLARE_EMAIL=you@example.com
 $ export CLOUDFLARE_API_TOKEN=your-api-token
 ```
 
-You must leave the empty provider definition in the file, so that Terraform knows to install the Cloudflare plugin. In a different tutorial, you will learn about [advanced options](https://www.terraform.io/docs/providers/cloudflare/index.html#argument-reference) that can be used with the provider.
+You must still include the empty provider definition in the file, so that Terraform knows to install the Cloudflare plugin. For more information about advanced options you can use to customize the Cloudflare provider, refer to [Provider customization](/terraform/advanced-topics/provider-customization/).
 
 After running the commands above, ensure that you can still authenticate to Cloudflare by running `terraform plan`. Terraform will pull the current state which requires a valid email and API token.
 
@@ -61,9 +61,9 @@ actions need to be performed.
 
 ## 2. Store configuration in GitHub
 
-After removing the credentials, initialize a git repository with your Cloudflare configuration and then push it to GitHub.
+After removing the credentials, initialize a Git repository with your Cloudflare configuration and then push it to GitHub.
 
-First, create the GitHub repository to store the config. This can be done via the GitHub UI or with an API call.
+First, create the GitHub repository to store the configuration. You can do this via the GitHub user interface or with an API call.
 
 ```sh
 $ export GITHUB_USER=your-github-user
@@ -75,9 +75,9 @@ $ echo $GITHUB_URL
 git@github.com:$GITHUB_USER/cf-config.git
 ```
 
-Next, initialize a git repository and make the first commit.
+Next, initialize a Git repository and make the first commit.
 
-{{<Aside type="note" header="Note:">}}
+{{<Aside type="note" header="Note">}}
 
 You might need to [add your SSH key to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
 
@@ -96,11 +96,11 @@ $ git commit -m "Step 2 - Initial commit with webserver definition."
  create mode 100644 cloudflare.tf
 ```
 
-Notice that the `.terraform` directory and `terraform.tfstate` file were not committed. The `.terraform` directory was not committed because the repository may be used on a different architecture, and the plugins contained in the directory are built for the system on which `terraform init` was run. The `terraform.tfstate` file was not committed because it may eventually contain sensitive strings, and it is not a good way to keep state in sync, as explained in Hashicorp's documentation on [Remote State](https://www.terraform.io/docs/language/state/remote.html).
+Notice that the `.terraform` directory and `terraform.tfstate` file were not committed. The `.terraform` directory was not committed because the repository may be used on a different architecture, and the plugins contained in the directory are built for the system on which `terraform init` was run. The `terraform.tfstate` file was not committed because it may eventually contain sensitive strings, and it is not a good way to keep state in sync, as explained in Hashicorp's documentation on [Remote State](https://www.terraform.io/language/state/remote).
 
-To prevent git from notifying you about the two files, add them to a new .gitignore file, commit it, and push everything to GitHub.
+To prevent Git from notifying you about the two files, add them to a new `.gitignore` file, commit it, and push everything to GitHub.
 
-```sh
+```bash
 $ cat > .gitignore <<'EOF'
 .terraform/
 terraform.tfstate*
