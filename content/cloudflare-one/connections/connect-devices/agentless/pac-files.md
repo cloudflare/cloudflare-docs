@@ -4,7 +4,7 @@ title: HTTP
 weight: 1
 ---
 
-#  Enable Gateway proxy with PAC file
+#  Enable Gateway proxy with PAC files
 
 {{<Aside type="note">}}
 
