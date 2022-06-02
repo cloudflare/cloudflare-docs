@@ -142,8 +142,7 @@ The table below lists directives and their behaviors when Origin Cache-Control i
         Will not cache at all
       </td>
       <td colspan="5" rowspan="1">
-        Does not cache <code>#headers</code> values mentioned in <code>Private=#headers</code>{' '}
-        directive.
+        Does not cache <code>#headers</code> values mentioned in <code>Private=#headers</code> directive.
       </td>
     </tr>
     <tr>
@@ -225,8 +224,7 @@ Certain scenarios also affect Origin Cache-Control behavior when it is enabled o
         Content may be cached
       </td>
       <td colspan="5" rowspan="1">
-        Content is cached only <code>if must-revalidate</code>, <code>public</code>, or{' '}
-        <code>s-maxage</code> is also present
+        Content is cached only <code>if must-revalidate</code>, <code>public</code>, or <code>s-maxage</code> is also present
       </td>
     </tr>
     <tr>

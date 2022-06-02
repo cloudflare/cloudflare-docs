@@ -259,7 +259,7 @@ $ curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: h
 # Attempt to write an object with the correct "X-Custom-Auth-Key" header value
 # Note: Assume that "*********" is the value of your AUTH_KEY_SECRET Wrangler secret
 $ curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: *********" --data 'test'
-#=> Put cat-pic1.jpg successfully!
+#=> Put cat-pic.jpg successfully!
 
 # Attempt to read object called "foo"
 $ curl https://your-worker.dev/foo

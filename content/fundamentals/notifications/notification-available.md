@@ -1,17 +1,16 @@
 ---
-title: Types of Notifications
+title: Available Notifications
 pcx-content-type: concept
 weight: 7
-meta:
-  title: What kinds of Notifications are available?
 ---
 
-# What kinds of Notifications are available?
+# Available Notifications
 
-Available Notifications depend on your Cloudflare plan. We offer a variety of Notifications for our products and services, such as Billing, Denial-of-Service protection, Magic Transit, and SSL/TLS.
-Depending on your plan, you will also be able to configure webhooks. Webhooks allow you to connect your account with external services such as Slack and Google Chat. Another possibility is to use PagerDuty to receive Cloudflare Notifications.
+Available Notifications depend on your Cloudflare plan. Cloudflare offers a variety of Notifications for our products and services, such as Billing, Denial-of-Service protection, Magic Transit, and SSL/TLS.
 
-## What should you do when receiving Notifications?
+Depending on your plan, you will also be able to configure webhooks (which allow you to connect your account with external services such as Slack and Google Chat) and PagerDuty to receive Cloudflare Notifications.
+
+## Actions available on receiving a Notification
 
 Each Notification carries different types of information about the status of your Cloudflare account, or the type of action you can take.
 
@@ -91,7 +90,7 @@ Purchase of Secondary DNS.
 **What should you do if you receive one?**
 
 1. Confirm that your primary nameservers are up and running.
-2. Confirm that the ACLs on your primary nameservers are configured correctly.
+2. Confirm that the [Access Control Lists (ACLs)](https://support.cloudflare.com/hc/articles/360001356152#access-control-list-configuration) on your primary nameservers are configured correctly.
 3. Confirm that your primary nameservers are configured correctly in your Cloudflare account (correct IP, port, TSIG).
 
 </div>
@@ -116,7 +115,7 @@ Purchase of Secondary DNS.
 **What should you do if you receive one?**
 
 1. Confirm that the primary nameserver that is failing is up and running.
-2. Confirm that the ACL on the primary nameserver that is failing is configured correctly.
+2. Confirm that the [Access Control Lists (ACLs)](https://support.cloudflare.com/hc/articles/360001356152#access-control-list-configuration) on your primary nameservers are configured correctly.
 3. Confirm that the primary nameserver that is failing is configured correctly in your Cloudflare account (correct IP, port, TSIG).
 
 </div>
@@ -810,6 +809,7 @@ Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to id
 Developers using Workers, especially those on the Unbound usage model.
 
 **Other options / filters**
+
 None.
 
 **Included with**
@@ -832,6 +832,7 @@ Check any recent changes to your script or its external dependencies. Usage repo
 Developers using Workers.
 
 **Other options / filters**
+
 None.
 
 **Included with**

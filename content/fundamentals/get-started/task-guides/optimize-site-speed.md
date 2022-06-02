@@ -40,6 +40,9 @@ Cloudflare offers a several products dedicated to improving site speed and avail
 - [Network Interconnect](/network-interconnect/): Connects your network infrastructure directly with Cloudflare.
 - [Pages](/pages/): Builds and deploys dynamic front-end applications.
 - [Railgun](/railgun/): Improves caching for dynamic content.
+- [Stream](/stream/): Offers storage, encoding, and adaptive bitrate playback for your video infrastruture.
+- [Waiting Room](/waiting-room/): Routes excess users away from your application and into a queue.
+- [Web3 Gateways](/web3/): Increase speed and security for Web3 apps using our IPFS and Ethereum gateways.
 - [Workers](/workers/): Lets you build serverless functions.
 - [Zaraz](/zaraz/): Loads third-party tools without slowing down your website.
 
