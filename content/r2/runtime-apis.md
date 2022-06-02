@@ -162,9 +162,15 @@ async function handleRequest(request) {
 
 {{</definitions>}}
 
-### Ranged reads
+#### Ranged reads
 
-`R2GetOptions` accepts a `range` parameter, which restricts data returned in `body` to be `range` bytes, starting from `offset`, inclusive.
+`R2GetOptions` accepts a `range` parameter, which can be used to restrict the data returned in `body`.
+
+There are 3 variations of arguments that can be used in a range:
+
+* An offset with an optional length
+* An optional offset with a length
+* A suffix
 
 {{<definitions>}}
 
@@ -175,6 +181,10 @@ async function handleRequest(request) {
 - {{<code>}}range{{<param-type>}}number{{</param-type>}}{{</code>}}
 
   - The number of bytes to return. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
+  
+- {{<code>}}suffix{{<param-type>}}number{{</param-type>}}{{</code>}}
+
+  - The number of bytes to return from the end of the file, starting from the last byte. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
 
 {{</definitions>}}
 
