@@ -39,8 +39,17 @@ Operating systems determine Firewall configuration in various ways. Follow the s
 
 ### On macOS
 
+macOS has two firewalls: an application-based firewall and a port-based firewall. The Zero Trust client will report a firewall is enabled if either firewall is running.
+
+#### Application-based firewall
+
 1.  Open **System Preferences** and navigate to **Security & Privacy**.
 1.  Verify that **Firewall** is **On**.
+
+#### Port-based firewall
+
+1. Run `sudo /sbin/pfctl -s info`.
+1. Look for the value of **Status** which must be **Enabled**.
 
 ### On Windows
 

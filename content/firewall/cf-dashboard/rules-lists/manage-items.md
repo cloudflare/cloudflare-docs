@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Manage IP List items
-weight: 361
+weight: 2
 ---
 
 # Manage IP List items
@@ -73,7 +73,7 @@ The updated list displays.
 
 Importing a CSV file to a list only updates descriptions or adds items to the list. It does not delete items from a list.
 
-If you need to replace the entire contents of a list, format the data as an array and use the Update Lists operation in the [Lists API](/firewall/api/cf-lists/endpoints/).
+If you need to replace the entire contents of a list, format the data as an array and use the Update Lists operation in the [Rules Lists API](/firewall/api/cf-lists/endpoints/).
 
 {{</Aside>}}
 

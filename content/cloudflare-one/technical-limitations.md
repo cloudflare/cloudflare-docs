@@ -33,11 +33,13 @@ All values are per account.
 
 | Feature                                  | Limit |
 | ---------------------------------------- | ----- |
-| Tunnels per account                      | 1000  |
-| IP routes per account                    | 1000  |
-| Active `cloudflared` replicas per tunnel | 25    |
+| Tunnels per account*                      | 1000  |
+| IP routes per account*                    | 1000  |
+| Active `cloudflared` replicas per tunnel* | 25    |
 
 {{</table-wrap>}}
+
+Features marked by a `*` are soft limits which may be increased on Enterprise accounts. To request a limit increase, contact your account team.
 
 ## Account defaults
 

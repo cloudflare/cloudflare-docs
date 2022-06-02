@@ -11,6 +11,7 @@ meta:
 This is a high-level, step-by-step walkthrough on how to get started with WARP in your organization. From downloading the client to sending the first queries to Cloudflare's edge, here is a guide on how to do it for the first time.
 
 ## Gateway with WARP (default)
+This mode enables our complete suite of [device security features](/cloudflare-one/connections/connect-devices/warp/#gateway-with-warp-default).
 
 ### 1. Create a Cloudflare Zero Trust account.
 
@@ -34,17 +35,10 @@ Advanced security features including HTTP traffic inspection require users to in
 
 Choose one of the [different ways](/cloudflare-one/connections/connect-devices/warp/deployment/) to deploy the WARP client, depending on what works best for your organization.
 
-### 6. Enable the Proxy setting in the Zero Trust Dashboard.
+### 6. Log in to your organization's Cloudflare Zero Trust instance from your devices. 
+On your device, navigate to the Settings section in the WARP client and insert your organization's team name.
 
-Navigate to **Settings** > **Network** and enable the **Proxy** setting. This will allow you to start routing your HTTP traffic to Gateway.
-
-### 7. Go through this checklist.
-
-To begin inspecting DNS and HTTP traffic on your devices, you need to ensure all of the following:
-
-- Your devices have the WARP client installed and connected.
-- The [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) has been installed on your devices.
-- The [proxy setting](/cloudflare-one/connections/connect-devices/warp/warp-settings/#enable-proxy) has been enabled on the Zero Trust Dashboard.
+Next, build [Secure Web Gateway policies](/cloudflare-one/policies/filtering/) to filter DNS, HTTP, and Network traffic on your devices.
 
 ## Gateway with DoH
 
@@ -66,10 +60,11 @@ Create [device enrollment rules](/cloudflare-one/connections/connect-devices/war
 
 ### 4. (optional) Add a location to Gateway.
 
-By default, the WARP client will direct DoH queries to a default DNS endpoint when enrolled to your account. If you need to direct these queries to a separate DNS endpoint, [add a location](/cloudflare-one/connections/connect-networks/locations/) to Gateway. This will create a new DoH endpoint, which you can add when deploying the WARP client to your devices.
+The WARP client will direct DoH queries to a default DNS endpoint when enrolled to your Zero Trust organization. If you need to direct these queries to a separate DNS endpoint, [add a location](/cloudflare-one/policies/filtering/dns-policies/locations/) to Gateway. Gateway will assign a [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain) to that location, which you can add when deploying the WARP client to your devices.
 
-Add your office as a location on Gateway. Gateway will assign a [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain) to that location — you will then need this value when deploying the WARP client to your devices.
 
 ### 5. Download and deploy the WARP client to your devices.
 
 Choose one of the [different ways](/cloudflare-one/connections/connect-devices/warp/deployment/) to deploy the WARP client, depending on what works best for your organization.
+
+Next, create [DNS policies](/cloudflare-one/policies/filtering/dns-policies/) to control how DNS queries from your devices get resolved.

@@ -14,7 +14,7 @@ Enterprise customers with Bot Management can use **Bot Analytics** to dynamicall
 
 To use Bot Analytics, open the Cloudflare dashboard and select **Security** > **Bots**.
 
-![Bot Analytics on Dashboard](/bots/static/bot-analytics-dashboard-ent.png)
+![View Bot Analytics in the Cloudflare Dashboard. For more details, keep reading.](/bots/static/bot-analytics-dashboard-ent.png)
 
 ## Features
 

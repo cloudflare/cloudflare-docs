@@ -23,6 +23,21 @@ The action that will be performed for requests that match specific rules of Clou
 
 {{<definitions>}}
 
+- **Block**
+
+  - API value: `"block"`.
+  - Blocks HTTP requests that match the rule expression.
+
+- **Managed Challenge**
+
+  - API value: `"managed_challenge"`.
+  - [Managed Challenges](https://support.cloudflare.com/hc/articles/200170136#managed-challenge) help reduce the lifetimes of human time spent solving Captchas across the Internet. Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge based on specific criteria.
+
+- **Legacy CAPTCHA**
+
+  - API value: `"challenge"`.
+  - Presents a CAPTCHA challenge to the clients making HTTP requests that match a rule expression.
+
 - **Log**
 
     - API value: `"log"`.
@@ -30,21 +45,11 @@ The action that will be performed for requests that match specific rules of Clou
 
 {{<Aside type="note">}}
 
-You cannot configure the rule action to _Log_ for rules with the `gatebot` tag or any rule whose `id` starts with `GB`.
+You cannot configure the rule action to _Log_ for rules with the `gatebot` tag.
 
-However, you can use the _Log_ action in the global ruleset configuration. In this case, any rule with the `gatebot` tag or whose `id` starts with `GB` will ignore the ruleset configuration and use the default action as defined in the Managed Ruleset. To prevent `gatebot` rules from executing their default action in _Log_ mode, set the sensitivity level of these rules to _Essentially Off_.
+However, you can use the _Log_ action in the global ruleset configuration. In this case, any rule with the `gatebot` tag will ignore the ruleset configuration and use the default action as defined in the Managed Ruleset. To prevent `gatebot` rules from executing their default action in _Log_ mode, set the sensitivity level of these rules to _Essentially Off_.
 
 {{</Aside>}}
-
-- **Block**
-
-  - API value: `"block"`.
-  - Blocks HTTP requests that match the rule expression.
-
-- **Legacy CAPTCHA**
-
-  - API value: `"challenge"`.
-  - Presents a CAPTCHA challenge to the clients making HTTP requests that match a rule expression.
 
 - **Connection Close**
 

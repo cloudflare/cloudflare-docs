@@ -64,16 +64,22 @@ After a minute or so, GitLab will be installed.
 
 ![Install GitLab](/cloudflare-one/static/zero-trust-security/gitlab/install-gitlab.png)
 
-However, the application is not running yet. You can check to see what ports are listening to confirm by installing and using `netstat`.
+However, the application is not running yet. You can check to see what ports are listening to confirm by using `ss`.
 
 ```bash
-sudo apt-get install net-tools
-sudo netstat -tulpn | grep LISTEN
+sudo ss -lntup
 ```
 
 The result should be only the services currently active on the machine:
 
-![Just Services](/cloudflare-one/static/zero-trust-security/gitlab/just-services.png)
+<!-- ![Just Services](/cloudflare-one/static/zero-trust-security/gitlab/just-services.png) -->
+```
+$ sudo ss -lntup
+Netid   State    Recv-Q   Send-Q     Local Address:Port     Peer Address:Port   Process
+udp     UNCONN   0        0                      *:9094                *:*
+tcp     LISTEN   0        128              0.0.0.0:22            0.0.0.0:*       users:(("sshd",pid=29,fd=3))
+tcp     LISTEN   0        128                 [::]:22               [::]:*       users:(("sshd",pid=29,fd=4))
+```
 
 To start GitLab, run the software's reconfigure command.
 
@@ -84,6 +90,32 @@ sudo gitlab-ctl reconfigure
 GitLab will launch its component services. Once complete, confirm that GitLab is running and listening on both ports 22 and 80.
 
 ![GitLab Services](/cloudflare-one/static/zero-trust-security/gitlab/gitlab-services.png)
+
+```
+$ sudo ss -lntup
+Netid   State    Recv-Q   Send-Q     Local Address:Port     Peer Address:Port   Process
+udp     UNCONN   0        0                      *:9094                *:*
+tcp     LISTEN   0        4096           127.0.0.1:9236          0.0.0.0:*
+tcp     LISTEN   0        4096           127.0.0.1:8150          0.0.0.0:*
+tcp     LISTEN   0        128              0.0.0.0:22            0.0.0.0:*       users:(("sshd",pid=29,fd=3))
+tcp     LISTEN   0        4096           127.0.0.1:8151          0.0.0.0:*
+tcp     LISTEN   0        4096           127.0.0.1:3000          0.0.0.0:*
+tcp     LISTEN   0        4096           127.0.0.1:8153          0.0.0.0:*       
+tcp     LISTEN   0        4096           127.0.0.1:8154          0.0.0.0:*
+tcp     LISTEN   0        4096           127.0.0.1:8155          0.0.0.0:*
+tcp     LISTEN   0        511              0.0.0.0:8060          0.0.0.0:*       users:(("nginx",pid=324,fd=8))
+tcp     LISTEN   0        4096           127.0.0.1:9121          0.0.0.0:*                                                 
+tcp     LISTEN   0        4096           127.0.0.1:9090          0.0.0.0:*
+tcp     LISTEN   0        4096           127.0.0.1:9187          0.0.0.0:*
+tcp     LISTEN   0        4096           127.0.0.1:9093          0.0.0.0:*
+tcp     LISTEN   0        4096           127.0.0.1:9229          0.0.0.0:*
+tcp     LISTEN   0        1024           127.0.0.1:8080          0.0.0.0:*
+tcp     LISTEN   0        511              0.0.0.0:80            0.0.0.0:*       users:(("nginx",pid=324,fd=7))
+tcp     LISTEN   0        4096           127.0.0.1:9168          0.0.0.0:*
+tcp     LISTEN   0        4096           127.0.0.1:8082          0.0.0.0:*
+tcp     LISTEN   0        128                 [::]:22               [::]:*       users:(("sshd",pid=29,fd=4))
+tcp     LISTEN   0        4096                   *:9094                *:* 
+```
 
 Users connect to GitLab over SSH (port 22 here) and HTTP for the web app (port 80). In the next step, you will make it possible for users to try both through Cloudflare Access. I'll leave this running and head over to the Cloudflare dashboard.
 
@@ -216,7 +248,7 @@ This command should be run as a `systemd` service for long-term use; if it termi
 
 You can now create DNS records for GitLab in the Cloudflare dashboard. Remember, you will still need two records - one for the web application and one for SSH traffic.
 
-In the DNS tab, choose the website where you built your [Zero Trust policies](/cloudflare-one/policies/zero-trust/). Click `+Add record` and select `CNAME` from type. In the `Name` field, input `gitlab`. In the `Target` field, input the ID of the Tunnel created followed by `cfargotunnel.com`. In this example, that value is:
+In the DNS tab, choose the website where you built your [Access policies](/cloudflare-one/policies/access/). Click `+Add record` and select `CNAME` from type. In the `Name` field, input `gitlab`. In the `Target` field, input the ID of the Tunnel created followed by `cfargotunnel.com`. In this example, that value is:
 
     6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
 

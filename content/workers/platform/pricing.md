@@ -22,7 +22,7 @@ All included usage is on a monthly basis.
 
 {{</table-wrap>}}
 
-1.  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple applied to the CPU time to account for the processing power allotted to your script. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
+1.  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple applied to the CPU time to account for the processing power allotted to your Worker. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
 
 2.  Duration billing will charge for the 128 MB of memory allocated to your Worker, regardless of actual usage. If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they are allocated a full 128 MB of memory.
 
@@ -34,43 +34,45 @@ Workers are available under two Usage Models: Bundled and Unbound. Usage Models 
 
 When an account is first upgraded to the Paid plan, the Unbound plan is used as the default Usage Model. You may change your default Usage Model account-wide by going to the **Account Home** > **Workers** > **Overview** > **Default Usage Model** > **Change**. Cloudflare recommends setting the default to the type of Worker you create the most. Existing Workers will not be impacted when changing the default Usage Model.
 
-You may change the Usage Model for individual Workers without affecting your account-wide default. You can do this through the [`usage_model` key](/workers/cli-wrangler/configuration#keys) in your `wranger.toml` file or through the dashboard: **Workers** > **select your Worker** > **Settings** > **Usage Model**.
+You may change the Usage Model for individual Workers without affecting your account-wide default. You can do this through the [`usage_model` key](/workers/wrangler/cli-wrangler/configuration#keys) in your `wranger.toml` file or through the dashboard: **Workers** > **select your Worker** > **Settings** > **Usage Model**.
 
 ### Same features
 
-Script size, number of scripts, subrequests, and available memory are not affected by plan type.
+Worker size, number of Workers, and available memory are not affected by plan type. The Unbound usage model includes a higher number of subrequests. Refer to [Limits](/workers/platform/limits/). 
 
-### Workers billing examples
+### Workers Unbound billing examples
 
 #### Example 1
 
-If an Unbound Worker executed 1.5 million times and used a total of 200,000 GB-s, the estimated cost in a month would be:
+If an Unbound Worker executed 1.5 million times and was active a total of 200,000 seconds, the estimated cost in a month would be:
 
 Total = ~$0.08 USD + Minimum $5/mo usage = $5.08
 
 - (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = $0.075
-- (200,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $0.00
+- (200,000 seconds) \* 128 MB / 1 GB = 25,000 GB-seconds
+- (25,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $0.00
 
 #### Example 2
 
-If an Unbound Worker executed 5 million times and used a total of 800,000 GB-s the estimated cost in a month would be:
+If an Unbound Worker executed 10 million times and was active a total of 6,400,000 seconds the estimated cost in a month would be:
 
-Total = ~$5.60 + Minimum $5/mo usage = $10.60
+Total = ~$6.35 + Minimum $5/mo usage = $11.35
 
-- (5 million requests - included 1 million requests) x $0.15 / 1,000,000 requests = $0.60
+- (10 million requests - included 1 million requests) x $0.15 / 1,000,000 requests = $1.35
+- (6,4000,000 seconds) \* 128 MB / 1 GB = 800,000 GB-seconds
 - (800,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 GB-s = $5.00
 
 ## Workers KV
 
 {{<table-wrap>}}
 
-|                 | Free plan<sup>1</sup> | Paid plan                   |
-| --------------- | --------------------- | --------------------------- |
+|                 | Free plan<sup>1</sup> | Paid plan                         |
+| --------------- | --------------------- | --------------------------------- |
 | Read requests   | 100,000 / day         | 10 million/month, + $0.50/million |
 | Write requests  | 1,000 / day           | 1 million/month, + $5.00/million  |
 | Delete requests | 1,000 / day           | 1 million/month, + $5.00/million  |
 | List requests   | 1,000 / day           | 1 million/month, + $5.00/million  |
-| Stored data     | 1 GB                  | 1 GB, + $0.50/ GB-month     |
+| Stored data     | 1 GB                  | 1 GB, + $0.50/ GB-month           |
 
 {{</table-wrap>}}
 
@@ -91,7 +93,7 @@ Durable Objects are only available on the Workers Paid plan.
 
 1.  Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object stops receiving requests, it will be removed from memory and stop incurring duration charges. A WebSocket being connected to the Durable Object counts as the Object being active.
 2.  Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
-3. Requests including all incoming HTTP requests and WebSocket messages. There is no charge for outgoing WebSocket messages.
+3.  Requests including all incoming HTTP requests, WebSocket messages, and alarm invocations. There is no charge for outgoing WebSocket messages.
 
 ### Durable Objects billing examples
 
@@ -152,9 +154,12 @@ The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transac
 2.  List operations are billed by read request units, based on the amount of data examined, for example, a list request that returns 80 KB of keys will be billed 20 request units.
 3.  Delete requests are unmetered, for example, deleting a 100 KB value will be charged one delete request.
 4.  Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
+5.  Each alarm write is billed as a single write request unit.
+
+Requests that hit the [Durable Objects in-memory cache](/workers/learning/using-durable-objects/#accessing-persistent-storage-from-a-durable-object) or that use the [multi-key versions of get/put/delete methods](/workers/runtime-apis/durable-objects/#transactional-storage-api) are billed the same as if they were a normal, individual request for each key.
 
 ## Fine Print
 
 Workers Paid plan is separate from any other Cloudflare plan (Free, Professional, Business) you may have. If you are an Enterprise customer, reach out to your account team to confirm pricing details.
 
-Only requests that hit a Worker script will count against your limits and your bill. Since Cloudflare Workers runs before the Cloudflare cache, the caching of a request still incurs costs. See definitions and behavior after a limit is hit in the [limits article](/workers/platform/limits/).
+Only requests that hit a Worker will count against your limits and your bill. Since Cloudflare Workers runs before the Cloudflare cache, the caching of a request still incurs costs. See definitions and behavior after a limit is hit in the [limits article](/workers/platform/limits/).

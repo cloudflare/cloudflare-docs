@@ -45,7 +45,7 @@ Cloudflare performs DNS-only load balancing when traffic to your hostname is **n
 
 ### Benefits
 
-If your load balancer is attached to a hostname used for an [MX, SRV, or TXT record](/load-balancing/additional-options/additional-dns-records/) — and not an A, AAAA, or CNAME record — its proxy mode should be **DNS-only**.
+If your load balancer is attached to a hostname used for an [MX, SRV, or TXT record](/load-balancing/additional-options/additional-dns-records/) — and not an `A`, `AAAA`, or `CNAME` record — its proxy mode should be **DNS-only**.
 
 ### Limitations
 
@@ -56,7 +56,7 @@ In comparison to [layer 7 load balancing](#layer-7-load-balancing-orange-clouded
 - Cannot integrate with other Cloudflare features such as caching, Workers, WAF, etc.
 - Increases authoritative queries against Cloudflare, which can potentially cost more for customers with usage-based billing.
 - Supports standard [session affinity](/load-balancing/understand-basics/session-affinity/).
-- Geo-locates traffic based on the data center associated with a user's recursive resolver, which can sometimes cause issues with [latency-based steering](/load-balancing/understand-basics/traffic-steering/steering-policies/dynamic-steering/).
+- Geo-locates traffic based on the data center associated with the ECS source address, if available. If not available, geo-locates based a user's recursive resolver, which can sometimes cause issues with [latency-based steering](/load-balancing/understand-basics/traffic-steering/steering-policies/dynamic-steering/).
 
 ---
 

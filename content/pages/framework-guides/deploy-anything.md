@@ -21,15 +21,15 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 
-| Configuration option     | Value              |
-| ------------------------ | ------------------ |
-| Production branch        | `main`             |
-| Build command (optional) | `yourbuildcommand` |
-| Build output directory   | `yourbuilddir`     |
+| Configuration option     | Value                 |
+| ------------------------ | --------------------- |
+| Production branch        | `main`                |
+| Build command (optional) | `<YOUR_BUILD_COMMAND>`|
+| Build output directory   | `<YOUR_BUILD_DIR>`    |
 
 </div>
 

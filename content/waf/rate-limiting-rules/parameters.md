@@ -18,15 +18,16 @@ The available rate limiting rule parameters are the following:
 - **Choose action** {{<type>}}String{{</type>}}
 
   - Field name in the API: `action` (rule field).
-  - Action to perform when the request rate specified in the rule is reached.
+  - Action to perform when the rate specified in the rule is reached.
   - Use one of the following values: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
 
 - **Duration** {{<type>}}Number{{</type>}}
 
   - Field name in the API: `mitigation_timeout`.
-  - Once the request rate is reached, the rate limiting rule applies the rule action to further requests for the period of time defined in this field (in seconds).
+  - Once the rate is reached, the rate limiting rule applies the rule action to further requests for the period of time defined in this field (in seconds).
   - In the dashboard, select one of the available values, which may vary according to your Cloudflare plan. The available API values are: `30`, `60` (one minute), `600` (ten minutes), `3600` (one hour), or `86400` (one day).
-  - When using the API, the value must be `0` when the action is `managed_challenge`, `js_challenge`, or `challenge`.
+  - You cannot define a duration when using one of the challenge actions. In this case, when visitors pass a challenge, their corresponding [request counter](/waf/rate-limiting-rules/request-rate/) is set to zero. When visitors with the same values for the rule characteristics make enough requests to trigger the rate limiting rule again, they will receive a new challenge.
+  - When using the API, you must set the `mitigation_timeout` value to `0` when the action is `managed_challenge`, `js_challenge`, or `challenge`.
 
 - **Requests** {{<type>}}Number{{</type>}}
 
@@ -65,7 +66,7 @@ The available rate limiting rule parameters are the following:
 
 {{<Aside type="note">}}
 
-Use _IP with NAT support_ to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies — refer to [Cloudflare Cookies](/fundamentals/get-started/cloudflare-cookies/) for details.
+Use _IP with NAT support_ to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies — refer to [Cloudflare Cookies](/fundamentals/get-started/reference/cloudflare-cookies/) for details.
 
 {{</Aside>}}
 
@@ -75,23 +76,25 @@ Use _IP with NAT support_ to handle situations such as requests under NAT sharin
   - Only available in the Cloudflare dashboard when you enable **Use custom counting expression**.
   - Defines the criteria used for determining the request rate. By default, the counting expression is the same as the rule expression. This default is also applied when you set this field to an empty string (`""`).
   - The counting expression can include [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields). When there are response fields in the counting expression, the counting will happen after the response is sent.
+  - In some cases, you cannot include HTTP response fields in the counting expression due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 
 - **Also apply rate limiting to cached assets** {{<type>}}Boolean{{</type>}}
 
   - Field name in the API: `requests_to_origin` (optional, with the opposite meaning of the Cloudflare dashboard option).
-  - If this field is disabled (or when the `requests_to_origin` API field is set to `true`), only the requests going to the origin (that is, requests that are not cached) will be considered when determining the request rate.
+  - If this parameter is disabled (or when the `requests_to_origin` API field is set to `true`), only the requests going to the origin (that is, requests that are not cached) will be considered when determining the request rate.
+  - In some cases, you cannot disable the **Also apply rate limiting to cached assets** parameter due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 
 - **With response type** {{<type>}}String{{</type>}}
 
   - Field name in the API: `response` > `content_type` (optional).
-  - Only available when the rule action is _Block_. 
+  - Only available when the rule action is _Block_.
   - Allows you to define the content type of a custom response when blocking a request due to rate limiting.
   - Available API values: `application/json`, `text/html`, `text/xml`, or `text/plain`.
 
 - **With response code** {{<type>}}Integer{{</type>}}
 
   - Field name in the API: `response` > `status_code` (optional).
-  - Only available when the rule action is _Block_. 
+  - Only available when the rule action is _Block_.
   - Allows you to define the HTTP status code returned to the visitor when blocking the request due to rate limiting.
   - You must enter a value between `400` and `499`. The default value is `429` (`Too many requests`).
 
@@ -103,6 +106,13 @@ Use _IP with NAT support_ to handle situations such as requests under NAT sharin
   - The maximum field size is 30 KB.
 
 {{</definitions>}}
+
+## Configuration restrictions
+
+If the rule expression includes [HTTP request body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields) or [IP Lists](/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/), then:
+
+* The rule counting expression, defined in the **Increment counter when** parameter, cannot include any of the [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields).
+* You must enable the **Also apply rate limiting to cached assets** parameter.
 
 ## Recommendations
 

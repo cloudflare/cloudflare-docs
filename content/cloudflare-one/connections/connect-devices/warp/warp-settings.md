@@ -127,7 +127,7 @@ When the toggle is enabled, users are prevented from turning off the connected s
 </div>
 </details>
 
-When the toggle is enabled, users who manually logged into their organization on WARP are prevented from leaving that organization. This disables the **Logout from Zero Trust** and **Reset All Settings** button in the WARP client interface. If the WARP client has been deployed with a management tool and a local policy exists, then this switch is bypassed and clients are always prevented from leaving.
+When the toggle is enabled, users who manually logged in to their organization on WARP are prevented from leaving that organization. This disables the **Logout from Zero Trust** and **Reset All Settings** button in the WARP client interface. If the WARP client has been deployed with a management tool and a local policy exists, then this switch is bypassed and clients are always prevented from leaving.
 
 ## Allow updates
 
@@ -159,10 +159,10 @@ When the toggle is enabled, users will receive update notifications when a new v
 
 When the toggle is enabled, the client will automatically reconnect if it has been disabled for the specified Timeout value. This setting is best used in conjunction with [Lock WARP Switch](/cloudflare-one/connections/connect-devices/warp/warp-settings/#lock-warp-switch) above.
 
-## Allow device to leave organization
+## Support URL
 
 <details>
-<summary>Support URL</summary>
+<summary>Feature availability</summary>
 <div>
 
 | Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |

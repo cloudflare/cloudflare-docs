@@ -1,24 +1,22 @@
 ---
 pcx-content-type: reference
-title: Command-line options
-weight: 3
+title: Configuration flags
+weight: 4
 ---
 
-# Command-line options
+# Configuration flags
 
-Command-line options let you configure properties across origins in the same `cloudflared` instance. They are also a quick way to handle configurations if you are connecting a single service through `cloudflared`. If you are connecting multiple services and you need to configure properties or exceptions for specific origins, you can do so by adding arguments to [ingress rules](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/) in your configuration file.
+This page lists general-purpose configuration options for a Cloudflare Tunnel. You can add these flags to the `cloudflared tunnel run` command for [remotely-managed](/cloudflare-one/connections/connect-apps/configuration/remote-management/) and [locally-managed](/cloudflare-one/connections/connect-apps/configuration/local-management/) tunnels.
 
-For example, the following command will run the `mytunnel` tunnel by proxying traffic to port 8000 and disabling chunked transfer encoding.
+{{<example>}}
 
-```bash
-$ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
+**Example:** The following command runs the `mytunnel` tunnel by proxying traffic to port `8000` and disabling chunked transfer encoding.
+
+```txt
+cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
 ```
 
-The following is a list of common command-line options you can use to configure your tunnels. For a complete list of options, run:
-
-```bash
-$ cloudflared tunnel help
-```
+{{</example>}}
 
 - [`config`](#config)
 - [`autoupdate-freq`](#autoupdate-freq)

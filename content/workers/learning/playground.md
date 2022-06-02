@@ -42,7 +42,7 @@ To get familiar with Workers, experiment with the Playground by borrowing [Examp
 
 There are two versions of the Playground available: the [browser Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank) and the dashboard Playground, also known as the previewer.
 
-To access the dashboard Playground, log into your Cloudflare account and go to **Account Home** > **Workers** > **your Worker script** > **Quick edit**.
+To access the dashboard Playground, log in to your Cloudflare account and go to **Account Home** > **Workers** > **your Worker script** > **Quick edit**.
 
 When you have code you are ready to test, select **Save and Deploy** to preview at the bottom of the script panel.
 
@@ -74,7 +74,7 @@ The console displays the output of any calls to `console.log` that were called f
 
 ## Deploy
 
-There are two ways to preview and deploy a Workers script: on [a site on Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164) or on a [workers.dev](https://workers.dev/) account. If you'd like to only explore Workers capabilities, you can avoid any setup through the [playground](#playground).
+There are two ways to preview and deploy a Workers script: on [a site on Cloudflare](/fundamentals/get-started/setup/add-site/) or on a [workers.dev](https://workers.dev/) account. If you'd like to only explore Workers capabilities, you can avoid any setup through the [playground](#playground).
 
 ### Cloudflare Dashboard
 

@@ -92,12 +92,12 @@ The Rules language [operators](/ruleset-engine/rules-language/operators/) do not
 
 ## Lists
 
-[Lists](/firewall/cf-firewall-rules/rules-lists/) allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of Lists that support different kinds of list items.
+[Lists](/firewall/cf-firewall-rules/rules-lists/) allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of lists that support different kinds of list items.
 
-To refer to a List in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). This example expression filters requests from IP addresses that are in an IP List named `office_network`:
+To refer to a list in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). This example expression filters requests from IP addresses that are in an IP List named `office_network`:
 
 ```sql
 (ip.src in $office_network)
 ```
 
-Note that list names can only include lowercase letters, numbers, and the underscore (`_`) character. For guidance on creating and managing Lists, refer to [Use Lists: Manage Lists](/firewall/cf-dashboard/rules-lists/manage-lists/).
+Note that list names can only include lowercase letters, numbers, and the underscore (`_`) character. For guidance on creating and managing lists, refer to [Work with lists](/firewall/cf-dashboard/rules-lists/manage-lists/).

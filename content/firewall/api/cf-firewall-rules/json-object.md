@@ -1,7 +1,7 @@
 ---
 title: JSON object
 pcx-content-type: reference
-weight: 411
+weight: 1
 meta:
   title: Firewall rules JSON object
 ---
@@ -59,16 +59,7 @@ This table summarizes the object properties:
       <tr>
         <td><code>action</code><br />{{<type>}}String{{</type>}}</td>
         <td>The action to take when a request satisfies the filter expression for this rule.</td>
-        <td>
-          <em>
-            log<br />
-            bypass<br />
-            allow<br />
-            challenge<br />
-            js_challenge<br />
-            managed_challenge<br />
-            block<br /></em>
-        </td>
+        <td>Refer to <a href="/firewall/cf-firewall-rules/actions/">Firewall rules actions</a> for a list of supported values.</td>
       </tr>
       <tr>
         <td><code>priority</code><br />{{<type>}}Number{{</type>}}</td>

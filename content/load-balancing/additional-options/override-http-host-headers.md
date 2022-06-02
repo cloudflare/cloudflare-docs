@@ -6,7 +6,7 @@ weight: 16
 
 # Override HTTP Host headers
 
-When your application needs specialized routing (CNAME setup or custom hosts like Heroku), you can customize the `Host` header used in health checks on a per-origin or per-monitor level.
+When your application needs specialized routing (`CNAME` setup or custom hosts like Heroku), you can customize the `Host` header used in health checks on a per-origin or per-monitor level.
 
 {{<Aside type="warning" header="Important">}}
 
@@ -56,4 +56,4 @@ For a list of origins that override a monitor's `Host` header:
 2.  Select **Advanced health check settings**.
 3.  If you have origin overrides, you will see **Origin host header overrides**.
 
-![List of origin host header overrides](/load-balancing/static/images/origin-host-header-override.png)
+![Example configuration of origin host header overrides](/load-balancing/static/images/origin-host-header-override.png)

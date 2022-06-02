@@ -88,21 +88,21 @@ There are many different event types that can be enabled for your webhook. Selec
 
 When your webhook is created, it will attempt to send a test payload to your application. Since your application is not actually deployed yet, leave the configuration as it is. You will later return to your repository to create, edit, and close some issues to ensure that the webhook is working once your application is deployed.
 
-## Generate
+## Init
 
-Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. In this tutorial, you will use the [router template](https://github.com/cloudflare/worker-template-router) to generate a Workers project with a built-in router, so you can take incoming requests, and route them to the appropriate JavaScript code.
+Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. In this tutorial, you will use the [router template](https://github.com/cloudflare/worker-template-router) to create a Workers project with a built-in router, so you can take incoming requests, and route them to the appropriate JavaScript code.
 
-In the command line, generate your Worker project, passing in a project name (for example, `slack-bot`), and the [template](/workers/examples/) URL to base your project on:
+In the command line, create your Worker project, cloning the [router template](https://github.com/cloudflare/worker-template-router) URL and passing in a project name (for example, `slack-bot`):
 
 ```sh
 ---
-header: Generate a new project
+header: Create a new project
 ---
-$ wrangler generate slack-bot https://github.com/cloudflare/worker-template-router
+$ git clone https://github.com/cloudflare/worker-template-router slack-bot
 $ cd slack-bot
 ```
 
-Wrangler templates are just Git repositories, so if you want to create your own templates, or use one from the [Template Gallery](/workers/examples/), there is a variety of options to help you get started.
+Wrangler templates are just Git repositories, so if you want to create your own templates, or use one from the [Template Gallery](/workers/get-started/quickstarts/#templates), there is a variety of options to help you get started.
 
 Cloudflare’s `worker-template` includes support for building and deploying JavaScript-based projects. Inside of your new `slack-bot` directory, `index.js` represents the entry point to your Cloudflare Workers application.
 
@@ -135,7 +135,7 @@ To build your Slack bot on Cloudflare Workers, you will build up your applicatio
 
 The router template includes a class, `Router`, that is included to help developers with the common task of associating “routes” in your application (for instance, `/users`, or `/about`) with “functions”. In this tutorial, there are two routes/function handlers that you need to define:
 
-1.  The `lookup` function will take requests from Slack (sent when a user uses the `/issue` command), and look up the corresponding issue using the GitHub API. This function will be a `PUT` request to `/lookup`.
+1.  The `lookup` function will take requests from Slack (sent when a user uses the `/issue` command), and look up the corresponding issue using the GitHub API. This function will be a `POST` request to `/lookup`.
 
 2.  The `webhook` function will be called when an issue changes on GitHub, via a configured webhook. This function will be a `POST` request to `/webhook`.
 
@@ -146,32 +146,26 @@ Inside of `index.js`, import the `Router` class and use it to update the `handle
 ```js
 ---
 filename: index.js
-highlight: [1, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+highlight: [6, 7, 8, 9]
 ---
-import Router from './router';
+import { Router } from 'itty-router';
 
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
+// Create a new router
+const router = Router();
 
-async function handleRequest(request) {
-  const r = new Router();
-  r.post('/lookup', lookup);
-  r.post('/webhook', webhook);
+router.post("/lookup", lookup);
+router.post("/webhook", webhook);
 
-  let response = await r.route(request);
+router.all("*", () => new Response("404, not found!", { status: 404 }))
 
-  if (!response) {
-    response = new Response('Not found', { status: 404 });
-  }
-
-  return response;
-}
+addEventListener('fetch', (e) => {
+  e.respondWith(router.handle(e.request))
+})
 ```
 
-First, import the `Router` class from `router.js`.
+First, import the `Router` class from `itty-router`.
 
-In `handleRequest`, instantiate a new instance of `Router`, setting it to the variable `r`. The `Router` class makes use of a few functions to quickly and easily handle requests. The `post` method takes in a path string and a function handler. This indicates “when a client sends an HTTP `POST` to the path `/lookup`, call the `lookup` function”.
+The `Router` class makes use of a few functions to quickly and easily handle requests. The `post` method takes in a path string and a function handler. This indicates “when a client sends an HTTP `POST` to the path `/lookup`, call the `lookup` function”.
 
 There are two `POST` routes to handle: `/lookup` and `/webhook`. These new routes will point to corresponding functions, `lookup` and `webhook` — the two function handlers that you will set up soon.
 
@@ -183,9 +177,7 @@ Note that you are able to use JavaScript features like async/await inside of you
 
 {{</Aside>}}
 
-If there is no matching route (for example, if someone requests the path `/admin`), the function should return a response with a status code of `404`. `handleRequest` checks to see if `response` is `undefined`, and if it is, it sets `response` to a new `Response` with the body text “Not found”, and a status code of `404`.
-
-Finally, the function returns the `response`, whether it is a match from the router, or a `404`, back to the `fetch` event. The result will either be a handled API route, or a plain HTTP response.
+If there is no matching route (for example, if someone requests the path `/admin`), the function should return a response with a status code of `404`. `router.all` catches any unhandled requests and returns a new `Response` with the body text `“404, not found!”`, and a status code of `404`.
 
 This request/response pattern makes it really straightforward to understand how requests are routed in your Workers application. You are almost done with this file. To complete it, you need to define the corresponding function handlers for your routes. In this tutorial, you will define those handlers in `src/handlers`:
 
@@ -203,29 +195,23 @@ With those files created (you will fill them in soon), import them at the top of
 ```js
 ---
 filename: index.js
-highlight: [1, 2, 11, 12]
+highlight: [1, 2]
 ---
 import lookup from './src/handlers/lookup';
 import webhook from './src/handlers/webhook';
-import Router from './router';
+import { Router } from 'itty-router';
 
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
+// Create a new router
+const router = Router();
 
-async function handleRequest(request) {
-  const r = new Router();
-  r.post('/lookup', lookup);
-  r.post('/webhook', webhook);
+router.post("/lookup", lookup);
+router.post("/webhook", webhook);
 
-  let response = await r.route(request);
+router.all("*", () => new Response("404, not found!", { status: 404 }))
 
-  if (!response) {
-    response = new Response('Not found', { status: 404 });
-  }
-
-  return response;
-}
+addEventListener('fetch', (e) => {
+  e.respondWith(router.handle(e.request))
+})
 ```
 
 ### Creating the lookup route
@@ -596,7 +582,7 @@ Add a simple utility function, `compact`, which takes an array, and filters out 
 ```js
 ---
 filename: src/utils/slack.js
-highlight: [1, 24]
+highlight: [1, 20]
 ---
 const compact = array => array.filter(el => el);
 
@@ -663,7 +649,7 @@ Since this webhook allows developers to post directly to your Slack channel, kee
 
 {{</Aside>}}
 
-To use this constant inside of your codebase, use the [`wrangler secret`](/workers/cli-wrangler/commands/#secret) command:
+To use this constant inside of your codebase, use the [`wrangler secret`](/workers/wrangler/cli-wrangler/commands/#secret) command:
 
 ```sh
 ---
@@ -682,7 +668,7 @@ To do this, wrap the majority of the `webhook` function handler in a try/catch b
 ```js
 ---
 filename: src/handlers/webhook.js
-highlight: [4, 22, 23, 24, 25]
+highlight: [4, 18, 19, 20, 21]
 ---
 import { constructGhIssueSlackMessage } from '../utils/slack';
 

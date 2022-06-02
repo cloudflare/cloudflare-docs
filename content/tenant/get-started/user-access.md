@@ -34,7 +34,7 @@ Another way to grant access is by making the below API call.
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<customer_account_id>/members' -H 'Content-Type: application/json' -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>' -d '{ "email": "<customer-email>", "roles": ["<user-role>"] }'
 ```
 
-In most cases, the user role to use is that of `Administrator` which has the id `05784afa30c1afe1440e79d9351c7430`. A full list of available roles can be fetched by making a call to `GET https://api.cloudflare.com/client/v4/accounts/<account_id>/roles`. Only ENT customers have access to our full set of user roles. For more details about roles, please refer to [Managing Cloudflare account access](https://support.cloudflare.com/hc/articles/200167946).
+In most cases, the user role to use is that of `Administrator` which has the id `05784afa30c1afe1440e79d9351c7430`. A full list of available roles can be fetched by making a call to `GET https://api.cloudflare.com/client/v4/accounts/<account_id>/roles`. Only ENT customers have access to our full set of user roles. For more details about roles, refer to [Manage account access](/fundamentals/get-started/setup/account-setup/manage-account-members/).
 
 Once the invite is sent, the user will receive an invitation to gain access to the account. If they do not already have a Cloudflare user, we will take them through the process of creating one. Once created, they will be given access to the account and any zones already created.
 
@@ -56,7 +56,7 @@ Creating a user works as follows:
 curl -X POST https://api.cloudflare.com/client/v4/users -H 'Content-Type: application/json' -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>' -d '{ "email": "<identifier>@youremaildomain.com>" }'
 ```
 
-These type of users are service users, as no one will log into the dashboard with them. If you are planning to use this method, we will enable you to see the API key in order to make API calls as this user.
+These type of users are service users, as no one will log in to the dashboard with them. If you are planning to use this method, we will enable you to see the API key in order to make API calls as this user.
 
 An example response for a successful creation:
 

@@ -33,9 +33,9 @@ To enable the Cloudflare OWASP Core Ruleset for a given zone via API, create a r
 
 To configure the Cloudflare OWASP Core Ruleset via API, create [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) using the Rulesets API. You can perform the following configurations:
 
-*   Enable all the rules up to a specific paranoia level.
-*   Configure the score threshold.
-*   Specify the action to perform when the threat score is greater than the threshold.
+*   [Set the paranoia level](#setting-the-paranoia-level).
+*   [Configure the score threshold](#configuring-the-score-threshold-and-the-action).
+*   [Specify the action to perform](#configuring-the-score-threshold-and-the-action) when the threat score is greater than the threshold.
 
 You can also disable specific rules in the Managed Ruleset using [rule overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
 
@@ -102,8 +102,8 @@ highlight: [4,5]
 curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>"
 ```
-      </div>
       {{</markdown>}}
+      </div>
     </details>
 
     <details>

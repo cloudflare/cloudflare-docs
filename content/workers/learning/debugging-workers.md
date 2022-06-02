@@ -14,7 +14,7 @@ Debugging is a critical part of developing a new application — whether running
 
 ## Local testing with `wrangler dev`
 
-When you are developing your Workers application, the [`wrangler dev`](/workers/cli-wrangler/commands/#dev) command can significantly reduce the time it takes to test and debug new features. It can help you get feedback quickly while iterating, by easily exposing logs on `localhost`, and allows you to experiment without deploying to production.
+When you are developing your Workers application, the [`wrangler dev`](/workers/wrangler/commands/#dev) command can significantly reduce the time it takes to test and debug new features. It can help you get feedback quickly while iterating, by easily exposing logs on `localhost`, and allows you to experiment without deploying to production.
 
 To get started, run `wrangler dev` in your Workers project directory. The `wrangler dev` command will deploy your application to the preview service, and make it available for access on `localhost`:
 
@@ -54,7 +54,7 @@ Received new request to url: https://example.com/
 
 Inserting `console.log` lines throughout your code can help you understand the state of your application in various stages until you reach the desired output.
 
-You can customize how `wrangler dev` works to fit your needs. Refer to [the `wrangler dev` documentation](/workers/cli-wrangler/commands/#dev) for available configuration options.
+You can customize how `wrangler dev` works to fit your needs. Refer to [the `wrangler dev` documentation](/workers/wrangler/commands/#dev) for available configuration options.
 
 {{<Aside type="warning">}}
 

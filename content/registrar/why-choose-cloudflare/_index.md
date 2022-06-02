@@ -1,21 +1,15 @@
 ---
 title: Why choose Cloudflare
-pcx-content-type: concept
-weight: 2
-meta:
-  title: How domain registration works
+pcx-content-type: navigation
+weight: 3
 ---
 
-# How domain registration works
+# Why choose Cloudflare
 
-![Overview of how domain registration works and all the parts involved](/registrar/static/domain-registry-process.png)
+Cloudflare Registrar offers domain name registration renewal without markups or renewal fees. You only pay what is charged by registries and [ICANN](https://www.icann.org/). Cloudflare Registrar also offers additional security features, such as free, one-click activation for Domain Name System Security Extensions (DNSSEC), custom domain protection, and WHOIS redaction.
 
-When you register a domain, you become the owner, or registrant, for that domain for a set period of time. Now that you are the registrant, you can create an authoritative record that tells the world the nameservers for your domain. The domain name system, or DNS, uses those nameservers to direct traffic to the IP address of your server.
+You can buy your domain from Cloudflare Registrar or from a third party. Even when you buy it from a third party, you can manage your domain with Cloudflare to benefit from all the features Cloudflare offers.
 
-When you put your site behind Cloudflare, you change your nameservers at your registry to the ones Cloudflare provides. Once Cloudflare is responsible for your authoritative DNS, Cloudflare can deliver the features that make your site faster and safer.
+Learn more about other reasons to choose Cloudflare Registrar:
 
-Your registry keeps the authoritative record for your nameservers. Each top-level domain (TLD) has a single registry that is responsible for maintaining those records. For example, `.com` is a TLD. Verisign is the exclusive registry for `.com`. As the TLD’s registry, Verisign stores the contact information and the nameservers for every `.com` domain in the world. As the registrant for a domain, you can tell your domain’s registry which nameservers a DNS resolver should use.
-
-Where do registrars fit in this relationship? Domain registrars communicate your ownership, and subsequent changes, of a domain to the registry for that TLD. Registries trust registrars to only accept changes from the domain owner and to accurately convey that information so that the registry can update their record. While there is one registry for every TLD, hundreds of registrars are able to register a domain.
-
-Beyond this, Cloudflare also offers you services such Domain Name System Security Extensions, custom domain protection, and WHOIS redaction.
+{{<directory-listing>}}

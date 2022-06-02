@@ -18,9 +18,9 @@ Bot Fight Mode is a simple, free product that helps detect and mitigate bot traf
 
 To start using Bot Fight Mode:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **Security** > **Bots**.
-3.  For **Bot Fight Mode**, select **On**.
+3. For **Bot Fight Mode**, select **On**.
 
 ## Disable Bot Fight Mode
 
@@ -28,7 +28,7 @@ If you find that **Bot Fight Mode** is causing problems with your application tr
 
 To disable Bot Fight Mode:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **Security** > **Bots**.
 3. For **Bot Fight Mode**, select **Off**.
 

@@ -8,11 +8,11 @@ weight: 0
 
 Magic Transit uses a static configuration to route traffic through [Generic Routing Encapsulation (GRE) tunnels](/magic-transit/about/tunnels-and-encapsulation/) from Cloudflare’s edge to your data center.
 
-Magic Transit steers traffic along GRE tunnel routes based on priorities you define during the onboarding process.
+Magic Transit steers traffic along tunnel routes based on priorities you define during the onboarding process.
 
 The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
 
-![Example route priorities](/magic-transit/static/mt-traffic-steering-ecmp-baseline.png)
+![Three tunnel routes with Tunnels 1 and 2 with the same top priority](/magic-transit/static/mt-traffic-steering-ecmp-baseline.png)
 
 When there are multiple routes with equal priority and different next-hops, Cloudflare uses equal-cost multi-path (ECMP) routing. An example of multiple routes with equal priority would be Tunnel 1 and Tunnel 2.
 
@@ -32,6 +32,8 @@ Using ECMP has a number of consequences:
 
 As a result, ECMP provides load balancing across tunnels with the same priority.
 
+{{<render file="_ecmp-flow-hashing.md">}}
+
 ### Examples
 
 This diagram illustrates how ECMP distributes traffic equally across 2 paths with the same priority.
@@ -42,12 +44,12 @@ This diagram illustrates how ECMP distributes traffic equally across 2 paths wit
 </summary>
   <div class="special-class" markdown="1">
 
-![ECMP diagram of health network](/magic-transit/static/mt-traffic-steering-ecmp-normal.png)
+![Traffic flow to Tunnels 1 and 2 using ECMP](/magic-transit/static/mt-traffic-steering-ecmp-normal.png)
 
 </div>
 </details>
 
-When Magic Transit health checks determine that GRE Tunnel 2 is unhealthy, that route is dynamically de-prioritized, leaving Tunnel 1 the sole top-priority route. As a result, traffic is steered away from Tunnel 2, and all traffic flows to Tunnel 1:
+When Magic Transit health checks determine that Tunnel 2 is unhealthy, that route is dynamically de-prioritized, leaving Tunnel 1 the sole top-priority route. As a result, traffic is steered away from Tunnel 2, and all traffic flows to Tunnel 1:
 
 <details>
 <summary>
@@ -55,12 +57,12 @@ When Magic Transit health checks determine that GRE Tunnel 2 is unhealthy, that 
 </summary>
   <div class="special-class" markdown="1">
 
-![ECMP diagram of unhealthy Tunnel 2](/magic-transit/static/mt-traffic-steering-ecmp-failure-1.png)
+![All traffic flowing to Tunnel 1 because of unhealthy Tunnel 2](/magic-transit/static/mt-traffic-steering-ecmp-failure-1.png)
 
 </div>
 </details>
 
-When Magic Transit determines that GRE Tunnel 1 is unhealthy as well, that route is also de-prioritized, leaving GRE Tunnel 3 as the top priority route. In that case, all traffic flows to GRE Tunnel 3.
+When Magic Transit determines that Tunnel 1 is unhealthy as well, that route is also de-prioritized, leaving Tunnel 3 as the top priority route. In that case, all traffic flows to Tunnel 3.
 
 <details>
 <summary>
@@ -68,7 +70,7 @@ When Magic Transit determines that GRE Tunnel 1 is unhealthy as well, that route
 </summary>
   <div class="special-class" markdown="1">
 
-![ECMP diagram of unhealthy Tunnels 1 and 2](/magic-transit/static/mt-traffic-steering-ecmp-failure-2.png)
+![All traffic flowing to Tunnel 3 because of unhealthy Tunnels 1 and 2](/magic-transit/static/mt-traffic-steering-ecmp-failure-2.png)
 
 </div>
 </details>

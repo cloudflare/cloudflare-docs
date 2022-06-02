@@ -33,7 +33,7 @@ Refer to the official Python documentation for installation guidance:
 
 - [Windows](https://www.python.org/downloads/windows/)
 - [Linux/UNIX](https://www.python.org/downloads/source/)
-- [Mac OS X](https://www.python.org/downloads/mac-osx/)
+- [macOS](https://www.python.org/downloads/macos/)
 - [Other](https://www.python.org/download/other/)
 
 ### Installing Pipenv
@@ -211,7 +211,7 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 

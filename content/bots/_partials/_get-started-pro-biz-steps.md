@@ -7,7 +7,7 @@ _build:
 
 To start using Super Bot Fight Mode:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2.  Go to **Security** > **Bots**.
 3.  Click **Configure Super Bot Fight Mode**.
 4.  Choose how your domain should respond to various types of traffic:

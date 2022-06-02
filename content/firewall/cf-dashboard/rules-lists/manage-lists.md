@@ -1,12 +1,12 @@
 ---
 pcx-content-type: how-to
-title: Manage lists
-weight: 351
+title: Work with lists
+weight: 1
 ---
 
-# Manage lists
+# Work with lists
 
-## Create an IP list
+## Create an IP List
 
 To create an IP List, follow these steps:
 
@@ -64,4 +64,4 @@ The **Lists** card displays the updated collection of lists.
 
 You can add and remove items from a list, but you cannot change the list name or type.
 
-For more information, refer to [Use IP Lists: Manage IP List items](/firewall/cf-dashboard/rules-lists/manage-items/).
+For more information, refer to [Manage IP List items](/firewall/cf-dashboard/rules-lists/manage-items/).

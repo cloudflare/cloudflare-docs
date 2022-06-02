@@ -16,10 +16,13 @@ In this tutorial, you will learn how to configure the Anycast GRE or IPsec tunne
 Before you can configure the Anycast GRE or IPsec tunnel on-ramp to Magic WAN, the following items should already be completed:
 
 - Purchased Magic WAN and Secure Web Gateway
+- Added a root certificate
 - Cloudflare created and provisioned Magic WAN and Secure Web Gateway
 - Received the Cloudflare GRE endpoint (Anycast IP address) assigned to Magic WAN
 - Established connectivity between site edge routers and the Cloudflare GRE endpoint via the Internet or Cloudflare Network Interconnect (CNI)
 - Use site routers that support Anycast GRE or IPsec tunnels and Policy-based Routing (PBR) so that specific Internet-bound traffic from the sites' private networks can be routed over the Anycast GRE or IPsec tunnel to Magic WAN, and subsequently Secure Web Gateway, to enforce a user's specific web access policies.
+
+Proper routing techniques, such as policy-based routing, should also be utilized on the site routers to match relevant Internet-bound traffic from the site’s appropriate local private subnets and route them over the GRE tunnel to Cloudflare Magic WAN and Secure Web Gateway for processing. Otherwise, such Internet-bound traffic would likely be routed straight out of the physical uplink of the site router without the protection enforced by the Cloudflare Secure Web Gateway.
 
 ## Example scenario
 
@@ -31,7 +34,7 @@ For the purpose of this tutorial, setup will reference a scenario where an enter
 
 Each site's private network has an on-ramp to Cloudflare's Anycast network using Anycast GRE or IPsec tunnels, and the Cloudflare tunnel endpoint IP address is `192.0.2.10`. The table below summarizes the Anycast GRE or IPsec tunnel configuration and route table entries for the Magic WAN topology.
 
-![Tunnel configuration](/magic-wan/static/tunnel-config-values.png)
+![Magic WAN prefix and next hope values for each branch office](/magic-wan/static/tunnel-config-values.png)
 
 ## Add Anycast GRE or IPsec tunnel
 
@@ -45,7 +48,7 @@ Each site's private network has an on-ramp to Cloudflare's Anycast network using
 
 In keeping with the example scenario, the list of tunnels should match the example below.
 
-![Tunnel configuration](/magic-wan/static/gre-tunnel-values.png)
+![Tunnel configuration for each branch office, including interface address, Customer and Cloudflare GRE endpoints, and TTL and MTU](/magic-wan/static/gre-tunnel-values.png)
 
 ## Add static routes
 
@@ -57,10 +60,12 @@ In keeping with the example scenario, the list of tunnels should match the examp
 
 In keeping with the example scenario, the list of static routes should match the example below.
 
-![Tunnel configuration](/magic-wan/static/static-route-values.png)
+![Static route configuration with defined prefixes, next hops, and priorities](/magic-wan/static/static-route-values.png)
 
 ## Secure Web Gateway
 
-After setting up the Anycast GRE and static routes, configure the policies for Secure Web Gateway in the Teams dashboard. To set up the policies, refer to [Secure Web Gateway policies](/cloudflare-one/policies/filtering/).
+After setting up the Anycast GRE and static routes, configure the policies for Secure Web Gateway in the Teams dashboard. To set up the policies, refer to [Secure Web Gateway policies](/cloudflare-one/policies/filtering/). 
+
+The Secure Web Gateway upgrade supports all TCP and UDP ports.
 
 After you configured Secure Web Gateway, enterprise users and devices from each of the sites mentioned in the example scenario would be able to safely browse or access Internet resources under the protection of the Cloudflare edge network.

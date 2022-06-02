@@ -19,7 +19,7 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
 ## Before you start
 
-1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+1.  [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/)
 2.  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
 
 ---
@@ -157,7 +157,7 @@ domain in the Cloudflare control panel:
 
 {{</Aside>}}
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/).
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
 
 1.  Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
 
@@ -229,7 +229,7 @@ You can help end users connect without requiring the command line by providing t
 
 - Ensure that RDP is enabled on the target Windows machine. If not, you may encounter an error: `No connection could be made because the target machine actively refused it`.
 
-### MacOS
+### macOS
 
 {{<Aside type="note">}}
 
@@ -237,7 +237,7 @@ Before you start, make sure you download an RDP client for macOS.
 
 {{</Aside>}}
 
-MacOS users can save a command shortcut that will launch the RDP flow.
+macOS users can save a command shortcut that will launch the RDP flow.
 
 1.  The command below can be saved as a `.command` file that can be launched on login:
 
@@ -267,4 +267,4 @@ MacOS users can save a command shortcut that will launch the RDP flow.
 
 5.  Double click on the previously created `CF-RDP-Tunnel.command` file.
 
-    The default behavior in MacOS is for the Terminal window to stay open. You can configure it to close automatically.
+    The default behavior in macOS is for the Terminal window to stay open. You can configure it to close automatically.

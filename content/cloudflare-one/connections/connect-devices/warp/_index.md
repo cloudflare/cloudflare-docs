@@ -3,10 +3,10 @@ pcx-content-type: concept
 title: WARP
 weight: 1
 meta:
-  title: Connect devices with the WARP client
+  title: About Cloudflare WARP
 ---
 
-# Connect devices with the WARP client
+# About Cloudflare WARP
 
 The Cloudflare WARP client allows you to protect corporate devices by securely and privately sending traffic from those devices to Cloudflare's edge, where Cloudflare Gateway can apply advanced web filtering. The WARP client also makes it possible to apply advanced Zero Trust policies that check for a device's health before it connects to corporate applications.
 
@@ -29,12 +29,6 @@ Here are a few ways in which the WARP client provides in-depth protection for yo
 The WARP client can be configured in three modes.
 
 ## WARP client modes
-
-{{<Aside type="note">}}
-
-**Proxy mode** can only be used by applications/operating systems that support SOCKS5/HTTPS proxy communication.
-
-{{</Aside>}}
 
 ### Gateway with WARP (default)
 
@@ -59,5 +53,12 @@ This mode is best suited for organizations that want to filter traffic directed 
 | DNS filtering | HTTP filtering | Features enabled |
 | ------------- | -------------- | ---------------- |
 | No | Yes | HTTP policies, Browser Isolation, identity-based policies, AV scanning, DLP for traffic sent through localhost proxy|
+
+{{<Aside type="note">}}
+
+ * Proxy mode can only be used by applications/operating systems that support SOCKS5/HTTPS proxy communication.
+ * This mode is only available on Windows, Linux and macOS.
+
+{{</Aside>}}
 
 Cloudflare WARP is [available](/cloudflare-one/connections/connect-devices/warp/download-warp/) for iOS, Android, ChromeOS, Mac, Linux, and Windows.

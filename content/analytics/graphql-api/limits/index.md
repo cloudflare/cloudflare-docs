@@ -12,7 +12,7 @@ The GraphQL Analytics API is available to all Cloudflare users; however, users o
 
 ### Data node access (by customer plan)
 
-Use the table below to identify which data nodes are included in your customer plan and the range of historical data you can query. For example, Free plans have access to the last 24 hours of `browserPerf1mGroups` data, while Enterprise plans have access to the last 30 days.
+Use the table below to identify which data nodes are included in your customer plan and the range of historical data you can query. For example, Free plans have access to the last 14 days of `firewallEventsAdaptive` data, while Enterprise plans have access to the last 30 days.
 
 {{<Aside type="note" header="Note">}}
 
@@ -24,7 +24,6 @@ Access to Network Analytics `*NetworkAnalyticsAdaptiveGroups` nodes is only avai
 
 | Data node                                     |     Free |      Pro | Business | Enterprise |
 | :-------------------------------------------- | -------: | -------: | -------: | ---------: |
-| `browserPerf1mGroups`                         | 24 hours |   7 days |  30 days |    30 days |
 | `dosdNetworkAnalyticsAdaptiveGroups`          |      n/a |      n/a |      n/a |    90 days |
 | `dosdAttackAnalyticsGroups`                   |      n/a |      n/a |      n/a |    90 days |
 | `firewallEventsAdaptiveByTimeGroups`          |  14 days |  14 days |  30 days |    30 days |
@@ -50,6 +49,9 @@ Access to Network Analytics `*NetworkAnalyticsAdaptiveGroups` nodes is only avai
 | `magicTransitNetworkAnalyticsAdaptiveGroups`  |      n/a |      n/a |      n/a |    90 days |
 | `spectrumNetworkAnalyticsAdaptiveGroups`      |      n/a |      n/a |      n/a |    90 days |
 | `synAvgPps1mGroups`                           |      n/a |      n/a |      n/a |     7 days |
+| `rumPerformanceEventsAdaptiveGroups`          | 6 months | 6 months | 6 months |   6 months |
+| `rumPageloadEventsAdaptiveGroups`             | 6 months | 6 months | 6 months |   6 months |
+| `rumWebVitalsEventsAdaptiveGroups`            | 6 months | 6 months | 6 months |   6 months |
 
 {{</table-wrap>}}
 
@@ -59,7 +61,7 @@ Access to Network Analytics `*NetworkAnalyticsAdaptiveGroups` nodes is only avai
 
 To obtain specific information regarding account limits for a particular data node, use the `settings` node.
 
-The example query below demonstrates how to retrieve account limits for the `browserPerf1mGroups` data node. The example queries the following fields:
+The example query below demonstrates how to retrieve account limits for the `firewallEventsAdaptive` data node. The example queries the following fields:
 
 {{<table-wrap>}}
 
@@ -80,7 +82,7 @@ The example query below demonstrates how to retrieve account limits for the `bro
   viewer {
     zones(filter: { zoneTag: $zoneTag }) {
       settings {
-        browserPerf1mGroups {
+        firewallEventsAdaptive {
           maxDuration
           maxNumberOfFields
           maxPageSize
@@ -102,12 +104,12 @@ The example query below demonstrates how to retrieve account limits for the `bro
       "zones": [
         {
           "settings": {
-            "browserPerf1mGroups": {
+            "firewallEventsAdaptive": {
               "enabled": true,
-              "maxDuration": 2592000,
+              "maxDuration": 259200,
               "maxNumberOfFields": 30,
               "maxPageSize": 10000,
-              "notOlderThan": 2595600
+              "notOlderThan": 2678400
             }
           }
         }

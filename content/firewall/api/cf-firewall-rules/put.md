@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: PUT examples
-weight: 431
+weight: 5
 ---
 
 # PUT examples

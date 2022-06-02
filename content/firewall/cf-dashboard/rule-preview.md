@@ -2,7 +2,7 @@
 title: Preview rules
 pcx-content-type: concept
 type: table
-weight: 331
+weight: 3
 layout: list
 meta:
   title: Preview firewall rules
@@ -12,9 +12,9 @@ meta:
 
 {{<content-column>}}
 
-Cloudflare firewall rules provides a powerful and flexible platform for filtering HTTP requests and protecting your site amid an evolving threat landscape. However, the same power and flexibility that allows you to tailor firewall rules to your specific application and environment can also introduce complexity. In these cases, it is critical that you have a way to test a firewall rule before deploying it so that you can ensure the rule will behave the way you expect.
+The expression of a firewall rule can become quite complex. In this situation, you should test your firewall rule before deploying it to ensure that the rule will behave as expected.
 
-To help customers understand the potential impact of a rule, Cloudflare has built **Rule Preview**. With the click of a button, Rule Preview allows you to test a firewall rule against a sample drawn from the last 72 hours of traffic. Rule Preview is built into the firewall rules Expression Editor so that you can test a rule as you edit it.
+Rule Preview helps you understand the potential impact of a firewall rule, by testing the rule against a sample drawn from the last 72 hours of traffic. Rule Preview is built into the firewall rules Expression Editor so that you can test a rule as you edit it.
 
 {{<Aside type="warning">}}
 
@@ -22,12 +22,10 @@ Rule Preview is only available to customers on an Enterprise plan.
 
 {{</Aside>}}
 
-## Use Rule Preview
+## Test a firewall rule with Rule Preview
 
-To test a firewall rule with Rule Preview:
-
-1. Locate the desired rule in the rules list and click the associated **Edit** button (wrench icon). The **Edit firewall rule** panel will open.
-1. Click **Test rule** to trigger the test.
+1. Locate the desired rule in the rules list and click **Edit** (wrench icon).
+2. Click **Test rule** to trigger the test.
 
 ![The Test Rule button next to the Action drop-down list allows you to check the traffic that would be affected by the current firewall rule](/firewall/static/firewall-rules-preview-1.png)
 
@@ -37,7 +35,7 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
 
 ![Example chart of a rule preview operation, stating that about 8% of the zone requests would be blocked by the current rule](/firewall/static/cf-firewall-rules-preview-rule-plot-chart.png)
 
-## Important Notes
+## Important notes
 
 **Consider the results of Firewall Preview an _indication_ of traffic levels**, not an exact calculation. The sample rate can be as little as 1% of your total traffic.
 

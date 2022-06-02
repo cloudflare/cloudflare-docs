@@ -2,13 +2,12 @@
 weight: 2
 pcx-content-type: reference
 title: Set up
+layout: single
 meta:
     title: Set up Cloudflare 1.1.1.1 resolver
 ---
 
 # Set up Cloudflare 1.1.1.1 resolver
-
-{{<content-column>}}
 
 By default, the DNS server your devices use is provided by your Internet provider. To start using 1.1.1.1 for your DNS queries, you will need to change the DNS settings in your device or router.
 
@@ -58,6 +57,13 @@ If you are using 1.1.1.1 for Families and see a domain that you believe is misca
 We review these submissions to improve Cloudflare’s categorization.
 
 {{</Aside>}}
+
+### Test 1.1.1.1 for Families
+
+After configuring 1.1.1.1 for Families, you can test if it is working as intended with the following URLs:
+
+- https://malware.testcategory.com/: Use this to test if 1.1.1.1 for Families is blocking known malware addresses correctly.
+- https://nudity.testcategory.com/: Use this to test if 1.1.1.1 for Families is blocking known adult content and malware addresses correctly.
 
 ## DNS over HTTPS (DoH)
 
@@ -115,5 +121,3 @@ family.cloudflare-dns.com
 
 </div>
 </details>
-
-{{</content-column>}}

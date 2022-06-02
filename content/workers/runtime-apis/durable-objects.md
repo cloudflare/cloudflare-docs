@@ -207,6 +207,10 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
       - Key at which the list results should start, inclusive.
 
+    - {{<code>}}startAfter{{<param-type>}}string{{</param-type>}}{{</code>}}
+
+      - Key after which the list results should start, exclusive. Cannot be used simultaneously with `start`.
+
     - {{<code>}}end{{<param-type>}}string{{</param-type>}}{{</code>}}
 
       - Key at which the list results should end, exclusive.
@@ -250,7 +254,33 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
     **Supported options:** Same as `put()`, above.
 
+- {{<code>}}getAlarm(){{</code>}} {{<type>}}Promise\<Number | null>{{</type>}}
+
+  - Retrieves the current alarm time (if set) as integer milliseconds since epoch. The alarm is considered to be set if it has not started, or if it has failed and any retry has not begun. If no alarm is set, `getAlarm()` returns null.
+
+    **Supported options:** Like `get()` above, but without `noCache`.
+
+- {{<code>}}setAlarm(scheduledTime{{<param-type>}}Date | number{{</param-type>}}){{</code>}} {{<type>}}Promise{{</type>}}
+
+  - Sets the current alarm time, accepting either a JS Date, or integer milliseconds since epoch.
+
+    If `setAlarm()` is called with a time equal to or before `Date.now()`,  the alarm will be scheduled for asynchronous execution in the immediate future. If the alarm handler is currently executing in this case, it will not be canceled. Alarms can be set to millisecond granularity and will usually execute within a few milliseconds after the set time, but can be delayed by up to a minute due to maintenance or failures while failover takes place.
+
+    **Supported options:** Like `put()` above, but without `noCache`.
+
+- {{<code>}}deleteAlarm(){{</code>}} {{<type>}}Promise{{</type>}}
+
+  - Deletes the alarm if one exists. Does not cancel the alarm handler if it is currently executing.
+
+    **Supported options:** Like `put()` above, but without `noCache`.
+
 {{</definitions>}}
+
+### `alarm()` handler method
+
+The system calls the `alarm()` handler method when a scheduled alarm time is reached. The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 seconds delay for up to 6 retries. Retries will be performed if the method fails with an uncaught exception.
+
+The method takes no parameters, does not return a result, and can be `async`.
 
 ### `fetch()` handler method
 
@@ -396,7 +426,7 @@ let response = await stub.fetch(url, options);
 
 The `fetch()` method of a stub has the exact same signature as the [global `fetch`](/workers/runtime-apis/fetch/). However, instead of sending an HTTP request to the Internet, the request is always sent to the Durable Object to which the stub points.
 
-Any uncaught exceptions thrown by the Durable Object's `fetch()` handler will be propagated to the caller's `fetch()` promise.
+Any uncaught exceptions thrown by the Durable Object's `fetch()` handler will be propagated to the caller's `fetch()` promise. Furthermore, if an uncaught exception is thrown by the Durable Object's `fetch()` handler, then the exception propagated to the caller's `fetch()` promise will include a property `.remote`, which will be set to `True`. If the caller's `fetch()` failed as a result of being unable to reach the Durable Object, the exception thrown to the caller's `fetch()` will not have the `.remote` property, indicating the exception was not generated remotely.
 
 ## Listing Durable Objects
 

@@ -7,7 +7,7 @@ title: Environments
 
 {{<Aside type="note">}}
 
-You can only use environments with [Wrangler](/workers/cli-wrangler/).
+You can only use environments with [Wrangler](/workers/wrangler/).
 
 {{</Aside>}}
 
@@ -19,37 +19,11 @@ These environments are utilized with the `--env` or `-e` flag on `wrangler build
 
 ---
 
-## Usage
-
-You will likely use environments to deploy Workers to a staging subdomain before your production environment. `wrangler publish` will determine its destination by the top-level configuration in your `wrangler.toml` [file](/workers/cli-wrangler/commands/#generate). You can create other environments beneath the top-level configuration in the `wrangler.toml` file by adding an [`[env.name]` configuration](/workers/cli-wrangler/configuration#environments) and specifying additional keys and values. For details on what keys are inherited by environments from the top-level configuration, see [`wrangler.toml` configuration](/workers/cli-wrangler/configuration/#keys).
-
-The layout of a top-level configuration in a `wrangler.toml` file is displayed below:
-
-```toml
----
-filename: wrangler.toml
----
-name = "your-worker"
-type = "javascript"
-account_id = "your-account-id"
-
-# This field specifies that the Worker
-# will be deployed to a *.workers.dev domain
-workers_dev = true
-
-# -- OR --
-
-# These fields specify that the Worker
-# will deploy to a custom domain
-zone_id = "your-zone-id"
-routes = ["example.com/*"]
-```
-
 ### Naming
 
 You cannot specify multiple environments with the same name. If this were allowed, publishing each environment would overwrite your previously deployed Worker and the behavior would not be clear.
 
-For this reason, Wrangler appends the environment name to the top-level name to publish a Worker script. For example, a Worker project named `my-worker` with an environment `[env.dev]` would become `my-worker-dev`.
+For this reason, Wrangler appends the environment name to the top-level name to publish a Worker. For example, a Worker project named `my-worker` with an environment `[env.dev]` would become `my-worker-dev`.
 
 The layout of an example `[env.dev]` environment is displayed below:
 
@@ -101,7 +75,7 @@ To deploy this Worker, run the `wrangler publish` command in your terminal:
 
 #### Publishing to \*.workers.dev
 
-Your `*.workers.dev` subdomain allows you to deploy Workers scripts [without attaching a custom domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/). To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`, select the **Workers** icon on your account home, or **Workers** then **Manage Workers** on your zone's dashboard, and begin setup on the right side of the Workers dashboard under **Your subdomain**.
+Your `*.workers.dev` subdomain allows you to deploy Workers [without attaching a custom domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/). To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`, select the **Workers** icon on your account home, or **Workers** then **Manage Workers** on your zone's dashboard, and begin setup on the right side of the Workers dashboard under **Your subdomain**.
 
 This `wrangler.toml` file has no environments defined and will publish `my-worker` to `my-worker.<your-subdomain>.workers.dev`:
 
@@ -120,7 +94,7 @@ workers_dev = true
 
 This example will publish to your `*.workers.dev` subdomain because `workers_dev` has been set to `true`.
 
-Run `wrangler publish` as normal to deploy your Worker script:
+Run `wrangler publish` as normal to deploy your Worker:
 
 ```sh
 ~/my-worker $ wrangler publish
@@ -134,7 +108,7 @@ Environments enable you to write and deploy projects to multiple places.
 
 You can define an environment by specifying an `[env.name]` block with its own values in your `wrangler.toml` file. Values within this block may override top-level configuration values with the same key.
 
-The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a custom domain, you must provide a [`route` or `routes` key](/workers/cli-wrangler/configuration/#keys) for each environment.
+The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a custom domain, you must provide a [`route` or `routes` key](/workers/wrangler/cli-wrangler/configuration/#keys) for each environment.
 
 ```toml
 ---
@@ -183,14 +157,14 @@ With this configuration, Wrangler will behave in the following manner:
 ✨  Successfully published your script to example.com/*
 ```
 
-Any defined [environment variables](/workers/platform/environment-variables/) (the [`vars`](/workers/cli-wrangler/configuration/#vars) key) are exposed as global variables to your Worker.
+Any defined [environment variables](/workers/platform/environment-variables/) (the [`vars`](/workers/wrangler/cli-wrangler/configuration/#vars) key) are exposed as global variables to your Worker.
 
 With this configuration, the `ENVIRONMENT` variable can be used to call specific code depending on the given environment:
 
 ```js
-if (ENVIRONMENT === 'staging') {
+if (ENVIRONMENT === "staging") {
   // staging-specific code
-} else if (ENVIRONMENT === 'production') {
+} else if (ENVIRONMENT === "production") {
   // production-specific code
 }
 ```

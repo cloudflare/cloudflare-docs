@@ -2,13 +2,14 @@
 pcx-content-type: tutorial
 title: Creating API tokens
 weight: 2
+layout: single
 ---
 
 # Creating API tokens
 
 ## Getting Started
 
-To get started creating an API Token, log into the [Cloudflare Dashboard](https://dash.cloudflare.com) and go to `User Profile` -> `API Tokens` or simply [click here](https://dash.cloudflare.com/profile/api-tokens). From the API Token home screen select `Create Token`.
+To get started creating an API Token, log in to the [Cloudflare Dashboard](https://dash.cloudflare.com) and go to `User Profile` -> `API Tokens` or simply [click here](https://dash.cloudflare.com/profile/api-tokens). From the API Token home screen select `Create Token`.
 
 If you are new to API Tokens or the Cloudflare API, Templates are the quickest way to get started. If you think a specific template matches your needs, go ahead and select it. You will be able to further customize the template after selecting it. If no template matches your use case or you want to build the token from scratch, select `Create Custom Token`
 
@@ -123,10 +124,4 @@ With this you have successfully created an API Token and can now start working w
 
 ## Roll API token
 
-If the secret is lost or believed to be compromised, you can either create a new token or your token can be rolled to generate a new secret. Rolling your secret key into a new one will invalidate the previous secret, but the access and permissions will be the same as the previous key.
-
-To roll your API token:
-
-1.  Log into your [Cloudflare account](https://dash.cloudflare.com) and go to **User Profile** > **API Tokens**.
-2.  Next to the API token you wish to roll, click the **three dot icon** > **Roll**.
-3.  Then, click **Confirm** to continue and you will see a new API token secret key.
+{{<render file="_roll-token.md">}}

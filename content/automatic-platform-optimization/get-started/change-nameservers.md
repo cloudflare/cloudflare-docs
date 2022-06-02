@@ -20,7 +20,7 @@ We recommend keeping this browser tab or window open and opening a new tab or wi
 
 ## Create the custom nameserver with Cloudflare
 
-1.  In a new browser tab or window, log into your Cloudflare dashboard.
+1.  In a new browser tab or window, log in to your Cloudflare dashboard.
 2.  Select your domain from the dropdown.
 3.  Select the **DNS** tile.
 4.  From the **Custom Nameservers** section, select **Add Custom Nameservers**.

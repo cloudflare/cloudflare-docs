@@ -74,7 +74,7 @@ Next, you will need to configure your private network server to connect to Cloud
     tunnel: <YOUR TUNNEL ID>
     credentials-file: /root/.cloudflared/<YOUR TUNNEL ID>.json
     warp-routing:
-    enabled: true
+      enabled: true
     ```
 
     {{<Aside>}}

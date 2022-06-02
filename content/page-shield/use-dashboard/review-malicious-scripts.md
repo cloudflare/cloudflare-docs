@@ -6,7 +6,7 @@ weight: 4
 
 # Review scripts considered malicious
 
-In the list of scripts displayed in the Script Monitor dashboard, the detected scripts that are considered malicious appear at the top of the list, so that you can quickly identify those scripts, review them, and take action.
+In the list of scripts displayed in the Active Scripts dashboard, detected scripts considered malicious appear at the top of the list, so that you can quickly identify those scripts, review them, and take action.
 
 {{<Aside type="note">}}
 
@@ -20,7 +20,7 @@ To review the scripts considered malicious:
 
 2.  Go to **Security** > **Page Shield**.
 
-3.  Under **Script Monitor**, click **Details** for each script considered malicious. The script details will contain:
+3.  Under **Active Scripts**, click **Details** for each script considered malicious. The script details will contain:
 
     - **Malicious Code**: Whether Cloudflare's internal systems consider the script malicious or not, and what is the score of the current script version (1-99).
     - **Malicious URL**: Whether the script URL is known to be malicious according to threat intelligence feeds.

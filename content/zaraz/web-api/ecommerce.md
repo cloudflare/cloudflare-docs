@@ -8,11 +8,13 @@ meta:
 
 # Ecommerce
 
+You can use `zaraz.ecommerce()` anywhere inside the `<body>` tag of a page.
+
 `zaraz.ecommerce()` allows you to track common events of the ecommerce user journey, such as when a user adds a product to cart, starts the checkout funnel or completes an order on your website.
 
 To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz account and on the tool you plan to send ecommerce data to. Then, add `zaraz.ecommerce()` to the `<body>` element of your website.
 
-Right now, Zaraz is compatible with Google Analytics 4 and Google Analytics 3.
+Right now, Zaraz is compatible with Google Analytics 3 (Universal Analytics), Google Analytics 4, Bing and Facebook Pixel.
 
 ## Enable ecommerce tracking
 
@@ -22,10 +24,11 @@ You do not need to map ecommerce events to triggers. Zaraz will automatically fo
 2. Click **Zaraz** > **Settings**.
 3. Enable **Ecommerce tracking**.
 4. Click **Save**.
-5. Locate the tool you want to use with ecommerce tracking and click **Edit**.
-6. Click **Settings**.
-7. Under **Advanced**, enable **Ecommerce tracking**.
-8. Click **Save**.
+5. Go to **Zaraz** > **Tools**.
+6. Locate the tool you want to use with ecommerce tracking and click **Edit**.
+7. Click **Settings**.
+8. Under **Advanced**, enable **Ecommerce tracking**.
+9. Click **Save**.
 
 ## Add ecommerce tracking to your website
 
@@ -88,7 +91,7 @@ To create a complete tracking event, you need to add an event and one or more pa
 | `checkout_id`            | String | Checkout ID.                                                                                |
 | `order_id`               | String | Internal ID of order/transaction/purchase.                                                  |
 | `affiliation`            | String | Name of affiliate from which the order occurred.                                            |
-| `subtotal`               | Number | Order total after discounts but before deducting taxes and shipping.                        |
+| `subtotal`               | Number | Order total after discounts but before adding taxes and shipping.                           |
 | `total`                  | Number | Revenue with discounts and coupons added in.                                                |
 | `revenue`                | Number | Revenue excluding shipping and tax.                                                         |
 | `shipping`               | Number | Cost of shipping for transaction.                                                           |
@@ -98,6 +101,7 @@ To create a complete tracking event, you need to add an event and one or more pa
 | `currency`               | String | Currency code for the transaction.                                                          |
 | `value`                  | Number | Total value of the product after quantity.                                                  |
 | `creative`               | String | Label for creative asset of promotion being tracked.                                        |
+| `query`                  | String | Product search term.                                                                        |
 
 {{</table-wrap>}}
 

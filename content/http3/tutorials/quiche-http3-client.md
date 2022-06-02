@@ -11,9 +11,9 @@ Quiche is Cloudflare's own implementation of the QUIC transport protocol and HTT
 
 ```sh
 $ git clone --recursive https://github.com/cloudflare/quiche.git
-$ cd quiche/tools/apps
+$ cd quiche/apps
 $ cargo build
-$ cd target/debug/
+$ cd ../target/debug/
 ```
 
 ## Use quiche-client

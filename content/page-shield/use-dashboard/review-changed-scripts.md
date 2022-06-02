@@ -20,4 +20,4 @@ When you receive such a notification:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2.  Go to **Security** > **Page Shield**.
-3.  Check the details of each changed script in the Script Monitor dashboard, and validate if it is an expected change.
+3.  Check the details of each changed script in the **Active Scripts** dashboard, and validate if it is an expected change.

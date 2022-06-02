@@ -1,10 +1,10 @@
 ---
 pcx-content-type: reference
-title: WARP with Firewall
-weight: 11
+title: WARP with firewall
+weight: 9
 ---
 
-# WARP with Firewall
+# WARP with firewall
 
 If your organization uses a firewall or other policies to restrict Internet traffic, you may need to make a few changes to allow WARP to connect.
 

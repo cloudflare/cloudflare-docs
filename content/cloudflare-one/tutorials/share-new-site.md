@@ -12,7 +12,7 @@ You can use Cloudflare's reverse proxy and [Cloudflare Tunnel](/cloudflare-one/g
 
 Instead of pointing DNS records to the external IP of a web service, you can connect that service to Cloudflare's network using Cloudflare Tunnel. Cloudflare Tunnel relies on a lightweight service, `cloudflared`, that you run in your infrastructure. `cloudflared` makes outbound-only connections to Cloudflare's network, so that you do not need to open holes in your firewall.
 
-You can use Cloudflare Tunnel to quickly share projects you are working on with team members without a virtual private network (VPN). In this example, you can use Cloudflare Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add a [Zero Trust policy](/cloudflare-one/policies/zero-trust/) to only allow certain people to reach the site.
+You can use Cloudflare Tunnel to quickly share projects you are working on with team members without a virtual private network (VPN). In this example, you can use Cloudflare Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add an [Access policy](/cloudflare-one/policies/access/) to only allow certain people to reach the site.
 
 **🗺️ This tutorial covers how to:**
 
@@ -26,7 +26,7 @@ You can use Cloudflare Tunnel to quickly share projects you are working on with 
 
 ## Before you start
 
-1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+1.  [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/)
 1.  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
 1.  [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI)
 

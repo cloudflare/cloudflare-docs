@@ -1,8 +1,7 @@
 ---
 pcx-content-type: reference
-type: overview
 title: Endpoints
-weight: 456
+weight: 3
 layout: list
 ---
 
@@ -20,7 +19,7 @@ For authentication instructions, refer to [Getting Started: Requests](https://ap
 
 For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://api.cloudflare.com/#getting-started-endpoints).
 
-{{<Aside type="warning" header="Important">}}
+{{<Aside type="note">}}
 
 The Filters API endpoints require a value for `<ZONE_ID>`.
 

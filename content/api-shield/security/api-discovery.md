@@ -21,7 +21,7 @@ For example, you might have thousands of APIs, but a lot of the calls look simil
 - `api.example.com/login/238`
 - `api.example.com/login/392`
 
-Both paths serve a similar purpose — allowing users to log into their accounts — but they are not identical. To simplify your endpoints, these examples might both map to `api.example.com/login/*`.
+Both paths serve a similar purpose — allowing users to log in to their accounts — but they are not identical. To simplify your endpoints, these examples might both map to `api.example.com/login/*`.
 
 API Discovery runs this process across all your authenticated endpoints, eventually generating a simple map of endpoints that might look like:
 

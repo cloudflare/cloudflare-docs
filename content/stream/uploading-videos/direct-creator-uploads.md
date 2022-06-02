@@ -10,6 +10,12 @@ Direct creator uploads allow users to upload videos without API tokens. A common
 use Direct creator uploads is on web apps, client side applications, or on mobile apps
 where users upload content directly to Stream.
 
+{{<Aside>}}
+
+Pending uploads count towards your storage limit.
+
+{{</Aside>}}
+
 ## Generate a unique one-time upload URL
 
 To give users the ability to directly upload their videos, first generate and

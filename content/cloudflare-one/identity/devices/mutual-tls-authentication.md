@@ -48,7 +48,7 @@ To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.team
 3.  Paste the content of the `ca.pem` file in the Certificate content field.
 4.  Assign the Root CA a name and add the fully-qualified domain names (FQDN) that will use this certificate.
 
-    These FQDNs will be the hostnames used for the resources being protected in the [Zero Trust policy](/cloudflare-one/policies/zero-trust/). You must associate the Root CA with the FQDN that the application being protected uses.
+    These FQDNs will be the hostnames used for the resources being protected in the [Access policy](/cloudflare-one/policies/access/). You must associate the Root CA with the FQDN that the application being protected uses.
 
 5.  Click **Save**.
 
@@ -72,10 +72,15 @@ To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.team
 
 ![mTLS session duration](/cloudflare-one/static/documentation/identity/devices/mutual-tls-session-duration.png)
 
+{{<Aside type="warning">}}
+
+Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the WARP client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/cloudflare-one/policies/filtering/http-policies/configuration-guidelines/#enabling-mTLS-authentication) for the domain.
+{{</Aside>}}
+
 ## Test using cURL
 
 Test for the site using mTLS by attempting to curl the site without a client certificate.
-This curl command example is for the site `example.com` that has a [Zero Trust policy](/cloudflare-one/policies/zero-trust/) set for `https://auth.example.com`:
+This curl command example is for the site `example.com` that has an [Access policy](/cloudflare-one/policies/access/) set for `https://auth.example.com`:
 
 ```curl
 curl -sv https://auth.example.com
@@ -173,7 +178,7 @@ Use the instructions under Installation to install the toolkit, and ensure that 
 
 ## Generating a client certificate
 
-Returning to the terminal, generate a client certificate that will authenticate against the Root CA uploaded. This example creates a new directory to keep client certificates separate from the Root CA working location for ease of management.
+Returning to the terminal, generate a client certificate that will authenticate against the Root CA uploaded.
 
 1.  Create a file named `client-csr.json` and add the following JSON blob:
 
@@ -200,7 +205,7 @@ Returning to the terminal, generate a client certificate that will authenticate 
 2.  Now, use the following command to generate a client certificate with the Cloudflare PKI toolkit:
 
     ```sh
-    $ cfssl gencert -ca=../mtls-test/ca.pem -ca-key=../mtls-test/ca-key.pem  -config=../mtls-test/ca-config.json -profile=client client-csr.json | cfssljson -bare client
+    $ cfssl gencert -ca=ca.pem -ca-key=ca-key.pem  -config=ca-config.json -profile=client client-csr.json | cfssljson -bare client
     ```
 
 3.  You can now test the client certificate with the following `cURL` command.
@@ -211,9 +216,9 @@ Returning to the terminal, generate a client certificate that will authenticate 
 
 ### Testing in the browser
 
-The instructions here cover usage with a computer running MacOS.
+The instructions here cover usage with a computer running macOS.
 
-1.  In the same working directory, run the following command to add the client certificate into the MacOS Keychain.
+1.  In the same working directory, run the following command to add the client certificate into the macOS Keychain.
 
     {{<Aside type="warning" header="Important">}}
 The command adds the client certificate to the trusted store on your device. **Only** proceed if you are comfortable doing so and intend to keep these testing certificates safeguarded.

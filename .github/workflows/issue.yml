@@ -1,0 +1,15 @@
+name: Issue Opened
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  compile:
+    name: Assignee
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/assign-issue
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

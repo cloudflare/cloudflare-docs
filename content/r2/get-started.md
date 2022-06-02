@@ -6,17 +6,23 @@ meta:
   title: Get started guide
 ---
 
-# R2 (beta) get started guide
+# R2 get started guide
 
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
-{{<Aside type="note" header="Beta registration">}}
-
-As of February 2022, R2 is under development. You can [sign up to join the waitlist for access](https://www.cloudflare.com/r2-storage/).
-
-{{</Aside>}}
-
 This guide will instruct you through setting up Wrangler to deploying your first R2 bucket.
+
+## Purchase R2
+
+Before you create your first bucket, you must purchase R2 in the Cloudflare dashboard.
+
+To purchase R2:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/sign-up/r2).
+2. In **Account Home**, select **R2**.
+3. Select **Purchase R2 Plan**.
+4. Select **Proceed to Payment Details** to review your payment.
+5. Select **Return to R2** to go to the R2 dashboard.
 
 ## 1. Install Wrangler
 
@@ -25,22 +31,16 @@ To create your R2 bucket, install [Wrangler](/workers/get-started/guide/#2-insta
 To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
 ```sh
-$ npm install -g @cloudflare/wrangler
+$ npm install -g wrangler
 ```
 
 or install with yarn:
 
 ```sh
-$ yarn global add @cloudflare/wrangler
+$ yarn global add wrangler
 ```
 
-or install with cargo:
-
-```sh
-$ cargo install wrangler
-```
-
-Refer to the Wrangler [Install/Update](/workers/cli-wrangler/install-update/) page for more information.
+Refer to the Wrangler [Install/Update](/workers/wrangler/get-started/) page for more information.
 
 ## 2. Authenticate Wrangler
 
@@ -57,7 +57,7 @@ y
 💁  Opened a link in your default browser: https://dash.cloudflare.com/oauth2/...
 ```
 
-Open the browser, log into your account, and select **Allow**. This will send an OAuth Token to Wrangler so it can deploy your scripts to Cloudflare.
+Open the browser, log in to your account, and select **Allow**. This will send an OAuth Token to Wrangler so it can deploy your scripts to Cloudflare.
 
 {{<Aside type="note">}}
 
@@ -70,13 +70,13 @@ R2 requires a Wrangler version of `1.19.8` or higher. To check your Wrangler ver
 Create your bucket by running:
 
 ```sh
-wrangler r2 bucket create <YOUR_BUCKET_NAME>
+$ wrangler r2 bucket create <YOUR_BUCKET_NAME>
 ```
 
 To check that your bucket was created, run:
 
 ```sh
-wrangler r2 bucket list
+$ wrangler r2 bucket list
 ```
 
 After running the `list` command, you will see all bucket names, including the one you have just created.
@@ -93,10 +93,10 @@ A binding is defined in the `wrangler.toml` file of your Worker project's direct
 
 {{</Aside>}}
 
-Run the [`wrangler generate`](/workers/cli-wrangler/commands/#generate) command to create a Worker using a [template](/workers/get-started/quickstarts/#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project. By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate your new Worker project:
+Create a Worker using a [template](/workers/get-started/quickstarts/#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project.
 
 ```sh
-wrangler generate <YOUR_WORKER_NAME>
+$ wrangler init <YOUR_WORKER_NAME>
 ```
 
 Next, find your newly generated `wrangler.toml` file in your project's directory and update `account_id` with your Cloudflare Account ID.
@@ -106,10 +106,20 @@ Find your Account ID by logging in to the Cloudflare dashboard > **Overview** > 
 ```toml
 name = "<YOUR_WORKER_NAME>"
 type = "javascript"
-compatibility_date = "2022-02-10"
+compatibility_date = "2022-04-18"
 
 account_id = "YOUR_ACCOUNT_ID" # ← Replace with your Account ID.
 workers_dev = true
+```
+
+If you need to use an older compatibility date, you need to enable the `r2_public_beta_bindings` [compatibility flag](/workers/platform/compatibility-dates/).
+
+To do this, update your `wrangler.toml` file to include the following:
+
+```toml
+# An example date older than "2022-04-18"
+compatibility_date = "2022-02-10"
+compatibility_flags = ["r2_public_beta_bindings"]
 ```
 
 To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the `<YOUR_BUCKET_NAME>` you used to create your bucket in [step 3](#create-your-bucket):
@@ -120,7 +130,7 @@ binding = 'MY_BUCKET' # <~ valid JavaScript variable name
 bucket_name = '<YOUR_BUCKET_NAME>'
 ```
 
-Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/cli-wrangler/configuration/).
+Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/wrangler/cli-wrangler/configuration/).
 
 ## 5. Access your R2 bucket from your Worker
 
@@ -129,34 +139,32 @@ Within your Worker code, your bucket is now available under the `MY_BUCKET` vari
 An R2 bucket is able to READ, LIST, WRITE, and DELETE objects. You can see an example of all operations below using the Service Worker syntax. Add the following snippet into your project's `index.js` file:
 
 ```js
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
+export default {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+    const key = url.pathname.slice(1);
 
-async function handleRequest(request) {
-  const url = new URL(request.url);
-  const key = url.pathname.slice(1);
+    switch (request.method) {
+      case "PUT":
+        await env.MY_BUCKET.put(key, request.body);
+        return new Response(`Put ${key} successfully!`);
+      case "GET":
+        const object = await env.MY_BUCKET.get(key);
 
-  switch (request.method) {
-    case 'PUT':
-      await MY_BUCKET.put(key, request.body);
-      return new Response(`Put ${key} successfully!`);
-   case 'GET':
-     const { value } = await MY_BUCKET.get(key);
+        if (!object) {
+          return new Response("Object Not Found", { status: 404 });
+        }
 
-     if (value === null) {
-       return new Response('Object Not Found', { status: 404 });
-     }
+        return new Response(object.body);
+      case "DELETE":
+        await env.MY_BUCKET.delete(key);
+        return new Response("Deleted!", { status: 200 });
 
-     return new Response(value);
-   case 'DELETE':
-     await MY_BUCKET.delete(key);
-     return new Response('Deleted!', { status: 200 });
-
-    default:
-      return new Response('Route Not Found.', { status: 404 });
+      default:
+        return new Response("Method Not Allowed", { status: 405 });
+    }
   }
-}
+};
 ```
 
 ## 6. Bucket access and privacy
@@ -167,26 +175,27 @@ You must now define authorization logic to determine who can perform what action
 
 1. [Basic Authentication](/workers/examples/basic-auth/): Shows how to restrict access using the HTTP Basic schema.
 2. [Using Custom Headers](/workers/examples/auth-with-headers/): Allow or deny a request based on a known pre-shared key in a header.
-3. [Authorizing users with Auth0](/workers/tutorials/authorize-users-with-auth0/#overview): Integrate Auth0, an identity management platform, into a Cloudflare Workers application.
+<!-- 3. [Authorizing users with Auth0](/workers/tutorials/authorize-users-with-auth0/#overview): Integrate Auth0, an identity management platform, into a Cloudflare Workers application. -->
 
 Continuing with your newly created bucket and Worker, you will need to protect all bucket operations.
 
-For PUT and DELETE requests, you will make use of a new `AUTH_KEY_SECRET` environment variable, which you will define later as a Wrangler secret.
+For `PUT` and `DELETE` requests, you will make use of a new `AUTH_KEY_SECRET` environment variable, which you will define later as a Wrangler secret.
 
-For GET requests, you will ensure that only a specific file can be requested. All of this custom logic occurs inside of an `authorizeRequest` function, with the `hasValidHeader` function handling the custom header logic. If all validation passes, then the operation is allowed.
+For `GET` requests, you will ensure that only a specific file can be requested. All of this custom logic occurs inside of an `authorizeRequest` function, with the `hasValidHeader` function handling the custom header logic. If all validation passes, then the operation is allowed.
 
 ```js
 const ALLOW_LIST = ['cat-pic.jpg'];
+
 // Check requests for a pre-shared secret
-const hasValidHeader = request => {
-  return request.headers.get('X-Custom-Auth-Key') === AUTH_KEY_SECRET;
+const hasValidHeader = (request, env) => {
+  return request.headers.get('X-Custom-Auth-Key') === env.AUTH_KEY_SECRET;
 };
 
-function authorizeRequest(request, key) {
+function authorizeRequest(request, env, key) {
   switch (request.method) {
     case 'PUT':
     case 'DELETE':
-      return hasValidHeader(request);
+      return hasValidHeader(request, env);
     case 'GET':
       return ALLOW_LIST.includes(key);
     default:
@@ -194,26 +203,30 @@ function authorizeRequest(request, key) {
   }
 }
 
-async function handleRequest(request) {
-  const url = new URL(request.url);
-  const key = url.pathname.slice(1);
+export default {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+    const key = url.pathname.slice(1);
 
-  if (!authorizeRequest(request, key)) {
-    return new Response('Forbidden', { status: 403 });
+    if (!authorizeRequest(request, env, key)) {
+      return new Response('Forbidden', { status: 403 });
+    }
+
+    // ...
   }
-  // ...
+};
 ```
 
 For this to work, you need to create a secret via Wrangler:
 
 ```sh
-wrangler secret put AUTH_KEY_SECRET
+$ wrangler secret put AUTH_KEY_SECRET
 ```
 
 This command will prompt you to enter a secret in your terminal:
 
 ```sh
-wrangler secret put AUTH_KEY_SECRET
+$ wrangler secret put AUTH_KEY_SECRET
 Enter the secret text you'd like assigned to the variable AUTH_KEY_SECRET on the script named <YOUR_WORKER_NAME>:
 *********
 🌀  Creating the secret for script name <YOUR_WORKER_NAME>
@@ -224,10 +237,10 @@ This secret is now available as the global variable `AUTH_KEY_SECRET` in your Wo
 
 ## 7. Deploy your bucket
 
-With your Worker and bucket set up, run the `wrangler publish` [command](/workers/cli-wrangler/commands/#publish) to deploy to Cloudflare's global network:
+With your Worker and bucket set up, run the `wrangler publish` [command](/workers/wrangler/cli-wrangler/commands/#publish) to deploy to Cloudflare's global network:
 
 ```sh
-wrangler publish
+$ wrangler publish
 ```
 
 You can verify your authorization logic is working through the following commands, using your deployed Worker endpoint:
@@ -246,7 +259,7 @@ $ curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: h
 # Attempt to write an object with the correct "X-Custom-Auth-Key" header value
 # Note: Assume that "*********" is the value of your AUTH_KEY_SECRET Wrangler secret
 $ curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: *********" --data 'test'
-#=> Put cat-pic1.jpg successfully!
+#=> Put cat-pic.jpg successfully!
 
 # Attempt to read object called "foo"
 $ curl https://your-worker.dev/foo

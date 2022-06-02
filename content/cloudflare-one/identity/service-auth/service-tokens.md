@@ -6,12 +6,6 @@ weight: 4
 
 # Service tokens
 
-{{<Aside>}}
-
-This feature is only available if you're using the Zero Trust Standard plan or the Zero Trust Enterprise plan. For more information, see our [plans page](https://www.cloudflare.com/teams-pricing/).
-
-{{</Aside>}}
-
 You can provide automated systems with service tokens to authenticate against Cloudflare's Zero Trust policies. Cloudflare for teams will generate service tokens that consist of an ID and Secret. Automated systems or applications can then use these values to reach an application protected by Access.
 
 This section covers how to create, renew, and revoke a service token.
@@ -43,7 +37,7 @@ This section covers how to create, renew, and revoke a service token.
 
 1.  Click **Close**.
 
-You can now use the service token when you create [service auth policies](/cloudflare-one/policies/zero-trust/). When creating these policies, use the `Service Auth` action to ensure that the identity provider login screen is not required for end users.
+You can now use the service token when you create [Service Auth policies](/cloudflare-one/policies/access/). When creating these policies, use the `Service Auth` action to ensure that the identity provider login screen is not required for end users.
 
 ## Connect your service to Access
 
