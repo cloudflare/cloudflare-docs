@@ -11,8 +11,8 @@ With Direct Uploads, you can bring your prebuilt assets right to Pages. By using
 
 Once you have your prebuilt assets ready, there are two ways to begin uploading: 
 
-1. [Wrangler](/pages/platform/direct-upload/#wrangler-cli).
-2. [Drag and drop](/pages/platform/direct-upload/#drag-and-drop).
+* [Wrangler](/pages/platform/direct-upload/#wrangler-cli).
+* [Drag and drop](/pages/platform/direct-upload/#drag-and-drop).
 
 {{<Aside type= "note">}}
   
