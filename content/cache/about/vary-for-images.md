@@ -11,12 +11,6 @@ Cloudflare sits in between the browser and the origin. When Cloudflare receives 
 
 `Vary` for Images reduces the content-negotiation process by parsing a request’s `Accept` header, which is sent to the origin to deliver the correct content to the browser.
 
-{{<Aside type="note" header="Note">}}
-
-You should use `Vary` when the vary value is dynamic/varies across requests. If you already know which request headers will vary, meaning that you know which image variants will be requested, you should include those headers in a [Custom cache key](/cache/how-to/create-cache-keys/).
-
-{{</Aside>}}
-
 Vary for images is available for Pro, Business, and Enterprise customers.
 
 ## File extensions
