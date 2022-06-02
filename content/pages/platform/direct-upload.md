@@ -72,7 +72,7 @@ If you would like to use Wrangler to obtain a list of all unique preview URLs fo
 wrangler pages deployment list
 ```
 
-For step-by-step directions on how to use Wrangler and continuous integration tools like GitHub Actions, Circle CI and Travis CI together for continuous deployment, refer to [Use Direct Upload with continuous integration](/pages/how-to/use-direct-upload-with-continuous-integration/). 
+For step-by-step directions on how to use Wrangler and continuous integration tools like GitHub Actions, Circle CI, and Travis CI together for continuous deployment, refer to [Use Direct Upload with continuous integration](/pages/how-to/use-direct-upload-with-continuous-integration/). 
 
 ## Drag and drop
 
