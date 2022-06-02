@@ -44,6 +44,10 @@ We no longer support [RC4 cipher suites](https://blog.cloudflare.com/end-of-the-
 | AEAD-AES256-GCM-SHA384 \[^1]        | ❌      | ❌      | ❌      | ✅      |
 | AEAD-CHACHA20-POLY1305-SHA256 \[^1] | ❌      | ❌      | ❌      | ✅      |
 
+### Custom certificates
+
+{{<render file="_custom-cert-ciphers.md">}}
+
 ---
 
 ## Disable cipher suites
