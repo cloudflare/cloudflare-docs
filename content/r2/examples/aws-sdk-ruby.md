@@ -24,7 +24,6 @@ require "aws-sdk-s3"
   secret_access_key: "#{secret_access_key}",
   endpoint: "https://#{cloudflare_account_id}.r2.cloudflarestorage.com",
   region: "auto",
-  force_path_style: true,
 )
 
 # List all buckets on your account
@@ -45,14 +44,14 @@ puts @r2.list_buckets
 puts @r2.list_objects(bucket:"your-bucket", max_keys:20)
 
 #=> {
-#=>   :is_truncated => false, 
-#=>   :marker => nil, 
-#=>   :next_marker => nil, 
-#=>   :name => "your-bucket", 
-#=>   :prefix => nil, 
-#=>   :delimiter =>nil, 
-#=>   :max_keys => 20, 
-#=>   :common_prefixes => [], 
+#=>   :is_truncated => false,
+#=>   :marker => nil,
+#=>   :next_marker => nil,
+#=>   :name => "your-bucket",
+#=>   :prefix => nil,
+#=>   :delimiter =>nil,
+#=>   :max_keys => 20,
+#=>   :common_prefixes => [],
 #=>   :encoding_type => nil
 #=>   :contents => [
 #=>     …,
