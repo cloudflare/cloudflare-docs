@@ -11,9 +11,9 @@ meta:
 Create [different overrides](/rules/origin-rules/features/) by including different action parameters in the `action_parameters` field:
 
 *   Define the `host_header` parameter to override the HTTP `Host` header of incoming requests.
-*   Define the `origin` object to override the URL and/or port of incoming requests.
+*   Define the `origin` object to override the hostname and/or destination port of incoming requests.
 
-## Host header override parameters
+## Host Header Override parameters
 
 The full syntax of the `action_parameters` field for overriding the HTTP `Host` header is the following:
 
@@ -23,30 +23,30 @@ The full syntax of the `action_parameters` field for overriding the HTTP `Host` 
 }
 ```
 
-## URL and port override parameters
+## Resolve Override and Destination Port Override parameters
 
-The full syntax of the `action_parameters` field for overriding both the URL and the port of incoming requests is the following:
+The full syntax of the `action_parameters` field for overriding both the hostname and the destination port of incoming requests is the following:
 
 ```json
 "action_parameters": {
   "origin": {
-    "host": "<HOST_NAME>",
+    "host": "<HOSTNAME>",
     "port": <PORT>
   }
 }
 ```
 
-If you are only overriding the host name or the port, omit the `port` or `host` parameter, respectively.
+If you are only overriding the hostname or the port, omit the `port` or `host` parameter, respectively.
 
-## Different origin overrides in the same rule
+## Configuring several overrides in the same rule
 
-The same rule can have different types of origin overrides. For example, a single rule can perform an HTTP `Host` header override and a destination port override. The syntax of such a rule would be the following:
+The same Origin Rule can have different types of overrides. For example, a single Origin Rule can perform an HTTP `Host` header override and a destination port override. The syntax of such a rule would be the following:
 
 ```json
 "action_parameters": {
   "host_header": "<HOST_HEADER_VALUE>",
   "origin": {
-    "host": "<HOST_NAME>",
+    "host": "<HOSTNAME>",
     "port": <PORT>
   }
 }
