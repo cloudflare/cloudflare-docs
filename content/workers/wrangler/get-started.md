@@ -36,6 +36,12 @@ If you previously had Wrangler 1 installed or were working on a Wrangler 1 proje
 
 {{</Aside>}}
 
+{{<Aside type="note">}}
+
+If you do not want to install Wrangler globally, you can use the [npx](https://docs.npmjs.com/cli/v8/commands/npx) command. For example: `npx wrangler init`.
+
+{{</Aside>}}
+
 ## 2. Authenticate
 
 With installation complete, `wrangler` will need access to a Cloudflare OAuth token to manage Workers resources on your behalf.

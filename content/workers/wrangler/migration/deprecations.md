@@ -12,6 +12,8 @@ This document describes the difference between `wrangler` 1 and 2, specifically 
 
 ### New fields
 
+These are new fields that can be added to your `wrangler.toml`.
+
 - **`main`**: `string`, optional
 
   The `main` field is used to specify an entry point to the Worker. It may be in the established service worker format[`], or the newer, preferred modules format[`]. An entry point is now explicitly required, and can be configured either via the `main` field, or passed directly as a command line argument; for example, `wrangler dev index.js`. This field replaces the legacy `build.upload.main` field (which only applied to modules format Workers).
@@ -78,7 +80,7 @@ A few configuration fields are deprecated and will not work as expected anymore.
 
 - **`type`**: `rust` | `javascript` | `webpack`, deprecated
 
-  The `type` configuration was used to specify the type of Worker. It has since been made redundant and is now inferred from usage. If you were using `type = "webpack"` (and the optional `webpack_config` field), you should read the [TODO: webpack migration guide](#todo/webpack-migration.md) to modify your project and use a custom build instead.
+  The `type` configuration was used to specify the type of Worker. It has since been made redundant and is now inferred from usage. If you were using `type = "webpack"` (and the optional `webpack_config` field), you should read the [webpack migration guide](/workers/wrangler/migration/eject-webpack/) to modify your project and use a custom build instead.
 
 ## Deprecated commands
 
