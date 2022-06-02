@@ -16,7 +16,29 @@ You can apply Gateway HTTP policies at the browser level by configuring a Proxy 
 
 ## 1. Generate a proxy endpoint
 
-Proxy endpoints are generated using the Cloudflare API.
+You can generate a proxy endpoint on the Zero Trust dashboard or through the Cloudflare API.
+
+{{<Aside type ="warning">}}
+All devices you add to the proxy endpoint will be able to access your Cloudflare Tunnel applications and services. If you only want to proxy web traffic, you can build a network policy that blocks those source IPs from connecting to your internal resources.
+{{</Aside>}}
+
+### Using the Dashboard
+
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **Gateway** > **Proxy Endpoints**.
+2. Click **Create endpoint**.
+3. Give your endpoint any name.
+4. Enter the public source IP address of your device(s) in CIDR notation.  For example,
+    - **IPv4**: `90.90.241.229/32` (up to `/26`)
+    - **IPv6**: `2601:645:4500:9c0:a945:f47c:23e9:a35b/128`
+5. Click **Save endpoint** and confirm the endpoint creation.
+
+Your Cloudflare proxy server domain is of the form:
+
+```txt
+https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
+```
+
+### Using the API
 
 1. Run the following command:
 
@@ -31,10 +53,12 @@ Proxy endpoints are generated using the Cloudflare API.
     Replace `<ACCOUNT_ID>`, `<EMAIL>`, and `<API_KEY>` with your [account credentials](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
 
     Replace `<PUBLIC_IP>` with the source IP address of your device in CIDR notation. For example,
-    - **IPv4**: `90.90.241.229/32` (be sure to include the `/32`)
-    - **IPv6**: `2601:645:4500:9c0:a945:f47c:23e9:a35b/128` (be sure to include the `/128`)
+    - **IPv4**: `90.90.241.229/32` (up to `/26`)
+    - **IPv6**: `2601:645:4500:9c0:a945:f47c:23e9:a35b/128`
 
-    You should see an output similar to
+    You can specify multiple IP addresses per proxy endpoint.
+
+    After running the command, you should see an output similar to
 
     ```bash
     {
@@ -127,7 +151,7 @@ function FindProxyForURL(url,host)
 
 ## 4. Configure your browser
 
-All major browsers support PAC files. You can configure individual browsers, or you can configure system settings that apply to all browsers on the device.
+All major browsers support PAC files. You can configure individual browsers, or you can configure system settings that apply to all browsers on the device. Multiple devices can call the same PAC file as long as their source IP addresses were included in the proxy endpoint configuration.
 
 The following example demonstrates the setup procedure for Firefox.
 
