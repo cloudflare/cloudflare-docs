@@ -923,7 +923,7 @@ $ wrangler pages deployment list [OPTIONS]
 
 #### `create`
 
-Publish a directory of static assets as a Pages deployment.
+Publish a directory of static assets as a Pages project.
 
 ```sh
 $ wrangler pages deployment create [DIRECTORY] [OPTIONS]
@@ -948,7 +948,7 @@ $ wrangler pages deployment create [DIRECTORY] [OPTIONS]
 
 ### `publish`
 
-Publish a directory of static assets as a Pages deployment.
+Deploy a directory of static assets as a Pages deployment. Your site is deployed to `<PROJECT_NAME>.pages.dev`. You will specify <PROJECT_NAME> in your terminal after you run the command.
 
 ```sh
 $ wrangler pages publish [DIRECTORY] [OPTIONS]
