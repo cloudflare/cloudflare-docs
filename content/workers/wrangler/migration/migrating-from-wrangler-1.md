@@ -46,7 +46,7 @@ $ wrangler --version
 
 Now you will test that Wrangler 2 can build your Wrangler 1 project. In most cases, it will build just fine. If there are errors, the command line should instruct you with exactly what to change to get it to build.
 
-If you'd like to read more on the deprecated `wrangler.toml` fields that cause Wrangler 2 to error, check out the [deprecations](/workers/wrangler/migration/deprecations/) page.
+If you would like to read more on the deprecated `wrangler.toml` fields that cause Wrangler 2 to error, refer to [Deprecations](/workers/wrangler/migration/deprecations/).
 
 Run the `wrangler dev` command. This will show any warnings or errors that should be addressed.
 Note that in most cases, the messages will include actionable instructions on how to resolve the issue.
