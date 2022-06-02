@@ -6,7 +6,7 @@ weight: 1001
 layout: example
 ---
 
-We've provided an example Worker that exposes an R2 bucket to the Internet and demonstrates its functionality for storing and retrieving objects.
+Below is an example Worker that exposes an R2 bucket to the Internet and demonstrates its functionality for storing and retrieving objects.
 
 ```ts
 interface Env {
