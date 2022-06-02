@@ -178,7 +178,7 @@ There are 3 variations of arguments that can be used in a range:
 
   - The byte to begin returning data from, inclusive.
 
-- {{<code>}}range{{<param-type>}}number{{</param-type>}}{{</code>}}
+- {{<code>}}length{{<param-type>}}number{{</param-type>}}{{</code>}}
 
   - The number of bytes to return. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
   
