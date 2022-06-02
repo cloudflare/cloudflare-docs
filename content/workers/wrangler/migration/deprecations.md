@@ -10,6 +10,23 @@ This document describes the difference between `wrangler` 1 and 2, specifically 
 
 `wrangler` 2 introduces some new fields for configuration, while also deprecating some redundant fields.
 
+## Common deprecations
+
+Here are common fields that are no longer required.
+
+- `type` is no longer required. Wrangler will infer the correct project type automatically.
+- `zone_id` is no longer required. It can be deduced from the routes directly.
+- `build.upload.format` is no longer used. The format is now inferred automatically from the code.
+- `build.upload.main` and `build.upload.dir` are no longer required. Use the top level `main` field, which now serves as the entry-point for the Worker.
+- `site.entry-point` is no longer required. The entry point should be specified through the `main` field.
+- `webpack_config` and `webpack` properties are no longer supported. Refer to [Ejecting Webpack](/workers/wrangler/migration/eject-webpack/).
+  Here are the Wrangler 1 commands that are no longer supported:
+- `wrangler preview` - Use the `wrangler dev` command, for running your worker in your local environment.
+- `wrangler generate` - If you want to use a starter template, clone its GitHub repository and manually initialize it.
+- `wrangler route` - Routes are defined in the `wrangler.toml` configuration file.
+- `wrangler report` - If you find a bug please report it at [Wrangler issues](https://github.com/cloudflare/wrangler2/issues/new/choose).
+- `wrangler build` - If you wish to access the output from bundling your Worker use `wrangler publish --outdir=path/to/output`.
+
 ### New fields
 
 - **`main`**: `string`, optional
@@ -84,13 +101,13 @@ A few configuration fields are deprecated and will not work as expected anymore.
 
 The following commands are deprecated in Wrangler as of Wrangler 2.
 
-### `build`:
+### `build`
 
 The `wrangler build` command is no longer available for building the Worker.
 
 The equivalent functionality can be achieved by `wrangler publish --dry-run --outdir=path/to/build`.
 
-### `config`:
+### `config`
 
 The `wrangler config` command is no longer available for authenticating via an API token.
 
