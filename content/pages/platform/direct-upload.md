@@ -9,14 +9,14 @@ With Direct Uploads, you can bring your prebuilt assets right to Pages. By using
 
 ## Methods to uploading
 
-Once you have your pre-built assets ready, there are two ways to begin uploading: 
+Once you have your prebuilt assets ready, there are two ways to begin uploading: 
 
-1. Using [Wrangler CLI](/workers/wrangler/get-started/).
-2. Dragging and dropping.
+* [Wrangler](/pages/platform/direct-upload/#wrangler-cli).
+* [Drag and drop](/pages/platform/direct-upload/#drag-and-drop).
 
 {{<Aside type= "note">}}
   
-Within a project, you can switch between creating deployments with either method. However, you cannot push additional changes through your standard git integration within the same project if that repository is already using Direct Uploads.
+Within a project, you can switch between creating deployments with either method. However, you cannot push additional changes through your standard Git integration within the same project if that repository is already using Direct Uploads.
 
 {{</Aside>}}
 
@@ -30,7 +30,7 @@ Below is the supported file types for each Direct Upload options:
 
 ### Set up Wrangler
 
-To begin, [install the latest version](/workers/wrangler/get-started/) of Wrangler and [set up Wrangler](/workers/wrangler/get-started/). Note that Pages integration with Wrangler relies on Wrangler 2.
+To begin, [install and set up the latest version of Wrangler](/workers/wrangler/get-started/). Note that Pages integration with Wrangler relies on Wrangler 2.
 
 #### Deploy your project with Wrangler
 
@@ -54,7 +54,7 @@ wrangler pages publish <DIRECTORY> --branch=[BRANCH]
 
 {{<Aside type= "note">}}
 
-If you are in a git workspace, Wrangler will automatically pull the branch information for you. Otherwise, you will be prompted to choose your branch (which will then determine if the deployment is production or preview).
+If you are in a Git workspace, Wrangler will automatically pull the branch information for you. Otherwise, you will be prompted to choose your branch (which will then determine if the deployment is production or preview).
 
 {{</Aside>}}
 
@@ -66,19 +66,25 @@ If you would like to use Wrangler to obtain a list of all available projects for
 wrangler pages project list
 ```
 
-Additionally, if you would like to use Wrangler to obtain a list of all unique preview URLs for a particular project, use:
+If you would like to use Wrangler to obtain a list of all unique preview URLs for a particular project, use:
 
 ```sh
 wrangler pages deployment list
 ```
 
-For step-by-step directions on how to use Wrangler and continuous integration tools like GitHub Actions, Circle CI and Travis CI together for continuous deployment, refer to [Pages How to](/pages/how-to/)
+For step-by-step directions on how to use Wrangler and continuous integration tools like GitHub Actions, Circle CI, and Travis CI together for continuous deployment, refer to [Use Direct Upload with continuous integration](/pages/how-to/use-direct-upload-with-continuous-integration/). 
 
 ## Drag and drop
 
 #### Deploy your project with drag and drop
 
-To begin the deployment process, on the **Create a Project** page, select **Upload Assets** and enter your project name in the provided field. Your project will be served from `<PROJECT_NAME>.pages.dev`. Next drag and drop your build output directory into the uploading frame. Once your files have been successfully uploaded, select **Save and Deploy** and continue to your newly deployed project. 
+To deploy with drag and drop:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+2. In **Account Home**, select your account > **Pages**.
+3. Select **Create a project** > **Direct Upload** > enter your project name in the provided field > **Create project**. 
+
+Your project will be served from `<PROJECT_NAME>.pages.dev`. Next drag and drop your build output directory into the uploading frame. Once your files have been successfully uploaded, select **Save and Deploy** and continue to your newly deployed project. 
 
 #### Create a new deployment
 
