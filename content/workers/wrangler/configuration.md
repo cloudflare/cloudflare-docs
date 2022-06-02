@@ -216,7 +216,7 @@ compatibility_flags = [
 ]
 
 # A list of other Cloudflare services bound to this service.
-services: [{
+services = [{
   /** The binding name used to refer to the bound service. */
   binding: string;
   /** The name of the service. */
