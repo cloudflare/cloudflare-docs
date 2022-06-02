@@ -12,13 +12,15 @@ This document describes the difference between `wrangler` 1 and 2, specifically 
 
 ### New fields
 
+These are new fields that can be added to your `wrangler.toml`.
+
 - **`main`**: `string`, optional
 
-  The `main` field is used to specify an entry point to the Worker. It may be in the established service worker format[`], or the newer, preferred modules format[`]. An entry point is now explicitly required, and can be configured either via the `main` field, or passed directly as a command line argument; for example, `wrangler dev index.js`. This field replaces the legacy `build.upload.main` field (which only applied to modules format Workers).
+  The `main` field is used to specify an entry point to the Worker. It may be in the established service worker format, or the newer, preferred modules format. An entry point is now explicitly required, and can be configured either via the `main` field, or passed directly as a command line, for example, `wrangler dev index.js`. This field replaces the legacy `build.upload.main` field (which only applied to modules format Workers).
 
 - **`rules`**: `array`, optional
 
-  The `rules` field is an array of mappings between module types and file patterns. It instructs `wrangler` to interpret specific files differently than JavaScript. For example, this is useful for reading text-like content as text files, or compiled WASM as ready to instantiate and execute. These rules can apply to Workers of both the established service worker format, and the newer modules format. This field replaces the legacy `build.upload.rules` field (which only applied to modules format Workers). Read more at (ref:)[]
+  The `rules` field is an array of mappings between module types and file patterns. It instructs `wrangler` to interpret specific files differently than JavaScript. For example, this is useful for reading text-like content as text files, or compiled WASM as ready to instantiate and execute. These rules can apply to Workers of both the established service worker format, and the newer modules format. This field replaces the legacy `build.upload.rules` field (which only applied to modules format Workers).
 
 <!-- - **`legacy_env`**: _boolean_, optional. default: `true`
 
@@ -36,7 +38,7 @@ This document describes the difference between `wrangler` 1 and 2, specifically 
 
 ### Non-mandatory fields
 
-A few configuration fields which were previously required, are now optional in particular situations; they can either be inferred, or added as an optimization. No fields are required anymore when starting with `wrangler` 2, and you can gradually add configuration as the need arises.
+A few configuration fields which were previously required, are now optional in particular situations. They can either be inferred, or added as an optimization. No fields are required anymore when starting with Wrangler 2, and you can gradually add configuration as the need arises.
 
 - **`name`**: `string`
 
@@ -78,7 +80,7 @@ A few configuration fields are deprecated and will not work as expected anymore.
 
 - **`type`**: `rust` | `javascript` | `webpack`, deprecated
 
-  The `type` configuration was used to specify the type of Worker. It has since been made redundant and is now inferred from usage. If you were using `type = "webpack"` (and the optional `webpack_config` field), you should read the [TODO: webpack migration guide](#todo/webpack-migration.md) to modify your project and use a custom build instead.
+  The `type` configuration was used to specify the type of Worker. It has since been made redundant and is now inferred from usage. If you were using `type = "webpack"` (and the optional `webpack_config` field), you should read the [webpack migration guide](/workers/wrangler/migration/eject-webpack/) to modify your project and use a custom build instead.
 
 ## Deprecated commands
 
