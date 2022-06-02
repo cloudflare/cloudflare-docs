@@ -847,6 +847,7 @@
 /workers/writing-workers/debugging-tips/ /workers/about/tips/debugging/ 301
 /workers/writing-workers/handling-errors/ /workers/about/tips/debugging/#4-go-to-origin-on-error 301
 /workers/writing-workers/resource-limits/ /workers/about/limits/ 301
+/workers/runtime-apis/r2/ /r2/runtime-apis/ 301
 
 # zaraz
 
