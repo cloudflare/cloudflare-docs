@@ -100,19 +100,19 @@ async function handleRequest(request) {
 
   - Whether the object's value has been consumed or not.
 
-- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}>{{</type>}}{{</code>}}
 
   - Returns a Promise that resolves to an `ArrayBuffer` containing the object's value.
 
-- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}>{{</code>}}
 
   - Returns a Promise that resolves to an string containing the object's value.
 
-- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}>{{</code>}}
 
   - Returns a Promise that resolves to the given object containing the object's value.
 
-- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}>{{</code>}}
 
   - Returns a Promise that resolves to a binary Blob containing the object's value.
 
@@ -190,7 +190,7 @@ async function handleRequest(request) {
 
   - A map of custom, user-defined metadata that will be stored with the object.
 
-- {{<code>}}md5{{<param-type>}}ArrayBuffer{{</param-type>}}{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}md5{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
 
   - A md5 hash to use to check the recieved object's integrity.
 
