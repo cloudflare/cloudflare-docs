@@ -65,15 +65,15 @@ A complete `full` type request will look like the following:
     -H 'Content-Type: application/json' \
     -H "X-Auth-Email: ${email}" \
     -H "X-Auth-Key: ${auth_key}" \
-    -d '{
+    --data '{
             "filter_v1": {},
             "time_limit": 300,
             "packet_limit": 10000,
-            "Byte_limit": 100000000,
+            "byte_limit": 100000000,
             "type": "full",
             "colo": "sfo06",
             "system": "magic-transit",
-            "destination_conf": "'${bucket}'"
+            "destination_conf": "${bucket}"
     }'
 
 #### Simple PCAP
