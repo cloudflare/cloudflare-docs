@@ -222,7 +222,7 @@ services = [{
   /** The name of the service. */
   service: string;
   /** The environment of the service (For example, production, staging, etc). */
-  environment?: string;
+  environment: string; // optional
 }]
 
 ```
