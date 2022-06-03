@@ -217,12 +217,12 @@ compatibility_flags = [
 
 # A list of other Cloudflare services bound to this service.
 services = [{
-  /** The binding name used to refer to the bound service. */
+  # The binding name used to refer to the bound service.
   binding: string;
-  /** The name of the service. */
+  # The name of the service.
   service: string;
-  /** The environment of the service (For example, production, staging, etc). */
-  environment: string; // optional
+  # The environment of the service (For example, production, staging, etc) (optional).
+  environment: string;
 }]
 
 ```
