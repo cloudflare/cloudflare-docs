@@ -27,7 +27,7 @@ meta:
       <td>Cloudflare Specials</td>
       <td> ...408cff2b</td>
       <td>100531</td>
-      <td>Atlassian Confluence - Code Injection - CVE:CVE-2022-26134</td>
+      <td>Atlassian Confluence - Code Injection - CVE:CVE-2022-26134 (rule improvements)</td>
       <td>N/A</td>
       <td>Block</td>
     </tr>
