@@ -8,7 +8,7 @@ meta:
   title: 2022-06-03 – Emergency Release
 ---
 
-# 2022-06-03 – Emergency Release
+#  2022-06-03 – Emergency Release
 
 {{<table-wrap>}}
 <table style="width: 100%">
