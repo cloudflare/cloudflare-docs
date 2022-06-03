@@ -42,8 +42,8 @@ If a full `type` is specified the following additional fields are required:
 - `colo`: This specifies the `colo` name we want to capture packets from. For example, `ord02`.
 
 Two optional fields are available to limit the amount of packets captured:
-- `packet_limit`: The number of packets to limit the PCAP. This number should be less than `10000` and cannot be set to zero.
-- `byte_limit`: The number of bytes to limit the PCAP. This number should be less than `1000000000` bytes.
+- `packet_limit`: The number of packets to limit the PCAP. This number should be less than `10000` and cannot be set to zero. This field can be used with both `full` and `simple` PCAP types.
+- `byte_limit`: The number of bytes to limit the PCAP. This number should be less than `1000000000` bytes. This field can only be used with a `full` PCAP type.
 
 In addition to the above fields, the JSON body can optionally filter packets by specifying any of
 
