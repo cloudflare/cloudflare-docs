@@ -16,7 +16,7 @@ Once you [set up retraction](#setup-guides), you can retract messages manually o
 
 ### Manual retraction
 
-To retract individual messages, locate the message in [Mail trace](#link-needed) and retract the message.
+To retract individual messages, locate the message in [Mail trace](/email-security/reporting/mailtrace/) and retract the message.
 
 ### Automatic retraction
 

@@ -6,7 +6,7 @@ weight: 2
 
 # Manage parent permissions
 
-When you set up Area 1 through a partner, that partner's account is the **parent** account to your **child** account.
+When you set up Area 1 through a [partner](/email-security/partners/), that partner's account is the **parent** account to your **child** account.
 
 Each child account can set the level of access allowed to their account from the parent. You may want to update this setting if you are receiving troubleshooting support from your parent account.
 

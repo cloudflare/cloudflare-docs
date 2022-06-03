@@ -28,4 +28,4 @@ To access **Added Detections** and potentially adjust your settings:
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Enhanced Detections** > **Added Detections**.
 
-From this view, you can adjust [varous configurations](#available-configurations).
+From this view, you can adjust [various configurations](#available-configurations).

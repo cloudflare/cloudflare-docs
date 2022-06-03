@@ -8,6 +8,8 @@ meta:
 
 # Inline deployment setup
 
+For help getting started with an [inline setup](/email-security/deployment/inline/), refer to the following guides:
+
 - **Microsoft**
    - [Office 365 - Area 1 as MX record](#link-needed)
    - [Office 365 - O365 as MX record](#link-needed)

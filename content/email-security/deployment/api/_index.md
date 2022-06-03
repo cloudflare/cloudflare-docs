@@ -12,7 +12,7 @@ meta:
 
 When you choose an **API deployment** for your [Area 1 setup](/email-security/deployment/), email messages only reach Area 1 after they have already reached a user's inbox.
 
-Then, through on integrations with your email provider, Area 1 will retract messages based on your organization's policies.
+Then, through on integrations with your email provider, Area 1 can [retract messages](/email-security/email-configuration/retract-settings/) based on your organization's policies.
 
 ![With API deployment, messages travel through Area 1's email filter after reaching your users.](/email-security/static/api-deployment-diagram.png)
 

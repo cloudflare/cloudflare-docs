@@ -9,7 +9,7 @@ layout: single
 
 Attackers often try to impersonate executives within an organization when sending malicious emails (banking information, trade secrets, and more).
 
-The **Business email compromise (BEC)** feature protects against these type of attacks by adding [an attribute](/email-security/reference/dispositions-and-attributes/#attributes) to any spoofed email messages matching these sensitive email addresses.
+The **Business email compromise (BEC)** feature protects against these attacks by adding [an attribute](/email-security/reference/dispositions-and-attributes/#attributes) to any spoofed email messages matching these sensitive email addresses.
 
 ## Setup
 
@@ -33,7 +33,7 @@ The CSV file should be smaller than 150 KB, start with a header row of **Display
 
 ### Integrating a directory
 
-Area 1 also supports directory integration for Microsoft and Gmail:
+If you want your BEC contacts automatically synced, Area 1 also supports directory integration for Microsoft and Gmail:
 
 - [Microsoft Directory Guide](/email-security/static/O365-Directory-Integration-Guide.pdf)
 - [Gmail Directory Guide](#link-needed)

@@ -27,6 +27,6 @@ To create an alert webhook in Area 1:
 
 {{<Aside type="note">}}
 
-For more details specifically on SIEM webhooks, refer to [SIEM integrations]](/email-security/reporting/siem-integration/).
+For more details specifically on SIEM webhooks, refer to [SIEM integrations](/email-security/reporting/siem-integration/).
 
 {{</Aside>}}

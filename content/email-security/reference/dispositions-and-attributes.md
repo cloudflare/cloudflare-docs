@@ -14,7 +14,7 @@ Based on these patterns, Area 1 may add X-Headers to each email message that pas
 
 Any traffic that flows through Area 1 is given a final **Disposition**, which represents our evaluation of that specific message. Each message will only receive one disposition header so your organization can take clear and specific actions on different message types.
 
-You can use disposition values when [creating your quarantine policy](#link-needed) or [setting up auto-retract](#link-needed).
+You can use disposition values when [creating your quarantine policy](/email-security/email-configuration/domains-and-routing/domains/) or [setting up auto-retract](/email-security/email-configuration/retract-settings/).
 
 ### Available values
 
@@ -47,7 +47,7 @@ Traffic that flows through Area 1 can also receive one or more **Attributes**, w
 | `NEW_DOMAIN_LINK=<REGISTRATION_DATE>` | Alerts to mail with links pointing out to a newly registered domain. Formatted as yyyy-MM-dd HH:mm:ss ZZZ. |
 | `ENCRYPTED` | Email message is encrypted. |
 | `EXECUTABLE` | Email message contains an executable file. |
-| `BEC` | Indicates that email address was contained in your business email compromise (BEC) list. Associated with `MALICIOUS` or `SPOOF` dispositions. |
+| `BEC` | Indicates that email address was contained in your [business email compromise (BEC)](/email-security/email-configuration/enhanced-detections/business-email-compromise/) list. Associated with `MALICIOUS` or `SPOOF` dispositions. |
 
 ### Header structure
 

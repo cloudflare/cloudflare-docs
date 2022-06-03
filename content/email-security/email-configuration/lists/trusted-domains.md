@@ -6,10 +6,16 @@ weight: 2
 
 # Trusted domains
 
+**Trusted domains** allows you to identify domains that should be exempted from Area 1 detections.
+
+## Default behavior
+
 When messages come to your recipients from certain domains, Area 1 triggers certain [detections](/email-security/reference/dispositions-and-attributes/) by default:
 
-- **Proximity Domains**: Domains with similar spelling to your existing domain, but are verified to be safe. For example, your company may have registered several lookalike domains to combat domain squatters. Will otherwise trigger a `Spoof` detection.
-- **Recent Domains**: Domains created recently (exact definition set in [Added Detections](/email-security/email-configuration/enhanced-detections/added-detections/)). Will otherwise trigger a `Malicious` or `Suspicious` detection.
+- **Proximity Domains**: Domains with similar spelling to your existing domain. Will trigger a `Spoof` detection.
+- **Recent Domains**: Domains created recently (exact definition set in [Added Detections](/email-security/email-configuration/enhanced-detections/added-detections/)). Will trigger a `Malicious` or `Suspicious` detection.
+
+However, sometimes those domains are legitimate. For example, your company may have registered several lookalike domains to combat domain squatters.
 
 To exempt specific domains from these detections, you can add trusted domains.
 
