@@ -47,7 +47,7 @@ curl -X PUT \
 
 ### Example B
 
-This example request replaces all rules in the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`, defining a single  custom rule with a custom response for blocked requests:
+This example request replaces all rules in the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`, defining a single custom rule with a custom response for blocked requests:
 
 ```json
 ---
