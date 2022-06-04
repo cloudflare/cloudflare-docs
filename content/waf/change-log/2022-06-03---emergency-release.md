@@ -47,6 +47,14 @@ meta:
       <td>N/A</td>
       <td>Block</td>
     </tr>
+    <tr>
+      <td>Cloudflare Specials</td>
+      <td> ...N/A</td>
+      <td>100531B</td>
+      <td>Atlassian Confluence - Code Injection - CVE:CVE-2022-26134</td>
+      <td>N/A</td>
+      <td>Disabled</td>
+    </tr>
   </tbody>
 </table>
 {{</table-wrap>}}
