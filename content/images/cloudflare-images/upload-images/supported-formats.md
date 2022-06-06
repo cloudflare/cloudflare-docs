@@ -19,5 +19,5 @@ Refer to the following list to learn about the maximum allowed sizes and dimensi
 
 - Images' height and width are limited to 10,000 pixels.
 - Image metadata is limited to 1024 bytes.
-- Images have a 10 MB size limit.
-- Animated GIFs, including all frames, are limited to 100 MP.
+- Images have a 10 megabyte (MB) size limit.
+- Animated GIFs, including all frames, are limited to 100 megapixels (MP).
