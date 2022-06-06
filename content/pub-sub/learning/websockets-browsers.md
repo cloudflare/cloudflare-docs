@@ -24,7 +24,7 @@ WebSocket support in Pub/Sub works by encapsulating MQTT packets (Pub/Sub’s un
 - In many MQTT libraries, you can replace the `mqtts://` scheme with `wss://` your code will use a WebSocket transport instead of the native “raw” TCP transport.
 - The WebSocket listener is available on TCP port `8884` (vs. 8883 for native MQTT)
 - WebSocket clients need to speak MQTT over WebSockets. Pub/Sub does not support other message serialization methods over WebSockets at present.
-- Authentication is performed within the WebSocket connection itself: an MQTT `CONNECT` packet inside the WebSocket tunnel includes the required username & password. The WebSocket connection itself does not need to be authenticated at the HTTP level.
+- Authentication is performed within the WebSocket connection itself. An MQTT `CONNECT` packet inside the WebSocket tunnel includes the required username and password. The WebSocket connection itself does not need to be authenticated at the HTTP level.
 
 We recommend using [MQTT.js](https://github.com/mqttjs/MQTT.js), one of the most popular JavaScript libraries, for client-side JavaScript support. It can be used in both the browser (via Webpack or Browserify) and in a Node.js environment.
 
