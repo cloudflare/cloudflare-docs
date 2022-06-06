@@ -6,9 +6,9 @@ weight: 8
 
 # Dimensions
 
-Dimensions are the labels used to describe different types of metrics or data. For example, `referers` is the data collected of external links referring visits to a page, while `browsers` shows which browsers accessed your website.
+Dimensions are the labels used to describe different types of metrics or data. For example, `referers` is the data collected from external links referring visits to a page, while `browsers` shows which browsers accessed your website.
 
-Below you will find a list of the different dimensions you can use to filter Web Analytics.
+Below you will find a list of the different dimensions you can use to filter Web Analytics:
 
 - **Referers**: The external links referring visits to a page.
 - **Paths**: The links within your site referring visits to a page.
