@@ -34,111 +34,151 @@ You must validate the signature of every incoming message to ensure it comes fro
 
 {{</Aside>}}
 
-```js
+```typescript
 // An example that shows how to consume and transform Pub/Sub messages from a Cloudflare Worker.
 
 /// <reference types="@cloudflare/workers-types" />
-
 // Retrieve this from your Broker's "publicKey" field.
 // Each Broker has a unique key to distinguish between your Broker vs. others.
-const BROKER_PUBLIC_KEY = "BROKER_SPECIFIC_PUBLIC_KEY";
+// Test key via https://mkjwk.org/
+// Key is a base64 URL-encoded JWK public key, retrieved from the Pub/Sub API via: GET .../brokers/YOUR_BROKER
+const BROKER_PUBLIC_KEY =
+    "W3sKICAieCI6ICJjdGZ4YVVMemtGSDRLZjZrYlBDVlFyRXBraXFkTTdZUi1yNGVCUktEamVRIiwK" +
+    "ICAiYWxnIjogIkVkRFNBIiwKICAiY3J2IjogIkVkMjU1MTkiLAogICJraWQiOiAiT0RPeGlYY3Ja" +
+    "dXE1VEozYzdiRkVQdkc3bmI0bC1Ga2p4a3NsWHJUZ0V4VSIsCiAgImt0eSI6ICJPS1AiLAogICJ1" +
+    "c2UiOiAic2lnIgp9LCB7CiAgIngiOiAidW51c2VkIiwKICAiYWxnIjogIkVkRFNBIiwKICAiY3J2" +
+    "IjogIkVkMjU1MTkiLAogICJraWQiOiAidW51c2VkIiwKICAia3R5IjogIk9LUCIsCiAgInVzZSI6" +
+    "ICJzaWciCn1d";
 const SIGNATURE_FORMAT = "NODE-ED25519";
 
+// PubSubMessage represents an incoming PubSub message.
+// The message includes metadata about the broker, the client, and the payload
+// itself.
 interface PubSubMessage {
-  readonly broker: string;
-  readonly namespace: string;
-  readonly topic: string;
-  readonly clientId: string;
-  readonly receivedAt: number;
-  readonly contentType: string;
-  readonly payloadFormatIndicator: number;
-  payload: string;
+    // Message ID
+    readonly mid: number;
+    // MQTT broker FQDN
+    readonly broker: string;
+    // The MQTT topic the message was sent on.
+    readonly topic: string;
+    // The client ID of the client that published this message.
+    readonly clientId: string;
+    // The unique identifier (JWT ID) used by the client to authenticate, if token
+    // auth was used.
+    readonly jti?: string;
+    // A Unix timestamp (seconds from Jan 1, 1970), set when the Pub/Sub Broker
+    // received the message from the client.
+    readonly receivedAt: number;
+    // An (optional) string with the MIME type of the payload, if set by the
+    // client.
+    readonly contentType: string;
+    // Set to 1 when the payload is a UTF-8 string
+    // https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html#_Toc3901063
+    readonly payloadFormatIndicator: number;
+    // Pub/Sub (MQTT) payloads can be UTF-8 strings, or byte arrays.
+    // You can use payloadFormatIndicator to inspect this before decoding.
+    payload: string | Uint8Array;
 }
 
+// JsonWebKey extended by kid parameter
+interface JsonWebKeyWithKid extends JsonWebKey {
+    // Key Identifier of the JWK
+    readonly kid: string;
+}
+
+// Note: In the future, this will be be built into the Workers runtime for
+// Workers in the same account as the Pub/Sub Broker
 async function isValidBrokerRequest(req: Request): Promise<boolean> {
-  if (req.method !== "POST") {
+    if (req.method !== "POST") {
+        return false;
+    }
+
+    let signature = req.headers.get("X-Signature-Ed25519");
+    let timestamp = req.headers.get("X-Signature-Timestamp");
+    let keyId = req.headers.get("X-Signature-Key-Id");
+
+    if (signature === null || timestamp === null || keyId === null) {
+        return false;
+    }
+
+    let body = await req.clone().text();
+    let alg = { name: SIGNATURE_FORMAT, namedCurve: SIGNATURE_FORMAT };
+
+    // Convert base64 encoded
+    let signatureBuffer = Uint8Array.from(atob(signature), c => c.charCodeAt(0))
+
+    // Deserialize the encoded list of JWKs
+    let publicJWKList : Array<JsonWebKeyWithKid> = JSON.parse(atob(BROKER_PUBLIC_KEY));
+
+    // Lookup JWK by Key Identifier
+    let publicJWK = publicJWKList.find(jwk => jwk.kid === keyId);
+
+    // No JWK in the Set, request can not be verified
+    if (!publicJWK) {
+        return false;
+    }
+
+    // Import the public key from our Broker (in JWK format) so we can verify the
+    // request is from _our_ Broker, and not an untrusted third-party
+    let publicKey = await crypto.subtle.importKey("jwk", publicJWK, alg, false, [
+        "verify",
+    ]);
+
+    if (
+        await crypto.subtle.verify(
+            SIGNATURE_FORMAT,
+            publicKey,
+            signatureBuffer,
+            new TextEncoder().encode(timestamp + body)
+        )
+    ) {
+        return true;
+    }
+
     return false;
-  }
-
-  let signature = req.headers.get("X-Signature-Ed25519");
-  let timestamp = req.headers.get("X-Signature-Timestamp");
-
-  if (signature === null || timestamp === null) {
-    return false;
-  }
-
-  let body = await req.clone().text();
-
-  let alg = { name: SIGNATURE_FORMAT, namedCurve: SIGNATURE_FORMAT };
-
-  // Decode our hex-encoded public key, and the hex encoded signature, into raw
-  // bytes before we can use them to verify the signature.
-  let keyBuffer = new Uint8Array(
-    BROKER_PUBLIC_KEY.match(/[0-9a-f]{2}/gi).map((s) => parseInt(s, 16))
-  ).buffer;
-  let signatureBuffer = new Uint8Array(
-    signature.match(/[0-9a-f]{2}/gi).map((s) => parseInt(s, 16))
-  ).buffer;
-
-  let publicKey = await crypto.subtle.importKey("raw", keyBuffer, alg, false, [
-    "verify",
-  ]);
-
-  if (
-    await crypto.subtle.verify(
-      SIGNATURE_FORMAT,
-      publicKey,
-      signatureBuffer,
-      new TextEncoder().encode(timestamp + body)
-    )
-  ) {
-    return true;
-  }
-
-  return false;
 }
 
 async function pubsub(
-  messages: Array<PubSubMessage>,
-  env: any,
-  ctx: ExecutionContext
-): Promise<Array<PubSubMessage>> {    
+    messages: Array<PubSubMessage>,
+    env: any,
+    ctx: ExecutionContext
+): Promise<Array<PubSubMessage>> {
 
-  // Messages may be batched at higher throughputs, so we should loop over
-  // the incoming messages and process them as needed.
-  for (let msg of messages) {  
-    // MQTT message payloads don't have to be strings, and can be streams of bytes.
-    // In this simple example, we only mutate UTF-8 (string) message payloads.
-    if (msg.payloadFormatIndicator === 1) {
-      msg.payload = `replaced text payload at ${Date.now()}`;
+    // Messages may be batched at higher throughputs, so we should loop over
+    // the incoming messages and process them as needed.
+    for (let msg of messages) {
+        console.log(msg);
+        // MQTT message payloads don't have to be strings, and can be streams of bytes.
+        // In this simple example, we only mutate UTF-8 (string) message payloads.
+        if (msg.payloadFormatIndicator === 1) {
+            msg.payload = `replaced text payload at ${Date.now()}`;
+        }
     }
-  }
 
-  return messages;
+    return messages;
 }
 
 const worker = {
-  async fetch(req: Request, env: any, ctx: ExecutionContext) {
-    // Critical: you must validate the incoming request is from your Broker
-    // In the future, Workers will be able to do this on your behalf for Workers
-    // in the same account as your Pub/Sub Broker.
-    if (await isValidBrokerRequest(req)) {
+    async fetch(req: Request, env: any, ctx: ExecutionContext) {
+        // Critical: you must validate the incoming request is from your Broker
+        // In the future, Workers will be able to do this on your behalf for Workers
+        // in the same account as your Pub/Sub Broker.
+        if (await isValidBrokerRequest(req)) {
+            // Parse the PubSub message
+            let incomingMessages: Array<PubSubMessage> = await req.json();
 
-      // Parse the PubSub messages (one or more)
-      let incomingMessages: Array<PubSubMessage> = await req.json();
-      
-      // Pass the message(s) to our pubsub handler, and capture the returned
-      // message.
-      let outgoingMessages = await pubsub(incomingMessages, env, ctx);
+            // Pass the messages to our pubsub handler, and capture the returned
+            // message.
+            let outgoingMessages = await pubsub(incomingMessages, env, ctx);
 
-      // Re-serialize the message(s) and return a HTTP 200.
-      // The Content-Type is optional, but must either by
-      // "application/octet-stream" or left empty.
-      return new Response(JSON.stringify(outgoingMessages), { status: 200 });
-    }
+            // Re-serialize the messages and return a HTTP 200.
+            // The Content-Type is optional, but must either by
+            // "application/octet-stream" or left empty.
+            return new Response(JSON.stringify(outgoingMessages), { status: 200 });
+        }
 
-    return new Response("not a valid Broker request", { status: 403 });
-  },
+        return new Response("not a valid Broker request", { status: 403 });
+    },
 };
 
 export default worker;
