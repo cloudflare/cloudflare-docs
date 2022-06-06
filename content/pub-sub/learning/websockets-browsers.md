@@ -33,7 +33,7 @@ We recommend using [MQTT.js](https://github.com/mqttjs/MQTT.js), one of the most
 In this example, we use MQTT.js’s WebSocket support to subscribe to a topic and publish messages to it.
 
 {{<Aside type="note">}}
-There is a live demo available at [demo.mqtt.dev](http://demo.mqtt.dev) that allows you to use your own Pub/Sub Broker and a valid token to subscribe to a topic and publish messages to it.
+You can view a live demo available at [demo.mqtt.dev](http://demo.mqtt.dev) that allows you to use your own Pub/Sub Broker and a valid token to subscribe to a topic and publish messages to it.
 {{</Aside>}}
 
 In a real-world deployment, our publisher could be another client, a native MQTT client, or a WebSocket client running on a remote server elsewhere. 
