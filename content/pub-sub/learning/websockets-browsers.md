@@ -30,8 +30,6 @@ We recommend using [MQTT.js](https://github.com/mqttjs/MQTT.js), one of the most
 
 ## JavaScript Web Example
 
-<show minimal browser code to pub & sub>
-
 In this simple example, we use MQTT.js’s WebSocket support to subscribe to a topic and publish messages to it.
 
 {{<Aside type="note">}}
