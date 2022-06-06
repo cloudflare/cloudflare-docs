@@ -22,11 +22,44 @@ The Worker runs as a "post-publish" hook where messages are accepted by the brok
 
 ### Connect a Worker to a Broker
 
-1. Create a Cloudflare Worker (or expand an existing Worker) to handle incoming POST requests from the broker. 
+To connect a Worker to a Pub/Sub Broker as an on-publish hook:
+
+1. Create a Cloudflare Worker (or expand an existing Worker) to handle incoming POST requests from the broker. The public URL of your Worker will be the URL you configure your Broker to send messages to.
 2. Configure the broker to send messages to the Worker.
-3. Verify the signature of the payload to confirm the request was from your PubSub Broker and not an untrusted third-party or another broker.
-4. Inspect or mutate the message (the HTTP request payload) as you see fit.
+3. **Important**: Verify the signature of the payload to confirm the request was from your PubSub Broker and not an untrusted third-party or another broker.
+4. Inspect or mutate the message (the HTTP request payload) as you see fit!
 5. Return an HTTP 200 OK with a well-formed response, which allows the broker to send the message on to any subscribers. 
+
+To configure an existing Broker to invoke a Worker, set the `on_publish.url` field of your Broker to the _publicly accessible_ URL of your Worker:
+
+```bash
+$ curl -s -X PATCH -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}?on_publish_url="https://your-worker.your-account.workers.dev"
+```
+
+You should receive a HTTP 200 response that resembles the example below, with the URL of your Worker:
+
+```json
+{
+  "result": {
+    "id": "4c63fa30ee13414ba95be5b56d896fea",
+    "name": "example-broker",
+    "authType": "TOKEN",
+    "created_on": "2022-05-11T23:19:24.356324Z",
+    "modified_on": "2022-05-11T23:19:24.356324Z",
+    "expiration": null,
+    "endpoint": "mqtts://example-broker.namespace.cloudflarepubsub.com:8883",
+    "on_publish": {
+      "url": "https://your-worker.your-account.workers.dev"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+Note that other HTTPS-enabled endpoints are valid destinations to forward messages to, but may incur latency and/or reduce message delivery success rates as messages will necessarily need to traverse the public Internet.
+
+### Example Worker
 
 {{<Aside type="note" heading="Important">}}
 
@@ -34,10 +67,17 @@ You must validate the signature of every incoming message to ensure it comes fro
 
 {{</Aside>}}
 
+The following code is an end-to-end example showing how to:
+
+* Authenticate incoming requests from Pub/Sub (and reject those not from Pub/Sub)
+* Replace the payload of a message
+* Return the message to the Broker so that it can forward it to subscribers
+
 ```typescript
 // An example that shows how to consume and transform Pub/Sub messages from a Cloudflare Worker.
 
 /// <reference types="@cloudflare/workers-types" />
+
 // Retrieve this from your Broker's "publicKey" field.
 // Each Broker has a unique key to distinguish between your Broker vs. others.
 // Test key via https://mkjwk.org/
