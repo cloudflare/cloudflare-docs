@@ -35,7 +35,7 @@ Follow this workflow to create an Origin Rule for a given zone via API:
 
 The API token used in API requests to manage Origin Rules must have at least the following permission:
 
-* Origin: Edit
+* _Origin_ > _Edit_
 
 ## Examples
 
