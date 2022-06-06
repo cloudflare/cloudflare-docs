@@ -15,7 +15,7 @@ With Pub/Sub’s WebSocket support, you can:
 - Publish telemetry directly from WebSocket clients, and then aggregate those messages in a centralized service or by using [Workers Analytics Engine]() to consume them on your behalf.
 - Publish and subscribe directly between a browser client and your MQTT-capable IoT devices in the field.
 
-When clients are connecting from a browser, you should use [`token` authentication](/pub-sub/platform/authentication-authorization/), and ensure you are issuing clients unique credentials.
+When clients are connecting from a browser, you should use [`token` authentication](/pub-sub/platform/authentication-authorization/) and ensure you are issuing clients unique credentials.
 
 ## MQTT over WebSockets
 
