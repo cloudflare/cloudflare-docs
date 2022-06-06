@@ -26,7 +26,7 @@ WebSocket support in Pub/Sub works by encapsulating MQTT packets (Pub/Sub’s un
 - WebSocket clients need to speak MQTT over WebSockets. Pub/Sub does not support other message serialization methods over WebSockets at present.
 - Authentication is performed within the WebSocket connection itself. An MQTT `CONNECT` packet inside the WebSocket tunnel includes the required username and password. The WebSocket connection itself does not need to be authenticated at the HTTP level.
 
-We recommend using [MQTT.js](https://github.com/mqttjs/MQTT.js), one of the most popular JavaScript libraries, for client-side JavaScript support. It can be used in both the browser (via Webpack or Browserify) and in a Node.js environment.
+We recommend using [MQTT.js](https://github.com/mqttjs/MQTT.js), one of the most popular JavaScript libraries, for client-side JavaScript support. It can be used in both the browser via Webpack or Browserify and in a Node.js environment.
 
 ## JavaScript Web Example
 
