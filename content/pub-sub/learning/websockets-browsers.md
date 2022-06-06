@@ -2,7 +2,7 @@
 title: WebSockets and Browser Clients
 pcx-content-type: reference
 type: concept
-summary: Connecting to Pub/Sub with WebSockets
+summary: Connect to Pub/Sub with WebSockets
 ---
 
 # WebSockets and Browser Clients
