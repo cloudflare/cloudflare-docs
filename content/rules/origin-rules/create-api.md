@@ -12,8 +12,6 @@ meta:
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create Origin Rules via API. Define the route configuration in the `action_parameters` field.
 
-Refer to [URL rewrite examples](/rules/origin-rules/examples/) for examples of rule definitions.
-
 When creating a Origin Rule via API, make sure you:
 
 * Set the rule action to `route`.
