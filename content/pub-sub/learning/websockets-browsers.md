@@ -11,7 +11,7 @@ Pub/Sub allows you to both publish and subscribe from within a web browser or ot
 
 With Pub/Sub’s WebSocket support, you can:
 
-- Subscribe to a topic in the browser and push near real-time updates (such as notifications or chat messages) to those clients from your backend services
+- Subscribe to a topic in the browser and push near real-time updates (such as notifications or chat messages) to those clients from your backend services.
 - Publish telemetry directly from WebSocket clients, and then aggregate those messages in a centralized service or by using [Workers Analytics Engine]() to consume them on your behalf.
 - Publish & subscribe directly between a browser client and your MQTT-capable IoT devices in the field.
 
