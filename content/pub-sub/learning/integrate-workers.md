@@ -8,9 +8,19 @@ weight: 2
 
 Once of the most powerful features of Pub/Sub is the ability to connect [Cloudflare Workers](/workers) — powerful serverless functions that run on the edge — and filter, aggregate and mutate every message published to that broker. Workers can also mirror those messages to other sources, including writing to [Cloudflare R2 storage](/r2/), external databases, or other cloud services beyond Cloudflare, making it easy to persist or analyze incoming message payloads and data at scale.
 
+There are three ways to integrate a Worker with Pub/Sub:
+
+1. **As an “On Publish” hook that receives all messages published to a Broker**. This allows the Worker to modify, copy to other destinations (such as [R2](/r2/) or [KV](/workers/learning/how-kv-works/)), filter and/or drop messages before they are delivered to subscribers.
+2. (Not yet available in beta) **Publishing directly to a Pub/Sub topic from a Worker.** You can publish telemetry and events to Pub/Sub topics from your Worker code.
+3. (Not yet available in beta) **Subscribing to a Pub/Sub topic (or topics) from within a Worker**. This allows the Worker to act as any other subscriber and consume messages published either from external clients (over MQTT) or from other Workers.
+
+You can use one, many or all of these integrations as needed.
+
+## On-Publish Hooks
+
 The Worker runs as a "post-publish" hook where messages are accepted by the broker, passed to the Worker, and messages are only sent to clients who subscribed to the topic after the Worker returns a valid HTTP response. If the Worker does not return a response (intentionally or not), or returns an HTTP status code other than HTTP 200, the message is dropped.
 
-## Connect a Worker to a broker
+### Connect a Worker to a Broker
 
 1. Create a Cloudflare Worker (or expand an existing Worker) to handle incoming POST requests from the broker. 
 2. Configure the broker to send messages to the Worker.
@@ -134,13 +144,14 @@ const worker = {
 export default worker;
 ```
 
+### Message Payload
+
 Below is an example of a PubSub message sent over HTTP to a Worker:
 
-```bash
+```json
 [
     {
-        "broker": "my-broker",
-        "namespace": "my-namespace",
+        "broker": "mqtts://my-broker.my-namespace.cloudflarepubsub.com",
         "topic": "us/external/metrics/abc-456-def-123/request_count",
         "clientId": "01G24VP1T3B51JJ0WJQJWCSY61",
         "jti": "01G2DA0P2M5K7EKS5ET6SW4TTF",
@@ -150,8 +161,7 @@ Below is an example of a PubSub message sent over HTTP to a Worker:
         "payload": "<payload>"
     },
     {
-        "broker": "my-broker",
-        "namespace": "my-namespace",
+        "broker": "mqtts://my-broker.my-namespace.cloudflarepubsub.com",
         "topic": "ap/external/metrics/abc-456-def-123/transactions_processed",
         "clientId": "01G24VS053KYGNBBX8RH3T7CY5",
         "jti": "01G2DA0V43B0SP6XEPHDD0DSJC",
@@ -162,6 +172,35 @@ Below is an example of a PubSub message sent over HTTP to a Worker:
     }
 ]
 ```
+
+### Per-Message Metadata and TypeScript Support
+
+Messages delivered to a Worker, or sent from a Worker, are wrapped with additional metadata about the message so that you can more easily inspect the topic, message format, and other properties that can help you to route & filter messages.
+
+This metadata includes:
+
+- the `broker` the message was associated with, so that your code can distinguish between messages from multiple Brokers
+- the `topic` the message was published to by the client. **Note that this is readonly: attempting to change the topic in the Worker is invalid and will result in that message being dropped**.
+- a `receivedTimestamp`, set when Pub/Sub first parses and deserializes the message
+- the `mid` (“message id”) of the message. This is a unique ID allowing Pub/Sub to track messages sent to your Worker, including which messages were dropped (if any). The `mid` field is immutable and returning a modified or missing `mid` will likely cause messages to be dropped.
+
+This metadata, including their JavaScript types and whether they are immutable (“`readonly`”), are expressed as the PubSubMessage interface in the [Cloudflare Workers TypeScript type definitions]([https://github.com/cloudflare/workers-types](https://github.com/cloudflare/workers-types))
+
+The `PubSubMessage` type may grow to include additional fields over time, and we recommend importing `cloudflare/workers-types` to ensure your code can benefit from any future changes.
+
+### Batching
+
+Messages sent to your on-publish Worker may be batched: each batch is an array of 1 or more `PubSubMessage`.
+
+- Batching helps to reduce the number of invocations against your Worker, and can allow you to better aggregate messages when writing them to upstream services.
+- Pub/Sub’s batching mechanism is designed to batch messages arriving simultaneously from publishers, and not wait several seconds.
+- It does **not** measurably increase the latency of message delivery.
+
+### On-Publish Best Practices
+
+- Only inspect the topics you need to to reduce the compute your Worker needs to do.
+- Use `ctx.waitUntil` if you need to write to storage or communicate with remote services and avoid increasing message delivery latency while waiting on those operations to complete.
+- Catch exceptions using [try-catch]([https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch)) - if your on-publish hook is able to “fail open”, you should use the `catch` block to return messages to the Broker in the event of an exception so that messages aren’t dropped.
 
 ## Troubleshoot Workers integrations
 
