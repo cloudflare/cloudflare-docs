@@ -15,7 +15,7 @@ To design and preview the appearance of a waiting room, select the **Customizati
 Cloudflare offers options to customize the appearance of your waiting room:
 
 - [Default waiting room](#default-waiting-room): An unbranded waiting room that displays an estimated waiting time to visitors.
-  - Select a language for your default waiting room page. You can choose from the following languages: Chinese (Simplified and Traditional), French, German, Italian, Japanese, Korean, Portuguese (Brazilian), Spanish, Dutch. Indonesian, Polish and Turkish.
+  - Select a language for your default waiting room page. You can choose from the following languages: Chinese (Simplified and Traditional), French, German, Italian, Japanese, Korean, Portuguese (Brazilian), Spanish, Arabic, Dutch, Indonesian, Polish and Turkish.
 - [Custom waiting room](#custom-waiting-room): Edit template text or create your own HTML code:
   - Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more.
   - Edit content directly in the dashboard or import relevant files.
