@@ -14,9 +14,12 @@ The following sections describe the features currently supported by Origin Rules
 
 This feature allows you to rewrite the HTTP `Host` header of incoming requests.
 
-A common use case for this functionality is when your content is hosted on an a third party server that only accepts `Host` headers with their own server names. In this situation, you must update the `Host` HTTP header in incoming requests from `Host: example.com` to `Host: thirdpartyserver.example.net`.
+A common use case for this functionality is when your content is hosted on an a third-party server that only accepts `Host` headers with their own server names. In this situation, you must update the `Host` HTTP header in incoming requests from `Host: example.com` to `Host: thirdpartyserver.example.net`.
 
-You must specify a valid hostname in a Host Header Override.
+You must specify a valid hostname in a Host Header Override that is either:
+
+* A hostname on the same Cloudflare account (possibly on a different zone).
+* A hostname for which Cloudflare is not proxying traffic (gray-clouded).
 
 {{<Aside type="note" header="Host header overrides when using load balancing">}}
 
@@ -26,13 +29,14 @@ If you have configured load balancing through Cloudflare and you wish to overrid
 
 ## Resolve Override
 
-This feature allows you to override the hostname or IP address of incoming requests.
+This feature allows you to override the resolved hostname of incoming requests.
 
-A common use case for this functionality is when you are serving an application from the URI (for example, `mydomain.com/app`). In this case, the `app` may be hosted on a different server or by a third party. Resolve Override allows you to redirect requests to this endpoint to the server for that third party application.
+A common use case for this functionality is when you are serving an application from the URI (for example, `mydomain.com/app`). In this case, the `app` may be hosted on a different server or by a third party. Resolve Override allows you to redirect requests to this endpoint to the server for that third-party application.
 
-You can specify a `CNAME` hostname, which must exist within [Cloudflare DNS](/dns/). Cloudflare recommends that you set the Resolve Override within the same zone name to make sure you have full control of these DNS records.
+You must specify a valid hostname in a Resolve Override that is either:
 
-You must specify a valid hostname in a Resolve Override.
+* A hostname on the same Cloudflare account (possibly on a different zone).
+* A hostname for which Cloudflare is not proxying traffic (gray-clouded).
 
 ## Destination Port Override
 
