@@ -47,13 +47,13 @@ When you create your `_middleware.js` file at the base of your `/functions` fold
 
 {{</Aside>}}
 
-Following the Functions naming convention, the `_middleware.js` file exports a single async `OnRequest` function that accepts a `request`, `env` and `next` as an argument. 
+Following the Functions naming convention, the `_middleware.js` file exports a single async `onRequest` function that accepts a `request`, `env` and `next` as an argument. 
 
 ```js
 ---
 filename: /functions/_middleware.js
 ---
-const abtest = async({request, next, env}) => {
+const abTest = async ({request, next, env}) => {
   /*
   Todo: 
   1. Conditional statements to check for the cookie
@@ -61,10 +61,10 @@ const abtest = async({request, next, env}) => {
   */
 }
 
-export const onRequest = [abtest]
+export const onRequest = [abTest]
 ```
 
-To identify the cookie, assign it in the browser and give it a unique name. Create a variable above your async function. Here, you can define the second route as `newHomepagePathName` and assign it to`/test`:
+To identify the cookie, assign it in the browser and give it a unique name. Create a variable above your async function. Here, you can define the second route as `newHomepagePathName` and assign it `/test`:
 
 ```js
 ---
@@ -74,7 +74,7 @@ highlight: [1,2]
 const cookieName = "ab-test-cookie"
 const newHomepagePathName = "/test"
 
-const abtest = async({request, next, env}) => {
+const abTest = async ({request, next, env}) => {
   /*
   Todo: 
   1. Conditional statements to check for the cookie
@@ -82,12 +82,12 @@ const abtest = async({request, next, env}) => {
   */
 }
 
-export const onRequest = [abtest]
+export const onRequest = [abTest]
 ```
 
 ## Set up conditional logic
 
-In your A/B testing, you want to be able to send a user to particular routes based on the presence of a cookie value. To do this, you must first intercept the URL request. 
+In your A/B testing, you want to be able to send a user to particular routes based on the presence of a cookie value. To do this, you must first intercept the request. 
 
 Based on the URL pathname, check what cookie value is present in the header. Based on the value, you will either set the base route or the `/test` route and fetch the assets for that route. 
 
@@ -99,73 +99,65 @@ highlight: [7,8,9,10,11,12,13,14,15,16,17,18,19]
 const cookieName = "ab-test-cookie"
 const newHomepagePathName = "/test"
 
-const abtest = async({request, next, env}) => {
-  const url = new URL(request.url)
+const abTest = async ({request, next, env}) => {
+  /*
+  Todo: 
+  1. Assign cookies based on randomly genrated percentage, then serve
+  */
 
+  const url = new URL(request.url)
   if (url.pathname === "/") {
-    // if cookie ab-test-hp=new
-    // if no cookie set, pass x% of traffic and set a cookie value (current|new)
-    
+    // if cookie ab-test-cookie=new then change the request to go to /test
+    // if no cookie set, pass x% of traffic and set a cookie value to "current" or "new"
+
     let cookie = request.headers.get("cookie")
     // is cookie set?
-    if (cookie && cookie.includes(`${cookieName}`)) {
-      if (cookie.includes(`${cookieName}=new`)) {
-        // pass the request to /new-homepage
-        url.pathname = newHomepagePathName
-        return env.ASSETS.fetch(url)
-      }
+    if (cookie && cookie.includes(`${cookieName}=new`)) {
+      // Change the request to go to /test (as set in the newHomepagePathName variable)
+      url.pathname = newHomepagePathName
+      return env.ASSETS.fetch(url)
+    }
   }
-    /*
-    Todo: 
-    1. Assign cookies based on randomly genrated percentage, then serve
-
-    */
 }
 
-export const onRequest = [abtest]
-
+export const onRequest = [abTest]
 ```
 
 If the cookie value is not present, you will have to assign one. You can generate numbers randomly by using the `Math.random()` method and getting whole numbers by calling a `Math.floor()` on the function.
 
 To make the number genrated into percentages, multiply `Math.random()` by `100` and call `Math.floor()` so that all the percentages can be whole numbers. Your default cookie version is given a value of `current`.
 
-If the percentage of the number generated is lower than `50`, you will assign the cookie version to `new`. Based on the percentage randomly generated, you will set the cookie and serve the assets. After the conditional block, pass the request to `next()`. This will pass the request back to the browser.
+If the percentage of the number generated is lower than `50`, you will assign the cookie version to `new`. Based on the percentage randomly generated, you will set the cookie and serve the assets. After the conditional block, pass the request to `next()`. This will pass the request back to the browser. This will result in 50% of users getting the new homepage.
 
 ```js
 ---
 filename: /functions/_middleware.js
 highlight: [20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36]
 ---
-const cookieName = "ab-test-homepage"
+const cookieName = "ab-test-cookie"
 const newHomepagePathName = "/test"
 
-const abtest = async ({ request, next, env }) => {
+const abTest = async ({ request, next, env }) => {
   const url = new URL(request.url)
-
   // if homepage
   if (url.pathname === "/") {
-    // if cookie ab-test-hp=new
-    // if no cookie set, pass xy% of traffic and set a cookie value (current|new)
-    
+    // if cookie ab-test-cookie=new then change the request to go to /test
+    // if no cookie set, pass x% of traffic and set a cookie value to "current" or "new"
+
     let cookie = request.headers.get("cookie")
     // is cookie set?
-    if (cookie && cookie.includes(`${cookieName}`)) {
-      if (cookie.includes(`${cookieName}=new`)) {
-        // pass the request to /new-homepage
-        url.pathname = newHomepagePathName
-        return env.ASSETS.fetch(url)
-      }
+    if (cookie && cookie.includes(`${cookieName}=new`)) {
+      // pass the request to /test
+      url.pathname = newHomepagePathName
+      return env.ASSETS.fetch(url)
     } else {
-      const perc = Math.floor(Math.random() * 100)
+      const percentage = Math.floor(Math.random() * 100)
       let version = "current" // default version
-
-      // change pathname and version name for traffic less than 50% 
-      if (perc < 50) {
+      // change pathname and version name for 50% of traffic 
+      if (percentage < 50) {
         url.pathname = newHomepagePathName
         version = "new"
       }
-
       // get the static file from ASSETS, and attach a cookie
       const asset = await env.ASSETS.fetch(url)
       let response = new Response(asset.body, asset)
@@ -173,11 +165,10 @@ const abtest = async ({ request, next, env }) => {
       return response
     }
   }
-
   return next()
 };
 
-export const onRequest = [abtest];
+export const onRequest = [abTest];
 ```
 
 ## Deploy to Cloudflare Pages
