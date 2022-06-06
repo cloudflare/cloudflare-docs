@@ -276,6 +276,24 @@ To validate traffic flow from the local subnet through Cloudflare’s Secure Web
 ![cURL example for validating traffic](/magic-wan/static/static-routes-west-ipsec.png)
 
 You can validate the request went through Secure Web Gateway with the presence of the `Cf-Team` response header or by looking at the logs in the dashboard under **Logs** > **Gateway** > **HTTP**.
+
+![Dashboard example for validating Secure Web Gateway](/magic-wan/static/dash-validation-ipsec.png)
+
+**Validate east-west traffic**
+
+To validate east-west traffic flow, perform a traceroute as shown in the example.
+
+![Traceroute example for IPsec validation](/magic-wan/static/traceroute-ipsec.png)
+
+The example shows a client in GCP Central (10.22.0.9), which can ping the private IP of a client in GCP West (10.77.0.10).
+
+The traceroute shows the path going from the client (10.22.0.9) <br>
+→ to the GCP Central lan0 IP on the EdgeConnect (10.22.0.2) <br>
+→ to the Cloudflare private IPSec endpoint IP (192.168.10.11) <br>
+→ to the GCP West EdgeConnect private IPSec endpoint IP (192.168.15.10) <br>
+→ to the GCP West client (10.77.0.10).
+
+This validates the east-west traffic flow through Cloudflare Magic WAN.
 </div>
 </details>
 
