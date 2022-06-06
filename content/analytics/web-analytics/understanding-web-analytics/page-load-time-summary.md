@@ -6,6 +6,13 @@ weight: 10
 
 # Page load time summary
 
+Page load time summary gives you an overview of how long your web page takes to load, broken down by area. To access Page load time:
+
+1. Go to [Web Analytics](https://dash.cloudflare.com/?to=/:account/web-analytics) from your account home page, and choose a website.
+2. Click **Page load time**.
+
+Below is a list of all the components you can inspect:
+
 - **Page load** - The total amount of time required to load the page.
 - **DNS** (`domainLookupEnd` - `domainLookupStart`) - How long a DNS query takes. This could appear as zero for reused connections or content stored in the local cache (memory or disk).
 - **TCP** (`connectEnd` - `connectStart`) - How long it takes to establish a TCP connection with the server. If using HTTPS, this process includes TLS negotiation time.
