@@ -7,7 +7,7 @@ summary: Connect to Pub/Sub with WebSockets
 
 # WebSockets and Browser Clients
 
-Pub/Sub allows you to both publish and subscribe from within a web browser or other WebSocket capable client: every Pub/Sub Broker supports MQTT over WebSockets natively, without further configuration.
+Pub/Sub allows you to both publish and subscribe from within a web browser or other WebSocket capable client. Every Pub/Sub Broker supports MQTT over WebSockets natively, without further configuration.
 
 With Pub/Sub’s WebSocket support, you can:
 
