@@ -1,18 +1,18 @@
 ---
 pcx-content-type: reference
-title: Script Monitor API
+title: Page Shield API
 weight: 4
 ---
 
-# Script Monitor API
+# Page Shield API
 
-You can change the Page Shield status and fetch information about the currently monitored scripts using the [Script Monitor API](https://api.cloudflare.com/#script-monitor-properties).
+You can change the Page Shield status and fetch information about the currently monitored scripts using the [Page Shield API](https://api.cloudflare.com/#page-shield-properties).
 
 For authentication instructions, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
 
 ## Endpoints
 
-You can obtain the complete endpoint by appending the [Script Monitor API](https://api.cloudflare.com/#script-monitor-properties) endpoints listed below to the Cloudflare API base URL.
+You can obtain the complete endpoint by appending the [Page Shield API](https://api.cloudflare.com/#page-shield-properties) endpoints listed below to the Cloudflare API base URL.
 
 The Cloudflare API base URL is:
 
@@ -22,21 +22,21 @@ https://api.cloudflare.com/client/v4
 
 The `<ZONE_ID>` argument is the zone ID (a hexadecimal string). You can find this value in the Cloudflare dashboard or using the Cloudflare API's [`/zones` endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
 
-The `<SCRIPT_ID>` argument is the script ID (a hexadecimal string). This value is included in the response of the [List Script Monitor scripts](https://api.cloudflare.com/#script-monitor-list-script-monitor-scripts) operation for every monitored script.
+The `<SCRIPT_ID>` argument is the script ID (a hexadecimal string). This value is included in the response of the [List Page Shield scripts](https://api.cloudflare.com/#page-shield-list-page-shield-scripts) operation for every monitored script.
 
 The following table summarizes the available operations:
 
 | Operation                        | Method + URL stub                                        | Notes                                                    |
 | -------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| [Get Page Shield settings][1]    | `GET zones/<ZONE_ID>/script_monitor`                     | Fetch the current Page Shield status (enabled/disabled). |
-| [Update Page Shield settings][2] | `PUT zones/<ZONE_ID>/script_monitor`                     | Updates the Page Shield status (enabled/disabled).       |
+| [Get Page Shield status][1]      | `GET zones/<ZONE_ID>/script_monitor`                     | Fetch the current Page Shield status (enabled/disabled). |
+| [Update Page Shield status][2]   | `PUT zones/<ZONE_ID>/script_monitor`                     | Updates the Page Shield status (enabled/disabled).       |
 | [List Page Shield scripts][3]    | `GET zones/<ZONE_ID>/script_monitor/scripts`             | Fetch a list of currently monitored scripts.             |
-| [Get a script][4]                | `GET zones/<ZONE_ID>/script_monitor/scripts/<SCRIPT_ID>` | Fetch the details of a currently monitored script.       |
+| [Get a Page Shield script][4]    | `GET zones/<ZONE_ID>/script_monitor/scripts/<SCRIPT_ID>` | Fetch the details of a currently monitored script.       |
 
-[1]: https://api.cloudflare.com/#script-monitor-get-script-monitor-settings
-[2]: https://api.cloudflare.com/#script-monitor-update-script-monitor-settings
-[3]: https://api.cloudflare.com/#script-monitor-list-script-monitor-scripts
-[4]: https://api.cloudflare.com/#script-monitor-get-a-script
+[1]: https://api.cloudflare.com/#page-shield-get-page-shield-status
+[2]: https://api.cloudflare.com/#page-shield-update-page-shield-status
+[3]: https://api.cloudflare.com/#page-shield-list-page-shield-scripts
+[4]: https://api.cloudflare.com/#page-shield-get-a-page-shield-script
 
 ## API notes
 
@@ -155,7 +155,7 @@ header: Response
 
 Some fields displayed in the example response may not be available, depending on your Cloudflare plan.
 
-For details on the available filtering, paging, and sorting parameters, refer to the [API reference](https://api.cloudflare.com/#script-monitor-list-script-monitor-scripts).
+For details on the available filtering, paging, and sorting parameters, refer to the [API reference](https://api.cloudflare.com/#page-shield-list-page-shield-scripts).
 
 ### Fetch list of infrequently reported scripts
 
@@ -209,7 +209,7 @@ header: Response
 
 Some fields displayed in the example response may not be available, depending on your Cloudflare plan.
 
-For details on the available filtering, paging, and sorting parameters, refer to the [API reference](https://api.cloudflare.com/#script-monitor-list-script-monitor-scripts).
+For details on the available filtering, paging, and sorting parameters, refer to the [API reference](https://api.cloudflare.com/#page-shield-list-page-shield-scripts).
 
 ### Get details of a monitored script
 
