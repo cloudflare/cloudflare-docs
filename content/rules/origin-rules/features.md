@@ -14,7 +14,7 @@ The following sections describe the features currently supported by Origin Rules
 
 This feature allows you to rewrite the HTTP `Host` header of incoming requests.
 
-A common use case for this functionality is when your content is hosted on an a third-party server that only accepts `Host` headers with their own server names. In this situation, you must update the `Host` HTTP header in incoming requests from `Host: example.com` to `Host: thirdpartyserver.example.net`.
+A common use case for this functionality is when your content is hosted on a third-party server that only accepts `Host` headers with their own server names. In this situation, you must update the `Host` HTTP header in incoming requests from `Host: example.com` to `Host: thirdpartyserver.example.net`.
 
 You must specify a valid hostname in a Host Header Override that is either:
 
@@ -44,4 +44,4 @@ This feature allows you to override the destination port of a request.
 
 When you configure Destination Port Override, you can redirect incoming requests to a different port. For example, you could override the destination port for requests received for `mydomain.com` so that they are served by the application running on port 9000 (`mydomain.com:9000`).
 
-The destination port must be between 1 and 65535.
+The destination port must be between 1 and 65,535.

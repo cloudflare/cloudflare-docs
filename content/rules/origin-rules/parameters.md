@@ -10,8 +10,8 @@ meta:
 
 Create [different overrides](/rules/origin-rules/features/) by including different action parameters in the `action_parameters` field:
 
-*   Define the `host_header` parameter to override the HTTP `Host` header of incoming requests.
-*   Define the `origin` object to override the hostname and/or destination port of incoming requests.
+* Define the `host_header` parameter to override the HTTP `Host` header of incoming requests.
+* Define the `origin` object to override the hostname and/or destination port of incoming requests.
 
 ## Host Header Override parameters
 
