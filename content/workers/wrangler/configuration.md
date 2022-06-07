@@ -87,7 +87,7 @@ kv_namespaces = [
 [durable_objects]
   bindings = [
     { name = "TEST_OBJECT", class_name = "", script_name = "" }
-]
+  ]
 
 # A list of migrations that should be uploaded with your Worker.
 # These define changes in your Durable Object declarations.
