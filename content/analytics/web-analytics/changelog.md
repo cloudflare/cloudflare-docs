@@ -1,7 +1,7 @@
 ---
 title: Changelog
 pcx-content-type: changelog
-weight: 7
+weight: 6
 meta:
   title: Changelog for beacon.mon.js
 ---
