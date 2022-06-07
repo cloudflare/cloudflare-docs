@@ -18,25 +18,47 @@ You can use one, many or all of these integrations as needed.
 
 ## On-Publish Hooks
 
-The Worker runs as a "post-publish" hook where messages are accepted by the broker, passed to the Worker, and messages are only sent to clients who subscribed to the topic after the Worker returns a valid HTTP response. If the Worker does not return a response (intentionally or not), or returns an HTTP status code other than HTTP 200, the message is dropped.
+"On-Publish" hooks are a powerful way to filter and modify messages as they are published to your Pub/Sub Broker.
+
+* The Worker runs as a "post-publish" hook where messages are accepted by the broker, passed to the Worker, and messages are only sent to clients who subscribed to the topic after the Worker returns a valid HTTP response.
+* If the Worker does not return a response (intentionally or not), or returns an HTTP status code other than HTTP 200, the message is dropped.
+* All `PUBLISH` messages (packets) published to your Broker are sent to the Worker. Other MQTT packets, such as CONNECT or AUTH packets, are automatically handled for you by Pub/Sub.
 
 ### Connect a Worker to a Broker
 
-To connect a Worker to a Pub/Sub Broker as an on-publish hook:
+{{<Aside type="note" heading="Important">}}
+
+You must validate the signature of every incoming message to ensure it comes from Cloudflare and not an untrusted third-party.
+
+{{</Aside>}}
+
+To connect a Worker to a Pub/Sub Broker as an on-publish hook, you'll need to:
 
 1. Create a Cloudflare Worker (or expand an existing Worker) to handle incoming POST requests from the broker. The public URL of your Worker will be the URL you configure your Broker to send messages to.
-2. Configure the broker to send messages to the Worker.
-3. **Important**: Verify the signature of the payload to confirm the request was from your PubSub Broker and not an untrusted third-party or another broker.
+2. Configure the broker to send messages to the Worker by setting the `on_publish.url` field on your Broker.
+3. **Important**: Verify the signature of the payload using the public keys associated with your Broker to confirm the request was from your Pub/Sub Broker, and **not** an untrusted third-party or another broker.
 4. Inspect or mutate the message (the HTTP request payload) as you see fit!
 5. Return an HTTP 200 OK with a well-formed response, which allows the broker to send the message on to any subscribers. 
 
-To configure an existing Broker to invoke a Worker, set the `on_publish.url` field of your Broker to the _publicly accessible_ URL of your Worker:
+The following is an end-to-end example showing how to:
+
+* Authenticate incoming requests from Pub/Sub (and reject those not from Pub/Sub)
+* Replace the payload of a message on a specific topic
+* Return the message to the Broker so that it can forward it to subscribers
+
+{{<Aside type="note">}}
+
+You should be familiar with setting up a [Worker](https://developers.cloudflare.com/workers/get-started/guide/) before continuing with this example.
+  
+{{</Aside>}}
+
+To ensure your Worker can validate incoming requests, you must make the public keys available to your Worker via an [environmental variable](https://developers.cloudflare.com/workers/platform/environment-variables/). To do so, we can fetch the public keys from our Broker:
 
 ```bash
-$ curl -s -X PATCH -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}?on_publish_url="https://your-worker.your-account.workers.dev"
+$ curl -s -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}/publickeys
 ```
 
-You should receive a HTTP 200 response that resembles the example below, with the URL of your Worker:
+You should receive a HTTP 200 response that resembles the example below, with the encoded public key set from your Worker:
 
 ```json
 {
@@ -48,6 +70,7 @@ You should receive a HTTP 200 response that resembles the example below, with th
     "modified_on": "2022-05-11T23:19:24.356324Z",
     "expiration": null,
     "endpoint": "mqtts://example-broker.namespace.cloudflarepubsub.com:8883",
+    "publicKeys": "W3sKICAieCI6ICJjdGZ4YVVMemtGSDRLZjZrYlBDVlFyRXBraXFkTTdZUi1yNGVCUktEamVRIiwKICAiYWxnIjogIkVkRFNBIiwKICAiY3J2IjogIkVkMjU1MTkiLAogICJraWQiOiAiT0RPeGlYY3JadXE1VEozYzdiRkVQdkc3bmI0bC1Ga2p4a3NsWHJUZ0V4VSIsCiAgImt0eSI6ICJPS1AiLAogICJ1c2UiOiAic2lnIgp9LCB7CiAgIngiOiAidW51c2VkIiwKICAiYWxnIjogIkVkRFNBIiwKICAiY3J2IjogIkVkMjU1MTkiLAogICJraWQiOiAidW51c2VkIiwKICAia3R5IjogIk9LUCIsCiAgInVzZSI6",
     "on_publish": {
       "url": "https://your-worker.your-account.workers.dev"
   },
@@ -57,38 +80,35 @@ You should receive a HTTP 200 response that resembles the example below, with th
 }
 ```
 
-Note that other HTTPS-enabled endpoints are valid destinations to forward messages to, but may incur latency and/or reduce message delivery success rates as messages will necessarily need to traverse the public Internet.
+Copy the encoded `publicKey` value into your `wrangler.toml`:
 
-### Example Worker
+```toml
+---
+filename: wrangler.toml
+---
+name = "my-pubsub-worker"
+type = "javascript"
 
-{{<Aside type="note" heading="Important">}}
+account_id = "<YOUR ACCOUNTID>"
+workers_dev = true
 
-You must validate the signature of every incoming message to ensure it comes from Cloudflare and not an untrusted third-party.
+# Define top-level environment variables
+# under the `[vars]` block using
+# the `key = "value"` format
+[vars]
+BROKER_PUBLIC_KEYS = "W3sKICAieCI6ICJjdGZ4YVVMemtGSDRLZjZrYlBDVlFyRXBraXFkTTdZUi1yNGVCUktEamVRIiwKICAiYWxnIjogIkVkRFNBIiwKICAiY3J2IjogIkVkMjU1MTkiLAogICJraWQiOiAiT0RPeGlYY3JadXE1VEozYzdiRkVQdkc3bmI0bC1Ga2p4a3NsWHJUZ0V4VSIsCiAgImt0eSI6ICJPS1AiLAogICJ1c2UiOiAic2lnIgp9LCB7CiAgIngiOiAidW51c2VkIiwKICAiYWxnIjogIkVkRFNBIiwKICAiY3J2IjogIkVkMjU1MTkiLAogICJraWQiOiAidW51c2VkIiwKICAia3R5IjogIk9LUCIsCiAgInVzZSI6" # accessible via env.BROKER_PUBLIC_KEYS in your Worker
+```
 
-{{</Aside>}}
-
-The following code is an end-to-end example showing how to:
-
-* Authenticate incoming requests from Pub/Sub (and reject those not from Pub/Sub)
-* Replace the payload of a message
-* Return the message to the Broker so that it can forward it to subscribers
+With the `BROKER_PUBLIC_KEYS` environmental variable set, we can now access these in our Worker code:
 
 ```typescript
+---
+filename: index.ts
+---
 // An example that shows how to consume and transform Pub/Sub messages from a Cloudflare Worker.
 
 /// <reference types="@cloudflare/workers-types" />
 
-// Retrieve this from your Broker's "publicKey" field.
-// Each Broker has a unique key to distinguish between your Broker vs. others.
-// Test key via https://mkjwk.org/
-// Key is a base64 URL-encoded JWK public key, retrieved from the Pub/Sub API via: GET .../brokers/YOUR_BROKER
-const BROKER_PUBLIC_KEY =
-    "W3sKICAieCI6ICJjdGZ4YVVMemtGSDRLZjZrYlBDVlFyRXBraXFkTTdZUi1yNGVCUktEamVRIiwK" +
-    "ICAiYWxnIjogIkVkRFNBIiwKICAiY3J2IjogIkVkMjU1MTkiLAogICJraWQiOiAiT0RPeGlYY3Ja" +
-    "dXE1VEozYzdiRkVQdkc3bmI0bC1Ga2p4a3NsWHJUZ0V4VSIsCiAgImt0eSI6ICJPS1AiLAogICJ1" +
-    "c2UiOiAic2lnIgp9LCB7CiAgIngiOiAidW51c2VkIiwKICAiYWxnIjogIkVkRFNBIiwKICAiY3J2" +
-    "IjogIkVkMjU1MTkiLAogICJraWQiOiAidW51c2VkIiwKICAia3R5IjogIk9LUCIsCiAgInVzZSI6" +
-    "ICJzaWciCn1d";
 const SIGNATURE_FORMAT = "NODE-ED25519";
 
 // PubSubMessage represents an incoming PubSub message.
@@ -128,7 +148,7 @@ interface JsonWebKeyWithKid extends JsonWebKey {
 
 // Note: In the future, this will be be built into the Workers runtime for
 // Workers in the same account as the Pub/Sub Broker
-async function isValidBrokerRequest(req: Request): Promise<boolean> {
+async function isValidBrokerRequest(req: Request, publicKeys: string): Promise<boolean> {
     if (req.method !== "POST") {
         return false;
     }
@@ -148,7 +168,7 @@ async function isValidBrokerRequest(req: Request): Promise<boolean> {
     let signatureBuffer = Uint8Array.from(atob(signature), c => c.charCodeAt(0))
 
     // Deserialize the encoded list of JWKs
-    let publicJWKList : Array<JsonWebKeyWithKid> = JSON.parse(atob(BROKER_PUBLIC_KEY));
+    let publicJWKList : Array<JsonWebKeyWithKid> = JSON.parse(atob(publicKeys));
 
     // Lookup JWK by Key Identifier
     let publicJWK = publicJWKList.find(jwk => jwk.kid === keyId);
@@ -188,9 +208,9 @@ async function pubsub(
     // the incoming messages and process them as needed.
     for (let msg of messages) {
         console.log(msg);
-        // MQTT message payloads don't have to be strings, and can be streams of bytes.
-        // In this simple example, we only mutate UTF-8 (string) message payloads.
-        if (msg.payloadFormatIndicator === 1) {
+        // Replace the message contents in our topic - named "test/topic"
+        // as a simple example
+        if (msg.topic.startsWith("test/topic")) {
             msg.payload = `replaced text payload at ${Date.now()}`;
         }
     }
@@ -200,10 +220,19 @@ async function pubsub(
 
 const worker = {
     async fetch(req: Request, env: any, ctx: ExecutionContext) {
-        // Critical: you must validate the incoming request is from your Broker
+    
+        // Retrieve this from your Broker's "publicKey" field.
+        //
+        // Each Broker has a unique key to distinguish between your Broker vs. others
+        // We store these keys in environmental variables (https://developers.cloudflare.com/workers/platform/environment-variables/)
+        // to avoid needing to fetch them on every request.
+        let publicKeys = env.BROKER_PUBLIC_KEYS
+    
+        // Critical: you must validate the incoming request is from your Broker.
+        //
         // In the future, Workers will be able to do this on your behalf for Workers
         // in the same account as your Pub/Sub Broker.
-        if (await isValidBrokerRequest(req)) {
+        if (await isValidBrokerRequest(req, brokerPublicKeys)) {
             // Parse the PubSub message
             let incomingMessages: Array<PubSubMessage> = await req.json();
 
@@ -223,6 +252,37 @@ const worker = {
 
 export default worker;
 ```
+
+Once you've published your Worker using `wrangler publish`, you will need to configure your Broker to invoke the Worker. This is done by setting the `on_publish.url` field of your Broker to the _publicly accessible_ URL of your Worker:
+
+```bash
+$ curl -s -X PATCH -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}?on_publish_url="https://your-worker.your-account.workers.dev"
+```
+
+You should receive a HTTP 200 response that resembles the example below, with the URL of your Worker:
+
+```json
+{
+  "result": {
+    "id": "4c63fa30ee13414ba95be5b56d896fea",
+    "name": "example-broker",
+    "authType": "TOKEN",
+    "created_on": "2022-05-11T23:19:24.356324Z",
+    "modified_on": "2022-05-11T23:19:24.356324Z",
+    "expiration": null,
+    "endpoint": "mqtts://example-broker.namespace.cloudflarepubsub.com:8883",
+    "on_publish": {
+      "url": "https://your-worker.your-account.workers.dev"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+Once you set this, _all_ MQTT `PUBLISH` messages sent to your Broker from clients will be delivered to your Worker for further processing.
+
+Note that other HTTPS-enabled endpoints are valid destinations to forward messages to, but may incur latency and/or reduce message delivery success rates as messages will necessarily need to traverse the public Internet.
 
 ### Message Payload
 
@@ -286,6 +346,7 @@ Messages sent to your on-publish Worker may be batched: each batch is an array o
 
 Some common failure modes can result in messages not being sent to subscribed clients when a Worker is processing messages, including:
 
+- Failing to correctly validate incoming requests. This can happen if you are not using the correct public keys (keys are unique to each of your Brokers), if the keys are malformed, and/or if you have not populated the keys in the Worker via environmental variables.
 - Not returning a HTTP 200 response. Any other HTTP status code is interpreted as an error and the message is dropped.
 - Not returning a valid Content-Type. The Content-Type in the HTTP response header must be `application/octet-stream`
 - Taking too long to return a response (more than 10 seconds). You can use [`ctx.waitUntil`](/workers/runtime-apis/fetch-event/#waituntil) if you need to write messages to other destinations after returning the message to the broker.
