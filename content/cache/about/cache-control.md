@@ -224,7 +224,7 @@ Certain scenarios also affect Origin Cache-Control behavior when it is enabled o
         Content may be cached
       </td>
       <td colspan="5" rowspan="1">
-        Content is cached only <code>if must-revalidate</code>, <code>public</code>, or <code>s-maxage</code> is also present
+        Content is cached only if <code>must-revalidate</code>, <code>public</code>, or <code>s-maxage</code> is also present
       </td>
     </tr>
     <tr>
