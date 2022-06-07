@@ -58,29 +58,38 @@ To ensure your Worker can validate incoming requests, you must make the public k
 $ curl -s -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}/publickeys
 ```
 
-You should receive a HTTP 200 response that resembles the example below, with the encoded public key set from your Worker:
+You should receive a HTTP 200 response that resembles the example below, with the public key set from your Worker:
 
 ```json
 {
-  "result": {
-    "id": "4c63fa30ee13414ba95be5b56d896fea",
-    "name": "example-broker",
-    "authType": "TOKEN",
-    "created_on": "2022-05-11T23:19:24.356324Z",
-    "modified_on": "2022-05-11T23:19:24.356324Z",
-    "expiration": null,
-    "endpoint": "mqtts://example-broker.namespace.cloudflarepubsub.com:8883",
-    "publicKeys": "W3sKICAieCI6ICJjdGZ4YVVMemtGSDRLZjZrYlBDVlFyRXBraXFkTTdZUi1yNGVCUktEamVRIiwKICAiYWxnIjogIkVkRFNBIiwKICAiY3J2IjogIkVkMjU1MTkiLAogICJraWQiOiAiT0RPeGlYY3JadXE1VEozYzdiRkVQdkc3bmI0bC1Ga2p4a3NsWHJUZ0V4VSIsCiAgImt0eSI6ICJPS1AiLAogICJ1c2UiOiAic2lnIgp9LCB7CiAgIngiOiAidW51c2VkIiwKICAiYWxnIjogIkVkRFNBIiwKICAiY3J2IjogIkVkMjU1MTkiLAogICJraWQiOiAidW51c2VkIiwKICAia3R5IjogIk9LUCIsCiAgInVzZSI6",
-    "on_publish": {
-      "url": "https://your-worker.your-account.workers.dev"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+  "keys": [
+    {
+      "use": "sig",
+      "kty": "OKP",
+      "kid": "JDPuYJqHOvqzlakkNFQ9kfN7WsYs5uHndp_ziRdmOCU",
+      "crv": "Ed25519",
+      "alg": "EdDSA",
+      "x": "Phf82R8tG1FdY475-AgtlaWIwH1lLFlfWu5LrsKhyjw"
+    },
+    {
+      "use": "sig",
+      "kty": "OKP",
+      "kid": "qk7Z4hbN738v-m2CKdVaKTav9pU32MAaQXB2tDaQ-_o",
+      "crv": "Ed25519",
+      "alg": "EdDSA",
+      "x": "Bt4kQWcK_XhZP1ZxEflsoYbqaBm9rEDk_jNWPdhxwTI"
+    }
+  ]
 }
 ```
 
-Copy the encoded `publicKey` value into your `wrangler.toml`:
+Copy the array of public keys into your `wrangler.toml` as an environmental variable:
+
+{{<Aside type="note">}}
+
+Your public keys will be unique to your own Pub/Sub Broker: you should ensure you're copying the keys associated with your own Broker.
+  
+{{</Aside>}}
 
 ```toml
 ---
@@ -89,14 +98,34 @@ filename: wrangler.toml
 name = "my-pubsub-worker"
 type = "javascript"
 
-account_id = "<YOUR ACCOUNTID>"
+account_id = "<YOUR ACCOUNT_ID>"
 workers_dev = true
 
 # Define top-level environment variables
 # under the `[vars]` block using
 # the `key = "value"` format
 [vars]
-BROKER_PUBLIC_KEYS = "W3sKICAieCI6ICJjdGZ4YVVMemtGSDRLZjZrYlBDVlFyRXBraXFkTTdZUi1yNGVCUktEamVRIiwKICAiYWxnIjogIkVkRFNBIiwKICAiY3J2IjogIkVkMjU1MTkiLAogICJraWQiOiAiT0RPeGlYY3JadXE1VEozYzdiRkVQdkc3bmI0bC1Ga2p4a3NsWHJUZ0V4VSIsCiAgImt0eSI6ICJPS1AiLAogICJ1c2UiOiAic2lnIgp9LCB7CiAgIngiOiAidW51c2VkIiwKICAiYWxnIjogIkVkRFNBIiwKICAiY3J2IjogIkVkMjU1MTkiLAogICJraWQiOiAidW51c2VkIiwKICAia3R5IjogIk9LUCIsCiAgInVzZSI6" # accessible via env.BROKER_PUBLIC_KEYS in your Worker
+# This will be accessible via env.BROKER_PUBLIC_KEYS in our Worker
+BROKER_PUBLIC_KEYS = '''{
+  "keys": [
+    {
+      "use": "sig",
+      "kty": "OKP",
+      "kid": "JDPuYJqHOvqzlakkNFQ9kfN7WsYs5uHndp_ziRdmOCU",
+      "crv": "Ed25519",
+      "alg": "EdDSA",
+      "x": "Phf82R8tG1FdY475-AgtlaWIwH1lLFlfWu5LrsKhyjw"
+    },
+    {
+      "use": "sig",
+      "kty": "OKP",
+      "kid": "qk7Z4hbN738v-m2CKdVaKTav9pU32MAaQXB2tDaQ-_o",
+      "crv": "Ed25519",
+      "alg": "EdDSA",
+      "x": "Bt4kQWcK_XhZP1ZxEflsoYbqaBm9rEDk_jNWPdhxwTI"
+    }
+  ]
+}'''
 ```
 
 With the `BROKER_PUBLIC_KEYS` environmental variable set, we can now access these in our Worker code:
@@ -115,139 +144,151 @@ const SIGNATURE_FORMAT = "NODE-ED25519";
 // The message includes metadata about the broker, the client, and the payload
 // itself.
 interface PubSubMessage {
-    // Message ID
-    readonly mid: number;
-    // MQTT broker FQDN
-    readonly broker: string;
-    // The MQTT topic the message was sent on.
-    readonly topic: string;
-    // The client ID of the client that published this message.
-    readonly clientId: string;
-    // The unique identifier (JWT ID) used by the client to authenticate, if token
-    // auth was used.
-    readonly jti?: string;
-    // A Unix timestamp (seconds from Jan 1, 1970), set when the Pub/Sub Broker
-    // received the message from the client.
-    readonly receivedAt: number;
-    // An (optional) string with the MIME type of the payload, if set by the
-    // client.
-    readonly contentType: string;
-    // Set to 1 when the payload is a UTF-8 string
-    // https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html#_Toc3901063
-    readonly payloadFormatIndicator: number;
-    // Pub/Sub (MQTT) payloads can be UTF-8 strings, or byte arrays.
-    // You can use payloadFormatIndicator to inspect this before decoding.
-    payload: string | Uint8Array;
+  // Message ID
+  readonly mid: number;
+  // MQTT broker FQDN
+  readonly broker: string;
+  // The MQTT topic the message was sent on.
+  readonly topic: string;
+  // The client ID of the client that published this message.
+  readonly clientId: string;
+  // The unique identifier (JWT ID) used by the client to authenticate, if token
+  // auth was used.
+  readonly jti?: string;
+  // A Unix timestamp (seconds from Jan 1, 1970), set when the Pub/Sub Broker
+  // received the message from the client.
+  readonly receivedAt: number;
+  // An (optional) string with the MIME type of the payload, if set by the
+  // client.
+  readonly contentType: string;
+  // Set to 1 when the payload is a UTF-8 string
+  // https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html#_Toc3901063
+  readonly payloadFormatIndicator: number;
+  // Pub/Sub (MQTT) payloads can be UTF-8 strings, or byte arrays.
+  // You can use payloadFormatIndicator to inspect this before decoding.
+  payload: string | Uint8Array;
 }
 
 // JsonWebKey extended by kid parameter
 interface JsonWebKeyWithKid extends JsonWebKey {
-    // Key Identifier of the JWK
-    readonly kid: string;
+  // Key Identifier of the JWK
+  readonly kid: string;
 }
 
 // Note: In the future, this will be be built into the Workers runtime for
 // Workers in the same account as the Pub/Sub Broker
-async function isValidBrokerRequest(req: Request, publicKeys: string): Promise<boolean> {
-    if (req.method !== "POST") {
-        return false;
-    }
+async function isValidBrokerRequest(
+  req: Request,
+  publicKeys: string
+): Promise<boolean> {
+  if (req.method !== "POST") {
+    return false;
+  }
 
-    let signature = req.headers.get("X-Signature-Ed25519");
-    let timestamp = req.headers.get("X-Signature-Timestamp");
-    let keyId = req.headers.get("X-Signature-Key-Id");
+  let signature = req.headers.get("X-Signature-Ed25519");
+  let timestamp = req.headers.get("X-Signature-Timestamp");
+  let keyId = req.headers.get("X-Signature-Key-Id");
 
-    if (signature === null || timestamp === null || keyId === null) {
-        return false;
-    }
+  if (signature === null || timestamp === null || keyId === null) {
+    return false;
+  }
 
-    let body = await req.clone().text();
-    let alg = { name: SIGNATURE_FORMAT, namedCurve: SIGNATURE_FORMAT };
+  let body = await req.clone().text();
+  let alg = { name: SIGNATURE_FORMAT, namedCurve: SIGNATURE_FORMAT };
 
-    // Convert base64 encoded
-    let signatureBuffer = Uint8Array.from(atob(signature), c => c.charCodeAt(0))
+  try {
+    // Convert the base64 encoded signature
+    let signatureBuffer = Uint8Array.from(atob(signature), (c) =>
+      c.charCodeAt(0)
+    );
 
-    // Deserialize the encoded list of JWKs
-    let publicJWKList : Array<JsonWebKeyWithKid> = JSON.parse(atob(publicKeys));
+    // Deserialize the encoded list of JWKs associated with our Pub/Sub Broker
+    let publicJWKList: Array<JsonWebKeyWithKid> = JSON.parse(publicKeys).keys;
 
     // Lookup JWK by Key Identifier
-    let publicJWK = publicJWKList.find(jwk => jwk.kid === keyId);
+    let publicJWK = publicJWKList.find((jwk) => jwk.kid === keyId);
 
     // No JWK in the Set, request can not be verified
     if (!publicJWK) {
-        return false;
+      return false;
     }
 
     // Import the public key from our Broker (in JWK format) so we can verify the
     // request is from _our_ Broker, and not an untrusted third-party
-    let publicKey = await crypto.subtle.importKey("jwk", publicJWK, alg, false, [
-        "verify",
-    ]);
+    let publicKey = await crypto.subtle.importKey(
+      "jwk",
+      publicJWK,
+      alg,
+      false,
+      ["verify"]
+    );
 
     if (
-        await crypto.subtle.verify(
-            SIGNATURE_FORMAT,
-            publicKey,
-            signatureBuffer,
-            new TextEncoder().encode(timestamp + body)
-        )
+      await crypto.subtle.verify(
+        SIGNATURE_FORMAT,
+        publicKey,
+        signatureBuffer,
+        new TextEncoder().encode(timestamp + body)
+      )
     ) {
-        return true;
+      return true;
     }
-
+  } catch (e) {
+    console.log(e);
     return false;
+  }
+
+  return false;
 }
 
 async function pubsub(
-    messages: Array<PubSubMessage>,
-    env: any,
-    ctx: ExecutionContext
+  messages: Array<PubSubMessage>,
+  env: any,
+  ctx: ExecutionContext
 ): Promise<Array<PubSubMessage>> {
-
-    // Messages may be batched at higher throughputs, so we should loop over
-    // the incoming messages and process them as needed.
-    for (let msg of messages) {
-        console.log(msg);
-        // Replace the message contents in our topic - named "test/topic"
-        // as a simple example
-        if (msg.topic.startsWith("test/topic")) {
-            msg.payload = `replaced text payload at ${Date.now()}`;
-        }
+  // Messages may be batched at higher throughputs, so we should loop over
+  // the incoming messages and process them as needed.
+  for (let msg of messages) {
+    console.log(msg);
+    // Replace the message contents in our topic - named "test/topic"
+    // as a simple example
+    if (msg.topic.startsWith("test/topic")) {
+      msg.payload = `replaced text payload at ${Date.now()}`;
     }
+  }
 
-    return messages;
+  return messages;
 }
 
 const worker = {
-    async fetch(req: Request, env: any, ctx: ExecutionContext) {
-    
-        // Retrieve this from your Broker's "publicKey" field.
-        //
-        // Each Broker has a unique key to distinguish between your Broker vs. others
-        // We store these keys in environmental variables (https://developers.cloudflare.com/workers/platform/environment-variables/)
-        // to avoid needing to fetch them on every request.
-        let publicKeys = env.BROKER_PUBLIC_KEYS
-    
-        // Critical: you must validate the incoming request is from your Broker.
-        //
-        // In the future, Workers will be able to do this on your behalf for Workers
-        // in the same account as your Pub/Sub Broker.
-        if (await isValidBrokerRequest(req, brokerPublicKeys)) {
-            // Parse the PubSub message
-            let incomingMessages: Array<PubSubMessage> = await req.json();
+  async fetch(req: Request, env: any, ctx: ExecutionContext) {
+    // Retrieve this from your Broker's "publicKey" field.
+    //
+    // Each Broker has a unique key to distinguish between your Broker vs. others
+    // We store these keys in environmental variables (https://developers.cloudflare.com/workers/platform/environment-variables/)
+    // to avoid needing to fetch them on every request.
+    let publicKeys = env.BROKER_PUBLIC_KEYS;
 
-            // Pass the messages to our pubsub handler, and capture the returned
-            // message.
-            let outgoingMessages = await pubsub(incomingMessages, env, ctx);
+    // Critical: you must validate the incoming request is from your Broker.
+    //
+    // In the future, Workers will be able to do this on your behalf for Workers
+    // in the same account as your Pub/Sub Broker.
+    if (await isValidBrokerRequest(req, publicKeys)) {
+      // Parse the PubSub message
+      let incomingMessages: Array<PubSubMessage> = await req.json();
 
-            // Re-serialize the messages and return a HTTP 200.
-            // The Content-Type is optional, but must either by
-            // "application/octet-stream" or left empty.
-            return new Response(JSON.stringify(outgoingMessages), { status: 200 });
-        }
+      // Pass the messages to our pubsub handler, and capture the returned
+      // message.
+      let outgoingMessages = await pubsub(incomingMessages, env, ctx);
 
-        return new Response("not a valid Broker request", { status: 403 });
-    },
+      // Re-serialize the messages and return a HTTP 200.
+      // The Content-Type is optional, but must either by
+      // "application/octet-stream" or left empty.
+      return new Response(JSON.stringify(outgoingMessages), { status: 200 });
+    }
+
+    return new Response("not a valid Broker request", { status: 403 });
+  },
 };
 
 export default worker;
@@ -280,7 +321,7 @@ You should receive a HTTP 200 response that resembles the example below, with th
 }
 ```
 
-Once you set this, _all_ MQTT `PUBLISH` messages sent to your Broker from clients will be delivered to your Worker for further processing.
+Once you set this, _all_ MQTT `PUBLISH` messages sent to your Broker from clients will be delivered to your Worker for further processing. You can use our [web-based live demo](https://demo.mqtt.dev) to test that your Worker is correctly validating requests and intercepting messages.
 
 Note that other HTTPS-enabled endpoints are valid destinations to forward messages to, but may incur latency and/or reduce message delivery success rates as messages will necessarily need to traverse the public Internet.
 
@@ -291,22 +332,22 @@ Below is an example of a PubSub message sent over HTTP to a Worker:
 ```json
 [
     {
-        "broker": "mqtts://my-broker.my-namespace.cloudflarepubsub.com",
+        "mid": 0,
+        "broker": "my-broker.my-namespace.cloudflarepubsub.com",
         "topic": "us/external/metrics/abc-456-def-123/request_count",
-        "clientId": "01G24VP1T3B51JJ0WJQJWCSY61",
-        "jti": "01G2DA0P2M5K7EKS5ET6SW4TTF",
+        "clientId": "broker01G24VP1T3B51JJ0WJQJWCSY61",
         "receivedAt": 1651578191,
-        "contentType": "application/json",
+        "contentType": null,
         "payloadFormatIndicator": 1,
         "payload": "<payload>"
     },
     {
-        "broker": "mqtts://my-broker.my-namespace.cloudflarepubsub.com",
+        "mid": 1,
+        "broker": "my-broker.my-namespace.cloudflarepubsub.com",
         "topic": "ap/external/metrics/abc-456-def-123/transactions_processed",
-        "clientId": "01G24VS053KYGNBBX8RH3T7CY5",
-        "jti": "01G2DA0V43B0SP6XEPHDD0DSJC",
+        "clientId": "broker01G24VS053KYGNBBX8RH3T7CY5",
         "receivedAt": 1651578193,
-        "contentType": "application/json",
+        "contentType": null,
         "payloadFormatIndicator": 1,
         "payload": "<payload>"
     }
