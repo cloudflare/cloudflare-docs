@@ -8,23 +8,13 @@ weight: 5
 
 Clientless Web Isolation allows users to securely navigate high risk or sensitive websites in a remote browser without having to install the Cloudflare WARP client on their device.
 
-## Enable remote browser
-
-To enable Clientless Web Isolation,
+## Set up remote browser
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **Settings** > **Browser Isolation**.
 2. Toggle on **Clientless Web Isolation**.
-3. (Optional) To configure access permissions, click **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can use the clientless remote browser.
+3. To configure permissions, click **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the clientless remote browser.
 
-### Optional configurations
-
-When users visit a website through the clientless remote browser, the traffic passes through Cloudflare Gateway. Therefore, you can apply HTTP policies even if the user's device does not have the Cloudflare certificate.
-
-- Configure [HTTP policies](/cloudflare-one/policies/filtering/http-policies/) to allow or block websites within the remote browser.
-
-- Configure [remote browser controls](/cloudflare-one/policies/browser-isolation/#settings) such as disabling copy/paste, printing, or keyboard input.
-
-## Open URL in remote browser
+## Use remote browser
 
 Clientless Web Isolation is implemented through a prefixed URL, where `<your-team-name>` is your organization's [team name](/cloudflare-one/glossary/#team-name).
 
@@ -35,6 +25,22 @@ https://<your-team-name>.cloudflareaccess.com/browser/<URL>
 For example, to isolate `www.example.com`, users would visit `https://yourcompany.cloudflareaccess.com/browser/https://www.example.com/` in their preferred browser.
 
 If `<url>` is not provided, users are presented with a Cloudflare Zero Trust landing page where they can input a target URL or search for a website.
+
+## Optional configurations
+
+### Allow or block websites
+
+When users visit a website through the [Clientless Web Isolation URL](#open-url-in-remote-browser), the traffic passes through Cloudflare Gateway. This allows you to [apply HTTP policies](/cloudflare-one/policies/filtering/http-policies/) to control what websites the remote browser can connect to, even if the user's device does not have WARP installed.
+
+For example, if you use a third-party Secure Web Gateway to block `example.com`, users can still access the page in the remote browser by visiting `https://yourcompany.cloudflareaccess.com/browser/https://www.example.com/`. To block `https://yourcompany.cloudflareaccess.com/browser/https://www.example.com/`, simply create a Cloudflare Gateway HTTP policy to block `example.com`:
+
+| Selector | Operator | Value           | Action         |
+| ---------| ---------| ----------------| -------------- |
+| Domain   | in       | `example.com`   | Block          |
+
+### Disable remote browser controls
+
+You can configure [remote browser controls](/cloudflare-one/policies/browser-isolation/#settings) such as disabling copy/paste, printing, or keyboard input. These settings display in the Gateway [HTTP policy builder](/cloudflare-one/policies/filtering/http-policies/) when you select the Isolate action.
 
 ## Address bar
 
@@ -48,7 +54,7 @@ By default the isolated domain name appears in the notch positioned at the top a
 
 ![Viewing hostname of an isolated page in the clientless remote browser](/cloudflare-one/static/documentation/policies/rbi-address-bar-notch.png)
 
-Clicking **expand** or the hostname text will expand the notch to the full address bar view. If isolated page content is obscured by the notch, expanding to the full address bar view will make the content accessible.
+Clicking **Expand** or the hostname text will expand the notch to the full address bar view. If isolated page content is obscured by the notch, expanding to the full address bar view will make the content accessible.
 
 ### Full address bar view
 
@@ -65,9 +71,9 @@ To turn on or off the address bar, users can right-click on any isolated page an
 - **Authentication events** — User login events are available in Access Audit Logs.
 - **HTTP request logs** — Traffic from the remote browser to the Internet is logged in Gateway request logs.
 
-## Integrate with a third-party Secure Web Gateway
+## Redirect traffic to remote browser
 
-Clientless Web Isolation can be integrated with a third-party Secure Web Gateway by implementing a custom block page. Below is an example block page that redirects websites to a remote browser.
+If you want to isolate a website without Cloudflare WARP installed, you will need to redirect traffic to the Clientless Web Isolation [prefixed URL](#use-remote-browser). One way to do this is through a third-party Secure Web Gateway. To redirect users to the remote browser, you can implement a custom block page similar to the example shown below.
 
 ```html
 <!doctype html>
