@@ -5,6 +5,12 @@ title: Changelog
 
 # Changelog
 
+## 2022-06-03
+
+- It is now possible to create standard `TransformStream` instances that can perform transformations on the data. Because this changes the behavior of the default `new TransformStream()` with no arguments, the `transformstream_enable_standard_constructor` compatibility flag is required to enable.
+- Preview in Quick Edit now correctly uses the correct R2 bindings.
+- Updated V8 from 10.1 to 10.2.
+
 ## 2022-05-26
 
 - The static `Response.json()` method can be used to initialize a Response object with a JSON-serialized payload (refer to [whatwg/fetch #1392](https://github.com/whatwg/fetch/pull/1392)).
