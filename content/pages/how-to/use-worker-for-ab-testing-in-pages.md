@@ -76,7 +76,7 @@ export const onRequest = [abTest]
 
 ## Set up conditional logic
 
-Based on the URL pathname, check that the cookie value is equal to `new` (`  if (cookie && cookie.includes(`${cookieName}=new`)) {`). If the value is `new`, then `newHomepagePathName` will be served.
+Based on the URL pathname, check that the cookie value is equal to `new`. If the value is `new`, then `newHomepagePathName` will be served.
 
 ```js
 ---
