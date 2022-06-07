@@ -232,9 +232,6 @@
 /gateway/locations/setup-instructions/android/ /cloudflare-one/connections/connect-networks/locations/ 301
 /gateway/reference/policy/ /cloudflare-one/policies/ 301
 
-# http3
-/http3/intro/ /http3/ 301
-
 # images
 /images/cloudflare-images/resize-images/ /images/cloudflare-images/transform/ 301
 /image-resizing/ /images/image-resizing/ 301
@@ -933,10 +930,10 @@
 /api-shield/products/* /api-shield/security/:splat 301
 /distributed-web/* /web3/:splat 301
 /fundamentals/internet/* /fundamentals/the-internet/ 301
+/http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
 /load-balancing/understand-basics/load-balancing-rules/* /load-balancing/additional-options/load-balancing-rules/:splat 301
 /fundamentals/get-started/origin-health/* /fundamentals/get-started/task-guides/origin-health/:splat 301
 /tenant/tutorial/* /tenant/get-started/:splat 301
-
 /argo-tunnel/run-tunnel/run-as-service/* /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/:splat 301
 /docs-engine/* https://github.com/cloudflare/cloudflare-docs/blob/production/README.md 301
 /warp-client/setting-up/* /warp-client/get-started/:splat 301
