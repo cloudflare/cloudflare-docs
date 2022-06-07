@@ -116,7 +116,7 @@ For more details, see [Static resource protection](/bots/reference/static-resour
 
 ### Verified bots
 
-Some automated traffic is good! To allow good bots like Google or Bing, use the **Verified Bot** field in your rules. If you see a verified bot that Cloudflare is not [currently tracking](https://radar.cloudflare.com/verified-bots), fill out an [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
+Some automated traffic is good! To allow good bots like Google or Bing, use the **Verified Bot** field in your rules. If you see a verified bot that Cloudflare is not [currently tracking](https://radar.cloudflare.com/verified-bots), fill out an [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link). The waiting time is up to several weeks for verified bot requests to be evaluated.
 
 ### Mobile traffic
 
