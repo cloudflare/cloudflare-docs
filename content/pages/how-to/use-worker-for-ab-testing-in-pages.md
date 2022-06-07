@@ -16,21 +16,14 @@ Depending on the number of application versions you have (this guide uses two), 
 To ensure that a user remains in the group you have given, you will set and store a cookie in the browser and depending on the cookie value you have set, the corresponding route will be served.
 
 
-Your percentage generator code should look like this `Math.floor(Math.random() * 100)`.
-
-{{<Aside type="Note">}}
-
-Cookies are helpful because they allow users to be served the same version of your application every time they visit and refresh your site. This will help keep the served version consistent for future rollouts. 
-
-{{</Aside>}}
-
-After you have set the value from the cookie, you can then have a conditional rendering set up that checks the value of the existing cookie and then assigns a group. Without a cookie, you will give one and set the URL. 
-
 ## Set up your Pages Function
 
 In your project, you can handle the logic for A/B testing using [Pages Functions](/pages/platform/functions/). Pages Functions allows you to handle server logic from within your Pages project. 
 
-To begin, go to your Pages project and create a `/functions` directory. Your application server logic will live in the `/functions` folder. 
+To begin:
+
+ 1. Go to your Pages project directory on your local machine.
+ 2. Create a `/functions` directory. Your application server logic will live in the `/functions` directory. 
 
 ## Add middleware logic
 
