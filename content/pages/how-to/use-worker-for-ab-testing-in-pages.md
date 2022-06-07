@@ -13,7 +13,7 @@ Configuring different versions of your application for A/B testing will be uniqu
 
 Depending on the number of application versions you have (this guide uses two), you can assign your users into experimental groups. The experimental groups in this guide are the base route `/` and the test route `/test`.
 
-To ensure that a user remains in the group you have given, a cookie will be set and stored in the browser and depending on cookie value the corresponding route will be served.
+To ensure that a user remains in the group you have given, you will set and store a cookie in the browser and depending on the cookie value you have set, the corresponding route will be served.
 
 
 Your percentage generator code should look like this `Math.floor(Math.random() * 100)`.
