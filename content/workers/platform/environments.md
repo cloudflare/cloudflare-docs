@@ -7,8 +7,6 @@ title: Environments
 
 {{<Aside type="note">}}
 
-If you are looking for the new [Service Environments](/workers/learning/using-services/) note that we have temporarily disabled the creation of Service Environments while we are improving this feature.
-
 You can only use environments with [Wrangler](/workers/wrangler/).
 
 {{</Aside>}}
