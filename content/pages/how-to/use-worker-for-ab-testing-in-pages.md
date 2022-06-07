@@ -15,7 +15,6 @@ Depending on the number of application versions you have (this guide uses two), 
 
 To ensure that a user remains in the group you have given, a cookie will be set and stored in the browser and depending on cookie value the corresponding route will be served.
 
-The cookie assignment is done randomly by using `Math.random()` which generates a list of random decimal numbers. You can make the numbers a whole number by calling the `Math.floor()` method on `Math.random()` like this: `Math.floor(Math.random())` and to make sure that you have a maximum range of numbers you can multiply by `100`. This means that you can now think of your assignments in terms of percentages.
 
 Your percentage generator code should look like this `Math.floor(Math.random() * 100)`.
 
