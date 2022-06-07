@@ -38,7 +38,8 @@ You can create a monitor within the [load balancer workflow](/load-balancing/how
         *   Instead of reporting a `301` or `302` code as unhealthy, the health check follows redirects to the final endpoint.
     *   **Configure Request Header(s)**:
         *   Useful if your servers are expecting specific incoming headers.
-
+    *   **Header**:
+        *   The HTTP request headers to send in the health check. It is recommended that you set a Host header by default. The User-Agent header cannot be overriden. This parameter is only valid for HTTP and HTTPS monitors.
 6.  Select **Save**.
 
 {{<Aside type="note" header="Note:">}}
