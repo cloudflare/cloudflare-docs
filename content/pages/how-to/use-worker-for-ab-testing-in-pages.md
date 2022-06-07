@@ -77,7 +77,7 @@ export const onRequest = [abTest]
 
 ## Set up conditional logic
 
-Based on the URL pathname, check what cookie value is present in the header. Based on the value, you will either set the base route or the `/test` route and fetch the assets for that route. 
+Based on the URL pathname, check that the cookie value is equal to `new` (`  if (cookie && cookie.includes(`${cookieName}=new`)) {`). If the value is `new`, then `newHomepagePathName` will be served.
 
 ```js
 ---
