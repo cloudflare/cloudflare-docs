@@ -448,11 +448,13 @@ The commands below will set the Google Cloud SDK to use the Cloudflare certifica
     gcloud config set core/custom_ca_certs_file ~/ca.pem
     ```
 
-> Note: The file at `~/ca.pem` needs to remain in place in order for the `gcloud` utility to leverage it. If the file is moved then step 3 above will need to be re-ran to point `gcloud` to the file's new location. 
+{{<Aside type="note">}}
+The file at `~/ca.pem` needs to remain in place in order for the `gcloud` utility to leverage it. If the file is moved then step 3 above will need to be re-run to point `gcloud` to the file's new location. 
+{{</Aside>}}
 
 #### Google Cloud SDK and Kaniko
 
-Per gcloud's [build submit](https://cloud.google.com/sdk/gcloud/reference/builds/submit) documentation if Kaniko is being used the Cloudflare Certificate will need to be installed in its CA store. Instructions can be found [here](https://docs.gitlab.com/ee/ci/docker/using_kaniko.html#using-a-registry-with-a-custom-certificate). 
+Per the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/builds/submit), if Kaniko is being used the Cloudflare certificate will need to be installed in the Kaniko CA store. Instructions can be found [here](https://docs.gitlab.com/ee/ci/docker/using_kaniko.html#using-a-registry-with-a-custom-certificate). 
 
 ### AWS CLI
 
