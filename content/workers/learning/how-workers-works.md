@@ -57,7 +57,7 @@ When a request to your `*.workers.dev` subdomain or to your Cloudflare-managed d
 Isolates are resilient and continuously available for the duration of a request, but in rare instances isolates may be evicted. When a script hits official [limits](/workers/platform/limits/) or when resources are exceptionally tight on the machine the request is running on, the runtime will selectively evict isolates after their events are properly resolved.
   
 Like all other JavaScript platforms, a single Workers instance may handle multiple requests including concurrent requests in a single-threaded event loop. That means that other requests may be processed during awaiting any `async` tasks (such as fetch) if other requests come in while processing a request. 
-Therefore we do *not* recommend you set or mutate global state within the event handler to avoid any concurrency issues.
+Therefore we do not recommend you set or mutate global state within the event handler to avoid any concurrency issues.
   
 
 ## Related resources
