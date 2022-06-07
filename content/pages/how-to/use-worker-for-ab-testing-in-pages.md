@@ -111,9 +111,7 @@ const abTest = async ({request, next, env}) => {
 export const onRequest = [abTest]
 ```
 
-If the cookie value is not present, you will have to assign one. You can generate numbers randomly by using the `Math.random()` method and getting whole numbers by calling a `Math.floor()` on the function.
-
-To make the number genrated into percentages, multiply `Math.random()` by `100` and call `Math.floor()` so that all the percentages can be whole numbers. Your default cookie version is given a value of `current`.
+If the cookie value is not present, you will have to assign one. Generate a percentage (from 0-99) by using: `Math.floor(Math.random() * 100)`. Your default cookie version is given a value of `current`.
 
 If the percentage of the number generated is lower than `50`, you will assign the cookie version to `new`. Based on the percentage randomly generated, you will set the cookie and serve the assets. After the conditional block, pass the request to `next()`. This will pass the request to Pages. This will result in 50% of users getting the new homepage.
 
