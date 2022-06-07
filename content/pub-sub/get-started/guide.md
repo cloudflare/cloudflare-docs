@@ -192,6 +192,10 @@ Each token allows you to publish or subscribe to the associated broker.
 
 Your broker is now created and ready to accept messages from authenticated clients. Because Pub/Sub is based on the MQTT protocol, there are client libraries for most popular programming languages. Refer to the list of [recommended client libraries](/pub-sub/learning/client-libraries/).
 
+{{<Aside type="note">}}
+You can view a live demo available at [demo.mqtt.dev](http://demo.mqtt.dev) that allows you to use your own Pub/Sub Broker and a valid token to subscribe to a topic and publish messages to it. The `JWT` field in the demo accepts a valid token from your Broker.
+{{</Aside>}}
+
 The example below uses [MQTT.js](https://github.com/mqttjs/MQTT.js) with Node.js to subscribe to a topic on a broker and publish a very basic "hello world" style message. You will need to have a [supported Node.js](https://nodejs.org/en/download/current/) version installed.
 
 ```bash
