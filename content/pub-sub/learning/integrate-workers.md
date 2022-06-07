@@ -106,6 +106,7 @@ workers_dev = true
 # the `key = "value"` format
 [vars]
 # This will be accessible via env.BROKER_PUBLIC_KEYS in our Worker
+# Note that we use three single quotes (') around our raw JSON
 BROKER_PUBLIC_KEYS = '''{
   "keys": [
     {
