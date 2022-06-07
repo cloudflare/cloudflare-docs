@@ -38,7 +38,7 @@ If using Unicode in object key names, refer to the [Unicode Interoperability tec
 
 The `x-amz-metadata-directive` allows a `MERGE` value, in addition to the standard `COPY` and `REPLACE` options. When used, `MERGE` is a combination of `COPY` and `REPLACE`, which will `COPY` any metadata keys from the source object and `REPLACE` those that are specified in the request with the new value. You cannot use `MERGE` to remove existing metadata keys from the source — use `REPLACE` instead.
 
-## ListBuckets
+## `ListBuckets`
 
 `ListBuckets` supports all the same search parameters as `ListObjectsV2` in R2 because some customers may have more than 1,000 buckets. Since tooling may not expose a way to set these search parameters, these values may also be sent in via headers. Values in headers take precedence over the search parameters.
 
