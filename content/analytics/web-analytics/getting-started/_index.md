@@ -8,14 +8,6 @@ meta:
 
 # Enabling Cloudflare Web Analytics
 
-{{<Aside type="note" header="Prerequisites">}}
-
-Before yo can start using Web Analytics, you have to [create a Cloudflare account](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) and [add your site](/fundamentals/get-started/setup/add-site/) to Cloudflare.
-
-{{</Aside>}}
-
---- 
-
 ## Sites not proxied through Cloudflare
 
 1. Go to [Get started with Web Analytics](https://dash.cloudflare.com/sign-up/web-analytics). Log in if you already have a Cloudflare account. If not, create one here.
