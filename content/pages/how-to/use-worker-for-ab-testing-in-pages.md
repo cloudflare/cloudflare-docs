@@ -15,7 +15,6 @@ Depending on the number of application versions you have (this guide uses two), 
 
 To ensure that a user remains in the group you have given, you will set and store a cookie in the browser and depending on the cookie value you have set, the corresponding route will be served.
 
-
 ## Set up your Pages Function
 
 In your project, you can handle the logic for A/B testing using [Pages Functions](/pages/platform/functions/). Pages Functions allows you to handle server logic from within your Pages project. 
