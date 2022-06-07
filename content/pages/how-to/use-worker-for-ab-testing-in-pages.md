@@ -161,7 +161,7 @@ export const onRequest = [abTest];
 
 ## Deploy to Cloudflare Pages
 
-Now that you have set up your `functions/_middleware.js` file in your project you are ready to deploy with Pages. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Account Home** > **Pages** and select **Create a project**. Select your git repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+Now that you have set up your `functions/_middleware.js` file in your project you are ready to deploy with Pages. If you are working with an existing Git project in the dashboard, push your project changes to GitHub/GitLab. If using Direct Uploads, refer to the [Direct Upload guide](/pages/platform/direct-upload/) to publish and deploy your project.
 
 <div>
 
