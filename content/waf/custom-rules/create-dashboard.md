@@ -46,6 +46,14 @@ When you select the _Block_ action in a custom rule you can optionally define a 
 
 The custom response has three settings:
 
-* **Response type**: Choose a content type from the list or select the default WAF block response. The response can be custom HTML, custom plain text, custom JSON, or custom XML.
+* **Response type**: Choose a content type or the default WAF block response from the list. The available custom response types are the following:
+
+    | Dashboard value | API value |
+    |---|---|
+    | Custom HTML | `"text/html"` |
+    | Custom Text | `"text/plain"` |
+    | Custom JSON | `"application/json"` |
+    | Custom XML | `"text/xml"` |
+
 * **Response code**: Choose an HTTP status code for the response, in the range 400-499. The default response code is 403.
 * **Response body**: The body of the response. Configure a valid body according to the response type you selected.
