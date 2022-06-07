@@ -26,6 +26,12 @@ To purchase R2:
 
 ## 1. Install Wrangler
 
+{{<Aside type="note">}}
+
+This guide is tailored to Wrangler 2. If you are still using Wrangler 1, please refer to the [migration guide.](https://developers.cloudflare.com/workers/wrangler/migration/migrating-from-wrangler-1/)
+
+{{</Aside>}}
+
 To create your R2 bucket, install [Wrangler](/workers/get-started/guide/#2-install-the-workers-cli), the Workers CLI.
 
 To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
