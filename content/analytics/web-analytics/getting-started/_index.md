@@ -18,7 +18,7 @@ Before yo can start using Web Analytics, you have to [create a Cloudflare accoun
 
 ## Sites not proxied through Cloudflare
 
-1. Go to [Get started with Web Analytics](https://dash.cloudflare.com/sign-up/web-analytics).
+1. Go to [Get started with Web Analytics](https://dash.cloudflare.com/sign-up/web-analytics). Log in if you already have a Cloudflare account. If not, create one here.
 2. Click **Add a site**.
 3. In **Set up hostname**, write your website's hostname.
 4. Click the message box that appears to choose the hostname you have input and click **Done**.
@@ -34,7 +34,7 @@ For more information on how many sites you can track, refer to [Limits](/analyti
 
 ## Sites proxied through Cloudflare
 
-1. Go to [Web Analytics Sites](https://dash.cloudflare.com/?to=/:account/web-analytics) from your account home page.
+1. Go to [Web Analytics](https://dash.cloudflare.com/?to=/:account/web-analytics) from your account home page.
 2. Under **Quick Actions**, click **Add a site**.
 3. Select a hostname from the drop-down menu. Automatic setup is enabled by default. To set up Web Analytics manually:
     1. Expand **Advanced options**.
