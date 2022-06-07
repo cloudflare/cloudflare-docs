@@ -27,7 +27,7 @@ To begin:
 
 ## Add middleware logic
 
-Pages Functions have utility functions that can reuse chunks of logic which are executed before and/or after route handlers. These are called [middleware](/pages/platform/functions/#adding-middleware). Following this guide, you will want to intercept requests before they get to your origin server, making ideal use of middleware.
+Pages Functions have utility functions that can reuse chunks of logic which are executed before and/or after route handlers. These are called [middleware](/pages/platform/functions/#adding-middleware). Following this guide, middleware will allow you to intercept requests to your Pages project before they reach your site.
 
 In your `/functions` directory, create a `_middleware.js` file. 
 
@@ -54,7 +54,7 @@ const abTest = async ({request, next, env}) => {
 export const onRequest = [abTest]
 ```
 
-To identify the cookie, assign it in the browser and give it a unique name. Create a variable above your async function. Here, you can define the second route as `newHomepagePathName` and assign it `/test`:
+To set the cookie, create the `cookieName` variable and assign any value. Then create the `newHomepagePathName` variable and assign it `/test`:
 
 ```js
 ---
@@ -76,8 +76,6 @@ export const onRequest = [abTest]
 ```
 
 ## Set up conditional logic
-
-In your A/B testing, you want to be able to send a user to particular routes based on the presence of a cookie value. To do this, you must first intercept the request. 
 
 Based on the URL pathname, check what cookie value is present in the header. Based on the value, you will either set the base route or the `/test` route and fetch the assets for that route. 
 
