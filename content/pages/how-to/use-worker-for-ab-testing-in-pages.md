@@ -115,7 +115,7 @@ If the cookie value is not present, you will have to assign one. You can generat
 
 To make the number genrated into percentages, multiply `Math.random()` by `100` and call `Math.floor()` so that all the percentages can be whole numbers. Your default cookie version is given a value of `current`.
 
-If the percentage of the number generated is lower than `50`, you will assign the cookie version to `new`. Based on the percentage randomly generated, you will set the cookie and serve the assets. After the conditional block, pass the request to `next()`. This will pass the request back to the browser. This will result in 50% of users getting the new homepage.
+If the percentage of the number generated is lower than `50`, you will assign the cookie version to `new`. Based on the percentage randomly generated, you will set the cookie and serve the assets. After the conditional block, pass the request to `next()`. This will pass the request to Pages. This will result in 50% of users getting the new homepage.
 
 ```js
 ---
