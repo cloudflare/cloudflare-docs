@@ -94,6 +94,7 @@
 # analytics
 /analytics/web-analytics/change-log/ /analytics/web-analytics/changelog/ 301
 /analytics/graphql-api/migration-guides/network-analytics-v2/about/ /analytics/graphql-api/migration-guides/network-analytics-v2/differences/ 301
+/analytics/web-analytics/about/ /analytics/web-analytics/ 301 
 
 # argo-tunnel
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
