@@ -8,13 +8,13 @@ weight: 5
 
 Clientless Web Isolation allows users to securely navigate high risk or sensitive websites in a remote browser without having to install the Cloudflare WARP client on their device.
 
-## Set up remote browser
+## Set up Clientless Web Isolation
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **Settings** > **Browser Isolation**.
 2. Toggle on **Clientless Web Isolation**.
-3. To configure permissions, click **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the clientless remote browser.
+3. To configure permissions, click **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
 
-## Use remote browser
+## Use the remote browser
 
 Clientless Web Isolation is implemented through a prefixed URL, where `<your-team-name>` is your organization's [team name](/cloudflare-one/glossary/#team-name).
 
@@ -71,9 +71,9 @@ To turn on or off the address bar, users can right-click on any isolated page an
 - **Authentication events** — User login events are available in Access Audit Logs.
 - **HTTP request logs** — Traffic from the remote browser to the Internet is logged in Gateway request logs.
 
-## Redirect traffic to remote browser
+## Redirect traffic to the remote browser
 
-If you want to isolate a website without Cloudflare WARP installed, you will need to redirect traffic to the Clientless Web Isolation [prefixed URL](#use-remote-browser). One way to do this is through a third-party Secure Web Gateway. To redirect users to the remote browser, you can implement a custom block page similar to the example shown below.
+If you want to isolate a website without Cloudflare WARP installed, you will need to redirect traffic to the Clientless Web Isolation [prefixed URL](#use-the-remote-browser). One way to do this is through a third-party Secure Web Gateway. To redirect users to the remote browser, you can implement a custom block page similar to the example shown below.
 
 ```html
 <!doctype html>
