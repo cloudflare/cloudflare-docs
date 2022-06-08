@@ -14,7 +14,7 @@ There are three steps to get started with Workers Analytics Engine:
 
 All data in Workers Analytics Engine is written to a dataset. A dataset is conceptually like a “table” in SQL; the rows and columns should have consistent meaning.
 
-To get started using the Workers Analytics Engine, you need to create a dataset and a binding that associates a given Worker with a dataset. This is done by editing [wrangler.toml](/workers/cli-wrangler/configuration/). For example:
+To get started using the Workers Analytics Engine, you need to create a dataset and a binding that associates a given Worker with a dataset. This is done by editing [wrangler.toml](/workers/wrangler/configuration/). For example:
 
 ```bash
 [analytics_engine]
