@@ -132,7 +132,7 @@ To create the overlay policy:
 
 3. Define at least one additional overlay policy and the traffic you want to send to Cloudflare over the IPsec tunnels.
 
-The service name used to send traffic through the tunnel created in the next step is **Cloudflare_IPsec**. The example uses **Match Everything** to send all other traffic through the established tunnel (both private east-west traffic & Internet bound north-south traffic through Cloudflare’s Secure Web Gateway). 
+The service name used to send traffic through the tunnel created in the next step is **Cloudflare_IPsec**. The example uses **Match Everything** to send all other traffic through the established tunnel (both private east-west traffic and Internet bound north-south traffic through Cloudflare’s Secure Web Gateway). 
 
 ![Business Intent Overlay screen with breakout and CF overlays for IPsec](/magic-wan/static/biz-intent-overlay-ipsec.png)
 </div>
