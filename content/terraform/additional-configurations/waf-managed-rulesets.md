@@ -131,6 +131,8 @@ Ensure that you place the skip rules **before** the rule that executes the Manag
 {{</Aside>}}
 
 ## Configure overrides
+  
+**Note:** Until [issue #1397](https://github.com/cloudflare/terraform-provider-cloudflare/issues/1397) is fixed, when configuring a ruleset with overrides, you will need to set `enabled = true` under `action_parameters` to ensure rules are not unintentially disabled.
 
 The following example adds three [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) for the Cloudflare Managed Ruleset:
 
