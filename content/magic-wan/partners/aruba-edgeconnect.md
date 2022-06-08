@@ -169,7 +169,100 @@ The service name used to send traffic through the tunnel created in the next ste
 
 ![Diagram of GCP, Aruba Orchestratror, and Cloudflare products for IPsec tunnels](/magic-wan/static/gcp-edgeconnect-diagram-ipsec.png)
 
-To create an IPsec tunnel, refer to [Add tunnels > IPsec tunnel](/magic-wan/how-to/configure-tunnels/#add-tunnels).
+For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](https://api.cloudflare.com/#magic-ipsec-tunnels-create-ipsec-tunnels).
+
+- `X-Auth-Email`: Your Cloudflare email ID
+- `X-Auth-Key`: Seen in the URL (dash.cloudflare.com/<X-Auth-Key>/....)
+- `Account key`: Global API token in Cloudflare dashboard
+
+1. Test new IPsec tunnel creation
+
+```bash
+---
+header: Request
+---
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tunnels?validate_only=true" \
+     -H "X-Auth-Email: user@example.com" \
+     -H "X-Auth-Key: XXXXXXXXXX" \
+     -H "Content-Type: application/json" \
+     --data '{"ipsec_tunnels":[{"name":"EdgeConnect_IPSEC_1","customer_endpoint":"35.188.72.56","cloudflare_endpoint":"172.64.241.205","interface_address":"192.168.10.11/31","description":"Tunnel for EdgeConnect - GCP Central"}]}'
+```
+
+2. Create a new IPsec tunnel
+
+```bash
+---
+header: Request
+---
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tunnels" \
+     -H "X-Auth-Email: user@example.com" \
+     -H "X-Auth-Key: XXXXXXXXXX" \
+     -H "Content-Type: application/json" \
+--data '{"ipsec_tunnels":[{"name":"EdgeConnect_IPSEC_1","customer_endpoint":"35.188.72.56","cloudflare_endpoint":"172.64.241.205","interface_address":"192.168.10.11/31","description":"Tunnel for EdgeConnect - GCP Central"}]}'
+```
+
+```bash
+---
+header: Response
+---
+{
+"result": {
+"ipsec_tunnels": [
+{
+"id": "tunnel_id",
+"interface_address": "192.168.10.11/31",
+"created_on": "2022-04-14T19:57:43.938376Z",
+"modified_on": "2022-04-14T19:57:43.938376Z",
+"name": "EdgeConnect_IPSEC_1",
+"cloudflare_endpoint": "172.64.241.205",
+"customer_endpoint": "35.188.72.56",
+"description": "Tunnel for EdgeConnect - GCP Central",
+"health_check": {
+"enabled": true,
+"target": "35.188.72.56",
+"type": "reply"
+}
+}
+]
+},
+"success": true,
+"errors": [],
+"messages": []
+}
+```
+
+3. Generate Pre Shared Key (PSK) for tunnel
+
+Use the tunnel ID from the response in Step 2. Save the pre-shared key generated in this step as you will need it to set up tunnels on the Orchestrator.
+
+```bash
+---
+header: Request
+---
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tunnels/e70536b11daa47e09ff046fbb9800e4f/psk_generate?validate_only=true" \
+     -H "X-Auth-Email: user@example.com" \
+     -H "X-Auth-Key: XXXXXXXXXX" \
+     -H "Content-Type: application/json"
+```
+
+```bash
+---
+header: Response
+---
+{
+"result": {
+"ipsec_id": "<ipsec_id>",
+"ipsec_tunnel_id": "<tunnel_id>",
+"psk": "XXXXXXXXXXXXXXXXX",
+"psk_metadata": {
+"last_generated_on": "2022-04-14T20:05:29.756514071Z"
+}
+},
+"success": true,
+"errors": [],
+"messages": []
+}
+```
 
 **Create an IPSec tunnel on EdgeConnect**
 
