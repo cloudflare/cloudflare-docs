@@ -275,7 +275,7 @@ To validate traffic flow from the local subnet through Cloudflare’s Secure Web
 
 ![cURL example for validating traffic](/magic-wan/static/static-routes-west-ipsec.png)
 
-You can validate the request went through Secure Web Gateway with the presence of the `Cf-Team` response header or by looking at the logs in the dashboard under **Logs** > **Gateway** > **HTTP**.
+You can validate the request was sent through Secure Web Gateway with the presence of the `Cf-Team` response header or by looking at the logs in the dashboard under **Logs** > **Gateway** > **HTTP**.
 
 ![Dashboard example for validating Secure Web Gateway](/magic-wan/static/dash-validation-ipsec.png)
 
