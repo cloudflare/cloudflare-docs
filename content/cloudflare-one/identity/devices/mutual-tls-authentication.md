@@ -216,9 +216,9 @@ Returning to the terminal, generate a client certificate that will authenticate 
 
 ### Testing in the browser
 
-The instructions here cover usage with a computer running MacOS.
+The instructions here cover usage with a computer running macOS.
 
-1.  In the same working directory, run the following command to add the client certificate into the MacOS Keychain.
+1.  In the same working directory, run the following command to add the client certificate into the macOS Keychain.
 
     {{<Aside type="warning" header="Important">}}
 The command adds the client certificate to the trusted store on your device. **Only** proceed if you are comfortable doing so and intend to keep these testing certificates safeguarded.

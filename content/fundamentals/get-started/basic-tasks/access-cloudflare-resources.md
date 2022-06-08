@@ -30,6 +30,7 @@ As you get started with Cloudflare, you may want to take advantage of the follow
 | --- | --- |
 | [Cloudflare blog](https://blog.cloudflare.com) | Keep up to date with product announcements and read technical deep-dives into the Internet and cybersecurity. |
 | [Cloudflare System Status](https://www.cloudflarestatus.com/) | Review system status and track ongoing incidents and outages. |
+| [Cloudflare Radar](https://radar.cloudflare.com) | Check up-to-date Internet trends and insights. |
 | [Cloudflare TV](https://cloudflare.tv/schedule) | Tune in for technical deep dives, founder interviews, diverse voices, and more. |
 
 {{<Aside type="note">}}

@@ -215,4 +215,14 @@ compatibility_flags = [
     "formdata_parser_supports_files"
 ]
 
+# A list of other Cloudflare services bound to this service.
+services = [{
+  # The binding name used to refer to the bound service.
+  binding: string;
+  # The name of the service.
+  service: string;
+  # The environment of the service (For example, production, staging, etc) (optional).
+  environment: string;
+}]
+
 ```

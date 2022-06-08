@@ -20,7 +20,10 @@ Cloudflare also issues and renews free, unshared, publicly trusted [SSL/TLS cert
 
 For customers on a **Pro** plan or above, Cloudflare offers several [Managed Rulesets](/waf/managed-rulesets/) as part of the Web Application Firewall (WAF).
 
+All customers have access to the [Cloudflare Security Center](/security-center/), which helps identify potential security risks and helps mitigate them with suggested actions.
+
 All customers also have the options to adjust the following **Security** settings:
+
 - [Security level](https://support.cloudflare.com/hc/articles/200170056): Use the IP reputation of a visitor to determine whether to present a [Managed Challenge](https://support.cloudflare.com/hc//articles/200170136#managed-challenge) page.
 - [Challenge Passage](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e): Specify the length of time that a visitor can access your website after completing a security challenge.
 - [Browser Integrity Check](https://support.cloudflare.com/hc/articles/200170086): Evaluate incoming HTTP headers based on known threats — such as requests with a missing or non-standard user agent — and present a challenge page if needed.

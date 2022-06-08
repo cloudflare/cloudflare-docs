@@ -6,9 +6,9 @@ weight: 1001
 layout: example
 ---
 
-You must [generate an Access Key](/r2/platform/s3-compatibility/tokens/) before getting started. All examples will utilitize `access_key_id` and `access_key_secret` variables which represent the **Access Key ID** and **Secret Access Key** values you generated.
+{{<render file="_keys.md">}}
 
-With [`rclone`](https://rclone.org/install/) installed, you may run [`rclone configure`](https://rclone.org/s3/) to configure a new S3 storage provider. You will be prompted with a series of questions for the new provider details.
+With [`rclone`](https://rclone.org/install/) installed, you may run [`rclone config`](https://rclone.org/s3/) to configure a new S3 storage provider. You will be prompted with a series of questions for the new provider details.
 
 {{<Aside type="note" header="Recommendation">}}
 It is recommended that you choose a unique provider name and then rely on all default answers to the prompts.

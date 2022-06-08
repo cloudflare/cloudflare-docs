@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
 title: Functions (beta)
+layout: single
 ---
 
 # Functions (beta)
@@ -48,8 +49,8 @@ The following routes will be generated based on the file structure, mapping the 
     /api/todos => ./functions/api/todos/index.ts
     /api/todos/* => ./functions/api/todos/[id].ts
     /api/todos/*/** => ./functions/api/todos/[[path]].ts
-    /*/profile => ./functions/api/[username]/profile.ts
-    /** => ./functions/api/[[path]].ts
+    /api/*/profile => ./functions/api/[username]/profile.ts
+    /api/** => ./functions/api/[[path]].ts
 
 ### Path segments
 

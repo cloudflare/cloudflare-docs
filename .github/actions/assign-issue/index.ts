@@ -5,6 +5,18 @@ import * as core from '@actions/core';
 import * as github from '@actions/github';
 import { OWNERS } from '../owners';
 
+/**
+ * Map "Product Name" => "product-slug"
+ * The slug must match the `content/{slug}` and `data/{slug}.yml` value.
+ * The "Name" must match the names/values from the ISSUE_TEMPLATE file(s).
+ */
+function slugify(input: string): string {
+  input = input.toLowerCase().replace(/\s+/g, '-');
+  if (input === 'image-optimization') return 'images';
+  if (input === 'pub/sub') return 'pub-sub';
+  return input.replace(/\//g, '');
+}
+
 (async function () {
   try {
     const token = core.getInput('GITHUB_TOKEN', { required: true });
@@ -35,8 +47,20 @@ import { OWNERS } from '../owners';
     const products = answer.split(/,\s*/g).filter(Boolean);
 
     for (const p of products) {
-      let names = OWNERS[p] || [];
-      names.forEach(x => users.add(x));
+      let slug = slugify(p);
+      let list = OWNERS[slug];
+
+      if (!list) {
+        console.error({ name: p, slug });
+        throw new Error('Unknown product!');
+      }
+
+      if (list.length > 0) {
+        list.forEach(x => users.add(x));
+      } else {
+        // ping Haley for assignment
+        users.add('haleycode');
+      }
     }
 
     // will throw if already assigned

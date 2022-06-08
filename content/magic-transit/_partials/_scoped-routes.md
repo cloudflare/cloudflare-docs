@@ -22,12 +22,12 @@ Regions and regional objects are automatically updated. If you route traffic thr
 <details>
   <summary>Scoping configuration data example</summary>
   
-| GRE tunnel      | Region code |
+| Tunnel      | Region code |
 | --------------- | ----------- |
-| GRE_1_IAD       | AFR         |
-| GRE_2_IAD       | EEUR        |
-| GRE_3_ATL       | ENAM        |
-| GRE_4_ATL       | ME          |
+| TUNNEL_1_IAD       | AFR         |
+| TUNNEL_2_IAD       | EEUR        |
+| TUNNEL_3_ATL       | ENAM        |
+| TUNNEL_4_ATL       | ME          |
 
 </details>
 

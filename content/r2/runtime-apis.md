@@ -17,7 +17,7 @@ R2 organizes the data you store, called objects, into containers, called buckets
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), or [R2 Buckets](#api). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](https://github.com/workers/platform/environment-variables) documentation for more information.
+A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), or [R2 Buckets](#api). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to [Environment Variables](/workers/platform/environment-variables) for more information.
 
 A binding is defined in the `wrangler.toml` file of your Worker project's directory.
 
@@ -57,11 +57,11 @@ async function handleRequest(request) {
 
 {{<definitions>}}
 
-- {{<code>}}head(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2HeadOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}head(key{{<param-type>}}string{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
   - Retrieves the `R2Object` for the given key containing only object metadata, if the key exists, and null if the key does not exist.
 
-- {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2GetOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2GetOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2ObjectBody{{</param-type>}}|{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
   - Retrieves the `R2Object` for the given key containing object metadata and the object body as a {{<code>}}{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}, if the key exists, and `null` if the key does not exist.
   - In the event that a precondition specified in {{<code>}}options{{</code>}} fails, {{<code>}}get(){{</code>}} returns an {{<code>}}{{<param-type>}}R2Object{{</param-type>}}{{</code>}} with {{<code>}}body{{</code>}} undefined.
@@ -84,6 +84,8 @@ async function handleRequest(request) {
 
 ## `R2Object` definition
 
+`R2Object` is created when you `PUT` an object into an R2 bucket. `R2Object` represents the metadata of an object based on the information provided by the uploader. Every object that you `PUT` into an R2 bucket will have an `R2Object` created.
+
 {{<definitions>}}
 
 - {{<code>}}key{{<param-type>}}string{{</param-type>}}{{</code>}}
@@ -98,19 +100,19 @@ async function handleRequest(request) {
 
   - Whether the object's value has been consumed or not.
 
-- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}>{{</type>}}{{</code>}}
 
   - Returns a Promise that resolves to an `ArrayBuffer` containing the object's value.
 
-- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}>{{</code>}}
 
   - Returns a Promise that resolves to an string containing the object's value.
 
-- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}>{{</code>}}
 
   - Returns a Promise that resolves to the given object containing the object's value.
 
-- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}>{{</code>}}
 
   - Returns a Promise that resolves to a binary Blob containing the object's value.
 
@@ -188,7 +190,7 @@ async function handleRequest(request) {
 
   - A map of custom, user-defined metadata that will be stored with the object.
 
-- {{<code>}}md5{{<param-type>}}ArrayBuffer{{</param-type>}}{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}md5{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
 
   - A md5 hash to use to check the recieved object's integrity.
 
@@ -280,7 +282,7 @@ For more information about conditional requests, refer to [RFC 7232](https://dat
 
 ### HTTP Metadata
 
-Generally, these fields match the HTTP metadata passed when the object was created.  They can be overriden when issuing `GET` requests, in which case, the given values will be echoed back in the response.
+Generally, these fields match the HTTP metadata passed when the object was created.  They can be overridden when issuing `GET` requests, in which case, the given values will be echoed back in the response.
 
 {{<definitions>}}
 
