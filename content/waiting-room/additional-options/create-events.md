@@ -6,7 +6,7 @@ weight: 4
 
 # Create scheduled events
 
-When you want to customize the behavior of a waiting room for a specific period of time — such as changing the queueing method or increasing the total active users — set up a **scheduled event**. You can do this from the dashboard or via de API.
+When you want to customize the behavior of a waiting room for a specific period of time — such as changing the queueing method or increasing the total active users — set up a **scheduled event**. You can do this from the dashboard or via the API.
 
 Any properties set on the event will override the default property on the waiting room for the duration of the event.
 
