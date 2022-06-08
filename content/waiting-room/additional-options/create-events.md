@@ -28,7 +28,7 @@ Any properties set on the event will override the default property on the waitin
 9.  Click **Next** and review your Event details and settings.
 10.  Click **Save**.
 
-In your Waiting Room page, in the **Next Event** column you can visualize the date of the next event scheduled or N/A in case there is no event scheduled for that waiting room. You can always suspend, edit or delete your event.
+In your Waiting Room page, in the **Next Event** column you can visualize the date of the next event scheduled. This columns will read `N/A` in case there is no event scheduled for that waiting room. You can always suspend, edit or delete your event.
 
 {{<Aside type="note">}}You have a limit of five events per waiting room.{{</Aside>}}
 
