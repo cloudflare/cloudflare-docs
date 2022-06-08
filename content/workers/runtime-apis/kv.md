@@ -244,7 +244,13 @@ The `name` is a string, the `expiration` value is a number, and `metadata` is wh
 
 Additionally, if `list_complete` is `false`, there are more keys to fetch, even if the `keys` array is empty. You will use the `cursor` property to get more keys. Refer to the [Pagination section](#pagination) below for more details.
 
-Note that if your metadata-values fit in [the size limit](/workers/platform/limits/#kv-limits), `list` can be used to return information associated with multiple keys in one operation. This is more efficient than a list followed by a `get` per key.
+Note that if your values fit in [the metadata-size limit](/workers/platform/limits/#kv-limits), you may consider storing them in metadata instead. This is more efficient than a `list` followed by a `get` per key. When using `put`, you can leave the `value` parameter empty and instead include a property in the metadata object:
+
+```js
+await NAMESPACE.put(key, "", {
+  metadata: { value: value },
+});
+```
 
 #### Listing by prefix
 
