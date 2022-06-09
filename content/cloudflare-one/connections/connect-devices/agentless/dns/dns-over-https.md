@@ -8,7 +8,7 @@ weight: 2
 
 With Cloudflare Gateway, you can filter DNS over HTTPS (DoH) requests by location or by user without needing to install the WARP client on your devices.
 
-Location-based policies require that you send DNS requests to a [location-specific DoH endpoint](#configure-browser-for-doh), while identity-based policies require that requests include a [user-specific DoH token](#configure-authenticated-doh).
+Location-based policies require that you send DNS requests to a [location-specific DoH endpoint](#configure-browser-for-doh), while identity-based policies require that requests include a [user-specific DoH token](#filter-doh-requests-by-user).
 
 ## Filter DoH requests by location
 
