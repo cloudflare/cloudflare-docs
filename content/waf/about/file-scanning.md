@@ -92,7 +92,6 @@ You can combine the previous expression with other [fields](/ruleset-engine/rule
     (cf.waf.file_scanner.has_malicious_file and http.request.uri.path contains "upload.php")
     ```
 
-
 * The following expression will match requests from bots uploading files:
 
     ```txt
