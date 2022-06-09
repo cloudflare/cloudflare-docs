@@ -33,7 +33,7 @@ For example, suppose you are collecting air quality samples. Each data point wou
 
 This is how it translates into code:
 
-```bash
+```js
   async fetch(request: Request, env) {
     env.WEATHER.writeDataPoint({
       labels: ["Seattle", "USA", "pro_sensor_9000”],
