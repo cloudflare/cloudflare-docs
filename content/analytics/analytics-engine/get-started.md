@@ -49,7 +49,7 @@ In our initial version, developers are responsible for **providing fields in a c
 
 Data can be queried using either [GraphQL](/analytics/graphql-api/) or SQL API.
 
-The GraphQL UI powers our dashboard and is better suited for building interactive dashboards. At this time, the GraphQL API exposes a highly simplified schema, though we plan to support a richer schema over time.
+The GraphQL API powers our dashboard and is better suited for building interactive dashboards. At this time, the GraphQL API exposes a highly simplified schema, though we plan to support a richer schema over time.
 
 SQL API is better suited for writing ad hoc queries and integrating with external tools like Grafana. At this time, the SQL API only supports the `SELECT` statement and a limited subset of SQL functionality.
 
