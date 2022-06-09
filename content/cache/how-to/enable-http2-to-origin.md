@@ -11,7 +11,7 @@ HTTP is a well established protocol that has several versions, and each version 
 
 At Cloudflare, HTTP/2 connection is enabled by default for Free, Pro and Business customers. Enterprise customers will need to enable this behavior, if they want to use HTTP/2. Please follow these steps to enable it:
 
-1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2.  Choose the domain that will use HTTP/2 to Origin.
 3.  Click on **Network**.
 4.  Under **HTTP/2 to Origin** set the toggle to On.
