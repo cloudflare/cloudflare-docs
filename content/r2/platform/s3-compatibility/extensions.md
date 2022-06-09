@@ -40,7 +40,7 @@ The `x-amz-metadata-directive` allows a `MERGE` value, in addition to the standa
 
 ## `ListBuckets`
 
-`ListBuckets` supports all the same search parameters as `ListObjectsV2` in R2 because some customers may have more than 1,000 buckets. Since tooling may not expose a way to set these search parameters, these values may also be sent in via headers. Values in headers take precedence over the search parameters.
+`ListBuckets` supports all the same search parameters as `ListObjectsV2` in R2 because some customers may have more than 1,000 buckets. Because tooling, like existing S3 libraries, may not expose a way to set these search parameters, these values may also be sent in via headers. Values in headers take precedence over the search parameters.
 
 {{<table-wrap>}}
 | Search parameter     | HTTP Header             | Meaning                                                           |
