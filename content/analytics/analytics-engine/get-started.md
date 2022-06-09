@@ -75,7 +75,7 @@ Note that, for our initial version, labels and metrics are accessed via names th
 
 Workers Analytics Engine is optimized for powering time series analytics that can be visualized using tools like Grafana. Every event written from the runtime is automatically populated with a `timestamp` field. It is expected that most time series will round, and then GROUP BY the `timestamp`. For example:
 
-```bash
+```sql
 SELECT
   intDiv(datetime, 300) * 300 as t, 
   label_1 as city, 
