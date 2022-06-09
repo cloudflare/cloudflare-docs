@@ -48,11 +48,11 @@ The following is an end-to-end example showing how to:
 
 {{<Aside type="note">}}
 
-You should be familiar with setting up a [Worker](https://developers.cloudflare.com/workers/get-started/guide/) before continuing with this example.
+You should be familiar with setting up a [Worker](/workers/get-started/guide/) before continuing with this example.
   
 {{</Aside>}}
 
-To ensure your Worker can validate incoming requests, you must make the public keys available to your Worker via an [environmental variable](https://developers.cloudflare.com/workers/platform/environment-variables/). To do so, we can fetch the public keys from our Broker:
+To ensure your Worker can validate incoming requests, you must make the public keys available to your Worker via an [environmental variable](/workers/platform/environment-variables/). To do so, we can fetch the public keys from our Broker:
 
 ```bash
 $ curl -s -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}/publickeys
