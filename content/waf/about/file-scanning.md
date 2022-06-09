@@ -76,15 +76,15 @@ Contact your account team to get access to WAF file scanning.
 
 Create a custom rule that logs detected malicious files uploaded to your application.
 
-For example create a custom rule with the _Log_ action and the following expression:
+For example, create a custom rule with the _Log_ action and the following expression:
 
 ```txt
 (cf.waf.file_scanner.has_malicious_file)
 ```
 
-This rule will match whenever a malicious file is detected for a given request.
+This rule will match requests where the WAF detects at least one malicious file.
 
-You can combine the expression above with other fields and functions to customize the rule scope or to combine this feature with other security features. For example:
+You can combine the previous expression with other [fields](/ruleset-engine/rules-language/fields/) and [functions](/ruleset-engine/rules-language/functions/) of the Rules language. This allows you to customize the rule scope or combine this feature with other security features. For example:
 
 * The following expression will match requests uploading malicious files if they target the specified endpoint:
 
