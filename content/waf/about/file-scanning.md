@@ -99,7 +99,6 @@ You can combine the expression above with other fields and functions to customiz
     (cf.waf.file_scanner.has_file and cf.bot_management.score lt 10)
     ```
 
-
 ### Step 2 — Monitor traffic
 
 After deploying your custom rule, go to Firewall Events, available at **Security** > **Overview**, and check for logged requests matching the rule you created.
