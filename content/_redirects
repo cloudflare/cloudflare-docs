@@ -334,6 +334,10 @@
 /magic-wan/get-started/configure-tunnels/specify-ip-addresses/ /magic-wan/how-to/run-endpoint-health-checks/ 301
 /magic-wan/get-started/configure-tunnels/specify-tunnel-endpoints/ /magic-wan/how-to/configure-tunnels/ 301
 /magic-wan/get-started/verify-requirements/ /magic-wan/prerequisites/ 301
+/magic-wan/tutorials/ipsec/ /magic-wan/how-to/ipsec/ 301
+/magic-wan/partners/aruba-edgeconnect/ /magic-wan/tutorials/aruba-edgeconnect/ 301
+/magic-wan/tutorials/ipsec/strongswan/ /magic-wan/tutorials/strongswan/ 301
+/magic-wan/tutorials/ipsec/vyos/ /magic-wan/tutorials/vyos/ 301
 
 # network-interconnect
 /network-interconnect/interconnect-types/ /network-interconnect/about/interconnect-types/ 301
