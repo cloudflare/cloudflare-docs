@@ -168,9 +168,9 @@ async function handleRequest(request) {
 
 There are 3 variations of arguments that can be used in a range:
 
-* An offset with an optional length
-* An optional offset with a length
-* A suffix
+* An offset with an optional length.
+* An optional offset with a length.
+* A suffix.
 
 {{<definitions>}}
 
