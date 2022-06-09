@@ -34,7 +34,7 @@ To do this:
 
 Next, generate an R2 API token:
 
-1. Go back to the Cloudflare dashboard > **R2**.
+1. Go to the Cloudflare dashboard > **R2**.
 2. On the right hand sidebar, select **Manage R2 API Tokens**.
 3. Select **Create API token**.
 4. Name your token **Postman** by selecting the pencil icon next to the API name and grant it the **Edit** permission.
@@ -45,7 +45,7 @@ Guard this token and the **Access Key ID** and **Secret Access Key** closely. Yo
 
 After you have created you API token in the Cloudflare dashboard:
 
-1. Go back to the [Postman dashboard](https://www.postman.com/cloudflare-r2/workspace/cloudflare-r2/collection/20913290-14ddd8d8-3212-490d-8647-88c9dc557659?action=share&creator=20913290&ctx=documentation) > **Variables**.
+1. Go to the [Postman dashboard](https://www.postman.com/cloudflare-r2/workspace/cloudflare-r2/collection/20913290-14ddd8d8-3212-490d-8647-88c9dc557659?action=share&creator=20913290&ctx=documentation) > **Variables**.
 2. Copy `Access Key ID` value from the Cloudflare dashboard and paste it into Postman’s `r2-secret-id` variable value and select **Save**.
 3. Copy the `Secret Access Key` value value from the Cloudflare dashboard and paste into Postman’s `r2-access-key` variable value and select **Save**.
 
