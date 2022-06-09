@@ -89,4 +89,4 @@ GROUP BY t, city
 ORDER BY t, avg_humidity desc
 ```
 
-This query first rounds the datetime field to the nearest five minutes. Then we group by that field and city and calculate the average humidity in each city for a five minute period. 
+This query first rounds the datetime field to the nearest five minutes. Then we group by that field and city, and calculate the average humidity in each city for a five minute period. 
