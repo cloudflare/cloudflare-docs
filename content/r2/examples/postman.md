@@ -58,7 +58,7 @@ To verify the token:
 
 The Postman collection uses AWS SigV4 authentication to complete the handshake.
 
-![ListBuckets in Postman](/r2/static/postman-r2-list-buckets.png)
+![Follow the instructions above to access ListBuckets in the Postman dashboard](/r2/static/postman-r2-list-buckets.png)
 
 You should see a `200 OK` response with a list of existing buckets. If you receive an error, ensure your R2 subscription is active and Postman variables are saved correctly.
 
