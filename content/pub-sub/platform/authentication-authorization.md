@@ -37,7 +37,7 @@ To generate a single token for a broker named `example-broker` in `your-namespac
 For example, to generate five valid tokens with an automatically generated Client ID for each token:
 
 ```bash
-# GET /accounts/:account_id/brokers/namespaces/:namespace_name/brokers/:broker_name/credentials
+# GET /accounts/:account_id/pubsub/namespaces/:namespace_name/brokers/:broker_name/credentials
 curl https://api.cloudflare.com/client/v4/accounts/<abcdef>/brokers/namespaces/your-namespace/brokers/example-broker/credentials?number=5&type=TOKEN&topicAcl="#"
 ```
 
