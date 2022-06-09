@@ -29,7 +29,7 @@ To do this:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?account=r2).
 2. In **Account Home**, select **R2**.
 3. In **R2**, under **Manage R2 API Tokens** on the right side of the dashboard, copy your Cloudflare account ID.
-4. Go back to the Postman dashboard.
+4. Go back to the [Postman dashboard](https://www.postman.com/cloudflare-r2/workspace/cloudflare-r2/collection/20913290-14ddd8d8-3212-490d-8647-88c9dc557659?action=share&creator=20913290&ctx=documentation).
 5. Set the **CURRENT VALUE** of `account-id` to your Cloudflare account ID and select **Save**.
 
 Next, generate an R2 API token:
