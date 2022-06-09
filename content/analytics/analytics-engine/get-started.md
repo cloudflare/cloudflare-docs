@@ -83,7 +83,7 @@ SELECT
 FROM analytics_engine
 WHERE 
   dataset = 'WEATHER'
-  AND timestamp >= now() - 86400
+  AND timestamp >= now() - INTERVAL '1' DAY
   AND metric_1 > 0
 GROUP BY t, city
 ORDER BY t, avg_humidity desc
