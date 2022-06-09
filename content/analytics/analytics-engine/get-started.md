@@ -59,7 +59,7 @@ The SQL API is available as an HTTP rest endpoint at `/v4/$accountTag/analytics_
 
 In the following example, we use the SQL API to query the top 10 cities that had the highest average humidity readings when the temperature was above 0:
 
-```bash
+```sql
 SELECT label_1 as city, avg(metric_2) as avg_humidity
 FROM analytics_engine
 WHERE 
