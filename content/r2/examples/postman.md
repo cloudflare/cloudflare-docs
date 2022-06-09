@@ -22,7 +22,7 @@ In the [Postman dashboard](https://www.postman.com/cloudflare-r2/workspace/cloud
 
 ![Select **Variables** in the Postman dashboard to continue with the example](/r2/static/postman-variables.png)
 
-To execute basic operations, you must set the `account-id`, `r2-access-key`, and `r2-secret-id` variables in the **Variables** tab.
+To execute basic operations, you must set the `account-id`, `r2-access-key`, and `r2-secret-id` variables in the Postman dashboard > **Variables**.
 
 To do this:
 
@@ -37,7 +37,7 @@ Next, generate an R2 API token:
 1. Go back to the Cloudflare dashboard > **R2**.
 2. On the right hand sidebar, select **Manage R2 API Tokens**.
 3. Select **Create API token**.
-4. Name your token **Postman** by selecting the pencil icon next to the API name and grant it the `Edit` permission.
+4. Name your token **Postman** by selecting the pencil icon next to the API name and grant it the **Edit** permission.
 
 ![Generate an R2 API token for Postman by following the instructions above](/r2/static/postman-r2-api-token.png)
 
@@ -92,7 +92,8 @@ After a few seconds, you should receive a `200 OK` response.
 
 It only takes a few more more clicks to download our cat friend using the `GetObject` request.
 
-1. Select the **Cloudflare R2** folder dropdown arrow > **Objects** folder dropdown arrow > **`GET`GetObject** and select **Send**.
+1. Select the **Cloudflare R2** folder dropdown arrow > **Objects** folder dropdown arrow > **`GET`GetObject**.
+2. Select **Send**.
 
 ![Follow the instructions above to GetObject in the Postman dashboard](/r2/static/postman-r2-get-object.png)
 
