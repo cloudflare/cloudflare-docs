@@ -159,6 +159,10 @@ async function handleRequest(request) {
 - {{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}{{</code>}}
 
   - Specifies that the object should only be returned given satisfaction of certain conditions in the `R2Conditional`. Refer to [Conditional operations](#conditional-operations).
+  
+- {{<code>}}range{{<param-type>}}R2Range{{</param-type>}}{{</code>}}
+
+  - Specifies that only a specific length (from an optional offset) or suffix of bytes from the object should be returned. Refer to [Ranged reads](#ranged-reads).
 
 {{</definitions>}}
 
