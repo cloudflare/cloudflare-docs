@@ -366,7 +366,7 @@ This metadata includes:
 - a `receivedTimestamp`, set when Pub/Sub first parses and deserializes the message
 - the `mid` (“message id”) of the message. This is a unique ID allowing Pub/Sub to track messages sent to your Worker, including which messages were dropped (if any). The `mid` field is immutable and returning a modified or missing `mid` will likely cause messages to be dropped.
 
-This metadata, including their JavaScript types and whether they are immutable (“`readonly`”), are expressed as the PubSubMessage interface in the [Cloudflare Workers TypeScript type definitions]([https://github.com/cloudflare/workers-types](https://github.com/cloudflare/workers-types))
+This metadata, including their JavaScript types and whether they are immutable (“`readonly`”), are expressed as the PubSubMessage interface in the [Cloudflare Workers TypeScript type definitions](https://github.com/cloudflare/workers-types).
 
 The `PubSubMessage` type may grow to include additional fields over time, and we recommend importing `cloudflare/workers-types` to ensure your code can benefit from any future changes.
 
@@ -382,7 +382,7 @@ Messages sent to your on-publish Worker may be batched: each batch is an array o
 
 - Only inspect the topics you need to to reduce the compute your Worker needs to do.
 - Use `ctx.waitUntil` if you need to write to storage or communicate with remote services and avoid increasing message delivery latency while waiting on those operations to complete.
-- Catch exceptions using [try-catch]([https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch)) - if your on-publish hook is able to “fail open”, you should use the `catch` block to return messages to the Broker in the event of an exception so that messages aren’t dropped.
+- Catch exceptions using [try-catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) - if your on-publish hook is able to “fail open”, you should use the `catch` block to return messages to the Broker in the event of an exception so that messages aren’t dropped.
 
 ## Troubleshoot Workers integrations
 
