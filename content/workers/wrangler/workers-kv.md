@@ -4,16 +4,29 @@ title: Workers KV
 weight: 3
 ---
 
-## Workers KV
+# Workers KV
 
-The Wrangler `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/).
+Workers KV is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare's data centers after access. 
+
+To learn more about how KV works, refer to [How KV works](/workers/learning/how-kv-works).
+
+To review the API spec, refer to the [KV in Runtime API](/workers/runtime-apis/kv).
+
+## Get started
+
+You can interact with KV via:
+
+* [Wrangler(command line)]().
+* The [Cloudflare dashboard]().
+
+### Get started with Wrangler
+
+Wrangler allows you to create, list, and delete KV namespaces. It also allows you to `PUT`, `LIST`, `GET`, and `DELETE` entries within your KV namespace.
 
 KV operations are scoped to your account, so in order to use any of these commands, you must:
 
 1. Configure an `account_id` in your project's `wrangler.toml` file or set the `CLOUDFLARE_ACCOUNT_ID` environment variable.
 2. Run all `wrangler kv:<COMMAND>` operations in your terminal from the project's root directory.
-
-### Get started
 
 To use Workers KV with your Worker, the first thing you must do is create a KV namespace. This is done with the `kv:namespace` subcommand.
 
