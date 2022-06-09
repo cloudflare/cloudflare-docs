@@ -5,71 +5,90 @@ title: Direct Uploads
 
 # Direct Uploads
 
-With Direct Uploads, you can bring your prebuilt assets right to Pages. By using your own continuous integration (CI) tooling to handle the build, deploy your website's assets right to the Cloudflare edge network.
+With Direct Uploads, you can bring your prebuilt assets right to Pages. Bring your own Continuous Integration (CI) tooling to handle the build and deploy your website's assets straight to the Cloudflare edge network.
 
 ## Methods to uploading
 
 Once you have your prebuilt assets ready, there are two ways to begin uploading: 
 
 * [Wrangler](/pages/platform/direct-upload/#wrangler-cli).
-* [Drag and drop](/pages/platform/direct-upload/#drag-and-drop).
+* [Drag and Drop](/pages/platform/direct-upload/#drag-and-drop).
 
 {{<Aside type= "note">}}
   
-Within a project, you can switch between creating deployments with either method. However, you cannot push additional changes through your standard Git integration within the same project if that repository is already using Direct Uploads.
+Within a direct uploads project, you can switch between creating deployments with either Wrangler or Drag and Drop. However, you cannot create deployments with these methods on a standard Git integrated project. 
 
 {{</Aside>}}
 
 ## Supported file types
 
 Below is the supported file types for each Direct Upload options:
-* Wrangler: A single folder of assets(for example, HTML, CSS, JS, PNG, SVG).
-* Drag and drop: Zip or folder of assets(for example, HTML, CSS, JS, PNG, SVG).
+* Wrangler: A single folder of assets
+* Drag and drop: A zip file or single folder of assets
 
 ## Wrangler CLI 
 
 ### Set up Wrangler
 
-To begin, [install and set up the latest version of Wrangler](/workers/wrangler/get-started/). Note that Pages integration with Wrangler relies on Wrangler 2.
+To begin, [install and set up the latest version of Wrangler](/workers/wrangler/get-started/). Note that Pages relies on Wrangler 2.
 
-#### Deploy your project with Wrangler
+#### Create your project
 
-Run the following Wrangler command to create a project: 
-
-```sh
-wrangler pages publish <project directory>
-```
-
-After running `wrangler pages publish`, you will be prompted to choose whether you would like to publish assets for an existing project or if you would like to create a new one. To begin a new project, select create a new project, continue to name your project, and deploy. Subsequent deployments will reuse these values (saved in your `node_modules/.cache/wrangler` folder).
-
-After you deploy your Project, go to your newly created Pages project in the Cloudflare dashboard to access deployment details, including its shareable and unique preview URL. 
-
-#### Create a new deployment
-
-After you have deployed your project, you can continue to add new deployments to that project. Deployments will be available at the following convention: `<DEPLOYMENT>.<PROJECT_NAME>.pages.dev`. 
+Once you have logged into Wrangler, it’s time to create your first project. Execute the following command:
 
 ```sh
-wrangler pages publish <DIRECTORY> --branch=[BRANCH]
+$ wrangler pages project create
 ```
+
+You will then be prompted to specify the project name. Your project will be served at `<project-name>.pages.dev`. You will also be prompted to specify your production branch. 
+
+Subsequent deployments will reuse both of these values (saved in your `node_modules/.cache/wrangler` folder).
+
+
+#### Publish your assets 
+From here, you have created an empty project and can now publish your assets for your first deployment and for all subsequent deployments in your production environment. To do this, execute the following command:
+
+```sh
+$ wrangler pages publish <output-directory>
+```
+
+Your production deployment will be available at `<project-name>.pages.dev`.
+  
+{{<Aside type= "note">}}
+
+Before using the publish command, you will need to make sure you are inside the project. If not, you can also pass in the project path. 
+
+{{</Aside>}}
+ 
+  
+However, to publish assets to a preview environment, you can execute: 
+
+```sh
+$ wrangler pages publish <output-directory> --branch=<branch-name>
+```
+
+For every branch you create, a branch alias will be available to you at `<branch-name>.<project-name>.pages.dev`. 
 
 {{<Aside type= "note">}}
 
-If you are in a Git workspace, Wrangler will automatically pull the branch information for you. Otherwise, you will be prompted to choose your branch (which will then determine if the deployment is production or preview).
+If you are in a Git workspace, Wrangler will automatically pull the branch information for you. Otherwise, you will need to specify your branch in this command.
 
 {{</Aside>}}
+
+If you would like to streamline the project creation and asset publishing steps, you can also use the publish command to both create and publish assets at the same time. If you execute this command first, you will still be prompted to specify your project name and production branch. These values will still be cached for subsequent deployments as stated above. If the cache already exists and you would like to create a new project, you will need to run the [create command](#create-your-project). 
 
 #### Other useful commands
 
 If you would like to use Wrangler to obtain a list of all available projects for direct upload, use:
 
 ```sh
-wrangler pages project list
+$ wrangler pages project list
 ```
 
 If you would like to use Wrangler to obtain a list of all unique preview URLs for a particular project, use:
 
 ```sh
-wrangler pages deployment list
+$ wrangler pages deployment list
 ```
 
 For step-by-step directions on how to use Wrangler and continuous integration tools like GitHub Actions, Circle CI, and Travis CI together for continuous deployment, refer to [Use Direct Upload with continuous integration](/pages/how-to/use-direct-upload-with-continuous-integration/). 
@@ -84,17 +103,20 @@ To deploy with drag and drop:
 2. In **Account Home**, select your account > **Pages**.
 3. Select **Create a project** > **Direct Upload** > enter your project name in the provided field > **Create project**. 
 
-Your project will be served from `<PROJECT_NAME>.pages.dev`. Next drag and drop your build output directory into the uploading frame. Once your files have been successfully uploaded, select **Save and Deploy** and continue to your newly deployed project. 
+Your project will be served from `<project-name>.pages.dev`. Next drag and drop your build output directory into the uploading frame. Once your files have been successfully uploaded, select **Save and Deploy** and continue to your newly deployed project. 
 
 #### Create a new deployment
 
-After you have your project created, select **Create a new deployment** to begin a new version of your site. Next, choose whether your new deployment will be made to your production or preview environment. If choosing preview, you can create a new deployment target or enter an existing one. Deployment targets allow you to access all changes at one preview subdomain with the following convention: `<DEPLOYMENT_TARGET>.<PROJECT_NAME>.pages.dev`. 
+After you have your project created, select **Create a new deployment** to begin a new version of your site. Next, choose whether your new deployment will be made to your production or preview environment. If choosing preview, you can create a new deployment branch or enter an existing one. 
 
 ## Troubleshoot
 
 ### Limits
+In regards to file count: 
+* For Wrangler uploads: there is a 20,000 file limit
+* For Drag and Drop uploads: there is a 1,000 file limit 
 
-There is a 1,000 file [limits](/pages/platform/limits/#files) in place for both drag and drop and Wrangler upload in regards to file count and a 25 MiB limit in place for individual file size. 
+On both upload methods, there is a 25 MiB limit in place for individual file size. 
 
 If using the drag and drop method, a red warning symbol will appear next to an asset if too large and thus unsuccessfully uploaded. In this case, you may choose to delete that asset but you cannot replace it. In order to do so, you must reupload the entire project.
 
