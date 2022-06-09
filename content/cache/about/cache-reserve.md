@@ -31,7 +31,7 @@ To Enable Cache Reserve via API, please refer to the API docs (link missing). En
 
 ## Limits
 
-- Cache Reserve may cache larger files than the standard CDN cache limits (link missing) (up to [R2 limits](https://developers.cloudflare.com/r2/platform/limits/)). However, serving these files may tend to incur extra operation costs because all requests for these files will attempt to use Cache Reserve.
+- Cache Reserve may cache larger files than the standard CDN [cache limits](https://developers.cloudflare.com/cache/about/default-cache-behavior/#customization-options-and-limitations) (up to [R2 limits](https://developers.cloudflare.com/r2/platform/limits/)). However, serving these files may tend to incur extra operation costs because all requests for these files will attempt to use Cache Reserve.
 - How long something will remain in Cache Reserve, how long it will be considered fresh, is determined by `Cache-Control` headers set at your origin. If no directive is set (`s-maxage`, etc), the default applied to the asset will be 30 days. Following the expiration of the retention period, Cloudflare will revalidate the asset when a subsequent request arrives in Cache Reserve for the asset.
 - The retention period of an asset is how long we will keep the asset in Cache Reserve before marking it for eviction. If an asset is not requested for more than 30 days, it may be evicted from Cache Reserve.
 - Origin Range requests are not supported at this time from Cache Reserve.
