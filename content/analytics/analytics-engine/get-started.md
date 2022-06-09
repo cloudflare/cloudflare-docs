@@ -19,7 +19,7 @@ To get started using the Workers Analytics Engine, you need to create a dataset 
 ```bash
 [analytics_engine]
 bindings = [
-    { name = <EVENT_NAME> }
+    { name = "<EVENT_NAME>" }
 ]
 ```
 
