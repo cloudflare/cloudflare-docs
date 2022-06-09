@@ -241,7 +241,7 @@ Whichever method you choose, your record must be proxied through Cloudflare (ora
 
 ---
 
-## 8. Publish your project
+## 7. Publish your project
 
 With your project configured, you can now publish your Worker.
 
