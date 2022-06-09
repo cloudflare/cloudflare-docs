@@ -1,5 +1,5 @@
 ---
-pcx-content-type: navigation
+pcx-content-type: reference
 title: Reference
 weight: 10
 ---
