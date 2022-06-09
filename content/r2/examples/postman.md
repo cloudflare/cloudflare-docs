@@ -43,7 +43,7 @@ Next, generate an R2 API token:
 
 Guard this token and the **Access Key ID** and **Secret Access Key** closely. You will not be able to review these values again after finishing this step. Anyone with this information can fully interact with all of your buckets.
 
-After you have created you API token in the Cloudflare dashboard:
+After you have created your API token in the Cloudflare dashboard:
 
 1. Go to the [Postman dashboard](https://www.postman.com/cloudflare-r2/workspace/cloudflare-r2/collection/20913290-14ddd8d8-3212-490d-8647-88c9dc557659?action=share&creator=20913290&ctx=documentation) > **Variables**.
 2. Copy `Access Key ID` value from the Cloudflare dashboard and paste it into Postman’s `r2-secret-id` variable value and select **Save**.
