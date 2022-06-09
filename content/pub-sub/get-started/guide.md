@@ -143,7 +143,7 @@ In the example above, a broker is created with an endpoint of `mqtts://example-b
 
 * Our Pub/Sub (MQTT) Broker is reachable over MQTTS (MQTT over TLS) - port 8883
 * The hostname is `example-broker.my-namespace.cloudflarepubsub.com`
-* [Token authentication](https://developers.cloudflare.com/pub-sub/platform/authentication-authorization/) is required to clients to connect.
+* [Token authentication](/pub-sub/platform/authentication-authorization/) is required to clients to connect.
 
 ## 5. Create credentials for your broker
 
