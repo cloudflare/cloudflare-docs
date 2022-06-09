@@ -24,7 +24,7 @@ For the vast majority of Cloudflare Zero Trust features to work, you need to spe
 | -------------- | ---------- |
 | `organization` | string     |
 
-**Description.** Instructs the client to register device with your organization. Registration requires authentication via an [IDP](/cloudflare-one/identity/idp-integration/) or [Service Auth](/cloudflare-one/identity/service-auth/).
+**Description.** Instructs the client to register device with your organization. Registration requires authentication via an [IDP](/cloudflare-one/identity/idp-integration/) or [Service Auth](/cloudflare-one/identity/service-tokens/).
 
 **Value:** Your [team name](/cloudflare-one/glossary/#team-name).
 
@@ -129,7 +129,7 @@ This parameter replaces the old `enabled` property, which can no longer be used 
 Devices that connect to Cloudflare Zero Trust with Service Token authentication are not subject to identity based rules.
 {{</Aside>}}
 
-Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a pre-generated [Service Token](/cloudflare-one/identity/service-auth/service-tokens/).
+Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a pre-generated [Service Token](/cloudflare-one/identity/service-tokens/).
 
 Both a `auth_client_id` and `auth_client_secret` are required when using this authentication method.
 
@@ -139,7 +139,7 @@ Both a `auth_client_id` and `auth_client_secret` are required when using this au
 | ---------------- | ---------- |
 | `auth_client_id` | string     |
 
-**Description.** The automatically generated ID when you created your [Service Token](/cloudflare-one/identity/service-auth/service-tokens/).
+**Description.** The automatically generated ID when you created your [Service Token](/cloudflare-one/identity/service-tokens/).
 
 **Value:** `Client ID` from your service token.
 
@@ -149,7 +149,7 @@ Both a `auth_client_id` and `auth_client_secret` are required when using this au
 | -------------------- | ---------- |
 | `auth_client_secret` | string     |
 
-**Description.** The automatically generated secret when you created your [Service Token](/cloudflare-one/identity/service-auth/service-tokens/).
+**Description.** The automatically generated secret when you created your [Service Token](/cloudflare-one/identity/service-tokens/).
 
 **Value:** `Client Secret` from your service token.
 
