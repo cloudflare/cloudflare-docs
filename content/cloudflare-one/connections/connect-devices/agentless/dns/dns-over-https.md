@@ -8,7 +8,7 @@ weight: 2
 
 With Cloudflare Gateway, you can filter DNS over HTTPS (DoH) requests by location or by user without needing to install the WARP client on your devices.
 
-Location-based policies require that you send DNS requests to a [location-specific DoH endpoint](#configure-browser-for-doh), while identity-based policies require that requests include a [user-specific DoH token](#filter-doh-requests-by-user).
+Location-based policies require that you send DNS requests to a [location-specific DoH endpoint](#filter-doh-requests-by-location), while identity-based policies require that requests include a [user-specific DoH token](#filter-doh-requests-by-user).
 
 ## Filter DoH requests by location
 
@@ -99,13 +99,13 @@ As of today, Safari does not support DNS over HTTPS.
 </div>
 </details>
 
-Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [Location selector](/cloudflare-one/policies/filtering/dns-policies/#location).
+Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [Location selector](/cloudflare-one/connections/connect-devices/agentless/dns/locations).
 
 ## Filter DoH requests by user
 
 In order to filter DoH queries based on user identity, each query must include a user-specific authentication token. If you have several devices per user and want to apply device-specific policies, you will need to map each device to a different email.
 
-Currently, authentication tokens can only be generated through the API. You can run this [interactive Python script]() which walks you through the procedure, or follow the steps described below.
+Currently, authentication tokens can only be generated through the API. You can run this [interactive Python script](/cloudflare-one/static/documentation/connections/authenticated-doh.py) which automates the setup procedure, or follow the steps described below.
 
 ### 1. Create a service token for the account
 
