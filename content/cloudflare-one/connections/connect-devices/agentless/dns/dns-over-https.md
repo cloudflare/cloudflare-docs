@@ -248,7 +248,7 @@ The response contains a unique DoH token associated with the user.
 Send DoH queries to the resolver at `https://<ACCOUNT_ID>.cloudflare-gateway.com/dns-query`, making sure to include the user's DoH token in the `CF-Authorization` header.
 
 ```bash
-curl 'https://<ACCOUNT_ID>.cloudflare-gateway.com/dns-query?name=example.com' \
+curl -s 'https://<ACCOUNT_ID>.cloudflare-gateway.com/dns-query?name=example.com' \
      -H 'accept: application/dns-json' \
      -H 'CF-Authorization: <USER_DOH_TOKEN>' | jq
 ```
@@ -260,9 +260,6 @@ Your DNS queries will now be sent to Gateway for filtering. If the site is block
 <div>
 
 ```bash
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100   187  100   187    0     0    968      0 --:--:-- --:--:-- --:--:--  1010
 {
   "Status": 0,
   "TC": false,
