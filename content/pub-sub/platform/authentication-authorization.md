@@ -55,7 +55,7 @@ This will return an array of Client IDs and signed JSON Web Tokens. Each Client 
 To configure an MQTT client to connect to Pub/Sub, you need:
 
 * Your Broker hostname - e.g. `your-broker.your-namespace.cloudflarepubsub.com` and port (`8883` for MQTT)
-* A Client ID - this must be either the Client ID associated with your token, or left empty. Some clients require a Client ID, and others generate a random Client ID. You will not be able to connect if the Client ID is mismatched.
+* A Client ID - this must be either the Client ID associated with your token, or left empty. Some clients require a Client ID, and others generate a random Client ID. **You will not be able to connect if the Client ID is mismatched**.
 * A username - Pub/Sub does not require you to specify a username. You can leave this empty, or for clients that require one to be set, the text `PubSub` is typically sufficient.
 * A "password" - this is a valid JSON Web Token (JWT) received from the API, _specific to the Broker you are trying to connect to_.
 
