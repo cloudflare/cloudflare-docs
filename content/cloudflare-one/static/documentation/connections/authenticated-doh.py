@@ -9,17 +9,17 @@ from pprint import pprint
 verbose = os.environ.get('VERBOSE', False)
  
  
-def check_for_command(command, install):
+def check_for_command(command):
     try:
         subprocess.check_output(["command", "-v", command])
     except:
         print(
-            f"Couldn't find {command} command. Please install with `{install}`")
+            f"Couldn't find required {command} command.")
         exit(1)
  
  
-check_for_command("wg", "brew install wireguard-tools")
-check_for_command("curl", "brew install curl")
+check_for_command("jq")
+check_for_command("curl")
  
  
 def read_string_option(env_name, human_name):
