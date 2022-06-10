@@ -2,7 +2,7 @@
 title: 2022-06-10 – Emergency
 type: table
 pcx-content-type: changelog
-weight: 904
+weight: 902
 layout: list
 meta:
   title: 2022-06-10 – Emergency Release
