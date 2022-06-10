@@ -60,7 +60,7 @@ def request_list_service_tokens():
  
 def request_enable_service_token_for_doh(service_token_id):
     url = f"{CF_API}/{account_tag}/access/organizations/doh/{service_token_id}"
-    return request_post(url)
+    return request_post(url,"")
  
  
 def request_doh_token(account_tag, user_id, client_id, client_secret):
