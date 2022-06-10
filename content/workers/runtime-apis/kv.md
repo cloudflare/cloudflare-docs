@@ -13,6 +13,8 @@ Learn more about [How KV works](/workers/learning/how-kv-works/).
 
 To use Workers KV, you must create a KV namespace and add a [binding](/workers/runtime-apis/kv/#kv-bindings) to your Worker. Refer to the [instructions for Wrangler KV commands](/workers/wrangler/cli-wrangler/commands/#kv) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces) to get started.
 
+The descriptions of KV methods below also contain links to Wrangler or REST API equivalents where appropriate, but using KV from your Worker is generally better for latency, scalability, and availability.
+
 ---
 
 ## Methods
