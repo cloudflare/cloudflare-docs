@@ -6,15 +6,33 @@ weight: 4
 
 # Create scheduled events
 
-When you want to customize the behavior of a waiting room for a specific period of time — such as changing the queueing method or increasing the total active users — set up a **scheduled event**.
+When you want to customize the behavior of a waiting room for a specific period of time — such as changing the queueing method or increasing the total active users — set up a **scheduled event**. You can do this from the dashboard or via the API.
 
 Any properties set on the event will override the default property on the waiting room for the duration of the event.
 
 {{<Aside type="note">}}Only some customers can support scheduled events with their waiting rooms. For more details, refer to our [Plans](/waiting-room/plans/) page.{{</Aside>}}
 
-## Create an event
+## Create an event from the dashboard
 
-At the moment, you can only create an event using the API.
+1.  Within your application, go to **Traffic** > **Waiting Rooms**.
+2.  Expand a Waiting Room  and click **Schedule Event**.
+3.  Customize the details for your event: name the event, add a description (optional), and select a Start Date Time and an End Date Time.
+4.  You can also enable the pre-queuing — in this case you need to define a pre-queuing time. And you can also select **Shuffle at Event Start** and all users in the pre-queue will be randomly admitted at event start.
+5.  Click **Next**.
+6.  In the **Settings** section, you can define new values for your Total active users, New users per minute, Session duration, Session Renewal, and Queuing Method. For each of these settings you also have the option to always inherit the values defined in your waiting room. With this option, if you change the settings of your base Waiting Room, the corresponding Event setting will update as well.
+
+    {{<Aside type="note">}}If you choose to override the values of Total active users, you must also override the number of New users per minute, and vice versa.{{</Aside>}}
+
+7.  Click **Next**.
+8.  In the customization section, you can select Always inherit your Waiting Room’s template (default) or you can override it with a Custom Event Template. In this case, you need to import your own template. M​ake sure to preview the result before continuing.
+9.  Click **Next** and review your Event details and settings.
+10.  Click **Save**.
+
+In your Waiting Room page, in the **Next Event** column you can visualize the date of the next event scheduled. This columns will read `N/A` in case there is no event scheduled for that waiting room. You can always suspend, edit or delete your event.
+
+{{<Aside type="note">}}You have a limit of five events per waiting room.{{</Aside>}}
+
+## Create an event via API
 
 To create an event, make a [POST request](https://api.cloudflare.com/#waiting-room-create-event) including [required and optional parameters](#properties). Any properties set on the event will override the default property on the waiting room for the duration of the event.
 
@@ -26,9 +44,9 @@ If you need to create overlapping events, use different waiting rooms.
 
 {{</Aside>}}
 
-### Properties
+### Parameters
 
-Though most properties are identical to those on a [regular waiting room](https://api.cloudflare.com/#waiting-room-properties), there are a few unique to [creating an event](https://api.cloudflare.com/#waiting-room-create-event):
+Though most parameters are identical to those in a regular waiting room, there are a few unique to creating an event. For a complete list of event settings, please refer to [Create an Event](https://api.cloudflare.com/#waiting-room-create-event).
 
 - `name` (required): Unique name with alphanumeric characters, hyphens, and underscores.
 - `event_start_time` (required): ISO 8601 timestamp that marks the start of the event. At this time, queued users will be processed with the event's configuration. Must occur at least 1 minute before `event_end_time`.
