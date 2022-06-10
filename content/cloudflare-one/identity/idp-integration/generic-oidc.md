@@ -36,7 +36,7 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 7. Name your identity provider and fill in the required fields with the information obtained in Step 3.
 
-8. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if it is supported by your IdP. PKCE will be performed on all login attempts.
+8. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 
 9. Click **Save**.
 
