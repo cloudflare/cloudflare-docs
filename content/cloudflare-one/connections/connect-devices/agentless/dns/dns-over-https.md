@@ -146,7 +146,7 @@ highlight: [3, 4, 7]
 </div>
 </details>
 
-### 2. Enable DoH functionality for the account
+### 2. Enable DoH functionality for the service token
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/organizations/doh/<ID>" \
