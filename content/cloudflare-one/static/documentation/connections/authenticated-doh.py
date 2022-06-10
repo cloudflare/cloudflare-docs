@@ -80,11 +80,6 @@ def request_doh_token(account_tag, user_id, client_id, client_secret):
 def request_post(url, body):
     return request("POST", url, body)
  
- 
-def request_put(url, body):
-    return request("PUT", url, body)
- 
- 
 def request_get(url):
     return request("GET", url, None)
  
