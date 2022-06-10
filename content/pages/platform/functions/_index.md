@@ -181,7 +181,8 @@ const errorHandler = async ({ next }) => {
 };
 
 const hello = async ({ next }) => {
-  const response = await next();
+  const rawResponse = await next();
+  const response = new Response(rawResponse.body, rawResponse); // clone response to create mutable headers
   response.headers.set('X-Hello', 'Hello from functions Middleware!');
   return response;
 };
