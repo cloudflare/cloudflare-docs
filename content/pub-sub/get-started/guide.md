@@ -226,7 +226,7 @@ const options = {
 const client = mqtt.connect(brokerEndpoint, options)
 
 client.subscribe("example-topic")
-client.publish("example-topic", `message from ${client.options.clientId}: hello at ${Date.now()`)
+client.publish("example-topic", `message from ${client.options.clientId}: hello at ${Date.now()}`)
 client.on("message", function (topic, message) {
   console.log(`received message on ${topic}: ${message}`)
 })
