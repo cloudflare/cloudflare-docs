@@ -31,7 +31,7 @@ layout: list
       <td>100045B</td>
       <td>Anomaly:Header, Directory Traversal - Multiple Slashes, Relative Paths,
   CR, LF or NULL</td>
-      <td>Log</td>
+      <td>N/A</td>
       <td>Block</td>
     </tr>
   </tbody>
