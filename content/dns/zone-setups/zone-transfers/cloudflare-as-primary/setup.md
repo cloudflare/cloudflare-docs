@@ -117,9 +117,26 @@ It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-
 
 ## Step 6 - Add secondary nameservers within Cloudflare
 
-Using the information from your secondary DNS provider, [create `NS` records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) listing your secondary nameservers.
+Using the information from your secondary DNS provider, [create `NS` records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) on your zone apex listing your secondary nameservers.
 
-By default, Cloudflare ignores `NS` records that are added to the zone apex. Ask your account team to update your zone settings to respond with additional nameserver records.
+By default, Cloudflare ignores `NS` records that are added to the zone apex. By sending the following API call, you can enable the usage of apex NS records and Cloudflare nameservers will respond with them alongside the assigned Cloudflare nameservers of the zone.
+
+```bash
+curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_settings/use_apex_ns' \
+-H 'X-Auth-Email: <EMAIL>' \
+-H 'X-Auth-Key: <API_KEY>' \
+-H 'Content-Type: application/json' \
+--data '{
+  "id": "use_apex_ns",
+  "value": true
+}'
+```
+
+{{<Aside type="note">}}
+
+Cloudflare is actively working to support this setting within the dashboard.
+
+{{</Aside>}}
 
 ## Step 7 - Enable outgoing zone transfers
 
@@ -134,7 +151,7 @@ When you enable outgoing zone transfers, this will send a DNS NOTIFY message to 
 
 ### Using the API
 
-To link a primary zone to a peer using the API, send a [POST](https://api.cloudflare.com/#secondary-dns-primary-zone--enable-outgoing-zone-transfers) request.
+To enable outgoing zone transfers using the API, send a [POST](https://api.cloudflare.com/#secondary-dns-primary-zone--enable-outgoing-zone-transfers) request.
 
 ## Step 8 - Add secondary nameservers to registrar
 
