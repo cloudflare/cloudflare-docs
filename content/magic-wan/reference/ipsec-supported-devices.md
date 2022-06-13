@@ -10,7 +10,7 @@ title: Supported IPsec devices
 | [Aruba EdgeConnect](/magic-wan/tutorials/aruba-edgeconnect)   |   ✅           |    ✅           |
 | [Cisco Viptela](/magic-wan/tutorials/viptela)                 |   ✅           |    ✅           |
 | Cisco Meraki                                                  |   Compatibility on roadmap | Compatibility on roadmap   |
-| Cisco ASA                                                     |   Compatibility on roadmap | Compatibility on roadmap   |
+| Cisco ASA                                                     |   Compatibility on roadmap | Specifications compatible*   |
 | Fortinet                                   |   Specifications compatible* | Specifications compatible*   |
 | Prisma SD-WAN (Palo Alto)                  |   Specifications compatible* | Specifications compatible*   |
 | Riverbed                 |   Specifications compatible* | Specifications compatible*   |
