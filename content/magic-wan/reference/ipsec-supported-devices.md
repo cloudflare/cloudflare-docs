@@ -8,7 +8,7 @@ title: Supported IPsec devices
 | Appliance                                                     |  GRE tunnel    |  IPsec tunnel  |
 |---------------------------------------------------------------|----------------|----------------|
 | [Aruba EdgeConnect](/magic-wan/tutorials/aruba-edgeconnect)   |   ✅           |    ✅           |
-| [Cisco Viptela](/magic-wan/tutorials/vipetela)                |   ✅           |    ✅           |
+| [Cisco Viptela](/magic-wan/tutorials/viptela)                 |   ✅           |    ✅           |
 | Cisco Meraki                                                  |   Incompatible | Incompatible   |
 | Cisco ASA                                                     |   Incompatible | Incompatible   |
 | Fortinet                                   |   Specifications compatible* | Specifications compatible*   |
