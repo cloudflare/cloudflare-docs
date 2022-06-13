@@ -21,11 +21,7 @@ To add a member to your account:
     <summary>Available roles (non-Enterprise)</summary>
     <div>
     
-    If you have an account on a Free, Pro, or Business plan, users can have the following roles:
-    - **Super Administrator - All Privileges** (only one allowed): Can edit any Cloudflare setting, make purchases, update billing, and manage memberships.
-    - **Administrator** (unlimited): Can access the full account and configure dashboard, but cannot manage billing or account membership.
-    
-    The user who creates your account automatically becomes the Super Administrator. This is the only Super Administrator role allowed for your account. For more details, refer to [Change super administrator](#change-super-administrator).
+    {{<render file="_account-roles-non-ent.md">}}
 
     </div>
     </details>
@@ -42,9 +38,7 @@ To add a member to your account:
     2. Select another role.
     3. De-select **Administrator**.
 
-    For a full list of available roles and associated permissions, go to the [**Account Members**](https://dash.cloudflare.com/?to=/:account/members) page.
-
-    All roles and permissions have access to your account **Overview**.
+    For a full list of available roles and associated permissions, go to the [**Account Members**](https://dash.cloudflare.com/?to=/:account/members) page within the dashboard or refer to [Available roles](/fundamentals/get-started/setup/account-setup/account-roles/#enterprise-roles).
 
     </div>
     </details>
