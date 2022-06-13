@@ -42,8 +42,8 @@ To make requests against the Pub/Sub API, retrieve your API key.
 
 In your terminal, configure environmental variables with these keys, so you do not have to type them out in each command:
 
-```bash
-$ export CF_API_EMAIL="<you@example.com>"
+```sh
+$ export CF_API_EMAIL="you@example.com"
 $ export CF_API_KEY="<YOUR_API_KEY>"
 ```
 
@@ -53,7 +53,7 @@ Once you have your credentials, you will also need your [Cloudflare Account ID](
 
 Back in your terminal, add your Account ID as an environmental variable.
 
-```bash
+```sh
 $ export CF_ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
 ```
 
