@@ -26,7 +26,7 @@ import { envs } from "@cloudflare/pages-plugin-stytch/api";
 export const onRequest: PagesFunction = stytchPlugin({
   project_id: "YOUR_STYTCH_PROJECT_ID",
   secret: "YOUR_STYTCH_PROJECT_SECRET",
-  env: env.live
+  env: envs.live
 });
 ```
 

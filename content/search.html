@@ -15,6 +15,7 @@ layout: home
   <div class="coveo-main-section">
     <div class="coveo-facet-column">
       <div class="CoveoDynamicFacet" data-title="Source" data-field="@customer_facing_source" data-id="source" data-number-of-values="" data-sort-criteria="score"></div>
+      <div class="CoveoDynamicFacet" data-title="Product" data-field="@product" data-number-of-values="5" data-sort-criteria="occurrences"></div>
       <div class="CoveoDynamicFacet" data-field="@language" data-number-of-values="" data-title="Language" data-sort-criteria="score"></div>
     </div>
     <div class="coveo-results-column">
@@ -59,8 +60,9 @@ layout: home
               </div>
               <div class="coveo-result-row" style="margin-top:10px;">
                 <div class="coveo-result-cell">
-                  <span class="CoveoFieldValue" data-field="@customer_facing_source" data-text-caption="Source" style="margin-right:20px;"></span>
-                  <span class="CoveoFieldValue" data-field="@language" data-text-caption="Language" style="margin-right:30px;"></span>
+                  <span class="CoveoFieldValue" data-field="@customer_facing_source" data-text-caption="Source:"></span>
+                  <span class="CoveoFieldValue" data-field="@product" data-split-values="true" data-text-caption="Product:"></span>
+                  <span class="CoveoFieldValue" data-field="@language" data-text-caption="Language:"></span>
                 </div>
               </div>
               <div class="coveo-result-row" style="margin-top:10px;">

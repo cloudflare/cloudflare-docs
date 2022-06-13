@@ -17,7 +17,7 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 **Before you start**
 
-- [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+- [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/)
 
 **⏲️ Time to complete:**
 

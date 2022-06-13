@@ -15,6 +15,7 @@ You can export a single image from Cloudflare Images. This feature is supported 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Click **Images**.
 3. Find the image you want to export and click **Export**.
+4. (Optional) If you want to export more than one image, click the checkbox next to the images you want to export and then **Export selected**.
 
 Your image will be downloaded to your computer.
 

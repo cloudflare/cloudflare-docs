@@ -6,11 +6,11 @@ weight: 11
 
 # Limits
 
-Cloudflare limits the number of sites for which you can track web analytics as well as the number of rules allowed for each plan type. Refer to the following tables for more information.
+Cloudflare limits the number of sites for which you can track web analytics, as well as the number of rules allowed for each plan type. Refer to the following tables for more information.
 
-## Site Limits
+## Site limits
 
-Cloudflare limits the number of sites for which you can track web analytics. Limits depend on whether a site uses Cloudflare's proxy.
+Cloudflare limits the number of sites for which you can track web analytics when they are not proxied by Cloudflare.
 
 {{<table-wrap>}}
 
@@ -21,7 +21,7 @@ Cloudflare limits the number of sites for which you can track web analytics. Lim
 
 {{</table-wrap>}}
 
-## Rules Limits
+## Rules limits
 
 Cloudflare limits the number of Web Analytics rules you can have by plan type. For plans with a limit of zero, Web Analytics injects the JS snippet on all subdomains.
 

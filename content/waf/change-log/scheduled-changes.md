@@ -24,14 +24,14 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-05-09</td>
-      <td>2022-05-16</td>
-      <td>Cloudflare Specials</td>
-      <td>...e1787c92</td>
       <td>N/A</td>
-      <td>Microsoft Exchange - Code Injection</td>
       <td>N/A</td>
-      <td>Block</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
     </tr>
   </tbody>
 </table>

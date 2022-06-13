@@ -30,7 +30,7 @@ main = "./some-entrypoint"
 account_id = ""
 
 # Whether you use `<NAME>.<SUBDOMAIN>.workers.dev` to
-# test and deploy your worker.
+# test and deploy your Worker.
 # @default `true`
 workers_dev = true
 
@@ -43,15 +43,15 @@ workers_dev = true
 # set to the Usage Model configured in the Cloudflare dashboard for that Worker.
 usage_model = "bundled" | "unbound"
 
-# A list of routes that your worker should be published to.
+# A list of routes that your Worker should be published to.
 # Only one of `routes` or `route` is required.
-# Only required when `workers_dev` is false, and there is no scheduled worker (refer to `triggers`)
+# Only required when `workers_dev` is false, and there is no scheduled Worker (refer to `triggers`)
 routes = ["routes"] | [{ pattern = "*", zone_id = "ZONE_ID" }] | [{ pattern = "*", zone_name = "ZONE_NAME" }]
 
 # The same as routes, but only one.
 route = "routes" | { pattern = "*", zone_id = "ZONE_ID" } | { pattern = "*", zone_name = "ZONE_NAME" }
 
-# Lets you call workers periodically, much like a cron job.
+# Lets you call Workers periodically, much like a cron job.
 # More details: https://developers.cloudflare.com/workers/platform/cron-triggers
 # @default `{crons:[]}`
 [triggers]
@@ -68,30 +68,26 @@ KEY = "value"
 # To learn more about KV namespaces, refer to:
 # https://developers.cloudflare.com/workers/learning/how-kv-works
 # @default `[]`
+# @param {string} binding The binding name used to refer to the KV namespace
+# @param {string} id The ID of the KV namespace at the edge
+# @param {string} preview_id The ID of the KV namespace used during `wrangler dev`
 # not inherited
-kv_namespaces = [{
-  # The binding name used to refer to the KV namespace
-  binding = "TEST_NAMESPACE",
-  # The ID of the KV namespace at the edge
-  id = "",
-  # The ID of the KV namespace used during `wrangler dev`
-  preview_id = ""
-  }]
+kv_namespaces = [
+  { binding = "TEST_NAMESPACE", id = "", preview_id = "" }
+]
 
 # A list of Durable Objects that your Worker should be bound to.
-# To learn more about durable objects, refer to:
+# To learn more about Durable Objects, refer to:
 # https://developers.cloudflare.com/workers/learning/using-durable-objects
 # @default `{bindings:[]}`
+# @param {string} name The name of the binding used to refer to the Durable Object
+# @param {string} class_name The exported class name of the Durable Object
+# @param {string} script_name The script where the Durable Object is defined (if it is external to this Worker)
 # not inherited
 [durable_objects]
-  bindings = [{
-    # The name of the binding used to refer to the Durable Object
-    name = "TEST_OBJECT",
-    # The exported class name of the Durable Object
-    class_name = "",
-    # The script where the Durable Object is defined (if it is external to this Worker)
-    script_name = ""
-  }]
+  bindings = [
+    { name = "TEST_OBJECT", class_name = "", script_name = "" }
+  ]
 
 # A list of migrations that should be uploaded with your Worker.
 # These define changes in your Durable Object declarations.
@@ -108,15 +104,13 @@ kv_namespaces = [{
 
 # Specifies R2 buckets that are bound to this Worker environment.
 # @default `[]`
+# @param {string} binding The binding name used to refer to the R2 bucket in the Worker.
+# @param {string} bucket_name The name of this R2 bucket at the edge.
+# @param {string} preview_bucket_name The preview name of this R2 used during `wrangler dev`
 # not inherited
-r2_buckets  = [{
-  # The binding name used to refer to the R2 bucket in the worker.
-  binding = "TEST_BUCKET",
-  # The name of this R2 bucket at the edge.
-  bucket_name = "",
-  # The preview name of this R2 used during `wrangler dev`
-  preview_bucket_name =  ""
-}]
+r2_buckets  = [
+  { binding = "TEST_BUCKET", bucket_name = "", preview_bucket_name =  "" }
+]
 
 # Configures a custom build step to be run by Wrangler when building your Worker.
 # Refer to the [custom builds documentation](https://developers.cloudflare.com/workers/cli-wrangler/configuration#build)
@@ -128,32 +122,32 @@ r2_buckets  = [{
   command = "npm run build"
   # The directory in which the command is executed.
   cwd = "build_cwd"
-  # The directory to watch for changes while using wrangler dev, defaults to the current working directory
+  # The directory to watch for changes while using `wrangler dev`, defaults to the current working directory
   watch_dir = "build_watch_dir"
 
 # An ordered list of rules that define which modules to import,
 # and what type to import them as. You will need to specify rules
-# to use Text, Data, and CompiledWasm modules, or when you wish to
+# to use `Text`, `Data`, and `CompiledWasm` modules, or when you wish to
 # have a .js file be treated as an ESModule instead of CommonJS.
 [[rules]]
   type = "Text"
   globs = ["**/*.md"]
   fallthrough = true
 
-# A list of text files that your worker should be bound to. This is
-# the legacy way of binding to a text file. ES module workers should
+# A list of text files that your Worker should be bound to. This is
+# the legacy way of binding to a text file. ES module Workers should
 # do proper module imports.
 [text_blobs]
   TEXT = ""
 
-# A list of wasm modules that your worker should be bound to. This is
-# the legacy way of binding to a wasm module. ES module workers should
+# A list of wasm modules that your Worker should be bound to. This is
+# the legacy way of binding to a wasm module. ES module Workers should
 # do proper module imports.
 [wasm_modules]
   MODULE = "module.wasm"
 
-# A list of data files that your worker should be bound to. This is
-# the legacy way of binding to a data file. ES module workers should
+# A list of data files that your Worker should be bound to. This is
+# the legacy way of binding to a data file. ES module Workers should
 # do proper module imports.
 [data_blobs]
   DATA = ""
@@ -215,4 +209,12 @@ compatibility_flags = [
     "formdata_parser_supports_files"
 ]
 
+# A list of other Cloudflare services bound to this service.
+# @default `[]`
+# @param {string} binding The binding name used to refer to the bound service.
+# @param {string} service The name of the service.
+# @param {string} environment The environment of the service (For example, production, staging, etc) (optional).
+services = [
+  { binding = "TEST_BINDING", service = "", environment = "" }
+]
 ```

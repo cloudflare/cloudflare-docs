@@ -232,10 +232,9 @@ Here are some examples of how the logical operators can be implemented. `X`, `Y`
 
 - X OR Y OR Z - `{"where":{"or":[{X},{Y},{Z}]}}`
 
-- X AND (Y OR Z) - `{"where":{"and":[{X}, "or":[{Y},{Z}]]}}`
+- X AND (Y OR Z) - `{"where":{"and":[{X}, {"or":[{Y},{Z}]}]}}`
 
-- (X AND Y) OR Z - `{"where":{"and":[{X},{Y}] "or":[{Z}]}}`
-
+- (X AND Y) OR Z - `{"where":{"or":[{"and": [{X},{Y}]},{Z}]}}`
 
 Example request using cURL:
 

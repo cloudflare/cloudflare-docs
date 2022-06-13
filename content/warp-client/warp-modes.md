@@ -6,17 +6,17 @@ weight: 2
 
 # WARP modes
 
-The WARP client has several modes to better suit different connection needs:
+The WARP client has several modes to better suit different connection needs.
 
 ## 1.1.1.1
 
-1.1.1.1 is Cloudflare’s public DNS resolver. It offers a fast and private way to browse the Internet. It also offers an encrypted service through DNS over HTTPS (DoH) or DNS over TLS (DoT) for increased security and privacy.
+1.1.1.1 is Cloudflare’s public DNS resolver. It offers a fast and private way to browse the Internet. It also offers a DNS encryption service through DNS over HTTPS (DoH) or DNS over TLS (DoT) for increased security and privacy.
 
-Refer to [1.1.1.1 resolver](/1.1.1.1/) to learn more about this service.
+Refer to [1.1.1.1 resolver](/1.1.1.1/encryption/) to learn more about DNS encryption.
 
 ## 1.1.1.1 with WARP
 
-The WARP application uses [BoringTun](https://blog.cloudflare.com/boringtun-userspace-wireguard-rust/) to encrypt the traffic from your device and send it directly to Cloudflare’s edge network. This ensures your connection is secure and private and prevents third parties from accessing your traffic. If the site you are visiting is already a Cloudflare customer, the content is immediately sent to your device. If not, Cloudflare uses its global network of data centers to devise the shortest path to the site.
+The WARP application uses [BoringTun](https://blog.cloudflare.com/boringtun-userspace-wireguard-rust/) to encrypt and secure the traffic from your device, and send it directly to Cloudflare’s edge network. This ensures Internet traffic between your device and the Internet is secure and private, while also preventing third parties from accessing your traffic. If the site you are visiting is already a Cloudflare customer, the content is immediately sent to your device. If not, Cloudflare uses its global network of data centers to devise the shortest path to the site.
 
 Read more about WARP in our blog post [Introducing WARP: Fixing Mobile Internet Performance and Security](https://blog.cloudflare.com/1111-warp-better-vpn/).
 

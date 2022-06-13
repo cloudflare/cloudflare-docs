@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
 title: Functions (beta)
+layout: single
 ---
 
 # Functions (beta)
@@ -48,8 +49,8 @@ The following routes will be generated based on the file structure, mapping the 
     /api/todos => ./functions/api/todos/index.ts
     /api/todos/* => ./functions/api/todos/[id].ts
     /api/todos/*/** => ./functions/api/todos/[[path]].ts
-    /*/profile => ./functions/api/[username]/profile.ts
-    /** => ./functions/api/[[path]].ts
+    /api/*/profile => ./functions/api/[username]/profile.ts
+    /api/** => ./functions/api/[[path]].ts
 
 ### Path segments
 
@@ -315,7 +316,7 @@ Workers KV is Cloudflare's globally replicated key-value storage solution. Withi
 
 ### KV namespace locally
 
-While developing locally, you can interact with your KV namespace by add `-k, --kv [Namespace Binding]` to your run command. For example, if your namespace is bound to `TodoList`, you can access the KV namespace in your local dev by running `npx wrangler pages dev dist --kv TodoList`. The data from this namespace can be accessed using `context.env`.
+While developing locally, you can interact with your KV namespace by add `-k, --kv [Namespace binding]` to your run command. For example, if your namespace is bound to `TodoList`, you can access the KV namespace in your local dev by running `npx wrangler pages dev dist --kv TodoList`. The data from this namespace can be accessed using `context.env`.
 
 ```js
 export async function onRequest({ env }) {

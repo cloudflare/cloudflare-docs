@@ -6,9 +6,9 @@ weight: 1001
 layout: example
 ---
 
-We've provided an example Worker that exposes an R2 bucket to the Internet and demonstrates its functionality for storing and retrieving objects.
+Below is an example Worker that exposes an R2 bucket to the Internet and demonstrates its functionality for storing and retrieving objects.
 
-```js
+```ts
 interface Env {
   BUCKET: R2Bucket
 }
@@ -18,7 +18,7 @@ function parseRange(encoded: string | null): undefined | { offset: number, lengt
     return
   }
 
-  const parts = encoded.split('-')
+  const parts = encoded.split("bytes=")[1]?.split("-") ?? []
   if (parts.length !== 2) {
     throw new Error('Not supported to skip specifying the beginning/ending byte at this time')
   }
@@ -66,8 +66,9 @@ export default {
       }
 
       if (request.method === 'GET') {
+        const range = parseRange(request.headers.get('range'))
         const object = await env.BUCKET.get(objectName, {
-          range: parseRange(request.headers.get('range')),
+          range,
           onlyIf: request.headers,
         })
 
@@ -78,8 +79,10 @@ export default {
         const headers = new Headers()
         object.writeHttpMetadata(headers)
         headers.set('etag', object.httpEtag)
+        const status = object.body ? (range ? 206 : 200) : 304
         return new Response(object.body, {
           headers,
+          status
         })
       }
 

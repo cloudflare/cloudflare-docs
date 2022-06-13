@@ -6,6 +6,8 @@ weight: 11
 
 # Glossary
 
+Review definitions for Cloudflare Zero Trust terms.
+
 ## [Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/)
 
 Cloudflare Zero Trust the power of Cloudflare’s global network to your internal teams and infrastructure. Cloudflare Zero Trust empowers users with secure, fast and seamless access to any device on the Internet.
@@ -100,7 +102,7 @@ An identity provider (IdP or IDP) stores and manages users' digital identities. 
 
 An open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
 
-## [location](/cloudflare-one/connections/connect-networks/locations/)
+## [location](/cloudflare-one/policies/filtering/dns-policies/locations/)
 
 Locations are physical entities like offices, homes, retail stores, movie theatres or a data center.
 
