@@ -24,14 +24,15 @@ layout: list
   </thead>
   <tbody>
     <tr>
+      <td>2022-06-13</td>
+      <td>2022-06-20</td>
+      <td>Cloudflare Specials</td>
+      <td>...b7dab91a</td>
+      <td>100045B</td>
+      <td>Anomaly:Header, Directory Traversal - Multiple Slashes, Relative Paths,
+  CR, LF or NULL</td>
       <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>Block</td>
     </tr>
   </tbody>
 </table>
