@@ -38,7 +38,7 @@ To add a member to your account:
     2. Select another role.
     3. De-select **Administrator**.
 
-    For a full list of available roles and associated permissions, refer to [Available roles](/fundamentals/get-started/setup/account-setup/account-roles/) or go to the [**Account Members**](https://dash.cloudflare.com/?to=/:account/members) page within the dashboard.
+    For a full list of available roles and associated permissions, go to the [**Account Members**](https://dash.cloudflare.com/?to=/:account/members) page within the dashboard or refer to [Available roles](/fundamentals/get-started/setup/account-setup/account-roles/#enterprise-roles).
 
     </div>
     </details>
