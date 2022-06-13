@@ -33,7 +33,7 @@ During the Private Beta, your account will need to be explicitly granted access.
 
 ## 2. Fetch your credentials
 
-To make requests against the Pub/Sub API, you'll need to create an **API Token** with `pubsub:edit` permissions.
+To make requests against the Pub/Sub API, you'll need to create an **API Token** with `pubsub:write` permissions.
 
 1. From the [Cloudflare dashboard](https://dash.cloudflare.com), click on the profile icon and select **My Profile**.
 2. Under **My Profile**, click **API Tokens**.
