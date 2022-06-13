@@ -140,6 +140,7 @@ The following example adds three [overrides](/ruleset-engine/managed-rulesets/ov
 
 {{<Aside type="warning" header="Important">}}
 Ruleset overrides and tag overrides apply to both existing and **future** rules in the Managed Ruleset. If you wish to override existing rules only, you must use rule overrides.
+Inside `overrides` object, `status` has to be used instead of `enabled`. `status` defines if the current rules-level or categories-level override enables or disables the ruleset rules or categorie.
 {{</Aside>}}
 
 The following configuration includes the three overrides in the rule that executes the Cloudflare Managed Ruleset:
