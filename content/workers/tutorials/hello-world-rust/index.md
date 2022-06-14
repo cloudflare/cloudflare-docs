@@ -50,7 +50,7 @@ Add the following content to your `Cargo.toml` file:
 
 [dependencies]
 pulldown-cmark = "0.4.0"
-wasm-bindgen = "0.2.78" # needed additionally for compiling properly
+wasm-bindgen = "0.2.78" # generates bindings to Javascript 
 ```
 
 Use the code in the `string-to-string` example from the `pulldown-cmark` GitHub repository. Change your `src/lib.rs` to look like this:
