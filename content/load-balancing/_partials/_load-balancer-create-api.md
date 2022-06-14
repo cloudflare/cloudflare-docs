@@ -34,7 +34,7 @@ curl -X POST \
       "00920f38ce07c2e2f4df50b1f61d4194"
     ],
     "proxied": true,
-    "steering_policy": "dynamic_latency",
+    "steering_policy": "random_steering",
     "session_affinity": "cookie",
     "session_affinity_attributes": {
       "samesite": "Auto",
@@ -77,7 +77,7 @@ header: Response
       "00920f38ce07c2e2f4df50b1f61d4194"
     ],
     "proxied": true,
-    "steering_policy": "dynamic_latency",
+    "steering_policy": "random_steering",
     "session_affinity": "cookie",
     "session_affinity_attributes": {
       "samesite": "Auto",
