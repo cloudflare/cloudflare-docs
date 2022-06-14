@@ -4,7 +4,7 @@ title: Betas
 ---
 
 # Beta Status
-Below shows betas relevant to Cloudflare Workers and includes links to more info — such as where to sign up for private betas.
+These are the betas relevant to Cloudflare Workers, including links to more info (e.g. such as signing up for private betas).
 
 | Product                       | Private Beta | Public Beta | More Info | 
 | :---                          |    :----:    |    :----:   | ----------- |
