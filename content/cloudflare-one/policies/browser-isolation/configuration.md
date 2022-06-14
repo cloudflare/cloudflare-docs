@@ -52,12 +52,12 @@ If you would like to temporarily disconnect Browser Isolation, you can do this b
 
 ### macOS
 
-1.  Click on the **Cloudflare Logo** in the Menu Bar.
+1.  Click the **Cloudflare Logo** in the Menu Bar.
 1.  Toggle the blue **Connected** switch into the Disconnected state.
 1.  Refresh your webpage to return to the non-isolated page.
 
 ### Windows
 
-1.  Click on the **Cloudflare Logo** in the System Tray.
+1.  Click the **Cloudflare Logo** in the System Tray.
 1.  Toggle the blue **Connected** switch into the Disconnected state.
 1.  Refresh your webpage to return to the non-isolated page.
