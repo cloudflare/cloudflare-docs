@@ -798,7 +798,6 @@ Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to id
 </div>
 </details>
 
-
 ## Web Analytics
 
 <details>
@@ -823,8 +822,6 @@ No action required. This notification is a weekly summary with reports from your
 
 </div>
 </details>
-
-
 
 ## Workers
 
