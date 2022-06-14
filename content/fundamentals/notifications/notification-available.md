@@ -798,6 +798,34 @@ Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to id
 </div>
 </details>
 
+
+## Web Analytics
+
+<details>
+<summary>Weekly summary</summary>
+<div>
+
+**Who is it for?**
+
+Customers using Web Analytics to monitor their website's performance.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All plans.
+
+**What should you do if you receive one?**
+
+No action required. This notification is a weekly summary with reports from your Web Analytics account. Refer to [Notifications](https://dash.cloudflare.com/?to=/:account/notifications) in the Cloudflare dashboard to refine your notifications settings.
+
+</div>
+</details>
+
+
+
 ## Workers
 
 <details>
