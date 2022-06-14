@@ -2,6 +2,7 @@
 title: Available Notifications
 pcx-content-type: concept
 weight: 7
+layout: single
 ---
 
 # Available Notifications
@@ -272,11 +273,45 @@ Multiple filters available:
 
 **Included with**
 
-All Cloudflare plans with Load Balancing purchase.
+All Cloudflare plans with [Load Balancing purchase](/load-balancing/how-to/enable-load-balancing/).
 
 **What should you do if you receive one?**
 
 No direct call to action.
+
+</div>
+</details>
+
+<details>
+<summary>Load Balancing Health Alert</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want to be warned about [changes in health status](/load-balancing/understand-basics/health-details/) in their pools or origins.
+
+**Other options / filters**
+
+Multiple filters available:
+
+- Customers can search for and add pools from their list of pools, as well as **Include future pools** (if all pools are selected). 
+- Customers can also choose the trigger that fires the notification. Available options are:
+  - *Health status trigger*:
+    - Becomes unhealthy or healthy
+    - Becomes unhealthy
+    - Becomes healthy
+  - *Event source trigger*:
+    - Health status changes in either pool or origin
+    - Health status changes in pool
+    - Health status changes in origin
+
+**Included with**
+
+All Cloudflare plans with [Load Balancing purchase](/load-balancing/how-to/enable-load-balancing/).
+
+**What should you do if you receive one?**
+
+Evaluate [load balancing analytics](/load-balancing/reference/load-balancing-analytics/) to review changes in health status over time.
 
 </div>
 </details>
