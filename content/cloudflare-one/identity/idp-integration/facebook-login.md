@@ -66,7 +66,7 @@ Use these steps to set up Facebook as your identity provider.
 
 1.  Click **Save Changes**.
 
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to Facebook.
+To test that your connection is working, follow the steps on [SSO Integration](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
 
 ## Example API Configuration
 
