@@ -6,21 +6,23 @@ weight: 13
 
 # Google
 
-You can integrate Google authentication with Cloudflare Access without a Google Workspace account. The integration will allow any user with a Google account to login (if the [Access policy](/cloudflare-one/policies/access/) allows them to reach the resource). Unlike the instructions for [Google Workspace](/cloudflare-one/identity/idp-integration/gsuite/), the steps below will not allow you to pull group membership information from a Google Workspace account.
+You can integrate Google authentication with Cloudflare Access without a Google Workspace account. The integration allows any user with a Google account to log in (if the [Access policy](/cloudflare-one/policies/access/) allows them to reach the resource). Unlike the instructions for [Google Workspace](/cloudflare-one/identity/idp-integration/gsuite/), the steps below will not allow you to pull group membership information from a Google Workspace account.
 
-Please note that you don't need to be a Google Cloud Platform user to integrate Google Suite as an identity provider with Cloudflare Zero Trust. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
+Please note that you do not need to be a Google Cloud Platform user to integrate Google Suite as an identity provider with Cloudflare Zero Trust. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
+
+## Set up Google as an identity provider
 
 1.  Visit the Google Cloud Platform console. Create a new project.
 
     ![Create Project](/cloudflare-one/static/documentation/identity/google/create-project.png)
 
-1.  Name the project and click **Create**.
+1.  Name the project and select **Create**.
 
-1.  On the project home page that loads, select **APIs & Services** from the sidebar and click **Dashboard**.
+1.  On the project home page that loads, select **APIs & Services** from the sidebar and select **Dashboard**.
 
-1.  Go to **Credentials** and click **Configure Consent Screen** at the top of the page.
+1.  Go to **Credentials** and select **Configure Consent Screen** at the top of the page.
 
-    ![Click Consent](/cloudflare-one/static/documentation/identity/google/click-configure-consent.png)
+    ![select Consent](/cloudflare-one/static/documentation/identity/google/select-configure-consent.png)
 
 1.  Choose `External` as the User Type. Since this application is not being created in a Google Workspace account, the only types of users are external.
 
@@ -44,7 +46,7 @@ Please note that you don't need to be a Google Cloud Platform user to integrate 
 
     ![Summary](/cloudflare-one/static/documentation/identity/google/consent-screen-summary.png)
 
-1.  Return to the **APIs & Services** page and click _+ Create Credentials_. Select `OAuth client ID`.
+1.  Return to the **APIs & Services** page and select _+ Create Credentials_. Select `OAuth client ID`.
 
     ![Create OAuth](/cloudflare-one/static/documentation/identity/google/create-oauth.png)
 
@@ -66,15 +68,15 @@ Please note that you don't need to be a Google Cloud Platform user to integrate 
 
 1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, select **Add new**.
 
 1.  Choose **Google** on the next page.
 
 1.  Input the Client ID and Client Secret fields generated previously.
 
-1.  Click **Save**.
+1.  select **Save**.
 
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to Google.
+To test that your connection is working, navigate to **Authentication > Login methods** and select **Test** next to Google.
 
 Your user identity should return.
 
