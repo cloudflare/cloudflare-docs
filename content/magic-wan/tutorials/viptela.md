@@ -15,7 +15,7 @@ Before setting up a connection between Cisco Viptela and Cloudflare, you must ha
 - Purchased Magic WAN and Secure Web Gateway.
 - Cloudflare provision Magic WAN and Secure Web Gateway.
 - Received two Cloudflare tunnel endpoints (Anycast IP address) assigned to Magic WAN.
-- Cisco 800k0k SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the Anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
+- Cisco 8000k SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the Anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
 - A static IP pair to use with the tunnel endpoints. The static IPs should be /31 addresses separate from the IPs used in the subnet deployment. The software version used on Cisco was `20.6.2/17.6.2`.
 
 ## Example scenario
