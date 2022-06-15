@@ -220,9 +220,16 @@ highlight: [3]
 </div>
 </details>
 
+{{<Aside type="note">}}
+
+Steps 1-3 above only need to be completed once, while Steps 4-5 below would occur during normal operation.
+
+{{</Aside>}}
+
 ### 4. Generate a DoH token for the user
 
 Request a DoH token for the user, using your service token to authenticate into your [team domain](/cloudflare-one/glossary/#team-domain).
+
 ```bash
 curl -s -X GET "https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/doh-token?account-id=<ACCOUNT_ID>&user-id=<USER_ID>&auth-domain=<TEAM_NAME>.cloudflareaccess.com" \
      -H "Cf-Access-Client-Id: <CLIENT_ID>" \
@@ -230,7 +237,7 @@ curl -s -X GET "https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/doh-toke
      -H "Content-Type: application/json" \
 ```
 
-The response contains a unique DoH token associated with the user.
+The response contains a unique DoH token associated with the user. This token expires in 24 hours. We recommend setting up a refresh flow for the DoH token instead of generating a new one for every DoH query.
 
 <details>
 <summary>Example response</summary>
