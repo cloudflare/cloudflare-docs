@@ -3,9 +3,9 @@ pcx-content-type: how-to
 title: Deploy a Qwik site
 ---
 
-# Deploy a Qwik site 
+# Deploy a Qwik site
 
-[Qwik](https://github.com/builderio/qwik) is an open-source, DOM-centric, resumable web application framework designed for best possible time to interactive by focusing on [resumability](https://github.com/BuilderIO/qwik/blob/main/docs/pages/guide/resumable-vs-replayable.mdx) of server-side rendering of HTML and [fine-grained lazy-loading](https://github.com/BuilderIO/qwik/blob/main/docs/pages/guide/lazy-loading.mdx) of code. 
+[Qwik](https://github.com/builderio/qwik) is an open-source, DOM-centric, resumable web application framework designed for best possible time to interactive by focusing on [resumability](https://github.com/BuilderIO/qwik/blob/main/docs/pages/guide/resumable-vs-replayable.mdx) of server-side rendering of HTML and [fine-grained lazy-loading](https://github.com/BuilderIO/qwik/blob/main/docs/pages/guide/lazy-loading.mdx) of code.
 
 In this guide, you will create a new Qwik application and deploy it using Cloudflare Pages.
 
@@ -24,9 +24,9 @@ By selecting _Cloudflare Pages_ as your server option in the terminal drop-down 
 After selecting your server option, change the directory to your project and render your project by running the following command:
 
 ```sh
-   cd [whatever you named the project]
-   npm install
-   npm start
+$ cd [whatever you named the project]
+$ npm install
+$ npm start
 ```
 
 {{<render file="_tutorials-before-you-start.md">}}

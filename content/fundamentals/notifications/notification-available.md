@@ -1,17 +1,17 @@
 ---
-title: Types of Notifications
+title: Available Notifications
 pcx-content-type: concept
 weight: 7
-meta:
-  title: What kinds of Notifications are available?
+layout: single
 ---
 
-# What kinds of Notifications are available?
+# Available Notifications
 
-Available Notifications depend on your Cloudflare plan. We offer a variety of Notifications for our products and services, such as Billing, Denial-of-Service protection, Magic Transit, and SSL/TLS.
-Depending on your plan, you will also be able to configure webhooks. Webhooks allow you to connect your account with external services such as Slack and Google Chat. Another possibility is to use PagerDuty to receive Cloudflare Notifications.
+Available Notifications depend on your Cloudflare plan. Cloudflare offers a variety of Notifications for our products and services, such as Billing, Denial-of-Service protection, Magic Transit, and SSL/TLS.
 
-## What should you do when receiving Notifications?
+Depending on your plan, you will also be able to configure webhooks (which allow you to connect your account with external services such as Slack and Google Chat) and PagerDuty to receive Cloudflare Notifications.
+
+## Actions available on receiving a Notification
 
 Each Notification carries different types of information about the status of your Cloudflare account, or the type of action you can take.
 
@@ -91,7 +91,7 @@ Purchase of Secondary DNS.
 **What should you do if you receive one?**
 
 1. Confirm that your primary nameservers are up and running.
-2. Confirm that the ACLs on your primary nameservers are configured correctly.
+2. Confirm that the [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/) on your primary nameservers are configured correctly.
 3. Confirm that your primary nameservers are configured correctly in your Cloudflare account (correct IP, port, TSIG).
 
 </div>
@@ -116,7 +116,7 @@ Purchase of Secondary DNS.
 **What should you do if you receive one?**
 
 1. Confirm that the primary nameserver that is failing is up and running.
-2. Confirm that the ACL on the primary nameserver that is failing is configured correctly.
+2. Confirm that the [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/) on your primary nameservers are configured correctly.
 3. Confirm that the primary nameserver that is failing is configured correctly in your Cloudflare account (correct IP, port, TSIG).
 
 </div>
@@ -166,7 +166,7 @@ Enterprise plans.
 Success alerts require no further action. Actions for failure notifications will depend on the type of failure. Possible actions include:
 
 - Checking the Access Control List (ACL) on your primary nameserver.
-- Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](https://support.cloudflare.com/hc/articles/360001356152#access-control-list-configuration).
+- Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/).
 - Checking logs on primary nameservers for other errors.
 
 </div>
@@ -273,11 +273,45 @@ Multiple filters available:
 
 **Included with**
 
-All Cloudflare plans with Load Balancing purchase.
+All Cloudflare plans with [Load Balancing purchase](/load-balancing/how-to/enable-load-balancing/).
 
 **What should you do if you receive one?**
 
 No direct call to action.
+
+</div>
+</details>
+
+<details>
+<summary>Load Balancing Health Alert</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want to be warned about [changes in health status](/load-balancing/understand-basics/health-details/) in their pools or origins.
+
+**Other options / filters**
+
+Multiple filters available:
+
+- Customers can search for and add pools from their list of pools, as well as **Include future pools** (if all pools are selected). 
+- Customers can also choose the trigger that fires the notification. Available options are:
+  - *Health status trigger*:
+    - Becomes unhealthy or healthy
+    - Becomes unhealthy
+    - Becomes healthy
+  - *Event source trigger*:
+    - Health status changes in either pool or origin
+    - Health status changes in pool
+    - Health status changes in origin
+
+**Included with**
+
+All Cloudflare plans with [Load Balancing purchase](/load-balancing/how-to/enable-load-balancing/).
+
+**What should you do if you receive one?**
+
+Evaluate [load balancing analytics](/load-balancing/reference/load-balancing-analytics/) to review changes in health status over time.
 
 </div>
 </details>
@@ -799,6 +833,31 @@ Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to id
 </div>
 </details>
 
+## Web Analytics
+
+<details>
+<summary>Weekly summary</summary>
+<div>
+
+**Who is it for?**
+
+Customers using Web Analytics to monitor their website's performance.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All plans.
+
+**What should you do if you receive one?**
+
+No action required. This notification is a weekly summary with reports from your Web Analytics account. Refer to [Notifications](https://dash.cloudflare.com/?to=/:account/notifications) in the Cloudflare dashboard to refine your notifications settings.
+
+</div>
+</details>
+
 ## Workers
 
 <details>
@@ -810,6 +869,7 @@ Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to id
 Developers using Workers, especially those on the Unbound usage model.
 
 **Other options / filters**
+
 None.
 
 **Included with**
@@ -832,6 +892,7 @@ Check any recent changes to your script or its external dependencies. Usage repo
 Developers using Workers.
 
 **Other options / filters**
+
 None.
 
 **Included with**

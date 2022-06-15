@@ -40,9 +40,15 @@ We no longer support [RC4 cipher suites](https://blog.cloudflare.com/end-of-the-
 | AES256-SHA256                       | ❌      | ❌      | ✅      | ❌      |
 | AES256-SHA                          | ✅      | ✅      | ✅      | ❌      |
 | DES-CBC3-SHA                        | ✅      | ❌      | ❌      | ❌      |
-| AEAD-AES128-GCM-SHA256 \[^1]        | ❌      | ❌      | ❌      | ✅      |
-| AEAD-AES256-GCM-SHA384 \[^1]        | ❌      | ❌      | ❌      | ✅      |
-| AEAD-CHACHA20-POLY1305-SHA256 \[^1] | ❌      | ❌      | ❌      | ✅      |
+| AEAD-AES128-GCM-SHA256 <sup>1</sup>        | ❌      | ❌      | ❌      | ✅      |
+| AEAD-AES256-GCM-SHA384 <sup>1</sup>        | ❌      | ❌      | ❌      | ✅      |
+| AEAD-CHACHA20-POLY1305-SHA256 <sup>1</sup> | ❌      | ❌      | ❌      | ✅      |
+
+1. Although TLS 1.3 uses the same cipher suite space as previous versions of TLS, TLS 1.3 cipher suites are defined differently. They only specifying the symmetric ciphers and cannot be used for TLS 1.2. Similarly, TLS 1.2 and lower cipher suites cannot be used with TLS 1.3 (IETF TLS 1.3 draft 21). BoringSSL also hard-codes cipher preferences in this order for TLS 1.3.
+
+### Custom certificates
+
+{{<render file="_custom-cert-ciphers.md">}}
 
 ---
 
@@ -71,5 +77,3 @@ ssl_ecdh_curve X25519:P-256:P-384;
 ssl_ciphers '[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305|ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305]:ECDHE+AES128:RSA+AES128:ECDHE+AES256:RSA+AES256:ECDHE+3DES:RSA+3DES';
 ssl_prefer_server_ciphers on;
 ```
-
-\[^1]: Although TLS 1.3 uses the same cipher suite space as previous versions of TLS, TLS 1.3 cipher suites are defined differently. They only specifying the symmetric ciphers and cannot be used for TLS 1.2. Similarly, TLS 1.2 and lower cipher suites cannot be used with TLS 1.3 (IETF TLS 1.3 draft 21). BoringSSL also hard-codes cipher preferences in this order for TLS 1.3.

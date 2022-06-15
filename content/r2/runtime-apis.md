@@ -57,11 +57,11 @@ async function handleRequest(request) {
 
 {{<definitions>}}
 
-- {{<code>}}head(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2HeadOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}head(key{{<param-type>}}string{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
   - Retrieves the `R2Object` for the given key containing only object metadata, if the key exists, and null if the key does not exist.
 
-- {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2GetOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2GetOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2ObjectBody{{</param-type>}}|{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
   - Retrieves the `R2Object` for the given key containing object metadata and the object body as a {{<code>}}{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}, if the key exists, and `null` if the key does not exist.
   - In the event that a precondition specified in {{<code>}}options{{</code>}} fails, {{<code>}}get(){{</code>}} returns an {{<code>}}{{<param-type>}}R2Object{{</param-type>}}{{</code>}} with {{<code>}}body{{</code>}} undefined.
@@ -84,6 +84,8 @@ async function handleRequest(request) {
 
 ## `R2Object` definition
 
+`R2Object` is created when you `PUT` an object into an R2 bucket. `R2Object` represents the metadata of an object based on the information provided by the uploader. Every object that you `PUT` into an R2 bucket will have an `R2Object` created.
+
 {{<definitions>}}
 
 - {{<code>}}key{{<param-type>}}string{{</param-type>}}{{</code>}}
@@ -98,19 +100,19 @@ async function handleRequest(request) {
 
   - Whether the object's value has been consumed or not.
 
-- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}>{{</type>}}{{</code>}}
 
   - Returns a Promise that resolves to an `ArrayBuffer` containing the object's value.
 
-- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}>{{</code>}}
 
   - Returns a Promise that resolves to an string containing the object's value.
 
-- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}>{{</code>}}
 
   - Returns a Promise that resolves to the given object containing the object's value.
 
-- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}>{{</code>}}
 
   - Returns a Promise that resolves to a binary Blob containing the object's value.
 
@@ -157,12 +159,22 @@ async function handleRequest(request) {
 - {{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}{{</code>}}
 
   - Specifies that the object should only be returned given satisfaction of certain conditions in the `R2Conditional`. Refer to [Conditional operations](#conditional-operations).
+  
+- {{<code>}}range{{<param-type>}}R2Range{{</param-type>}}{{</code>}}
+
+  - Specifies that only a specific length (from an optional offset) or suffix of bytes from the object should be returned. Refer to [Ranged reads](#ranged-reads).
 
 {{</definitions>}}
 
-### Ranged reads
+#### Ranged reads
 
-`R2GetOptions` accepts a `range` parameter, which restricts data returned in `body` to be `range` bytes, starting from `offset`, inclusive.
+`R2GetOptions` accepts a `range` parameter, which can be used to restrict the data returned in `body`.
+
+There are 3 variations of arguments that can be used in a range:
+
+* An offset with an optional length.
+* An optional offset with a length.
+* A suffix.
 
 {{<definitions>}}
 
@@ -170,9 +182,13 @@ async function handleRequest(request) {
 
   - The byte to begin returning data from, inclusive.
 
-- {{<code>}}range{{<param-type>}}number{{</param-type>}}{{</code>}}
+- {{<code>}}length{{<param-type>}}number{{</param-type>}}{{</code>}}
 
   - The number of bytes to return. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
+  
+- {{<code>}}suffix{{<param-type>}}number{{</param-type>}}{{</code>}}
+
+  - The number of bytes to return from the end of the file, starting from the last byte. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
 
 {{</definitions>}}
 
@@ -188,7 +204,7 @@ async function handleRequest(request) {
 
   - A map of custom, user-defined metadata that will be stored with the object.
 
-- {{<code>}}md5{{<param-type>}}ArrayBuffer{{</param-type>}}{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}md5{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
 
   - A md5 hash to use to check the recieved object's integrity.
 

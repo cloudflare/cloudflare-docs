@@ -50,6 +50,12 @@ $ git push -u origin main
 
 Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** dashboard and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
+{{<Aside type="note">}}
+
+Your `build.sh` file needs to be executable for the build command to work. You can do this by running `chmod +x build.sh`, or commit the file as an executable by running `git add --chmod=+x build.sh`.
+
+{{</Aside>}}
+
 <div>
 
 | Configuration option | Value            |

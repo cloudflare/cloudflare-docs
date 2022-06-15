@@ -11,7 +11,7 @@ The Stytch Pages Plugin is a middleware which validates all requests and their `
 ## Installation
 
 ```sh
-npm install @cloudflare/pages-plugin-stytch
+$ npm install @cloudflare/pages-plugin-stytch
 ```
 
 ## Usage

@@ -15,3 +15,5 @@ To get the [security, performance, and reliability benefits](/fundamentals/get-s
 2. [Add a site](/fundamentals/get-started/setup/add-site/): Add and activate a new domain to use Cloudflare.
 3. [Allow Cloudflare IP addresses](/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/) (*for some*): If you control your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/) and plan on using [Cloudflare's proxy](/dns/manage-dns-records/reference/proxied-dns-records/), you should review your server configuration to make sure you are not accidentally blocking Cloudflare IP addresses.
 4. [Optimize site setup](/fundamentals/get-started/task-guides/): Once your site is activated on Cloudflare, you can improve site speed and SEO, build out layers of application security, and more.
+
+{{<render file="_pointer-to-workers-zt-docs.md">}}
