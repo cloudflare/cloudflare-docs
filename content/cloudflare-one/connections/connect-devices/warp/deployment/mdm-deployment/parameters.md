@@ -26,7 +26,7 @@ Instructs the client to register device with your organization. Registration req
 
 **Value:** Your [team name](/cloudflare-one/glossary/#team-name).
 
-## Required for DNS only policy enforcement
+## Required for DNS-only policy enforcement
 
 This field is only required to enforce DNS policies when deploying the client in DoH-only mode.
 
