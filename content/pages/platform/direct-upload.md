@@ -16,15 +16,15 @@ Once you have your prebuilt assets ready, there are two ways to begin uploading:
 
 {{<Aside type= "note">}}
   
-Within a direct uploads project, you can switch between creating deployments with either Wrangler or Drag and Drop. However, you cannot create deployments with these methods on a standard Git integrated project. 
+Within a direct uploads project, you can switch between creating deployments with either Wrangler or Drag and Drop. However, you cannot create deployments with these methods on a standard Git integrated project.
 
 {{</Aside>}}
 
 ## Supported file types
 
 Below is the supported file types for each Direct Upload options:
-* Wrangler: A single folder of assets
-* Drag and drop: A zip file or single folder of assets
+* Wrangler: A single folder of assets. (Zip files are not supported.)
+* Drag and Drop: A zip file or single folder of assets.
 
 ## Wrangler CLI 
 
@@ -34,40 +34,40 @@ To begin, [install and set up the latest version of Wrangler](/workers/wrangler/
 
 #### Create your project
 
-Once you have logged into Wrangler, it’s time to create your first project. Execute the following command:
+Log in to Wrangler with the `wrangler login` command then run the following command:
 
 ```sh
 $ wrangler pages project create
 ```
 
-You will then be prompted to specify the project name. Your project will be served at `<project-name>.pages.dev`. You will also be prompted to specify your production branch. 
+You will then be prompted to specify the project name. Your project will be served at `<PROJECT_NAME>.pages.dev`. You will also be prompted to specify your production branch. 
 
 Subsequent deployments will reuse both of these values (saved in your `node_modules/.cache/wrangler` folder).
 
 
-#### Publish your assets 
+#### Publish your assets
+
 From here, you have created an empty project and can now publish your assets for your first deployment and for all subsequent deployments in your production environment. To do this, execute the following command:
 
 ```sh
-$ wrangler pages publish <output-directory>
+$ wrangler pages publish <OUTPUT_DIRECTORY>
 ```
 
-Your production deployment will be available at `<project-name>.pages.dev`.
-  
+Your production deployment will be available at `<PROJECT_NAME>.pages.dev`.
+ 
 {{<Aside type= "note">}}
 
-Before using the publish command, you will need to make sure you are inside the project. If not, you can also pass in the project path. 
+Before using the `wrangler publish` command, you will need to make sure you are inside the project. If not, you can also pass in the project path. 
 
 {{</Aside>}}
  
-  
-However, to publish assets to a preview environment, you can execute: 
+However, to publish assets to a preview environment, run: 
 
 ```sh
-$ wrangler pages publish <output-directory> --branch=<branch-name>
+$ wrangler pages publish <OUTPUT_DIRECTORY> --branch=<BRANCH_NAME>
 ```
 
-For every branch you create, a branch alias will be available to you at `<branch-name>.<project-name>.pages.dev`. 
+For every branch you create, a branch alias will be available to you at `<BRANCH_NAME>.<PROJECT_NAME>.pages.dev`. 
 
 {{<Aside type= "note">}}
 
@@ -75,7 +75,7 @@ If you are in a Git workspace, Wrangler will automatically pull the branch infor
 
 {{</Aside>}}
 
-If you would like to streamline the project creation and asset publishing steps, you can also use the publish command to both create and publish assets at the same time. If you execute this command first, you will still be prompted to specify your project name and production branch. These values will still be cached for subsequent deployments as stated above. If the cache already exists and you would like to create a new project, you will need to run the [create command](#create-your-project). 
+If you would like to streamline the project creation and asset publishing steps, you can also use the publish command to both create and publish assets at the same time. If you execute this command first, you will still be prompted to specify your project name and production branch. These values will still be cached for subsequent deployments as stated above. If the cache already exists and you would like to create a new project, you will need to run the [`create` command](#create-your-project). 
 
 #### Other useful commands
 
@@ -103,7 +103,7 @@ To deploy with drag and drop:
 2. In **Account Home**, select your account > **Pages**.
 3. Select **Create a project** > **Direct Upload** > enter your project name in the provided field > **Create project**. 
 
-Your project will be served from `<project-name>.pages.dev`. Next drag and drop your build output directory into the uploading frame. Once your files have been successfully uploaded, select **Save and Deploy** and continue to your newly deployed project. 
+Your project will be served from `<PROJECT_NAME>.pages.dev`. Next drag and drop your build output directory into the uploading frame. Once your files have been successfully uploaded, select **Save and Deploy** and continue to your newly deployed project. 
 
 #### Create a new deployment
 
@@ -112,9 +112,11 @@ After you have your project created, select **Create a new deployment** to begin
 ## Troubleshoot
 
 ### Limits
-In regards to file count: 
-* For Wrangler uploads: there is a 20,000 file limit
-* For Drag and Drop uploads: there is a 1,000 file limit 
+
+Regarding file count:
+
+* For Wrangler uploads, there is a 20,000 file limit.
+* For Drag and Drop uploads, there is a 1,000 file limit.
 
 On both upload methods, there is a 25 MiB limit in place for individual file size. 
 
