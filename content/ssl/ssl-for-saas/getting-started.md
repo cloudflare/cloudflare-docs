@@ -16,6 +16,11 @@ Before you can start creating custom hostnames, you need to have access to [SSL 
 
 If you have not used the Cloudflare API previously, review our [API Quickstart](/api/).
 
+{{<Aside type="note">}}
+ 
+If there are multiple proxied DNS records for one zone, Cloudflare must prioritize which record controls the zone settings and associated origin server. Adding a new custom hostname may take priority over your current settings or cause your settings to no longer apply. To prevent overriding or voiding your settings, review [Hostname priority (SSL for SaaS)](/ssl/ssl-tls/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas)
+ 
+{{</Aside>}}
 ---
 
 ## Step 1 — Create fallback origin and CNAME target
@@ -54,13 +59,6 @@ The CNAME target — optional, but highly encouraged — provides a friendly and
     - **API**: Using the hostname from the A or AAAA record you just created, [update the fallback origin value](https://api.cloudflare.com/#custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames).
 
 ---
-
-{{<Aside type="note">}}
- 
-If there are multiple proxied DNS records for one zone, Cloudflare must prioritize which record controls the zone settings and associated origin server. Adding a new custom hostname may take priority over your current settings or cause your settings to no longer apply. To prevent overriding or voiding your settings, review [Hostname priority (SSL for SaaS)](/ssl/ssl-tls/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas)
- 
-{{</Aside>}}
-
 
 ## Step 2 — Review validation and verification options
 
