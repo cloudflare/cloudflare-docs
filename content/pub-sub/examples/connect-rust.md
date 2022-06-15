@@ -13,10 +13,14 @@ The example below creates a simple subscriber, sends a message to the configured
 
 Make sure to set the `BROKER_URI` (e.g. `mqtts://YOUR-BROKER.YOUR-NAMESPACE.cloudflarepubsub.com`), `BROKER_TOKEN` (a valid auth token), and `BROKER_TOPIC` environmental variables before running the example program.
 
-```rust
+```toml
 # in your Cargo.toml
 paho-mqtt = "0.11.1"
+```
 
+Create a file called `example.rs` with the following content, and use `cargo run` to build and run the example:
+
+```rust
 use paho_mqtt::*;
 use std::thread;
  

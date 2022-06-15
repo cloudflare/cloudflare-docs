@@ -26,61 +26,51 @@ To create a custom rule, add a rule to the `http_request_firewall_custom` phase 
 
 2.  Invoke the [Update ruleset](/ruleset-engine/rulesets-api/update/) method to update the list of rules in the phase entry point ruleset with a new rule. You must include the rule ID of all the rules you wish to keep in the ruleset (all other fields are optional).
 
-<details>
-<summary>Example: Add new custom rule using the Update ruleset API method</summary>
-<div>
+### Example A
+
+This example request replaces all rules in the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`, defining a single custom rule that challenges requests from the United Kingdom or France with a threat score greater than `10`:
 
 ```json
----
-header: Request
----
 curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_custom/entrypoint" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_custom/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "rules": [
     {
       "description": "My custom rule",
-      "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+      "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") and cf.threat_score > 10",
       "action": "challenge"
     }
   ]
 }'
 ```
 
-The response includes the complete ruleset definition.
+### Example B
+
+This example request replaces all rules in the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`, defining a single custom rule with a [custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for blocked requests:
 
 ```json
 ---
-header: Response
+highlight: [10,11,12,13,14,15,16]
 ---
-{
-  "result": {
-    "id": "{ruleset-id}",
-    "name": "Default",
-    "description": "",
-    "kind": "zone",
-    "version": "5",
-    "rules": [
-      {
-        "id": "{rule-id}",
-        "version": "1",
-        "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
-        "action": "challenge",
-        "description": "My custom rule",
-        "last_updated": "2021-05-31T18:33:41.347Z",
-        "ref": "{rule-ref-1}",
-        "enabled": true
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_custom/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-d '{
+  "rules": [
+    {
+      "description": "My custom rule with plain text response",
+      "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") and cf.threat_score > 50",
+      "action": "block",
+      "action_parameters": {
+        "response": {
+          "status_code": 403,
+          "content": "Your request was blocked.",
+          "content_type": "text/plain"
+        }
       }
-    ],
-    "last_updated": "2021-05-31T18:33:41.347Z",
-    "phase": "http_request_firewall_custom"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}
+    }
+  ]
+}'
 ```
 
-</div>
-</details>

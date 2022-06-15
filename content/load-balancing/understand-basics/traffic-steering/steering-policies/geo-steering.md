@@ -62,6 +62,9 @@ If you only define `WNAM`, then traffic from the East Coast will be routed to th
 
 ### Country steering 
 
+{{<Aside type="note">}}
+Currently, China is not supported for Geo steering.{{</Aside>}}
+
 #### Via the dashboard
 
 When [creating or editing a load balancer](/load-balancing/how-to/create-load-balancer/):
@@ -81,6 +84,7 @@ When creating a load balancer [via the API](https://api.cloudflare.com/#load-bal
 To get a list of country codes, use the [Region API](/load-balancing/reference/region-mapping-api/).
 
 Any country not explicitly defined will fall back to using the corresponding `region_pool` mapping (if it exists), then to the associated default pools.
+
 
 ### PoP steering
 

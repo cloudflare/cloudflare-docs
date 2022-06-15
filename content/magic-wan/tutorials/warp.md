@@ -7,7 +7,7 @@ meta:
 
 # WARP on-ramp to Magic WAN
 
-Use WARP as an on-ramp to Magic WAN and route traffic from user devices with WARP installed to any network connected with Magic IP-layer tunnels (Anycast [GRE](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/), [IPsec](/magic-wan/tutorials/ipsec/), or [CNI](/network-interconnect/)).
+Use WARP as an on-ramp to Magic WAN and route traffic from user devices with WARP installed to any network connected with Magic IP-layer tunnels (Anycast [GRE](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/), [IPsec](/magic-wan/how-to/ipsec/), or [CNI](/network-interconnect/)).
 
 ## Prerequisites
 
@@ -18,7 +18,7 @@ Before you can begin using WARP as an on-ramp to Magic WAN, you must:
 
 ## 1. Create a service token
 
-Refer to [Create a service token](/cloudflare-one/identity/service-auth/service-tokens/#create-a-service-token) in the Cloudflare Zero Trust documentation for more information.
+Refer to [Create a service token](/cloudflare-one/identity/service-tokens/#create-a-service-token) in the Cloudflare Zero Trust documentation for more information.
 
 ## 2. Install the WARP client on your device
 

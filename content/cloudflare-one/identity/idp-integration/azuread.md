@@ -80,7 +80,9 @@ You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare Zero T
 
 19. (Optional) If you are using Azure AD groups, toggle **Support Groups** slider **On** in the **Edit your Azure AD identity provider** window.
 
-20. Click **Save**.
+20. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+
+21. Click **Save**.
 
 To test that your connection is working, navigate to **Authentication** > **Login methods** and click **Test** next to Azure AD.
 
