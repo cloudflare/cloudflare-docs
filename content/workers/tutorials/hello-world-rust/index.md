@@ -17,6 +17,10 @@ In this tutorial, you will learn how to generate, build, preview, configure, and
 Cloudflare's command-line tool for managing Workers projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. You will use the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/) to start building your project.
 
 In the command line, create your Workers project, cloning the [rustwasm-worker-template](https://github.com/cloudflare/rustwasm-worker-template) URL and passing in a project name (for example, `rustwasm-markdown-parser`):
+  
+## Note
+  
+This tutorial no longer works because of changes in the [rustwasm-worker-template](https://github.com/cloudflare/rustwasm-worker-template)
 
 ```sh
 ~ $ git clone https://github.com/cloudflare/rustwasm-worker-template/ rustwasm-markdown-parser
@@ -46,6 +50,7 @@ Add the following content to your `Cargo.toml` file:
 
 [dependencies]
 pulldown-cmark = "0.4.0"
+wasm-bindgen = "0.2.78" # generates bindings to Javascript 
 ```
 
 Use the code in the `string-to-string` example from the `pulldown-cmark` GitHub repository. Change your `src/lib.rs` to look like this:
