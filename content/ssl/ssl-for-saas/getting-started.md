@@ -55,6 +55,13 @@ The CNAME target — optional, but highly encouraged — provides a friendly and
 
 ---
 
+{{<Aside type="note">}}
+ 
+If there are multiple proxied DNS records for one zone, Cloudflare must prioritize which record controls the zone settings and associated origin server. Adding a new custom hostname may take priority over your current settings or cause your settings to no longer apply. To prevent overriding or voiding your settings, review [Hostname priority (SSL for SaaS)](https://developers.cloudflare.com/ssl/ssl-tls/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas)
+ 
+{{</Aside>}}
+
+
 ## Step 2 — Review validation and verification options
 
 Each Custom Hostname requires successful Certificate Validation and Hostname Verification.
