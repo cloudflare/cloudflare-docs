@@ -100,7 +100,7 @@ This parameter replaces the old `enabled` property, which can no longer be used 
 
 ### `support_url`
 
-When the WARP client is deployed via MDM, the in-app **Send Feedback** button is disabled by default. This parameter allows you to re-enable the button and direct it toward your organization.
+When the WARP client is deployed via MDM, the in-app **Send Feedback** button is disabled by default. This parameter allows you to re-enable the button and direct feedback towards your organization.
 
 **Value Type:** `string`
 
