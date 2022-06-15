@@ -11,7 +11,7 @@ To learn more about Anycast IPsec, refer to [What is IPsec?](https://www.cloudfl
 
 Before you begin, make sure you already have an Account ID and API Key.
 
-For a list of supported devices, refer to [IPsec supported devices](/magic-wan/reference/ipsec-supported-devices).
+For a list of compatible devices, refer to [Device compatibility](/magic-wan/reference/device-compatibility).
 
 ## IPsec process
 
