@@ -57,7 +57,7 @@ console.log(STRIPE_TOKEN);
 
 ### Adding secrets via wrangler
 
-Secrets are defined by running [`wrangler secret put <NAME>`](/workers/wrangler/commands/#secret) in your terminal, where `<NAME>` is the name of your binding. You may assign environment-specific secrets by re-running the command `wrangler secret put <NAME> -e` or `wrangler secret put <NAME> --env`.
+Secrets are defined by running [`wrangler secret put <NAME>`](/workers/wrangler/commands/#secret) in your terminal, where `<NAME>` is the name of your binding. You may assign environment-specific secrets by rerunning the command `wrangler secret put <NAME> -e` or `wrangler secret put <NAME> --env`.
 
 {{<Aside type="warning">}}
 
