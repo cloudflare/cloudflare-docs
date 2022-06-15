@@ -67,20 +67,10 @@ Cloudflare determines this priority in the following order (assuming each record
 
 If a hostname resource record is not proxied (gray-clouded) for a zone on Cloudflare, that zone’s settings are not applied and any settings configured at the associated origin are applied instead. This origin could be another zone on Cloudflare or any other server.
 
-### Example scenarios
-
-#### Scenario 1
+### Example scenario
 
 Customer1 uses Cloudflare for authoritative DNS for the zone `shop.example.com`. Customer2 is a SaaS provider that creates and successfully [verifies the new Custom Hostname](/ssl/ssl-for-saas/common-tasks/hostname-verification/) `shop.*example.com*`. Afterward, traffic starts routing over Customer2’s zone:
 
 - If Customer1 wants to regain control of their zone, Customer 1 contacts Customer2 and requests them to delete the Custom Hostname record. Another possibility is to stop proxying (gray-cloud) the record.
 - If Customer1 is already proxying a new Custom Hostname for `www.example.com`, Customer2 creates and verifies `www.example.com` so traffic starts routing over Customer2’s zone. Since this new Custom Hostname is the last one validated, the new custom hostname on Customer1’s zone enters a _moved_ status.
 - If Customer1 is already proxying a legacy Custom Hostname for `www.example.com` and Customer2 creates and verifies a new wildcard Custom Hostname for `*.example.com`, traffic is routed to Customer1’s zone while the `www.example.com` CNAME points to Customer1.
-
-#### Scenario 2
-
-A customer has a [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) DNS record for their domain. The customer's zone on Cloudflare is using a Free plan.
-
-This customer is also using a SaaS provider that utilizes Cloudflare for SaaS. The SaaS provider is using a Cloudflare Enterprise plan.
-
-If the SaaS provider is using a wildcard hostname (), then the original customer's plan limits will take precedence over the SaaS provider's plan limits (Cloudflare will treat the zone as a Free zone). To apply the Enterprise limits through Cloudflare for SaaS, the original customer's zone would need to either use a [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records/) record or the SaaS provider would need to use an exact hostname match.
