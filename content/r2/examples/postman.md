@@ -78,7 +78,7 @@ You should see a `200 OK` response. If you run the `ListBuckets` request again, 
 
 You will now add an object to your bucket:
 
-1. Go to**Variables** in the Postman dashboard.
+1. Go to **Variables** in the Postman dashboard.
 2. Set `r2-object` to `cat-pic.jpg` and select **Save**.
 3. Select **Cloudflare R2** folder dropdown arrow > **Objects** folder dropdown arrow > **Multipart** folder dropdown arrow > **`PUT`PutObject** and select **Send**.
 4. Go to **Body** and choose **binary** before attaching your cat picture.

@@ -8,4 +8,4 @@ weight: 6
 
 If you are using a [Web3 gateway](/web3/about/) for internal application calls, you may want to restrict gateway access to specific backend services.
 
-You can achieve this goal by [creating general Access policies](/cloudflare-one/policies/access/) to block normal traffic and then [creating service tokens](/cloudflare-one/identity/service-auth/service-tokens/) to allow access by your backend service.
+You can achieve this goal by [creating general Access policies](/cloudflare-one/policies/access/) to block normal traffic and then [creating service tokens](/cloudflare-one/identity/service-tokens/) to allow access by your backend service.

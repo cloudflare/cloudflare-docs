@@ -41,7 +41,11 @@ You do not need to be a Google Cloud Platform user to integrate Google Suite as 
 
 1.  Under **Login methods**, select **Add new**. Choose **Google** on the next page.
 
-1.  Input the Client ID and Client Secret fields generated previously. Select **Save**.
+1.  Input the Client ID and Client Secret fields generated previously.
+
+1.  (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+
+1.  Select **Save**.
 
 ## Next steps
 

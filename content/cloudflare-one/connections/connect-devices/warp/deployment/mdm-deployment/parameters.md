@@ -22,7 +22,11 @@ For the majority of Cloudflare Zero Trust features to work, you need to specify 
 
 Instructs the client to register device with your organization. Registration requires authentication via an [IDP](/cloudflare-one/identity/idp-integration/) or [Service Auth](/cloudflare-one/identity/service-auth/).
 
+<<<<<<< HEAD
 **Value Type:** `string`
+=======
+**Description.** Instructs the client to register device with your organization. Registration requires authentication via an [IDP](/cloudflare-one/identity/idp-integration/) or [Service Auth](/cloudflare-one/identity/service-tokens/).
+>>>>>>> production
 
 **Value:** Your [team name](/cloudflare-one/glossary/#team-name).
 
@@ -115,7 +119,7 @@ When the WARP client is deployed via MDM, the in-app **Send Feedback** button is
 Devices that connect to Cloudflare Zero Trust with Service Token authentication are not subject to identity-based rules.
 {{</Aside>}}
 
-Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a pre-generated [Service Token](/cloudflare-one/identity/service-auth/service-tokens/).
+Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a pre-generated [Service Token](/cloudflare-one/identity/service-tokens/).
 
 Both `auth_client_id` and `auth_client_secret` are required when using this authentication method.
 

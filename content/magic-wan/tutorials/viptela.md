@@ -14,17 +14,38 @@ Before setting up a connection between Cisco Viptela and Cloudflare, you must ha
 
 - Purchased Magic WAN and Secure Web Gateway.
 - Cloudflare provision Magic WAN and Secure Web Gateway.
-- Received the Cloudflare GRE endpoint (Anycast IP address) assigned to Magic WAN.
-- Cisco 800k0k SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the Anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
+- Received two Cloudflare tunnel endpoints (Anycast IP address) assigned to Magic WAN.
+- Cisco 8000k SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the Anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
 - A static IP pair to use with the tunnel endpoints. The static IPs should be /31 addresses separate from the IPs used in the subnet deployment. The software version used on Cisco was `20.6.2/17.6.2`.
 
 ## Example scenario
 
 For the purpose of this tutorial, the integration will refer to a scenario with one branch office with subnets.
 
+<details>
+<summary>
+  GRE tunnel configuration
+</summary>
+ <div class="special-class" markdown="1">
+
 The central branch office has a 192.168.30.0/24 network with the SD-WAN appliance terminating the Anycast GRE tunnel.
 
-![Table of branch subnet information](/magic-wan/static/viptela-branch-subnets.png)
+![Table of routing information for central  branch](/magic-wan/static/viptela-gre-routing-table.png)
+</div>
+</details>
+
+<details>
+<summary>
+  IPsec tunnel configuration
+</summary>
+ <div class="special-class" markdown="1">
+
+The central branch office has a 192.168.30.0/24 network with the SD-WAN appliance terminating the Anycast IPsec tunnel.
+
+![Table of routing information for central  branch](/magic-wan/static/viptela-ipsec-routing-table.png)
+
+</div>
+</details>
 
 ## 1. Create a SIG template on Cisco vManage
 
@@ -37,6 +58,8 @@ Cisco vManage is Cisco's SD-WAN management tool that is used to manage all the S
  <div class="special-class" markdown="1">
 
 For this example scenario, a non-default template for `SIG-Branch` was created.
+
+![Traffic flow diagram for GRE](/magic-wan/static/viptela-flow-diagram-gre.png)
 
 To create a Secure Internet Gateway (SIG) using vManage:
 
@@ -82,7 +105,7 @@ When creating the Feature Template, you can choose values that apply globally or
 
 For this example scenario, a non-default template for SIG-Branch-IPsec-Template was created.
 
-![Traffic flow diagram for IPsec](/magic-wan/static/viptela-ipsec-flow-diagram.png)
+![Traffic flow diagram for IPsec](/magic-wan/static/viptela-flow-diagram-ipsec.png)
 
 To create a Secure Internet Gateway (SIG) using vManage:
 
@@ -309,6 +332,7 @@ A matching blocked log line is visible from the Cloudflare logs.
 ![A blocked log from Gateway Activity Log in the Cloudflare dashboard](/magic-wan/static/viptela-gre-swg-traffic.png)
 
 **Validate east-west traffic**
+
 The example shows a client in AWS (10.1.2.23), which can ping the private IP of the router in GCP (192.168.30.3).
 
 The traceroute shows the path going from the client (10.1.2.23)<br>
@@ -318,6 +342,8 @@ The traceroute shows the path going from the client (10.1.2.23)<br>
 → to the GCP workload (192.168.30.3).
 
 This validates the east-west traffic flow through Cloudflare Magic WAN.
+
+![East-west traffic ping](/magic-wan/static/viptela-east-west-ping.png)
 </div> 
 </details>
 
@@ -331,7 +357,7 @@ This validates the east-west traffic flow through Cloudflare Magic WAN.
 
 On the client VM (192.168.30.3), a blocked response is visible.
 
-![cURL example to validate traffic with a blocked response](/magic-wan/static/viptela-update-device-template-ipsec.png)
+![cURL example to validate traffic with a blocked response](/magic-wan/static/viptela-validate-traffic-curl-ipsec.png)
 
 You can validate the request went through Gateway with the presence of the `Cf-Team` response header, or by looking at the logs in the dashboard under **Logs** > **Gateway** > **HTTP**.
 
