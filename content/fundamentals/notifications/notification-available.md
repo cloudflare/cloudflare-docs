@@ -90,7 +90,7 @@ Purchase of Secondary DNS.
 **What should you do if you receive one?**
 
 1. Confirm that your primary nameservers are up and running.
-2. Confirm that the [Access Control Lists (ACLs)](https://support.cloudflare.com/hc/articles/360001356152#access-control-list-configuration) on your primary nameservers are configured correctly.
+2. Confirm that the [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/) on your primary nameservers are configured correctly.
 3. Confirm that your primary nameservers are configured correctly in your Cloudflare account (correct IP, port, TSIG).
 
 </div>
@@ -115,7 +115,7 @@ Purchase of Secondary DNS.
 **What should you do if you receive one?**
 
 1. Confirm that the primary nameserver that is failing is up and running.
-2. Confirm that the [Access Control Lists (ACLs)](https://support.cloudflare.com/hc/articles/360001356152#access-control-list-configuration) on your primary nameservers are configured correctly.
+2. Confirm that the [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/) on your primary nameservers are configured correctly.
 3. Confirm that the primary nameserver that is failing is configured correctly in your Cloudflare account (correct IP, port, TSIG).
 
 </div>
@@ -165,7 +165,7 @@ Enterprise plans.
 Success alerts require no further action. Actions for failure notifications will depend on the type of failure. Possible actions include:
 
 - Checking the Access Control List (ACL) on your primary nameserver.
-- Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](https://support.cloudflare.com/hc/articles/360001356152#access-control-list-configuration).
+- Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/).
 - Checking logs on primary nameservers for other errors.
 
 </div>
