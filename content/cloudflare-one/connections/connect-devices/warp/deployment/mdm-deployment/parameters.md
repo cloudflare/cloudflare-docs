@@ -16,7 +16,7 @@ Most of the parameters listed below are also configurable in the Zero Trust Dash
 
 ## Required for full Cloudflare One features
 
-For the majority of Cloudflare Zero Trust features to work, you need to specify a team name. Examples of Cloudflare Zero Trust features depending on the team name are [HTTP policies](/cloudflare-one/policies/filtering/http-policies/), [Browser Isolation](/cloudflare-one/policies/browser-isolation/), and [device posture](/cloudflare-one/identity/devices/).
+For the majority of Cloudflare Zero Trust features to work, you need to specify a team name. Examples of Cloudflare Zero Trust features which depend on the team name are [HTTP policies](/cloudflare-one/policies/filtering/http-policies/), [Browser Isolation](/cloudflare-one/policies/browser-isolation/), and [device posture](/cloudflare-one/identity/devices/).
 
 ### `organization`
 
