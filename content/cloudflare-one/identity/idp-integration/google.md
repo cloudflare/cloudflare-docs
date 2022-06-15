@@ -51,7 +51,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Suite as 
 
 ### Test your connection
 
-To test that your connection is working, go to **Authentication > Login methods** and select **Test** next to Google.
+To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to Google.
 
 ## Example API Config
 
