@@ -66,7 +66,7 @@ Controls the visibility of the onboarding screens that ask the user to review th
 
 ### `switch_locked`
 
-Allows the user to control the connected state of the application (main toggle switch).
+Allows the user to turn off the WARP switch and disconnect the client.
 
 **Value Type:** `boolean`
 
