@@ -46,6 +46,7 @@ Add the following content to your `Cargo.toml` file:
 
 [dependencies]
 pulldown-cmark = "0.4.0"
+wasm-bindgen = "0.2.78"
 ```
 
 Use the code in the `string-to-string` example from the `pulldown-cmark` GitHub repository. Change your `src/lib.rs` to look like this:
@@ -54,24 +55,28 @@ Use the code in the `string-to-string` example from the `pulldown-cmark` GitHub 
 ---
 filename: src/lib.rs
 ---
-mod utils;
-
-use cfg_if::cfg_if;
-use wasm_bindgen::prelude::*;
+use worker::*;
 use pulldown_cmark::{Parser, Options, html};
 
-cfg_if! {
-    // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
-    // allocator.
-    if #[cfg(feature = "wee_alloc")] {
-        extern crate wee_alloc;
-        #[global_allocator]
-        static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-    }
+mod utils;
+
+fn log_request(req: &Request) {
+    console_log!(
+        "{} - [{}], located at: {:?}, within: {}",
+        Date::now().to_string(),
+        req.path(),
+        req.cf().coordinates().unwrap_or_default(),
+        req.cf().region().unwrap_or("unknown region".into())
+    );
 }
 
-#[wasm_bindgen]
-pub fn parse() -> String {
+#[event(fetch)]
+pub async fn main(req: Request, _env: Env, _ctx: worker::Context) -> Result<Response> {
+    log_request(&req);
+
+    // Optionally, get more helpful error messages written to the console in the case of a panic.
+    utils::set_panic_hook();
+
     let markdown_input: &str = "Hello world, this is a ~~complicated~~ *very simple* example.";
     println!("Parsing the following Markdown string:\n{}", markdown_input);
 
@@ -89,7 +94,7 @@ pub fn parse() -> String {
     let expected_html: &str = "<p>Hello world, this is a <del>complicated</del> <em>very simple</em> example.</p>\n";
     assert_eq!(expected_html, &html_output);
 
-    format!("\nHTML output:\n{}", &html_output)
+    Response::ok(format!("\nHTML output:\n{}", &html_output))
 }
 ```
 
