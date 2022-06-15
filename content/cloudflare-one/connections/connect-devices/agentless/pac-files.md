@@ -54,16 +54,12 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
     --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway/proxy_endpoints \
     --header 'X-Auth-Email: <EMAIL>' \
     --header 'X-Auth-Key: <API_KEY>' \
-    --data '{"name": "any_name", "ips": ["<PUBLIC_IP>"]}'
+    --data '{"name": "any_name", "ips": ["<PUBLIC_IP>", "<PUBLIC_IP2>", "<PUBLIC_IP3>"]}'
     ```
 
-    Replace `<ACCOUNT_ID>`, `<EMAIL>`, and `<API_KEY>` with your [account credentials](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
-
     Replace `<PUBLIC_IP>` with the source IP address of your device in CIDR notation. For example,
-    - **IPv4**: `90.90.241.229/32` (up to `/26`)
-    - **IPv6**: `2601:645:4500:9c0:a945:f47c:23e9:a35b/128`
-
-    You can specify multiple IP addresses per proxy endpoint.
+    - **IPv4**: `90.90.241.229/32` (up to '/25')
+    - **IPv6**: `2601:645:4500:9c0:a945:f47c:23e9:a35b/128` (up to '/109')
 
     After running the command, you should see an output similar to
 
@@ -92,6 +88,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
     ```
 
     In the example above, the subdomain is `3ele0ss56t` and the proxy server domain is `3ele0ss56t.proxy.cloudflare-gateway.com`.
+
 </div>
 </details>
 
