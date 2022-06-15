@@ -11,7 +11,7 @@ The Cloudflare Access Pages Plugin is a middleware to validate Cloudflare Access
 ## Installation
 
 ```sh
-npm install @cloudflare/pages-plugin-cloudflare-access
+$ npm install @cloudflare/pages-plugin-cloudflare-access
 ```
 
 ## Usage

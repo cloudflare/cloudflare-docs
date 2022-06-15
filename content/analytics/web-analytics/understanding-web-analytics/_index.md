@@ -1,7 +1,7 @@
 ---
 pcx-content-type: navigation
 title: Understanding Cloudflare Web Analytics
-weight: 5
+weight: 4
 ---
 
 # Understanding Cloudflare Web Analytics

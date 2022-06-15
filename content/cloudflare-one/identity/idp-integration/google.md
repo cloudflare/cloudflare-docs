@@ -72,6 +72,8 @@ You can review the summary information and return to the dashboard at the bottom
 
 1.  Input the Client ID and Client Secret fields generated previously.
 
+1.  (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+
 1.  Click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to Google.

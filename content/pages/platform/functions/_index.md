@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
 title: Functions (beta)
+layout: single
 ---
 
 # Functions (beta)

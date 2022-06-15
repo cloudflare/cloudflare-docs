@@ -92,9 +92,13 @@ https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
 
 19. Select **Google Workspace**.
 
-20. Input the Client ID and Client Secret fields generated previously. Additionally, input the domain of your Google Workspace account. Click **Save**.
+20. Input the Client ID and Client Secret fields generated previously. Additionally, input the domain of your Google Workspace account.
 
-21. To complete setup, you must scroll below and visit the link generated. If you are not the Google Workspace administrator, share the link with the administrator.
+21. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+
+22. Click **Save**.
+
+23. To complete setup, you must scroll below and visit the link generated. If you are not the Google Workspace administrator, share the link with the administrator.
 
   {{<Aside type="note">}}
   
@@ -106,7 +110,7 @@ https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
 
   {{</Aside>}}
 
-22. The generated link will prompt you to login to your Google account and to authorize Cloudflare Access to view group information.
+24. The generated link will prompt you to login to your Google account and to authorize Cloudflare Access to view group information.
 
     ![Authorize Groups](/cloudflare-one/static/documentation/identity/gsuite/authorize-groups.png)
 
@@ -114,7 +118,7 @@ https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
 
     ![Group Success](/cloudflare-one/static/documentation/identity/gsuite/group-success.png)
 
-23. You can now return to the list of identity providers in the **Authentication** page of the Cloudflare Zero Trust dashboard. Select Google Workspace and click **Test**.
+25. You can now return to the list of identity providers in the **Authentication** page of the Cloudflare Zero Trust dashboard. Select Google Workspace and click **Test**.
 
     Your user identity and group membership should return.
 

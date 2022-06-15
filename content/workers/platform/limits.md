@@ -11,7 +11,7 @@ title: Limits
 
 | Feature                                                                         | Free      | Paid (Bundled and Unbound)      |
 | ------------------------------------------------------------------------------- | --------- | --------- |
-| [Subrequests](#subrequests)                                                     | 50        | 50 Bundled, 1000 Unbound        |
+| [Subrequests](#subrequests)                                                     | 50/request| 50/request (Bundled),<br> 1000/request (Unbound)|
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
 | [Environment variables](#environment-variables)                                 | 64/Worker | 64/Worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
