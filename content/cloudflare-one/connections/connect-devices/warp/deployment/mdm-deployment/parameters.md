@@ -32,7 +32,7 @@ This field is only required to enforce DNS policies when deploying the client in
 
 ### `gateway_unique_id`
 
-Instructs the client to direct all DNS queries to a specific policy location. This value is only necessary if deploying without a team name _or_ in an organization with multiple policy locations.
+Instructs the client to direct all DNS queries to a specific policy location. This value is only necessary if deploying without a team name or in an organization with multiple policy locations.
 
 **Value Type:** `string`
 
