@@ -66,7 +66,6 @@ Read more about [enabling DNS over HTTPS](https://www.chromium.org/developers/dn
 </div>
 </details>
 
-
 <details>
 <summary>Microsoft Edge</summary>
 <div>
@@ -290,7 +289,8 @@ Your DNS queries will now be sent to Gateway for filtering. If the site is block
   ]
 }
 ```
+
 </div>
 </details>
 
-You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/analytics/logs/activity-log/). To filter these requests, build a DNS policy using the [User Email](/cloudflare-one/policies/filtering/identity-selectors/#user-email) selector.
+You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/analytics/logs/activity-log/). To filter these requests, build a DNS policy using the [User Email](/cloudflare-one/policies/filtering/identity-selectors/#user-email) selector. The other identity-based selectors are not currently supported by agentless DoH.
