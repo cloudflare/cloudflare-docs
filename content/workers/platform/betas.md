@@ -8,6 +8,7 @@ These are the betas relevant to Cloudflare Workers, including links to more info
 
 | Product                       | Private Beta | Public Beta | More Info | 
 | :---                          |    :----:    |    :----:   | ----------- |
-| Workers Analytics Engine      | Yes          |             |[Blog](https://blog.cloudflare.com/workers-analytics-engine/) |
-| R2 Storage                    |              |  Yes        |[Blog](https://blog.cloudflare.com/r2-open-beta/) |
-| D1 Database                   | Yes          |             |[Blog](https://blog.cloudflare.com/introducing-d1/) |
+| Workers Analytics Engine      | ✅           |             |[Blog](https://blog.cloudflare.com/workers-analytics-engine/) |
+| R2 Storage                    |              |  ✅         |[Docs](/r2) |
+| D1 Database                   | ✅           |             |[Blog](https://blog.cloudflare.com/introducing-d1/) |
+| Pub/Sub                       | ✅           |             | [Docs](/pub-sub/)
