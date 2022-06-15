@@ -126,7 +126,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `cacheTags` {{<type>}}Array\<string\>{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This option appends additional [**Cache-Tag**](https://developers.cloudflare.com/cache/how-to/purge-cache/#cache-tags-enterprise-only) headers to the response from the origin. Allowing for purges of cached content based on tags provided by the worker, without modifications to the origin. This is performed utilizing the [**Purge by Tag**](https://developers.cloudflare.com/cache/how-to/purge-cache/#purge-using-cache-tags) feature, which is currently only available to enterprise customers. If this option is used in a non-enterprise account the additional headers will not be appended.
+    *   This option appends additional [**Cache-Tag**](/cache/how-to/purge-cache/#cache-tags-enterprise-only) headers to the response from the origin server. This allows for purges of cached content based on tags provided by the Worker, without modifications to the origin server. This is performed utilizing the [**Purge by Tag**](/cache/how-to/purge-cache/#purge-using-cache-tags) feature, which is currently only available to Enterprise customers. If this option is used in a non-Enterprise account, the additional headers will not be appended.
 
 *   `cacheTtl` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
