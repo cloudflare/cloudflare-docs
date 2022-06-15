@@ -22,11 +22,7 @@ For the majority of Cloudflare Zero Trust features to work, you need to specify 
 
 Instructs the client to register device with your organization. Registration requires authentication via an [IDP](/cloudflare-one/identity/idp-integration/) or [Service Auth](/cloudflare-one/identity/service-auth/).
 
-<<<<<<< HEAD
 **Value Type:** `string`
-=======
-**Description.** Instructs the client to register device with your organization. Registration requires authentication via an [IDP](/cloudflare-one/identity/idp-integration/) or [Service Auth](/cloudflare-one/identity/service-tokens/).
->>>>>>> production
 
 **Value:** Your [team name](/cloudflare-one/glossary/#team-name).
 
