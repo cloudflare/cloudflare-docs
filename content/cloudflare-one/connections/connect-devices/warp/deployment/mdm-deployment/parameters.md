@@ -16,15 +16,13 @@ Most of the parameters listed below are also configurable in the Zero Trust Dash
 
 ## Required for full Cloudflare One features
 
-For the vast majority of Cloudflare Zero Trust features to work, you need to specify a team name. Examples of Cloudflare Zero Trust features depending on the team name are [HTTP policies](/cloudflare-one/policies/filtering/http-policies/), [Browser Isolation](/cloudflare-one/policies/browser-isolation/), and [device posture](/cloudflare-one/identity/devices/).
+For the majority of Cloudflare Zero Trust features to work, you need to specify a team name. Examples of Cloudflare Zero Trust features depending on the team name are [HTTP policies](/cloudflare-one/policies/filtering/http-policies/), [Browser Isolation](/cloudflare-one/policies/browser-isolation/), and [device posture](/cloudflare-one/identity/devices/).
 
 ### `organization`
 
-| Field          | Value Type |
-| -------------- | ---------- |
-| `organization` | string     |
-
 **Description.** Instructs the client to register device with your organization. Registration requires authentication via an [IDP](/cloudflare-one/identity/idp-integration/) or [Service Auth](/cloudflare-one/identity/service-auth/).
+
+**Value Type:** `string`
 
 **Value:** Your [team name](/cloudflare-one/glossary/#team-name).
 
@@ -34,11 +32,9 @@ This field is only required to enforce DNS policies when deploying the client in
 
 ### `gateway_unique_id`
 
-| Field               | Value Type |
-| ------------------- | ---------- |
-| `gateway_unique_id` | string     |
-
 **Description.** Instructs the client to direct all DNS queries to a specific policy location. This value is only necessary if deploying without a team name _or_ in an organization with multiple policy locations.
+
+**Value Type:** `string`
 
 **Value:** Your [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain).
 
@@ -46,11 +42,9 @@ This field is only required to enforce DNS policies when deploying the client in
 
 ### `service_mode`
 
-| Field          | Value Type |
-| -------------- | ---------- |
-| `service_mode` | string     |
-
 **Description.** Allows you to choose the operational mode of the client.
+
+**Value Type:** `string`
 
 **Value:**
 
@@ -61,11 +55,9 @@ New service modes such as Proxy only are not supported as a value and must be co
 
 ### `onboarding`
 
-| Field        | Value Type |
-| ------------ | ---------- |
-| `onboarding` | boolean    |
-
 **Description.** Controls the visibility of the onboarding screens that ask the user to review the privacy policy during an application's first launch.
+
+**Value Type:** `boolean`
 
 **Value:**
 
@@ -74,11 +66,9 @@ New service modes such as Proxy only are not supported as a value and must be co
 
 ### `switch_locked`
 
-| Field           | Value Type |
-| --------------- | ---------- |
-| `switch_locked` | boolean    |
-
 **Description.** Allows the user to control the connected state of the application (main toggle switch).
+
+**Value Type:** `boolean`
 
 **Value:**
 
@@ -95,11 +85,9 @@ This parameter replaces the old `enabled` property, which can no longer be used 
 
 ### `auto_connect`
 
-| Field          | Value Type |
-| -------------- | ---------- |
-| `auto_connect` | integer    |
-
 **Description.** If switch has been turned off by user the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value, usually just enough time for a user to login to hotel or airport wifi.
+
+**Value Type:** `integer`
 
 **Value:**
 
@@ -112,11 +100,9 @@ This parameter replaces the old `enabled` property, which can no longer be used 
 
 ### `support_url`
 
-| Field         | Value Type |
-| ------------- | ---------- |
-| `support_url` | string     |
-
 **Description.** When the WARP client is deployed via MDM, the in-app Send Feedback button is disabled by default. This parameter allows you to re-enable the button and direct it towards your organization.
+
+**Value Type:** `string`
 
 **Value:**
 
@@ -135,21 +121,17 @@ Both a `auth_client_id` and `auth_client_secret` are required when using this au
 
 ### `auth_client_id`
 
-| Field            | Value Type |
-| ---------------- | ---------- |
-| `auth_client_id` | string     |
-
 **Description.** The automatically generated ID when you created your [Service Token](/cloudflare-one/identity/service-auth/service-tokens/).
+
+**Value Type:** `string`
 
 **Value:** `Client ID` from your service token.
 
 ### `auth_client_secret`
 
-| Field                | Value Type |
-| -------------------- | ---------- |
-| `auth_client_secret` | string     |
-
 **Description.** The automatically generated secret when you created your [Service Token](/cloudflare-one/identity/service-auth/service-tokens/).
+
+**Value Type:** `string`
 
 **Value:** `Client Secret` from your service token.
 
