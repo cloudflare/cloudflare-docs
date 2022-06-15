@@ -32,7 +32,7 @@ You can install the service to either run at login or at boot.
 Open a terminal window and run the following command:
 
 ```sh
-$ cloudflared service install
+$ cloudflared service install $(cloudflared tunnel token <TUNNEL>)
 ```
 
 Cloudflare Tunnel will be installed as a launch agent and start whenever you log in, using your local user configuration found in `~/.cloudflared/`.
@@ -42,7 +42,7 @@ Cloudflare Tunnel will be installed as a launch agent and start whenever you log
 Open a terminal window and run the following command:
 
 ```sh
-$ sudo cloudflared service install
+$ sudo cloudflared service install $(cloudflared tunnel token <TUNNEL>)
 ```
 
 Cloudflare Tunnel will be installed as a launch daemon and start whenever your system boots, using your configuration found in `/etc/cloudflared`.
