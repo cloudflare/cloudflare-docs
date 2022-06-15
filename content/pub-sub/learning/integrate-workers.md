@@ -207,7 +207,7 @@ export default worker;
 Once you've published your Worker using `wrangler publish`, you will need to configure your Broker to invoke the Worker. This is done by setting the `on_publish.url` field of your Broker to the _publicly accessible_ URL of your Worker:
 
 ```bash
-$ curl -s -X PATCH -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}?on_publish_url="https://your-worker.your-account.workers.dev"
+$ curl -s -X PATCH -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}" --data '{"on_publish":{"url":"https://your.worker.workers.dev"}}'
 ```
 
 You should receive a HTTP 200 response that resembles the example below, with the URL of your Worker:
