@@ -14,6 +14,10 @@ This feature is only available to Enterprise customers.
 
 You can apply Gateway HTTP policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file. The PAC file contains a Javascript function which instructs a browser to forward traffic to a proxy server instead of directly to the destination server. When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account, to be filtered by Gateway.
 
+## Prerequisites
+
+Install the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on your device.
+
 ## 1. Generate a proxy endpoint
 
 You can generate a proxy endpoint on the Zero Trust dashboard or through the Cloudflare API.
