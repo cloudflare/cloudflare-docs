@@ -19,7 +19,7 @@ By design, replicas do not offer any level of traffic steering (random, hash, or
 
 # About Cloudflare Load Balancers
 
-Cloudflare Load Balancer allows users to proactively steer traffic away from unhealthy origins and intelligently distribute the traffic load based on a multitude of steering algorithms. This process ensures that errors are not served to end-users and empowers businesses to tightly couple overall business objectives to their traffic behavior.
+Cloudflare Load Balancer allows users to proactively steer traffic away from unhealthy origins and intelligently distribute the traffic load based on a multitude of steering algorithms. This process ensures that errors are not served to end users and empowers businesses to tightly couple overall business objectives to their traffic behavior.
 
 In this model, more than one Tunnel is required with identical configurations. The DNS record (UUID.cfargotunnel.com) for each Tunnel can then be used at the Origin within the Load Balancer. Then, you can define traffic steering policies to determine when traffic should be routed to each unique origin (i.e. Cloudflare Tunnel). 
 
