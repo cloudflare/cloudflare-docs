@@ -341,6 +341,7 @@
 /magic-wan/partners/aruba-edgeconnect/ /magic-wan/tutorials/aruba-edgeconnect/ 301
 /magic-wan/tutorials/ipsec/strongswan/ /magic-wan/tutorials/strongswan/ 301
 /magic-wan/tutorials/ipsec/vyos/ /magic-wan/tutorials/vyos/ 301
+/magic-wan/reference/ipsec-supported-devices/ /magic-wan/reference/device-compatibility/ 301
 
 # network-interconnect
 /network-interconnect/interconnect-types/ /network-interconnect/about/interconnect-types/ 301

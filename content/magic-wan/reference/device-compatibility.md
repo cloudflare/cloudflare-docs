@@ -1,9 +1,13 @@
 ---
 pcx-content-type: reference
-title: Supported IPsec devices
+title: Device compatibility
 ---
 
-# Supported IPsec devices
+# Device compatibility
+
+Magic WAN is compatible with any device that supports IPsec with the [supported configuration parameters](/magic-wan/how-to/ipsec/#supported-configuration-parameters) or supports GRE.
+
+The matrix below includes example devices and links to the integration guides.
 
 | Appliance                                                     |  GRE tunnel    |  IPsec tunnel  |
 |---------------------------------------------------------------|----------------|----------------|
@@ -19,11 +23,11 @@ title: Supported IPsec devices
 | Versa                    |   Specifications compatible* | Compatibility on roadmap  | 
 | [VyOS](/magic-wan/tutorials/vyos)          |  –  |  ✅ |
 
-| VPN        | GRE tunnel  |  IPsec tunnel |
-|------------------|-------------|---------------|
-| AWS VPN  |   Specifications compatible*  | Incompatible natively.</br> **Workaround:** Set up VM as an IPSec tunnel endpoint with replay protection disabled.|
-| Azure VPN Gateway    | Compatibility on roadmap  | Specifications compatible* |
-| GCP Cloud VPN        | Specifications compatible* | Incompatible natively. </br> **Workaround:** Set up VM as an IPSec tunnel endpoint with replay protection disabled) |
+| VPN               | GRE tunnel                  |  IPsec tunnel |
+|-------------------|-----------------------------|---------------|
+| AWS VPN           | Compatibility on roadmap    | Incompatible natively.</br> **Workaround:** Set up VM as an IPSec tunnel endpoint with replay protection disabled.|
+| Azure VPN Gateway | Compatibility on roadmap    | Specifications compatible* |
+| GCP Cloud VPN     | Compatibility on roadmap    | Incompatible natively. </br> **Workaround:** Set up VM as an IPSec tunnel endpoint with replay protection disabled) |
 
 
 \* Specifications compatible per vendor documentation; detailed integration guide coming soon.
