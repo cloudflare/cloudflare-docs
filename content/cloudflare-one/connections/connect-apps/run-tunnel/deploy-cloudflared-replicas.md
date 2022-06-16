@@ -31,7 +31,7 @@ In this model, more than one tunnel is required with identical configurations. T
 
 # Deploy `cloudflared` replicas
 
-To deploy multiple instances of cloudflared, you can create and configure one instance of cloudflared and run it as multiple different processes. This is as simple as running the same tunnel on the same or unique origins. 
+To deploy multiple instances of `cloudflared`, you can create and configure one instance of `cloudflared` and run it as multiple different processes. 
 
 Cloudflare Load Balancers and DNS records can still point to the tunnel and its unique ID while that tunnel sends traffic to the multiple instances of cloudflared that run through it.
 
