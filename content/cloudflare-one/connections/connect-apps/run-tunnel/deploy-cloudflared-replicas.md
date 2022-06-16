@@ -75,7 +75,7 @@ This will output your tunnel UUID as well as your two newly generated connector 
 
 # Deploy a Load Balancer
 
-You can create DNS records from cloudflared, which will provision a CNAME record that points to the subdomain of a specific tunnel. The result is the same as creation from the dashboard above.
+You can create DNS records from `cloudflared`, which will provision a CNAME record that points to the subdomain of a specific tunnel. The result is the same as creation from the dashboard above.
 To do so, run the following command:
 
   ```bash
