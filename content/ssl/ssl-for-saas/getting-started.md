@@ -16,11 +16,8 @@ Before you can start creating custom hostnames, you need to have access to [SSL 
 
 If you have not used the Cloudflare API previously, review our [API Quickstart](/api/).
 
-{{<Aside type="note">}}
- 
 If there are multiple proxied DNS records for one zone, Cloudflare must prioritize which record controls the zone settings and associated origin server. Adding a new custom hostname may take priority over your current settings or cause your settings to no longer apply. To prevent overriding or voiding your settings, review [Hostname priority (SSL for SaaS)](/ssl/ssl-tls/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas)
  
-{{</Aside>}}
 ---
 
 ## Step 1 — Create fallback origin and CNAME target
@@ -28,6 +25,8 @@ If there are multiple proxied DNS records for one zone, Cloudflare must prioriti
 The fallback origin is where Cloudflare will route traffic sent to your custom hostnames (must be proxied).
 
 The CNAME target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#step-5--have-customer-create-a-cname-record).
+
+We suggest using a domain other than your main company domain (example.cloud instead of example.com) to lower risk and add flexibility to your custom hostname management.
 
 1.  Create a [new application](/fundamentals/get-started/setup/add-site/) and select the **Free** plan.
 
@@ -68,6 +67,9 @@ Each Custom Hostname requires successful Certificate Validation and Hostname Ver
 - [Hostname Verification](/ssl/ssl-for-saas/common-tasks/hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
 
 Depending on which method you select for each of these options, additional steps might be required for you and your customers.
+{{<Aside type="note">}}
+You can no longer use HTTP based validation for Wildcard certificates according to the Certificate Authority Browser Forum.
+{{</Aside>}}
 
 ---
 
@@ -121,7 +123,7 @@ $ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/
 
 ## Step 5 — Have customer create a CNAME record
 
-Your customer needs to set up a CNAME record at their DNS provider that points to your [CNAME target](#step-1--create-fallback-origin-and-cname-target).
+Your customer needs to set up a CNAME record at their DNS provider that points to your [CNAME target](#step-1--create-fallback-origin-and-cname-target). For an existing site, ensure your custom hostname and certificate are verified and valid prior to completing this step. Shifting traffic before the certificate has been issued may cause an insecurity in your domain.
 
 For example:
 
