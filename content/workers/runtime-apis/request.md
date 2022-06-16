@@ -138,7 +138,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `image` {{<type>}}Object | null{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Enables [Image Resizing](https://developers.cloudflare.com/images/) for this request. The possible values are described in [Image Resizing with Workers](https://developers.cloudflare.com/images/image-resizing/resize-with-workers) documentation.
+    *   Enables [Image Resizing](/images/) for this request. The possible values are described in [Image Resizing with Workers](/images/image-resizing/resize-with-workers) documentation.
 
 *   `minify` {{<type>}}{ javascript?: boolean; css?: boolean; html?: boolean; }{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
