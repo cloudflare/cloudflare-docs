@@ -25,7 +25,9 @@ You do not need to be a Google Cloud Platform user to integrate Google Suite as 
 1.  Name the application, add a support email, and input contact fields. Google Cloud Platform requires an email in your account.
 {{<Aside type="note">}}In the **Scopes** section, we recommend adding the `userinfo.email` scope. This is not required for the integration, but shows authenticating users what information is being gathered. You do not need to add test users.{{</Aside>}}
 
-1.  Return to the **APIs & Services** page, select **Create Credentials** > **OAuth client ID**, and name the application.
+1. Return to the **APIs & Services** page, select **Create Credentials** > **OAuth client ID**, and name the application.
+
+    ![Location of OAuth client ID settings on Google Cloud Platform credentials page.](/cloudflare-one/static/documentation/identity/google/create-oauth.png)
 
 1.  Under **Authorized JavaScript origins**, in the **URIs** field, enter your [team domain](/cloudflare-one/glossary/#team-domain).
 
