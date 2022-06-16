@@ -8,7 +8,7 @@ Our lightweight, open-source connector, [cloudflared]([url](https://github.com/c
 
 # About `cloudflared` replicas
 
-Cloudflare Tunnel also allows users to deploy additional instances of our connector, cloudflared, for availability and failover scenarios. We refer to these unique instances as [replicas]([url](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#connector)). Each replica establishes four new connections which serve as additional points of ingress to your Origin should you need them. Each of the replicas will point to the same Cloudflare Tunnel. This ensures that in the event a single host running cloudflared goes down, your network remains up. 
+Cloudflare Tunnel also allows users to deploy additional instances of our connector, `cloudflared`, for availability and failover scenarios. We refer to these unique instances as [replicas]([url](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#connector)). Each replica establishes four new connections which serve as additional points of ingress to your origin, should you need them. Each of the replicas will point to the same tunnel. This ensures that your network remains up in the event a single host running `cloudflared` goes down. 
 
 By design, replicas do not offer any level of traffic steering (random, hash, or round-robin). Instead, when a request arrives to Cloudflare, the network will pick any connection available to the origin. If a connection fails, we will retry others, but there is no guarantee about which connection is chosen. 
 
