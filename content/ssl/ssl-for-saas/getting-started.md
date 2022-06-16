@@ -26,6 +26,8 @@ The fallback origin is where Cloudflare will route traffic sent to your custom h
 
 The CNAME target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#step-5--have-customer-create-a-cname-record).
 
+We suggest using a domain other than your main company domain (example.cloud instead of example.com) to lower risk and add flexibility to your custom hostname management.
+
 1.  Create a [new application](/fundamentals/get-started/setup/add-site/) and select the **Free** plan.
 
 2.  Navigate to **DNS**.
