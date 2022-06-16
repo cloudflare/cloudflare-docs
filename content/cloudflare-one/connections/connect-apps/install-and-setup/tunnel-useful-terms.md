@@ -12,7 +12,7 @@ Review terminology for tunnels setup locally through the CLI.
 
 ## Tunnel
 
-A tunnel is a secure, outbound-only pathway you can establish between your origin and the Cloudflare edge. Each tunnel you create will be assigned a [name](#tunnel-name) and a [UUID](#tunnel-uuid).
+A tunnel is a secure, outbound-only pathway you can establish between your origin and the Cloudflare global network. Each tunnel you create will be assigned a [name](#tunnel-name) and a [UUID](#tunnel-uuid).
 
 ## Tunnel UUID
 
@@ -24,7 +24,11 @@ The `cloudflared tunnel create <NAME>` command creates a tunnel and assigns it a
 
 ## Connector
 
-You can create and configure a tunnel once and run it as multiple different `cloudflared` processes. These processes are known as connectors, or replicas. DNS records and Cloudflare Load Balancers can still point to the tunnel and its UUID, while that tunnel sends traffic to the multiple instances of cloudflared that run through it. Using multiple connectors provides tunnels with high availability, scalability, and elasticity.
+The connector, simply called `cloudflared`, establishes connectivity from your origin server to the Cloudflare global network. Each instance of the connector will be given a unique connector id which can be surfaced by running `cloudflared tunnel info <NAME or UUID>` or visiting the Zero Trust dashboard. Our connector offers high-availability by design, creating four long-lived connections to two distinct data centers within Cloudflare’s global network. This means that whether an individual connection, server, or data center goes down, your origin remains available.
+  
+## Replica
+
+You can create and configure a tunnel once and run that tunnel through multiple, unique instances of the connector, `cloudflared`. These instances are known as connectors, or replicas. DNS records and Cloudflare Load Balancers will still point to the tunnel and its DNS Record (UUID.cfargotunnel.com), while that tunnel sends traffic to the multiple instances of cloudflared that run through it. Today, there is no guarentee about which connector will be chosen. Replicas are often deployed to provide tunnels with high availability in the event a given host running cloudflared is interupted or taken offline. 
 
 ## Default `cloudflared` directory
 
