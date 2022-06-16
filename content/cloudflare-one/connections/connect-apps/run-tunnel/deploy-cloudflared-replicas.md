@@ -82,7 +82,7 @@ To do so, run the following command:
     cloudflared tunnel route lb <tunnel name/uuid> <hostname> <load balancer pool>
   ```
 
-The command will create a LB record that points to the tunnel subdomain (UUID.cfargotunnel.com), but will not proxy traffic if the tunnel is not currently running.
+The command will create a LB record that points to the tunnel subdomain (`UUID.cfargotunnel.com`), but will not proxy traffic if the tunnel is not currently running.
 
 _Note: this command requires the cert.pem file._
   
