@@ -47,11 +47,11 @@ Paid plans provide additional compatibility with older browsers/operating system
 
 ## Other products
 
-| Feature/Product                  | Custom (Legacy IP) | Custom Certificates | Advanced Certificates | SSL for SaaS |
-| -------------------------------- | ------------------ | ------------------- | --------------------- | ------------ | --- |
-| Clients using ECDSA key exchange | ✅                 | ✅                  | ✅                    | ✅           |
-| Clients using RSA key exchange   | ✅                 | ✅                  | ✅                    | ✅           |
-| Clients without SNI              | ✅                 | ❌                  | ❌                    | ❌           | ❌  |
+| Feature/Product | Custom (Legacy IP) | Custom Certificates | Advanced Certificates | SSL for SaaS |
+| --- | --- | --- | --- | --- |
+| Clients using ECDSA key exchange | ✅ | ✅ | ✅ | ✅ |
+| Clients using RSA key exchange   | ✅ | ✅ | ✅ | ✅ |
+| Clients without SNI | ✅ | ❌ | ❌ | ❌ |
 
 {{<Aside type="note" header="Note">}}
 
