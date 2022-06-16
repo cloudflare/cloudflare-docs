@@ -1,12 +1,11 @@
 ---
+title: Using R2 with the Cache API
+summary: Use the Cache API to store objects from R2 in Cloudflare's cache.
 type: example
-summary: Use the Cache API to store responses in Cloudflare's cache.
 tags:
   - Cache API
-  - Middleware
-  - Caching
+  - R2
 pcx-content-type: configuration
-title: Using the Cache API
 weight: 1001
 layout: example
 ---
@@ -16,36 +15,46 @@ layout: example
 export default {
   async fetch(request, env, context) {
     try {
-      const cacheUrl = new URL(request.url);
+      const url = new URL(request.url);
 
       // Construct the cache key from the cache URL
-      const cacheKey = new Request(cacheUrl.toString(), request);
+      const cacheKey = new Request(url.toString(), request);
       const cache = caches.default;
 
       // Check whether the value is already available in the cache
-      // if not, you will need to fetch it from origin, and store it in the cache
+      // if not, you will need to fetch it from R2, and store it in the cache
       // for future access
       let response = await cache.match(cacheKey);
 
       if (response) {
         console.log(`Cache hit for: ${request.url}.`);
-        return response
+        return response;
       }
 
       console.log(
         `Response for request url: ${request.url} not present in cache. Fetching and caching request.`
       );
-      // If not in cache, get it from origin
-      response = await fetch(request);
 
-      // Must use Response constructor to inherit all of response's fields
-      response = new Response(response.body, response);
+      // If not in cache, get it from R2
+      const objectKey = url.pathname.slice(1);
+      const object = await env.MY_BUCKET.get(objectKey);
+      if (!object || !object.body) {
+        return new Response('Object Not Found', { status: 404 });
+      }
+
+      // Set the appropriate object headers
+      const headers = new Headers();
+      object.writeHttpMetadata(headers);
+      headers.set('etag', object.httpEtag);
 
       // Cache API respects Cache-Control headers. Setting s-max-age to 10
       // will limit the response to be in cache for 10 seconds max
-
       // Any changes made to the response here will be reflected in the cached value
-      response.headers.append('Cache-Control', 's-maxage=10');
+      headers.append('Cache-Control', 's-maxage=10');
+
+      response = new Response(object.body, {
+        headers,
+      });
 
       // Store the fetched response as cacheKey
       // Use waitUntil so you can return the response without blocking on
