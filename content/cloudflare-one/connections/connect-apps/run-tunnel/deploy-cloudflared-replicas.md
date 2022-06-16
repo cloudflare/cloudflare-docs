@@ -25,7 +25,7 @@ In this model, more than one tunnel is required with identical configurations. T
 
 # When to use Load Balancers
 - When you have a need to intelligently steer traffic based on latency, geolocation, or other signals
-- When you have a need to implement failover logic if a Tunnel reaches an inactive state
+- When you have a need to implement failover logic if a tunnel reaches an inactive state
 - When you have a need to be alerted when a Tunnel reaches an inactive state
 - When you have a need to distribute traffic more evenly across your Tunnel-accessible Origins
 
