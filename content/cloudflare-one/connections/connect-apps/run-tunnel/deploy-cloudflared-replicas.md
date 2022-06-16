@@ -27,7 +27,7 @@ In this model, more than one tunnel is required with identical configurations. T
 - When you have a need to intelligently steer traffic based on latency, geolocation, or other signals
 - When you have a need to implement failover logic if a tunnel reaches an inactive state
 - When a tunnel reaches an inactive state and you want to be alerted 
-- When you have a need to distribute traffic more evenly across your Tunnel-accessible Origins
+- When you have a need to distribute traffic more evenly across your Cloudflare Tunnel-accessible origins
 
 # Deploy `cloudflared` replicas
 
