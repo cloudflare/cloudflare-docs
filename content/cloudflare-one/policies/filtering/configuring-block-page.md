@@ -33,7 +33,7 @@ Users will now see a custom message when they are blocked by this HTTP policy.
 1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Policies** > **DNS**.
 2. Find the policy for which you would like to display a block page and click **Edit**. You can only enable the block page for policies with a Block action.
 3. Scroll down to the **Configure policy settings** step.
-4. Toggle the **Display block page** switch.
+4. Enable **Display block page**.
 5. Click **Save policy**.
 
 Users will now see a block page when they are blocked by this DNS policy.
@@ -53,7 +53,7 @@ You can customize the block page by making global changes that will show up ever
 To apply customizations to your block page:
 
 1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **General**.
-2. Under **Block page**, toggle on the custom block page feature.
+2. Under **Block page**, enable the custom block page feature.
 3. Click **Customize**. Available global customizations include:
 
     - Adding your organization's name
