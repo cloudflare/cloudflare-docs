@@ -254,13 +254,15 @@ The `route` key here is a [route pattern](/workers/platform/routing/routes/), wh
 
 With your project configured, you can now publish your Worker. To deploy to your `*.workers.dev` subdomain, run:
 
+
 ```sh
 ---
 header: Publish to workers.dev
 ---
 ~/my-worker $ wrangler publish
 ```
----
+
+--- 
 
 ### (Optional) Publish your project to a registered domain
 
@@ -272,8 +274,7 @@ After deploying your Worker, you may want to publish your application on a zone 
 4.  Next, input your zone URL. This will automatically create a new DNS record for your zone
 5.  Click **Add Custom Domain**. Your Worker will now be reachable with your new URL. 
 
-
----
+--- 
 
 
 ## Next steps
