@@ -11,9 +11,9 @@ With Cloudflare Access, you can create Allow or Block policies which evaluate th
 - **Evaluate URL** — the API endpoint containing your business logic.
 - **Keys URL** — the key that Access uses to verify that the response came from your API
 
-After the user authenticates with your identity provider, Access sends the user's identity to the external API at **Evaluate URL**. The external API returns a True or False response to Access, which will then allow or deny access to the user.
+After the user authenticates with your identity provider, Access sends the user's identity to the external API at **Evaluate URL**. The external API returns a True or False response to Access, which will then allow or deny access to the user. To protect against man-in-the-middle attacks, Access signs all requests with your Access account key and checks that responses are signed by the key at **Keys URL**.
 
-To protect against man-in-the-middle attacks, Access signs all requests with your Access account key and checks that responses are signed by the key at **Keys URL**.
+You can set up External Evaluation rules using any API service, but to get started quickly we recommend using [Cloudflare Workers](/workers/).
 
 ## Set up external API and key with Cloudflare Workers
 
@@ -25,10 +25,10 @@ To protect against man-in-the-middle attacks, Access signs all requests with you
 
 ### 1. Create a new Worker
 
-1. Open a terminal and create a new Workers project.
+1. Open a terminal and clone our example project.
 
     ```sh
-    wrangler generate my-worker
+    wrangler generate my-worker https://github.com/cloudflare/workers-access-external-auth-example
     ```
 
 2. Navigate to the project directory.
@@ -37,9 +37,7 @@ To protect against man-in-the-middle attacks, Access signs all requests with you
     cd my-worker
     ```
 
-### 2. Generate a key
-
-1. Create a [Workers KV namespace](/workers/wrangler/workers-kv/) to store the key. The binding name should be `KV` if you want to try the example API.
+3. Create a [Workers KV namespace](/workers/wrangler/workers-kv/) to store the key. The binding name should be `KV` if you want to run the example as written.
 
     ```sh
     wrangler kv:namespace create "KV"
@@ -47,7 +45,7 @@ To protect against man-in-the-middle attacks, Access signs all requests with you
 
     The command will output the binding name and KV namespace ID, for example `{ binding = "KV", id = "3e56d0300d714e7994c209d7aff3ccbe" }`.
 
-2. Open `wrangler.toml` in a text editor and insert the following:
+4. Open `wrangler.toml` in a text editor and insert the following:
     - `<ACCOUNT_ID>`: your Cloudflare account ID, shown in the [Cloudflare dashboard](https://dash.cloudflare.com/) in the **Workers** tab.
     - `<KV_NAMESPACE_ID>`: the `id` of your KV namespace.
     - `<TEAM_NAME>`: your Cloudflare Zero Trust [team name](/cloudflare-one/glossary/#team-name).
@@ -74,7 +72,11 @@ To protect against man-in-the-middle attacks, Access signs all requests with you
     DEBUG=false
     ```
 
-3. Publish the Worker to your account.
+### 2. Program your business logic
+
+1. Open `index.js` and modify the `externalEvaluation` function to perform logic on any identity-based data sent by Access.
+
+2. Publish the Worker to your Workers account.
 
     ```sh
     wrangler publish
@@ -82,29 +84,21 @@ To protect against man-in-the-middle attacks, Access signs all requests with you
 
     The Worker will be deployed to your `*.workers.dev` subdomain at `my-worker.<YOUR_SUBDOMAIN>.workers.dev`.
 
-4. To generate an RSA private/public key pair, open a browser and go to `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/keys`.
-
-5. (Optional) To confirm that the key is stored in the `KV` namespace:
-    1. Open the [Cloudflare dashboard](https://dash.cloudflare.com/) and navigate to **Workers** > **KV**.
-    2. Select **View** next to `my-worker-KV`.
-
-    If you want to generate a new key, delete the existing key from the dashboard and visit `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/keys` again.
-
-### 3. Program your business logic
-
-1. In your `my-worker` directory, replace `index.js` with our [example code](https://github.com/cloudflare/workers-access-external-auth-example/blob/main/index.js).
-
-2. Open `index.js` and modify the `externalEvaluation` function to perform logic on any identity-based data sent by Access.
-
-3. Publish your changes.
-
-    ```sh
-    wrangler publish
-    ```
-
 {{<Aside type="note" header="What identity-based data is available?">}}
 To view a list of available data fields, log in to your Access application and append `/cdn-cgi/access/get-identity` to the URL. For example, if `www.example.com` is behind Access, visit `https://www.example.com/cdn-cgi/access/get-identity`.
 {{</Aside>}}
+
+### 3. Generate a key
+
+To generate an RSA private/public key pair:
+
+1. Open a browser and go to `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/keys`.
+
+2. (Optional) Verify that the key has been stored in the `KV` namespace:
+    1. Open the [Cloudflare dashboard](https://dash.cloudflare.com/) and navigate to **Workers** > **KV**.
+    2. Select **View** next to `my-worker-KV`.
+
+Other key formats (such as DSA) are not supported at this time.
 
 ### 4. Create an External Evaluation rule
 
