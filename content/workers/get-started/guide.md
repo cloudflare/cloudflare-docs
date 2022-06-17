@@ -219,7 +219,7 @@ You can get your `zone_id` with the following steps:
 
 Wrangler’s environments feature allows you to deploy the same project to multiple places under multiple names. For a complete guide on how to configure environments, refer to the [environments page](/workers/platform/environments/).
 
-To add a `production` environment, pass in a `zone_id` and `route`:
+To add a `production` environment, pass in a `route` and specify the environment:
 
 ```toml
 ---
@@ -252,9 +252,7 @@ The `route` key here is a [route pattern](/workers/platform/routing/routes/), wh
 
 ## 7. Publish your project
 
-With your project configured, you can now publish your Worker.
-
-To deploy to your `*.workers.dev` subdomain, run:
+With your project configured, you can now publish your Worker. To deploy to your `*.workers.dev` subdomain, run:
 
 ```sh
 ---
@@ -270,7 +268,7 @@ After deploying your Worker, you may want to publish your application on a zone 
 
 1.  [**Log in** to your Cloudflare account](https://dash.cloudflare.com/login)
 2.  On the dashboard select Workers, this will show you all Workers deployed to your zone. 
-3.  Select your depoyed Worker >  **Triggers** > **Custom Domains** 
+3.  Select your deployed Worker >  **Triggers** > **Custom Domains** 
 4.  Next, input your zone URL. This will automatically create a new DNS record for your zone
 5.  Click **Add Custom Domain**. Your Worker will now be reachable with your new URL. 
 
