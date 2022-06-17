@@ -92,8 +92,9 @@
 /access/ssh/ssh-guide/ /cloudflare-one/tutorials/ssh/ 301
 
 # analytics
-/analytics/web-analytics/change-log/ /analytics/web-analytics/changelog/ 301
 /analytics/graphql-api/migration-guides/network-analytics-v2/about/ /analytics/graphql-api/migration-guides/network-analytics-v2/differences/ 301
+/analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
+/analytics/web-analytics/change-log/ /analytics/web-analytics/changelog/ 301
 /analytics/web-analytics/about/ /analytics/web-analytics/ 301 
 
 # argo-tunnel
@@ -127,6 +128,7 @@
 /bots/about/static-resources/ /bots/reference/static-resources/ 301
 /bots/bot-fight-mode/ /bots/ 301
 /bots/bot-management-enterprise/ /bots/get-started/bm-subscription/ 301
+/bots/bm-subscription/ /bots/get-started/bm-subscription/ 301
 
 # byoip
 /byoip/dynamic-advertisement/ /byoip/about/dynamic-advertisement/ 301
@@ -336,6 +338,7 @@
 /magic-wan/get-started/configure-tunnels/assign-tunnel-priorities/ /magic-wan/how-to/configure-static-routes/ 301
 /magic-wan/get-started/configure-tunnels/specify-ip-addresses/ /magic-wan/how-to/run-endpoint-health-checks/ 301
 /magic-wan/get-started/configure-tunnels/specify-tunnel-endpoints/ /magic-wan/how-to/configure-tunnels/ 301
+/magic-wan/get-started/configure-tunnels/ /magic-wan/how-to/configure-tunnels/ 301
 /magic-wan/get-started/verify-requirements/ /magic-wan/prerequisites/ 301
 /magic-wan/tutorials/ipsec/ /magic-wan/how-to/ipsec/ 301
 /magic-wan/partners/aruba-edgeconnect/ /magic-wan/tutorials/aruba-edgeconnect/ 301
@@ -363,6 +366,8 @@
 /pages/how-to/deploy-a-zola-site/ /pages/framework-guides/deploy-a-zola-site/ 301
 /pages/how-to/elderjs/ /pages/framework-guides/elderjs/ 301
 /pages/platform/github-integration/ /pages/platform/git-integration/ 301 
+/pages/platform/direct-uploads/ /pages/platform/direct-upload/ 301
+
 
 # page-shield
 /page-shield/script-monitor/ /page-shield/ 301
@@ -860,7 +865,8 @@
 
 /zaraz/datalayer-compatibility/ /zaraz/advanced/datalayer-compatibility/ 301
 /zaraz/get-started/block-zaraz/ /zaraz/advanced/block-zaraz/ 301
-/zaraz/user-properties/ /zaraz/properties-reference/ 301
+/zaraz/user-properties/ /zaraz/reference/properties-reference/ 301
+/zaraz/properties-reference/ /zaraz/reference/properties-reference/ 301
 /zaraz/web-api/zaraz-track/ /zaraz/web-api/track/ 301
 
 # cloudflare-one / zero-trust
@@ -873,6 +879,7 @@
 /cloudflare-one/connections/connect-apps/configuration/config/ /cloudflare-one/connections/connect-apps/configuration/arguments/ 301
 /cloudflare-one/connections/connect-apps/configuration/ingress/ /cloudflare-one/connections/connect-apps/configuration/local-management/ingress/ 301
 /argo-tunnel/configuration/ingress/ /cloudflare-one/connections/connect-apps/configuration/local-management/ingress/ 301
+/argo-tunnel/faq/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
 /cloudflare-one/connections/connect-apps/configuration/configuration-file/ /cloudflare-one/connections/connect-apps/configuration/local-management/configuration-file/ 301
 /cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/ /cloudflare-one/connections/connect-apps/configuration/local-management/ingress/ 301
 /cloudflare-one/connections/connect-apps/configuration/private-networks/ /cloudflare-one/connections/connect-networks/private-net/ 301
