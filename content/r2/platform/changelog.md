@@ -48,7 +48,7 @@ title: Changelog
 
 - S3 API `GetObject` ranges are now inclusive (`bytes=0-0` will correctly return the first byte).
 - S3 API `GetObject` partial reads return the proper `206 Partial Content` response code.
-- Copying from a non-existent key (or from a non-existent bucket) to another bucket now returns the proper NoSuchKey / NoSuchBucket response.
+- Copying from a non-existent key (or from a non-existent bucket) to another bucket now returns the proper `NoSuchKey` / `NoSuchBucket` response.
 - The S3 API now returns the proper `Content-Type: application/xml` response header on relevant endpoints.
 - Multipart uploads now have a `-N` suffix on the etag representing the number of parts the file was published with.
 - `UploadPart` and `UploadPartCopy` now return proper error messages, such as `TooMuchConcurrency` or `NoSuchUpload`, instead of 'internal error'.
