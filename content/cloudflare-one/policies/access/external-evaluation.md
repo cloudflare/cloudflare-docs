@@ -121,7 +121,7 @@ To view a list of available data fields, log in to your Access application and a
 
 When a user logs in to your application, Access will now check their email, device, location, and other identity-based data against your business logic. To test your policies against an email, go to the **Policies** tab and select **Test your policies**.
 
-### Troubleshooting
+### Troubleshooting the Worker
 
 To debug your External Evaluation rule:
 
