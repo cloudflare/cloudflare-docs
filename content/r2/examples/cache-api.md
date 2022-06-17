@@ -38,7 +38,7 @@ export default {
       // If not in cache, get it from R2
       const objectKey = url.pathname.slice(1);
       const object = await env.MY_BUCKET.get(objectKey);
-      if (!object || !object.body) {
+      if (object === null) {
         return new Response('Object Not Found', { status: 404 });
       }
 
