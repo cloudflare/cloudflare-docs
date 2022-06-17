@@ -229,15 +229,24 @@ name = "my-worker"
 
 # The route pattern your Workers application will be served at
 route = "example.com/*"
+
+[env.production]
+name = "my-worker"
+routes = [
+  "example.com/foo/*",
+]
+
+# This will deploy your Worker to staging 
+[env.staging]
+name = "my-worker"
+routes = [
+  "example.com/bar/*",
+]
+
 ```
 
 The `route` key here is a [route pattern](/workers/platform/routing/routes/), which can contain wildcards.
 
-If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally. If your Worker acts as your origin (that is, the request terminates in a Worker), you must add a DNS record.
-
-You may enter a placeholder `AAAA` record pointing to `100::`, which must be proxied through Cloudflare (orange-cloud in the DNS settings). This value specifically is the [reserved IPv6 discard prefix](https://tools.ietf.org/html/rfc6666) but is not the only value allowed. For example, you may also use an `A` record pointed to `192.0.2.1` or a `CNAME` pointed to any resolvable target.
-
-Whichever method you choose, your record must be proxied through Cloudflare (orange-clouded) and resolve successfully.
 
 ---
 
@@ -253,29 +262,21 @@ header: Publish to workers.dev
 ---
 ~/my-worker $ wrangler publish
 ```
-
-{{<Aside type="note" header="Note">}}
-
-When pushing to your `*.workers.dev` subdomain for the first time, you may initially see [`523` errors](https://support.cloudflare.com/hc/articles/115003011431#523error) while DNS is propagating. It should work without any errors after a minute or so.
-
-{{</Aside>}}
+---
 
 ### (Optional) Publish your project to a registered domain
 
-To deploy the production environment set in your `wrangler.toml` file in the [optional configuration step](/workers/get-started/guide/#optional-configure-for-deploying-to-a-registered-domain), pass the `--env` flag to the command:
+After deploying your Worker, you may want to publish your application on a zone you own, and not a `*.workers.dev` subdomain. You can do this by adding a [Custom Domain](/workers/platform/routing/custom-domains) to your Worker, in the following steps:
 
-```sh
----
-header: Publish to example.com
----
-~/my-worker $ wrangler publish --env production
-```
+1.  [**Log in** to your Cloudflare account](https://dash.cloudflare.com/login)
+2.  On the dashboard select Workers, this will show you all Workers deployed to your zone. 
+3.  Select your depoyed Worker >  **Triggers** > **Custom Domains** 
+4.  Next, input your zone URL. This will automatically create a new DNS record for your zone
+5.  Click **Add Custom Domain**. Your Worker will now be reachable with your new URL. 
 
-For more information on environments, refer to the [Wrangler documentation](/workers/wrangler/configuration/#environments).
-
-You can also configure a GitHub repository to automatically deploy every time you `git push`. You can do this by either using the [Workers GitHub action](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler), or by writing your own GitHub action and manually configuring the necessary [GitHub secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
 
 ---
+
 
 ## Next steps
 
