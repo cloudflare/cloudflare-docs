@@ -12,27 +12,27 @@ title: Changelog
 
 ## 2022-06-16
 
-- Fixed a regression where TooMuchConcurrency & NoSuchUpload were being returned as NoSuchBucket in UploadPart.
+- Fixed a regression in the S3 API `UploadPart` operation where `TooMuchConcurrency` & `NoSuchUpload` errors were being returned as `NoSuchBucket`.
 
 ## 2022-06-13
 
-- Fixed ListObjectsV2 not returning empty folders as common prefixes when using delimiters.
-- The KeyCount returned by ListObjectsV2 now correctly returns the sum of keys and common prefixes rather than just the keys.
-- Invalid cursors for list operations no-longer fail with an 'Internal Error' and now return the appropiate error message.
+- Fixed a bug with the S3 API `ListObjectsV2` operation not returning empty folders as common prefixes when using delimiters.
+- The S3 API `ListObjectsV2` `KeyCount` parameter now properly returns the sum of keys + common prefixes rather than just the keys.
+- Invalid cursors for list operations no-longer fail with an `InternalError` and now return the appropiate error message.
 
 ## 2022-06-10
 
-- The ContinuationToken field is now correctly returned in the response if provided in a ListObjectsV2 request.
-- Fixed a bug where AbortMultipartUpload threw an error when called multiple times.
+- The `ContinuationToken` field is now correctly returned in the response if provided in a S3 API `ListObjectsV2` request.
+- Fixed a bug where the S3 API `AbortMultipartUpload` operation threw an error when called multiple times.
 
 ## 2022-05-27
 
-- Fixed a bug where S3's PutObject or the `.put()` binding could fail but still show the bucket upload as successful.
-- If [conditional headers](https://datatracker.ietf.org/doc/html/rfc7232) are provided to UploadObject or CreateMultipartUpload requests, and the object exists, a 412 Precondition Failed error will be returned if these checks are not met.
+- Fixed a bug where the S3 API's `PutObject` or the `.put()` binding could fail but still show the bucket upload as successful.
+- If [conditional headers](https://datatracker.ietf.org/doc/html/rfc7232) are provided to S3 API `UploadObject` or `CreateMultipartUpload` operations, and the object exists, a `412 Precondition Failed` status code will be returned if these checks are not met.
 
 ## 2022-05-20
 
-- Fixed a bug when `Accept-Encoding` was being used in `SignedHeaders` when sending requests to the S3 API would result in a SignatureDoesNotMatch response.
+- Fixed a bug when `Accept-Encoding` was being used in `SignedHeaders` when sending requests to the S3 API would result in a `SignatureDoesNotMatch` response.
 
 ## 2022-05-17
 
