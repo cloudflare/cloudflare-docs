@@ -16,9 +16,9 @@ title: Changelog
 
 ## 2022-06-13
 
-- Fixed a bug with the S3 API `ListObjectsV2` operation not returning empty folders as common prefixes when using delimiters.
-- The S3 API `ListObjectsV2` `KeyCount` parameter now properly returns the sum of keys + common prefixes rather than just the keys.
-- Invalid cursors for list operations no-longer fail with an `InternalError` and now return the appropiate error message.
+- Fixed a bug with the S3 API `ListObjectsV2` operation not returning empty folder/s as common prefixes when using delimiters.
+- The S3 API `ListObjectsV2` `KeyCount` parameter now correctly returns the sum of keys + common prefixes rather than just the keys.
+- Invalid cursors for list operations no longer fail with an `InternalError` and now return the appropriate error message.
 
 ## 2022-06-10
 
@@ -49,8 +49,8 @@ title: Changelog
 - S3 API `GetObject` ranges are now inclusive (`bytes=0-0` will correctly return the first byte).
 - S3 API `GetObject` partial reads return the proper `206 Partial Content` response code.
 - Copying from a non-existent key (or from a non-existent bucket) to another bucket now returns the proper NoSuchKey / NoSuchBucket response.
-- The S3 API now returns the proper `Content-Type: application/xml` response header on applicable endpoints.
-- Multipart uploads now have a `-N` suffix on the etag that represents the number of parts the file was published with.
+- The S3 API now returns the proper `Content-Type: application/xml` response header on relevant endpoints.
+- Multipart uploads now have a `-N` suffix on the etag representing the number of parts the file was published with.
 - `UploadPart` and `UploadPartCopy` now return proper error messages, such as `TooMuchConcurrency` or `NoSuchUpload`, instead of 'internal error'.
 - `UploadPart` can now be sent a 0-length part.
 
@@ -63,7 +63,7 @@ title: Changelog
 
 ## 2022-05-03
 
-- Pagination cursors are no-longer returned when the keys in a bucket is the same as the `MaxKeys` argument.
+- Pagination cursors are no longer returned when the keys in a bucket is the same as the `MaxKeys` argument.
 - The S3 API `ListBuckets` operaetion now accepts `cf-max-keys`, `cf-start-after` and `cf-continuation-token` headers behave the same as the respective URL parameters.
 - The S3 API `ListBuckets` and `ListObjects` endpoints now allow `per_page` to be 0.
 - The S3 API `CopyObject` source parameter now requires a leading slash.
@@ -77,10 +77,10 @@ title: Changelog
 - Fixed `.put()` for the Workers R2 bindings.
 - Fixed a regression where key names were not properly decoded when using the S3 API.
 - Fixed a bug where deleting an object and then another object which is a prefix of the first could result in errors.
-- The S3 API `DeleteObjects` operation no-longer returns an error even though an object has been deleted in some cases.
+- The S3 API `DeleteObjects` operation no longer returns an error even though an object has been deleted in some cases.
 - Fixed a bug where `startAfter` and `continuationToken` were not working in list operations.
-- The S3 API `ListObjects` operation now properly renders `Prefix`, `Delimiter`, `StartAfter` and `MaxKeys` in the response. 
-- The S3 API `ListObjectsV2` now properly honors the `encoding-type` parameter.
+- The S3 API `ListObjects` operation now correctly renders `Prefix`, `Delimiter`, `StartAfter` and `MaxKeys` in the response. 
+- The S3 API `ListObjectsV2` now correctly honors the `encoding-type` parameter.
 - The S3 API `PutObject` operation now works with `POST` requests for `s3cmd` compatibility.
 
 ## 2022-04-04
