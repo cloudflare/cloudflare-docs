@@ -5,6 +5,10 @@ title: Changelog
 
 # Changelog
 
+## 2022-06-09
+
+- No externally-visible changes.
+
 ## 2022-06-03
 
 - It is now possible to create standard `TransformStream` instances that can perform transformations on the data. Because this changes the behavior of the default `new TransformStream()` with no arguments, the `transformstream_enable_standard_constructor` compatibility flag is required to enable.
