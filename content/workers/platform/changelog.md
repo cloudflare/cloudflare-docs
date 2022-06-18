@@ -5,6 +5,11 @@ title: Changelog
 
 # Changelog
 
+## 2022-06-18
+
+- Cron trigger events on Worker scripts using the old `addEventListener` syntax are now treated as failing if there is no event listener registered for `scheduled` events.
+- The `durable_object_alarms` flag no longer needs to be explicitly provided to use DO alarms.
+
 ## 2022-06-09
 
 - No externally-visible changes.
