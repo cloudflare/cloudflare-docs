@@ -64,7 +64,7 @@ title: Changelog
 ## 2022-05-03
 
 - Pagination cursors are no longer returned when the keys in a bucket is the same as the `MaxKeys` argument.
-- The S3 API `ListBuckets` operaetion now accepts `cf-max-keys`, `cf-start-after` and `cf-continuation-token` headers behave the same as the respective URL parameters.
+- The S3 API `ListBuckets` operation now accepts `cf-max-keys`, `cf-start-after` and `cf-continuation-token` headers behave the same as the respective URL parameters.
 - The S3 API `ListBuckets` and `ListObjects` endpoints now allow `per_page` to be 0.
 - The S3 API `CopyObject` source parameter now requires a leading slash.
 - The S3 API `CopyObject` operation now returns a `NoSuchBucket` error when copying to a non-existent bucket instead of an internal error.
