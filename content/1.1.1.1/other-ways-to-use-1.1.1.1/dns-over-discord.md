@@ -82,6 +82,31 @@ The refresh button is available on all responses to the `/dig` command, includin
 
 </div>
 
+### Changing DNS provider
+
+By default, the DNS over Discord bot will use Cloudflare's 1.1.1.1 DNS service. You can run the DNS lookup with alternate DNS providers by using the dropdown below the result. Clicking it will show a list of available providers, and selecting a new provider will update the results in the message. Any user can change the DNS provider.
+
+Like the refresh button, the provider dropdown is available on all responses to the `/dig` command.
+
+<details>
+<summary>Supported DNS providers</summary>
+<div>
+
+* [1.1.1.1 (Cloudflare)](https://developers.cloudflare.com/1.1.1.1/)
+* [1.1.1.2 (Cloudflare Malware Blocking)](https://developers.cloudflare.com/1.1.1.1/setup/#1111-for-families)
+* [1.1.1.3 (Cloudflare Malware + Adult Content Blocking)](https://developers.cloudflare.com/1.1.1.1/setup/#1111-for-families)
+* [8.8.8.8 (Google)](https://developers.google.com/speed/public-dns)
+* [9.9.9.9 (Quad9)](https://www.quad9.net/)
+
+</div>
+</details>
+
+<div class="medium-img">
+
+![Changing DNS provider (1.1.1.1 -> 8.8.8.8) for dig domain: cloudflare.com](/1.1.1.1/static/dns-over-discord/dig-command-provider.gif)
+
+</div>
+
 ## `multi-dig` command
 
 If you want to look up multiple DNS record types at once, use the `/multi-dig` command. This allows you to specify any supported DNS record type, and multiple types separated by a space.
@@ -170,6 +195,31 @@ As with the `/dig` command, any user can press the refresh button to refresh the
 <div class="medium-img">
 
 ![Refreshing multi-dig domain: cloudflare.com types: A AAAA](/1.1.1.1/static/dns-over-discord/multi-dig-command-refresh.gif)
+
+</div>
+
+### Changing DNS provider
+
+Much like the `/dig` command, the `/multi-dig` command also allows for the DNS provider being used for the lookup to be changed. The menu will appear after each set of DNS results (or after each block of results if more than 10 record types are requested).
+
+This menu can be used be any user to change the DNS provider used for the lookup, like with the `/dig` command.
+
+<details>
+<summary>Supported DNS providers</summary>
+<div>
+
+* [1.1.1.1 (Cloudflare)](https://developers.cloudflare.com/1.1.1.1/)
+* [1.1.1.2 (Cloudflare Malware Blocking)](https://developers.cloudflare.com/1.1.1.1/setup/#1111-for-families)
+* [1.1.1.3 (Cloudflare Malware + Adult Content Blocking)](https://developers.cloudflare.com/1.1.1.1/setup/#1111-for-families)
+* [8.8.8.8 (Google)](https://developers.google.com/speed/public-dns)
+* [9.9.9.9 (Quad9)](https://www.quad9.net/)
+
+</div>
+</details>
+
+<div class="medium-img">
+
+![Changing DNS provider (1.1.1.1 -> 8.8.8.8) for multi-dig domain: cloudflare.com types: A AAAA](/1.1.1.1/static/dns-over-discord/multi-dig-command-provider.gif)
 
 </div>
 
