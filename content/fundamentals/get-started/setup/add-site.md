@@ -10,7 +10,7 @@ When you add a site to Cloudflare, you need to create a new domain within Cloudf
 
 {{<Aside type="note">}}
 
-These instructions are tailored to customers using a full setup for Cloudflare DNS (the most common configuration). If you are using a [partial setup](/dns/zone-setups/partial-setup/) or [secondary setup](/dns/zone-setups/secondary-dns/), your setup process will be different.
+These instructions are tailored to customers using a full setup for Cloudflare DNS (the most common configuration). If you are using a [partial setup](/dns/zone-setups/partial-setup/) or [secondary setup](/dns/zone-setups/zone-transfers/), your setup process will be different.
 
 {{</Aside>}}
 

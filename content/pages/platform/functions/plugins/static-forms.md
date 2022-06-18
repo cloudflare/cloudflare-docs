@@ -11,7 +11,7 @@ The Static Forms Pages Plugin intercepts all form submissions made which have th
 ## Installation
 
 ```sh
-npm install @cloudflare/pages-plugin-static-forms
+$ npm install @cloudflare/pages-plugin-static-forms
 ```
 
 ## Usage
