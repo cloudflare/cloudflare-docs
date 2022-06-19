@@ -73,7 +73,7 @@ console.log(
 
 // You can also create links for operations such as putObject to allow temporary write access to a specific key.
 console.log(
-  await s3.getSignedUrlPromise('getObject', { Bucket: 'my-bucket-name', Key: 'dog.png', Expires: 3600 })
+  await s3.getSignedUrlPromise('putObject', { Bucket: 'my-bucket-name', Key: 'dog.png', Expires: 3600 })
 )
 ```
 
