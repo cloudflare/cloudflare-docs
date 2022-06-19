@@ -65,5 +65,5 @@ You can also generate presigned links which allow you to share public access to 
 ```sh
 # You can pass the --expire flag to determine how long the presigned link is valid.
 $ rclone link r2demo:my-bucket-name/cat.png --expire 3600
-# https://<accountid>.r2.cloudflarestorage.com/my-bucket-name/cat.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=b23bdc13c027c407213b95231dccd0d8%2F20220619%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220619T200905Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=25a127fe6109c08bfb44870b1cf325d6875a5b44b4c0948c7e8d09fa13a95a9a
+# https://<accountid>.r2.cloudflarestorage.com/my-bucket-name/cat.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>
 ```
