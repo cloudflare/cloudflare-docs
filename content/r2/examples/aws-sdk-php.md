@@ -86,12 +86,12 @@ var_dump($buckets['Buckets']);
 You can also generate presigned links that can be used to share public read or write access to a bucket temporarily.
 
 ```php
-// The second parameter allows you to determine how long the presigned link is valid.
 $cmd = $s3_client->getCommand('GetObject', [
     'Bucket' => $bucket_name,
     'Key' => 'ferriswasm.png'
 ]);
 
+// The second parameter allows you to determine how long the presigned link is valid.
 $request = $s3_client->createPresignedRequest($cmd, '+1 hour');
 
 print_r((string)$request->getUri())
