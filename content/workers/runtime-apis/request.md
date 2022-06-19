@@ -224,6 +224,10 @@ All plans have access to:
 
     *   Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, and `ja3Hash`. Refer to [Bot Management Variables](/bots/reference/bot-management-variables) for more details.
 
+*   `clientAcceptEncoding` {{<type>}}string | null{{</type>}}
+
+    *   If Cloudflare replaces the value of the `Accept-Encoding` header, the original value is stored in the `clientAcceptEncoding` property, for example, `"gzip, deflate, br"`.
+  
 *   `colo` {{<type>}}string{{</type>}}
 
     *   The three-letter [`IATA`](https://en.wikipedia.org/wiki/IATA_airport_code) airport code of the data center that the request hit, for example, `"DFW"`.
