@@ -54,5 +54,5 @@ You can also generate presigned links which allow you to share public access to 
 ```sh
 # You can pass the --expires-in flag to determine how long the presigned link is valid.
 $ aws s3 presign --endpoint-url https://<accountid>.r2.cloudflarestorage.com  s3://sdk-example/ferriswasm.png --expires-in 3600
-# https://<accountid>.r2.cloudflarestorage.com/sdk-example/ferriswasm.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=b23bdc13c027c407213b95231dccd0d8%2F20220619%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220619T201129Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=3c3281d112b7a834ec6cbc7e50cd54d75e630b2b021a6e47b82e4043882ce1bc
+# https://<accountid>.r2.cloudflarestorage.com/sdk-example/ferriswasm.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>   
 ```
