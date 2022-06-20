@@ -210,7 +210,7 @@ This command will build your project, run it locally, and return a URL for you t
 
 To publish your application on a zone you own, and not a `*.workers.dev` subdomain, you can add a `route` key to your `wrangler.toml` file.
 
-{{<Aside type="note" header="Optional content >}}
+{{<Aside type="note" header="Optional content" >}}
 
 Wrangler’s environments feature allows you to deploy the same project to multiple places under multiple names. For a complete guide on how to configure environments, refer to the [environments page](/workers/platform/environments/).
 
