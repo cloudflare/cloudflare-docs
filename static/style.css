@@ -4434,9 +4434,7 @@ pre {
   overflow: auto;
 }
 
-
 /* test style for tabs*/
-
 
 /* body {
   font-family: "Open Sans";
@@ -4446,16 +4444,22 @@ pre {
 } */
 
 .wrapper {
-  max-width: 50rem;
   width: 100%;
+  max-width: 700px;
   margin: 0 auto;
+  position: relative;
+  padding-bottom: 12rem;
+  font-family: var(--sans-serif-font-family);
 }
 
 .tabs {
+  display: flex;
   position: relative;
+  border-radius: 3px;
   margin: 3rem 0;
-  background: var(--orange);
-  height: 14.75rem;
+  box-shadow: 0 1px rgba(var(--shadow-color-rgb), 0.12);
+  max-height: 14.75rem;
+  background: rgba(var(--color-rgb), 0.05);
 }
 
 .tabs::before,
@@ -4469,7 +4473,7 @@ pre {
 }
 
 .tab {
-  float: left;
+  background-color: var(--background-color);
 }
 
 .tab-switch {
@@ -4482,12 +4486,15 @@ pre {
   line-height: 2.75em;
   height: 3em;
   padding: 0 1.618em;
-  /* background: #1abc9c; */
-  border-right: 0.125rem solid #f9fafa;
-  color: #fff;
+  text-align: center;
+  color: currentColor;
   cursor: pointer;
   top: 0;
   transition: all 0.25s;
+  font-weight: 700;
+  font-size: var(--code-font-size);
+  font-family: var(--monospace-font-family);
+  box-shadow: 1px 0 rgba(var(--shadow-color-rgb), 0.12);
 }
 
 .tab-label:hover {
@@ -4499,7 +4506,9 @@ pre {
   width: 100%;
   position: absolute;
   z-index: 1;
-  top: 2.75em;
+  height: 15rem;
+  border-radius: 3px;
+  /* top: 2.75em; */
   left: 0;
   padding: 1.618rem;
   background: #fff;
@@ -4507,20 +4516,147 @@ pre {
   border-bottom: 0.25rem solid #bdc3c7;
   opacity: 0;
   transition: all 0.35s;
+  overflow-y: scroll;
+  background-color: rgb(243 243 244);
 }
 
-.tab-switch:checked+.tab-label {
-  background: #fff;
-  color: #2c3e50;
+.tab-switch:checked + .tab-label {
+  color: currentColor;
+  background: rgba(var(--gray-5-rgb), 0.2);
   border-bottom: 0;
-  border-right: 0.125rem solid #fff;
   transition: all 0.35s;
   /* z-index: 1; */
   top: -0.0625rem;
 }
 
-.tab-switch:checked+label+.tab-content {
+.tab-switch:checked + label + .tab-content {
   /* z-index: 2; */
   opacity: 1;
   transition: all 0.35s;
+}
+
+/* new style test*/
+
+/* @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700);
+@import url(https://fonts.googleapis.com/css?family=Raleway:100,400,700); */
+
+/* Component Needs */
+.pc-tab > input,
+.pc-tab section > div {
+  display: none;
+}
+
+#tab1:checked ~ section .tab1,
+#tab2:checked ~ section .tab2,
+#tab3:checked ~ section .tab3 {
+  display: block;
+}
+
+#tab1:checked ~ nav .tab1,
+#tab2:checked ~ nav .tab2,
+#tab3:checked ~ nav .tab3 {
+  color: red;
+}
+
+/* Visual Styles */
+/* *,
+*:after,
+*:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  background: #ecf0f1;
+  font-family: 'Raleway';
+} */
+
+.pc-tab {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.pc-tab ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pc-tab ul li label {
+  float: left;
+  padding: 15px 25px;
+  border: 1px solid #ddd;
+  border-bottom: 0;
+  background: #eee;
+  color: #444;
+}
+
+.pc-tab ul li label:hover {
+  background: #ddd;
+}
+
+.pc-tab ul li label:active {
+  background: #fff;
+}
+
+.pc-tab ul li:not(:last-child) label {
+  border-right-width: 0;
+}
+
+.pc-tab section {
+  font-family: "Droid Serif";
+  clear: both;
+}
+
+.pc-tab section div {
+  padding: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  background: #fff;
+  line-height: 1.5em;
+  letter-spacing: 0.3px;
+  color: #444;
+}
+
+.pc-tab section div h2 {
+  margin: 0;
+  font-family: "Raleway";
+  letter-spacing: 1px;
+  color: #34495e;
+}
+
+#tab1:checked ~ nav .tab1 label,
+#tab2:checked ~ nav .tab2 label,
+#tab3:checked ~ nav .tab3 label {
+  background: white;
+  color: #111;
+  position: relative;
+}
+
+#tab1:checked ~ nav .tab1 label:after,
+#tab2:checked ~ nav .tab2 label:after,
+#tab3:checked ~ nav .tab3 label:after {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background: #fff;
+  left: 0;
+  bottom: -1px;
+}
+
+footer {
+  margin-top: 50px;
+  font-size: 14px;
+  color: #ccc;
+  text-align: center;
+}
+
+footer a {
+  color: #aaa;
+  text-decoration: none;
 }
