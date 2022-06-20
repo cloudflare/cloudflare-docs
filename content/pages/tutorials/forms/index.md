@@ -232,63 +232,38 @@ addEventListener('fetch', event => {
 {{< /tab >}}
 {{< tab tabName="TS (ESM)">}}
 
-```html
-<html lang="en">
-  <head>
-    <meta charset="utf8" />
-    <title>Form Demo</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-  </head>
-  <body>
-    <form method="POST" action="/api/submit">
-      <div class="input">
-        <label for="name">Full Name</label>
-        <input id="name" name="name" type="text" />
-      </div>
+```js
+type ENV = {
+  KV_ADAM_REDIRECTS: KVNamespace;
+};
 
-      <div class="input">
-        <label for="email">Email Address</label>
-        <input id="email" name="email" type="email" />
-      </div>
+export default {
+  async fetch(request: Request, env: ENV): Promise<Response> {
+    console.log(request.cf);
+    const url = new URL(request.url);
 
-      <div class="input">
-        <label for="referers">How did you hear about us?</label>
-        <select id="referers" name="referers">
-          <option hidden disabled selected value></option>
-          <option value="Facebook">Facebook</option>
-          <option value="Twitter">Twitter</option>
-          <option value="Google">Google</option>
-          <option value="Bing">Bing</option>
-          <option value="Friends">Friends</option>
-        </select>
-      </div>
+    if (url.pathname === '/setup') {
+      // add a couple of redirects
+      await env.KV_ADAM_REDIRECTS.put('/cloudflare', 'https://cloudflare.com');
+      await env.KV_ADAM_REDIRECTS.put('/example', 'https://example.com');
+      await env.KV_ADAM_REDIRECTS.put('/request', 'https://request.eidam.dev');
+      await env.KV_ADAM_REDIRECTS.put(
+        '/docs',
+        'https://developers.cloudflare.com'
+      );
 
-      <div class="checklist">
-        <label>What are your favorite movies?</label>
-        <ul>
-          <li>
-            <input id="m1" type="checkbox" name="movies" value="Space Jam" />
-            <label for="m1">Space Jam</label>
-          </li>
-          <li>
-            <input id="m2" type="checkbox" name="movies" value="Little Rascals" />
-            <label for="m2">Little Rascals</label>
-          </li>
-          <li>
-            <input id="m3" type="checkbox" name="movies" value="Frozen" />
-            <label for="m3">Frozen</label>
-          </li>
-          <li>
-            <input id="m4" type="checkbox" name="movies" value="Home Alone" />
-            <label for="m4">Home Alone</label>
-          </li>
-        </ul>
-      </div>
+      return new Response('Added to KV');
+    }
 
-      <button type="submit">Submit</button>
-    </form>
-  </body>
-</html>
+    const redirectUrl = await env.KV_ADAM_REDIRECTS.get(url.pathname);
+    if (redirectUrl) {
+      return Response.redirect(redirectUrl);
+    }
+
+    return new Response(JSON.stringify(request.cf, null, 4));
+  },
+};
+
 ```
 
 {{< /tab >}}
