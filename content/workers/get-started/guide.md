@@ -210,16 +210,13 @@ This command will build your project, run it locally, and return a URL for you t
 
 To publish your application on a zone you own, and not a `*.workers.dev` subdomain, you can add a `route` key to your `wrangler.toml` file.
 
-You can get your `zone_id` with the following steps:
-
-1.  [**Log in** to your Cloudflare account](https://dash.cloudflare.com/login) and select the desired zone.
-2.  If not already there, navigate to **Overview** in the dashboard.
-3.  Scroll down until you see **Zone ID** on the right.
-4.  Click **Click to copy** below the input.
+{{<Aside type="note" header="Optional content >}}
 
 Wrangler’s environments feature allows you to deploy the same project to multiple places under multiple names. For a complete guide on how to configure environments, refer to the [environments page](/workers/platform/environments/).
 
-To add a `production` environment, pass in a `route` and specify the environment:
+{{</Aside>}}
+
+To add a domain, pass in a `route`:
 
 ```toml
 ---
@@ -229,19 +226,6 @@ name = "my-worker"
 
 # The route pattern your Workers application will be served at
 route = "example.com/*"
-
-[env.production]
-name = "my-worker"
-routes = [
-  "example.com/foo/*",
-]
-
-# This will deploy your Worker to staging 
-[env.staging]
-name = "my-worker"
-routes = [
-  "example.com/bar/*",
-]
 
 ```
 
