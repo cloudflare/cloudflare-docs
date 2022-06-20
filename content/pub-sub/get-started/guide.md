@@ -223,7 +223,7 @@ const mqtt = require('mqtt')
 
 const brokerEndpoint = "mqtts://my-broker.my-namespace.cloudflarepubsub.com"
 const options = {
-  port: 8443,
+  port: 8883,
   password: process.env.BROKER_TOKEN,
   protocolVersion: 5, // MQTT 5
 }
@@ -231,7 +231,7 @@ const options = {
 const client = mqtt.connect(brokerEndpoint, options)
 
 client.subscribe("example-topic")
-client.publish("example-topic", `message from ${client.options.clientId}: hello at ${Date.now()`)
+client.publish("example-topic", `message from ${client.options.clientId}: hello at ${Date.now()}`)
 client.on("message", function (topic, message) {
   console.log(`received message on ${topic}: ${message}`)
 })
