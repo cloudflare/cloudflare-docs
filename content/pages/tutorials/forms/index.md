@@ -195,6 +195,168 @@ The HTML page is also completely unstyled at this point, relying on the browsers
 
 {{</Aside>}}
 
+{{< tabs tabTotal="3" tabRightAlign="2">}}
+{{< tab tabName="JS (ESM)" >}}
+
+```js
+export default {
+  fetch(request) {
+    const base = 'https://example.com';
+    const statusCode = 301;
+
+    const destination = new URL(request.url, base);
+    return Response.redirect(destination.toString(), statusCode);
+  },
+};
+
+```
+
+{{< /tab >}}
+{{< tab tabName="JS (SW)" >}}
+
+```js
+async function handler(request) {
+  const base = 'https://example.com';
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener('fetch', event => {
+  event.respondWith(handler(event.request));
+});
+```
+
+{{< /tab >}}
+{{< tab tabName="TS (ESM)">}}
+
+```html
+<html lang="en">
+  <head>
+    <meta charset="utf8" />
+    <title>Form Demo</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+  </head>
+  <body>
+    <form method="POST" action="/api/submit">
+      <div class="input">
+        <label for="name">Full Name</label>
+        <input id="name" name="name" type="text" />
+      </div>
+
+      <div class="input">
+        <label for="email">Email Address</label>
+        <input id="email" name="email" type="email" />
+      </div>
+
+      <div class="input">
+        <label for="referers">How did you hear about us?</label>
+        <select id="referers" name="referers">
+          <option hidden disabled selected value></option>
+          <option value="Facebook">Facebook</option>
+          <option value="Twitter">Twitter</option>
+          <option value="Google">Google</option>
+          <option value="Bing">Bing</option>
+          <option value="Friends">Friends</option>
+        </select>
+      </div>
+
+      <div class="checklist">
+        <label>What are your favorite movies?</label>
+        <ul>
+          <li>
+            <input id="m1" type="checkbox" name="movies" value="Space Jam" />
+            <label for="m1">Space Jam</label>
+          </li>
+          <li>
+            <input id="m2" type="checkbox" name="movies" value="Little Rascals" />
+            <label for="m2">Little Rascals</label>
+          </li>
+          <li>
+            <input id="m3" type="checkbox" name="movies" value="Frozen" />
+            <label for="m3">Frozen</label>
+          </li>
+          <li>
+            <input id="m4" type="checkbox" name="movies" value="Home Alone" />
+            <label for="m4">Home Alone</label>
+          </li>
+        </ul>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
+```
+
+{{< /tab >}}
+{{< tab tabName="TS (SW)">}}
+
+```html
+<html lang="en">
+  <head>
+    <meta charset="utf8" />
+    <title>Form Demo</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+  </head>
+  <body>
+    <form method="POST" action="/api/submit">
+      <div class="input">
+        <label for="name">Full Name</label>
+        <input id="name" name="name" type="text" />
+      </div>
+
+      <div class="input">
+        <label for="email">Email Address</label>
+        <input id="email" name="email" type="email" />
+      </div>
+
+      <div class="input">
+        <label for="referers">How did you hear about us?</label>
+        <select id="referers" name="referers">
+          <option hidden disabled selected value></option>
+          <option value="Facebook">Facebook</option>
+          <option value="Twitter">Twitter</option>
+          <option value="Google">Google</option>
+          <option value="Bing">Bing</option>
+          <option value="Friends">Friends</option>
+        </select>
+      </div>
+
+      <div class="checklist">
+        <label>What are your favorite movies?</label>
+        <ul>
+          <li>
+            <input id="m1" type="checkbox" name="movies" value="Space Jam" />
+            <label for="m1">Space Jam</label>
+          </li>
+          <li>
+            <input id="m2" type="checkbox" name="movies" value="Little Rascals" />
+            <label for="m2">Little Rascals</label>
+          </li>
+          <li>
+            <input id="m3" type="checkbox" name="movies" value="Frozen" />
+            <label for="m3">Frozen</label>
+          </li>
+          <li>
+            <input id="m4" type="checkbox" name="movies" value="Home Alone" />
+            <label for="m4">Home Alone</label>
+          </li>
+        </ul>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
+```
+
+{{< /tab >}}
+
+
+{{< /tabs >}}
 ### Worker
 
 The HTML form is complete and ready for deployment. When the user submits this form, all data will be sent in a `POST` request to the `/api/submit` URL. This is due to the form's `method` and `action` attributes. However, there is currently no request handler at the `/api/submit` address. You will now create it.
