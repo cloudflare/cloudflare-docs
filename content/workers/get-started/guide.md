@@ -266,13 +266,13 @@ header: Publish to workers.dev
 
 ### (Optional) Publish your project to a registered domain
 
-After deploying your Worker, you may want to publish your application on a zone you own, and not a `*.workers.dev` subdomain. You can do this by adding a [Custom Domain](/workers/platform/routing/custom-domains) to your Worker, in the following steps:
+You can publish your Worker to a zone you own instead of a `*.workers.dev` subdomain by adding a [Custom Domain](/workers/platform/routing/custom-domains). To add a custom domain:
 
 1.  [**Log in** to your Cloudflare account](https://dash.cloudflare.com/login)
 2.  On the dashboard select Workers, this will show you all Workers deployed to your zone. 
-3.  Select your deployed Worker >  **Triggers** > **Custom Domains** 
+3.  Select your Worker >  **Triggers** > **Custom Domains** 
 4.  Next, input your zone URL. This will automatically create a new DNS record for your zone
-5.  Click **Add Custom Domain**. Your Worker will now be reachable with your new URL. 
+5.  Click **Add Custom Domain**.
 
 --- 
 
