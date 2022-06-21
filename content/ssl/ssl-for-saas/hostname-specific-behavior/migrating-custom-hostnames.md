@@ -26,7 +26,7 @@ If you would like to migrate the custom hostname without end customers changing 
  
 3. Confirm that the custom hostname has validated in the new zone.
 
-4. Wait for the certificate to validate automatically through Cloudflare or [validate it using Domain Control Validation](/ssl/edge-certificates/changing-dcv-method/methods/#perform-dcv)(DCV).
+4. Wait for the certificate to validate automatically through Cloudflare or [validate it using Domain Control Validation (DCV)](/ssl/edge-certificates/changing-dcv-method/methods/#perform-dcv).
 
 5. Remove custom hostname from the old zone.
 
@@ -64,8 +64,9 @@ If you are migrating custom hostnames that rely on a Wildcard certificate, Cloud
   
 The custom hostname can activate on the new zone even if the certificate is still active on the old zone. This ensures a valid certificate exists during migration. However, it is important to validate the certificate on the new zone as soon as possible.
  
----
+{{<Aside type="note">}}
  
 Verify that the custom hostname successfully activated after the migration in the Cloudflare Dashboard by selecting **SSL/TLS** > **Custom hostnames** > **{your custom hostname}**.
  
+  {{</Aside>}}
 
