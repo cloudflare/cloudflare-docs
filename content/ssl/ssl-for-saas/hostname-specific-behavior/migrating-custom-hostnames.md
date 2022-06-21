@@ -68,5 +68,5 @@ The custom hostname can activate on the new zone even if the certificate is stil
  
 Verify that the custom hostname successfully activated after the migration in the Cloudflare Dashboard by selecting **SSL/TLS** > **Custom hostnames** > **{your custom hostname}**.
  
-  {{</Aside>}}
+{{</Aside>}}
 
