@@ -16,9 +16,9 @@ You can [create IP Access Rules](/waf/tools/ip-access-rules/create-rule/) in the
 
 IP Access Rules are available to all customers.
 
-Block by country is only available on the Enterprise plan. Other customers may perform country blocking using [firewall rules](/firewall/).
-
 Each Cloudflare account can have a maximum of 50,000 rules. If you are an Enterprise customer and need more rules, contact your account team.
+
+Block by country is only available on the Enterprise plan. Other customers may perform country blocking using [firewall rules](/firewall/).
 
 ## Important remarks
 
