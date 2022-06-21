@@ -14,18 +14,27 @@ There are three steps to get started with Workers Analytics Engine:
 
 All data in Workers Analytics Engine is written to a dataset. A dataset is conceptually like a table in SQL: the rows and columns should have consistent meaning.
 
-To get started using the Workers Analytics Engine, you need to create a dataset and a binding that associates a given Worker with a dataset. This is done by editing [wrangler.toml](/workers/wrangler/configuration/). For example:
+To access your dataset from the Workers runtime, you need to create a binding. A binding is an [environment variable](/workers/platform/environment-variables/) that you can use in the Workers runtime which enables you to write to a dataset.  A dataset is created implicitly after you define your binding and begin writing to it from a Worker.
+
+To define a binding, use [wrangler.toml](/workers/wrangler/configuration/). For example:
 
 ```toml
-[analytics_engine]
-bindings = [
-    { name = "<EVENT_NAME>" }
-]
+[[unsafe.bindings]]
+type = "analytics_engine"
+name = "<BINDING_NAME>"
 ```
 
+By default, the dataset name is the same as the binding name. If you want, you can also specify the dataset name:
+
+```toml
+[[unsafe.bindings]]
+type = "analytics_engine"
+name = "<BINDING_NAME>"
+dataset = "<DATASET_NAME>"
+```
 ## 2. Write data from the Workers Runtime API
 
-Once a binding is declared in Wrangler and your worker is deployed, you get a new [environment variable](/workers/platform/environment-variables/) in the Workers runtime that represents your Workers Analytics Engine dataset. This variable has a method, `writeDataPoint()`. A data point is a structured event which consists of a vector of labels and a vector of metrics.
+Once a binding is declared in Wrangler and your worker is deployed, you get a new environment variable in the Workers runtime that represents your Workers Analytics Engine dataset. This variable has a method, `writeDataPoint()`. A data point is a structured event which consists of a vector of labels and a vector of metrics.
 
 A metric is just a number type field that can be aggregated in some way – for example, it could be summed, averaged, or quantiled. A label is a string type field that can be used for grouping or filtering.
 
