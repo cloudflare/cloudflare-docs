@@ -86,7 +86,7 @@ Workers Analytics Engine is optimized for powering time series analytics that ca
 
 ```sql
 SELECT
-  intDiv(datetime, 300) * 300 as t, 
+  intDiv(timestamp, 300) * 300 as t, 
   label_1 as city, 
   avg(metric_2) as avg_humidity
 FROM analytics_engine
