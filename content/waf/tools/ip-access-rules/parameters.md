@@ -3,13 +3,13 @@ title: Parameters
 pcx-content-type: reference
 weight: 3
 meta:
-  title: IP Access Rule parameters
+  title: IP Access rule parameters
 layout: list
 ---
 
 # Parameters
 
-An IP Access Rule will apply a certain action to incoming traffic based on the visitor's IP address, IP range, country, or Autonomous System Number (ASN).
+An IP Access rule will apply a certain action to incoming traffic based on the visitor's IP address, IP range, country, or Autonomous System Number (ASN).
 
 ## IP address
 
@@ -47,7 +47,7 @@ Cloudflare uses the following special country alpha-2 codes that are not part of
 
 {{<Aside type="note" header="Notes about country blocking">}}
 * Block by country is only available on Enterprise plans.
-* IP addresses globally allowed by Cloudflare will override an IP Access Rule country block, but they will not override a country block via [firewall rules](/firewall/).
+* IP addresses globally allowed by Cloudflare will override an IP Access rule country block, but they will not override a country block via [firewall rules](/firewall/).
 {{</Aside>}}
 
 ## Autonomous System Number (ASN)

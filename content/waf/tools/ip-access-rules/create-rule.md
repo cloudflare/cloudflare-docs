@@ -3,12 +3,12 @@ title: Create a rule
 pcx-content-type: how-to
 weight: 2
 meta:
-  title: Create an IP Access Rule
+  title: Create an IP Access rule
 ---
 
-# Create an IP Access Rule
+# Create an IP Access rule
 
-You can create IP Access Rules in the Cloudflare dashboard or via API.
+You can create IP Access rules in the Cloudflare dashboard or via API.
 
 ## Using the dashboard
 
@@ -24,5 +24,5 @@ You can create IP Access Rules in the Cloudflare dashboard or via API.
 
 ## Using the API
 
-Use the Cloudflare API to programmatically create IP Access Rules. For more information, refer to [List Access Rules](https://api.cloudflare.com/#firewall-access-rule-for-a-zone-list-access-rules).
+Use the Cloudflare API to programmatically create IP Access rules. For more information, refer to [List Access Rules](https://api.cloudflare.com/#firewall-access-rule-for-a-zone-list-access-rules).
 

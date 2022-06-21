@@ -1,20 +1,20 @@
 ---
-title: IP Access Rules
+title: IP Access rules
 pcx-content-type: concept
 weight: 2
 ---
 
-# IP Access Rules
+# IP Access rules
 
-Use IP Access Rules to allowlist, block, and challenge traffic based on the visitor's IP address, country, or Autonomous System Number (ASN).
+Use IP Access rules to allowlist, block, and challenge traffic based on the visitor's IP address, country, or Autonomous System Number (ASN).
 
-IP Access Rules are commonly used to block or challenge suspected malicious traffic. Another common use of IP Access Rules is to allow services that regularly access your site, such as APIs, crawlers, and payment providers.
+IP Access rules are commonly used to block or challenge suspected malicious traffic. Another common use of IP Access rules is to allow services that regularly access your site, such as APIs, crawlers, and payment providers.
 
-You can [create IP Access Rules](/waf/tools/ip-access-rules/create-rule/) in the Cloudflare dashboard or via API.
+You can [create IP Access rules](/waf/tools/ip-access-rules/create-rule/) in the Cloudflare dashboard or via API.
 
 ## Availability
 
-IP Access Rules are available to all customers.
+IP Access rules are available to all customers.
 
 Each Cloudflare account can have a maximum of 50,000 rules. If you are an Enterprise customer and need more rules, contact your account team.
 
@@ -24,7 +24,7 @@ Block by country is only available on the Enterprise plan. Other customers may p
 
 * Allowing a country code does not bypass Cloudflare's WAF.
 
-* By design, IP Access Rules configured to _Allow_ traffic do not show up in [Firewall Analytics](/waf/analytics/).
+* By design, IP Access rules configured to _Allow_ traffic do not show up in [Firewall Analytics](/waf/analytics/).
 
 * Requests containing certain attack patterns in the `User-Agent` field are checked before being processed by the general firewall pipeline. Therefore, such requests are blocked before any allowlist logic takes place. When this  occurs, firewall events downloaded from the API show `rule_id` as `security_level` and action as `drop`.
 

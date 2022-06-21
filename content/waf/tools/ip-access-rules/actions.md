@@ -3,12 +3,12 @@ title: Actions
 pcx-content-type: reference
 weight: 4
 meta:
-  title: IP Access Rules actions
+  title: IP Access rules actions
 ---
 
 # Actions
 
-An IP Access Rule can perform one of the following actions:
+An IP Access rule can perform one of the following actions:
 
 * **Block**: Prevents a visitor from visiting your site.
 
