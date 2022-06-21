@@ -29,3 +29,7 @@ Each Cloudflare account can have a maximum of 50,000 rules. If you are an Enterp
 * Requests containing certain attack patterns in the `User-Agent` field are checked before being processed by the general firewall pipeline. Therefore, such requests are blocked before any allowlist logic takes place. When this  occurs, firewall events downloaded from the API show `rule_id` as `security_level` and action as `drop`.
 
 * Cloudflare supports use of `fail2ban` to block IPs on your server. However, to prevent `fail2ban` from inadvertently blocking Cloudflare IPs and causing errors for some visitors, ensure you restore original visitor IP in your origin server logs. For details, refer to [Restoring original visitor IPs](https://support.cloudflare.com/hc/articles/200170786).
+
+## Related resources
+
+To learn more about protection options provided by Cloudflare to protect your website against malicious traffic and bad actors, refer to [Secure your website](/fundamentals/get-started/task-guides/secure-your-website/).
