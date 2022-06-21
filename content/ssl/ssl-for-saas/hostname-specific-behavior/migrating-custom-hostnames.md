@@ -12,39 +12,39 @@ As a SaaS provider, you may want, or have, multiple zones to manage hostnames. E
  
 ## CNAME
  
-If your custom hostname uses a CNAME record, add the custom hostname to the new zone and update your DNS record to point to the new zone.
+If your custom hostname uses a CNAME record, add the custom hostname to the new zone and [update your DNS record](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) to point to the new zone.
  
 {{<Aside type="note">}}
  
-If you would like to migrate the custom hostname without end customers changing the DNS target, use apex proxying.
+If you would like to migrate the custom hostname without end customers changing the DNS target, use [apex proxying](/ssl/ssl-for-saas/common-tasks/hostname-verification/#apex-verification).
  
 {{</Aside>}}
  
-1. Add custom hostname to your new zone.
+1. [Add custom hostname](/ssl/ssl-for-saas/getting-started/#:~:text=Log%20in%20to%20the%20Cloudflare,Click%20Add%20Custom%20Hostname.) to your new zone.
  
-1. Direct your customer to change the DNS record so that it points to the new zone.
+2. Direct your customer to [change the DNS record](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) so that it points to the new zone.
  
-1. Confirm that the custom hostname has validated in the new zone.
+3. Confirm that the custom hostname has validated in the new zone.
 
-1. Wait for the certificate to validate automatically through Cloudflare or validate it using the DCV records.
+4. Wait for the certificate to validate automatically through Cloudflare or [validate it using Domain Control Validation](/ssl/edge-certificates/changing-dcv-method/methods/#perform-dcv)(DCV).
 
-1. Remove custom hostname from the old zone.
+5. Remove custom hostname from the old zone.
 
 Once these steps are complete, the custom hostname's traffic will route to the second SaaS zone and will use its configuration.
  
 ## A record
  
-Through Apex Proxying or BYOIP, you can migrate the custom hostname without action from your end customer.
+Through [Apex Proxying](/ssl/ssl-for-saas/common-tasks/hostname-verification/#apex-verification) or [BYOIP](/byoip/), you can migrate the custom hostname without action from your end customer.
 
 1. Verify with the account team that your apex proxying IPs have been assigned to both SaaS zones.
  
-1. Add custom hostname to the new zone.
+2. [Add custom hostname](/ssl/ssl-for-saas/getting-started/#:~:text=Log%20in%20to%20the%20Cloudflare,Click%20Add%20Custom%20Hostname.) to the new zone.
 
-1. Confirm that the custom hostname has validated in the new zone.
+3. Confirm that the custom hostname has validated in the new zone.
 
-1. Wait for the certificate to validate automatically through Cloudflare or validate it using the DCV records.
+4. Wait for the certificate to validate automatically through Cloudflare or [validate it using DCV](/ssl/edge-certificates/changing-dcv-method/methods/#perform-dcv).
  
-1. Remove custom hostname from the old zone.
+5. Remove custom hostname from the old zone.
  
 {{<Aside type=“note”>}}
  
@@ -56,11 +56,11 @@ The most recently edited custom hostname will be active. For instance, `example.
  
 If you are migrating custom hostnames that rely on a Wildcard certificate, Cloudflare cannot automatically complete Domain Control Validation (DCV).
  
-1. Add custom hostname to the new zone.
+1. [Add custom hostname](/ssl/ssl-for-saas/getting-started/#:~:text=Log%20in%20to%20the%20Cloudflare,Click%20Add%20Custom%20Hostname.) to the new zone.
  
-1. Direct your customer to change the DNS record so that it points to the new zone.
+2. Direct your customer to [change the DNS record](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) so that it points to the new zone.
  
-1. Validate the certificate on the new zone.
+3. [Validate the certificate](/ssl/edge-certificates/changing-dcv-method/methods/#perform-dcv) on the new zone through DCV.
   
 The custom hostname can activate on the new zone even if the certificate is still active on the old zone. This ensures a valid certificate exists during migration. However, it is important to validate the certificate on the new zone as soon as possible.
  
