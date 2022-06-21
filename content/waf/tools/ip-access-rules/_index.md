@@ -10,7 +10,7 @@ Use IP Access rules to allowlist, block, and challenge traffic based on the visi
 
 IP Access rules are commonly used to block or challenge suspected malicious traffic. Another common use of IP Access rules is to allow services that regularly access your site, such as APIs, crawlers, and payment providers.
 
-You can [create IP Access rules](/waf/tools/ip-access-rules/create-rule/) in the Cloudflare dashboard or via API.
+You can [create IP Access rules](/waf/tools/ip-access-rules/create/) in the Cloudflare dashboard or via API.
 
 ## Availability
 
