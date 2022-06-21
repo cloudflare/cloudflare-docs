@@ -1,7 +1,7 @@
 ---
 title: Parameters
 pcx-content-type: reference
-weight: 4
+weight: 3
 meta:
   title: IP Access Rule parameters
 layout: list
@@ -47,7 +47,7 @@ Cloudflare uses the following special country alpha-2 codes that are not part of
 
 {{<Aside type="note" header="Notes about country blocking">}}
 * Block by country is only available on Enterprise plans.
-* IP addresses globally allowed by Cloudflare will override an IP Access Rule country block, but they will not override a country block via [firewall rules](/firewall-rules/).
+* IP addresses globally allowed by Cloudflare will override an IP Access Rule country block, but they will not override a country block via [firewall rules](/firewall/).
 {{</Aside>}}
 
 ## Autonomous System Number (ASN)

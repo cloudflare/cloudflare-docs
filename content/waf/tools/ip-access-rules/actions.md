@@ -1,7 +1,7 @@
 ---
 title: Actions
 pcx-content-type: reference
-weight: 3
+weight: 4
 meta:
   title: IP Access Rules actions
 ---
