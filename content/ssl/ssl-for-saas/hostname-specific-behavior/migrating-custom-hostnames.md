@@ -46,7 +46,7 @@ Through Apex Proxying or BYOIP, you can migrate the custom hostname without acti
  
 1. Remove custom hostname from the old zone.
  
-{{</Aside type = “note”>}}
+{{<Aside type = “note”>}}
  
 The most recently edited custom hostname will be active. For instance, `example.com` exists on `SaaS Zone 1`. It is added to `SaaS Zone 2`. Because it was activated more recently on `SaaS Zone 2`, that is where it will be active. However, if edits are made to example.com on `SaaS Zone 1`, it will reactivate on that zone instead of `SaaS Zone 2`.
  
