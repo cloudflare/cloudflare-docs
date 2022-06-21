@@ -24,7 +24,11 @@ If you would like to migrate the custom hostname without end customers changing 
  
 1. Direct your customer to change the DNS record so that it points to the new zone.
  
-1. Remove custom hostname from the original zone once it has validated in the new zone.
+1. Confirm that the custom hostname has validated in the new zone.
+
+1. Wait for the certificate to validate automatically through Cloudflare or validate it using the DCV records.
+
+1. Remove custom hostname from the old zone.
 
 Once these steps are complete, the custom hostname's traffic will route to the second SaaS zone and will use its configuration.
  
@@ -37,6 +41,8 @@ Through Apex Proxying or BYOIP, you can migrate the custom hostname without acti
 1. Add custom hostname to the new zone.
 
 1. Confirm that the custom hostname has validated in the new zone.
+
+1. Wait for the certificate to validate automatically through Cloudflare or validate it using the DCV records.
  
 1. Remove custom hostname from the old zone.
  
