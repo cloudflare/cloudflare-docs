@@ -6,8 +6,8 @@ _build:
 ---
 
 {{<button-group>}}
-  {{<button type="primary" href="../free/">}}Free{{</button>}}
-  {{<button type="primary" href="../pro/">}}Pro{{</button>}}
-  {{<button type="primary" href="../biz-and-ent/">}}Business{{</button>}}
-  {{<button type="primary" href="../bm-subscription/">}}Bot Management for Enterprise{{</button>}}
+  {{<button type="primary" href="/bots/plans/free/">}}Free{{</button>}}
+  {{<button type="primary" href="/bots/plans/pro/">}}Pro{{</button>}}
+  {{<button type="primary" href="/bots/plans/biz-and-ent/">}}Business{{</button>}}
+  {{<button type="primary" href="/bots/plans/bm-subscription/">}}Bot Management for Enterprise{{</button>}}
 {{</button-group>}}
