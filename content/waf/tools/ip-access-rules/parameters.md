@@ -9,7 +9,7 @@ layout: list
 
 # Parameters
 
-You can specify IP Access Rules by IP address, IP range, country, or Autonomous System Number (ASN).
+An IP Access Rule will apply a certain action to incoming traffic based on the visitor's IP address, IP range, country, or Autonomous System Number (ASN).
 
 ## IP address
 
