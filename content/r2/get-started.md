@@ -157,7 +157,7 @@ export default {
       case 'GET':
         const object = await env.MY_BUCKET.get(key);
 
-        if (!object || !object.body) {
+        if (object === null) {
           return new Response('Object Not Found', { status: 404 });
         }
 
