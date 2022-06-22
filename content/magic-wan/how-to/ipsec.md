@@ -75,4 +75,4 @@ To set up your static routes, refer to [Configure static routes](/magic-wan/how-
 - Remote Port of 500
 - 0s reauth time or no reauth
 - 4h rekey time
-- Disable anti-replay protection
+- Disable [anti-replay protection](/magic-wan/about/anti-replay-protection/)
