@@ -41,7 +41,7 @@ By default, Cloudflare proxies traffic destined for the HTTP/HTTPS ports listed 
 </details>
 
 <details>
-<summary>Caching is disabled for the following ports</summary>
+<summary>Ports supported by Cloudflare, but with caching disabled</summary>
 <div>
 
 - 2052
