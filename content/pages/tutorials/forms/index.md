@@ -8,6 +8,46 @@ title: HTML forms
 
 # HTML forms
 
+{{< new-tabs >}}
+
+{{< new-tabs-nav>}}
+{{< new-tabs-nav-item id="js-esm">}}JS ESM{{</ new-tabs-nav-item >}}
+{{< new-tabs-nav-item id="js-sw">}}JS SW{{</ new-tabs-nav-item >}}
+{{</ new-tabs-nav >}}
+
+<section>
+{{< new-tab id="js-esm" >}}
+```js
+export default {
+  fetch(request) {
+    const base = "https://example.com";
+    const statusCode = 301;
+
+    const destination = new URL(request.url, base);
+    return Response.redirect(destination.toString(), statusCode);
+  },
+};
+```
+{{< /new-tab >}}
+{{< new-tab id="js-sw" >}}
+```js
+async function handler(request) {
+  const base = "https://example.com";
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
+```
+{{< /new-tab >}}
+</section>
+{{</ new-tabs >}}
+
 In this tutorial, you will create a simple `<form>` using plain HTML and CSS and deploy it to Cloudflare Pages. While doing so, you will learn about some of the HTML form attributes and how to collect submitted data within a Worker.
 
 {{<Aside type="note" header="MDN Introductory Series">}}
@@ -45,7 +85,13 @@ To enable this, you must create a `<label>` element for each input and assign ea
 ```html
 <form method="POST" action="/submit">
   <label for="i-fullname">Full Name</label>
-  <input id="i-fullname" type="text" name="fullname" pattern="[A-Za-z]+" required />
+  <input
+    id="i-fullname"
+    type="text"
+    name="fullname"
+    pattern="[A-Za-z]+"
+    required
+  />
 
   <label for="i-email">Email Address</label>
   <input id="i-email" type="email" name="email" required />
@@ -70,7 +116,13 @@ By default, HTML forms send their contents in the `application/x-www-form-urlenc
 ```html
 <form method="POST" action="/submit" enctype="multipart/form-data">
   <label for="i-fullname">Full Name</label>
-  <input id="i-fullname" type="text" name="fullname" pattern="[A-Za-z]+" required />
+  <input
+    id="i-fullname"
+    type="text"
+    name="fullname"
+    pattern="[A-Za-z]+"
+    required
+  />
 
   <label for="i-email">Email Address</label>
   <input id="i-email" type="email" name="email" required />
@@ -165,7 +217,12 @@ Copy and paste the following content into your `public/index.html` file:
             <label for="m1">Space Jam</label>
           </li>
           <li>
-            <input id="m2" type="checkbox" name="movies" value="Little Rascals" />
+            <input
+              id="m2"
+              type="checkbox"
+              name="movies"
+              value="Little Rascals"
+            />
             <label for="m2">Little Rascals</label>
           </li>
           <li>
@@ -195,28 +252,27 @@ The HTML page is also completely unstyled at this point, relying on the browsers
 
 {{</Aside>}}
 
-{{< tabs tabTotal="3" tabRightAlign="2">}}
-{{< tab tabName="JS (ESM)" >}}
+{{< tabs labels="JS/ESM | JS/SW | TS/ESM | TS/SW">}}
+{{< tab tabName="JS/ESM" >}}
 
 ```js
 export default {
   fetch(request) {
-    const base = 'https://example.com';
+    const base = "https://example.com";
     const statusCode = 301;
 
     const destination = new URL(request.url, base);
     return Response.redirect(destination.toString(), statusCode);
   },
 };
-
 ```
 
 {{< /tab >}}
-{{< tab tabName="JS (SW)" >}}
+{{< tab tabName="JS/SW" >}}
 
 ```js
 async function handler(request) {
-  const base = 'https://example.com';
+  const base = "https://example.com";
   const statusCode = 301;
 
   const destination = new URL(request.url, base);
@@ -224,7 +280,7 @@ async function handler(request) {
 }
 
 // Initialize Worker
-addEventListener('fetch', event => {
+addEventListener("fetch", (event) => {
   event.respondWith(handler(event.request));
 });
 ```
@@ -234,7 +290,7 @@ addEventListener('fetch', event => {
 
 ```js
 type ENV = {
-  KV_ADAM_REDIRECTS: KVNamespace;
+  KV_ADAM_REDIRECTS: KVNamespace,
 };
 
 export default {
@@ -242,17 +298,17 @@ export default {
     console.log(request.cf);
     const url = new URL(request.url);
 
-    if (url.pathname === '/setup') {
+    if (url.pathname === "/setup") {
       // add a couple of redirects
-      await env.KV_ADAM_REDIRECTS.put('/cloudflare', 'https://cloudflare.com');
-      await env.KV_ADAM_REDIRECTS.put('/example', 'https://example.com');
-      await env.KV_ADAM_REDIRECTS.put('/request', 'https://request.eidam.dev');
+      await env.KV_ADAM_REDIRECTS.put("/cloudflare", "https://cloudflare.com");
+      await env.KV_ADAM_REDIRECTS.put("/example", "https://example.com");
+      await env.KV_ADAM_REDIRECTS.put("/request", "https://request.eidam.dev");
       await env.KV_ADAM_REDIRECTS.put(
-        '/docs',
-        'https://developers.cloudflare.com'
+        "/docs",
+        "https://developers.cloudflare.com"
       );
 
-      return new Response('Added to KV');
+      return new Response("Added to KV");
     }
 
     const redirectUrl = await env.KV_ADAM_REDIRECTS.get(url.pathname);
@@ -263,7 +319,6 @@ export default {
     return new Response(JSON.stringify(request.cf, null, 4));
   },
 };
-
 ```
 
 {{< /tab >}}
@@ -308,7 +363,12 @@ export default {
             <label for="m1">Space Jam</label>
           </li>
           <li>
-            <input id="m2" type="checkbox" name="movies" value="Little Rascals" />
+            <input
+              id="m2"
+              type="checkbox"
+              name="movies"
+              value="Little Rascals"
+            />
             <label for="m2">Little Rascals</label>
           </li>
           <li>
@@ -330,8 +390,8 @@ export default {
 
 {{< /tab >}}
 
-
 {{< /tabs >}}
+
 ### Worker
 
 The HTML form is complete and ready for deployment. When the user submits this form, all data will be sent in a `POST` request to the `/api/submit` URL. This is due to the form's `method` and `action` attributes. However, there is currently no request handler at the `/api/submit` address. You will now create it.

@@ -1,10 +1,24 @@
 
 <section class="wrapper">
-    <nav class="tabs">
+    <nav role = "navigation" class="tabs">
         {{.Inner}}
     </nav>
 </section>
 
 <!-- <div class="pc-tab">
     {{.Inner}}
+</div> -->
+
+
+<!-- {{ $text := (.Get "labels") }}
+{{ $labels := split $text " | " }}
+
+<div class="wrapper">
+  <nav role="navigation" class="tabs ">
+    {{ range $idx, $txt := $labels }}
+      <a href="#tab-{{$txt}}" class=" tab-label">{{$txt}}</a>
+    {{ end  }}
+  </nav>
+
+  {{ .Inner }}
 </div> -->
