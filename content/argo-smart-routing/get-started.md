@@ -12,4 +12,4 @@ weight: 2
 
 1. On the left sidebar, go to **Traffic** > **Argo**.
 
-1. To enable Argo, turn on the **toggle**.
+1. From **Argo Smart Routing**, turn on the **toggle**.
