@@ -54,7 +54,7 @@ This is how it translates into code:
 
 In our initial version, developers are responsible for **providing fields in a consistent order**, so that they have the same semantics when querying. In a future iteration, we plan to let developers name their labels and metrics in the binding, and then use these names when writing data points in the runtime.
 
-## 3. Query data using GraphQL and SQL API.
+## 3. Query data using GraphQL and SQL API
 
 Data can be queried using either [GraphQL](/analytics/graphql-api/) or SQL API.
 
