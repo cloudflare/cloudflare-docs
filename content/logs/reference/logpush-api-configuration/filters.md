@@ -239,12 +239,12 @@ Here are some examples of how the logical operators can be implemented. `X`, `Y`
 Example request using cURL:
 
 ```bash
-curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/ \
+curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 -H 'X-Auth-Key: <KEY>' \
--H 'X-Auth-Email:<EMAIL>' \
+-H 'X-Auth-Email: <EMAIL>' \
 -H 'Content-Type: application/json' \
 -d '{
-"name":"example.com static assets",
+"name":"static-assets",
 "logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
 "dataset": "http_requests",
 "filter":"{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"},{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"example.com\"}]}}",
