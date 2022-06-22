@@ -39,7 +39,7 @@ curl -X POST \
     "session_affinity_attributes": {
       "samesite": "Auto",
       "secure": "Auto",
-      "drain_duration": 100
+      "drain_duration": 100,
       "zero_downtime_failover": "sticky"
     },
     "session_affinity_ttl": 5000,
@@ -83,7 +83,7 @@ header: Response
     "session_affinity_attributes": {
       "samesite": "Auto",
       "secure": "Auto",
-      "drain_duration": 100
+      "drain_duration": 100,
       "zero_downtime_failover": "sticky"
     },
     "session_affinity_ttl": 5000,
