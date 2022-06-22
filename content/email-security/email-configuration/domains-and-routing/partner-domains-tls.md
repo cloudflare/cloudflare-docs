@@ -6,22 +6,19 @@ weight: 3
 
 # Partner Domains TLS
 
-When you completely trust a sender, you can exempt their incoming messages from SSL/TLS inspection (including TLS versions 1.1, 1.2, and 1.3).
+To add additional TLS requirements for emails coming from certain domains, you can enforce higher levels of SSL/TLS inspection. If TLS is required, mail without TLS from the specified domain will be dropped.
 
-## Exempt a domain
+## Add a domain
 
-To exempt a specific domain from SSL/TLS inspection:
+To require that email from a specific domain passes SSL/TLS inspection:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Domains & Routing** > **Partner Domains TLS**.
 4. Click **New Partner Domain**.
 4. Enter a **Domain** and any **Notes**.
-5. For **Require TLS Inbound**, move the toggle to **Off**.
-6. Click **Save**.
+5. Click **Save**.
 
-{{<Aside type="note">}}
+## Exempt TLS inspection
 
-Creating an exemption will not turn off enforcement against legacy standards like SSLv1, SSLv2, and TLSv1, which are insecure by contemporary measures.
-
-{{</Aside>}}
+If you decide to exempt a domain from TLS inspection - by toggling **Require TLS Inbound** to **Off** - this will not turn off enforcement against legacy standards like SSLv1, SSLv2, and TLSv1, which are insecure by contemporary measures.

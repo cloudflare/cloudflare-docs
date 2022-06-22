@@ -25,11 +25,17 @@ Using the dashboard, you can add email addresses indivdually or upload a CSV fil
 4. Click **New Display Name**.
 5. Enter an email address manually or upload a CSV file.
 
-{{<Aside type="note">}}
+#### CSV uploads
 
-The CSV file should be smaller than 150 KB, start with a header row of **Display_Name**, **Email**, and contain no additional fields.
+You can also upload a CSV file of multiple email addresses, so long as the file is smaller than 150 KB, starts with a header row of all required values, and contains no additional fields.
 
-{{</Aside>}}
+An example file would look like this:
+
+```txt
+Display_Name, Email
+Star Phish, star@nophish.com
+Phish Ee, phishee@nophish.com
+```
 
 ### Integrating a directory
 

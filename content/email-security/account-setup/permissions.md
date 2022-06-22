@@ -23,7 +23,9 @@ If your account has [parent permissions](/email-security/account-setup/manage-pa
 
 ## Child accounts
 
-Child accounts actually control settings and services associated with an Area 1 instance.
+Child accounts control settings and services associated with an Area 1 instance.
+
+### Child users
 
 Users created at Child level will only have access to the assigned Child Account. These users can have one of the following roles:
 
@@ -46,3 +48,7 @@ Users created at Child level will only have access to the assigned Child Account
 | Landscape | ✅ | ✅ | ✅ |
 | Message Preview | ❌ | ✅ | ✅ |
 | Message Retraction | ❌ | ✅ | ✅ |
+
+### Parent users
+
+Depending on the [parent permissions](/email-security/account-setup/manage-parent-permissions/) of your child account, you can delegate access to parent users of your account. This configuration will allow a parent user to view and change settings associated with your account.

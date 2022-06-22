@@ -28,6 +28,6 @@ To update or add a new add-on to the subject or body of a message:
 6. If desired, you can also use **Subject Prefix** or **Body Prefix** to update the text added before or after the rendered disposition:
 
     - **Subject Prefix**: Includes a dynamic value for `%LABELS` that lists the disposition and can include additional text.
-    - **Body Prefix**: Includes a dynamic value for `%REASONS` that lists the reasons behind an assigned disposition and can include additional, HTML-formatted text.
+    - **Body Prefix**: Includes a dynamic value for `%LABELS` that lists the disposition and `%REASONS` that lists the reasons behind an assigned disposition. Can include additional, HTML-formatted text.
 
 7. Click **Update Text Add-Ons**.

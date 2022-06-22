@@ -6,7 +6,7 @@ weight: 6
 
 # Phish submissions
 
-As part of your email configuration, your administrators and email recipients can submit missed phish samples to Area 1 so we can process them and take necessary action.
+As part of your email configuration, your administrators and email recipients can submit missed phish samples to [Area 1 Service Addresses](https://horizon.area1security.com/support/service-addresses) so we can process them and take necessary action.
 
 ## What happens after phish submission
 

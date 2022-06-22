@@ -19,7 +19,7 @@ For help setting up the proper configuration in your SIEM tool, refer to the fol
 
 ### Step 2 - Create a webhook
 
-To create a webhook in Area 1 and send data into a SIEM tool:
+To [create a webhook](/email-security/email-configuration/domains-and-routing/alert-webhooks/) in Area 1 and send data into a SIEM tool:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).

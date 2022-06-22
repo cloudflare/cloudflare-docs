@@ -12,7 +12,6 @@ For help getting started with an [inline setup](/email-security/deployment/inlin
 
 - **Microsoft**
    - [Office 365 - Area 1 as MX record](#link-needed)
-   - [Office 365 - O365 as MX record](#link-needed)
 - **GSuite**: 
    - [GSuite - Area 1 as MX record](/email-security/static/GSuite-Area1-MX.pdf)
 - **Cisco**:

@@ -28,7 +28,7 @@ To create a new allowed pattern:
 
         - *Trusted Sender*: Messages will bypass all [detections](/email-security/reference/dispositions-and-attributes/) and link following by Area 1. Typically, only applies to phishing simulations from vendors such as KnowB4.
         - *Exempt Recipient*: Will exempt messages from all Area 1 [detections](/email-security/reference/dispositions-and-attributes/) intended for recipients matching this pattern (email address or regular expression only). Typically, this only applies to submission mailboxes for user reporting to Security.
-        - *Acceptable Sender*: Will exempt messages from the `Spam` and `Spoof` [disposition](/email-security/reference/dispositions-and-attributes/#available-values) (but not `Malicious` or `Suspicious`). Commonly used for external domains and sources that send mail on behalf of your organization, such as marketing emails or internal tools.
+        - *Acceptable Sender*: Will exempt messages from the `Spam`, `Spoof`, and `Bulk` [dispositions](/email-security/reference/dispositions-and-attributes/#available-values) (but not `Malicious` or `Suspicious`). Commonly used for external domains and sources that send mail on behalf of your organization, such as marketing emails or internal tools.
     
     - **Notes**: Provide additional notes about the allowed pattern.
 
@@ -44,6 +44,5 @@ An example file would look like this:
 ```txt
 Pattern, Notes, Verify Email, Trusted Sender, 
 Exempt Recipient, Acceptable Sender
-
 whale@notaphish.com, not a phish, true, true, false, true
 ```
