@@ -1,3 +1,6 @@
 {
-  "files.insertFinalNewline": false
+  "files.insertFinalNewline": false,
+  "spellchecker.ignoreWordsList": [
+    "algorith"
+  ]
 }
