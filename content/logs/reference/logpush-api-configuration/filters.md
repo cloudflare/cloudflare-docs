@@ -214,11 +214,11 @@ The filter field has limits of approximately 30 operators and 1000 bytes. Anythi
 
 {{<Aside type="note" header="Note">}}
 Filtering is not supported on the following data types: `objects`, `array[int]`, `array[object]`.
-{{</Aside>}}
 
-For the Firewall events dataset, the following fields are not supported: Kind, MatchIndex, Metadata, OriginatorRayID, RuleID, Source.
+For the Firewall events dataset, the following fields are not supported: Action, Kind, MatchIndex, Metadata, OriginatorRayID, RuleID and Source.
 
 For the Gateway HTTP dataset, the following fields are not supported: Downloaded File Names, Uploaded File Names.
+{{</Aside>}}
 
 ## Logical Operators
 
@@ -239,12 +239,12 @@ Here are some examples of how the logical operators can be implemented. `X`, `Y`
 Example request using cURL:
 
 ```bash
-curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/ \
+curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 -H 'X-Auth-Key: <KEY>' \
--H 'X-Auth-Email:<EMAIL>' \
+-H 'X-Auth-Email: <EMAIL>' \
 -H 'Content-Type: application/json' \
 -d '{
-"name":"example.com static assets",
+"name":"static-assets",
 "logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
 "dataset": "http_requests",
 "filter":"{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"},{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"example.com\"}]}}",

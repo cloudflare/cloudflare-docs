@@ -31,7 +31,7 @@ Cloudflare Zaraz offers event and system properties that you can use when config
 | `{{ system.page.url.username }}` | String | Returns the username specified before the domain name. |
 | `{{ system.page.url.protocol }}` | String | Returns the protocol scheme of the URL, including the final `:`. |
 | `{{ system.page.url.origin }}` | String | Returns the origin of the URL, that is its scheme, its domain and its port. |
-| `{{ system.page.url.href }}` | String | Returns the origin of the URL, that is its scheme, its domain and its port. |
+| `{{ system.page.url.href }}` | String | Returns a string containing the entire URL |
 | `{{ system.page.url.baseDomain }}` | String | Returns the base domain part of the URL, without any subdomains. |
 | `{{ system.page.referrer }}` | String | Returns the page referrer from `document.referrer`. |
 | `{{ system.page.encoding }}` | String | Returns the document character encoding from `document.characterSet`. |

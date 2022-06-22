@@ -40,9 +40,9 @@ When `cloudflared` receives an incoming request, it evaluates each ingress rule 
 
 If a rule does not specify a hostname, all hostnames will be matched. If a rule does not specify a path, all paths will be matched.
 
-The last rule you list in the config file must be a catch-all rule that matches all traffic.
+The last rule you list in the configuration file must be a catch-all rule that matches all traffic.
 
-This is an example config file that specifies several rules:
+This is an example configuration file that specifies several rules:
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -54,7 +54,7 @@ ingress:
     service: https://localhost:8000
   # Rules can match the request's path to a regular expression:
   - hostname: static.example.com
-    path: /*.(jpg|png|css|js)
+    path: \.(jpg|png|css|js)$
     service: https://localhost:8001
   # Rules can match the request's hostname to a wildcard character:
   - hostname: '*.example.com'
@@ -153,7 +153,7 @@ To set both top-level configurations and origin-specific configurations, you can
 Default: `30s`
 
 Timeout for establishing a new TCP connection to your origin server. This excludes the time taken to
-establish TLS, which is controlled by [tlsTimeout](#tlstimeout).
+establish TLS, which is controlled by tlsTimeout.
 
 ### tlsTimeout
 
@@ -213,7 +213,7 @@ Disables TLS verification of the certificate presented by your origin. Will allo
 
 Default: `false`
 
-Disables chunked transfer encoding. Useful if you are running a WSGI server.
+Disables chunked transfer encoding. Useful if you are running a Web Server Gateway Interface (WSGI) server.
 
 ### proxyAddress
 

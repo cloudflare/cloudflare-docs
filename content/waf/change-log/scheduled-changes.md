@@ -24,12 +24,12 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-05-23</td>
-      <td>2022-05-30</td>
+      <td>2022-06-20</td>
+      <td>2022-06-27</td>
       <td>Cloudflare Specials</td>
-      <td>...f0c856b4</td>
-      <td>100054_BETA</td>
-      <td>Apache Struts - Command Injection - CVE:CVE-2017-5638</td>
+      <td>...34780914</td>
+      <td>100532</td>
+      <td>Vulnerabilty scanner activity</td>
       <td>N/A</td>
       <td>Block</td>
     </tr>

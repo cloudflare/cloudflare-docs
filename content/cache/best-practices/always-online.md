@@ -15,7 +15,7 @@ Do not use Always Online with:
 
 - [Custom Hostnames (SSL for SaaS)](/ssl/ssl-for-saas/)
 - API traffic
-- An [IP Access Rule](https://support.cloudflare.com/hc/articles/217074967) or [Firewall Rule](https://support.cloudflare.com/hc/articles/360016473712) that blocks the United States or
+- An [IP Access rule](/waf/tools/ip-access-rules/) or [firewall rule](/firewall/) that blocks the United States or
 - A [Cache Everything Page Rule](/cache/how-to/create-page-rules/#cache-everything) that configures an Edge Cache TTL lower than the Always Online crawl frequency pertaining to your domain plan type.
 - Bypass Cache page rules. Always Online ignores Bypass Cache page rules and serves Always Online cached assets.
 

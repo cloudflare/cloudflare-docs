@@ -33,31 +33,36 @@ During the Private Beta, your account will need to be explicitly granted access.
 
 ## 2. Fetch your credentials
 
-To make requests against the Pub/Sub API, retrieve your API key.
+To make requests against the Pub/Sub API, you'll need to create an **API Token** with `pubsub:write` permissions.
 
 1. From the [Cloudflare dashboard](https://dash.cloudflare.com), click on the profile icon and select **My Profile**.
 2. Under **My Profile**, click **API Tokens**.
-3. On the **API Tokens** under **API Keys**, locate **Global API Key** and click **View**.
-4. Copy the key to your clipboard.
+3. On the [**API Tokens**](https://dash.cloudflare.com/profile/api-tokens) page, click **Create Token**
+4. Choose **Get Started** next to **Create Custom Token** 
+5. Name the token - e.g. "Pub/Sub Write Access"
+6. Under the **Permissions** heading, choose **Account**, select **Pub/Sub** from the first drop-down, and **Edit** as the permission.
+7. Click **Continue to Summary** at the bottom of the page, where you should see _All accounts - Pub/Sub:Edit_ as the permission
+8. Click **Create Token**, and copy the token value.
 
-In your terminal, configure environmental variables with these keys, so you do not have to type them out in each command:
+In your terminal, configure a `CLOUDFLARE_API_TOKEN` environmental variable with your Pub/Sub token, so you do not have to type it out in each command:
 
-```bash
-$ export CF_API_EMAIL="<you@example.com>"
-$ export CF_API_KEY="<YOUR_API_KEY>"
+```sh
+$ export CLOUDFLARE_API_TOKEN="pasteyourtokenhere"
 ```
 
-These credentials should be kept secret and not committed to source code or placed in any client-side code.
+{{<Aside type="warning" header="Warning">}}
 
-Once you have your credentials, you will also need your [Cloudflare Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+This token should be kept secret and not committed to source code or placed in any client-side code.
 
-Back in your terminal, add your Account ID as an environmental variable.
+{{</Aside>}}
 
-```bash
-$ export CF_ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
+Once you have your token set, you will also need to set your [Cloudflare Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/). Back in your terminal, add your Account ID as an environmental variable.
+
+```sh
+$ export CLOUDFLARE_ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
 ```
 
-With these three environmental variables set up, you can create your first Pub/Sub Broker.
+With these two (2) environmental variables set up, you can now create your first Pub/Sub Broker!
 
 ## 3. Create your first namespace
 
@@ -74,7 +79,7 @@ For example, a namespace of `my-namespace` and a broker of `staging` would creat
 With this in mind, create a new namespace. This example will use `my-namespace` as a placeholder:
 
 ```bash
-$ curl -s -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces" --data '{"name": "my-namespace" }'
+$ curl -s -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pubsub/namespaces" --data '{"name": "my-namespace" }'
 ```
 
 You should receive a HTTP 200 response that resembles the following:
@@ -117,7 +122,7 @@ To create a new MQTT Broker called `example-broker` in the `my-namespace` namesp
 export DEFAULT_NAMESPACE="my-namespace"
 
 # Create the Broker
-$ curl -s -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers" --data '{"name": "example-broker", "authType": "TOKEN" }'
+$ curl -s -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers" --data '{"name": "example-broker", "authType": "TOKEN" }'
 ```
 
 You should receive an HTTP 200 response that resembles the following:
@@ -143,7 +148,7 @@ In the example above, a broker is created with an endpoint of `mqtts://example-b
 
 * Our Pub/Sub (MQTT) Broker is reachable over MQTTS (MQTT over TLS) - port 8883
 * The hostname is `example-broker.my-namespace.cloudflarepubsub.com`
-* [Token authentication](https://developers.cloudflare.com/pub-sub/platform/authentication-authorization/) is required to clients to connect.
+* [Token authentication](/pub-sub/platform/authentication-authorization/) is required to clients to connect.
 
 ## 5. Create credentials for your broker
 
@@ -168,7 +173,7 @@ To generate two tokens for your broker:
 # Set the $BROKER_NAME env var to make our lives easier (make sure to set this to the name you chose)
 export BROKER_NAME="example-broker"
 
-$ curl -s -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}/credentials?number=2&type=TOKEN&topicAcl=#"
+$ curl -s -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}/credentials?number=2&type=TOKEN&topicAcl=#"
 ```
 
 You should receive a HTTP 200 response that resembles the example below, which is a map of Client IDs and their associated tokens.
@@ -192,6 +197,10 @@ Each token allows you to publish or subscribe to the associated broker.
 
 Your broker is now created and ready to accept messages from authenticated clients. Because Pub/Sub is based on the MQTT protocol, there are client libraries for most popular programming languages. Refer to the list of [recommended client libraries](/pub-sub/learning/client-libraries/).
 
+{{<Aside type="note">}}
+You can view a live demo available at [demo.mqtt.dev](http://demo.mqtt.dev) that allows you to use your own Pub/Sub Broker and a valid token to subscribe to a topic and publish messages to it. The `JWT` field in the demo accepts a valid token from your Broker.
+{{</Aside>}}
+
 The example below uses [MQTT.js](https://github.com/mqttjs/MQTT.js) with Node.js to subscribe to a topic on a broker and publish a very basic "hello world" style message. You will need to have a [supported Node.js](https://nodejs.org/en/download/current/) version installed.
 
 ```bash
@@ -204,7 +213,7 @@ $ npm i mqtt --save
 Generate a credential and store it in the `BROKER_TOKEN` environmental variable so the MQTT client can access it.
 
 ```bash
-export BROKER_TOKEN=$(curl -s -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}/credentials?number=2&type=TOKEN&topicAcl=#" | jq '.result | to_entries | .[0].value')
+export BROKER_TOKEN=$(curl -s -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}/credentials?number=2&type=TOKEN&topicAcl=#" | jq '.result | to_entries | .[0].value')
 ```
 
 Create a file called `index.js ` and make sure to update the `brokerEndpoint` with the address of your Pub/Sub broker.

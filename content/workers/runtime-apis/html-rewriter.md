@@ -191,6 +191,42 @@ The `element` argument, used only in element handlers, is a representation of a 
 
   - Removes the start tag and end tag of the element but keeps its inner content intact.
 
+- {{<code>}}onEndTag(handler{{<param-type>}}Function<void>{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
+
+  - Registers a handler that is invoked when the end tag of the element is reached.
+
+{{</definitions>}}
+
+### EndTag
+
+The `endTag` argument, used only in handlers registered with `element.onEndTag`, is a limited representation of a DOM element.
+
+#### Properties
+
+{{<definitions>}}
+
+- `name` {{<type>}}string{{</type>}}
+
+  - The name of the tag, such as `"h1"` or `"div"`. This property can be assigned different values, to modify an element’s tag.
+
+{{</definitions>}}
+
+#### Methods
+
+{{<definitions>}}
+
+- {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}EndTag{{</type>}}
+
+  - Inserts content right before the end tag.
+
+- {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}EndTag{{</type>}}
+
+  - Inserts content right after the end tag.
+
+- {{<code>}}remove(){{</code>}} {{<type>}}EndTag{{</type>}}
+
+  - Removes the element with all its content.
+
 {{</definitions>}}
 
 ### Text chunks

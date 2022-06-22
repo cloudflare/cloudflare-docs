@@ -17,6 +17,7 @@ Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/s
 {{<button-group>}}
 {{<button type="primary" href="/workers/get-started/guide">}}Get started{{</button>}}
 {{<button type="secondary" href="/workers/tutorials">}}View the tutorials{{</button>}}
+{{<button type="secondary" href="/workers/platform/betas">}}Explore betas{{</button>}}
 {{</button-group>}}
 
 ---

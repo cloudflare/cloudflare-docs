@@ -8,7 +8,7 @@ weight: 6
 
 {{<Aside type="note">}}
 
-We've temporarily disabled the creation of Service Environments while we are improving this feature.
+We have temporarily disabled the creation of Service Environments while we are improving this feature.
 
 {{</Aside>}}
 

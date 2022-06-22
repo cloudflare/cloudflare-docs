@@ -4,109 +4,77 @@ title: Block page
 weight: 7
 ---
 
-# Block page
+# Configure block page
 
 Gateway responds to any blocked domain with 0.0.0.0, and does not return that blocked domain's IP address. As a result, the browser will show a default error page, and users will not be able to reach that website. This may cause confusion and lead some users to think that their Internet is not working.
 
-Configuring a **block page** on the Zero Trust dashboard helps avoid this confusion. Your block page will display information such as the rule ID of the policy blocking the website, a policy-specific block message, your organization's name, and a global message you may want to show — for example, a message explaining that the website has been blocked by Gateway, and whom in the organizations users should contact for support.
+Configuring a block page on the Zero Trust dashboard helps avoid this confusion. Your block page will display information such as the rule ID of the policy blocking the website, a policy-specific block message, your organization's name, and a global message you may want to show — for example, a message explaining that the website has been blocked by Gateway, and whom in the organizations users should contact for support.
 
-To configure a block page:
+## Prerequisites
 
-1.  [Download the Cloudflare certificate](#download-the-cloudflare-certificate).
-1.  [Add the certificate to your system](#add-the-certificate-to-your-system).
-1.  Enable the block page for [HTTP](#enable-the-block-page-for-http-policies) or [DNS](#enable-the-block-page-for-dns-policies) policies.
-1.  [Customize the block page](#customize-the-block-page).
-
-## Download the Cloudflare certificate
-
-1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Devices**.
-
-1.  Scroll down to the **Certificates** card.
-
-1.  Click on **Download certificate**.
-
-Now you will need to add the certificate to your system. This ensures your web browser can use it to establish HTTPS connections.
-
-## Add the certificate to your system
-
-1.  If you are on a Mac, **double-click** on the `.pem` file.
-
-The certificate is now listed in the **Keychain Access** application.
-
-![Keychain](/cloudflare-one/static/documentation/policies/listed-in-keychain.png)
-
-1.  Double-click on the certificate.
-
-1.  Click **Trust**.
-
-![Keychain](/cloudflare-one/static/documentation/policies/cert-click-on-trust.png)
-
-1.  Select **Always Trust** from the drop-down menu for **When using this certificate**.
-
-1.  Close the menu.
-
-If your system asks for admin permission, enter your password or use your fingerprint ID to confirm the changes.
-
-### Firefox
-
-If you are not using Firefox, you can skip this section.
-
-Follow the instructions below to finish configuring the block page:
-
-1.  Enter **about:config** in the address bar.
-1.  If you see a prompt from Firefox, click **Accept the risk!**.
-1.  Set `security.enterprise_roots.enabled` to `true`.
+In order to display the block page, your devices must have the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) installed.
 
 ## Enable the block page for HTTP policies
 
-The block page is automatically enabled for all HTTP policies. When a user is blocked at the HTTP layer, the block page is displayed. As you configure a policy with a Block action, you can specify a policy-specific block message.
+The block page is automatically enabled for all HTTP policies. When a user is blocked at the HTTP layer, the block page is displayed.
 
-![Enable HTTP block page](/cloudflare-one/static/documentation/policies/http-block.png)
+To specify a policy-specific block message:
+
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Policies** > **HTTP**.
+2. Find the policy you want to customize and click **Edit**. You can only edit the block page for policies with a Block action.
+3. Scroll down to the **Configure policy settings** step.
+4. In the **Block page customised text** field, enter a custom block message.
+5. Click **Save policy**.
+
+Users will now see a custom message when they are blocked by this HTTP policy.
 
 ## Enable the block page for DNS policies
 
-For DNS policies:
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Policies** > **DNS**.
+2. Find the policy for which you would like to display a block page and click **Edit**. You can only enable the block page for policies with a Block action.
+3. Scroll down to the **Configure policy settings** step.
+4. Enable **Display block page**.
+5. Click **Save policy**.
 
-1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Policies > DNS**.
-1.  Find the policy for which you would like to set up a block page.
-1.  Click **Edit**.
-1.  Scroll down to find the **Configure policy settings** step.
-1.  Toggle the **Display block page** switch.
+Users will now see a block page when they are blocked by this DNS policy.
 
-![Enable block page](/cloudflare-one/static/documentation/policies/block-page-toggle.png)
+{{<Aside header="Troubleshooting the block page">}}
 
-1.  Click **Save**.
+If your users see a "Warning: Potential Security Risk Ahead" message in their browser when visiting a blocked page, check that you have correctly installed the Cloudflare certificate on their device.
 
-Your block page is now enabled for this policy.
-
-{{<Aside header="Warning: Potential Security Risk">}}
-
-If your users are seeing the following error when navigating to a blocked page, double-check that you have downloaded the Cloudflare certificate and you have added it correctly to your system.
-
-![Block page](/cloudflare-one/static/documentation/policies/https-browser-error.png)
+![Error message when visiting a blocked page](/cloudflare-one/static/documentation/policies/https-browser-error.png)
 
 {{</Aside>}}
 
 ## Customize the block page
 
-You can customize the block page by making global changes that will show up every time a user navigates to a block page, independently of the type of rule (DNS or HTTP) that's blocking the website. These global customizations include:
+You can customize the block page by making global changes that will show up every time a user navigates to a block page, independently of the type of rule (DNS or HTTP) that is blocking the website. 
 
-- Adding your organization's name
-- Adding a logo
-- Adding a header text
-- Adding a global block message
-- Choosing a background color
+To apply customizations to your block page:
 
-All of these elements will display in addition to two fields specific to the policy that's blocking the website:
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **General**.
+2. Under **Block page**, enable the custom block page feature.
+3. Click **Customize**. Available global customizations include:
 
-- **The policy-specific block message** you've specified while creating the policy. This message is displayed under your global block message, and above the Rule ID.
+    - Adding your organization's name
+    - Adding a logo
+    - Adding a header text
+    - Adding a global block message, which will be displayed above the policy-specific block message
+    - Adding a [Mailto link](#allow-users-to-email-an-administrator)
+    - Choosing a background color
 
-- **The Rule ID**, which will make it easier for admins to debug possible policy issues in relation to blocked websites.
+4. Click **Save**. Your customers will now see your custom block page when navigating to a blocked website.
 
-To apply customizations to your block page, navigate to the **Block page** card under **Settings > General**.
+### Allow users to email an administrator
 
-![Block page](/cloudflare-one/static/documentation/policies/customize-settings-page.png)
+You can add a Mailto link to your custom block page, which allows users to directly email you about the blocked site. When users click **Contact your Administrator** on your block page, an email template opens with the email address and subject line you configure, as well as the following diagnostic information:
 
-Once you have completed your customization, click **Save**. Your customers will now see your custom block page when navigating to a blocked website.
-
-![Final block page](/cloudflare-one/static/documentation/policies/final-block-page.png)
+| Field        | Description                                |
+| ------------- | ------------------------------------------- |
+| Site URL     | The URL of the blocked page.   |
+| Rule ID      | The ID of the Gateway policy that blocked the page. |
+| Source IP    | The public source IP of the user device. |
+| Account ID   | The Cloudflare account associated with the block policy. |
+| User ID      | The ID of the user who visited the page. Currently, User IDs are not surfaced in the dashboard and can only be viewed by calling the [API](https://api.cloudflare.com/#zero-trust-users-get-users).|
+| Device ID    | The ID of the device that visited the page. This is generated by the WARP client.|
+| Block Reason | Your policy-specific block message. |
