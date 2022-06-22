@@ -40,6 +40,7 @@ curl -X POST \
       "samesite": "Auto",
       "secure": "Auto",
       "drain_duration": 100
+      "zero_downtime_failover": "sticky"
     },
     "session_affinity_ttl": 5000,
     "random_steering": {
@@ -83,6 +84,7 @@ header: Response
       "samesite": "Auto",
       "secure": "Auto",
       "drain_duration": 100
+      "zero_downtime_failover": "sticky"
     },
     "session_affinity_ttl": 5000,
     "random_steering": {
