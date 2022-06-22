@@ -1,6 +1,7 @@
 ---
 pcx-content-type: reference
 title: Gateway Activity logs
+layout: single
 weight: 3
 ---
 
@@ -147,3 +148,7 @@ To enable Logpush for Gateway Activity logs:
 The setup of your Logpush integration is now complete. Logpush will send updated logs every five minutes to your selected destination.
 
 You can configure multiple destinations and add additional fields to your logs by returning to the **Logpush** page.
+
+## GraphQL queries
+
+You can use the [GraphQL Analytics API](/analytics/graphql-api/) to query your Gateway Activity logs. To view a list of Gateway datasets and nodes, refer to the [available datasets](/analytics/graphql-api/features/data-sets/#available-datasets) table.
