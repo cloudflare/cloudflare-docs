@@ -4454,6 +4454,7 @@ pre {
 
 .tabs {
   display: flex;
+  justify-content: space-between;
   position: relative;
   border-radius: 3px;
   margin: 3rem 0;
@@ -4474,6 +4475,7 @@ pre {
 
 .tab {
   background-color: var(--background-color);
+  width: 25%;
 }
 
 .tab-switch {
@@ -4510,7 +4512,7 @@ pre {
   border-radius: 3px;
   /* top: 2.75em; */
   left: 0;
-  padding: 1.618rem;
+  /* padding: 1.618rem; */
   background: #fff;
   color: #2c3e50;
   border-bottom: 0.25rem solid #bdc3c7;
@@ -4533,6 +4535,11 @@ pre {
   /* z-index: 2; */
   opacity: 1;
   transition: all 0.35s;
+  height: auto;
+}
+
+.tab-content > .CodeBlock {
+  border-radius: 0;
 }
 
 /* new style test*/
