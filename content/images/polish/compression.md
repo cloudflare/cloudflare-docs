@@ -21,16 +21,16 @@ Polish is disabled and no compression is applied.
 
 ### Lossless
 
-The lossless option attempts to strip most metadata, like EXIF data, but does not change the image detail. Effectively, when uncompressed, a lossless image is identical to the original. On average, lossless compression reduces file size by 21 percent.
+The Lossless option attempts to strip most metadata, like EXIF data, but does not change the image detail. Effectively, when uncompressed, a lossless image is identical to the original. On average, lossless compression reduces file size by 21 percent.
 
-This option applies a lossless compression to GIF and PNG files.
+This option removes attempts to remove EXIF data from GIF, PNG and JEPG files. However, it only applies lossless compression to GIF and PNG files, as JPEGs are inherently lossy.
 
 
 ### Lossy
 
-Lossy attempts to strip most metadata and compresses images by approximately 15 percent. When uncompressed, some of the redundant information from the original image is lost. On average, using Lossy mode reduces file size by 48 percent. Lossy has the same effect as Lossless when applied to PNG.
+Lossy attempts to strip most metadata and compresses images by approximately 15 percent. When uncompressed, some of the redundant information from the original image is lost. On average, using Lossy mode reduces file size by 48 percent.
 
-This option applies a lossy compression to JPEG files.
+Although this option tries to remove EXIF data from GIF, PNG and JEPG files, it only applies compression to JPEG files.  Lossy has the same effect as Lossless when applied to PNG.
 
 ### WebP
 
