@@ -6,9 +6,9 @@ weight: 1
 
 # Overview
 
-Phishing is the root cause of 95% of security breaches that lead to financial loss and brand damage. Cloudflare Area 1 Horizon is a cloud-based service that stops phishing attacks, the biggest cybersecurity threat, across all traffic vectors: email, web, and network.
+Phishing is the root cause of upwards of 90% of breaches that lead to financial loss and brand damage. Cloudflare Area 1 email security is a cloud-native service that stops phishing attacks, the biggest cybersecurity threat, across all threat vectors - email, web, and network - and either at the edge or in the cloud.
 
-With globally distributed sensors & comprehensive attack analytics, Area 1 Horizon proactively identifies phishing campaigns, attacker infrastructure, and attack delivery mechanisms during the earliest stages of a phishing attack cycle. Using flexible enforcement platforms, Area 1 Horizon allows customers to take preemptive action against these targeted phishing attacks across all vectors: email, web, and network and either at the edge or in the cloud.
+With globally distributed sensors & comprehensive attack analytics, Area 1 proactively identifies phishing campaigns, attacker infrastructure, and attack delivery mechanisms during the earliest stages of a phishing attack cycle. Using flexible enforcement platforms, the Area 1 solution allows customers to take preemptive action against targeted phishing, including malware, spoofing attacks, payload-less Business Email Compromise attacks, supply chain phishing, and other advanced threats.
 
 ## Availability
 
