@@ -12,7 +12,7 @@ Customers on all plans can share account access with other members. However, the
 
 To add a member to your account:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator**).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator** and have a verified email address).
 2. Go to **Manage Account** > **Members**.
 3. For **Invite members**, enter one or more email addresses.
 4. Choose the associated roles.

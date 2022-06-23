@@ -12,7 +12,7 @@ Cloudflare offers several tools to protect your website against malicious traffi
 
 ### Default protection
 
-As long as your traffic is [proxied by Cloudflare](/fundamentals/get-started/concepts/how-cloudflare-works/), Cloudflare automatically protects your application from [DDoS attacks](https://support.cloudflare.com/hc/articles/200172676).
+As long as your traffic is [proxied by Cloudflare](/fundamentals/get-started/concepts/how-cloudflare-works/), Cloudflare automatically protects your application from [DDoS attacks](/ddos-protection/).
 
 Cloudflare also issues and renews free, unshared, publicly trusted [SSL/TLS certificates](/ssl/edge-certificates/universal-ssl/) to all Cloudflare domains.
 

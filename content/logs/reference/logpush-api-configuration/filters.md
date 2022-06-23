@@ -76,14 +76,14 @@ The following table represents the comparison operators that are supported and e
    </tr>
    <tr>
       <td>Less than<br />or equal</td>
-      <td><code class="InlineCode">lte</code></td>
+      <td><code class="InlineCode">leq</code></td>
       <td>&#10060;</td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
       <td>&#10060;</td>
       <td>&#10060;</td>
       <td>
-         <code class="InlineCode">{\"key\":\"BotScore\",\"operator\":\"<strong>lte</strong>\",\"value\":\"30\"}</code>
+         <code class="InlineCode">{\"key\":\"BotScore\",\"operator\":\"<strong>leq</strong>\",\"value\":\"30\"}</code>
       </td>
     </tr>
     <tr>
@@ -100,14 +100,14 @@ The following table represents the comparison operators that are supported and e
     </tr>
     <tr>
       <td>Greater than<br />or equal</td>
-      <td><code class="InlineCode">gte</code></td>
+      <td><code class="InlineCode">geq</code></td>
       <td>&#10060;</td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
       <td>&#10060;</td>
       <td>&#10060;</td>
       <td>
-         <code class="InlineCode">{\"key\":\"BotScore\",\"operator\":\"<strong>gte</strong>\",\"value\":\"30\"}</code>
+         <code class="InlineCode">{\"key\":\"BotScore\",\"operator\":\"<strong>geq</strong>\",\"value\":\"30\"}</code>
       </td>
     </tr>
     <tr>

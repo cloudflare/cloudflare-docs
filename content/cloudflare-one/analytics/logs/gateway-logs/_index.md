@@ -1,6 +1,7 @@
 ---
 pcx-content-type: reference
 title: Gateway Activity logs
+layout: single
 weight: 3
 ---
 
