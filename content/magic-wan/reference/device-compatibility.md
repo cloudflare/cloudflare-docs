@@ -31,4 +31,4 @@ The matrix below includes example devices and links to the integration guides.
 
 
 \* Specifications compatible per vendor documentation; detailed integration guide coming soon.</br>
-\** For more information about replay attacks and anti-replay protection, refer to [Anti-replay protection](/magic-wan/about/anti-replay-protection/).
+\** For more information about replay attacks and anti-replay protection, refer to [Anti-replay protection](/magic-wan/reference/anti-replay-protection/).
