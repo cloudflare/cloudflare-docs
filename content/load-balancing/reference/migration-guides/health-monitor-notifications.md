@@ -100,9 +100,10 @@ Once you created your new notification in [Step 2](#step-2---create-new-notifica
 
 <div>
 
-If using the Cloudflare API, send a [PATCH](https://api.cloudflare.com/#account-load-balancer-pools-patch-pool) request that includes the following object.
+If using the Cloudflare API, send a [PATCH](https://api.cloudflare.com/#account-load-balancer-pools-patch-pool) request that includes the following objects.
 
 ```json
+"notification_email": "",
 "notification_filter": {
     "pool": {
         "healthy": null,
