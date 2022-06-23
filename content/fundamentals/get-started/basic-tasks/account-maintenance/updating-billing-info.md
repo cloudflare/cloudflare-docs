@@ -4,7 +4,7 @@ title: Update billing information
 weight: 2
 ---
 
-# Overview
+# Update billing information
 
 To avoid potential disruptions in your Cloudflare services, make sure your billing information is current and accurate. It is also important to understand [how Cloudflare plans and add-ons are priced](https://www.cloudflare.com/plans/#overview).
 
@@ -32,11 +32,11 @@ To add or update your primary payment method,
 
 1. Log in to the Cloudfare dashboard.
 
-2. Select **Billing**.
+2. Select **Choose account** > **Manage account** > **Billling**.
 
 3. On the left navigation, select **Payment Info***.
 
-4. If there is no payment method on file, the **Payment method** dialog opens automatically. Otherwise, select **Manage** next to your current payment method and the **Payment Method** dialog opens.
+4. If there is no payment method on file, the **Payment Method** dialog opens automatically. Otherwise, select **Manage** next to your current payment method and the **Payment Method** dialog opens.
 
 5. Enter the required information based on the payment options below:
     * If paying by credit card:
@@ -67,7 +67,7 @@ A backup payment method is used if the primary payment method fails. To add a ba
 
 1. Log in to the Cloudfare dashboard.
 
-2. Select **Billing**.
+2. Select **Choose account** > **Manage account** > **Billling**.
 
 3. On the left nagivation, select **Payment Info***.
 
@@ -95,7 +95,7 @@ To delete your current payment method:
 
 1. Log in to the Cloudfare dashboard.
 
-2. Select **Billing**.
+2. Select **Choose account** > **Manage account** > **Billling**.
 
 3. On the left navigation, select **Payment Info***.
 
@@ -113,7 +113,7 @@ If paying by credit card:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 
-2. Select **My Profile** > **Billling**.
+2. Select **Choose account** > **Manage account** > **Billling**.
 
 3. Ensure that you have selected the account for which you want to update your payment address.
 
