@@ -34,7 +34,7 @@ Although this option tries to remove EXIF data from GIF, PNG and JEPG files, it 
 
 ### WebP
 
-WebP provides superior savings in file size when compared to PNG or JPEG. WebP lossless images are approximately 26 percent smaller than PNGs, while lossy images are 25 to 34 percent smaller than JPEGs. WebP is supported in all browsers except for Internet Explorer and KaiOS. You can learn more in our [blog post](https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/).
+WebP provides superior savings in file size when compared to PNG or JPEG. WebP lossless images are approximately 26 percent smaller than PNGs, while lossy images are around 17 percent smaller than JPEGs. WebP is supported in all browsers except for Internet Explorer and KaiOS. You can learn more in our [blog post](https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/).
 
 Polish creates and caches a WebP version of the image and delivers it to the browser if the `Accept` header from the browser includes WebP, and the compressed image is significantly smaller than the lossy or lossless compression:
 
