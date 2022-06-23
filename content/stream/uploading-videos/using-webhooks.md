@@ -1,18 +1,19 @@
 ---
 pcx-content-type: how-to
-title: Using webhooks
+title: Use webhooks
 weight: 7
 ---
 
-# Using webhooks
+# Use webhooks
 
-A tool to notify your service when videos successfully finish processing and are ready to stream.
+Webhooks notify your service when videos successfully finish processing and are ready to stream or if your video enters an error state.
 
-## Subscriptions
+## Create or modify webhook subscriptions
 
-### Create or modify the webhook subscription
+To subscribe to receive webhook notifications on your service or modify an existing subscription, you will need a [Cloudflare API token](https://www.cloudflare.com/a/account/my-account).
 
-To subscribe to receive webhook notifications on your service, or modify an existing subscription, you will need a [Cloudflare API token](https://www.cloudflare.com/a/account/my-account).
+
+The webhook notification URL must include the protocol. Only `http://` or `https://` is supported.
 
 ```bash
 curl -X PUT --header 'Authorization: Bearer $TOKEN' \
@@ -20,11 +21,10 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/webhook \
 --data '{"notificationUrl":"$WEBHOOK_NOTIFICATION_URL"}'
 ```
 
-The webhook notification URL must include the protocol. Only `http://` or `https://` is supported.
-
-#### Example response to create or modify the webhook subscription
-
 ```bash
+---
+header: Example response
+---
 {
   "result": {
     "notificationUrl": "http://www.your-service-webhook-handler.com",
@@ -43,9 +43,10 @@ When a video on your account finishes processing, you will receive a `POST` requ
 
 Note the `status` field indicates whether the video processing finished successfully.
 
-### Example POST request body sent in response to successful encoding
-
 ```javascript
+---
+header: Example POST request body sent in response to successful encoding
+---
 {
     "uid": "dd5d531a12de0c724bd1275a3b2bc9c6",
     "readyToStream": true,
@@ -61,59 +62,57 @@ Note the `status` field indicates whether the video processing finished successf
 
 ## Verify webhook authenticity
 
-Cloudflare Stream will sign the webhook requests it sends to your notification URLs and include the signature of each request in the `Webhook-Signature` HTTP header. This allows your application to verify that the webhook requests are sent by Stream.
+Cloudflare Stream will sign the webhook requests sent to your notification URLs and include the signature of each request in the `Webhook-Signature` HTTP header. This allows your application to verify the webhook requests are sent by Stream.
 
 To verify a signature, you need to retrieve your webhook signing secret. This value is returned in the API response when you create or retrieve the webhook.
 
-To verify the signature, get the value of the `Webhook-Signature` header. It will look like this:
+To verify the signature, get the value of the `Webhook-Signature` header, which will look similar to the example below.
 
 `
 Webhook-Signature: time=1230811200,sig1=60493ec9388b44585a29543bcf0de62e377d4da393246a8b1c901d0e3e672404
 `
 
-### Step 1: Parse the signature
+### 1. Parse the signature
 
 Retrieve the `Webhook-Signature` header from the webhook request and split the string using the `,` character.
 
-Split each value again using the `=` character
+Split each value again using the `=` character.
 
 The value for `time` is the current [UNIX time](https://en.wikipedia.org/wiki/Unix_time) when the server sent the request. `sig1` is the signature of the request body.
 
-At this step, you should discard requests with timestamps that are too old for your application.
+At this point, you should discard requests with timestamps that are too old for your application.
 
-### Step 2: Create signature source string
+### 2. Create signature source string
 
-Prepare the signature source string:
-You should concatenate these three strings:
+Prepare the signature source string and concatenate the following strings:
 
 *   Value of the `time` field e.g. `1230811200`
 *   Character `.`
 *   Webhook request body (complete with newline characters, if applicable)
 
-It is important for every byte in the request body to remain unaltered for successful signature verification.
+Every byte in the request body must remain unaltered for successful signature verification.
 
-### Step 3: Create the expected signature
+### 3. Create the expected signature
 
-Compute an HMAC with the SHA256 function (HMAC-SHA256), using your webhook secret and the source string from step 2.
-This step will depend on what programming language your application is written in.
+Compute an HMAC with the SHA256 function (HMAC-SHA256) using your webhook secret and the source string from step 2.
+This step depends on the programming language use by your application.
 
 Cloudflare's signature will be encoded to hex.
 
-### Step 4: Compare the expected and the actual signatures
+### 4. Compare expected and actual signatures
 
 Compare the signature in the request header to the expected signature. Preferably, use a constant-time comparison function to compare the signatures.
 
-If the signatures match, you can trust that the webhook was sent by Cloudflare.
+If the signatures match, you can trust Cloudflare sent the webhook.
 
 ## Limitations
 
-*   Webhooks will only be sent after the processing of a video is complete,
-    and the body will indicate whether the processing of the video succeeded or failed.
+*   Webhooks will only be sent after video processing is complete, and the body will indicate whether the video processing succeeded or failed.
 *   Only one webhook subscription is allowed per-account.
 
 ## Examples
 
-### Golang
+**Golang**
 
 Using [crypto/hmac](https://golang.org/pkg/crypto/hmac/#pkg-overview):
 
@@ -141,7 +140,7 @@ func main() {
 
 ```
 
-### Node.js
+**Node.js**
 ```js
 
     var crypto = require('crypto');
@@ -154,7 +153,7 @@ func main() {
     hash.digest('hex');
 ```    
 
-### Ruby
+**Ruby**
 ```ruby
     require 'openssl'
 
