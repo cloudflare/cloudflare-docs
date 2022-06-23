@@ -105,7 +105,7 @@ To delete your current payment method:
 
 Now, the **Payment Method** dialog should appear in the **Payment Method** section, where you can enter new payment details.
 
-## Update your billing address.
+## Update your billing address
 
 The billing address is associated with your **Payment method** and is used to calculate your sales tax. If you need to update your billing address, you must also enter you **Payment Method**. The process for updating your billing address depends on the **Payment Method**.
 
