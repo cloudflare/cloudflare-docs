@@ -107,7 +107,7 @@ Now, the **Payment Method** dialog should appear in the **Payment Method** secti
 
 ## Update your billing address
 
-The billing address is associated with your **Payment method** and is used to calculate your sales tax. If you need to update your billing address, you must also enter you **Payment Method**. The process for updating your billing address depends on the **Payment Method**.
+The billing address is associated with your **Payment Method** and is used to calculate your sales tax. If you need to update your billing address, you must also enter you **Payment Method**. The process for updating your billing address depends on the **Payment Method**.
 
 If paying by credit card:
 
