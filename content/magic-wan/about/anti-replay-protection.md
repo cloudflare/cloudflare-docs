@@ -9,7 +9,7 @@ If you use Magic WAN and Anycast IPsec tunnels, you will need to disable anti-re
 
 ## Replay attacks
 
-Replay attacks occur when a malicious actor intercepts and records a packet, and later, sends the recorded packet to the target network again with an intent that benefits the attacker.
+Replay attacks occur when a malicious actor intercepts and records a packet, and later sends the recorded packet to the target network again with an intent that benefits the attacker.
 
 ### Example
 
