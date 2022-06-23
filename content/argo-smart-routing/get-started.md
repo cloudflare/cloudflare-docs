@@ -13,3 +13,9 @@ weight: 2
 1. On the left sidebar, go to **Traffic** > **Argo**.
 
 1. From **Argo Smart Routing**, turn on the **toggle**.
+
+## Enable Argo Tiered Cache
+
+Argo Tiered Cache uses Cloudflare's network of data centers to deliver content more efficiently. Argo Smart Routing works with Tiered Cache to provide the fastest and most reliable connection for users.
+
+To enable Argo Tiered Cache, go to [Enable Tiered Cache](/cache/how-to/enable-tiered-cache).
