@@ -8,11 +8,19 @@ weight: 2
 
 To avoid potential disruptions in your Cloudflare services, make sure your billing information is current and accurate. It is also important to understand [how Cloudflare plans and add-ons are priced](https://www.cloudflare.com/plans/#overview).
 
-To access your current payment methods (primary and backup) in the [Cloudflare dashboard](https://dash.cloudflare.com), navigate to the left sidebar and select **Manage account** > **Billing**. Then select **Payment Info**.
-
 If Cloudflare is unable to process your payment, review [Troubleshooting failed payments](https://support.cloudflare.com/hc/en-us/articles/218344877).
 
 ---
+
+## Access payment methods
+
+To access your current payment methods (primary and backup):
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com)
+
+2. Select **Manage account** > **Billing**. 
+
+3. Select **Payment Info**.
 
 ## Add or update payment methods
 
