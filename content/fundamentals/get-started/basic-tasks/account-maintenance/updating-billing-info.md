@@ -8,9 +8,9 @@ weight: 2
 
 To avoid potential disruptions in your Cloudflare services, make sure your billing information is current and accurate. It is also important to understand [how Cloudflare plans and add-ons are priced](https://www.cloudflare.com/plans/#overview).
 
-To access your current payment methods (primary and backup) select **Billing** > **Payment Info** in the Cloudflare dashboard.
+To access your current payment methods (primary and backup) navigate to the left sidebar and select **Manage account** > **Billing** > **Payment Info** in the Cloudflare dashboard.
 
-Your billing address can either be associated with your **Payment Method** or your business' physical address. It will be used to calculate your sales tax (if applicable). 
+Your billing address can either be associated with your payment method or your business' physical address. It will be used to calculate your sales tax (if applicable). 
 
 To include your business' information in your invoices, you must include **Billing address**, **Company name**, and **VAT/GST number** (if applicable) in your Payment method section.
 
@@ -30,11 +30,11 @@ Customers in the Enterprise plan have additional payment options such as wire an
 
 To add or update your primary payment method,
 
-1. Log in to the Cloudfare dashboard.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 
-2. Select **Choose account** > **Manage account** > **Billling**.
+2. On the left sidebar, select **Manage account** > **Billing**.
 
-3. On the left navigation, select **Payment Info***.
+3. Select **Payment Info***.
 
 4. If there is no payment method on file, the **Payment Method** dialog opens automatically. Otherwise, select **Manage** next to your current payment method and the **Payment Method** dialog opens.
 
@@ -65,13 +65,13 @@ Ensure your new payment method now appears in the **Payment Method** section.
 
 A backup payment method is used if the primary payment method fails. To add a backup payment method:
 
-1. Log in to the Cloudfare dashboard.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 
-2. Select **Choose account** > **Manage account** > **Billling**.
+2. On the left sidebar, select **Manage account** > **Billing**.
 
-3. On the left nagivation, select **Payment Info***.
+3. Select **Payment Info**.
 
-4. Select **Manage**.
+4. In the **Payment Method** card, select **Manage**.
 
 5. In the **Backup** card, select **Add** to enter a backup payment method.
 
@@ -93,37 +93,31 @@ You also cannot delete your payment method if a payment fails or if there is an 
 
 To delete your current payment method:
 
-1. Log in to the Cloudfare dashboard.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 
-2. Select **Choose account** > **Manage account** > **Billling**.
+2. On the left sidebar, select **Manage account** > **Billing**.
 
-3. On the left navigation, select **Payment Info***.
+3. Select **Payment Info**.
 
-4. Next to your current payment method, select **Delete**.
+4. In the **Payment Method** card, select **Manage**.
 
-5. Select **Confirm** to finish.
+5. Next to your current payment method, select **Delete**.
 
-Now, the **Payment Method** dialog should appear in the **Payment Method** section, where you can enter new payment details.
+6. Select **Confirm** to finish.
 
 ## Update your billing address
 
-The billing address is associated with your **Payment Method** and is used to calculate your sales tax. If you need to update your billing address, you must also enter you **Payment Method**. The process for updating your billing address depends on the **Payment Method**.
+The billing address is associated with your payment method and is used to calculate your sales tax. If you need to update your billing address, you must also enter you payment method. The process for updating your billing address depends on the payment method.
 
 If paying by credit card:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 
-2. Select **Choose account** > **Manage account** > **Billling**.
+2. On the left sidebar, select **Manage account** > **Billing**.
 
-3. Ensure that you have selected the account for which you want to update your payment address.
+3. Select **Edit** in the **Billing Address** card and input your information.
 
-4. On the left navigation, select **Payment Info**.
-
-5. In the **Payment Method** section, select **Edit**.
-
-6. Enter your credit card deatils and new billing address in the **Payment Method** dialog. Include a **Company name** and **VAT/GST number** (if applicable) if you would like your company's information on your invoice.
-
-7. Review the suggested address in the pop-up window. If the information is correct, select **Confirm**. If not, select **Edit this address** to return to the **Payment Method** dialog.
+7. Review the suggested address in the pop-up window. If the information is correct, select **Confirm**. 
 
 If paying by Paypal, refer to PayPal's [billing address documentation](https://www.paypal.com/ai/smarthelp/article/how-do-i-edit-the-billing-address-linked-to-my-credit-card-faq680).
 
