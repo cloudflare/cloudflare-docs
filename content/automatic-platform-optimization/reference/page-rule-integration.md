@@ -12,7 +12,7 @@ The following Page rules can control APO. Any changes to Caching page rules requ
 
 - **Cache Level: Ignore Query String** — APO ignores all query strings when serving from Cache.
 
-- **Cache Level: Cache Everything** — APO caches pages with all query strings. Default cookies rules still apply.
+- **Cache Level: Cache Everything** — APO caches pages with all query strings.
 
   {{<Aside type="warning">}}
 
