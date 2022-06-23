@@ -29,6 +29,15 @@ Cloudflare Zaraz offers backwards compatibility with the `dataLayer` function fo
 
 When you toggle Single Page Application support off, the `pageview` trigger will only work when loading a new web page. When enabled, Zaraz's `pageview` trigger will work every time the URL changes on a single page application. This is also known as virtual page views.
 
+## Privacy
+
+Zaraz offers privacy settings you can turn on, such as:
+
+* **Remove URL query parameters**: This option removes all query parameters from URLs. Example: `https://example.com/?q=hello` becomes `https://example.com/`.
+* **Trim IP addresses**:
+* Clean User Agent strings
+* Remove external referers
+
 ## Injection
 
 ### Auto-inject script
