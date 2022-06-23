@@ -20,7 +20,7 @@ A primary payment method is required to process payment for Cloudflare products 
 
 {{<Aside type="note">}}
 
-Customers in the Enterprise plan have additional payment options such as wire and ACH as well as yearly or quarterly billing. To discuss upgrading to Enterprise, [contact us](https://www.cloudflare.com/plans/enterprise/contact/).
+Customers in the [Enterprise plan](https://www.cloudflare.com/plans/enterprise/contact/) have additional payment options such as wire and ACH as well as yearly or quarterly billing.
 
 {{</Aside>}}
 
@@ -30,14 +30,14 @@ To add or update your primary payment method,
 
 2. On the left sidebar, select **Manage account** > **Billing**.
 
-3. Select **Payment Info***.
+3. Select **Payment Info**.
 
 4. If there is no payment method on file, the **Payment Method** dialog opens automatically. Otherwise, select **Manage** next to your current payment method and the **Payment Method** dialog opens.
 
 5. Enter the required information based on the payment options below:
     * If paying by credit card:
         * Enter all the information required under the **Credit Card Details** form.
-        * To add your business' information to your invoice, include your **Company** and **VAT/GST Number**, if applicable.
+        * To add your business information to your invoice, include your **Company** and **VAT/GST Number**, if applicable.
 
     * If paying by PayPal (will charge your credit card if you do not have enough funds in your Paypal account):
         * Select the **Paypal logo** on the upper right.
@@ -81,7 +81,7 @@ Before removing your payment method from file, you must cancel all Cloudflare pa
 
 {{<Aside type="warning">}}
 
-If you currently subscribe to any add-on services, Cloudflare must always have a payment method on file. If you need to remove a payment method, then you must enter a new one to replace it. Otherwise, you will see an error.
+If you currently subscribe to any [add-on services](https://support.cloudflare.com/hc/articles/115004555148), Cloudflare must always have a payment method on file. If you need to remove a payment method, then you must enter a new one to replace it. Otherwise, you will see an error.
 
 You also cannot delete your payment method if a payment fails or if there is an outstanding balance. Until we process payment, you can only add or edit your payment method.
 
@@ -117,4 +117,3 @@ If paying by credit card:
 
 If paying by Paypal, refer to PayPal's [billing address documentation](https://www.paypal.com/ai/smarthelp/article/how-do-i-edit-the-billing-address-linked-to-my-credit-card-faq680).
 
----
