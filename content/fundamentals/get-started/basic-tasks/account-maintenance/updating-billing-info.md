@@ -1,12 +1,12 @@
 ---
 pcx-content-type: how-to
-title: Updating billing information
+title: Update billing information
 weight: 2
 ---
 
 # Overview
 
-To avoid potential disruptions in your Cloudflare services, it is important to ensure your billing information is current and accurate. It is also important to understand [how Cloudflare plans and add-ons are priced](https://www.cloudflare.com/plans/#overview).
+To avoid potential disruptions in your Cloudflare services, make sure your billing information is current and accurate. It is also important to understand [how Cloudflare plans and add-ons are priced](https://www.cloudflare.com/plans/#overview).
 
 To access your current payment methods (primary and backup) select **Billing** > **Payment Info** in the Cloudflare dashboard.
 
@@ -111,7 +111,7 @@ The billing address is associated with your **Payment method** and is used to ca
 
 If paying by credit card:
 
-1. Log in to the Cloudflare dashboard.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 
 2. Select **My Profile** > **Billling**.
 
