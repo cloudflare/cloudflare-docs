@@ -45,6 +45,7 @@ To add a member to your account:
 
 5. (Optional) Click **Direct add** to add the member to your account without requiring an email invitation.
 6. Click **Invite**.
+7. Members without an existing Cloudflare account will first need to [create an account](/fundamentals/get-started/setup/account-setup/create-account/).
 
 ## Remove account members
 
