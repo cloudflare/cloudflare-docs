@@ -1,1 +1,3 @@
-<div id="tab-{{ .Get "id" }}" class="tabs-content">{{ $.Inner | markdownify }}</div>
+<div class="tab-content" id="tab-{{ .Get "id" }}" >
+    {{ $.Inner | markdownify }}
+</div>

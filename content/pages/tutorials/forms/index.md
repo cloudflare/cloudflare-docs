@@ -9,14 +9,7 @@ title: HTML forms
 # HTML forms
 
 {{< new-tabs >}}
-
-{{< new-tabs-nav>}}
-{{< new-tabs-nav-item id="js-esm">}}JS ESM{{</ new-tabs-nav-item >}}
-{{< new-tabs-nav-item id="js-sw">}}JS SW{{</ new-tabs-nav-item >}}
-{{</ new-tabs-nav >}}
-
-<section>
-{{< new-tab id="js-esm" >}}
+{{< new-tab id="jsesm" >}}
 ```js
 export default {
   fetch(request) {
@@ -29,7 +22,7 @@ export default {
 };
 ```
 {{< /new-tab >}}
-{{< new-tab id="js-sw" >}}
+{{< new-tab id="jssw" >}}
 ```js
 async function handler(request) {
   const base = "https://example.com";
@@ -45,7 +38,38 @@ addEventListener("fetch", (event) => {
 });
 ```
 {{< /new-tab >}}
-</section>
+{{< new-tab id="tsesm" >}}
+```js
+async function handler(request) {
+  const base = "https://example.com";
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
+```
+{{< /new-tab >}}
+{{< new-tab id="tssw" >}}
+```js
+async function handler(request) {
+  const base = "https://example.com";
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
+```
+{{< /new-tab >}}
 {{</ new-tabs >}}
 
 In this tutorial, you will create a simple `<form>` using plain HTML and CSS and deploy it to Cloudflare Pages. While doing so, you will learn about some of the HTML form attributes and how to collect submitted data within a Worker.
