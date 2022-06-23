@@ -4448,7 +4448,7 @@ pre {
   max-width: 700px;
   margin: 0 auto;
   position: relative;
-  padding-bottom: 12rem;
+  padding-bottom: 5rem;
   font-family: var(--sans-serif-font-family);
 }
 
@@ -4462,6 +4462,7 @@ pre {
   max-height: 14.75rem;
   background: rgba(var(--color-rgb), 0.05);
 }
+
 
 .tabs::before,
 .tabs::after {
@@ -4485,9 +4486,10 @@ pre {
 .tab-label {
   position: relative;
   display: block;
-  line-height: 2.75em;
-  height: 3em;
-  padding: 0 1.618em;
+  /* line-height: 2.75em; */
+  /* height: 5em; */
+  padding: 0 0.618em;
+  text-decoration: none;
   text-align: center;
   color: currentColor;
   cursor: pointer;
@@ -4502,6 +4504,10 @@ pre {
 .tab-label:hover {
   top: -0.25rem;
   transition: top 0.25s;
+}
+
+#tab-jssw,#tab-jsesm,#tab-tsesm,#tab-tssw {
+ 
 }
 
 .tab-content {
@@ -4521,6 +4527,8 @@ pre {
   overflow-y: scroll;
   background-color: rgb(243 243 244);
 }
+
+
 
 .tab-switch:checked + .tab-label {
   color: currentColor;
