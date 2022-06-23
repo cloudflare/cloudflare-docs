@@ -1,6 +1,8 @@
 ---
 pcx-content-type: concept
 title: Anti-replay protection
+_build:
+  list: never
 ---
 
 # Anti-replay protection
