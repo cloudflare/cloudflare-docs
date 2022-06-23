@@ -7,23 +7,23 @@ title: Configure a Google Workspace account for Access for SaaS
 
 # Configure a Google Workspace account for Access for SaaS
 
-This tutorial covers how to use Cloudflare as a single sign on provider by setting up Access for SaaS.
+This tutorial covers how to use Cloudflare Access as a single sign-on provider for your Google Workspace account.
 
 **⏲️ Time to complete:** 15 minutes
 
 ## Create an SSO provider in Google Workspace
 
-1.  In your Google Workspace account, create an SSO third-party identity provider.
+1. In your Google Workspace account, create an SSO third-party identity provider.
 
     ![SSO profile on Google Workspace](/cloudflare-one/static/zero-trust-security/google-workspace-saas/sso-profile.png)
 
-1.  Select **Setup SSO with a third party identity provider**.
+1. Select **Setup SSO with a third-party identity provider**.
 
 ## Create an application on the Zero Trust Dashboard
 
-1.  On the Zero Trust Dashboard, navigate to **Access** > **Applications** and create a SaaS application.
+1. On the Zero Trust Dashboard, navigate to **Access** > **Applications** and create a SaaS application.
 
-1.  Follow [this guide](https://support.google.com/a/answer/6349809?hl=en&ref_topic=7556907) to collect the Entity ID and Assertion Consumer Service URL to add to your application:
+1. Follow [this guide](https://support.google.com/a/answer/6349809?hl=en&ref_topic=7556907) to collect the Entity ID and Assertion Consumer Service URL to add to your application:
 
     - Entity ID: `google.com`
     - Assertion Consumer Service URL: `https://google.com/a/your_domain.com/acs`
@@ -31,7 +31,11 @@ This tutorial covers how to use Cloudflare as a single sign on provider by setti
 
     ![Add fields to the Zero Trust application](/cloudflare-one/static/zero-trust-security/google-workspace-saas/teams-app-fields.png)
 
-1.  Click **Next** to create an Access policy and use the following mapping to set up your Workspace sign-in:
+1. The Google Workspace SaaS integration is incompatible with the Google Workspace IdP integration. If you added Google Workspace as an identity provider, disable the option in your application configuration.
+
+    ![Deselecting the Google Workspace IdP when configuring an Access application](/cloudflare-one/static/zero-trust-security/google-workspace-saas/disable-google-workspace-idp.png)
+
+1. Click **Next** to create an Access policy and use the following mapping to set up your Workspace sign-in:
 
     | Google Workspace value   | Cloudflare value |
     | ------------------------ | ---------------- |
@@ -39,13 +43,13 @@ This tutorial covers how to use Cloudflare as a single sign on provider by setti
     | Sign-out page URL        | SSO Endpoint     |
     | Verification Certificate | Public Key       |
 
-1.  Next, you can select **Use a domain specific issuer**. If you select this option, Google will send an issuer specific to your domain (where `your_domain.com` is replaced with your actual primary Google Workspace domain name).
+1. Next, you can select **Use a domain specific issuer**. If you select this option, Google will send an issuer specific to your domain (where `your_domain.com` is replaced with your actual primary Google Workspace domain name).
 
 ## Create and upload a certificate file
 
-1.  Paste the **Public Key** in VIM or another code editor.
-1.  Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
-1.  Set the file extension as `.crt` and save.
+1. Paste the **Public Key** in VIM or another code editor.
+1. Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+1. Set the file extension as `.crt` and save.
 
 Once the certificate file has been created, upload it to your Google Workspace account.
 

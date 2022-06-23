@@ -10,13 +10,13 @@ You can integrate a Google Workspace (formerly Google Suite) account with Cloudf
 
 Once integrated, users will login with their Google Workspace credentials to reach resources protected by Cloudflare Access or to enroll their device into Cloudflare Gateway.
 
-You do not need to be a Google Cloud Platform user to integrate Google Workspace as an identity provider with Cloudflare Zero Trust. You will only need to open the Google Cloud Platform to access the IdP integration settings.
+You do not need to be a Google Cloud Platform user to integrate Google Workspace as an identity provider with Cloudflare Zero Trust. You will only need to open the Google Cloud Platform to configure IdP integration settings.
 
 ## Set up Google Workspace as an identity provider
 
 1. Log in to the Google Cloud Platform [console](https://console.cloud.google.com/). This is separate from your Google Workspace console.
 
-2. If you do not already have a Google Cloud project, select **Create Project** to create a new project. Name the project and select **Create**.
+2. A Google Cloud project is required to enable Google Workspace APIs. If you do not already have a Google Cloud project, go to **IAM & Admin** > **Create Project**. Name the project and select **Create**.
 
 3. Go to **APIs & Services** and select **+ Enable APIs and Services**. The API Library will load.
 
@@ -43,6 +43,10 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 10. Choose _Web application_ as the Application type.
 
 11. Under **Authorized JavaScript origins**, in the **URIs** field, enter your [team domain](/cloudflare-one/glossary/#team-domain).
+
+    ```txt
+    https://<your-team-name>.cloudflareaccess.com
+    ```
 
 12. Under **Authorized redirect URIs**, in the **URIs** field, enter your team domain followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
