@@ -1,6 +1,7 @@
 ---
 pcx-content-type: reference
 title: Polish compression
+weight: 2
 ---
 
 # Polish compression
