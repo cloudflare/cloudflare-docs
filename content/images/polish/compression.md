@@ -42,11 +42,19 @@ Polish creates and caches a WebP version of the image and delivers it to the bro
 Accept: image/avif,image/webp,image/*,*/*;q=0.8
 ```
 
-#### File sizes with WebP
+#### File size, image quality and WebP
 
-WebP cannot distinguish image data from the artifacts introduced in highly compressed JPEG images. As a result, the WebP algorithm ends up encoding unnecessary data. Sometimes, this leads to a bigger than expected image file size after compression.
+Lossy formats like JPEG and WebP are able to generate files of any size, and every image could theoretically be made smaller. However, reduction in file size comes at a cost of reduction in image quality. Reduction of file sizes below each format's optimal size limit causes disproportionally large losses in quality. Re-encoding of files that are already optimized reduces their quality more than it reduces their file size.
 
-Cloudflare tries to balance quality and image file size with Polish, and will not compress the image if the final result is below a certain quality threshold.
+Cloudflare will not convert from JPEG to WebP when we detect that the conversion would make the file bigger, or would reduce image quality by more than it would save in file size.
+
+If you choose the Lossless Polish setting, then WebP will be used very rarely. This is due to the fact that, in this mode, WebP is only adequate for PNG images, and cannot improve compression for JPEG images.
+
+Although WebP compresses better than JPEG on average, there are exceptions and in some ocasions JPEG compresses better than WebP. Cloudflare tries to detect these cases and keep the JPEG format.
+
+If you serve low-quality JPEG images at the origin (quality setting 60 or lower), it may not be beneficial to convert them to WebP. This is because low-quality JPEG images have blocky edges and noise caused by compression, and these distortions increase file size of WebP images. We recommend serving high-quality JPEG images (quality setting between 80 and 90) at your origin server to avoid this.
+
+If your server or CMS has a built-in image converter or optimizer, it may interfere with Polish. It does not make sense to apply lossy optimizations twice to images, because quality degradation will be larger than the savings in file size.
 
 ## Polish interaction with Image optimization
 
