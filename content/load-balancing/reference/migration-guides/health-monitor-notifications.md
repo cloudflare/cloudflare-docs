@@ -6,7 +6,7 @@ weight: 2
 
 # Health monitor notifications
 
-Cloudflare is migrating the notifications used by load balancing [health monitors](/load-balancing/understand-basics/monitors) to use Cloudflare's centralized [Notifications Service](/fundamentals/notifications/).
+Cloudflare is migrating the notifications used by load balancing [health monitors](/load-balancing/understand-basics/monitors/) to use Cloudflare's centralized [Notifications Service](/fundamentals/notifications/).
 
 ## What is changing and why?
 
@@ -28,10 +28,10 @@ First you should determine which pools are using notifications.
 To find pools with existing notifications in the dashboard:
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-1. Go to **Traffic** > **Load Balancing**.
-1. Click **Manage Pools**.
-1. On a pool, click **Edit**.
-1. For **Health Check Notifications**, check the value is toggled to **On**.
+2. Go to **Traffic** > **Load Balancing**.
+3. Click **Manage Pools**.
+4. On a pool, click **Edit**.
+5. For **Health Check Notifications**, check the value is toggled to **On**.
 
 </div>
 </details>
@@ -41,7 +41,7 @@ To find pools with existing notifications in the dashboard:
 
 <div>
 
-- If using the [Cloudflare API](https://api.cloudflare.com/#account-load-balancer-pools-list-pools), check the `notification_filter` object. Health checks with enabled legacy notifications will have something like:
+If using the [Cloudflare API](https://api.cloudflare.com/#account-load-balancer-pools-list-pools), check the `notification_filter` object. Health checks with enabled legacy notifications will have something like:
     ```json
     "pool": {
         "healthy": true,
@@ -100,7 +100,7 @@ Once you created your new notification in [Step 2](#step-2---create-new-notifica
 
 <div>
 
-If using the Cloudflare API, send a [PATCH](https://api.cloudflare.com/#account-load-balancer-pools-patch-pool) request that includes the following objects.
+If using the Cloudflare API, send a [`PATCH`](https://api.cloudflare.com/#account-load-balancer-pools-patch-pool) request that includes the following objects.
 
 ```json
 "notification_email": "",
