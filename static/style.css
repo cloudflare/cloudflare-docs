@@ -4449,20 +4449,32 @@ pre {
   margin: 0 auto;
   position: relative;
   padding-bottom: 5rem;
+  overflow-anchor: none;
   font-family: var(--sans-serif-font-family);
 }
 
 .tabs {
-  display: flex;
-  justify-content: space-between;
   position: relative;
   border-radius: 3px;
-  margin: 3rem 0;
+  margin-top: 3rem;
   box-shadow: 0 1px rgba(var(--shadow-color-rgb), 0.12);
-  max-height: 14.75rem;
-  background: rgba(var(--color-rgb), 0.05);
+  /* max-height: 14.75rem; */
 }
 
+.tabs-content-wrapper {
+  height: 15rem;
+  background: rgba(var(--color-rgb), 0.05);
+}
+.tabs > ul {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  width: 100%;
+  /* justify-content: space-between; */
+}
+.tabs > ul > li {
+  margin-bottom: 0;
+}
 
 .tabs::before,
 .tabs::after {
@@ -4483,38 +4495,48 @@ pre {
   display: none;
 }
 
+.tab-label-wrapper {
+  width: 25%;
+  margin-bottom: 0;
+  list-style-type: none;
+  box-shadow: 1px 0 rgba(var(--shadow-color-rgb), 0.12);
+}
 .tab-label {
   position: relative;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
   /* line-height: 2.75em; */
-  /* height: 5em; */
-  padding: 0 0.618em;
+  height: 2.5rem;
+  padding: 0.6em 1.25em;
   text-decoration: none;
   text-align: center;
   color: currentColor;
   cursor: pointer;
   top: 0;
-  transition: all 0.25s;
+  /* transition: all 0.25s; */
   font-weight: 700;
   font-size: var(--code-font-size);
   font-family: var(--monospace-font-family);
-  box-shadow: 1px 0 rgba(var(--shadow-color-rgb), 0.12);
 }
 
 .tab-label:hover {
-  top: -0.25rem;
-  transition: top 0.25s;
+  /* top: -0.25rem;
+  transition: top 0.25s; */
 }
 
-#tab-jssw,#tab-jsesm,#tab-tsesm,#tab-tssw {
- 
+#tab-jssw,
+#tab-jsesm,
+#tab-tsesm,
+#tab-tssw {
 }
 
 .tab-content {
   width: 100%;
   position: absolute;
   z-index: 1;
-  height: 15rem;
+
   border-radius: 3px;
   /* top: 2.75em; */
   left: 0;
@@ -4525,10 +4547,16 @@ pre {
   opacity: 0;
   transition: all 0.35s;
   overflow-y: scroll;
+  
   background-color: rgb(243 243 244);
 }
-
-
+.tab-content:target {
+  /* color: currentColor; */
+    /* background: rgba(var(--gray-5-rgb), 0.2); */
+    border-bottom: 0;
+    transition: all 0.35s;
+  opacity: 1;
+}
 
 .tab-switch:checked + .tab-label {
   color: currentColor;
