@@ -1,6 +1,6 @@
 ---
 pcx-content-type: how-to
-title: Cancel Cloudflare Subscriptions
+title: Cancel Cloudflare subscriptions
 weight: 2
 ---
 
@@ -20,19 +20,19 @@ To disable a subscription:
 
 3. Select the domain for which you would like to cancel your subscription.
 
-4. Select the feature name under **Active Subscriptions** (Free or Pro customers) or **Plan Extensions** (Enterprise customers).
+4. Select the feature you want to disable under **Active Subscriptions** (Free or Pro customers) or **Plan Extensions** (Enterprise customers).
 
-5. Follow the instructions to disable the feature. Each feature has a different process which could include toggling a switch, clicking a button, or selecting 'Disable' from a drop-down list.
+5. Follow the instructions to disable the feature. Each feature has a different process which could include toggling a switch, clicking a button, or choosing _Disable_ from a drop-down list.
 
 ## Step 2: Cancel the subscription in your billing profile
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 
-2. In the left sidebar, select **Manage account** > **Billing**.
+2. Select **Manage account** > **Billing**.
 
 3. Select **Subscriptions**.
 
-4. Select **Cancel** on the subscription you would like to disable.
+4. Find the subscription you want to disable and select **Cancel**.
 
 5. You will be asked to share feedback with us. Choose all that apply. 
 
