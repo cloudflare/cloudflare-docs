@@ -738,8 +738,46 @@ html[is-site-page] .DocsContent {
     font-size: .85em;
 }
 
-.TriBlock h3 {
-    font-size: medium;
+.ConnectHeader {
+    width: 100%;
+    padding-left: .75em;
+    margin-top: 2em;
+    margin-bottom: 3em;
+    border-top: 1px solid black
+}
+
+[theme=dark] .ConnectHeader {
+    border-top: 1px solid white;
+}
+
+.ConnectBlockGrid {
+    display: flex;
+    max-width: 90%;
+    flex-wrap: wrap;
+    padding-left: .75em;
+    justify-content: space-between;
+}
+
+.ConnectBlock {
+    width: 12em;
+    height: 7em;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    margin-bottom: 2em;
+}
+
+.ConnectBlockGrid a {
+    color: inherit;
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+[theme=dark] .ConnectBlock {
+    border: 1px solid white;
 }
 
 @font-face {
