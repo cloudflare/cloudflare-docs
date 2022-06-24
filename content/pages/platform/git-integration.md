@@ -13,9 +13,9 @@ Suppose you have a custom Git workflow that uses specific branches to represent 
 
 For example, imagine that you merge new code into your GitHub `main` branch. When it is time to deploy your project to Pages, your merged set of commits will be deployed to the `production` branch in the Cloudflare Pages dashboard. You can set the default build branch to `production` or change it to any other branch by going to the Pages project's **Settings** > **Builds & deployments** > **Configure Production deployment**. In the dropdown menu under **production branch**, select the new `production` branch.
 
-You can also use [preview deployments](/pages/platform/preview-deployments/) to preview how the new version of your project looks before merging to `production`. In addition, Pages allows you to configure how your preview branches are built by using [Branch build controls](/pages/platform/branch-build-controls/), which will enable you to configure automatic deployments to suit your preference on a per-project basis.
+You can also use [preview deployments](/pages/platform/preview-deployments/) to preview how the new version of your project looks before merging to `production`. In addition, Pages allows you to configure how your preview branches are built by using [branch build controls](/pages/platform/branch-build-controls/), which will enable you to configure automatic deployments to suit your preference on a per-project basis.
 
-To do this in your Pages project's go-to  **Settings** > **Builds & deployments** > **Configure preview deployment** and select **custom branches** you can specify branches you wish to include and exclude from automatic deployments in the provided configuration fields. To learn more refer to the [Branch build controls](/pages/platform/branch-build-controls/) documentation.
+To do this in your Pages project's go-to  **Settings** > **Builds & deployments** > **Configure preview deployment** and select **custom branches** you can specify branches you wish to include and exclude from automatic deployments in the provided configuration fields. To learn more refer to the [branch build controls](/pages/platform/branch-build-controls/) documentation.
 
 
 ## Organizational access
