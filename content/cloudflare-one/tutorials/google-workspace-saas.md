@@ -1,64 +1,67 @@
 ---
-updated: 2021-09-07
+updated: 2022-06-24
 category: 🔐 Zero Trust
 pcx-content-type: tutorial
-title: Configure a Google Workspace account for Access for SaaS
+title: Connect to Google Workspace through Access
 ---
 
-# Configure a Google Workspace account for Access for SaaS
+# Connect to Google Workspace through Access
 
-This tutorial covers how to use Cloudflare Access as a single sign-on provider for your Google Workspace account.
+This tutorial covers how to configure Cloudflare Access as a single sign-on provider for your Google Workspace account.
 
 **⏲️ Time to complete:** 15 minutes
 
-## Create an SSO provider in Google Workspace
+## 1. Create an application on the Zero Trust Dashboard
 
-1. In your Google Workspace account, create an SSO third-party identity provider.
+1. Log in to the [Zero Trust dashboard](https://dash.teams.cloudflare.com/) and navigate to **Access** > **Applications**.
 
-    ![SSO profile on Google Workspace](/cloudflare-one/static/zero-trust-security/google-workspace-saas/sso-profile.png)
+2. Select **SaaS application**.
 
-1. Select **Setup SSO with a third-party identity provider**.
+3. Fill in the following information:
+    - **Application**: _Google_.
+    - **Entity ID**: `google.com`
+    - **Assertion Consumer Service URL**: `https://google.com/a/<your_domain.com>/acs`, where `<your_domain.com>` is your Google Workspace domain.
+    - **Name ID Format**: _Email_.
 
-## Create an application on the Zero Trust Dashboard
+4. When you put your Google Workspace behind Access, users will not be able to log in using their [Google](/cloudflare-one/identity/idp-integration/google/) or [Google Workspace](/cloudflare-one/identity/idp-integration/gsuite/) credentials. Therefore, we recommend deselecting those options in your list of identity providers.
 
-1. On the Zero Trust Dashboard, navigate to **Access** > **Applications** and create a SaaS application.
+    ![Google Workspace IdP shown as deselected in the Access application](/cloudflare-one/static/zero-trust-security/google-workspace-saas/disable-google-workspace-idp.png)
 
-1. Follow [this guide](https://support.google.com/a/answer/6349809?hl=en&ref_topic=7556907) to collect the Entity ID and Assertion Consumer Service URL to add to your application:
+5. On the next page, [create an Access policy](cloudflare-one/policies/access/) for your application. For example, you could allow users with an `@your_domain.com` email address.
 
-    - Entity ID: `google.com`
-    - Assertion Consumer Service URL: `https://google.com/a/your_domain.com/acs`
-    - Name ID: `Email`
+6. On the next page, you will see your **SSO endpoint**, **Access Entity ID or Issuer**, and **Public Key**. These values will be used to configure Google Workspace.
 
-    ![Add fields to the Zero Trust application](/cloudflare-one/static/zero-trust-security/google-workspace-saas/teams-app-fields.png)
+## 2. Create a certificate from your Public Key
 
-1. The Google Workspace SaaS integration is incompatible with the Google Workspace IdP integration. If you added Google Workspace as an identity provider, disable the option in your application configuration.
+1. Copy paste your **Public Key** into a text editor.
+2. Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`. For example,
 
-    ![Deselecting the Google Workspace IdP when configuring an Access application](/cloudflare-one/static/zero-trust-security/google-workspace-saas/disable-google-workspace-idp.png)
+    ```txt
+    -----BEGIN CERTIFICATE-----
+    <Public key>
+    -----END CERTIFICATE-----
+    ```
 
-1. Click **Next** to create an Access policy and use the following mapping to set up your Workspace sign-in:
+3. Set the file extension as `.crt` and save.
 
-    | Google Workspace value   | Cloudflare value |
-    | ------------------------ | ---------------- |
-    | Sign-in page URL         | SSO Endpoint     |
-    | Sign-out page URL        | SSO Endpoint     |
-    | Verification Certificate | Public Key       |
+## 3. Create an SSO provider in Google Workspace
 
-1. Next, you can select **Use a domain specific issuer**. If you select this option, Google will send an issuer specific to your domain (where `your_domain.com` is replaced with your actual primary Google Workspace domain name).
+1. Log in to your [Google Admin console](https://admin.google.com/).
+2. Navigate to **Security** > **Authentication** > **SSO with third party IdP**.
+3. Select **Third-party SSO profile for your organization**.
+4. Enable **Set up SSO with third-party identity provider**.
+5. Fill in the following information:
+    - **Sign-in page URL**: Copy paste your **SSO Endpoint** from the Zero Trust dashboard.
+    - **Sign-out page URL**: `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/logout`, where `<team-name>` is your Zero Trust [team name](/cloudflare-one/glossary/#team-name).
+    - **Verification certificate**: Upload the certificate file containing your Public Key.
+6. (Optional) Enable **Use a domain specific issuer**. If you select this option, Google will send an issuer specific to your Google Workspace domain (`google.com/a/<your_domain.com>` instead of the standard `google.com`).
 
-## Create and upload a certificate file
+## 4. Test the integration
 
-1. Paste the **Public Key** in VIM or another code editor.
-1. Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
-1. Set the file extension as `.crt` and save.
-
-Once the certificate file has been created, upload it to your Google Workspace account.
-
-## Test the integration
-
-You can now test the integration by going to `https://google.com/a/<yourdomain>`.
+To test the integration, open an incognito browser window and go to `https://mail.google.com/`. An Access login screen should appear.
 
 ## Troubleshooting
 
 `Error: “G Suite - This account cannot be accessed because the login credentials could not be verified.”`
 
-If you see this error, it is likely that the Public Key and Private Key do not match. Confirm your certificate file matches your Public Key.
+If you see this error, it is likely that the Public Key and Private Key do not match. Confirm that your certificate file includes the correct Public Key.
