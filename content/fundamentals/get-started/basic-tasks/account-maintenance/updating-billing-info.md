@@ -16,7 +16,7 @@ If Cloudflare is unable to process your payment, review [Troubleshooting failed 
 
 To access your current payment methods (primary and backup):
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com)
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 
 2. Select **Manage account** > **Billing**. 
 
