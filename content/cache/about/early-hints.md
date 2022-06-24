@@ -1,9 +1,9 @@
 ---
-title: Early Hints (Beta)
+title: Early Hints
 pcx-content-type: concept
 ---
 
-# Early Hints (Beta)
+# Early Hints
 
 Early Hints takes advantage of “server think time” to asynchronously send instructions to the browser to begin loading resources while the origin server is compiling the full response. By sending these hints to a browser before the full response is prepared, the browser can figure out how to load the webpage faster for the end user.
 
@@ -17,13 +17,11 @@ Early Hints is currently only supported over HTTP/2 and HTTP/3.
 
 For more information about Early Hints, refer to the [Early Hints blog](https://blog.cloudflare.com/early-hints/).
 
-## Sign up for Early Hints Beta
+## Enabling Early Hints
 
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
 2.  From the dashboard, click **Speed** > **Optimization**.
-3.  Under **Optimized Delivery**, click **Join the beta**.
-
-After joining the Beta, you can toggle Early Hints on or off from **Optimized Delivery**.
+3.  Under **Optimized Delivery**, switch the toggle to **On** for **Early Hints**.
 
 ## Generating Early Hints
 
