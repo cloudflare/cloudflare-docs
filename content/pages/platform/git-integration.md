@@ -9,10 +9,8 @@ Cloudflare supports connecting Cloudflare Pages to your GitHub and GitLab reposi
 
 ## Custom branches
 
-Suppose you have a custom Git workflow that uses specific branches to represent your project's production build. In that case, you can specify a custom branch when creating (or managing an existing) project in the Pages dashboard by going to  **Settings** > **Builds & deployments** and clicking the **Configure Production deployments** button.
-
-For example, imagine that you merge new code into your GitHub `main` branch. When it is time to deploy your project to Pages, your merged set of commits will be deployed to the `production` branch in the Cloudflare Pages dashboard. You can set the default build branch to `production` or change it to any other branch by going to the Pages project's **Settings** > **Builds & deployments** > **Configure Production deployment**. In the dropdown menu under **production branch**, select the new `production` branch.
-
+Suppose you have a custom Git workflow that uses specific branches to represent your project's production build. In that case, you can specify a custom branch when creating (or managing an existing) project in the Pages dashboard by going to  **Settings** > **Builds & deployments** and clicking the **Configure Production deployments** button. You can change the production branch to any other branch in the dropdown menu under **production branch**.
+ 
 You can also use [preview deployments](/pages/platform/preview-deployments/) to preview how the new version of your project looks before merging into `production`. In addition, Pages allows you to configure which of your preview branches are built and deployed by using [branch build controls](/pages/platform/branch-build-controls/).
 
 To configure this in your Pages project go to **Settings** > **Builds & deployments** > **Configure preview deployment** and select **Custom branches**. Here you can specify branches you wish to include and exclude from automatic deployments in the provided configuration fields. To learn more refer to the [branch build controls](/pages/platform/branch-build-controls/) documentation.
