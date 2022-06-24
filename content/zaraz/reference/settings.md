@@ -33,7 +33,7 @@ When you toggle Single Page Application support off, the `pageview` trigger will
 
 Zaraz offers privacy settings you can turn on, such as:
 
-* **Remove URL query parameters**: Removes all query parameters from URLs. Example: `https://example.com/?q=hello` becomes `https://example.com/`.
+* **Remove URL query parameters**: Removes all query parameters from URLs. For example, `https://example.com/?q=hello` becomes `https://example.com/`.
 
 * **Trim IP addresses**: Trims part of the IP address before passing it to server-side loaded tools, to hide it from third-parties.
 
