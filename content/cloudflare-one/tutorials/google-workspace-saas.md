@@ -27,7 +27,7 @@ This tutorial covers how to configure Cloudflare Access as a single sign-on prov
 When you put your Google Workspace behind Access, users will not be able to log in using [Google](/cloudflare-one/identity/idp-integration/google/) or [Google Workspace](/cloudflare-one/identity/idp-integration/gsuite/) as an identity provider.
 {{</Aside>}}
 
-4. On the next page, [create an Access policy](cloudflare-one/policies/access/) for your application. For example, you could allow users with an `@your_domain.com` email address.
+4. On the next page, [create an Access policy](/cloudflare-one/policies/access/) for your application. For example, you could allow users with an `@your_domain.com` email address.
 
 5. On the next page, you will see your **SSO endpoint**, **Access Entity ID or Issuer**, and **Public Key**. These values will be used to configure Google Workspace.
 
