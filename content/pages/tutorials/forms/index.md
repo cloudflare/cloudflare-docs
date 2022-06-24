@@ -8,70 +8,6 @@ title: HTML forms
 
 # HTML forms
 
-{{< new-tabs >}}
-{{< new-tab id="jsesm" >}}
-```js
-export default {
-  fetch(request) {
-    const base = "https://example.com";
-    const statusCode = 301;
-
-    const destination = new URL(request.url, base);
-    return Response.redirect(destination.toString(), statusCode);
-  },
-};
-```
-{{< /new-tab >}}
-{{< new-tab id="jssw" >}}
-```js
-async function handler(request) {
-  const base = "https://example.com";
-  const statusCode = 301;
-
-  const destination = new URL(request.url, base);
-  return Response.redirect(destination.toString(), statusCode);
-}
-
-// Initialize Worker
-addEventListener("fetch", (event) => {
-  event.respondWith(handler(event.request));
-});
-```
-{{< /new-tab >}}
-{{< new-tab id="tsesm" >}}
-```js
-async function handler(request) {
-  const base = "https://example.com";
-  const statusCode = 301;
-
-  const destination = new URL(request.url, base);
-  return Response.redirect(destination.toString(), statusCode);
-}
-
-// Initialize Worker
-addEventListener("fetch", (event) => {
-  event.respondWith(handler(event.request));
-});
-```
-{{< /new-tab >}}
-{{< new-tab id="tssw" >}}
-```js
-async function handler(request) {
-  const base = "https://example.com";
-  const statusCode = 301;
-
-  const destination = new URL(request.url, base);
-  return Response.redirect(destination.toString(), statusCode);
-}
-
-// Initialize Worker
-addEventListener("fetch", (event) => {
-  event.respondWith(handler(event.request));
-});
-```
-{{< /new-tab >}}
-{{</ new-tabs >}}
-
 In this tutorial, you will create a simple `<form>` using plain HTML and CSS and deploy it to Cloudflare Pages. While doing so, you will learn about some of the HTML form attributes and how to collect submitted data within a Worker.
 
 {{<Aside type="note" header="MDN Introductory Series">}}
@@ -276,9 +212,8 @@ The HTML page is also completely unstyled at this point, relying on the browsers
 
 {{</Aside>}}
 
-{{< tabs labels="JS/ESM | JS/SW | TS/ESM | TS/SW">}}
-{{< tab tabName="JS/ESM" >}}
-
+{{< new-tabs >}}
+{{< new-tab id="jsesm" >}}
 ```js
 export default {
   fetch(request) {
@@ -290,13 +225,11 @@ export default {
   },
 };
 ```
-
-{{< /tab >}}
-{{< tab tabName="JS/SW" >}}
-
+{{< /new-tab >}}
+{{< new-tab id="jssw" >}}
 ```js
 async function handler(request) {
-  const base = "https://example.com";
+  const base = "https://anothert.com";
   const statusCode = 301;
 
   const destination = new URL(request.url, base);
@@ -308,113 +241,40 @@ addEventListener("fetch", (event) => {
   event.respondWith(handler(event.request));
 });
 ```
-
-{{< /tab >}}
-{{< tab tabName="TS (ESM)">}}
-
+{{< /new-tab >}}
+{{< new-tab id="tsesm" >}}
 ```js
-type ENV = {
-  KV_ADAM_REDIRECTS: KVNamespace,
-};
+async function handler(request) {
+  const base = "https://yams.com";
+  const statusCode = 301;
 
-export default {
-  async fetch(request: Request, env: ENV): Promise<Response> {
-    console.log(request.cf);
-    const url = new URL(request.url);
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
 
-    if (url.pathname === "/setup") {
-      // add a couple of redirects
-      await env.KV_ADAM_REDIRECTS.put("/cloudflare", "https://cloudflare.com");
-      await env.KV_ADAM_REDIRECTS.put("/example", "https://example.com");
-      await env.KV_ADAM_REDIRECTS.put("/request", "https://request.eidam.dev");
-      await env.KV_ADAM_REDIRECTS.put(
-        "/docs",
-        "https://developers.cloudflare.com"
-      );
-
-      return new Response("Added to KV");
-    }
-
-    const redirectUrl = await env.KV_ADAM_REDIRECTS.get(url.pathname);
-    if (redirectUrl) {
-      return Response.redirect(redirectUrl);
-    }
-
-    return new Response(JSON.stringify(request.cf, null, 4));
-  },
-};
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
 ```
+{{< /new-tab >}}
+{{< new-tab id="tssw" >}}
+```js
+async function handler(request) {
+  const base = "https://obinnas.com";
+  const statusCode = 301;
 
-{{< /tab >}}
-{{< tab tabName="TS (SW)">}}
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
 
-```html
-<html lang="en">
-  <head>
-    <meta charset="utf8" />
-    <title>Form Demo</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-  </head>
-  <body>
-    <form method="POST" action="/api/submit">
-      <div class="input">
-        <label for="name">Full Name</label>
-        <input id="name" name="name" type="text" />
-      </div>
-
-      <div class="input">
-        <label for="email">Email Address</label>
-        <input id="email" name="email" type="email" />
-      </div>
-
-      <div class="input">
-        <label for="referers">How did you hear about us?</label>
-        <select id="referers" name="referers">
-          <option hidden disabled selected value></option>
-          <option value="Facebook">Facebook</option>
-          <option value="Twitter">Twitter</option>
-          <option value="Google">Google</option>
-          <option value="Bing">Bing</option>
-          <option value="Friends">Friends</option>
-        </select>
-      </div>
-
-      <div class="checklist">
-        <label>What are your favorite movies?</label>
-        <ul>
-          <li>
-            <input id="m1" type="checkbox" name="movies" value="Space Jam" />
-            <label for="m1">Space Jam</label>
-          </li>
-          <li>
-            <input
-              id="m2"
-              type="checkbox"
-              name="movies"
-              value="Little Rascals"
-            />
-            <label for="m2">Little Rascals</label>
-          </li>
-          <li>
-            <input id="m3" type="checkbox" name="movies" value="Frozen" />
-            <label for="m3">Frozen</label>
-          </li>
-          <li>
-            <input id="m4" type="checkbox" name="movies" value="Home Alone" />
-            <label for="m4">Home Alone</label>
-          </li>
-        </ul>
-      </div>
-
-      <button type="submit">Submit</button>
-    </form>
-  </body>
-</html>
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
 ```
-
-{{< /tab >}}
-
-{{< /tabs >}}
+{{< /new-tab >}}
+{{</ new-tabs >}}
 
 ### Worker
 
