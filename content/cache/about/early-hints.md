@@ -21,7 +21,7 @@ For more information about Early Hints, refer to the [Early Hints blog](https://
 
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
 2.  From the dashboard, click **Speed** > **Optimization**.
-3.  Under **Optimized Delivery**, switch the toggle to **On** for **Early Hints**.
+3.  Under **Optimized Delivery**, enable **Early Hints**.
 
 ## Generating Early Hints
 
