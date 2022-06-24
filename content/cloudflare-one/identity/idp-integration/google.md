@@ -8,7 +8,7 @@ weight: 13
 
 You can integrate Google authentication with Cloudflare Access without a Google Workspace account. The integration allows any user with a Google account to log in (if the [Access policy](/cloudflare-one/policies/access/) allows them to reach the resource). Unlike the instructions for [Google Workspace](/cloudflare-one/identity/idp-integration/gsuite/), the steps below will not allow you to pull group membership information from a Google Workspace account.
 
-You do not need to be a Google Cloud Platform user to integrate Google Suite as an identity provider with Cloudflare Zero Trust. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
+You do not need to be a Google Cloud Platform user to integrate Google Suite as an identity provider with Cloudflare Zero Trust. You will only need to open the Google Cloud Platform to configure IdP integration settings.
 
 ## Set up Google as an identity provider
 

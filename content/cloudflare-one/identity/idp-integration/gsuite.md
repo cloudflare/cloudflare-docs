@@ -6,9 +6,13 @@ weight: 13
 
 # Google Workspace
 
+{{<Aside type="note">}}
+The Google Workspace IdP integration is not supported if your Google Workspace account is protected by Access.
+{{</Aside>}}
+
 You can integrate a Google Workspace (formerly Google Suite) account with Cloudflare Access. Unlike the instructions for [generic Google authentication](/cloudflare-one/identity/idp-integration/google/), the steps below will allow you to pull group membership information from your Google Workspace account.
 
-Once integrated, users will login with their Google Workspace credentials to reach resources protected by Cloudflare Access or to enroll their device into Cloudflare Gateway.
+Once integrated, users will log in with their Google Workspace credentials to reach resources protected by Cloudflare Access or to enroll their device into Cloudflare Gateway.
 
 You do not need to be a Google Cloud Platform user to integrate Google Workspace as an identity provider with Cloudflare Zero Trust. You will only need to open the Google Cloud Platform to configure IdP integration settings.
 

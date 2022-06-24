@@ -23,13 +23,13 @@ This tutorial covers how to configure Cloudflare Access as a single sign-on prov
     - **Assertion Consumer Service URL**: `https://google.com/a/<your_domain.com>/acs`, where `<your_domain.com>` is your Google Workspace domain.
     - **Name ID Format**: _Email_.
 
-4. When you put your Google Workspace behind Access, users will not be able to log in using their [Google](/cloudflare-one/identity/idp-integration/google/) or [Google Workspace](/cloudflare-one/identity/idp-integration/gsuite/) credentials. Therefore, we recommend deselecting those options in your list of identity providers.
+{{<Aside type="warning">}}
+When you put your Google Workspace behind Access, users will not be able to log in using [Google](/cloudflare-one/identity/idp-integration/google/) or [Google Workspace](/cloudflare-one/identity/idp-integration/gsuite/) as an identity provider.
+{{</Aside>}}
 
-    ![Google Workspace IdP shown as deselected in the Access application](/cloudflare-one/static/zero-trust-security/google-workspace-saas/disable-google-workspace-idp.png)
+4. On the next page, [create an Access policy](cloudflare-one/policies/access/) for your application. For example, you could allow users with an `@your_domain.com` email address.
 
-5. On the next page, [create an Access policy](cloudflare-one/policies/access/) for your application. For example, you could allow users with an `@your_domain.com` email address.
-
-6. On the next page, you will see your **SSO endpoint**, **Access Entity ID or Issuer**, and **Public Key**. These values will be used to configure Google Workspace.
+5. On the next page, you will see your **SSO endpoint**, **Access Entity ID or Issuer**, and **Public Key**. These values will be used to configure Google Workspace.
 
 ## 2. Create a certificate from your Public Key
 
