@@ -657,14 +657,16 @@ html[is-site-page] .DocsContent {
 
 .HeroBlockGrid>* {
     padding: 2em;
-    max-width: 100%
+    max-width: 100%;
+    border: solid green 1px
 }
 
 .HeroBlock {
     width: 28em;
     max-width: 100%;
     margin-left: auto;
-    margin-right: auto
+    margin-right: auto;
+    border: solid blue 1px
 }
 
 .HeroBlock--content>:first-child {
@@ -686,25 +688,58 @@ html[is-site-page] .DocsContent {
 
 .QuadBlockGrid {
     display: flex;
+    width: 100%;
     flex-wrap: wrap;
-    justify-content: center
+    justify-content: left;
 }
 
 .QuadBlockGrid>* {
-    padding: 3em;
-    max-width: 100%
+    max-width: 100%;
+    position: relative;
 }
 
 .QuadBlock {
-    width: 11em;
     max-width: 100%;
     margin-left: auto;
-    margin-right: auto
+    margin-right: auto;
+    padding-left: .75em;
+    padding-right: 3.5em;
 }
 
-.QuadBlock--content>a {
+.QuadBlock a {
+    color: inherit;
+}
+
+.TriBlockGrid {
+    display: flex;
+    max-width: 90%;
+    flex-wrap: wrap;
+    padding-left: .75em;
+    margin-top: 7em;
+    margin-bottom: 1em;
+    justify-content: space-between;
+}
+
+.TriBlock {
+    width: 20em;
+    height: 12em;
+    background: #f3f3f4;
+    padding-top: .0005em;
+    padding-left: 1.25em;
+}
+
+[theme=dark] .TriBlock {
+    background: #242628
+}
+
+.TriBlock a {
+    color: inherit;
     text-decoration: none;
-    color: inherit
+    font-size: .85em;
+}
+
+.TriBlock h3 {
+    font-size: medium;
 }
 
 @font-face {
