@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
 title: Headers
+last-reviewed: "2022-05-01"
 ---
 
 # Headers
@@ -46,8 +47,8 @@ An incoming request which matches multiple rules' URL patterns will inherit all 
 
 {{<table-wrap>}}
 
-| Request URL                                   | Headers                                                                                                                               |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Request URL                                     | Headers                                                                                                                               |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `https://custom.domain/secure/page`             | `X-Frame-Options: DENY` <br /> `X-Content-Type-Options: nosniff ` <br /> `Referrer-Policy: no-referrer`                               |
 | `https://custom.domain/static/image.jpg`        | `Access-Control-Allow-Origin: *` <br /> `X-Robots-Tag: nosnippet`                                                                     |
 | `https://myproject.pages.dev/home`              | `X-Robots-Tag: noindex`                                                                                                               |

@@ -4127,7 +4127,8 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   display: flex;
 }
 @media (max-width: 414px) {
-  .DocsFooter--edit-on-gh-link-wrapper {
+  .DocsFooter--edit-on-gh-link-wrapper,
+  .DocsFooter--content-time {
     display: block;
     margin-bottom: 0.5em;
   }
