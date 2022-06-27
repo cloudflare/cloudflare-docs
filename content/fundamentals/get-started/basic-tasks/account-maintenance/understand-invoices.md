@@ -63,13 +63,7 @@ Invoices cannot be re-generated once issued. Any pending billing updates or chan
 
 ### Change in billing contact information
 
-If your billing contact information has changed, [update your Cloudflare email address](https://support.cloudflare.com/hc/articles/203471284#12345679) as soon as possible:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
-
-2. Select **Change Email Address**.
-
-3. Input your new email and password, then select **Save**.
+If your billing contact information has changed, [update your Cloudflare email address](https://support.cloudflare.com/hc/articles/203471284#12345679) as soon as possible.
 
 ### Change in Cloudflare subscription or account
 
