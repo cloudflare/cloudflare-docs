@@ -10,7 +10,7 @@ For security reasons, Cloudflare attempts to verify the email address associated
 
 ## When creating your account
 
-When you first [create an account](/fundamentals/get-started/account-setup/create-account/), Cloudflare automatically sends a message to the email address you provided for your account.
+When you first [create an account](/fundamentals/get-started/setup/account-setup/create-account/), Cloudflare automatically sends a message to the email address you provided for your account.
 
 To verify your email:
 
