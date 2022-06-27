@@ -72,6 +72,10 @@ Possible errors in this step could be caused by incorrect Pages Functions config
 
 If you are not using Functions or have reviewed that your Functions configuration does not contain any errors, review the [Cloudflare Status site](https://www.cloudflarestatus.com/) for Cloudflare network issues that could be causing the build failure. 
 
+## Differences between pages.dev and custom domains
+
+If your custom domain is proxied through Cloudflare, your zone's settings such as Auto Minify will apply. If Auto Minify is enabled for HTML, this will strip comments that some frameworks rely on such as Nuxt.js. If you're experiencing errors on your custom domain but not on your pages.dev domain, set the DNS record for your project to be DNS Only and see if the error persists. If not, review your zone's configuration to see what might cause it.
+
 ## Resources
 
 If you need additional guidance on build errors, contact your Cloudflare account team (Enterprise) or refer to the [Support Center](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support) for guidance on contacting Cloudflare Support.
