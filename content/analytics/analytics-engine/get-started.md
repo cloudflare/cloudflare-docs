@@ -41,7 +41,7 @@ Once a binding is declared in Wrangler and your worker is deployed, you get a ne
 
 A double is just a number type field that can be aggregated in some way – for example, it could be summed, averaged, or quantiled. A blob is a string type field that can be used for grouping or filtering.
 
-For example, suppose you are collecting air quality samples. Each data point would represent a reading from your weather sensor. Metrics might include numbers like the temperature or air pressure reading. The labels could include the location of the sensor and the hardware identifier of the sensor.
+For example, suppose you are collecting air quality samples. Each data point would represent a reading from your weather sensor. Doubles might include numbers like the temperature or air pressure reading. The blobs could include the location of the sensor and the hardware identifier of the sensor.
 
 This is how it translates into code:
 
