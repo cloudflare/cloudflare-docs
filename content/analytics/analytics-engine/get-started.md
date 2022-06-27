@@ -75,14 +75,6 @@ Here's how we represent that as SQL:
 
 ```sql
 SELECT blob1 as city, avg(double2) as avg_humidity FROM analytics_engine WHERE dataset = 'WEATHER' AND double1 > 0 GROUP BY city ORDER BY avg_humidity DESC LIMIT 10
-SELECT label_1 as city, avg(metric_2) as avg_humidity
-FROM analytics_engine
-WHERE 
-  dataset = 'WEATHER'
-  AND metric_1 > 0
-ORDER BY avg_humidity DESC
-LIMIT 10
-```
 
 Note that, for our initial version, blobs and doubles are accessed via names that have 1-based indexing. In the future, when we let developers name blobs and doubles in their binding, these names will also be available via the SQL API.
 
