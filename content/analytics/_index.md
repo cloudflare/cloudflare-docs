@@ -8,6 +8,10 @@ weight: 1
 
 Cloudflare visualizes the metadata collected by our products in the Cloudflare dashboard. Refer to [Types of analytics](/fundamentals/data-products/types-of-analytics/) for more information about the various types of analytics and where they exist in the dashboard.
 
+## Workers Analytics Engine
+
+[Workers Analytics Engine](/analytics/analytics-engine/) provides analytics about anything using Cloudflare Workers.
+
 ## Cloudflare Web Analytics
 
 [Cloudflare Web Analytics](/analytics/web-analytics/) provides free, privacy-first analytics for your website without changing your DNS or using Cloudflare’s proxy.
