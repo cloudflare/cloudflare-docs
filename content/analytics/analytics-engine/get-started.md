@@ -69,7 +69,7 @@ The SQL API is available as an HTTP endpoint at `/v4/$accountTag/analytics_engin
 
 ### Example of querying data with the SQL API
 
-In the following example, we use the SQL API to query the top 10 cities that had the highest average humidity readings when the temperature was above zero:
+In the following example, we use the SQL API to query the top 10 cities that had the highest average humidity readings when the temperature was above zero.
 
 ```sql
 SELECT blob1 as city, avg(double2) as avg_humidity FROM analytics_engine WHERE dataset = 'WEATHER' AND double1 > 0 GROUP BY city ORDER BY avg_humidity DESC LIMIT 10
