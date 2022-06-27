@@ -49,7 +49,7 @@ This is how it translates into code:
   async fetch(request, env) {
     env.WEATHER.writeDataPoint({
       blobs: ["Seattle", "USA", "pro_sensor_9000"],
-      metrics: [25, 0.5]
+      doubles: [25, 0.5]
     });
     return new Response("OK!");
   }
