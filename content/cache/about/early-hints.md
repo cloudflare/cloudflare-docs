@@ -15,7 +15,7 @@ Early Hints is currently only supported over HTTP/2 and HTTP/3.
 
 {{</Aside>}}
 
-For more information about Early Hints, refer to the [Early Hints blog](https://blog.cloudflare.com/early-hints/).
+For more information about Early Hints, refer to the [Cloudflare](https://blog.cloudflare.com/early-hints) and [Google Chrome](https://developer.chrome.com/en/blog/early-hints/) blogs.
 
 ## Enabling Early Hints
 
