@@ -22,8 +22,9 @@ When clients are connecting from a browser, you should use [`token` authenticati
 WebSocket support in Pub/Sub works by encapsulating MQTT packets (Pub/Sub’s underlying native protocol) within WebSocket [frames](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#exchanging_data_frames).
 
 - In many MQTT libraries, you can replace the `mqtts://` scheme with `wss://`, and your code will use a WebSocket transport instead of the native “raw” TCP transport.
-- The WebSocket listener is available on TCP port `8884` versus 8883 for native MQTT.
+- The WebSocket listener is available on both TCP ports `443` and `8884` versus `8883` for native MQTT.
 - WebSocket clients need to speak MQTT over WebSockets. Pub/Sub does not support other message serialization methods over WebSockets at present.
+- **Clients should include a `sec-websocket-protocol: mqtt` request header in the initial HTTP GET request** to distinguish an "MQTT over WebSocket" request from future, non-MQTT protocol support over WebSockets.
 - Authentication is performed within the WebSocket connection itself. An MQTT `CONNECT` packet inside the WebSocket tunnel includes the required username and password. The WebSocket connection itself does not need to be authenticated at the HTTP level.
 
 We recommend using [MQTT.js](https://github.com/mqttjs/MQTT.js), one of the most popular JavaScript libraries, for client-side JavaScript support. It can be used in both the browser via Webpack or Browserify and in a Node.js environment.
@@ -39,6 +40,8 @@ You can view a live demo available at [demo.mqtt.dev](http://demo.mqtt.dev) that
 In a real-world deployment, our publisher could be another client, a native MQTT client, or a WebSocket client running on a remote server elsewhere. 
 
 ```js
+// Ensure MQTT.js is installed first
+// > npm install mqtt
 import * as mqtt from "mqtt"
 
 // Where 'url' is "mqtts://BROKER.NAMESPACE.cloudflarepubsub.com:8884"

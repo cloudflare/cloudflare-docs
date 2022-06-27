@@ -86,7 +86,7 @@ Once you have verified the token is as desired, select `Create Token` to proceed
 
 ## Generating the Token
 
-Once successfully generated, the token secret is only shown once. Make sure to copy the secret to a secure place.
+Once successfully generated, the token secret is **only shown once**. Make sure to copy the secret to a secure place.
 
 *Warning:* Do not store the secret in plaintext where others may be able to access it. Anyone with this token can perform the authorized actions against the resources the token has been granted access to.
 
