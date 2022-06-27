@@ -46,7 +46,7 @@ For example, suppose you are collecting air quality samples. Each data point wou
 This is how it translates into code:
 
 ```js
-  async fetch(request: Request, env) {
+  async fetch(request, env) {
     env.WEATHER.writeDataPoint({
       labels: ["Seattle", "USA", "pro_sensor_9000"],
       metrics: [25, 0.5]
