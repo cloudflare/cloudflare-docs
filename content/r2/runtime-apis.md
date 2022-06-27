@@ -143,6 +143,10 @@ async function handleRequest(request) {
 - {{<code>}}customMetadata{{<param-type>}}Record\<string, string>{{</param-type>}}{{</code>}}
 
   - A map of custom, user-defined metadata associated with the object.
+  
+- {{<code>}}range{{</code>}} {{<param-type>}}R2Range{{</param-type>}}
+
+  - A R2Range object containing the returned range of the object.
 
 - {{<code>}}writeHttpMetadata(headers{{<param-type>}}Headers{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
