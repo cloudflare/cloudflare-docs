@@ -4,15 +4,15 @@ title: Understand Cloudflare invoices
 weight: 3
 ---
 
-## Understand Cloudflare invoices
+# Understand Cloudflare invoices
 
 You will receive an invoice in the **Billing** section of your Cloudflare account when you:
-    * Change your Cloudflare plan type
-    * Upgrade or downgrade to or from a paid plan
-    * Add a new domain to a Cloudflare account
-    * Enable or renew a subscription or add-on service
+* Change your Cloudflare plan type
+* Upgrade or downgrade to or from a paid plan
+* Add a new domain to a Cloudflare account
+* Enable or renew a subscription or add-on service
 
-For any historical invoices not included in the **Billing** section, please [contact Cloudflare support](https://support.cloudflare.com/hc/en-us).
+For any historical invoices not included in the **Billing** section, [contact Cloudflare support](https://support.cloudflare.com/hc/articles/200172476).
 
 {{<Aside type="note">}}
 
@@ -22,7 +22,7 @@ Enterprise customers receive invoices directly from the Cloudflare accounting te
 
 ---
 
-# Enable email invoices from Cloudflare
+## Enable email invoices from Cloudflare
 
 To enable Cloudflare invoice emails, which are sent when you add or remove subscriptions from your account:
 
@@ -35,11 +35,11 @@ To enable Cloudflare invoice emails, which are sent when you add or remove subsc
 4. In the **Billing email preferences** card, toggle the notification switch to **On**.
 
 Once enabled, you will receive an invoice via email: 
-    * within one business day of initial set-up
-    * every month at the end of your billing period
-    * within one business day for all new purchases
+* within one business day of initial set-up
+* every month at the end of your billing period
+* within one business day for all new purchases
 
-# Download invoice
+## Download invoice
 
 To download your Cloudflare invoice:
 
@@ -61,7 +61,7 @@ Invoices cannot be re-generated once issued. Any pending billing updates or chan
 
 ## Troubleshooting your invoice
 
-# Change in billing contact information
+### Change in billing contact information
 
 If your billing contact information has changed, update your Cloudflare email address as soon as possible:
 
@@ -71,17 +71,17 @@ If your billing contact information has changed, update your Cloudflare email ad
 
 3. Input your new email and password, then select **Save**.
 
-# Change in Cloudflare subscription or account
+### Change in Cloudflare subscription or account
 
 The invoice data corresponds to the date your Cloudflare account changed. You are charged immediately for the plan, additional domain, or add-on service. An invoice will be available on the Cloudflare dashboard within 24 hours of the account change.
 
 Billing periods are 30 days. Payments for all recurring monthly costs are processed on the last day of the billing period. Invoices are generated the same day and will appear in the **Billing** section of the [Cloudflare dashboard](https://dash.cloudflare.com) within 24 hours.
 
-# Cloudflare invoice without company name
+### Cloudflare invoice without company name
 
 To add your business or company name, VAT ID, or Tax ID/EIN on an invoice, add the company name when [updating billing information](/fundamentals/get-started/basic-tasks/account-maintenance/updating-billing-info/).
 
-# Inconsistent invoice and payment amounts
+### Inconsistent invoice and payment amounts
 
 If your Cloudflare payment is past due and you order additional services, the past due amount will be added to your invoice. This may cause inconsistencies between the invoice and what you see in the [Cloudflare dashboard](https://dash.cloudflare.com). Once the account is current, the amounts in the [Cloudflare dashboard](https://dash.cloudflare.com) will update.
 
