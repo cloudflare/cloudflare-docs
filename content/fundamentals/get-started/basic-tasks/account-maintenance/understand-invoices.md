@@ -34,7 +34,7 @@ To enable Cloudflare invoice emails, which are sent when you add or remove subsc
 
 4. In the **Billing email preferences** card, toggle the notification switch to **On**.
 
-Once enabled, you will receive an invoice via email: 
+Once enabled, you will receive invoices via email: 
 * within one business day of initial set-up
 * every month at the end of your billing period
 * within one business day for all new purchases
@@ -63,7 +63,7 @@ Invoices cannot be re-generated once issued. Any pending billing updates or chan
 
 ### Change in billing contact information
 
-If your billing contact information has changed, update your Cloudflare email address as soon as possible:
+If your billing contact information has changed, [update your Cloudflare email address](https://support.cloudflare.com/hc/articles/203471284#12345679) as soon as possible:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
 
