@@ -55,7 +55,7 @@ This is how it translates into code:
   }
 ```
 
-In our initial version, developers are responsible for **providing fields in a consistent order**, so that they have the same semantics when querying. In a future iteration, we plan to let developers name their labels and metrics in the binding, and then use these names when writing data points in the runtime.
+In our initial version, developers are responsible for **providing fields in a consistent order**, so that they have the same semantics when querying. In a future iteration, we plan to let developers name their blobs and doubles in the binding, and then use these names when writing data points in the runtime.
 
 ## 3. Query data using GraphQL and SQL API
 
@@ -84,7 +84,7 @@ ORDER BY avg_humidity DESC
 LIMIT 10
 ```
 
-Note that, for our initial version, labels and metrics are accessed via names that have 1-based indexing. In the future, when we let developers name labels and metrics in their binding, these names will also be available via the SQL API.
+Note that, for our initial version, blobs and doubles are accessed via names that have 1-based indexing. In the future, when we let developers name blobs and doubles in their binding, these names will also be available via the SQL API.
 
 ### Working with time series
 
