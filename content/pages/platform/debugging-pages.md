@@ -74,7 +74,13 @@ If you are not using Functions or have reviewed that your Functions configuratio
 
 ## Differences between pages.dev and custom domains
 
-If your custom domain is proxied through Cloudflare, your zone's settings such as Auto Minify will apply. If Auto Minify is enabled for HTML, this will strip comments that some frameworks rely on such as Nuxt.js. If you're experiencing errors on your custom domain but not on your pages.dev domain, set the DNS record for your project to be DNS Only and see if the error persists. If not, review your zone's configuration to see what might cause it.
+If your custom domain is proxied through Cloudflare, your zone's settings such as Auto Minify and caching will apply.
+
+If you are experiencing issues with a framework like Nuxt.js only on the custom domain, see if Auto Minify is enabled for HTML and disable it.
+
+If you are experiencing issues with new content not being shown then check for a Page Rule with "Cache Everything" enabled, Pages handles its own cache.
+
+If you're experiencing errors on your custom domain but not on your pages.dev domain, set the DNS record for your project to be DNS Only and see if the error persists. If not, review your zone's configuration to see what might cause it.
 
 ## Resources
 
