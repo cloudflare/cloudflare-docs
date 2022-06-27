@@ -39,7 +39,7 @@ dataset = "<DATASET_NAME>"
 
 Once a binding is declared in Wrangler and your worker is deployed, you get a new environment variable in the Workers runtime that represents your Workers Analytics Engine dataset. This variable has a method, `writeDataPoint()`. A data point is a structured event which consists of a vector of blobs and a vector of doubles.
 
-A metric is just a number type field that can be aggregated in some way – for example, it could be summed, averaged, or quantiled. A label is a string type field that can be used for grouping or filtering.
+A double is just a number type field that can be aggregated in some way – for example, it could be summed, averaged, or quantiled. A blob is a string type field that can be used for grouping or filtering.
 
 For example, suppose you are collecting air quality samples. Each data point would represent a reading from your weather sensor. Metrics might include numbers like the temperature or air pressure reading. The labels could include the location of the sensor and the hardware identifier of the sensor.
 
