@@ -50,6 +50,7 @@ Beta datasets are available to Enterprise customers for testing and exploration.
 | Dataset (product) | Node                                                                                                        |
 | :----------------- | :---------------------------------------------------------------------------------------------------------- |
 | Web Analytics      | `rumPageloadEventsAdaptiveGroups` `rumPerformanceEventsAdaptiveGroups` `rumWebVitalsEventsAdaptiveGroups`   |
+| Waiting Room      | `waitingRoomAnalyticsAdaptive` `waitingRoomAnalyticsAdaptiveGroups`   |
 
 {{</table-wrap>}}
 
