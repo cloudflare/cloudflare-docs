@@ -74,8 +74,21 @@ In the following example, we use the SQL API to query the top 10 cities that had
 Here's how we represent that as SQL:
 
 ```sql
-SELECT blob1 as city, avg(double2) as avg_humidity FROM analytics_engine WHERE dataset = 'WEATHER' AND double1 > 0 GROUP BY city ORDER BY avg_humidity DESC LIMIT 10
+SELECT blob1 as city, avg(double2) as avg_humidity 
+FROM analytics_engine 
+WHERE dataset = 'WEATHER' 
+  AND double1 > 0 
+GROUP BY city 
+ORDER BY avg_humidity 
+DESC LIMIT 10
+```
+
 You can then perform the query using any HTTP client. Here's an example of doing it using cURL:
+
+```curl
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/analytics_engine/sql" -H "Authorization: Bearer YOUR_API_TOKEN" -H "Content-Type:application/json" -X POST -d "SELECT blob1 as city, avg(double2) as avg_humidity FROM analytics_engine WHERE dataset = 'WEATHER' AND double1 > 0 GROUP BY city ORDER BY avg_humidity DESC LIMIT 10"
+```
+
 Note that, for our initial version, blobs and doubles are accessed via names that have 1-based indexing. In the future, when we let developers name blobs and doubles in their binding, these names will also be available via the SQL API.
 
 ### Working with time series
