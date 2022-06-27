@@ -90,7 +90,7 @@ Workers Analytics Engine is optimized for powering time series analytics that ca
 ```sql
 SELECT
   intDiv(toUInt32(timestamp), 300) * 300 as t, 
-  label_1 as city, 
+  blob1 as city, 
   avg(double2) as avg_humidity
 FROM analytics_engine
 WHERE 
