@@ -48,7 +48,7 @@ This is how it translates into code:
 ```js
   async fetch(request, env) {
     env.WEATHER.writeDataPoint({
-      labels: ["Seattle", "USA", "pro_sensor_9000"],
+      blobs: ["Seattle", "USA", "pro_sensor_9000"],
       metrics: [25, 0.5]
     });
     return new Response("OK!");
