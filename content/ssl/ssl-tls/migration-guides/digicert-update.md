@@ -16,8 +16,11 @@ This change will not impact existing certificates issued from Digicert that Clou
 
 Cloudflare will stop using Digicert as an issuing certificate authority (CA) for new Universal certificates and instead use one of our other CAs. This will not affect existing Universal certificates.
 
-- **Free, Pro, and Business zones**: October 3, 2022
-- **Enterprise zones**: October 10, 2022
+This process will begin for Enterprise zones on **October 10, 2022**.
+
+The maximum validity period for Universal certificates will also be decreased from 1 year to 90 days.
+
+#### DCV changes
 
 If your domain is on a [Full setup](/dns/zone-setups/full-setup/), you do not need to make any updates for [Domain Control Validation (DCV)](/ssl/edge-certificates/changing-dcv-method/). Cloudflare will automatically complete [TXT-based DCV](/ssl/edge-certificates/changing-dcv-method/methods/txt/) on your behalf.
 
@@ -37,12 +40,12 @@ If you want to choose the issuing CA for your certificate, [order an Advanced ce
 
 Our changes will not affect existing Advanced certificates that Cloudflare is actively serving, but will impact new certificate orders and renewals:
 
-- **New certificate orders**: After October 3, 2022, you will not be able to choose DigiCert as a Certificate Authority for Advanced certificates. This means that DigiCert will no longer be an option [in the dashboard](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#using-the-dashboard) and any [API calls](https://api.cloudflare.com/#certificate-packs-order-advanced-certificate-manager-certificate-pack) that are made using `“digicert”` as the CA will fail.
-- **Certificate renewals**: After October 10, 2022, Cloudflare will choose an issuing CA on your behalf (Let's Encrypt or Google Trust Services) for certificate renewals.
+- **New certificate orders**: After **October 3, 2022**, you will not be able to choose DigiCert as a Certificate Authority for Advanced certificates. This means that DigiCert will no longer be an option [in the dashboard](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#using-the-dashboard) and any [API calls](https://api.cloudflare.com/#certificate-packs-order-advanced-certificate-manager-certificate-pack) that are made using `“digicert”` as the CA will fail.
+- **Certificate renewals**: After **October 10, 2022**, Cloudflare will choose an issuing CA on your behalf (Let's Encrypt or Google Trust Services) for certificate renewals.
 
 ### Domain control validation (DCV)
 
-Email DCV will be deprecated as an option for new certificate orders on October 3rd, 2022 and for renewals on October 10th, 2022.
+Email DCV will be deprecated as an option for new certificate orders on **October 3rd, 2022** and for renewals on **October 10th, 2022**.
 
 Also, the maximum validity period for certificates will be decreased from 1 year to 90 days. This means that certificates will be renewed - and require DCV - more frequently.
 
@@ -54,13 +57,28 @@ If you are currently pinning your Advanced certificate, stop pinning the certifi
 
 If your system integrates with the [Advanced certificates API](https://api.cloudflare.com/#certificate-packs-order-advanced-certificate-manager-certificate-pack), update your system to use Google Trust Services (`"google"`) or Let's Encrypt (`"lets_encrypt"`) as the issuing CA.
 
-If you want to choose the issuing CA for certificate renewals, first set up [notifications](/fundamentals/notifications/notification-available/#ssltls) for Advanced certificate events. Then, when the certificate is up for renewal, send a [`PATCH`](https://api.cloudflare.com/#certificate-packs-restart-validation-for-advanced-certificate-manager-certificate-pack) request that changes the `"certificate_authority"` field to use `"lets_encrypt"` or `"google"`.
+If you want to choose the issuing CA for certificate renewals, first set up [notifications](/fundamentals/notifications/notification-available/#ssltls) for Advanced certificate events. Then, when the certificate is up for renewal, send a `PATCH` request to the Cloudflare API that changes the `"certificate_authority"` field to use `"lets_encrypt"` or `"google"`.
 
-If your domain is on a [Partial setup](/dns/zone-setups/partial-setup/):
+```bash
+---
+header: Request
+---
+curl -X PATCH "https://api.cloudflare.com/client/v4/zones/<<ZONE_ID>>/ssl/certificate_packs/<<PACK_ID>>" \
+     -H "X-Auth-Email: <<EMAIL>>" \
+     -H "X-Auth-Key: <<AUTH_KEY>>" \
+     -H "Content-Type: application/json"
+     --data '{
+        "certificate_authority":"google"
+        }'
+```
 
-- And also using Email DCV, test and integrate with [TXT](/ssl/edge-certificates/changing-dcv-method/methods/txt/) or [HTTP](/ssl/edge-certificates/changing-dcv-method/methods/http/) DCV.
-- Place one DCV token at your DNS provider for every hostname on your certificate (the certificate will not be issued until all DCV tokens have been added). These tokens will be returned in the API response or in the dashboard.
-- If you have a certificate that covers a wildcard and an apex (`example.com`, `*.example.com`), you will need to add two DCV tokens to your DNS provider for the validation to pass.
+#### Zones on a partial setup
+
+If your domain is on a [Partial setup](/dns/zone-setups/partial-setup/), you will need to place one DCV token at your DNS provider for **every hostname** on your certificate (the certificate will not be issued until all DCV tokens have been added). These tokens will be returned in the API response or in the dashboard.
+
+If you have a certificate that covers a wildcard and an apex (`example.com`, `*.example.com`), you will need to add two DCV tokens to your DNS provider for the validation to pass.
+
+If you were previously using Email DCV, you will need to test and integrate with [TXT](/ssl/edge-certificates/changing-dcv-method/methods/txt/) or [HTTP](/ssl/edge-certificates/changing-dcv-method/methods/http/) DCV.
 
 ---
 
@@ -70,12 +88,10 @@ If your domain is on a [Partial setup](/dns/zone-setups/partial-setup/):
 
 Our changes will not affect existing SSL for SaaS certificates that Cloudflare is actively serving, but will impact new certificate orders and renewals:
 
-- **New certificate orders**: After October 3, 2022, you will not be able to choose DigiCert as a Certificate Authority for Advanced certificates. This means that DigiCert will no longer be an option [in the dashboard](/ssl/ssl-for-saas/common-tasks/issuing-certificates/#via-the-dashboard) and any [API calls](/ssl/ssl-for-saas/common-tasks/issuing-certificates/#via-the-api) that are made using `“digicert”` as the CA will fail.
+- **New certificate orders**: After October 3, 2022, you will not be able to choose DigiCert as a Certificate Authority for SSL for SaaS certificates. This means that DigiCert will no longer be an option [in the dashboard](/ssl/ssl-for-saas/common-tasks/issuing-certificates/#via-the-dashboard) and any [API calls](/ssl/ssl-for-saas/common-tasks/issuing-certificates/#via-the-api) that are made using `“digicert”` as the CA will fail.
 - **Certificate renewals**: After October 10, 2022, Cloudflare will choose an issuing CA on your behalf (Let's Encrypt or Google Trust Services) for certificate renewals.
 
-### Domain control validation (DCV)
-
-If your domain is using wildcard custom hostnames, you will be required to fetch two DCV tokens - one for the apex and one for the wildcard - and return those to your customers. This is became - in contrast to DigiCert - Let’s Encrypt and Google Trust Services follow the [ACME Protocol](https://datatracker.ietf.org/doc/html/rfc8555), which requires one DCV token to be placed for every hostname on the certificate.
+### Domain Control Validation (DCV)
 
 CNAME DCV will also be deprecated, requiring customers to use either [HTTP](/ssl/ssl-for-saas/common-tasks/hostname-verification/#http) or [TXT](/ssl/ssl-for-saas/common-tasks/hostname-verification/#txt) DCV.
 
@@ -85,7 +101,7 @@ Also, the maximum validity period for certificates will be decreased from 1 year
 
 If your system integrates with the [SSL for SaaS API](https://api.cloudflare.com/#custom-hostname-for-a-zone-properties), update your system to use Google Trust Services (`"google"`) or Let's Encrypt (`"lets_encrypt"`) as the value for `"certificate_authority"`.
 
-If you want to choose the issuing CA for certificate renewals, first set up [notifications](/fundamentals/notifications/notification-available/#ssltls) for **SSL for SaaS Custom Hostname** events. Then, when the certificate is up for renewal, send a [`PATCH`](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname) request that changes the `"certificate_authority"` field to use `"lets_encrypt"` or `"google"`.
+If you want to choose the issuing CA for certificate renewals, send a [`PATCH`](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname) request that changes the `"certificate_authority"` field to use `"lets_encrypt"` or `"google"`.
 
 #### Non-wildcard hostnames
 
@@ -93,6 +109,8 @@ For non-wildcard hostnames, you do not need to make any updates for DCV. Cloudfl
 
 #### Wildcard hostnames
 
-To validate wildcard hostname, Cloudflare will now require two [TXT DCV tokens](/ssl/ssl-for-saas/common-tasks/hostname-verification/#txt) to be placed at your customer’s authoritative DNS provider in order for the wildcard certificate to issue or renew. These tokens can be fetched through the [GET custom hostnames endpoint](https://api.cloudflare.com/#custom-hostname-for-a-zone-list-custom-hostnames) when the certificates are in a “pending validation” state during custom hostname creation or during certificate renewals. You can also fetch them through the dashboard.
+To validate wildcard hostname, Cloudflare will now require two [TXT DCV tokens](/ssl/ssl-for-saas/common-tasks/hostname-verification/#txt) - one for the apex and one for the wildcard - to be placed at your customer’s authoritative DNS provider in order for the wildcard certificate to issue or renew. This is because - in contrast to DigiCert - Let’s Encrypt and Google Trust Services follow the [ACME Protocol](https://datatracker.ietf.org/doc/html/rfc8555), which requires one DCV token to be placed for every hostname on the certificate.
+
+These tokens can be fetched through the [GET custom hostnames endpoint](https://api.cloudflare.com/#custom-hostname-for-a-zone-list-custom-hostnames) when the certificates are in a “pending validation” state during custom hostname creation or during certificate renewals. You can also fetch them through the dashboard.
 
 As the SaaS provider, you will be responsible for sharing these DCV tokens with your customers. Let’s Encrypt DCV tokens are valid for 7 days and Google Trust Services tokens are valid for 14 days. We recommend that you make this clear to your customers, so that they add the tokens in a timely manner. If your customers take longer than the token validity period to add the record then you will need to fetch updated tokens and share those in order for the certificate to validate and issue.
