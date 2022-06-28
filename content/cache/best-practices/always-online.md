@@ -30,7 +30,7 @@ There are limitations with the Always Online functionality:
 
 Always Online does not trigger for HTTP response codes such as [404](https://support.cloudflare.com/hc/articles/115003014512#code_404), [503](https://support.cloudflare.com/hc/articles/115003011431#503error), or [500](https://support.cloudflare.com/hc/articles/115003011431#500error) errors such as database connection errors or internal server errors.
 
-## Commons issues
+## Frequently asked questions
 
 1. How can I know if a page has been crawled?
     - You can go to the [Internet Archive](https://web.archive.org/) and search for the page URL to see if it has been crawled or not.
