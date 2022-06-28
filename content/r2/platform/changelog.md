@@ -17,7 +17,7 @@ title: Changelog
 ## 2022-06-13
 
 - Fixed a bug with the S3 API `ListObjectsV2` operation not returning empty folder/s as common prefixes when using delimiters.
-- The S3 API `ListObjectsV2` `KeyCount` parameter now correctly returns the sum of keys + common prefixes rather than just the keys.
+- The S3 API `ListObjectsV2` `KeyCount` parameter now correctly returns the sum of keys and common prefixes rather than just the keys.
 - Invalid cursors for list operations no longer fail with an `InternalError` and now return the appropriate error message.
 
 ## 2022-06-10
@@ -41,7 +41,7 @@ title: Changelog
 
 ## 2022-05-16
 
-- Add support for virtual-hosted style paths, such as `<bucket>.<account-id>.r2.cloudflarestorage.com`.
+- Add support for virtual-hosted style paths, such as `<BUCKET>.<ACCOUNT_ID>.r2.cloudflarestorage.com`.
 - Implemented `GetBucketLocation` for compatibility with external tools, this will always return a `LocationConstraint` of `auto`.
 
 ## 2022-05-06
@@ -59,7 +59,7 @@ title: Changelog
 - When using the S3 API, an empty string and `us-east-1` will now alias to the `auto` region for compatibility with external tools.
 - `GetBucketEncryption`, `PutBucketEncryption` and `DeleteBucketEncrypotion` are now supported (the only supported value currently is `AES256`).
 - Unsupported operations are explicitly rejected as unimplemented rather than implicitly converting them into `ListObjectsV2`/`PutBucket`/`DeleteBucket` respectively.
-- S3 API CompleteMultipartUploads requests are now properly escaped.
+- S3 API `CompleteMultipartUploads` requests are now properly escaped.
 
 ## 2022-05-03
 
