@@ -255,15 +255,19 @@ There are 3 variations of arguments that can be used in a range:
   let truncated = listed.truncated;
   let cursor = truncated ? listed.cursor : undefined;
 
-  // ❌ - if your limit can't fit into a single response or your bucket
-  // has less objects than the limit, it will be stuck here permanently
+  // ❌ - if your limit can't fit into a single response or your
+  // bucket has less objects than the limit, it will get stuck here.
   while (listed.objects.length < options.limit) {
     // ...
   }
 
-  // ✅ - use the truncated property to check if there are more objects to be returned
+  // ✅ - use the truncated property to check if there are more
+  // objects to be returned
   while (truncated) {
-      const next = await env.MY_BUCKET.list({ ...options, cursor: cursor})
+      const next = await env.MY_BUCKET.list({
+        ...options,
+        cursor: cursor,
+      });
       listed.objects.push(...next.objects);
 
       truncated = next.truncated;
