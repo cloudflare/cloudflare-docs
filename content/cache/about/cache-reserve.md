@@ -29,7 +29,7 @@ To enable Cache Reserve through the dashboard:
 
 {{<Aside type="note" header="Note">}}You can pause Cache Reserve at any time. Pausing cache reserve means that Cloudflare’s network will no longer use cache reserve to serve data, but resources will remain in storage until they are purged or expired.{{</Aside>}}
 
-![Cache Reserve enablement in the dash](/cache/static/images/cache-reserve-dash.png)
+![Cache Reserve enablement in the dashboard](/cache/static/images/cache-reserve-dash.png)
 
 If you are an Enterprise customer and interested in this product, please contact your account team to help configure it for you.
 
