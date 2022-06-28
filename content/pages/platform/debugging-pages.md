@@ -80,7 +80,7 @@ If you are experiencing issues with a framework like Nuxt.js only on the custom 
 
 If you are experiencing issues with new content not being shown then check for a Page Rule with "Cache Everything" enabled, Pages handles its own cache.
 
-If you're experiencing errors on your custom domain but not on your pages.dev domain, set the DNS record for your project to be DNS Only and see if the error persists. If not, review your zone's configuration to see what might cause it.
+If you are experiencing errors on your custom domain but not on your `pages.dev` domain, go to **DNS** in the Cloudflare dashboard and set the DNS record for your project to be **DNS Only** (grey cloud). If the error persists, review your zone's configuration.
 
 ## Resources
 
