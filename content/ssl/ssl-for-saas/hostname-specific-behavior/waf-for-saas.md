@@ -67,7 +67,7 @@ This assigns custom metadata to your custom hostname so that it has a security t
 
 ## Step 2 - Trigger security products based on tags
 
-1. Locate the custom metadata field in the Ruleset Engine where the WAF runs. This can be used to trigger different configurations of products such as [WAF](/waf/), [Firewall Rules](/firewall/), [Advanced Rate Limiting](/rate-limiting/), and [Transform Rules](/rules/transform/).
+1. Locate the custom metadata field in the Ruleset Engine where the WAF runs. This can be used to trigger different configurations of products such as [WAF](/waf/), [Firewall Rules](/firewall/), [Advanced Rate Limiting](/waf/rate-limiting-rules/), and [Transform Rules](/rules/transform/).
 
 2. Build your rules through either the dashboard or via the API. An example rate limiting rule, corresponding to “security_level” low, is shown below as an API call.
 
