@@ -21,7 +21,7 @@ You can enable Cache Reserve from the dashboard or via API. In both situations, 
 
 To enable Cache Reserve through the dashboard:
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a zone.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain.
 2.  Navigate to **Caching**.
 3.  Enable **Cache Reserve**.
 
@@ -31,11 +31,11 @@ To enable Cache Reserve through the dashboard:
 
 If you are an Enterprise customer and are interested in Cache Reserve, contact your account team to get help with your configuration.
 
-To enable Cache Reserve via API, refer to the API documentation. Enabling via the API will not provide a warning if you attempt to use Cache Reserve without Tiered Cache enabled, which may increase your operations costs.
+Documentation for enabling Cache Reserve via API, is forthcoming.
 
 ## Limits
 
-- Cache Reserve file limits are the same as standard CDN [cache limits](/cache/about/default-cache-behavior/#customization-options-and-limitations) (up to [R2 limits](/r2/platform/limits/)). However, serving these files may have extra operation costs because all requests for these files will attempt to use Cache Reserve.
+- Cache Reserve file limits are the same as standard CDN [cache limits](/cache/about/default-cache-behavior/#customization-options-and-limitations) (up to [R2 limits](/r2/platform/limits/)).
 - Origin Range requests are not supported at this time from Cache Reserve.
 - Vary for Images is currently not compatible with Cache Reserve.
 
@@ -51,7 +51,7 @@ Cache Reserve charges based on the total volume of data stored, along with two c
 <table>
   <tbody>
     <th></th>
-    <th>Paid - Rates</th>
+    <th>Rates</th>
     <tr>
       <td>Storage</td>
       <td>$0.015 / GB-month</td>
