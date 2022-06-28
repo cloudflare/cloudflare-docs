@@ -44,6 +44,7 @@ export default {
 	async fetch(request, env) {
 		const url = new URL(request.url);
 		const key = url.pathname.slice(1);
+
 		switch (request.method) {
 			case 'PUT':
 				await env.MY_BUCKET.put(key, request.body);
