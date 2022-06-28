@@ -99,7 +99,7 @@ Class B operations are performed when data needs to be fetched from Cache Reserv
 
 Free operations include purging assets.
 
-Cache Reserve will respect Cache-Control, CDN-Cache-Control headers.
+Cache Reserve will respect Cache-Control and CDN-Cache-Control headers.
 
 Cache Reserve will also be purged along with edge cache when a purge by URL request is sent by the customer. Other purge methods such as purge by tag or prefix will invalidate the asset in Cache Reserve, but assets purged this way will still incur storage costs until they expire.
 
