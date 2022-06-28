@@ -20,9 +20,9 @@ To remedy a false positive:
 
     1\. Select the zone that is experiencing DDoS attack false positives.
 
-    1\. Navigate to **Security** > **Overview**.
+    2\. Navigate to **Security** > **Overview**.
 
-    2\. Click **Add filter** and filter by `Service equals HTTP DDoS`.
+    3\. Click **Add filter** and filter by `Service equals HTTP DDoS`.
 
     </div></details>
 
