@@ -72,7 +72,7 @@ Possible errors in this step could be caused by incorrect Pages Functions config
 
 If you are not using Functions or have reviewed that your Functions configuration does not contain any errors, review the [Cloudflare Status site](https://www.cloudflarestatus.com/) for Cloudflare network issues that could be causing the build failure. 
 
-## Differences between pages.dev and custom domains
+## Differences between `pages.dev` and custom domains
 
 If your custom domain is proxied through Cloudflare, your zone's settings such as Auto Minify and caching will apply.
 
