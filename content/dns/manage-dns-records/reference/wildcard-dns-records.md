@@ -26,6 +26,8 @@ To create a wildcard DNS record, [create a DNS record](/dns/manage-dns-records/h
 
 ## Limitations
 
+Customers on all plans can create and proxy wildcard DNS records.
+
 When using wildcard records, there are several limitations detailed in [RFC4592](https://datatracker.ietf.org/doc/rfc4592/):
 
 - Wildcard records do not cover the zone apex (could answer for `www.example.com`, but not `example.com`).
