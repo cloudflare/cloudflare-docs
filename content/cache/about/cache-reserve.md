@@ -11,7 +11,7 @@ Cache Reserve is a large, persistent data store [implemented on top of R2](https
 
 ![Content being served from the origin to be cached in tiered data centers (T1=upper-tier, T2=lower-tier) on its way back to the client](/cache/static/images/content-being-served.png)
 
-How long content in Cache Reserve will be considered “fresh” is determined by edge cache TTL setting or Cache-Control headers at your origin, if [edge cache TTL](/cache/about/edge-browser-cache-ttl/) is not set. Following the expiration of the retention period, Cloudflare will revalidate the asset when a subsequent request arrives in Cache Reserve for the asset. This is the same as our regular CDN.
+How long content in Cache Reserve will be considered “fresh” is determined by edge cache TTL setting or Cache-Control headers at your origin, if [edge cache TTL](/cache/about/edge-browser-cache-ttl/) is not set. After the retention period expires, Cloudflare will revalidate the asset when a subsequent request arrives in Cache Reserve for the asset. This is the same behavior as in Cloudflare's regular CDN.
 
 The retention period of an asset is how long we will keep the asset in Cache Reserve before marking it for eviction. If an asset is not requested within the retention period, it will be evicted from Cache Reserve. Every access will extend the retention period of the asset by exactly one period.  
 
