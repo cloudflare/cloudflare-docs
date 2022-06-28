@@ -1,8 +1,6 @@
 ---
 title: Cache Reserve (beta)
 pcx-content-type: concept
-meta:
-  title: Cache Reserve (beta)
 ---
 
 # Cache Reserve (beta)
