@@ -83,7 +83,7 @@ Operations are performed by Cache Reserve on behalf of the user in order to writ
 
 #### Class A operations (writes)
 
-Class A Operations are performed based on misses from Cloudflare’s CDN. When a request cannot be served from cache, it will be fetched from the origin and written to cache reserve as well as our edge caches on the way back to the visitor. 
+Class A operations are performed based on cache misses from Cloudflare’s CDN. When a request cannot be served from cache, it will be fetched from the origin and written to cache reserve as well as our edge caches on the way back to the visitor. 
 
 #### Class B operations (reads)
 
