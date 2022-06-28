@@ -267,6 +267,9 @@
 /images/url-format/ /images/image-resizing/url-format/ 301
 /images/variants/ /images/cloudflare-images/resize-images/ 301
 /images/worker/ /images/image-resizing/resize-with-workers/ 301
+/images/cloudflare-images/delete-images/ /images/cloudflare-images/transform/delete-images/ 301
+/images/cloudflare-images/delete-variants/ /images/cloudflare-images/transform/delete-variants/ 301
+/images/cloudflare-images/export-image/ /images/cloudflare-images/transform/export-image/ 301
 
 # load-balancing
 /load-balancing/about/ /load-balancing/ 301
