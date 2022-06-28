@@ -37,7 +37,7 @@ To enable Cache Reserve via API, refer to the API documentation. Enabling via th
 
 ## Limits
 
-- Cache Reserve file limits are the same as standard CDN [cache limits](/cache/about/default-cache-behavior/#customization-options-and-limitations) (up to [R2 limits](/r2/platform/limits/)). However, serving these files may tend to incur extra operation costs because all requests for these files will attempt to use Cache Reserve.
+- Cache Reserve file limits are the same as standard CDN [cache limits](/cache/about/default-cache-behavior/#customization-options-and-limitations) (up to [R2 limits](/r2/platform/limits/)). However, serving these files may have extra operation costs because all requests for these files will attempt to use Cache Reserve.
 - Origin Range requests are not supported at this time from Cache Reserve.
 - Vary for Images is currently not compatible with Cache Reserve.
 
