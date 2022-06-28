@@ -40,9 +40,9 @@ Conceptually, there are two ways to interact with Cloudflare’s Cache using a W
 
 - In order to purge an asset globally, the standard cache purge options must be used. Based on cache API implementation, not all cache purge endpoints function for purging assets stored by the Cache API.
 
-  - All assets on a zone can be purged by using the [Purge Everything](https://developers.cloudflare.com/cache/how-to/purge-cache#purge-everything) cache operation. This purge will remove all assets associated with a Cloudflare zone from cache in all data centers regardless of the method set.
+  - All assets on a zone can be purged by using the [Purge Everything](/cache/how-to/purge-cache#purge-everything) cache operation. This purge will remove all assets associated with a Cloudflare zone from cache in all data centers regardless of the method set.
 
-  - Available to Enterprise Customers, [Cache Tags](https://developers.cloudflare.com/cache/how-to/purge-cache#add-cache-tag-http-response-headers) can be added to requests dynamically in a Worker by calling `response.headers.append()` and appending `Cache-Tag` values dynamically to that request. Once set, those tags can be used to selectively purge assets from cache without invalidating all cached assets on a zone. 
+  - Available to Enterprise Customers, [Cache Tags](/cache/how-to/purge-cache#add-cache-tag-http-response-headers) can be added to requests dynamically in a Worker by calling `response.headers.append()` and appending `Cache-Tag` values dynamically to that request. Once set, those tags can be used to selectively purge assets from cache without invalidating all cached assets on a zone. 
 
 ---
 
