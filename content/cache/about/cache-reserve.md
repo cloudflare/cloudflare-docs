@@ -79,7 +79,7 @@ For example:
 
 ### Operations
 
-Operations are performed by Cache Reserve on behalf of the user in order to write data from the origin to cache reserve and to pass that data downstream to other parts of Cloudflare’s network. You do not need to manage this.
+Operations are performed by Cache Reserve on behalf of the user to write data from the origin to cache reserve and to pass that data downstream to other parts of Cloudflare’s network. These operations are managed internally by Cloudflare.
 
 #### Class A operations (writes)
 
