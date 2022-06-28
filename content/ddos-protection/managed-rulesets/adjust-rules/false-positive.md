@@ -52,7 +52,7 @@ _\* Not available in Network Analytics dashboard yet._
 
 Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/ddos-protection/reference/analytics/).
 
-## Updating the adjusted rules at a later date
+## Updating the adjusted rules later
 
 Later, you can change the [sensitivity level](/ddos-protection/managed-rulesets/network/override-parameters/#sensitivity) of the rule causing the false positives to avoid future issues, and change the rule action back to its default value.
 
