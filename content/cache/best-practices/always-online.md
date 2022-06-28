@@ -10,13 +10,12 @@ Observe the following best practices when enabling Always Online with Internet A
 - **Allow requests from the Internet Archive IP addresses.** Origin servers receive requests from the Internet Archive IPs. Make sure you are not blocking requests from the Internet Archive IP range:  `207.241.224.0/20` and `208.70.24.0/21`.
 - **Be aware that the Internet Archive does not consider your origin server’s cache-control header.** When the Internet Archive is crawling sites, it will crawl sites regardless of their cache-control, since the Internet Archive does not cache assets, but archives them.
 - **Consider potential conflicts with Cloudflare features that transform URIs.** Always Online with Internet Archive integration may cause issues with Page Rules and other Cloudflare features that transform URIs due to the way the Internet Archive crawls pages to archive. Specifically, some redirects that take place at the edge may cause the Internet Archive's crawler not to archive the target URL. Before enabling Origin Cache Control, review [how Cloudflare caches resources by default](/cache/about/default-cache-behavior/) as well as any Page Rules you have configured so that you can avoid these issues. If you experience problems, disable Always Online.
-- **Make sure you do not block known bots via a firewall rule.** If you block known bots, the Internet Archive will not be able to crawl. 
+- **Make sure you do not block Known Bots or Verified Bots via a firewall rule.** If you block either of these bot lists, the Internet Archive will not be able to crawl.
 
 Do not use Always Online with:
 
 - API traffic.
 - An [IP Access rule](/waf/tools/ip-access-rules/) or [firewall rule](/firewall/) that blocks the United States or
-- A [Cache Everything Page Rule](/cache/how-to/create-page-rules/#cache-everything) that configures an Edge Cache TTL lower than the Always Online crawl frequency pertaining to your domain plan type.
 - Bypass Cache page rules. Always Online ignores Bypass Cache page rules and serves Always Online cached assets.
 
 ## Limitations
@@ -37,7 +36,7 @@ Always Online does not trigger for HTTP response codes such as [404](https://sup
     - You can also check this via the [Internet Archive Availability API](https://archive.org/help/wayback_api.php).
 
 2. Why were not pages x, y and z crawled?
-    - Since Cloudflare does not crawl the entire site, it is possible that there will be missing pages. If you really want to archive a page, then you can visit the [Internet Archive](https://web.archive.org/save) save page and ask them to crawl a particular page.
+    - Since Cloudflare only requests to crawl the most popular pages on the site, it is possible that there will be missing pages. If you really want to archive a page, then you can visit the [Internet Archive](https://web.archive.org/save) save page and ask them to crawl a particular page.
 
 3. What IP addresses do we need to whitelist to make sure crawling works?
     - IP Range: `207.241.224.0/20` and `208.70.24.0/21`. Note that this ip range belongs to Internet Archive and NOT Cloudflare, since it is the Internet Archive that does the crawling.
