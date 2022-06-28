@@ -94,7 +94,7 @@ After you have your project created, select **Create a new deployment** to begin
 
 ### Limits
 
-There is a 1,000 file [limit](/pages/platform/limits/#files) for Drag and Drop uploads. All Pages projects have a 25 MiB limit in place for individual file size. 
+There is a 1,000 file [limit](/pages/platform/limits/#files) for drag and drop uploads. All Pages projects have a 25 MiB limit in place for individual file size. 
 
 If using the drag and drop method, a red warning symbol will appear next to an asset if too large and thus unsuccessfully uploaded. In this case, you may choose to delete that asset but you cannot replace it. In order to do so, you must reupload the entire project.
 
