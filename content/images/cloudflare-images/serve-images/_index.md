@@ -2,7 +2,7 @@
 pcx-content-type: reference
 title: Serve images
 layout: single
-weight: 6
+weight: 7
 ---
 
 # Serve images

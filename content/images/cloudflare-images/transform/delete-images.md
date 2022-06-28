@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Delete images
-weight: 7
+weight: 5
 ---
 
 # Delete images

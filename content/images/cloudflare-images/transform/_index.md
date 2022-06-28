@@ -1,9 +1,9 @@
 ---
 pcx-content-type: navigation
-title: Transform images
-weight: 4
+title: Edit images
+weight: 5
 ---
 
-# Transform images
+# Edit images
 
 {{<directory-listing>}}

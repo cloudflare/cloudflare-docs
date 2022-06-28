@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Export image
-weight: 9
+weight: 7
 meta:
   title: Export a single image
 ---
