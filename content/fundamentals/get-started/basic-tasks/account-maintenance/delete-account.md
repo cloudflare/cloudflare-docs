@@ -16,7 +16,7 @@ Before Cloudflare can cancel your account and delete your personal information, 
 
 * [Cancel your subscriptions or add-on services](/fundamentals/get-started/basic-tasks/account-maintenance/cancel-subscription/)
 
-* [Remove your domain from Cloudflare](https://support.cloudflare.com/hc/en-us/articles/360033554252)
+* [Remove your domain from Cloudflare](https://support.cloudflare.com/hc/articles/360033554252)
 
 * [Remove Cloudflare nameservers at your domain registrar](/dns/zone-setups/full-setup/setup)
 
@@ -36,7 +36,7 @@ Deleting your account is permanent. Any accounts where you are the primary owner
 
 2. Select **My Profile**.
 
-3. Select **Delete this user**, then select **Continue to delete user**.
+3. Select **Delete this user** > **Continue to delete user**.
 
 4. Follow the prompts to finish deleting your account.
 
