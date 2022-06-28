@@ -107,4 +107,4 @@ While Cache Reserve does require a paid plan, users can continue to use Cloudfla
 
 ## Tips and best practices
 
-Cache Reserve should be used with [Tiered Cache](/cache/about/tiered-cache/) enabled. Cache Reserve is designed for use with Tiered Cache enabled for maximum origin shielding. Using Cache Reserve without Tiered Cache may result in higher storage operation costs. Enabling via the UI will check and provide a warning if you try to use Cache Reserve without Tiered Cache enabled.
+Cache Reserve should be used with [Tiered Cache](/cache/about/tiered-cache/) enabled. Cache Reserve is designed for use with Tiered Cache enabled for maximum origin shielding. Using Cache Reserve without Tiered Cache may result in higher storage operation costs. Enabling Cache Reserve via the Cloudflare dashboard will check and provide a warning if you try to use Cache Reserve without Tiered Cache enabled.
