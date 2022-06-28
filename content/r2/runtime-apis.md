@@ -146,7 +146,7 @@ async function handleRequest(request) {
   
 - {{<code>}}range{{</code>}} {{<param-type>}}R2Range{{</param-type>}}
 
-  - A R2Range object containing the returned range of the object.
+  - A `R2Range` object containing the returned range of the object.
 
 - {{<code>}}writeHttpMetadata(headers{{<param-type>}}Headers{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
