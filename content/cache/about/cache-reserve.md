@@ -19,7 +19,7 @@ Cache Reserve is a usage-based product and pricing is detailed below.
 
 ## Enable Cache Reserve
 
-Enabling Cache Reserve can be done from the dashboard or via API. In both situations, you need a paid Cache Reserve Plan.
+You can enable Cache Reserve from the dashboard or via API. In both situations, you need a paid Cache Reserve Plan.
 
 To enable Cache Reserve through the dashboard:
 
