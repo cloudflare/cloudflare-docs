@@ -1,23 +1,21 @@
 ---
 pcx-content-type: how-to
-title: Export image
-weight: 9
-meta:
-  title: Export a single image
+title: Export images
+weight: 7
 ---
 
-# Export a single image
+# Export images
 
-You can export a single image from Cloudflare Images. This feature is supported both in the Cloudflare dashboard and via API.
+Cloudflare Images supports image exports. This feature is available both in the Cloudflare dashboard and via API.
 
-## Export a single image in the dashboard
+## Export one or more images in the dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Click **Images**.
-3. Find the image you want to export and click **Export**.
-4. (Optional) If you want to export more than one image, click the checkbox next to the images you want to export and then **Export selected**.
+3. Find the image or images you want to export.
+4. If you want to export a single image, click **Export**. If you need to export several images, first click the checkbox on the images you want to export and then click **Export selected**.
 
-Your image will be downloaded to your computer.
+Your images will be downloaded to your computer.
 
 ## Export a single image via API
 
