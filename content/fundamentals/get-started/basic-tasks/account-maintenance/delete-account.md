@@ -24,11 +24,11 @@ Before Cloudflare can cancel your account and delete your personal information, 
 
 * [Remove your domain from Cloudflare](https://support.cloudflare.com/hc/articles/360033554252)
 
-* [Remove Cloudflare nameservers at your domain registrar](/dns/zone-setups/full-setup/setup)
+* [Remove Cloudflare nameservers at your domain registrar](/dns/zone-setups/full-setup/setup/)
 
 * [Disable auto-renew for your Registrar domain(s)](/registrar/account-options/renew-domains#set-up-automatic-renewals)
 
-* If you are using a Cloudflare [CNAME setup](/dns/zone-setups/partial-setup), [update your DNS records](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) at your DNS provider to point to your website IPs or hostnames instead of Cloudflare.
+* If you are using a Cloudflare [CNAME setup](/dns/zone-setups/partial-setup/), [update your DNS records](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) at your DNS provider to point to your website IPs or hostnames instead of Cloudflare.
 
 * [Delete payment information](/fundamentals/get-started/basic-tasks/account-maintenance/updating-billing-info/#delete-your-current-payment-method)
 
