@@ -89,7 +89,7 @@ Class A operations are performed based on cache misses from Cloudflare’s CDN. 
 
 Class B operations are performed when data needs to be fetched from Cache Reserve to respond to a miss in the edge cache. 
 
-#### Operations billing examples:
+#### Operations billing examples
 
 - 10,000 writes in a month will be charged $4.50.
 - One read in a month will be charged $0.36.
