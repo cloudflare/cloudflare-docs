@@ -469,6 +469,7 @@
 /ssl/ssl-for-saas/uploading-certificates/ /ssl/ssl-for-saas/custom-certificates/uploading-certificates/ 301
 /ssl/ssl-for-saas/validation-backoff-schedule/ /ssl/ssl-tls/validation-backoff-schedule/ 301
 /ssl/ssl-for-saas/versioning/ /ssl/ssl-for-saas/reference/versioning/ 301
+/ssl/ssl-tls/dcv-update/ /ssl/ssl-tls/migration-guides/dcv-update/ 301
 /ssl/universal-ssl/ /ssl/edge-certificates/universal-ssl/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
 /ssl/universal-ssl/validating/ /ssl/edge-certificates/changing-dcv-method/ 301
