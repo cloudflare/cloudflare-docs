@@ -33,7 +33,7 @@ To enable Cache Reserve through the dashboard:
 
 If you are an Enterprise customer and are interested in Cache Reserve, contact your account team to get help with your configuration.
 
-To Enable Cache Reserve via API, please refer to the API docs. Enabling via the API will not provide a warning if you attempt to use Cache Reserve without Tiered Cache enabled, which may increase your operations costs.
+To enable Cache Reserve via API, refer to the API documentation. Enabling via the API will not provide a warning if you attempt to use Cache Reserve without Tiered Cache enabled, which may increase your operations costs.
 
 ## Limits
 
