@@ -135,6 +135,6 @@ This routes traffic from `app.customer.com` to your origin.
 
 {{<Aside type = note>}}
 
-When an end customer churns, remove their custom hostname(s) from your account. Otherwise their traffic may continue to route through your zone.
+When an end customer churns, immediately remove their custom hostname(s) from your account. Otherwise their traffic may continue to route through your zone.
 
 {{</Aside>}}
