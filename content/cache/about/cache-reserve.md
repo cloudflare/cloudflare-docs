@@ -17,7 +17,7 @@ The retention period of an asset is how long we will keep the asset in Cache Res
 
 Cache Reserve is a usage-based product and pricing is detailed below.
 
-## Configuration
+## Enable Cache Reserve
 
 Enabling Cache Reserve can be done from the dashboard or via API. In both situations, you need a paid Cache Reserve Plan.
 
