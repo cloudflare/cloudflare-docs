@@ -7,9 +7,15 @@ meta:
 
 # Cache Reserve (beta)
 
-Cache Reserve is a new way to persistently serve all static content from Cloudflare’s global cache. 
+Cache Reserve is a large, persistent data store that is [implemented on top of R2](https://blog.cloudflare.com/r2-open-beta/). By pushing a single button in the dashboard, all of your website’s cacheable content will be written to Cache Reserve. In the same way that [Tiered Cache](https://blog.cloudflare.com/introducing-smarter-tiered-cache-topology-generation/) builds a hierarchy of caches between your visitors and your origin, Cache Reserve serves as the ultimate [upper-tier cache](https://developers.cloudflare.com/cache/about/tiered-cache/) that will reserve storage space for your assets for as long as you want. This ensures that your content is served from cache longer, shielding your origin from unneeded egress fees.
 
-Cache Reserve solves the problem of less popular content that is evicted repeatedly and needs to be served from an origin, increasing costs. Cache Reserve ensures that even if a specific content has not been requested in months, it can still be served from Cloudflare’s cache - avoiding the need to pull it from the origin and saving the customer money on egress. 
+![Content being served from the origin to be cached in tiered data centers (T1=upper-tier, T2=lower-tier) on its way back to the client](/cache/static/images/content-being-served.png)
+
+How long content in Cache Reserve will be considered “fresh” is determined by edge cache TTL setting or Cache-Control headers at your origin, if [edge cache TTL](https://developers.cloudflare.com/cache/about/edge-browser-cache-ttl/) is not set. Following the expiration of the retention period, Cloudflare will revalidate the asset when a subsequent request arrives in Cache Reserve for the asset. This is the same as our regular CDN.
+
+The retention period of an asset is how long we will keep the asset in Cache Reserve before marking it for eviction. If an asset is not requested within the retention period, it will be evicted from Cache Reserve. Every access will extend the retention period of the asset by exactly one period.  
+
+Cache Reserve is a usage-based product and pricing is detailed below.
 
 ## Configuration
 
@@ -27,15 +33,13 @@ To enable Cache Reserve through the dashboard:
 
 If you are an Enterprise customer and interested in this product, please contact your account team to help configure it for you.
 
-To Enable Cache Reserve via API, please refer to the API docs (link missing). Enabling via the API will not provide a warning if you attempt to use Cache Reserve without Tiered Cache enabled, which may increase your operations costs.
+To Enable Cache Reserve via API, please refer to the API docs. Enabling via the API will not provide a warning if you attempt to use Cache Reserve without Tiered Cache enabled, which may increase your operations costs.
 
 ## Limits
 
-- Cache Reserve has the standard CDN [cache limits](https://developers.cloudflare.com/cache/about/default-cache-behavior/#customization-options-and-limitations).
-- How long something will remain in Cache Reserve and how long it will be considered fresh, is determined by `Cache-Control` headers set at your origin. If no directive is set (`s-maxage`, etc), the default applied to the asset will be 30 days. Following the expiration of the retention period, Cloudflare will revalidate the asset when a subsequent request arrives in Cache Reserve for the asset.
-- The retention period of an asset is how long we will keep the asset in Cache Reserve before marking it for eviction. If an asset is not requested for more than 30 days, it may be evicted from Cache Reserve.
+- Cache Reserve file limits are the same as standard CDN [cache limits](https://developers.cloudflare.com/cache/about/default-cache-behavior/#customization-options-and-limitations) (up to [R2 limits](https://developers.cloudflare.com/r2/platform/limits/)). However, serving these files may tend to incur extra operation costs because all requests for these files will attempt to use Cache Reserve.
 - Origin Range requests are not supported at this time from Cache Reserve.
-- Vary for Images is not supported by Cache Reserve.
+- Vary for Images is currently not compatible with Cache Reserve.
 
 ## Pricing
 
@@ -103,4 +107,4 @@ While Cache Reserve does require a paid plan, users can continue to use Cloudfla
 
 ## Tips and Best Practices
 
-Cache Reserve should be used with [Tiered Cache](https://developers.cloudflare.com/cache/about/tiered-cache/) enabled. Cache Reserve is designed for use with Tiered Cache enabled for maximum origin shielding. Using Cache Reserve without Tiered Cache may result in higher storage operation costs. Enabling via the UI will check and provide a warning if you try to use Cache Reserve without Tiered Cache enabled. 
+Cache Reserve should be used with [Tiered Cache](https://developers.cloudflare.com/cache/about/tiered-cache/) enabled. Cache Reserve is designed for use with Tiered Cache enabled for maximum origin shielding. Using Cache Reserve without Tiered Cache may result in higher storage operation costs. Enabling via the UI will check and provide a warning if you try to use Cache Reserve without Tiered Cache enabled.
