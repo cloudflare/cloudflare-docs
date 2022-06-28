@@ -105,6 +105,6 @@ Cache Reserve will also be purged along with edge cache when you send a purge by
 
 While Cache Reserve does require a paid plan, users can continue to use Cloudflare’s CDN (without Cache Reserve) for free. 
 
-## Tips and Best Practices
+## Tips and best practices
 
 Cache Reserve should be used with [Tiered Cache](/cache/about/tiered-cache/) enabled. Cache Reserve is designed for use with Tiered Cache enabled for maximum origin shielding. Using Cache Reserve without Tiered Cache may result in higher storage operation costs. Enabling via the UI will check and provide a warning if you try to use Cache Reserve without Tiered Cache enabled.
