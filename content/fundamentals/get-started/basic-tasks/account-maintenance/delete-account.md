@@ -10,6 +10,12 @@ These steps do not apply to accounts under contract. Contact your Customer Succe
 
 ---
 
+## Who can delete their account
+
+If your account uses [Single-Sign On (SSO)](/cloudflare-one/applications/configure-apps/dash-sso-apps), your super administrator may need to delete your account on your behalf.
+
+If your account does not use SSO, you can delete your account on your own.
+
 ## Prerequisites
 
 Before Cloudflare can cancel your account and delete your personal information, you will need to follow the process below for each domain associated with your Cloudflare account:
@@ -26,17 +32,21 @@ Before Cloudflare can cancel your account and delete your personal information, 
 
 * [Delete payment information](/fundamentals/get-started/basic-tasks/account-maintenance/updating-billing-info/#delete-your-current-payment-method)
 
-* (Optional) [Download a copy of your invoices](/fundamentals/get-started/basic-tasks/account-maintenance/understand-invoices/#download-invoice). Once deleted, the invoices will no longer be accessible and cannot be re-sent to you.
+* (*Optional*) [Download a copy of your invoices](/fundamentals/get-started/basic-tasks/account-maintenance/understand-invoices/#download-invoice). Once deleted, the invoices will no longer be accessible and cannot be re-sent to you.
 
 ## Delete your Cloudflare account
 
-Deleting your account is permanent. Any accounts where you are the primary owner will also be deleted and any other users on those accounts will be removed. All domains, subscriptions, and billing information on your account will be removed from Cloudflare. 
+Deleting your account is permanent. Any accounts where you are the primary owner will also be deleted and any other users on those accounts will be removed. All domains, subscriptions, and billing information on your account will be removed from Cloudflare.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and navigate to your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 
 2. Select **My Profile**.
 
-3. Select **Delete this user** > **Continue to delete user**.
+3. Select **Delete this user**
+
+    ![To delete your account, select Delete this user on your profile page.](/fundamentals/static/images/get-started/delete-account.png)
+
+3. Select **Continue to delete user**.
 
 4. Follow the prompts to finish deleting your account.
 
