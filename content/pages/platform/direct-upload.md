@@ -5,18 +5,18 @@ title: Direct Uploads
 
 # Direct Uploads
 
-With Direct Uploads, you can bring your prebuilt assets directly to Pages. Bring your own Continuous Integration (CI) tooling to handle the build and deploy your website's assets straight to the Cloudflare edge network.
+Direct Uploads enable you to upload your prebuilt assets to the Pages platform and deploy them to the Cloudflare edge network. This guide will instruct you how to upload your assets using Wrangler or the Drag and Drop method.
 
 ## Upload methods
 
-Once you have your prebuilt assets ready, there are two ways to begin uploading: 
+After you have your prebuilt assets ready, there are two ways to begin uploading: 
 
 * [Wrangler](/pages/platform/direct-upload/#wrangler-cli).
 * [Drag and Drop](/pages/platform/direct-upload/#drag-and-drop).
 
 {{<Aside type= "note">}}
   
-Within a direct uploads project, you can switch between creating deployments with either Wrangler or Drag and Drop. However, you cannot create deployments with these methods on a standard Git integrated project.
+Within a Direct Uploads project, you can switch between creating deployments with either Wrangler or Drag and Drop. However, you cannot create deployments with Direct Uploads on a project that you created through Git integration on the dashboard. Only projects created with Direct Uploads can be updated with Direct Uploads.
 
 {{</Aside>}}
 
@@ -40,7 +40,7 @@ Log in to Wrangler with the `wrangler login` command then run the following comm
 $ wrangler pages project create
 ```
 
-You will then be prompted to specify the project name. Your project will be served at `<PROJECT_NAME>.pages.dev`. You will also be prompted to specify your production branch. 
+You will then be prompted to specify the project name. Your project will be served at `<PROJECT_NAME>.pages.dev` (or your project name plus a few random characters if your project name is already taken). You will also be prompted to specify your production branch. 
 
 Subsequent deployments will reuse both of these values (saved in your `node_modules/.cache/wrangler` folder).
 
@@ -120,7 +120,7 @@ Regarding file count:
 
 On both upload methods, there is a 25 MiB limit in place for individual file size. 
 
-If using the drag and drop method, a red warning symbol will appear next to an asset if too large and thus unsuccessfully uploaded. In this case, you may choose to delete that asset but you cannot replace it. In order to do so, you must reupload the entire project.
+If using the Drag and Drop method, a red warning symbol will appear next to an asset if too large and thus unsuccessfully uploaded. In this case, you may choose to delete that asset but you cannot replace it. In order to do so, you must reupload the entire project.
 
 ### Using Functions
 
