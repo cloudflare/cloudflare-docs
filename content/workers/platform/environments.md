@@ -7,7 +7,7 @@ title: Environments
 
 {{<Aside type="note">}}
 
-You can only use environments with [Wrangler](/workers/wrangler/).
+We have temporarily disabled the creation of Service Environments while we are improving this feature.
 
 {{</Aside>}}
 
