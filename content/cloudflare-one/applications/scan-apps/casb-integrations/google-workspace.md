@@ -17,13 +17,13 @@ The Google Workspace integration detects a variety of user security, data loss p
 
 For the Google Workspace integration to function, CASB requires the following API scopes for access:
 
-`https://www.googleapis.com/auth/admin.directory.domain.readonly`
-`https://www.googleapis.com/auth/admin.directory.user.readonly`
-`https://www.googleapis.com/auth/admin.directory.user.security`
-`https://www.googleapis.com/auth/calendar`
-`https://www.googleapis.com/auth/cloud-platform.read-only`
-`https://www.googleapis.com/auth/drive.readonly`
-`https://www.googleapis.com/auth/gmail.settings.basic`
+* `https://www.googleapis.com/auth/admin.directory.domain.readonly`
+* `https://www.googleapis.com/auth/admin.directory.user.readonly`
+* `https://www.googleapis.com/auth/admin.directory.user.security`
+* `https://www.googleapis.com/auth/calendar`
+* `https://www.googleapis.com/auth/cloud-platform.read-only`
+* `https://www.googleapis.com/auth/drive.readonly`
+* `https://www.googleapis.com/auth/gmail.settings.basic`
 
 These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission, refer to the [Google Workspace Admin SDK Directory API](https://developers.google.com/admin-sdk/directory/v1/guides/authorizing).
 
