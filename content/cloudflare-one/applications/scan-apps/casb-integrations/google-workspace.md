@@ -46,11 +46,11 @@ Users who did not enable two-factor authentication (2FA) or set a recovery email
 
 Having inactive or suspended users in your Google Workspace account may present potential compliance violations (for example, employee offboarding violations). Inactive users also increase the risk of account misuse should someone else gain access to their account.
 
-| Finding                              | Severity |
-|--------------------------------------|----------|
-| Google Workspace Admin User Inactive | Medium   |
-| Google Workspace User Inactive       | Low      |
+| Finding                               | Severity |
+|---------------------------------------|----------|
+| Google Workspace Admin User Inactive  | Medium   |
 | Google Workspace Admin User Suspended | Medium   |
+| Google Workspace User Inactive        | Low      |
 | Google Workspace User Suspended       | Low      |
 
 ### File sharing
