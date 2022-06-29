@@ -186,15 +186,17 @@ A technology which combines several different application login screens into one
 
 ## team domain
 
-Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Cloudflare Zero Trust configuration. This is where your users will find the apps you've secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/applications/app-launcher/) — and will be able to make login requests to them.
+Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Cloudflare Zero Trust configuration. This is where your users will find the apps you have secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/applications/app-launcher/) — and will be able to make login requests to them.
 
 ## team name
 
-The customizable portion of your [team domain](#team-domain). You can change this name at any time in the Cloudflare Zero Trust dashboard, under **Settings** > **General**. However, changing your team name may disrupt integrations with identity providers and other applications. If you change the team name, you may need to update these configurations to reflect your new team name.
+The customizable portion of your [team domain](#team-domain). You can view your team name in the Cloudflare Zero Trust dashboard under **Settings** > **General**.
 
 | team domain                             | team name        |
 | --------------------------------------- | ---------------- |
 | `<your-team-name>.cloudflareaccess.com` | `your-team-name` |
+
+You can change your team name at any time, unless you have the Cloudflare Dashboard SSO feature enabled on your account. Cloudflare Dashboard SSO does not currently support team name changes. If you change your team name, you may need to update your identity provider and other third-party integrations to reflect your new team name.  
 
 ## Terraform
 

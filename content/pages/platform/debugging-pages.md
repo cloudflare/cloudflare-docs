@@ -72,6 +72,16 @@ Possible errors in this step could be caused by incorrect Pages Functions config
 
 If you are not using Functions or have reviewed that your Functions configuration does not contain any errors, review the [Cloudflare Status site](https://www.cloudflarestatus.com/) for Cloudflare network issues that could be causing the build failure. 
 
+## Differences between `pages.dev` and custom domains
+
+If your custom domain is proxied (orange-clouded) through Cloudflare, your zone's settings such as Auto Minify and caching will apply.
+
+If you are experiencing issues with a framework, like Nuxt.js, only on the custom domain, review if Auto Minify is enabled (log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Speed** > **Optimization** > **Auto Minify**) for HTML and disable it.
+
+If you are experiencing issues with new content not being shown, go to **Rules** > **Page Rules** in the Cloudflare dashboard and check for a Page Rule with **Cache Everything** enabled. If present, remove this rule as Pages handles its own cache.
+
+If you are experiencing errors on your custom domain but not on your `pages.dev` domain, go to **DNS** in the Cloudflare dashboard and set the DNS record for your project to be **DNS Only** (grey cloud). If the error persists, review your zone's configuration.
+
 ## Resources
 
 If you need additional guidance on build errors, contact your Cloudflare account team (Enterprise) or refer to the [Support Center](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support) for guidance on contacting Cloudflare Support.
