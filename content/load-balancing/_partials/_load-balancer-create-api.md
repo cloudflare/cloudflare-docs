@@ -34,14 +34,22 @@ curl -X POST \
       "00920f38ce07c2e2f4df50b1f61d4194"
     ],
     "proxied": true,
-    "steering_policy": "dynamic_latency",
+    "steering_policy": "random_steering",
     "session_affinity": "cookie",
     "session_affinity_attributes": {
       "samesite": "Auto",
       "secure": "Auto",
-      "drain_duration": 100
+      "drain_duration": 100,
+      "zero_downtime_failover": "sticky"
     },
     "session_affinity_ttl": 5000,
+    "random_steering": {
+      "pool_weights": {
+        "de90f38ced07c2e2f4df50b1f61d4194": 0.3,
+        "9290f38c5d07c2e2f4df57b1f61d4196": 0.5
+      },
+      "default_weight": 0.2
+    }
 }'
 ```
 
@@ -70,14 +78,21 @@ header: Response
       "00920f38ce07c2e2f4df50b1f61d4194"
     ],
     "proxied": true,
-    "steering_policy": "dynamic_latency",
+    "steering_policy": "random_steering",
     "session_affinity": "cookie",
     "session_affinity_attributes": {
       "samesite": "Auto",
       "secure": "Auto",
-      "drain_duration": 100
+      "drain_duration": 100,
+      "zero_downtime_failover": "sticky"
     },
     "session_affinity_ttl": 5000,
+    "random_steering": {
+      "pool_weights": {
+        "de90f38ced07c2e2f4df50b1f61d4194": 0.3,
+        "9290f38c5d07c2e2f4df57b1f61d4196": 0.5
+      },
+      "default_weight": 0.2
   }
 }
 ```

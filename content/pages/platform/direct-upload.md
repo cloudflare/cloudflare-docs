@@ -120,6 +120,7 @@ Regarding file count:
 
 On both upload methods, there is a 25 MiB limit in place for individual file size. 
 
+
 If using the Drag and Drop method, a red warning symbol will appear next to an asset if too large and thus unsuccessfully uploaded. In this case, you may choose to delete that asset but you cannot replace it. In order to do so, you must reupload the entire project.
 
 ### Using Functions

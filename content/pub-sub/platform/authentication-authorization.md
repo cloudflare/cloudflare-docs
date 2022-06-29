@@ -37,7 +37,7 @@ To generate a single token for a broker named `example-broker` in `your-namespac
 For example, to generate five valid tokens with an automatically generated Client ID for each token:
 
 ```bash
-# GET /accounts/:account_id/brokers/namespaces/:namespace_name/brokers/:broker_name/credentials
+# GET /accounts/:account_id/pubsub/namespaces/:namespace_name/brokers/:broker_name/credentials
 curl https://api.cloudflare.com/client/v4/accounts/<abcdef>/brokers/namespaces/your-namespace/brokers/example-broker/credentials?number=5&type=TOKEN&topicAcl="#"
 ```
 
@@ -45,10 +45,21 @@ This will return an array of Client IDs and signed JSON Web Tokens. Each Client 
 
 ```bash
 [
-   "01G18XKFVJ53DVBNK3KFPH9CX9": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJicm9rZXIiOiJicm9rZXIubmFtZXNwYWNlIiwiZXhwIjoxNTE2MjQyNjIyLCJpYXQiOjE1MTYyMzkwMjIsImNsaWVudElkIjoiMDFHMThXWEdTRkFOU0VGSEdOQ1E4SFc5QjMiLCJqdGkiOiIwMUcxOFhLRlZKNTNEVkJOSzNLRlBIOUNYOSJ9.qw_GcI5gxvqTabnhYYpvEW_WqSs48IjBSSAp2NAdDkE
+   "yourbroker01G18XKFVJ53DVBNK3KFPH9CX9": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJicm9rZXIiOiJicm9rZXIubmFtZXNwYWNlIiwiZXhwIjoxNTE2MjQyNjIyLCJpYXQiOjE1MTYyMzkwMjIsImNsaWVudElkIjoiMDFHMThXWEdTRkFOU0VGSEdOQ1E4SFc5QjMiLCJqdGkiOiIwMUcxOFhLRlZKNTNEVkJOSzNLRlBIOUNYOSJ9.qw_GcI5gxvqTabnhYYpvEW_WqSs48IjBSSAp2NAdDkE"
    // four other tokens
 ]
 ```
+
+## Configuring Clients
+
+To configure an MQTT client to connect to Pub/Sub, you need:
+
+* Your Broker hostname - e.g. `your-broker.your-namespace.cloudflarepubsub.com` and port (`8883` for MQTT)
+* A Client ID - this must be either the Client ID associated with your token, or left empty. Some clients require a Client ID, and others generate a random Client ID. **You will not be able to connect if the Client ID is mismatched**.
+* A username - Pub/Sub does not require you to specify a username. You can leave this empty, or for clients that require one to be set, the text `PubSub` is typically sufficient.
+* A "password" - this is a valid JSON Web Token (JWT) received from the API, _specific to the Broker you are trying to connect to_.
+
+The most common failure case is supplying a Client ID that does not match your token. Ensure you are setting this correctly in your client, or (recommended) leaving it empty if your client supports auto-assigning the Client ID when it connects to Pub/Sub. 
 
 ## Token claims and metadata
 
@@ -78,11 +89,30 @@ You can also list all currently revoked tokens by making a GET request to the `/
 
 ## Credential Lifetime and Expiration
 
-By default, per-broker credentials do not expire, in order to simplify credential management.
+Credentials can be set to expire at a Broker-level that applies to all credentials, and/or at a per-credential level.
 
-We strongly recommend setting a per-broker expiration configuration via the **Expiration** field, which will implicitly set an expiration timestamp for all credentials generated for that broker via the `exp` JWT claim. Using short-lived credentials – for example, 7 to 30 days – with an automatic rotation policy can reduce the risk of credential compromise and the need to actively revoke credentials after-the-fact.
+* By default, credentials do not expire, in order to simplify credential management.
+* Credentials will inherit the shortest of the expirations set, if both the Broker and the issued credential have an expiration set.
 
-You can use Pub/Sub itself to issue fresh credentials to clients using [Cron Triggers](/workers/platform/cron-triggers/) or a separate HTTP endpoint that clients can use to refresh their local token store.
+To set an expiry for each set of credentials issued by setting the `expiration` value when requesting credentials: in this case, we specify `86400` seconds (1 day). 
+
+```bash
+# GET /accounts/:account_id/pubsub/namespaces/:namespace_name/brokers/:broker_name/credentials
+curl https://api.cloudflare.com/client/v4/accounts/<abcdef>/brokers/namespaces/your-namespace/brokers/example-broker/credentials?number=5&type=TOKEN&topicAcl="#"&expiration=86400`
+```
+
+To set a Broker-level global expiration on an existing Pub/Sub Broker, set the `expiration` field on the Broker to the seconds any credentials issued should inherit:
+
+```bash
+# PATCH /accounts/:account_id/pubsub/namespaces/:namespace_name/brokers/:broker_name
+curl https://api.cloudflare.com/client/v4/accounts/<abcdef>/brokers/namespaces/your-namespace/brokers/example-broker --data '{"expiration":604800}'
+```
+
+### Best Practices
+
+* We strongly recommend setting a per-broker expiration configuration via the **expiration** (integer seconds) field, which will implicitly set an expiration timestamp for all credentials generated for that broker via the `exp` JWT claim.
+* Using short-lived credentials – for example, 7 to 30 days – with an automatic rotation policy can reduce the risk of credential compromise and the need to actively revoke credentials after-the-fact.
+* You can use Pub/Sub itself to issue fresh credentials to clients using [Cron Triggers](/workers/platform/cron-triggers/) or a separate HTTP endpoint that clients can use to refresh their local token store.
 
 ## Authorization and Access Control
 

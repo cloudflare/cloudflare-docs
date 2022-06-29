@@ -19,7 +19,7 @@ These limits are subject to change and many will increase over time.
 | Namespaces per Account                           | 1           | The maximum number of namespaces allowed on an account. <br/> Users may be able to create multiple namespaces in the future. |
 | Brokers per Namespace                            | 10          | Can eventually be increased. |
 | Subscribers per topic          | 1000            | The maximum number of subscribers per MQTT topic.
-| Connections per Device                           | 1           | The number of simultaneous connections from a single client ID. |
+| Connections per Device                           | 1           | The number of simultaneous connections from a single client ID (or token). **More than one connection from the same client ID will result in existing clients receiving a DISCONNECT** using Reason Code 0x8e (Session Taken Over). |
 | Maximum Packets per Second per Client	           | 10          | The number of MQTT packets per second a client can send to the broker. <br/> Clients that exceed this rate will receive a DISCONNECT with Reason Code 0x96 (Message rate too high).|
 | Maximum Topic Length                             | 65k bytes	 | The maximum length of a topic, in bytes, including all slashes, prefixes, or wildcard symbols. |
 | Maximum Topic Depth	                             | 8           |	The maximum number of forward slashes (`/`) allowed in a topic. |

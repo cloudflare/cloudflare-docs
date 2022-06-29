@@ -8,7 +8,7 @@ weight: 5
 
 Cloudflare verifies ownership of each new hostname before traffic is allowed to proxy. There are four methods to verify ownership: TXT record, HTTP token, CNAME, or Apex.
 
-{{<Aside type="note" header="Note:">}}
+{{<Aside type="note">}}
 
 If a custom hostname is already on Cloudflare, then traffic will only shift to your fallback origin once the [DNS target has changed](/ssl/ssl-for-saas/getting-started/#step-5--have-customer-create-a-cname-record).
 
@@ -36,7 +36,7 @@ app.example.com CNAME proxy-fallback.saasprovider.com
 proxy-fallback.saasprovider.com CNAME proxy-fallback.saasprovider.com.cdn.cloudflare.net
 ```
 
-{{<Aside type="warning" header="Warning:">}}To prevent unresolvable CNAME loops, only 10 consecutive CNAMES are followed to find the appropriate Custom Hostname CNAME. The final CNAME must contain <code class="InlineCode">[zone_name].cdn.cloudflare.net</code>.{{</Aside>}}
+{{<Aside type="warning">}}To prevent unresolvable CNAME loops, only 10 consecutive CNAMES are followed to find the appropriate Custom Hostname CNAME. The final CNAME must contain <code class="InlineCode">[zone_name].cdn.cloudflare.net</code>.{{</Aside>}}
 
 #### If using another DNS provider
 
@@ -48,6 +48,8 @@ app.example.com CNAME proxy-fallback.saasprovider.com
 ```
 
 ## Apex verification
+
+If you have an Enterprise account, you can utilize Apex verification (after talking with your account team).
 
 For verification, the account that owns the custom hostname must also own all A and AAAA records for the apex. To verify ownership, the IP returned for the hostname must reside in the IP prefix allocated to the account.
 
@@ -198,7 +200,7 @@ Applicable hostname verification status includes:
 </tr>
 <tr>
 <td>Blocked</td>
-<td>Custom hostname cannot be added to Cloudflare at this time. If you are an Enterprise customer, please contact your Customer Success Manager. Otherwise, please email abusereply@cloudflare.com with the name of the web property and a detailed explanation of your association with this web property.</td>
+<td>Custom hostname cannot be added to Cloudflare at this time. Custom hostname was likely associated with Cloudflare previously and flagged for abuse. If you are an Enterprise customer, please contact your Customer Success Manager. Otherwise, please email abusereply@cloudflare.com with the name of the web property and a detailed explanation of your association with this web property.</td>
 </tr>
 <tr>
 <td>Moved</td>
