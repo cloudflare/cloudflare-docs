@@ -707,7 +707,7 @@ html[is-site-page] .DocsContent {
 }
 
 [theme=dark] .QuadBlock a {
-    color: inherit;
+    color: var(--code-orange)
 }
 
 .TriBlockGrid {
@@ -742,7 +742,7 @@ html[is-site-page] .DocsContent {
 }
 
 [theme=dark] .ViewProducts a {
-    color: inherit;
+    color: var(--code-orange)
 }
 
 .ConnectHeader {
