@@ -125,7 +125,7 @@ This code consists of three parts:
 
 1. `export default`
 
-`export default` is JavaScript syntax required for defining [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#default_exports_versus_named_exports). `export default` lets the Workers runtime know that this is a Worker object as opposed to other Cloudflare products.
+`export default` is JavaScript syntax required for defining [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#default_exports_versus_named_exports). `export default` lets the Workers runtime know that this is a Worker object as opposed to other Cloudflare products. Refer to [MDN documentation for more information of default exports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#default_exports_versus_named_exports).
 
 2. The event handler: `async fetch(request)`
 
@@ -195,16 +195,6 @@ $ npm install
 
 This starter is used in the tutorial for [building a Slack Bot](/workers/tutorials/build-a-slackbot/).
 
-### 5c. Make use of runtime APIs
-
-The example outlined in this guide is a starting point. There are many Workers [runtime APIs](/workers/runtime-apis/) available to manipulate requests and generate responses. For example, you can use the [HTMLRewriter API](/workers/runtime-apis/html-rewriter/) to parse and dynamically transform HTML, use the [Cache API](/workers/runtime-apis/cache/) to retrieve data from and put data into [the Cloudflare cache](/workers/learning/how-the-cache-works/), compute a custom response right from the edge, redirect the request to another service, and more.
-
-For inspiration, refer to [Built with Workers](https://workers.cloudflare.com/built-with) for a showcase of projects.
-
----
-
-
-
 ### (Optional) Configure for deploying to a registered domain
 
 To publish your application on a zone you own, and not a `*.workers.dev` subdomain, you can add a `route` key to your `wrangler.toml` file.
@@ -244,7 +234,7 @@ Whichever method you choose, your record must be proxied through Cloudflare (ora
 
 ## 6. Publish your project
 
-With your project configured, you can now publish your Worker. You can publish your Worker to a custom domain, or, if left unindicated, the Worker will publish to a `*.workers.dev` subdomain by default. To set up a `*.workers.dev` subdomain, go to the Cloudflare dashboard > **Workers** > **Your subdomain**.
+With your project configured, you can now publish your Worker. You can publish your Worker to a custom domain, or, if not configured, the Worker will publish to a `*.workers.dev` subdomain by default. To set up a `*.workers.dev` subdomain, go to the Cloudflare dashboard > **Workers** > **Your subdomain** > **Change**.
 
 To deploy to your `*.workers.dev` subdomain, run:
 
@@ -263,7 +253,7 @@ When pushing to your `*.workers.dev` subdomain for the first time, you may initi
 
 {{</Aside>}}
 
-To publish to a custom domain, refer to []().
+To publish your Worker to a custom domain (like `example.com`), refer to []().
 
 <!-->
 
