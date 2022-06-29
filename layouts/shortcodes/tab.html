@@ -1,14 +1,9 @@
-{{ $tabName := .Get "tabName" }}
-{{ $tabID := delimit (shuffle (slice "a" "b" "c" "d" "e" "f")) "" }}
-{{ .Parent.Scratch.Add "tabName" (slice $tabName) }}
-{{ .Parent.Scratch.Add "tabID" (slice $tabID) }}
+{{ $tabName := .Get "tabName" }} {{ $tabID := delimit (shuffle (slice "a" "b"
+"c" "d" "e" "f")) "" }} {{ .Parent.Scratch.Add "tabName" (slice $tabName) }} {{
+.Parent.Scratch.Add "tabID" (slice $tabID) }} {{- $label := replace (.Get
+"label") "/" "-"}}
 
-<nav class="tab">
-    <input type="radio" name="css-tabs" id="{{ $tabID }}" checked class="tab-switch">
-    <label for="{{$tabID}}" class="tab-label">{{$tabName}}</label>
-    <div class="tab-content"> {{ $.Inner | markdownify }}</div>
-</nav> 
-
+<div class="tab" id="tab-{{$label}}">{{ $.Inner | markdownify }}</div>
 
 <!-- <div class="pc-tab">
     <input checked="checked" id="{{ $tabID }}" type="radio" name="pct" />
@@ -28,9 +23,7 @@
     </section>
 </div> -->
 
-
-
-    <!-- <input checked="checked" id="{{ $tabID }}" type="radio" name="pct" />
+<!-- <input checked="checked" id="{{ $tabID }}" type="radio" name="pct" />
     <nav>
         <ul>
             <li class="tab1">

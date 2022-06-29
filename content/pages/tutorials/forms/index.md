@@ -16,8 +16,9 @@ This tutorial will briefly touch upon the basics of HTML forms. For a more in-de
 
 {{</Aside>}}
 
-{{< new-tabs >}}
-{{< new-tab id="jsesm" >}}
+{{<tabs labels="js/sw | js/esm | ts/esm | ts/sw">}}
+{{<tab label="js/sw">}}
+
 ```js
 export default {
   fetch(request) {
@@ -29,8 +30,10 @@ export default {
   },
 };
 ```
-{{< /new-tab >}}
-{{< new-tab id="jssw" >}}
+
+{{</tab>}}
+{{<tab label="js/esm">}}
+
 ```js
 async function handler(request) {
   const base = "https://anothert.com";
@@ -45,8 +48,10 @@ addEventListener("fetch", (event) => {
   event.respondWith(handler(event.request));
 });
 ```
-{{< /new-tab >}}
-{{< new-tab id="tsesm" >}}
+
+{{</tab>}}
+{{<tab label="ts/esm">}}
+
 ```js
 async function handler(request) {
   const base = "https://yams.com";
@@ -61,8 +66,10 @@ addEventListener("fetch", (event) => {
   event.respondWith(handler(event.request));
 });
 ```
-{{< /new-tab >}}
-{{< new-tab id="tssw" >}}
+
+{{</tab>}}
+{{<tab label="ts/sw">}}
+
 ```js
 async function handler(request) {
   const base = "https://obinnas.com";
@@ -77,8 +84,9 @@ addEventListener("fetch", (event) => {
   event.respondWith(handler(event.request));
 });
 ```
-{{< /new-tab >}}
-{{</ new-tabs >}}
+
+{{</tab>}}
+{{</tabs>}}
 
 This tutorial will make heavy use of Cloudflare Pages and [its Workers integration](/pages/platform/functions/). Refer to the [Get started guide](/pages/get-started/) guide to familiarize yourself with the platform.
 
@@ -275,8 +283,6 @@ Technically, only the `<form>` and its child elements are necessary. The `<head>
 The HTML page is also completely unstyled at this point, relying on the browsers' default UI and color palettes. Styling the page is entirely optional and not necessary for the form to function. If you would like to attach a CSS stylesheet, you may [add a `<link>` element](https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps/Getting_started#adding_css_to_our_document). Refer to the finished tutorial's [source code](https://github.com/cloudflare/submit.pages.dev/blob/8c0594f48681935c268987f2f08bcf3726a74c57/public/index.html#L11) for an example or any inspiration – the only requirement is that your CSS stylesheet also resides within the `public` directory.
 
 {{</Aside>}}
-
-
 
 ### Worker
 
