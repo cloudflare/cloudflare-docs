@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 Cache Reserve is a large, persistent data store [implemented on top of R2](https://blog.cloudflare.com/r2-open-beta/). By pushing a single button in the dashboard, all of your website’s cacheable content will be written to Cache Reserve. In the same way that [Tiered Cache](https://blog.cloudflare.com/introducing-smarter-tiered-cache-topology-generation/) builds a hierarchy of caches between your visitors and your origin, Cache Reserve serves as the ultimate [upper-tier cache](/cache/about/tiered-cache/) that will reserve storage space for your assets for as long as you want. This ensures that your content is served from cache longer, shielding your origin from unneeded egress fees.
 
-![Content being served from the origin to be cached in tiered data centers (T1=upper-tier, T2=lower-tier) on its way back to the client](/cache/static/images/content-being-served.png)
+![Content served from origin and getting cached in Cache Reserve, and Edge Cache Data Centers (T1=upper-tier, T2=lower-tier) on its way back to the client](/cache/static/images/content-being-served.png)
 
 How long content in Cache Reserve will be considered “fresh” is determined by edge cache TTL setting or Cache-Control headers at your origin, if [edge cache TTL](/cache/about/edge-browser-cache-ttl/) is not set. After the retention period expires, Cloudflare will revalidate the asset when a subsequent request arrives in Cache Reserve for the asset. This is the same behavior as in Cloudflare's regular CDN.
 
