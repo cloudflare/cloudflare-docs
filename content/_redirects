@@ -294,6 +294,7 @@
 /logs/get-started/logpush-dashboard/ /logs/get-started/enable-destinations/ 301
 /logs/log-fields/ /logs/reference/log-fields/ 301
 /logs/logpull-api/ /logs/logpull/ 301
+/logs/logpull-api/requesting-logs/ /logs/logpull/requesting-logs/ 301
 /logs/logpush/ /logs/about/ 301
 /logs/logpush/aws-s3/ /logs/get-started/enable-destinations/aws-s3/ 301
 /logs/logpush/azure/ /logs/get-started/enable-destinations/azure/ 301
