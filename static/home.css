@@ -706,7 +706,7 @@ html[is-site-page] .DocsContent {
     padding-right: 3.5em;
 }
 
-.QuadBlock a {
+[theme=dark] .QuadBlock a {
     color: inherit;
 }
 
@@ -735,6 +735,14 @@ html[is-site-page] .DocsContent {
 .TriBlock a {
     color: inherit;
     font-size: .85em;
+}
+
+.ViewProducts {
+    padding-left: .75em;
+}
+
+[theme=dark] .ViewProducts a {
+    color: inherit;
 }
 
 .ConnectHeader {
