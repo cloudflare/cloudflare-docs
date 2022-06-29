@@ -32,7 +32,7 @@ Conceptually, there are two ways to interact with Cloudflare’s Cache using a W
 
 ### Purging assets stored with the Cache API
 
-Assets stored in the cache through [Cache API](/runtime-apis/cache/) operations can be purged in a couple of ways:
+Assets stored in the cache through [Cache API](/workers/runtime-apis/cache/) operations can be purged in a couple of ways:
 
 - Call `cache.delete` within a Worker to invalidate the cache for the asset with a matching request variable.
 
