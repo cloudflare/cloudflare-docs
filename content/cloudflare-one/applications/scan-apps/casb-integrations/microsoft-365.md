@@ -1,102 +1,95 @@
 ---
 pcx-content-type: reference
 title: Microsoft 365
-weight: 2
+weight: 3
 ---
 
-# Google Workspace
+# Microsoft 365
 
-The Google Workspace integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Google Workspace account that could leave you and your organization vulnerable.
+The Microsoft 365 (M365) integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Microsoft 365 account that could leave you and your organization vulnerable.
 
 ## Integration prerequisites
 
-* A Google Workspace account with a Business Starter, Business Standard, Business Plus or Enterprise plan.
-* [Super Admin privileges](https://support.google.com/a/answer/2405986) in Google Workspace.
+* A Microsoft 365 account with an active Microsoft Business Basic, Microsoft Business Standard, Microsoft 365 E3, Microsoft 365 E5, or Microsoft 365 F3 subscription.
+* [Global admin role](https://docs.microsoft.com/en-us/microsoft-365/admin/add-users/about-admin-roles?view=o365-worldwide#commonly-used-microsoft-365-admin-center-roles) or equivalent permissions in Microsoft 365.
 
 ## Integration permissions
 
-For the Google Workspace integration to function, CASB requires the following API scopes for access:
+For the Microsoft 365 integration to function, CASB requires the following delegated Microsoft Graph API scopes for access:
 
-`https://www.googleapis.com/auth/admin.directory.domain.readonly`
-`https://www.googleapis.com/auth/admin.directory.user.readonly`
-`https://www.googleapis.com/auth/admin.directory.user.security`
-`https://www.googleapis.com/auth/calendar`
-`https://www.googleapis.com/auth/cloud-platform.read-only`
-`https://www.googleapis.com/auth/drive.readonly`
-`https://www.googleapis.com/auth/gmail.settings.basic`
+* `Application.Read.All`
+* `Calendars.Read`
+* `Domain.Read.All`
+* `Group.Read.All`
+* `MailboxSettings.Read`
+* `offline_access`
+* `RoleManagement.Read.All`
+* `User.Read.All`
+* `UserAuthenticationMethod.Read.All`
 
-These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission, refer to the [Google Workspace Admin SDK Directory API](https://developers.google.com/admin-sdk/directory/v1/guides/authorizing).
+These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission, refer to the [Microsoft Graph permissions documentation](https://docs.microsoft.com/en-us/graph/permissions-reference).
 
 ## Security findings
 
-The Google Workspace integration currently scans for the following findings, or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/scan-apps/#severity-levels).
+The Microsoft 365 integration currently scans for the following findings, or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/scan-apps/#severity-levels).
 
 ### User account settings
 
-Users who did not enable two-factor authentication (2FA) or set a recovery email run the risk of having their accounts compromised. This puts your entire organization at risk should a bad actor gain access to the user's account.
+Keep user accounts safe by ensuring the following settings are maintained. Review password configurations and password strengths to ensure alignment to your organization's security policies and best practices.
 
-| Finding                                       | Severity |
-|-----------------------------------------------|----------|
-| Google Workspace Admin User 2FA Disabled      | Critical |
-| Google Workspace User 2FA Disabled            | High     |
-| Google Workspace User without Recovery Email  | Low      |
-| Google Workspace User without Recovery Phone  | Low      |
-
-### Inactive or suspended users
-
-Having inactive or suspended users in your Google Workspace account may present potential compliance violations (for example, employee offboarding violations). Inactive users also increase the risk of account misuse should someone else gain access to their account.
-
-| Finding                              | Severity |
-|--------------------------------------|----------|
-| Google Workspace Admin User Inactive | Medium   |
-| Google Workspace User Inactive       | Low      |
-| Google Workspace Admin User Suspended | Medium   |
-| Google Workspace User Suspended       | Low      |
+| Finding                                      | Severity |
+|----------------------------------------------|----------|
+| FIDO2 authentication method unattested       | Low      |
+| Provisioning error for on-prem user          | Low      |
+| Password expiration disabled for user        | Low      |
+| Password not changed in last 90 days         | Low      |
+| Strong password disabled for user            | Low      |
+| Cloud sync disabled for on-prem user         | Low      |
+| Weak Windows Hello for Business key strength | Low      |
+| On-prem user not synced in 7 days.           | Low      |
+| User is not a legal adult                    | Low      |
+| User configured proxy addresses              | Low      |
+| User account disabled                        | Low      |
 
 ### File sharing
 
-Get alerted when files, folders, and calendars in your Google Workspace have their permissions changed to a less secure setting, including _Anyone with the link_.
+Get alerted when calendars in your Microsoft 365 account have their permissions changed to a less secure setting.
 
 | Finding                                       | Severity |
 |-----------------------------------------------|----------|
-| File Publicly Accessible Read and Write       | Critical |
-| File Publicly Accessible Read Only            | High     |
-| File Shared Outside Company Read and Write    | High     |
-| File Shared Outside Company Read Only         | Medium   |
-| File Shared Company Wide Read and Write       | Medium   |
-| File Shared Company Wide Read Only            | Medium   |
-| Google Workspace Calendar Publicly Accessible | Medium   |
+| Calendar Shared Externally                    | Low      |
 
 ### Third-party apps
 
-Identify and get alerted about the third-party apps that have access to at least one service in your Google Workspace domain. Additionally, receive information about which services are being accessed and by whom to get full visibility into Shadow IT.
+Identify and get alerted about the third-party apps that have access to at least one service in your Microsoft 365 domain. Additionally, receive information about which services are being accessed and by whom to get full visibility into Shadow IT.
+
+| Finding                        | Severity |
+|--------------------------------|----------|
+| App Not Certified By Microsoft | Low      |
+| App Not Attested By Published  | Low      |
+| App Disabled By Microsoft      | Low      |
+
+### Email administrator settings
+
+Discover suspicious or insecure email configurations in your Microsoft domain. Missing SPF and DMARC records make it easier for bad actors to spoof email, while SPF records configured to another domain can be a potential warning sign of malicious activity.
 
 | Finding                                            | Severity |
 |----------------------------------------------------|----------|
-| Installed 3rd Party App with Drive Access          | High     |
-| Installed 3rd Party App with Gmail Access          | High     |
-| Installed 3rd Party App with Google Docs Access    | Medium   |
-| Installed 3rd Party App with Google Slides Access  | Medium   |
-| Installed 3rd Party App with Google Sheets Access  | Medium   |
-| Installed 3rd Party App with Google Sign In Access | Low      |
-
-### Gmail admin settings
-
-Discover suspicious or insecure email configurations in your Google Workspace domain. Missing SPF and DMARC records make it easier for bad actors to spoof email, while SPF records configured to another domain can be a potential warning sign of malicious activity.
-
-| Finding                                                   | Severity |
-|-----------------------------------------------------------|----------|
-| Google Workspace Domain SPF Record Allows Any IP Address  | High     |
-| Google Workspace Domain SPF Record Not Present            | Medium   |
-| Google Workspace Domain DMARC Record Not Present          | Medium   |
-| Google Workspace Domain DMARC Not Enforced                | Medium   |
-| Google Workspace Domain DMARC Not Enforced for Subdomains | Medium   |
-| Google Workspace Domain DMARC Only Partially Enforced     | Medium   |
+| Microsoft Domain SPF Record Allows Any IP Address  | High     |
+| Microsoft Domain SPF Record Not Present            | Medium   |
+| Microsoft Domain DMARC Record Not Present          | Medium   |
+| Microsoft Domain DMARC Not Enforced                | Medium   |
+| Microsoft Domain DMARC Not Enforced for Subdomains | Medium   |
+| Microsoft Domain DMARC Only Partially Enforced     | Medium   |
+| Microsoft Domain Not Verified                      | Medium   |
+| App Certification Expires in 90 Days or Sooner     | Low      |
 
 ### Email forwarding
 
 Get alerted when users set their email to be forwarded externally. This can either be a sign of unauthorized activity, or an employee unknowingly sending potentially sensitive information to a personal email.
 
-| Finding                                      | Severity |
-|----------------------------------------------|----------|
-| Google Workspace User Delegates Email Access | High     |
+| Finding                                               | Severity |
+|-------------------------------------------------------|----------|
+| Active Message Rule Forwards Externally As Attachment | Low      |
+| Active Message Rule Forwards Externally               | Low      |
+| Active Message Rule Redirects Externally              | Low      |

@@ -80,7 +80,7 @@ Identify and get alerted about the third-party apps that have access to at least
 | Installed 3rd Party App with Google Sheets Access  | Medium   |
 | Installed 3rd Party App with Google Sign In Access | Low      |
 
-### Gmail admin settings
+### Gmail administrator settings
 
 Discover suspicious or insecure email configurations in your Google Workspace domain. Missing SPF and DMARC records make it easier for bad actors to spoof email, while SPF records configured to another domain can be a potential warning sign of malicious activity.
 
