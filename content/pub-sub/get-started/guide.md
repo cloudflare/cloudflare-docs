@@ -223,7 +223,7 @@ const mqtt = require('mqtt')
 
 const brokerEndpoint = "mqtts://my-broker.my-namespace.cloudflarepubsub.com"
 const options = {
-  port: 8443,
+  port: 8883,
   password: process.env.BROKER_TOKEN,
   protocolVersion: 5, // MQTT 5
 }
