@@ -1,9 +1,9 @@
 ---
-title: Account Maintenance
+title: Account maintenance
 pcx-content-type: navigation
-weight: 5
+weight: 3
 ---
 
-# Account Maintenance
+# Account maintenance
 
 {{<directory-listing>}}

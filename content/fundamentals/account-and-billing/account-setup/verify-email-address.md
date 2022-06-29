@@ -6,11 +6,11 @@ weight: 1
 
 # Verify email address
 
-For security reasons, Cloudflare attempts to verify the email address associated with your account. You cannot perform certain tasks within the Cloudflare dashboard - for example, [adding a new member](/fundamentals/get-started/setup/account-setup/manage-account-members/#add-account-members) or [updating your communication preferences](/fundamentals/get-started/setup/account-setup/customize-account/communication-preference/) - without verifying your email.
+For security reasons, Cloudflare attempts to verify the email address associated with your account. You cannot perform certain tasks within the Cloudflare dashboard - for example, [adding a new member](/fundamentals/account-and-billing/account-setup/manage-account-members/#add-account-members) or [updating your communication preferences](/fundamentals/account-and-billing/account-setup/customize-account/communication-preference/) - without verifying your email.
 
 ## When creating your account
 
-When you first [create an account](/fundamentals/get-started/setup/account-setup/create-account/), Cloudflare automatically sends a message to the email address you provided for your account.
+When you first [create an account](/fundamentals/account-and-billing/account-setup/create-account/), Cloudflare automatically sends a message to the email address you provided for your account.
 
 To verify your email:
 
