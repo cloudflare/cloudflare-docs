@@ -1,5 +1,5 @@
 ---
-pcx-content-type: configuration
+pcx-content-type: concept
 title: Dedicated egress IPs
 layout: single
 weight: 12
@@ -7,13 +7,20 @@ weight: 12
 
 # Dedicated egress IPs
 
-<details>
-<summary>Feature availability</summary>
-<div>
-
+{{<Aside type="note">}}
 Dedicated egress IPs are only available on Enterprise plans.
-
-</div>
-</details>
+{{</Aside>}}
 
 When your users connect to the Internet through Cloudflare Gateway, by default their traffic is assigned a source IP address that is shared across all Cloudflare WARP users. Enterprise customers can purchase dedicated egress IPs to ensure that egress traffic from your organization is assigned a unique, static IP. These source IPs are dedicated to your account and can be used within allowlists on upstream services.
+
+All traffic proxied by Gateway will route via these dedicated egress IPs.
+
+## IP geolocation
+
+Each dedicated egress IP is associated with a Cloudflare data center, and your egress traffic will share the same IP geolocation as the data center. When you purchase a dedicated egress IP, you can request a specific city to egress from. If you have multiple egress IPs, your end users will be automatically routed to the closest one.
+
+Note that it can take anywhere from 1 week to up to 4 weeks for websites to recognize the updated IP geolocation. For example, if your users are in India, they would see a U.S. Google page instead of the typical Indian Google landing page until Google picks up the updated IP geolocation.
+
+## TCP/UDP support
+
+Only TCP traffic can be proxied through dedicated egress IPs. UDP is not supported at this time. If most of your traffic will route through the dedicated egress IPs, we recommend [disabling QUIC in Google Chrome](/cloudflare-one/policies/filtering/http-policies/configuration-guidelines/#enabling-access-to-google-services) to ensure that users can reach Google-related services.
