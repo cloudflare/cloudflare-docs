@@ -118,8 +118,7 @@ zaraz.ecommerce('Product Viewed', {
   brand: 'Cool Brand',
   variant: 'White',
   price: 14.99,
-  currency: 'usd',
-  value: 18.99,
+  currency: 'usd'
 });
 ```
 
@@ -138,7 +137,6 @@ zaraz.ecommerce('Product List Viewed',
       variant: 'White',
       price: 14.99,
       currency: 'usd',
-      value: 18.99, 
       position: 1, 
     },{ 
       product_id: '999555322',
@@ -149,7 +147,6 @@ zaraz.ecommerce('Product List Viewed',
       variant: 'Pink',
       price: 10.99,
       currency: 'usd',
-      value: 16.99, 
       position: 2, 
     },
     ], 
@@ -187,6 +184,7 @@ zaraz.ecommerce('Order Completed', {
   shipping: 3,
   tax: 2,
   discount: 5,
+  value: 30.0,
   coupon: 'winter-sale',
   currency: 'USD',
   products: [
