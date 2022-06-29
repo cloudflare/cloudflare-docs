@@ -30,9 +30,9 @@ Conceptually, there are two ways to interact with Cloudflare’s Cache using a W
 
 ---
 
-### Purging Assets Stored with the Cache API
+### Purging assets stored with the Cache API
 
-  Assets stored in the cache through [Cache API](/runtime-apis/cache) operations can be purged in a couple of ways:
+Assets stored in the cache through [Cache API](/runtime-apis/cache/) operations can be purged in a couple of ways:
 
 - Call `cache.delete` within a Worker to invalidate the cache for the asset with a matching request variable.
 
@@ -40,15 +40,15 @@ Conceptually, there are two ways to interact with Cloudflare’s Cache using a W
 
 - In order to purge an asset globally, the standard cache purge options must be used. Based on cache API implementation, not all cache purge endpoints function for purging assets stored by the Cache API.
 
-  - All assets on a zone can be purged by using the [Purge Everything](/cache/how-to/purge-cache#purge-everything) cache operation. This purge will remove all assets associated with a Cloudflare zone from cache in all data centers regardless of the method set.
+  - All assets on a zone can be purged by using the [Purge Everything](/cache/how-to/purge-cache/#purge-everything) cache operation. This purge will remove all assets associated with a Cloudflare zone from cache in all data centers regardless of the method set.
 
-  - Available to Enterprise Customers, [Cache Tags](/cache/how-to/purge-cache#add-cache-tag-http-response-headers) can be added to requests dynamically in a Worker by calling `response.headers.append()` and appending `Cache-Tag` values dynamically to that request. Once set, those tags can be used to selectively purge assets from cache without invalidating all cached assets on a zone. 
+  - Available to Enterprise Customers, [Cache Tags](/cache/how-to/purge-cache/#add-cache-tag-http-response-headers) can be added to requests dynamically in a Worker by calling `response.headers.append()` and appending `Cache-Tag` values dynamically to that request. Once set, those tags can be used to selectively purge assets from cache without invalidating all cached assets on a zone. 
 
 ---
 
 ## Edge versus browser caching
 
-The browser cache is controlled through the `Cache-Control` header sent in the response to the eyeball (the response passed or promised to `event.respondWith()`). Workers can customize browser cache behavior by setting this header on the response.
+The browser cache is controlled through the `Cache-Control` header sent in the response to the client (the response passed or promised to `event.respondWith()`). Workers can customize browser cache behavior by setting this header on the response.
 
 Other means to control Cloudflare’s cache that are not mentioned in this documentation include: Page rules and Cloudflare cache settings. Refer to the [How to Control Cloudflare’s cache support article](https://support.cloudflare.com/hc/en-us/articles/202775670) if you wish to avoid writing JavaScript with still some granularity of control.
 
