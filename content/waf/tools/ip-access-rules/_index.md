@@ -22,7 +22,7 @@ Block by country is only available on the Enterprise plan. Other customers may p
 
 ## Important remarks
 
-* Allowing a country code does not bypass Cloudflare's WAF.
+* Allowing a country code does not bypass [WAF Managed Rulesets](/waf/managed-rulesets/) or [WAF managed rules (previous version)](https://support.cloudflare.com/hc/articles/200172016).
 
 * By design, IP Access rules configured to _Allow_ traffic do not show up in [Firewall Analytics](/waf/analytics/).
 
