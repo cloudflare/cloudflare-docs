@@ -66,13 +66,19 @@ Run `wrangler init` followed by your project name:
 $ wrangler init <YOUR_WORKER>
 ```
 
-You will be asked `“Would you like to use git to manage this Worker? (y/n)”` and `Would you like to use TypeScript? (y/n)`. For the purpose of this guide, respond with `y` to both questions. If you run:
+You will be asked `“Would you like to use git to manage this Worker? (y/n)”` and `Would you like to use TypeScript? (y/n)`. If you would like to respond yes to every question, run:
 
 ```sh
 $ wrangler init <YOUR_WORKER> -y
 ```
 
-Wrangler will say yes to all question on your behalf and initialize your new project with git, a `package.json` file, configure TypeScript and a minimum Hello World script. 
+Wrangler will say yes to all question on your behalf and initialize your new project with git, a `package.json` file, configure TypeScript and a minimum Hello World script.
+
+{{<Aside type="note" header="TypeScript">}}
+
+`wrangler init ` will prompt you to choose y/n to `Would you like to use TypeScript? (y/n)`. If you indicate yes, you will get an `index.ts` file instead of a `index.js` file and Wrangler will also generate a `tsconfig.json` file in the root of your project. 
+
+{{</Aside>}}
 
 You can also use one of [Cloudflare's templates](https://github.com/cloudflare/templates#usage) to start a new project.
 
@@ -85,9 +91,9 @@ $ cd <YOUR_WORKER>
 In your project directory, `wrangler init` has generated the following files:
 
 1. `wrangler.toml`: Your [Wrangler](https://developers.cloudflare.com/workers/wrangler/configuration/#example) configuration file.
-2. `tsconfig.json`: TypeScript configuration that includes [Workers types](https://github.com/cloudflare/workers-types).
-3. `index.ts` (in `/src`): A minimal Worker Hello World application script written in `modules` syntax.
-3. `package.json`: A minimal Node dependencies configuration file.
+2. `index.js` (in `/src`): A minimal Worker Hello World application script written in `modules` syntax.
+3. `package.json`: A minimal Node dependencies configuration file. Only generated if indicated in `wrangler init` command.
+4. `tsconfig.json`: TypeScript configuration that includes [Workers types](https://github.com/cloudflare/workers-types). Only generated if indicated in `wrangler init` command.
 
 ---
 
@@ -105,43 +111,39 @@ $ wrangler dev
 
 With your new project generated, you can begin to write your code.
 
-### 5a. Understanding Hello World
-
-Fundamentally, a Workers application consists of two parts:
-
-1.  An [event listener](/workers/runtime-apis/add-event-listener/) that listens for [`FetchEvents`](/workers/runtime-apis/fetch-event/), and
-2.  An event handler that returns a [Response](/workers/runtime-apis/response/) object which is passed to the event’s `.respondWith()` method.
-
-When a request is received on one of Cloudflare’s edge servers for a URL matching a Workers script, it passes the request to the Workers runtime. This dispatches a [`FetchEvent`](/workers/runtime-apis/fetch-event/) in the [isolate](/workers/learning/how-workers-works/#isolates) where the script is running.
+After running the `wrangler init` command to generate your Worker, the `index.js` file will be populated with the code below:
 
 ```js
----
-filename: ~/my-worker/index.js
----
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
-
-async function handleRequest(request) {
-  return new Response('Hello worker!', {
-    headers: { 'content-type': 'text/plain' },
-  });
-}
+export default {
+  async fetch(request) {
+    return new Response("Hello World!");
+  },
+};
 ```
 
-Below is an example of the request response workflow:
+This code consists of three parts:
 
-1.  An event listener for the `FetchEvent` tells the script to listen for any request coming to your Worker. The event handler is passed the `event` object, which includes `event.request`, a [`Request`](/workers/runtime-apis/request/) object which is a representation of the HTTP request that triggered the `FetchEvent`.
+1. `export default`
 
-2.  The call to [`.respondWith()`](/workers/runtime-apis/fetch-event/#methods) lets the Workers runtime intercept the request in order to send back a custom response (in this example, the plain text “Hello worker!”).
+`export default` is JavaScript syntax required for defining [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#default_exports_versus_named_exports). `export default` lets the Workers runtime know that this is a Worker object as opposed to other Cloudflare products.
 
-    - The `FetchEvent` handler typically culminates in a call to the method `.respondWith()` with either a [`Response`](/workers/runtime-apis/response/) or `Promise<Response>` that determines the response.
+2. The event handler: `async fetch(request)`
 
-    - The `FetchEvent` object also provides [two other methods](/workers/runtime-apis/fetch-event/#methods) to handle unexpected exceptions and operations that may complete after a response is returned.
+The event handler indicates what events the user wants the Worker to listen to (such as, [`fetch`](/workers/runtime-apis/fetch-event/) and [`schedule`](/workers/runtime-apis/scheduled-event/)). 
 
-Learn more about [the `FetchEvent` lifecycle](/workers/runtime-apis/fetch-event/#lifecycle-methods).
+3. Parameters (`request`, `env`, `context`)
 
-### 
+The event handler mentioned above will always get three parameters passed into it: [`request`, `env` and `context`](workers/runtime-apis/fetch-event/#syntax-module-worker). If you would like to interact with these parameters, you will have to accept the parameters as variables by indicating them in your code. You can choose which parameters to use, but they must always be written in order (`request`, `env`, `context`.) In this example, `request` is indicated meaning that your Worker can now interact with the Request object.
+
+4. `return new Response("Hello World!");`
+
+The Workers runtime expects `fetch` events to return a Response object. In this example, you will return a new Response with the string `"Hello World!"`.
+
+In order to see code changes in real time, change the `"Hello World!"` string to `"Hello Worker!"` and, with `wrangler dev` running, save your changes.
+
+To experiment with more premade Workers, refer to [Workers Examples](/workers/examples/).
+
+<!-->
 
 ### 5b. Routing and filtering requests
 
@@ -201,19 +203,7 @@ For inspiration, refer to [Built with Workers](https://workers.cloudflare.com/bu
 
 ---
 
-## 6. Preview your project
 
-```sh
-~/my-worker $ wrangler dev
-⬣ Listening at http://localhost:8787
-╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ [b] open a browser, [d] open Devtools, [l] turn on local mode, [c] clear console, [x] to exit                        │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-```
-
-This command will build your project, run it locally, and return a URL for you to visit to preview the Worker.
-
----
 
 ### (Optional) Configure for deploying to a registered domain
 
@@ -250,9 +240,11 @@ Whichever method you choose, your record must be proxied through Cloudflare (ora
 
 ---
 
-## 8. Publish your project
+<!-->
 
-With your project configured, you can now publish your Worker.
+## 6. Publish your project
+
+With your project configured, you can now publish your Worker. You can publish your Worker to a custom domain, or, if left unindicated, the Worker will publish to a `*.workers.dev` subdomain by default. To set up a `*.workers.dev` subdomain, go to the Cloudflare dashboard > **Workers** > **Your subdomain**.
 
 To deploy to your `*.workers.dev` subdomain, run:
 
@@ -260,14 +252,20 @@ To deploy to your `*.workers.dev` subdomain, run:
 ---
 header: Publish to workers.dev
 ---
-~/my-worker $ wrangler publish
+$ wrangler publish
 ```
+
+You can preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
 {{<Aside type="note" header="Note">}}
 
 When pushing to your `*.workers.dev` subdomain for the first time, you may initially see [`523` errors](https://support.cloudflare.com/hc/articles/115003011431#523error) while DNS is propagating. It should work without any errors after a minute or so.
 
 {{</Aside>}}
+
+To publish to a custom domain, refer to []().
+
+<!-->
 
 ### (Optional) Publish your project to a registered domain
 
@@ -285,6 +283,8 @@ For more information on environments, refer to the [Wrangler documentation](/wor
 You can also configure a GitHub repository to automatically deploy every time you `git push`. You can do this by either using the [Workers GitHub action](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler), or by writing your own GitHub action and manually configuring the necessary [GitHub secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
 
 ---
+
+<!-->
 
 ## Next steps
 
