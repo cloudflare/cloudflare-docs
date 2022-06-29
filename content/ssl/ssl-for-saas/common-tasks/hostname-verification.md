@@ -200,7 +200,7 @@ Applicable hostname verification status includes:
 </tr>
 <tr>
 <td>Blocked</td>
-<td>Custom hostname cannot be added to Cloudflare at this time. Cusom hostname was likely associated with Cloudflare previously and flagged by [Trust and Safety](https://www.cloudflare.com/trust-hub/trust-and-safety/). If you are an Enterprise customer, please contact your Customer Success Manager. Otherwise, please email abusereply@cloudflare.com with the name of the web property and a detailed explanation of your association with this web property.</td>
+<td>Custom hostname cannot be added to Cloudflare at this time. Cusom hostname was likely associated with Cloudflare previously and flagged for abuse. If you are an Enterprise customer, please contact your Customer Success Manager. Otherwise, please email abusereply@cloudflare.com with the name of the web property and a detailed explanation of your association with this web property.</td>
 </tr>
 <tr>
 <td>Moved</td>
