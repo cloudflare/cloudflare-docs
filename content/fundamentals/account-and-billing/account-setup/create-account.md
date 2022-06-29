@@ -12,7 +12,7 @@ To create a new Cloudflare account:
 2. Enter your **Email** and **Password**. 
 3. Click **Create Account**.
 
-Once you create your account, Cloudflare will automatically send an email to your address to [verify that email address](/fundamentals/get-started/basic-tasks/account-security/verify-email-address/).
+Once you create your account, Cloudflare will automatically send an email to your address to [verify that email address](/fundamentals/account-and-billing/account-setup/verify-email-address/).
 
 ## Best practices
 

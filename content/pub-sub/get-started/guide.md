@@ -25,7 +25,7 @@ In the future, we will be adding support for Pub/Sub to [wrangler](/workers/wran
 
 ## Prerequisite: Create a Cloudflare account
 
-In order to use Pub/Sub, you need a [Cloudflare account](/fundamentals/get-started/setup/account-setup/). If you already have an account, you can skip this step.
+In order to use Pub/Sub, you need a [Cloudflare account](/fundamentals/account-and-billing/account-setup/). If you already have an account, you can skip this step.
 
 ## 1. Enable Pub/Sub
 

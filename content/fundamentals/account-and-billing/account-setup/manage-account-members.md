@@ -38,7 +38,7 @@ To add a member to your account:
     2. Select another role.
     3. De-select **Administrator**.
 
-    For a full list of available roles and associated permissions, go to the [**Account Members**](https://dash.cloudflare.com/?to=/:account/members) page within the dashboard or refer to [Available roles](/fundamentals/get-started/setup/account-setup/account-roles/#enterprise-roles).
+    For a full list of available roles and associated permissions, go to the [**Account Members**](https://dash.cloudflare.com/?to=/:account/members) page within the dashboard or refer to [Available roles](/fundamentals/account-and-billing/account-setup/account-roles/#enterprise-roles).
 
     </div>
     </details>
@@ -88,6 +88,6 @@ To enable editing access by Cloudflare Support:
 
 {{<Aside type="note">}}
 
-In an emergency, Cloudflare Support can override your **Editing Permissions** and make updates to your account, but your Super Administrator will receive an email and the action will be recorded in your [Audit Logs](/fundamentals/get-started/basic-tasks/account-security/review-audit-logs/) with an **Action** of **Break glass**.
+In an emergency, Cloudflare Support can override your **Editing Permissions** and make updates to your account, but your Super Administrator will receive an email and the action will be recorded in your [Audit Logs](/fundamentals/account-and-billing/account-security/review-audit-logs/) with an **Action** of **Break glass**.
 
 {{</Aside>}}

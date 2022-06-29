@@ -6,7 +6,7 @@ weight: 4
 
 # Available roles
 
-When you [add a new member](/fundamentals/get-started/setup/account-setup/manage-account-members/) to your account, you need to choose a role for that member.
+When you [add a new member](/fundamentals/account-and-billing/account-setup/manage-account-members/) to your account, you need to choose a role for that member.
 
 The exact roles available depend on your Cloudflare plan type.
 
