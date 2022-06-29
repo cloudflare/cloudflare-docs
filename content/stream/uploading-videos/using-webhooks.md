@@ -108,7 +108,7 @@ Every byte in the request body must remain unaltered for successful signature ve
 ### 3. Create the expected signature
 
 Compute an HMAC with the SHA256 function (HMAC-SHA256) using your webhook secret and the source string from step 2.
-This step depends on the programming language use by your application.
+This step depends on the programming language used by your application.
 
 Cloudflare's signature will be encoded to hex.
 
@@ -116,7 +116,7 @@ Cloudflare's signature will be encoded to hex.
 
 Compare the signature in the request header to the expected signature. Preferably, use a constant-time comparison function to compare the signatures.
 
-If the signatures match, you can trust Cloudflare sent the webhook.
+If the signatures match, you can trust that Cloudflare sent the webhook.
 
 ## Limitations
 
