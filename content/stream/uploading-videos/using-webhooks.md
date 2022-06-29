@@ -60,6 +60,19 @@ header: Example POST request body sent in response to successful encoding
   }
 ```
 
+## Error codes
+
+When a video is done processing, the status returns a `ready` state, but a video can return an `error` state for different reasons. Review the error codes below to learn possible reasons for the error.
+
+- `ERR_NON_VIDEO` – The upload is not a video. 
+- `ERR_DURATION_EXCEED_CONSTRAINT` – The video duration exceeds the constraints defined in the direct creator upload.
+- `ERR_FETCH_ORIGIN_ERROR` – The video failed to download from the URL.
+- `ERR_MALFORMED_VIDEO` – The video is a valid file but contains corrupt data that cannot be recovered.
+- `ERR_DURATION_TOO_SHORT` – The video's duration is shorter than 0.1 seconds.
+- `ERR_UNKNOWN` – If Stream can’t automatically determine why the video errored, the ERR_UNKNOWN code will be used.
+
+Additionally, you may receive a `pctComplete` option for videos in a `ready` state, which means the video is playable but the full quality is not yet available.
+
 ## Verify webhook authenticity
 
 Cloudflare Stream will sign the webhook requests sent to your notification URLs and include the signature of each request in the `Webhook-Signature` HTTP header. This allows your application to verify the webhook requests are sent by Stream.
@@ -82,7 +95,7 @@ The value for `time` is the current [UNIX time](https://en.wikipedia.org/wiki/Un
 
 At this point, you should discard requests with timestamps that are too old for your application.
 
-### 2. Create signature source string
+### 2. Create the signature source string
 
 Prepare the signature source string and concatenate the following strings:
 
