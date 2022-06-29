@@ -38,7 +38,7 @@ Assets stored in the cache through [Cache API](/runtime-apis/cache/) operations 
 
   - Assets purged in this way are only purged locally to the data center the Worker runtime was executed.
 
-- In order to purge an asset globally, the standard cache purge options must be used. Based on cache API implementation, not all cache purge endpoints function for purging assets stored by the Cache API.
+- To purge an asset globally, you must use the standard cache purge options. Based on cache API implementation, not all cache purge endpoints function for purging assets stored by the Cache API.
 
   - All assets on a zone can be purged by using the [Purge Everything](/cache/how-to/purge-cache/#purge-everything) cache operation. This purge will remove all assets associated with a Cloudflare zone from cache in all data centers regardless of the method set.
 
