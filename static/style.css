@@ -4462,7 +4462,7 @@ pre {
 }
 
 .tabs-content-wrapper {
-  height: 15rem;
+  height: 17rem;
   background: rgba(var(--color-rgb), 0.05);
 }
 .tabs > ul {
@@ -4525,7 +4525,6 @@ pre {
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  /* line-height: 2.75em; */
   height: 2.5rem;
   padding: 0.6em 1.25em;
   text-decoration: none;
@@ -4533,49 +4532,41 @@ pre {
   color: currentColor;
   cursor: pointer;
   top: 0;
-  /* transition: all 0.25s; */
   font-weight: 700;
   font-size: var(--code-font-size);
   font-family: var(--monospace-font-family);
 }
 
-.tab-label:hover {
-  /* top: -0.25rem;
-  transition: top 0.25s; */
-}
-
-#tab-jssw,
-#tab-jsesm,
-#tab-tsesm,
-#tab-tssw {
-}
-
 .tab-content {
   width: 100%;
-  position: absolute;
+  max-height: 270px;
   z-index: 1;
   border-radius: 3px;
-  /* top: 2.75em; */
   left: 0;
+  /* display: none; */
   padding-left: 10px;
   color: #2c3e50;
   border-bottom: 0.25rem solid #bdc3c7;
-  opacity: 0;
   transition: all 0.35s;
-  overflow-y: scroll;
+  overflow: scroll;
   background-color: rgb(243 243 244);
 }
+
+
 
 [theme="dark"] .tab-content {
   background: transparent;
 }
-.tab-content:target {
-  /* color: currentColor; */
-    /* background: rgba(var(--gray-5-rgb), 0.2); */
-    border-bottom: 0;
-    transition: all 0.35s;
-  opacity: 1;
+
+.hide-content{
+  display: none;
 }
+
+.js-svg{
+  height:"48" ;
+  width:"48"
+}
+
 
 .tab-switch:checked + .tab-label {
   color: currentColor;
@@ -4595,130 +4586,4 @@ pre {
 
 .tab-content > .CodeBlock {
   border-radius: 0;
-}
-
-/* new style test*/
-
-/* @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700);
-@import url(https://fonts.googleapis.com/css?family=Raleway:100,400,700); */
-
-/* Component Needs */
-.pc-tab > input,
-.pc-tab section > div {
-  display: none;
-}
-
-#tab1:checked ~ section .tab1,
-#tab2:checked ~ section .tab2,
-#tab3:checked ~ section .tab3 {
-  display: block;
-}
-
-#tab1:checked ~ nav .tab1,
-#tab2:checked ~ nav .tab2,
-#tab3:checked ~ nav .tab3 {
-  color: red;
-}
-
-/* Visual Styles */
-/* *,
-*:after,
-*:before {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-body {
-  -webkit-font-smoothing: antialiased;
-  background: #ecf0f1;
-  font-family: 'Raleway';
-} */
-
-.pc-tab {
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.pc-tab ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.pc-tab ul li label {
-  float: left;
-  padding: 15px 25px;
-  border: 1px solid #ddd;
-  border-bottom: 0;
-  background: #eee;
-  color: #444;
-}
-
-.pc-tab ul li label:hover {
-  background: #ddd;
-}
-
-.pc-tab ul li label:active {
-  background: #fff;
-}
-
-.pc-tab ul li:not(:last-child) label {
-  border-right-width: 0;
-}
-
-.pc-tab section {
-  font-family: "Droid Serif";
-  clear: both;
-}
-
-.pc-tab section div {
-  padding: 20px;
-  width: 100%;
-  border: 1px solid #ddd;
-  background: #fff;
-  line-height: 1.5em;
-  letter-spacing: 0.3px;
-  color: #444;
-}
-
-.pc-tab section div h2 {
-  margin: 0;
-  font-family: "Raleway";
-  letter-spacing: 1px;
-  color: #34495e;
-}
-
-#tab1:checked ~ nav .tab1 label,
-#tab2:checked ~ nav .tab2 label,
-#tab3:checked ~ nav .tab3 label {
-  background: white;
-  color: #111;
-  position: relative;
-}
-
-#tab1:checked ~ nav .tab1 label:after,
-#tab2:checked ~ nav .tab2 label:after,
-#tab3:checked ~ nav .tab3 label:after {
-  content: "";
-  display: block;
-  position: absolute;
-  height: 2px;
-  width: 100%;
-  background: #fff;
-  left: 0;
-  bottom: -1px;
-}
-
-footer {
-  margin-top: 50px;
-  font-size: 14px;
-  color: #ccc;
-  text-align: center;
-}
-
-footer a {
-  color: #aaa;
-  text-decoration: none;
 }
