@@ -16,6 +16,70 @@ This tutorial will briefly touch upon the basics of HTML forms. For a more in-de
 
 {{</Aside>}}
 
+{{< new-tabs >}}
+{{< new-tab id="jsesm" >}}
+```js
+export default {
+  fetch(request) {
+    const base = "https://example.com";
+    const statusCode = 301;
+
+    const destination = new URL(request.url, base);
+    return Response.redirect(destination.toString(), statusCode);
+  },
+};
+```
+{{< /new-tab >}}
+{{< new-tab id="jssw" >}}
+```js
+async function handler(request) {
+  const base = "https://anothert.com";
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
+```
+{{< /new-tab >}}
+{{< new-tab id="tsesm" >}}
+```js
+async function handler(request) {
+  const base = "https://yams.com";
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
+```
+{{< /new-tab >}}
+{{< new-tab id="tssw" >}}
+```js
+async function handler(request) {
+  const base = "https://obinnas.com";
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
+```
+{{< /new-tab >}}
+{{</ new-tabs >}}
+
 This tutorial will make heavy use of Cloudflare Pages and [its Workers integration](/pages/platform/functions/). Refer to the [Get started guide](/pages/get-started/) guide to familiarize yourself with the platform.
 
 ## Overview
@@ -212,69 +276,7 @@ The HTML page is also completely unstyled at this point, relying on the browsers
 
 {{</Aside>}}
 
-{{< new-tabs >}}
-{{< new-tab id="jsesm" >}}
-```js
-export default {
-  fetch(request) {
-    const base = "https://example.com";
-    const statusCode = 301;
 
-    const destination = new URL(request.url, base);
-    return Response.redirect(destination.toString(), statusCode);
-  },
-};
-```
-{{< /new-tab >}}
-{{< new-tab id="jssw" >}}
-```js
-async function handler(request) {
-  const base = "https://anothert.com";
-  const statusCode = 301;
-
-  const destination = new URL(request.url, base);
-  return Response.redirect(destination.toString(), statusCode);
-}
-
-// Initialize Worker
-addEventListener("fetch", (event) => {
-  event.respondWith(handler(event.request));
-});
-```
-{{< /new-tab >}}
-{{< new-tab id="tsesm" >}}
-```js
-async function handler(request) {
-  const base = "https://yams.com";
-  const statusCode = 301;
-
-  const destination = new URL(request.url, base);
-  return Response.redirect(destination.toString(), statusCode);
-}
-
-// Initialize Worker
-addEventListener("fetch", (event) => {
-  event.respondWith(handler(event.request));
-});
-```
-{{< /new-tab >}}
-{{< new-tab id="tssw" >}}
-```js
-async function handler(request) {
-  const base = "https://obinnas.com";
-  const statusCode = 301;
-
-  const destination = new URL(request.url, base);
-  return Response.redirect(destination.toString(), statusCode);
-}
-
-// Initialize Worker
-addEventListener("fetch", (event) => {
-  event.respondWith(handler(event.request));
-});
-```
-{{< /new-tab >}}
-{{</ new-tabs >}}
 
 ### Worker
 

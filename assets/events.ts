@@ -96,6 +96,39 @@ export function focus() {
   });
 }
 
+function $switchTabs(ev: MouseEvent) {
+  ev.preventDefault()
+  let tabs = document.querySelectorAll('.tab-content');
+  for (let i = 0; i < tabs.length; i++) tabs[i].classList.add('hide-content');
+
+  let tab = ev.target.getAttribute("data-tab")
+ let selectedContent = document.getElementById(tab)
+ selectedContent.classList.remove("hide-content")
+}
+
+export function tabs(){
+  let tabs = document.querySelectorAll('.tab-label');
+  for (let i = 0; i < tabs.length; i++) tabs[i].addEventListener('click', $switchTabs);
+}
+
+
+// function $switchTabs(ev: MouseEvent) {
+//   ev.preventDefault()
+//   let tabs = document.querySelectorAll('.tab-content');
+//   for (let i = 0; i < tabs.length; i++) tabs[i].classList.remove('show-content');
+
+//   let tab = ev.target.getAttribute("data-tab")
+//  let selectedContent = document.getElementById(tab)
+//  selectedContent.classList.add("show-content")
+// }
+
+// export function tabs(){
+//   let labels = document.querySelectorAll('.tab-label');
+//   let tabs = document.querySelector('.tabs')
+//   tabs.
+//   for (let i = 0; i < labels.length; i++) labels[i].addEventListener('click', $switchTabs);
+// }
+
 export function dropdowns() {
   let attr = 'data-expanded';
 
@@ -164,3 +197,5 @@ export function dropdowns() {
     }
   });
 }
+
+
