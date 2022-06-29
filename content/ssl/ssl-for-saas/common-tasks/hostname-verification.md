@@ -8,7 +8,7 @@ weight: 5
 
 Cloudflare verifies ownership of each new hostname before traffic is allowed to proxy. There are four methods to verify ownership: TXT record, HTTP token, CNAME, or Apex.
 
-{{<Aside type="note" header="Note:">}}
+{{<Aside type="note">}}
 
 If a custom hostname is already on Cloudflare, then traffic will only shift to your fallback origin once the [DNS target has changed](/ssl/ssl-for-saas/getting-started/#step-5--have-customer-create-a-cname-record).
 
@@ -36,7 +36,7 @@ app.example.com CNAME proxy-fallback.saasprovider.com
 proxy-fallback.saasprovider.com CNAME proxy-fallback.saasprovider.com.cdn.cloudflare.net
 ```
 
-{{<Aside type="warning" header="Warning:">}}To prevent unresolvable CNAME loops, only 10 consecutive CNAMES are followed to find the appropriate Custom Hostname CNAME. The final CNAME must contain <code class="InlineCode">[zone_name].cdn.cloudflare.net</code>.{{</Aside>}}
+{{<Aside type="warning">}}To prevent unresolvable CNAME loops, only 10 consecutive CNAMES are followed to find the appropriate Custom Hostname CNAME. The final CNAME must contain <code class="InlineCode">[zone_name].cdn.cloudflare.net</code>.{{</Aside>}}
 
 #### If using another DNS provider
 
