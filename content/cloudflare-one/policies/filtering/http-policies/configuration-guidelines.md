@@ -10,7 +10,7 @@ This section provides tips on configuring the Gateway proxy.
 
 ## Disable QUIC in Google Chrome
 
-Google Chrome by default enables support for QUIC, which is used to connect to HTTP/3 capable webpages. Since Gateway does not currently support inspection of HTTP/3 traffic, you will need to disable QUIC within Google Chrome in order to apply HTTP policies.
+Google Chrome by default enables support for QUIC, which is used to connect to HTTP/3 capable webpages. Since Gateway does not currently support inspection of HTTP/3 traffic, you will need to disable QUIC within Google Chrome in order to apply HTTP policies. Disabling QUIC forces the browser to fall back to HTTP/2, allowing traffic from Chrome to be filtered by Gateway.
 
 To manually disable QUIC in the Google Chrome browser:
 
