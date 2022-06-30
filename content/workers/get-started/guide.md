@@ -91,7 +91,7 @@ $ cd <YOUR_WORKER>
 In your project directory, `wrangler init` has generated the following files:
 
 1. `wrangler.toml`: Your [Wrangler](https://developers.cloudflare.com/workers/wrangler/configuration/#example) configuration file.
-2. `index.js` (in `/src`): A minimal Worker Hello World application script written in `modules` syntax.
+2. `index.js` (in `/src`): A minimal Worker Hello World application script written in module syntax.
 3. `package.json`: A minimal Node dependencies configuration file. Only generated if indicated in `wrangler init` command.
 4. `tsconfig.json`: TypeScript configuration that includes [Workers types](https://github.com/cloudflare/workers-types). Only generated if indicated in `wrangler init` command.
 
@@ -121,25 +121,25 @@ export default {
 };
 ```
 
-This code consists of three parts:
+This code block consists of four parts:
 
-1. `export default`
+1. The `export` statement: `export default`
 
-`export default` is JavaScript syntax required for defining [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#default_exports_versus_named_exports). `export default` lets the Workers runtime know that this is a Worker object as opposed to other Cloudflare products. Refer to [MDN documentation for more information of default exports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#default_exports_versus_named_exports).
+`export default` is JavaScript syntax required for defining [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#default_exports_versus_named_exports). `export default` lets the Workers runtime know that this is a Worker object as opposed to another Cloudflare product. Refer to [MDN documentation for more information on default exports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
 
 2. The event handler: `async fetch(request)`
 
-The event handler indicates what events the user wants the Worker to listen to (such as, [`fetch`](/workers/runtime-apis/fetch-event/) and [`schedule`](/workers/runtime-apis/scheduled-event/)). 
+The event handler indicates what events the Worker should listen to (such as, [`fetch`](/workers/runtime-apis/fetch-event/) or [`schedule`](/workers/runtime-apis/scheduled-event/)). 
 
-3. Parameters (`request`, `env`, `context`)
+3. Parameters: `request`, `env`, `context`
 
-The event handler mentioned above will always get three parameters passed into it: [`request`, `env` and `context`](workers/runtime-apis/fetch-event/#syntax-module-worker). If you would like to interact with these parameters, you will have to accept the parameters as variables by indicating them in your code. You can choose which parameters to use, but they must always be written in order (`request`, `env`, `context`.) In this example, `request` is indicated meaning that your Worker can now interact with the Request object.
+The event handler will always get three parameters passed into it: [`request`, `env` and `context`](workers/runtime-apis/fetch-event/#syntax-module-worker). If you would like to interact with these parameters, you will have to accept the parameters as variables by indicating them in your code. You can choose which parameters to use. They must always be written in order (`request`, `env`, `context`.) In this example, `request` is indicated and your Worker can now interact with the `Request` object.
 
-4. `return new Response("Hello World!");`
+4. The `Response` object: `return new Response("Hello World!");`
 
-The Workers runtime expects `fetch` events to return a Response object. In this example, you will return a new Response with the string `"Hello World!"`.
+The Workers runtime expects `fetch` events to return a `Response` object. In this example, you will return a new Response with the string `"Hello World!"`.
 
-In order to see code changes in real time, change the `"Hello World!"` string to `"Hello Worker!"` and, with `wrangler dev` running, save your changes.
+In order to review code changes in real time, rewrite the `"Hello World!"` string to `"Hello Worker!"` and, with `wrangler dev` running, save your changes.
 
 To experiment with more premade Workers, refer to [Workers Examples](/workers/examples/).
 
@@ -253,8 +253,6 @@ When pushing to your `*.workers.dev` subdomain for the first time, you may initi
 
 {{</Aside>}}
 
-To publish your Worker to a custom domain (like `example.com`), refer to []().
-
 <!-->
 
 ### (Optional) Publish your project to a registered domain
@@ -278,4 +276,4 @@ You can also configure a GitHub repository to automatically deploy every time yo
 
 ## Next steps
 
-This is just the beginning of what you can do with Cloudflare Workers. To do more with Workers, refer to the [Tutorials](/workers/tutorials/) section.
+To do more with Workers, explore the [Tutorials](/workers/tutorials/) and [Examples](/workers/examples/).
