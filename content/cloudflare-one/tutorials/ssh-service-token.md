@@ -27,11 +27,7 @@ This walkthrough extends a [previous guide](/cloudflare-one/tutorials/gitlab/) t
 
 Navigate to the Access section of the Zero Trust dashboard and select the `Service Auth` page.
 
-![Service Auth Start](/cloudflare-one/static/zero-trust-security/ssh-tokens/service-auth-start.png)
-
 Click **Create Service Token** and name the service token. Cloudflare Access will generate a `Client ID` and `Client Secret`. You must copy the `Client Secret` from this page - it will not be shown again.
-
-![Name and Detail](/cloudflare-one/static/zero-trust-security/ssh-tokens/name-and-detail.png)
 
 {{<Aside>}}
 
