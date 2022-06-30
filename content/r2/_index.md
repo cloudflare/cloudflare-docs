@@ -23,7 +23,7 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 
 ## Popular pages
 
-- [Pricing](/r2/platform/pricing/) – Learn about the Free tier and paid rates.
+- [Pricing](/r2/platform/pricing/) – Learn about the free tier and paid rates.
 - [Reference: Changelog](/r2/platform/changelog/) – Keep up-to-date with what's new in R2.
 - [Limits](/r2/platform/limits/) – Learn about account limits.
 
