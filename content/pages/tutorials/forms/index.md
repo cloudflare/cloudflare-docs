@@ -16,53 +16,58 @@ This tutorial will briefly touch upon the basics of HTML forms. For a more in-de
 
 {{</Aside>}}
 
-{{< new-tabs >}}
-{{< new-tab id="jsesm" >}}
-```js
-export default {
-  fetch(request) {
-    const base = "https://example.com";
-    const statusCode = 301;
+{{<tabs labels="js/sw | js/esm | ts/esm | ts/sw">}}
+{{<tab label="js/sw">}}
 
-    const destination = new URL(request.url, base);
-    return Response.redirect(destination.toString(), statusCode);
+```js
+async function handler(request) {
+  const base = 'https://example.com';
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener('fetch', event => {
+  event.respondWith(handler(event.request));
+});
+```
+
+{{</tab>}}
+{{<tab label="js/esm">}}
+
+```js
+async function handler(request) {
+  const base = "https://example.com";
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
+```
+
+{{</tab>}}
+{{<tab label="ts/esm">}}
+
+```js
+import meaning from "meaning-of-life";
+
+export default {
+  async fetch(request: Request): Promise<Response> {
+    return new Response(meaning);
   },
 };
 ```
-{{< /new-tab >}}
-{{< new-tab id="jssw" >}}
-```js
-async function handler(request) {
-  const base = "https://anothert.com";
-  const statusCode = 301;
 
-  const destination = new URL(request.url, base);
-  return Response.redirect(destination.toString(), statusCode);
-}
+{{</tab>}}
+{{<tab label="ts/sw">}}
 
-// Initialize Worker
-addEventListener("fetch", (event) => {
-  event.respondWith(handler(event.request));
-});
-```
-{{< /new-tab >}}
-{{< new-tab id="tsesm" >}}
-```js
-async function handler(request) {
-  const base = "https://yams.com";
-  const statusCode = 301;
-
-  const destination = new URL(request.url, base);
-  return Response.redirect(destination.toString(), statusCode);
-}
-
-// Initialize Worker
-addEventListener("fetch", (event) => {
-  event.respondWith(handler(event.request));
-});
-```
-{{< /new-tab >}}
-{{< new-tab id="tssw" >}}
 ```js
 async function handler(request) {
   const base = "https://obinnas.com";
@@ -77,8 +82,9 @@ addEventListener("fetch", (event) => {
   event.respondWith(handler(event.request));
 });
 ```
-{{< /new-tab >}}
-{{</ new-tabs >}}
+
+{{</tab>}}
+{{</tabs>}}
 
 This tutorial will make heavy use of Cloudflare Pages and [its Workers integration](/pages/platform/functions/). Refer to the [Get started guide](/pages/get-started/) guide to familiarize yourself with the platform.
 

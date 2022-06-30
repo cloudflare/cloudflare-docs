@@ -96,6 +96,36 @@ export function focus() {
   });
 }
 
+function $tab(ev: MouseEvent) {
+  ev.preventDefault();
+
+  let tabs = document.querySelectorAll(".tab");
+
+  for (let i = 0; i < tabs.length; i++) {
+    (tabs[i] as HTMLElement).style.display = "none";
+  }
+
+  let target = ev.target;
+  let link = (target as HTMLElement).getAttribute("data-link");
+
+  document.getElementById(link).style.display = "block";
+}
+
+export function tabs() {
+  // Find all tab wrappers
+  let wrappers = document.querySelectorAll(".wrapper");
+
+  for (let i = 0; i < wrappers.length; i++) {
+    const labels = wrappers[i].querySelectorAll(".tab-label");
+    const tabs = wrappers[i].querySelectorAll(".tab");
+
+    // Set the first tab in a group to display
+    ((tabs[0] as HTMLElement) || null).style.display = "block";
+    for (let i = 0; i < labels.length; i++)
+      labels[i].addEventListener("click", $tab);
+  }
+}
+
 export function dropdowns() {
   let attr = 'data-expanded';
 
