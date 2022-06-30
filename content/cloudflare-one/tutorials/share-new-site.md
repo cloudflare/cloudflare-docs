@@ -114,11 +114,11 @@ Before you build the rule, you'll need to follow [these instructions](/cloudflar
 
 1.  In the policy builder, add the subdomain of your new DNS record that represents your Cloudflare Tunnel connection.
 
-    ![Add subdomain](/cloudflare-one/static/secure-origin-connections/share-new-site/configure-app.png)
+    ![Add subdomain in the policy builder](/cloudflare-one/static/secure-origin-connections/share-new-site/configure-app.png)
 
     You can then add rules to determine who can reach the site.
 
-    ![Limit Access](/cloudflare-one/static/secure-origin-connections/share-new-site/add-rules.png)
+    ![Limit Access in the policy builder](/cloudflare-one/static/secure-origin-connections/share-new-site/add-rules.png)
 
 ## Additional Materials
 
