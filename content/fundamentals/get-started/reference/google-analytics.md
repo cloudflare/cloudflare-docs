@@ -27,6 +27,6 @@ As an alternative to the standard setup of Google Analytics with tag/snippet, Cl
 
 {{<Aside type="note">}}
 
-Details about features of Google Analytics that are unavailable with Zaraz can be found in [Zaraz FAQ](zaraz/faq/#tools)
+Details about features of Google Analytics that are unavailable with Zaraz can be found in [Zaraz FAQ](/zaraz/faq/#tools)
 
 {{</Aside>}}
