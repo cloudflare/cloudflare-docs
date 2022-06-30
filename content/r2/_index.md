@@ -12,5 +12,27 @@ meta:
 # Cloudflare R2 documentation
 
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+  
+{{<button-group>}}
+{{<button type="primary" href="/r2/get-started/">}}Get started{{</button>}}
+{{<button type="secondary" href="/r2/examples/">}}View the examples{{</button>}}
+{{<button type="secondary" href="/r2/runtime-apis/">}}View the Workers APIs{{</button>}}
+{{</button-group>}}
+
+---
+
+## Popular pages
+
+- [Pricing](/r2/platform/pricing/) – Learn about the Free tier and paid rates.
+- [Reference: Changelog](/r2/platform/changelog/) – Keep up-to-date with what's new in R2.
+- [Limits](/r2/platform/limits/) – Learn about account limits.
+
+---
+
+## Community
+
+[Connect with the Workers community on Discord](https://discord.gg/cloudflaredev) to ask questions, show off what you are building, and discuss the platform with other developers.
+
+[Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what is new in Cloudflare Workers.
 
 {{</content-column>}}
