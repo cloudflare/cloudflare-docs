@@ -8,9 +8,9 @@ weight: 5
 
 This section provides tips on configuring the Gateway proxy.
 
-## Enabling access to Google services
+## Disable QUIC in Google Chrome
 
-Google Chrome uses the QUIC protocol to connect to all Google-related services. Since Gateway does not currently support inspection of QUIC traffic, you will need to disable QUIC within Google Chrome.
+Google Chrome by default enables support for QUIC, which is used to connect to HTTP/3 capable webpages. Since Gateway does not currently support inspection of HTTP/3 traffic, you will need to disable QUIC within Google Chrome in order to apply HTTP policies.
 
 To manually disable QUIC in the Google Chrome browser:
 
@@ -27,6 +27,6 @@ The following Windows registry key (or Mac/Linux preference) can be used to disa
 *   **Description:** If this policy is set to true (or not set), usage of QUIC is allowed. If the policy is set to false, usage of QUIC is not allowed.
 *   **Recommended value:** `Windows: 0x00000000`, `Linux: false`, `Mac: <false />`
 
-## Enabling mTLS authentication
+## Enable mTLS authentication
 
 Applications which enforce mutual TLS are incompatible with TLS decryption. To allow mTLS requests through Gateway, add a [*Do Not Inspect*](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) HTTP policy for the mTLS-protected domain.
