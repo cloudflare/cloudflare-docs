@@ -5025,6 +5025,7 @@ pre {
 
 [theme="dark"] .tab-label-wrapper:hover,
 [theme="dark"] .tab-label-wrapper a:hover {
+  width: 100%;
   background-color: rgba(var(--orange-rgb), 0.08);
   color: var(--code-orange);
 }
@@ -5048,7 +5049,7 @@ pre {
   max-height: 270px;
   border-radius: 3px;
   display: none;
-  padding-left: 10px;
+  /* padding-left: 10px; */
   display: none;
   color: #2c3e50;
   border-bottom: 0.25rem solid #bdc3c7;
