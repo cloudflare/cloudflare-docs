@@ -18,6 +18,6 @@ To begin using Argo Smart Routing, you must add it to your plan.
 
 ## Enable Argo Tiered Cache
 
-Argo Tiered Cache uses Cloudflare's network of data centers to deliver content more efficiently. Argo Smart Routing and Argo Tiered Cache work together to provide the fastest and most reliable connection for users.
+Argo Tiered Cache uses Cloudflare's network of data centers to deliver content more efficiently. [Cache](/cache) works by storing a copy of website content at our data centers. 
 
-To enable Argo Tiered Cache, go to [Enable Tiered Cache](/cache/how-to/enable-tiered-cache).
+Argo Smart Routing and Argo Tiered Cache work together to provide the fastest and most reliable connection for users. To enable Argo Tiered Cache, go to [Enable Tiered Cache](/cache/how-to/enable-tiered-cache).
