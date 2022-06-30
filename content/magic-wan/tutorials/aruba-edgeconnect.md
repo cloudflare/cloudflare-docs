@@ -21,6 +21,7 @@ Note that north-south traffic routed through Cloudflare’s Secure Web Gateway i
 Before setting up a connection between EdgeConnect and Cloudflare, you must have:
 
 - A contract that includes Magic WAN and Secure Web Gateway.
+- Received two Cloudflare endpoints (Anycast IP address).
 - Determined a private static /31 IP pair to use with each tunnel. The /31 pairs should be from a different private subnet, separate from the private subnets used behind each EdgeConnect appliance.
 - The EdgeConnect devices used in this tutorial and on v9.0. 
 
