@@ -8,7 +8,7 @@ weight: 7
 
 Webhooks notify your service when videos successfully finish processing and are ready to stream or if your video enters an error state.
 
-## Create or modify webhook subscriptions
+## Subscribe to webhook notifications
 
 To subscribe to receive webhook notifications on your service or modify an existing subscription, you will need a [Cloudflare API token](https://www.cloudflare.com/a/account/my-account).
 
@@ -62,7 +62,9 @@ header: Example POST request body sent in response to successful encoding
 
 ## Error codes
 
-When a video is done processing, the status returns a `ready` state, but a video can return an `error` state for different reasons. Review the error codes below to learn possible reasons for the error.
+When a video is done processing, the `state` field returns a `ready` state. If a video could not process successfully, the `state` field returns `error`, and the `errReasonCode` returns one of the values listed below. 
+
+Videos may sometimes return the `state` field as `ready` and an additional `pctComplete` state that is not 100. When this occurs, the video is playable, but the video's full quality is not yet available.
 
 - `ERR_NON_VIDEO` – The upload is not a video. 
 - `ERR_DURATION_EXCEED_CONSTRAINT` – The video duration exceeds the constraints defined in the direct creator upload.
@@ -71,7 +73,21 @@ When a video is done processing, the status returns a `ready` state, but a video
 - `ERR_DURATION_TOO_SHORT` – The video's duration is shorter than 0.1 seconds.
 - `ERR_UNKNOWN` – If Stream can’t automatically determine why the video errored, the ERR_UNKNOWN code will be used.
 
-Additionally, you may receive a `pctComplete` option for videos in a `ready` state, which means the video is playable but the full quality is not yet available.
+```bash
+---
+header: Example error response
+highlight: [3, 6]
+---
+{
+  "status": {
+    "state": "error",
+    "step": "encoding",
+    "pctComplete": "39",
+    "errReasonCode": "ERR_MALFORMED_VIDEO",
+    "errReasonText": "The video was deemed to be corrupted or malformed.",
+  }
+}
+```
 
 ## Verify webhook authenticity
 
