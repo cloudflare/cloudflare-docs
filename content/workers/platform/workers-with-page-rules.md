@@ -24,7 +24,7 @@ If you are experiencing Page Rule errors when running Workers, contact your Clou
 
 ## Disabled Page Rules
 
-The following Page Rules are disabled when an incoming request is matched to a Worker route:
+The following Page Rules may not work as expected when an incoming request is matched to a Worker route:
 
 *   Always Online
 *   Always Use HTTPS
@@ -36,6 +36,14 @@ The following Page Rules are disabled when an incoming request is matched to a W
 *   Host Header Override
 *   Mirage
 *   Rocket Loader
+
+This is because the default setting of these Page Rules will be disabled when Cloudflare recognizes that the request is headed to a Worker.
+
+{{<Aside type="warning" header="Testing">}}
+
+Due to ongoing changes to the Workers runtime, detailed documentation on how these rules will be affected will be published following testing.
+
+{{</Aside>}}
 
 To learn what these Page Rules do, refer to [Understanding and configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427).
 
