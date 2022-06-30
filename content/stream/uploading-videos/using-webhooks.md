@@ -60,25 +60,28 @@ header: Example POST request body sent in response to successful encoding
   }
 ```
 
+When a video is done processing, the `state` field returns a `ready` state. Videos may sometimes return the `state` field as `ready` and an additional `pctComplete` state that is not 100, which means higher quality renditions are still processing. When `pctComplete` reaches 100, all quality resolutions are available for the video.
+
 ## Error codes
 
-When a video is done processing, the `state` field returns a `ready` state. If a video could not process successfully, the `state` field returns `error`, and the `errReasonCode` returns one of the values listed below. 
-
-Videos may sometimes return the `state` field as `ready` and an additional `pctComplete` state that is not 100. When this occurs, the video is playable, but the video's full quality is not yet available.
+If a video could not process successfully, the `state` field returns `error`, and the `errReasonCode` returns one of the values listed below. 
 
 - `ERR_NON_VIDEO` – The upload is not a video. 
 - `ERR_DURATION_EXCEED_CONSTRAINT` – The video duration exceeds the constraints defined in the direct creator upload.
 - `ERR_FETCH_ORIGIN_ERROR` – The video failed to download from the URL.
 - `ERR_MALFORMED_VIDEO` – The video is a valid file but contains corrupt data that cannot be recovered.
 - `ERR_DURATION_TOO_SHORT` – The video's duration is shorter than 0.1 seconds.
-- `ERR_UNKNOWN` – If Stream can’t automatically determine why the video errored, the ERR_UNKNOWN code will be used.
+- `ERR_UNKNOWN` – If Stream cannot automatically determine why the video returned an error, the ERR_UNKNOWN code will be used.
+
+In addition to the `state` field, a video's `readyToStream` field must also be `true` for a video to play.
 
 ```bash
 ---
 header: Example error response
-highlight: [3, 6]
+highlight: [2, 4, 6]
 ---
 {
+  "readyToStream": true,
   "status": {
     "state": "error",
     "step": "encoding",
