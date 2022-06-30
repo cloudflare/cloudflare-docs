@@ -1,7 +1,7 @@
 ---
 pcx-content-type: navigation
 title: Configuring Cloudflare Web Analytics
-weight: 6
+weight: 5
 ---
 
 # Configuring Cloudflare Web Analytics

@@ -14,8 +14,10 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`kv:namespace`](#kvnamespace) - Manage Workers KV namespaces.
 - [`kv:key`](#kvkey) - Manage key-value pairs within a Workers KV namespace.
 - [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
+- [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
+- [`pages`](#pages) - Configure Cloudflare Pages.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 
@@ -662,6 +664,54 @@ y
 
 ---
 
+## r2 bucket
+
+Interact with buckets in an R2 store.
+
+{{<Aside type="note">}}
+The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/workers/runtime-apis/r2/).
+{{</Aside>}}
+
+### `create`
+
+Create a new R2 bucket.
+
+```sh
+$ wrangler r2 bucket create <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the new R2 bucket.
+
+{{</definitions>}}
+
+### `delete`
+
+Delete an R2 bucket.
+
+```sh
+$ wrangler r2 bucket delete <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to delete.
+
+{{</definitions>}}
+
+### `list`
+
+List R2 bucket in the current account.
+
+```sh
+$ wrangler r2 bucket list
+```
+
+---
+
 ## secret
 
 Manage the secret variables for a Worker.
@@ -782,6 +832,127 @@ $ wrangler tail <NAME> [OPTIONS]
 {{</definitions>}}
 
 After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
+
+---
+
+## pages
+
+Configure Cloudflare Pages.
+
+{{<Aside type="warning">}}
+The `wrangler pages ...` commands are in beta.<br>
+Report any issues to https://github.com/cloudflare/wrangler2/issues/new/choose.
+{{</Aside>}}
+
+### `dev`
+
+Develop your full stack Pages application locally.
+
+```sh
+$ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND..>]
+```
+
+{{<definitions>}}
+
+- `DIRECTORY` {{<type>}}string{{</type>}}
+  - The directory of static assets to serve.
+- `COMMAND..` {{<type>}}string{{</type>}}
+  - The proxy command(s) to run.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
+  - Run on my machine.
+- `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}(default: 8788){{</prop-meta>}}
+  - The port to listen on (serve from).
+- `--proxy` {{<type>}}number{{</type>}}
+  - The port to proxy (where the static assets are served).
+- `--script-path` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: "\_worker.js"){{</prop-meta>}}
+  - The location of the single Worker script if not using functions.
+- `--binding` {{<type>}}string[]{{</type>}}
+  - Bind variable/secret (KEY=VALUE).
+- `--kv` {{<type>}}string[]{{</type>}}
+  - KV namespace to bind.
+- `--do` {{<type>}}string[]{{</type>}}
+  - Durable Object to bind (NAME=CLASS).
+- `--live-reload` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Auto reload HTML pages when change is detected.
+
+{{</definitions>}}
+
+### `project list`
+
+List your Pages projects.
+
+```sh
+$ wrangler pages project list
+```
+
+### `project create`
+
+Create a new Cloudflare Pages project.
+
+```sh
+$ wrangler pages project create [PROJECT-NAME] [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `PROJECT-NAME` {{<type>}}string{{</type>}}
+  - The name of your Pages project.
+- `--production-branch` {{<type>}}string{{</type>}}
+  - The name of the production branch of your project.
+
+{{</definitions>}}
+
+### `deployment list`
+
+List deployments in your Cloudflare Pages project.
+
+```sh
+$ wrangler pages deployment list [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `--project-name` {{<type>}}string{{</type>}}
+  - The name of the project you would like to list deployments for.
+
+{{</definitions>}}
+
+### `publish`
+
+Deploy a directory of static assets as a Pages deployment.
+
+```sh
+$ wrangler pages publish [DIRECTORY] [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DIRECTORY` {{<type>}}string{{</type>}}
+  - The directory of static files to upload.
+- `--project-name` {{<type>}}string{{</type>}}
+  - The name of the project you want to deploy to.
+- `--branch` {{<type>}}string{{</type>}}
+  - The name of the branch you want to deploy to.
+- `--commit-hash` {{<type>}}string{{</type>}}
+  - The SHA to attach to this deployment.
+- `--commit-message` {{<type>}}string{{</type>}}
+  - The commit message to attach to this deployment.
+- `--commit-dirty` {{<type>}}boolean{{</type>}}
+  - Whether or not the workspace should be considered dirty for this deployment.
+
+{{</definitions>}}
+
+{{<Aside type="note">}}
+
+Your site is deployed to `<PROJECT_NAME>.pages.dev`. If you do not provide the `--project-name` argument, you will be prompted to enter <PROJECT_NAME> in your terminal after you run the command.
+
+{{</Aside>}}
+
+{{<Aside type="note">}}
+
+This command has an alias of `wrangler pages deploy create`.
+
+{{</Aside>}}
 
 ---
 

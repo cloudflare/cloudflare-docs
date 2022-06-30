@@ -17,13 +17,13 @@ The Google Workspace integration detects a variety of user security, data loss p
 
 For the Google Workspace integration to function, CASB requires the following API scopes for access:
 
-`https://www.googleapis.com/auth/admin.directory.domain.readonly`
-`https://www.googleapis.com/auth/admin.directory.user.readonly`
-`https://www.googleapis.com/auth/admin.directory.user.security`
-`https://www.googleapis.com/auth/calendar`
-`https://www.googleapis.com/auth/cloud-platform.read-only`
-`https://www.googleapis.com/auth/drive.readonly`
-`https://www.googleapis.com/auth/gmail.settings.basic`
+* `https://www.googleapis.com/auth/admin.directory.domain.readonly`
+* `https://www.googleapis.com/auth/admin.directory.user.readonly`
+* `https://www.googleapis.com/auth/admin.directory.user.security`
+* `https://www.googleapis.com/auth/calendar`
+* `https://www.googleapis.com/auth/cloud-platform.read-only`
+* `https://www.googleapis.com/auth/drive.readonly`
+* `https://www.googleapis.com/auth/gmail.settings.basic`
 
 These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission, refer to the [Google Workspace Admin SDK Directory API](https://developers.google.com/admin-sdk/directory/v1/guides/authorizing).
 
@@ -46,11 +46,11 @@ Users who did not enable two-factor authentication (2FA) or set a recovery email
 
 Having inactive or suspended users in your Google Workspace account may present potential compliance violations (for example, employee offboarding violations). Inactive users also increase the risk of account misuse should someone else gain access to their account.
 
-| Finding                              | Severity |
-|--------------------------------------|----------|
-| Google Workspace Admin User Inactive | Medium   |
-| Google Workspace User Inactive       | Low      |
+| Finding                               | Severity |
+|---------------------------------------|----------|
+| Google Workspace Admin User Inactive  | Medium   |
 | Google Workspace Admin User Suspended | Medium   |
+| Google Workspace User Inactive        | Low      |
 | Google Workspace User Suspended       | Low      |
 
 ### File sharing
@@ -80,7 +80,7 @@ Identify and get alerted about the third-party apps that have access to at least
 | Installed 3rd Party App with Google Sheets Access  | Medium   |
 | Installed 3rd Party App with Google Sign In Access | Low      |
 
-### Gmail admin settings
+### Gmail administrator settings
 
 Discover suspicious or insecure email configurations in your Google Workspace domain. Missing SPF and DMARC records make it easier for bad actors to spoof email, while SPF records configured to another domain can be a potential warning sign of malicious activity.
 

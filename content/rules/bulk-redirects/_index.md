@@ -24,4 +24,6 @@ Bulk Redirects are essentially static — they do not support any string replace
 
 {{</table-wrap>}}
 
-When determining the available Bulk Redirect features and their limits, Cloudflare takes into account the highest plan on your account.
+The limits in the table are the default limits for each Cloudflare plan. If you need more URL Redirects, contact your account team.
+
+When determining the available Bulk Redirect features and their limits, Cloudflare takes the highest plan on your account into consideration.
