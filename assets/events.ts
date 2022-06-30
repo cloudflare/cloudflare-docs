@@ -116,18 +116,22 @@ function $tab(ev: MouseEvent) {
   let target = ev.target;
   let link = (target as HTMLElement).getAttribute("data-link");
 
-  let linkElement = document.getElementById(link);
-  linkElement.style.display = "block";
+  document.getElementById(link).style.display = "block";
 }
 
 export function tabs() {
-  const labels = document.querySelectorAll(".tab-label");
-  const tabs = document.querySelectorAll(".tab");
+  // Find all tab wrappers
+  let wrappers = document.querySelectorAll(".wrapper");
 
-  let defaultTab = (tabs[tabs.length - 1] as HTMLElement) || null;
-  defaultTab.style.display = "block";
-  for (let i = 0; i < labels.length; i++)
-    labels[i].addEventListener("click", $tab);
+  for (let i = 0; i < wrappers.length; i++) {
+    const labels = wrappers[i].querySelectorAll(".tab-label");
+    const tabs = wrappers[i].querySelectorAll(".tab");
+
+    // Set the first tab in a group to display
+    ((tabs[0] as HTMLElement) || null).style.display = "block";
+    for (let i = 0; i < labels.length; i++)
+      labels[i].addEventListener("click", $tab);
+  }
 }
 
 export function dropdowns() {

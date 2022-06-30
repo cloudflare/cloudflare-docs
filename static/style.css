@@ -4497,7 +4497,10 @@ pre {
 }
 
 .tab-label-wrapper {
+  display: flex;
   width: 25%;
+  align-items: center;
+  flex-direction: row;
   margin-bottom: 0;
   list-style-type: none;
   box-shadow: 1px 0 rgba(var(--shadow-color-rgb), 0.12);
@@ -4515,9 +4518,6 @@ pre {
 
 .tab-label {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   white-space: nowrap;
   height: 2.5rem;
   padding: 0.6em 1.25em;
