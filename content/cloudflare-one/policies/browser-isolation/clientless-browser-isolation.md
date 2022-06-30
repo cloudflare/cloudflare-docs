@@ -38,6 +38,18 @@ For example, if you use a third-party Secure Web Gateway to block `example.com`,
 | ---------| ---------| ----------------| -------------- |
 | Domain   | in       | `example.com`   | Block          |
 
+### Connect private networks
+
+With Clientless Web Isolation, users can reach any private IP resource you have connected through [Cloudflare Tunnel](cloudflare-one/connections/connect-apps/). To connect a private network to Cloudflare, refer to our [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/).
+
+For example, if you added `192.0.2.1` to your tunnel, users can connect to your application by going to:
+
+`https://<your-team-name>.cloudflareaccess.com/browser/http://192.0.2.1`
+
+{{<Aside type="note">}}
+All users with access to your remote browser can access your Cloudflare Tunnel applications unless you create a Gateway HTTP policy to block them.
+{{</Aside>}}
+
 ### Disable remote browser controls
 
 You can configure [remote browser controls](/cloudflare-one/policies/browser-isolation/#settings) such as disabling copy/paste, printing, or keyboard input. These settings display in the Gateway [HTTP policy builder](/cloudflare-one/policies/filtering/http-policies/) when you select the Isolate action.
