@@ -25,4 +25,4 @@ Note that it can take anywhere from 1 week to up to 4 weeks for websites to reco
 
 At this time, only TCP traffic can be proxied through dedicated egress IPs. UDP traffic will egress from the default shared IP ranges instead of your dedicated IPs.
 
-Google Chrome by default uses the UDP-based QUIC protocol to connect to websites. In order to route traffic from Chrome through your dedicated egress IPs, you must [disable QUIC in Google Chrome](/cloudflare-one/policies/filtering/http-policies/configuration-guidelines/#disable-quic-in-google-chrome).  This forces the browser to connect using TCP instead of UDP.
+Google Chrome by default uses the UDP-based QUIC protocol to connect to websites. In order to route traffic from Chrome through your dedicated egress IPs, you must [disable QUIC in Google Chrome](/cloudflare-one/policies/filtering/http-policies/incompatible-traffic/#disable-quic-in-google-chrome).  This forces the browser to connect using TCP instead of UDP.
