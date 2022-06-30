@@ -71,14 +71,14 @@ If a video could not process successfully, the `state` field returns `error`, an
 - `ERR_FETCH_ORIGIN_ERROR` – The video failed to download from the URL.
 - `ERR_MALFORMED_VIDEO` – The video is a valid file but contains corrupt data that cannot be recovered.
 - `ERR_DURATION_TOO_SHORT` – The video's duration is shorter than 0.1 seconds.
-- `ERR_UNKNOWN` – If Stream cannot automatically determine why the video returned an error, the ERR_UNKNOWN code will be used.
+- `ERR_UNKNOWN` – If Stream cannot automatically determine why the video returned an error, the `ERR_UNKNOWN` code will be used.
 
 In addition to the `state` field, a video's `readyToStream` field must also be `true` for a video to play.
 
 ```bash
 ---
 header: Example error response
-highlight: [2, 4, 6]
+highlight: [2, 4, 7]
 ---
 {
   "readyToStream": true,
@@ -91,6 +91,57 @@ highlight: [2, 4, 6]
   }
 }
 ```
+
+<details>
+<summary>
+Example: POST body for successful video encoding
+</summary>
+ <div class="special-class" markdown="1">
+
+ ```bash
+{
+  "uid": "d98ecbca0f8803646848c7eda78eb1f9",
+  "creator": null,
+  "thumbnail": "https://customer-ce3d67rtmy3k8d1t.staging.cloudflarestream.com/d98ecbca0f8803646848c7eda78eb1f9/thumbnails/thumbnail.jpg",
+  "thumbnailTimestampPct": 0,
+  "readyToStream": true,
+  "status": {
+    "state": "ready",
+    "pctComplete": "39.000000",
+    "errorReasonCode": "",
+    "errorReasonText": ""
+  },
+  "meta": {
+    "filename": "small.mp4",
+    "filetype": "video/mp4",
+    "name": "small.mp4",
+    "relativePath": "null",
+    "type": "video/mp4"
+  },
+  "created": "2022-06-30T17:53:12.512033Z",
+  "modified": "2022-06-30T17:53:21.774299Z",
+  "size": 383631,
+  "preview": "https://watch-stage.videodelivery.net/d98ecbca0f8803646848c7eda78eb1f9?staging=true",
+  "allowedOrigins": [],
+  "requireSignedURLs": false,
+  "uploaded": "2022-06-30T17:53:12.511981Z",
+  "uploadExpiry": "2022-07-01T17:53:12.511973Z",
+  "maxSizeBytes": null,
+  "maxDurationSeconds": null,
+  "duration": 5.5,
+  "input": {
+    "width": 560,
+    "height": 320
+  },
+  "playback": {
+    "hls": "https://customer-ce3d67rtmy3k8d1t.staging.cloudflarestream.com/d98ecbca0f8803646848c7eda78eb1f9/manifest/video.m3u8",
+    "dash": "https://customer-ce3d67rtmy3k8d1t.staging.cloudflarestream.com/d98ecbca0f8803646848c7eda78eb1f9/manifest/video.mpd"
+  },
+  "watermark": null
+}
+```
+</div> 
+</details>
 
 ## Verify webhook authenticity
 
