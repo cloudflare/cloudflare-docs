@@ -18,7 +18,7 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 {{</Aside>}}
 
-This guide will instruct you through setting up a Cloudflare account to deploying your first Worker script. This guide assumes that you have have a Cloudflare account. If you do not have a Cloudflare account, sign up before continuing with this guide:
+This guide will instruct you through setting up a Cloudflare account to deploying your first Worker script. This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, sign up before continuing by following this guide:
 
 <p>{{<button type="primary" href="https://dash.cloudflare.com/sign-up/workers">}}Sign up{{</button>}}</p>
 
@@ -26,9 +26,9 @@ This guide will instruct you through setting up a Cloudflare account to deployin
 
 ## 1. Install Wrangler (Workers CLI)
 
-Installing `wrangler`, the Workers CLI, allows you to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects.
+Installing `wrangler`, the Workers command-line interface (CLI), allows you to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
 
 ```sh
 $ npm install -g wrangler
@@ -76,7 +76,7 @@ Wrangler will say yes to all question on your behalf and initialize your new pro
 
 {{<Aside type="note" header="TypeScript">}}
 
-`wrangler init ` will prompt you to choose y/n to `Would you like to use TypeScript? (y/n)`. If you indicate yes, you will get an `index.ts` file instead of a `index.js` file and Wrangler will also generate a `tsconfig.json` file in the root of your project. 
+`wrangler init` will prompt you to choose y/n to `Would you like to use TypeScript? (y/n)`. If you indicate yes, you will get an `index.ts` file instead of a `index.js` file and Wrangler will also generate a `tsconfig.json` file in the root of your project. 
 
 {{</Aside>}}
 
@@ -133,13 +133,13 @@ The event handler indicates what events the Worker should listen to (such as, [`
 
 3. Parameters: `request`, `env`, `context`
 
-The event handler will always get three parameters passed into it: [`request`, `env` and `context`](workers/runtime-apis/fetch-event/#syntax-module-worker). If you would like to interact with these parameters, you will have to accept the parameters as variables by indicating them in your code. You can choose which parameters to use. They must always be written in order (`request`, `env`, `context`.) In this example, `request` is indicated and your Worker can now interact with the `Request` object.
+The event handler will always get three parameters passed into it: [`request`, `env` and `context`](/workers/runtime-apis/fetch-event/#syntax-module-worker). If you would like to interact with these parameters, you will have to accept the parameters as variables by indicating them in your code. You can choose which parameters to use. They must always be written in order (`request`, `env`, `context`). In this example, `request` is indicated and your Worker can now interact with the `Request` object.
 
 4. The `Response` object: `return new Response("Hello World!");`
 
 The Workers runtime expects `fetch` events to return a `Response` object. In this example, you will return a new Response with the string `"Hello World!"`.
 
-In order to review code changes in real time, rewrite the `"Hello World!"` string to `"Hello Worker!"` and, with `wrangler dev` running, save your changes.
+To review code changes in real time, rewrite the `"Hello World!"` string to `"Hello Worker!"` and, with `wrangler dev` running, save your changes.
 
 To experiment with more premade Workers, refer to [Workers Examples](/workers/examples/).
 
