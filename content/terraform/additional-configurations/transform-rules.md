@@ -49,9 +49,9 @@ For more information on rewriting URLs, refer to [URL Rewrite Rules](/rules/tran
 
 The following configuration example performs the following adjustments to HTTP request headers:
 
-* Adds a header `my-header-1` with a static value.
-* Adds a header `my-header-2` with a dynamic value defined by an expression.
-* Deletes header `existing-header`, if it exists.
+* Adds a `my-header-1` header to the request with a static value.
+* Adds a `my-header-2` header to the request with a dynamic value defined by an expression.
+* Deletes the `existing-header` header from the request, if it exists.
 
 ```tf
 resource "cloudflare_ruleset" "transform_modify_request_headers" {
@@ -86,3 +86,45 @@ resource "cloudflare_ruleset" "transform_modify_request_headers" {
 ```
 
 For more information on modifying request headers, refer to [HTTP Request Header Modification Rules](/rules/transform/request-header-modification/).
+
+## Create an HTTP Response Header Modification Rule
+
+The following configuration example performs the following adjustments to HTTP response headers:
+
+* Adds a `my-header-1` header to the response with a static value.
+* Adds a `my-header-2` header to the response with a dynamic value defined by an expression.
+* Deletes the `existing-header` header from the response, if it exists.
+
+```tf
+resource "cloudflare_ruleset" "transform_modify_response_headers" {
+  zone_id     = "<ZONE_ID>"
+  name        = "Transform Rule performing HTTP response header modifications"
+  description = ""
+  kind        = "zone"
+  phase       = "http_response_headers_transform"
+  rules {
+    action = "rewrite"
+    action_parameters {
+      headers {
+        name      = "my-header-1"
+        operation = "set"
+        value     = "Fixed value"
+      }
+      headers {
+        name       = "my-header-2"
+        operation  = "set"
+        expression = "cf.zone.name"
+      }
+      headers {
+        name      = "existing-header"
+        operation = "remove"
+      }
+    }
+    expression = "true"
+    description = "Example HTTP Response Header Modification Rule"
+    enabled = true
+  }
+}
+```
+
+For more information on modifying response headers, refer to [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/).
