@@ -4458,7 +4458,6 @@ pre {
   border-radius: 3px;
   margin-top: 3rem;
   box-shadow: 0 1px rgba(var(--shadow-color-rgb), 0.12);
-  /* max-height: 14.75rem; */
 }
 
 .tabs-content-wrapper {
@@ -4491,10 +4490,6 @@ pre {
 
 .tabs::after {
   clear: both;
-}
-
-.tab {
-  background-color: var(--background-color);
 }
 
 .tab-switch {
@@ -4537,25 +4532,14 @@ pre {
 }
 
 .tab {
-  width: 100%;
   max-height: 270px;
-  z-index: 1;
   border-radius: 3px;
-  left: 0;
   display: none;
   padding-left: 10px;
+  display: none;
   color: #2c3e50;
   border-bottom: 0.25rem solid #bdc3c7;
-  transition: all 0.35s;
   overflow: scroll;
-}
-
-.tab:target {
-  display: block;
-}
-
-.tab:last-child {
-  display: block;
 }
 
 .tab:target ~ .tab:last-child {
@@ -4564,11 +4548,6 @@ pre {
 
 [theme="dark"] .tab-content {
   background: transparent;
-}
-
-.js-svg {
-  height: "48";
-  width: "48";
 }
 
 .tab-switch:checked + .tab-label {

@@ -105,15 +105,31 @@ export function focus() {
 }
 
 function $tab(ev: MouseEvent) {
-  // console.log(ev);
-  // ev.preventDefault();
-  // window.location.href = ev.view.location.href;
+  ev.preventDefault();
+
+  let tabs = document.querySelectorAll(".tab");
+
+  for (let i = 0; i < tabs.length; i++) {
+    (tabs[i] as HTMLElement).style.display = "none";
+  }
+
+  let target = ev.target;
+  let link = (target as HTMLElement).getAttribute("data-link");
+
+  let linkElement = document.getElementById(link);
+  linkElement.style.display = "block";
 }
 
 export function tabs() {
-  const tabs = document.querySelectorAll(".tab-label");
-  for (let i = 0; i < tabs.length; i++) tabs[i].addEventListener("click", $tab);
+  const labels = document.querySelectorAll(".tab-label");
+  const tabs = document.querySelectorAll(".tab");
+
+  let defaultTab = (tabs[tabs.length - 1] as HTMLElement) || null;
+  defaultTab.style.display = "block";
+  for (let i = 0; i < labels.length; i++)
+    labels[i].addEventListener("click", $tab);
 }
+
 export function dropdowns() {
   let attr = "data-expanded";
 
