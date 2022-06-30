@@ -54,6 +54,8 @@ This process may involve a few minutes of downtime.
 
 </details>
 
+{{<render file="_acm-validate-cert.md">}}
+
 ## Renew DCV tokens
 
 {{<render file="_dcv-token-renewal.md">}}
