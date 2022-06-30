@@ -40,7 +40,7 @@ For example, if you use a third-party Secure Web Gateway to block `example.com`,
 
 ### Connect private networks
 
-With Clientless Web Isolation, users can reach any private IP resource you have connected through [Cloudflare Tunnel](cloudflare-one/connections/connect-apps/). To connect a private network to Cloudflare, refer to our [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/).
+With Clientless Web Isolation, users can reach any private IP resource you have connected through [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/). To connect a private network to Cloudflare, refer to our [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/).
 
 For example, if you added `192.0.2.1` to your tunnel, users can connect to your application by going to:
 
