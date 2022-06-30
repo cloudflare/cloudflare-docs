@@ -21,6 +21,7 @@ Learn more about [how Workers works](/workers/learning/how-workers-works/).
 {{<button-group>}}
 {{<button type="primary" href="/workers/get-started/guide">}}Get started{{</button>}}
 {{<button type="secondary" href="/workers/tutorials">}}View the tutorials{{</button>}}
+{{<button type="secondary" href="/workers/platform/betas">}}Explore betas{{</button>}}
 {{</button-group>}}
 
 ---

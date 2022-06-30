@@ -2,6 +2,7 @@
 pcx-content-type: tutorial
 title: Creating API tokens
 weight: 2
+layout: single
 ---
 
 # Creating API tokens
@@ -85,7 +86,7 @@ Once you have verified the token is as desired, select `Create Token` to proceed
 
 ## Generating the Token
 
-Once successfully generated, the token secret is only shown once. Make sure to copy the secret to a secure place.
+Once successfully generated, the token secret is **only shown once**. Make sure to copy the secret to a secure place.
 
 *Warning:* Do not store the secret in plaintext where others may be able to access it. Anyone with this token can perform the authorized actions against the resources the token has been granted access to.
 
@@ -123,10 +124,4 @@ With this you have successfully created an API Token and can now start working w
 
 ## Roll API token
 
-If the secret is lost or believed to be compromised, you can either create a new token or your token can be rolled to generate a new secret. Rolling your secret key into a new one will invalidate the previous secret, but the access and permissions will be the same as the previous key.
-
-To roll your API token:
-
-1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to **User Profile** > **API Tokens**.
-2.  Next to the API token you wish to roll, click the **three dot icon** > **Roll**.
-3.  Then, click **Confirm** to continue and you will see a new API token secret key.
+{{<render file="_roll-token.md">}}

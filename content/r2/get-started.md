@@ -26,6 +26,12 @@ To purchase R2:
 
 ## 1. Install Wrangler
 
+{{<Aside type="note">}}
+
+This guide is tailored to Wrangler 2. If you are still using Wrangler 1, refer to the [Migrate from Wrangler 1 guide](/workers/wrangler/migration/migrating-from-wrangler-1/).
+
+{{</Aside>}}
+
 To create your R2 bucket, install [Wrangler](/workers/get-started/guide/#2-install-the-workers-cli), the Workers CLI.
 
 To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
@@ -140,30 +146,41 @@ An R2 bucket is able to READ, LIST, WRITE, and DELETE objects. You can see an ex
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request, env) {
     const url = new URL(request.url);
     const key = url.pathname.slice(1);
 
     switch (request.method) {
-      case "PUT":
+      case 'PUT':
         await env.MY_BUCKET.put(key, request.body);
         return new Response(`Put ${key} successfully!`);
-      case "GET":
+      case 'GET':
         const object = await env.MY_BUCKET.get(key);
 
-        if (!object) {
-          return new Response("Object Not Found", { status: 404 });
+        if (object === null) {
+          return new Response('Object Not Found', { status: 404 });
         }
 
-        return new Response(object.body);
-      case "DELETE":
+        const headers = new Headers();
+        object.writeHttpMetadata(headers);
+        headers.set('etag', object.httpEtag);
+
+        return new Response(object.body, {
+          headers,
+        });
+      case 'DELETE':
         await env.MY_BUCKET.delete(key);
-        return new Response("Deleted!", { status: 200 });
+        return new Response('Deleted!');
 
       default:
-        return new Response("Method Not Allowed", { status: 405 });
+        return new Response('Method Not Allowed', {
+          status: 405,
+          headers: {
+            Allow: 'PUT, GET, DELETE',
+          },
+        });
     }
-  }
+  },
 };
 ```
 
@@ -259,7 +276,7 @@ $ curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: h
 # Attempt to write an object with the correct "X-Custom-Auth-Key" header value
 # Note: Assume that "*********" is the value of your AUTH_KEY_SECRET Wrangler secret
 $ curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: *********" --data 'test'
-#=> Put cat-pic1.jpg successfully!
+#=> Put cat-pic.jpg successfully!
 
 # Attempt to read object called "foo"
 $ curl https://your-worker.dev/foo

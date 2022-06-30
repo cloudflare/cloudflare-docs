@@ -132,8 +132,6 @@ To experiment with more premade Workers, refer to [Workers Examples](/workers/ex
 
 With your project configured, you can now publish your Worker. You can publish your Worker to a custom domain, or, if not configured, the Worker will publish to a `*.workers.dev` subdomain by default. To set up a `*.workers.dev` subdomain, go to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Workers** > **Your subdomain** > **Change**.
 
-To deploy to your `*.workers.dev` subdomain, run:
-
 ```sh
 ---
 header: Publish to workers.dev

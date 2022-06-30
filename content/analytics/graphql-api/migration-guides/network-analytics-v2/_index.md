@@ -26,7 +26,7 @@ The following table compares the features of NAv1 and NAv2:
 | Sampling method | Core Sample Enrichment | Edge Sample Enrichment |
 | Historical data retention method | Aggregated roll-ups | Adaptive Bit Rate |
 | Retention period | 1-min roll-ups: 30 days<br/>1-hour roll-ups: 6 months<br/>1-day roll-ups: 1 year<br/>Attack roll-ups: 1 year | All nodes: 16 weeks |
-| Attack mitigation systems | dosd and gatebot | dosd, gatebot, flowtrackd\*, and Magic Firewall\* |
+| Attack mitigation systems | `dosd` | `dosd`, `flowtrackd`\*, and Magic Firewall\* |
 | Examples of new fields | n/a | Rule ID<br/>GRE tunnel ID<br/>Packet size |
 
 {{</table-wrap>}}
