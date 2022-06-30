@@ -34,7 +34,7 @@ To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you hav
 $ npm install -g wrangler
 ```
 
-or install with yarn:
+or install with `yarn`:
 
 ```sh
 $ yarn global add wrangler
@@ -52,8 +52,6 @@ $ wrangler login
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
 
-
-
 ---
 
 ## 3. Start a new project
@@ -66,13 +64,12 @@ Run `wrangler init` followed by your project name:
 $ wrangler init <YOUR_WORKER>
 ```
 
-You will be asked `“Would you like to use git to manage this Worker? (y/n)”` and `Would you like to use TypeScript? (y/n)`. If you would like to respond yes to every question, run:
+You will be asked:
 
-```sh
-$ wrangler init <YOUR_WORKER> -y
-```
-
-Wrangler will say yes to all question on your behalf and initialize your new project with git, a `package.json` file, configure TypeScript and a minimum Hello World script.
+1. `Would you like to use git to manage this Worker? (y/n)` Indicate `y`.
+2. `Would you like to use TypeScript? (y/n)` Indicate `n` to continue with JavaScript for this guide.
+3. `No package.json found. Would you like to create one? (y/n)` Indicate `y`.
+4. `Would you like to create a Worker at <YOUR_WORKER>\src\index.js?` Indicate `y`.
 
 {{<Aside type="note" header="TypeScript">}}
 
@@ -91,7 +88,7 @@ $ cd <YOUR_WORKER>
 In your project directory, `wrangler init` has generated the following files:
 
 1. `wrangler.toml`: Your [Wrangler](https://developers.cloudflare.com/workers/wrangler/configuration/#example) configuration file.
-2. `index.js` (in `/src`): A minimal Worker Hello World application script written in module syntax.
+2. `index.js` or `index.ts` (in `/src`): A minimal Hello World Worker written in module syntax.
 3. `package.json`: A minimal Node dependencies configuration file. Only generated if indicated in `wrangler init` command.
 4. `tsconfig.json`: TypeScript configuration that includes [Workers types](https://github.com/cloudflare/workers-types). Only generated if indicated in `wrangler init` command.
 
@@ -234,7 +231,7 @@ Whichever method you choose, your record must be proxied through Cloudflare (ora
 
 ## 6. Publish your project
 
-With your project configured, you can now publish your Worker. You can publish your Worker to a custom domain, or, if not configured, the Worker will publish to a `*.workers.dev` subdomain by default. To set up a `*.workers.dev` subdomain, go to the Cloudflare dashboard > **Workers** > **Your subdomain** > **Change**.
+With your project configured, you can now publish your Worker. You can publish your Worker to a custom domain, or, if not configured, the Worker will publish to a `*.workers.dev` subdomain by default. To set up a `*.workers.dev` subdomain, go to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Workers** > **Your subdomain** > **Change**.
 
 To deploy to your `*.workers.dev` subdomain, run:
 
