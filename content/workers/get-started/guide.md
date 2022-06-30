@@ -129,7 +129,7 @@ This code block consists of four parts:
 
 2. The event handler: `async fetch(request)`
 
-The event handler indicates what events the Worker should listen to (such as, [`fetch`](/workers/runtime-apis/fetch-event/) or [`schedule`](/workers/runtime-apis/scheduled-event/)). 
+The event handler indicates what events the Worker should listen to (such as, [`fetch`](/workers/runtime-apis/fetch-event/) or [`scheduled`](/workers/runtime-apis/scheduled-event/)). 
 
 3. Parameters: `request`, `env`, `context`
 
