@@ -5046,6 +5046,12 @@ pre {
 
 .tab {
   max-height: 270px;
+  display: none;
+  color: #2c3e50;
+  border-bottom: 0.25rem solid #bdc3c7;
+  overflow: scroll;
+}
+  max-height: 270px;
   border-radius: 3px;
   display: none;
   padding-left: 10px;
