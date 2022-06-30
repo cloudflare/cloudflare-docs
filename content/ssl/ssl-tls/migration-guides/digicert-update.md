@@ -59,18 +59,16 @@ If your system integrates with the [Advanced certificates API](https://api.cloud
 
 If you want to choose the issuing CA for certificate renewals, first set up [notifications](/fundamentals/notifications/notification-available/#ssltls) for Advanced certificate events. Then, when the certificate is up for renewal, send a `PATCH` request to the Cloudflare API that changes the `"certificate_authority"` field to use `"lets_encrypt"` or `"google"`.
 
-```bash
----
-header: Request
----
-curl -X PATCH "https://api.cloudflare.com/client/v4/zones/<<ZONE_ID>>/ssl/certificate_packs/<<PACK_ID>>" \
-     -H "X-Auth-Email: <<EMAIL>>" \
-     -H "X-Auth-Key: <<AUTH_KEY>>" \
-     -H "Content-Type: application/json"
-     --data '{
-        "certificate_authority":"google"
-        }'
-```
+<details>
+<summary>Example PATCH request</summary>
+<div>
+
+{{<render file="_acm-patch-example.md">}}
+
+</div>
+</details>
+
+
 
 #### Zones on a partial setup
 
