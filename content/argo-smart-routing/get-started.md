@@ -16,6 +16,12 @@ To begin using Argo Smart Routing, you must add it to your plan.
 
 1. From **Argo Smart Routing**, turn on the **toggle**.
 
+1. Provide your billing information.
+
+    * If you do not have a billing profile, enter your billing information.
+
+    * If you have a billing profile, confirm your billing information.
+
 ## Enable Argo Tiered Cache
 
 Argo Tiered Cache uses Cloudflare's network of data centers to deliver content more efficiently. [Cache](/cache) works by storing a copy of website content at our data centers. 
