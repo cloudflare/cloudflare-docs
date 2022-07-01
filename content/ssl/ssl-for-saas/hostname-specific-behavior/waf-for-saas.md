@@ -71,7 +71,7 @@ This assigns custom metadata to your custom hostname so that it has a security t
 
 1. Locate the custom metadata field in the Ruleset Engine where the WAF runs. This can be used to trigger different configurations of products such as [WAF](/waf/), [Firewall Rules](/firewall/), [Advanced Rate Limiting](/waf/rate-limiting-rules/), and [Transform Rules](/rules/transform/).
 
-2. Build your rules through either the dashboard or via the API. An example rate limiting rule, corresponding to “security_level” low, is shown below as an API call.
+2. Build your rules either [through the dashboard](/firewall/cf-dashboard/create-edit-delete-rules/) or via the API. An example rate limiting rule, corresponding to “security_level” low, is shown below as an API call.
 
 ```
 curl -X PUT "https://api.cloudflare.com/client/v4/zones/{zone:id}/rulesets/phases/http_ratelimit/entrypoint" \
