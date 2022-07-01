@@ -87,7 +87,7 @@ To enter a snippet:
 To surround existing content with a snippet:
 1. Select the text you wish to surround with a snippet.
 2. Enter the snippet prefix (temporarily replacing the selected text) and press `Ctrl+Space` (`Command+Space` on a Mac).
-3. Select the desired snippet and press `Enter`. VSCode will insert the snippet body and paste the previously selected content in the correct location (determined by `$TM_SELECTED_TEXT` in the snippet configuration).
+3. Select the desired snippet and press `Enter`. VSCode will insert the snippet body and paste the previously selected content in the correct location.
 4. (Optional) Enter or select a value for the first placeholder supported by the snippet, if any, and press `Tab` to move to the next placeholder. Keep replacing placeholders and pressing `Tab`. When there are no more placeholders, pressing `Tab` will end the process.
 
 ## For Cloudflare employees
