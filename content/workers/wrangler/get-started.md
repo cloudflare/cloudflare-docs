@@ -46,7 +46,7 @@ If you do not want to install Wrangler globally, you can use the [npx](https://d
 
 ## Authenticate
 
-With installation complete,Wranglerwill need access to a Cloudflare OAuth token to manage Workers resources on your behalf.
+With installation complete, Wrangler will need access to a Cloudflare OAuth token to manage Workers resources on your behalf.
 
 Run the command `wrangler login`, which will automate this process.
 
