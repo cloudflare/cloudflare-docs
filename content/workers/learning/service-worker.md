@@ -1,6 +1,6 @@
 ---
 pcx-content-type: concept
-title: Service Worker
+title: Service Worker syntax
 weight: 0
 ---
 
