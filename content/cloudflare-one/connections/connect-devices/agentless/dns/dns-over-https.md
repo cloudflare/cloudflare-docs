@@ -182,15 +182,21 @@ If you get an `access.api.error.service_token_not_found` error,  check that `<SE
 
 ### 3. Create a user
 
+Create a new user and optionally add them to a group.
+
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/users" \
      -H "X-Auth-Email: <EMAIL>" \
      -H "X-Auth-Key: <API_KEY>" \
      -H "Content-Type: application/json" \
-     --data '{"name":"John Doe", "email":"jdoe@acme.com"}'
+     --data '{
+        "name":"John Doe",
+        "email":"jdoe@acme.com",
+        "custom": {"groups":[{"id": "02fk6b3p3majl10", "email": "finance@acme.com", "name": "Finance"}]}
+        }'
 ```
 
-Save the user's `id`.
+Save the user's `id` returned in the response.
 
 <details>
 <summary>Example response</summary>
@@ -208,7 +214,15 @@ highlight: [3]
     "uid": "54d425de-7a78-4186-9975-d43c88ee7899",
     "name": "John Doe",
     "email": "jdoe@acme.com",
-    "last_successful_login": "2022-04-25T22:58:06.44749Z"
+    "custom": {
+        "groups": [
+            {
+                "email": "finance@acme.com",
+                "id": "02fk6b3p3majl10",
+                "name": "Finance"
+            }
+        ]
+    }
   },
   "success": true,
   "errors": [],
@@ -259,7 +273,7 @@ curl -s 'https://<ACCOUNT_ID>.cloudflare-gateway.com/dns-query?name=example.com'
      -H 'CF-Authorization: <USER_DOH_TOKEN>' | jq
 ```
 
-Your DNS queries will now be sent to Gateway for filtering. If the site is blocked, the query will return the IP address of the Gateway block server (`162.159.36.12`).
+If the site is blocked, the query will return the IP address of the Gateway block server (`162.159.36.12`).
 
 <details>
 <summary>Example response</summary>
@@ -293,4 +307,4 @@ Your DNS queries will now be sent to Gateway for filtering. If the site is block
 </div>
 </details>
 
-You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/analytics/logs/activity-log/). To filter these requests, build a DNS policy using the [User Email](/cloudflare-one/policies/filtering/identity-selectors/#user-email) selector. The other identity-based selectors are not currently supported by agentless DoH.
+You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/analytics/logs/activity-log/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/policies/filtering/identity-selectors/).
