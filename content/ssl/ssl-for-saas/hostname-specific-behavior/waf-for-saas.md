@@ -106,3 +106,5 @@ To build rules through the dashboard:
 3. Follow the instructions on the dashboard specific to firewall rules, rate limiting rules, or managed rules, depending on your security goal.
 
 4. Once the rule is active, you should see it under the applicable tab (firewall rules, rate limiting, or managed rules).
+
+![Rule Active](/ssl/static/active-rule.png)
