@@ -165,17 +165,17 @@ All major browsers support PAC files. You can configure individual browsers, or 
 
 The following example demonstrates the setup procedure for Firefox.
 
-1. In Firefox, open the **Settings** menu and scroll down to **Network Settings**.
+1. In Firefox, go to **Settings** and scroll down to **Network Settings**.
 
 ![Navigating to Network Settings menu in Firefox](/cloudflare-one/static/documentation/connections/firefox-network-settings.png)
 
-2. Click **Settings**.
+2. Select **Settings**.
 3. Select **Automatic proxy configuration URL**.
-4. Input the URL where your PAC file is hosted, for example `https://proxy-pac.cflr.workers.dev/3ele0ss56t.pac`.
+4. Enter the URL where your PAC file is hosted, for example `https://proxy-pac.cflr.workers.dev/3ele0ss56t.pac`.
 
-![Input PAC file URL into Firefox](/cloudflare-one/static/documentation/connections/firefox-pac-file.png)
+![Enter PAC file URL into Firefox](/cloudflare-one/static/documentation/connections/firefox-pac-file.png)
 
-5. Click **OK**. HTTP traffic from Firefox is now being filtered by Gateway.
+5. Select **OK**. HTTP traffic from Firefox is now being filtered by Gateway.
 
 ## 5. Test your HTTP policy
 
@@ -183,8 +183,6 @@ You can test any [supported HTTP policy](#limitations), such as the example poli
 
 ## Limitations
 
-Currently, the agentless HTTP proxy does not support:
+At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/) or mTLS authentication.
 
-- [Identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/)
-- mTLS authentication
-- Browser isolation policies. Until PAC support is added, you can use the [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/clientless-browser-isolation/) URL to open websites in a remote browser.
+[Browser Isolation](cloudflare-one/policies/browser-isolation/) is disabled by default, because the lack of user identity information poses a potential security risk. If you want to apply Isolate policies, request access from your account team.
