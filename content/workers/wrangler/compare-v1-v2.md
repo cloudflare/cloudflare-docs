@@ -10,7 +10,7 @@ Wrangler 2 introduces a number of new features for developing and deploying a Wo
 
 - `wrangler.toml` is no longer mandatory.
 - `dev` and `publish` accept CLI arguments.
-- `tail` can be run on arbitrary Worker names
+- `tail` can be run on arbitrary Worker names.
 - `init` creates a project boilerplate.
 - Service environments.
 - JSON bindings for `vars`.
