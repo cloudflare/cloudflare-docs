@@ -77,7 +77,7 @@ Additionally, the following snippets support surrounding existing text:
 
 ### How to use
 
-Note: Make sure you open the root folder of your cloned repository in VSCode, so that VSCode correctly detects the snippets file stored in the `.vscode/` sub-folder.
+Note: Make sure you open the root folder of your cloned repository in Visual Studio Code (VSCode), so that VSCode correctly detects the snippets file stored in the `.vscode/` sub-folder.
 
 To enter a snippet:
 1. Enter the snippet prefix and press `Ctrl+Space` (`Command+Space` on a Mac).
