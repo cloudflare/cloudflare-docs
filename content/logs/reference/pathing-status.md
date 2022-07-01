@@ -41,27 +41,23 @@ $ jq -r .EdgePathingSrc logs.json | sort -n | uniq -c | sort -n | tail
 
 - `errHost` (host header mismatch, DNS errors, etc.)
 - `ban` (blocked by IP address, range, etc.)
-- `tempOk` (challenge successfully completed)
-- `chl` (challenge issued)
 
 For example:
 
 ```bash
 $ jq -r .EdgePathingOp logs.json | sort -n | uniq -c | sort -n | tail
-1 chl
 1 errHost
 97 wl
 ```
 
 ### EdgePathingStatus
 
-**EdgePathingStatus** is the value **EdgePathingSrc** returns. With a pathing source of `macro`, `user`, or `err`, the pathing status indicates the list where the IP address was found. `nr` is the most common value and it means that the request was not flagged by a security check. Some values indicate the class of user; for example, `se` means search engine. Others indicate whether the visitor saw an error or a captcha, such as, `captchaNew` or `jschlOK`.
+**EdgePathingStatus** is the value **EdgePathingSrc** returns. With a pathing source of `macro`, `user`, or `err`, the pathing status indicates the list where the IP address was found. `nr` is the most common value and it means that the request was not flagged by a security check. Some values indicate the class of user; for example, `se` means search engine.
 
 For example:
 
 ```bash
 $ jq -r .EdgePathingStatus logs.json | sort -n | uniq -c | sort -n | tail
-1 captchaNew
 1 dnsErr
 5 ip
 92 nr
@@ -83,13 +79,6 @@ Certain combinations of pathing have been labeled in the Cloudflare **Threat Ana
 | `user.ban.ip`           | IP block (user)      |
 | `user.ban.ipr16`        | IP range block (/16) |
 | `user.ban.ipr24`        | IP range block (/24) |
-| `macro.chl.captchaErr`  | Captcha Error        |
-| `macro.chl.captchaFail` | Human Challenged     |
-| `macro.chl.captchaNew`  | New CAPTCHA (CF)     |
-| `macro.chl.jschlFail`   | Browser Challenged   |
-| `macro.chl.jschlNew`    | Challenged threat    |
-| `macro.chl.jschlErr`    | Bot request          |
-| `user.chl.captchaNew`   | New CAPTCHA (user)   |
 
 {{</table-wrap>}}
 
@@ -109,7 +98,6 @@ For example, the following query shows the status code and pathing information f
 
 ```bash
 $ jq -r 'select(.OriginResponseStatus == null) | select(.CacheResponseStatus == null) |"\(.EdgeResponseStatus) / \(.EdgePathingSrc) / \(.EdgePathingStatus) / \(.EdgePathingOp)"' logs.json | sort -n | uniq -c | sort -n
-1 403 / macro / captchaNew / chl
 1 403 / macro / nr / wl
 1 409 / err / dnsErr / errHost
 ```
@@ -150,8 +138,6 @@ These occur for actions triggered from users based on the configuration for a sp
 
 {{</table-wrap>}}
 
-To understand the behavior of challenge pages, refer to [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
-
 ## Firewall Rules
 
 Cloudflare Firewall Rules triggers actions based on matching customer-defined rules.
@@ -165,8 +151,6 @@ Cloudflare Firewall Rules triggers actions based on matching customer-defined ru
 
 {{</table-wrap>}}
 
-To understand the behavior of challenge pages, see [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
-
 ## Zone Lockdown
 
 **Zone Lockdown** blocks visitors to particular URIs where the visitor's IP is not allowlisted.
@@ -178,8 +162,6 @@ To understand the behavior of challenge pages, see [JavaScript and Captcha Chall
 | `zl`              | Lock down applied. | `ban`         | `user`         |
 
 {{</table-wrap>}}
-
-To understand the behavior of challenge pages, see [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
 ## Firewall User-Agent Block
 
@@ -193,8 +175,6 @@ Challenge (Captcha or JavaScript) or block visitors who use a browser for which 
 
 {{</table-wrap>}}
 
-To understand the behavior of challenge pages, refer to [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
-
 ## Browser Integrity Check
 
 Assert whether the source of the request is illegitimate or the request itself is malicious.
@@ -206,8 +186,6 @@ Assert whether the source of the request is illegitimate or the request itself i
 | <span style="font-weight: 400;">empty</span> | Blocked request. | `ban`         | `bic`          |
 
 {{</table-wrap>}}
-
-To understand the behavior of challenge pages, refer to [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
 ## Hot Linking
 
@@ -221,8 +199,6 @@ Prevent hot linking from other sites.
 
 {{</table-wrap>}}
 
-To understand the behavior of challenge pages, see [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
-
 ## L7-to-L7 DDoS mitigation
 
 Drop DDoS attacks through L7 mitigation.
@@ -234,8 +210,6 @@ Drop DDoS attacks through L7 mitigation.
 | <span style="font-weight: 400;">`l7ddos`</span> | Blocked request. | `ban`         | `protect`      |
 
 {{</table-wrap>}}
-
-To understand the behavior of challenge pages, refer to [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
 ## IP Reputation (MACRO)
 
@@ -258,12 +232,6 @@ The macro stage is comprised of many different paths. They are categorized by th
 
 {{</table-wrap>}}
 
-All other paths in the MACRO stage issue a challenge. Possible scenarios include:
-
-- A clean IP (acceptable threat level) with IUAM on will trigger the JS challenge.
-- A greylisted IP triggers the JS challenge (Managed Challenge if IUAM is on).
-- An IP with a bad reputation (also TOR) with a threat level above the accepted threshold triggers a Managed Challenge (JS challenge if IUAM is on).
-
 ## Rate Limiting
 
 {{<table-wrap>}}
@@ -275,8 +243,6 @@ All other paths in the MACRO stage issue a challenge. Possible scenarios include
 
 {{</table-wrap>}}
 
-To understand the behavior of challenge pages, refer to [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
-
 ## Special cases
 
 {{<table-wrap>}}
@@ -286,21 +252,5 @@ To understand the behavior of challenge pages, refer to [JavaScript and Captcha 
 | `ao_crawl`        | AO (Always Online) crawler request.                       | `wl`          | `skip`         |
 | `cdnjs`           | Request to a cdnjs resource.                              | `wl`          | `skip`         |
 |                   | Certain challenge forced by Cloudflare's special headers. |               | `forced`       |
-
-{{</table-wrap>}}
-
-## JavaScript and Captcha Challenge
-
-{{<table-wrap>}}
-
-| EdgePathingStatus                                   | Description                                                                                                                                                                                                                                                | EdgePathingOp | EdgePathingSrc | Status Code                                         |
-| --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | -------------- | --------------------------------------------------- |
-| `captchaNew`<br/>`jschlNew`<br/>   | A Captcha/JavaScript challenge was presented.                                                                                                                                                                                                              | `chl`         |        n/a        | `403`<br/>`503`<br/>               |
-| `captchaOk`<br/>`jschlOk`<br/>     | A Captcha/JavaScript challenge would have been presented but a clearance cookie was present.                                                                                                                                                               | `temp_ok`     |         n/a       | As per request.                   |
-| `captchaSucc`<br/>`jschlSucc` | A Captcha challenge was solved correctly and a clearance cookie will be issued.                                                                                                                                                                            | `temp_ok`     | `macro`        | `302` (Redirect to original URL.) |
-| `captchaFail`<br/>`jschlFail`<br/> | A failed attempt at solving the Captcha challenge, no clearance cookie will be issued.                                                                                                                                                                     | <p>`chl`</p>  | `macro`        | `302` (Redirect to original URL.) |
-| `captchaErr`<br/>`jschlErr`<br/>   | A failed attempt at solving the Captcha challenge, no clearance cookie will be issued. Not enough data was provided to solve the challenge. The difference to the previous case is that not all input was provided which is needed to verify the solution. | <p>`chl`</p>  | `macro`        | `302` (Redirect to original URL.) |
-| `tokRedempSucc`                   | A blinded-token redemption was successful.                                                                                                                                                                                                                 | <p>`chl`</p>  |        n/a        | As per request.                   |
-| `tokRedempFail`                   | A blinded-token redemption failed.                                                                                                                                                                                                                         | `chl`         |       n/a         | As per request.                   |
 
 {{</table-wrap>}}

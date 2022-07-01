@@ -22,9 +22,9 @@ A tunnel UUID is an alphanumeric, unique ID assigned to a tunnel. The tunnel UUI
 
 The `cloudflared tunnel create <NAME>` command creates a tunnel and assigns it a name. Once named, a tunnel is a persistent pathway within which you can stop and start as many [connectors](#connector) as needed, adding stability and ease of use to your tunnel experience. Tunnel names do not need to be hostnames; for example, you can assign your tunnel a name that represents your application/network, a particular server, or the cloud environment where it runs. Just choose any identifier that lets you easily reference a tunnel whenever you need.
 
-## Connector
+## Replica
 
-You can create and configure a tunnel once and run it as multiple different `cloudflared` processes. These processes are known as connectors, or replicas. DNS records and Cloudflare Load Balancers can still point to the tunnel and its UUID, while that tunnel sends traffic to the multiple instances of cloudflared that run through it. Using multiple connectors provides tunnels with high availability, scalability, and elasticity.
+You can create and configure a tunnel once and run it as multiple different `cloudflared` processes. Each of these `cloudflared` processes is called a replica. [Deploying multiple replicas](/cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/) for a tunnel increases the tunnel's availability, scalability, and elasticity.
 
 ## Default `cloudflared` directory
 

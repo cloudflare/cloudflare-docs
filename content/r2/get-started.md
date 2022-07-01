@@ -28,7 +28,7 @@ To purchase R2:
 
 {{<Aside type="note">}}
 
-This guide is tailored to Wrangler 2. If you are still using Wrangler 1, refer to the [Migrate from Wrangler 1 guide](https://developers.cloudflare.com/workers/wrangler/migration/migrating-from-wrangler-1/).
+This guide is tailored to Wrangler 2. If you are still using Wrangler 1, refer to the [Migrate from Wrangler 1 guide](/workers/wrangler/migration/migrating-from-wrangler-1/).
 
 {{</Aside>}}
 
@@ -157,7 +157,7 @@ export default {
       case 'GET':
         const object = await env.MY_BUCKET.get(key);
 
-        if (!object || !object.body) {
+        if (object === null) {
           return new Response('Object Not Found', { status: 404 });
         }
 

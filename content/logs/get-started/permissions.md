@@ -33,4 +33,4 @@ To check the list of members in your account, or to manage roles and permissions
 3.  Enter a member’s email address to add them to your account, and click **Invite**.
 4.  Alternatively, scroll down to the **Members** card to find a list of members with their status and role.
 
-For more information on managing roles within your Cloudflare account, visit the [help center](/fundamentals/get-started/setup/account-setup/manage-account-members/).
+For more information, refer to [Managing roles within your Cloudflare account](/fundamentals/account-and-billing/account-setup/manage-account-members/).

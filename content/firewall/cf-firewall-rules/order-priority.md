@@ -8,13 +8,13 @@ weight: 3
 
 ## Overview
 
-Cloudflare Firewall Rules is part of a larger evaluation chain for HTTP requests, as illustrated in the diagram below. For example, Firewall Rules only evaluates requests that first clear IP Access Rules. If a request is blocked by a rule at any stage in the chain, Cloudflare does not evaluate the request further.
+Cloudflare Firewall Rules is part of a larger evaluation chain for HTTP requests, as illustrated in the diagram below. For example, Firewall Rules only evaluates requests that first clear IP Access rules. If a request is blocked by a rule at any stage in the chain, Cloudflare does not evaluate the request further.
 
 ![Flow chart of request evaluation at Cloudflare for security products that are not powered by the Ruleset Engine](/firewall/static/firewall-rules-order-and-priority-1.png)
 
 {{<Aside type="warning" header="Important">}}
 
-- You can use [IP Access Rules](https://support.cloudflare.com/hc/articles/217074967) to allowlist requests under certain conditions, effectively excluding these requests from all security checks. However, allowing a given country code will not bypass the [Cloudflare Web Application Firewall (WAF)](/waf/).
+- You can use [IP Access rules](/waf/tools/ip-access-rules/) to allowlist requests under certain conditions, effectively excluding these requests from all security checks. However, allowing a given country code will not bypass [WAF Managed Rulesets](/waf/managed-rulesets/) or [WAF managed rules (previous version)](https://support.cloudflare.com/hc/articles/200172016).
 
 - The execution order diagram does not include products powered by the [Ruleset Engine](/ruleset-engine/) like the [WAF](/waf/) or [Transform Rules](/rules/transform/).
 

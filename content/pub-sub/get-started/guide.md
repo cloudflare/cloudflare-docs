@@ -25,7 +25,7 @@ In the future, we will be adding support for Pub/Sub to [wrangler](/workers/wran
 
 ## Prerequisite: Create a Cloudflare account
 
-In order to use Pub/Sub, you need a [Cloudflare account](/fundamentals/get-started/setup/account-setup/). If you already have an account, you can skip this step.
+In order to use Pub/Sub, you need a [Cloudflare account](/fundamentals/account-and-billing/account-setup/). If you already have an account, you can skip this step.
 
 ## 1. Enable Pub/Sub
 
@@ -223,7 +223,7 @@ const mqtt = require('mqtt')
 
 const brokerEndpoint = "mqtts://my-broker.my-namespace.cloudflarepubsub.com"
 const options = {
-  port: 8443,
+  port: 8883,
   password: process.env.BROKER_TOKEN,
   protocolVersion: 5, // MQTT 5
 }
@@ -231,7 +231,7 @@ const options = {
 const client = mqtt.connect(brokerEndpoint, options)
 
 client.subscribe("example-topic")
-client.publish("example-topic", `message from ${client.options.clientId}: hello at ${Date.now()`)
+client.publish("example-topic", `message from ${client.options.clientId}: hello at ${Date.now()}`)
 client.on("message", function (topic, message) {
   console.log(`received message on ${topic}: ${message}`)
 })

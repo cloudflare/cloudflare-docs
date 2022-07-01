@@ -22,7 +22,7 @@ Clientless Web Isolation is implemented through a prefixed URL, where `<your-tea
 https://<your-team-name>.cloudflareaccess.com/browser/<URL>
 ```
 
-For example, to isolate `www.example.com`, users would visit `https://yourcompany.cloudflareaccess.com/browser/https://www.example.com/` in their preferred browser.
+For example, to isolate `www.example.com`, users would visit `https://<your-team-name>.cloudflareaccess.com/browser/https://www.example.com/` in their preferred browser.
 
 If `<url>` is not provided, users are presented with a Cloudflare Zero Trust landing page where they can input a target URL or search for a website.
 
@@ -32,11 +32,21 @@ If `<url>` is not provided, users are presented with a Cloudflare Zero Trust lan
 
 When users visit a website through the [Clientless Web Isolation URL](#use-the-remote-browser), the traffic passes through Cloudflare Gateway. This allows you to [apply HTTP policies](/cloudflare-one/policies/filtering/http-policies/) to control what websites the remote browser can connect to, even if the user's device does not have WARP installed.
 
-For example, if you use a third-party Secure Web Gateway to block `example.com`, users can still access the page in the remote browser by visiting `https://yourcompany.cloudflareaccess.com/browser/https://www.example.com/`. To block `https://yourcompany.cloudflareaccess.com/browser/https://www.example.com/`, simply create a Cloudflare Gateway HTTP policy to block `example.com`:
+For example, if you use a third-party Secure Web Gateway to block `example.com`, users can still access the page in the remote browser by visiting `https://<your-team-name>.cloudflareaccess.com/browser/https://www.example.com/`. To block `https://<your-team-name>.cloudflareaccess.com/browser/https://www.example.com/`, simply create a Cloudflare Gateway HTTP policy to block `example.com`:
 
 | Selector | Operator | Value           | Action         |
 | ---------| ---------| ----------------| -------------- |
 | Domain   | in       | `example.com`   | Block          |
+
+### Connect private networks
+
+With Clientless Web Isolation, users can reach any private IP resource you have connected through [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/). To connect a private network to Cloudflare, refer to our [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/).
+
+For example, if you added `192.0.2.1` to your tunnel, users can connect to your application through the remote browser by going to `https://<your-team-name>.cloudflareaccess.com/browser/http://192.0.2.1`.
+
+{{<Aside type="note">}}
+All users with access to your remote browser can access your Cloudflare Tunnel applications unless you create a Gateway HTTP policy to block them.
+{{</Aside>}}
 
 ### Disable remote browser controls
 
