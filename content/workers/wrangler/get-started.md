@@ -76,12 +76,6 @@ Note that this command will not update Wrangler in projects where it is already 
 $ npm update wrangler --save
 ```
 
-or
-
-```sh
-$ npm upgrade wrangler --save
-```
-
 ## Related resources
 
 With Wrangler successfully installed, refer to [Commands](/workers/wrangler/commands/) and [Configuration](/workers/wrangler/configuration/) to continue building with Wrangler.
