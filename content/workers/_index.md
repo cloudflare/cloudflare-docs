@@ -50,6 +50,26 @@ View this Hello World example in the Workers playground:
 
 ```js
 ---
+header: Service Worker syntax
+---
+addEventListener("fetch", (event) => {
+  event.respondWith(handleRequest(event.request));
+});
+
+async function handleRequest(request) {
+  return new Response("Hello world");
+}
+```
+
+{{<button-group>}}
+{{<button type="primary" href="https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank">}}Launch playground{{</button>}}
+{{<button type="secondary" href="/workers/learning/playground">}}Learn more{{</button>}}
+{{</button-group>}}
+
+Or try inputting the JavaScript modules syntax example:
+
+```js
+---
 header: Module syntax
 ---
 export default {
@@ -58,24 +78,6 @@ export default {
   },
 };
 ```
-
-```js
----
-header: Service Worker syntax
----
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
-});
-
-async function handleRequest(request) {
-  return new Response("Hello World!");
-}
-```
-
-{{<button-group>}}
-{{<button type="primary" href="https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank">}}Launch playground{{</button>}}
-{{<button type="secondary" href="/workers/learning/playground">}}Learn more{{</button>}}
-{{</button-group>}}
 
 ---
 
