@@ -6,7 +6,7 @@ weight: 1
 
 # Get started with Wrangler
 
-Wrangler is a command line tool (CL) for building [Cloudflare Workers](https://workers.cloudflare.com/).
+Wrangler is a command-line tool for building [Cloudflare Workers](https://workers.cloudflare.com/).
 
 {{<Aside type="note">}}
 
