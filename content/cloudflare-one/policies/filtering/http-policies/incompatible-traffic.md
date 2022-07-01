@@ -28,7 +28,7 @@ Google Chrome by default enables support for QUIC, which is used to connect to H
 
 To manually disable QUIC in the Google Chrome browser:
 
-1. In the address bar, type:  `chrome://flags#enable-quic`.
+1. In the address bar, type: `chrome://flags#enable-quic`.
 2. Set the **Experimental QUIC protocol** flag to `Disabled`.
 3. Relaunch Chrome for the setting to take effect.
 
