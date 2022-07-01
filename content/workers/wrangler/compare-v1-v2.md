@@ -4,7 +4,7 @@ title: Comparing Wrangler 1 & 2
 weight: 11
 ---
 
-## New in Wrangler 2
+# New in Wrangler 2
 
 Wrangler 2 introduces a number of new features for developing and deploying a Worker. This document is to show previous users of Wrangler 1 what they can expect when they move to Wrangler 2.
 

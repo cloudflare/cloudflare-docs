@@ -22,6 +22,7 @@ Wrangler supports importing modules in the following formats:
 ### External packages
 
 Wrangler supports importing modules from external packages.
+
 Here is an example of creating a Worker project that has a dependency on the `meaning-of-life` package from `npm`:
 
 First, create the project and install the dependencies.

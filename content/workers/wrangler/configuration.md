@@ -4,7 +4,7 @@ title: Configuration
 weight: 3
 ---
 
-## Configure `wrangler.toml`
+# Configure `wrangler.toml`
 
 Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker. This document serves as a reference for all the fields and acceptable values in this configuration file.
 
