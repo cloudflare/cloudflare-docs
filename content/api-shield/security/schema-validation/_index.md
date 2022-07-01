@@ -34,4 +34,4 @@ Regular expression support is a paid add-on in the Enterprise plan.
 
 ## Availability
 
-This feature is only available for customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
+Schema Validation is only available for Enterprise customers. If you are interested in using this product, contact your account team.
