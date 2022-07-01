@@ -28,7 +28,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone:id}/custom_hostna
 
 ## Step 1 - Associate custom metadata to a custom hostname
 
-To apply WAF to your custom hostname, you need to create an association between your customer’s domain and the firewall ruleset that you’d like to attach to it. Cloudflare’s product, [Custom Metadata] (/ssl/ssl-for-saas/hostname-specific-behavior/custom-metadata/) allows you to do this via the API. 
+To apply WAF to your custom hostname, you need to create an association between your customer’s domain and the firewall ruleset that you’d like to attach to it. Cloudflare’s product, [Custom Metadata](/ssl/ssl-for-saas/hostname-specific-behavior/custom-metadata/) allows you to do this via the API. 
 
 1. [Locate your zone ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/), available in the Cloudflare dashboard.
 
@@ -48,7 +48,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnam
 
 {{<Aside type="note">}}
 
-One instance of low, medium, and high rules could be rate limiting. You can specify three different thresholds: low - 100 requests/minute, medium - 85 requests/minute, high - 50 requests/minute, for example. Another possibility is a Firewall Rule in which low challenges requests whereas high blocks them.
+One instance of low, medium, and high rules could be rate limiting. You can specify three different thresholds: low - 100 requests/minute, medium - 85 requests/minute, high - 50 requests/minute, for example. Another possibility is a Firewall Rule in which low challenges requests and high blocks them.
 
 {{</Aside>}}
 
@@ -73,7 +73,7 @@ This assigns custom metadata to your custom hostname so that it has a security t
 
 2. Build your rules either [through the dashboard](/firewall/cf-dashboard/create-edit-delete-rules/) or via the API. An example rate limiting rule, corresponding to “security_level” low, is shown below as an API call.
 
-```
+```json
 curl -X PUT "https://api.cloudflare.com/client/v4/zones/{zone:id}/rulesets/phases/http_ratelimit/entrypoint" \
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H "Content-Type: application/json"\
