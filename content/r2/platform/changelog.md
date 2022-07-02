@@ -5,6 +5,15 @@ title: Changelog
 
 # Changelog
 
+## 2022-07-01
+
+- The S3 API `ListObjects` and `ListObjectsV2` operations will now return a `NotImplemented` response for unsupported search parameters.
+- Fixed listing behaviour when the number of files within a folder exceeds the `limit` used for that list operation.
+- Fixed a bug when listing that could cause objects thath share the base name of a folder to be skipped.
+- Fixed a bug when listing files that shared a specific common prefix.
+- The S3 API `DeleteObjects` operation can now handle 1,000 objects at a time.
+- The S3 API `CreateBucket` operation now accepts a `x-amz-bucket-object-lock-enabled` header with a value of `false` for compatibility with certain tooling. A value of `true` will continue to return a `NotImplemented` response as R2 does not yet have object locks.
+
 ## 2022-06-17
 
 - Fixed a regression for some clients when using an empty delimiter.
