@@ -5025,14 +5025,13 @@ pre {
 
 [theme="dark"] .tab-label-wrapper:hover,
 [theme="dark"] .tab-label-wrapper a:hover {
-  width: 100%;
+  /* width: 100%; */
   background-color: rgba(var(--orange-rgb), 0.08);
   color: var(--code-orange);
 }
 
 .tab-label {
   position: relative;
-  white-space: nowrap;
   height: 2.5rem;
   padding: 0.6em 1.25em;
   text-decoration: none;
@@ -5040,11 +5039,31 @@ pre {
   color: currentColor;
   cursor: pointer;
   top: 0;
+  overflow-wrap: break-word;
   font-weight: 700;
   font-size: var(--code-font-size);
   font-family: var(--monospace-font-family);
 }
 
+@media (max-width: 951px) {
+  .tab-label{
+    padding: 3px 1px 1px 1px;
+  }
+
+  .tabs>ul>li {
+    padding: 5px;
+  }
+}
+
+@media (max-width: 1026px) {
+  .tab-label{
+    padding: 3px 1px 1px 1px;
+  }
+
+  .tabs>ul>li {
+    padding: 5px;
+  }
+}
 .tab {
   max-height: 270px;
   display: none;
