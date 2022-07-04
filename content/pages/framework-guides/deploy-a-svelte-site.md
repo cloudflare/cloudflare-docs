@@ -76,35 +76,20 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 ### SvelteKit Configuration
 
-By default, SvelteKit prepares our project with the assumption that it will deployed to a Node.js server. This is not appropriate for this tutorial, but luckily SvelteKit is flexible and has a ready-made "adapter" for your needs. A few, easy changes have to be made.
+Although Sveltekit has a specific adapter for Cloudflare Pages [`@sveltejs/adapter-cloudflare`](https://www.npmjs.com/package/@sveltejs/adapter-cloudflare), By default, SvelteKit projects are configured to use [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto) which automatically chooses the adapter for your current environment. In this case, Cloudflare Pages. 
 
-First, install the [`@sveltejs/adapter-static`](https://www.npmjs.com/package/@sveltejs/adapter-static) package:
+To deploy your Sveltekit application on Cloudflare Pages, a few easy changes need to be made to your build settings. First update the **Build directory** to `.svelte-kit/cloudflare` this lets the [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto) install the dependecies for [`@sveltejs/adapter-cloudflare`](https://www.npmjs.com/package/@sveltejs/adapter-cloudflare) and build your application.
 
-```sh
-$ npm install @sveltejs/adapter-static@next --save-dev
-```
+<div>
 
-Then, in the `svelte.config.js` file, update the adapter selection:
+| Configuration option  | Value                   |
+| --------------------- | ----------------------- |
+| Production branch     | `main`                  |
+| Build command         | `npm run build`         |
+| Build directory       | `.svelte-kit/cloudflare`|
+| Environment Variables | `NODE_VERSION: 14`      |
 
-```diff
-++ import adapter from '@sveltejs/adapter-static';
-++
-/** @type {import('@sveltejs/kit').Config} */
-const config = {
-  kit: {
-++  adapter: adapter(),
-    // ... truncated ...
-  }
-};
-
-export default config;
-```
-
-{{<Aside type="note">}}
-
-**Important:** Remember to commit and push these changes to your GitHub repository.
-
-{{</Aside>}}
+</div>
 
 ### Finalize Setup
 
