@@ -252,12 +252,22 @@ Example:
 
 ### `privacy` command
 
-The `/privacy` command displays the privacy policy notice for using the 1.1.1.1 DNS over Discord bot. This notice can also be viewed at [https://dns-over-discord.v4.wtf/privacy](https://dns-over-discord.v4.wtf/privacy).
+The `/privacy` command displays the Privacy Policy notice for using the 1.1.1.1 DNS over Discord bot. This notice can also be viewed at [https://dns-over-discord.v4.wtf/privacy](https://dns-over-discord.v4.wtf/privacy).
 
 Example:
 
 ```txt
 /privacy
+```
+
+### `terms` command
+
+The `/terms` command displays the Terms of Service notice for using the 1.1.1.1 DNS over Discord bot. This notice can also be viewed at [https://dns-over-discord.v4.wtf/terms](https://dns-over-discord.v4.wtf/terms).
+
+Example:
+
+```txt
+/terms
 ```
 
 ### `github` command
