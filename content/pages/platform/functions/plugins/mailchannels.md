@@ -8,6 +8,16 @@ weight: 1
 
 The MailChannels Pages Plugin intercepts all form submissions made which have the `data-static-form-name` attribute set. It then emails these form submissions using the MailChannels API.
 
+The MailChannels API also allows you add a DomainKeys Identified Mail (DKIM) which is an email authentication standard that helps you to sign email messages from your domain with a digital signature using public-key cryptography.
+
+To add a DKIM signature to a message, add the following fields to the personalization object for the message:
+
+**dkim_domain**: This is the domain (d=) field for the DKIM signature. To pass DMARC, this should be aligned with the domain in the From header address.
+
+**dkim_selector**: This is the selector (s=) field for the DKIM signature. It specifies where to find the associated public key in the DNS - see the DKIM specification for more details.
+
+**dkim_private_key**: The base-64 encoded private key.
+
 ## Installation
 
 ```sh
@@ -26,6 +36,9 @@ export const onRequest: PagesFunction = mailChannelsPlugin({
   personalizations: [
     {
       to: [{ name: "ACME Support", email: "support@example.com" }],
+      "dkim_domain": "example.com",
+      "dkim_selector": "mcdkim",
+      "dkim_private_key": "<base64 encoded privatekey>"
     },
   ],
   from: {
