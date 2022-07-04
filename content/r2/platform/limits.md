@@ -24,7 +24,7 @@ pcx-content-type: concept
 2. The max upload size is 5 MB less than 5 GB, so 4.995 GB.
 3. Max upload size applies to uploading a file via one request, uploading a part of a multipart upload, or
 copying into a part of a multipart upload. If you have a Worker, its inbound request size is
-constrained by [Workers request limits](workers/platform/limits#request-limits). The max upload size limit does not apply to subrequests.
+constrained by [Workers request limits](/workers/platform/limits#request-limits). The max upload size limit does not apply to subrequests.
 If you need to upload larger files, browse the [examples](/r2/examples/) on how to use the S3 API.
 4. During open beta, the number of operations per bucket will be temporarily restricted.
 
