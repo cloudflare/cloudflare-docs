@@ -75,4 +75,4 @@ To investigate a possibly ongoing attack, click **View Dashboard**.
 
 ## Final remarks
 
-Events listed under Firewall Events with the `Connection Close` mitigation action are not covered by DDoS alerts. Cloudflare only sends notifications when the mitigation action is one of the following: `force-conn-close`, `block`, `ratelimit`, or `captcha`.
+Events listed under [Firewall Events](/waf/analytics/paid-plans/) with the `Connection Close` mitigation action are not covered by DDoS alerts. Cloudflare only sends notifications when the mitigation action is one of the following: `force-conn-close`, `block`, `ratelimit`, or `captcha`.
