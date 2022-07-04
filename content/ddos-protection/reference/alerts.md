@@ -28,7 +28,7 @@ To set up a notification:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
-2. Navigate to **Account Home** > **Notifications**.
+2. Click **Notifications**.
 
 3. Under **Notifications**, click **Add**.
 
