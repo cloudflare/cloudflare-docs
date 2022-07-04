@@ -33,7 +33,7 @@ To receive real-time attack alerts, configure [DDoS alerts](/ddos-protection/ref
 
 ### Example report
 
-The following image illustrates an example DDoS report:
+The following image shows an example DDoS report:
 
 ![Example email sent with a weekly DDoS report](/ddos-protection/static/ddos-report-email.png)
 
