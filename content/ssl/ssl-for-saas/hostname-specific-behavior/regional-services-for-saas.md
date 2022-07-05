@@ -8,6 +8,8 @@ weight: 2
 
 By default, Cloudflare routes customer traffic through the closest data center. This maximizes speed regardless of geographic location. However, this can route traffic through a different country than where the request was made. You may want to maintain regional control over your data because of end-customer agreements. Cloudflare offers Regional Services for SaaS to give you the ability to accommodate regional restrictions while still using Cloudflare’s global edge network.
 
+---
+
 ## Prerequisites
 
 Prior to enabling Regional Services for SaaS:
@@ -17,6 +19,8 @@ Prior to enabling Regional Services for SaaS:
 * If you have 10 or more unique origins, ensure your [fallback origin](/ssl/ssl-for-saas/getting-started/#step-1--create-fallback-origin-and-cname-target).
 
 * [Ensure that **Always Use HTTPS** is enabled](/ssl/edge-certificates/additional-options/always-use-https/).
+
+---
 
 ## Step 1 - Create a Spectrum application
 
