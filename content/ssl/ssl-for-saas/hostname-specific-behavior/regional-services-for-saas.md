@@ -16,10 +16,12 @@ Prior to enabling Regional Services for SaaS:
 
 * Ensure you have access to [SSL for SaaS](/ssl/ssl-for-saas/#availability).
 
-* If you have 10 or more unique origins, ensure your [fallback origin](/ssl/ssl-for-saas/getting-started/#step-1--create-fallback-origin-and-cname-target).
+* If you have 10 or more unique origins, ensure your [fallback origin](/ssl/ssl-for-saas/getting-started/#step-1--create-fallback-origin-and-cname-target) is set up.
 
 * Ensure that [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/).
 ``` is enabled
+
+* You must have [access to a custom origin](/ssl/ssl-for-saas/hostname-specific-behavior/custom-origin). Using Cloudflare's default fallback origin for Regional Services will lead to an error.
 
 ---
 
@@ -39,7 +41,7 @@ Prior to enabling Regional Services for SaaS:
 
 7. Under **Edge Port**, enter *443*.
 
-8. Under **Origin**, select **Origin IP or DNS record**. Enter your origin IP and port. You must use a [custom origin](/ssl/ssl-for-saas/hostname-specific-behavior/custom-origin/) when using Regional Services for SaaS. It is not compatible with the fallback origin.
+8. Under **Origin**, select **Origin IP or DNS record**. Enter your origin IP and port. 
 
 {{<Aside type="note">}}
 You cannot enable **Edge TLS Termination** or **IP Access Rules** while using HTTPS.
