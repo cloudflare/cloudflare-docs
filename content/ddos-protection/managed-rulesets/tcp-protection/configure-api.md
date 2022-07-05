@@ -1,12 +1,14 @@
 ---
 type: overview
 pcx-content-type: reference
-title: Advanced TCP Protection API
+title: Configure via API
 weight: 3
 layout: list
+meta:
+  title: Configure Advanced TCP Protection via API
 ---
 
-# Advanced TCP Protection API
+# Configure Advanced TCP Protection via API
 
 You can configure Advanced TCP Protection using the Advanced TCP Protection API.
 
