@@ -29,7 +29,7 @@ layout: list
       <td>Cloudflare Specials</td>
       <td>...N/A</td>
       <td>100533</td>
-      <td>web shell activity</td>
+      <td>Web shell activity</td>
       <td>N/A</td>
       <td>Log</td>
     </tr>
