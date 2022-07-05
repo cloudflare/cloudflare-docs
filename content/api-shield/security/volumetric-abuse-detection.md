@@ -10,8 +10,6 @@ layout: list
 
 Cloudflare Volumetric Abuse Detection helps you set up a system of adaptive rate limiting.
 
-{{<render file="_availability.md">}}
-
 ## Process
 
 After [API Discovery](/api-shield/security/api-discovery/), Cloudflare looks for endpoint abuse based on common user traffic.
@@ -23,3 +21,7 @@ These two scenarios speak to the limitations of traditional rate limiting. Not o
 This process currently requires a session identifier, like an authorization token available as a request header.
 
 {{<render file="_blog-post.md">}}
+
+## Availability
+
+Volumetric Abuse Detection is only available for Enterprise customers. If you are an Enterprise customer and interested in this product, contact your account team.

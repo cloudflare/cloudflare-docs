@@ -28,21 +28,13 @@ Administrators can deploy Cloudflare Tunnel to connect one or more machines avai
 
 ## Create a Zero Trust policy
 
-First, navigate to the Zero Trust dashboard to create a new application. Select the `Applications` page from the sidebar. Click **Add application**.
-
-![App List](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
-
-Choose **Self-hosted** on the next page.
-
-![Add App](/cloudflare-one/static/zero-trust-security/ssh/add-app.png)
+First, navigate to the Zero Trust dashboard to create a new application. Select the `Applications` page from the sidebar. Click **Add application**. Then choose **Self-hosted** on the next page.
 
 Input a subdomain where your application will be available to users.
 
 ![Configure](/cloudflare-one/static/zero-trust-security/ssh/configure-app.png)
 
 Next, create rules that control who can reach the application.
-
-![Add Rules](/cloudflare-one/static/zero-trust-security/ssh/app-rules.png)
 
 Finally, click **Save** to save the policy. You can return to edit the policy to make changes to who should be allowed or to choose what authentication providers can be used.
 
@@ -125,8 +117,6 @@ Select `CNAME` as the record type. For the target, input the ID of your Tunnel f
 
 Click **Save**.
 
-![Add DNS](/cloudflare-one/static/zero-trust-security/ssh/add-dns.png)
-
 ## Run the Tunnel
 
 You can now run the Tunnel to connect the target service to Cloudflare. Use the following command to run the Tunnel, replacing `<NAME>` with the name created for your Tunnel.
@@ -142,8 +132,6 @@ We recommend that you run `cloudflared` [as a service](/cloudflare-one/connectio
 Cloudflare can render an SSH client in your browser without the need for client software or end user configuration changes.
 
 To enable this feature, navigate to the **Access > Applications** page in the Zero Trust Dashboard. Click **Edit** and select the **Settings** tab. In the **`cloudflared` settings** card, select _SSH_ from the **Browser Rendering** drop-down menu.
-
-![Auto Auth](/cloudflare-one/static/documentation/applications/ssh-browser-rendering.png)
 
 Once enabled, when users authenticate and visit the URL of the application, Cloudflare will render a terminal in their browser.
 

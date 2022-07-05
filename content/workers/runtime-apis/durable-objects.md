@@ -189,7 +189,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 - {{<code>}}delete(keys{{<param-type>}}Array\<string>{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise\<number>{{</type>}}
 
-  - Deletes the provided keys and their associated values. Returns a count of the number of key-value pairs deleted.
+  - Deletes the provided keys and their associated values. Supports up to 128 keys at a time. Returns a count of the number of key-value pairs deleted.
 
     **Supported options:** Same as `put()`, above.
 

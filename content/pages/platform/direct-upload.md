@@ -37,7 +37,7 @@ To begin, [install and set up the latest version of Wrangler](/workers/wrangler/
 Run the following Wrangler command to create a project: 
 
 ```sh
-wrangler pages publish <project directory>
+$ wrangler pages publish <project directory>
 ```
 
 After running `wrangler pages publish`, you will be prompted to choose whether you would like to publish assets for an existing project or if you would like to create a new one. To begin a new project, select create a new project, continue to name your project, and deploy. Subsequent deployments will reuse these values (saved in your `node_modules/.cache/wrangler` folder).
@@ -49,7 +49,7 @@ After you deploy your Project, go to your newly created Pages project in the Clo
 After you have deployed your project, you can continue to add new deployments to that project. Deployments will be available at the following convention: `<DEPLOYMENT>.<PROJECT_NAME>.pages.dev`. 
 
 ```sh
-wrangler pages publish <DIRECTORY> --branch=[BRANCH]
+$ wrangler pages publish <DIRECTORY> --branch=[BRANCH]
 ```
 
 {{<Aside type= "note">}}
@@ -63,13 +63,13 @@ If you are in a Git workspace, Wrangler will automatically pull the branch infor
 If you would like to use Wrangler to obtain a list of all available projects for direct upload, use:
 
 ```sh
-wrangler pages project list
+$ wrangler pages project list
 ```
 
 If you would like to use Wrangler to obtain a list of all unique preview URLs for a particular project, use:
 
 ```sh
-wrangler pages deployment list
+$ wrangler pages deployment list
 ```
 
 For step-by-step directions on how to use Wrangler and continuous integration tools like GitHub Actions, Circle CI, and Travis CI together for continuous deployment, refer to [Use Direct Upload with continuous integration](/pages/how-to/use-direct-upload-with-continuous-integration/). 
@@ -94,7 +94,7 @@ After you have your project created, select **Create a new deployment** to begin
 
 ### Limits
 
-There is a 1,000 file [limits](/pages/platform/limits/#files) in place for both drag and drop and Wrangler upload in regards to file count and a 25 MiB limit in place for individual file size. 
+There is a 1,000 file [limit](/pages/platform/limits/#files) for drag and drop uploads. All Pages projects have a 25 MiB limit in place for individual file size. 
 
 If using the drag and drop method, a red warning symbol will appear next to an asset if too large and thus unsuccessfully uploaded. In this case, you may choose to delete that asset but you cannot replace it. In order to do so, you must reupload the entire project.
 

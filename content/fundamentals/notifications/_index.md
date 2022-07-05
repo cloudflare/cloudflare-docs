@@ -18,6 +18,15 @@ The available Notification features vary according to your plan:
 * Business and higher plans can also [access PagerDuty](/fundamentals/notifications/create-notifications/create-pagerduty/).
 * Professional and higher plans can also [use webhooks](/fundamentals/notifications/create-notifications/configure-webhooks/).
 
+{{<Aside type="note" header="Note">}}
+
+The availability of delivery methods like PagerDuty and webhooks in Free or Professional zones depends on the highest zone plan in your Cloudflare account:
+
+* PagerDuty is available in zones on a Free/Professional plan if your Cloudflare account has at least one zone in a Business plan (or higher).
+* Webhooks are available in zones on a Free plan if your Cloudflare account has at least one zone in a Professional plan (or higher).
+
+{{</Aside>}}
+
 ## Where to find the Notifications section
 
 Cloudflare Notifications is available in your [Cloudflare dashboard](https://dash.cloudflare.com/login). After logging in and choosing your account:
