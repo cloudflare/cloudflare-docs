@@ -113,7 +113,7 @@ With this in mind, create a new namespace. This example will use `my-namespace` 
 $ wrangler pubsub namespace create my-namespace 
 ```
 
-You should receive a HTTP 200 response that resembles the following:
+You should receive a success response that resembles the following:
 
 ```json
 {
@@ -142,7 +142,7 @@ Broker names must be:
 To create a new MQTT Broker called `example-broker` in the `my-namespace` namespace from the example above:
 
 ```bash
-$ wrangler pubsub namespace create example-broker --namespace=my-namespace
+$ wrangler pubsub broker create example-broker --namespace=my-namespace
 ```
 
 You should receive a success response that resembles the following:
@@ -188,7 +188,7 @@ To generate two tokens for a broker called `example-broker` with a 48 hour expir
 $ wrangler pubsub broker issue example-broker --namespace=NAMESPACE_NAME --number=5 --expiration=48h
 ```
 
-You should receive a scucess response that resembles the example below, which is a map of Client IDs and their associated tokens.
+You should receive a success response that resembles the example below, which is a map of Client IDs and their associated tokens.
 
 ```json
 {
