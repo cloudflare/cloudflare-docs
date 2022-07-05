@@ -347,17 +347,15 @@ To add environment variables, go to **Account Home** > **Pages** > **your Pages 
 
 ### Adding environment variables locally
 
-When developing locally, you can access environment variables by adding a `.dev.vars` file to the root of your functions directory. Next, define your environment variables and then access them in your component by using `env.ENV_NAME`.
+When developing locally, you can access environment variables by adding a `.dev.vars` file to the root directory of your project. Next, define your environment variables and then access them in your component by using `env.ENV_NAME`.
 
 For example :
 
 ```env
 ---
-filename: functions/.dev.vars
+filename:/.dev.vars
 ---
-
 Const ENV_NAME = "SUPER_SECRET_KEY"
-
 ```
 
 ```js
