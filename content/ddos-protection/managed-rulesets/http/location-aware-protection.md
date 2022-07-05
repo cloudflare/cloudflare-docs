@@ -22,7 +22,7 @@ Cloudflare maps the source IP address of every request targeting your website to
 
 The default action of the rule exposing the geo-distribution profile is _Log_. This means that Cloudflare will not mitigate any traffic unless the traffic rates are high and present a risk to the Cloudflare network. You can use this mode to first observe what traffic is flagged before deciding on an action.
 
-To view traffic flagged by the geo-profiling rule, navigate to **Security** > **Overview** in the Cloudflare dashboard and filter by _Service = HTTP DDoS_ and _Rule ID = XXXXXX_.
+To view traffic flagged by the geo-profiling rule, navigate to **Security** > **Overview** in the Cloudflare dashboard and filter by `Service equals HTTP DDoS` and `Rule ID equals XXXXXX`.
 
 ## Available parameters
 
