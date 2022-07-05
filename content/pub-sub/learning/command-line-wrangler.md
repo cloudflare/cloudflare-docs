@@ -5,7 +5,7 @@ type: example
 summary: How to manage Pub/Sub with Wrangler, the Cloudflare CLI.
 ---
 
-# What is Wrangler?
+## What is Wrangler?
 
 Wrangler is a command-line tool for building and managing Cloudflare's Developer Platform, including [Cloudflare Workers](https://workers.cloudflare.com/), [R2 Storage](https://developers.cloudflare.com/r2) and [Cloudflare Pub/Sub](https://developers.cloudflare.com/pub-sub/).
 
@@ -15,7 +15,7 @@ Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using
 
 {{</Aside>}}
 
-# Authenticating Wrangler
+## Authenticating Wrangler
 
 To use Wrangler with Pub/Sub, you'll need an API Token that has permissions to both read and write for Pub/Sub. The `wrangler login` flow does not issue you an API Token with valid Pub/Sub permissions.
 
@@ -48,7 +48,7 @@ This token should be kept secret and not committed to source code or placed in a
 
 {{</Aside>}}
 
-# Pub/Sub Commands
+## Pub/Sub Commands
 
 Wrangler exposes two groups of commands for managing your Pub/Sub configurations:
 
@@ -89,7 +89,7 @@ Commands:
   wrangler pubsub broker public-keys <name>       Show the public keys used for verifying on-publish hooks and credentials for a Broker.
 ```
 
-## Create a Namespace
+### Create a Namespace
 
 To create a [Namespace](https://developers.cloudflare.com/pub-sub/learning/how-pubsub-works/#brokers-and-namespaces):
 
@@ -97,7 +97,7 @@ To create a [Namespace](https://developers.cloudflare.com/pub-sub/learning/how-p
 wrangler pubsub namespace create NAMESPACE_NAME
 ```
 
-## Create a Broker
+### Create a Broker
 
 To create a [Broker](https://developers.cloudflare.com/pub-sub/learning/how-pubsub-works/#brokers-and-namespaces) within a Namespace:
 
@@ -105,7 +105,7 @@ To create a [Broker](https://developers.cloudflare.com/pub-sub/learning/how-pubs
 wrangler pubsub broker create BROKER_NAME --namespace=NAMESPACE_NAME
 ```
 
-## Issue an Auth Token
+### Issue an Auth Token
 
 You can issue client credentials for a Pub/Sub Broker directly via Wrangler. Note that:
 
@@ -121,7 +121,7 @@ wrangler pubsub broker issue BROKER_NAME --namespace=NAMESPACE_NAME
 
 You can use `--number=<NUM>` to issue multiple tokens at once, and `--expiration=<DURATION>` to set an expiry (e.g. `4h` or `30d`) on the issued tokens. 
 
-## Revoke a Token
+### Revoke a Token
 
 To revoke one or more tokens—which will immediately prevent that token from being used to authenticate—use the `revoke` sub-command and pass the unique token ID (or `JTI`):
 
@@ -129,6 +129,6 @@ To revoke one or more tokens—which will immediately prevent that token from be
 wrangler pubsub broker revoke BROKER_NAME --namespace=NAMESPACE_NAME --jti=JTI_ONE --jti=JTI_TWO
 ```
 
-# Filing Bugs
+## Filing Bugs
 
 If you've found a bug with one of the `wrangler pubsub [...]` commands, please [file a bug on GitHub](https://github.com/cloudflare/wrangler2/issues/new/choose), and include the version of `wrangler` you're using with `wrangler --version`.
