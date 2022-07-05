@@ -53,8 +53,8 @@ To edit, delete, or disable a notification, go to your [account notifications](h
 
 Cloudflare can issue notifications for two kinds of DDoS alerts:
 
-* **HTTP DDoS attack**: For HTTP attacks with a duration over 2 minutes that generate more than 2,000 requests per second.
-* **L3/L4 (network/transport layer) DDoS attack**: For Layer 3/4 attacks with a duration over 2 minutes that generate more than 20,000 packets per second.
+* **HTTP DDoS attack**: For HTTP attacks with a duration over two minutes that generate more than 2,000 requests per second.
+* **L3/L4 (network/transport layer) DDoS attack**: For Layer 3/4 attacks with a duration over two minutes that generate more than 20,000 packets per second.
 
 The available notifications depend on your Cloudflare plan and services:
 
