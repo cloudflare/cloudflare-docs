@@ -92,6 +92,8 @@ To summarize, a namespace can be specified in two ways:
     $ wrangler kv:key get --namespace-id=<YOUR_ID> "<KEY>"
     ```
 
+Refer to the [`kv:bulk` documentation](/workers/wrangler/cli-wrangler/commands/#kvbulk) to write a file of multiple key-value pairs to a given namespace.
+
 ## Use environments with KV namespaces
 
 KV namespaces can be used with environments. This is useful for when you have code in your Worker that refers to a KV binding like `MY_KV`, and you want to be able to have these bindings point to different namespaces (like one for staging and one for production).
