@@ -56,4 +56,4 @@ Use CNI with other products in Cloudflare's suite for additional benefits.
 
 {{</table-wrap>}}
 
-For more detail on how CNI delivers these benefits, see [Introducing Cloudflare Network Interconnect](https://blog.cloudflare.com/cloudflare-network-interconnect/#:~:text=Today%20we're%20excited%20to,to%20their%20physical%20network%20edge.).
+For more detail on how CNI delivers these benefits, see [Introducing Cloudflare Network Interconnect](https://blog.cloudflare.com/cloudflare-network-interconnect/).
