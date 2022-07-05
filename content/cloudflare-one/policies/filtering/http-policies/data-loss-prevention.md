@@ -24,8 +24,7 @@ To perform DLP filtering, you first configure a DLP Profile with the data patter
 DLP scans will not start until you create an HTTP policy.
 {{</Aside>}}
 4. Select **Save profile**.
-5. To start logging or blocking traffic, go to **Gateway** > **Policies** > **HTTP Policies** and create a policy using the _DLP Profiles_ selector. Refer to the [HTTP policies documentation](/cloudflare-one/policies/filtering/http-policies/) for more information.
-
+5. To start logging or blocking traffic, go to **Gateway** > **Policies** > **HTTP Policies** and create a policy using the [DLP Profiles](/cloudflare-one/policies/filtering/http-policies/#dlp-profiles) selector.
 
 ## Example DLP policy
 

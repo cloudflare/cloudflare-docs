@@ -150,7 +150,7 @@ These selectors depend on the `Content-Type` header being present in the request
 
 ### DLP Profile
 
-Scans HTTP requests and responses for strings that match the format of social security numbers and other PII. You must configure the DLP Profile before you can use it in your policy. For more information, refer to our [DLP Profile](/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/) documentation.
+Scans HTTP traffic for the presence of social security numbers and other PII. You must configure the DLP Profile before you can use this selector in your policy. For more information, refer to our [DLP Profile](/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/) documentation.
 
 ### Host
 
