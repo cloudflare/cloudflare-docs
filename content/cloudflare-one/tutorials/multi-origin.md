@@ -40,13 +40,11 @@ Once installed, run the following command in your Terminal to authenticate this 
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account. The authentication is account-wide and you can use the same authentication flow for multiple hostnames in your account regardless of which you choose in this step.
 
-![Choose Site](/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
-
 Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
 You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
-![Download Cert](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
+![Download Certificate](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
 
 ## Create a Tunnel
 
@@ -110,6 +108,6 @@ For example, the `CNAME` entry for `grafana` and `blog` should point to the same
 
 `5157d321-5933-4b30-938b-d889ca87e11b.cfargotunnel.com`
 
-![Add DNS](/cloudflare-one/static/secure-origin-connections/multi-origin/multi-origin-dns.png)
+![DNS records](/cloudflare-one/static/secure-origin-connections/multi-origin/multi-origin-dns.png)
 
 Once saved, you can share the subdomain created and visitors can reach both applications.

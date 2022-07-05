@@ -214,6 +214,8 @@ Once you click one of the sites in your account, Cloudflare will download a cert
 
 You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
+![Download Certificate](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
+
 ### Create a Tunnel
 
 You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
@@ -223,6 +225,8 @@ Run the following command to create a Tunnel. You can replace `mongodb` with any
 `$ cloudflared tunnel create mongodb`
 
 Cloudflare will create the Tunnel with that name and generate an ID and credentials file for that Tunnel.
+
+![New Tunnel](/cloudflare-one/static/secure-origin-connections/share-new-site/create.png)
 
 ### Delete the `cert.pem` file
 
