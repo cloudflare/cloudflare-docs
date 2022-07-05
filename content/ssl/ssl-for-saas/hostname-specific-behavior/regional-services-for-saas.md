@@ -18,7 +18,8 @@ Prior to enabling Regional Services for SaaS:
 
 * If you have 10 or more unique origins, ensure your [fallback origin](/ssl/ssl-for-saas/getting-started/#step-1--create-fallback-origin-and-cname-target).
 
-* [Ensure that **Always Use HTTPS** is enabled](/ssl/edge-certificates/additional-options/always-use-https/).
+* Ensure that [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/).
+``` is enabled
 
 ---
 
@@ -34,14 +35,14 @@ Prior to enabling Regional Services for SaaS:
 
 5. Under **Domain**, enter the domain that will use Spectrum. The domain associated here is where all custom hostnames are going to point.
 
-6. Choose the appropriate [type of IP addresses for your subdomain](https://www.cloudflare.com/learning/dns/glossary/what-is-my-ip-address/).
+6. Choose the appropriate type of IP addresses for your subdomain.
 
-7. Under **Edge Port**, input *443*.
+7. Under **Edge Port**, enter *443*.
 
-8. Under **Origin**, select **Origin IP or DNS record**. Input your origin IP and port. You must use a [custom origin](/ssl/ssl-for-saas/hostname-specific-behavior/custom-origin/) when using Regional Services for SaaS. It is not compatible with the fallback origin.
+8. Under **Origin**, select **Origin IP or DNS record**. Enter your origin IP and port. You must use a [custom origin](/ssl/ssl-for-saas/hostname-specific-behavior/custom-origin/) when using Regional Services for SaaS. It is not compatible with the fallback origin.
 
 {{<Aside type="note">}}
-You cannot enable  **Edge TLS Termination** or **IP Access Rules** while using HTTPS.
+You cannot enable **Edge TLS Termination** or **IP Access Rules** while using HTTPS.
 {{</Aside>}}
 
 9. Select **Submit** to finish the application.
@@ -50,7 +51,7 @@ You cannot enable  **Edge TLS Termination** or **IP Access Rules** while using H
 
 ### For 10 or more unique origins:
 
-1. Navigate to **SSL/TLS** > **Custom hostnames**.
+1. Navigate to **SSL/TLS** > **Custom Hostnames**.
 
 2. If you are creating a new custom hostname, select **Add Custom Hostname**. Otherwise, select the custom hostname that you want to use and select **Edit**.
 
@@ -58,20 +59,20 @@ You cannot enable  **Edge TLS Termination** or **IP Access Rules** while using H
 
 4. If you are creating a new custom hostname, select **Add Custom Hostname** and follow the instructions to [verify custom hostname](/ssl/ssl-for-saas/common-tasks/hostname-verification/). Otherwise, select **Save**.
 
-6. Navigate to **DNS** in the left sidebar.
+6. Navigate to **DNS**.
 
 7. Select **Add Record** and select *CNAME* from the **Type** dropdown.
 
-8. Input the custom hostname under **Name**.
+8. Under **Name**, enter the custom hostname.
 
-9. Input your Spectrum app custom origin under **Target** and select **Save**.
+9. Under **Target**, enter your Spectrum app custom origin and select **Save**.
 
 ### For less than 10 unique origins:
 
-1. Navigate to **DNS** in the left sidebar.
+1. Navigate to **DNS**.
 
 2. Select **Add Record** and select *CNAME* from the **Type** dropdown.
 
-3. Input the custom hostname under **Name**.
+3. Under **Name**, enter your custom hostname.
 
-4.  Input your Spectrum app custom origin under **Target** and select **Save**.
+4. Under **Target**, enter your Spectrum app custom origin and select **Save**.
