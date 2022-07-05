@@ -1,5 +1,5 @@
 ---
-title: Configure the Managed Ruleset in the dashboard
+title: Configure in the dashboard
 pcx-content-type: how-to
 weight: 2
 meta:
