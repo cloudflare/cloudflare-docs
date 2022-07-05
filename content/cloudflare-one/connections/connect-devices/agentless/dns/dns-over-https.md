@@ -273,7 +273,7 @@ curl -s 'https://<ACCOUNT_ID>.cloudflare-gateway.com/dns-query?name=example.com'
      -H 'CF-Authorization: <USER_DOH_TOKEN>' | jq
 ```
 
-If the site is blocked, the query will return the IP address of the Gateway block server (`162.159.36.12`).
+If the site is blocked and you have enabled [**Display block page**](/cloudflare-one/policies/filtering/configuring-block-page/#enable-the-block-page-for-dns-policies) for the policy, the query will return `162.159.36.12` (the IP address of the Gateway block server). If the block page is disabled, the response will be `0.0.0.0`.
 
 <details>
 <summary>Example response</summary>
