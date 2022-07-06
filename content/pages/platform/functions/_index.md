@@ -355,7 +355,7 @@ For example :
 ---
 filename:/.dev.vars
 ---
-Const ENV_NAME = "SUPER_SECRET_KEY"
+ENV_NAME = "SUPER_SECRET_KEY"
 ```
 
 ```js
