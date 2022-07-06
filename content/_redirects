@@ -235,6 +235,7 @@
 /gateway/getting-started-new/onboarding-gateway/ /cloudflare-one/policies/filtering/ 301
 /gateway/locations/ /cloudflare-one/connections/connect-networks/locations/ 301
 /gateway/locations/setup-instructions/android/ /cloudflare-one/connections/connect-networks/locations/ 301
+/gateway/locations/setup-instructions/router/ /cloudflare-one/policies/filtering/dns-policies/locations/ 301
 /gateway/reference/policy/ /cloudflare-one/policies/ 301
 
 # images
@@ -657,6 +658,7 @@
 /workers/kv/writing-data/ /workers/reference/storage/writing-data/ 301
 /workers/learning/fetch-event-lifecycle/ /workers/runtime-apis/fetch-event/ 301
 /workers/learning/getting-started/ /workers/get-started/guide/ 301
+/workers/learning/profiling-workers/ /workers/learning/ 301
 /workers/learning/workers-metrics/ /workers/learning/metrics-and-analytics/ 301
 /workers/platform/scripts/ https://api.cloudflare.com/#worker-script-properties 301
 /workers/platform/services/ /workers/ 301
