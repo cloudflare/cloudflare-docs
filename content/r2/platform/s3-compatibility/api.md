@@ -100,6 +100,6 @@ Below is a list of unimplemented object-level operations.
 
 {{<Aside type="warning">}}
 
-Note that `ListObjects` is supported but `ListObjectsV2` is recommended when developing applications. Learn more at [ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html).
+Even though `ListObjects` is a supported operation, it is recommended that you use `ListObjectsV2` instead when developing applications. For more information, refer to [ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html).
 
 {{</Aside>}}
