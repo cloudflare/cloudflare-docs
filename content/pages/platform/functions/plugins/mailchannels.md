@@ -18,6 +18,16 @@ To add a DKIM signature to a message, add the following fields to the personaliz
 
 **dkim_private_key**: The base-64 encoded private key.
 
+## Generate DKIM credentials 
+
+You can generate your DKIM credientails using any DKIM generator.
+
+1. Enter your domain name 
+2. Enter the Public key into your DNS server record as a text(TXT) entry. The name of your DNS record must follow this convention `[selector key]._domainkey.<Your domain>`. 
+3. Add the value of your Public key in the content field 
+4. Enter the Private key into your email server
+
+
 ## Installation
 
 ```sh
