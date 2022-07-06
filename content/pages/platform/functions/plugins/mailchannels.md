@@ -20,12 +20,15 @@ To add a DKIM signature to a message, add the following fields to the personaliz
 
 ## Generate DKIM credentials 
 
-You can generate your DKIM credientails using any DKIM generator.
+You can generate your DKIM credentials using any DKIM generator of your choice. To add your generated credentials to your project on the Cloudflare dashboard, do the following:
 
-1. Enter your domain name 
-2. Enter the Public key into your DNS server record as a text(TXT) entry. The name of your DNS record must follow this convention `[selector key]._domainkey.<Your domain>`. 
-3. Add the value of your Public key in the content field 
-4. Enter the Private key into your email server
+1. Select the Zone to add DKIM records for then in the menu on the left 
+2. Select **DNS** > **Add Record** 
+3. In the drop-down menu, select **TXT** as the type of record  
+4. Enter your domain name 
+5. Enter the Public key into your DNS server record as a text(TXT) entry. The name of your DNS record must follow this convention `[selector key]._domainkey.<Your domain>`. 
+6. Add the value of your Public key in the content field.
+7. Enter the Private key into your email server.
 
 
 ## Installation
