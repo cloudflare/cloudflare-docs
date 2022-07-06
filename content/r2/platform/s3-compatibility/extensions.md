@@ -32,6 +32,41 @@ These headers map to the `httpMetadata` field in the R2 bindings:
 
 If using Unicode in object key names, refer to the [Unicode Interoperability technical notes](/r2/learning/unicode-interoperability/).
 
+## Auto-creating buckets on upload
+
+If creating buckets on-demand, you might do an opportunistic PUT and then issue a `CreateBucket` if the error returned is `NoSuchBucket`.
+However, this is operationally problematic if the body may have already been partially consumed. Typically to solve this one would use
+HTTP 100 and is indeed how S3 typically solves this. However, this response isn't actually supported by Cloudflare. Additionally,
+even if HTTP 100 existed there's still additional latency involved since the sending of the body starts synchronously in the path of
+ongoing network transfers instead of overlapping in the background.
+
+To support this, uploads (`PutObject` / `CreateMultipartUpload`) support a header being specified that will ensure `NoSuchBucket` is
+never returned. The bucket is instantiated with the equivalent of the following `CreateBucket` request:
+```
+PUT / HTTP/1.1
+Host: bucket.account.r2.cloudflarestorage.com
+<CreateBucketConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+   <LocationConstraint>auto</LocationConstraint>
+</CreateBucketConfiguration>
+```
+
+This is primarily only useful if you have one bucket per customer in which case the [ListBuckets extension](#ListBuckets) to support accounts with
+greater than 1000 buckets may also be useful.
+
+## PutObject
+
+### cf-create-bucket-if-missing
+
+Add a header value of `cf-create-bucket-if-missing` with the value `true` to implicitly create the bucket if it does not exist yet.
+See [above](#auto-creating-buckets-on-upload) for a more detailed explanation of when to use it. Usually it's better to split those operations out.
+
+## CreateMultipartUpload
+
+### cf-create-bucket-if-missing
+
+Add a header value of `cf-create-bucket-if-missing` with the value `true` to implicitly create the bucket if it does not exist yet.
+See [above](#auto-creating-buckets-on-upload) for a more detailed explanation of when to use it. Usually it's better to split those operations out.
+
 ## CopyObject
 
 ### MERGE metadata directive
