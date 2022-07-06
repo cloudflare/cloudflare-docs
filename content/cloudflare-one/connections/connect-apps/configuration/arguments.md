@@ -8,15 +8,11 @@ weight: 4
 
 This page lists general-purpose configuration options for a Cloudflare Tunnel. You can add these flags to the `cloudflared tunnel run` command for [remotely-managed](/cloudflare-one/connections/connect-apps/configuration/remote-management/) and [locally-managed](/cloudflare-one/connections/connect-apps/configuration/local-management/) tunnels.
 
-{{<example>}}
-
 **Example:** The following command runs the `mytunnel` tunnel by proxying traffic to port `8000` and disabling chunked transfer encoding.
 
 ```txt
 cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
 ```
-
-{{</example>}}
 
 - [`config`](#config)
 - [`autoupdate-freq`](#autoupdate-freq)
@@ -28,8 +24,6 @@ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
 - [`retries`](#retries)
 - [`pidfile`](#pidfile)
 - [`protocol`](#protocol)
-- [`help`](#help)
-- [`version`](#version)
 - [`logfile`](#logfile)
 - [`loglevel`](#loglevel)
 - [`transport-loglevel`](#transport-loglevel)
@@ -120,7 +114,9 @@ Writes the application's process identifier (PID) to this file after the first s
 | ---------- | ------- | --------------------------- |
 | `protocol` | `auto`  | `TUNNEL_TRANSPORT_PROTOCOL` |
 
-Specifies the protocol used to establish a connection between `cloudflared` and the edge. Available values are `auto`, `http2`, `h2mux`, and `quic`. The `auto` value will automatically configure the `http2` protocol.
+Specifies the protocol used to establish a connection between `cloudflared` and the edge. Available values are `auto`, `http2`, `h2mux`, and `quic`.
+
+The `auto` value will automatically configure the `quic` protocol. If `cloudflared` is unable to establish UDP connections, it will fallback to using the `http2` protocol.
 
 ## `region`
 
