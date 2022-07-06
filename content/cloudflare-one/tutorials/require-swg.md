@@ -46,11 +46,9 @@ Next, build a rule to decide which devices can enroll in your account.
 
 1.  Click **Add a rule**.
 
-    ![Device Enrollment](/cloudflare-one/static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
+1. Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
 
-    Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
-
-    ![Allow Cloudflare users](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
+    ![Allow users](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
 
 1.  Click **Save**.
 
@@ -79,19 +77,11 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
 1.  Once the client is installed, click the gear icon.
 
-    ![WARP](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
-
 1.  Under the **Account** tab, click **Login with Cloudflare for Teams**.
-
-    ![Account View](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/account-view.png)
 
 1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 
-    ![Team Name](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
-
-The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`. These settings can be configured globally for an organization through a device management platform.
-
-![Confirm WARP](/cloudflare-one/static/secure-web-gateway/block-football/warp-mode.png)
+1. The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`. These settings can be configured globally for an organization through a device management platform.
 
 ## Build a device posture rule
 
@@ -117,8 +107,6 @@ To build Access policies that require Gateway:
 1.  In the application of your choice, edit an existing rule or add a new one.
 
 1.  In the rule builder view, click **+ Add require** and select `Gateway` from both drop-down menus.
-
-    ![Add Policy](/cloudflare-one/static/zero-trust-security/require-swg/require-gateway.png)
 
 1.  Save the rule and the application.
 
