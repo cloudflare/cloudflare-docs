@@ -671,6 +671,7 @@ html {
   padding: var(--padding-vertical) var(--padding-horizontal);
   font-family: inherit;
   cursor: default;
+  tab-size: 2;
 }
 .CodeBlock > code > * {
   cursor: text;
