@@ -6,9 +6,9 @@ weight: 2
 
 # Get started with Argo Smart Routing
 
-To begin using Argo Smart Routing, you must add it to your plan.
-
 ## Enable Argo Smart Routing
+
+To begin using Argo Smart Routing, you must add it to your plan.
 
 1. Log in to your [Cloudflare Dashboard](https://dash.cloudflare.com/) and select your domain.
 
