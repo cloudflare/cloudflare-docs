@@ -3,10 +3,10 @@ title: Certificate signing requests (CSRs)
 pcx-content-type: tutorial
 weight: 7
 meta:
-  title: Certificate signing requests (CSRs) — SSL for SaaS
+  title: Certificate signing requests (CSRs) — Cloudflare for SaaS
 ---
 
-# Certificate signing requests (CSRs) — SSL for SaaS
+# Certificate signing requests (CSRs) — Cloudflare for SaaS
 
 {{<render file="_csr-definition.md">}} <br>
 

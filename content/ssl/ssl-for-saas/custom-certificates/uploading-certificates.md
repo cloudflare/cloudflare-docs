@@ -3,10 +3,10 @@ title: Manage custom certificates
 pcx-content-type: how-to
 weight: 6
 meta:
-  title: Manage custom certificates — SSL for SaaS
+  title: Manage custom certificates — Cloudflare for SaaS
 ---
 
-# Manage custom certificates — SSL for SaaS
+# Manage custom certificates — Cloudflare for SaaS
 
 For use cases and limitations, refer to [custom certificates](/ssl/ssl-for-saas/custom-certificates/).
 

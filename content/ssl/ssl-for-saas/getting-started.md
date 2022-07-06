@@ -3,20 +3,20 @@ title: Get started
 pcx-content-type: get-started
 weight: 1
 meta:
-  title: Get started with SSL for SaaS
+  title: Get started with Cloudflare for SaaS
 ---
 
-# Get started with SSL for SaaS
+# Get started with Cloudflare for SaaS
 
 ---
 
 ## Prerequisites
 
-Before you can start creating custom hostnames, you need to have access to [SSL for SaaS](/ssl/ssl-for-saas/#availability).
+Before you can start creating custom hostnames, you need to have access to [Cloudflare for SaaS](/ssl/ssl-for-saas/#availability).
 
 If you have not used the Cloudflare API previously, review our [API Quickstart](/api/).
 
-If there are multiple proxied DNS records for one zone, Cloudflare must prioritize which record controls the zone settings and associated origin server. Adding a new custom hostname may take priority over your current settings or cause your settings to no longer apply. To prevent overriding or voiding your settings, review [Hostname priority (SSL for SaaS)](/ssl/ssl-tls/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas)
+If there are multiple proxied DNS records for one zone, Cloudflare must prioritize which record controls the zone settings and associated origin server. Adding a new custom hostname may take priority over your current settings or cause your settings to no longer apply. To prevent overriding or voiding your settings, review [Hostname priority (Cloudflare for SaaS)](/ssl/ssl-tls/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas)
  
 ---
 
@@ -44,7 +44,7 @@ We suggest using a domain other than your main company domain (example.cloud ins
 
 4.  Enable **Custom Hostnames** for your zone:
 
-    - If you are an Enterprise customer, upgrade your zone to an Enterprise plan and contact your Customer Success Manager to enable **SSL for SaaS Certificates**.
+    - If you are an Enterprise customer, upgrade your zone to an Enterprise plan and contact your Customer Success Manager to enable **Cloudflare for SaaS Certificates**.
     - If you are not an Enterprise customer, go to **SSL/TLS** > **Custom Hostnames** to enable **Cloudflare for SaaS**.
 
 5.  Set the **Fallback Origin** via either the dashboard or API.

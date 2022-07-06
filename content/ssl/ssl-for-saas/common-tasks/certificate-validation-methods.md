@@ -3,10 +3,10 @@ title: Validate certificates
 pcx-content-type: configuration
 weight: 4
 meta:
-  title: Validate certificates — SSL for SaaS
+  title: Validate certificates — Cloudflare for SaaS
 ---
 
-# Validate certificates — SSL for SaaS
+# Validate certificates — Cloudflare for SaaS
 
 {{<render file="_dcv-definition.md">}}
 

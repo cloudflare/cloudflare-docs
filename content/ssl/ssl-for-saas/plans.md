@@ -3,10 +3,10 @@ title: Plans
 pcx-content-type: reference
 weight: 2
 meta:
-  title: Plans — SSL for SaaS
+  title: Plans — Cloudflare for SaaS
 ---
 
-# Plans — SSL for SaaS
+# Plans — Cloudflare for SaaS
 
 {{<table-wrap>}}
 

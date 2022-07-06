@@ -12,7 +12,7 @@ These analytics include **Site Analytics**, **Bot Analytics**, **Cache Analytics
 
 {{<Aside type="note">}}
 
-The plan of your SSL for SaaS application determines the analytics available for your custom hostnames.
+The plan of your Cloudflare for SaaS application determines the analytics available for your custom hostnames.
 
 {{</Aside>}}
 

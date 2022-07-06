@@ -56,6 +56,10 @@ Both BYOIP addresses and IP addresses configured for Apex Proxying allow for hos
 
 SSL for SaaS v2 is functionally equivalent to SSL for SaaS v1, but removes the requirements to use specific anycast IP addresses at Cloudflare’s edge and Cloudflare’s Universal SSL product with the SSL for SaaS zone.
 
+{{<Aside type="note">}}
+SSL for SaaS v2 is now called Cloudflare for SaaS.
+{{</Aside>}}
+
 ## What happens during the migration?
 
 Once the migration has been started for your zone(s), Cloudflare will require every Custom Hostname to pass a hostname verification check. Existing Custom Hostnames that are proxying to Cloudflare with a DNS CNAME record will automatically re-validate and migrate to the new version with no downtime. Any Custom Hostnames created after the start of the migration will need to pass the hostname validation check using one of the validation methods mentioned above.
