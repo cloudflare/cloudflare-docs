@@ -79,7 +79,7 @@ Each API call to [create a Custom Hostname](https://api.cloudflare.com/#custom-h
 }
 ```
 
-{{<Aside header="Note">}}
+{{<Aside type="note">}}
 Once you activate a Custom Hostname, you can remove the TXT record.
 {{</Aside>}}
 

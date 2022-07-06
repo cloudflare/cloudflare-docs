@@ -14,7 +14,7 @@ By default, Cloudflare routes customer traffic through the closest data center. 
 
 Prior to enabling Regional Services for SaaS:
 
-* Ensure you have access to [SSL for SaaS](/ssl/ssl-for-saas/#availability).
+* Ensure you have access to [Cloudflare for SaaS](/ssl/ssl-for-saas/#availability).
 
 * If you have 10 or more unique origins, ensure your [fallback origin](/ssl/ssl-for-saas/getting-started/#step-1--create-fallback-origin-and-cname-target) is set up.
 

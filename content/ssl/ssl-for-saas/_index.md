@@ -1,18 +1,18 @@
 ---
 pcx-content-type: overview
-title: SSL for SaaS
+title: Cloudflare for SaaS
 weight: 9
 ---
 
-# SSL for SaaS
+# Cloudflare for SaaS
 
-{{<render file="_ssl-for-saas-definition.md">}}
+{{<render file="_ssl-for-saas-definition.md">}} <br>
 
 For example, a customer may want to use their vanity domain `app.customer.com` to point to an application hosted on your Cloudflare zone `service.saas.com`.
 
 ## Benefits
 
-When you use SSL for SaaS, it helps you:
+When you use Cloudflare for SaaS, it helps you:
 
 *   Efficiently manage the entire SSL lifecycle, including initial issuance and renewal.
 *   Offer a branded visitor experience, leading to increased trust.
@@ -32,7 +32,7 @@ For more information on these features, refer to [hostname specific behavior](/s
 
 ## Availability
 
-SSL for SaaS is available as an add-on purchase for customers on any plan. For more details, refer to [Plans](/ssl/ssl-for-saas/plans/).
+Cloudflare for SaaS is available as an add-on purchase for customers on any plan. For more details, refer to [Plans](/ssl/ssl-for-saas/plans/).
 
 ## Next steps
 
