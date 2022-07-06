@@ -16,7 +16,7 @@ Each section will have two tables: a table of implemented APIs and a table of un
 
 Refer the feature column of each table to review which features of an API have been implemented and which have not.
 
-✅ Feature Implemented
+✅ Feature Implemented <br>
 ❌ Feature Not Implemented
 
 ## Bucket region
