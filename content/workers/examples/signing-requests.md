@@ -144,7 +144,7 @@ async function generateSignedUrl(url) {
   // it into a ByteString, and then a Base64-encoded string.
   const base64Mac = btoa(String.fromCharCode(...new Uint8Array(mac)));
   
-  //must convert "+" to "-" as urls encode "+" as " " 
+  // must convert "+" to "-" as urls encode "+" as " " 
   base64Mac = base64Mac.replaceAll("+", "-")
   url.searchParams.set('mac', base64Mac);
   url.searchParams.set('expiry', expiry);
