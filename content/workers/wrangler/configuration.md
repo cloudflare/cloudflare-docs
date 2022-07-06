@@ -223,7 +223,7 @@ services = [
 
 Wrangler supports the use of proxies via environment variables. 
 
-The first non-empty environment variable named https_proxy, HTTPS_PROXY, http_proxy or HTTP_PROXY will be used when wrangler makes outgoing requests.
+The first non-empty environment variable named `https_proxy`, `HTTPS_PROXY`, `http_proxy` or `HTTP_PROXY` will be used when wrangler makes outgoing requests.
 
 For example, on macOS this can be done by adding `HTTP_PROXY=http://<YOUR_PROXY_HOST>:<YOUR_PROXY_PORT>` before your wrangler commands, as shown below:
 
