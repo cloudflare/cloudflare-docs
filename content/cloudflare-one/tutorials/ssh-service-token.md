@@ -27,11 +27,7 @@ This walkthrough extends a [previous guide](/cloudflare-one/tutorials/gitlab/) t
 
 Navigate to the Access section of the Zero Trust dashboard and select the `Service Auth` page.
 
-![Service Auth Start](/cloudflare-one/static/zero-trust-security/ssh-tokens/service-auth-start.png)
-
 Click **Create Service Token** and name the service token. Cloudflare Access will generate a `Client ID` and `Client Secret`. You must copy the `Client Secret` from this page - it will not be shown again.
-
-![Name and Detail](/cloudflare-one/static/zero-trust-security/ssh-tokens/name-and-detail.png)
 
 {{<Aside>}}
 
@@ -43,17 +39,13 @@ For the purposes of this tutorial, the `Client Secret` is visible. However, real
 
 Next, find the application that should be available to services connecting with this token. This example uses a GitLab instance previously configured in another tutorial. You can also add this type of rule to an Access Group so that it can be reused or to a new application.
 
-Select the `Applications` page in the Access section of the Zero Trust dashboard. Locate the application and click **Edit**.
+Select the `Applications` page in the Access section of the Zero Trust dashboard. Locate the application and click **Edit**. The rule currently shown is the identity-based rule that allows team members to connect. Click **Add a Rule** to allow services.
 
-![App List](/cloudflare-one/static/zero-trust-security/ssh-tokens/app-list.png)
-
-The rule currently shown is the identity-based rule that allows team members to connect. Click **Add a Rule** to allow services.
-
-![Start App](/cloudflare-one/static/zero-trust-security/ssh-tokens/start-app.png)
+![Add Rule in App](/cloudflare-one/static/zero-trust-security/ssh-tokens/start-app.png)
 
 The dropdown for `Rule Action` defaults to `Allow`. To use a service token, you must select `Service Auth` instead.
 
-![Non ID Rule](/cloudflare-one/static/zero-trust-security/ssh-tokens/choose-service-auth.png)
+![Use Service Token](/cloudflare-one/static/zero-trust-security/ssh-tokens/choose-service-auth.png)
 
 In the rule configuration card, select `Service Token` from the dropdown. Choose the name of one or more service tokens that can authenticate. Click **Save rule**.
 

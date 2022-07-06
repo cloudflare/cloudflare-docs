@@ -8990,7 +8990,7 @@ All license text:
 
   #### Used by:
 
-  - [nel](https://crates.io/crates/nel)
+  - [nel](https://crates.io/crates/nel/0.1.4)
 
   Copyright 2021 Cloudflare, Inc. All rights reserved.
 
@@ -10008,7 +10008,7 @@ All license text:
   The MIT License (MIT)
 
   Copyright (c) 2015-2016 the fiat-crypto authors (see
-  https://github.com/mit-plv/fiat-crypto/blob/master/AUTHORS).
+  https://github.com/mit-plv/fiat-crypto/blob/master/AUTHORS ).
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal

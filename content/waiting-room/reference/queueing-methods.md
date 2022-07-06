@@ -33,17 +33,13 @@ When your application has open spots, your waiting room chooses visitors at rand
 
 Use this method when you want to distribute products or services more equitably. Earlier users have a better chance of exiting the waiting room before the estimated wait time because they have more chances to be selected.
 
-## API-only queueing methods
-
-The following queueing methods are only available via the API and are commonly used when you [create an event](/waiting-room/additional-options/create-events/).
-
-### Passthrough
+## Passthrough
 
 Allow all traffic to pass immediately through your waiting room and into your application by setting its `queueing_method` to **passthrough**.
 
 Use this setup when you only want to use your waiting room for events — where you can update the queueing method — and otherwise avoid queueing during low-traffic hours.
 
-### Reject
+## Reject
 
 Prevent any traffic from reaching your application by setting its `queueing_method` to **reject**. Users will see a static page.
 

@@ -5,6 +5,16 @@ title: Changelog
 
 # Changelog
 
+## 2022-07-01
+
+- Unsupported search parameters to `ListObjects`/`ListObjectsV2` are now rejected with `501 Not Implemented`.
+- Fixes for Listing:
+  - Fix listing behavior when the number of files within a folder exceeds the limit (you'd end up seeing a CommonPrefix for that large folder N times where N = number of children within the CommonPrefix / limit).
+    - Fix corner case where listing could cause objects with sharing the base name of a "folder" to be skipped.
+    - Fix listing over some files that shared a certain common prefix.
+  - `DeleteObjects` can now handle 1000 objects at a time.
+- S3 `CreateBucket` request can specify `x-amz-bucket-object-lock-enabled` with a value of `false` and not have the requested rejected with a `NotImplemented` error. A value of `true` will continue to be rejected as R2 does not yet support object locks.
+
 ## 2022-06-17
 
 - Fixed a regression for some clients when using an empty delimiter.
