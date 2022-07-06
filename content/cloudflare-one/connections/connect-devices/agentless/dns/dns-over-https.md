@@ -148,7 +148,7 @@ highlight: [3, 4, 7]
 ### 2. Enable DoH functionality for the service token
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/organizations/doh/<ID>" \
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/organizations/doh/<ID>" \
      -H "X-Auth-Email: <EMAIL>" \
      -H "X-Auth-Key: <API_KEY>" \
      -H "Content-Type: application/json" \
