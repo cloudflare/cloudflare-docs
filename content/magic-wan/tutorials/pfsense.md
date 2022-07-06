@@ -49,7 +49,7 @@ Refer to the image below for guidance on which values to use.
 | **Interface**             | WAN                |
 | **Remote Gateway**        | &lt;Anycast IP provided by Cloudflare> |
 
-![pfSense IPsec phase 1 expiration and replacement values for a policy based configuration](/magic-wan/static/pfsense-p1-expiration-route-based.png)
+![pfSense IPsec phase 1 expiration and replacement values for a policy based configuration](/magic-wan/static/pfsense-p1-expiration-replacement.png)
 
 | Field                     | Value              |
 |---------------------------|--------------------|
@@ -76,7 +76,7 @@ Refer to the image below for guidance on which values to use.
 | **Interface**             | WAN                |
 | **Remote Gateway**        | &lt;Anycast IP provided by Cloudflare> |
 
- ![pfSense IPsec phase 1 expiration and replacement values for a route based configuration](/magic-wan/static/pfsense-p1-expiration-route-based.png)
+ ![pfSense IPsec phase 1 expiration and replacement values for a route based configuration](/magic-wan/static/pfsense-p1-expiration-replacement.png)
 
 | Field                     | Value              |
 |---------------------------|--------------------|
