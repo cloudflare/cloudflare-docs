@@ -136,7 +136,7 @@ header: Query
 {
   viewer {
     zones(filter: {zoneTag: "your Zone ID"}) {
-         loadBalancingRequestsAdapative( 
+         loadBalancingRequestsAdaptive( 
             limit: 100, 
             filter: { 
                 datetime_geq: "2021-06-26T00:00:00Z", 
