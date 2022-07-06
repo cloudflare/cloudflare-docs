@@ -60,7 +60,7 @@ HTTP adds a DCV token to your origin. You can either add that token [manually](#
 
 {{<Aside type="warning">}}
 
-Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates. For more details and next steps, refer to [Changes to HTTP DCV](/ssl/ssl-tls/dcv-update/).
+HTTP DCV validation is  no longer allowed for wildcard certificates. For more details and next steps, refer to [Changes to HTTP DCV](/ssl/ssl-tls/dcv-update/).
 
 {{</Aside>}}
 
@@ -108,7 +108,7 @@ Once you create a new hostname [via the dashboard](/ssl/ssl-for-saas/common-task
 
 </details>
 
-{{<Aside type="note" header="Note">}}
+{{<Aside type="note">}}
 
 Cloudflare is able to serve a random token from our edge due to the fact that `site.example.com` has a CNAME in place to `$CNAME_TARGET`, which ultimately resolves to Cloudflare IPs. If your customer has not yet added the CNAME, the CA will not be able to retrieve the token and the process will not complete.
 
