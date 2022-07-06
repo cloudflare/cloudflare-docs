@@ -18,7 +18,7 @@ Connection requests are rate limited. Try your request again after waiting a few
 
 ## Why am I not receiving data?
 
-First, double check if you have a filter defined. If you do, it may be too strict (or incorrect) which ends up dropping all your data.
+First, double-check if you have a filter defined. If you do, it may be too strict (or incorrect) which ends up dropping all your data.
 
 If you are confident in your filter, check the sample rate you used when creating the session. For example, a sample of 100 means you will receive one log for every 100 requests to your zone.
 
