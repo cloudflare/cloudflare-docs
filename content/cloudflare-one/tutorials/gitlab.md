@@ -186,7 +186,7 @@ cloudflared tunnel create gitlab
 
 `cloudflared` will generate a unique ID for this Tunnel, for example `6ff42ae2-765d-4adf-8112-31c55c1551ef`. You can use this Tunnel both for SSH and HTTP traffic.
 
-2. Next, you will need to configure Cloudflare Tunnel to proxy traffic to both destinations. The configuration below will take traffic bound for the DNS record that will be created for the web app and the DNS record to represent SSH traffic to the right port.
+2. You will need to configure Cloudflare Tunnel to proxy traffic to both destinations. The configuration below will take traffic bound for the DNS record that will be created for the web app and the DNS record to represent SSH traffic to the right port.
 
 You use the text editor of your choice to edit the configuration file. The example relies on `Vi`.
 
@@ -194,7 +194,7 @@ You use the text editor of your choice to edit the configuration file. The examp
 vim ~/.cloudflared/config.yml
 ```
 
-3. Next, configure the Tunnel to serve traffic.
+3. Configure the Tunnel to serve traffic.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
