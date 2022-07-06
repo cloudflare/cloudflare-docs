@@ -3,10 +3,10 @@ title: Custom certificates
 pcx-content-type: concept
 weight: 5
 meta:
-  title: Custom certificates — SSL for SaaS
+  title: Custom certificates — Cloudflare for SaaS
 ---
 
-# Custom certificates — SSL for SaaS
+# Custom certificates — Cloudflare for SaaS
 
 If your customers need to provide their own key material, you may want to [upload a custom certificate](/ssl/ssl-for-saas/custom-certificates/uploading-certificates/). Cloudflare will automatically bundle the certificate with a certificate chain [optimized for maximum browser compatibility](/ssl/edge-certificates/custom-certificates/bundling-methodologies/#compatible).
 
