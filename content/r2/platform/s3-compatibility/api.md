@@ -100,6 +100,6 @@ Below is a list of unimplemented object-level operations.
 
 {{<Aside type="warning">}}
 
-Note that `ListObjects` is a deprecated operation in S3 that was replaced with `ListObjectsV2`.
+Even though `ListObjects` is a supported operation, it is recommended that you use `ListObjectsV2` instead when developing applications. For more information, refer to [ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html).
 
 {{</Aside>}}
