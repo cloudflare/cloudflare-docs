@@ -200,7 +200,8 @@ Write the application's PID to this file after the first successful connection. 
 |--|--|--|
 | `protocol` | `auto` | `TUNNEL_TRANSPORT_PROTOCOL` |
 
-Specify the protocol used to establish a connection between `cloudflared` and the edge. The `auto` value will automatically configure the `http2` protocol. 
+Specify the protocol used to establish a connection between `cloudflared` and the edge. The `auto` value will automatically configure the `quic` protocol.
+If protocol is `auto` and `cloudflared` is unable to establish `UDP` connections, it will fallback to using `http2`.
 
 ### `logfile`
 
