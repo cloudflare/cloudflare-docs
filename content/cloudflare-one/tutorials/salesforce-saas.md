@@ -37,8 +37,6 @@ title: Salesforce with Access for SaaS configuration
 1.  Click Add application.
 1.  Next, take note of the **SSO endpoint**, the **Access Entity ID or Issuer**, and the **Public Key**.
 
-![Setup SaaS IdPs](/cloudflare-one/static/documentation/applications/saas-integrate.png)
-
 ## Create a certificate file
 
 1.  Paste the **Public key** in VIM or another code editor.
