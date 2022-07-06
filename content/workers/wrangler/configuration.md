@@ -73,7 +73,12 @@ KEY = "value"
 # @param {string} preview_id The ID of the KV namespace used during `wrangler dev`
 # not inherited
 [[kv_namespaces]]
-  binding = "TEST_NAMESPACE"
+  binding = "TEST_NAMESPACE_0"
+  id = ""
+  preview_id = ""
+
+[[kv_namespaces]]
+  binding = "TEST_NAMESPACE_1"
   id = ""
   preview_id = ""
 
