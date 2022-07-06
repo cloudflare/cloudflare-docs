@@ -12,7 +12,7 @@ To learn more about how KV works, refer to [How KV works](/workers/learning/how-
 
 To review the API spec, refer to the [KV in Runtime API](/workers/runtime-apis/kv).
 
-You can interact with KV via Wrangler and the Cloudflare dashboard. This guide 
+You can interact with KV via Wrangler and the Cloudflare dashboard. This page will guide you through creating your KV namespace, writing a new value to your namespace and interacting with [environments](/workers/platform/environments/).
 
 ## Create a KV namespace with Wrangler
 
@@ -24,7 +24,7 @@ To create a KV namespace with Wrangler:
 
 1. Run `wrangler kv:namespace create <YOUR_NAMESPACE>` in your terminal.
 
-The `kv:namespace` subcommand takes as a new binding name as its argument. A Workers KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide:
+The `kv:namespace` subcommand takes a new binding name as its argument. A Workers KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide:
 
 ```sh
 $ wrangler kv:namespace create <YOUR_NAMESPACE>
@@ -48,7 +48,7 @@ Note that binding names do not need to correspond to the namespace you created. 
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), or [R2 Buckets](#api). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](https://github.com/workers/platform/environment-variables) documentation for more information.
+A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), or [R2 Buckets](/r2/runtime-apis/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/platform/environment-variables) documentation for more information.
 
 A binding is defined in the `wrangler.toml` file of your Worker project's directory.
 
@@ -112,7 +112,7 @@ kv_namespaces = [
 ]
 ```
 
-Using the same binding name for two different namespaces keeps your Worker code simple. You can set a `.get()` command in your Worker code for one binding but when the Worker is running (`let value = await <YOUR_BINDING>.get("KEY");`), data distribution flows according to the environments set up in your `wrangler.toml` file.
+Using the same binding name for two different namespaces keeps your Worker code simple. In the `staging` environment, `MY_KV.get("KEY")` will read from the namespace ID `e29b263ab50e42ce9b637fa8370175e8`. In the `production` environment, `MY_KV.get("KEY")` will read from the namespace ID `a825455ce00f4f7282403da85269f8ea`.
 
 To insert a value into a `staging` KV namespace, use:
 
