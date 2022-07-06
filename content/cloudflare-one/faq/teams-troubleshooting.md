@@ -8,8 +8,6 @@ weight: 4
 
 # Troubleshooting
 
-## 
-
 ## I see a website is blocked, and it shouldn't be.
 
 If you believe a domain has been incorrectly blocked, you can use [this form](https://radar.cloudflare.com/categorization-feedback/) to get the URL reviewed.
