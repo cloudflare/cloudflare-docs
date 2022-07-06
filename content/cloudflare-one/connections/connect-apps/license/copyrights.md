@@ -699,8 +699,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ---
 
-https://github.com/prometheus/client\_golang
-https://github.com/prometheus/client\_model
+https://github.com/prometheus/client_golang
+https://github.com/prometheus/client_model
 https://github.com/prometheus/common
 https://github.com/prometheus/procfs
 

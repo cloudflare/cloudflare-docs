@@ -59,7 +59,7 @@ If an Unbound Worker executed 10 million times and was active a total of 6,400,0
 Total = ~$6.35 + Minimum $5/mo usage = $11.35
 
 - (10 million requests - included 1 million requests) x $0.15 / 1,000,000 requests = $1.35
-- (6,4000,000 seconds) \* 128 MB / 1 GB = 800,000 GB-seconds
+- (6,400,000 seconds) \* 128 MB / 1 GB = 800,000 GB-seconds
 - (800,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 GB-s = $5.00
 
 ## Workers KV
