@@ -219,7 +219,7 @@ services = [
 ]
 ```
 
-## Proxy Support
+## Proxy support
 
 Wrangler supports the use of proxies via environment variables. 
 
