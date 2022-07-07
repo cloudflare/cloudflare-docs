@@ -22,7 +22,7 @@ Argo Smart Routing includes [comprehensive analytics](analytics) to compare perf
 
 ## Availability
 <!-- TODO: Check for accuracy with Success/PM/Billing? -->
-Argo Smart Routing is available as a paid plan extension for all Cloudflare users. Free, Pro, and Business customers can enable Argo in their [Cloudflare Dashboard](https://dash.cloudflare.com/). Enterprise customers can enroll in a free 3 day trial by contacting their Customer Success Manager.
+Argo Smart Routing is available as a paid plan extension for all Cloudflare users. Free, Pro, and Business users can enable Argo in their [Cloudflare Dashboard](https://dash.cloudflare.com/). Enterprise users can enroll in a free 3 day trial by contacting their Customer Success Manager.
 
 {{<button-group>}}
   {{<button type="primary" href="get-started">}}Get started{{</button>}}
