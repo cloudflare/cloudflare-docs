@@ -965,6 +965,7 @@
 /tenant/tutorial/* /tenant/get-started/:splat 301
 /argo-tunnel/run-tunnel/run-as-service/* /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/:splat 301
 /docs-engine/* https://github.com/cloudflare/cloudflare-docs/blob/production/README.md 301
+/railgun/user-guide/optimized-partner-api/* /railgun/user-guide/optimized-partner-api/ 301
 /warp-client/setting-up/* /warp-client/get-started/:splat 301
 /warp-client/setting-up/linux/* /warp-client/get-started/linux/:splat 301
 /warp-client/setting-up/macOS/* /warp-client/get-started/macos/:splat 301
