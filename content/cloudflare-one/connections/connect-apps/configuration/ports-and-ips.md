@@ -8,18 +8,22 @@ weight: 5
 
 Users can implement a positive security model with Cloudflare Tunnel by restricting traffic originating from `cloudflared`. The parameters below can be configured for egress traffic inside of a firewall.
 
-- TCP/UDP port 7844 (for `h2mux`/`http2` and `quic`)
-  - IPs are those behind `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com`
-- TCP port 443 (HTTPS)
-  - IPs are those behind `api.cloudflare.com` and `update.argotunnel.com`
+| Destination | Port | Protocols |
+| ----------- | -------- | --------- |
+| `region1.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
+| `region2.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
+| `api.cloudflare.com`        | 443  | TCP (HTTPS) |
+| `update.argotunnel.com`     | 443  | TCP (HTTPS) |
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
 Opening port 443 for connections to `update.argotunnel.com` is optional. Failure to do so will prompt a log error, but `cloudflared` will still run correctly.
 
 {{</Aside>}}
 
-Below the output of `dig` commands towards the above hostnames:
+## Test connectivity with dig
+
+To test your connectivity to Cloudflare, you can use the `dig` command to query the hostnames listed above.
 
 ```bash
 $ dig A region1.v2.argotunnel.com
@@ -107,7 +111,8 @@ update.argotunnel.com.	190	IN	A	172.64.155.89
 ...
 ```
 
-On Windows, you can use PowerShell commands if dig is not available.
+## Test connectivity with PowerShell
+On Windows, you can use PowerShell commands if `dig` is not available.
 
 To test DNS:
 
@@ -140,8 +145,3 @@ To test ports:
     SourceAddress    : 10.0.2.15
     TcpTestSucceeded : True
 
-{{<Aside>}}
-
-These IP addresses are unlikely to change but in the event that they do, Cloudflare will update the information here.
-
-{{</Aside>}}
