@@ -7,11 +7,11 @@ summary: How to manage Pub/Sub with Wrangler, the Cloudflare CLI.
 
 ## What is Wrangler?
 
-Wrangler is a command-line tool for building and managing Cloudflare's Developer Platform, including [Cloudflare Workers](https://workers.cloudflare.com/), [R2 Storage](https://developers.cloudflare.com/r2) and [Cloudflare Pub/Sub](https://developers.cloudflare.com/pub-sub/).
+Wrangler is a command-line tool for building and managing Cloudflare's Developer Platform, including [Cloudflare Workers](https://workers.cloudflare.com/), [R2 Storage](/r2) and [Cloudflare Pub/Sub](/pub-sub/).
 
 {{<Aside type="note">}}
 
-Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using an older version of Wrangler, ensure you [update the installed version](https://developers.cloudflare.com/workers/wrangler/get-started/#update).
+Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using an older version of Wrangler, ensure you [update the installed version](/workers/wrangler/get-started/#update).
 
 {{</Aside>}}
 
@@ -52,8 +52,8 @@ This token should be kept secret and not committed to source code or placed in a
 
 Wrangler exposes two groups of commands for managing your Pub/Sub configurations:
 
-1. `wrangler pubsub namespace`, which manages the [namespaces](https://developers.cloudflare.com/pub-sub/learning/how-pubsub-works/#brokers-and-namespaces) your brokers are grouped into.
-2. `wrangler pubsub broker` for managing your individual brokers, issuing and revoking credentials, and updating your [Worker integrations](https://developers.cloudflare.com/pub-sub/learning/integrate-workers/).
+1. `wrangler pubsub namespace`, which manages the [namespaces](/pub-sub/learning/how-pubsub-works/#brokers-and-namespaces) your brokers are grouped into.
+2. `wrangler pubsub broker` for managing your individual brokers, issuing and revoking credentials, and updating your [Worker integrations](/pub-sub/learning/integrate-workers/).
 
 The available `wrangler pubsub namespace` sub-commands include:
 
@@ -91,7 +91,7 @@ Commands:
 
 ### Create a Namespace
 
-To create a [Namespace](https://developers.cloudflare.com/pub-sub/learning/how-pubsub-works/#brokers-and-namespaces):
+To create a [Namespace](/pub-sub/learning/how-pubsub-works/#brokers-and-namespaces):
 
 ```sh
 wrangler pubsub namespace create NAMESPACE_NAME
@@ -99,7 +99,7 @@ wrangler pubsub namespace create NAMESPACE_NAME
 
 ### Create a Broker
 
-To create a [Broker](https://developers.cloudflare.com/pub-sub/learning/how-pubsub-works/#brokers-and-namespaces) within a Namespace:
+To create a [Broker](/pub-sub/learning/how-pubsub-works/#brokers-and-namespaces) within a Namespace:
 
 ```sh
 wrangler pubsub broker create BROKER_NAME --namespace=NAMESPACE_NAME
