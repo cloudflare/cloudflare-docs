@@ -49,8 +49,6 @@ Based on additional knowledge about your website traffic and requirements, you c
 - Create [forwarding URLs](https://support.cloudflare.com/hc/articles/4729826525965) to prevent access to specify URLs, request schemes, file types, subdomains, or directories by redirecting users to a safe location.
 - Restrict access to documents, files, and media by configuring [Token Authentication](https://support.cloudflare.com/hc/articles/115001376488).
 
-### Hide
-
 ### Dedicated products
 
 Cloudflare also offers dedicated products to increase the security of your website and underlying infrastructure:
@@ -60,4 +58,3 @@ Cloudflare also offers dedicated products to increase the security of your websi
 - [Magic Transit](/magic-transit/): Delivers network functions at Cloudflare scale — DDoS protection, traffic acceleration, and much more from every Cloudflare data center — for on-premise, cloud-hosted, and hybrid networks.
 - [Magic WAN](/magic-wan/): Securely connect any traffic source - data centers, offices, devices, cloud properties - to Cloudflare’s network and configure routing policies to get the bits where they need to go, all within one SaaS solution.
 - [Page Shield](/page-shield/): Monitor third-party scripts on your application and receive notifications when they have been compromised or are exhibiting malicious behavior.
-- [Spectrum](): 
