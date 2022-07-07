@@ -12,6 +12,7 @@ meta:
 
 ## Secure origin connections
 
+{{<render file="_origin-secure-dns.md">}}
 {{<render file="_origin-secure-connections.md">}}
 
 ## Monitor origin health

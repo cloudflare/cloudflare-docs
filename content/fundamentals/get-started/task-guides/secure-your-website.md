@@ -37,6 +37,7 @@ All customers also have the options to adjust the following **Security** setting
 
 Based on additional knowledge about your website traffic and requirements, you can also:
 
+- Enable [DNSSEC](/dns/additional-options/dnssec/) to add an extra layer of authentication to DNS queries.
 - Enable [bot protection](/bots/get-started/).
 - Set up various **Security** rules:
     - [Firewall rules](/firewall/cf-firewall-rules/) block, challenge, or allow requests based on [several characteristics](/ruleset-engine/rules-language/fields/) (user agents, cookies, referrer, and more).
@@ -46,8 +47,9 @@ Based on additional knowledge about your website traffic and requirements, you c
     - [Zone Lockdown rules](https://support.cloudflare.com/hc/articles/115001595131) (customers on a Pro plan or higher) specify a list of IP addresses, CIDR ranges, or networks that are allowed to access a particular domain, subdomain, or URL.
 - Further customize [Web Application Firewall (WAF)](/waf/) and [DDoS Protection](/ddos-protection/) settings.
 - Create [forwarding URLs](https://support.cloudflare.com/hc/articles/4729826525965) to prevent access to specify URLs, request schemes, file types, subdomains, or directories by redirecting users to a safe location.
-- When possible, use [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) to prevent your origin IP addresses from being leaked.
 - Restrict access to documents, files, and media by configuring [Token Authentication](https://support.cloudflare.com/hc/articles/115001376488).
+
+### Hide
 
 ### Dedicated products
 
