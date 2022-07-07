@@ -5059,7 +5059,7 @@ pre {
   border-radius: 3px;
   color: #2c3e50;
   border-bottom: 0.25rem solid #bdc3c7;
-  overflow: scroll;
+  overflow: auto;
 }
 
 
