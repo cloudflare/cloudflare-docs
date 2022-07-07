@@ -12,7 +12,7 @@ To perform DLP filtering, you first configure a DLP Profile with the data patter
 
 ## Prerequisites
 
-* Enrolled in the DLP Beta program
+* Enrolled in the [DLP Beta program](https://www.cloudflare.com/zero-trust/dlp-waitlist/)
 * Enabled [Gateway HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/)
 
 ## Configure a DLP Profile
