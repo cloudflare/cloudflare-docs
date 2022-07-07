@@ -6,7 +6,7 @@ weight: 4
 
 # Native OS
 
-{{<Aside type="Warning" header="Warning">}}
+{{<Aside type="warning" header="Warning">}}
 
 Enrolling devices using static IP addresses may prevent users from connecting to some of the public Wi-Fi networks that use captive portals. If users are experiencing connectivity issues related to captive portals, they should:
 

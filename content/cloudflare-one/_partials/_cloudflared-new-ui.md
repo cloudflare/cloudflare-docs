@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-{{<Aside type="Warning">}}
+{{<Aside type="warning">}}
 
 **New!** Set up and manage your Cloudflare Tunnel environment on the Zero Trust dashboard. You will be able to install `cloudflared` as a service, create and run tunnels, and get an overview of your active and inactive connectors.
 
