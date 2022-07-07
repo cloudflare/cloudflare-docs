@@ -32,7 +32,7 @@ For more information on these features, refer to [hostname specific behavior](/s
 
 ## Availability
 
-Cloudflare for SaaS is available as an add-on purchase for customers on any plan. For more details, refer to [Plans](/ssl/ssl-for-saas/ssl/plans/).
+Cloudflare for SaaS is available as an add-on purchase for customers on any plan. For more details, refer to [Plans](/ssl/ssl-for-saas/plans/).
 
 ## Next steps
 
