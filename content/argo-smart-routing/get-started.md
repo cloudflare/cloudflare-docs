@@ -8,7 +8,11 @@ weight: 2
 
 ## Enable Argo Smart Routing
 
-To begin using Argo Smart Routing, you must add it to your plan.
+{{<Aside type="note">}}
+
+If you are an Enterprise user, you can add the permission to your account by contacting your Account Executive or Customer Success Manager.
+
+{{</Aside>}}
 
 1. Log in to your [Cloudflare Dashboard](https://dash.cloudflare.com/) and select your domain.
 
