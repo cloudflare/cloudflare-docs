@@ -121,7 +121,7 @@ function $tab(ev: MouseEvent) {
 
 export function tabs() {
   // Find all tab wrappers
-  let wrappers = document.querySelectorAll(".wrapper");
+  let wrappers = document.querySelectorAll(".tabs-wrapper");
 
   addEventListener("load", () => {
     for (let i = 0; i < wrappers.length; i++) {

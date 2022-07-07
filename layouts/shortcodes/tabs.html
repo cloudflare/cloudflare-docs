@@ -1,6 +1,6 @@
 {{- $text := .Get "labels" -}} {{- $labels := split $text " | " -}}
 
-<div class="wrapper">
+<div class="tabs-wrapper">
   <nav role="navigation" class="tabs">
     <ul>
       {{ range $idx, $txt := $labels }} {{- $link := replace $txt "/" "-"}}
