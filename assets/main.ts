@@ -14,12 +14,11 @@ declare global {
 (function () {
   navs.init();
   timeago.init();
-
+  events.tabs();
   events.load();
   events.focus();
   events.mobile();
   events.dropdowns();
-  events.tabs();
   events.copy();
 
   contents.toc();
