@@ -128,10 +128,14 @@ export function tabs() {
       const labels = wrappers[i].querySelectorAll(".tab-label");
       const tabs = wrappers[i].querySelectorAll(".tab");
 
-      // Set the first tab in a group to display
-      ((tabs[0] as HTMLElement) || null).style.display = "block";
-      for (let i = 0; i < labels.length; i++)
-        labels[i].addEventListener("click", $tab);
+      if (tabs.length > 0) {
+        // Set the first tab in a group to display
+        (tabs[0] as HTMLElement).style.display = "block";
+        for (let i = 0; i < labels.length; i++)
+          labels[i].addEventListener("click", $tab);
+      } else {
+        console.log({ wrappers, tabs, labels });
+      }
     }
   });
 }
