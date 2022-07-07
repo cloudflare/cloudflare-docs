@@ -8,7 +8,11 @@ weight: 2
 
 Cloudflare offers several tools to protect your website against malicious traffic and bad actors.
 
-## Protection options
+## Account protection options
+
+For recommendations about how to protect your Cloudflare account, refer to [Account Security](/fundamentals/account-and-billing/account-security/).
+
+## Zone protection options
 
 ### Default protection
 
@@ -42,6 +46,7 @@ Based on additional knowledge about your website traffic and requirements, you c
     - [Zone Lockdown rules](https://support.cloudflare.com/hc/articles/115001595131) (customers on a Pro plan or higher) specify a list of IP addresses, CIDR ranges, or networks that are allowed to access a particular domain, subdomain, or URL.
 - Further customize [Web Application Firewall (WAF)](/waf/) and [DDoS Protection](/ddos-protection/) settings.
 - Create [forwarding URLs](https://support.cloudflare.com/hc/articles/4729826525965) to prevent access to specify URLs, request schemes, file types, subdomains, or directories by redirecting users to a safe location.
+- When possible, use [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) to prevent your origin IP addresses from being leaked.
 - Restrict access to documents, files, and media by configuring [Token Authentication](https://support.cloudflare.com/hc/articles/115001376488).
 
 ### Dedicated products
@@ -53,3 +58,4 @@ Cloudflare also offers dedicated products to increase the security of your websi
 - [Magic Transit](/magic-transit/): Delivers network functions at Cloudflare scale — DDoS protection, traffic acceleration, and much more from every Cloudflare data center — for on-premise, cloud-hosted, and hybrid networks.
 - [Magic WAN](/magic-wan/): Securely connect any traffic source - data centers, offices, devices, cloud properties - to Cloudflare’s network and configure routing policies to get the bits where they need to go, all within one SaaS solution.
 - [Page Shield](/page-shield/): Monitor third-party scripts on your application and receive notifications when they have been compromised or are exhibiting malicious behavior.
+- [Spectrum](): 
