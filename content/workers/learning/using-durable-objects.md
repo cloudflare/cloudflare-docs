@@ -552,3 +552,7 @@ A single instance of a Durable Object cannot do more work than is possible on a 
 - `Error: Durable Object is overloaded. Requests queued for too long.` The oldest request has been in the queue too long.
 
 To solve this you can either do less work per request, or send fewer requests, for example, by splitting the requests among more instances of the Durable Object.
+
+#### Error: Durable Object storage operation exceeded timeout which caused object to be reset.
+
+To prevent indefinite locking, there is a limit on how much time storage operations can take. In objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact support.
