@@ -63,8 +63,8 @@ We suggest using a domain other than your main company domain (example.cloud ins
 
 Each Custom Hostname requires successful Certificate Validation and Hostname Verification.
 
-- [Certificate Validation](/ssl/ssl-for-saas/common-tasks/certificate-validation-methods/): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
-- [Hostname Verification](/ssl/ssl-for-saas/common-tasks/hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
+- [Certificate Validation](/ssl/ssl-for-saas/ssl/common-tasks/certificate-validation-methods/): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
+- [Hostname Verification](/ssl/ssl-for-saas/ssl/common-tasks/hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
 
 Depending on which method you select for each of these options, additional steps might be required for you and your customers.
 {{<Aside type="note">}}
@@ -107,13 +107,13 @@ With a CNAME in place, the entire process — from validation to issuance to edg
 
 ### Monitor certificate status
 
-For help tracking a certificate's status, refer to [Monitor certificates](/ssl/ssl-for-saas/common-tasks/issuing-certificates/).
+For help tracking a certificate's status, refer to [Monitor certificates](/ssl/ssl-for-saas/ssl/common-tasks/issuing-certificates/).
 
 ### View certificates
 
 Once domain validation has been completed, the certificates will be issued and distributed to Cloudflare’s edge.
 
-To view these certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/ssl/ssl-for-saas/common-tasks/certificate-validation-methods/)).
+To view these certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/ssl/ssl-for-saas/ssl/common-tasks/certificate-validation-methods/)).
 
 ```sh
 $ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep app.example.com
