@@ -382,6 +382,13 @@
 /page-shield/script-monitor/use-dashboard/ /page-shield/use-dashboard/monitor-scripts/ 301
 /page-shield/reference/script-monitor-api/ /page-shield/reference/page-shield-api/ 301
 
+# railgun
+/railgun/user-guide/optimized-partner-api/enable-and-disable-connections/ /railgun/user-guide/optimized-partner-api/ 301
+/railgun/user-guide/optimized-partner-api/manage-railguns/ /railgun/user-guide/optimized-partner-api/ 301
+/railgun/user-guide/optimized-partner-api/list-railgun-details/ /railgun/user-guide/optimized-partner-api/ 301
+/railgun/user-guide/optimized-partner-api/railguns-via-ip-ranges/ /railgun/user-guide/optimized-partner-api/ 301
+/railgun/user-guide/optimized-partner-api/using-curl-with-the-api/ /railgun/user-guide/optimized-partner-api/ 301
+
 # randomness-beacon
 /randomness-beacon/about/Background/ /randomness-beacon/about/background/ 301
 /randomness-beacon/about/Drand/ /randomness-beacon/about/drand/ 301
