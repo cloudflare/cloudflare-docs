@@ -1,7 +1,7 @@
 ---
 title: Plans
 pcx-content-type: reference
-weight: 2
+weight: 1
 meta:
   title: Plans — Cloudflare for SaaS
 ---
