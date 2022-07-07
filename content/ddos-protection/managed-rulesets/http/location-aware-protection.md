@@ -43,4 +43,4 @@ To configure the geo-profiling rule, refer to the instructions in [Configure one
 * Rule ID: `a8c6333711ff4b0a81371d1c444be2c3`
 * Description: `Location-Aware DDoS Protection (Available only to Enterprise zones with Advanced DDoS service).`
 
-For more information on available configuration parameters, refer to [HTTP DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
+For more information on the available configuration parameters, refer to [HTTP DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
