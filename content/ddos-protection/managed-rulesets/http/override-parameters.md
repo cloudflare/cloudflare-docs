@@ -1,7 +1,7 @@
 ---
-title: Managed Ruleset parameters
+title: Parameters
 pcx-content-type: reference
-weight: 4
+weight: 5
 meta:
   title: HTTP DDoS Attack Protection parameters
 ---
