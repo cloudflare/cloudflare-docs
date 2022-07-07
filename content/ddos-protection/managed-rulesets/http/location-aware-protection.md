@@ -6,7 +6,7 @@ weight: 4
 
 # Location-Aware DDoS Protection
 
-Location-Aware DDoS Protection can detect and mitigate traffic that deviates from your site's geo-distribution profile, which Cloudflare builds from legitimate traffic and updates over time.
+Location-Aware DDoS Protection can detect and mitigate traffic that deviates from your site's geo-distribution profile, which Cloudflare builds from legitimate traffic and keeps updating over time.
 
 The geo-distribution profile is exposed as a rule in the HTTP DDoS Attack Protection Managed Ruleset that you can configure.
 
