@@ -148,6 +148,10 @@ These selectors depend on the `Content-Type` header being present in the request
 | -- | -- |
 | Upload Mime Type | `http.upload.mime == "image/png\"` |
 
+### DLP Profile
+
+Scans HTTP traffic for the presence of social security numbers and other PII. You must configure the DLP Profile before you can use this selector in your policy. For more information, refer to our [DLP Profile](/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/) documentation.
+
 ### Host
 
 | UI name | API example |
