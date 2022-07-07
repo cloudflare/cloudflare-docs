@@ -45,7 +45,7 @@ DLP Profiles may be used alongside other Zero Trust rules in a [Gateway HTTP pol
 
 {{<Aside type="note" header="Tips">}}
 - Adding additional conditions to your policy limits the scope of the DLP scan and can help reduce false positives.
-- The Allow action functions as an implicit logger, giving you visibility into where your sensitive data is going.
+- The **Allow** action functions as an implicit logger, giving you visibility into where your sensitive data is going.
 
 {{</Aside>}}
 
