@@ -16,9 +16,13 @@ This feature is only available to Enterprise customers subscribed to the Advance
 
 ## How it works
 
-Cloudflare maps the source IP address of every request targeting your website to a client country and continent. With this information, Cloudflare updates internal counters for the number of legitimate (non-attack) requests to your zone per client country and client region. These counters are then used to calculate the 95th percentile (P95) requests-per-second rate for every client country and region using the rates from the past seven days. The result of these calculations is a geo-distribution profile for your website, which is updated every 24 hours. Incoming traffic that deviates from your profile may be malicious.
+Cloudflare maps the source IP address of every request targeting your website to a client country and continent. With this information, Cloudflare updates internal counters for the number of legitimate (non-attack) requests to your zone per client country and client region. These counters are then used to calculate the 95th percentile (P95) requests-per-second rate for every client country and region using the rates from the past seven days.
 
-The default action of the managed rule exposing the geo-distribution profile is _Log_. You can use this mode to first observe what traffic is flagged before deciding on a mitigation action.
+Location-Aware DDoS Protection also takes into account Cloudflare’s [Machine Learning (ML) models](/bots/concepts/bot-score/#machine-learning) to identify traffic that is likely automated.
+
+Using these sources of information, Cloudflare builds a geo-distribution profile for your website, which is updated every 24 hours. Incoming traffic that deviates from your profile may be malicious.
+
+Cloudflare may change the rule logic from time to time to improve it. Any rule changes will appear in the [HTTP DDoS Protection Managed Ruleset changelog](/ddos-protection/change-log/http/).
 
 ---
 
@@ -32,12 +36,11 @@ To view traffic flagged by the geo-profiling rule:
 
 ## Configure the geo-profiling rule
 
-To configure the geo-profiling rule, refer to the instructions in [Configure one or more rules](/ddos-protection/managed-rulesets/http/configure-dashboard/#configure-one-or-more-rules), searching for the rule with ID `a8c6333711ff4b0a81371d1c444be2c3`.
+You can adjust the action and sensitivity of the geo-profiling rule. The default action is _Log_. You can use this action to first observe what traffic is flagged before deciding on a mitigation action.
 
-You can configure the following parameters:
+To configure the geo-profiling rule, refer to the instructions in [Configure one or more rules](/ddos-protection/managed-rulesets/http/configure-dashboard/#configure-one-or-more-rules), searching for the following rule:
 
-* **Sensitivity**: Adjust the sensitivity level to define how much tolerance you permit for traffic that deviates from your geo-distribution profile. The lower the sensitivity, the higher the tolerance. If you expect traffic from secondary countries and regions, consider changing the sensitivity level from the default level (_High_) to a lower level (_Medium_, _Low_, or _Essentially Off_).
+* Rule ID: `a8c6333711ff4b0a81371d1c444be2c3`
+* Description: `Location-Aware DDoS Protection (Available only to Enterprise zones with Advanced DDoS service).`
 
-* **Action**: Defines the action to apply to requests that deviate from the geo-distribution profile. The default action of the geo-profiling rule is _Log_, which does not apply any mitigation action. To start applying a mitigation action, update the rule action to _Block_, _Managed Challenge_, or _Legacy CAPTCHA_. Blocked requests will receive a `409` response status code.
-
-For more information on these parameters, refer to [HTTP DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
+For more information on available configuration parameters, refer to [HTTP DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
