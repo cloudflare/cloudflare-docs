@@ -41,7 +41,7 @@ Once deployed, Cloudflare Gateway will begin to block DNS queries to sites categ
 
 ![Blocked](/cloudflare-one/static/secure-web-gateway/review-gateway-block/blocked.png)
 
-3. You can expand the record to identify more information about the event, including user identity if you have deployed the [Zero Trust agent](/cloudflare-one/connections/connect-devices/).
+3. Expand the record to identify more information about the event, including user identity if you have deployed the [Zero Trust agent](/cloudflare-one/connections/connect-devices/).
 
 
 ## Review block reason
