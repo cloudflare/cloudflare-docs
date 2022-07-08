@@ -225,8 +225,6 @@ When using Wrangler in corporate environments that require the use of a VPN or H
 
 You can use Wrangler with your VPN or HTTP proxy via environment variables. 
 
-To use Wrangler behind a proxy, you'll need to set an environment variable pointing to your proxy.
-
 Wrangler supports the following environment variable names:
 - `https_proxy`
 - `HTTPS_PROXY`
