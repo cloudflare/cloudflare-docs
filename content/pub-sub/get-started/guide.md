@@ -35,7 +35,7 @@ During the Private Beta, your account will need to be explicitly granted access.
 
 {{<Aside type="note">}}
 
-Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using an older version of Wrangler, ensure you [update the installed version](https://developers.cloudflare.com/workers/wrangler/get-started/#update).
+Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using an older version of Wrangler, ensure you [update the installed version](/workers/wrangler/get-started/#update).
 
 {{</Aside>}}
 

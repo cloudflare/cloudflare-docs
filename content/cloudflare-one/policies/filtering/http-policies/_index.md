@@ -53,7 +53,7 @@ For more information on this action, refer to the documentation on [Browser Isol
 
 ### Do Not Inspect
 
-{{<Aside type="Warning" header="Warning">}}
+{{<Aside type="warning" header="Warning">}}
 
 When a *Do Not Inspect* rule is created for a given hostname, application, or app type, no traffic will be inspected.
 

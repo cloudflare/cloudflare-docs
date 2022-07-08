@@ -95,9 +95,9 @@ For this tutorial, you will need:
 
 1.  Set Provisioning to _Manual_.
 
-        ![AWS settings](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-settings.png)
+    ![AWS settings](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-settings.png)
 
-         {{<Aside type="Warning" header="Important">}}
+    {{<Aside type="warning" header="Important">}}
 
     Access for SaaS does not currently support System for Cross-domain Identity Management (SCIM). Please make sure that:
 
