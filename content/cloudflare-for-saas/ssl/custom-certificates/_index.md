@@ -12,7 +12,7 @@ If your customers need to provide their own key material, you may want to [uploa
 
 As part of this process, you may also want to [generate a Certificate Signing Request (CSR)](/cloudflare-for-saas/ssl/custom-certificates/certificate-signing-requests/) for your customer so they do not have to manage the private key on their own.
 
-{{<render file="_ssl-for-saas-plan-limitation.md">}}
+{{<render file="../../ssl/_partials/_ssl-for-saas-plan-limitation.md">}}
 
 ## Use cases
 
