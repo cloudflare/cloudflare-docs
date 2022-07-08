@@ -8,7 +8,7 @@ meta:
 
 # Validate certificates — Cloudflare for SaaS
 
-{{<render file="_dcv-definition.md">}}
+{{<render file="../../ssl/_partials/_dcv-definition.md">}}
 
 ## DCV methods
 
@@ -20,39 +20,39 @@ If you value simplicity and your customers can tolerate a few minutes of downtim
 
 ### TXT record
 
-{{<render file="_txt-validation-definition.md">}}
+{{<render file="../../ssl/_partials/_txt-validation-definition.md">}}
 
-{{<render file="_ssl-for-saas-create-hostname.md">}}
+{{<render file="../../ssl/_partials/_ssl-for-saas-create-hostname.md">}}
 
 - [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, refer to the values present in the `validation_records` array (specifically `txt_name` and `txt_value`).
 - **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the values for **Certificate validation TXT name** and **Certificate validation TXT value**.
 
 Ask your customer to create a TXT record named the **name** and containing the **value** at their authoritative DNS provider. Once this TXT record is in place, validation and certificate issuance will automatically complete.
 
-{{<render file="_ssl-for-saas-validate-patch.md">}}
+{{<render file="../../ssl/_partials/_ssl-for-saas-validate-patch.md">}}
 
 ### Email
 
-{{<render file="_email-validation-definition.md">}}
+{{<render file="../../ssl/_partials/_email-validation-definition.md">}}
 
-{{<render file="_ssl-for-saas-create-hostname.md">}}
+{{<render file="../../ssl/_partials/_ssl-for-saas-create-hostname.md">}}
 
 - [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, refer to the values present in the `validation_records` array (specifically `emails`).
 - **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the value for **Certificate validation email recipients**.
 
-{{<render file="_email-validation-process.md">}}
+{{<render file="../../ssl/_partials/_email-validation-process.md">}}
 
-{{<render file="_ssl-for-saas-validate-patch.md">}}
+{{<render file="../../ssl/_partials/_ssl-for-saas-validate-patch.md">}}
 
 ### CNAME (manual)
 
-{{<render file="_dcv-cname-definition.md">}}
+{{<render file="../../ssl/_partials/_dcv-cname-definition.md">}}
 
 Since this method is only available using the API, you need to make a [POST request](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) and set a `"method":"cname"` parameter.
 
 Within the `ssl` object in the response, refer to the values present in the `validation_records` array. Each record will contain a property for `cname` and `cname_target` (you can also access these values in the dashboard by clicking that specific hostname certificate). Provide these values to your customer so they can add a CNAME record at their authoritative DNS provider.
 
-{{<render file="_ssl-for-saas-validate-patch.md">}}
+{{<render file="../../ssl/_partials/_ssl-for-saas-validate-patch.md">}}
 
 ### HTTP
 
@@ -66,7 +66,7 @@ HTTP DCV validation is no longer allowed for wildcard certificates. For more det
 
 #### HTTP (manual)
 
-{{<render file="_ssl-for-saas-create-hostname.md">}}
+{{<render file="../../ssl/_partials/_ssl-for-saas-create-hostname.md">}}
 
 - [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, store the values present in the `validation_records` array (specifically `http_url` and `http_body`).
 - **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the values for **Certificate validation request** and **Certificate validation response**.
@@ -90,7 +90,7 @@ ca3-be794c5f757b468eba805d1a705e44f6
 
 On the next check cycle, Cloudflare will ask the CA to recheck the URL, complete validation, and issue the certificate.
 
-{{<render file="_ssl-for-saas-validate-patch.md">}}
+{{<render file="../../ssl/_partials/_ssl-for-saas-validate-patch.md">}}
 
 #### HTTP (automatic)
 
@@ -102,7 +102,7 @@ Once you create a new hostname [via the dashboard](/cloudflare-for-saas/ssl/comm
 <summary>What happens after you create the custom hostname</summary>
 <div>
 
-{{<render file="_cname-cert-verification.md">}}
+{{<render file="../../ssl/_partials/_cname-cert-verification.md">}}
 
 </div>
 

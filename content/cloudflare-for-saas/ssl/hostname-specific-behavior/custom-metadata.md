@@ -13,7 +13,7 @@ To do this, you will first need to reach out to your account team to enable acce
 * Read the metadata JSON from [Cloudflare Workers](/workers/) (requires access to Workers) to define per-hostname behavior.
 * Use custom metadata values in [rule expressions](/ruleset-engine/rules-language/expressions/) of different Cloudflare security products to define the rule scope.
 
-{{<render file="_ssl-for-saas-plan-limitation.md">}}
+{{<render file="../../ssl/_partials/_ssl-for-saas-plan-limitation.md">}}
 
 ---
 

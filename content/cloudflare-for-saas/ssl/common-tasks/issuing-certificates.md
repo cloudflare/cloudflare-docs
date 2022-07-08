@@ -8,12 +8,12 @@ weight: 3
 
 Once you have [set up your Cloudflare for SaaS application](/cloudflare-for-saas/getting-started/), you can start issuing new certificates for your customers.
 
-{{<render file="_issue-certs-preamble.md">}}
+{{<render file="../../ssl/_partials/_issue-certs-preamble.md">}}
 
 ## Via the dashboard
 
-{{<render file="_create-custom-hostname.md">}}
+{{<render file="../../ssl/_partials/_create-custom-hostname.md">}}
 
 ## Via the API
 
-{{<render file="_create-custom-hostname-api.md">}}
+{{<render file="../../ssl/_partials/_create-custom-hostname-api.md">}}

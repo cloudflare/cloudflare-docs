@@ -6,7 +6,7 @@ weight: 9
 
 # Cloudflare for SaaS
 
-{{<render file="_ssl-for-saas-definition.md">}} <br>
+{{<render file="../../ssl/_partials/_ssl-for-saas-definition.md">}} <br>
 
 For example, a customer may want to use their vanity domain `app.customer.com` to point to an application hosted on your Cloudflare zone `service.saas.com`.
 
