@@ -20,7 +20,7 @@ weight: 10
 
 ## Fallback origins
 
-Our API includes the following endpoints related to the [fallback origin](/ssl/ssl-for-saas/getting-started/#step-1--create-fallback-origin-and-cname-target):
+Our API includes the following endpoints related to the [fallback origin](/cloudflare-for-saas/getting-started/#step-1--create-fallback-origin-and-cname-target):
 
 - [Get fallback origin](https://api.cloudflare.com/#custom-hostname-fallback-origin-for-a-zone-get-fallback-origin-for-custom-hostnames)
 - [Update fallback origin](https://api.cloudflare.com/#custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames)

@@ -8,6 +8,6 @@ weight: 2
 
 We have many different status codes. They can be related to:
 
-*   [Custom hostnames](/ssl/ssl-for-saas/ssl/reference/status-codes/custom-hostnames/)
-*   [Specific certificate authorities](/ssl/ssl-for-saas/ssl/reference/status-codes/certificate-authority-specific/)
-*   [Custom Certificate Signing Requests](/ssl/ssl-for-saas/ssl/reference/status-codes/custom-csrs/)
+*   [Custom hostnames](/cloudflare-for-saas/ssl/reference/status-codes/custom-hostnames/)
+*   [Specific certificate authorities](/cloudflare-for-saas/ssl/reference/status-codes/certificate-authority-specific/)
+*   [Custom Certificate Signing Requests](/cloudflare-for-saas/ssl/reference/status-codes/custom-csrs/)

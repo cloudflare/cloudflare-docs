@@ -31,7 +31,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/ssl/ssl-for-saas/ssl/reference/hostname-analytics/">Custom analytics</a>
+          <a href="/cloudflare-for-saas/ssl/reference/hostname-analytics/">Custom analytics</a>
         </strong>
       </td>
       <td colspan="2" style="text-align:center">
@@ -42,7 +42,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/ssl/ssl-for-saas/ssl/hostname-specific-behavior/custom-origin/">Custom origin</a>
+          <a href="/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-origin/">Custom origin</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>
@@ -51,7 +51,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/ssl/ssl-for-saas/ssl/custom-certificates/">Custom certificates</a>
+          <a href="/cloudflare-for-saas/ssl/custom-certificates/">Custom certificates</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>
@@ -60,7 +60,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/ssl/ssl-for-saas/ssl/custom-certificates/certificate-signing-requests/">CSR support</a>
+          <a href="/cloudflare-for-saas/ssl/custom-certificates/certificate-signing-requests/">CSR support</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>
@@ -90,7 +90,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/ssl/ssl-for-saas/ssl/common-tasks/enforce-mtls/">mTLS support</a>
+          <a href="/cloudflare-for-saas/ssl/common-tasks/enforce-mtls/">mTLS support</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>
@@ -113,7 +113,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/ssl/ssl-for-saas/ssl/hostname-specific-behavior/custom-metadata/">Custom metadata</a>
+          <a href="/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/">Custom metadata</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>

@@ -6,7 +6,7 @@ weight: 3
 
 # Issue new certificates
 
-Once you have [set up your Cloudflare for SaaS application](/ssl/ssl-for-saas/getting-started/), you can start issuing new certificates for your customers.
+Once you have [set up your Cloudflare for SaaS application](/cloudflare-for-saas/getting-started/), you can start issuing new certificates for your customers.
 
 {{<render file="_issue-certs-preamble.md">}}
 
