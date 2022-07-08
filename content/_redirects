@@ -451,7 +451,7 @@
 /spectrum/proxy-protocol/ /spectrum/reference/simple-proxy-protocol-header/ 301
 
 # ssl
-/ssl/ssl-for-saas/certificate-signing-requests/ /ssl/ssl-for-saas/custom-certificates/certificate-signing-requests/ 301
+/ssl/ssl-for-saas/certificate-signing-requests/ /cloudflare-for-saas/custom-certificates/certificate-signing-requests/ 301
 /ssl/advanced-certificate-manager/ /ssl/edge-certificates/advanced-certificate-manager/ 301
 /ssl/certificate-transparency-monitoring/ /ssl/edge-certificates/additional-options/certificate-transparency-monitoring/ 301
 /ssl/custom-certificates/ /ssl/edge-certificates/custom-certificates/ 301
@@ -984,6 +984,7 @@
 /ssl/ssl-for-saas/custom-certificates/* /cloudflare-for-saas/ssl/custom-certificates/:splat
 /ssl/ssl-for-saas/hostname-specific-behavior/* /cloudflare-for-saas/ssl/hostname-specific-behavior/:splat
 /ssl/ssl-for-saas/reference/* /cloudflare-for-saas/ssl/reference/:splat 301
+/ssl/ssl-for-saas/* /cloudflare-for-saas/:splat 301
 
 /warp-client/setting-up/* /warp-client/get-started/:splat 301
 /warp-client/setting-up/linux/* /warp-client/get-started/linux/:splat 301
