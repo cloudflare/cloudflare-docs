@@ -26,7 +26,7 @@ Because requests to proxied hostnames go through Cloudflare before reaching your
 
 #### Record types
 
-By default, Cloudflare only supports proxied `A`, `AAAA`, and `CNAME` records, you cannot proxy other record types.
+By default, Cloudflare only supports proxied `A`, `AAAA`, and `CNAME` records. You cannot proxy other record types.
 
 If you encounter a `CNAME` record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration.
 
