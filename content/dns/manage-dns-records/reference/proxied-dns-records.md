@@ -16,7 +16,7 @@ Cloudlare recommends enabling our proxy for all `A`, `AAAA`, and `CNAME` records
 
 ## Proxied records
 
-When an `A`, `AAAA`, or `CNAME` record is **Proxied** — also known as being _orange-clouded_ — DNS queries for these will resolve to Cloudflare Anycast IPs instead of their original DNS target. This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server.
+When an `A`, `AAAA`, or `CNAME` record is **Proxied** — also known as being orange-clouded — DNS queries for these will resolve to Cloudflare Anycast IPs instead of their original DNS target. This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server.
 
 This behavior allows Cloudflare to [optimize, cache, and protect](/fundamentals/get-started/concepts/how-cloudflare-works/) all requests to your application, as well as protect your origin server from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/).
 
@@ -52,6 +52,6 @@ To solve this issue, we recommend using [Cloudflare Zero Trust](/cloudflare-one/
 
 ## DNS-only records
 
-When an `A`, `AAAA`, or `CNAME` record is **DNS-only** — also known as being _gray-clouded_ — DNS queries for these will resolve to the record's normal IP address. 
+When an `A`, `AAAA`, or `CNAME` record is **DNS-only** — also known as being gray-clouded — DNS queries for these will resolve to the record's normal IP address. 
 
 In addition to potentially exposing your origin IP addresses to bad actors and [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), leaving your records as **DNS-only** means that Cloudflare cannot [optimize, cache, and protect](/fundamentals/get-started/concepts/how-cloudflare-works/) requests to your application.
