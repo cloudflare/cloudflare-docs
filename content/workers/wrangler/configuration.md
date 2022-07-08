@@ -223,7 +223,7 @@ services = [
 
 When using Wrangler in corporate environments that require the use of a VPN or HTTP proxy, you may come across a `UNABLE_TO_GET_ISSUER_CERT_LOCALLY` error, or your IT team may ask you to use a proxy.
 
-You can use Wrangler with your VPN or HTTP proxy via environment variables. 
+You can use Wrangler with your VPN or HTTP proxy via your computer's environment variables. 
 
 Wrangler supports the following environment variable names:
 - `https_proxy`
@@ -236,3 +236,7 @@ For example, to configure this on macOS add `HTTP_PROXY=http://<YOUR_PROXY_HOST>
 ```bash
 HTTP_PROXY=http://localhost:8080 wrangler dev
 ```
+
+If your IT team has configured your computer's proxy settings, be aware that the first non-empty environment variable in this list will be used when Wrangler makes outgoing requests.
+
+For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only use `https_proxy` for outgoing requests.
