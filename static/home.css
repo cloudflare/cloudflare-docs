@@ -650,15 +650,16 @@ html[is-site-page] .DocsContent {
 }
 
 .HeroBlockGrid {
+    padding-left: .75em;
+    padding-top: 2em;
+    max-width: 90%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center
+    justify-content: space-between;
 }
 
 .HeroBlockGrid>* {
-    padding: 2em;
     max-width: 100%;
-    border: solid green 1px
 }
 
 .HeroBlock {
@@ -666,7 +667,6 @@ html[is-site-page] .DocsContent {
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-    border: solid blue 1px
 }
 
 .HeroBlock--content>:first-child {
@@ -691,6 +691,7 @@ html[is-site-page] .DocsContent {
     width: 100%;
     flex-wrap: wrap;
     justify-content: left;
+    margin-top: 3em;
 }
 
 .QuadBlockGrid>* {
@@ -706,10 +707,6 @@ html[is-site-page] .DocsContent {
     padding-right: 3.5em;
 }
 
-[theme=dark] .QuadBlock a {
-    color: var(--code-orange)
-}
-
 .TriBlockGrid {
     display: flex;
     max-width: 90%;
@@ -722,7 +719,7 @@ html[is-site-page] .DocsContent {
 
 .TriBlock {
     width: 20em;
-    height: 12em;
+    height: 15em;
     background: #f3f3f4;
     padding-top: .25em;
     padding-left: 1.25em;
@@ -735,14 +732,6 @@ html[is-site-page] .DocsContent {
 .TriBlock a {
     color: inherit;
     font-size: .85em;
-}
-
-.ViewProducts {
-    padding-left: .75em;
-}
-
-[theme=dark] .ViewProducts a {
-    color: var(--code-orange)
 }
 
 .ConnectHeader {
@@ -785,6 +774,17 @@ html[is-site-page] .DocsContent {
 
 [theme=dark] .ConnectBlock {
     border: 1px solid white;
+}
+
+.ViewProducts {
+    padding-left: .75em;
+    padding-top: .5em;
+    max-width: 90%;
+}
+
+.StartHere a {
+    font-size:2em;
+    color: inherit;
 }
 
 @font-face {
