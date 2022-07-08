@@ -98,7 +98,9 @@ For this tutorial, you will need:
 
     ![AWS settings](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-settings.png)
 
-    {{<Aside type="warning" header="Important">}}Access for SaaS does not currently support System for Cross-domain Identity Management (SCIM). Please make sure that:
+    {{<Aside type="warning" header="Important">}}
+
+    Access for SaaS does not currently support System for Cross-domain Identity Management (SCIM). Please make sure that:
 
 1.  Users are created in both your identity provider and AWS
 1.  Users have matching usernames in your identity provider and AWS.
