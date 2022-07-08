@@ -80,6 +80,7 @@ Although Sveltekit has a specific adapter for Cloudflare Pages [`@sveltejs/adapt
 
 To deploy your Sveltekit application on Cloudflare Pages, a few easy changes need to be made to your build settings. First update the **Build directory** to `.svelte-kit/cloudflare` this lets the [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto) install the dependecies for [`@sveltejs/adapter-cloudflare`](https://www.npmjs.com/package/@sveltejs/adapter-cloudflare) and build your application.
 
+
 <div>
 
 | Configuration option  | Value                   |
