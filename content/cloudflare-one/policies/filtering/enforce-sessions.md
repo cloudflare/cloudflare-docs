@@ -24,3 +24,7 @@ Session checks are now enabled for the application protected by this policy.
 For WARP sessions to function correctly with Gateway policies, end users must have the latest beta version of the WARP client installed on their devices. Gateway policies with WARP sessions configured will automatically block users who do not have the latest beta version of the client installed.
 
 {{</Aside>}}
+
+## Limitations
+
+- **Only one user per device** — If a device is already registered with User A, User B will not be able to log in on that device through the re-authentication flow. You can revoke a device registration by going to **My Team** > **Devices**.
