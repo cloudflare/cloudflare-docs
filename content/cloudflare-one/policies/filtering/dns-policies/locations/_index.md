@@ -51,7 +51,7 @@ If you think someone else is wrongfully using this IPv4 address, [let us know](h
 
 You can now apply [DNS policies](/cloudflare-one/policies/filtering/dns-policies/) to your location using the [Location](/cloudflare-one/policies/filtering/dns-policies/#location) selector.
 
-{{<Aside type="Warning" header="Warning">}}
+{{<Aside type="warning" header="Warning">}}
 
 Deploying Gateway DNS filtering using static IP addresses may prevent users from connecting to public Wi-Fi networks through captive portals. To avoid this issue, use the [WARP client](/cloudflare-one/connections/connect-devices/warp/) to connect your devices to Cloudflare Zero Trust.
 
