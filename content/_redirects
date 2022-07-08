@@ -465,23 +465,29 @@
 /ssl/keyless-ssl/high-availability/ /ssl/keyless-ssl/reference/high-availability/ 301
 /ssl/keyless-ssl/keyless-delegation/ /ssl/keyless-ssl/reference/keyless-delegation/ 301
 /ssl/keyless-ssl/scaling-and-benchmarking/ /ssl/keyless-ssl/reference/scaling-and-benchmarking/ 301
-/ssl/ssl-for-saas/certificate-validation-methods/ /ssl/ssl-for-saas/common-tasks/certificate-validation-methods/ 301
-/ssl/ssl-for-saas/common-api-calls/ /ssl/ssl-for-saas/reference/common-api-calls/ 301
-/ssl/ssl-for-saas/hostname-verification/ /ssl/ssl-for-saas/common-tasks/hostname-verification/ 301
-/ssl/ssl-for-saas/hostname-verification-backoff-schedule/ /ssl/ssl-tls/hostname-verification-backoff-schedule/ 301
-/ssl/ssl-for-saas/issuing-certificates/ /ssl/ssl-for-saas/common-tasks/issuing-certificates/ 301
-/ssl/ssl-for-saas/reference/validation-backoff-schedule/ /ssl/ssl-tls/validation-backoff-schedule/ 301
-/ssl/ssl-for-saas/status-codes/ /ssl/ssl-for-saas/reference/status-codes/ 301
-/ssl/ssl-for-saas/status-codes/certificate-authority-specific/ /ssl/ssl-for-saas/reference/status-codes/certificate-authority-specific/ 301
-/ssl/ssl-for-saas/status-codes/custom-csrs/ /ssl/ssl-for-saas/reference/status-codes/custom-csrs/ 301
-/ssl/ssl-for-saas/status-codes/custom-hostnames/ /ssl/ssl-for-saas/reference/status-codes/custom-hostnames/ 301
-/ssl/ssl-for-saas/uploading-certificates/ /ssl/ssl-for-saas/custom-certificates/uploading-certificates/ 301
-/ssl/ssl-for-saas/validation-backoff-schedule/ /ssl/ssl-tls/validation-backoff-schedule/ 301
-/ssl/ssl-for-saas/versioning/ /ssl/ssl-for-saas/reference/versioning/ 301
 /ssl/universal-ssl/ /ssl/edge-certificates/universal-ssl/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
 /ssl/universal-ssl/validating/ /ssl/edge-certificates/changing-dcv-method/ 301
 /ssl/notifications/ /fundamentals/notifications/notification-available/ 301
+
+# cloudflare for saas
+/ssl/ssl-for-saas/certificate-validation-methods/ /ssl/ssl-for-saas/ssl/common-tasks/certificate-validation-methods/ 301
+/ssl/ssl-for-saas/common-api-calls/ /ssl/ssl-for-saas/ssl/reference/common-api-calls/ 301
+/ssl/ssl-for-saas/hostname-specific-behavior/regional-services-for-saas/ /ssl/ssl-for-saas/related-products/regional-services-for-saas/ 301
+/ssl/ssl-for-saas/hostname-specific-behavior/waf-for-saas/ /ssl/ssl-for-saas/related-products/waf-for-saas/ 301
+/ssl/ssl-for-saas/hostname-verification/ /ssl/ssl-for-saas/ssl/common-tasks/hostname-verification/ 301
+/ssl/ssl-for-saas/hostname-verification-backoff-schedule/ /ssl/ssl-tls/ssl/reference/hostname-verification-backoff-schedule/ 301
+/ssl/ssl-for-saas/issuing-certificates/ /ssl/ssl-for-saas/ssl/common-tasks/issuing-certificates/ 301
+/ssl/ssl-for-saas/reference/validation-backoff-schedule/ /ssl/ssl-tls/validation-backoff-schedule/ 301
+/ssl/ssl-for-saas/status-codes/ /ssl/ssl-for-saas/ssl/reference/status-codes/ 301
+/ssl/ssl-for-saas/status-codes/certificate-authority-specific/ /ssl/ssl-for-saas/ssl/reference/status-codes/certificate-authority-specific/ 301
+/ssl/ssl-for-saas/status-codes/custom-csrs/ /ssl/ssl-for-saas/ssl/reference/status-codes/custom-csrs/ 301
+/ssl/ssl-for-saas/status-codes/custom-hostnames/ /ssl/ssl-for-saas/ssl/reference/status-codes/custom-hostnames/ 301
+/ssl/ssl-for-saas/troubleshooting/ /ssl/ssl-for-saas/ssl/troubleshooting/ 301
+/ssl/ssl-for-saas/uploading-certificates/ /ssl/ssl-for-saas/ssl/custom-certificates/uploading-certificates/ 301
+/ssl/ssl-for-saas/validation-backoff-schedule/ /ssl/ssl-tls/validation-backoff-schedule/ 301
+/ssl/ssl-for-saas/versioning/ /ssl/ssl-for-saas/ssl/reference/versioning/ 301
+<!-- Includes dynamic redirects listed at bottom -->
 
 # stream
 /stream/analytics/ /stream/getting-analytics/ 301
@@ -972,6 +978,13 @@
 /tenant/tutorial/* /tenant/get-started/:splat 301
 /argo-tunnel/run-tunnel/run-as-service/* /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/:splat 301
 /docs-engine/* https://github.com/cloudflare/cloudflare-docs/blob/production/README.md 301
+
+<!-- Cloudflare for SaaS -->
+/ssl/ssl-for-saas/common-tasks/* /ssl/ssl-for-saas/ssl/common-tasks/:splat 301
+/ssl/ssl-for-saas/custom-certificates/* /ssl/ssl-for-saas/ssl/custom-certificates/:splat
+/ssl/ssl-for-saas/hostname-specific-behavior/* /ssl/ssl-for-saas/ssl/hostname-specific-behavior/:splat
+/ssl/ssl-for-saas/reference/* /ssl/ssl-for-saas/ssl/reference/:splat 301
+
 /warp-client/setting-up/* /warp-client/get-started/:splat 301
 /warp-client/setting-up/linux/* /warp-client/get-started/linux/:splat 301
 /warp-client/setting-up/macOS/* /warp-client/get-started/macos/:splat 301
