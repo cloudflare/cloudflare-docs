@@ -221,9 +221,19 @@ services = [
 
 ## Proxy support
 
-Wrangler supports the use of proxies via environment variables. 
+When using Wrangler in corporate environments that require the use of a VPN or HTTP proxy, you may come across a `UNABLE_TO_GET_ISSUER_CERT_LOCALLY` error.
 
-The first non-empty environment variable named `https_proxy`, `HTTPS_PROXY`, `http_proxy` or `HTTP_PROXY` will be used when wrangler makes outgoing requests.
+You can use Wrangler with your VPN or HTTP proxy via environment variables. 
+
+To use Wrangler behind a proxy, you'll need to set an environment variable pointing to your proxy.
+
+Wrangler supports the following environment variable names:
+- `https_proxy`
+- `HTTPS_PROXY`
+- `http_proxy`
+- `HTTP_PROXY`
+
+The first non-empty environment variable in this list will be used when wrangler makes outgoing requests.
 
 For example, on macOS this can be done by adding `HTTP_PROXY=http://<YOUR_PROXY_HOST>:<YOUR_PROXY_PORT>` before your wrangler commands, as shown below:
 
