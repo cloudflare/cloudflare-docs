@@ -14,7 +14,7 @@ As a SaaS provider, you may want to apply different security measures to differe
 
 ## Prerequisites
 
-Before you can use WAF for SaaS, you need to create a custom hostname. Review [Get started with Cloudflare for SaaS](/ssl/ssl-for-saas/getting-started/) if you have not already done so.
+Before you can use WAF for SaaS, you need to create a custom hostname. Review [Get started with Cloudflare for SaaS](/cloudflare-for-saas/getting-started/) if you have not already done so.
 
 You can also create a custom hostname through the API:
 
@@ -28,7 +28,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone:id}/custom_hostna
 
 ## Step 1 - Associate custom metadata to a custom hostname
 
-To apply WAF to your custom hostname, you need to create an association between your customer’s domain and the firewall ruleset that you’d like to attach to it. Cloudflare’s product, [Custom Metadata](/ssl/ssl-for-saas/ssl/hostname-specific-behavior/custom-metadata/) allows you to do this via the API. 
+To apply WAF to your custom hostname, you need to create an association between your customer’s domain and the firewall ruleset that you’d like to attach to it. Cloudflare’s product, [Custom Metadata](/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/) allows you to do this via the API. 
 
 1. [Locate your zone ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/), available in the Cloudflare dashboard.
 
@@ -44,7 +44,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnam
 
 ```
 
-4. Plan your [custom metadata](/ssl/ssl-for-saas/ssl/hostname-specific-behavior/custom-metadata/). It is fully customizable. In the example below, we have chosen the tag “security_level” to which we expect to assign three values (low, medium, and high).
+4. Plan your [custom metadata](/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/). It is fully customizable. In the example below, we have chosen the tag “security_level” to which we expect to assign three values (low, medium, and high).
 
 {{<Aside type="note">}}
 

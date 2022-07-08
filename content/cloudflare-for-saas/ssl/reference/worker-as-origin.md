@@ -8,7 +8,7 @@ weight: 0
 
 If you are building your application on [Cloudflare Workers](/workers/), you can use a Worker as the origin for your SaaS zone (also known as your fallback origin).
 
-1.  In your SaaS zone, [create and set a fallback origin](/ssl/ssl-for-saas/getting-started/#step-1--create-fallback-origin-and-cname-target), but use a "fake" proxied DNS record.
+1.  In your SaaS zone, [create and set a fallback origin](/cloudflare-for-saas/getting-started/#step-1--create-fallback-origin-and-cname-target), but use a "fake" proxied DNS record.
 
     - **Example**: `service.example.com AAAA 100::`
 

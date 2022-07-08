@@ -96,7 +96,7 @@ On the next check cycle, Cloudflare will ask the CA to recheck the URL, complete
 
 If you value simplicity and your customers can handle a few minutes of downtime, you can rely on Cloudflare automatic HTTP validation.
 
-Once you create a new hostname [via the dashboard](/ssl/ssl-for-saas/ssl/common-tasks/issuing-certificates/#via-the-dashboard) or [via the API](/ssl/ssl-for-saas/ssl/common-tasks/issuing-certificates/#via-the-api) and choose the `http` validation method, all your customers have to do is add a CNAME to your `$CNAME_TARGET` and Cloudflare will take care of the rest.
+Once you create a new hostname [via the dashboard](/cloudflare-for-saas/ssl/common-tasks/issuing-certificates/#via-the-dashboard) or [via the API](/cloudflare-for-saas/ssl/common-tasks/issuing-certificates/#via-the-api) and choose the `http` validation method, all your customers have to do is add a CNAME to your `$CNAME_TARGET` and Cloudflare will take care of the rest.
 
 <details>
 <summary>What happens after you create the custom hostname</summary>
