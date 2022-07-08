@@ -90,7 +90,7 @@ Your team members can run the WARP client to enroll in your Gateway account and 
 
 6. Once authenticated, the client will update to `Teams` mode.
 
-7. You can click the gear to toggle between `Gateway with DoH`, which only filters DNS, or `Gateway with WARP`, which functions as a full forward proxy and can filter HTTP requests. In this use case, you only need DNS filtering.
+7. Click the gear to toggle between `Gateway with DoH`, which only filters DNS, or `Gateway with WARP`, which functions as a full forward proxy and can filter HTTP requests. In this use case, you only need DNS filtering.
 
 ## Review logs and devices
 
