@@ -488,8 +488,7 @@
 /ssl/ssl-for-saas/validation-backoff-schedule/ /ssl/ssl-tls/validation-backoff-schedule/ 301
 /ssl/ssl-for-saas/versioning/ /cloudflare-for-saas/ssl/reference/versioning/ 301
 /ssl/ssl-for-saas/getting-started/ /cloudflare-for-saas/getting-started/ 301
-/ssl/ssl-for-saas/plans/ /cloudflare-for-saas/plans/301
-
+/ssl/ssl-for-saas/plans/ /cloudflare-for-saas/plans 301
 <!-- Includes dynamic redirects listed at bottom -->
 
 # stream
