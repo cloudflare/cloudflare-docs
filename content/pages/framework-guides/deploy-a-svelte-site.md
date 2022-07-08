@@ -76,10 +76,9 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 ### SvelteKit Configuration
 
-Although Sveltekit has a specific adapter for Cloudflare Pages [`@sveltejs/adapter-cloudflare`](https://www.npmjs.com/package/@sveltejs/adapter-cloudflare), By default, SvelteKit projects are configured to use [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto) which automatically chooses the adapter for your current environment. In this case, Cloudflare Pages. 
+By default, SvelteKit projects are configured to use [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto) which automatically chooses the adapter for your current environment. In this case, Cloudflare Pages. To deploy your Sveltekit application on Pages, First update the **Build directory** to `.svelte-kit/cloudflare` this lets the [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto) know you are deploying to a Cloudflare Pages environment.
 
-To deploy your Sveltekit application on Cloudflare Pages, a few easy changes need to be made to your build settings. First update the **Build directory** to `.svelte-kit/cloudflare` this lets the [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto) install the dependecies for [`@sveltejs/adapter-cloudflare`](https://www.npmjs.com/package/@sveltejs/adapter-cloudflare) and build your application.
-
+Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 
@@ -88,9 +87,15 @@ To deploy your Sveltekit application on Cloudflare Pages, a few easy changes nee
 | Production branch     | `main`                  |
 | Build command         | `npm run build`         |
 | Build directory       | `.svelte-kit/cloudflare`|
-| Environment Variables | `NODE_VERSION: 14`      |
+| Environment Variables | `NODE_VERSION: 16 or 14`|
 
 </div>
+
+{{<Aside type= "Note">}}
+
+Although you can use [`@sveltejs/adapter-cloudflare`](https://www.npmjs.com/package/@sveltejs/adapter-cloudflare) to deploy Sveltekit apps to Pages, you may not need to since [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto) detects the environment automatically.
+
+{{</Aside>}}
 
 ### Finalize Setup
 
