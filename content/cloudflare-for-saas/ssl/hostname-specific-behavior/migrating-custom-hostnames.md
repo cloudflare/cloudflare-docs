@@ -34,7 +34,7 @@ Once these steps are complete, the custom hostname's traffic will route to the s
  
 ## A record
  
-Through [Apex Proxying](/ssl/ssl-for-saas/ssl/common-tasks/hostname-verification/#apex-verification) or [BYOIP](/byoip/), you can migrate the custom hostname without action from your end customer.
+Through [Apex Proxying](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#apex-verification) or [BYOIP](/byoip/), you can migrate the custom hostname without action from your end customer.
 
 1. Verify with the account team that your apex proxying IPs have been assigned to both SaaS zones.
  
