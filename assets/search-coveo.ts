@@ -65,7 +65,14 @@
     // Initialize the framework by targeting the root in the interface.
     // It does not have to be the document body.
     const root = document.getElementById('searchresults')
+
     coveo.init(root);
+
+    coveo.$$(root).on("afterInitialization", (e, args) => {
+      let pipelineContext = coveo.$$(root).find(".CoveoPipelineContext");
+      pipelineContext = coveo.get(pipelineContext);
+      pipelineContext.setContextValue("referrer", document.referrer);
+    })
 
     // Hacky fix to manually control search/loading icons
     function showLoadingToggle(bool) {
