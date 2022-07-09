@@ -71,7 +71,8 @@
     coveo.$$(root).on("afterInitialization", (e, args) => {
       let pipelineContext = coveo.$$(root).find(".CoveoPipelineContext");
       pipelineContext = coveo.get(pipelineContext);
-      pipelineContext.setContextValue("referrer", document.referrer);
+      pipelineContext.setContextValue("referrer", document.referrer.match("\.pages\.dev(\/.+?\/)")[1]);
+      console.log(pipelineContext.getContext());
     })
 
     // Hacky fix to manually control search/loading icons
