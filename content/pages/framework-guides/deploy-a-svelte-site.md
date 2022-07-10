@@ -106,7 +106,7 @@ However, in production, to deploy your Sveltekit application on Pages, First upd
 
 You can add this adapter to your application in the following steps: 
 
-1. Install the Cloudflare Adapter by running `npm i --save-dev @sveltejs/adapter-Cloudflare in your terminal 
+1. Install the Cloudflare Adapter by running `npm i --save-dev @sveltejs/adapter-Cloudflare` in your terminal 
 
 2. Include the adapter in the `svelte.config.js`
 
