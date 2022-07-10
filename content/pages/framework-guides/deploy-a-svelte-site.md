@@ -184,6 +184,10 @@ $ npm install @sveltejs/adapter-static@next --save-dev
 Then, in the `svelte.config.js` file, update the adapter selection:
 
 ```diff
+---
+filename:  svelte.config.js
+---
+
 ++ import adapter from '@sveltejs/adapter-static';
 ++
 /** @type {import('@sveltejs/kit').Config} */
