@@ -196,6 +196,11 @@ Regardless of the adapter you pick, when deploying, select the new GitHub reposi
 
 </div>
 
+{{<Aside>}}
+
+**Important:** Remember to commit and push these changes to your GitHub repository.
+
+{{</Aside>}}
 
 ### Finalize Setup
 
