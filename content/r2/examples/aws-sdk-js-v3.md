@@ -55,7 +55,7 @@ console.log(
 
 console.log(
   await S3.send(
-    new ListObjectsV2Command({ Bucket: 'sdk-example' })
+    new ListObjectsV2Command({ Bucket: 'my-bucket-name' })
   )
 );
 // {
