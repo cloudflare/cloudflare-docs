@@ -197,6 +197,17 @@ $ hugo -b $CF_PAGES_URL
 
 {{</Aside>}}
 
+
+Set the environment variable `HUGO_VERSION` in your Worker > **Settings** to use a [specific version of Hugo](https://github.com/gohugoio/hugo/releases).
+
+For example, `HUGO_VERSION`: `0.101.0`
+  
+{{<Aside type="note"}} 
+         
+Since Hugo is constantly receiving new updates, it is strongly recommended to use a recent version of Hugo to avoid build errors.
+         
+{{</Aside>}}
+
 After completing configuration, click the **Save and Deploy** button. You should see Cloudflare Pages installing `hugo` and your project dependencies, and building your site, before deploying it.
 
 {{<Aside type="note">}}
@@ -207,12 +218,6 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Hugo site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
-
-## Using a specific Hugo version
-
-You can set the environment variable `HUGO_VERSION` in your Worker > **Settings** to use a [specific version of Hugo](https://github.com/gohugoio/hugo/releases).
-
-For example, `HUGO_VERSION`: `0.98.0`
 
 ## Learn more
 
