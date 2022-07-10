@@ -70,7 +70,7 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 {{<Aside type="warning">}}
 
-**Important:** SvelteKit requires Node.js v14.x or later to build successfully. You must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
+**Important:** SvelteKit requires Node.js v16.x or later to build successfully. You must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16` or greater.
 
 {{</Aside>}}
 
@@ -153,6 +153,7 @@ declare namespace App {
 
 ```
 In your component access bindings like KV and durable objects namespace with `env` : 
+
 ```js
 export async function post({ request, platform }) {
   const counter = platform.env.COUNTER.idFromName('A');
