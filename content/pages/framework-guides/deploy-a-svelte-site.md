@@ -160,7 +160,21 @@ export async function post({ request, platform }) {
 }
 ```
 
+When deploying with the with [`@sveltejs/adapter-cloudflare`](https://www.npmjs.com/package/@sveltejs/adapter-Cloudflare) or [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto), select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+
+<div>
+
+| Configuration option  | Value                   |
+| --------------------- | ----------------------- |
+| Production branch     | `main`                  |
+| Build command         | `npm run build`         |
+| Build directory       | `.svelte-kit/cloudflare`|
+| Environment Variables | `NODE_VERSION: 16 or 14`|
+
+</div>
+
 ### SvelteKit Static adapter
+
 The static adapter only produces client-side static assets; compatible with Cloudflare Pages. To use this adapter first, install the [`@sveltejs/adapter-static`](https://www.npmjs.com/package/@sveltejs/adapter-static) package:
 
 ```sh
@@ -175,26 +189,29 @@ Then, in the `svelte.config.js` file, update the adapter selection:
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   kit: {
-++  adapter: adapter(),
-    // ... truncated ...
+++  adapter: adapter(
+++  {
+++     // default options are shown. On some platforms
+++    // these options are set automatically — see below
+++    pages: 'build',
+++    assets: 'build',
+++    fallback: null,
+++    precompress: false
+++  }
+++),
+++ prerender: {
+++     // This can be false if you're using a fallback (i.e. SPA mode)
+++      default: true
+++  }
+  
   }
 };
 
 export default config;
 ```
 
-Regardless of the adapter you pick, when deploying, select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+When deploying a SvelteKit application using [`@sveltejs/adapter-static`](https://www.npmjs.com/package/@sveltejs/adapter-static) set the **Build directory** to `build`. 
 
-<div>
-
-| Configuration option  | Value                   |
-| --------------------- | ----------------------- |
-| Production branch     | `main`                  |
-| Build command         | `npm run build`         |
-| Build directory       | `.svelte-kit/cloudflare`|
-| Environment Variables | `NODE_VERSION: 16 or 14`|
-
-</div>
 
 {{<Aside>}}
 
