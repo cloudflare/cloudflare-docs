@@ -8,7 +8,7 @@ weight: 42
 
 ## Endpoints
 
-The table below summarizes the job operations available. All the examples in this page are for zone-scoped datasets. Account-scoped datasets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
+The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. All the examples in this page are for zone-scoped datasets. Account-scoped datasets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
 
 The `<ZONE_ID>` argument is the zone id (hexadecimal string). The `<ACCOUNT_ID>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
 The `<JOB_ID>` argument is the numeric job id. The `<DATASET>` argument indicates the log category (such as `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`).
@@ -128,6 +128,16 @@ Response
 {{<Aside type="info" header="Note">}}
 
 For a detailed description, refer to [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties).
+
+{{</Aside>}}
+
+## Kind
+
+The kind parameter (optional) is used to differentiate between Logpush and Edge Logpush jobs. For Logpush jobs, this parameter can be left empty or omitted. For Edge Log Delivery jobs, set `"kind": "edge"`. Edge Log Delivery is only supported for the `http_requests` dataset today.
+
+{{<Aside type="info" header="Note">}}
+
+The kind parameter cannot be used to update existing Logpush jobs. Kind can only be specified upon job creation. 
 
 {{</Aside>}}
 
