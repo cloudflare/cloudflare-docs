@@ -125,7 +125,7 @@ Response
 
 ## Job object
 
-{{<Aside type="info" header="Note">}}
+{{<Aside type="note" header="Note">}}
 
 For a detailed description, refer to [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties).
 
