@@ -27,7 +27,7 @@ You can connect to machines over SSH using Cloudflare's Zero Trust platform.
 
 ## Create a Zero Trust policy
 
-1. To create a new application, navigate to the Zero Trust dashboard. From the sidebar, select the `Applications` page. Select **Add an application**.
+1. To create a new application, go to the Zero Trust dashboard. From the sidebar, select the `Applications` page. Select **Add an application**.
 ![App List](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
 
 1. On the next page, choose **Self-hosted**.
@@ -107,7 +107,9 @@ ingress:
 
 You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
 
-1. On the Cloudflare Dashboard, choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Select **+ Add record**.
+1. On the Cloudflare Dashboard, choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
+
+1. Go to **DNS** and select **+ Add record**.
 
 1. Choose `CNAME` as the record type. For **Target**, input the ID of your Tunnel followed by `cfargotunnel.com`. Select **Save**.
 
