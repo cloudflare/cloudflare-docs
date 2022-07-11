@@ -46,7 +46,7 @@ In general, this means that you will be making all the API calls to Cloudflare o
 
 {{<Aside type="note">}}
 
-This capability is not enabled by default. Please contacct [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) if you need this functionality.
+This capability is not enabled by default. If you need this functionality, contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476).
 
 {{</Aside>}}
 
