@@ -38,8 +38,6 @@ Next, create rules that control who can reach the application.
 
 Finally, click **Save** to save the policy. You can return to edit the policy to make changes to who should be allowed or to choose what authentication providers can be used.
 
-![Save](/cloudflare-one/static/zero-trust-security/ssh/save-app.png)
-
 ## Install `cloudflared`
 
 Cloudflare Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
@@ -105,17 +103,13 @@ ingress:
 
 ## Route to the Tunnel
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
 
-Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
+1. In the [Cloudflare Dashboard](https://dash.cloudflare.com/), choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
 
-![DNS List](/cloudflare-one/static/zero-trust-security/ssh/dns-list.png)
+1. Go to **DNS** and select **+ Add record**.
 
-Select `CNAME` as the record type. For the target, input the ID of your Tunnel followed by `cfargotunnel.com`. In this example, the target would be:
-
-`6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com`
-
-Click **Save**.
+1. Choose `CNAME` as the record type. For **Target**, input the ID of your Tunnel followed by `cfargotunnel.com`. Select **Save**.
 
 ## Run the Tunnel
 
