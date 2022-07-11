@@ -29,7 +29,7 @@ If you value simplicity and your customers can tolerate a few minutes of downtim
 
 Ask your customer to create a TXT record named the **name** and containing the **value** at their authoritative DNS provider. Once this TXT record is in place, validation and certificate issuance will automatically complete.
 
-{{<render file="../../ssl/_partials/_ssl-for-saas-validate-patch.md">}}
+{{<render file="_ssl-for-saas-validate-patch.md">}}
 
 ### Email
 
@@ -42,7 +42,7 @@ Ask your customer to create a TXT record named the **name** and containing the *
 
 {{<render file="../../ssl/_partials/_email-validation-process.md">}}
 
-{{<render file="../../ssl/_partials/_ssl-for-saas-validate-patch.md">}}
+{{<render file="_ssl-for-saas-validate-patch.md">}}
 
 ### CNAME (manual)
 
@@ -52,7 +52,7 @@ Since this method is only available using the API, you need to make a [POST requ
 
 Within the `ssl` object in the response, refer to the values present in the `validation_records` array. Each record will contain a property for `cname` and `cname_target` (you can also access these values in the dashboard by clicking that specific hostname certificate). Provide these values to your customer so they can add a CNAME record at their authoritative DNS provider.
 
-{{<render file="../../ssl/_partials/_ssl-for-saas-validate-patch.md">}}
+{{<render file="_ssl-for-saas-validate-patch.md">}}
 
 ### HTTP
 
@@ -90,7 +90,7 @@ ca3-be794c5f757b468eba805d1a705e44f6
 
 On the next check cycle, Cloudflare will ask the CA to recheck the URL, complete validation, and issue the certificate.
 
-{{<render file="../../ssl/_partials/_ssl-for-saas-validate-patch.md">}}
+{{<render file="_ssl-for-saas-validate-patch.md">}}
 
 #### HTTP (automatic)
 
