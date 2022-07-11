@@ -10,24 +10,24 @@ The MailChannels Pages Plugin intercepts all form submissions made which have th
 
 The MailChannels API also allows you add a DomainKeys Identified Mail (DKIM) which is an email authentication standard that helps you to sign email messages from your domain with a digital signature using public-key cryptography.
 
-To add a DKIM signature to a message, add the following fields to the personalization object for the message:
+To add a DKIM signature to a message, add the following fields to the `personalization` object for the message:
 
-**dkim_domain**: This is the domain (d=) field for the DKIM signature. To pass DMARC, this should be aligned with the domain in the From header address.
+**`dkim_domain`**: This is the domain (`d=`) field for the DKIM signature. To pass DMARC, this should be aligned with the domain in the From header address.
 
-**dkim_selector**: This is the selector (s=) field for the DKIM signature. It specifies where to find the associated public key in the DNS - see the DKIM specification for more details.
+**`dkim_selector`**: This is the selector (`s=`) field for the DKIM signature. It specifies where to find the associated public key in the DNS - see the DKIM specification for more details.
 
-**dkim_private_key**: The base-64 encoded private key.
+**`dkim_private_key`**: The base-64 encoded private key.
 
 ## Generate DKIM credentials 
 
-You can generate your DKIM credentials using any DKIM generator of your choice. To add your generated credentials to your project on the Cloudflare dashboard, do the following:
+You can generate your DKIM credentials using any DKIM generator of your choice. To add your generated credentials to your zone on the Cloudflare dashboard, do the following:
 
 1. Select the Zone to add DKIM records to. 
 2. In the menu on the left select **DNS** > **Add Record**.
 3. In the drop-down menu, select **TXT** as the type of record.  
 4. Enter your domain name.
-5. Enter the Public key into your DNS server record as a text(TXT) entry. The name of your DNS record must follow this convention `[selector key]._domainkey.<Your domain>`. 
-6. Add the value of your Public key in the content field.
+5. Enter the DKIM record into your DNS server record as a text (TXT) entry. The name of your DNS record must follow this convention `[selector key]._domainkey.<Your domain>`. 
+6. Add the value of your DKIM record in the content field.
 7. Enter the Private key into your email server.
 
 ## Installation
