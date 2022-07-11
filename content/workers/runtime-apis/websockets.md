@@ -90,7 +90,7 @@ let [client, server] = Object.values(new WebSocketPair());
 
 {{<definitions>}}
 
-- {{<code>}}message{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}message{{<param-type>}}string{{</param-type>}} | {{<param-type>}}ArrayBuffer{{</param-type>}} | {{<param-type>}}ArrayBufferView{{</param-type>}}{{</code>}}
 
   - The message to send down the WebSocket connection to the corresponding client. This should be a string or something coercible into a string; for example, strings and numbers will be simply cast into strings, but objects and arrays should be cast to JSON strings using <code>JSON.stringify</code>, and parsed in the client.
 
