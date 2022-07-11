@@ -24,7 +24,7 @@ You can create a monitor within the [load balancer workflow](/load-balancing/how
 
     *   **Interval**:
         *   By increasing the default, you can improve failover time, but you may also increase load on your servers.
-        *   Minimum time in seconds is 60 (Pro), 10 (Business), and 5 (Enterprise).
+        *   Minimum time in seconds is 60 (Pro), 15 (Business), and 10 (Enterprise).
     *   **Timeout** and **Retries**:
         *   The health check will return unhealthy if it exceeds the duration specified in **Timeout** (and exceeds this duration more times than the specified number of **Retries**).
     *   **Expected Code(s)**: The expected HTTP response codes listed individually (200, 302) or as a range (2xx, 3xx).

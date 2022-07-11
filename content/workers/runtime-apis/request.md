@@ -111,10 +111,6 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
     *   Whether [Cloudflare Apps](https://www.cloudflare.com/apps/) should be enabled for this request. Defaults to `true`.
 
-*   `avif` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-    *   Enables or disables [AVIF](https://blog.cloudflare.com/generate-avif-images-with-image-resizing/) image format in [Polish](https://blog.cloudflare.com/introducing-polish-automatic-image-optimizati/).
-
 *   `cacheEverything` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/en-us/articles/200172266). Defaults to `false`.
