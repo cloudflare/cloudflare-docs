@@ -137,7 +137,7 @@ The kind parameter (optional) is used to differentiate between Logpush and Edge 
 
 {{<Aside type="info" header="Note">}}
 
-The kind parameter cannot be used to update existing Logpush jobs. Kind can only be specified upon job creation. 
+The kind parameter cannot be used to update existing Logpush jobs. You can only specify the kind parameter when creating a new job. 
 
 {{</Aside>}}
 
