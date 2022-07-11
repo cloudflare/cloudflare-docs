@@ -9,6 +9,7 @@ weight: 1002
 layout: example
 ---
 
+This example is a snippet from our Cloudflare Pages Template repo. 
 
 ```js
 ---
