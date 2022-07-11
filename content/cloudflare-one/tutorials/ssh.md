@@ -107,7 +107,7 @@ ingress:
 
 You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
 
-1. In the Cloudflare Dashboard, choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
+1. In the [Cloudflare Dashboard](https://dash.cloudflare.com/), choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
 
 1. Go to **DNS** and select **+ Add record**.
 
