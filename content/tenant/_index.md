@@ -14,6 +14,7 @@ Use Cloudflare's provisioning APIs to set up and manage Cloudflare accounts and 
 
 As you dive into the Tenant API, take advantage of the following resources:
 
+- [Concepts](/concepts/) explain some basic ideas behind how the Tenant API and how it works.
 - [Get started](/get-started/) provides the quickest path to get your customer accounts up and running.
 - [How to](/how-to/) offers step-by-step instructions for specific tasks.
 - [Reference topics](/reference/) contains detailed information about the Tenant API, including a list of available zone and account-level subscriptions.
