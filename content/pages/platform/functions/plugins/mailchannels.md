@@ -8,28 +8,6 @@ weight: 1
 
 The MailChannels Pages Plugin intercepts all form submissions made which have the `data-static-form-name` attribute set. It then emails these form submissions using the MailChannels API.
 
-The MailChannels API also allows you add a DomainKeys Identified Mail (DKIM) which is an email authentication standard that helps you to sign email messages from your domain with a digital signature using public-key cryptography.
-
-To add a DKIM signature to a message, add the following fields to the `personalization` object for the message:
-
-**`dkim_domain`**: This is the domain (`d=`) field for the DKIM signature. To pass DMARC, this should be aligned with the domain in the From header address.
-
-**`dkim_selector`**: This is the selector (`s=`) field for the DKIM signature. It specifies where to find the associated public key in the DNS - see the DKIM specification for more details.
-
-**`dkim_private_key`**: The base-64 encoded private key.
-
-## Generate DKIM credentials 
-
-You can generate your DKIM credentials using any DKIM generator of your choice. To add your generated credentials to your zone on the Cloudflare dashboard, do the following:
-
-1. Select the Zone to add DKIM records to. 
-2. In the menu on the left select **DNS** > **Add Record**.
-3. In the drop-down menu, select **TXT** as the type of record.  
-4. Enter your domain name.
-5. Enter the DKIM record into your DNS server record as a text (TXT) entry. The name of your DNS record must follow this convention `[selector key]._domainkey.<Your domain>`. 
-6. Add the value of your DKIM record in the content field.
-7. Enter the Private key into your email server.
-
 ## Installation
 
 ```sh
@@ -48,9 +26,6 @@ export const onRequest: PagesFunction = mailChannelsPlugin({
   personalizations: [
     {
       to: [{ name: "ACME Support", email: "support@example.com" }],
-      "dkim_domain": "example.com",
-      "dkim_selector": "mcdkim",
-      "dkim_private_key": "<base64 encoded privatekey>"
     },
   ],
   from: {
@@ -94,3 +69,98 @@ The Plugin takes a single argument, an object with a number of properties:
 The `method` and `action` attributes of the HTML form do not need to be set. The Plugin will automatically override them to allow it to intercept the submission.
 
 For more information about MailChannels and the options they support, refer to [the documentation](https://mailchannels.zendesk.com/hc/en-us/articles/4565898358413-Sending-Email-from-Cloudflare-Workers-using-MailChannels-Send-API).
+
+
+## DKIM support for Mailchannel API
+
+The MailChannels API also allows you add a DomainKeys Identified Mail (DKIM) which is an email authentication standard that helps you to sign email messages from your domain with a digital signature using public-key cryptography. Refer to [Cloudflare DNS DKIM guide](https://www.cloudflare.com/en-ca/learning/dns/dns-records/dns-dkim-record/) to learn more.
+
+{{<Aside type= "note" header="Optional content">}}
+When using the MailChannel plugin adding DKIM is optional. 
+{{</Aside>}}
+
+To add a DKIM signature to a message, add the following fields to the `personalization` object for the message:
+
+**`dkim_domain`**: This is the domain (`d=`) field for the DKIM signature. To pass DMARC, this should be aligned with the domain in the From header address.
+
+**`dkim_selector`**: This is the selector (`s=`) field for the DKIM signature. It specifies where to find the associated public key in the DNS - see the DKIM specification for more details.
+
+**`dkim_private_key`**: The base-64 encoded private key.
+
+## Generate DKIM credentials 
+
+You can generate your DKIM credentials using [OpenSSL](https://www.openssl.org/) in the following steps:
+
+1. Generate your private key and DNS credentials by running the command below in your terminal: 
+
+```sh
+$ openssl genrsa 2048 | tee private_key.pem | openssl rsa -pubout -outform der | openssl base64 -A | awk '{print "v=DKIM1; k=rsa; p="$1}' > dkim_record.txt
+```
+{{<Aside type="note" header="Command breakdown">}}
+
+`openssl genrsa 2048` generates a 2048-bit RSA key. The output is passed to
+
+`tee private_key.pem`, which writes the key to the `private_key.pem` file, and passes the key to
+
+`openssl rsa -outform der | openssl base 64 -A`, which converts the key from PEM format to DER format, then base64 encodes it (this essentially removes the header from the PEM formatted key). The output is then passed to dkim_record.txt
+
+{{</Aside>}}
+
+2. Copy the private key from `private_key.pem`file and add it to your Function
+
+3. Create a DNS record with the content of the `dkim_record.txt` file content.
+
+
+Look in your generated `dkim_record.txt` file for your generated credentials, and add them to your Zone on the Cloudflare dashboard. Follow the steps below:
+
+1. Select the Zone to add DKIM records. 
+2. In the menu on the left select **DNS** > **Add Record**.
+3. In the drop-down menu, select **TXT** as the type of record.  
+4. Enter your domain name.
+5. Enter the DKIM record into your DNS server as a text (TXT) entry. The name of your DNS record must follow this convention `[selector key]._domainkey.<Your domain>`. 
+
+{{<Aside type= "note" header="Value of selector">}}
+You can choose any value as the selector, as long as it is permitted to use as a DNS hostname (that is: all lowercase letters, numbers and hyphens). It is recommended to use the name of the service and some date indicator, so it's easy to remember where this key is used. E.g: cloudflare2022.
+{{</Aside>}}
+
+6. Add the content of your `dkim_record.txt` file in the content field.
+7. Add the private key to your Pages Function.
+
+![Follow the instructions above to add DKIM credentials to your Zone DNS records](/pages/platform/functions/plugins/mailchannel_DKIM_DNS_setup.png)
+
+## Add DKIM fields to personalization object
+
+```typescript
+---
+filename: functions/_middleware.ts
+---
+import mailChannelsPlugin from "@cloudflare/pages-plugin-mailchannels";
+
+export const onRequest: PagesFunction = mailChannelsPlugin({
+  personalizations: [
+    {
+      to: [{ name: "ACME Support", email: "support@example.com" }],
+      "dkim_domain": "support@example.com",
+      "dkim_selector": "mcdkim",
+      "dkim_private_key": "<base64 encoded privatekey>"
+    },
+  ],
+  from: {
+    name: "ACME Support",
+    email: "support@example.com",
+  },
+  respondWith: () => {
+    return new Response(
+      `Thank you for submitting your enquiry. A member of the team will be in touch shortly.`
+    );
+  },
+});
+```
+
+### Addition information 
+
+- [Mailchannel article on adding DKIM with Workers](https://mailchannels.zendesk.com/hc/en-us/articles/7122849237389-Adding-a-DKIM-Signature)
+
+- [How to create a DKIM record with OpenSSL](https://www.mailhardener.com/kb/how-to-create-a-dkim-record-with-openssl)
+
+- [Cloudflare + MailChannels Email Sending with DKIM](https://github.com/maggie-j-liu/mail)
