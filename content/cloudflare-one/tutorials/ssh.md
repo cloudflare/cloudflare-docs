@@ -27,25 +27,16 @@ You can connect to machines over SSH using Cloudflare's Zero Trust platform.
 
 ## Create a Zero Trust policy
 
-First, navigate to the Zero Trust dashboard to create a new application. Select the `Applications` page from the sidebar. Click **Add application**.
-
+1. To create a new application, navigate to the Zero Trust dashboard. From the sidebar, select the `Applications` page. Select **Add an application**.
 ![App List](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
 
-Choose **Self-hosted** on the next page.
+1. On the next page, choose **Self-hosted**.
 
-![Add App](/cloudflare-one/static/zero-trust-security/ssh/add-app.png)
+1. Within **Application Domain**, input a subdomain. This will be the hostname where your application will be available to users.
 
-Input a subdomain that will become the hostname where your application will be available to users.
+1. Create rules to control who can reach the application.
 
-![Configure](/cloudflare-one/static/zero-trust-security/ssh/configure-app.png)
-
-Next, create rules that control who can reach the application.
-
-![Add Rules](/cloudflare-one/static/zero-trust-security/ssh/app-rules.png)
-
-Finally, click **Save** to save the policy. You can return to edit the policy to make changes to who should be allowed or to choose what authentication providers can be used.
-
-![Save](/cloudflare-one/static/zero-trust-security/ssh/save-app.png)
+1. To save the policy, select **Save**. You can edit the policy later to change who should be allowed or to choose allowed authentication providers.
 
 ## Install `cloudflared` on the server
 
