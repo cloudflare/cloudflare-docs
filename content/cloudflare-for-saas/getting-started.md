@@ -77,13 +77,13 @@ You can no longer use HTTP based validation for Wildcard certificates according 
 
 Once your account has been provisioned, you are ready to issue certificates.
 
-{{<render file="../../ssl/_partials/_issue-certs-preamble.md">}}
+{{<render file="_issue-certs-preamble.md">}}
 
 <details>
 <summary>Using the dashboard</summary>
 <div>
 
-{{<render file="../../ssl/_partials/_create-custom-hostname.md">}}
+{{<render file="_create-custom-hostname.md">}}
 
 </div>
 </details>
@@ -92,7 +92,7 @@ Once your account has been provisioned, you are ready to issue certificates.
 <summary>Using the API</summary>
 <div>
 
-{{<render file="../../ssl/_partials/_create-custom-hostname-api.md">}}
+{{<render file="_create-custom-hostname-api.md">}}
 
 </div>
 </details>

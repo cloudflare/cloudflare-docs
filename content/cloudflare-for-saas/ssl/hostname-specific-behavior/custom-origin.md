@@ -6,9 +6,9 @@ weight: 4
 
 # Custom origin server
 
-{{<render file="../../ssl/_partials/_custom-origin-server-definition.md">}}
+{{<render file="_custom-origin-server-definition.md">}}
 
-{{<render file="../../ssl/_partials/_ssl-for-saas-plan-limitation.md">}}
+{{<render file="_ssl-for-saas-plan-limitation.md">}}
 
 ## Requirements
 

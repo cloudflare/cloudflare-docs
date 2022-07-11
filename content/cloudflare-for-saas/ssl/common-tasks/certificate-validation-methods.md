@@ -22,7 +22,7 @@ If you value simplicity and your customers can tolerate a few minutes of downtim
 
 {{<render file="../../ssl/_partials/_txt-validation-definition.md">}}
 
-{{<render file="../../ssl/_partials/_ssl-for-saas-create-hostname.md">}}
+{{<render file="_ssl-for-saas-create-hostname.md">}}
 
 - [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, refer to the values present in the `validation_records` array (specifically `txt_name` and `txt_value`).
 - **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the values for **Certificate validation TXT name** and **Certificate validation TXT value**.
@@ -35,7 +35,7 @@ Ask your customer to create a TXT record named the **name** and containing the *
 
 {{<render file="../../ssl/_partials/_email-validation-definition.md">}}
 
-{{<render file="../../ssl/_partials/_ssl-for-saas-create-hostname.md">}}
+{{<render file="_ssl-for-saas-create-hostname.md">}}
 
 - [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, refer to the values present in the `validation_records` array (specifically `emails`).
 - **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the value for **Certificate validation email recipients**.
@@ -66,7 +66,7 @@ HTTP DCV validation is no longer allowed for wildcard certificates. For more det
 
 #### HTTP (manual)
 
-{{<render file="../../ssl/_partials/_ssl-for-saas-create-hostname.md">}}
+{{<render file="_ssl-for-saas-create-hostname.md">}}
 
 - [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, store the values present in the `validation_records` array (specifically `http_url` and `http_body`).
 - **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the values for **Certificate validation request** and **Certificate validation response**.
