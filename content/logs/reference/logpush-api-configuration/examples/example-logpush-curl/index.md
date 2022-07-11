@@ -77,7 +77,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
     - Google BigQuery usage.
     - Automated timestamp parsing within Sumo Logic; refer to [timestamps from Sumo Logic](https://help.sumologic.com/03Send-Data/Sources/04Reference-Information-for-Sources/Timestamps%2C-Time-Zones%2C-Time-Ranges%2C-and-Date-Formats) for details.
 - **ownership_challenge** - Challenge token required to prove destination ownership.
-- **kind** (optional) - used to differentiate between Logpush and Edge Logpush jobs. Refer to [Kind](/logs/reference/logpush-api-configuration/#kind) for details.
+- **kind** (optional) - Used to differentiate between Logpush and Edge Logpush jobs. Refer to [Kind](/logs/reference/logpush-api-configuration/#kind) for details.
 - **filter** (optional) - Refer to [Filters](/logs/reference/logpush-api-configuration/filters/) for details.
 
 ### Response
