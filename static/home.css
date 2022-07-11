@@ -612,6 +612,12 @@ html[is-site-page] .DocsContent {
     color: inherit;
 }
 
+.HomeTitle {
+    padding-left: .75em;
+    padding-top: 2em;
+    line-height: 5em;
+}
+
 @font-face {
     font-family: cloudflare-icons;
     font-style: normal;
