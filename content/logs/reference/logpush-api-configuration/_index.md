@@ -135,7 +135,7 @@ For a detailed description, refer to [Logpush job object definition](https://api
 
 The kind parameter (optional) is used to differentiate between Logpush and Edge Logpush jobs. For Logpush jobs, this parameter can be left empty or omitted. For Edge Log Delivery jobs, set `"kind": "edge"`. Currently, Edge Log Delivery is only supported for the `http_requests` dataset.
 
-{{<Aside type="info" header="Note">}}
+{{<Aside type="note" header="Note">}}
 
 The kind parameter cannot be used to update existing Logpush jobs. You can only specify the kind parameter when creating a new job. 
 
