@@ -14,7 +14,7 @@ Push your request or event logs to your preferred cloud service provider or anal
 
 The number of files delivered depends on the number of logs that need to be delivered. More logs equals more batches and therefore more files. The number of files also depends on the number of Cloudflare log-processing servers needed to handle the volume of logs.
 
-[Instant Logs](/logs/instant-logs/) allows Enterprise customers to view their HTTP request logs instantly in the Cloudflare dashboard. Instant Logs allows customers to actively monitor the traffic flowing through their network and make immediate key decisions that affect their applications. Instant Logs is used to live tail your traffic, does not require any setup and by design it does not have any retention.
+[Instant Logs](/logs/instant-logs/) allows Enterprise customers to view their HTTP request logs instantly in the Cloudflare dashboard. Instant Logs allows customers to actively monitor the traffic flowing through their network and make immediate key decisions that affect their applications. Use Instant Logs to live tail your traffic — it does not require any setup and by design it does not have any retention.
 
 If you only want to have access to HTTP request logs, you can also use [Logpull](/logs/logpull/). The data from **Logpull** and **Logpush** is exactly the same.
 
