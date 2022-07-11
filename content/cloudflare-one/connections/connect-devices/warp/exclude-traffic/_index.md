@@ -24,6 +24,8 @@ DNS requests to domain names entered here will not be encrypted, monitored or su
 
 {{<Aside type="warning">}}
 
-Traffic excluded from WARP by Split Tunnel configuration will not be encrypted, managed or monitored by Cloudflare Gateway.
+* Traffic excluded from WARP by Split Tunnel configuration will not be encrypted, managed or monitored by Cloudflare Gateway.
+  
+* Device Posture attributes can only be evaluated for traffic that is included in the WARP tunnel. At a minimum you must include yourztdomain.cloudflareaccess.com, any IDP involved in authentication and the application protected by access inside the tunnel if using Device Posture attributes.
 
 {{</Aside>}}
