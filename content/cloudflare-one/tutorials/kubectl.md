@@ -36,7 +36,7 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 1. Create rules to control who can reach the application.
 
-1. To save the policy, select **Save**. You can edit the policy later to change who should be allowed or to choose allowed authentication providers.
+1. To save the policy, select **Save**. You can edit the policy later to change allowed users or authentication providers.
 
 ## Install `cloudflared`
 
