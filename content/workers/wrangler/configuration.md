@@ -11,6 +11,16 @@ Wrangler optionally uses a `wrangler.toml` configuration file to customize the d
 The configuration for a Worker can become complex when you can define different [environments](/workers/platform/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.
 
+## Environments
+
+Environments allow you to configure different configurations for different environments.
+
+These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or publish
+with the `-e` / `--env` flag in the `wrangler` commands like `wrangler publish --env staging`.
+
+Whilst the majority of keys are inheritable, meaning that top-level configuration can be used in environments,
+bindings such as `vars` or `kv_namespaces` are not inheritable and need to be defined explicitly.
+
 ## Inheritable keys
 
 Inheritable keys are configurable at the top-level, and can be inherited (or overridden)
@@ -417,18 +427,6 @@ ip = "192.168.1.1"
 port = "8080"
 local_protocol = "http"
 ```
-
-## Environments
-
-Environments allow you to configure different configurations for different environments.
-
-These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or publish
-with the `-e` / `--env` flag in the `wrangler` commands like `wrangler publish --env staging`.
-
-Whilst the majority of keys are inheritable, meaning that top-level configuration can be used in environments,
-bindings such as `vars` or `kv_namespaces` are not inheritable and need to be defined explicitly.
-
-Refer to the [example configuration](#example-configuration).
 
 {{<definitions>}}
 
