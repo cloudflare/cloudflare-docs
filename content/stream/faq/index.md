@@ -17,18 +17,6 @@ meta:
 
 Cloudflare decides on which bitrate, resolution, and codec is best for you. We deliver all videos to industry standard H264 codec. We use a few different adaptive streaming levels from 360p to 1080p to ensure smooth streaming for your audience watching on different devices and bandwidth constraints.
 
-### What domains do I need to add to my allowlist if I use Content Security Policy (CSP) directives on my website?
-
-If your website uses Content Security Policy (CSP) directives and you use the provided Stream Player, `videodelivery.net`, `*.cloudflarestream.com` and `*.cloudflarestream.com` must be included in the `frame-src` or `default-src` directive to allow the player's `<iframe>` element to load.
-
-```bash
-Content-Security-Policy: frame-src; 'self' *.videodelivery.net *.cloudflarestream.com *.cloudflarestream.com;
-```
-
-If your website uses CSP directives and you use your own player, `videodelivery.net`, `*.cloudflarestream.com` and `*.cloudflarestream.com` must be included in the `media-src`, `img-src`, and `connect-src` directives, or the fallback directive, `default-src`.
-
-If you need to ensure only videos from your Cloudflare Stream account can be played on your website, replace `*` in `*.cloudflarestream.com` in the examples above with your unique customer code, which can be found in the Stream Dashboard. This subdomain is unique to your Cloudflare Stream account.
-
 ### Does Stream support multi-audio tracks?
 
 Stream does not currently support multi-audio tracks. For files with multiple audio tracks, Stream uses the first available audio track.
@@ -132,6 +120,14 @@ Below are bitrate recommendations for encoding new videos for Stream:
 ### If I cancel my stream subscription, are the videos deleted?
 
 Videos are removed if the subscription is not renewed within 30 days.
+
+### What domains do I need to add to my allowlist if I use Content Security Policy (CSP) directives on my website?
+
+If your website uses Content Security Policy (CSP) directives and you use the provided Stream Player, `videodelivery.net` and `*.cloudflarestream.com` must be included in the `frame-src` or `default-src` directive to allow the player's `<iframe>` element to load.
+
+```http
+Content-Security-Policy: frame-src; 'self' *.videodelivery.net *.cloudflarestream.com
+```
 
 ## Stream Live
 
