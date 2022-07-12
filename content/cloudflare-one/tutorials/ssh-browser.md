@@ -28,7 +28,7 @@ Administrators can deploy Cloudflare Tunnel to connect one or more machines avai
 
 ## Create a Zero Trust policy
 
-First, navigate to the Zero Trust dashboard to create a new application. Select the `Applications` page from the sidebar. Click **Add application**. Then choose **Self-hosted** on the next page.
+First, navigate to the Zero Trust dashboard to create a new application. Select the **Applications** page from the sidebar. Click **Add application**. Then choose **Self-hosted** on the next page.
 
 Input a subdomain where your application will be available to users.
 

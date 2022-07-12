@@ -28,7 +28,7 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
 1.  Navigate to the Zero Trust Dashboard to create a new application.
 
-2.  Select the `Applications` page from the sidebar.
+2.  Select the **Applications** page from the sidebar.
 
 3.  Click **Add application**.
 
