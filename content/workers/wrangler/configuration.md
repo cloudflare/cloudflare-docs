@@ -296,7 +296,7 @@ durable_objects.bindings = [
 ]
 ```
 
-### KV namespaces
+### KV Namespaces
 
 Workers KV is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers,
 then caches that data in Cloudflare’s data centers after access.
@@ -359,7 +359,7 @@ r2_buckets  = [
 ]
 ```
 
-### Service bindings
+### Service Bindings
 
 A Service binding allows you to send HTTP requests to another Worker without those requests going over the Internet.
 The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service.
