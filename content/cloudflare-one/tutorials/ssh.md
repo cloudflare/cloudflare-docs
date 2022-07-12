@@ -27,25 +27,16 @@ You can connect to machines over SSH using Cloudflare's Zero Trust platform.
 
 ## Create a Zero Trust policy
 
-First, navigate to the Zero Trust dashboard to create a new application. Select the `Applications` page from the sidebar. Click **Add application**.
+1. To create a new application, go to the Zero Trust dashboard. From the sidebar, select the **Applications** page. Select **Add an application**.
+![Location of 'Add an application' button above Application list](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
 
-![App List](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
+1. On the next page, choose **Self-hosted**.
 
-Choose **Self-hosted** on the next page.
+1. Within **Application Domain**, input a subdomain. This will be the hostname where your application will be available to users.
 
-![Add App](/cloudflare-one/static/zero-trust-security/ssh/add-app.png)
+1. Create rules to control who can reach the application.
 
-Input a subdomain that will become the hostname where your application will be available to users.
-
-![Configure](/cloudflare-one/static/zero-trust-security/ssh/configure-app.png)
-
-Next, create rules that control who can reach the application.
-
-![Add Rules](/cloudflare-one/static/zero-trust-security/ssh/app-rules.png)
-
-Finally, click **Save** to save the policy. You can return to edit the policy to make changes to who should be allowed or to choose what authentication providers can be used.
-
-![Save](/cloudflare-one/static/zero-trust-security/ssh/save-app.png)
+1. To save the policy, select **Save**. You can edit the policy later to change allowed users or authentication providers.
 
 ## Install `cloudflared` on the server
 
@@ -114,19 +105,19 @@ ingress:
 
 ## Route to the Tunnel
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
 
-Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
+1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com/) and select your account. Select your domain and go to **DNS**.
 
-![DNS List](/cloudflare-one/static/zero-trust-security/ssh/dns-list.png)
+2. Select **+ Add record**. Choose `CNAME` as the record type. For **Name**, choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
 
-Select `CNAME` as the record type. For the target, input the ID of your Tunnel followed by `cfargotunnel.com`. In this example, the target would be:
+3. For **Target**, input the ID of your Tunnel followed by `.cfargotunnel.com`. For example:
+  
+  ```txt
+    6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
+  ```
 
-`6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com`
-
-Click **Save**.
-
-![Add DNS](/cloudflare-one/static/zero-trust-security/ssh/add-dns.png)
+4. Select **Save**.
 
 ## Run the Tunnel
 
@@ -167,8 +158,10 @@ You can now test the SSH flow by running a command to reach the service. When th
 
 Cloudflare can render an SSH client in your browser without the need for client software or end user configuration changes.
 
-To enable, navigate to the application page of the Access section in the Zero Trust dashboard. Click **Edit** and select the Settings tab. In the **`cloudflared` settings** card, select _SSH_ from the **Browser Rendering** drop-down menu.
+1. In the Zero Trust dashboard, go to **Access** > **Applications**.
 
-![Auto Auth](/cloudflare-one/static/documentation/applications/ssh-browser-rendering.png)
+1. Choose your application and go to **Edit** > **Settings**.
+
+1. In **Additional settings**, select _SSH_ from the **Browser Rendering** drop-down menu.
 
 Once enabled, when users authenticate and visit the URL of the application, Cloudflare will render a terminal in their browser.
