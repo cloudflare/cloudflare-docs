@@ -132,7 +132,7 @@ specified for each environment.
 
 {{</definitions>}}
 
-## Route Type
+## Types of routes
 
 There are four types of routes.
 
@@ -227,7 +227,7 @@ Example:
 crons = ["1 * * * *"]
 ```
 
-## Build
+## Custom Builds
 
 You can configure a custom build step that will be run before your Worker is published.
 Refer to [custom builds](/workers/wrangler/custom-builds/).
@@ -391,7 +391,7 @@ services = [
 ]
 ```
 
-## Dev
+## Local development settings
 
 You can configure various aspects of local development, such as the local protocol or port.
 
