@@ -14,7 +14,7 @@ If you are an Enterprise user, you can add the permission to your account by con
 
 {{</Aside>}}
 
-1. Log in to your [Cloudflare Dashboard](https://dash.cloudflare.com/) and select your domain.
+1. Log in to your [Cloudflare Dashboard](https://dash.cloudflare.com/) and select your account and domain.
 
 1. Go to **Traffic** > **Argo**.
 
