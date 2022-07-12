@@ -10,6 +10,6 @@ Bindings allow your Workers to interact with resources on the Workers platform. 
 There are multiple types of bindings available today:
 
 1. [Service bindings](/workers/platform/bindings/about-service-bindings/) for communication with another Worker.
-2. KV Namespace bindings for communication between a Worker and a KV namespace.
-3. R2 Bucket bindings for communication between a Worker and an R2 bucket.
+2. KV namespace bindings for communication between a Worker and a KV namespace.
+3. R2 bucket bindings for communication between a Worker and an R2 bucket.
 4. Durable Object bindings for communication between a Worker and a Durable Object.
