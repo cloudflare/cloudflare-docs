@@ -133,13 +133,26 @@ For a detailed description, refer to [Logpush job object definition](https://api
 
 ## Kind
 
-The kind parameter (optional) is used to differentiate between Logpush and Edge Logpush jobs. For Logpush jobs, this parameter can be left empty or omitted. For Edge Log Delivery jobs, set `"kind": "edge"`. Currently, Edge Log Delivery is only supported for the `http_requests` dataset.
+The kind parameter (optional) is used to differentiate between Logpush and Edge Log Delivery jobs. For Logpush jobs, this parameter can be left empty or omitted. For Edge Log Delivery jobs, set `"kind": "edge"`. Currently, Edge Log Delivery is only supported for the `http_requests` dataset.
 
 {{<Aside type="note" header="Note">}}
 
 The kind parameter cannot be used to update existing Logpush jobs. You can only specify the kind parameter when creating a new job. 
 
 {{</Aside>}}
+
+```bash
+curl -s -X POST 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs' \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>" \
+-d '{
+ "name":"<DOMAIN_NAME>",
+ "destination_conf":"s3://<BUCKET_PATH>?region=us-west-2",
+ "dataset": "http_requests",
+ "logpull_options":"fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+ "kind":"edge"
+}' | jq .
+```
 
 ## Options
 
