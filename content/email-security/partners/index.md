@@ -6,6 +6,6 @@ weight: 8
 
 # Partners
 
-Partners have the option to set up accounts for themselves and their customers.
+Area 1 partners have the option to set up accounts for themselves and their customers.
 
-For more details, refer to our [MSPP setup guide](#link-needed).
+For more details, refer to our [MSPP setup guide](/email-security/static/MSSP_Onboarding_Deployment_Guide.pdf).

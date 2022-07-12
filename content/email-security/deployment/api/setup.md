@@ -14,7 +14,6 @@ When you first get started with Area 1, you will need to set up a way to connect
 
 Send messages to Area 1 via BCC configurations within your email provider:
 
-   - [Office 365 BCC Setup](#link-needed)
    - [GSuite BCC Setup](/email-security/static/GSuite-BCC-Setup.pdf)
    - [Cisco BCC Setup](/email-security/static/Cisco-BCC-Setup.pdf)
    - [Microsoft Exchange BCC Setup](/email-security/static/Deployment_and_Configuration_Guide_for_Microsoft_Exchange_Bcc_configuration.pdf)
