@@ -347,15 +347,30 @@ To add environment variables, go to **Account Home** > **Pages** > **your Pages 
 
 ### Adding environment variables locally
 
-When developing locally, you can access environment variables by adding a binding to your Wrangler commands like `npx wrangler pages dev dist --binding ENV_NAME="ENV_VALUE"`. This allows you to then access the environment value in your component by using `env.ENV_NAME`.
+When developing locally, you can access environment variables by adding a `.dev.vars` file to the root directory of your project. Next, define your environment variables and then access them in your component by using `env.ENV_NAME`.
 
-For example, you can run `npx wrangler pages dev dist --binding COLOR="BLUE"` and then:
+For example :
+
+```env
+---
+filename:/.dev.vars
+---
+ENV_NAME = "SUPER_SECRET_KEY"
+```
 
 ```js
+---
+filename: functions/index.js
+---
 export async function onRequest({ env }) {
-  return new Response(env.COLOR);
+  return new Response(env.ENV_NAME);
 }
 ```
+{{<Aside type= "Note">}}
+
+Adding a binding through the CLI with `--binding` is still supported, and whatever you specify in CLI will take precedence over environment variables in `.dev.vars`
+
+{{</Aside>}}
 
 Here is a real-world example of using environment variables inside a middleware function. To connect [Sentry](https://www.sentry.io/) to a Cloudflare Worker, you can use [Toucan js](https://github.com/robertcepa/toucan-js) and access your Sentry Data Source Name (DSN) in your function.
 

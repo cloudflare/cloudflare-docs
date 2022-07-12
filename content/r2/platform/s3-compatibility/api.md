@@ -16,7 +16,7 @@ Each section will have two tables: a table of implemented APIs and a table of un
 
 Refer the feature column of each table to review which features of an API have been implemented and which have not.
 
-✅ Feature Implemented
+✅ Feature Implemented <br>
 ❌ Feature Not Implemented
 
 ## Bucket region
@@ -70,6 +70,7 @@ Below is a list of implemented object-level operations. Refer to the Feature col
 | API Name                | Feature                   |
 | ------------------------| ------------------------- |
 | ✅ [HeadObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadObject.html)       | ✅ Conditional Operations: <br> &emsp;   ✅ If-Match <br> &emsp;  ✅ If-Modified-Since <br> &emsp;  ✅ If-None-Match <br> &emsp;  ✅ If-Unmodified-Since <br> ✅ Range: <br> &emsp;  ✅ Range (has no effect in HeadObject) <br> &emsp;  ✅ partNumber <br> ❌ SSE-C: <br> &emsp;  ❌ x-amz-server-side-encryption-customer-algorithm <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key-MD5 <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner  |
+| ✅ [ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html)      | Query Parameters: <br> &emsp;  ✅ delimiter <br> &emsp;  ✅ encoding-type <br> &emsp; ✅ marker <br> &emsp;  ✅ max-keys <br> &emsp;  ✅ prefix <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
 | ✅ [ListObjectsV2](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html) | Query Parameters: <br> &emsp;  ✅ list-type <br> &emsp;  ✅ continuation-token <br> &emsp;  ✅ delimiter <br> &emsp;  ✅ encoding-type <br> &emsp;  ✅ fetch-owner <br> &emsp;  ✅ max-keys <br> &emsp;  ✅ prefix <br> &emsp;  ✅ start-after <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner                   |
 | ✅ [GetObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html)         | ✅ Conditional Operations: <br> &emsp;  ✅ If-Match <br> &emsp;  ✅ If-Modified-Since <br> &emsp;  ✅ If-None-Match <br> &emsp;  ✅ If-Unmodified-Since <br> ✅ Range: <br> &emsp;  ✅ Range <br> &emsp;  ✅ PartNumber <br> ❌ SSE-C: <br> &emsp;  ❌ x-amz-server-side-encryption-customer-algorithm <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key-MD5 <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
 | ✅ [PutObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html)         | ✅ System Metadata: <br> &emsp;  ✅ Content-Type <br> &emsp;  ✅ Cache-Control <br> &emsp;  ✅ Content-Disposition <br> &emsp;  ✅ Content-Encoding <br> &emsp;  ✅ Content-Language <br> &emsp;  ✅ Expires <br> &emsp;  ✅ Content-MD5 <br> ❌ Object Lifecycle <br> ❌ Website: <br> &emsp;  ❌ x-amz-website-redirect-location <br> ❌ SSE-C: <br> &emsp;  ❌ x-amz-server-side-encryption <br> &emsp;  ❌ x-amz-server-side-encryption-customer-algorithm <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key-MD5 <br> &emsp;  ❌ x-amz-server-side-encryption-aws-kms-key-id <br> &emsp;  ❌ x-amz-server-side-encryption-context <br> &emsp;  ❌ x-amz-server-side-encryption-bucket-key-enabled <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Tagging: <br> &emsp;  ❌ x-amz-tagging <br> ❌ Object Locking: <br> &emsp;  ❌ x-amz-object-lock-mode <br> &emsp;  ❌ x-amz-object-lock-retain-until-date <br> &emsp;  ❌ x-amz-object-lock-legal-hold <br> ❌ ACL: <br> &emsp;  ❌ x-amz-acl <br> &emsp;  ❌ x-amz-grant-full-control <br> &emsp;  ❌ x-amz-grant-read <br> &emsp;  ❌ x-amz-grant-read-acp <br> &emsp;  ❌ x-amz-grant-write-acp <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
@@ -90,9 +91,8 @@ Below is a list of unimplemented object-level operations.
 
 {{<table-wrap>}}
 
-| API Name                | Feature                   |
-| ------------------------| ------------------------- |
-| ❌ [ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html)      | ❌ Query Parameters: <br> &emsp;  ❌ delimiter <br> &emsp;  ❌ encoding-type <br> &emsp; ❌ marker <br> &emsp;  ❌ max-keys <br> &emsp;  ❌ prefix <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
+| API Name                                                                                | Feature                   |
+| ----------------------------------------------------------------------------------------| ------------------------- |
 | ❌ [ListMultipartUploads](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html) | ❌ Query Parameters: <br> &emsp;  ❌ delimiter <br> &emsp;  ❌ encoding-type <br> &emsp;  ❌ key-marker <br> &emsp;  ❌ max-uploads <br> &emsp;  ❌ prefix <br> &emsp;  ❌ upload-id-marker |
 | ❌ [ListParts](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html)          | ❌ Query Parameters: <br> &emsp;  ❌ max-parts <br> &emsp;  ❌ part-number-marker <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer |
 
@@ -100,6 +100,6 @@ Below is a list of unimplemented object-level operations.
 
 {{<Aside type="warning">}}
 
-Note that `ListObjects` is a deprecated operation in S3 that was replaced with `ListObjectsV2`.
+Even though `ListObjects` is a supported operation, it is recommended that you use `ListObjectsV2` instead when developing applications. For more information, refer to [ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html).
 
 {{</Aside>}}

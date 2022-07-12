@@ -8,7 +8,11 @@ weight: 2
 
 Cloudflare offers several tools to protect your website against malicious traffic and bad actors.
 
-## Protection options
+## Account protection options
+
+For recommendations about how to protect your Cloudflare account, refer to [Account Security](/fundamentals/account-and-billing/account-security/).
+
+## Zone protection options
 
 ### Default protection
 
@@ -33,6 +37,7 @@ All customers also have the options to adjust the following **Security** setting
 
 Based on additional knowledge about your website traffic and requirements, you can also:
 
+- Enable [DNSSEC](/dns/additional-options/dnssec/) to add an extra layer of authentication to DNS queries.
 - Enable [bot protection](/bots/get-started/).
 - Set up various **Security** rules:
     - [Firewall rules](/firewall/cf-firewall-rules/) block, challenge, or allow requests based on [several characteristics](/ruleset-engine/rules-language/fields/) (user agents, cookies, referrer, and more).

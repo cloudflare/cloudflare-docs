@@ -155,25 +155,6 @@ Instant Logs has three limits set in place:
 
 If either of these limits are reached, the logs stream will automatically stop.
 
-## Common issues
-
-- Get a HTTP 301 when attempting to connect to the WebSocket.
-
-  - Make sure you are using the `wss://` protocol when connecting to your WebSocket.
-
-- Get a HTTP 429.
-
-  - Connection requests are rate limited. Try your request again after waiting a few minutes.
-
-- No data received.
-
-  - First, double check if you have a filter defined. If you do, it may be too strict (or incorrect) which ends up dropping all your data.
-  - If you are confident in your filter, check the sample rate you used when creating the session. For example, a sample of 100 means you will receive one log for every 100 requests to your zone.
-  - Finally, make sure the destination is proxied through Cloudflare (also known as orange clouded). We cannot log your request if it does not go through our edge network.
-
-- There was an error fetching your data.
-  - Make sure you have the correct permissions. In order to use Instant Logs you need Super Administrator, Administrator, Log Share or Log Share Reader permissions.
-
 ## Connect with us
 
 If you have any feature requests or notice any bugs, share your feedback directly with us by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).

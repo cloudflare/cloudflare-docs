@@ -75,7 +75,7 @@ $ cd <YOUR_WORKER>
 
 In your project directory, `wrangler init` has generated the following files:
 
-1. `wrangler.toml`: Your [Wrangler](https://developers.cloudflare.com/workers/wrangler/configuration/#example) configuration file.
+1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#example) configuration file.
 2. `index.js` (in `/src`): A minimal Hello World Worker written in JavaScript module syntax.
 3. `package.json`: A minimal Node dependencies configuration file. Only generated if indicated in `wrangler init` command.
 4. `tsconfig.json`: TypeScript configuration that includes [Workers types](https://github.com/cloudflare/workers-types). Only generated if indicated in `wrangler init` command.

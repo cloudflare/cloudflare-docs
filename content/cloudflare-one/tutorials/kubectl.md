@@ -27,25 +27,19 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 ## Create a Zero Trust policy
 
-First, navigate to the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/) to create a new application. Select the `Applications` page from the sidebar. Click **Add application**.
-
-![App List](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
+First, navigate to the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/) to create a new application. Select the **Applications** page. Click **Add application**.
 
 Choose **Self-hosted** on the next page.
 
-![Add App](/cloudflare-one/static/zero-trust-security/ssh/add-app.png)
-
 Input a subdomain where your application will be available to users.
 
-![Configure](/cloudflare-one/static/zero-trust-security/ssh/configure-app.png)
+![Configure App](/cloudflare-one/static/zero-trust-security/ssh/configure-app.png)
 
 Next, create rules that control who can reach the application.
 
 ![Add Rules](/cloudflare-one/static/zero-trust-security/ssh/app-rules.png)
 
 Finally, click **Save** to save the policy. You can return to edit the policy to make changes to who should be allowed or to choose what authentication providers can be used.
-
-![Save](/cloudflare-one/static/zero-trust-security/ssh/save-app.png)
 
 ## Install `cloudflared`
 
@@ -125,8 +119,6 @@ Select `CNAME` as the record type. For the target, input the ID of your Tunnel f
 `6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com`
 
 Click **Save**.
-
-![Add DNS](/cloudflare-one/static/zero-trust-security/ssh/add-dns.png)
 
 ## Run the Tunnel
 
