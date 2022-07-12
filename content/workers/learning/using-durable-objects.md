@@ -16,6 +16,8 @@ For a high-level introduction to Durable Objects, refer to [the announcement blo
 
 For details on the specific Durable Object APIs, refer to the [Runtime API documentation](/workers/runtime-apis/durable-objects/).
 
+[The Workers community on Discord](https://discord.gg/cloudflaredev) has a #durable-objects channel where you can ask questions, show off what you are building, and discuss Durable Objects with other developers.
+
 ## Using Durable Objects
 
 Durable Objects are named instances of a class you define. Like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
