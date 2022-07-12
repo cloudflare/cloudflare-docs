@@ -33,4 +33,4 @@ If you've already changed your nameservers to Cloudflare's and are now getting t
 
 ### .gov domain
 
-Due to the technical limitation, if you have a `.gov` domain which has been approved by DotGov, please contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476-Contacting-Cloudflare-Support) to add the domain to your account.
+Due to the technical limitation, if you have a `.gov` domain which has been approved by DotGov, contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to add the domain to your account.
