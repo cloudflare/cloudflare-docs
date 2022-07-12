@@ -369,7 +369,7 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  The environment of the service (e.g. `production`, `staging`, etc). Refer to [Environments](/workers/platform/environments/).
+  -  The environment of the service (e.g. `production`, `staging`, etc). Refer to [Service Environments](/workers/platform/environments/).
 
 {{</definitions>}}
 
@@ -416,4 +416,43 @@ Example:
 ip = "192.168.1.1"
 port = "8080"
 local_protocol = "http"
+```
+
+## Environments
+
+Environments allow you to configure different configurations for different environments.
+
+These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or publish
+with the `-e` / `--env` flag in the `wrangler` commands like `wrangler publish --env staging`.
+
+Whilst the majority of keys are inheritable, meaning that top-level configuration can be used in environments,
+bindings such as `vars` or `kv_namespaces` are not inheritable and need to be defined explicitly.
+
+Refer to the [example configuration](#example-configuration).
+
+{{<definitions>}}
+
+## Example configuration
+
+```toml
+---
+filename: wrangler.toml
+---
+# Top-level configuration
+name = "my-worker"
+main = "src/index.js"
+compatibility_date = "2022-07-12"
+
+workers_dev = false
+route = { pattern = "example.org/*", zone_name = "example.org" }
+
+kv_namespaces = [
+  { binding = "MY_NAMESPACE", id = "KV_ID" }
+]
+
+[env.staging]
+name = "my-worker-staging"
+kv_namespaces = [
+  { binding = "MY_NAMESPACE", id = "STAGING_KV_ID" }
+]
 ```
