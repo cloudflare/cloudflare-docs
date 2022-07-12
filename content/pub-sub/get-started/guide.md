@@ -35,7 +35,7 @@ During the Private Beta, your account will need to be explicitly granted access.
 
 {{<Aside type="note">}}
 
-Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using an older version of Wrangler, ensure you [update the installed version](https://developers.cloudflare.com/workers/wrangler/get-started/#update).
+Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using an older version of Wrangler, ensure you [update the installed version](/workers/wrangler/get-started/#update).
 
 {{</Aside>}}
 
@@ -113,7 +113,7 @@ With this in mind, create a new namespace. This example will use `my-namespace` 
 $ wrangler pubsub namespace create my-namespace 
 ```
 
-You should receive a HTTP 200 response that resembles the following:
+You should receive a success response that resembles the following:
 
 ```json
 {
@@ -140,6 +140,7 @@ Broker names must be:
 - Unique per namespace.
 
 To create a new MQTT Broker called `example-broker` in the `my-namespace` namespace from the example above:
+
 
 ```sh
 $ wrangler pubsub namespace create example-broker --namespace=my-namespace
@@ -185,10 +186,10 @@ Ensure you do not commit your credentials to source control, such as GitHub. A v
 To generate two tokens for a broker called `example-broker` with a 48 hour expiry:
 
 ```sh
-$ wrangler pubsub broker issue example-broker --namespace=NAMESPACE_NAME --number=5 --expiration=48h
+$ wrangler pubsub broker issue example-broker --namespace=NAMESPACE_NAME --number=2 --expiration=48h
 ```
 
-You should receive a scucess response that resembles the example below, which is a map of Client IDs and their associated tokens.
+You should receive a success response that resembles the example below, which is a map of Client IDs and their associated tokens.
 
 ```json
 {

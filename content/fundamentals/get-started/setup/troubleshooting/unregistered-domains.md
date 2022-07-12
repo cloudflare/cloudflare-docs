@@ -30,3 +30,7 @@ You need to add your domain to Cloudflare first, and only then add our nameserve
 If you've already changed your nameservers to Cloudflare's and are now getting this error, resetting them to your registrar's default ones, waiting for a few hours, and then [adding that domain](/fundamentals/get-started/setup/add-site/) should work.
 
 {{</Aside>}}
+
+### .gov domain
+
+Due to the technical limitation, if you have a `.gov` domain which has been approved by DotGov, contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to add the domain to your account.

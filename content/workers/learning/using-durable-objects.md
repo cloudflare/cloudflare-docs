@@ -16,6 +16,8 @@ For a high-level introduction to Durable Objects, refer to [the announcement blo
 
 For details on the specific Durable Object APIs, refer to the [Runtime API documentation](/workers/runtime-apis/durable-objects/).
 
+[The Workers community on Discord](https://discord.gg/cloudflaredev) has a #durable-objects channel where you can ask questions, show off what you are building, and discuss Durable Objects with other developers.
+
 ## Using Durable Objects
 
 Durable Objects are named instances of a class you define. Like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
@@ -552,3 +554,7 @@ A single instance of a Durable Object cannot do more work than is possible on a 
 - `Error: Durable Object is overloaded. Requests queued for too long.` The oldest request has been in the queue too long.
 
 To solve this you can either do less work per request, or send fewer requests, for example, by splitting the requests among more instances of the Durable Object.
+
+#### Error: Durable Object storage operation exceeded timeout which caused object to be reset.
+
+To prevent indefinite locking, there is a limit on how much time storage operations can take. In objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact support.
