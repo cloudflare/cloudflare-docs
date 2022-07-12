@@ -109,7 +109,7 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
 
 1. Go to **DNS** and select **+ Add record**.
 
-1. Choose `CNAME` as the record type. For **Target**, input the ID of your Tunnel followed by `cfargotunnel.com`. Select **Save**.
+1. Choose `CNAME` as the record type. For **Target**, input the ID of your Tunnel followed by `.cfargotunnel.com`. Select **Save**.
 
 ## Run the Tunnel
 

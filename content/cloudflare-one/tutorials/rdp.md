@@ -151,7 +151,7 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
 
 1.  Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
 
-2.  Select `CNAME` as the record type. For the target, input the ID of your Tunnel followed by `cfargotunnel.com`.
+2.  Select `CNAME` as the record type. For the target, input the ID of your Tunnel followed by `.cfargotunnel.com`.
 
 3.  Click **Save**.
 
