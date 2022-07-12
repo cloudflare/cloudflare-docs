@@ -28,6 +28,6 @@ If you are an Enterprise user, you can add the permission to your account by con
 
 ## Enable Argo Tiered Cache
 
-[Cache](/cache) works by storing a copy of website content at Cloudflare's data centers. Argo Tiered Cache divides these data centers into a hierarchy based on location. This allows Cloudflare to deliver content from data centers closest to your visitor.
+[Cache](/cache/) works by storing a copy of website content at Cloudflare's data centers. Argo Tiered Cache divides these data centers into a hierarchy based on location. This allows Cloudflare to deliver content from data centers closest to your visitor.
 
 Argo Smart Routing and Argo Tiered Cache work together to provide the most efficient connection for visitors to your site. For more information, go to [Tiered Cache](/cache/about/tiered-cache/).
