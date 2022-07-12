@@ -5,13 +5,14 @@ title: Refactor a Worker to a Pages Function
 
 # Refactor a Worker to a Pages Function
 
-In this guide, you will learn how to refactor a Worker to a Pages Function that can be hosted with your application on Cloudflare Pages. You may want to do this for one of these reasons: 
-1. If you manage a serverless function that your application depends on and wish to ship the logic without managing a Worker as a separate service.
-2. If you are migrating your Worker to Pages Functions and want to leverage on the routing and middleware capabilities of Pages Functions.
+In this guide, you will learn how to refactor a Worker to a Pages Function that can be hosted with your application on Cloudflare Pages. You may want to do this:
 
-{{<Aside type= "note" header="Note">}}
+1. If you manage a serverless function that your Pages application depends on and wish to ship the logic without managing a Worker as a separate service.
+2. If you are migrating your Worker to Pages Functions and want to use the routing and middleware capabilities of Pages Functions.
 
-You can import your Worker to a Pages project without using Functions by creating a `_worker.js` file in the in the output directory of your Pages project. This [Advanced mode](/pages/platform/functions/#advanced-mode) requires writing your worker with [Module syntax](/workers/learning/migrating-to-module-workers/). 
+{{<Aside type= "note">}}
+
+You can import your Worker to a Pages project without using Functions by creating a `_worker.js` file in the in the output directory of your Pages project. This [Advanced mode](/pages/platform/functions/#advanced-mode) requires writing your Worker with [Module syntax](/workers/learning/migrating-to-module-workers/). 
 
 However, when using the `_worker.js` file in Pages, the entire `/functions` directory is ignored – including its routing and middleware characteristics.
 
@@ -19,23 +20,23 @@ However, when using the `_worker.js` file in Pages, the entire `/functions` dire
 
 ## General refactoring steps 
 
-1. Remove the `addEventListener()` method and its event response and replace it with the appropriate `OnRequest` method. Refer to [Function documentation](/pages/platform/functions/#writing-your-first-function) to select the appropriate method for your function.
+1. Remove the `addEventListener()` method and its event response and replace it with the appropriate `OnRequest` method. Refer to [Functions](/pages/platform/functions/#writing-your-first-function) to select the appropriate method for your Function.
 2. Pass the `context` object as an argument to your new `OnRequest` method to access the properties of the context parameter: `request`,`env`,`params` and `next`.
-3. Handle logic that must be executed before or after route handles with middleware. Learn more about [using Middleware](/pages/platform/functions/#adding-middleware) in the Functions documentation.
+3. Use middleware to handle logic that must be executed before or after route handlers. Learn more about [using Middleware](/pages/platform/functions/#adding-middleware) in the Functions documentation.
 
-## Handle form submission example 
+## Background
 
 To explain the process of refactoring, this guide uses a simple form submission example. 
 
 Form submissions can be handled by Workers but can also be a good use case for Pages Functions, since forms are most times specific to a particular application. 
 
-Assuming you are already using a Worker to handle your form, you would have deployed this Worker and then added the URL to your form action attribute in your HTML form. This means that when you change how the Worker handles your submissions, you do so separately from your client. If the logic in your Worker is used by more than one application, it makes sense to leave it this way.  
+Assuming you are already using a Worker to handle your form, you would have deployed this Worker and then added the URL to your form action attribute in your HTML form. This means that when you change how the Worker handles your submissions, you must make changes to the Worker script. If the logic in your Worker is used by more than one application, Pages Functions would not be a good use case.
 
-However, it can be beneficial to use a [Pages Function](/pages/platform/functions/), which is a serverless function that lives within the same filesystem as your application and is deployed with Cloudflare Pages, when scoping logic that is needed in the same project. 
+However, it can be beneficial to use a [Pages Function](/pages/platform/functions/) when you would like to organize your function logic in the same project directory as your application.
 
-Building your application this way, can help you manage your client and serverless logic from the same place and make it easier to use and debug your code. 
+Building your application using Pages Functions can help you manage your client and serverless logic from the same place and make it easier to write and debug your code. 
 
-## Handling form entries with Airtable and Workers
+## Handle form entries with Airtable and Workers
 
 An [Airtable](https://airtable.com/) is a low-code platform for building collaborative applications. It helps customize your workflow, collaborate, and handle form submissions. For this example, you will utilize Airtable's form submission feature.
 
@@ -43,9 +44,9 @@ An [Airtable](https://airtable.com/) is a low-code platform for building collabo
 
 This step creates the boilerplate to write your Airtable submission Worker. After writing your Worker, you can deploy it to Cloudflare's edge network after you [configure your project for deployment](/workers/get-started/guide/#7-configure-your-project-for-deployment). Refer to the Workers documentation for a full tutorial on how to [handle form submission with Workers](/workers/tutorials/handle-form-submissions-with-airtable/).
 
-The code block below shows an example of a Worker that handles Airtable form submission.
+The following code block shows an example of a Worker that handles Airtable form submission.
 
-Every Worker will have the default response to a `fetch` action with a `request` handler. In the example below, you have a `submitHandler` async function that is called if the pathname of the work is `/submit`. This function checks that the request method is a `POST` request and then proceeds to parse and post the form entries to Airtable using your credentials, which you can store using [wrangler secret](/workers/wrangler/commands/#secret).
+Every Worker will have the default response to a `fetch` action with a `request` handler. The `submitHandler` async function is called if the pathname of the work is `/submit`. This function checks that the request method is a `POST` request and then proceeds to parse and post the form entries to Airtable using your credentials, which you can store using [Wrangler `secret`](/workers/wrangler/commands/#secret).
 
 ```js
 ---
