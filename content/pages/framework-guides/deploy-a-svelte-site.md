@@ -100,13 +100,13 @@ However, in production, to deploy your Sveltekit application on Pages, First upd
 
 ### SvelteKit Cloudflare 
 
-[`@sveltejs/adapter-cloudflare`](https://www.npmjs.com/package/@sveltejs/adapter-Cloudflare) supports all SvelteKit features and builds for Cloudflare Pages. The Cloudflare adapter is recommended because it supports expected local development and Production behaviours. 
+[`@sveltejs/adapter-cloudflare`](https://www.npmjs.com/package/@sveltejs/adapter-cloudflare) supports all SvelteKit features and builds for Cloudflare Pages. The Cloudflare adapter is recommended because it supports expected local development and Production behaviours. 
 
 ### Usage
 
 You can add this adapter to your application in the following steps: 
 
-1. Install the Cloudflare Adapter by running `npm i --save-dev @sveltejs/adapter-Cloudflare` in your terminal 
+1. Install the Cloudflare Adapter by running `npm i --save-dev @sveltejs/adapter-cloudflare` in your terminal 
 
 2. Include the adapter in the `svelte.config.js`
 
@@ -160,7 +160,7 @@ export async function post({ request, platform }) {
 }
 ```
 
-When deploying with the with [`@sveltejs/adapter-cloudflare`](https://www.npmjs.com/package/@sveltejs/adapter-Cloudflare) or [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto), select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+When deploying with the with [`@sveltejs/adapter-cloudflare`](https://www.npmjs.com/package/@sveltejs/adapter-cloudflare) or [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto), select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 
@@ -239,6 +239,35 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 {{</Aside>}}
 
+## Functions setup 
+
+In SvelteKit, functions are written as endpoints and Functions contained in the `/functions` directory at the project's root will not be included in the deployment, which compiles to a single _worker.js file. 
+
+In other to have the correct request handlers in Pages functions. When writing your endpoints in SveleteKit, attach the corresponding `onRequest` handler to your SvelteKit endpoint. For example:
+
+```js
+---
+filename: src/routes/random.js
+---
+/** @type {import('@sveltejs/kit').RequestHandler} */
+export async function get() {
+  return {
+    status: 200,
+    headers: {
+      'access-control-allow-origin': '*'
+    },
+    body: {
+      number: Math.random()
+    }
+  };
+}
+```
+
+The `GET` request handler here will correspond to an `OnRequestGet` in Pages Functions. 
+
+### Functions error logging
+
+While Functions are in beta, they don't have error logs yet. So your alternative right now is to use a reporting platform like Sentry. 
 ## Learn more
 
 By completing this guide, you have successfully deployed your Svelte site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
