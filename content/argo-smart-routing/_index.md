@@ -18,11 +18,11 @@ Routing your traffic with Argo Smart Routing provides:
 * **Added security:** Encrypt your traffic end-to-end across the Cloudflare network.
 * **Reduced cost:** Save money by reducing content requests, server load and latency, and bandwidth usage.
 
-Argo Smart Routing includes [comprehensive analytics](analytics) to compare performance improvements with Argo enabled.
+Argo Smart Routing includes [comprehensive analytics](analytics) to compare performance improvements with and without Argo enabled.
 
 ## Availability
 <!-- TODO: Check for accuracy with Success/PM/Billing? -->
-Argo Smart Routing is available as a paid plan extension for all Cloudflare users. Free, Pro, and Business users can enable Argo in their [Cloudflare Dashboard](https://dash.cloudflare.com/). Enterprise users can enroll in a free 3 day trial by contacting their Customer Success Manager.
+All Cloudflare users can use Argo Smart Routing as a paid plan extension. Free, Pro, and Business users can enable Argo in their [Cloudflare Dashboard](https://dash.cloudflare.com/). Enterprise users can enroll in a free 3 day trial by contacting their Customer Success Manager.
 
 {{<button-group>}}
   {{<button type="primary" href="get-started">}}Get started{{</button>}}
