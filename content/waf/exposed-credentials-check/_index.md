@@ -22,7 +22,9 @@ The WAF provides two mechanisms for this check:
 
 *   The ability to [write custom rules](#exposed-credentials-checks-in-custom-rules) for a zone that check for exposed credentials according to your criteria for specific applications.
 
-Cloudflare updates the databases of exposed credentials supporting the exposed credentials check feature on a regular basis. The username/password credentials in clear text never leave the Cloudflare network. The WAF only uses an anonymized version of the username when determining if there are previously exposed credentials with that username.
+Cloudflare updates the databases of exposed credentials supporting the exposed credentials check feature on a regular basis.
+
+The username/password credentials in clear text never leave the Cloudflare network. The WAF only uses an anonymized version of the username and password when determining if there are previously exposed credentials. Cloudflare follows the approach based on the _k_-Anonymity mathematical property described in the following blog post: [Validating Leaked Passwords with k-Anonymity](https://blog.cloudflare.com/validating-leaked-passwords-with-k-anonymity/).
 
 ## Available actions
 
