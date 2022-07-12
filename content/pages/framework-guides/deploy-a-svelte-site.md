@@ -70,13 +70,13 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 {{<Aside type="warning">}}
 
-**Important:** SvelteKit requires Node.js v16.x or later to build successfully. You must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16` or greater.
+**Important:** SvelteKit requires Node.js v16.x or later to build successfully. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Pages** > **Settings** > **Environment Variables** section and add a `NODE_VERSION` variable with a value of `16` or greater.
 
 {{</Aside>}}
 
 ### SvelteKit Configuration
 
-Currently, SvekteKit has three available adapters that you can use to deploy a SvelteKit project to Cloudflare Pages. 
+Currently, SvekteKit has three available adapters that you can use to deploy a SvelteKit project to Cloudflare Pages.
 
 1. [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto)
 2. [`@sveltejs/adapter-cloudflare`](https://www.npmjs.com/package/@sveltejs/adapter-cloudflare) 
@@ -86,9 +86,9 @@ You will need to pick the one that best suits your use case.
 
 ### SvelteKit Adapter Auto
 
-The SvelteKit project's default configuration uses [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto), which automatically chooses the adapter for your current environment. While you can use this default adapter when deploying to Cloudflare Pages by setting your **Build directory** to `.svelte-kit/cloudflare`, local development has a few drawbacks. 
+The SvelteKit project's default configuration uses [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto), which automatically chooses the adapter for your current environment. While you can use this default adapter when deploying to Cloudflare Pages by setting your **Build directory** to `.svelte-kit/cloudflare`, local development has a few disadvantages.
 
-When building locally, [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto) has no way to know what platform you're going to deploy to, so the build fails. Also, since the environment variables aren't set, you can not use Cloudflare Pages features like Direct uploads or use Functions locally. 
+When building locally, [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto) has no way to know what platform you are going to deploy to, so the build will fail. Since the environment variables are not set, you cannot use Cloudflare Pages features, like Direct Uploads or use Functions, locally. 
 
 {{<Aside type= "note" header="Optional configuration">}}
 
@@ -263,11 +263,12 @@ export async function get() {
 }
 ```
 
-The `GET` request handler here will correspond to an `OnRequestGet` in Pages Functions. 
+The `GET` request handler here will correspond to an `onRequestGet` in Pages Functions. 
 
 ### Functions error logging
 
 While Functions are in beta, they don't have error logs yet. So your alternative right now is to use a reporting platform like Sentry. 
+
 ## Learn more
 
 By completing this guide, you have successfully deployed your Svelte site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
