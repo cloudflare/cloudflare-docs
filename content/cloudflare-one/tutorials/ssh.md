@@ -156,6 +156,6 @@ Cloudflare can render an SSH client in your browser without the need for client 
 
 1. Choose your application and go to **Edit** > **Settings**.
 
-1. In **Additional settings**, select _SSH_ from the **Browser Rendering** dropdown menu.
+1. In **Additional settings**, select _SSH_ from the **Browser Rendering** drop-down menu.
 
 Once enabled, when users authenticate and visit the URL of the application, Cloudflare will render a terminal in their browser.
