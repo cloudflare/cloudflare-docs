@@ -15,3 +15,4 @@ These are the betas relevant to Cloudflare Workers, including links to more info
 | D1 Database                   | ✅           |             |[Blog](https://blog.cloudflare.com/introducing-d1/) |
 | Pub/Sub                       | ✅           |             |[Docs](/pub-sub) |
 | Email Workers                 | ✅           |             |[Blog](https://blog.cloudflare.com/announcing-route-to-workers/) |
+| TCP Workers                   | ✅           |             |[Blog](https://blog.cloudflare.com/introducing-socket-workers/) |
