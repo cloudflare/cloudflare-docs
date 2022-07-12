@@ -28,7 +28,7 @@ The accepted file formats are YAML (`.yml` or `.yaml` file extension) and JSON (
 
 ## Limitations
 
-Currently, API Shield cannot validate some features of API schemas, including the following: all responses, external references, non-basic path templating, or unique items.
+Currently, API Shield cannot validate some features of API schemas, including the following: request body validations, all responses, external references, non-basic path templating, or unique items.
 
 Regular expression support is a paid add-on in the Enterprise plan.
 
