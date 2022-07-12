@@ -185,7 +185,7 @@ Ensure you do not commit your credentials to source control, such as GitHub. A v
 To generate two tokens for a broker called `example-broker` with a 48 hour expiry:
 
 ```bash
-$ wrangler pubsub broker issue example-broker --namespace=NAMESPACE_NAME --number=5 --expiration=48h
+$ wrangler pubsub broker issue example-broker --namespace=NAMESPACE_NAME --number=2 --expiration=48h
 ```
 
 You should receive a success response that resembles the example below, which is a map of Client IDs and their associated tokens.
