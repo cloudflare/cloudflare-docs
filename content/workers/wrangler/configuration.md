@@ -399,7 +399,7 @@ You can configure various aspects of local development, such as the local protoc
 
   -  Protocol that local dev server listens to requests on. Defaults to `http`.
 
-- `local_protocol` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `upstream_protocol` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   -  Protocol that the local dev server forwards requests on. Defaults to `https`.
 
