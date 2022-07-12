@@ -6,7 +6,7 @@ weight: 2
 
 # WAF for SaaS
 
-[Web Application Firewall (WAF)](/waf/) allows you to create additional security measures through Cloudflare. As a SaaS provider, you can link firewall rules, rate liminting rules, and managed rules to your custom hostnames. This provides more control to keep your domains safe from malicious traffic.
+[Web Application Firewall (WAF)](/waf/) allows you to create additional security measures through Cloudflare. As a SaaS provider, you can link firewall rules, rate limiting rules, and managed rules to your custom hostnames. This provides more control to keep your domains safe from malicious traffic.
 
 As a SaaS provider, you may want to apply different security measures to different custom hostnames. With WAF for SaaS, you can create multiple WAF configuration that you can apply to different sets of custom hostnames. This added flexibility and security leads to optimal protection across the domains of your end customers.
 
