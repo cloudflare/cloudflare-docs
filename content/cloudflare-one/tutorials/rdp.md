@@ -28,7 +28,7 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
 1.  Navigate to the Zero Trust Dashboard to create a new application.
 
-2.  Select the `Applications` page from the sidebar.
+2.  Select the **Applications** page from the sidebar.
 
 3.  Click **Add application**.
 
@@ -143,23 +143,23 @@ You can now [configure the Tunnel](/cloudflare-one/connections/connect-apps/conf
 <strong>IMPORTANT</strong>: Make sure you have enabled WebSockets in the "Network" section of your
 domain in the Cloudflare control panel:
 
-![Enable WebSockets](/cloudflare-one/static/zero-trust-security/ssh/enable-websockets.png)
+![How to enable WebSockets](/cloudflare-one/static/zero-trust-security/ssh/enable-websockets.png)
 
 {{</Aside>}}
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
 
-1.  Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
+1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com/) and select your account. Select your domain and go to **DNS**.
 
-    ![DNS record](/cloudflare-one/static/zero-trust-security/ssh/dns-list.png)
+2. Select **+ Add record**. Choose `CNAME` as the record type. For **Name**, choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
 
-2.  Select `CNAME` as the record type. For the target, input the ID of your Tunnel followed by `cfargotunnel.com`. In this example, the target would be:
-
-    ```txt
+3. For **Target**, input the ID of your Tunnel followed by `.cfargotunnel.com`. For example:
+  
+  ```txt
     6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
-    ```
+  ```
 
-3.  Click **Save**.
+4. Select **Save**.
 
 ## Run the Tunnel
 

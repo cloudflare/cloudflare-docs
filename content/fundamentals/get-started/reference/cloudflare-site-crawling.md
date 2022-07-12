@@ -35,4 +35,4 @@ Cloudflare will also crawl your site in other, specific situations:
     * *Triggered when*: Cloudflare support engineers perform error checks and by continuous monitoring used to raise intelligent alerts in the Cloudflare dashboard.
 * **Certificate validation**: 
     * *User-Agent*: `Cloudflare Custom Hostname Verification`
-    * *Triggered when*: You choose to validate a custom hostname certificate with a [DCV HTTP token](/ssl/ssl-for-saas/common-tasks/certificate-validation-methods/#http).
+    * *Triggered when*: You choose to validate a custom hostname certificate with a [DCV HTTP token](/cloudflare-for-saas/ssl/common-tasks/certificate-validation-methods/#http).
