@@ -51,6 +51,11 @@ Cloudflare limits the upload size (HTTP POST request size) per plan type:
 
 If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through an [unproxied (grey-clouded) DNS record](/dns/manage-dns-records/reference/proxied-dns-records/).
 
+Cloudflare cacheable file limits:
+
+- Free, Pro and Business customers have a limit of 512 MB.
+- For Enterprise customers the default maximum cacheable file size is 5 GB. Contact your account team to request a limit increase.
+
 ## Cloudflare cache responses
 
 The output of the `CF-Cache-Status header` shows whether or not a resource is cached. To investigate cache responses returned by the `CF-Cache-Status` header, use services like [Redbot](https://redbot.org/), [webpagetest.org](http://www.webpagetest.org/), or a visual tool like [Chrome’s Dr. Flare plugin](https://community.cloudflare.com/t/community-tip-dr-flare-debug-tool-for-cloudflare-chrome-extension/110166).

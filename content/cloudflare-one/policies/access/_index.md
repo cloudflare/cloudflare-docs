@@ -135,13 +135,14 @@ Here is a list of all the criteria you can apply:
 - **Access groups** — `example-team`
 - **Emails** — `you@company.com`
 - **Emails ending in** — `@company.com`
+- **External Evaluation** - allows or denies access based on custom logic in an external API. For more information, refer to the [External Evaluation rules](/cloudflare-one/policies/access/external-evaluation/) page.
 - **IP ranges** — `192.168.100.14` (supports IPv4 and IPv6).
 - **Country** – uses the IP address to determine country.
 - **Everyone** — allows, denies, or bypasses access to everyone.
 - **Common Name** - The request will need to present a valid certificate with an expected common name.
 - **Valid Certificate** - the request will need to present any valid client certificate.
 - **Service Token** - the request will need to present the correct service token headers configured for the specific application
-- **Any Access Service Token** - the request will need to present the headers for any [service token](/cloudflare-one/identity/service-auth/service-tokens/) created for this account.
+- **Any Access Service Token** - the request will need to present the headers for any [service token](/cloudflare-one/identity/service-tokens/) created for this account.
 - **Login Methods** - checks the identity provider used at the time of login.
 - **Authentication Method** - checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider.
 - **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an OIDC or SAML identity provider.

@@ -41,11 +41,11 @@ Applying rate limiting rules to verified bots might affect Search Engine Optimiz
 
 ## Availability
 
-Rate limiting rules are available to Enterprise customers on the Core or Advanced plan. The available features depend on the exact plan:
+Rate limiting rules are available to Enterprise customers. The available features depend on the exact plan:
 
 {{<table-wrap>}}
 
-Feature | Enterprise Core | Enterprise Advanced |
+Feature | Enterprise | Enterprise Advanced |
 ---|---|---
 Available fields<br/>in rule expression | URL, Method, Headers, Source IP | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Bot Management fields*)
 Counting characteristics | IP | IP, IP with NAT support, Query, Headers, Cookie, ASN, Country, JA3 Fingerprint*

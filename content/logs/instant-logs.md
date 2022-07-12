@@ -99,7 +99,7 @@ The response will include a new field called **destination_conf**. The value of 
         "fields": "ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID",
         "sample": 100,
         "filter": "",
-        "destination_conf": "wss://datalab.cfdata.org/instant-logs/ws/sessions/949f9eb846f06d8f8b7c91b186a349d2",
+        "destination_conf": "wss://logs.cloudflare.com/instant-logs/ws/sessions/99d471b1ca3c23cc8e30b6acec5db987",
         "kind": "instant-logs"
     },
     "success": true
@@ -111,7 +111,7 @@ The response will include a new field called **destination_conf**. The value of 
 Using a CLI utility like [Websocat](https://github.com/vi/websocat), you can connect to the WebSocket and start immediately receiving logs.
 
 ```bash
-websocat wss://datalab.cfdata.org/instant-logs/ws/sessions/949f9eb846f06d8f8b7c91b186a349d2
+websocat wss://logs.cloudflare.com/instant-logs/ws/sessions/99d471b1ca3c23cc8e30b6acec5db987
 ```
 
 Response:
@@ -123,7 +123,7 @@ Once connected to the websocket, you will receive messages of line-delimited JSO
 Now that you have a connection to Cloudflare's websocket and are receiving logs from the edge, you can start slicing and dicing the logs. A handy tool for this is [Angle Grinder](https://github.com/rcoh/angle-grinder). Angle Grinder lets you apply filtering, transformations and aggregations on stdin with first class JSON support. For example, to get the number of visitors from each country you can sum the number of events by the `ClientCountry` field.
 
 ```bash
-websocat wss://datalab.cfdata.org/instant-logs/ws/sessions/949f9eb846f06d8f8b7c91b186a349d2 | agrind '* | json | sum(sampleInterval) by ClientCountry'
+websocat wss://logs.cloudflare.com/instant-logs/ws/sessions/99d471b1ca3c23cc8e30b6acec5db987 | agrind '* | json | sum(sampleInterval) by ClientCountry'
 ```
 
 Response:
@@ -154,25 +154,6 @@ Instant Logs has three limits set in place:
 - If you stop listening to a socket for more than five minutes.
 
 If either of these limits are reached, the logs stream will automatically stop.
-
-## Common issues
-
-- Get a HTTP 301 when attempting to connect to the WebSocket.
-
-  - Make sure you are using the `wss://` protocol when connecting to your WebSocket.
-
-- Get a HTTP 429.
-
-  - Connection requests are rate limited. Try your request again after waiting a few minutes.
-
-- No data received.
-
-  - First, double check if you have a filter defined. If you do, it may be too strict (or incorrect) which ends up dropping all your data.
-  - If you are confident in your filter, check the sample rate you used when creating the session. For example, a sample of 100 means you will receive one log for every 100 requests to your zone.
-  - Finally, make sure the destination is proxied through Cloudflare (also known as orange clouded). We cannot log your request if it does not go through our edge network.
-
-- There was an error fetching your data.
-  - Make sure you have the correct permissions. In order to use Instant Logs you need Super Administrator, Administrator, Log Share or Log Share Reader permissions.
 
 ## Connect with us
 

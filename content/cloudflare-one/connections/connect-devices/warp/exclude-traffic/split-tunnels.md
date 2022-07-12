@@ -81,7 +81,7 @@ Due to platform differences, mobile clients can only apply Split Tunnels rules w
 
 - Domain-based Split Tunnels rules are created when the tunnel is established based on the IP address for that domain at that time. The route is refreshed each time the tunnel is established.
 
-- Wildcard domain prefixes (for example, `*.example.com`) are not supported. Because route information must be added when the tunnel starts, these platforms can’t support wildcards. Wildcard domain prefixes can still exist in your configuration, but they will be ignored on these platforms.
+- Wildcard domain prefixes (for example, `*.example.com`) are supported only if they have valid wildcard DNS records. Other wildcard domains are not supported because the client is unable to match wildcard domains to hostnames when starting up the tunnel. Unsupported wildcard domain prefixes can still exist in your configuration, but they will be ignored on mobile platforms.
 
 ## Remove an item from Split Tunnels
 

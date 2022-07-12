@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
 title: Functions (beta)
+layout: single
 ---
 
 # Functions (beta)
@@ -48,8 +49,8 @@ The following routes will be generated based on the file structure, mapping the 
     /api/todos => ./functions/api/todos/index.ts
     /api/todos/* => ./functions/api/todos/[id].ts
     /api/todos/*/** => ./functions/api/todos/[[path]].ts
-    /*/profile => ./functions/api/[username]/profile.ts
-    /** => ./functions/api/[[path]].ts
+    /api/*/profile => ./functions/api/[username]/profile.ts
+    /api/** => ./functions/api/[[path]].ts
 
 ### Path segments
 
@@ -305,7 +306,7 @@ export async function onRequest(context) {
 
 ## Adding bindings
 
-While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project. You can also use these bindings in development with [Wrangler](/pages/platform/functions/#develop-and-preview-locally).
+A binding is how your Function (Worker) interacts with external resources. You can add KV, Durable Object, and plain-text bindings to your project. A binding is a runtime variable that the Workers runtime provides to your code. You can also use these bindings in development with [Wrangler](/pages/platform/functions/#develop-and-preview-locally).
 
 ### KV namespace
 
@@ -346,15 +347,30 @@ To add environment variables, go to **Account Home** > **Pages** > **your Pages 
 
 ### Adding environment variables locally
 
-When developing locally, you can access environment variables by adding a binding to your Wrangler commands like `npx wrangler pages dev dist --binding ENV_NAME="ENV_VALUE"`. This allows you to then access the environment value in your component by using `env.ENV_NAME`.
+When developing locally, you can access environment variables by adding a `.dev.vars` file to the root directory of your project. Next, define your environment variables and then access them in your component by using `env.ENV_NAME`.
 
-For example, you can run `npx wrangler pages dev dist --binding COLOR="BLUE"` and then:
+For example :
+
+```env
+---
+filename:/.dev.vars
+---
+ENV_NAME = "SUPER_SECRET_KEY"
+```
 
 ```js
+---
+filename: functions/index.js
+---
 export async function onRequest({ env }) {
-  return new Response(env.COLOR);
+  return new Response(env.ENV_NAME);
 }
 ```
+{{<Aside type= "Note">}}
+
+Adding a binding through the CLI with `--binding` is still supported, and whatever you specify in CLI will take precedence over environment variables in `.dev.vars`
+
+{{</Aside>}}
 
 Here is a real-world example of using environment variables inside a middleware function. To connect [Sentry](https://www.sentry.io/) to a Cloudflare Worker, you can use [Toucan js](https://github.com/robertcepa/toucan-js) and access your Sentry Data Source Name (DSN) in your function.
 
@@ -382,7 +398,7 @@ In some cases, the built-in routing and middleware system is not desirable for e
 
 When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed **as is** and **must be** written using the [Module Worker syntax](/workers/runtime-apis/fetch-event/#syntax-module-worker).
 
-If you have never used module syntax, refer to the [JavaScript modules blog post to learn more](https://blog.cloudflare.com/workers-javascript-modules/). Using Module Workers enables JavaScript frameworks to generate a Worker as part of the Pages output directory contents.
+If you have never used Module syntax, refer to the [JavaScript modules blog post to learn more](https://blog.cloudflare.com/workers-javascript-modules/). Using Module Workers enables JavaScript frameworks to generate a Worker as part of the Pages output directory contents.
 
 Your custom Module Worker will assume full control of all incoming HTTP requests to your domain. Because of this, your custom Worker is required to make and/or forward requests to your project's static assets.
 
@@ -403,6 +419,8 @@ export default {
   },
 };
 ```
+
+The `env.ASSETS.fetch()` function will allow you to send the user to a modified path which is defined through the `url` parameter. `env` is the object that contains your environment variables and bindings. `ASSETS` is a default Function binding that allows communication between your Function and Pages' asset serving resource. `fetch()` calls to Pages' asset-serving resource and serves the requested asset.
 
 {{<Aside type="warning">}}
 

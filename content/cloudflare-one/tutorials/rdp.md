@@ -19,7 +19,7 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
 ## Before you start
 
-1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+1.  [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/)
 2.  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
 
 ---
@@ -28,29 +28,19 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
 1.  Navigate to the Zero Trust Dashboard to create a new application.
 
-2.  Select the `Applications` page from the sidebar.
+2.  Select the **Applications** page from the sidebar.
 
 3.  Click **Add application**.
 
-    ![App List](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
-
 4.  Choose **Self-hosted** on the next page.
-
-    ![Add App](/cloudflare-one/static/zero-trust-security/ssh/add-app.png)
 
 5.  Input a subdomain where your application will be available to users.
 
-    ![Configure](/cloudflare-one/static/zero-trust-security/ssh/configure-app.png)
-
 6.  Next, create rules that control who can reach the application.
-
-    ![Add Rules](/cloudflare-one/static/zero-trust-security/ssh/app-rules.png)
 
 7.  Finally, click **Save** to save the policy.
 
     You can always edit the policy to change who should be allowed access to the application, or to change which authentication providers can be used to access the application.
-
-    ![Save](/cloudflare-one/static/zero-trust-security/ssh/save-app.png)
 
 ## Install `cloudflared`
 
@@ -153,25 +143,23 @@ You can now [configure the Tunnel](/cloudflare-one/connections/connect-apps/conf
 <strong>IMPORTANT</strong>: Make sure you have enabled WebSockets in the "Network" section of your
 domain in the Cloudflare control panel:
 
-![Enable WebSockets](/cloudflare-one/static/zero-trust-security/ssh/enable-websockets.png)
+![How to enable WebSockets](/cloudflare-one/static/zero-trust-security/ssh/enable-websockets.png)
 
 {{</Aside>}}
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
 
-1.  Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
+1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com/) and select your account. Select your domain and go to **DNS**.
 
-    ![DNS List](/cloudflare-one/static/zero-trust-security/ssh/dns-list.png)
+2. Select **+ Add record**. Choose `CNAME` as the record type. For **Name**, choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
 
-2.  Select `CNAME` as the record type. For the target, input the ID of your Tunnel followed by `cfargotunnel.com`. In this example, the target would be:
-
-    ```txt
+3. For **Target**, input the ID of your Tunnel followed by `.cfargotunnel.com`. For example:
+  
+  ```txt
     6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
-    ```
+  ```
 
-3.  Click **Save**.
-
-    ![Add DNS](/cloudflare-one/static/zero-trust-security/ssh/add-dns.png)
+4. Select **Save**.
 
 ## Run the Tunnel
 
@@ -229,7 +217,7 @@ You can help end users connect without requiring the command line by providing t
 
 - Ensure that RDP is enabled on the target Windows machine. If not, you may encounter an error: `No connection could be made because the target machine actively refused it`.
 
-### MacOS
+### macOS
 
 {{<Aside type="note">}}
 
@@ -237,7 +225,7 @@ Before you start, make sure you download an RDP client for macOS.
 
 {{</Aside>}}
 
-MacOS users can save a command shortcut that will launch the RDP flow.
+macOS users can save a command shortcut that will launch the RDP flow.
 
 1.  The command below can be saved as a `.command` file that can be launched on login:
 
@@ -267,4 +255,4 @@ MacOS users can save a command shortcut that will launch the RDP flow.
 
 5.  Double click on the previously created `CF-RDP-Tunnel.command` file.
 
-    The default behavior in MacOS is for the Terminal window to stay open. You can configure it to close automatically.
+    The default behavior in macOS is for the Terminal window to stay open. You can configure it to close automatically.

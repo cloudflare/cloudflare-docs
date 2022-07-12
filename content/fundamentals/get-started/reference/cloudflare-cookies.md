@@ -74,9 +74,9 @@ The table below shows additional cookies used by the Challenge Platform.
 | Cookie Name (XXX represents dynamic part)                     | Description                                                                                                                                                                                   |
 | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `cf_clearance`                                                | Clearance Cookie stores the proof of challenge passed. It is used to no longer issue a captcha or jschallenge challenge if present. It is required to reach origin server.                    |
-| `cf-cc-XXX`; `cf-chl-cc-XXX`; `cf-chl-seq-XXX`; `cf-chl-prog` | These cookies are used by Cloudflare for the execution of Javascript or Captcha challenges. They are not used for tracking or beyond the scope of the challenge. They can be deleted if seen. |
-| `cf-chl-XXXX`                                                 | This cookie is used to check whether the [Cloudflare Edge server](https://www.cloudflare.com/en-gb/learning/cdn/glossary/edge-server/) supports cookies. It can be deleted if seen.           |
-| `cf-chl-rc-i`; `cf-chl-rc-ni`                                 | These cookies are for internal use which allows Cloudflare to identify production issues on clients.                                                                                          |
+| `cf_cc_XXX`; `cf_chl_cc_XXX`; `cf_chl_seq_XXX`; `cf_chl_prog` | These cookies are used by Cloudflare for the execution of Javascript or Captcha challenges. They are not used for tracking or beyond the scope of the challenge. They can be deleted if seen. |
+| `cf_chl_XXXX`                                                 | This cookie is used to check whether the [Cloudflare Edge server](https://www.cloudflare.com/en-gb/learning/cdn/glossary/edge-server/) supports cookies. It can be deleted if seen.           |
+| `cf_chl_rc_i`; `cf_chl_rc_ni`                                 | These cookies are for internal use which allows Cloudflare to identify production issues on clients.                                                                                          |
 
 {{<Aside type="warning">}}
 

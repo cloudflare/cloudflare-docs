@@ -7,7 +7,7 @@ title: Environments
 
 {{<Aside type="note">}}
 
-You can only use environments with [Wrangler](/workers/wrangler/).
+We have temporarily disabled the creation of [Service Environments](/workers/learning/using-services/#service-environments) while we are improving this feature. Environments made using Wrangler, as described below, are still supported.
 
 {{</Aside>}}
 
@@ -23,7 +23,7 @@ These environments are utilized with the `--env` or `-e` flag on `wrangler build
 
 You cannot specify multiple environments with the same name. If this were allowed, publishing each environment would overwrite your previously deployed Worker and the behavior would not be clear.
 
-For this reason, Wrangler appends the environment name to the top-level name to publish a Worker script. For example, a Worker project named `my-worker` with an environment `[env.dev]` would become `my-worker-dev`.
+For this reason, Wrangler appends the environment name to the top-level name to publish a Worker. For example, a Worker project named `my-worker` with an environment `[env.dev]` would become `my-worker-dev`.
 
 The layout of an example `[env.dev]` environment is displayed below:
 
@@ -75,7 +75,7 @@ To deploy this Worker, run the `wrangler publish` command in your terminal:
 
 #### Publishing to \*.workers.dev
 
-Your `*.workers.dev` subdomain allows you to deploy Workers scripts [without attaching a custom domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/). To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`, select the **Workers** icon on your account home, or **Workers** then **Manage Workers** on your zone's dashboard, and begin setup on the right side of the Workers dashboard under **Your subdomain**.
+Your `*.workers.dev` subdomain allows you to deploy Workers [without attaching a custom domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/). To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`, select the **Workers** icon on your account home, or **Workers** then **Manage Workers** on your zone's dashboard, and begin setup on the right side of the Workers dashboard under **Your subdomain**.
 
 This `wrangler.toml` file has no environments defined and will publish `my-worker` to `my-worker.<your-subdomain>.workers.dev`:
 
@@ -94,7 +94,7 @@ workers_dev = true
 
 This example will publish to your `*.workers.dev` subdomain because `workers_dev` has been set to `true`.
 
-Run `wrangler publish` as normal to deploy your Worker script:
+Run `wrangler publish` as normal to deploy your Worker:
 
 ```sh
 ~/my-worker $ wrangler publish

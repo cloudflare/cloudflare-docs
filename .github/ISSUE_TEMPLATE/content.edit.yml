@@ -17,14 +17,15 @@ body:
         - Bots
         - BYOIP
         - Cache
+        - China Network
         - Client IP Geolocation
+        - Cloudflare for SaaS
         - Cloudflare One
         - DDoS Protection
         - DNS
         - Email Routing
         - Firewall
         - Fundamentals
-        - HTTP/3
         - Image Optimization
         - Load Balancing
         - Logs

@@ -53,7 +53,7 @@ For more information on this action, refer to the documentation on [Browser Isol
 
 ### Do Not Inspect
 
-{{<Aside type="Warning" header="Warning">}}
+{{<Aside type="warning" header="Warning">}}
 
 When a *Do Not Inspect* rule is created for a given hostname, application, or app type, no traffic will be inspected.
 
@@ -101,19 +101,28 @@ A list of supported applications and their ID numbers is available through the [
 
 ### Destination Continent
 
-The continent to which the request is destined. Geolocation is determined from the target IP address.
+The continent to which the request is destined. Geolocation is determined from the target IP address. To specify a continent, enter its two-letter code into the **Value** field:
+
+- AF – Africa
+- AN – Antarctica
+- AS – Asia
+- EU – Europe
+- NA – North America
+- OC – Oceania
+- SA – South America
+- T1 – Tor network
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
-| Destination Continent IP Geolocation | `http.dst.geo.continent == "North America"` |
+| Destination Continent IP Geolocation | `http.dst.geo.continent == "EU"` |
 
 ### Destination Country
 
-The country that the request is destined for. Geolocation is determined from the target IP address.
+The country that the request is destined for. Geolocation is determined from the target IP address. To specify a country, enter its [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) in the **Value** field.
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
-| Destination Country IP Geolocation | `http.dst.geo.country == "Russia"` |
+| Destination Country IP Geolocation | `http.dst.geo.country == "RU"` |
 
 ### Destination IP
 
@@ -138,6 +147,10 @@ These selectors depend on the `Content-Type` header being present in the request
 | UI name | API example |
 | -- | -- |
 | Upload Mime Type | `http.upload.mime == "image/png\"` |
+
+### DLP Profile
+
+Scans HTTP traffic for the presence of social security numbers and other PII. You must configure the DLP Profile before you can use this selector in your policy. For more information, refer to our [DLP Profile](/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/) documentation.
 
 ### Host
 
@@ -179,19 +192,28 @@ With the Device Posture selector, admins can use signals from end-user devices t
 
 ### Source Continent
 
-The continent of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP).
+The continent of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP). To specify a continent, enter its two-letter code into the **Value** field:
+
+- AF – Africa
+- AN – Antarctica
+- AS – Asia
+- EU – Europe
+- NA – North America
+- OC – Oceania
+- SA – South America
+- T1 – Tor network
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
-| Source Continent IP Geolocation | `http.src.geo.continent == "North America"` |
+| Source Continent IP Geolocation | `http.src.geo.continent == "EU"` |
 
 ### Source Country
 
-The country of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP).
+The country of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP). To specify a country, enter its [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) in the **Value** field.
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
-| Source Country IP Geolocation | `http.src.geo.country == "Russia"` |
+| Source Country IP Geolocation | `http.src.geo.country == "RU"` |
 
 ### Source IP
 

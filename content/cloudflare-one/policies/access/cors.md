@@ -1,102 +1,245 @@
 ---
-pcx-content-type: concept
+pcx-content-type: how-to
 title: CORS
 weight: 4
 ---
 
-# CORS
+# Access and CORS
 
 Cross-Origin Resource Sharing ([CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)) is a mechanism that uses HTTP headers to grant a web application running on one origin permission to reach selected resources in a different origin. The web application executes a cross-origin HTTP request when it requests a resource that has a different origin from its own, including domain, protocol, or port.
 
-When you protect a site with Cloudflare Access, Cloudflare checks every HTTP request bound for that site to ensure that the request has a valid authentication cookie.
+When you protect a site with Cloudflare Access, Cloudflare checks every HTTP request bound for that site to ensure that the request has a valid `CF-Authorization` authentication cookie. If a request does not include the cookie, it will be blocked. For a CORS request to reach your site, additional configuration may be required depending on the type of request:
 
-This has implications for CORS configurations, including:
+- [Simple requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests) are sent directly to the origin, without triggering a preflight request.
 
-- OPTIONS requests are not sent with cookies from the browser, by design. This cannot be changed. When Cloudflare sees the OPTIONS request being sent to a protected domain, without a cookie, Cloudflare Access blocks the request.
-- Any cross-site request that fails to include the Cloudflare Access token will be returned to the login page. The login page itself will not allow cross-site requests.
-- Cross-origin requests that do not send OPTIONS requests, but do provide the Cloudflare Access cookie, will require the origin to set its own CORS headers.
+- [Preflighted requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#preflighted_requests) cause the browser to send an OPTIONS request before sending the actual request. The OPTIONS request checks which methods and headers are allowed by the origin.
 
-To handle CORS headers for the policy protecting the path that requires CORS, navigate to the bottom of the _Create Access Policy_ window and expand the **Advanced settings** section and configure the settings.
+{{<Aside type="warning" header="Important">}}
 
-## Access and CORS
-
-{{<Aside type="Warning" header="Important">}}
+- Do not troubleshoot CORS in Incognito mode, as this will cause disruptions with Access due to `CF-Authorization` being blocked as a third-party cookie on cross origin requests.
 
 - Safari, in particular Safari 13.1, handles cookies in a unique format. In some cases, this can cause CORS to fail. This will be dependent on Apple releasing a patch for handling cookies. This is known to impact macOS 10.15.4 when running Safari 13.1 (15609.1.20.111.8).
 
-- Do not troubleshoot CORS in Incognito mode, as this will cause disruptions with Access due to `CF-Authorization` being blocked as a third-party cookie on cross origin requests"
-
 {{</Aside>}}
 
-If you have two sites protected by Cloudflare Access, `app1.site.com` and `app2.hostname.com`, requests made between the two will be subject to CORS checks. Users who login to `app1.site.com` will be issued cookies for `app1.site.com` and your Cloudflare Access [team domain](/cloudflare-one/glossary/#team-domain).
+## Allow simple requests
 
-When the user's browser requests `app2.hostname.com`, the cookie will not be present for that domain so the request will be sent to the login page. However, the user will have a cookie for their Cloudflare Access session, which will redirect them successfully to `app2.hostname.com` if they are permitted to reach it.
+If you make a simple CORS request to an Access-protected domain and have not yet logged in, the request will return a `CORS error`. There are two ways you can resolve this error:
 
-During this entire flow, the browser itself will check CORS headers. As part of that behavior, the browser will make the `Origin` header null once a 302 has occurred. Cloudflare Access honors all redirects, however, the final redirect of a login will be made to the original domain. Since the `Origin` header is still null, unless the configuration allows all origins, the request will now fail due to the browser's CORS issue. A refresh will resolve this for the user.
+- **Option 1** — [Log in and refresh the page](#authenticate-manually).
+- **Option 2** — [Create a Cloudflare Worker which automatically sends an authentication token](#send-authentication-token-with-cloudflare-worker). This method only works if both sites involved in the CORS exchange are behind Access.
 
-This can be addressed with the following settings:
+### Authenticate manually
 
-- Use the `allow-all-origins` configuration.
-- Allow `null` as an allowed origin.
+1. Visit the target domain in your browser. You will see the Access login page.
+2. Log in to the target domain. This generates a `CF-Authorization` cookie.
+3. Refresh the page that made the CORS request. The refresh resends the request with the newly generated cookie.
 
-## List of CORS settings
+## Allow Preflighted Requests
 
-- **Access-Control-Allow-Credentials** allows CORS headers or methods to use the user’s credentials to reach the protected application or path.
+If you make a preflighted cross-origin request to an Access-protected domain, the OPTIONS request will return a `403` error. This error occurs regardless of whether you have logged in to the domain. This is because the browser never includes cookies with OPTIONS requests, by design. Cloudflare will therefore block the preflight request, causing the CORS exchange to fail.
 
-- **Access-Control-Max-Age (seconds)** allows you to set a maximum time for caching the results of a CORS request.
+There are two ways you can resolve this error:
 
-- **Access-Control-Allow-Origins** lets you list the fully qualified domain name (FQDN) that makes the CORS request. You can add multiple FQDNs or select **Allow all origins** to permit any FQDN.
+- **Option 1** — [Configure Cloudflare to respond to the OPTIONS request](#configure-response-to-preflight-request).
+- **Option 2** — [Create a Cloudflare Worker which automatically sends an authentication token](#send-authentication-token-with-cloudflare-worker). This method only works if both sites involved in the CORS exchange are behind Access.
 
-- **Access-Control-Allow-Methods** allows you to permit all method types (for example, POST or GET requests).
+### Configure response to preflight requests
 
-- **Access-Control-Allow Headers** allow you to permit all HTTP headers or HTTP headers you define that meet the criteria defined in the **Access-Control-Allow-Origins** or **Access-Control-Allow-Methods** sections.
+You can configure Cloudflare to respond to the OPTIONS request on your behalf. The OPTIONS request never reaches your origin. After the preflight exchange resolves, the browser will then send the main request which does include the authentication cookie (assuming you have logged into the Access-protected domain).
 
-### CORS requests that do not require OPTIONS (Simple Requests)
+To configure how Cloudflare responds to preflight requests:
 
-Cross-origin requests that do not require a specific OPTIONS preflight are commonly known as [Simple Requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS). The browser will still require the correct CORS headers, but will not send a preflight OPTIONS request to retrieve them. To make one of these requests, the `CF_authorization` cookie must be included. CORS configurations made in the Cloudflare Access dashboard will not be applied; these CORS headers must come from the origin.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access** > **Applications**.
+2. Locate the origin that will be receiving OPTIONS requests and click **Edit**.
+3. In the **Settings** tab, scroll down to **CORS settings**.
+4. Configure the dashboard [CORS settings](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#the_http_response_headers) to match the response headers sent by your origin.
 
-Requests that do not include the cookie will be redirected to the Cloudflare Access login page.
+    For example, if you have configured `api.mysite.com`to return the following headers:
 
-## Using `curl` to review the configuration
+    ```
+    headers: {
+        'Access-Control-Allow-Origin': 'https://example.com',
+        'Access-Control-Allow-Credentials' : true,
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'office',
+        'Content-Type': 'application/json',
+    }
+    ```
 
-You can use the command-line tool `curl` to review your configuration. To do so, you will need three prerequisites:
+    then go to `api.mysite.com` in Access and configure **Access-Control-Allow-Origin**, **Access-Control-Allow-Credentials**, **Access-Control-Allow-Methods**, and **Access-Control-Allow-Headers**.
+    ![Example CORS settings configuration on the Zero Trust dashboard](/cloudflare-one/static/documentation/policies/CORS-settings.png)
 
-1.  An OPTIONS request
-1.  An origin header
-1.  The Access-Control-Request-Method
+5. Click **Save application**.
 
-The example `curl` command below includes all three.
+6. (Optional) You can check your configuration by sending an OPTIONS request to the origin with `curl`. For example,
 
-```bash
-curl -I -XOPTIONS  https://app2.site.com \
-    -H 'origin: https://app1.almightyzero.com' \
-    -H 'access-control-request-method: GET'
-```
+    ```bash
+    curl -I -XOPTIONS https://api.mysite.com \
+        -H 'origin: https://example.com' \
+        -H 'access-control-request-method: GET'
+    ```
 
-If configured, Cloudflare will return a response similar to the following example:
+    should return a response similar to:
 
-```bash
-HTTP/2 200
-date: Wed, 22 Apr 2020 18:17:44 GMT
-set-cookie: __cfduid=d886c3e5dd7b8c4daba5f9f0cd173c3511587579464; expires=Fri, 22-May-20 18:17:44 GMT; path=/; domain=.almightyzero.com; HttpOnly; SameSite=Lax
-vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
-access-control-allow-origin: https://app1.almightyzero.com
-access-control-allow-methods: GET
-access-control-allow-credentials: true
-expect-ct: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-server: cloudflare
-cf-ray: 588157e55e0882d7-ATL
-cf-request-id: 0244b54354000082d7b991f200000001
-```
+    ```bash
+    HTTP/2 200 
+    date: Tue, 24 May 2022 21:51:21 GMT
+    vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+    access-control-allow-origin: https://example.com
+    access-control-allow-methods: GET
+    access-control-allow-credentials: true
+    expect-ct: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+    report-to: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=A%2FbOOWJio%2B%2FjuJv5NC%2FE3%2Bo1zBl2UdjzJssw8gJLC4lE1lzIUPQKqJoLRTaVtFd21JK1d4g%2BnlEGNpx0mGtsR6jerNfr2H5mlQdO6u2RdOaJ6n%2F%2BS%2BF9%2Fa12UromVLcHsSA5Y%2Fj72tM%3D"}],"group":"cf-nel","max_age":604800}
+    nel: {"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}
+    server: cloudflare
+    cf-ray: 7109408e6b84efe4-EWR
+    ```
+
+## Send authentication token with Cloudflare Worker
+
+If you have two sites protected by Cloudflare Access, `example.com` and `api.mysite.com`, requests made between the two will be subject to CORS checks. Users who log in to `example.com` will be issued a cookie for `example.com`. When the user's browser requests `api.mysite.com`, Cloudflare Access looks for a cookie specific to `api.mysite.com`. The request will fail if the user has not already logged in to `api.mysite.com`.
+
+To avoid having to log in twice, you can create a Cloudflare Worker that automatically sends authentication credentials to `api.mysite.com`.
+
+### Prerequisites
+
+- [Workers account](/workers/get-started/guide/)
+- `wrangler` installation
+- `example.com` and `api.mysite.com` domains [protected by Access](/cloudflare-one/applications/configure-apps/)
+
+### 1. Generate a service token
+
+Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generate a new Access service token. Copy the `Client ID` and `Client Secret` to a safe place, as you will use them in a later step.
+
+### 2. Add a Service Auth policy
+
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **Access** > **Applications**.
+
+2. Find your `api.mysite.com` application and click **Edit**.
+
+3. Click the **Policies** tab.
+
+4. Add the following policy:
+| Action        | Rule type | Selector      |
+| ------------- | --------- | ------------- |
+| Service Auth  | Include   | Service Token |
+
+### 3. Create a new Worker
+
+1. Open a terminal and create a new Workers project.
+
+    ```sh
+    wrangler generate redirect-worker
+    ```
+
+2. Navigate to the project directory.
+
+    ```sh
+    cd redirect-worker
+    ```
+
+3. Open `wrangler.toml` in a text editor and insert your Account ID. To find your Account ID, open your [Cloudflare dashboard](https://dash.cloudflare.com/) and click the **Workers** tab.
+
+    ```txt
+    ---
+    filename: wrangler.toml
+    ---
+    name = "redirect-worker"
+    type = "javascript"
+
+    account_id = "123abc456654abc123"
+    workers_dev = true
+    route = ""
+    zone_id = ""
+    compatibility_date = "2022-05-16"
+    ```
+
+4. Open `index.js` and copy in the following example code.
+
+    ```js
+    ---
+    filename: index.js
+    ---
+    // The hostname where your API lives
+    const originalAPIHostname = 'api.mysite.com'
+
+    async function handleRequest(request) {
+
+    /** Change just the host. 
+    If the request comes in on example.com/api/name, the new URL is api.mysite.com/api/name
+    **/
+    const url = new URL(request.url)
+    url.hostname = originalAPIHostname
+
+    /** If your API is located on api.mysite.com/anyname (without "api/" in the path),
+    remove the "api/" part of example.com/api/name
+    **/
+
+    // url.pathname = url.pathname.substring(4)
+
+    /** Best practice is to always use the original request to construct the new request
+    to clone all the attributes. Applying the URL also requires a constructor
+    since once a Request has been constructed, its URL is immutable.
+    **/
+
+    const newRequest = new Request(
+        url.toString(),
+        request,
+    )
+
+    newRequest.headers.set('cf-access-client-id', CF_ACCESS_CLIENT_ID)
+    newRequest.headers.set('cf-access-client-secret', CF_ACCESS_CLIENT_SECRET)
+    try {
+        return await fetch(newRequest)
+    } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 })
+    }
+    }
+
+    addEventListener('fetch', event => {
+    event.respondWith(handleRequest(event.request))
+    })
+    ```
+
+5. Publish the Worker to your account.
+
+    ```sh
+    wrangler publish
+    ```
+
+### 4. Configure the Worker
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), navigate to the **Workers** tab.
+
+2. Click your newly created Worker. In this example, the Worker is called `redirect-worker`.
+
+3. In the **Triggers** tab, scroll down to **Routes** and add `example.com/api/*`. The Worker is placed on a subpath of `example.com` to avoid making a cross-origin request.
+
+4. In the **Settings** tab, click **Variables**.
+
+5. Under **Environment Variables**, add the following [secret variables](/workers/platform/environment-variables/#environment-variables-via-the-dashboard):
+    - `CF_ACCESS_CLIENT_ID` = `<service token Client ID>`
+    - `CF_ACCESS_CLIENT_SECRET` = `<service token Client Secret>`
+
+The Client ID and Client Secret are copied from your [service token](#1-generate-a-service-token).
+
+6. Enable the **Encrypt** option for each variable and click **Save**.
+
+### 5. Update HTTP request URLs
+
+Modify your `example.com` application to send all requests to `example.com/api/` instead of `api.mysite.com`.
+
+HTTP requests should now work seamlessly between two different Access-protected domains. When a user logs in to `example.com`, the browser makes a request to the Worker instead of to `api.mysite.com`. The Worker adds the Access service token to the request headers and then forwards the request to `api.mysite.com`. Since the service token matches a Service Auth policy, the user no longer needs to log in to `api.mysite.com`.
 
 ## Troubleshooting
 
 In general, we recommend the following steps when troubleshooting CORS issues:
 
-1.  Capture a HAR file with the issue described, as well as the JS console log output recorded simultaneously. This is because the HAR file alone will not give full visibility on the reason behind cross-origin issues.
-1.  Ensure that the application has set `credentials: 'same-origin'` in all fetch or XHR requests.
-1.  If you are using the [cross-origin setting](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) on script tags, these must be set to "use-credentials".
+1. Capture a HAR file with the issue described, as well as the JS console log output recorded simultaneously. This is because the HAR file alone will not give full visibility on the reason behind cross-origin issues.
+2. Ensure that the application has set `credentials: 'same-origin'` in all fetch or XHR requests.
+3. If you are using the [cross-origin setting](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) on script tags, these must be set to "use-credentials".
 
-{{<Aside type="Warning" header="CORS is failing on the same domain">}}
-CORS checks do not occur on the same domain. If this error occurs, it is likely the user flow is making a sub-request without the cookie.
+{{<Aside type="warning" header="CORS is failing on the same domain">}}
+CORS checks do not occur on the same domain. If this error occurs, it is likely the request is being sent without the `CF-Authorization` cookie.
 {{</Aside>}}

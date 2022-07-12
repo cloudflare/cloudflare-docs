@@ -9,6 +9,10 @@ title: Deploy a Hugo site
 
 In this guide, you will create a new Hugo application and deploy it using Cloudflare Pages. You will use the `hugo` CLI to create a new Hugo site.
 
+{{<render file="_tutorials-before-you-start.md">}}
+
+Go to the [Deploying with Cloudflare Pages](/pages/framework-guides/deploy-a-hugo-site/#deploying-with-cloudflare-pages) if you already have a Hugo site hosted with your [Git provider](/pages/get-started/#connect-to-your-git-provider).
+
 ## Installing Hugo
 
 First, install the Hugo CLI, using the specific instructions for your operating system below:
@@ -51,9 +55,7 @@ $ scoop install hugo
 
 The Hugo GitHub repository contains pre-built versions of the Hugo command-line tool for various operating systems, which can be found on [the Releases page](https://github.com/gohugoio/hugo/releases).
 
-For more instruction on installing these releases, refer to [Hugo's install guide](https://gohugo.io/getting-started/installing/).
-
-{{<render file="_tutorials-before-you-start.md">}}
+For more instruction on installing these releases, refer to [Hugo's documentation](https://gohugo.io/getting-started/installing/).
 
 ## Creating a new project
 
@@ -182,6 +184,18 @@ Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://da
 | Build directory      | `public` |
 
 </div>
+
+{{<Aside type="note" header="Base URL configuration">}}
+
+Hugo allows you to configure the `baseURL` of your application. This allows you to utilize the `absURL` helper to construct full canonical URLs. In order to do this with Pages, you must provde the `-b` or `--baseURL` flags with the `CF_PAGES_URL` environment variable to your `hugo` build command.
+
+Your final build command may look like this: 
+
+```sh
+$ hugo -b $CF_PAGES_URL
+```
+
+{{</Aside>}}
 
 After completing configuration, click the **Save and Deploy** button. You should see Cloudflare Pages installing `hugo` and your project dependencies, and building your site, before deploying it.
 

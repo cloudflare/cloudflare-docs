@@ -1,7 +1,7 @@
 ---
-title: Managed Ruleset parameters
+title: Parameters
 pcx-content-type: reference
-weight: 4
+weight: 5
 meta:
   title: HTTP DDoS Attack Protection parameters
 ---
@@ -45,9 +45,9 @@ The action that will be performed for requests that match specific rules of Clou
 
 {{<Aside type="note">}}
 
-You cannot configure the rule action to _Log_ for rules with the `gatebot` tag or any rule whose `id` starts with `GB`.
+You cannot configure the rule action to _Log_ for rules with the `gatebot` tag.
 
-However, you can use the _Log_ action in the global ruleset configuration. In this case, any rule with the `gatebot` tag or whose `id` starts with `GB` will ignore the ruleset configuration and use the default action as defined in the Managed Ruleset. To prevent `gatebot` rules from executing their default action in _Log_ mode, set the sensitivity level of these rules to _Essentially Off_.
+However, you can use the _Log_ action in the global ruleset configuration. In this case, any rule with the `gatebot` tag will ignore the ruleset configuration and use the default action as defined in the Managed Ruleset. To prevent `gatebot` rules from executing their default action in _Log_ mode, set the sensitivity level of these rules to _Essentially Off_.
 
 {{</Aside>}}
 

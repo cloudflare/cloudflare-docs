@@ -22,7 +22,7 @@ All included usage is on a monthly basis.
 
 {{</table-wrap>}}
 
-1.  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple applied to the CPU time to account for the processing power allotted to your script. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
+1.  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple applied to the CPU time to account for the processing power allotted to your Worker. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
 
 2.  Duration billing will charge for the 128 MB of memory allocated to your Worker, regardless of actual usage. If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they are allocated a full 128 MB of memory.
 
@@ -38,26 +38,28 @@ You may change the Usage Model for individual Workers without affecting your acc
 
 ### Same features
 
-Script size, number of scripts, subrequests, and available memory are not affected by plan type.
+Worker size, number of Workers, and available memory are not affected by plan type. The Unbound usage model includes a higher number of subrequests. Refer to [Limits](/workers/platform/limits/). 
 
-### Workers billing examples
+### Workers Unbound billing examples
 
 #### Example 1
 
-If an Unbound Worker executed 1.5 million times and used a total of 200,000 GB-s, the estimated cost in a month would be:
+If an Unbound Worker executed 1.5 million times and was active a total of 200,000 seconds, the estimated cost in a month would be:
 
 Total = ~$0.08 USD + Minimum $5/mo usage = $5.08
 
 - (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = $0.075
-- (200,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $0.00
+- (200,000 seconds) \* 128 MB / 1 GB = 25,000 GB-seconds
+- (25,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $0.00
 
 #### Example 2
 
-If an Unbound Worker executed 5 million times and used a total of 800,000 GB-s the estimated cost in a month would be:
+If an Unbound Worker executed 10 million times and was active a total of 6,400,000 seconds the estimated cost in a month would be:
 
-Total = ~$5.60 + Minimum $5/mo usage = $10.60
+Total = ~$6.35 + Minimum $5/mo usage = $11.35
 
-- (5 million requests - included 1 million requests) x $0.15 / 1,000,000 requests = $0.60
+- (10 million requests - included 1 million requests) x $0.15 / 1,000,000 requests = $1.35
+- (6,400,000 seconds) \* 128 MB / 1 GB = 800,000 GB-seconds
 - (800,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 GB-s = $5.00
 
 ## Workers KV
@@ -160,4 +162,4 @@ Requests that hit the [Durable Objects in-memory cache](/workers/learning/using-
 
 Workers Paid plan is separate from any other Cloudflare plan (Free, Professional, Business) you may have. If you are an Enterprise customer, reach out to your account team to confirm pricing details.
 
-Only requests that hit a Worker script will count against your limits and your bill. Since Cloudflare Workers runs before the Cloudflare cache, the caching of a request still incurs costs. See definitions and behavior after a limit is hit in the [limits article](/workers/platform/limits/).
+Only requests that hit a Worker will count against your limits and your bill. Since Cloudflare Workers runs before the Cloudflare cache, the caching of a request still incurs costs. See definitions and behavior after a limit is hit in the [limits article](/workers/platform/limits/).

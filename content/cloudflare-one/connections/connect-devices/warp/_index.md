@@ -30,12 +30,6 @@ The WARP client can be configured in three modes.
 
 ## WARP client modes
 
-{{<Aside type="note">}}
-
-**Proxy mode** can only be used by applications/operating systems that support SOCKS5/HTTPS proxy communication.
-
-{{</Aside>}}
-
 ### Gateway with WARP (default)
 
 This mode is best suited for organizations that want to use advanced firewall/proxy functionalities and enforce device posture rules.
@@ -59,5 +53,12 @@ This mode is best suited for organizations that want to filter traffic directed 
 | DNS filtering | HTTP filtering | Features enabled |
 | ------------- | -------------- | ---------------- |
 | No | Yes | HTTP policies, Browser Isolation, identity-based policies, AV scanning, DLP for traffic sent through localhost proxy|
+
+{{<Aside type="note">}}
+
+ * Proxy mode can only be used by applications/operating systems that support SOCKS5/HTTPS proxy communication.
+ * This mode is only available on Windows, Linux and macOS.
+
+{{</Aside>}}
 
 Cloudflare WARP is [available](/cloudflare-one/connections/connect-devices/warp/download-warp/) for iOS, Android, ChromeOS, Mac, Linux, and Windows.

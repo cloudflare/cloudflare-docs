@@ -27,7 +27,7 @@ If you are using both Magic Transit and Spectrum for IP addresses that overlap, 
 
 ### `dosdAttackAnalyticsGroups`
 
-This node provides information about DDoS attacks detected and mitigated by Cloudflare's main DDoS protection system, the denial of service daemon (dosd). This node includes attack metadata such as:
+This node provides information about DDoS attacks detected and mitigated by Cloudflare's main DDoS protection system, the denial of service daemon (`dosd`). This node includes attack metadata such as:
 
 - `startDatetime`
 - `endDatetime`
@@ -46,7 +46,7 @@ To adjust mitigation sensitivities and actions, or to define expression filters 
 
 ### `dosdNetworkAnalyticsAdaptiveGroups`
 
-This node complements the information in the `dosdAttackAnalyticsGroups` node. Provides deep packet-level information about DDoS attack packets mitigated by dosd, including fields such as:
+This node complements the information in the `dosdAttackAnalyticsGroups` node. Provides deep packet-level information about DDoS attack packets mitigated by `dosd`, including fields such as:
 
 - `ipProtocol`
 - `ipv4Checksum`
@@ -59,9 +59,9 @@ Each row represents a packet sample. The sample rate is 1/10,000 packets.
 
 ### `flowtrackdNetworkAnalyticsAdaptiveGroups`
 
-This node is only available to Magic Transit customers. Provides metadata about out-of-state TCP DDoS attacks mitigated by flowtrackd, Cloudflare’s Advanced TCP Protection system.
+This node is only available to Magic Transit customers. Provides metadata about out-of-state TCP DDoS attacks mitigated by `flowtrackd`, Cloudflare’s Advanced TCP Protection system.
 
-flowtrackd does not use the following ID fields: attack ID, rule ID, and ruleset ID.
+`flowtrackd` does not use the following ID fields: attack ID, rule ID, and ruleset ID.
 
 The sample rate is dynamic and based on the volume of packets, ranging from 1/100 to 1/10,000 packets.
 

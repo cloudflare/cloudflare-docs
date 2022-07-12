@@ -8,7 +8,7 @@ weight: 0
 
 Magic Transit uses a static configuration to route traffic through [Generic Routing Encapsulation (GRE) tunnels](/magic-transit/about/tunnels-and-encapsulation/) from Cloudflare’s edge to your data center.
 
-Magic Transit steers traffic along GRE tunnel routes based on priorities you define during the onboarding process.
+Magic Transit steers traffic along tunnel routes based on priorities you define during the onboarding process.
 
 The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
 
@@ -49,7 +49,7 @@ This diagram illustrates how ECMP distributes traffic equally across 2 paths wit
 </div>
 </details>
 
-When Magic Transit health checks determine that GRE Tunnel 2 is unhealthy, that route is dynamically de-prioritized, leaving Tunnel 1 the sole top-priority route. As a result, traffic is steered away from Tunnel 2, and all traffic flows to Tunnel 1:
+When Magic Transit health checks determine that Tunnel 2 is unhealthy, that route is dynamically de-prioritized, leaving Tunnel 1 the sole top-priority route. As a result, traffic is steered away from Tunnel 2, and all traffic flows to Tunnel 1:
 
 <details>
 <summary>
@@ -62,7 +62,7 @@ When Magic Transit health checks determine that GRE Tunnel 2 is unhealthy, that 
 </div>
 </details>
 
-When Magic Transit determines that GRE Tunnel 1 is unhealthy as well, that route is also de-prioritized, leaving GRE Tunnel 3 as the top priority route. In that case, all traffic flows to GRE Tunnel 3.
+When Magic Transit determines that Tunnel 1 is unhealthy as well, that route is also de-prioritized, leaving Tunnel 3 as the top priority route. In that case, all traffic flows to Tunnel 3.
 
 <details>
 <summary>

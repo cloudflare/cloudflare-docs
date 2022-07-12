@@ -14,13 +14,13 @@ The onboarding process begins with an initial kickoff call where Cloudflare enga
 
 After your call with Cloudflare, complete the [prerequisites](/magic-wan/prerequisites/).
 
-## 2. Configure your Anycast GRE or IPsec tunnels
+## 2. Configure tunnels
 
-[Configure your Anycast GRE or IPsec tunnels](/magic-wan/how-to/configure-tunnels/) to connect Cloudflare to your origin infrastructure.
+[Configure your tunnels](/magic-wan/how-to/configure-tunnels/) to connect Cloudflare to your origin infrastructure.
 
 ## 3. Configure static routes
 
-[Configure your static routes](/magic-wan/how-to/configure-static-routes/) to route your traffic through your Anycast GRE or IPsec tunnels.
+[Configure your static routes](/magic-wan/how-to/configure-static-routes/) to route your traffic through your tunnels.
 
 ## 4. Run endpoint health checks
 

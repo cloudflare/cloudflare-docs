@@ -8,43 +8,39 @@ weight: 12
 
 Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you integrate IdPs not already set in Access.
 
-At the moment, Access does not support sending custom parameters to identity providers. If you need to send custom parameters to your identity provider, consider setting it up through [SAML](/cloudflare-one/identity/idp-integration/generic-saml/).
+## Set up a generic OIDC
 
-## Setting up a generic OIDC
+1. Visit your identity provider and create a client/app.
 
-To set up a generic OIDC:
-
-1.  Visit your identity provider and create a client/app.
-
-1.  When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+2. When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-1.  Copy the content of these fields:
+3. Copy the content of these fields:
 
     - Client ID
     - Client secret
     - Auth URL: The `authorization_endpoint` URL of your IdP
-    - Token URL: The token_endpoint URL of your IdP
+    - Token URL: The `token_endpoint` URL of your IdP
     - Certificate URL: The `jwks_uri` endpoint of your IdP to allow the IdP keys to sign the tokens
 
-    You can find these values on your identity provider’s **OIDC discovery endpoint**. Some providers call this the “well-known URL.”
+    You can find these values on your identity provider’s **OIDC discovery endpoint**. Some providers call this the “well-known URL”.
 
-1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+4. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+5. Under **Login methods**, click **Add new**.
 
-1.  Choose **OpenID Connect** on the next page.
+6. Choose **OpenID Connect**..
 
-1.  In the **Name** field, enter your IdP. Then, paste in the **Client ID** and **Client secret**.
+7. Name your identity provider and fill in the required fields with the information obtained in Step 3.
 
-1.  Click **Save**.
+8. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 
-1.  To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
+9. Click **Save**.
 
-On success, a confirmation screen displays.
+To test that your connection is working, navigate to **Authentication** > **Login methods** and click **Test** next to the login method you want to test. On success, a confirmation screen displays.
 
 ## Example API Configuration
 

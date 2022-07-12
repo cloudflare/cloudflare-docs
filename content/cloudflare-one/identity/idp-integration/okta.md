@@ -50,7 +50,9 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 15. (Optional) Create an Okta API token and enter it in the Zero Trust dashboard (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
 
-16. Click **Save**.
+16. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+
+17. Click **Save**.
 
 To test that your connection is working, navigate to **Settings** > **Authentication** > **Login methods** and click **Test** next to Okta.
 

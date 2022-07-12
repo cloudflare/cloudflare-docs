@@ -8,7 +8,7 @@ meta:
 
 # Cloudflare Advanced TCP Protection Managed Ruleset
 
-The Cloudflare Advanced TCP Protection Managed Ruleset, powered by [flowtrackd](https://blog.cloudflare.com/announcing-flowtrackd/), is a TCP flow classification engine used to detect and mitigate sophisticated out-of-state TCP attacks such as randomized and spoofed ACK floods, SYN floods, and SYN-ACK reflection attacks.
+The Cloudflare Advanced TCP Protection Managed Ruleset, powered by [`flowtrackd`](https://blog.cloudflare.com/announcing-flowtrackd/), is a TCP flow classification engine used to detect and mitigate sophisticated out-of-state TCP attacks such as randomized and spoofed ACK floods, SYN floods, and SYN-ACK reflection attacks.
 
 The Cloudflare Advanced TCP Protection Managed Ruleset is disabled by default.
 

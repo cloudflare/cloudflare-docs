@@ -6,7 +6,7 @@ weight: 2
 
 # Get started
 
-Before being able to use Zaraz, it is recommended that you proxy your website through Cloudflare. Refer to [Creating a Cloudflare account and adding a website](https://support.cloudflare.com/hc/articles/201720164) for more information. If you do not want to proxy your website through Cloudflare, refer to [Use Zaraz on domains not proxied by Cloudflare](/zaraz/advanced/domains-not-proxied/).
+Before being able to use Zaraz, it is recommended that you proxy your website through Cloudflare. Refer to [Set up Cloudflare](/fundamentals/get-started/setup/) for more information. If you do not want to proxy your website through Cloudflare, refer to [Use Zaraz on domains not proxied by Cloudflare](/zaraz/advanced/domains-not-proxied/).
 
 ## Events, triggers, actions and tools
 
@@ -18,6 +18,6 @@ Some tools come with a preconfigured `Pageview` action, that uses the built-in `
 
 ## ​Web API
 
-If you need to programatically start actions in your tools, Cloudflare Zaraz provides a unified Web API to send events to Zaraz, and from there, to third-party tools. This Web API includes the `zaraz.track()`, `zaraz.set()` and `zaraz.ecommerce()` methods.
+If you need to programmatically start actions in your tools, Cloudflare Zaraz provides a unified Web API to send events to Zaraz, and from there, to third-party tools. This Web API includes the `zaraz.track()`, `zaraz.set()` and `zaraz.ecommerce()` methods.
 
 [Zaraz Track](/zaraz/web-api/track/) allows you to track custom events and actions on your website, that might happen in real time. [Zaraz Set](/zaraz/web-api/set/) is an easy shortcut to define a variable once and have it sent with every future Zaraz Track call. [Zaraz Ecommerce](/zaraz/web-api/ecommerce/) is a unified method for sending ecommerce related data to multiple tools without needing to configure triggers and events. Refer to [Web API](/zaraz/web-api/) for more information.

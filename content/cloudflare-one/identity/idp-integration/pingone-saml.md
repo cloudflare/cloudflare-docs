@@ -14,13 +14,13 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
 2. Click **Add Application**.  
 3. Enter an **Application Name**.
 4. Select **SAML Application**.
-5. Click **Configure**. 
+5. Click **Configure**.
 6. To fill in your Cloudflare Access metadata:
     1. Select **Import from URL**.
     2. Set the **Import URL** to:
 
     ```txt
-    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
     where `<your-team-name>` is your Cloudflare Zero Trust [team name](/cloudflare-one/glossary/#team-domain).  

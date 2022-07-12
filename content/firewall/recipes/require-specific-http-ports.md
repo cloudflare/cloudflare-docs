@@ -30,10 +30,12 @@ This example blocks requests to `www.example.com` that are not on ports 80 or 44
   </tbody>
 </table>
 
+Alternatively, if you are using [WAF managed rules](https://support.cloudflare.com/hc/articles/200172016) and you do not need to specify a custom expression, enable rule ID 100015: "Anomaly:Port - Non Standard Port (not 80 or 443)" to block all requests to your zone on non-standard HTTP ports.
+
 {{<Aside type="note" header="Open server ports and blocked traffic">}}
 
-Due to the nature of Cloudflare's Anycast network, ports other than `80` and `443` will be open so that Cloudflare can serve traffic for other customers on these ports.
+{{<render file="_open-ports-blocked-traffic.md">}}
 
-The above firewall rule will block traffic at the application layer (layer 7 in the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/)), preventing HTTP/HTTPS requests over non-standard ports from reaching the origin server.
+Firewall rules and WAF managed rules can block traffic at the application layer (layer 7 in the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/)), preventing HTTP/HTTPS requests over non-standard ports from reaching the origin server.
 
 {{</Aside>}}

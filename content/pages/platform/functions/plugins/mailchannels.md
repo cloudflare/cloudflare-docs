@@ -11,7 +11,7 @@ The MailChannels Pages Plugin intercepts all form submissions made which have th
 ## Installation
 
 ```sh
-npm install @cloudflare/pages-plugin-mailchannels
+$ npm install @cloudflare/pages-plugin-mailchannels
 ```
 
 ## Usage

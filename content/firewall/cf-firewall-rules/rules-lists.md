@@ -6,9 +6,9 @@ weight: 2
 
 # IP Lists
 
-Use IP Lists to refer to a group of IP addresses collectively, by name, in your firewall rule expression. You can choose to create your own custom list of IP addresses or use a list managed by Cloudflare.
+Use IP Lists to refer to a group of IP addresses collectively, by name, in your firewall rule expression. You can create your own custom lists of IP addresses or [use lists managed by Cloudflare](#managed-ip-lists).
 
-For example, use a list of known office IP addresses in a firewall rule that allows requests from the addresses on the list to bypass security features. Or you may want to block requests that don't come from the known office addresses.
+For example, use a list of known office IP addresses in a firewall rule that allows requests from the addresses on the list to bypass security features. Or you may want to block requests that do not come from the known office addresses.
 
 When you update the content of a list, any rules that use the list are automatically updated, so you can make a single change to your firewall rules list rather than modify rules individually.
 
@@ -22,52 +22,64 @@ Using IP Lists has these advantages:
 - When updating a set of firewall rules that target the same group of IP addresses, using an IP List is easier and less error prone than editing multiple firewall rules.
 - IP Lists are easier to read and more informative, particularly when you use descriptive names for your lists.
 
-## Managed IP Lists: Open Proxies
+## Managed IP Lists
 
-Use Managed IP Lists to access Cloudflare's IP threat intelligence.
+Use Managed IP Lists to access Cloudflare's IP threat intelligence. The available Managed IP Lists depend on your Cloudflare plan.
 
-Cloudflare scans public, open proxy lists for reachable, open proxies. After verifying the proxies, Cloudflare determines their exit IPs and creates a list of IPs you can use when writing rules via the dashboard or API.
+Cloudflare provides the following Managed IP Lists:
 
-## Availability
-
-The number of IP Lists you can create depends on the Cloudflare plans associated with the zones in your account. Regardless of plan, you can store up to a total of 10,000 items, spread across all of your lists.
-
-{{<table-wrap>}}
-<table style="width: 100%">
+<table>
   <thead>
     <tr>
-      <td></td>
-      <td colspan="4" style="text-align:center"><strong>Cloudflare plan</strong></td>
-    </tr>
-    <tr>
-      <th></th>
-      <th>Free</th>
-      <th>Pro</th>
-      <th>Business</th>
-      <th>Enterprise</th>
+      <th>Display name</th>
+      <th style="width: 30%">Name in expressions</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>Number of IP Lists</strong></td>
-      <td>1</td>
-      <td>10</td>
-      <td>10</td>
-      <td>10</td>
+      <td>Cloudflare Open Proxies</td>
+      <td><code>cf.open_proxies</code></td>
+      <td>IP addresses of known open HTTP and SOCKS proxy endpoints, which are frequently used to launch attacks and hide attackers identity.</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Anonymizers</td>
+      <td><code>cf.anonymizer</code></td>
+      <td>IP addresses of known anonymizers (Open SOCKS Proxies, VPNs, and TOR nodes).</td>
+    </tr>
+    <tr>
+      <td>Cloudflare VPNs</td>
+      <td><code>cf.vpn</code></td>
+      <td>IP addresses of known VPN servers.</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Malware</td>
+      <td><code>cf.malware</code></td>
+      <td>IP addresses of known sources of malware.</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Botnets, Command and Control Servers</td>
+      <td><code>cf.botnetcc</code></td>
+      <td>IP addresses of known botnet command-and-control servers.</td>
     </tr>
   </tbody>
 </table>
-{{</table-wrap>}}
 
-{{<Aside type="note" header="Important">}}
+## Availability
 
-Access to the Open Proxy List in the rule builder and <code>cf.open_proxies</code> requires a Cloudflare Enterprise plan.
+The number of IP Lists you can create depends on the Cloudflare plans associated with the zones in your account. You can store up to a total of 10,000 items across all your lists, regardless of your plan.
 
-{{</Aside>}}
+The available Managed IP Lists depend on your Cloudflare plan.
+
+Feature                                   | Free | Pro | Business | Enterprise | Enterprise Advanced
+------------------------------------------|------|-----|----------|------------|--------------------
+Number of IP Lists                        | 1    | 10  | 10       | 10         | 10
+Cloudflare Open Proxies Managed IP List   | –    | –   | –        | Yes        | Yes
+All [Managed IP Lists](#managed-ip-lists) | –    | –   | –        | –          | Yes
 
 ## User role requirements
 
-The following user roles have access to the List management functionality:
+The following user roles have access to the list management functionality:
 
 - Super Administrator
 - Administrator

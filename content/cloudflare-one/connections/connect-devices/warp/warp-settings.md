@@ -159,10 +159,10 @@ When the toggle is enabled, users will receive update notifications when a new v
 
 When the toggle is enabled, the client will automatically reconnect if it has been disabled for the specified Timeout value. This setting is best used in conjunction with [Lock WARP Switch](/cloudflare-one/connections/connect-devices/warp/warp-settings/#lock-warp-switch) above.
 
-## Allow device to leave organization
+## Support URL
 
 <details>
-<summary>Support URL</summary>
+<summary>Feature availability</summary>
 <div>
 
 | Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |

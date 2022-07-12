@@ -11,7 +11,7 @@ The Google Chat Pages Plugin creates a Google Chat bot which can respond to mess
 ## Installation
 
 ```sh
-npm install @cloudflare/pages-plugin-google-chat
+$ npm install @cloudflare/pages-plugin-google-chat
 ```
 
 ## Usage

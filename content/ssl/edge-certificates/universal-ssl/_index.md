@@ -19,8 +19,4 @@ For sites that require an SSL certificate prior to migrating traffic to Cloudfla
 
 ## Backup certificates
 
-Depending on your plan, Cloudflare may issue a backup Universal certificate automatically for your domain.
-
-Backup certificates are wrapped with a different private key and issued from a different Certificate Authority than the primary certificate.
-
-For additional details, refer to the [introductory blog post](https://blog.cloudflare.com/introducing-backup-certificates/).
+For more details, refer to [backup certificates](/ssl/edge-certificates/backup-certificates/).

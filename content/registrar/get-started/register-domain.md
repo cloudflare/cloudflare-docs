@@ -16,13 +16,17 @@ Cloudflare Registrar is only available for customers that use Cloudflare as thei
 
 ## How to register a new domain
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account. Go to **Registrar** > **Register**.
+{{<Aside type="note">}}If you are registering a `.us` domain, refer to the [Additional requirements for .US domains](/registrar/faq/#additional-requirements-for-us-domains) before proceeding.{{</Aside>}}
 
-2. In the search box, enter the domain name you wish to register. You may also enter one or more keywords. The search results will contain a list of suggested domains. If the domain you entered does not appear in the list, this means it is not available for registration. Cloudflare currently does not support internationalized domain names (IDNs), also known as unicode, for example.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account. 
 
-    If you are registering a `.us` domain, refer to the [Additional requirements for .US domains](/registrar/faq/#additional-requirements-for-us-domains) before proceeding.
+2. Go to **Registrar** > **Register Domains**.
 
-3. Click **Purchase** on the domain you wish to register. In rare instances, a domain that is not available for registration may appear in the search results. After clicking **Purchase**, a definitive availability check will be performed to confirm that the domain is actually available for registration.
+3. In the search box, enter the domain name you wish to register, and click **Search**. You may also enter one or more keywords. Cloudflare currently does not support internationalized domain names (IDNs), also known as unicode. For that reason, you cannot search for words with special characters, such as `à`, `ü`, `ç`, among others.
+
+    The search results will contain a list of suggested domains. If the domain you entered does not appear in the list, this means it is not available for registration. 
+
+4. Click **Purchase** on the domain you wish to register. In rare instances, a domain that is not available for registration may appear in the search results. After clicking **Purchase**, a definitive availability check will be performed to confirm that the domain is actually available for registration.
 
 {{<Aside type="note">}}
 
@@ -30,13 +34,11 @@ Currently, Cloudflare cannot register premium domains (domains that have non-sta
 
 {{</Aside>}}
 
-4. Select the term (number of years) you wish to register the domain for and click **Continue**. Most top-level domains (TLDs) can be registered for a maximum of ten years. Some TLDs may have different term limits and these will be reflected in the drop-down options.
+5. Select the term (number of years) you wish to register the domain from the **Payment option** drop-down menu. Most top-level domains (TLDs) can be registered for a maximum of ten years. Some TLDs may have different term limits and these will be reflected in the drop-down options.
    
     The expiration date and price will update automatically based on the term selected. The **Renew On** date is the date that the system will attempt to auto-renew the domain. All registrations have Auto-renew turned on by default; however, you may disable this option at any time.
 
-5. Enter the contact details for the domain. These details will be used to create all of the required contacts (Registrant, Admin, Technical, and Billing), and may be updated after registration is completed. Refer to [Contact requirements](#contact-requirements) to learn the specific requirements for each contact field.    
-
-    After entering the contact information click **Continue**. If any of the contact information is missing or not properly validated, an error message will appear and you will need to correct the data before proceeding.
+6. Enter the contact details for the domain. These details will be used to create all of the required contacts (Registrant, Admin, Technical, and Billing), and may be updated after registration is completed. Refer to [Contact requirements](#contact-requirements) to learn the specific requirements for each contact field.    
 
 {{<Aside type="note">}}
 
@@ -46,9 +48,11 @@ It is important that you provide complete and accurate contact information. If y
 
 {{</Aside>}}
 
-6. The billing information will use the billing profile you have with Cloudflare, if one already exists. If there is no billing profile, you will need to enter your payment information.
+7. In **Payment**, select which type of payment you which to use. Cloudflare uses the billing profile you have in your account automatically fill the form, if one already exists. If there is no billing profile, you need to enter your payment information.
 
-7. Review the terms and conditions, including the Domain Registration Agreement, Self-serve Subscription Agreement, and the Privacy Policy. By clicking **Submit**, you acknowledge that you are accepting the terms of the agreements.
+8. Review the terms and conditions, including the Domain Registration Agreement, Self-serve Subscription Agreement, and the Privacy Policy. 
+
+9. Click **Complete purchase** to continue. By clicking **Complete purchase**, you acknowledge that you are accepting the terms of the agreements.
 
 The registration process may take up to 30 seconds to complete. Once the registration is complete, the browser will navigate to the domain management page where you may update the contacts, change the auto-renew settings, and add additional years to the term. You will also receive a confirmation email regarding your new domain registration.
 

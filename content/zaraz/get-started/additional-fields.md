@@ -8,11 +8,11 @@ weight: 6
 
 Almost all tools in the Tools Library require that you enter information in more than one field to be properly configured. Beyond these required default fields, some tools let you add additional fields.
 
-If we take Universal Google Analytics as an example, a default field would be your GA Property ID (the Google Analytics account ID), and an example of an additonal field would be a Custom Dimension (like Custom Dimension 1).
+If we take Universal Google Analytics as an example, a default field would be your GA Property ID (the Google Analytics account ID), and an example of an additional field would be a Custom Dimension (like Custom Dimension 1).
 
 ## Add an additional field to a specific action
 
-Adding an additonal field to an action will attach it to this action only, and will not affect your other actions. 
+Adding an additional field to an action will attach it to this action only, and will not affect your other actions. 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
 2. Click **Zaraz** > **Tools**.

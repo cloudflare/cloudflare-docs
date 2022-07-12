@@ -2,11 +2,9 @@
 title: Overview
 pcx-content-type: overview
 weight: 1
-meta:
-  title: Cloudflare SSL
 ---
 
-# Cloudflare SSL
+# Overview
 
 At Cloudflare, our goal is to build a better Internet (safer, better, more accessible).
 

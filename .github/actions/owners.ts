@@ -1,57 +1,59 @@
 /**
- * Map of "Product Name" to GitHub usernames of PCX team.
- * @important "Product Name" keys must match values found in the ISSUE_TEMPLATE files!
- * Products are gatheres from these DevDocs & do not necessarily map to internal product names.
+ * Map "product-slug" to GitHub username(s) of PCX team.
+ * @important "product-slug" keys must match `content/*` subdirectory names.
+ * @note Products are gathered from these DevDocs & do not necessarily map to internal product names.
+ * Products w/o any GitHub username(s) will ping `haleycode` for assignment.
  * This PCX OWNERSHIP mapping is used for:
  *   - the "issues.opened" event to assign GitHub Issues to PCX member
- *   - TODO(future) the "pull_request.created" event to request review(s) instead of CODEOWNERS usage
+ *   - the "pull_request.opened" event to request review(s) instead of CODEOWNERS usage
  */
 export const OWNERS: Record<string, string[]> = {
   '1.1.1.1': ['marciocloudflare'],
-  'Analytics': ['angelampcosta'],
-  'API': ['ranbel'],
-  'API Shield': ['ranbel'],
-  'Automatic Platform Optimization': ['dcpena'],
-  'Bots': ['kodster28'],
-  'BYOIP': ['haleycodes'], // TODO
-  'Cache': ['angelampcosta'],
-  'Client IP Geolocation': ['pedrosousa'],
-  'Cloudflare One': ['ranbel'],
-  'DDoS Protection': ['pedrosousa'],
-  'DNS': ['kodster28'],
-  'Email Routing': ['marciocloudflare'],
-  'Firewall': ['pedrosousa'],
-  'Fundamentals': ['kodster28'], // TODO
-  'HTTP/3': ['angelampcosta'],
-  'Image Optimization': ['marciocloudflare'],
-  'Load Balancing': ['kodster28'],
-  'Logs': ['angelampcosta'],
-  'Magic Firewall': ['dcpena'],
-  'Magic Transit': ['dcpena'],
-  'Magic WAN': ['dcpena'],
-  'Network Error Logging': ['haleycodes'], // TODO
-  'Network Interconnect': ['dcpena'],
-  'Page Shield': ['pedrosousa'],
-  'Pages': ['deadlypants1973'],
-  'Partners': ['haleycodes'], // TODO
-  'Pub/Sub': ['dcpena'],
-  'R2': ['deadlypants1973'],
-  'Railgun': ['marciocloudflare'],
-  'Randomness Beacon': ['kodster28'],
-  'Registrar': ['marciocloudflare'],
-  'Rules': ['pedrosousa'],
-  'Ruleset Engine': ['pedrosousa'],
-  'Security Center': ['ranbel'],
-  'Spectrum': ['angelampcosta'],
-  'SSL': ['kodster28'],
-  'Stream': ['dcpena'],
-  'Tenant': ['kodster28'],
-  'Terraform': ['ranbel'],
-  'Time Services': ['haleycodes'], // TODO
-  'WAF': ['pedrosousa'],
-  'Waiting Room': ['angelampcosta'],
-  'WARP Client': ['ranbel'],
-  'Web3': ['kodster28'],
-  'Workers': ['deadlypants1973'],
-  'Zaraz': ['marciocloudflare'],
-}
+  'analytics': ['angelampcosta'],
+  'api': ['ranbel'],
+  'api-shield': ['patriciasantaana'],
+  'automatic-platform-optimization': ['dcpena'],
+  'bots': ['patriciasantaana'],
+  'byoip': [], // TODO
+  'cache': ['angelampcosta'],
+  'china-network': ['pedrosousa'], // TODO
+  'client-ip-geolocation': ['pedrosousa'],
+  'cloudflare-for-saas': ['kodster28'],
+  'cloudflare-one': ['ranbel'],
+  'ddos-protection': ['pedrosousa'],
+  'dns': ['kodster28'],
+  'email-routing': ['marciocloudflare'],
+  'firewall': ['pedrosousa'],
+  'fundamentals': ['kodster28'],
+  'images': ['marciocloudflare'],
+  'load-balancing': ['patriciasantaana'],
+  'logs': ['angelampcosta'],
+  'magic-firewall': ['dcpena'],
+  'magic-transit': ['dcpena'],
+  'magic-wan': ['dcpena'],
+  'network-error-logging': ['dcpena'],
+  'network-interconnect': ['dcpena'],
+  'page-shield': ['pedrosousa'],
+  'pages': ['deadlypants1973'],
+  'partners': ['kodster28'],
+  'pub-sub': ['dcpena'],
+  'r2': ['deadlypants1973'],
+  'railgun': ['marciocloudflare'],
+  'randomness-beacon': ['kodster28'],
+  'registrar': ['marciocloudflare'],
+  'rules': ['pedrosousa'],
+  'ruleset-engine': ['pedrosousa'],
+  'security-center': ['ranbel'],
+  'spectrum': ['angelampcosta'],
+  'ssl': ['kodster28'],
+  'stream': ['dcpena'],
+  'tenant': ['kodster28'],
+  'terraform': ['ranbel'],
+  'time-services': ['kodster28'],
+  'waf': ['pedrosousa'],
+  'waiting-room': ['angelampcosta'],
+  'warp-client': ['marciocloudflare'],
+  'web3': ['kodster28'],
+  'workers': ['deadlypants1973'],
+  'zaraz': ['marciocloudflare'],
+};

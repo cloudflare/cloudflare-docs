@@ -26,7 +26,7 @@ You can use Cloudflare Tunnel to quickly share projects you are working on with 
 
 ## Before you start
 
-1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+1.  [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/)
 1.  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
 1.  [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI)
 
@@ -35,8 +35,6 @@ You can use Cloudflare Tunnel to quickly share projects you are working on with 
 ## Install `cloudflared`
 
 In this example, the new website is a [Hugo site](https://gohugo.io/getting-started/quick-start/). Hugo, a static site generator, provides a built-in server that can be used for testing changes. That server is available at `localhost:1313` - an address only available currently on the same machine as the server.
-
-![New Hugo](/cloudflare-one/static/secure-origin-connections/share-new-site/hugo-new.png)
 
 To share this work-in-progress, start by [downloading and installing](/cloudflare-one/connections/connect-apps/install-and-setup/) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
 
@@ -47,8 +45,6 @@ Once installed, run the following command in your Terminal to authenticate this 
 `$ cloudflared login`
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your Cloudflare account. The website selected does not need to be the website where the environment will be made available.
-
-![Choose Site](/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
 
 Once you click one of the sites in your account, Cloudflare will download a certificate file to authenticate this instance of `cloudflared`. You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
@@ -118,11 +114,11 @@ Before you build the rule, you'll need to follow [these instructions](/cloudflar
 
 1.  In the policy builder, add the subdomain of your new DNS record that represents your Cloudflare Tunnel connection.
 
-    ![App Picker](/cloudflare-one/static/secure-origin-connections/share-new-site/configure-app.png)
+    ![Add subdomain in the policy builder](/cloudflare-one/static/secure-origin-connections/share-new-site/configure-app.png)
 
     You can then add rules to determine who can reach the site.
 
-    ![App Picker](/cloudflare-one/static/secure-origin-connections/share-new-site/add-rules.png)
+    ![Limit Access in the policy builder](/cloudflare-one/static/secure-origin-connections/share-new-site/add-rules.png)
 
 ## Additional Materials
 

@@ -6,11 +6,11 @@ weight: 1001
 layout: example
 ---
 
-We've provided an example Worker that exposes an R2 bucket to the Internet and demonstrates its functionality for storing and retrieving objects.
+Below is an example Worker that exposes an R2 bucket to the Internet and demonstrates its functionality for storing and retrieving objects.
 
-```js
+```ts
 interface Env {
-  BUCKET: R2Bucket
+  MY_BUCKET: R2Bucket
 }
 
 function parseRange(encoded: string | null): undefined | { offset: number, length: number } {
@@ -18,7 +18,7 @@ function parseRange(encoded: string | null): undefined | { offset: number, lengt
     return
   }
 
-  const parts = encoded.split('-')
+  const parts = encoded.split("bytes=")[1]?.split("-") ?? []
   if (parts.length !== 2) {
     throw new Error('Not supported to skip specifying the beginning/ending byte at this time')
   }
@@ -59,15 +59,16 @@ export default {
         }
         console.log(JSON.stringify(options))
 
-        const listing = await env.BUCKET.list(options)
+        const listing = await env.MY_BUCKET.list(options)
         return new Response(JSON.stringify(listing), {headers: {
           'content-type': 'application/json; charset=UTF-8',
         }})
       }
 
       if (request.method === 'GET') {
-        const object = await env.BUCKET.get(objectName, {
-          range: parseRange(request.headers.get('range')),
+        const range = parseRange(request.headers.get('range'))
+        const object = await env.MY_BUCKET.get(objectName, {
+          range,
           onlyIf: request.headers,
         })
 
@@ -78,12 +79,14 @@ export default {
         const headers = new Headers()
         object.writeHttpMetadata(headers)
         headers.set('etag', object.httpEtag)
+        const status = object.body ? (range ? 206 : 200) : 304
         return new Response(object.body, {
           headers,
+          status
         })
       }
 
-      const object = await env.BUCKET.head(objectName, {
+      const object = await env.MY_BUCKET.head(objectName, {
         onlyIf: request.headers,
       })
 
@@ -99,7 +102,7 @@ export default {
       })
     }
     if (request.method === 'PUT' || request.method == 'POST') {
-      const object = await env.BUCKET.put(objectName, request.body, {
+      const object = await env.MY_BUCKET.put(objectName, request.body, {
         httpMetadata: request.headers,
       })
       return new Response(null, {
@@ -109,7 +112,7 @@ export default {
       })
     }
     if (request.method === 'DELETE') {
-      await env.BUCKET.delete(url.pathname.slice(1))
+      await env.MY_BUCKET.delete(url.pathname.slice(1))
       return new Response()
     }
 

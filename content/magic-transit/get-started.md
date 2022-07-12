@@ -16,7 +16,7 @@ After your call with Cloudflare, complete the [prerequisites](/magic-transit/pre
 
 ## 2. Configure tunnels
 
-[Configure your Anycast tunnels](/magic-transit/how-to/configure-tunnels/) to connect Cloudflare to your origin infrastructure.
+[Configure your tunnels](/magic-transit/how-to/configure-tunnels/) to connect Cloudflare to your origin infrastructure.
 
 ## 3. Run pre-flight checks
 
@@ -28,7 +28,7 @@ Once Cloudflare’s pre-flight checks have passed and your account team verifies
 
 To configure the edge network, Cloudflare routes traffic sourced from Cloudflare’s network and attracts traffic from the broader Internet by advertising your customer-owned prefixes.
 
-You control the edge router advertisement, which dictates whether Cloudflare’s edge network advertises your prefixes. Advertisement is activated at the go-live call, routing traffic via Cloudflare and the GRE tunnels to your data centers.
+You control the edge router advertisement, which dictates whether Cloudflare’s edge network advertises your prefixes. Advertisement is activated at the go-live call, routing traffic via Cloudflare and the tunnels to your data centers.
 
 If you are using a Cloudflare IP, you do not need to advertise your prefixes.
 

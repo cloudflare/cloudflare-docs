@@ -17,7 +17,7 @@ When setting up your first Cloudflare Tunnel, you have the option to create it:
 
 Before you start, make sure you:
 
-* [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website).
+* [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/).
 * [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708).
 
 ## Set up a tunnel remotely (Dashboard setup)

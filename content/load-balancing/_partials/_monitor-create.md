@@ -24,7 +24,7 @@ You can create a monitor within the [load balancer workflow](/load-balancing/how
 
     *   **Interval**:
         *   By increasing the default, you can improve failover time, but you may also increase load on your servers.
-        *   Minimum time in seconds is 60 (Pro), 10 (Business), and 5 (Enterprise).
+        *   Minimum time in seconds is 60 (Pro), 15 (Business), and 10 (Enterprise).
     *   **Timeout** and **Retries**:
         *   The health check will return unhealthy if it exceeds the duration specified in **Timeout** (and exceeds this duration more times than the specified number of **Retries**).
     *   **Expected Code(s)**: The expected HTTP response codes listed individually (200, 302) or as a range (2xx, 3xx).
@@ -38,7 +38,8 @@ You can create a monitor within the [load balancer workflow](/load-balancing/how
         *   Instead of reporting a `301` or `302` code as unhealthy, the health check follows redirects to the final endpoint.
     *   **Configure Request Header(s)**:
         *   Useful if your servers are expecting specific incoming headers.
-
+    *   **Header**:
+        *   The HTTP request headers to send in the health check. It is recommended that you set a Host header by default. The User-Agent header cannot be overridden. This parameter is only valid for HTTP and HTTPS monitors.
 6.  Select **Save**.
 
 {{<Aside type="note" header="Note:">}}

@@ -428,7 +428,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-hostname-metadata">
         <td><code>cf.hostname.metadata</code><br />{{<type>}}String{{</type>}}</td>
         <td>
-          <p>Returns the string representation of the per-hostname <a href="/ssl/ssl-for-saas/hostname-specific-behavior/custom-metadata/">custom metadata</a> JSON object set by SSL for SaaS customers.
+          <p>Returns the string representation of the per-hostname <a href="/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/">custom metadata</a> JSON object set by SSL for SaaS customers.
           </p>
         </td>
     </tr>
@@ -473,6 +473,12 @@ The Cloudflare Rules language supports these dynamic fields:
         <p>When a request comes from a worker, this field will hold the name of the zone for that worker. Otherwise <code class="InlineCode">cf.worker.upstream_zone</code> is empty.</p>
       </td>
     </tr>
+    <tr id="cf.bot_management.js_score">
+    <td><code>js_score</code>
+    <td>
+      <p>Customers should not use <code>js_score</code> when creating Bot Management firewall rules because it will always be blank.</p>
+   </td>
+   </tr>
   </tbody>
 </table>
 
@@ -543,6 +549,16 @@ The Cloudflare Rules language supports these dynamic fields:
          <code class="InlineCode">192.0.2.2</code>
         </td>
     </tr>
+    <tr id="field-ip-dst-country">
+        <td><p><code>ip.dst.country</code><br />{{<type>}}String{{</type>}}</p>
+        </td>
+        <td>
+         Represents the 2-letter country code associated with the server IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
+         Example value:
+         <code class="InlineCode">GB</code>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+        </td>
+    </tr>
     <tr id="field-ip-geoip-country">
         <td><p><code>ip.geoip.country</code><br />{{<type>}}String{{</type>}}</p>
         </td>
@@ -593,6 +609,16 @@ The Cloudflare Rules language supports these dynamic fields:
         </td>
         <td>
         The source address of the IP Packet.
+        </td>
+    </tr>
+    <tr id="field-ip-src-country">
+        <td><p><code>ip.src.country</code><br />{{<type>}}String{{</type>}}</p>
+        </td>
+        <td>
+         Represents the 2-letter country code associated with the client IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
+         Example value:
+         <code class="InlineCode">GB</code>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
         </td>
     </tr>
     <tr id="field-ip-ttl">

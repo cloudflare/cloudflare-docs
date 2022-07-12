@@ -31,7 +31,7 @@ There are a number of VNC versions, deployments and instances. This tutorial foc
 
 ## Before you start
 
-1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+1.  [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/)
 1.  [Enable Cloudflare Zero Trust on your account](/cloudflare-one/setup/)
 1.  [Connect your identity provider to Cloudflare Zero Trust](/cloudflare-one/identity/idp-integration/)
 

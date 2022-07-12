@@ -14,7 +14,7 @@ To use an IP List in the [Expression Builder](/firewall/cf-dashboard/edit-expres
 
     ![Selecting an IP List from the Value drop-down list when configuring the expression of a firewall rule](/firewall/static/cf-open-proxies-list.png)
 
-1. Select an IP List from the **Value** drop-down list.
+1. Select an IP List from the **Value** drop-down list. Depending on your plan, you may be able to select an [IP List managed by Cloudflare](/firewall/cf-firewall-rules/rules-lists/#managed-ip-lists).
 
 1. When you are done composing your rule, click **Deploy** to commit your changes and enable your rule. Click **Save as draft** if you are not ready to enable the rule.
 
@@ -30,16 +30,12 @@ This expression filters requests from IP addresses that are in an IP List named 
 
 Note that names for IP Lists can only include lowercase letters, numbers, and the underscore (`_`) character.
 
-For more on creating lists, refer to [Use IP Lists: Manage lists](/firewall/cf-dashboard/rules-lists/manage-lists/).
+For more on creating lists, refer to [Work with lists](/firewall/cf-dashboard/rules-lists/manage-lists/).
 
-To create a new rule via API using the Cloudflare Open Proxies Managed List, use the following expression:
+To create a new rule via API using a Managed IP List — for example, `cf.open_proxies` — use the following expression:
 
 ```txt
 (ip.src in $cf.open_proxies)
 ```
 
-{{<Aside type="warning" header="Important">}}
-
-Access to the Open Proxy List requires a Cloudflare Enterprise plan.
-
-{{</Aside>}}
+The available Managed IP Lists depend on your Cloudflare plan. For more information, refer to [Managed IP Lists](/firewall/cf-firewall-rules/rules-lists/#managed-ip-lists).

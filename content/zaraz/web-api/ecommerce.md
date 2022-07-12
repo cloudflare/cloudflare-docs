@@ -91,7 +91,7 @@ To create a complete tracking event, you need to add an event and one or more pa
 | `checkout_id`            | String | Checkout ID.                                                                                |
 | `order_id`               | String | Internal ID of order/transaction/purchase.                                                  |
 | `affiliation`            | String | Name of affiliate from which the order occurred.                                            |
-| `subtotal`               | Number | Order total after discounts but before deducting taxes and shipping.                        |
+| `subtotal`               | Number | Order total after discounts but before adding taxes and shipping.                           |
 | `total`                  | Number | Revenue with discounts and coupons added in.                                                |
 | `revenue`                | Number | Revenue excluding shipping and tax.                                                         |
 | `shipping`               | Number | Cost of shipping for transaction.                                                           |
@@ -121,6 +121,40 @@ zaraz.ecommerce('Product Viewed', {
   currency: 'usd',
   value: 18.99,
 });
+```
+
+### Product List Viewed
+
+```js
+zaraz.ecommerce('Product List Viewed', 
+  {  products: 
+    [
+    { 
+      product_id: '999555321',
+      sku: '2671033',
+      category: 'T-shirts',
+      name: 'V-neck T-shirt',
+      brand: 'Cool Brand',
+      variant: 'White',
+      price: 14.99,
+      currency: 'usd',
+      value: 18.99, 
+      position: 1, 
+    },{ 
+      product_id: '999555322',
+      sku: '2671034',
+      category: 'T-shirts',
+      name: 'T-shirt',
+      brand: 'Cool Brand',
+      variant: 'Pink',
+      price: 10.99,
+      currency: 'usd',
+      value: 16.99, 
+      position: 2, 
+    },
+    ], 
+  }
+);
 ```
 
 ### Product added

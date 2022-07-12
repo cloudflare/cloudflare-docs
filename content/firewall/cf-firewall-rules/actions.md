@@ -49,12 +49,9 @@ For reference information on rule actions available for Cloudflare products powe
         </td>
         <td>
           <ul>
-            <li>Records matching requests in the Cloudflare Logs</li>
-            <li>Only available for Enterprise plans</li>
-            <li>
-              Recommended for validating rules before committing to a more
-              severe action
-            </li>
+            <li>Records matching requests in the Cloudflare Logs.</li>
+            <li>Only available for Enterprise plans.</li>
+            <li>Recommended for validating rules before committing to a more severe action.</li>
           </ul>
         </td>
         <td>1</td>
@@ -67,14 +64,10 @@ For reference information on rule actions available for Cloudflare products powe
         </td>
         <td>
           <ul>
+            <li>Allows user to dynamically disable Cloudflare security features for a request.</li>
+            <li>Available to all plans.</li>
             <li>
-              Allows user to dynamically disable Cloudflare security features
-              for a request
-            </li>
-            <li>Available to all plans</li>
-            <li>
-              <p>Matching requests exempt from evaluation by a user-defined list
-              containing one or more of the following Cloudflare security features:</p>
+              <p>Matching requests exempt from evaluation by a user-defined list containing one or more of the following Cloudflare security features:</p>
               <ul>
                 <li>User-agent Blocking</li>
                 <li>Browser Integrity Check</li>
@@ -82,15 +75,16 @@ For reference information on rule actions available for Cloudflare products powe
                 <li>Security Level (IP Reputation)</li>
                 <li>Rate Limiting (previous version)</li>
                 <li>Zone Lockdown (PRO, BIZ, ENT)</li>
-                <li>WAF Managed Rules (PRO, BIZ, ENT; previous version)</li>
+                <li>WAF managed rules (previous version; PRO, BIZ, ENT)</li>
               </ul>
-              <p><strong>Note:</strong> Currently, you cannot skip Bot Fight Mode or Super Bot Fight Mode. For more information on these products, refer to <a href="/bots/">Cloudflare bot solutions</a>.</p>
+              <p><strong>Notes:</strong></p>
+              <ul>
+                <li>Currently, you cannot bypass Bot Fight Mode or Super Bot Fight Mode. For more information on these products, refer to <a href="/bots/">Cloudflare bot solutions</a>.</li>
+                <li>You cannot bypass the new <a href="/waf/">Cloudflare WAF</a>, only its previous version (<a href="https://support.cloudflare.com/hc/articles/200172016">WAF managed rules</a>).</li>
+              </ul>
+              <p></p>
             </li>
-            <li>
-              Requests which match the <em>Bypass</em> action are still subject
-              to evaluation (and thus a challenge or block) within Firewall
-              Rules, based on the order of execution.
-            </li>
+            <li>Requests which match the <em>Bypass</em> action are still subject to evaluation (and thus a challenge or block) within Firewall Rules, based on the order of execution.</li>
           </ul>
         </td>
         <td>2</td>

@@ -11,7 +11,7 @@ The Honeycomb Pages Plugin automatically sends traces to Honeycomb for analysis 
 ## Installation
 
 ```sh
-npm install @cloudflare/pages-plugin-honeycomb
+$ npm install @cloudflare/pages-plugin-honeycomb
 ```
 
 ## Usage

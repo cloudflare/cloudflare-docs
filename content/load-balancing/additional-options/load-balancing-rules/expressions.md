@@ -98,10 +98,4 @@ To return to the builder, click **Use expression builder**.
 
 ### Rules lists
 
-Rules Lists allow you to create a group of IP addresses and refer to them collectively, by name, in your Load Balancing expressions.
-
-For example, you might create a list of known office IP addresses and use it in a Load Balancing rule that selects a specific pool for requests from the addresses in the list.
-
-Cloudflare stores your lists at the account level and sends to the edge, so you can view, manage, and incorporate them into firewall rules for any of your zones.
-
-For more details, refer to [IP Lists](/firewall/cf-firewall-rules/rules-lists/) in the Firewall Rules documentation.
+Load Balancing Custom Rules does not support IP list operators.

@@ -9,15 +9,15 @@ title: Limits
 
 {{<table-wrap>}}
 
-| Feature                                                                         | Free      | Paid      |
+| Feature                                                                         | Free      | Paid (Bundled and Unbound)      |
 | ------------------------------------------------------------------------------- | --------- | --------- |
-| [Subrequests](#subrequests)                                                     | 50        | 50        |
+| [Subrequests](#subrequests)                                                     | 50/request| 50/request (Bundled),<br> 1000/request (Unbound)|
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
-| [Environment variables](#environment-variables)                                 | 64/worker | 64/worker |
+| [Environment variables](#environment-variables)                                 | 64/Worker | 64/Worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
-| [Script size](#script-size)                                                     | 1 MB      | 1 MB      |
-| [Number of scripts](#number-of-scripts)                                         | 30        | 100       |
-| [Number of Cron Triggers<br/>per script](#number-of-schedules)                  | 3         | 3         |
+| [Worker size](#worker-size)                                                     | 1 MB      | 1 MB      |
+| [Number of Workers](#number-of-workers)                                         | 30        | 100       |
+| [Number of Cron Triggers<br/>per Worker](#number-of-schedules)                  | 3         | 3         |
 | [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 90        |
 
 {{</table-wrap>}}
@@ -62,7 +62,7 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 ### Bundled Usage Model
 
-Workers on the Bundled Usage Model are intended for use cases below 50 ms. Bundled Workers limits are based on CPU time, rather than [duration](#duration). This means that the time limit does not include the time a script is waiting for responses from network calls. The billing model for Bundled Workers is based on requests that exceed the included number of requests on the Paid plan. Learn more about [Usage Model pricing](/workers/platform/pricing/#usage-models).
+Workers on the Bundled Usage Model are intended for use cases below 50 ms. Bundled Workers limits are based on CPU time, rather than [duration](#duration). This means that the time limit does not include the time a Worker is waiting for responses from network calls. The billing model for Bundled Workers is based on requests that exceed the included number of requests on the Paid plan. Learn more about [Usage Model pricing](/workers/platform/pricing/#usage-models).
 
 {{<Aside type="note" header="No limit* for duration">}}
 
@@ -133,7 +133,7 @@ Refer to [KV pricing](/workers/platform/pricing/#workers-kv) to review the speci
 
 ## Request
 
-Bundled (Paid) Workers scripts automatically scale onto thousands of Cloudflare edge servers around the world. There is no general limit to the number of requests per second Workers can handle.
+Workers automatically scale onto thousands of Cloudflare edge servers around the world. There is no general limit to the number of requests per second Workers can handle.
 
 Cloudflare’s abuse protection methods do not affect well-intentioned traffic. However, if you send many thousands of requests per second from a small number of client IP addresses, you can inadvertently trigger Cloudflare’s abuse protection. If you expect to receive `1015` errors in response to traffic or expect your application to incur these errors, contact your Cloudflare account team to increase your limit.
 
@@ -141,7 +141,7 @@ The burst rate and daily request limits apply at the account level, meaning that
 
 ### Burst rate
 
-Accounts using the Workers Free plan are subject to a burst rate limit of 1000 requests per minute. Users visiting a rate limited site will receive a Cloudflare `1015` error page. However if you are calling your script programmatically, you can detect the rate limit page and handle it yourself by looking for HTTP status code `429`.
+Accounts using the Workers Free plan are subject to a burst rate limit of 1000 requests per minute. Users visiting a rate limited site will receive a Cloudflare `1015` error page. However if you are calling your Worker programmatically, you can detect the rate limit page and handle it yourself by looking for HTTP status code `429`.
 
 ### Daily request
 
@@ -169,9 +169,15 @@ Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to
 
 ## CPU runtime
 
-Most Workers requests consume less than a millisecond. It is rare to find a normally operating Workers script that exceeds the CPU time limit. A Worker may consume up to 10 ms on the Free plan and up to 50 ms for Bundled Workers on the Paid Plan. The Paid Plan also offers up to a 30 second [duration](/workers/platform/limits/#duration) for increased compute time. The 10 ms allowance on the Free plan is enough execution time for most use cases including application hosting.
+Most Workers requests consume less than a millisecond. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is capped at various limits depending on your plan, usage model, and Worker type. 
 
-There is no limit on the real runtime for a Workers script. As long as the client that sent the request remains connected, the Workers script can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/workers/runtime-apis/fetch-event/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
+* A Worker may consume up to **10 milliseconds** on the Free plan.
+* A Worker or [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **50 milliseconds** with the Bundled usage model on the Paid Plan.
+* A Worker may consume up to **30 seconds** with the Unbound usage model on the Paid Plan.
+* A [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **30 seconds** with the Unbound usage model on the Paid Plan, when the schedule interval is less than 1 hour.
+* A [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **15 minutes** with the Unbound usage model on the Paid Plan, when the schedule interval is greater than 1 hour.
+
+There is no limit on the real runtime for a Worker. As long as the client that sent the request remains connected, the Worker can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/workers/runtime-apis/fetch-event/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
 
 ---
 
@@ -187,15 +193,15 @@ Duration is most applicable to Unbound Workers on the [Paid plan](/workers/platf
 
 ## Subrequests
 
-### Can a Workers script make subrequests to load other sites on the Internet?
+### Can a Worker make subrequests to load other sites on the Internet?
 
 Yes. Use the [Fetch API](/workers/runtime-apis/fetch/) to make arbitrary requests to other Internet resources.
 
 ### How many subrequests can I make?
 
-The limit for subrequests a Workers script can make is 50 per request. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Workers script makes could be greater than the number of `fetch(request)` calls in the script.
+The limit for subrequests a Worker can make is 50 per request on the Bundled usage model or 1000 per request on the Unbound usage model. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
 
-For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1000 per request.
+For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1000 per request, regardless of usage model.
 
 ### How long can a subrequest take?
 
@@ -207,7 +213,7 @@ When the client disconnects, all tasks associated with that client’s request a
 
 ## Simultaneous open connections
 
-While handling a request, each Worker script is allowed to have up to six connections open simultaneously. The connections opened by the following API calls all count toward this limit:
+While handling a request, each Worker is allowed to have up to six connections open simultaneously. The connections opened by the following API calls all count toward this limit:
 
 - the `fetch()` method of the [Fetch API](/workers/runtime-apis/fetch/).
 - `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/workers/runtime-apis/kv/).
@@ -216,6 +222,12 @@ While handling a request, each Worker script is allowed to have up to six connec
 Once a Worker has six connections open, it can still attempt to open additional connections. However, these attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed. Since earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
 
 If the system detects that a Worker is deadlocked on open connections — for example, if the Worker has pending connection attempts but has no in-progress reads or writes on the connections that it already has open — then the least-recently-used open connection will be canceled to unblock the Worker. If the Worker later attempts to use a canceled connection, an exception will be thrown. These exceptions should rarely occur in practice, though, since it is uncommon for a Worker to open a connection that it does not have an immediate use for.
+
+{{<Aside type="note">}}
+
+Simultaneous Open Connections are measured from the top-level request, meaning any connections open from Workers sharing resources (for example, Workers triggered via [Service bindings](/workers/runtime-apis/service-bindings/)) will share the simultaneous open connection limit.
+
+{{</Aside>}}
 
 ---
 
@@ -226,17 +238,17 @@ There is no limit to the number of environment variables per account.
 
 Each environment variable has a size limitation of 5 KB.
 
-### Script size
+### Worker size
 
-A Workers script can be up to 1 MB in size after compression. If needed, you can [request a larger script size](https://www.cloudflare.com/larger-scripts-on-workers-early-access/).
+A Worker can be up to 1 MB in size after compression. If needed, you can [request a larger Worker size](https://www.cloudflare.com/larger-scripts-on-workers-early-access/).
 
-### Number of scripts
+### Number of Workers
 
-Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 100 scripts at any given time. Free Workers accounts are limited to a maximum of 30 scripts at any given time.
+Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 100 Workers at any given time. Free Workers accounts are limited to a maximum of 30 Workers at any given time.
 
 {{<Aside type="note">}}
 
-App Workers scripts do not count towards this limit.
+App Workers do not count towards this limit.
 
 {{</Aside>}}
 

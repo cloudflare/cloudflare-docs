@@ -69,19 +69,28 @@ A list of supported applications and their ID numbers is available through the [
 
 ### Destination Continent
 
-The continent that the request is destined for. Geolocation is determined from the target IP address.
+The continent that the request is destined for. Geolocation is determined from the target IP address. To specify a continent, enter its two-letter code into the **Value** field:
+
+- AF – Africa
+- AN – Antarctica
+- AS – Asia
+- EU – Europe
+- NA – North America
+- OC – Oceania
+- SA – South America
+- T1 – Tor network
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
-| Destination Continent IP Geolocation | `net.dst.geo.continent == "North America"` |
+| Destination Continent IP Geolocation | `net.dst.geo.continent == "EU"` |
 
 ### Destination Country
 
-The country that the request is destined for. Geolocation is determined from the target IP address.
+The country that the request is destined for. Geolocation is determined from the target IP address. To specify a country, enter its [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) in the **Value** field.
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
-| Destination Country IP Geolocation | `net.dst.geo.country == "Russia"` |
+| Destination Country IP Geolocation | `net.dst.geo.country == "RU"` |
 
 ### Destination IP
 
@@ -139,7 +148,16 @@ The domain whose Server Name Indication (SNI) header Gateway will filter traffic
 
 ### Source Continent
 
-The continent of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP).
+The continent of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP). To specify a continent, enter its two-letter code into the **Value** field:
+
+- AF – Africa
+- AN – Antarctica
+- AS – Asia
+- EU – Europe
+- NA – North America
+- OC – Oceania
+- SA – South America
+- T1 – Tor network
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
@@ -147,11 +165,11 @@ The continent of the user making the request. Geolocation is determined from the
 
 ### Source Country
 
-The country of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP).
+The country of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP). To specify a country, enter its [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) in the **Value** field.
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
-| Source Country IP Geolocation | `net.src.geo.country == "Russia"` |
+| Source Country IP Geolocation | `net.src.geo.country == "RU"` |
 
 ### Source IP
 

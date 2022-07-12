@@ -42,8 +42,8 @@ If a full `type` is specified the following additional fields are required:
 - `colo`: This specifies the `colo` name we want to capture packets from. For example, `ord02`.
 
 Two optional fields are available to limit the amount of packets captured:
-- `packet_limit`: The number of packets to limit the PCAP. This number should be less than `10000` and cannot be set to zero.
-- `byte_limit`: The number of bytes to limit the PCAP. This number should be less than `1000000000` bytes.
+- `packet_limit`: The number of packets to limit the PCAP. This number should be less than `10000` and cannot be set to zero. This field can be used with both `full` and `simple` PCAP types.
+- `byte_limit`: The number of bytes to limit the PCAP. This number should be less than `1000000000` bytes. This field can only be used with a `full` PCAP type.
 
 In addition to the above fields, the JSON body can optionally filter packets by specifying any of
 
@@ -65,15 +65,15 @@ A complete `full` type request will look like the following:
     -H 'Content-Type: application/json' \
     -H "X-Auth-Email: ${email}" \
     -H "X-Auth-Key: ${auth_key}" \
-    -d '{
+    --data '{
             "filter_v1": {},
             "time_limit": 300,
             "packet_limit": 10000,
-            "Byte_limit": 100000000,
+            "byte_limit": 100000000,
             "type": "full",
             "colo": "sfo06",
             "system": "magic-transit",
-            "destination_conf": "'${bucket}'"
+            "destination_conf": "${bucket}"
     }'
 
 #### Simple PCAP
@@ -103,6 +103,7 @@ A complete `simple` type request will look like the following:
 ### Example response
 
 The response to this message will be a JSON body containing the details of the job running to build the packet capture. The response will contain a unique identifier for the packet capture request, and the details that were sent in the request.
+For example here is a response for a simple type PCAP:
 
     {
       "result": {
@@ -126,6 +127,28 @@ The response to this message will be a JSON body containing the details of the j
       "messages": []
     }
 
+Here is an example of a response for a full type PCAP:
+
+    {
+      "result": {
+        "id": "7d7c88382f0b4d5daa9587aa45a1a877",
+        "submitted": "2022-06-02T18:38:22.269047Z",
+        "filter_v1": {},
+        "time_limit": 300,
+        "status": "pending",
+        "type": "full",
+        "system": "magic-transit",
+        "packet_limit": 10000,
+        "byte_limit": 100000000,
+        "colo": "sfo06",
+        "destination_conf": "gs://test-magic-pcaps"
+      },
+      "success": true,
+      "errors": [],
+      "messages": []
+    }
+
+
 The response will have the `status` field set to `pending` while the collection is in progress. You must wait for the PCAP collection to complete before downloading the file. When the PCAP is ready to download, the status will change to `success`.
 
 ## Check PCAP status
@@ -138,6 +161,7 @@ To check the status of a running job, send a request to the endpoint and specify
     -H 'X-Auth-Key: 00000000000'
 
 The response will be similar to the one received when requesting a PCAP collection.
+Here is an example of a simple PCAP result:
 
     {
       "result": {

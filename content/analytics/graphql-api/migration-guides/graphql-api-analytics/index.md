@@ -6,7 +6,7 @@ meta:
   title: to
 ---
 
-# `httpRequests1mByColoGroups/httpRequests1dByColoGroups` to `httpRequestsAdaptiveGroups`
+# HTTP Requests by Colo Groups to HTTP Requests by Adaptive Groups
 
 This guide shares considerations when migrating from the deprecated `httpRequests1mByColoGroups` and `httpRequests1dByColoGroups` GraphQL API nodes to the `httpRequestsAdaptiveGroups` GraphQL API node.
 

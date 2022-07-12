@@ -22,7 +22,7 @@ To have your Mac to synchronize time from `time.cloudflare.com`:
 4.  Enter your password.
 5.  Next to **Set date and time automatically**, enter `time.cloudflare.com`.
 
-![Screenshot of updating the Date & Time settings on machine running MacOS](/time-services/static/mactime.png)
+![Screenshot of updating the Date & Time settings on machine running macOS](/time-services/static/mactime.png)
 
 ## Windows
 

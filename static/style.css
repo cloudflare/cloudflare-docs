@@ -360,6 +360,7 @@ html[theme="dark"] {
   --shadow-color-rgb: 0, 0, 0;
   --section-tiger-stripe-background-color: var(--gray-05);
   --deemphasized-color: var(--gray-7);
+  color-scheme: dark;
 }
 [theme="dark"] [light-theme-only],
 [theme="light"] [dark-theme-only] {
@@ -670,6 +671,7 @@ html {
   padding: var(--padding-vertical) var(--padding-horizontal);
   font-family: inherit;
   cursor: default;
+  tab-size: 2;
 }
 .CodeBlock > code > * {
   cursor: text;
@@ -3316,6 +3318,157 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 .DocsMarkdown--table-wrap-inner {
   display: flex;
 }
+
+.DocsMarkdown--table-wrap
+  > div
+  > table
+  > tbody
+  > tr
+  > td
+  > ul
+  > li
+  > ul
+  > li
+  > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+.DocsMarkdown--table-wrap
+  > div
+  > table
+  > tbody
+  > tr:nth-child(4)
+  > td:nth-child(2)
+  > ul
+  > li:nth-child(4)
+  > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+.DocsMarkdown--table-wrap
+  > div
+  > table
+  > tbody
+  > tr:nth-child(5)
+  > td:nth-child(2)
+  > ul
+  > li:nth-child(3)
+  > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+.DocsMarkdown--table-wrap
+  > div
+  > table
+  > tbody
+  > tr:nth-child(6)
+  > td:nth-child(2)
+  > ul
+  > li:nth-child(4)
+  > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-http-request-timestamp-sec > td:nth-child(2) > p:nth-child(4) > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-ip-src-lat > td:nth-child(2) > p:nth-child(3) > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-ip-src-lon > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-ip-src-city > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-ip-geoip-country > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-ip-geoip-subdivision-1-iso-code > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+#field-ip-geoip-subdivision-2-iso-code > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+#field-raw-http-request-full-uri > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-raw-http-request-uri > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-raw-http-request-uri-path > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-raw-http-request-uri-query > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-cf-bot_management-ja3_hash > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+#field-cf-edge-server_ip > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-cf-hostname-metadata > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-cf-random_seed > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-raw-http-request-uri-args > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-raw-http-request-uri-args-names > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-raw-http-request-uri-args-values > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-http-request-headers-names > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+#field-http-request-accepted_languages > td > p > a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
 .DocsMarkdown--table-wrap table {
   min-width: calc(
     var(--docs-body-width) - var(--docs-content-gap) * 2 -
@@ -4226,11 +4379,13 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   }
 }
 [theme="dark"] .DocsMarkdown td > a {
-  color: var(--orange);
+  background-color: var(--background-color);
+  color: var(--code-orange);
 }
 
 [theme="light"] .DocsMarkdown td > a {
-  color: var(--orange);
+  background-color: var(--background-color);
+  color: #1d1f20;
 }
 
 [theme="dark"] .DocsMarkdown td > strong > a {
@@ -4238,7 +4393,39 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 [theme="light"] .DocsMarkdown--aside > p > a {
-  color: var(--orange);
+  background-color: var(--background-color);
+  color: #1d1f20;
+}
+
+.DocsContent
+  > article
+  > div
+  > div
+  > table
+  > tbody
+  > tr:nth-child(4)
+  > td:nth-child(1)
+  > a {
+  background-color: #f3802014;
+  color: #1d1f20;
+}
+
+[theme="light"]
+  .DocsMarkdown--aside
+  > .DocsMarkdown--link
+  > .DocsMarkdown--link-content {
+  /* background-color: var(--background-color); */
+  color: var(--code--orange);
+}
+
+[theme="dark"] .InlineCodeLink .InlineCode {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+}
+
+[theme="light"] .atry .InlineCode {
+  background-color: var(--background-color);
+  color: var(--code-orange);
 }
 
 [theme="dark"] .DocsMarkdown--aside > p > a {

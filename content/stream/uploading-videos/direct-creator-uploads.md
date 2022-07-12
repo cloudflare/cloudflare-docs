@@ -190,8 +190,9 @@ Typically, tus uploads require the authentication information to be sent with ev
 To get around this, you can request a one-time tokenized URL by making a POST request to the `/stream?direct_user=true` end point:
 
 ```bash
-curl -H "Authorization: bearer $TOKEN" -X POST -H 'Tus-Resumable: 1.0.0' -H 'Upload-Length: $VIDEO_LENGTH' 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true'
+curl -H "Authorization: bearer $TOKEN" -X POST -H 'Tus-Resumable: 1.0.0' -H 'Upload-Length: $VIDEO_SIZE' 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true'
 ```
+In the example above, replace $VIDEO_SIZE with your video's size in bytes, as per the [TUS specification](https://tus.io/protocols/resumable-upload.html).
 
 The response will contain a `Location` header which provides the one-time URL the client can use to upload the video using tus.
 

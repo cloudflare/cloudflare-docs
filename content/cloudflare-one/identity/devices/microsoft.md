@@ -1,16 +1,16 @@
 ---
 pcx-content-type: how-to
-title: Microsoft Intune
+title: Microsoft Endpoint Manager
 weight: 4
 ---
 
-# Microsoft Intune
+# Microsoft Endpoint Manager
 
-Cloudflare Zero Trust can integrate with Microsoft Intune to require that users connect to certain applications from managed devices. Our service-to-service posture check identifies devices based on their serial numbers.
+Cloudflare Zero Trust can integrate with Microsoft Endpoint Manager and Intune to require that users connect to certain applications from managed devices. Our service-to-service posture check identifies devices based on their serial numbers.
 
 ## Prerequisites
 
-Device posture with Microsoft Intune requires:
+Device posture with Microsoft Endpoint Manager requires:
 
 - An Intune license
 - Microsoft Endpoint Manager managing the device
@@ -47,6 +47,8 @@ To retrieve those values:
 1. Click **Save**.
 1. Click **Test Provider** to ensure the values have been entered correctly.
 
-## Device properties
+## Additional Resources
 
-The Intune device posture check relies on information from the Microsoft Graph API. Refer to Microsoft's [ComplianceState](https://docs.microsoft.com/en-us/graph/api/resources/intune-devices-compliancestate?view=graph-rest-1.0) and [List managedDevices](https://docs.microsoft.com/en-us/graph/api/intune-devices-manageddevice-list?view=graph-rest-1.0) documentation for a list of properties returned by the API.
+The Microsoft Endpoint Manager device posture check relies on information from the Microsoft Graph API. Refer to Microsoft's [ComplianceState](https://docs.microsoft.com/en-us/graph/api/resources/intune-devices-compliancestate?view=graph-rest-1.0) and [List managedDevices](https://docs.microsoft.com/en-us/graph/api/intune-devices-manageddevice-list?view=graph-rest-1.0) documentation for a list of properties returned by the API.
+
+To learn more about how to control ComplianceState, refer to Microsoft's [compliance policies guide](https://docs.microsoft.com/en-us/mem/intune/protect/device-compliance-get-started).

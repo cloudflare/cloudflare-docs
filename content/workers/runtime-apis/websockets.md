@@ -52,11 +52,11 @@ let [client, server] = Object.values(new WebSocketPair());
 
 - `event` {{<type-link href="#events">}}WebSocketEvent{{</type-link>}}
 
-  - The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/#events) to listen to.
+  - The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/#events)) to listen to.
 
 - {{<code>}}callbackFunction(message{{<type-link href="#message">}}Message{{</type-link>}}) {{<type>}}Function{{</type>}}{{</code>}}
 
-  - A function to be called when the Websocket responds to a specific event.
+  - A function to be called when the WebSocket responds to a specific event.
 
 {{</definitions>}}
 
@@ -82,7 +82,7 @@ let [client, server] = Object.values(new WebSocketPair());
 
 ### send
 
-- {{<code>}}send(message{{<param-type>}}string{{</param-type>}}){{</code>}}
+- {{<code>}}send(message{{<param-type>}}string{{</param-type>}} | {{<param-type>}}ArrayBuffer{{</param-type>}} | {{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}}
 
   Send a message to the other WebSocket in this WebSocket pair.
 

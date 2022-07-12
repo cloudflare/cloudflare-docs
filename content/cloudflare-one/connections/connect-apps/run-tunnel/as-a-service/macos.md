@@ -1,6 +1,6 @@
 ---
 pcx-content-type: how-to
-title: MacOS
+title: macOS
 weight: 31
 meta:
   title: Run as a service on macOS

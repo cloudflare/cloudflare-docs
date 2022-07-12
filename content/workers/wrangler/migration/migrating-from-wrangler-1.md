@@ -18,18 +18,29 @@ To learn more about the improvements to Wrangler, refer to the [Comparing Wrangl
 
 ### Update Wrangler version
 
-The first step is to update to the latest version of Wrangler in your Worker project.
-If you had previously installed Wrangler 1 globally, you can uninstall it with:
+#### 1. Uninstall Wrangler 1
+
+If you had previously installed Wrangler 1 globally using NPM, you can uninstall it with:
 
 ```sh
 $ npm uninstall -g @cloudflare/wrangler
 ```
 
-Now, install the latest version of Wrangler into your project, adding it to your `devDependencies`:
+If you used Cargo to install Wrangler 1, you can uninstall it with:
+
+```sh
+$ cargo uninstall wrangler
+```
+
+#### 2. Install Wrangler
+
+Now, install the latest version of Wrangler.
 
 ```sh
 $ npm install -g wrangler
 ```
+
+#### 3. Verify your install
 
 To check that you have installed the correct Wrangler version, run:
 
@@ -37,18 +48,22 @@ To check that you have installed the correct Wrangler version, run:
 $ wrangler --version
 ```
 
-### Build your Worker
+### Test Wrangler 2 on your previous projects
+
+Now you will test that Wrangler 2 can build your Wrangler 1 project. In most cases, it will build just fine. If there are errors, the command line should instruct you with exactly what to change to get it to build.
+
+If you would like to read more on the deprecated `wrangler.toml` fields that cause Wrangler 2 to error, refer to [Deprecations](/workers/wrangler/migration/deprecations/).
 
 Run the `wrangler dev` command. This will show any warnings or errors that should be addressed.
 Note that in most cases, the messages will include actionable instructions on how to resolve the issue.
 
-- Errors need to be fixed before Wrangler can build your Worker.
-- In most cases, you will only see warnings.
-  These do not stop Wrangler from building your Worker, but consider updating the configuration to remove them.
-
 ```sh
 $ wrangler dev
 ```
+
+- Errors need to be fixed before Wrangler can build your Worker.
+- In most cases, you will only see warnings.
+  These do not stop Wrangler from building your Worker, but consider updating the configuration to remove them.
 
 Here is an example of some warnings and errors:
 
@@ -69,23 +84,6 @@ Here is an example of some warnings and errors:
   - Expected "route" to be either a string, or an object with shape { pattern, zone_id | zone_name }, but got "".
 ```
 
-### Common deprecations
-
-Here are common fields that are no longer required.
-
-- `type` is no longer required. Wrangler will infer the correct project type automatically.
-- `zone_id` is no longer required. It can be deduced from the routes directly.
-- `build.upload.format` is no longer used. The format is now inferred automatically from the code.
-- `build.upload.main` and `build.upload.dir` are no longer required. Use the top level `main` field, which now serves as the entry-point for the Worker.
-- `site.entry-point` is no longer required. The entry point should be specified through the `main` field.
-- `webpack_config` and `webpack` properties are no longer supported. Refer to [Ejecting Webpack](/workers/wrangler/migration/eject-webpack/).
-
-Here are the Wrangler 1 commands that are no longer supported:
-
-- `wrangler preview` - Use the `wrangler dev` command, for running your worker in your local environment.
-- `wrangler generate` - If you want to use a starter template, clone its GitHub repository and manually initialize it.
-- `wrangler route` - Routes are defined in the `wrangler.toml` configuration file.
-- `wrangler report` - If you find a bug please report it at [Wrangler issues](https://github.com/cloudflare/wrangler2/issues/new/choose).
-- `wrangler build` - If you wish to access the output from bundling your Worker use `wrangler publish --outdir=path/to/output`.
+### Deprecations
 
 Refer to the [deprecations guide](/workers/wrangler/migration/deprecations/) for more details on what is no longer supported.

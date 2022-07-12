@@ -10,11 +10,11 @@ Before you can begin using Magic Transit, verify that you meet Cloudflare's onbo
 
 ## Verify router compatibility
 
-Magic Transit relies on Generic Routing Encapsulation (GRE) tunnels to transmit packets from Cloudflare’s edge to your origin network.
+Magic Transit relies on Anycast tunnels to transmit packets from Cloudflare’s edge to your origin network.
 
-The routers at your GRE tunnel endpoints must meet the following requirements to ensure compatibility with Magic Transit.
+The routers at your tunnel endpoints must meet the following requirements to ensure compatibility with Magic Transit.
 
-- Support GRE tunneling.
+- Support Anycast tunneling.
 - Allow configuration of at least one tunnel per Internet service provider (ISP).
 - Support maximum segment size (MSS) clamping.
 
@@ -42,9 +42,9 @@ If you are using a Cloudflare IP, you do not need to verify your IRR entries.
 
 The SYN-ACK packet sent to the client during TCP handshake encodes the value for maximum segment size (MSS). Egress packets are routed via your ISP interface, and each packet must comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 
-Cloudflare uses GRE tunnels to deliver packets from our edge to your data centers, while Cloudflare Magic Transit encapsulates these packets, adding a new IP header and GRE protocol header.
+Cloudflare uses tunnels to deliver packets from our edge to your data centers, while Cloudflare Magic Transit encapsulates these packets, adding a new IP header and GRE protocol header.
 
-You must set the MSS value to 1436 bytes at your physical egress interfaces — not the GRE tunnel interfaces — to accommodate the additional header data. For Magic Transit egress traffic, the MSS should be set via the tunnel’s interface for egress traffic.
+You must set the MSS value to 1436 bytes at your physical egress interfaces — not the tunnel interfaces — to accommodate the additional header data. For Magic Transit egress traffic, the MSS should be set via the tunnel’s interface for egress traffic.
 
 {{<Aside type="warning" header="Important">}}
 

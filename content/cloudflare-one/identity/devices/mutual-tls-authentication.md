@@ -74,7 +74,7 @@ To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.team
 
 {{<Aside type="warning">}}
 
-Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the WARP client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/cloudflare-one/policies/filtering/http-policies/configuration-guidelines/#enabling-mTLS-authentication) for the domain.
+Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the WARP client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) for the domain.
 {{</Aside>}}
 
 ## Test using cURL
@@ -216,9 +216,9 @@ Returning to the terminal, generate a client certificate that will authenticate 
 
 ### Testing in the browser
 
-The instructions here cover usage with a computer running MacOS.
+The instructions here cover usage with a computer running macOS.
 
-1.  In the same working directory, run the following command to add the client certificate into the MacOS Keychain.
+1.  In the same working directory, run the following command to add the client certificate into the macOS Keychain.
 
     {{<Aside type="warning" header="Important">}}
 The command adds the client certificate to the trusted store on your device. **Only** proceed if you are comfortable doing so and intend to keep these testing certificates safeguarded.

@@ -39,7 +39,7 @@ After enabling TLS 1.3, visit a site with TLS 1.3 enabled over HTTPS. Then:
 
 1.  Open Chrome **Developer Tools**.
 2.  Click the **Security** tab.
-3.  Reload the page (Command-R in Mac OS, Ctrl-R in Windows).
+3.  Reload the page (Command-R in macOS, Ctrl-R in Windows).
 4.  Click on the site under **Main origin**.
 5.  Under **Connection**, confirm that the protocol is **TLS 1.3**.
 

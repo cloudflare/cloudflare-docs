@@ -25,3 +25,5 @@ If no monitors are attached to the load balancer, it will direct traffic to the 
 ## Random steering
 
 Choose **Random** to route traffic to a healthy pool at random. Customers can use this option to set up [active - active failover](/load-balancing/reference/common-configurations/#active---active-failover) (also known as round robin), where traffic is split equally between multiple pools.
+
+Similar to setting Weights to direct the amount of traffic going to each origin server, customers can also set Weights on pools via the [API's](https://api.cloudflare.com/#load-balancers-create-load-balancer) `random_steering` object to determine the percentage of traffic sent to each pool.

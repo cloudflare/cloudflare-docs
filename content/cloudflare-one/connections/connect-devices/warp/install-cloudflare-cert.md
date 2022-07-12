@@ -49,7 +49,7 @@ F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37
 
 ## Add the certificate to your system
 
-### MacOS
+### macOS
 
 You will need to install the root certificate in the **Keychain Access** application. In the application, you can choose the keychain in which you want to install the certificate. macOS offers three options, each having a different impact on which users will be affected by trusting the root certificate.
 
@@ -69,21 +69,21 @@ To install the certificate in **Keychain Access**:
 
 3. In the pop-up message, choose the option that suits your needs (_login_, _Local Items_, or _System_) and click **Add**.
 
-![MacOS popup window for adding certificates](/cloudflare-one/static/documentation/connections/keychain-popup.png)
+![macOS popup window for adding certificates](/cloudflare-one/static/documentation/connections/keychain-popup.png)
 
 The certificate is now listed in your preferred keychain within the **Keychain Access** application. You can always move the certificate under a different keychain by dragging and dropping the certificate onto the desired keychain on the left.
 
-![Viewing certificate in MacOS Keychain Access application](/cloudflare-one/static/documentation/connections/listed-in-keych.png)
+![Viewing certificate in macOS Keychain Access application](/cloudflare-one/static/documentation/connections/listed-in-keych.png)
 
 4. Double-click the certificate.
 
 5. Click **Trust**.
 
-![MacOS window for certificate configuration](/cloudflare-one/static/documentation/connections/cert-click-on-trust.png)
+![macOS window for certificate configuration](/cloudflare-one/static/documentation/connections/cert-click-on-trust.png)
 
 6. From the **When using this certificate** drop-down menu, select **Always Trust**.
 
-![MacOS window for configuring certificate trust settings](/cloudflare-one/static/documentation/connections/cert-select-always-trust.png)
+![macOS window for configuring certificate trust settings](/cloudflare-one/static/documentation/connections/cert-select-always-trust.png)
 
 7. Close the menu.
 
@@ -195,14 +195,14 @@ The location where the root certificate should be installed is different dependi
 
 #### Debian / Ubuntu
 
-1. Download both the [.crt certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt) and the [.pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem).
-2. Copy both certificates to the user store.
+1. Download the [.pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem).
+2. Copy the certificate to the system, changing the file extension to `.crt`.
 
   ```bash
-  sudo cp Cloudflare_CA.crt Cloudflare_CA.pem /usr/share/ca-certificates
+  sudo cp Cloudflare_CA.pem /usr/local/share/ca-certificates/Cloudflare_CA.crt
   ```
   
-3. Import the certificate
+3. Import the certificate.
 
 ```bash
 sudo dpkg-reconfigure ca-certificates
@@ -447,6 +447,14 @@ The commands below will set the Google Cloud SDK to use the Cloudflare certifica
     ```bash
     gcloud config set core/custom_ca_certs_file ~/ca.pem
     ```
+
+{{<Aside type="note">}}
+The file at `~/ca.pem` needs to remain in place in order for the `gcloud` utility to leverage it. If the file is moved then step 3 above will need to be re-run to point `gcloud` to the file's new location. 
+{{</Aside>}}
+
+#### Google Cloud SDK and Kaniko
+
+Per the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/builds/submit), if Kaniko is being used the Cloudflare certificate will need to be installed in the Kaniko CA store. Instructions can be found [here](https://docs.gitlab.com/ee/ci/docker/using_kaniko.html#using-a-registry-with-a-custom-certificate). 
 
 ### AWS CLI
 

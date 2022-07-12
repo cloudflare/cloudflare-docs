@@ -32,7 +32,7 @@ Replacing long-lived API keys with short-lived certificates offers the following
 
 ## Before you start
 
-1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+1.  [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/)
 1.  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
 
 ---
@@ -42,8 +42,6 @@ Replacing long-lived API keys with short-lived certificates offers the following
 First, build a Zero Trust policy to enforce rules whenever any user attempts to connect to the resources being protected. Building the Zero Trust policy first ensures that resources are not connected to Cloudflare for a period of time before a Zero Trust policy can be added.
 
 In the Zero Trust dashboard, open the `Applications` page of the `Access` section. Select the "Self-hosted" option.
-
-![Add App](/cloudflare-one/static/zero-trust-security/ssh-slc/self-hosted.png)
 
 Name the application using a subdomain of a domain active in your Cloudflare account. This will be the host that users configure in their SSH configuration file to reach the protected resources.
 
@@ -114,11 +112,7 @@ Users will now be able to authenticate through Cloudflare Access and connect ove
 
 You can extend the Zero Trust security model by replacing long-lived SSH keys with short-lived certificates provided by Cloudflare Access. To do so, navigate to the Zero Trust dashboard and open the `Service Authentication` page. Select the `SSH` tab.
 
-In the `Application` drop-down, select the application created previously and click **Generate certificate**.
-
-![Gen Cert](/cloudflare-one/static/zero-trust-security/ssh-slc/gen-cert.png)
-
-Cloudflare Access will display the public key and an audience tag for the generated certificate.
+In the `Application` drop-down, select the application created previously and click **Generate certificate**. Cloudflare Access will display the public key and an audience tag for the generated certificate.
 
 ![Gen Cert Output](/cloudflare-one/static/zero-trust-security/ssh-slc/gen-cert-output.png)
 
