@@ -380,3 +380,40 @@ services = [
   { binding = "TEST_BINDING", service = "TEST_WORKER" }
 ]
 ```
+
+## Dev
+
+You can configure various aspects of local development, such as the local protocol or port.
+
+{{<definitions>}}
+
+- `ip` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - IP address for the local dev server to listen on. Defaults to `localhost`.
+
+- `port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Port for the local dev server to listen on. Defaults to `8787`.
+
+- `local_protocol` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  -  Protocol that local dev server listens to requests on. Defaults to `http`.
+
+- `local_protocol` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  -  Protocol that the local dev server forwards requests on. Defaults to `https`.
+
+- `host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  -  Host to forward requests to, defaults to the host of the first `route` of the Worker.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+[dev]
+ip = "192.168.1.1"
+port = "8080"
+local_protocol = "http"
+```
