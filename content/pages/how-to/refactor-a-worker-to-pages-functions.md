@@ -110,17 +110,11 @@ const HandleAirtableData = (body) => {
 ```
 
 
-## Using Pages Functions
+### Refactor your Worker
 
-[Pages Functions](/pages/platform/functions/) are serverless functions that run on Cloudflare Pages together with your application. They enable you to run server-side code that add dynamic functionality without running a dedicated server. While the above code works perfectly, you can handle the form submission logic for your client in the same application with Pages Functions.
+To refactor the above Worker, go to your Pages project directory and create a `/functions` folder. In `/functions`, create a `form.js` file. This file will handle form submissions. 
 
-You can refactor your Airtable Worker to Pages Functions by first creating a `functions` folder at the base of your application. Within this folder, you can create a `form.js` file to handle form submissions. Next, you will refactor the Worker code to fit the Pages Function syntax in this file.
-
-### Refactoring your Worker
-
-Every Worker has an `addEventListener` to listen for `fetch` events, but you will not need this in a Pages Function. Instead, you will `export` a single `OnRequest` function, and depending on the HTTPS request it handles, you will name it accordingly. Refer to [Function documentation](/pages/platform/functions/#writing-your-first-function) to select the appropriate method for your function.
-
-In the case of accepting form submissions and posting to an Airtable, you will export a single `OnRequestPost` function like the example below:
+Then, in the `form.js` file, export a single `onRequestPost`:
 
 ```js
 ---
@@ -132,7 +126,11 @@ export async function onRequestPost({ request, env }) {
 
 ```
 
-The above code takes a `request` and `env` as arguments which passes these props down to the `submitHandler` function, which remains unchanged from the original Worker. However, because Functions allow you to specify the HTTPS request type, you can remove the `request.method` check, which is handled by naming the request type. 
+Every Worker has an `addEventListener` to listen for `fetch` events, but you will not need this in a Pages Function. Instead, you will `export` a single `onRequest` function, and depending on the HTTPS request it handles, you will name it accordingly. Refer to [Function documentation](/pages/platform/functions/#writing-your-first-function) to select the appropriate method for your function.
+
+The above code takes a `request` and `env` as arguments which pass these properties down to the `submitHandler` function, which remains unchanged from the [original Worker](#handle-form-entries-with-airtable-and-workers). However, because Functions allow you to specify the HTTPS request type, you can remove the `request.method` check in your Worker. This is now handled by Pages Functions by naming the `onRequest` handler.
+
+Now, you will introduce the `submitHandler` function and pass the `env` parameter as a property. This will allow you to access `env` in the `HandleAirtableData` function below. This function does a `POST` request to Airtable using your Airtable credentials:
 
 ```js
 ---
@@ -164,7 +162,7 @@ async function submitHandler({ request, env }) {
 }
 ```
 
-The code block above shows that you pass the `env` parameter as props so we can access it in the `HandleAirtableData` function below. This function does a `POST` request to Airtable using your Airtable credentials.  
+Finally, create a `HandleAirtableData` function. This function will send a `fetch` request to Airtable with your Airtable credentials and the body of your request:
 
 ```js
 ---
@@ -189,16 +187,11 @@ const HandleAirtableData = async function onRequest({ body, env }) {
 };
 ```
 
-You can test your function [locally using Wrangler](/pages/platform/functions/#develop-and-preview-locally).
+You can test your Function [locally using Wrangler](/pages/platform/functions/#develop-and-preview-locally). By completing this guide, you have successfully refactored your form submission Worker to a form submission Pages Function.
 
 ## Related resources
-
-Now that you have seen Pages Functions in a production example. You can refer the [documentation](/pages/platform/functions/) to learn more. You can also check out these tutorials and documentaion for more examples:
 
 - [HTML forms](/pages/tutorials/forms/)
 - [Plugins documentation](/pages/platform/functions/plugins/)
 - [Functions documentation](/pages/platform/functions/)
-
-
-
 
