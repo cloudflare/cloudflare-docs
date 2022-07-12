@@ -450,6 +450,8 @@ kv_namespaces = [
 
 [env.staging]
 name = "my-worker-staging"
+route = { pattern = "staging.example.org/*", zone_name = "example.org" }
+
 kv_namespaces = [
   { binding = "MY_NAMESPACE", id = "STAGING_KV_ID" }
 ]
