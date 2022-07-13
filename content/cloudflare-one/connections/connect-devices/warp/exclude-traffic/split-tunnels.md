@@ -74,7 +74,7 @@ Many Cloudflare Zero Trust services rely on traffic going through WARP. If you a
 | Feature | Domains to include |
 | --------| ------------------ |
 | [Device posture checks](/cloudflare-one/identity/devices/)| `<your-team-name>.cloudflareaccess.com`, IdP used to authenticate into Access, and the application protected by Access |
-| [WARP session duration](/cloudflare-one/policies/filtering/enforce-sessions/) | `<your-team-name>.cloudflareaccess.com>` |
+| [WARP session duration](/cloudflare-one/policies/filtering/enforce-sessions/) | `<your-team-name>.cloudflareaccess.com>` and the HTTP or Network resource with the session re-authentication policy |
 
 ## Important platform differences
 
