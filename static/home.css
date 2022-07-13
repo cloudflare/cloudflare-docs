@@ -563,9 +563,19 @@ html[is-site-page] .DocsContent {
     background: #242628
 }
 
+.TriBlock p {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding-top: .25em;
+}
+
 .TriBlock a {
-    color: inherit;
     font-size: .85em;
+}
+
+.TriBlock ul li {
+    list-style-type: none;
+    padding: 0; /* Remove padding */
 }
 
 .ConnectHeader {
