@@ -22,6 +22,17 @@ To create a Custom Domain, you must have:
 
 The interface provides active feedback on valid and invalid entries. Valid entries are hostnames on an active Cloudflare zone. If you attempt to create a Custom Domain on a hostname with an existing DNS record, Cloudflare will confirm that you would like to replace the existing record. Custom Domains can be attached to your Worker via API or within the Cloudflare dashboard under **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Add Custom Domain**.
 
+## Configure your `wrangler.toml`
+
+To configure a subdomain in your `wrangler.toml`, add the following to your environment:
+
+```toml
+Route = [
+{pattern = “subdomain.example.com”, 
+custom domains = true,
+}]
+```
+
 ## Fetch
 
 Custom Domains are considered the origin for your request. This means calling `fetch()` on the initial request is, in most cases, an anti-pattern. Instead, create new `Request` objects to reference any external dependencies, or use Cloudflare's built in primitives via bindings.

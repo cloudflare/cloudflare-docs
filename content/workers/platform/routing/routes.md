@@ -77,6 +77,19 @@ A route can be specified without being associated with a Worker; this will act t
 
 In this example, all requests destined for example.com and whose paths are prefixed by `/images/` would be routed to `worker-script`, _except_ for `/images/cat.png`, which would bypass Workers completely. Requests with a path of `/images/cat.png?foo=bar` would be routed to `worker-script`, due to the presence of the query string.
 
+## Configure your `wrangler.toml`
+
+To configure a route in your `wrangler.toml`, add the following to your environment:
+
+```toml
+Route = [
+{pattern = “example.com/about”, 
+Zone_id = <YOUR_ZONE_ID>,
+}]
+```
+
+If you have specified your zone ID in the environment of your `wrangler.toml`, you will not need to write it again in object form.
+
 ### Validity
 
 The following set of rules govern route pattern validity.
