@@ -5009,11 +5009,12 @@ pre {
   box-shadow: 1px 0 rgba(var(--shadow-color-rgb), 0.12);
 }
 
-.tab-label-wrapper:hover {
+.active, .tab-label-wrapper:hover {
   background-color: rgba(var(--gray-3-rgb), 0.19);
+  color: rgb(29, 31,32);
 }
 
-[theme="dark"] .tab-label-wrapper:hover,
+[theme="dark"] .active, .tab-label-wrapper:hover,
 [theme="dark"] .tab-label-wrapper a:hover {
   background-color: rgba(var(--orange-rgb), 0.08);
   color: var(--code-orange);
