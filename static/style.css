@@ -5011,6 +5011,7 @@ pre {
 
 .active, .tab-label-wrapper:hover {
   background-color: rgba(var(--gray-3-rgb), 0.19);
+  color: rgb(29, 31,32);
 }
 
 [theme="dark"] .active, .tab-label-wrapper:hover,
