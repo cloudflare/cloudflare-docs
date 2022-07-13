@@ -32,7 +32,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnam
 
 ```
 
-4. Make an API call such as the example below, specifying `”early_hints”:”on”` within the [custom metadata](/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/):
+4. Make an API call such as the example below, specifying `”early_hints”:”on”` within the [SSL settings](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname):
 
 ```json
 $ curl -sXPATCH \
@@ -44,11 +44,10 @@ $ curl -sXPATCH \
 -d '{
  "ssl": {
    "method": "http",
-   "type":"dv"
- },
- "custom_metadata": {
-   "customer_id": "12345",
-   "early_hints”:”on”
+   "type":"dv",
+   "settings": {
+    "early_hints": "on"
+  }
  }
 }'
 
