@@ -151,6 +151,6 @@ As a SaaS provider, you must removed a customer's custom hostname from your zone
 
 {{<Aside type="note">}}
 
-For end customers: if you have recently churned with your service (SaaS) provider but traffic continues to route to them, your service provider likely still has your domain listed as a custom hostname. Contact [Cloudflare Support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support) for further assistance.
+For end customers: if you have recently churned with your service (SaaS) provider but traffic continues to route to them, your service provider likely still has your domain listed as a custom hostname. Contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) for further assistance.
 
 {{</Aside>}}
