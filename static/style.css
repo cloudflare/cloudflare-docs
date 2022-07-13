@@ -5009,7 +5009,7 @@ pre {
   box-shadow: 1px 0 rgba(var(--shadow-color-rgb), 0.12);
 }
 
-.active, .tab-label-wrapper:hover {
+.active,.tab-label-wrapper:hover {
   background-color: rgba(var(--gray-3-rgb), 0.19);
   color: rgb(29, 31,32);
 }
@@ -5027,6 +5027,7 @@ pre {
   text-decoration: none;
   text-align: center;
   color: currentColor;
+    /* pointer-events: none; */
   cursor: pointer;
   top: 0;
   overflow-wrap: break-word;

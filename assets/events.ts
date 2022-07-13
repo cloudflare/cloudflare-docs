@@ -141,9 +141,10 @@ export function tabs() {
 }
 
 export function activeTab() {
-  let header = document.getElementById("tab-active");
-  let tabs = header.getElementsByClassName("tab-label");
-  for (let i = 0; i < tabs.length; i++) {
+  var header = document.getElementById("tab-active");
+  var tabs = header.getElementsByClassName("tab-label");
+  console.log(tabs)
+  for (var i = 0; i < tabs.length; i++) {
     (tabs[i] as HTMLElement).addEventListener("click", function name() {
       let current = document.getElementsByClassName("active");
       current[0].className = current[0].className.replace(" active", "");
