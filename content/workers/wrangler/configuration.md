@@ -78,7 +78,7 @@ At a minimum, `name`, `main` and `compatibility_date` are required to publish a 
 
 - `usage_model` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The usage model of your Worker. Refer to [usage models](/workers/platform/usage-models/).
+  - The usage model of your Worker. Refer to [usage models](/workers/platform/pricing/#usage-models).
 
 - `build` {{<type-link href="#build">}}Build{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -95,7 +95,7 @@ At a minimum, `name`, `main` and `compatibility_date` are required to publish a 
 
 - `node_compat` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Add polyfills for node builtin modules and globals. Refer to [node compatibility](/workers/platform/node-compatibility/).
+  - Add polyfills for node builtin modules and globals. Refer to [node compatibility](#node-compatibility).
 
 {{</definitions>}}
 
@@ -429,6 +429,17 @@ local_protocol = "http"
 ```
 
 {{<definitions>}}
+
+## Node compatibility
+
+You can add experimental Node compatibility to your Worker by adding the `node_compat` key to your `wrangler.toml`
+or by passing the `--node-compat` flag to `wrangler`.
+
+It's not possible to polyfill all Node APIs or behaviours, but it's possible to polyfill some of them. APIs such as `fs`
+can't be replicated as Workers has no concept of a filesystem.
+
+This is currently powered by `@esbuild-plugins/node-globals-polyfill`
+which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
 
 ## Example configuration
 
