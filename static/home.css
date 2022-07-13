@@ -576,6 +576,8 @@ html[is-site-page] .DocsContent {
 .TriBlock ul li {
     list-style-type: none;
     padding: 0; /* Remove padding */
+    margin-top: 0px;
+    margin-left: 0px;
 }
 
 .ConnectHeader {
