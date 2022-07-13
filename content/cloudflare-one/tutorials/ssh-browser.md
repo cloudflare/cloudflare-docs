@@ -1,5 +1,5 @@
 ---
-updated: 2021-04-15
+updated: 2022-07-12
 category: 🔐 Zero Trust
 pcx-content-type: tutorial
 title: Render an SSH client in a browser

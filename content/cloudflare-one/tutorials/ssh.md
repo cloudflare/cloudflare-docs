@@ -1,5 +1,5 @@
 ---
-updated: 2021-03-23
+updated: 2022-07-12
 category: 🔐 Zero Trust
 pcx-content-type: tutorial
 title: Connect through Cloudflare Access over SSH
