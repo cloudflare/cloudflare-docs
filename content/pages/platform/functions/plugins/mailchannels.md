@@ -70,7 +70,6 @@ The `method` and `action` attributes of the HTML form do not need to be set. The
 
 For more information about MailChannels and the options they support, refer to [the documentation](https://mailchannels.zendesk.com/hc/en-us/articles/4565898358413-Sending-Email-from-Cloudflare-Workers-using-MailChannels-Send-API).
 
-
 ## DKIM support for Mailchannel API
 
 The MailChannels API also allows you add a DomainKeys Identified Mail (DKIM) which is an email authentication standard that helps you to sign email messages from your domain with a digital signature using public-key cryptography. Refer to [Cloudflare DNS DKIM guide](https://www.cloudflare.com/en-ca/learning/dns/dns-records/dns-dkim-record/) to learn more.
@@ -119,8 +118,8 @@ Look in your generated `dkim_record.txt` file for your generated credentials, an
 4. Enter your domain name.
 5. Enter the DKIM record into your DNS server as a text (TXT) entry. The name of your DNS record must follow this convention `[selector key]._domainkey.<Your domain>`. 
 
-{{<Aside type= "note" header="Value of selector">}}
-You can choose any value as the selector, as long as it is permitted to use as a DNS hostname (that is: all lowercase letters, numbers and hyphens). It is recommended to use the name of the service and some date indicator, so it's easy to remember where this key is used. E.g: cloudflare2022.
+{{<Aside type= "note" header="Selector value">}}
+You can choose any value as the selector, as long as it is permitted as a DNS hostname (that is, all lowercase letters, numbers and hyphens). It is recommended to use the name of the service and a date indicator. This makes it easy to remember where this key is used, for example, `cloudflare2022`.
 {{</Aside>}}
 
 6. Add the content of your `dkim_record.txt` file in the content field.
@@ -157,10 +156,8 @@ export const onRequest: PagesFunction = mailChannelsPlugin({
 });
 ```
 
-### Addition information 
+### Related resources
 
-- [Mailchannel article on adding DKIM with Workers](https://mailchannels.zendesk.com/hc/en-us/articles/7122849237389-Adding-a-DKIM-Signature)
-
-- [How to create a DKIM record with OpenSSL](https://www.mailhardener.com/kb/how-to-create-a-dkim-record-with-openssl)
-
-- [Cloudflare + MailChannels Email Sending with DKIM](https://github.com/maggie-j-liu/mail)
+* [Adding a DKIM Signature](https://mailchannels.zendesk.com/hc/en-us/articles/7122849237389-Adding-a-DKIM-Signature)
+* [How to create a DKIM record with OpenSSL](https://www.mailhardener.com/kb/how-to-create-a-dkim-record-with-openssl)
+* [Cloudflare + MailChannels Email Sending with DKIM](https://github.com/maggie-j-liu/mail)
