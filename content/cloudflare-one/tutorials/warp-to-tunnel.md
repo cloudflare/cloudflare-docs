@@ -157,26 +157,16 @@ Once the certificate has been installed, you can configure Gateway to inspect HT
 
 ## Enroll a device
 
-1.  Follow the [instructions](/cloudflare-one/connections/connect-devices/warp/deployment/) to install the WARP client depending on your device type. Cloudflare Gateway does not need a special version of the client.
+1. Follow the [instructions](/cloudflare-one/connections/connect-devices/warp/deployment/) to install the WARP client depending on your device type. Cloudflare Gateway does not need a special version of the client.
 
-1.  Once the client is installed, click the gear icon.
+2. Once the client is installed, select the gear icon.
 
-    ![WARP](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
+3. Under the **Account** tab, select **Login with Cloudflare for Teams**.
 
-1.  Under the **Account** tab, click **Login with Cloudflare for Teams**.
+4. Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 
-    ![Account View](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/account-view.png)
-
-1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
-
-    ![Team Name](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
-
-The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`. These settings can be configured globally for an organization through a device management platform.
-
-![Confirm WARP](/cloudflare-one/static/secure-web-gateway/block-football/warp-mode.png)
+The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can select the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`. These settings can be configured globally for an organization through a device management platform.
 
 ## Connect via WARP
 
-Once enrolled, they will be able to connect to the private IPs configured for HTTP traffic in this example or arbitrary TCP traffic.
-
-![Private IP](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/connect-private-ip.png)
+Once enrolled, your users will be able to connect to the private IPs configured for HTTP traffic in this example or arbitrary TCP traffic.
