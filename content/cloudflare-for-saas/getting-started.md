@@ -133,8 +133,18 @@ app CNAME john.customers.saasprovider.com
 
 This routes traffic from `app.customer.com` to your origin.
 
-{{<Aside type ="note">}}
+---
 
-When an end customer churns, immediately remove their custom hostname(s) from your account. Otherwise their traffic may continue to route through your zone.
+## Step 6 - Offboard custom hostnames
 
-{{</Aside>}}
+As a SaaS provider, you must removed a customer's custom hostname from your zone if they decide to churn. Even if the end customer changes the DNS record to point elsewhere, the custom hostname on the SaaS zone will take priority. This will cause its traffic to continue to route to the SaaS zone.
+
+### Remove custom hostname
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and website.
+
+2. Select **SSL/TLS** > **Custom Hostnames**.
+
+3. Select the custom hostname and select **Delete**. 
+
+4. A confirmation window will appear. Acknowledge the warning and select **Delete** again.
