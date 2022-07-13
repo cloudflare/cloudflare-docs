@@ -241,7 +241,7 @@ For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only 
 
 ## Local Environments
 
-Wrangler allows you to set variable or secret keys locally. They only get used when you run `wrangler dev` and it is useful during development without the need to set the `[vars]` bindings in your `wrangler.toml` file.
+Wrangler allows you to set variable or secret keys locally without the need to set the `[vars]` bindings in your `wrangler.toml` file. The variables and secrets keys you set only get used when you run `wrangler dev`.
 
 You need to create a file called `.dev.vars` next to the `wrangler.toml` file (or in the current working directory if there's no `wrangler.toml`). 
 
