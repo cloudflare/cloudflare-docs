@@ -163,11 +163,11 @@ The last step is to create a Zero Trust application to run your VNC server in th
 
 1.  Name the application and set the domain to which you would like to expose the VNC server.
 
-    ![Name application](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-domain-application.png)
+    ![Example domain name input for VNC application](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-domain-application.png)
 
 1.  Add a Zero Trust policy. In this example, we are only allowing users with emails ending in `@example.com`.
 
-    ![Create policy](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-policy.png)
+    ![Example Zero Trust policy input for VNC application](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-policy.png)
 
 1.  In **`cloudflared` settings**, set **Application Type** to be _VNC_.
 
