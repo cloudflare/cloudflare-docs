@@ -77,24 +77,22 @@ You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tu
 
 ## Configure and run the Tunnel
 
-Next, create a configuration file for the tunnel in the `.cloudflared` default directory. The following template contains the required fields but can be further modified as needed.
+1. Create a configuration file for the tunnel in the `.cloudflared` default directory. The following template contains the required fields but can be further modified as needed.
 
-```yaml
-tunnel: 8e343b13-a087-48ea-825f-9783931ff2a5
-credentials-file: /root/.cloudflared/8e343b13-a087-48ea-825f-9783931ff2a5.json
-warp-routing:
-  enabled: true
-```
+    ```yaml
+    tunnel: 8e343b13-a087-48ea-825f-9783931ff2a5
+    credentials-file: /root/.cloudflared/8e343b13-a087-48ea-825f-9783931ff2a5.json
+    warp-routing:
+    enabled: true
+    ```
 
-You can now run the Tunnel. The command below will connect this instance of `cloudflared` to Cloudflare's network. Traffic inside of your organization, from enrolled WARP agents, will be sent to this instance when the destination is this private IP range.
+2. You can now run the Tunnel. The command below will connect this instance of `cloudflared` to Cloudflare's network. Traffic inside of your organization, from enrolled WARP agents, will be sent to this instance when the destination is this private IP range.
 
-```bash
-cloudflared tunnel run grafana
-```
+    ```bash
+    cloudflared tunnel run grafana
+    ```
 
 This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/#create-route-and-configure-the-tunnel) for long-lived connections.
-
-![Config File](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/config-file.png)
 
 ## Route private IP ranges through WARP
 
