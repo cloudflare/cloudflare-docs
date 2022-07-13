@@ -5009,7 +5009,7 @@ pre {
   box-shadow: 1px 0 rgba(var(--shadow-color-rgb), 0.12);
 }
 
-.tab-label-wrapper:hover {
+.active, .tab-label-wrapper:hover {
   background-color: rgba(var(--gray-3-rgb), 0.19);
 }
 

@@ -2,11 +2,11 @@
 
 <div class="tabs-wrapper">
   <nav role="navigation" class="tabs">
-    <ul>
+    <ul id="tab-active">
       {{ range $idx, $txt := $labels }} {{- $link := replace $txt "/" "-"}}
       <li class="tab-label-wrapper">
         {{ if or (eq $link "js-sw") }}
-        <a class="tab-label" href="#" data-link="tab-{{$link}}">
+        <a class="tab-label active" href="#" data-link="tab-{{$link}}">
           JavaScript SW</a
         >
 

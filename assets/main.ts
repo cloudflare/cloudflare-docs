@@ -19,7 +19,7 @@ declare global {
   events.mobile();
   events.dropdowns();
   events.copy();
-
+  events.activeTab();
   contents.toc();
   events.tabs();
 })();
