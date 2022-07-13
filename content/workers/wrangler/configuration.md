@@ -58,7 +58,8 @@ At a minimum, `name`, `main` and `compatibility_date` are required to publish a 
 
 - `workers_dev` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether we use `<name>.<subdomain>.workers.dev` to test and deploy your Worker. Defaults to `true`.
+  - Whether we use `<name>.<subdomain>.workers.dev` to test and deploy your Worker. If you have a Worker that
+    is only for `scheduled` events, you can set this to `false`. Defaults to `true`.
 
 - `route` {{<type-link href="#route-type">}}Route{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
