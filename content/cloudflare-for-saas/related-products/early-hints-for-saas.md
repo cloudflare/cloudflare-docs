@@ -43,10 +43,10 @@ $ curl -sXPATCH \
 -H "Content-Type: application/json" \
 -d '{
  "ssl": {
-   "method": "http",
-   "type":"dv",
-   "settings": {
-    "early_hints": "on"
+  "method": "http",
+  "type": "dv",
+  "settings": {
+   "early_hints": "on"
   }
  }
 }'
