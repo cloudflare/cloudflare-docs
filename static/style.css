@@ -4959,14 +4959,14 @@ pre {
   max-width: 700px;
   margin: 0 auto;
   position: relative;
-  padding-bottom: 5rem;
+  padding-bottom: 1rem;
   overflow-anchor: none;
   font-family: var(--sans-serif-font-family);
 }
 
 .tabs {
   position: relative;
-  border-radius: 3px;
+  /* border-radius: 3px; */
   margin-top: 3rem;
   box-shadow: 0 1px rgba(var(--shadow-color-rgb), 0.12);
 }
@@ -4983,7 +4983,7 @@ pre {
   width: 100%;
   outline: 1px solid rgba(var(--color-rgb), 0.09);
   background-color: rgb(243 243 244);
-  border-radius: 4px;
+  border-radius:var(--border-radius) var(--border-radius) 0 0;
 }
 
 [theme="dark"] .tabs>ul {
@@ -5056,7 +5056,7 @@ pre {
 .tab {
   max-height: 270px;
   display: none;
-  border-radius: 3px;
+  /* border-radius: 3px; */
   color: #2c3e50;
   border-bottom: 0.25rem solid #bdc3c7;
   overflow: auto;
