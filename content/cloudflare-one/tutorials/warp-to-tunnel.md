@@ -35,7 +35,7 @@ Once enrolled, user endpoints will be able to connect to private [RFC 1918](http
 
     The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account. This will authenticate your instance of `cloudflared` to your Cloudflare account &mdash; you will be able to create a Tunnel for any site, not just the site selected.
 
-3. Once you click one of the sites in your account, Cloudflare will download a certificate file called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
+3. Once you select one of the sites in your account, Cloudflare will download a certificate file called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
 You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
@@ -108,9 +108,7 @@ By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certai
 
 1.  On the Zero Trust Dashboard, navigate to **Settings > Network**.
 
-1.  Click **Manage**. The IP ranges listed are those that Cloudflare excludes by default. Choose the range being used for this private connection and delete it.
-
-![Split Tunnel](/cloudflare-one/static/secure-web-gateway/split-tunnel/split-tunnel-entries.png)
+1.  Select **Manage**. The IP ranges listed are those that Cloudflare excludes by default. Choose the range being used for this private connection and delete it.
 
 ## Integrate your identity provider
 
@@ -126,17 +124,15 @@ Next, build a rule to decide which devices can enroll in your account.
 
 1.  Navigate to **Settings > Devices > Device enrollment**.
 
-1.  Click **Manage**.
+1.  Select **Manage**.
 
-1.  Click **Add a rule**.
-
-    ![Device Enrollment](/cloudflare-one/static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
+1.  Select **Add a rule**.
 
     Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
 
-    ![Allow Cloudflare users](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
+    ![Example device enrollment config to allow Cloudflare users](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
 
-1.  Click **Save**.
+1.  Select **Save**.
 
 Your rule will now be visible under the **Device enrollment rules** list.
 
