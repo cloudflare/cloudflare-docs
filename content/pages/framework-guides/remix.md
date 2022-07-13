@@ -42,28 +42,6 @@ $ git branch -M main
 $ git push -u origin main
 ```
 
-## Creating Bindings 
-
-Bindings allow your Pages Functions to interact with resources on the Cloudflare platform. Add bindings like [Workers KV](/workers/runtime-apis/kv/) or [Durable Objects](/workers/runtime-apis/durable-objects/) to your Remix apps in the following steps:
-
-1. Login to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Workers** > [**KV**]( https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces).
-
-2. Select **Create namespace** to create a new KV namespace.
-
-3. Add a Namespace name and click **Add**
-
-## Adding Binding to Remix project
-
-After deploying, add a binding to your project in the following steps:
-
-1. Click on your Pages project > **Settings** > from the menu click on **Functions**.
-
-2. Under KV namespace bindings, click on the **Add binding** button, then add the name of the binding.
-
-3. Click **Save**, and your binding will be available in your project 
-
-In your Remix app, you can access your KV binding like in this [Cloudflare KV example](https://remix.run/docs/en/v1/guides/data-loading#cloudflare-kv) on Remix documentation. 
-
 ## Deploying with Cloudflare Pages
 
 Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
@@ -81,7 +59,7 @@ Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://da
 
 {{<Aside type="warning">}}
 
-Currently Cloudflare uses Node `12.18.0` in the Pages build environment, but Remix requires a newer node version >14.0.0 to build on Cloudflare Pages. To set the Node version go to _Settings_ > _Environment Variables_ > _Production_ and add `NODE_VERSION = v16.7.0` in your production option.
+Currently Cloudflare uses Node `12.18.0` in the Pages build environment, but Remix requires a newer node version >14.0.0 to build on Cloudflare Pages. To set the Node version go to **Settings** > **Environment variables** > **Production** and add `NODE_VERSION = v16.7.0` in the production option.
 
 {{</Aside>}}
 
@@ -95,6 +73,12 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Remix site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+
+## Creating and adding a binding to your Remix application
+
+A [binding](/pages/platform/functions/#adding-bindings) is how your Function (Worker) interacts with external resources. You can add KV, Durable Object, and plain-text bindings to your project. A binding is a runtime variable that the Workers runtime provides to your code. You can also use these bindings in development with [Wrangler](https://developers.cloudflare.com/workers/wrangler/get-started/).
+
+To add a KV namespace or Durable Object binding to your Remix application, refer to [Functions](/pages/platform/functions/#adding-bindings).
 
 ## Learn more
 
