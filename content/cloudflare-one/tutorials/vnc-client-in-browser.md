@@ -157,32 +157,20 @@ At this point you have a running VNC server and a Cloudflare Tunnel on your mach
 
 The last step is to create a Zero Trust application to run your VNC server in the Browser.
 
-1.  Open your [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and go to the **Access > Applications** tab.
+1.  Open your [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and go to **Access > Applications**.
 
-1.  Click **Add an application**.
+1.  Select **Add an application**. Choose **Self-hosted**.
 
-1.  Select **Self-hosted**.
-
-1.  Name the application and set the domain to which you would like to expose the VNC server:
+1.  Name the application and set the domain to which you would like to expose the VNC server.
 
     ![Name application](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-domain-application.png)
 
-1.  Add a Zero Trust policy. In this example we are only allowing users with emails ending in `@example.com`.
+1.  Add a Zero Trust policy. In this example, we are only allowing users with emails ending in `@example.com`.
 
     ![Create policy](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-policy.png)
 
 1.  In **`cloudflared` settings**, set **Application Type** to be _VNC_.
 
-And now you are ready to use the VNC terminal directly in the browser. Users will first see a login screen with your configured identity providers:
+Users will see a login screen with your configured identity providers. After successful authentication, they may be prompted to enter the VNC server’s password.
 
-![VNC login screen](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-login-screen.png)
-
-After successful authentication, they may be prompted to enter the VNC server’s password:
-
-![VNC password prompt](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-server-password.png)
-
-Then your user will be directed into your VNC server:
-
-![VNC server](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-server.png)
-
-You’ve now successfully deployed a Zero Trust VNC server in the browser. You can define granular access controls across each individual VNC instance.
+You can define granular access controls across each individual VNC instance.
