@@ -7,9 +7,9 @@ title: Changelog
 
 ## 2022-07-12
 
-- S3 XML documents sent to R2 that have an XML declaration aren't rejected with 400 Bad Request / MalformedXML.
+- S3 XML documents sent to R2 that have an XML declaration are not rejected with `400 Bad Request` / `MalformedXML`.
 - Minor S3 XML compatability fix impacting Arq Backup on Windows only (not the Mac version). Response now contains XML declaration tag prefix and the `xmlns` attribute is present on all top-level tags in the response.
-- Beta `ListMultipartUploads` support
+- Beta `ListMultipartUploads` support.
 
 ## 2022-07-06
 
