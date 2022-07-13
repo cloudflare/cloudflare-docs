@@ -239,7 +239,7 @@ If your IT team has configured your computer's proxy settings, be aware that the
 
 For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only use `https_proxy` for outgoing requests.
 
-## Local Environments
+## Local environments
 
 Wrangler allows you to set variable or secret keys locally without the need to set the `[vars]` bindings in your `wrangler.toml` file. The variables and secrets keys you set only get used when you run `wrangler dev`.
 
