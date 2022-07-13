@@ -12,12 +12,6 @@ Schema Validation allows you to check if incoming traffic complies with a previo
 
 For help configuring Schema Validation for one or more hosts using the dashboard, refer to [Configure Schema Validation](/api-shield/security/schema-validation/configure/).
 
-{{<Aside type="note">}}
-
-This feature is only available for customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
-
-{{</Aside>}}
-
 ## Operation IDs
 
 For more control with Schema Validation, include unique Operations IDs for each endpoint and method pair defined in the schema. Cloudflare supports Operation IDs with a maximum size of 32 characters.
@@ -37,3 +31,7 @@ The accepted file formats are YAML (`.yml` or `.yaml` file extension) and JSON (
 Currently, API Shield cannot validate some features of API schemas, including the following: request body validations, all responses, external references, non-basic path templating, or unique items.
 
 Regular expression support is a paid add-on in the Enterprise plan.
+
+## Availability
+
+Schema Validation is only available for Enterprise customers. If you are interested in using this product, contact your account team.

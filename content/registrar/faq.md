@@ -47,6 +47,8 @@ ICANN prohibits domain transfers within 60 days of a change to the WHOIS data or
 
 You can leave the domain **In Progress** and Cloudflare will attempt to process the transfer until the 60-day window passes.
 
+{{<Aside type="note" header="Note">}}This information does not apply to `.uk` domains.{{</Aside>}}
+
 ### Why am I not able to start a transfer?
 
 If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg'>unverified email address</a>, you might experience issues when initiating a domain transfer.

@@ -17,7 +17,7 @@ Asynchronous tasks such as `fetch` are not executed at the top level in a Worker
 
 {{<Aside type="warning" header="Worker to Worker">}}
 
-It is not currently (January 2022) possible to send fetch requests to other Workers (Worker to Worker) within the same zone. The origin server, if any, will receive the request instead. However, sending requests to Workers within other zones is possible and will work as normal.
+Worker-to-Worker `fetch` requests are now possible with [Service bindings](/workers/platform/bindings/about-service-bindings/).
 
 {{</Aside>}}
 

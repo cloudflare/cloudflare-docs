@@ -669,7 +669,7 @@ y
 Interact with buckets in an R2 store.
 
 {{<Aside type="note">}}
-The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](https://developers.cloudflare.com/workers/runtime-apis/r2/).
+The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/workers/runtime-apis/r2/).
 {{</Aside>}}
 
 ### `create`
@@ -877,9 +877,7 @@ $ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND..>]
 
 {{</definitions>}}
 
-### `project`
-
-#### `list`
+### `project list`
 
 List your Pages projects.
 
@@ -887,7 +885,7 @@ List your Pages projects.
 $ wrangler pages project list
 ```
 
-#### `create`
+### `project create`
 
 Create a new Cloudflare Pages project.
 
@@ -904,9 +902,7 @@ $ wrangler pages project create [PROJECT-NAME] [OPTIONS]
 
 {{</definitions>}}
 
-### `deployment`
-
-#### `list`
+### `deployment list`
 
 List deployments in your Cloudflare Pages project.
 
@@ -921,34 +917,9 @@ $ wrangler pages deployment list [OPTIONS]
 
 {{</definitions>}}
 
-#### `create`
-
-Publish a directory of static assets as a Pages deployment.
-
-```sh
-$ wrangler pages deployment create [DIRECTORY] [OPTIONS]
-```
-
-{{<definitions>}}
-
-- `DIRECTORY` {{<type>}}string{{</type>}}
-  - The directory of static files to upload.
-- `--project-name` {{<type>}}string{{</type>}}
-  - The name of the project you want to deploy to.
-- `--branch` {{<type>}}string{{</type>}}
-  - The name of the branch you want to deploy to.
-- `--commit-hash` {{<type>}}string{{</type>}}
-  - The SHA to attach to this deployment.
-- `--commit-message` {{<type>}}string{{</type>}}
-  - The commit message to attach to this deployment.
-- `--commit-dirty` {{<type>}}boolean{{</type>}}
-  - Whether or not the workspace should be considered dirty for this deployment.
-
-{{</definitions>}}
-
 ### `publish`
 
-Publish a directory of static assets as a Pages deployment.
+Deploy a directory of static assets as a Pages deployment.
 
 ```sh
 $ wrangler pages publish [DIRECTORY] [OPTIONS]
@@ -970,6 +941,18 @@ $ wrangler pages publish [DIRECTORY] [OPTIONS]
   - Whether or not the workspace should be considered dirty for this deployment.
 
 {{</definitions>}}
+
+{{<Aside type="note">}}
+
+Your site is deployed to `<PROJECT_NAME>.pages.dev`. If you do not provide the `--project-name` argument, you will be prompted to enter <PROJECT_NAME> in your terminal after you run the command.
+
+{{</Aside>}}
+
+{{<Aside type="note">}}
+
+This command has an alias of `wrangler pages deploy create`.
+
+{{</Aside>}}
 
 ---
 

@@ -20,7 +20,7 @@ anim=false
 ---
 header: Workers
 ---
-cf: {images: {anim: false}}
+cf: {image: {anim: false}}
 ```
 
 #### `background`
@@ -38,7 +38,7 @@ background=%23RRGGBB
 ---
 header: Workers
 ---
-cf: {images: {background: "#RRGGBB"}}
+cf: {image: {background: "#RRGGBB"}}
 ```
 
 #### `blur`
@@ -56,7 +56,7 @@ blur=50
 ---
 header: Workers
 ---
-cf: {images: {blur: 50}}
+cf: {image: {blur: 50}}
 ```
 
 #### `brightness`
@@ -74,7 +74,7 @@ brightness=0.5
 ---
 header: Workers
 ---
-cf: {images: {brightness: 0.5}}
+cf: {image: {brightness: 0.5}}
 ```
 
 #### `contrast`
@@ -92,7 +92,7 @@ contrast=0.5
 ---
 header: Workers
 ---
-cf: {images: {contrast: 0.5}}
+cf: {image: {contrast: 0.5}}
 ```
 
 #### `dpr`
@@ -110,7 +110,7 @@ dpr=1
 ---
 header: Workers
 ---
-cf: {images: {dpr: 1}}
+cf: {image: {dpr: 1}}
 ```
 
 #### `fit`
@@ -131,7 +131,7 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
   ---
   header: Workers
   ---
-  cf: {images: {fit: "scale-down"}}
+  cf: {image: {fit: "scale-down"}}
   ```
 
   - `contain`  
@@ -148,7 +148,7 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
   ---
   header: Workers
   ---
-  cf: {images: {fit: "contain"}}
+  cf: {image: {fit: "contain"}}
   ```
 
   - `cover`  
@@ -165,7 +165,7 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
   ---
   header: Workers
   ---
-  cf: {images: {fit: "cover"}}
+  cf: {image: {fit: "cover"}}
   ```
 
   - `crop`  
@@ -182,7 +182,7 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
   ---
   header: Workers
   ---
-  cf: {images: {fit: "crop"}}
+  cf: {image: {fit: "crop"}}
   ```
 
   - `pad`  
@@ -199,7 +199,7 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
   ---
   header: Workers
   ---
-  cf: {images: {fit: "pad"}}
+  cf: {image: {fit: "pad"}}
   ```
 
 #### `format`
@@ -226,7 +226,7 @@ format=auto
 ---
 header: Workers
 ---
-cf: {images: {format: "avif"}}
+cf: {image: {format: "avif"}}
 ```
 
 For the `format:auto` option to work with a custom Worker, you need to parse the `Accept` header. Refer to [this example Worker](/images/image-resizing/resize-with-workers/#an-example-worker) for a complete overview of how to set up an Image Resizing Worker.
@@ -262,7 +262,7 @@ gamma=0.5
 ---
 header: Workers
 ---
-cf: {images: {gamma: 0.5}}
+cf: {image: {gamma: 0.5}}
 ```
 
 #### `gravity`
@@ -283,7 +283,7 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
   ---
   header: Workers
   ---
-  cf: {images: {gravity: "auto"}}
+  cf: {image: {gravity: "auto"}}
   ```
 
   - `side`  
@@ -306,11 +306,11 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
   ---
   header: Workers
   ---
-  cf: {images: {gravity: "right"}}
+  cf: {image: {gravity: "right"}}
 
   or
 
-  cf: {images: {gravity: {x:0.5, y:0.2}}}
+  cf: {image: {gravity: {x:0.5, y:0.2}}}
   ```
 
 #### `height`
@@ -328,7 +328,7 @@ height=250
 ---
 header: Workers
 ---
-cf: {images: {height: 250}}
+cf: {image: {height: 250}}
 ```
 
 #### `metadata`
@@ -349,7 +349,7 @@ Controls amount of invisible metadata (EXIF data) that should be preserved. Colo
   ---
   header: Workers
   ---
-  cf: {images: {metadata: "keep"}}
+  cf: {image: {metadata: "keep"}}
   ```
 
   - `copyright`  
@@ -366,7 +366,7 @@ Controls amount of invisible metadata (EXIF data) that should be preserved. Colo
   ---
   header: Workers
   ---
-  cf: {images: {metadata: "copyright"}}
+  cf: {image: {metadata: "copyright"}}
   ```
 
   - `none`  
@@ -383,7 +383,7 @@ Controls amount of invisible metadata (EXIF data) that should be preserved. Colo
   ---
   header: Workers
   ---
-  cf: {images: {metadata: "none"}}
+  cf: {image: {metadata: "none"}}
   ```
 
 #### `onerror=redirect`
@@ -403,7 +403,7 @@ onerror=redirect
 ---
 header: Workers
 ---
-cf: {images: {onerror: "redirect"}}
+cf: {image: {onerror: "redirect"}}
 ```
 
 #### `quality`
@@ -423,7 +423,7 @@ quality=50
 ---
 header: Workers
 ---
-cf: {images: {quality: 50}}
+cf: {image: {quality: 50}}
 ```
 
 #### `rotate`
@@ -441,7 +441,7 @@ rotate=90
 ---
 header: Workers
 ---
-cf: {images: {rotate: 90}}
+cf: {image: {rotate: 90}}
 ```
 
 #### `sharpen`
@@ -459,7 +459,7 @@ sharpen=2
 ---
 header: Workers
 ---
-cf: {images: {sharpen: 2}}
+cf: {image: {sharpen: 2}}
 ```
 
 #### `trim`
@@ -477,7 +477,7 @@ trim=20;30;20;0
 ---
 header: Workers
 ---
-cf: {images: {trim: {"top": 12, "bottom": 34, "left": 56, "right": 78}}}
+cf: {image: {trim: {"top": 12, "bottom": 34, "left": 56, "right": 78}}}
 ```
 
 #### `width`
@@ -495,5 +495,5 @@ width=250
 ---
 header: Workers
 ---
-cf: {images: {width: 250}}
+cf: {image: {width: 250}}
 ```

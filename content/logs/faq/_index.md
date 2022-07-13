@@ -29,6 +29,12 @@ For questions about Logpush.
 
 {{<button type="primary"  href="/logs/faq/logpush/">}}Logpush  ❯{{</button>}}
 
+## Instant Logs
+
+For questions about Instant Logs.
+
+{{<button type="primary"  href="/logs/faq/instant-logs/">}}Instant Logs ❯{{</button>}}
+
 ## Logpull API
 
 For questions about the Logpull API.

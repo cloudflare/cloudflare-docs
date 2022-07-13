@@ -4,9 +4,9 @@ title: Configuration
 weight: 3
 ---
 
-## Configure `wrangler.toml`
+# Configure `wrangler.toml`
 
-`wrangler` optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker. This document serves as a reference for all the fields and acceptable values in this configuration file.
+Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker. This document serves as a reference for all the fields and acceptable values in this configuration file.
 
 The configuration for a Worker can become complex when you can define different [environments](/workers/platform/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.
@@ -68,30 +68,26 @@ KEY = "value"
 # To learn more about KV namespaces, refer to:
 # https://developers.cloudflare.com/workers/learning/how-kv-works
 # @default `[]`
+# @param {string} binding The binding name used to refer to the KV namespace
+# @param {string} id The ID of the KV namespace at the edge
+# @param {string} preview_id The ID of the KV namespace used during `wrangler dev`
 # not inherited
-kv_namespaces = [{
-  # The binding name used to refer to the KV namespace
-  binding = "TEST_NAMESPACE",
-  # The ID of the KV namespace at the edge
-  id = "",
-  # The ID of the KV namespace used during `wrangler dev`
-  preview_id = ""
-  }]
+kv_namespaces = [
+  { binding = "TEST_NAMESPACE", id = "", preview_id = "" }
+]
 
 # A list of Durable Objects that your Worker should be bound to.
 # To learn more about Durable Objects, refer to:
 # https://developers.cloudflare.com/workers/learning/using-durable-objects
 # @default `{bindings:[]}`
+# @param {string} name The name of the binding used to refer to the Durable Object
+# @param {string} class_name The exported class name of the Durable Object
+# @param {string} script_name The script where the Durable Object is defined (if it is external to this Worker)
 # not inherited
 [durable_objects]
-  bindings = [{
-    # The name of the binding used to refer to the Durable Object
-    name = "TEST_OBJECT",
-    # The exported class name of the Durable Object
-    class_name = "",
-    # The script where the Durable Object is defined (if it is external to this Worker)
-    script_name = ""
-  }]
+  bindings = [
+    { name = "TEST_OBJECT", class_name = "", script_name = "" }
+  ]
 
 # A list of migrations that should be uploaded with your Worker.
 # These define changes in your Durable Object declarations.
@@ -108,15 +104,13 @@ kv_namespaces = [{
 
 # Specifies R2 buckets that are bound to this Worker environment.
 # @default `[]`
+# @param {string} binding The binding name used to refer to the R2 bucket in the Worker.
+# @param {string} bucket_name The name of this R2 bucket at the edge.
+# @param {string} preview_bucket_name The preview name of this R2 used during `wrangler dev`
 # not inherited
-r2_buckets  = [{
-  # The binding name used to refer to the R2 bucket in the Worker.
-  binding = "TEST_BUCKET",
-  # The name of this R2 bucket at the edge.
-  bucket_name = "",
-  # The preview name of this R2 used during `wrangler dev`
-  preview_bucket_name =  ""
-}]
+r2_buckets  = [
+  { binding = "TEST_BUCKET", bucket_name = "", preview_bucket_name =  "" }
+]
 
 # Configures a custom build step to be run by Wrangler when building your Worker.
 # Refer to the [custom builds documentation](https://developers.cloudflare.com/workers/cli-wrangler/configuration#build)
@@ -215,4 +209,32 @@ compatibility_flags = [
     "formdata_parser_supports_files"
 ]
 
+# A list of other Cloudflare services bound to this service.
+# @default `[]`
+# @param {string} binding The binding name used to refer to the bound service.
+# @param {string} service The name of the service.
+# @param {string} environment The environment of the service (For example, production, staging, etc) (optional).
+services = [
+  { binding = "TEST_BINDING", service = "", environment = "" }
+]
 ```
+
+## Proxy support
+
+To enable proxy setup, use Wrangler with your VPN or HTTP proxy by configuring your computer's environment variables. Note that when using Wrangler in corporate environments that require the use of a VPN or HTTP proxy, you may come across a `UNABLE_TO_GET_ISSUER_CERT_LOCALLY` error. This error can be fixed with the use of environment variables.
+
+Wrangler supports the following environment variable names:
+- `https_proxy`
+- `HTTPS_PROXY`
+- `http_proxy`
+- `HTTP_PROXY`
+
+For example, to configure this on macOS add `HTTP_PROXY=http://<YOUR_PROXY_HOST>:<YOUR_PROXY_PORT>` before your wrangler commands, as shown below:
+
+```bash
+HTTP_PROXY=http://localhost:8080 wrangler dev
+```
+
+If your IT team has configured your computer's proxy settings, be aware that the first non-empty environment variable in this list will be used when Wrangler makes outgoing requests.
+
+For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only use `https_proxy` for outgoing requests.

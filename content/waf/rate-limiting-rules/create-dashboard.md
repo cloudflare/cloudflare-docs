@@ -52,6 +52,14 @@ To create a new rate limiting rule:
 When you select the _Block_ action in a rate limiting rule you can optionally define a custom response for requests exceeding the configured rate limit.
 
 The custom response has three settings:
-* **Response type**: Choose a content type from the list or select the default rate limiting response. The response can be custom HTML, custom plain text, custom JSON, or custom XML.
-* **Response code**: Choose an HTTP status code for the response, in the range 400-499.
+* **Response type**: Choose a content type or the default rate limiting response from the list. The available custom response types are the following:
+
+    | Dashboard value | API value |
+    |---|---|
+    | Custom HTML | `"text/html"` |
+    | Custom Text | `"text/plain"` |
+    | Custom JSON | `"application/json"` |
+    | Custom XML | `"text/xml"` |
+
+* **Response code**: Choose an HTTP status code for the response, in the range 400-499. The default response code is 429.
 * **Response body**: The body of the response. Configure a valid body according to the response type you selected.

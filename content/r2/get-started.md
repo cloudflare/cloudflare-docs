@@ -26,6 +26,12 @@ To purchase R2:
 
 ## 1. Install Wrangler
 
+{{<Aside type="note">}}
+
+This guide is tailored to Wrangler 2. If you are still using Wrangler 1, refer to the [Migrate from Wrangler 1 guide](/workers/wrangler/migration/migrating-from-wrangler-1/).
+
+{{</Aside>}}
+
 To create your R2 bucket, install [Wrangler](/workers/get-started/guide/#2-install-the-workers-cli), the Workers CLI.
 
 To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
@@ -105,21 +111,11 @@ Find your Account ID by logging in to the Cloudflare dashboard > **Overview** > 
 
 ```toml
 name = "<YOUR_WORKER_NAME>"
-type = "javascript"
-compatibility_date = "2022-04-18"
+main = "src/index.js"
+compatibility_date = "2022-06-30"
 
 account_id = "YOUR_ACCOUNT_ID" # ← Replace with your Account ID.
 workers_dev = true
-```
-
-If you need to use an older compatibility date, you need to enable the `r2_public_beta_bindings` [compatibility flag](/workers/platform/compatibility-dates/).
-
-To do this, update your `wrangler.toml` file to include the following:
-
-```toml
-# An example date older than "2022-04-18"
-compatibility_date = "2022-02-10"
-compatibility_flags = ["r2_public_beta_bindings"]
 ```
 
 To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the `<YOUR_BUCKET_NAME>` you used to create your bucket in [step 3](#create-your-bucket):
@@ -140,30 +136,41 @@ An R2 bucket is able to READ, LIST, WRITE, and DELETE objects. You can see an ex
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request, env) {
     const url = new URL(request.url);
     const key = url.pathname.slice(1);
 
     switch (request.method) {
-      case "PUT":
+      case 'PUT':
         await env.MY_BUCKET.put(key, request.body);
         return new Response(`Put ${key} successfully!`);
-      case "GET":
+      case 'GET':
         const object = await env.MY_BUCKET.get(key);
 
-        if (!object) {
-          return new Response("Object Not Found", { status: 404 });
+        if (object === null) {
+          return new Response('Object Not Found', { status: 404 });
         }
 
-        return new Response(object.body);
-      case "DELETE":
+        const headers = new Headers();
+        object.writeHttpMetadata(headers);
+        headers.set('etag', object.httpEtag);
+
+        return new Response(object.body, {
+          headers,
+        });
+      case 'DELETE':
         await env.MY_BUCKET.delete(key);
-        return new Response("Deleted!", { status: 200 });
+        return new Response('Deleted!');
 
       default:
-        return new Response("Method Not Allowed", { status: 405 });
+        return new Response('Method Not Allowed', {
+          status: 405,
+          headers: {
+            Allow: 'PUT, GET, DELETE',
+          },
+        });
     }
-  }
+  },
 };
 ```
 

@@ -49,7 +49,7 @@ Isolate News and Media sites, which are targets for Malvertising attacks:
 | --------------------| ---------| ----------------| -------------- |
 | Content categories  | in       | News and Media | Isolate         |
 
-### Isolate unknown content
+### Isolate uncategorized content
 
 Isolate content that has not been categorized by Cloudflare Radar:
 

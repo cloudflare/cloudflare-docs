@@ -11,7 +11,7 @@ The hCaptcha Pages Plugin validates hCaptcha tokens.
 ## Installation
 
 ```sh
-npm install @cloudflare/pages-plugin-hcaptcha
+$ npm install @cloudflare/pages-plugin-hcaptcha
 ```
 
 ## Usage

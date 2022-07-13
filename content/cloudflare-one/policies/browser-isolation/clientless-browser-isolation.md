@@ -1,69 +1,104 @@
 ---
-pcx-content-type: how-to
+pcx-content-type: concept
 title: Clientless Web Isolation
 weight: 5
 ---
 
 # Clientless Web Isolation
 
-Clientless Web Isolation enables users to securely navigate high risk or sensitive websites in a remote browser without transmitting or executing any untrusted website code or sensitive data to the endpoint device.
+Clientless Web Isolation allows users to securely navigate high risk or sensitive websites in a remote browser without having to install the Cloudflare WARP client on their device.
 
-## UI Setup
+## Set up Clientless Web Isolation
 
-1. Log in to the [Zero Trust dashboard](https://dash.teams.cloudflare.com/).
-2. Navigate to **Settings** > **Browser Isolation**.
-3. Enable **Clientless Web Isolation**.
-4. Configure permissions.
-5. Navigate to `<authdomain>.cloudflareaccess.com/browser`, complete the login and start using Browser Isolation.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **Settings** > **Browser Isolation**.
+2. Toggle on **Clientless Web Isolation**.
+3. To configure permissions, click **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
 
-### Optional configurations
+## Use the remote browser
 
-{{<Aside type="note">}}
-
-Clientless Web Isolation does not require the Cloudflare Root CA to be configured on the endpoint device.
-
-{{</Aside>}}
-
-* You can configure Zero Trust to [allow / block websites within the remote browser](/cloudflare-one/policies/filtering/http-policies/).
-
-* You can configure [remote browser controls](/cloudflare-one/policies/browser-isolation/#settings) such as disabling copy/paste, printing, or keyboard input.
-
-
-## API setup
-
-Clientless Web Isolation is implemented through a prefixed URL.
+Clientless Web Isolation is implemented through a prefixed URL, where `<your-team-name>` is your organization's [team name](/cloudflare-one/glossary/#team-name).
 
 ```txt
-https://{{authdomain}}.cloudflareaccess.com/browser/{{url}}
+https://<your-team-name>.cloudflareaccess.com/browser/<URL>
 ```
-### Parameters
 
-* `authdomain` — Your organization's Cloudflare Zero Trust team domain.
-* `URL (optional)` — Target URL to open in a remote browser. This parameter is optional — when not provided, users are presented with a Cloudflare Zero Trust landing page to input a URL or search for a website. 
+For example, to isolate `www.example.com`, users would visit `https://<your-team-name>.cloudflareaccess.com/browser/https://www.example.com/` in their preferred browser.
+
+If `<url>` is not provided, users are presented with a Cloudflare Zero Trust landing page where they can input a target URL or search for a website.
+
+## Optional configurations
+
+### Allow or block websites
+
+When users visit a website through the [Clientless Web Isolation URL](#use-the-remote-browser), the traffic passes through Cloudflare Gateway. This allows you to [apply HTTP policies](/cloudflare-one/policies/filtering/http-policies/) to control what websites the remote browser can connect to, even if the user's device does not have WARP installed.
+
+For example, if you use a third-party Secure Web Gateway to block `example.com`, users can still access the page in the remote browser by visiting `https://<your-team-name>.cloudflareaccess.com/browser/https://www.example.com/`. To block `https://<your-team-name>.cloudflareaccess.com/browser/https://www.example.com/`, simply create a Cloudflare Gateway HTTP policy to block `example.com`:
+
+| Selector | Operator | Value           | Action         |
+| ---------| ---------| ----------------| -------------- |
+| Domain   | in       | `example.com`   | Block          |
+
+### Connect private networks
+
+With Clientless Web Isolation, users can reach any private IP resource you have connected through [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/). To connect a private network to Cloudflare, refer to our [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/).
+
+For example, if you added `192.0.2.1` to your tunnel, users can connect to your application through the remote browser by going to `https://<your-team-name>.cloudflareaccess.com/browser/http://192.0.2.1`.
+
+{{<Aside type="note">}}
+All users with access to your remote browser can access your Cloudflare Tunnel applications unless you create a Gateway HTTP policy to block them.
+{{</Aside>}}
+
+### Disable remote browser controls
+
+You can configure [remote browser controls](/cloudflare-one/policies/browser-isolation/#settings) such as disabling copy/paste, printing, or keyboard input. These settings display in the Gateway [HTTP policy builder](/cloudflare-one/policies/filtering/http-policies/) when you select the Isolate action.
+
+## Address bar
+
+Clientless Web Isolation has an embedded address bar. This feature is designed to improve the user's experience while navigating in isolated pages with prefixed URLs.
+
+The clientless address bar has three views: hostname notch, full address bar and hidden. The user's selected view is remembered across domains and remote browsing sessions.
+
+### Hostname notch view
+
+By default the isolated domain name appears in the notch positioned at the top and center of an isolated page.
+
+![Viewing hostname of an isolated page in the clientless remote browser](/cloudflare-one/static/documentation/policies/rbi-address-bar-notch.png)
+
+Clicking **Expand** or the hostname text will expand the notch to the full address bar view. If isolated page content is obscured by the notch, expanding to the full address bar view will make the content accessible.
+
+### Full address bar view
+
+The full address bar allows users to search and navigate to isolated websites. Users can jump to the address bar at any time by pressing <kbd>CTRL</kbd> + <kbd>L</kbd> on the keyboard.
+
+![Viewing full address of an isolated page in the clientless remote browser](/cloudflare-one/static/documentation/policies/rbi-address-bar-full.png)
+
+### Hidden view
+
+To turn on or off the address bar, users can right-click on any isolated page and select **Show / Hide address bar**.
 
 ## Logs
 
-* **Authentication events.** User login events are available in Access Audit Logs.
-* **HTTP request logs.** Traffic from the remote browser to the Internet is logged in Gateway request logs.
+- **Authentication events** — User login events are available in Access Audit Logs.
+- **HTTP request logs** — Traffic from the remote browser to the Internet is logged in Gateway request logs.
 
-## Examples
+## Redirect traffic to the remote browser
 
-* **Integrating with a third-party Secure Web Gateway.** Clientless Web Isolation can be integrated with a secure web gateway by implementing a custom block page.
+If you want to isolate a website without Cloudflare WARP installed, you will need to redirect traffic to the Clientless Web Isolation [prefixed URL](#use-the-remote-browser). One way to do this is through a third-party Secure Web Gateway. To redirect users to the remote browser, you can implement a custom block page similar to the example shown below.
 
-    ```html
-    <!doctype html>
-    <html>
-    <head>
-    <title>Redirecting website to a remote browser</title>
-    <script>
-        window.location.href = 'https://<authdomain>.cloudflareaccess.com/browser/{{URL}}';
-    </script>
-    <noscript>
-        <meta http-equiv="refresh" content="0; url=https://<authdomain>.cloudflareaccess.com/browser/{{URL}}" />
-    </noscript>
-    </head>
-    <body>
-    <p>This website is being redirected to a remote browser. Click <a href="https://<authdomain>.cloudflareaccess.com/browser/{{URL}}">here</a> if you are not automatically redirected.</p>
-    </body>
-    </html>
-    ```
+```html
+<!doctype html>
+<html>
+<head>
+<title>Redirecting website to a remote browser</title>
+<script>
+    window.location.href = 'https://<your-team-name>.cloudflareaccess.com/browser/<URL>}';
+</script>
+<noscript>
+    <meta http-equiv="refresh" content="0; url=https://<your-team-name>.cloudflareaccess.com/browser/<URL>" />
+</noscript>
+</head>
+<body>
+<p>This website is being redirected to a remote browser. Click <a href="https://<your-team-name>.cloudflareaccess.com/browser/<URL>">here</a> if you are not automatically redirected.</p>
+</body>
+</html>
+```

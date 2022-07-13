@@ -25,6 +25,7 @@ To review the scripts considered malicious:
     - **Malicious Code**: Whether Cloudflare's internal systems consider the script malicious or not, and what is the score of the current script version (1-99).
     - **Malicious URL**: Whether the script URL is known to be malicious according to threat intelligence feeds.
     - **Malicious Domain**: Whether the script's domain is known to be malicious according to threat intelligence feeds.
+    - **Malicious Category**: The categorization of the script considered malicious according to threat intelligence feeds.
 
     For more information, refer to [Detecting malicious scripts](/page-shield/about/malicious-script-detection/).
 

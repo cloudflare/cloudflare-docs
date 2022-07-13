@@ -26,7 +26,7 @@ After selecting your deployment option, change the directory to your project and
 
 ```sh
 # choose Cloudflare Pages
-cd [whatever you named the project]
+$ cd [whatever you named the project]
 $ npm run dev
 ```
 

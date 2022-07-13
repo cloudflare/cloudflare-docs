@@ -60,7 +60,7 @@ curl -X PUT \
 
 ### Example B - Rate limiting with a custom response
 
-This example request defines a custom plain text response for requests blocked due to rate limiting.
+This example request defines a [custom response](/waf/rate-limiting-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for requests blocked due to rate limiting.
 
 ```json
 ---

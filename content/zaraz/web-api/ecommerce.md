@@ -123,6 +123,40 @@ zaraz.ecommerce('Product Viewed', {
 });
 ```
 
+### Product List Viewed
+
+```js
+zaraz.ecommerce('Product List Viewed', 
+  {  products: 
+    [
+    { 
+      product_id: '999555321',
+      sku: '2671033',
+      category: 'T-shirts',
+      name: 'V-neck T-shirt',
+      brand: 'Cool Brand',
+      variant: 'White',
+      price: 14.99,
+      currency: 'usd',
+      value: 18.99, 
+      position: 1, 
+    },{ 
+      product_id: '999555322',
+      sku: '2671034',
+      category: 'T-shirts',
+      name: 'T-shirt',
+      brand: 'Cool Brand',
+      variant: 'Pink',
+      price: 10.99,
+      currency: 'usd',
+      value: 16.99, 
+      position: 2, 
+    },
+    ], 
+  }
+);
+```
+
 ### Product added
 
 ```js

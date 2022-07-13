@@ -1,12 +1,12 @@
 ---
-title: About
+title: Concepts
 pcx-content-type: concept
 weight: 2
 meta:
-  title: About Cloudflare Web Application Firewall
+  title: Concepts
 ---
 
-# About Cloudflare Web Application Firewall (WAF)
+# Concepts
 
 The Cloudflare Web Application Firewall (Cloudflare WAF) checks incoming web requests and filters undesired traffic based on sets of rules called rulesets. The matching engine that powers the WAF rules supports the wirefilter syntax using the [Rules language](/ruleset-engine/rules-language/).
 
@@ -88,14 +88,3 @@ Cloudflare evaluates different types of rules when processing incoming requests.
 * [Rate limiting rules](/waf/rate-limiting-rules/), available in **Security** > **WAF** > **Rate limiting rules**
 * [Managed Rulesets](/waf/managed-rulesets/), available in **Security** > **WAF** > **Managed rules**
 * [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128) (previous version), available in **Security** > **WAF** > **Rate limiting rules**
-
----
-
-## Next steps
-
-To configure Managed Rulesets using the Cloudflare dashboard, refer to [Deploy Managed Rulesets for a zone in the dashboard](/waf/managed-rulesets/deploy-zone-dashboard/).
-
-You can also use the Rulesets API to deploy rulesets to the available phases. Refer to the following pages for additional guidance:
-
-* [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/)
-* [Work with custom rulesets](/ruleset-engine/custom-rulesets/)

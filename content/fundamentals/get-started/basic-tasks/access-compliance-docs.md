@@ -6,7 +6,7 @@ weight: 5
 
 # Access compliance documentation
 
-Users on Pro, Business and Enterprise plan can access common compliance documentation — for topics like PCI, SOC 2, ISO, and more — through the Cloudflare dashboard.
+Super Administrators can access common compliance documentation — for topics like PCI, SOC 2, ISO, and more — through the Cloudflare dashboard.
 
 To access compliance documentation:
 

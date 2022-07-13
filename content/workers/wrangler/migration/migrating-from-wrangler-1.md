@@ -18,15 +18,21 @@ To learn more about the improvements to Wrangler, refer to the [Comparing Wrangl
 
 ### Update Wrangler version
 
-#### 1.
+#### 1. Uninstall Wrangler 1
 
-If you had previously installed Wrangler 1 globally, you can uninstall it with:
+If you had previously installed Wrangler 1 globally using NPM, you can uninstall it with:
 
 ```sh
 $ npm uninstall -g @cloudflare/wrangler
 ```
 
-#### 2.
+If you used Cargo to install Wrangler 1, you can uninstall it with:
+
+```sh
+$ cargo uninstall wrangler
+```
+
+#### 2. Install Wrangler
 
 Now, install the latest version of Wrangler.
 
@@ -34,7 +40,7 @@ Now, install the latest version of Wrangler.
 $ npm install -g wrangler
 ```
 
-#### 3.
+#### 3. Verify your install
 
 To check that you have installed the correct Wrangler version, run:
 
@@ -43,6 +49,10 @@ $ wrangler --version
 ```
 
 ### Test Wrangler 2 on your previous projects
+
+Now you will test that Wrangler 2 can build your Wrangler 1 project. In most cases, it will build just fine. If there are errors, the command line should instruct you with exactly what to change to get it to build.
+
+If you would like to read more on the deprecated `wrangler.toml` fields that cause Wrangler 2 to error, refer to [Deprecations](/workers/wrangler/migration/deprecations/).
 
 Run the `wrangler dev` command. This will show any warnings or errors that should be addressed.
 Note that in most cases, the messages will include actionable instructions on how to resolve the issue.

@@ -71,6 +71,16 @@ pcx-content-type: reference
         </td>
     </tr>
     <tr>
+        <td><p><code>ip.dst.country</code><br />{{<type>}}String{{</type>}}</p>
+        </td>
+        <td>
+         Represents the 2-letter country code associated with the server IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
+         Example value:
+         <code class="InlineCode">GB</code>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, see <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+        </td>
+    </tr>
+    <tr>
         <td><p><code>ip.geoip.country</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
@@ -121,6 +131,16 @@ pcx-content-type: reference
         </td>
         <td>
         The source address of the IP Packet.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>ip.src.country</code><br />{{<type>}}String{{</type>}}</p>
+        </td>
+        <td>
+         Represents the 2-letter country code associated with the client IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
+         Example value:
+         <code class="InlineCode">GB</code>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, see <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
         </td>
     </tr>
     <tr>

@@ -189,7 +189,7 @@ $ wrangler publish
 
 ### Set secrets
 
-Create and save [a Client ID and a Client Secret](/cloudflare-one/identity/service-auth/service-tokens) to Worker secrets in case your Tunnel is protected by Cloudflare Access.
+Create and save [a Client ID and a Client Secret](/cloudflare-one/identity/service-tokens) to Worker secrets in case your Tunnel is protected by Cloudflare Access.
 
 ```sh
 $ wrangler secret put CF_CLIENT_ID

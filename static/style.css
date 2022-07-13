@@ -360,6 +360,7 @@ html[theme="dark"] {
   --shadow-color-rgb: 0, 0, 0;
   --section-tiger-stripe-background-color: var(--gray-05);
   --deemphasized-color: var(--gray-7);
+  color-scheme: dark;
 }
 [theme="dark"] [light-theme-only],
 [theme="light"] [dark-theme-only] {
@@ -670,6 +671,7 @@ html {
   padding: var(--padding-vertical) var(--padding-horizontal);
   font-family: inherit;
   cursor: default;
+  tab-size: 2;
 }
 .CodeBlock > code > * {
   cursor: text;

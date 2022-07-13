@@ -40,19 +40,26 @@ The following methods are available on the bucket binding object injected into y
 For example, to issue a `PUT` object request using the binding above:
 
 ```js
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
-});
+export default {
+	async fetch(request, env) {
+		const url = new URL(request.url);
+		const key = url.pathname.slice(1);
 
-async function handleRequest(request) {
-  const url = new URL(request.url);
-  const key = url.pathname.slice(1);
+		switch (request.method) {
+			case 'PUT':
+				await env.MY_BUCKET.put(key, request.body);
+				return new Response(`Put ${key} successfully!`);
 
-  switch (request.method) {
-    case "PUT":
-      await MY_BUCKET.put(key, request.body);
-      return new Response(`Put ${key} successfully!`);
-}
+			default:
+				return new Response(`${request.method} is not allowed.`, {
+					status: 405,
+					headers: {
+						Allow: 'PUT',
+					},
+				});
+		}
+	},
+};
 ```
 
 {{<definitions>}}
@@ -100,19 +107,19 @@ async function handleRequest(request) {
 
   - Whether the object's value has been consumed or not.
 
-- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}>{{</type>}}{{</code>}}
 
   - Returns a Promise that resolves to an `ArrayBuffer` containing the object's value.
 
-- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}>{{</code>}}
 
   - Returns a Promise that resolves to an string containing the object's value.
 
-- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}>{{</code>}}
 
   - Returns a Promise that resolves to the given object containing the object's value.
 
-- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}{{</code>}}
+- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}>{{</code>}}
 
   - Returns a Promise that resolves to a binary Blob containing the object's value.
 
@@ -143,6 +150,10 @@ async function handleRequest(request) {
 - {{<code>}}customMetadata{{<param-type>}}Record\<string, string>{{</param-type>}}{{</code>}}
 
   - A map of custom, user-defined metadata associated with the object.
+  
+- {{<code>}}range{{</code>}} {{<param-type>}}R2Range{{</param-type>}}
+
+  - A `R2Range` object containing the returned range of the object.
 
 - {{<code>}}writeHttpMetadata(headers{{<param-type>}}Headers{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
@@ -159,12 +170,22 @@ async function handleRequest(request) {
 - {{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}{{</code>}}
 
   - Specifies that the object should only be returned given satisfaction of certain conditions in the `R2Conditional`. Refer to [Conditional operations](#conditional-operations).
+  
+- {{<code>}}range{{<param-type>}}R2Range{{</param-type>}}{{</code>}}
+
+  - Specifies that only a specific length (from an optional offset) or suffix of bytes from the object should be returned. Refer to [Ranged reads](#ranged-reads).
 
 {{</definitions>}}
 
-### Ranged reads
+#### Ranged reads
 
-`R2GetOptions` accepts a `range` parameter, which restricts data returned in `body` to be `range` bytes, starting from `offset`, inclusive.
+`R2GetOptions` accepts a `range` parameter, which can be used to restrict the data returned in `body`.
+
+There are 3 variations of arguments that can be used in a range:
+
+* An offset with an optional length.
+* An optional offset with a length.
+* A suffix.
 
 {{<definitions>}}
 
@@ -172,9 +193,13 @@ async function handleRequest(request) {
 
   - The byte to begin returning data from, inclusive.
 
-- {{<code>}}range{{<param-type>}}number{{</param-type>}}{{</code>}}
+- {{<code>}}length{{<param-type>}}number{{</param-type>}}{{</code>}}
 
   - The number of bytes to return. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
+  
+- {{<code>}}suffix{{<param-type>}}number{{</param-type>}}{{</code>}}
+
+  - The number of bytes to return from the end of the file, starting from the last byte. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
 
 {{</definitions>}}
 
@@ -190,7 +215,7 @@ async function handleRequest(request) {
 
   - A map of custom, user-defined metadata that will be stored with the object.
 
-- {{<code>}}md5{{<param-type>}}ArrayBuffer{{</param-type>}}{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}md5{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
 
   - A md5 hash to use to check the recieved object's integrity.
 
@@ -242,7 +267,7 @@ An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 
   - If true, indicates there are more results to be retrieved for the current `list` request.
 
-- {{<code>}}cursor{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}cursor{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
 
   - A token that can be passed to future `list` calls to resume listing from that point. Only present if truncated is true.
 
