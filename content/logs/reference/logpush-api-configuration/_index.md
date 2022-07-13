@@ -172,6 +172,10 @@ The options that you can customize are:
 The **CVE-2021-44228** parameter can only be set through the API at this time. Updating your Logpush job through the dashboard will set this option to false.
 {{</Aside>}}
 
+{{<Aside type="note" header="Note">}}
+Parameters **max_upload_bytes** and **max_upload_records** are not configurable for Edge Log Delivery.
+{{</Aside>}}
+
 To check if the selected **logpull_options** are valid:
 
 ```bash
