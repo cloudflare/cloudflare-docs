@@ -5013,7 +5013,7 @@ pre {
   background-color: rgba(var(--gray-3-rgb), 0.19);
 }
 
-[theme="dark"] .tab-label-wrapper:hover,
+[theme="dark"] .active, .tab-label-wrapper:hover,
 [theme="dark"] .tab-label-wrapper a:hover {
   background-color: rgba(var(--orange-rgb), 0.08);
   color: var(--code-orange);
