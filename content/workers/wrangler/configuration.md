@@ -245,8 +245,7 @@ Wrangler allows you to set variable or secret keys locally without the need to s
 
 You need to create a file called `.dev.vars` next to the `wrangler.toml` file (or in the current working directory if there is no `wrangler.toml`). 
 
-Any values in this file, formatted like a `dotenv` file, will add to
-or override the `[vars]` bindings provided in the `wrangler.toml`.
+Any values in this file, formatted like a `dotenv` file, will add to or override the `[vars]` bindings provided in the `wrangler.toml`.
 
 Below is an example of `.dev.vars` file:
 
