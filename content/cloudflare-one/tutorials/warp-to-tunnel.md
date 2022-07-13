@@ -1,5 +1,5 @@
 ---
-updated: 2021-03-23
+updated: 2022-07-13
 category: 🌐 Connections
 difficulty: Advanced
 pcx-content-type: tutorial
@@ -25,23 +25,19 @@ Once enrolled, user endpoints will be able to connect to private [RFC 1918](http
 
 ## Install `cloudflared`
 
-Start by [downloading and installing](/cloudflare-one/connections/connect-apps/install-and-setup/) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
+1. [Download and install](/cloudflare-one/connections/connect-apps/install-and-setup/) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
 
-`$ brew install cloudflare/cloudflare/cloudflared`
+    `$ brew install cloudflare/cloudflare/cloudflared`
 
-Once installed, run the following command in your Terminal to authenticate this instance of `cloudflared` into your Cloudflare account.
+2. Run the following command in your Terminal to authenticate this instance of `cloudflared` into your Cloudflare account.
 
-`$ cloudflared login`
+    `$ cloudflared login`
 
-The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account. This will authenticate your instance of `cloudflared` to your Cloudflare account; you will be able to create a Tunnel for any site, not just the site selected.
+    The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account. This will authenticate your instance of `cloudflared` to your Cloudflare account &mdash; you will be able to create a Tunnel for any site, not just the site selected.
 
-![Choose Site](/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
-
-Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
+3. Once you click one of the sites in your account, Cloudflare will download a certificate file called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
 You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
-
-![Download Cert](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
 
 {{<Aside>}}
 If you already have `cloudflared` installed, make sure it's updated to the latest version before you continue with the tutorial. Some commands may not run with older versions of `cloudflared`.
