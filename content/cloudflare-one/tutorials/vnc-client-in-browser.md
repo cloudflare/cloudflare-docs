@@ -1,5 +1,5 @@
 ---
-updated: 2021-06-18
+updated: 2022-07-13
 category: 🔐 Zero Trust
 difficulty: Advanced
 pcx-content-type: tutorial
@@ -69,8 +69,6 @@ This section covers how to install a VNC server with TightVNC and the Gnome User
     $ sudo tightvncserver
     ```
 
-    ![VNC password](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-password.png)
-
 1.  Select a password for the VNC server. This password will be used during login for your browser VNC server.
 
 1.  Run the following command, which will take you to your VNC server configuration directory.
@@ -100,8 +98,6 @@ This section covers how to install a VNC server with TightVNC and the Gnome User
     gnome-panel &
     nautilus &
     ```
-
-    ![VNC xstartup file](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-xstartup.png)
 
 1.  Run the following command to create your VNC server:
 
@@ -152,8 +148,6 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
     ```bash
     $ cloudflared tunnel --config path/config.yaml run <NAME>
     ```
-
-    ![Run Tunnel](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-run-tunnel.png)
 
 1.  Follow [this guide](/cloudflare-one/connections/connect-apps/configuration/ports-and-ips/) to open outbound connections for Cloudflare Tunnel if you have a firewall enabled.
 
