@@ -519,17 +519,26 @@ html[is-site-page] .DocsContent {
     margin-top: 3em;
 }
 
-.QuadBlockGrid>* {
-    max-width: 100%;
-    position: relative;
-}
-
 .QuadBlock {
+    display: flex;
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
     padding-left: .75em;
-    padding-right: 3.5em;
+    padding-right: 2.5em;
+    align-items: center;
+    justify-content: center;
+}
+
+.QuadBlockGrid a {
+    color: inherit;
+}
+
+.QuadBlock img {
+    height: 2.5em;
+    width: 2.5em;
+    padding-bottom: .5em;
+    align-content: center;
 }
 
 .TriBlockGrid {
