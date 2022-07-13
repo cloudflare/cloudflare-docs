@@ -47,39 +47,33 @@ If you already have `cloudflared` installed, make sure it's updated to the lates
 
 You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) that will connect `cloudflared` to Cloudflare's edge.
 
-Begin by [creating a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) with an associated name. This example uses the name `grafana`.
+1. [Create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) with an associated name. This example uses the name `grafana`.
 
-```bash
-cloudflared tunnel create grafana
-```
+    ```bash
+    cloudflared tunnel create grafana
+    ```
 
-![Create Tunnel](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/create-tunnel.png)
+    You can confirm the ID of the Tunnel by running the following command.
 
-You can confirm the ID of the Tunnel by running the following command.
+    ```bash
+    cloudflared tunnel list
+    ```
 
-```bash
-cloudflared tunnel list
-```
+2. Create a route. Routes map a Tunnel ID to a CIDR range that you specify. You can use private IP space specified by [RFC 1918](https://tools.ietf.org/html/rfc1918) or other routes. The private IP space specified should match the private IP space of your subnet or environment where Cloudflare Tunnel will send connections.
 
-![List Tunnel](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/list-tunnel.png)
+    This example tells Cloudflare Tunnel that, for users in this organization, connections to `100.64.0.0/10` should be served by this Tunnel. For the purposes of this tutorial, Grafana is running in a Digital Ocean environment where a virtual interface has been applied that will send traffic bound for localhost to `100.64.0.1`.
 
-Next, you will need to create a route. Routes map a Tunnel ID to a CIDR range that you specify. You can use private IP space specified by [RFC 1918](https://tools.ietf.org/html/rfc1918) or other routes. The private IP space specified should match the private IP space of your subnet or environment where Cloudflare Tunnel will send connections.
+    ```bash
+    cloudflared tunnel route ip add 100.64.0.0/10 8e343b13-a087-48ea-825f-9783931ff2a5
+    ```
 
-This example tells Cloudflare Tunnel that, for users in this organization, connections to `100.64.0.0/10` should be served by this Tunnel. For the purposes of this tutorial, Grafana is running in a Digital Ocean environment where a virtual interface has been applied that will send traffic bound for localhost to `100.64.0.1`.
+3. Similar to the `list` command, you can confirm the routes enrolled with the following command.
 
-```bash
-cloudflared tunnel route ip add 100.64.0.0/10 8e343b13-a087-48ea-825f-9783931ff2a5
-```
+    ```bash
+    cloudflared tunnel route ip show
+    ```
 
-![Route Add](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/route-add.png)
-
-Similar to the `list` command, you can confirm the routes enrolled with the following command.
-
-```bash
-cloudflared tunnel route ip show
-```
-
-![IP List](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/ip-list.png)
+    ![Terminal listing example route enrollments](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/ip-list.png)
 
 ## Configure and run the Tunnel
 
