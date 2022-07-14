@@ -5040,7 +5040,8 @@ pre {
 }
 
 .tab-label > svg {
-  width: 10%;
+  width: 15px;
+  margin-right: 0.25rem;
 
 }
 
