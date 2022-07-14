@@ -129,17 +129,24 @@ You can choose any value as the selector, as long as it is permitted as a DNS ho
 
 ## Add DKIM fields to personalization object
 
+After generating DKIM records, you must add the corresponding fields to the `personalizations` object to use DKIM. 
+
+The required fields are `dkim_domain`,`dkim_selector`, `dkim_private_key`. The value of these fields must match the genrated values from your DNS records. 
+
+The following code block shows an example of using DKIM credentials with the Mailchannel plugin.
+
 ```typescript
 ---
 filename: functions/_middleware.ts
+highlight: [8,9,10,11]
 ---
 import mailChannelsPlugin from "@cloudflare/pages-plugin-mailchannels";
 
 export const onRequest: PagesFunction = mailChannelsPlugin({
   personalizations: [
     {
-      to: [{ name: "ACME Support", email: "support@example.com" }],
-      "dkim_domain": "support@example.com",
+      to: [{ name: "ACME Member Support", email: "members@example.com" }],
+      "dkim_domain": "example.com", // The value has to be the Zone you added DKIM records to
       "dkim_selector": "mcdkim",
       "dkim_private_key": "<base64 encoded privatekey>"
     },
