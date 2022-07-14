@@ -19,7 +19,7 @@ Parent users can have one of the following roles:
 - **Read-only**: Can enter child accounts but is prevented from making any settings changes, regardless of the customer account settings.
 - **Read-write**: Can enter child accounts and make changes on behalf of the customer.
 
-If your account has [parent permissions](/email-security/account-setup/manage-parent-permissions/) that conflict with a parent user permissions, the parent permissions set on your account take precedence.
+If your account has [parent permissions](/email-security/account-setup/manage-parent-permissions/) that conflict with a parent user's permissions, the parent permissions set on your account take precedence.
 
 ## Child accounts
 
