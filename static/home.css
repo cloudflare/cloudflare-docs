@@ -492,6 +492,7 @@ html[is-site-page] .DocsContent {
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 2em;
 }
 
 .HeroBlock--content>:first-child {
@@ -541,6 +542,10 @@ html[is-site-page] .DocsContent {
     align-content: center;
 }
 
+[theme=dark] .QuadBlock img {
+    filter: invert(100%) sepia(0%) saturate(4588%) hue-rotate(160deg) brightness(108%) contrast(101%);
+}
+
 .TriBlockGrid {
     display: flex;
     max-width: 90%;
@@ -557,6 +562,7 @@ html[is-site-page] .DocsContent {
     background: #f3f3f4;
     padding-top: .25em;
     padding-left: 1.25em;
+    margin-bottom: 1em;
 }
 
 [theme=dark] .TriBlock {
