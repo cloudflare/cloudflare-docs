@@ -116,19 +116,7 @@ If curl returns a `401` code, it means the public IP of your device does not mat
 
 ## 3. Create a PAC file
 
-A PAC file is a text file that specifies which traffic should redirect to the proxy server. You can use the default PAC file or create your own.
-
-### Default PAC file
-
-When you create a proxy server, Cloudflare automatically generates a PAC file on Cloudflare Workers. The default PAC file will redirect all traffic to Cloudflare except for internal traffic. The file is hosted at:
-
- ```txt
- https://proxy-pac.cflr.workers.dev/<your_proxy_subdomain>.pac
- ```
-
-You can use this URL when configuring your browser settings, for example `https://proxy-pac.cflr.workers.dev/3ele0ss56t.pac`.
-
-### Custom PAC file
+A PAC file is a text file that specifies which traffic should redirect to the proxy server.
 
 Below is the default PAC file. You can [customize the file](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file) and host it somewhere your browser can access, such as on an internal web server or on [Cloudflare Workers](/workers/).
 
