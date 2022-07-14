@@ -1,5 +1,5 @@
 ---
-updated: 2021-06-11
+updated: 2022-07-14
 category: 🔐 Zero Trust
 difficulty: Advanced
 pcx-content-type: tutorial
@@ -98,10 +98,19 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
 
 1. Log in to your [Zero Trust dashboard](https://dash.teams.cloudflare.com/), select your account, and go to **Gateway > Policies**.
 
-1.  [Create a network policy](/cloudflare-one/policies/filtering/network-policies/) to allow traffic from specific users to reach that application.
+1.  [Create a network policy](/cloudflare-one/policies/filtering/network-policies/) to allow traffic from specific users to reach that application. For example:
 
-1.  Create a second network policy to block all traffic to the IP range that was routed.
+    | Selector       | Operator      | Value           | Action |
+    |----------------|---------------|-----------------|--------|
+    | Destination IP | in            | `10.0.0.0/8`    | Allow  |
+    | User Email     | matches regex | `*@example.com` |        |
 
-1.  Verify that you do not have the desired target private IP range in the Split Tunnel configuration menu. This menu can be found at **Settings > Network > Split Tunnels**.
+1.  Create a second network policy to block all traffic to the IP range that was routed. For example:
+
+    | Selector       | Operator      | Value           | Action |
+    |----------------|---------------|-----------------|--------|
+    | Destination IP | in            | `10.0.0.0/8`    | Block  |
+
+1.  To verify you do not have the desired target private IP range in the Split Tunnel configuration menu, go to **Settings > Network > Split Tunnels**.
 
 Your setup is now complete. For more in-depth information on how identity-aware network policies work, read our [dedicated documentation page](/cloudflare-one/policies/filtering/network-policies/).
