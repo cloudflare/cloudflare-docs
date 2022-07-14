@@ -133,6 +133,10 @@ After generating DKIM records, you must add the corresponding fields to the `per
 
 The required fields are `dkim_domain`,`dkim_selector`, `dkim_private_key`. The value of these fields must match the genrated values from your DNS records. 
 
+{{<Aside type="note">}}
+When adding your `dkim_private_key` value, ensure that you remove any whitespaces between the value content as they might result in errors.
+{{</Aside>}}
+
 The following code block shows an example of using DKIM credentials with the Mailchannel plugin.
 
 ```typescript
