@@ -101,7 +101,6 @@ export const loader: LoaderFunction = async ({
 }) => {
   return json(
     await context.PRODUCTS_KV.get(`product-${params.productId}`, {
-    await PRODUCTS_KV.get(`product-${params.productId}`, {
       type: "json",
     })
   );
@@ -113,7 +112,7 @@ export default function Product() {
     <div>
       <p>Product</p>
       {product.name}
-      <p>{} Products</p>
+      <p>Products</p>
       {/* ... */}
     </div>
   );
