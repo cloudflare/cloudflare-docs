@@ -31,23 +31,7 @@ To find pools with existing notifications in the dashboard:
 1. Go to **Traffic** > **Load Balancing**.
 1. Click **Manage Pools**.
 1. On a pool, click **Edit**.
-1. For **Health Check Notifications**, check the value is toggled to **On**.
-
-</div>
-</details>
-
-<details>
-<summary>With code</summary>
-
-<div>
-
-- If using the [Cloudflare API](https://api.cloudflare.com/#account-load-balancer-pools-list-pools), check the `notification_filter` object. Health checks with enabled legacy notifications will have something like:
-    ```json
-    "pool": {
-        "healthy": true,
-        "disable": true
-    }
-    ```
+1. For **Health Check Notifications**, check if there is an email address present. If so, you will need to create a new notification.
 
 </div>
 </details>
@@ -64,25 +48,6 @@ On the pool you located in [Step 1](#step-1---find-existing-notifications), look
 </div>
 </details>
 
-<details>
-<summary>With code</summary>
-
-<div>
-
-If using the Cloudflare API, [create a new notification](https://api.cloudflare.com/#notification-policies-create-a-notification-policy) with the following parameters specified:
-
-```json
-"alert_type": "g6_health_alert",
-"filters": {
-    "pool_id": <<ARRAY_OF_INCLUDED_POOL_IDS>>,
-    "new_health": <<ARRAY_OF_STATUS_TRIGGERS>> ["Unhealthy", "Healthy"],
-    "event_source": <<ARRAY_OF_OBJECTS_WATCHED>> ["pool", "origin"]
-}
-```
-
-</div>
-</details>
-
 ### Step 3 - Remove deprecated notifications
 
 <details>
@@ -91,25 +56,6 @@ If using the Cloudflare API, [create a new notification](https://api.cloudflare.
 <div>
 
 Once you created your new notification in [Step 2](#step-2---create-new-notifications), you will return to the pool you were editing previously. To disable the deprecated notifications, toggle the **Health Check Notifications** on your pool to **Off**.
-
-</div>
-</details>
-
-<details>
-<summary>With code</summary>
-
-<div>
-
-If using the Cloudflare API, send a [PATCH](https://api.cloudflare.com/#account-load-balancer-pools-patch-pool) request that includes the following object.
-
-```json
-"notification_filter": {
-    "pool": {
-        "healthy": null,
-        "disable": true
-    }
-}
-```
 
 </div>
 </details>
