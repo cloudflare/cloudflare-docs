@@ -147,6 +147,6 @@ Access integrates with the Cloudflare Logpush API, so you can export per-request
 
 Cloudflare Logpush pushes Enterprise customers' HTTP request logs, including Access user identity, to a cloud storage provider every five minutes.
 
-For instructions on setting up Logpush, refer to [Manage the Logpush API](/logs/get-started/enable-destinations/).
+For instructions on setting up Logpush, refer to [Enable destinations](/logs/get-started/enable-destinations/).
 
 For more on exporting per-request Access logs, refer to [API configuration](/logs/get-started/api-configuration/).

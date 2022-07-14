@@ -19,7 +19,7 @@ The supported parameters are as follows:
 - Fields that are unchanged from other sources:
     - **dataset** (required): For example, `http_requests`.
     - **name** (optional): We suggest using your domain name as the job name.
-    - **logpull_options** (optional): Refer to [Logpush API configuration options](/logs/get-started/api-configuration/#options) to configure fields, sample rate, and timestamp format.
+    - **logpull_options** (optional): Refer to [API configuration options](/logs/get-started/api-configuration/#options) to configure fields, sample rate, and timestamp format.
 - Unique fields: 
     - **destination_conf**: Where to send the logs. This consists of an endpoint URL and HTTP headers used.
         - Any `"header_*"` URL parameters will be used to set request headers.
