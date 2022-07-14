@@ -4,9 +4,9 @@ title: Configuration
 weight: 3
 ---
 
-## Configure `wrangler.toml`
+# Configure `wrangler.toml`
 
-`wrangler` optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker. This document serves as a reference for all the fields and acceptable values in this configuration file.
+Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker. This document serves as a reference for all the fields and acceptable values in this configuration file.
 
 The configuration for a Worker can become complex when you can define different [environments](/workers/platform/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.
@@ -218,3 +218,23 @@ services = [
   { binding = "TEST_BINDING", service = "", environment = "" }
 ]
 ```
+
+## Proxy support
+
+To enable proxy setup, use Wrangler with your VPN or HTTP proxy by configuring your computer's environment variables. Note that when using Wrangler in corporate environments that require the use of a VPN or HTTP proxy, you may come across a `UNABLE_TO_GET_ISSUER_CERT_LOCALLY` error. This error can be fixed with the use of environment variables.
+
+Wrangler supports the following environment variable names:
+- `https_proxy`
+- `HTTPS_PROXY`
+- `http_proxy`
+- `HTTP_PROXY`
+
+For example, to configure this on macOS add `HTTP_PROXY=http://<YOUR_PROXY_HOST>:<YOUR_PROXY_PORT>` before your wrangler commands, as shown below:
+
+```bash
+HTTP_PROXY=http://localhost:8080 wrangler dev
+```
+
+If your IT team has configured your computer's proxy settings, be aware that the first non-empty environment variable in this list will be used when Wrangler makes outgoing requests.
+
+For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only use `https_proxy` for outgoing requests.

@@ -10,19 +10,11 @@ If your organization uses a firewall or other policies to restrict Internet traf
 
 ## Client Orchestration API
 
-The WARP client talks with our edge via a standard HTTPS connection outside the tunnel for operations like registration or settings changes. To perform these operations, you must allow this IPv4 address:
+The WARP client talks with our edge via a standard HTTPS connection outside the tunnel for operations like registration or settings changes. To perform these operations, you must allow `zero-trust-client.cloudflareclient.com` which will lookup the following IP addresses:
 
-- IPv4 API Endpoint: `162.159.192.1`
-
-{{<Aside type="note">}}
-The Orchestration API endpoint is currently shared with our Consumer WARP client. Starting with build 2022.4.x we will be splitting this out to its own dedicated IP addresses.
-
-Those IP addresses will be:
 
 - IPv4 API Endpoint: `162.159.137.105` and `162.159.138.105`
 - IPv6 API Endpoint: `2606:4700:7::a29f:8969` and `2606:4700:7::a29f:8a69`
-
-{{</Aside>}}
 
 ## DoH IP
 

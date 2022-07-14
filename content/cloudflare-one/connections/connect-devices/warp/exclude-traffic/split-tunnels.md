@@ -67,6 +67,15 @@ Domain-based split tunneling works alongside DNS by dynamically excluding or inc
 
 {{</Aside>}}
 
+### Cloudflare Zero Trust domains
+
+Many Cloudflare Zero Trust services rely on traffic going through WARP. If you are using Split Tunnels in Include mode, you will need to manually add the following domains in order for these features to function.
+
+| Feature | Domains to include |
+| --------| ------------------ |
+| [Device posture checks](/cloudflare-one/identity/devices/)| `<your-team-name>.cloudflareaccess.com`, IdP used to authenticate into Access, and the application protected by Access |
+| [WARP session duration](/cloudflare-one/policies/filtering/enforce-sessions/) | `<your-team-name>.cloudflareaccess.com>` and the HTTP or Network resource with the session re-authentication policy |
+
 ## Important platform differences
 
 Domain-based Split Tunnels work differently on mobile clients than on desktop clients. If both mobile and desktop clients will connect to your organization, it is recommended to use Split Tunnels based on IP addresses or CIDR, which work the same across all platforms.

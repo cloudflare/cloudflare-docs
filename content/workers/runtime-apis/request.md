@@ -111,10 +111,6 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
     *   Whether [Cloudflare Apps](https://www.cloudflare.com/apps/) should be enabled for this request. Defaults to `true`.
 
-*   `avif` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-    *   Enables or disables [AVIF](https://blog.cloudflare.com/generate-avif-images-with-image-resizing/) image format in [Polish](https://blog.cloudflare.com/introducing-polish-automatic-image-optimizati/).
-
 *   `cacheEverything` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/en-us/articles/200172266). Defaults to `false`.
@@ -126,7 +122,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `cacheTags` {{<type>}}Array\<string\>{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This option appends additional [**Cache-Tag**](/cache/how-to/purge-cache/#cache-tags-enterprise-only) headers to the response from the origin server. This allows for purges of cached content based on tags provided by the Worker, without modifications to the origin server. This is performed utilizing the [**Purge by Tag**](/cache/how-to/purge-cache/#purge-using-cache-tags) feature, which is currently only available to Enterprise customers. If this option is used in a non-Enterprise account, the additional headers will not be appended.
+    *   This option appends additional [**Cache-Tag**](/cache/how-to/purge-cache/#cache-tags-enterprise-only) headers to the response from the origin server. This allows for purges of cached content based on tags provided by the Worker, without modifications to the origin server. This is performed using the [**Purge by Tag**](/cache/how-to/purge-cache/#purge-using-cache-tags) feature, which is currently only available to Enterprise zones. If this option is used in a non-Enterprise zone, the additional headers will not be appended.
 
 *   `cacheTtl` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -138,7 +134,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `image` {{<type>}}Object | null{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Enables [Image Resizing](https://developers.cloudflare.com/images/) for this request. The possible values are described in [Image Resizing with Workers](https://developers.cloudflare.com/images/image-resizing/resize-with-workers) documentation.
+    *   Enables [Image Resizing](/images/) for this request. The possible values are described in [Image Resizing with Workers](/images/image-resizing/resize-with-workers) documentation.
 
 *   `minify` {{<type>}}{ javascript?: boolean; css?: boolean; html?: boolean; }{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -224,6 +220,10 @@ All plans have access to:
 
     *   Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, and `ja3Hash`. Refer to [Bot Management Variables](/bots/reference/bot-management-variables) for more details.
 
+*   `clientAcceptEncoding` {{<type>}}string | null{{</type>}}
+
+    *   If Cloudflare replaces the value of the `Accept-Encoding` header, the original value is stored in the `clientAcceptEncoding` property, for example, `"gzip, deflate, br"`.
+  
 *   `colo` {{<type>}}string{{</type>}}
 
     *   The three-letter [`IATA`](https://en.wikipedia.org/wiki/IATA_airport_code) airport code of the data center that the request hit, for example, `"DFW"`.

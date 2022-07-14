@@ -4,37 +4,39 @@ title: Get started
 weight: 1
 ---
 
+# Get started with Wrangler
+
+Wrangler is a command-line tool for building [Cloudflare Workers](https://workers.cloudflare.com/).
+
 {{<Aside type="note">}}
 
 Wrangler has launched a new version. If you are looking for the Wrangler 1 documentation, you can find it [here](/workers/wrangler/cli-wrangler/install-update/).
 
+If you previously had Wrangler 1 installed or were working on a Wrangler 1 project, refer to the [Migration guide](/workers/wrangler/migration/migrating-from-wrangler-1/).
+
 {{</Aside>}}
 
-## Get started with Wrangler
+## Install
 
-`wrangler` is a command line tool for building [Cloudflare Workers](https://workers.cloudflare.com/).
+Installing Wrangler, the Workers CLI, allows you to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects.
 
-## 1. Install the Workers CLI
-
-Installing `wrangler`, the Workers CLI, allows you to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects.
-
-To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
 
 ```sh
 $ npm install -g wrangler
 ```
 
-or install with yarn:
+or install with `yarn`:
 
 ```sh
 $ yarn global add wrangler
 ```
 
-{{<Aside type="note">}}
+To check your Wrangler version, run:
 
-If you previously had Wrangler 1 installed or were working on a Wrangler 1 project, refer to the [Migration guide](/workers/wrangler/migration/migrating-from-wrangler-1/).
-
-{{</Aside>}}
+```sh
+$ wrangler --version
+```
 
 {{<Aside type="note">}}
 
@@ -42,9 +44,9 @@ If you do not want to install Wrangler globally, you can use the [npx](https://d
 
 {{</Aside>}}
 
-## 2. Authenticate
+## Authenticate
 
-With installation complete, `wrangler` will need access to a Cloudflare OAuth token to manage Workers resources on your behalf.
+With installation complete, Wrangler will need access to a Cloudflare OAuth token to manage Workers resources on your behalf.
 
 Run the command `wrangler login`, which will automate this process.
 
@@ -60,7 +62,19 @@ Successfully logged in.
 
 Open the browser, log in to your account, and select **Allow**. This will send an OAuth Token to Wrangler so it can deploy your scripts to Cloudflare.
 
----
+## Update
+
+To update Wrangler, run:
+
+```sh
+$ npm -g install wrangler@latest
+```
+
+Note that this command will not update Wrangler in projects where it is already installed. If you already have a `package.json` in your directory with Wrangler installed, run:
+
+```sh
+$ npm update wrangler --save
+```
 
 ## Related resources
 

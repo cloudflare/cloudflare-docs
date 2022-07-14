@@ -10,7 +10,7 @@ Postman is an API platform that makes interacting with APIs easier. This guide w
 
 ## 1. Purchase R2
 
-This guide assumes that you have made a Cloudflare account and [purchased R2](https://developers.cloudflare.com/r2/get-started/#purchase-r2).
+This guide assumes that you have made a Cloudflare account and [purchased R2](/r2/get-started/#purchase-r2).
 
 ## 2. Explore R2 in Postman
 

@@ -59,3 +59,11 @@ $ rclone tree r2demo:my-bucket-name
 # ├── cat.png
 # └── todos.txt
 ```
+
+You can also generate presigned links which allow you to share public access to a file temporarily.
+
+```sh
+# You can pass the --expire flag to determine how long the presigned link is valid.
+$ rclone link r2demo:my-bucket-name/cat.png --expire 3600
+# https://<accountid>.r2.cloudflarestorage.com/my-bucket-name/cat.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>
+```

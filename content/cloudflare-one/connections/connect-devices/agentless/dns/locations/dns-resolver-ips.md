@@ -85,4 +85,4 @@ For example, if you want to block security threats for specific networks, you co
 
 **Action**: Block
 
-DNS queries made from IP addresses that are not in your IP list will not be filtered or populate your organization’s [Gateway activity logs](/cloudflare-one/analytics/logs/activity-log/).
+DNS queries made from IP addresses that are not in your IP list will not be filtered or populate your organization’s [Gateway activity logs](/cloudflare-one/analytics/logs/gateway-logs/).

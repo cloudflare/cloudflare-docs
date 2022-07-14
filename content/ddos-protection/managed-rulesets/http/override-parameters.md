@@ -1,7 +1,7 @@
 ---
-title: Managed Ruleset parameters
+title: Parameters
 pcx-content-type: reference
-weight: 4
+weight: 5
 meta:
   title: HTTP DDoS Attack Protection parameters
 ---
@@ -31,7 +31,7 @@ The action that will be performed for requests that match specific rules of Clou
 - **Managed Challenge**
 
   - API value: `"managed_challenge"`.
-  - [Managed Challenges](https://support.cloudflare.com/hc/articles/200170136#managed-challenge) help reduce the lifetimes of human time spent solving Captchas across the Internet. Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge based on specific criteria.
+  - [Managed Challenges](/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge) help reduce the lifetimes of human time spent solving Captchas across the Internet. Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge based on specific criteria.
 
 - **Legacy CAPTCHA**
 

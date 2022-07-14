@@ -1,5 +1,5 @@
 ---
-title: Managed Ruleset parameters
+title: Parameters
 pcx-content-type: reference
 weight: 4
 meta:

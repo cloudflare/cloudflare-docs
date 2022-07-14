@@ -1,6 +1,7 @@
 ---
 title: Get started
 pcx-content-type: get-started
+layout: single
 weight: 3
 meta:
   title: Enabling Cloudflare Web Analytics

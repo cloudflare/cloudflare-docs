@@ -6,9 +6,9 @@ weight: 2
 
 # Deprecations
 
-This document describes the difference between `wrangler` 1 and 2, specifically deprecations and breaking changes.
+This document describes the difference between Wrangler 1 and 2, specifically deprecations and breaking changes.
 
-`wrangler` 2 introduces some new fields for configuration, while also deprecating some redundant fields.
+Wrangler 2 introduces some new fields for configuration, while also deprecating some redundant fields.
 
 ## Common deprecations
 
@@ -37,7 +37,7 @@ These are new fields that can be added to your `wrangler.toml`.
 
 - **`rules`**: `array`, optional
 
-  The `rules` field is an array of mappings between module types and file patterns. It instructs `wrangler` to interpret specific files differently than JavaScript. For example, this is useful for reading text-like content as text files, or compiled WASM as ready to instantiate and execute. These rules can apply to Workers of both the established service worker format, and the newer modules format. This field replaces the legacy `build.upload.rules` field (which only applied to modules format Workers).
+  The `rules` field is an array of mappings between module types and file patterns. It instructs Wrangler to interpret specific files differently than JavaScript. For example, this is useful for reading text-like content as text files, or compiled WASM as ready to instantiate and execute. These rules can apply to Workers of both the established service worker format, and the newer modules format. This field replaces the legacy `build.upload.rules` field (which only applied to modules format Workers).
 
 <!-- - **`legacy_env`**: _boolean_, optional. default: `true`
 
@@ -143,9 +143,9 @@ Routes are specified in the `wrangler.toml` configuration file.
 
 ## Other deprecated behaviour
 
-- `wrangler` will no longer use `index.js` in the directory where `wrangler dev` is called as the entry point to a Worker. Use the `main` configuration field, or explicitly pass it as a command line argument, for example: `wrangler dev index.js`.
+- Wrangler will no longer use `index.js` in the directory where `wrangler dev` is called as the entry point to a Worker. Use the `main` configuration field, or explicitly pass it as a command line argument, for example: `wrangler dev index.js`.
 
-- `wrangler` will no longer assume that bare specifiers are file names if they are not represented as a path. For example, in a folder like so:
+- Wrangler will no longer assume that bare specifiers are file names if they are not represented as a path. For example, in a folder like so:
 
   ```
   project
@@ -163,7 +163,7 @@ Routes are specified in the `wrangler.toml` configuration file.
   });
   ```
 
-  `wrangler` 1 would resolve `import SomeDependency from "some-dependency.js";` to the file `some-dependency.js`. This will also work in `wrangler` 2, but will also log a deprecation warning. In the future, this will break with an error. Instead, you should rewrite the import to specifiy that it is a relative path, like so:
+  Wrangler 1 would resolve `import SomeDependency from "some-dependency.js";` to the file `some-dependency.js`. This will also work in Wrangler 2, but will also log a deprecation warning. In the future, this will break with an error. Instead, you should rewrite the import to specifiy that it is a relative path, like so:
 
   ```diff
   - import SomeDependency from "some-dependency.js";

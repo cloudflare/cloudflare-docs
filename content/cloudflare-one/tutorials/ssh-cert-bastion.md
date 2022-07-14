@@ -43,8 +43,6 @@ First, build a Zero Trust policy to enforce rules whenever any user attempts to 
 
 In the Zero Trust dashboard, open the `Applications` page of the `Access` section. Select the "Self-hosted" option.
 
-![Add App](/cloudflare-one/static/zero-trust-security/ssh-slc/self-hosted.png)
-
 Name the application using a subdomain of a domain active in your Cloudflare account. This will be the host that users configure in their SSH configuration file to reach the protected resources.
 
 ![Name App](/cloudflare-one/static/zero-trust-security/ssh-slc/name-app.png)
@@ -114,11 +112,7 @@ Users will now be able to authenticate through Cloudflare Access and connect ove
 
 You can extend the Zero Trust security model by replacing long-lived SSH keys with short-lived certificates provided by Cloudflare Access. To do so, navigate to the Zero Trust dashboard and open the `Service Authentication` page. Select the `SSH` tab.
 
-In the `Application` drop-down, select the application created previously and click **Generate certificate**.
-
-![Gen Cert](/cloudflare-one/static/zero-trust-security/ssh-slc/gen-cert.png)
-
-Cloudflare Access will display the public key and an audience tag for the generated certificate.
+In the `Application` drop-down, select the application created previously and click **Generate certificate**. Cloudflare Access will display the public key and an audience tag for the generated certificate.
 
 ![Gen Cert Output](/cloudflare-one/static/zero-trust-security/ssh-slc/gen-cert-output.png)
 

@@ -40,19 +40,26 @@ The following methods are available on the bucket binding object injected into y
 For example, to issue a `PUT` object request using the binding above:
 
 ```js
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
-});
+export default {
+	async fetch(request, env) {
+		const url = new URL(request.url);
+		const key = url.pathname.slice(1);
 
-async function handleRequest(request) {
-  const url = new URL(request.url);
-  const key = url.pathname.slice(1);
+		switch (request.method) {
+			case 'PUT':
+				await env.MY_BUCKET.put(key, request.body);
+				return new Response(`Put ${key} successfully!`);
 
-  switch (request.method) {
-    case "PUT":
-      await MY_BUCKET.put(key, request.body);
-      return new Response(`Put ${key} successfully!`);
-}
+			default:
+				return new Response(`${request.method} is not allowed.`, {
+					status: 405,
+					headers: {
+						Allow: 'PUT',
+					},
+				});
+		}
+	},
+};
 ```
 
 {{<definitions>}}
@@ -143,6 +150,10 @@ async function handleRequest(request) {
 - {{<code>}}customMetadata{{<param-type>}}Record\<string, string>{{</param-type>}}{{</code>}}
 
   - A map of custom, user-defined metadata associated with the object.
+  
+- {{<code>}}range{{</code>}} {{<param-type>}}R2Range{{</param-type>}}
+
+  - A `R2Range` object containing the returned range of the object.
 
 - {{<code>}}writeHttpMetadata(headers{{<param-type>}}Headers{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
@@ -256,7 +267,7 @@ An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 
   - If true, indicates there are more results to be retrieved for the current `list` request.
 
-- {{<code>}}cursor{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}cursor{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
 
   - A token that can be passed to future `list` calls to resume listing from that point. Only present if truncated is true.
 

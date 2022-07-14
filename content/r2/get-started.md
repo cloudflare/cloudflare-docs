@@ -28,7 +28,7 @@ To purchase R2:
 
 {{<Aside type="note">}}
 
-This guide is tailored to Wrangler 2. If you are still using Wrangler 1, refer to the [Migrate from Wrangler 1 guide](https://developers.cloudflare.com/workers/wrangler/migration/migrating-from-wrangler-1/).
+This guide is tailored to Wrangler 2. If you are still using Wrangler 1, refer to the [Migrate from Wrangler 1 guide](/workers/wrangler/migration/migrating-from-wrangler-1/).
 
 {{</Aside>}}
 
@@ -111,21 +111,11 @@ Find your Account ID by logging in to the Cloudflare dashboard > **Overview** > 
 
 ```toml
 name = "<YOUR_WORKER_NAME>"
-type = "javascript"
-compatibility_date = "2022-04-18"
+main = "src/index.js"
+compatibility_date = "2022-06-30"
 
 account_id = "YOUR_ACCOUNT_ID" # ← Replace with your Account ID.
 workers_dev = true
-```
-
-If you need to use an older compatibility date, you need to enable the `r2_public_beta_bindings` [compatibility flag](/workers/platform/compatibility-dates/).
-
-To do this, update your `wrangler.toml` file to include the following:
-
-```toml
-# An example date older than "2022-04-18"
-compatibility_date = "2022-02-10"
-compatibility_flags = ["r2_public_beta_bindings"]
 ```
 
 To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the `<YOUR_BUCKET_NAME>` you used to create your bucket in [step 3](#create-your-bucket):
@@ -157,7 +147,7 @@ export default {
       case 'GET':
         const object = await env.MY_BUCKET.get(key);
 
-        if (!object || !object.body) {
+        if (object === null) {
           return new Response('Object Not Found', { status: 404 });
         }
 

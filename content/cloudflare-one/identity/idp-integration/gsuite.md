@@ -6,123 +6,80 @@ weight: 13
 
 # Google Workspace
 
+{{<Aside type="note">}}
+The Google Workspace IdP integration is not supported if your Google Workspace account is protected by Access.
+{{</Aside>}}
+
 You can integrate a Google Workspace (formerly Google Suite) account with Cloudflare Access. Unlike the instructions for [generic Google authentication](/cloudflare-one/identity/idp-integration/google/), the steps below will allow you to pull group membership information from your Google Workspace account.
 
-Once integrated, users will login with their Google Workspace credentials to reach resources protected by Cloudflare Access or to enroll their device into Cloudflare Gateway.
+Once integrated, users will log in with their Google Workspace credentials to reach resources protected by Cloudflare Access or to enroll their device into Cloudflare Gateway.
 
-Please note that you don't need to be a Google Cloud Platform user to integrate Google Workspace as an identity provider with Cloudflare Zero Trust. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
+You do not need to be a Google Cloud Platform user to integrate Google Workspace as an identity provider with Cloudflare Zero Trust. You will only need to open the Google Cloud Platform to configure IdP integration settings.
 
-1.  Log in to the Google Cloud Platform [console](https://console.cloud.google.com/). This is separate from your Google Workspace console.
+## Set up Google Workspace as an identity provider
 
-    ![GCP Console](/cloudflare-one/static/documentation/identity/gsuite/gcp-home.png)
+1. Log in to the Google Cloud Platform [console](https://console.cloud.google.com/). This is separate from your Google Workspace console.
 
-2.  Click **Create Project** to create a new project. Name the project and click **Create**. You should now see a Dashboard for your project.
+2. A Google Cloud project is required to enable Google Workspace APIs. If you do not already have a Google Cloud project, go to **IAM & Admin** > **Create Project**. Name the project and select **Create**.
 
-    ![Post Create](/cloudflare-one/static/documentation/identity/gsuite/post-create.png)
+3. Go to **APIs & Services** and select **+ Enable APIs and Services**. The API Library will load.
 
-3.  On the left-hand side, select `APIs & Services` and click **Dashboard**.
+4. In the API Library, search for `admin` and select _Admin SDK API_.
 
-4.  In the screen that loads, click **+ Enable APIs and Services** in the top toolbar.
+5. **Enable** the Admin SDK API.
 
-5.  The API Library will load. Search for `admin` in the search bar.
+6. Return to the **APIs & Services** page and go to **Credentials**.
 
-    ![API Library](/cloudflare-one/static/documentation/identity/gsuite/api-library.png)
+    ![Location of credential settings at the top of the Google Cloud Platform dashboard.](/cloudflare-one/static/documentation/identity/google/click-configure-consent.png)
 
-6.  Select `Admin SDK API` by Google.
+7. You will see a warning that you need to configure a consent screen. Select **Configure Consent Screen**.
 
-7.  Click **Enable** on the Admin SDK API page. The Admin SDK will be added to your project.
+8. To configure the consent screen:
+    1. Choose **Internal** as the User Type. This limits authorization requests to users in your Google Workspace and blocks users who have regular Gmail addresses.
+    2. Name the application, add a support email, and input contact fields. Google Cloud Platform requires an email in your account.
+    3. The **Scopes** page can be left blank.
+    4. The summary page will load and you can save and exit.
 
-    ![Admin SDK](/cloudflare-one/static/documentation/identity/gsuite/post-enable.png)
+9. Return to the **Credentials** page and select **+ Create Credentials** > **OAuth client ID**.
 
-8.  Return to the APIs & Services page. Click **Credentials** in the navigation bar. You will see a warning that you need to configure a consent screen. Click **Configure Consent Screen**.
+    ![Location of OAuth client ID settings on Google Cloud Platform credentials page.](/cloudflare-one/static/documentation/identity/google/create-oauth.png)
 
-    ![Configure Consent Screen](/cloudflare-one/static/documentation/identity/gsuite/configure-consent-screen.png)
+10. Choose _Web application_ as the Application type.
 
-9.  Cloudflare Access will gather information about users in your Google Workspace account, but not other accounts. Toggle `Internal` to limit this to members in your account.
+11. Under **Authorized JavaScript origins**, in the **URIs** field, enter your [team domain](/cloudflare-one/glossary/#team-domain).
 
-    ![Internal Users](/cloudflare-one/static/documentation/identity/gsuite/consent-internal.png)
+    ```txt
+    https://<your-team-name>.cloudflareaccess.com
+    ```
 
-10. Input information about the application.
+12. Under **Authorized redirect URIs**, in the **URIs** field, enter your team domain followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
-In this case, you are making an application available to your users and can add your team's contact information.
+    ```txt
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
 
-![Internal Users](/cloudflare-one/static/documentation/identity/gsuite/consent-screen-contact.png)
+13. Google will present the OAuth Client ID and Secret values. The secret field functions like a password and should not be shared. Copy both values.
 
-You will not need to configure scopes in this screen and can leave these fields blank.
-
-![Consent Screen Scope](/cloudflare-one/static/documentation/identity/gsuite/consent-screen-scope.png)
-
-The summary page will load and you can save and exit.
-
-![Consent Screen Summary](/cloudflare-one/static/documentation/identity/gsuite/consent-screen-summary.png)
-
-11. Return to the **Credentials** page. Click **+ Create Credentials**
-
-    ![Create Credentials](/cloudflare-one/static/documentation/identity/gsuite/create-credentials.png)
-
-12. Select **OAuth client ID**.
-
-    ![Select OAuth](/cloudflare-one/static/documentation/identity/gsuite/select-oauth.png)
-
-13. Select `Web application` as the Application type.
-
-14. Under **Authorized JavaScript origins**, in the **URIs** field, enter your [team domain](/cloudflare-one/glossary/#team-domain).
-
-15. Under **Authorized redirect URIs**, in the **URIs** field, enter your team domain followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
-
-```txt
-https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
-```
-
-![Input Team Domain](/cloudflare-one/static/documentation/identity/gsuite/input-auth-domain.png)
-
-    Click **Create**.
-
-16. Google will present the OAuth Client ID and Secret values. The secret field functions like a password and should be kept securely and not shared. For the purposes of this tutorial, the secret field is kept visible. Copy both values.
-
-    ![Secret Field](/cloudflare-one/static/documentation/identity/gsuite/secret-field.png)
-
-    The Client ID will now appear in the `APIs & Services` page.
-
-    ![Client ID Visible](/cloudflare-one/static/documentation/identity/gsuite/client-id-visible.png)
-
-17. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
-
-18. Under **Login methods**, click **Add new**.
-
-19. Select **Google Workspace**.
-
-20. Input the Client ID and Client Secret fields generated previously. Additionally, input the domain of your Google Workspace account.
-
-21. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
-
-22. Click **Save**.
-
-23. To complete setup, you must scroll below and visit the link generated. If you are not the Google Workspace administrator, share the link with the administrator.
-
-  {{<Aside type="note">}}
+14. On your [Google Admin console](https://admin.google.com), go to **Security** > **Access and data control** > **API controls**.  
+  ![Location of Trust internal apps setting in the Google Admin dashboard](/cloudflare-one/static/documentation/identity/gsuite/trust-internal-apps.png)
   
-  For the next steps to work correctly, you must enable the **Trust internal, domain-owned apps** option under the **Security** > **Access and data control** > **API controls** section of the Google Admin web app. 
-  
-  ![Enable trust internal apps](/cloudflare-one/static/documentation/identity/gsuite/trust-internal-apps.png)
-  
-  The option is disabled by default and must be enabled for Cloudflare Access to work correctly.
+15. Enable the **Trust internal, domain-owned apps** option.  This setting is disabled by default and must be enabled for Cloudflare Access to work correctly.
 
-  {{</Aside>}}
+16. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Authentication**.
 
-24. The generated link will prompt you to login to your Google account and to authorize Cloudflare Access to view group information.
+17. Under **Login methods**, select **Add new** and choose **Google Workspace**.
 
-    ![Authorize Groups](/cloudflare-one/static/documentation/identity/gsuite/authorize-groups.png)
+18. Input the Client ID and Client Secret fields generated previously. Additionally, input the domain of your Google Workspace account.
 
-    A success page will then load from Cloudflare Access.
+19. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
 
-    ![Group Success](/cloudflare-one/static/documentation/identity/gsuite/group-success.png)
+20. Select **Save**. To complete setup, you must visit the generated link. If you are not the Google Workspace administrator, share the link with the administrator.
 
-25. You can now return to the list of identity providers in the **Authentication** page of the Cloudflare Zero Trust dashboard. Select Google Workspace and click **Test**.
+21. The generated link will prompt you to log in to your Google admin account and to authorize Cloudflare Access to view group information. After allowing permisisons, you will see a success page from Cloudflare Access.
 
-    Your user identity and group membership should return.
+## Test your connection
 
-    ![Connection Works](/cloudflare-one/static/documentation/identity/gsuite/connection-works.png)
+To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to Google Workspace. Your user identity and group membership should return.
 
 ## Example API Configuration
 
