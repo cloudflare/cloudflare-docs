@@ -1,7 +1,7 @@
 ---
 pcx-content-type: navigation
 title: Logpush examples
-weight: 48
+weight: 90
 ---
 
 # Logpush examples
