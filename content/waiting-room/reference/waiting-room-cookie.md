@@ -16,7 +16,6 @@ Cloudflare Waiting Room requires the `__cfwaitingroom` cookie. When a waiting ro
 ## Cookie expiration time
 
 - While a visitor stays in a waiting room, `__cfwaitingroom` cookie expiration is always set to five minutes, but renews every 20 seconds automatically as long as the visitor does not close the their tab or leave your application.
-- If a user closes their tab or leaves the waiting room, their cookie will expire after five minutes.
 - When the visitor accesses the application, the `__cfwaitingroom` cookie expires after an interval (specified by [session_duration](/waiting-room/reference/configuration-settings/#session-duration)).
 
 ## Cookie function
