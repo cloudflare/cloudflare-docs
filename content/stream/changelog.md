@@ -50,3 +50,7 @@ You can now configure Stream to send webhooks each time a live stream connects a
 
 Stream now supports live video content! For more, read the [blog post](https://blog.cloudflare.com/stream-live/) and get started by reading the [docs](https://developers.cloudflare.com/stream/stream-live/).
 ...
+
+## 2021-07-26 Thumbnail previews in Stream Player seek bar
+
+The Stream Player now displays preview images when viewers hover their mouse over the seek bar, making it easier to skip to a specific part of a video.
