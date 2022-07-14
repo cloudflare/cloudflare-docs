@@ -5073,6 +5073,9 @@ pre {
   overflow: auto;
 }
 
+.tab > pre {
+ border-radius:0px 0px 0px 0px ;
+}
 
 .tab:target~.tab:last-child {
   display: none;
