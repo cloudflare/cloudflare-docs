@@ -9,25 +9,25 @@ title: Changelog
 
 ### Picture-in-Picture Support
 
-The [Stream Player](https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-player/) now displays a button to activate Picture-in-Picture mode, if the viewer's web browser supports the [Picture-in-Picture API](https://developer.mozilla.org/en-US/docs/Web/API/Picture-in-Picture_API).
+The [Stream Player](/stream/viewing-videos/using-the-stream-player/) now displays a button to activate Picture-in-Picture mode, if the viewer's web browser supports the [Picture-in-Picture API](https://developer.mozilla.org/en-US/docs/Web/API/Picture-in-Picture_API).
 
 ## 2022-05-13
 
 ### Creator ID property
 
-During or after uploading a video to Stream, it is now possible to specify a value for a new field, "creator". This field can be used to identify the creator of the video content, linking the way you identify your users or creators to videos in your Stream account. For more, read the [blog post](https://blog.cloudflare.com/stream-creator-management/)
+During or after uploading a video to Stream, you can now specify a value for a new field, `creator`. This field can be used to identify the creator of the video content, linking the way you identify your users or creators to videos in your Stream account. For more, read the [blog post](https://blog.cloudflare.com/stream-creator-management/)
 
 ## 2022-03-17
 
 ### Analytics panel in Stream Dashboard
 
-The Stream Dashboard now has an analytics panel that shows the number of minutes of both live and recorded video delivered. This view can be filtered by Creator ID, Video ID and country. For more in-depth analytics data, refer to the [bulk analytics documentation](https://developers.cloudflare.com/stream/getting-analytics/fetching-bulk-analytics/)
+The Stream Dashboard now has an analytics panel that shows the number of minutes of both live and recorded video delivered. This view can be filtered by **Creator ID**, **Video ID**, and **Country**. For more in-depth analytics data, refer to the [bulk analytics documentation](/stream/getting-analytics/fetching-bulk-analytics/)
 
 ## 2022-03-16
 
 ### Custom letterbox color configuration option for Stream Player
 
-The Stream Player can now be configured to use a custom letterbox color, displayed around the video ("letterboxing" or "pillarboxing") when the video's aspect ratio does not match the player's aspect ratio. Refer to the documentation on configuring the Stream Player [here](https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-player/#basic-options).
+The Stream Player can now be configured to use a custom letterbox color, displayed around the video ("letterboxing" or "pillarboxing") when the video's aspect ratio does not match the player's aspect ratio. Refer to the documentation on configuring the Stream Player [here](/stream/viewing-videos/using-the-stream-player/#basic-options).
 
 ## 2022-02-17
 
@@ -45,7 +45,7 @@ When viewing ads in the [VAST format](https://www.iab.com/guidelines/vast/#:~:te
 
 ### DASH and HLS manifest URLs accessible in Stream Dashboard
 
-If you choose to use a third-party player with Cloudflare Stream, you can now easily access HLS and DASH manifest URLs from within the Stream Dashboard. For more about using Stream with third-party players, read the docs [here](https://developers.cloudflare.com/stream/viewing-videos/using-own-player/).
+If you choose to use a third-party player with Cloudflare Stream, you can now easily access HLS and DASH manifest URLs from within the Stream Dashboard. For more about using Stream with third-party players, read the docs [here](/stream/viewing-videos/using-own-player/).
 
 ## 2022-01-22
 
@@ -57,19 +57,19 @@ When a live input is connected, the Stream Dashboard now displays technical deta
 
 ### Live viewer count in the Stream Player
 
-The [Stream Player](https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-player/) now shows the total number of people currently watching a video live.
+The [Stream Player](/stream/viewing-videos/using-the-stream-player/) now shows the total number of people currently watching a video live.
 
 ## 2022-01-04
 
 ### Webhook notifications for live stream connections events
 
-You can now configure Stream to send webhooks each time a live stream connects and disconnects. Read the docs [here](https://developers.cloudflare.com/stream/stream-live/webhooks).
+You can now configure Stream to send webhooks each time a live stream connects and disconnects. For more information, refer to the [Webhooks documentation](/stream/stream-live/webhooks).
 
 ## 2021-09-30
 
 ### Serverless Live Streaming
 
-Stream now supports live video content! For more, read the [blog post](https://blog.cloudflare.com/stream-live/) and get started by reading the [docs](https://developers.cloudflare.com/stream/stream-live/).
+Stream now supports live video content! For more information, read the [blog post](https://blog.cloudflare.com/stream-live/) and get started by reading the [docs](/stream/stream-live/).
 ...
 
 ## 2021-07-26
