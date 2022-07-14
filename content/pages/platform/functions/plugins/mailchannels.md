@@ -138,7 +138,7 @@ The following code block shows an example of using DKIM credentials with the Mai
 ```typescript
 ---
 filename: functions/_middleware.ts
-highlight: [8,9,10,11]
+highlight: [7,8,9]
 ---
 import mailChannelsPlugin from "@cloudflare/pages-plugin-mailchannels";
 
