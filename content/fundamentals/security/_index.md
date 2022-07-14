@@ -1,9 +1,9 @@
 ---
 pcx-content-type: navigation
-title: Logpush examples
-weight: 48
+title: Security
+weight: 7
 ---
 
-# Logpush examples
+# Security
 
 {{<directory-listing>}}

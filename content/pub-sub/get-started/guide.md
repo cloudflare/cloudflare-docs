@@ -109,7 +109,7 @@ For example, a namespace of `my-namespace` and a broker of `staging` would creat
 
 With this in mind, create a new namespace. This example will use `my-namespace` as a placeholder:
 
-```bash
+```sh
 $ wrangler pubsub namespace create my-namespace 
 ```
 
@@ -141,8 +141,9 @@ Broker names must be:
 
 To create a new MQTT Broker called `example-broker` in the `my-namespace` namespace from the example above:
 
-```bash
-$ wrangler pubsub broker create example-broker --namespace=my-namespace
+
+```sh
+$ wrangler pubsub namespace create example-broker --namespace=my-namespace
 ```
 
 You should receive a success response that resembles the following:
@@ -184,8 +185,8 @@ Ensure you do not commit your credentials to source control, such as GitHub. A v
 
 To generate two tokens for a broker called `example-broker` with a 48 hour expiry:
 
-```bash
-$ wrangler pubsub broker issue example-broker --namespace=NAMESPACE_NAME --number=5 --expiration=48h
+```sh
+$ wrangler pubsub broker issue example-broker --namespace=NAMESPACE_NAME --number=2 --expiration=48h
 ```
 
 You should receive a success response that resembles the example below, which is a map of Client IDs and their associated tokens.
@@ -210,7 +211,7 @@ You can view a live demo available at [demo.mqtt.dev](http://demo.mqtt.dev) that
 
 The example below uses [MQTT.js](https://github.com/mqttjs/MQTT.js) with Node.js to subscribe to a topic on a broker and publish a very basic "hello world" style message. You will need to have a [supported Node.js](https://nodejs.org/en/download/current/) version installed.
 
-```bash
+```sh
 # Check that Node.js is installed
 $ which node
 # Install MQTT.js
@@ -219,7 +220,7 @@ $ npm i mqtt --save
 
 Generate a credential and store it in the `BROKER_TOKEN` environmental variable so the MQTT client can access it.
 
-```bash
+```sh
 export BROKER_TOKEN=$(curl -s -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}/credentials?number=2&type=TOKEN&topicAcl=#" | jq '.result | to_entries | .[0].value')
 ```
 
@@ -246,7 +247,7 @@ client.on("message", function (topic, message) {
 
 Run the example. You should see the output written to your terminal (stdout).
 
-```bash
+```sh
 $ node index.js
 > received message on example-topic: hello from 01G2MFECWBR5WD8WSBE3AMMVVY at 1652102228
 ```

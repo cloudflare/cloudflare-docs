@@ -15,7 +15,6 @@ You can configure a WARP session for any Allow policy. To configure a session:
 3. Under **Step 4 - Configure policy settings**, select **Edit** next to **Enforce WARP client session duration**.
 4. Enter a session expiration time in `1h30m0s` format and save.
 5. Save the policy.
-6. If you are using [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) in Include mode, add `*.cloudflareaccess.com` to the list of included domains. This allows the WARP client to detect re-authentication attempts.
 
 Session checks are now enabled for the application protected by this policy.
 

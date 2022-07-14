@@ -1,10 +1,10 @@
 ---
 pcx-content-type: how-to
-title: Configure custom fields
+title: Custom fields
 weight: 43
 ---
 
-# Configure custom fields
+# Custom fields
 
 You can configure custom fields — selected from the list of HTTP request headers, HTTP response headers, and cookies — to include in Logpush log entries of a zone. Once configured, these custom fields will be enabled for all the Logpush jobs in the zone that use the HTTP requests dataset and include the request headers, response headers, or cookie fields.
 
