@@ -5010,17 +5010,20 @@ pre {
 }
 
 .active,.tab-label-wrapper:hover {
-  background-color: rgba(var(--gray-3-rgb), 0.19);
-  color: rgb(29, 31,32);
+  background-color: rgba(var(--gray-3-rgb), 0.19) !important;
+  color: rgb(29, 31,32) !important; 
 }
 
 [theme="dark"] .active, .tab-label-wrapper:hover,
 [theme="dark"] .tab-label-wrapper a:hover {
-  background-color: rgba(var(--orange-rgb), 0.08);
-  color: var(--code-orange);
+  background-color: rgba(var(--orange-rgb), 0.08) ;
+  color: var(--code-orange) !important;
 }
 
 .tab-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
   position: relative;
   height: 2.5rem;
   padding: 0.6em 1.25em;
@@ -5034,6 +5037,11 @@ pre {
   font-weight: 700;
   font-size: var(--code-font-size);
   font-family: var(--monospace-font-family);
+}
+
+.tab-label > svg {
+  width: 10%;
+
 }
 
 @media (max-width: 951px) {
