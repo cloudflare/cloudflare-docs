@@ -468,15 +468,14 @@ html[is-site-page] .DocsContent {
     }
 }
 
-body {
+.HeroImage {
     background-image: url("/light-background-image.svg");
     background-repeat: no-repeat;
     margin: 0 auto;
     position: relative;
-    top: 3.8em;
 }
 
-[theme=dark] body {
+[theme=dark] .HeroImage {
     background-image: url("/dark-background-image.svg");
 }
 
@@ -568,7 +567,7 @@ body {
     max-width: 90%;
     flex-wrap: wrap;
     padding-left: .75em;
-    margin-top: 4em;
+    margin-top: 8em;
     margin-bottom: 1em;
     justify-content: space-between;
 }
@@ -675,6 +674,7 @@ body {
 
 .HomeTitle {
     padding-left: .75em;
+    padding-top: 3em;
     line-height: 5em;
 }
 
