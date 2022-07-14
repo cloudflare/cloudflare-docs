@@ -42,8 +42,7 @@ For normal queries, spaces split search terms into different values. For example
 
 However, spaces, quotations, and other characters are sometimes part of the `message_id` parameter. To ensure these values are included as part of filtering on the message ID, you should prefix the `message_id` value with `message_id`.
 
-For example, the following query would find all messages that contain the terms `billing` and
-`statement` and have a `message_id` equal to `<Amazon aws Support@email.amazonses.com>`.
+For example, the following query would find all messages that contain the terms `billing` and `statement` and have a `message_id` equal to `<Amazon aws Support@email.amazonses.com>`.
 
 ```txt
 billing statement message_id:<Amazon aws Support@email.amazonses.com>

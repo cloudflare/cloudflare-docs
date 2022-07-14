@@ -32,12 +32,12 @@ To create a new allowed pattern:
     
     - **Notes**: Provide additional notes about the allowed pattern.
 
-6. Choose whether to **Verify Sender**, which applies the the `Spoof` [disposition](/email-security/reference/dispositions-and-attributes/#available-values) for emails failing the SPF/DKIM/DMARC domain policy (only applicable for *Trusted Sender* and *Acceptable Sender*). 
+6. Choose whether to **Verify Sender**, which applies the `Spoof` [disposition](/email-security/reference/dispositions-and-attributes/#available-values) for emails failing the SPF/DKIM/DMARC domain policy (only applicable for *Trusted Sender* and *Acceptable Sender*). 
 7. Click **Save**.
 
 ### CSV uploads
 
-You can also upload a CSV file of multiple allowed patterns, so long as the file is smaller than 150 KB, starts with a header row of all required values, and contains no additional fields.
+You can also upload a CSV file of multiple allowed patterns. The CSV file must be smaller than 150 KB, start with a header row of all required values, and contain no additional fields.
 
 An example file would look like this:
 

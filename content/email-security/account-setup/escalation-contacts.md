@@ -19,6 +19,6 @@ You can enable these special notifications through an opt-in process:
 
 {{<Aside type="note">}}
 
-If you select **Critical Service Events**, the contact will be sent a text and/or an email message. They will need to click on the links to confirm the subscriptions.
+If you select **Critical Service Events**, the contact will be sent a text and/or an email message. They will need to click on the link to confirm the subscriptions.
 
 {{</Aside>}}

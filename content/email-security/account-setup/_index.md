@@ -1,5 +1,5 @@
 ---
-title: Account
+title: Account setup
 pcx-content-type: navigation
 weight: 4
 ---

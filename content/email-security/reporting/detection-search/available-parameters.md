@@ -31,8 +31,6 @@ You can pull information for a message in [search detections](/email-security/re
 
 ## Data retention
 
-For Area 1 Horizon Enterprise customers, detections search would index for a
-period of 12 months and rotate over to a rolling 12-month period.
+For Area 1 Horizon Enterprise customers, detections search would index for amperiod of 12 months and rotate over to a rolling 12-month period.
 
-For Area 1 Horizon Advantage customers, detections search would index for 3
-months and rotate over to a rolling 3-month period.
+For Area 1 Horizon Advantage customers, detections search would index for 3 months and rotate over to a rolling 3-month period.

@@ -28,5 +28,5 @@ To access Mail Trace in the dashboard:
     - **Sender** (email address)
     - **Message ID**
 
-5. Based on your search, you can see all that information, as well as the assigned **Disposition**.
+5. Based on your search, you can review the requested information, as well as the assigned **Disposition**.
 6. For additional details about metadata and Area 1 processing and forwarding, click **View**.

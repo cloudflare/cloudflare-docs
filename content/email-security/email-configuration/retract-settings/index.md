@@ -40,7 +40,7 @@ To set up automatic retraction:
 
 ## Setup guides
 
-For more details, refer to the following resources:
+For more details, refer to:
 
 - [Retraction Guide for Office 365](/email-security/static/Gmail-Message-Retraction.pdf)
 - [Retraction Guide for Gmail](/email-security/static/O365-Message-Retraction.pdf)

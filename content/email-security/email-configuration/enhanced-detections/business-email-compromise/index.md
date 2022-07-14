@@ -7,7 +7,7 @@ layout: single
 
 # Business email compromise (BEC)
 
-Attackers often try to impersonate executives within an organization when sending malicious emails (banking information, trade secrets, and more).
+Attackers often try to impersonate executives within an organization when sending malicious emails (with requests about banking information, trade secrets, etc.).
 
 The **Business email compromise (BEC)** feature protects against these attacks by adding [an attribute](/email-security/reference/dispositions-and-attributes/#attributes) to any spoofed email messages matching these sensitive email addresses.
 
@@ -27,7 +27,7 @@ Using the dashboard, you can add email addresses indivdually or upload a CSV fil
 
 #### CSV uploads
 
-You can also upload a CSV file of multiple email addresses, so long as the file is smaller than 150 KB, starts with a header row of all required values, and contains no additional fields.
+You can also upload a CSV file of multiple email addresses. The CSV file must be smaller than 150 KB, start with a header row of all required values, and contain no additional fields.
 
 An example file would look like this:
 
