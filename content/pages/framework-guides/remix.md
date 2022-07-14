@@ -80,6 +80,48 @@ A [binding](/pages/platform/functions/#adding-bindings) is how your Function (Wo
 
 To add a KV namespace or Durable Object binding to your Remix application, refer to [Functions](/pages/platform/functions/#adding-bindings).
 
+### Using binding in your Remix application
+
+For example, if you create a KV namespace binding called `PRODUCTS_KV`, you will access it in your Remix application by first importing the `LoaderFunction` from `@remix-run/cloudflare-pages`. The `LoaderFunction` allows you to access data from different points in your Remix application. 
+
+The following code block shows an example of accessing a KV namespace in Remix. 
+
+```typescript
+---
+filename: app/routes/products/$productId.tsx
+highlight: [9,10,11,12,13,18,21]
+---
+import type { LoaderFunction } from "@remix-run/cloudflare";
+import { json } from "@remix-run/cloudflare"; 
+import { useLoaderData } from "@remix-run/react";
+
+export const loader: LoaderFunction = async ({
+  context, params,
+  params,
+}) => {
+  return json(
+    await context.PRODUCTS_KV.get(`product-${params.productId}`, {
+    await PRODUCTS_KV.get(`product-${params.productId}`, {
+      type: "json",
+    })
+  );
+};
+
+export default function Product() {
+  const product = useLoaderData();
+  return (
+    <div>
+      <p>Product</p>
+      {product.name}
+      <p>{} Products</p>
+      {/* ... */}
+    </div>
+  );
+}
+
+```
+
+
 ## Learn more
 
 By completing this guide, you have successfully deployed your Remix.js site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
