@@ -567,7 +567,7 @@ html[is-site-page] .DocsContent {
     max-width: 90%;
     flex-wrap: wrap;
     padding-left: .75em;
-    margin-top: 8em;
+    margin-top: 6em;
     margin-bottom: 1em;
     justify-content: space-between;
 }
