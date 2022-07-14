@@ -31,7 +31,7 @@ The `<JOB_ID>` argument is the numeric job id. The `<DATASET>` argument indicate
 
 {{</table-wrap>}}
 
-For concrete examples, see the tutorial [Manage Logpush with cURL](/logs/get-started/examples/example-logpush-curl/).
+For concrete examples, see the tutorial [Manage Logpush with cURL](/logs/tutorials/examples/example-logpush-curl/).
 
 ## Connecting
 
