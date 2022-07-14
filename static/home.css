@@ -478,7 +478,7 @@ html[is-site-page] .DocsContent {
 
 [theme=dark] .HeroImage {
     background-image: url("/Dev-Docs-Header-Illustration-Dark-Mode.svg");
-    box-shadow: 0 0 0px .5px black inset;
+    box-shadow: 0 0 0px .5px #1d1f20 inset;
 }
 
 .HeroBlockGrid {
