@@ -8,7 +8,7 @@ weight: 42
 
 ## Endpoints
 
-The table below summarizes the job operations available. All the examples in this page are for zone-scoped datasets. Account-scoped datasets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
+The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. All the examples in this page are for zone-scoped datasets. Account-scoped datasets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
 
 The `<ZONE_ID>` argument is the zone id (hexadecimal string). The `<ACCOUNT_ID>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
 The `<JOB_ID>` argument is the numeric job id. The `<DATASET>` argument indicates the log category (such as `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`).
@@ -125,11 +125,34 @@ Response
 
 ## Job object
 
-{{<Aside type="info" header="Note">}}
+{{<Aside type="note" header="Note">}}
 
 For a detailed description, refer to [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties).
 
 {{</Aside>}}
+
+## Kind
+
+The kind parameter (optional) is used to differentiate between Logpush and Edge Log Delivery jobs. For Logpush jobs, this parameter can be left empty or omitted. For Edge Log Delivery jobs, set `"kind": "edge"`. Currently, Edge Log Delivery is only supported for the `http_requests` dataset.
+
+{{<Aside type="note" header="Note">}}
+
+The kind parameter cannot be used to update existing Logpush jobs. You can only specify the kind parameter when creating a new job. 
+
+{{</Aside>}}
+
+```bash
+curl -s -X POST 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs' \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>" \
+-d '{
+ "name":"<DOMAIN_NAME>",
+ "destination_conf":"s3://<BUCKET_PATH>?region=us-west-2",
+ "dataset": "http_requests",
+ "logpull_options":"fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+ "kind":"edge"
+}' | jq .
+```
 
 ## Options
 
@@ -147,6 +170,10 @@ The options that you can customize are:
 
 {{<Aside type="note" header="Note">}}
 The **CVE-2021-44228** parameter can only be set through the API at this time. Updating your Logpush job through the dashboard will set this option to false.
+{{</Aside>}}
+
+{{<Aside type="note" header="Note">}}
+Parameters **max_upload_bytes** and **max_upload_records** are not configurable for Edge Log Delivery.
 {{</Aside>}}
 
 To check if the selected **logpull_options** are valid:
