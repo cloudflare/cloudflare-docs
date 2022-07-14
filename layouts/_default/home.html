@@ -65,14 +65,18 @@
       <div class="SiteHeader---shadow-cover"></div>
 
       <main class="DocsBody">
+        {{ if .IsHome }}
         <div class="HeroImage">
+        {{ end }}
         <div id="docs-content" data-reach-skip-nav-content></div>
         <div class="DocsContent" page-type="developers-site">
           <article class="DocsMarkdown">
             {{- .Content -}}
           </article>
         </div>
+      {{ if .IsHome }}
       </div>
+      {{ end }}
       </main>
     </div>
 
