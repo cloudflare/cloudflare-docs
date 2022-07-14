@@ -10,7 +10,7 @@ Edge Log Delivery allows customers to send logs directly from Cloudflare’s edg
 
 For [Data Localization Suite](https://www.cloudflare.com/data-localization/) customers, Edge Log Delivery can be configured to deliver logs directly to your destination without first flowing through either of our US or EU core data centers. This means that your logs are delivered from data centers inside your selected region to your destination — for example, an Azure storage bucket in your preferred region, or an instance of Splunk that runs in an on-premise data center.
 
-Edge Log Delivery is only available for HTTP request logs. Refer to the [Logpush API configuration](/logs/reference/logpush-api-configuration/#kind) page for steps on how to configure a job to use Edge Log Delivery.
+Edge Log Delivery is only available for HTTP request logs. Refer to the [API configuration](/logs/get-started/api-configuration/#kind) page for steps on how to configure a job to use Edge Log Delivery.
 
 {{<button-group>}}
 {{<button type="primary" href="/logs/get-started/">}}Get started{{</button>}}

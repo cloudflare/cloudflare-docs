@@ -1,10 +1,10 @@
 ---
 pcx-content-type: concept
-title: Logpush API configuration
+title: API configuration
 weight: 42
 ---
 
-# Logpush API configuration
+# API configuration
 
 ## Endpoints
 
@@ -31,7 +31,7 @@ The `<JOB_ID>` argument is the numeric job id. The `<DATASET>` argument indicate
 
 {{</table-wrap>}}
 
-For concrete examples, see the tutorial [Manage Logpush with cURL](/logs/reference/logpush-api-configuration/examples/example-logpush-curl/).
+For concrete examples, see the tutorial [Manage Logpush with cURL](/logs/tutorials/examples/example-logpush-curl/).
 
 ## Connecting
 
@@ -161,7 +161,7 @@ Logpush repeatedly delivers logs on your behalf and uploads them to your destina
 The options that you can customize are:
 
 1.  **Fields**: Refer to [Log fields](/logs/reference/log-fields/) for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields/default`.
-2.  **Filter**: Use filters to select the events to include and/or remove from your logs. For more information, refer to [Filters](/logs/reference/logpush-api-configuration/filters/).
+2.  **Filter**: Use filters to select the events to include and/or remove from your logs. For more information, refer to [Filters](/logs/reference/filters/).
 3.  **Sampling rate**: Value can range from `0.001` to `1.0` (inclusive). `sample=0.1` means `return 10% (1 in 10) of all records`. The default value is `1`, meaning logs will be unsampled. 
 4.  **Timestamp format**: The format in which timestamp fields will be returned. Value options: `unixnano` (default), `unix`, `rfc3339`.
 5.  **Redaction for CVE-2021-44228**: This option will replace every occurrence of `${` with `x{`.  To enable it, set `CVE-2021-44228=true`.
@@ -201,7 +201,7 @@ Response
 
 ## Custom fields
 
-You can add custom fields to your HTTP request log entries in the form of HTTP request headers, HTTP response headers, and cookies. Custom fields configuration applies to all the Logpush jobs in a zone that use the HTTP requests dataset. To learn more, refer to [Configure custom fields](/logs/reference/logpush-api-configuration/custom-fields/).
+You can add custom fields to your HTTP request log entries in the form of HTTP request headers, HTTP response headers, and cookies. Custom fields configuration applies to all the Logpush jobs in a zone that use the HTTP requests dataset. To learn more, refer to [Custom fields](/logs/reference/custom-fields/).
 
 ## Audit
 

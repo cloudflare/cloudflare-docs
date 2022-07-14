@@ -10,7 +10,7 @@ You can manage your Cloudflare Logpush service from the command line using cURL.
 
 Before getting started, review:
 
-- [Logpush API configuration](/logs/reference/logpush-api-configuration/)
+- [API configuration](/logs/get-started/api-configuration/)
 - [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties)
 
 {{<Aside type="note">}}
@@ -31,7 +31,7 @@ $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ow
 
 ### Parameters
 
-- **destination_conf** - See [Destination](/logs/reference/logpush-api-configuration/#destination) for details.
+- **destination_conf** - See [Destination](/logs/get-started/api-configuration/#destination) for details.
 
 ### Response
 
@@ -69,16 +69,16 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 ### Parameters
 
 - **name** (optional) - We suggest using your domain name as the job name; the name cannot be changed after the job is created.
-- **destination_conf** - Refer to [Destination](/logs/reference/logpush-api-configuration/#destination) for details.
+- **destination_conf** - Refer to [Destination](/logs/get-started/api-configuration/#destination) for details.
 - **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets; this parameter cannot be changed after the job is created.
-- **logpull_options** (optional) - Refer to [Options](/logs/reference/logpush-api-configuration/#options).
+- **logpull_options** (optional) - Refer to [Options](/logs/get-started/api-configuration/#options).
   - Typically includes the desired fields and timestamp format.
   - Set the timestamp format to `RFC 3339` (`&timestamps=rfc3339`) for:
     - Google BigQuery usage.
     - Automated timestamp parsing within Sumo Logic; refer to [timestamps from Sumo Logic](https://help.sumologic.com/03Send-Data/Sources/04Reference-Information-for-Sources/Timestamps%2C-Time-Zones%2C-Time-Ranges%2C-and-Date-Formats) for details.
 - **ownership_challenge** - Challenge token required to prove destination ownership.
-- **kind** (optional) - Used to differentiate between Logpush and Edge Log Delivery jobs. Refer to [Kind](/logs/reference/logpush-api-configuration/#kind) for details.
-- **filter** (optional) - Refer to [Filters](/logs/reference/logpush-api-configuration/filters/) for details.
+- **kind** (optional) - Used to differentiate between Logpush and Edge Log Delivery jobs. Refer to [Kind](/logs/get-started/api-configuration/#kind) for details.
+- **filter** (optional) - Refer to [Filters](/logs/reference/filters/) for details.
 
 ### Response
 
