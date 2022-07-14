@@ -24,8 +24,7 @@ To log in to Cloudflare Zero Trust directly, go to the [Zero Trust dashboard](ht
 
 To log in through the Cloudflare dashboard:
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-1.  Log in to the [Zero Trust dashboard](/cloudflare-one/setup/#start-from-the-cloudflare-dashboard).
+1.  Log in to the [Zero Trust dashboard](https://dash.teams.cloudflare.com/).
 
 ### Step 2 — Set up an IdP
 
