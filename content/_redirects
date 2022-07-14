@@ -310,6 +310,12 @@
 /logs/tutorials/bot-management-dashboard/ /bots/bot-analytics/ 301
 /logs/tutorials/example-logpush-python/ /logs/get-started/logpush-configuration-api/examples/example-logpush-python/ 301
 /logs/tutorials/tutorial-logpush-curl/ /logs/get-started/logpush-configuration-api/examples/example-logpush-curl/ 301
+/logs/reference/logpush-api-configuration/ /logs/get-started/api-configuration/ 301
+/logs/reference/logpush-api-configuration/filters/ /logs/reference/filters/ 301
+/logs/reference/logpush-api-configuration/custom-fields/ /logs/reference/custom-fields/ 301
+/logs/reference/logpush-api-configuration/examples/ /logs/get-started/examples/ 301
+/logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/get-started/examples/example-logpush-curl/ 301
+/logs/reference/logpush-api-configuration/examples/example-logpush-python/ /logs/get-started/examples/example-logpush-python/ 301
 
 # magic-firewall
 /magic-firewall/examples/ /magic-firewall/reference/examples/ 301

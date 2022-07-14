@@ -1,10 +1,10 @@
 ---
 pcx-content-type: concept
-title: Logpush API configuration
+title: API configuration
 weight: 42
 ---
 
-# Logpush API configuration
+# API configuration
 
 ## Endpoints
 
