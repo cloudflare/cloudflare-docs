@@ -151,7 +151,7 @@ declare namespace App {
 }
 
 ```
-In your component access bindings like KV and durable objects namespace with `env` : 
+4. Access the added KV or Durable objects namespace in your component with `env` : 
 
 ```js
 export async function post({ request, platform }) {
@@ -216,7 +216,7 @@ export default config;
 When deploying a SvelteKit application using [`@sveltejs/adapter-static`](https://www.npmjs.com/package/@sveltejs/adapter-static) set the **Build directory** to `build`. 
 
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
 **Important:** Remember to commit and push these changes to your GitHub repository.
 
@@ -242,7 +242,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 In SvelteKit, functions are written as endpoints. Functions contained in the `/functions` directory at the project's root will not be included in the deployment, which compiles to a single `_worker.js` file. 
 
-In other to have the correct request handlers in Pages functions. When writing your endpoints in SveleteKit, attach the corresponding `onRequest` handler to your SvelteKit endpoint. For example:
+When writing your endpoints in SveleteKit, attach the corresponding `onRequest` handler to your SvelteKit endpoint. For example:
 
 ```js
 ---
