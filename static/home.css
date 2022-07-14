@@ -532,7 +532,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     padding-left: .75em;
-    padding-right: 1.5em;
+    padding-right: .5em;
     align-items: center;
     justify-content: center;
 }
@@ -541,14 +541,25 @@ body {
     color: inherit;
 }
 
-.QuadBlock img {
+.CommunityBlock {
+    display: flex;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: .75em;
+    padding-right: 3.5em;
+    align-items: center;
+    justify-content: center;
+}
+
+.CommunityBlock img {
     height: 2.5em;
     width: 2.5em;
     padding-bottom: .5em;
     align-content: center;
 }
 
-[theme=dark] .QuadBlock img {
+[theme=dark] .CommunityBlock img {
     filter: invert(100%) sepia(0%) saturate(4588%) hue-rotate(160deg) brightness(108%) contrast(101%);
 }
 
