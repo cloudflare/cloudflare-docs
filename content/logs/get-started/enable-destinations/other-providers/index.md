@@ -31,4 +31,4 @@ To get started:
     - Zone ID
     - Destination access details for your cloud service provider
 
-2.  Configure your Logpush job. For more information on how to configure a Logpush job, refer to [Logpush API configuration](/logs/reference/logpush-api-configuration/).
+2.  Configure your Logpush job. For more information on how to configure a Logpush job, refer to [Logpush API configuration](/logs/get-started/api-configuration/).
