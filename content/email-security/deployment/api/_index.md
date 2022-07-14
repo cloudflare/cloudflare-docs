@@ -22,16 +22,16 @@ When you choose API deployment, you get the following benefits:
 
 - Easy protection for complex email architectures, without requiring any change to mailflow operations.
 - Agentless deployment for Microsoft 365 and Gmail.
-- Initial email protection from your current email provider.
+- The initial email protection measures offered by your current email provider.
 
 ## Limitations
 
 However, API deployment also has the following disadvantages:
 
 - Area 1 is dependent on your email provider's API infrastructure and outages will increase the message dwell time in the inbox.
+- Area 1 requires read and write access to mailboxes.
+- Requires API support from your email provider (does not typically support on-premise providers).
 - Your email provider may throttle API requests from Area 1.
-- Requires read and write access to mailboxes.
-- Requires API support (does not typically support on-premise providers).
 - Detection rates may be lower if multiple solutions exist.
 - Messages cannot be modified or quarantined.
 - Certain URL rewrite schemes cannot be decoded (for example, Mimecast).

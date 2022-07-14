@@ -21,4 +21,4 @@ To require that email from a specific domain passes SSL/TLS inspection:
 
 ## Exempt TLS inspection
 
-If you decide to exempt a domain from TLS inspection - by toggling **Require TLS Inbound** to **Off** - this will not turn off enforcement against legacy standards like SSLv1, SSLv2, and TLSv1, which are insecure by contemporary measures.
+If you decide to exempt a domain from TLS inspection - by toggling **Require TLS Inbound** to **Off** - this will not turn off enforcement against legacy standards like SSLv1, SSLv2, and TLSv1, which is generally considered insecure.

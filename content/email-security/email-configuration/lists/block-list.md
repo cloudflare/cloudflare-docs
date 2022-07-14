@@ -10,7 +10,7 @@ When you add **blocked senders**, Area 1 automatically marks all messages from t
 
 ## Add a blocked sender
 
-To create a new allowed pattern:
+To create a new blocked pattern:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).

@@ -6,7 +6,7 @@ weight: 1
 
 # Allowed patterns
 
-When you set up **allowed patterns**, our email security exempts messages that match certain patterns from normal detection scanning.
+When you set up **allowed patterns**, Cloudflare Area 1 email security exempts messages that match certain patterns from normal detection scanning.
 
 ## Add an allowed pattern
 
@@ -27,7 +27,7 @@ To create a new allowed pattern:
     - **Allow Type**: Choose one or more of the following types:
 
         - *Trusted Sender*: Messages will bypass all [detections](/email-security/reference/dispositions-and-attributes/) and link following by Area 1. Typically, only applies to phishing simulations from vendors such as KnowB4.
-        - *Exempt Recipient*: Will exempt messages from all Area 1 [detections](/email-security/reference/dispositions-and-attributes/) intended for recipients matching this pattern (email address or regular expression only). Typically, this only applies to submission mailboxes for user reporting to Security.
+        - *Exempt Recipient*: Will exempt messages from all Area 1 [detections](/email-security/reference/dispositions-and-attributes/) intended for recipients matching this pattern (email address or regular expression only). Typically, this only applies to submission mailboxes for user reporting to security.
         - *Acceptable Sender*: Will exempt messages from the `Spam`, `Spoof`, and `Bulk` [dispositions](/email-security/reference/dispositions-and-attributes/#available-values) (but not `Malicious` or `Suspicious`). Commonly used for external domains and sources that send mail on behalf of your organization, such as marketing emails or internal tools.
     
     - **Notes**: Provide additional notes about the allowed pattern.

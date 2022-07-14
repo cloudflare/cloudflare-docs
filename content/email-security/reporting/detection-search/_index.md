@@ -6,7 +6,7 @@ weight: 1
 
 # Detection search
 
-**Detection search** allows you to search through and view all emails that Area 1 has marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/). All messages in include the raw message with its headers, as well as any associated Area 1 dispositions and processing information.
+**Detection search** allows you to search through and view all emails that Area 1 has marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/). All messages include the raw message with its headers, as well as any associated Area 1 dispositions and processing information.
 
 You would commonly use detection search to get visibility into *why* and *when* Area 1 marked a message with a specific disposition. 
 

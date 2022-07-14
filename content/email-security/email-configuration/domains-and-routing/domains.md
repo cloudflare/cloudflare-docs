@@ -6,7 +6,7 @@ weight: 1
 
 # Domains
 
-Area 1 works through a system of domain-based routing, where we receive and evaluate incoming email from a domain.
+Cloudflare Area 1 works through a system of domain-based routing, where Cloudflare receives and evaluates incoming email from a domain.
 
 ## Create a domain
 

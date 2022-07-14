@@ -27,7 +27,7 @@ Child accounts control settings and services associated with an Area 1 instance.
 
 ### Child users
 
-Users created at Child level will only have access to the assigned Child Account. These users can have one of the following roles:
+Users created at child level will only have access to the assigned child account. These users can have one of the following roles:
 
 - **Read-only**: Only have access to view the email and detection statistics. No access to **Settings** (the gear icon).
 - **Read-write**: Can view email and detection statistics, as well as message preview, retraction, detection search, and mail trace. No access to **Settings** (the gear icon).

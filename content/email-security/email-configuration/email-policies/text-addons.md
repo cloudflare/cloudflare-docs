@@ -6,7 +6,7 @@ weight: 1
 
 # Text add-ons
 
-When a message receives a specific [disposition](/email-security/reference/dispositions-and-attributes/) from Area 1, you can add additional information to the *subject* and *body* of each message.
+When a message receives a specific [disposition](/email-security/reference/dispositions-and-attributes/) from Area 1, you can add additional information to the subject and body of each message.
 
 This information provides additional context to your employees, which can help them make better decisions if you choose to have a more permissive email policy. Subject prefixes can tell recipients which category the message is in. Body prefixes provide more context about why the message was added to a specific category.
 
