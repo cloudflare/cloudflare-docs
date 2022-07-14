@@ -27,3 +27,13 @@ Administrators can set up an Access policy to require approval before a user is 
 1.  Enter the desired **Approver Emails** (note: these must be email addresses).
 
 Now when a user accesses an application behind a temporary authentication policy, they will be able to enter their reason for accessing and submit their access request. Approvers will receive an email alert to approve or deny the request. Alternatively, an approval link will be generated that the requesting user can present to the approver. The approver can then grant access for a set amount of time, for a maximum 24 hours).
+
+## During authentication
+
+- Users will see
+
+![Temporary auth request page](/cloudflare-one/static/documentation/policies/temp-auth-request.png)
+
+- Approvers will see
+
+![Temporary auth approval page](/cloudflare-one/static/documentation/policies/temp-auth-approval.png)
