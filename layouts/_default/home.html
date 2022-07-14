@@ -61,8 +61,10 @@
         </div>
       </div>
 
+      {{ if not .IsHome }}
       <div class="SiteHeader---shadow"></div>
       <div class="SiteHeader---shadow-cover"></div>
+      {{ end }}
 
       <main class="DocsBody">
         {{ if .IsHome }}

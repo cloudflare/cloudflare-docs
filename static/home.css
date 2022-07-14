@@ -469,14 +469,16 @@ html[is-site-page] .DocsContent {
 }
 
 .HeroImage {
-    background-image: url("/light-background-image.svg");
+    background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
     background-repeat: no-repeat;
     margin: 0 auto;
     position: relative;
+    box-shadow: 0 0 0px .5px white inset;
 }
 
 [theme=dark] .HeroImage {
-    background-image: url("/dark-background-image.svg");
+    background-image: url("/Dev-Docs-Header-Illustration-Dark-Mode.svg");
+    box-shadow: 0 0 0px .5px black inset;
 }
 
 .HeroBlockGrid {
@@ -567,7 +569,7 @@ html[is-site-page] .DocsContent {
     max-width: 90%;
     flex-wrap: wrap;
     padding-left: .75em;
-    margin-top: 6em;
+    margin-top: 3.5em;
     margin-bottom: 1em;
     justify-content: space-between;
 }
@@ -593,6 +595,7 @@ html[is-site-page] .DocsContent {
 
 .TriBlock a {
     font-size: .90em;
+    color: normal;
 }
 
 .TriBlock ul li {
