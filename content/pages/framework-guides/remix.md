@@ -80,9 +80,9 @@ A [binding](/pages/platform/functions/#adding-bindings) is how your Function (Wo
 
 To add a KV namespace or Durable Object binding to your Remix application, refer to [Functions](/pages/platform/functions/#adding-bindings).
 
-### Using binding in your Remix application
+### Using a binding in your Remix application
 
-For example, if you create a KV namespace binding called `PRODUCTS_KV`, you will access it in your Remix application by first importing the `LoaderFunction` from `@remix-run/cloudflare-pages`. The `LoaderFunction` allows you to access data from different points in your Remix application. 
+If you have created a KV namespace binding called `PRODUCTS_KV`, you will access it in your Remix application by first importing the `LoaderFunction` from `@remix-run/cloudflare-pages`. The `LoaderFunction` allows you to access data from different points in your Remix application. 
 
 The following code block shows an example of accessing a KV namespace in Remix. 
 
@@ -120,7 +120,6 @@ export default function Product() {
 }
 
 ```
-
 
 ## Learn more
 
