@@ -21,9 +21,11 @@ You must specify a valid hostname in a Host Header Override that is either:
 * A hostname on the same Cloudflare account (possibly on a different zone).
 * A hostname for which Cloudflare is not proxying traffic (gray-clouded).
 
-{{<Aside type="note" header="Host header overrides when using load balancing">}}
+{{<Aside type="warning" header="Host header overrides when using load balancing">}}
 
 If you have configured load balancing through Cloudflare and you wish to override the HTTP `Host` header per origin or for a given monitor, refer to [Override HTTP Host headers](/load-balancing/additional-options/override-http-host-headers/) in the Load Balancing documentation for more information.
+
+If you set up both a Host Header Override with an Origin Rule and a header override in your Load Balancer configuration, the Origin Rule will take precedence over the Load Balancer configuration.
 
 {{</Aside>}}
 

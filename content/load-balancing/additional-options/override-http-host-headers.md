@@ -12,6 +12,8 @@ When your application needs specialized routing (`CNAME` setup or custom hosts l
 
 If you set a header override on an individual origin, it will take precedence over a header override set on a monitor.
 
+Also, if you set up both a Host Header Override with an [Origin Rule](/rules/origin-rules/) and a header override in your Load Balancer configuration, the Origin Rule will take precedence over the Load Balancer configuration.
+
 {{</Aside>}}
 
 ## Per origin Host header override
