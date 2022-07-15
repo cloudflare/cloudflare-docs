@@ -161,7 +161,7 @@ The following example demonstrates the setup procedure for Firefox.
 3. Select **Automatic proxy configuration URL**.
 4. Enter the URL where your PAC file is hosted, for example `https://proxy-pac.cflr.workers.dev/3ele0ss56t.pac`.
 
-![Enter PAC file URL into Firefox](/cloudflare-one/static/documentation/connections/firefox-pac-file.png)
+    ![Enter PAC file URL into Firefox](/cloudflare-one/static/documentation/connections/firefox-pac-file.png)
 
 5. Select **OK**. HTTP traffic from Firefox is now being filtered by Gateway.
 
