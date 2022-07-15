@@ -2,7 +2,7 @@
 {{- $default := .Get "default"
 -}}
 
-{{ if eq $default "js/sw"}}
+{{ if eq $default "true"}}
 <div class="tab tab-default" id="tab-js-sw">{{ $.Inner | markdownify }}</div>
 {{ else }}
 <div class="tab" id="tab-{{$label}}">{{ $.Inner | markdownify }}</div>

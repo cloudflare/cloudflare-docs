@@ -17,7 +17,7 @@ This tutorial will briefly touch upon the basics of HTML forms. For a more in-de
 {{</Aside>}}
 
 {{<tabs labels="js/sw | js/esm | ts/esm | ts/sw">}}
-{{<tab label="js/sw" default="js/sw">}}
+{{<tab label="js/sw" default="true">}}
 
 ```js
 async function handler(request) {
