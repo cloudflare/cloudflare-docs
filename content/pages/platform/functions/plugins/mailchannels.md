@@ -72,7 +72,7 @@ For more information about MailChannels and the options they support, refer to [
 
 ## DKIM support for Mailchannels API
 
-The MailChannels API also allows you add a DomainKeys Identified Mail (DKIM) which is an email authentication standard that helps you to sign email messages from your domain with a digital signature using public-key cryptography. Refer to [Cloudflare DNS DKIM guide](https://www.cloudflare.com/en-ca/learning/dns/dns-records/dns-dkim-record/) to learn more.
+The MailChannels API also allows you add a DomainKeys Identified Mail (DKIM) to your DNS records. DKIM is an email authentication standard that helps you to sign email messages from your domain with a digital signature using public-key cryptography. Refer to [Cloudflare DNS DKIM guide](https://www.cloudflare.com/en-ca/learning/dns/dns-records/dns-dkim-record/) to learn more.
 
 {{<Aside type= "note" header="Optional content">}}
 Setting up DKIM for use in your MailChannels Pages Plugin is optional, but will improve the deliverability of your emails. Clients will be less likely to mark your emails as spam or junk, because, when configured correctly, DKIM allows clients to verify that you own the domain you are sending from.
