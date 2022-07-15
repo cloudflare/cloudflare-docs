@@ -151,7 +151,7 @@ declare namespace App {
 }
 
 ```
-4. Access the added KV or Durable objects namespace in your component with `env` : 
+4. Access the added KV or Durable objects namespace in your endpoint with `env` : 
 
 ```js
 export async function post({ request, platform }) {
@@ -174,7 +174,7 @@ When deploying with [`@sveltejs/adapter-cloudflare`](https://www.npmjs.com/packa
 
 ### SvelteKit Static adapter
 
-The static adapter only produces client-side static assets and is compatible with Cloudflare Pages. To use this adapter, install the [`@sveltejs/adapter-static`](https://www.npmjs.com/package/@sveltejs/adapter-static) package:
+The static adapter only produces client-side static assets (no server-side rendering) and is compatible with Cloudflare Pages. To use this adapter, install the [`@sveltejs/adapter-static`](https://www.npmjs.com/package/@sveltejs/adapter-static) package:
 
 ```sh
 $ npm install @sveltejs/adapter-static@next --save-dev
@@ -241,7 +241,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 In SvelteKit, functions are written as endpoints. Functions contained in the `/functions` directory at the project's root will not be included in the deployment, which compiles to a single `_worker.js` file. 
 
-When writing your endpoints in SveleteKit, attach the corresponding `onRequest` handler to your SvelteKit endpoint. For example:
+When writing your endpoints in SvelteKit, attach the corresponding `onRequest` handler to your SvelteKit endpoint. For example:
 
 ```js
 ---
@@ -262,7 +262,9 @@ export async function get() {
 ```
 
 The `GET` request handler here will correspond to an `onRequestGet` in Pages Functions. 
-
+{{<Aside type= "note" header="SvelteKit Endpoints">}}
+For more information about SvelteKit Endpoints, see the [SvelteKit docs](https://kit.svelte.dev/docs/routing#endpoints).
+{{</Aside>}}
 ### Functions error logging
 
 Logs are not available as Pages Functions is currently in beta. A third-party alternative, such as Sentry, can be used for logging with Pages Functions.
