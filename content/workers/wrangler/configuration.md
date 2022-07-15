@@ -73,14 +73,14 @@ KEY = "value"
 # @param {string} preview_id The ID of the KV namespace used during `wrangler dev`
 # not inherited
 [[kv_namespaces]]
-  binding = "TEST_NAMESPACE_0"
-  id = ""
-  preview_id = ""
+  binding = "<YOUR_NAMESPACE_0>"
+  id = "<YOUR_ID>"
+  preview_id = "<YOUR_PREVIEW_ID>"
 
 [[kv_namespaces]]
-  binding = "TEST_NAMESPACE_1"
-  id = ""
-  preview_id = ""
+  binding = "<YOUR_NAMESPACE_1>"
+  id = "<YOUR_ID>"
+  preview_id = "<YOUR_PREVIEW_ID>"
 
 # A list of Durable Objects that your Worker should be bound to.
 # To learn more about Durable Objects, refer to:
