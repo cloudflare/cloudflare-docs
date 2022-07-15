@@ -589,7 +589,11 @@ html[is-site-page] .DocsContent {
 
 .TriBlock a {
     font-size: .90em;
-    color: normal;
+    color: #0055DC;
+    text-decoration: underline;
+    --background-color: transparent;
+    --border-bottom-color-rgb: #0055DC;
+    --border-bottom-color-alpha: .3;
 }
 
 .TriBlock ul li {
