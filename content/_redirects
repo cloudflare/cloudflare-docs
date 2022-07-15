@@ -911,10 +911,12 @@
 /cloudflare-one/connections/connect-apps/configuration/configuration-file/ /cloudflare-one/connections/connect-apps/configuration/local-management/configuration-file/ 301
 /cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/ /cloudflare-one/connections/connect-apps/configuration/local-management/ingress/ 301
 /cloudflare-one/connections/connect-apps/configuration/private-networks/ /cloudflare-one/connections/connect-networks/private-net/ 301
+/cloudflare-one/connections/connect-apps/create-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
 /cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare/ /cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/setup/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
 /cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/ /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/ 301
 /cloudflare-one/connections/connect-apps/trycloudflare/ /cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare/ 301
+
 /cloudflare-one/connections/connect-browsers/ /cloudflare-one/policies/browser-isolation/ 301
 /cloudflare-one/connections/connect-browsers/configuration/ /cloudflare-one/policies/browser-isolation/configuration/ 301
 /cloudflare-one/connections/connect-browsers/extensions/ /cloudflare-one/policies/browser-isolation/extensions/ 301
