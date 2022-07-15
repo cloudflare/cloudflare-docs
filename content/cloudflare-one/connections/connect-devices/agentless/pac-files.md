@@ -155,7 +155,7 @@ The following example demonstrates the setup procedure for Firefox.
 
 1. In Firefox, go to **Settings** and scroll down to **Network Settings**.
 
-![Navigating to Network Settings menu in Firefox](/cloudflare-one/static/documentation/connections/firefox-network-settings.png)
+    ![Navigating to Network Settings menu in Firefox](/cloudflare-one/static/documentation/connections/firefox-network-settings.png)
 
 2. Select **Settings**.
 3. Select **Automatic proxy configuration URL**.
