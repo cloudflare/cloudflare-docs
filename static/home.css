@@ -587,12 +587,6 @@ html[is-site-page] .DocsContent {
     background: #242628
 }
 
-.TriBlock p {
-    font-size: 1.25em;
-    font-weight: bold;
-    padding-top: .25em;
-}
-
 .TriBlock a {
     font-size: .90em;
     color: normal;
@@ -620,6 +614,49 @@ html[is-site-page] .DocsContent {
 
 [theme=dark] .TriBlockHeader img {
     filter: invert(100%) sepia(4%) saturate(159%) hue-rotate(297deg) brightness(116%) contrast(100%);
+}
+
+.FeaturedContentGrid {
+    display: flex;
+    max-width: 90%;
+    flex-wrap: wrap;
+    padding-left: .75em;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+.FeaturedContentBlock {
+    display: flex;
+    width: 15em;
+    height: 30em;
+    background: #f3f3f4;
+    margin-top: 1em;
+    margin-left: 1.25em;
+    margin-bottom: 1em;
+    padding-bottom: .5em;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 14em;
+}
+
+[theme=dark] .FeaturedContentBlock {
+    background: #242628
+}
+
+.FeatureContentHeader {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items:flex-end;
+}
+
+.FeatureContentTitle {
+    font-size: 1.15em;
+    font-weight: bold;
+}
+
+.FeaturedContentDescription {
+    font-size: .85em;
 }
 
 .ConnectHeader {
