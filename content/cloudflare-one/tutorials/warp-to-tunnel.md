@@ -49,9 +49,9 @@ If you already have `cloudflared` installed, make sure it's updated to the lates
 
 ## Create a Tunnel
 
-You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) that will connect `cloudflared` to Cloudflare's edge.
+You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#set-up-a-tunnel-locally-cli-setup) that will connect `cloudflared` to Cloudflare's edge.
 
-Begin by [creating a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) with an associated name. This example uses the name `grafana`.
+Begin by creating a Tunnel with an associated name. This example uses the name `grafana`.
 
 ```bash
 cloudflared tunnel create grafana

@@ -8,7 +8,7 @@ weight: 51
 
 | Before you start                                                                   |
 | ---------------------------------------------------------------------------------- |
-| 1. [Create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/)      |
+| 1. [Create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/)      |
 | 1. [Configure the Tunnel](/cloudflare-one/connections/connect-apps/configuration/) |
 
 ## Route traffic from the Cloudflare dashboard
