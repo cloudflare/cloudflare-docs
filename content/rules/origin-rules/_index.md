@@ -30,3 +30,7 @@ Currently you can only create Origin Rules [using the API](/rules/origin-rules/c
 | Destination Port Override | Yes  | Yes |   Yes    |    Yes     |
 
 {{</table-wrap>}}
+
+## Important remarks
+
+If you override the hostname with an Origin Rule (via Host Header Override or Resolve Override) and add a header override to your Load Balancer configuration, the Origin Rule will take precedence over the Load Balancer configuration.
