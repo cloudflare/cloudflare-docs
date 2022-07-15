@@ -94,7 +94,7 @@ Ensure that the machine's firewall permits egress on ports `80`, `443`, and `338
 
 ## Create a Tunnel
 
-Next, [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) with the command below.
+Next, [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#set-up-a-tunnel-locally-cli-setup) with the command below.
 
 ```sh
 $ cloudflared tunnel create <NAME>
