@@ -155,9 +155,9 @@ Once the certificate has been installed, you can configure Gateway to inspect HT
 
 1. Go to **Settings** > **Network**.
 
-2. Toggle **Proxy** to _Enabled_. This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
+2. Toggle **Proxy** to Enabled. This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
 
-3. Toggle **TLS decryption** to _Enabled_. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
+3. Toggle **TLS decryption** to Enabled. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
 
 ## Enroll a device
 
