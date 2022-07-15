@@ -98,7 +98,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 ## 2. Test your proxy server
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), create an [HTTP policy](/cloudflare-one/policies/filtering/http-policies/) for testing purposes. For example,
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), create an [HTTP policy](/cloudflare-one/policies/filtering/http-policies/) for testing purposes. For example:
     | Selector      | Operator  | Value              | Action |
     | --------------| ----------| -------------------| ------ |
     | Domain        | in        | `example.com`      | Block  |
