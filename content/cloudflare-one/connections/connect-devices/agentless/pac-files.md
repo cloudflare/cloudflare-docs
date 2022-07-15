@@ -98,7 +98,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 ## 2. Test your proxy server
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), create an [HTTP policy](/cloudflare-one/policies/filtering/http-policies/) for testing purposes. For example,
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), create an [HTTP policy](/cloudflare-one/policies/filtering/http-policies/) for testing purposes. For example:
     | Selector      | Operator  | Value              | Action |
     | --------------| ----------| -------------------| ------ |
     | Domain        | in        | `example.com`      | Block  |
@@ -111,7 +111,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
     ```
 
 {{<Aside type="note">}}
-If curl returns a `401` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double check that curl is not using IPv6 (force the option `-4`).
+If curl returns a `401` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that curl is not using IPv6 (use the `-4` option to force IPv4).
 {{</Aside>}}
 
 ## 3. Create a PAC file
@@ -155,19 +155,19 @@ The following example demonstrates the setup procedure for Firefox.
 
 1. In Firefox, go to **Settings** and scroll down to **Network Settings**.
 
-![Navigating to Network Settings menu in Firefox](/cloudflare-one/static/documentation/connections/firefox-network-settings.png)
+    ![Navigating to Network Settings menu in Firefox](/cloudflare-one/static/documentation/connections/firefox-network-settings.png)
 
 2. Select **Settings**.
 3. Select **Automatic proxy configuration URL**.
 4. Enter the URL where your PAC file is hosted, for example `https://proxy-pac.cflr.workers.dev/3ele0ss56t.pac`.
 
-![Enter PAC file URL into Firefox](/cloudflare-one/static/documentation/connections/firefox-pac-file.png)
+    ![Enter PAC file URL into Firefox](/cloudflare-one/static/documentation/connections/firefox-pac-file.png)
 
 5. Select **OK**. HTTP traffic from Firefox is now being filtered by Gateway.
 
 ## 5. Test your HTTP policy
 
-You can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-the-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
+You can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-your-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
 
 ## Limitations
 
