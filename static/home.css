@@ -628,7 +628,7 @@ html[is-site-page] .DocsContent {
 .FeaturedContentBlock {
     display: flex;
     width: 15em;
-    height: 30em;
+    height: 18em;
     background: #f3f3f4;
     margin-top: 1em;
     margin-left: 1.25em;
@@ -636,7 +636,7 @@ html[is-site-page] .DocsContent {
     padding-bottom: .5em;
     padding-left: 1em;
     padding-right: 1em;
-    padding-top: 14em;
+    padding-top: 2em;
 }
 
 [theme=dark] .FeaturedContentBlock {
