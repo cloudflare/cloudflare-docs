@@ -620,6 +620,11 @@ html[is-site-page] .DocsContent {
     filter: invert(100%) sepia(4%) saturate(159%) hue-rotate(297deg) brightness(116%) contrast(100%);
 }
 
+.FeaturedContentSectionTitle {
+    padding-left:.75em; 
+    margin-bottom: 2em;
+}
+
 .FeaturedContentGrid {
     display: flex;
     max-width: 90%;
