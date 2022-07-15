@@ -2,7 +2,7 @@
 pcx-content-type: how-to
 title: Add locations
 layout: single
-weight: 3
+weight: 1
 ---
 
 # Add locations
