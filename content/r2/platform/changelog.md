@@ -5,6 +5,11 @@ title: Changelog
 
 # Changelog
 
+## 2022-07-14
+
+- Improvements to 500s. We now more consistently convert errors so things that were previously concurrency problems for some operations should now be `TooMuchConcurrency` instead of `InternalError`, other error cases were also improved. There should also be a reduced rate of `500` errors generally due to internal improvements.
+- `ListMultipartUpload` correctly encodes the returned Key if the `encoding-type` parameter is specified.
+
 ## 2022-07-13
 
 - S3 XML documents sent to R2 that have an XML declaration are not rejected with `400 Bad Request` / `MalformedXML`.
