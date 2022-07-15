@@ -242,14 +242,38 @@ There are 3 variations of arguments that can be used in a range:
 
   - Note that there is a limit on the total amount of data that a single `list` operation can return. If you request data, you may recieve fewer than `limit` results in your response to accomodate metadata.
 
-  This means applications must be careful to avoid code like the following:
+  This means applications must be careful to avoid comparing the amount of returned objects against your `limit`. Instead, use the `truncated` property to determine if the `list` request has more data to be returned.
 
   ```js
-    while (listed.length < limit) {
-      listed = myBucket.list({ limit, include: ['customMetadata'] })
-    }
+  const options = {
+      limit: 500,
+      include: ['customMetadata'],
+  }
+
+  const listed = await env.MY_BUCKET.list(options);
+
+  let truncated = listed.truncated;
+  let cursor = truncated ? listed.cursor : undefined;
+
+  // ❌ - if your limit can't fit into a single response or your
+  // bucket has less objects than the limit, it will get stuck here.
+  while (listed.objects.length < options.limit) {
+    // ...
+  }
+
+  // ✅ - use the truncated property to check if there are more
+  // objects to be returned
+  while (truncated) {
+      const next = await env.MY_BUCKET.list({
+        ...options,
+        cursor: cursor,
+      });
+      listed.objects.push(...next.objects);
+
+      truncated = next.truncated;
+      cursor = next.cursor
+  }
   ```
-  Instead, use the `truncated` property to determine if the `list` request has more data to be returned.
 
 {{</definitions>}}
 
