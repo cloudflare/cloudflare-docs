@@ -41,7 +41,7 @@ layout: list
       <td>100534</td>
       <td>Web Shell Activity</td>
       <td>N/A</td>
-      <td>Log</td>
+      <td>Block</td>
     </tr>
     <tr>
       <td>2022-07-11</td>
