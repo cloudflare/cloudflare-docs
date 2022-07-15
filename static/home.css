@@ -640,7 +640,7 @@ html[is-site-page] .DocsContent {
     padding-bottom: .5em;
     padding-left: 1em;
     padding-right: 1em;
-    padding-top: 2em;
+    padding-top: 1.25em;
 }
 
 [theme=dark] .FeaturedContentBlock {
