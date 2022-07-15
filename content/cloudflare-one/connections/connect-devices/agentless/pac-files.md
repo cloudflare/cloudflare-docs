@@ -167,7 +167,7 @@ The following example demonstrates the setup procedure for Firefox.
 
 ## 5. Test your HTTP policy
 
-You can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-the-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
+You can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-your-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
 
 ## Limitations
 
