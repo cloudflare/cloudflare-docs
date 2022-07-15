@@ -936,6 +936,7 @@
 /cloudflare-one/connections/connect-devices/warp/deployment/Windows-Teams/ /cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/ 301
 /cloudflare-one/connections/connect-devices/warp/device-enrollment/ /cloudflare-one/connections/connect-devices/warp/warp-settings#device-enrollment-rules/ 301
 
+/cloudflare-one/connections/connect-networks/ /cloudflare-one/connections/connect-apps/private-net/ 301
 /cloudflare-one/connections/connect-networks/locations/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
 /cloudflare-one/connections/connect-networks/locations/configuring-a-location/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
 /cloudflare-one/connections/connect-networks/locations/dedicated-ipv4-ipv6/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/ 301
