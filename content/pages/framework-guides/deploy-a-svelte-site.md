@@ -88,7 +88,7 @@ You will need to pick the one that best suits your use case.
 
 The SvelteKit project's default configuration uses [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto), which automatically chooses the adapter for your current environment. While you can use this default adapter when deploying to Cloudflare Pages by setting your **Build directory** to `.svelte-kit/cloudflare`, local development has a few disadvantages.
 
-When building locally, [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto) has no way to know what platform you are going to deploy to, so the build will fail. Since the environment variables are not set, you cannot use Cloudflare Pages features, like Direct Uploads or use Functions, locally. 
+When building locally, [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto) has no way to know what platform you are going to deploy to. This will cause the build to fail. Since the environment variables are not set, you cannot use Cloudflare Pages features, like Direct Uploads or Functions, locally. 
 
 {{<Aside type= "note" header="Optional configuration">}}
 
@@ -96,7 +96,7 @@ SvelteKit detects Pages via the `CF_PAGES` environment variable. You can use the
 
 {{</Aside>}}
 
-However, in production, to deploy your Sveltekit application on Pages, First update the **Build directory** to `.svelte-kit/cloudflare`; this lets the [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto) know you are deploying to a Cloudflare Pages environment.
+To deploy your Sveltekit application in production, update the **Build directory** to `.svelte-kit/cloudflare`. This lets the [`@sveltejs/adapter-auto` package](https://www.npmjs.com/package/@sveltejs/adapter-auto) know you are deploying to a Cloudflare Pages environment.
 
 ### SvelteKit Cloudflare 
 
@@ -214,7 +214,6 @@ export default config;
 ```
 
 When deploying a SvelteKit application using [`@sveltejs/adapter-static`](https://www.npmjs.com/package/@sveltejs/adapter-static) set the **Build directory** to `build`. 
-
 
 {{<Aside type="note">}}
 
