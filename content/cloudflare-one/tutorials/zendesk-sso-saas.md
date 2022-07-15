@@ -20,23 +20,25 @@ For this tutorial, you will need:
 
 20 minutes
 
+---
+
 ## Configure Zendesk and Cloudflare
 
-1.  Navigate to your Zendesk administrator dashboard, typically available at `<yourdomain>.zendesk.com/admin/security/sso`.
+1. Navigate to your Zendesk administrator dashboard, typically available at `<yourdomain>.zendesk.com/admin/security/sso`.
 
-1.  In a separate tab or window, open the [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and navigate to **Access** > **Applications**.
+2. In a separate tab or window, open the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), select your account, and go to **Access** > **Applications**.
 
-1.  Select _SaaS_ as the application type to begin creating a SaaS application.
+3. Select **Add an application**, then choose _SaaS_.
 
-1.  Input the following values in the Zero Trust application configuration:
+4. Input the following values in the Zero Trust application configuration:
 
     | Zero Trust field                   | Value                                           |
     |------------------------------------|-------------------------------------------------|
     | **Entity ID**                      | `https://<yoursubdomain>.zendesk.com`           |
     | **Assertion Consumer Service URL** | contents of **SAML SSO URL** in Zendesk account |
-    | **Name ID Format**                 | Email                                           |
+    | **Name ID Format**                 | _Email_                                         |
 
-1.  (Optional) Configure these Attribute Statements to include a user’s first and last name:
+5. (Optional) Configure these Attribute Statements to include a user’s first and last name:
 
     | Cloudflare attribute name | IdP attribute value                                               |
     |---------------------------|-------------------------------------------------------------------|
@@ -47,9 +49,9 @@ For this tutorial, you will need:
 
     ![Zendesk attributes](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-attributes.png)
 
-1. [Create an Access policy](/cloudflare-one/policies/access/) to determine who can access Zendesk.
+6. To determine who can access Zendesk, [create an Access policy](/cloudflare-one/policies/access/).
 
-1.  Copy the values from the Cloudflare IdP fields and add them to the following Zendesk fields:
+7. Copy the values from the Cloudflare IdP fields and add them to the following Zendesk fields:
 
     | Cloudflare IdP field                        | Zendesk field               |
     |---------------------------------------------|-----------------------------|
@@ -67,6 +69,6 @@ For this tutorial, you will need:
 
     ![Zendesk fingerprint](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-fingerprint.png)
 
-1.  Go to `https://<yourdomain>.zendesk.com/admin/security/staff_members` and enable **External Authentication** > **Single Sign On**.
+8. Go to `https://<yourdomain>.zendesk.com/admin/security/staff_members` and enable **External Authentication** > **Single Sign On**.
 
 Users should now be able to log in to Zendesk if their Email address exists in the Zendesk user list.

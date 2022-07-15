@@ -1,5 +1,5 @@
 ---
-updated: 2022-07-13
+updated: 2022-07-15
 category: 🔐 Zero Trust
 difficulty: Advanced
 pcx-content-type: tutorial
@@ -24,7 +24,7 @@ Cloudflare Access provides a user-facing portal, the [App Launcher](https://blog
 
 ## Configure the App Launcher
 
-1. On the Zero Trust Dashboard, go to **Settings > Authentication**.
+1. On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Authentication**.
 
 2. Under **App Launcher**, select **Manage**.
 

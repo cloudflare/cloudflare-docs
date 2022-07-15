@@ -1,5 +1,5 @@
 ---
-updated: 2022-07-13
+updated: 2022-07-15
 category: 🌐 Connections
 difficulty: Advanced
 pcx-content-type: tutorial
@@ -23,13 +23,11 @@ Once enrolled, user endpoints will be able to connect to private [RFC 1918](http
 
 **⏲️ Time to complete:** 45 minutes
 
+---
+
 ## Install `cloudflared`
 
-1. [Download and install](/cloudflare-one/connections/connect-apps/install-and-setup/) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
-
-    ```sh
-    $ brew install cloudflare/cloudflare/cloudflared
-    ```
+1. [Download and install](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) the Cloudflare Tunnel daemon, `cloudflared`.
 
 2. Run the following command in your Terminal to authenticate this instance of `cloudflared` into your Cloudflare account.
 
@@ -44,14 +42,14 @@ Once enrolled, user endpoints will be able to connect to private [RFC 1918](http
 You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
 {{<Aside>}}
-If you already have `cloudflared` installed, make sure it's updated to the latest version before you continue with the tutorial. Some commands may not run with older versions of `cloudflared`.
+If you already have `cloudflared` installed, make sure to update to the latest version before you continue with the tutorial. Some commands may not run with older versions of `cloudflared`.
 {{</Aside>}}
 
 ## Create a Tunnel
 
 You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) that will connect `cloudflared` to Cloudflare's edge.
 
-1. [Create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) with an associated name. This example uses the name `grafana`.
+1. Create a Tunnel with an associated name. This example uses the name `grafana`.
 
     ```sh
     $ cloudflared tunnel create grafana
@@ -110,33 +108,31 @@ Users can reach this private service by logging in to their Zero Trust account a
 
 By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certain other routes as part of its [Split Tunnel feature](/cloudflare-one/tutorials/split-tunnel/). To use this feature the IPs that you specified for your Tunnel must be included which will send traffic for those destinations through the WARP agent and to the Tunnel.
 
-1.  On the Zero Trust Dashboard, navigate to **Settings > Network**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), select your account and go to **Settings** > **Network**.
 
-1.  Select **Manage**. The IP ranges listed are those that Cloudflare excludes by default. Choose the range being used for this private connection and delete it.
+2. Within **Split Tunnels**, select **Manage**. The IP ranges listed are those that Cloudflare excludes by default. Choose the range being used for this private connection and delete it.
 
 ## Integrate your identity provider
 
-Users can now connect over this private network by [enrolling their devices into the WARP agent](/cloudflare-one/connections/connect-devices/warp/) in the same account as the Cloudflare Tunnel configuration. They must use the `Gateway with WARP` mode.
+Users can now connect over this private network by [enrolling their devices into the WARP agent](/cloudflare-one/connections/connect-devices/warp/) in the same account as the Cloudflare Tunnel configuration. They must use _Gateway with WARP_ mode.
 
 You can begin to [enroll devices](/cloudflare-one/connections/connect-devices/warp/deployment/) by determining which users are allowed to enroll.
 
-Navigate to the `Settings` section of the Zero Trust dashboard and select `Authentication`. Cloudflare Zero Trust will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/cloudflare-one/identity/idp-integration/).
+On the Zero Trust dashboard, select your account and go to **Settings** > **Authentication**. Cloudflare Zero Trust will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or integrate your corporate [identity provider](/cloudflare-one/identity/idp-integration/).
 
 ## Determine which devices can enroll
 
-Next, build a rule to decide which devices can enroll in your account.
+1. Go to **Settings** > **Devices** > **Device enrollment**.
 
-1.  Navigate to **Settings > Devices > Device enrollment**.
+2. Within **Device enrollment permissions**, select **Manage**.
 
-1.  Select **Manage**.
-
-1.  Select **Add a rule**.
+3. Select **Add a rule**.
 
     Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
 
     ![Example device enrollment config to allow Cloudflare users](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
 
-1.  Select **Save**.
+4. Select **Save**.
 
 Your rule will now be visible under the **Device enrollment rules** list.
 
@@ -144,10 +140,7 @@ Your rule will now be visible under the **Device enrollment rules** list.
 
 To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
 
-To download the Cloudflare certificate:
-
-- Follow the link provided in [these instructions](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/).
-- Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
+To download the Cloudflare certificate, refer to [Install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/). To find the certificate in the Zero Trust Dashboard, go to **Settings** > **Devices** > **Certificates**.
 
 ## Enable the Cloudflare proxy
 
@@ -165,11 +158,11 @@ Once the certificate has been installed, you can configure Gateway to inspect HT
 
 2. Once the client is installed, select the gear icon.
 
-3. Under the **Account** tab, select **Login with Cloudflare for Teams**.
+3. Under the **Account** tab, select **Login with Cloudflare Zero Trust**.
 
-4. Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
+4. Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings** > **General**.
 
-The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can select the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`. These settings can be configured globally for an organization through a device management platform.
+The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to Teams mode. You can select the gear to toggle between DNS filtering or full proxy. In this use case, you must select _Gateway with WARP_. These settings can be configured globally for an organization through a device management platform.
 
 ## Connect via WARP
 
