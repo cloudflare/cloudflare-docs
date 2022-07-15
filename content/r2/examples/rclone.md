@@ -36,7 +36,7 @@ filename: ~/.config/rclone/rclone.conf
 ---
 [r2demo]
 type = s3
-provider = Other
+provider = Cloudflare
 access_key_id = abc123 # Your access_key_id
 secret_access_key = xyz456 # Your access_key_secret
 endpoint = https://<accountid>.r2.cloudflarestorage.com
@@ -44,6 +44,10 @@ acl = private
 ```
 
 You may then use the new `rclone` provider for any of your normal workflows.
+
+## Listing buckets & objects
+
+The [rclone tree](https://rclone.org/commands/rclone_tree/) command can be used to list the contents of the remote, in this case Cloudflare R2.
 
 ```sh
 $ rclone tree r2demo:
@@ -60,7 +64,25 @@ $ rclone tree r2demo:my-bucket-name
 # └── todos.txt
 ```
 
-You can also generate presigned links which allow you to share public access to a file temporarily.
+## Uploading & retrieving objects
+
+The [rclone copy](https://rclone.org/commands/rclone_copy/) command can be used to upload objects to an R2 bucket and vice versa - this allows you to upload files up to the 5TB maximum object size that R2 supports.
+  
+```sh
+# Upload dog.txt to the user-uploads bucket
+$ rclone copy dog.txt r2demo:user-uploads/dog.txt
+$ rclone tree r2demo:user-uploads
+# /
+# ├── foobar.png
+# └── dog.txt
+
+# Download dog.txt from the user-uploads bucket
+$ rclone copy r2demo:user-uploads/dog.txt dog.txt
+```
+
+## Generating presigned URLs
+
+You can also generate presigned links which allow you to share public access to a file temporarily using the [rclone link](https://rclone.org/commands/rclone_link/) command.
 
 ```sh
 # You can pass the --expire flag to determine how long the presigned link is valid.
