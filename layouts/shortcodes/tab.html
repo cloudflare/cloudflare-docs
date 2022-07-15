@@ -1,3 +1,9 @@
-{{- $label := replace (.Get "label") "/" "-"}}
+{{- $label := replace (.Get "label") "/" "-"}} 
+{{- $default := .Get "default"
+-}}
 
+{{ if eq $default "js/sw"}}
+<div class="tab tab-default" id="tab-js-sw">{{ $.Inner | markdownify }}</div>
+{{ else }}
 <div class="tab" id="tab-{{$label}}">{{ $.Inner | markdownify }}</div>
+{{ end }}

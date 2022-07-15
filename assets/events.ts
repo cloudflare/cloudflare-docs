@@ -127,10 +127,12 @@ export function tabs() {
     for (let i = 0; i < wrappers.length; i++) {
       const labels = wrappers[i].querySelectorAll(".tab-label");
       const tabs = wrappers[i].querySelectorAll(".tab");
+      // const defaultTab = wrappers[i].querySelector(".tab-default");
 
       if (tabs.length > 0) {
         // Set the first tab in a group to display
         (tabs[0] as HTMLElement).style.display = "block";
+        // (defaultTab as HTMLElement).style.display = "none";
         for (let i = 0; i < labels.length; i++)
           labels[i].addEventListener("click", $tab);
       } else {

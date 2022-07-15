@@ -5073,6 +5073,10 @@ pre {
   overflow: auto;
 }
 
+.tab-default {
+  display: block;
+}
+
 .tab > pre {
  border-radius:0px 0px 0px 0px ;
     margin-bottom: 0px;
