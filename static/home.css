@@ -468,6 +468,7 @@ html[is-site-page] .DocsContent {
     }
 }
 
+@media (min-width:600px) {
 .HeroImage {
     background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
     background-repeat: no-repeat;
@@ -475,11 +476,22 @@ html[is-site-page] .DocsContent {
     position: relative;
     box-shadow: 0 0 0px .5px white inset;
 }
+}
 
+@media (min-width:600px) {
 [theme=dark] .HeroImage {
     background-image: url("/Dev-Docs-Header-Illustration-Dark-Mode.svg");
     box-shadow: 0 0 0px .5px #1d1f20 inset;
 }
+}
+
+@media (max-width:600px) {
+    .HeroImage {
+        background-image: none;
+    }
+}
+
+
 
 .HeroBlockGrid {
     padding-left: .75em;
