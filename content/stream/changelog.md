@@ -78,6 +78,39 @@ Stream now supports live video content! For more information, read the [blog pos
 
 The Stream Player now displays preview images when viewers hover their mouse over the seek bar, making it easier to skip to a specific part of a video.
 
+
+
+## 2021-05-03
+
+### MP4 video file downloads
+
+You can now give your viewers the option to download videos uploaded to Stream as an MP4 video file. For more, read the docs [here](/stream/viewing-videos/download-videos/).
+
+## 2021-03-29
+
+### Picture quality improvements
+
+Cloudflare Stream now encodes videos with fewer artifacts, resulting in improved video quality for your viewers.
+
+## 2021-03-25
+
+### Improved client bandwidth hints for third-party video players
+
+If you use Cloudflare Stream with a third party player, and send the `clientBandwidthHint` parameter in requests to fetch video manifests, Cloudflare Stream now selects the ideal resolution to provide to your client player more intelligently. This ensures your viewers receive the ideal resolution for their network connection.
+
+## 2021-03-17
+
+### Less bandwidth, identical video quality
+
+Cloudflare Stream now delivers video using 3-10x less bandwidth, with no reduction in quality. This ensures faster playback for your viewers with less buffering, particularly when viewers have slower network connections.
+
+## 2021-01-17
+
+### Removed weekly upload limit, increased max video upload size
+
+- You can now upload videos up to 30GB in size to Cloudflare Stream
+- You can now upload an unlimited number of videos to Cloudflare Stream each week
+
 ## 2020-12-14
 
 ### Tus support for direct creator uploads
