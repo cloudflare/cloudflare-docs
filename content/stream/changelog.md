@@ -65,18 +65,67 @@ The [Stream Player](/stream/viewing-videos/using-the-stream-player/) now shows t
 
 You can now configure Stream to send webhooks each time a live stream connects and disconnects. For more information, refer to the [Webhooks documentation](/stream/stream-live/webhooks).
 
+## 2021-12-07
+
+### FedRAMP Support
+
+The Stream Player can now be served from a [FedRAMP](https://www.cloudflare.com/press-releases/2021/cloudflare-hits-milestone-in-fedramp-approval/) compliant subdomain.
+
+## 2021-11-23
+
+### 24/7 Live streaming support
+
+You can now use Cloudflare Stream for 24/7 live streaming.
+
+## 2021-11-17
+
+### Persistent Live Stream IDs
+
+You can now start and stop live broadcasts without having to provide a new video ID to the Stream Player (or your own player) each time the stream starts and stops. [Read the docs](https://developers.cloudflare.com/stream/stream-live/watch-live-stream/#view-by-live-input-id).
+
+## 2021-10-14
+
+### MP4 video file downloads for live videos
+
+Once a live video has ended and been recorded, you can now give viewers the option to download an MP4 video file of the live recording. For more, read the docs [here](/stream/stream-live/download-stream-live-videos/).
+
 ## 2021-09-30
 
 ### Serverless Live Streaming
 
 Stream now supports live video content! For more information, read the [blog post](https://blog.cloudflare.com/stream-live/) and get started by reading the [docs](/stream/stream-live/).
-...
 
 ## 2021-07-26
 
 ### Thumbnail previews in Stream Player seek bar
 
 The Stream Player now displays preview images when viewers hover their mouse over the seek bar, making it easier to skip to a specific part of a video.
+
+### MP4 video file downloads (GA)
+
+All Cloudflare Stream customers can now give viewers the option to download videos uploaded to Stream as an MP4 video file. For more, read the docs [here](/stream/viewing-videos/download-videos/).
+
+## 2021-07-10
+
+### Stream Connect (open beta)
+
+You can now opt-in to the Stream Connect beta, and use Cloudflare Stream to restream live video to any platform that accepts RTMPS input, including Facebook, YouTube and Twitch.
+
+For more, read the [blog post](https://blog.cloudflare.com/restream-with-stream-connect/) or the [docs](/stream/stream-live/simulcasting/).
+
+## 2021-06-10
+
+### Simplified signed URL token generation
+
+You can now obtain a signed URL token via a single API request, without needing to generate signed tokens in your own application. [Read the docs](/stream/viewing-videos/securing-your-stream)
+
+## 2021-06-08
+
+### Stream Connect (closed beta)
+
+You can now use Cloudflare Stream to restream live video to any platform that accepts RTMPS input, including Facebook, YouTube and Twitch.
+
+For more, read the [blog post](https://blog.cloudflare.com/restream-with-stream-connect/) or the [docs](/stream/stream-live/simulcasting/).
 
 ## 2021-03-10
 
@@ -147,3 +196,5 @@ Videos with multiple audio tracks (ex: 5.1 surround sound) are now mixed down to
 ### Storage limit notifications
 
 Cloudflare now emails you if your account is using 75% or more of your prepaid video storage, so that you can take action and plan ahead.
+
+...
