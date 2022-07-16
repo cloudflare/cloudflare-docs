@@ -77,3 +77,23 @@ Stream now supports live video content! For more information, read the [blog pos
 ### Thumbnail previews in Stream Player seek bar
 
 The Stream Player now displays preview images when viewers hover their mouse over the seek bar, making it easier to skip to a specific part of a video.
+
+## 2020-12-14
+
+### Tus support for direct creator uploads
+
+You can now use the [tus protocol](/stream/uploading-videos/direct-creator-uploads/#using-tus-recommended-for-videos-over-200mb) when allowing creators (your end users) to upload their own videos directly to Cloudflare Stream.
+
+In addition, all uploads to Cloudflare Stream made using tus are now faster and more reliable as part of this change.
+
+## 2020-12-09
+
+### Multiple audio track mixdown
+
+Videos with multiple audio tracks (ex: 5.1 surround sound) are now mixed down to stereo when uploaded to Stream. The resulting video, with stereo audio, is now playable in the Stream Player.
+
+## 2020-12-02
+
+### Storage limit notifications
+
+Cloudflare now emails you if your account is using 75% or more of your prepaid video storage, so that you can take action and plan ahead.
