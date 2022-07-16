@@ -1,0 +1,28 @@
+$ MYCERT="$(cat app_example_com.pem|perl -pe 's/\r?\n/\\n/'|sed -e 's/..$//')"
+$ MYKEY="$(cat app_example_com.key|perl -pe 's/\r?\n/\\n/'|sed -e's/..$//')"
+$ request_body=$(< <(cat <<EOF
+{
+	"certificate": "$MYCERT",
+	"private_key": "$MYKEY",
+	"bundle_method":"ubiquitous"
+}
+EOF
+))
+$ request_body=$(< <(cat <<EOF
+{
+	"certificate": "$MYCERT",
+	"private_key": "$MYKEY",
+	"bundle_method":"ubiquitous",
+	"geo_restrictions":{"label":"us"}'
+}
+))$ request_body=$(< <(cat <<EOF
+{
+	"certificate": "$MYCERT",
+	"private_key": "$MYKEY",
+	"bundle_method":"ubiquitous",
+	"geo_restrictions":{"label":"us"}',
+	"type":"sni_custom"
+}
+))$ curl -sX POST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates \
+     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+     -H "Content-Type: application/json" -d "$request_body"
