@@ -81,7 +81,7 @@ You can now use Cloudflare Stream for 24/7 live streaming.
 
 ### Persistent Live Stream IDs
 
-You can now start and stop live broadcasts without having to provide a new video ID to the Stream Player (or your own player) each time the stream starts and stops. [Read the docs](https://developers.cloudflare.com/stream/stream-live/watch-live-stream/#view-by-live-input-id).
+You can now start and stop live broadcasts without having to provide a new video ID to the Stream Player (or your own player) each time the stream starts and stops. [Read the docs](/stream/stream-live/watch-live-stream/#view-by-live-input-id).
 
 ## 2021-10-14
 
@@ -127,6 +127,12 @@ You can now use Cloudflare Stream to restream live video to any platform that ac
 
 For more, read the [blog post](https://blog.cloudflare.com/restream-with-stream-connect/) or the [docs](/stream/stream-live/simulcasting/).
 
+## 2021-05-03
+
+### MP4 video file downloads (beta)
+
+You can now give your viewers the option to download videos uploaded to Stream as an MP4 video file. For more, read the docs [here](/stream/viewing-videos/download-videos/).
+
 ## 2021-03-10
 
 ### Stream Player 2.0 (preview)
@@ -145,12 +151,6 @@ For more, see [this post](https://community.cloudflare.com/t/announcing-the-prev
 ### Faster video encoding
 
 Videos uploaded to Cloudflare Stream are now available to view 5x sooner, reducing the time your users wait between uploading and viewing videos.
-
-## 2021-05-03
-
-### MP4 video file downloads (beta)
-
-You can now give your viewers the option to download videos uploaded to Stream as an MP4 video file. For more, read the docs [here](/stream/viewing-videos/download-videos/).
 
 ## 2021-03-29
 
