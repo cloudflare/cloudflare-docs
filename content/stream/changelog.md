@@ -78,11 +78,28 @@ Stream now supports live video content! For more information, read the [blog pos
 
 The Stream Player now displays preview images when viewers hover their mouse over the seek bar, making it easier to skip to a specific part of a video.
 
+## 2021-03-10
 
+### Stream Player 2.0 (preview)
+
+A brand new version of the Stream Player is now available for preview. New features include:
+
+- Unified controls across desktop and mobile devices
+- Keyboard shortcuts
+- Intelligent mouse cursor interactions with player controls
+- Phased out support for Internet Explorer 11
+
+For more, see [this post](https://community.cloudflare.com/t/announcing-the-preview-build-for-stream-player-2-0/243095) on the Cloudflare Community Forum.
+
+## 2021-03-04
+
+### Faster video encoding
+
+Videos uploaded to Cloudflare Stream are now available to view 5x sooner, reducing the time your users wait between uploading and viewing videos.
 
 ## 2021-05-03
 
-### MP4 video file downloads
+### MP4 video file downloads (beta)
 
 You can now give your viewers the option to download videos uploaded to Stream as an MP4 video file. For more, read the docs [here](/stream/viewing-videos/download-videos/).
 
