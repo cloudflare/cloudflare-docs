@@ -63,7 +63,7 @@ For this tutorial, you will need:
     <ol style="list-style-type: lower-alpha;">
     <li>Copy the public key value and paste it into <b>X.509 cert</b>.</li>
     <li>Wrap the value with <code>-----BEGIN CERTIFICATE-----</code> and <code>-----END CERTIFICATE-----</code>.</li>
-    <li>Set <b>Algorithm</b> to SHA256 and select <b>Calculate Fingerprint</b>.</li>
+    <li>Set <b>Algorithm</b> to <em>SHA256</em> and select <b>Calculate Fingerprint</b>.</li>
     <li>Copy the <b>Formatted FingerPrint</b> value.</li>
     </ol>
 

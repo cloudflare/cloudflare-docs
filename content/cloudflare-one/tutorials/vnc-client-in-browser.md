@@ -23,7 +23,7 @@ Administrators can use Cloudflare Tunnel to connect a VNC host to Cloudflare’s
 
 10 minutes
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
 There are a number of VNC versions, deployments, and instances. This tutorial focuses on configuring a Tight VNC server on an Azure hosted Linux virtual machine (VM). For help with other configurations, post your questions in our [community](https://community.cloudflare.com/t/feedback-for-browser-vnc/280619/3).
 
@@ -73,7 +73,7 @@ This section covers how to install a VNC server with TightVNC and the Gnome User
     $ vim xstartup
     ```
 
-7. Update the file to the following configuration (this is for demonstration purposes, browser based VNC will work with most configurations):
+7. Update the file to the following configuration (this is for demonstration purposes — browser-based VNC will work with most configurations):
 
     ```txt
     xsetroot -solid grey
@@ -99,7 +99,7 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
 
 ## Configure Cloudflare Tunnel on your machine
 
-1. Follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/installation/#build-from-source) to install `cloudflared`
+1. Follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) to install `cloudflared`.
 
 2. Authenticate `cloudflared` with the command:
 
@@ -129,7 +129,7 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
     - service: http_status:404
     ```
 
-    As you do that, replace the `hostname` value with the domain you wish to use to expose your VNC server in the browser. Also, replace `5901` with the port your VNC server is running on. To get a list of ports, run `sudo ss -lnpt` and look for `VNC` to get the value that should be specified in your configuration file.
+    As you do that, replace `<HOSTNAME>` with the domain you wish to use to expose your VNC server in the browser. Also, replace `5901` with the port your VNC server is running on. To get a list of ports, run `sudo ss -lnpt` and look for `VNC` to get the value that should be specified in your configuration file.
 
 1. [Route your Tunnel](/cloudflare-one/connections/connect-apps/routing-to-tunnel/dns/) to your website.
 
@@ -149,7 +149,7 @@ The last step is to create a Zero Trust application to run your VNC server in th
 
 1. Open your [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and go to **Access > Applications**.
 
-2. Select **Add an application**. Choose **Self-hosted**.
+2. Select **Add an application** and choose **Self-hosted**.
 
 3. Name the application and set the domain to which you would like to expose the VNC server.
 
@@ -159,7 +159,7 @@ The last step is to create a Zero Trust application to run your VNC server in th
 
     ![Example Zero Trust policy input for VNC application](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-policy.png)
 
-5. In **`cloudflared` settings**, set **Application Type** to be _VNC_.
+5. In **`cloudflared` settings**, set **Application Type** to _VNC_.
 
 Users will see a login screen with your configured identity providers. After successful authentication, they may be prompted to enter the VNC server’s password.
 
