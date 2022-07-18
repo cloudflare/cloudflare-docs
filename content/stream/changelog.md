@@ -144,7 +144,7 @@ A brand new version of the Stream Player is now available for preview. New featu
 - Intelligent mouse cursor interactions with player controls
 - Phased out support for Internet Explorer 11
 
-For more, see [this post](https://community.cloudflare.com/t/announcing-the-preview-build-for-stream-player-2-0/243095) on the Cloudflare Community Forum.
+For more, refer to [this post](https://community.cloudflare.com/t/announcing-the-preview-build-for-stream-player-2-0/243095) on the Cloudflare Community Forum.
 
 ## 2021-03-04
 
