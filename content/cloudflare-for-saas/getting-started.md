@@ -24,6 +24,12 @@ If there are multiple proxied DNS records for one zone, Cloudflare must prioriti
 
 The fallback origin is where Cloudflare will route traffic sent to your custom hostnames (must be proxied).
 
+{{<Aside type="note">}}
+
+You can also [use a Worker as your origin](/cloudflare-for-saas/ssl/reference/worker-as-origin/) or [create a custom origin server](/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-origin/) to send traffic from one or more custom hostnames somewhere besides your default proxy fallback.
+
+{{</Aside>}}
+
 The CNAME target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#step-5--have-customer-create-a-cname-record).
 
 We suggest using a domain other than your main company domain (example.cloud instead of example.com) to lower risk and add flexibility to your custom hostname management.
