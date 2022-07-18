@@ -47,9 +47,7 @@ This section covers how to install a VNC server with TightVNC and the Gnome User
 
     ```sh
     $ sudo apt-get update
-    ```
-
-    ```sh
+    
     $ sudo apt-get install gnome-core gnome-panel ubuntu-gnome-desktop tightvncserver
     ```
 
