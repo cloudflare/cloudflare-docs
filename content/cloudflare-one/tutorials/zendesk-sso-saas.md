@@ -1,5 +1,5 @@
 ---
-updated: 2021-08-03
+updated: 2022-07-15
 category: 🔐 Zero Trust
 difficulty: Advanced
 pcx-content-type: tutorial
@@ -10,72 +10,65 @@ title: Configure Zendesk SSO with Access for SaaS
 
 This tutorial covers how to configure Zendesk SSO with Access for SaaS.
 
-{{<Aside>}}
-
 For this tutorial, you will need:
 
 - A Zero Trust Account
 - An integrated identity provider (IdP)
 - Admin access to your Zendesk account
 
-{{</Aside>}}
-
 **⏲️ Time to complete:**
 
 20 minutes
 
+---
+
 ## Configure Zendesk and Cloudflare
 
-1.  To begin, navigate to your Zendesk administrator dashboard, typically available at `<yourdomain>.zendesk.com/admin/security/sso`.
+1. Navigate to your Zendesk administrator dashboard, typically available at `<yourdomain>.zendesk.com/admin/security/sso`.
 
-1.  In a separate tab or window, open the [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and navigate to **Access** > **Applications**.
+2. In a separate tab or window, open the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), select your account, and go to **Access** > **Applications**.
 
-1.  Select _SaaS_ as the application type to begin creating a SaaS application.
+3. Select **Add an application**, then choose _SaaS_.
 
-1.  Copy the following fields from your Zendesk account and input them in the Zero Trust application configuration:
+4. Input the following values in the Zero Trust application configuration:
 
-    - **Assertion Consumer Service URL**. This URL appears as `SAML SSO URL` in your Zendesk account.
-    - **Entity ID**: `https://yoursubdomain.zendesk.com`
-    - **NameID**: Email
+    | Zero Trust field                   | Value                                           |
+    |------------------------------------|-------------------------------------------------|
+    | **Entity ID**                      | `https://<yoursubdomain>.zendesk.com`           |
+    | **Assertion Consumer Service URL** | contents of **SAML SSO URL** in Zendesk account |
+    | **Name ID Format**                 | _Email_                                         |
 
-1.  Configure these Attribute Statements to include a user’s first and last name:
+5. (Optional) Configure these Attribute Statements to include a user’s first and last name:
 
-    - `<Cloudflare Firstname attribute name>` => `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname`
-    - `<Cloudflare Last name attribute name>` => `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname`
+    | Cloudflare attribute name | IdP attribute value                                               |
+    |---------------------------|-------------------------------------------------------------------|
+    | `<first name>`            | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname` |
+    | `<last name>`             | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname`   |
 
-    {{<Aside type="note">}}
-
-    This step is optional. If the name is not provided, Zendesk will [use the user's email address as their name](https://support.zendesk.com/hc/en-us/articles/203663676#topic_dzb_gl5_2v)
-
-    {{</Aside>}}
+    Zendesk will [use the user's email address as their name](https://support.zendesk.com/hc/en-us/articles/203663676#topic_dzb_gl5_2v) if the name is not provided.
 
     ![Zendesk attributes](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-attributes.png)
 
-1.  Create an Access policy to determine who can access Zendesk.
+6. To determine who can access Zendesk, [create an Access policy](/cloudflare-one/policies/access/).
 
-    ![Zendesk policy](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-policy.png)
+7. Copy the values from the Cloudflare IdP fields and add them to the following Zendesk fields:
 
-1.  Copy the Cloudflare IdP values and add them to the following Zendesk Fields:
+    | Cloudflare IdP field                        | Zendesk field               |
+    |---------------------------------------------|-----------------------------|
+    | **SSO Endpoint**                            | **SAML SSO URL**            |
+    | **Public Key** (transformed to fingerprint) | **Certificate Fingerprint** |
 
-    - SSO Endpoint => SAML SSO URL
-    - Public Key => Certificate Fingerprint
+    To transform the public key into a fingerprint, use a [fingerprint calculator](https://www.samltool.com/fingerprint.php):
 
-    {{<Aside type="note">}}
-
-    The Public key must be transformed into a fingerprint. To do that:
-
-    1.  Copy the Public Key Value.
-    1.  Paste the Public Key into [SAML X.509 Certificate Fingerprint - Online SHA1 Decoder | SAMLTool.com](https://www.samltool.com/fingerprint.php).
-    1.  Wrap the value in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
-    1.  Set the algorithm to SHA256.
-    1.  Copy the Formatted Fingerprint Value.
-
-    {{</Aside>}}
+    <ol style="list-style-type: lower-alpha;">
+    <li>Copy the public key value and paste it into <b>X.509 cert</b>.</li>
+    <li>Wrap the value with <code>-----BEGIN CERTIFICATE-----</code> and <code>-----END CERTIFICATE-----</code>.</li>
+    <li>Set <b>Algorithm</b> to <em>SHA256</em> and select <b>Calculate Fingerprint</b>.</li>
+    <li>Copy the <b>Formatted FingerPrint</b> value.</li>
+    </ol>
 
     ![Zendesk fingerprint](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-fingerprint.png)
 
-1.  Go to `https://<yourdomain>.zendesk.com/admin/security/staff_members` and enable **External Authentication** > **Single Sign On**.
-
-    ![Zendesk external authentication](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-external-auth.png)
+8. Go to `https://<yourdomain>.zendesk.com/admin/security/staff_members` and enable **External Authentication** > **Single Sign On**.
 
 Users should now be able to log in to Zendesk if their Email address exists in the Zendesk user list.
