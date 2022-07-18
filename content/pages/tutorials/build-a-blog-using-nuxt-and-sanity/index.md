@@ -119,7 +119,7 @@ Finally, add `@nuxtjs/sanity` as a **build module** in your Nuxt configuration:
 filename: nuxt.config.js
 ---
 {
-  buildModules: ['@nuxtjs/sanity/module'];
+  buildModules: ['@nuxtjs/sanity'];
 }
 ```
 
