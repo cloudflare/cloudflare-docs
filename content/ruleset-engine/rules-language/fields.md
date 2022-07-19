@@ -179,7 +179,7 @@ The Cloudflare Rules language supports these standard fields:
       </td>
    </tr>
    <tr id="field-http-request-version">
-      <td valign="top"><code>http.request.version</code><br />{{<type>}}Number{{</type>}}</td>
+      <td valign="top"><code>http.request.version</code><br />{{<type>}}String{{</type>}}</td>
       <td>
          <p>Represents the version of the HTTP protocol used. Use this field when you require different checks for different versions.
          </p>
