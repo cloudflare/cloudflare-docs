@@ -41,7 +41,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostna
         --data '{"hostname":"{your_custom_hostname}"}, "ssl”:{"wildcard": "true", "early_hints": "on"}}'
 ```
 
-4. For an existing custom hostname, an API call such as the example below, specifying `"early_hints2: "on"`:
+4. For an existing custom hostname, an API call such as the example below, specifying `"early_hints": "on"`:
 
 ```json
 $ curl -sXPATCH \
