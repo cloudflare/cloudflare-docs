@@ -4437,7 +4437,7 @@ pre {
 
 .skip-link {
   background: #f3f3f4;
-  z-index: -1;
+  z-index: 1;
   color: inherit;
   font-weight: 700;
   left: 50%;
@@ -4445,6 +4445,7 @@ pre {
   position: absolute;
   transform: translateY(-100%);
   transition: transform 0.3s;
+  opacity: 1;
 }
 
 [theme=dark] .skip-link {
@@ -4454,11 +4455,12 @@ pre {
 
 .skip-link:focus {
   transform: translateY(0%);
+  -webkit-transform: translateY(0%);
 }
 
 @media (max-width: 600px) {
   .skip-link {
-    margin-top: 2em;
+    margin-top: 3em;
   }
 }
 
