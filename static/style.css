@@ -4455,12 +4455,11 @@ pre {
 
 .skip-link:focus {
   transform: translateY(0%);
-  -webkit-transform: translateY(0%);
 }
 
 @media (max-width: 600px) {
-  .skip-link {
-    margin-top: 3em;
+  .skip-link:focus {
+    transform: translateY(100%);
   }
 }
 
