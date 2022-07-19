@@ -2,6 +2,7 @@
 pcx-content-type: how-to
 title: Enable HTTP destination 
 weight: 50
+layout: single
 ---
 
 # Enable HTTP destination

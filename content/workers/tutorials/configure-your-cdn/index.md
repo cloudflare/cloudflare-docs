@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx-content-type: tutorial
 title: Configure your CDN
+layout: single
 ---
 
 # Configure your CDN

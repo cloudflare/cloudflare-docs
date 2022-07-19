@@ -2,6 +2,7 @@
 pcx-content-type: how-to
 title: New Relic
 weight: 103
+layout: single
 ---
 
 # New Relic

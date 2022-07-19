@@ -2,6 +2,7 @@
 pcx-content-type: how-to
 title: Elastic
 weight: 100
+layout: single
 ---
 
 # Elastic

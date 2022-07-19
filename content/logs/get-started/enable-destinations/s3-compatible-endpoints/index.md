@@ -2,6 +2,7 @@
 title: Enable S3-compatible endpoints
 pcx-content-type: how-to
 weight: 57
+layout: single
 meta:
   title: Enable Logpush to S3-compatible endpoints
 ---

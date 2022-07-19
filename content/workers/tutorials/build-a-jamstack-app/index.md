@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx-content-type: tutorial
 title: Build a todo list JAMstack application
+layout: single
 ---
 
 # Build a todo list JAMstack application

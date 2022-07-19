@@ -2,6 +2,7 @@
 pcx-content-type: reference
 title: Glossary
 weight: 11
+layout: single
 ---
 
 # Glossary
