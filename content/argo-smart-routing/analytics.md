@@ -8,7 +8,7 @@ weight: 3
 
 Cloudflare provides analytics to show the performance benefits of Argo Smart Routing.
 
-You can access Argo analytics for your domain in the [Cloudflare Dashboard](https://dash.cloudflare.com/) at **Analytics** > **Performance**. For information on all analytics in the Dashboard, refer to [Analytics](/analytics/).
+You can access Argo analytics for your domain in the [Cloudflare dashboard](https://dash.cloudflare.com/) at **Analytics** > **Performance**. For information on all analytics in the dashboard, refer to [Analytics](/analytics/).
 
 ## How it works
 
@@ -22,7 +22,7 @@ Detailed performance data within **Origin Performance (Argo)** will only display
 
 ## Types of analytics
 
-The Dashboard displays two different views for performance data:
+The dashboard displays two different views for performance data:
 
 * **Origin Response Time**: A histogram shows response time from your origin to the Cloudflare network. The blue bars show TTFB without Argo, while the orange bars show TTFB where Argo found a Smart Route.
 
