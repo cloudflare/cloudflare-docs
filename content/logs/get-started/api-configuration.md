@@ -161,7 +161,7 @@ Logpush repeatedly delivers logs on your behalf and uploads them to your destina
 The options that you can customize are:
 
 1.  **Fields** (optional): Refer to [Log fields](/logs/reference/log-fields/) for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields/default`.
-4.  **Timestamp format** (optional): The format in which timestamp fields will be returned. Value options: `unixnano` (default), `unix`, `rfc3339`.
+2.  **Timestamp format** (optional): The format in which timestamp fields will be returned. Value options: `unixnano` (default), `unix`, `rfc3339`.
 5.  **Redaction for CVE-2021-44228** (optional): This option will replace every occurrence of `${` with `x{`.  To enable it, set `CVE-2021-44228=true`.
 
 {{<Aside type="note" header="Note">}}
