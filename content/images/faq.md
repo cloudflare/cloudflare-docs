@@ -95,7 +95,7 @@ Yes. Based on the `Accept` HTTP request header Cloudflare Images will be served 
 
 ### Can Cloudflare Images use the HEIC (HEIF) format?
 
-No, we have no plans to support HEIC. It's based on a patent-encumbered codec, and it's not supported in any browser. We can serve images in the AVIF format, which is a version of HEIF with a newer, royalty-free AV1 codec.
+No. Cloudflare has no plans to support HEIC. This format is based on a patent-encumbered codec, and it is not supported in any browser. Cloudflare can serve images in the AVIF format, which is a version of HEIF with a newer, royalty-free AV1 codec.
 
 ---
 
