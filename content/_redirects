@@ -286,7 +286,6 @@
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/reference/common-configurations/ 301
 
 # logs
-/logs/analytics-integrations/ /fundamentals/data-products/analytics-integrations/ 301
 /logs/get-started/logpush-configuration-api/ /logs/get-started/enable-destinations/ 301
 /logs/get-started/logpush-configuration-api/examples/ /logs/reference/logpush-api-configuration/examples/ 301
 /logs/get-started/logpush-configuration-api/examples/example-logpush-curl/ /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ 301
@@ -1020,6 +1019,7 @@
 /browser-isolation/* /cloudflare-one/policies/browser-isolation/ 301
 
 /ssl/custom-certificates/* /ssl/edge-certificates/custom-certificates/:splat 301
+/logs/analytics-integrations/* /fundamentals/data-products/analytics-integrations/:splat 301
 
 # partial redirects (will expand later)
 
