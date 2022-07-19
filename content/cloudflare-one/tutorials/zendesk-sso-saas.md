@@ -60,12 +60,13 @@ For this tutorial, you will need:
 
     To transform the public key into a fingerprint, use a [fingerprint calculator](https://www.samltool.com/fingerprint.php):
 
-    <ol style="list-style-type: lower-alpha;">
-    <li>Copy the public key value and paste it into <b>X.509 cert</b>.</li>
-    <li>Wrap the value with <code>-----BEGIN CERTIFICATE-----</code> and <code>-----END CERTIFICATE-----</code>.</li>
-    <li>Set <b>Algorithm</b> to <em>SHA256</em> and select <b>Calculate Fingerprint</b>.</li>
-    <li>Copy the <b>Formatted FingerPrint</b> value.</li>
-    </ol>
+    1. Copy the public key value and paste it into **X.509 cert**.
+
+    2. Wrap the value with `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+
+    3. Set **Algorithm** to _SHA256_ and select **Calculate Fingerprint**.
+
+    4. Copy the **Formatted FingerPrint** value.
 
     ![Zendesk fingerprint](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-fingerprint.png)
 
