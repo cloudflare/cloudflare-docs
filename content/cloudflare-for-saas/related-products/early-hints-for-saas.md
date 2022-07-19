@@ -46,7 +46,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostna
 ```json
 $ curl -sXPATCH \
 
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{hostname_id}}" \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{hostname_id}" \
 -H "X-Auth-Email: {email}" \
 -H "X-Auth-Key: {key}" \
 -H "Content-Type: application/json" \
