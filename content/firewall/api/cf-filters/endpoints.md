@@ -29,97 +29,22 @@ To retrieve a list of zones associated with your account, use the [List Zones](h
 
 The Cloudflare Filters API supports the operations outlined below. Visit the pages in this section for examples.
 
+{{<table-wrap>}}
+
+| Operation                                                                         | Method & Endpoint      | Notes|
+| ------------------------------------------------------------------------------- | --------- | --------- |
+| [Create filters](https://api.cloudflare.com/#filters-create-filters)                                                     | `POST zones<ZONE_ID>/filters`| Handled as a single transaction. If there is an error, the entire operation fails.|
+| [Get filters](https://api.cloudflare.com/#filters-list-filters) | `POST zones/<ZONE_ID></ZONE_ID>/filters`        |  Lists all current filters. Results return paginated with 25 items per page by default. Use optional parameters to narrow results.       |
+| [Get a filter](https://api.cloudflare.com/#filters-list-individual-filter)  | ` GET zones/<ZONE_ID>/filters/<FILTER_ID>` | Retrieve a single filter by ID. |
+| [Update filters](https://api.cloudflare.com/#filters-update-filters)                         | `PUT zones/<ZONE_ID></ZONE_ID>/filters`     |  Handled as a single transaction. All filters must exist for operation to succeed. If there is an error, the entire operation fails.     |
+| [Update a filter](https://api.cloudflare.com/#filters-update-individual-filter) | `PUT zones/<ZONE_ID>/filters/<FILTER_ID>`| Update a single filter by ID.   |
+| [Delete filters](https://api.cloudflare.com/#filters-delete-filters)            | `DELETE zones/<ZONE_ID>/filters`       | Delete existing filters. Must specify list of filter IDs.
+
+Empty requests result in no deletion. Returns HTTP status code 200 if a specified filter does not exist.     |
+| [Delete a filter](https://api.cloudflare.com/#filters-delete-individual-filter)                  | `DELETE zones/<ZONE_ID>/filters/<FILTER_ID>`         | Delete a filter by ID.  |
+
+{{</table-wrap>}}
+
 {{</content-column>}}
 
-<table style="table-layout:fixed; width:100%">
-  <thead>
-    <tr>
-      <th style="width: 20%">Operation</th>
-      <th>Method & Endpoint</th>
-      <th style="width: 30%">Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#filters-create-filters">Create filters</a>
-      </td>
-      <td>
-        <code class="InlineCode">POST zones/&lt;ZONE_ID&gt;/filters</code>
-      </td>
-      <td>Handled as a single transaction. If there is an error, the entire operation fails.</td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#filters-list-filters">Get filters</a>
-      </td>
-      <td>
-        <code class="InlineCode">GET zones/&lt;ZONE_ID&gt;/filters</code>
-      </td>
-      <td>
-        Lists all current filters. Results return paginated with 25 items per page by default. Use
-        optional parameters to narrow results.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#filters-list-individual-filter">Get a filter</a>
-      </td>
-      <td>
-        <code class="InlineCode">
-          GET zones/&lt;ZONE_ID&gt;/filters/&lt;FILTER_ID&gt;
-        </code>
-      </td>
-      <td>Retrieve a single filter by ID.</td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#filters-update-filters">Update filters</a>
-      </td>
-      <td>
-        <code class="InlineCode">PUT zones/&lt;ZONE_ID&gt;/filters</code>
-      </td>
-      <td>
-        Handled as a single transaction. All filters must exist for operation to succeed. If there
-        is an error, the entire operation fails.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#filters-update-individual-filter">Update a filter</a>
-      </td>
-      <td>
-        <code class="InlineCode">
-          PUT zones/&lt;ZONE_ID&gt;/filters/&lt;FILTER_ID&gt;
-        </code>
-      </td>
-      <td>Update a single filter by ID.</td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#filters-delete-filters">Delete filters</a>
-      </td>
-      <td>
-        <code class="InlineCode">DELETE zones/&lt;ZONE_ID&gt;/filters</code>
-      </td>
-      <td>
-        <p>Delete existing filters. Must specify list of filter IDs.</p>
-        <p>
-          Empty requests result in no deletion. Returns HTTP status code 200 if a specified filter
-          does not exist.
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#filters-delete-individual-filter">Delete a filter</a>
-      </td>
-      <td>
-        <code class="InlineCode">
-          DELETE zones/&lt;ZONE_ID&gt;/filters/&lt;FILTER_ID&gt;
-        </code>
-      </td>
-      <td>Delete a filter by ID.</td>
-    </tr>
-  </tbody>
-</table>
+

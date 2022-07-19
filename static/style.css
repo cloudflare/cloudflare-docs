@@ -2719,11 +2719,19 @@ html[is-docs-page] body {
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
   box-shadow: var(--focus-shadow);
 }
-.DocsMarkdown--link .DocsMarkdown--link-content {
-  background-color: var(--background-color);
+.DocsMarkdown--link > .DocsMarkdown--link-content {
+  /* background-color: var(--background-color); */
+  color: black;
   border-bottom: 1px solid
     rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
 }
+
+[theme="dark"] .DocsMarkdown--link > .DocsMarkdown--link-content {
+  background-color: var(--background-color);
+  color: var(--code--orange);
+  border-bottom: 1px solid rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
+}
+
 .DocsMarkdown--link-external-icon {
   display: inline-block;
   height: 16px;
@@ -3319,56 +3327,22 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   display: flex;
 }
 
-.DocsMarkdown--table-wrap
-  > div
-  > table
-  > tbody
-  > tr
-  > td
-  > ul
-  > li
-  > ul
-  > li
-  > a {
+.DocsMarkdown--table-wrap>div>table>tbody>tr>td>ul>li>ul>li>a {
   background-color: var(--background-color);
   color: var(--code-orange);
 }
 
-.DocsMarkdown--table-wrap
-  > div
-  > table
-  > tbody
-  > tr:nth-child(4)
-  > td:nth-child(2)
-  > ul
-  > li:nth-child(4)
-  > a {
+.DocsMarkdown--table-wrap>div>table>tbody>tr:nth-child(4)>td:nth-child(2)>ul>li:nth-child(4)>a {
   background-color: var(--background-color);
   color: var(--code-orange);
 }
 
-.DocsMarkdown--table-wrap
-  > div
-  > table
-  > tbody
-  > tr:nth-child(5)
-  > td:nth-child(2)
-  > ul
-  > li:nth-child(3)
-  > a {
+.DocsMarkdown--table-wrap>div>table>tbody>tr:nth-child(5)>td:nth-child(2)>ul>li:nth-child(3)>a {
   background-color: var(--background-color);
   color: var(--code-orange);
 }
 
-.DocsMarkdown--table-wrap
-  > div
-  > table
-  > tbody
-  > tr:nth-child(6)
-  > td:nth-child(2)
-  > ul
-  > li:nth-child(4)
-  > a {
+.DocsMarkdown--table-wrap>div>table>tbody>tr:nth-child(6)>td:nth-child(2)>ul>li:nth-child(4)>a {
   background-color: var(--background-color);
   color: var(--code-orange);
 }
@@ -4383,9 +4357,20 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   color: var(--code-orange);
 }
 
-[theme="light"] .DocsMarkdown td > a {
+.DocsMarkdown td > a, .DocsMarkdown td>span>a {
   background-color: var(--background-color);
-  color: #1d1f20;
+  color: var(--code-orange);
+  border-bottom: 1px solid rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
+  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+  
+}
+
+[theme= "dark"] .DocsMarkdown td>a,
+.DocsMarkdown td>span>a {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+  border-bottom: 1px solid rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
+  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
 }
 
 [theme="dark"] .DocsMarkdown td > strong > a {
@@ -4397,19 +4382,28 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   color: #1d1f20;
 }
 
-.DocsContent
-  > article
-  > div
-  > div
-  > table
-  > tbody
-  > tr:nth-child(4)
-  > td:nth-child(1)
-  > a {
-  background-color: #f3802014;
-  color: #1d1f20;
+[theme="light"] .DocsMarkdown--aside > a {
+  /* background-color: var(--background-color); */
+    color: var(--code-orange);
+}
+[theme="dark"] .DocsMarkdown--aside >a {
+  background-color: transparent;
+  color: var(--code-orange);
 }
 
+[theme="light"] .DocsMarkdown--aside>ul>li>strong>a {
+  /* background-color: var(--background-color); */
+  color: var(--code-orange);
+  border-bottom: 1px solid rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
+
+  /* color: black;
+    border-bottom: 1px solid rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha)); */
+}
+
+[theme="dark"] .DocsMarkdown--aside>ul>li>strong>a {
+  background-color: transparent;
+  color: var(--code-orange);
+}
 [theme="light"]
   .DocsMarkdown--aside
   > .DocsMarkdown--link
