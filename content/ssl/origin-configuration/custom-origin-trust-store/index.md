@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
 title: Custom origin trust store
+layout: single
 ---
 
 # Custom origin trust store

@@ -2,6 +2,7 @@
 title: Enable New Relic
 pcx-content-type: how-to
 weight: 64
+layout: single
 meta:
   title: Enable Logpush to New Relic
 ---

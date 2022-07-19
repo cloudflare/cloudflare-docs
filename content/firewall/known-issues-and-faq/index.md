@@ -4,6 +4,7 @@ pcx-content-type: faq
 weight: 6
 meta:
   title: Firewall Rules FAQ
+layout: single
 ---
 
 # Firewall Rules FAQ

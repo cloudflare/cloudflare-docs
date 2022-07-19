@@ -2,6 +2,7 @@
 pcx-content-type: how-to
 title: Graylog
 weight: 102
+layout: single
 ---
 
 # Graylog

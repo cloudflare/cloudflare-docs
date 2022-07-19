@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
 title: Routing
+layout: single
 ---
 
 # Routing

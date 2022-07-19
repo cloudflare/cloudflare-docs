@@ -2,6 +2,7 @@
 pcx-content-type: reference
 title: Filtering
 weight: 11
+layout: single
 ---
 
 # Filtering

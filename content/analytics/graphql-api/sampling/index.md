@@ -2,6 +2,7 @@
 pcx-content-type: reference
 title: Sampling
 weight: 41
+layout: single
 ---
 
 # Sampling

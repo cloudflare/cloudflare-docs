@@ -2,6 +2,7 @@
 pcx-content-type: how-to
 title: Create a Notification
 weight: 8
+layout: single
 ---
 
 # Create a Notification
