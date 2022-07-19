@@ -22,26 +22,26 @@ Before you can employ Early Hints for SaaS, you need to create a custom hostname
 
 2. Locate your Authentication Key by selecting **My Profile** > **API tokens** > **Global API Key**.
 
-3. If you would like to enable Early Hints for a preexisting custom hostname, locate your custom hostname ID by making a ‘get’ call in the API:
+3. If you would like to enable Early Hints for a preexisting custom hostname, locate your custom hostname ID by making a `GET` request to the API:
 
 ```json
 curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
     -H "X-Auth-Email: {email}" \
     -H "X-Auth-Key: {key}" \
-    -H "Content-Type: application/JSON"
+    -H "Content-Type: application/json"
 ```
 
-If you are [creating a new custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), make an API call such as the example below, specifying `"early_hints":"on"`:
+If you are [creating a new custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), make an API call such as the example below, specifying `"early_hints": "on"`:
 
 ```json
 curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
      -H "X-Auth-Email: {email}" \
      -H "X-Auth-Key: {key}" \
-     -H "Content-Type: application/JSON" \
-        --data '{"hostname":"{your_custom_hostname}"}, "ssl”:{“wildcard”:”true”,”early_hints":"on"}}'
+     -H "Content-Type: application/json" \
+        --data '{"hostname":"{your_custom_hostname}"}, "ssl”:{"wildcard": "true", "early_hints": "on"}}'
 ```
 
-4. For an existing custom hostname, an API call such as the example below, specifying `”early_hints”:”on”`:
+4. For an existing custom hostname, an API call such as the example below, specifying `"early_hints2: "on"`:
 
 ```json
 $ curl -sXPATCH \
@@ -53,7 +53,7 @@ $ curl -sXPATCH \
 --data '{
  "ssl": {
    "wildcard":"true",
-   "early_hints:"on"
+   "early_hints": "on"
  }
 }'
 
