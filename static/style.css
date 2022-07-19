@@ -4457,7 +4457,7 @@ pre {
   transform: translateY(0%);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .skip-link:focus {
     transform: translateY(100%);
   }
