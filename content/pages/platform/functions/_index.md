@@ -335,7 +335,7 @@ Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **F
 
 ### Durable Objects locally
 
-Currently, Durable Objects are not supported in local development mode. To use Durable Objects in your Pages application, first deploy a Worker containing a Durable Object separately, and then add it as a binding to your Pages project as shown in the section above. 
+Currently, Durable Objects are not supported in local development mode. To use Durable Objects in your Pages application, deploy a Worker containing a Durable Object. Then add it as a binding to your Pages project as shown in the section above. 
 
 Support for using Durable Objects in local development is actively being worked on and will be available soon.
 
