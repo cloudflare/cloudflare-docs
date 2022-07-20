@@ -24,10 +24,10 @@
     </button>
     {{- end -}}
 
-    <a {{ if $active }}aria-current="page" {{ end }}class="DocsSidebar--nav-link" {{with .Context.Params.redirect }} href="{{ . }}" {{else}} href="{{ $current }}" {{ end }} {{ if $active }} is-active{{ else if not $isLinkTabbable }} tabindex="-1"{{ end }}>
+    <a {{ if $active }}aria-current="page" {{ end }}class="DocsSidebar--nav-link" {{with .Context.Params.external_link }} href="{{ . }}" {{else}} href="{{ $current }}" {{ end }} {{ if $active }} is-active{{ else if not $isLinkTabbable }} tabindex="-1"{{ end }}>
       <span class="DocsSidebar--nav-link-highlight"></span>
       <span class="DocsSidebar--nav-link-text">{{ .Context.Title }}</span>
-      {{- with .Context.Params.redirect }}
+      {{- with .Context.Params.external_link }}
       {{- partialCached "external.icon" . -}}
       {{- end -}}
     </a>
