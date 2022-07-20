@@ -124,7 +124,7 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
 You can now run the Tunnel to connect the target service to Cloudflare. Use the following command to run the Tunnel, replacing `<NAME>` with the name created for your Tunnel.
 
 ```sh
-cloudflared tunnel run <NAME>
+$ cloudflared tunnel run <NAME>
 ```
 
 We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/) that is configured to launch on start.
@@ -137,17 +137,19 @@ You can now connect from a client machine using `cloudflared`.
 
 This example uses a macOS laptop. On macOS, you can install `cloudflared` with the following command using Homebrew.
 
-    $ brew install cloudflare/cloudflare/cloudflared
+```sh
+$ brew install cloudflare/cloudflare/cloudflared
+```
 
 While you need to install `cloudflared`, you do not need to wrap your SSH commands in any unique way. Instead, you will need to make a one-time change to your SSH configuration file.
 
-```bash
-vim ~/.ssh/config
+```sh
+$ vim ~/.ssh/config
 ```
 
 Input the following values; replacing `azure.widgetcorp.tech` with the hostname you created.
 
-```bash
+```txt
 Host azure.widgetcorp.tech
   ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
 ```

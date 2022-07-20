@@ -102,7 +102,9 @@ You can now configure a DNS record for the Tunnel you have created. Navigate to 
 
 Open the `DNS` page and click **+Add record**. Select `CNAME` for `Type` and in the `Target` field input the UUID value of your Tunnel followed by `.cfargotunnel.com`. In this example, that value is:
 
-    79a60ee2-9a98-4f5f-96c7-76c88b2075be.cfargotunnel.com
+```txt
+79a60ee2-9a98-4f5f-96c7-76c88b2075be.cfargotunnel.com
+```
 
 ![Add DNS](/cloudflare-one/static/zero-trust-security/ssh-slc/add-dns.png)
 
@@ -118,8 +120,10 @@ In the `Application` drop-down, select the application created previously and cl
 
 You must now configure your SSH host to rely on the generated certificate. In your `sshd` configuration, set the following values:
 
-    PubkeyAuthentication yes
-    TrustedUserCAKeys /etc/ssh/ca.pub
+```txt
+PubkeyAuthentication yes
+TrustedUserCAKeys /etc/ssh/ca.pub
+```
 
 Save the public key value as a `ca.pub` file in the path specified in the `TrustedUserCAKeys` setting. Restart the server.
 
@@ -135,14 +139,16 @@ $ cloudflared access ssh-config --hostname ssh-bastion.widgetcorp.tech --short-l
 
 `cloudflared` will generate the required lines to append to the SSH configuration file, similar to the example output below.
 
-    Host ssh-bastion.widgetcorp.tech
-      ProxyCommand bash -c '/usr/local/bin/cloudflared access ssh-gen --hostname %h; ssh -tt %r@cfpipe-ssh-bastion.widgetcorp.tech >&2 <&1'
+```txt
+Host ssh-bastion.widgetcorp.tech
+  ProxyCommand bash -c '/usr/local/bin/cloudflared access ssh-gen --hostname %h; ssh -tt %r@cfpipe-ssh-bastion.widgetcorp.tech >&2 <&1'
 
-    Host cfpipe-ssh-bastion.widgetcorp.tech
-      HostName ssh-bastion.widgetcorp.tech
-      ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
-      IdentityFile ~/.cloudflared/ssh-bastion.widgetcorp.tech-cf_key
-      CertificateFile ~/.cloudflared/ssh-bastion.widgetcorp.tech-cf_key-cert.pub
+Host cfpipe-ssh-bastion.widgetcorp.tech
+  HostName ssh-bastion.widgetcorp.tech
+  ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
+  IdentityFile ~/.cloudflared/ssh-bastion.widgetcorp.tech-cf_key
+  CertificateFile ~/.cloudflared/ssh-bastion.widgetcorp.tech-cf_key-cert.pub
+```
 
 When users authenticate through Cloudflare Access, Cloudflare will generate a certificate for the individual using the username from the identity provider (stripped of the email domain). That certificate will then be presented to the SSH server.
 
