@@ -150,7 +150,7 @@ This routes traffic from `app.customer.com` to your origin.
 
 ## Step 6 — Offboard custom hostnames
 
-As a SaaS provider, you must removed a customer's custom hostname from your zone if they decide to churn. Even if the end customer changes the DNS record to point elsewhere, the custom hostname on the SaaS zone will take priority. This will cause its traffic to continue to route to the SaaS zone.
+As a SaaS provider, you must remove a customer's custom hostname from your zone if they decide to churn. Even if the end customer changes the DNS record to point elsewhere, the custom hostname on the SaaS zone will take priority. This will cause its traffic to continue to route to the SaaS zone.
 
 ### Remove custom hostname
 
