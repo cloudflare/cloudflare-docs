@@ -33,11 +33,11 @@ Cloudflare Access allows you to integrate your SaaS products by acting as an ide
 
 8.  Scroll down to the **Application visibility** card.
 
-    *   Toggle on **Show application in the App Launcher** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application. Users with no access to the application will not see it in the App Launcher regardless of whether the toggle is enabled. Users with access to the application will still be able to reach it with a direct link.
+    * Toggle on **Show application in the App Launcher** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application. Users with no access to the application will not see it in the App Launcher regardless of whether the toggle is enabled. Users with access to the application will still be able to reach it with a direct link.
 
-    *   \[Optional] Add a custom logo for your application by clicking **Custom** and entering a link to your desired image.
+    * (Optional) Add a custom logo for your application by clicking **Custom** and entering a link to your desired image.
 
-    {{<Aside>}}
+    {{<Aside type="note">}}
 If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
     {{</Aside>}}
 
