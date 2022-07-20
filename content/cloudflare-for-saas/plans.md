@@ -129,20 +129,3 @@ meta:
 The Enterprise plan offers features that give SaaS providers flexibility when it comes to meeting their end customer's requirements. In addition to that, Enterprise customers are able to extend all of the benefits of the Enterprise plan to their customer's custom hostnames. This includes advanced Bot Mitigation, WAF rules, analytics, DDoS mitigation, and more. 
 
 In addition, large SaaS providers rely on Enterprise level support, multi-user accounts, SSO, and other benefits that are not provided in non-Enterprise plans. 
-
-## Configurations
-
-Cloudflare for SaaS is highly customizable. Below are three examples of possible use cases, ranging from Enterprise to Free plan level.
-
-### Pro:
-
-![Pro Case](/cloudflare-for-saas/static/use-cases/Pro.png)
-
-### Advanced:
-
-![Advanced case](/cloudflare-for-saas/static/use-cases/Advanced.png)
-
-### Standard:
-
-![Standard case](/cloudflare-for-saas/static/use-cases/Standard.png)
-

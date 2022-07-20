@@ -8,7 +8,7 @@ weight: 9
 
 {{<render file="_ssl-for-saas-definition.md">}} <br>
 
-For example, a customer may want to use their vanity domain `app.customer.com` to point to an application hosted on your Cloudflare zone `service.saas.com`. As a SaaS provider, you can not only manage custom hostnames but also increase security, performance, and reliability for your end customer through Clooudflare products.
+As a SaaS provider, you may want to support subdomains under your own zone in addition to letting your customers use their own domain names with your services. For example, a customer may want to use their vanity domain `app.customer.com` to point to an application hosted on your Cloudflare zone `service.saas.com`. Cloudflare for SaaS allows you to increase security, performance, and reliability of your customers' domains.
 
 ## Benefits
 
@@ -18,6 +18,7 @@ When you use Cloudflare for SaaS, it helps you to:
 *   Keep your customers' traffic encrypted.
 *   Keep your customers online.
 *   Facilitate fast load times of your customers' domains.
+*   Access analytics for all domains.
 
 ## Limitations
 
@@ -32,7 +33,23 @@ For more information on these features, refer to [Hostname management](/cloudfla
 
 ## How it works
 
-Through a suite of easy-to-use products, Cloudflare for SaaS routes traffic from custom hostnames to the origin through a fallback domain. As the SaaS provider, you can extend Cloudflare's products to customer-owned custom domains by adding them to your zone [as custom hostnames](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/). Refer to [Configurations](/cloudflare-for-saas/plans/#configurations) for more detail.
+Through a suite of easy-to-use products, Cloudflare for SaaS routes traffic from custom hostnames to the origin through a fallback domain. As the SaaS provider, you can extend Cloudflare's products to customer-owned custom domains by adding them to your zone [as custom hostnames](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/). Possible configurations include:
+
+### Standard SSL:
+
+Standard SSL is available on all plans.
+
+![Standard case](/cloudflare-for-saas/static/use-cases/Standard.png)
+
+### SSL with Apex Proxying:
+
+This allows you to support apex domains even if your customers are using a DNS provider that doesn't allow a CNAME at the apex.
+
+![Advanced case](/cloudflare-for-saas/static/use-cases/Advanced.png)
+
+### SSL with BYOIP:
+
+This allows you to support apex domains even if your customers are using a DNS provider that doesn't allow a CNAME at the apex. Also, you can point to your own IPs if you want to bring an IP range to Cloudflare (instead of Cloudflare provided IPs).
 
 ![Pro Case](/cloudflare-for-saas/static/use-cases/Pro.png)
 

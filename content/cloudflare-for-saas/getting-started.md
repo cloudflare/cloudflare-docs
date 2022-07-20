@@ -72,8 +72,15 @@ Each Custom Hostname requires successful Certificate Validation and Hostname Ver
 - [Certificate Validation](/cloudflare-for-saas/ssl/common-tasks/certificate-validation-methods/): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
 - [Hostname Verification](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
 
-Depending on which method you select for each of these options, additional steps might be required for you and your customers.
 {{<Aside type="note">}}
+
+After you create a hostname, Cloudflare will periodically attempt to verify it. Checks occur frequently immediately after the hostname was created, but the gaps between check intervals increase over the following 7 days. For more detail, refer to [Hostname verification backoff schedule](/cloudflare-for-saas/ssl/reference/hostname-verification-backoff-schedule/).
+
+{{</Aside>}}
+
+Depending on which method you select for each of these options, additional steps might be required for you and your customers.
+
+{{<Aside type="warning">}}
 You can no longer use HTTP based validation for Wildcard certificates according to the Certificate Authority Browser Forum.
 {{</Aside>}}
 
