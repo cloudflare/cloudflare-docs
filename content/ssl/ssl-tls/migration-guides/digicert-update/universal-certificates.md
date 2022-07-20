@@ -6,9 +6,7 @@ meta:
     title: Universal certificates - DigiCert migration guide
 ---
 
-# Universal certificates
-
-## Upcoming changes
+# Changes to Universal certificates
 
 Cloudflare will stop using Digicert as an issuing certificate authority (CA) for new Universal certificates and instead use one of our [other CAs](/ssl/ssl-tls/certificate-authorities/). This will not affect existing Universal certificates.
 
@@ -20,11 +18,13 @@ GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/ssl/certificate_packs?s
 
 The maximum validity period for Universal certificates will also be decreased from 1 year to 90 days.
 
-### DCV changes
+## DCV changes
 
-If your domain is on a [Full setup](/dns/zone-setups/full-setup/), you do not need to make any updates for [Domain Control Validation (DCV)](/ssl/edge-certificates/changing-dcv-method/). Cloudflare will automatically complete [TXT-based DCV](/ssl/edge-certificates/changing-dcv-method/methods/txt/) on your behalf.
+You do not need to make any updates to the Domain Control Validation (DCV) for your zone.
 
-If your domain is on a [Partial setup](/dns/zone-setups/partial-setup/), you also do not need to make any updates for [Domain Control Validation (DCV)](/ssl/edge-certificates/changing-dcv-method/). Cloudflare will automatically complete [HTTP-based DCV](/ssl/edge-certificates/changing-dcv-method/methods/http/) on your behalf.
+If your domain is using a [Full setup](/dns/zone-setups/full-setup/), Cloudflare will automatically complete [TXT-based DCV](/ssl/edge-certificates/changing-dcv-method/methods/txt/) on your behalf.
+
+If your domain is on a [Partial setup](/dns/zone-setups/partial-setup/), Cloudflare will automatically complete [HTTP-based DCV](/ssl/edge-certificates/changing-dcv-method/methods/http/) on your behalf.
 
 ## Recommendations
 
