@@ -66,7 +66,7 @@ If you are done creating Tunnels, you can delete the `cert.pem` file, leave only
 
 You can now [configure](/cloudflare-one/connections/connect-apps/configuration/) `cloudflared` to route traffic to your local development environment. You can use a configuration file to do so, which makes it easier to start `cloudflared` in the future.
 
-By default, `cloudflared` expects the configuration file at a specific location: `~/.cloudflared/config.yml`. You can modify this location if you want. For this example, we'll keep the default. Create or edit your configuration file using a text editor.
+By default, `cloudflared` expects the configuration file at a specific location: `~/.cloudflared/config.yml`. You can modify this location if you want. For this example, we will keep the default. Create or edit your configuration file using a text editor.
 
 `$ vim ~/.cloudflared/config.yml`
 
