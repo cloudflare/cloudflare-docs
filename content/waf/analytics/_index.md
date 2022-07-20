@@ -44,7 +44,7 @@ L4 DoS attacks mitigated | –                   | –                   | –  
 
 Firewall Analytics currently has these limitations:
 
-*   Firewall Analytics may use sampled data to improve performance.
+*   Firewall Analytics may use sampled data to improve performance. If sampled data is applied to your search, you might not see all Firewall Events and filters might not return the expected results. In order to see more events, please select a very small timeframe so it is small enough to display only few events.
 
 *   The UI may show an inaccurate number of events per page. Data queries are highly optimized, but this means that pagination may not always work due to the fact that the source data may have been sampled. The GraphQL Analytics API does not have this pagination issue.
 
