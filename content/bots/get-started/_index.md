@@ -9,3 +9,6 @@ meta:
 # Get started with Cloudflare bot solutions
 
 {{<directory-listing>}}
+
+
+{{<product-icon product="bots">}}

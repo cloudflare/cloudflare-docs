@@ -1,0 +1,5 @@
+{{- $product := default (.Get "product") (.Get 0) -}}
+{{- $data := (index $.Site.Data $product) }}
+
+<div aria-hidden="true">{{ safeHTML $data.logo }}</div>
+<span>{{ $data.product.title }}</span>
