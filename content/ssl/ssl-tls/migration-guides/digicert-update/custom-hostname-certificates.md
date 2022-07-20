@@ -12,12 +12,6 @@ On **September 26, 2022**, Cloudflare will stop using Digicert as an issuing cer
 
 On **October 31, 2022**, Cloudflare will stop using Digicert as the CA for custom hostname certificate renewals. This will not affect existing custom hostname certificates, but only certificate renewals.
 
-To view which custom hostnames are currently using DigiCert as the issuing CA and might potentially be impacted, make an API call to the `/custom_hostnames/` endpoint.
-
-```sh
-GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/custom_hostnames?wildcard=true&ssl=0
-```
-
 ## Domain Control Validation (DCV) updates
 
 CNAME and Email DCV will also be deprecated on **September 26th, 2022**, requiring customers to use either [HTTP](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#http) or [TXT](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#txt) DCV.
@@ -28,19 +22,33 @@ Also, the maximum validity period for certificates will be decreased from 1 year
 
 ### Before September 26, 2022
 
-If your system integrates with the [SSL for SaaS API](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), you will need to update:
+If your system integrates with the SSL for SaaS API to [create custom hostnames](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), you will need to update:
 
 - The value sent in the `"certificate_authority"` field under the SSL object. Your integration should either use Google Trust Services (`"google"`) or Let's Encrypt (`"lets_encrypt"`).
 - The value sent in the `"method"` field under the SSL object. Your integration should either use [`"txt"`](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#txt) or [`"http"`](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#http) (only available for [non-wildcard hostnames](#non-wildcard-hostnames)).
 
 ### Before October 31, 2022
 
-We recommend that you migrate all  of your current custom hostnames away from DigiCert before October 31st. This will give you control over the offboarding by migrating custom hostnames to the new system in a controlled manner versus having Cloudflare manage the offboarding when the certificates come up for renewal.
+We recommend that you migrate all your current custom hostnames away from DigiCert before October 31, 2022. This give you the control to migrate custom hostnames to the new system in a controlled manner instead of having Cloudflare manage the offboarding when the certificates come up for renewal.
 
-If you want more control over custom hostname certificates when they come up for renewal, you should update the following properties by sending a [`PATCH`](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname) request:
+#### Identify certificates
 
-- The value sent in the `"certificate_authority"` field under the SSL object should either be `"lets_encrypt"` or `"google"`. If the certificate was previously using DigiCert and you do not update this value, Cloudflare will choose the issuing CA.
-- The value sent in the `"method"` field under the SSL object should either be [`"txt"`](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#txt) or [`"http"`](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#http) (only available for [non-wildcard hostnames](#non-wildcard-hostnames)). If the certificate is still using `"cname"` or `"email"`, Cloudflare will automatically change it to be `"txt"`.
+To identify certificates that are coming up for renewal, set up [notifications](/fundamentals/notifications/notification-available/#ssltls) for **SSL for SaaS Custom Hostnames Alert** events.
+
+You can also send a [GET](https://api.cloudflare.com/#custom-hostname-for-a-zone-list-custom-hostnames) request to the API and look for certificates with a `status` of `pending_validation` and a `certificate_authority` of `digicert` within the SSL object.
+
+#### Update values
+
+You should update the following values using the [dashboard](/cloudflare-for-saas/ssl/common-tasks/issuing-certificates/#via-the-dashboard-1) or the [API](/cloudflare-for-saas/ssl/common-tasks/issuing-certificates/#via-the-api-1):
+
+- **Certificate Authority**: When you update this value, it will immediately reissue the certificate. If the certificate was previously using DigiCert and you do not update this value, Cloudflare will choose the issuing CA.
+    - *Dashboard*: Update the value for **SSL certificate authority** to either be **Let's Encrypt** or **Google Trust Services**.
+    - *API*: Update the value sent in the `"certificate_authority"` field under the SSL object to either be `"lets_encrypt"` or `"google"`.
+
+- **DCV Method**: You can only update this value when your certificate is up for renewal. If your certificate was previously using **Email** or **CNAME** validation and you do not update this value, Cloudflare will automatically your DCV method to **TXT**.
+    - *Dashboard*: Update the value for **Certificate validation method** to either be [**TXT Validation**](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#txt) or [**HTTP Validation**](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#http) (only available for [non-wildcard hostnames](#non-wildcard-hostnames)).
+    - *API*: Update the value sent in the `"method"` field under the SSL object to either be [`"txt"`](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#txt) or [`"http"`](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#http) (only available for [non-wildcard hostnames](#non-wildcard-hostnames)).
+
 
 {{<Aside type="note">}}
 
@@ -48,9 +56,13 @@ After your DigiCert certificate is renewed, the API will return a new certificat
 
 {{</Aside>}}
 
-#### Non-wildcard hostnames
+---
 
-For non-wildcard hostnames, you do not need to make any updates for DCV as long as the custom hostname is proxying traffic through Cloudflare. Cloudflare will complete DCV by serving the [HTTP token](/cloudflare-for-saas/ssl/common-tasks/certificate-validation-methods/#http-automatic).
+### Non-wildcard hostnames
+
+For non-wildcard hostnames, you can use HTTP DCV to automatically perform DCV as long as the custom hostname is proxying traffic through Cloudflare. Cloudflare will complete DCV on the hostname's behalf by serving the [HTTP token](/cloudflare-for-saas/ssl/common-tasks/certificate-validation-methods/#http-automatic).
+
+If your hostname is using another validation method, you will need to [update](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname) the `"method"` field in the SSL object to be `"http"`.
 
 If the custom hostname is not proxying traffic through Cloudflare, then the custom hostname domain owner will need to add the TXT or HTTP DCV token for the new certificate to validate and issue. As the SaaS provider, you will be responsible for sharing this token with the custom hostname domain owner.
 
@@ -62,4 +74,45 @@ If your hostname is using another validation method, you will need to [update](h
 
 These tokens can be fetched through the [GET custom hostnames endpoint](https://api.cloudflare.com/#custom-hostname-for-a-zone-list-custom-hostnames) when the certificates are in a “pending validation” state during custom hostname creation or during certificate renewals. You can also fetch them through the dashboard.
 
+For example, here are two tokens highlighted section in the API response.
+
+```json
+---
+header: Response
+highlight: [11,12,13,14,15,16,17,18]
+---
+{
+"result": [
+{
+    "id": "xxxx",
+    "hostname": "example.com",
+    "ssl": {
+    "id": "xxxx",
+    "type": "dv",
+    "method": "txt",
+    "status": "pending_validation",
+    "txt_name": "_acme-challenge.example.com",
+    "txt_value": "09pBM4ygXti9LSvoJsqg5zdZglHs8MjfqLsJSGTkh5w",
+    "validation_records": [
+        {
+            "status": "pending",
+            "txt_name": "_acme-challenge.example.com",
+            "txt_value": "09pBM4ygXti9LSvoJsqg5zdZglHs8MjfqLsJSGTkh5w"
+        }
+    ],
+    "settings": {
+        "min_tls_version": "1.3"
+    },
+    "bundle_method": "ubiquitous",
+    "wildcard": false,
+    "certificate_authority": "lets_encrypt"
+    },
+    "status": "active",
+    "created_at": "2021-09-23T19:42:02.877815Z"
+    }
+}
+```
+
 As the SaaS provider, you will be responsible for sharing these DCV tokens with your customers. Let’s Encrypt DCV tokens are valid for 7 days and Google Trust Services tokens are valid for 14 days. We recommend that you make this clear to your customers, so that they add the tokens in a timely manner. If your customers take longer than the token validity period to add the record then you will need to fetch updated tokens and share those in order for the certificate to validate and issue.
+
+Once your customer has added these tokens, the certificate status will change to **Active**. Cloudflare will periodically check if the DCV tokens have been placed according to the [certificate validation schedule](/ssl/ssl-tls/validation-backoff-schedule/). Once your customer has added the records, you can make a no-change call to the custom hostnames API to restart the validation schedule for a specific hostname.
