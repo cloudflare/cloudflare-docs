@@ -98,7 +98,7 @@ A video guide is also available:
 
 ### Cloudflare logging
 
-Enterprise customers have access to detailed logs of HTTP requests, on their Cloudflare dashboard. Enterprise customers also have access to Cloudflare's Logpush service, which can be configured from the Cloudflare Dashboard or API (for more information about Cloudflare HTTP logging, refer to [Cloudflare Logs](/logs/)).
+Enterprise customers have access to detailed logs of HTTP requests, on their Cloudflare dashboard. Enterprise customers also have access to Cloudflare's Logpush service, which can be configured from the Cloudflare dashboard or API (for more information about Cloudflare HTTP logging, refer to [Cloudflare Logs](/logs/)).
 
 Once a member of your team authenticates to reach a resource behind Access, Cloudflare generates a token for that user that contains their SSO identity. The token is structured as a [JSON Web Token (JWT)](/cloudflare-one/glossary/#json-web-token). Cloudflare relies on an RSA Signature with SHA-256, or RS256, an asymmetric algorithm, to perform that signature. Cloudflare also makes the public key available, so that you can validate their authenticity, as well.
 
