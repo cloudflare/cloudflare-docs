@@ -38,7 +38,7 @@ Cloudflare Access allows you to integrate your SaaS products by acting as an ide
     * (Optional) Add a custom logo for your application by clicking **Custom** and entering a link to your desired image.
 
     {{<Aside type="note">}}
-If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
+If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
     {{</Aside>}}
 
 9.  Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.

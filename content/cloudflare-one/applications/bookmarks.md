@@ -24,7 +24,7 @@ Links to applications not protected by Access can be added as **bookmarks**. To 
     - (Optional) Add a custom logo for your application by clicking **Custom** and entering a link to your desired image.
 
     {{<Aside type="note">}}
-If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
+If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
     {{</Aside>}}
 
 1.  Click **Next**.
