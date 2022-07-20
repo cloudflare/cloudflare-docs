@@ -33,7 +33,7 @@ For more information on these features, refer to [Hostname management](/cloudfla
 
 ## How it works
 
-Through a suite of easy-to-use products, Cloudflare for SaaS routes traffic from custom hostnames to the origin through a fallback domain. As the SaaS provider, you can extend Cloudflare's products to customer-owned custom domains by adding them to your zone [as custom hostnames](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/). Possible configurations include:
+Through a suite of easy-to-use products, Cloudflare for SaaS routes traffic from custom hostnames to the origin through a fallback domain. As the SaaS provider, you can extend Cloudflare's products to customer-owned custom domains by adding them to your zone [as custom hostnames](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/). Cloudflare for SaaS is highly customizable. Three possible configurations are shown below.
 
 ### Standard SSL:
 
