@@ -2720,7 +2720,7 @@ html[is-docs-page] body {
   box-shadow: var(--focus-shadow);
 }
 .DocsMarkdown--link > .DocsMarkdown--link-content {
-  /* background-color: var(--background-color); */
+  background-color: var(--background-color);
   color: black;
   border-bottom: 1px solid
     rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));

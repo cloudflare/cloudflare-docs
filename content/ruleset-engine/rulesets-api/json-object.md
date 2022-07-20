@@ -35,111 +35,21 @@ A fully populated ruleset object has the following JSON structure.
 
 The table lists the properties of a ruleset object.
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Description</th>
-      <th>Value</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody style="vertical-align:top">
-    <tr>
-      <td>
-        <code>id</code>
-      </td>
-      <td>
-        Represents the unique Cloudflare-generated identifier for a given version of a ruleset.
-      </td>
-      <td>32-character UUIDv4 string</td>
-      <td>Unique, read-only</td>
-    </tr>
-    <tr>
-      <td>
-        <code>name</code>
-      </td>
-      <td>A human-readable name for the ruleset.</td>
-      <td>String</td>
-      <td>The name is immutable. You cannot change the name over the lifetime of the ruleset.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>description</code>
-      </td>
-      <td>Optional description for the ruleset.</td>
-      <td>String</td>
-      <td>You can change the description over the lifetime of the ruleset.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>kind</code>
-      </td>
-      <td>The kind of ruleset the JSON object represents.</td>
-      <td>
-        <p>
-          There are four kinds of rulesets:
-          <ul>
-            <li>
-              <em>root</em>
-            </li>
-            <li>
-              <em>zone</em>
-            </li>
-            <li>
-              <em>managed</em>
-            </li>
-            <li>
-              <em>custom</em>
-            </li>
-          </ul>
-        </p>
-      </td>
-      <td>
-        <code>kind</code> is immutable.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>version</code>
-      </td>
-      <td>The version of the ruleset.</td>
-      <td>
-        Integer value starting at <code>1</code> and incremented by <code>1</code> each time the
-        ruleset is modified
-      </td>
-      <td>Read-only</td>
-    </tr>
-    <tr>
-      <td>
-        <code>phase</code>
-      </td>
-      <td>The phase to which the ruleset belongs.</td>
-      <td>String</td>
-      <td>
-        <code>phase</code> is immutable.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>rules</code>
-      </td>
-      <td>A list of rules to include in the ruleset.</td>
-      <td>
-        Array of JSON objects (refer to <a href="#rule-object-structure-and-properties">rule JSON object</a>)
-      </td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <code>last_updated</code>
-      </td>
-      <td>The time (UTC) when the ruleset was last updated.</td>
-      <td>ISO 8601 timestamp in the format YYYY-MM-DDThh:mm:ss.TZD</td>
-      <td>Read-only</td>
-    </tr>
-  </tbody>
-</table>
+{{<table-wrap>}}
+
+| Property                                                                        | Description| Value | Note |
+| ------------------------------------------------------------------------------- | ---------  | --------- | ---------------
+| `id`                                                    | Represents the unique Cloudflare-generated identifier for a given version of a ruleset. | 32-character UUIDv4 string|  Unique, read-only |
+| `name` | A human-readable name for the ruleset.          | String         | You can change the description over the lifetime of the ruleset.| 
+| `description`                                | Optional description for the ruleset.  | String |  You can change the description over the lifetime of the ruleset.|
+| `kind`                        | The kind of ruleset the JSON object represents.      | There are four kinds of rulesets: root, zone,managed, custom    |`kind` is immutable. |
+| `version`                                                    | The version of the ruleset.      | Integer value starting at `1 `and incremented by `1` each time the ruleset is modified     |Read-only
+| `phase`                                        | The phase to which the ruleset belongs.         | String       | `phase` is immutable.
+| `rules`                | 	A list of rules to include in the ruleset.        | Array of JSON objects (refer to rule [JSON object](#rule-object-structure-and-properties))        |
+| `last_updated`        | The time (UTC) when the rule was last updated.         | ISO 8601 timestamp in the format YYYY-MM-DDThh:mm:ss.TZD      | Read-only
+
+
+{{</table-wrap>}}
 
 ## Rule object structure and properties
 
