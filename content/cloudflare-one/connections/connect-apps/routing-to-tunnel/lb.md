@@ -54,7 +54,7 @@ Instead, set up a health check endpoint in `cloudflared` — for example, an [in
 
 A load balancer maintains [session affinity](/load-balancing/understand-basics/session-affinity/) by treating an entire Named Tunnel as an origin server, meaning that it does not distinguish between Named Tunnels [running as replicas](/cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/).
 
-To maintain session affinity for individual service instances running behind tunnel replicas, use different Named Tunnel IDs.
+To maintain session affinity for individual service instances running behind tunnel replicas, use different Named Tunnel IDs. For more information on Load Balancers and Replicas please see [Tunnel Availability and Failover](/cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/).
 
 ### Local connection preference
 
