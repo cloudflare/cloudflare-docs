@@ -55,56 +55,61 @@ In addition to the above fields, the JSON body can optionally filter packets by 
 
 Currently, you can only send one collect request per minute for simple PCAPs, and you can only have one running or pending full PCAP at a time.
 
-### Example request
+### Example requests
 
-#### Full PCAP
+```bash
+---
+header: Full PCAP example request
+---
+  curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
+  -H 'Content-Type: application/json' \
+  -H "X-Auth-Email: ${email}" \
+  -H "X-Auth-Key: ${auth_key}" \
+  --data '{
+          "filter_v1": {},
+          "time_limit": 300,
+          "packet_limit": 10000,
+          "byte_limit": 100000000,
+          "type": "full",
+          "colo": "sfo06",
+          "system": "magic-transit",
+           "destination_conf": "${bucket}"
+           }'
+```
 
-A complete `full` type request will look like the following:
-
-    curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
-    -H 'Content-Type: application/json' \
-    -H "X-Auth-Email: ${email}" \
-    -H "X-Auth-Key: ${auth_key}" \
-    --data '{
-            "filter_v1": {},
-            "time_limit": 300,
-            "packet_limit": 10000,
-            "byte_limit": 100000000,
-            "type": "full",
-            "colo": "sfo06",
-            "system": "magic-transit",
-            "destination_conf": "${bucket}"
-    }'
-
-#### Simple PCAP
-
-A complete `simple` type request will look like the following:
-
-    curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
-    -H 'Content-Type: application/json' \
-    -H 'X-Auth-Email: user@example.com' \
-    -H 'X-Auth-Key: 00000000000' \
-    --data '{
-            "filter_v1": {
-                   "source_address": "1.2.3.4",
-                   "source_port": 123,
-                   "destination_address": "5.6.7.8",
-                   "destination_port": 80,
-                   "protocol": 6
-            },
-            "time_limit": 300,
-            "packet_limit": 10000,
-            "type": "simple",
-            "system": "magic-transit"
-    }'
+```bash
+---
+header: Simple PCAP example request
+---
+  curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
+  -H 'Content-Type: application/json' \
+  -H 'X-Auth-Email: user@example.com' \
+  -H 'X-Auth-Key: 00000000000' \
+  --data '{
+          "filter_v1": {
+                  "source_address": "1.2.3.4",
+                  "source_port": 123,
+                  "destination_address": "5.6.7.8",
+                  "destination_port": 80,
+                  "protocol": 6
+          },
+          "time_limit": 300,
+          "packet_limit": 10000,
+          "type": "simple",
+          "system": "magic-transit"
+  }'
+```
 
 `filter_v1` can be left empty to collect all packets without any filtering.
 
-### Example response
+### Example responses
 
 The response to this message will be a JSON body containing the details of the job running to build the packet capture. The response will contain a unique identifier for the packet capture request, and the details that were sent in the request.
-For example here is a response for a simple type PCAP:
 
+```bash
+---
+header: Simple PCAP example response
+---
     {
       "result": {
         "id": "6d1f0aac13cd40e3900d29f5dd0e8a2b",
@@ -126,9 +131,12 @@ For example here is a response for a simple type PCAP:
       "errors": [],
       "messages": []
     }
+```
 
-Here is an example of a response for a full type PCAP:
-
+```bash
+---
+header: Full PCAP example response
+---
     {
       "result": {
         "id": "7d7c88382f0b4d5daa9587aa45a1a877",
@@ -147,7 +155,7 @@ Here is an example of a response for a full type PCAP:
       "errors": [],
       "messages": []
     }
-
+```
 
 The response will have the `status` field set to `pending` while the collection is in progress. You must wait for the PCAP collection to complete before downloading the file. When the PCAP is ready to download, the status will change to `success`.
 
@@ -155,14 +163,19 @@ The response will have the `status` field set to `pending` while the collection 
 
 To check the status of a running job, send a request to the endpoint and specify the PCAP identifier. The PCAP identifier is received in the response of a collect request as shown in the previous step.
 
+```bash
     curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${pcap_id} \
     -H 'Content-Type: application/json' \
     -H 'X-Auth-Email: user@example.com' \
     -H 'X-Auth-Key: 00000000000'
+```
 
 The response will be similar to the one received when requesting a PCAP collection.
-Here is an example of a simple PCAP result:
 
+```bash
+---
+header: Simple PCAP example result
+---
     {
       "result": {
         "id": "6d1f0aac13cd40e3900d29f5dd0e8a2b",
@@ -184,7 +197,7 @@ Here is an example of a simple PCAP result:
       "errors": [],
       "messages": []
     }
-
+```
 While the collection is ongoing, the status will be set to `pending` or `running`. Once the PCAP is ready, the status will change to `success`.
 
 ## Download PCAP
@@ -199,23 +212,28 @@ To obtain full PCAPs, download the files from the bucket specified in `destinati
 
 Once the Simple PCAP collection is complete, you can download the PCAP by specifying the PCAP identifier used earlier.
 
+```bash
     curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${pcap_id}/download \
     -H 'Content-Type: application/json' \
     -H 'X-Auth-Email: user@example.com' \
     -H 'X-Auth-Key: 00000000000' \
     --output download.pcap
+```
 
 ## List PCAPs
 
 To list all the requests sent so far, you can use the command below.
 
+```bash
     curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
     -H 'Content-Type: application/json' \
     -H 'X-Auth-Email: user@example.com' \
     -H 'X-Auth-Key: 00000000000'
+```
 
 The response will include an array of up to 50 requests sent in the past and will also include completed and ongoing requests. A sample response may look like the example below.
 
+```bash
     {
       "result": [
         {
@@ -233,3 +251,4 @@ The response will include an array of up to 50 requests sent in the past and wil
       "errors": [],
       "messages": []
     }
+```
