@@ -369,7 +369,9 @@ Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **F
 
 ### Durable Objects locally
 
-Just as you can access kv with `-k` or `--kv` you can access durable objects in your local builds with `-o`, `--do` followed by your Durable object name and class.
+Currently, Durable Objects are not supported in local development mode. To use Durable Objects in your Pages application, deploy a Worker containing a Durable Object. Then add it as a binding to your Pages project as shown in the section above. 
+
+Support for using Durable Objects in local development is actively being worked on and will be available soon.
 
 ### Environment variable
 
