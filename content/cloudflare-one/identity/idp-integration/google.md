@@ -20,7 +20,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Suite as 
 
     ![Location of credential settings at the top of the Google Cloud Platform dashboard.](/cloudflare-one/static/documentation/identity/google/click-configure-consent.png)
 
-4. Choose `External` as the User Type. Since this application is not being created in a Google Workspace account, the only types of users are external.
+4. Choose `External` as the User Type. Since this application is not being created in a Google Workspace account, any user with a Gmail address can login.
 
 5. Name the application, add a support email, and input contact fields. Google Cloud Platform requires an email in your account.
 {{<Aside type="note">}}In the **Scopes** section, we recommend adding the `userinfo.email` scope. This is not required for the integration, but shows authenticating users what information is being gathered. You do not need to add test users.{{</Aside>}}

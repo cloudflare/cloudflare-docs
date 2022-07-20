@@ -2,6 +2,7 @@
 title: Enable other providers
 pcx-content-type: how-to
 weight: 66
+layout: single
 meta:
   title: Enable Logpush to other providers
 ---
@@ -31,4 +32,4 @@ To get started:
     - Zone ID
     - Destination access details for your cloud service provider
 
-2.  Configure your Logpush job. For more information on how to configure a Logpush job, refer to [Logpush API configuration](/logs/reference/logpush-api-configuration/).
+2.  Configure your Logpush job. For more information on how to configure a Logpush job, refer to [API configuration](/logs/get-started/api-configuration/).

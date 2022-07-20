@@ -24,12 +24,22 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-06-20</td>
-      <td>2022-07-05</td>
+      <td>2022-07-18</td>
+      <td>2022-07-25</td>
       <td>Cloudflare Specials</td>
-      <td>...34780914</td>
-      <td>100532</td>
-      <td>Vulnerabilty scanner activity</td>
+      <td>...1651d0c8</td>
+      <td>100536</td>
+      <td>GraphQL Injection</td>
+      <td>N/A</td>
+      <td>Block</td>
+    </tr>
+    <tr>
+      <td>2022-07-18</td>
+      <td>2022-07-25</td>
+      <td>Cloudflare Specials</td>
+      <td>...6a648210</td>
+      <td>100537</td>
+      <td>Oracle ADF Remote Code Execution - CVE:CVE-2022-21445</td>
       <td>N/A</td>
       <td>Block</td>
     </tr>

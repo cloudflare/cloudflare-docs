@@ -111,21 +111,11 @@ Find your Account ID by logging in to the Cloudflare dashboard > **Overview** > 
 
 ```toml
 name = "<YOUR_WORKER_NAME>"
-type = "javascript"
-compatibility_date = "2022-04-18"
+main = "src/index.js"
+compatibility_date = "2022-06-30"
 
 account_id = "YOUR_ACCOUNT_ID" # ← Replace with your Account ID.
 workers_dev = true
-```
-
-If you need to use an older compatibility date, you need to enable the `r2_public_beta_bindings` [compatibility flag](/workers/platform/compatibility-dates/).
-
-To do this, update your `wrangler.toml` file to include the following:
-
-```toml
-# An example date older than "2022-04-18"
-compatibility_date = "2022-02-10"
-compatibility_flags = ["r2_public_beta_bindings"]
 ```
 
 To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the `<YOUR_BUCKET_NAME>` you used to create your bucket in [step 3](#create-your-bucket):
@@ -142,7 +132,7 @@ Find more detailed information on configuring your Worker in the [Wrangler Confi
 
 Within your Worker code, your bucket is now available under the `MY_BUCKET` variable and you can begin interacting with it.
 
-An R2 bucket is able to READ, LIST, WRITE, and DELETE objects. You can see an example of all operations below using the Service Worker syntax. Add the following snippet into your project's `index.js` file:
+An R2 bucket is able to READ, LIST, WRITE, and DELETE objects. You can see an example of all operations below using the Module Worker syntax. Add the following snippet into your project's `index.js` file:
 
 ```js
 export default {

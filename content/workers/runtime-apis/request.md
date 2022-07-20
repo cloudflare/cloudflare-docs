@@ -111,10 +111,6 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
     *   Whether [Cloudflare Apps](https://www.cloudflare.com/apps/) should be enabled for this request. Defaults to `true`.
 
-*   `avif` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-    *   Enables or disables [AVIF](https://blog.cloudflare.com/generate-avif-images-with-image-resizing/) image format in [Polish](https://blog.cloudflare.com/introducing-polish-automatic-image-optimizati/).
-
 *   `cacheEverything` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/en-us/articles/200172266). Defaults to `false`.
@@ -224,6 +220,10 @@ All plans have access to:
 
     *   Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, and `ja3Hash`. Refer to [Bot Management Variables](/bots/reference/bot-management-variables) for more details.
 
+*   `clientAcceptEncoding` {{<type>}}string | null{{</type>}}
+
+    *   If Cloudflare replaces the value of the `Accept-Encoding` header, the original value is stored in the `clientAcceptEncoding` property, for example, `"gzip, deflate, br"`.
+  
 *   `colo` {{<type>}}string{{</type>}}
 
     *   The three-letter [`IATA`](https://en.wikipedia.org/wiki/IATA_airport_code) airport code of the data center that the request hit, for example, `"DFW"`.

@@ -58,6 +58,6 @@ Later, you can change the [sensitivity level](/ddos-protection/managed-rulesets/
 
 {{<Aside type="note" header="Recommendation: Enable DDoS alerts">}}
 
-Cloudflare recommends that you enable [DDoS alerts](/ddos-protection/reference/alerts/) to get real-time notifications on detected and mitigated attacks automatically performed by Cloudflare’s systems. When you receive these notifications, you can review if it is in fact a real DDoS attack, or if it is a false positive, and then take action to remedy it.
+Cloudflare recommends that you create notifications for [DDoS alerts](/ddos-protection/reference/alerts/) to get real-time notifications on detected and mitigated attacks automatically performed by Cloudflare’s systems. When you receive these notifications, you can review if it is in fact a real DDoS attack, or if it is a false positive, and then take action to remedy it.
 
 {{</Aside>}}

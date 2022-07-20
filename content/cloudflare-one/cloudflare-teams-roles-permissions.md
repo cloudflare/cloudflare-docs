@@ -8,7 +8,7 @@ weight: 21
 
 When creating a Cloudflare Zero Trust account, you will be given the Super Administrator role. With this role, you can invite members to join your Zero Trust account, and assign them different roles depending on the permissions you would like to give them. 
 
-To check the list of members in your account, or to manage roles and permissions, refer to our [Account setup](/fundamentals/get-started/setup/account-setup/manage-account-members/) documentation.
+To check the list of members in your account, or to manage roles and permissions, refer to our [Account setup](/fundamentals/account-and-billing/account-setup/manage-account-members/) documentation.
 
 ## Zero Trust roles
 

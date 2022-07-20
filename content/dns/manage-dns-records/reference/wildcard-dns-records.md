@@ -6,9 +6,9 @@ weight: 4
 
 # Wildcard DNS records
 
-Normal DNS records map a domain name to one or multiple IP addresses or another resources associated with that domain name (a one-to-many mapping).
+Normal DNS records map a domain name to one or multiple IP addresses or other associated resources to a specific domain name (a one-to-many mapping).
 
-Wildcard DNS records allow you to have a many-to-one mapping, for example if you had hundreds or thousands of subdomains you wanted to point to the same resource. Wildcard records are used as the response for all subdomains that are not specifically covered by another DNS record.
+Wildcard DNS records allow you to have a many-to-many mapping, for example if you had hundreds or thousands of subdomains you wanted to point to the same resources. Wildcard records are used as the response for all subdomains that are not specifically covered by another DNS record.
 
 Within Cloudflare, wildcard DNS records can be either [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) or DNS-only.
 
@@ -19,20 +19,25 @@ To create a wildcard DNS record, [create a DNS record](/dns/manage-dns-records/h
 {{<example>}}
 
 | Type | Name  | IPv4 address | Proxy status |
-| ---- | ----- | ------------ | ------------ |
+| --- | --- | --- | --- |
 | `A`    | `*` | `192.0.2.1`  | Proxied      |
 
 {{</example>}}
 
-## Limitations
+You can also create a wildcard DNS record specifically for a deeper subdomain. For example, if you wanted to create a wildcard record on `*.www.example.com`, you would create a record with `*.www` in the name field.
+
+{{<example>}}
+
+| Type | Name  | IPv4 address | Proxy status |
+| --- | --- | --- | --- |
+| `A`    | `*.www` | `192.0.2.2`  | Proxied      |
+
+{{</example>}}
+
+## Availability
 
 Customers on all plans can create and proxy wildcard DNS records.
 
-When using wildcard records, there are several limitations detailed in [RFC4592](https://datatracker.ietf.org/doc/rfc4592/):
+## Additional information
 
-- Wildcard records do not cover the zone apex (could answer for `www.example.com`, but not `example.com`).
-- Wildcard records are only supported on the first level (`*.example.com` would work as a wildcard, but `subdomain.*.example.com` would interpret the `*` as a literal character).
-- Wildcard records do apply to multiple levels, but they cannot be defined on multiple levels (`*.*.example.com` would have the second `*` interpreted as a literal character).
-- Wildcard records only cover their specified record type (a wildcard `A` record would not cover queries for `AAAA` records).
-
-For more details on wildcard records, refer to the [introductory blog post](https://blog.cloudflare.com/wildcard-proxy-for-everyone/).
+For more information on wildcard records — as well as more details about their limitations — refer to the [introductory blog post](https://blog.cloudflare.com/wildcard-proxy-for-everyone/).

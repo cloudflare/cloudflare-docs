@@ -46,6 +46,6 @@ Firewall Analytics currently has these limitations:
 
 *   Firewall Analytics may use sampled data to improve performance.
 
-*   The UI may show an inaccurate number of events per page. Data queries are highly optimized, but this means that pagination may not always work due to the fact that the source data may have been sampled. The GraphQL Analytics API does not have this limitation.
+*   The UI may show an inaccurate number of events per page. Data queries are highly optimized, but this means that pagination may not always work due to the fact that the source data may have been sampled. The GraphQL Analytics API does not have this pagination issue.
 
 *   Triggered OWASP rules appear in the Firewall Analytics page under **Additional logs**, but they are not included in exported JSON files.

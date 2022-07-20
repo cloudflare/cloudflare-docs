@@ -39,4 +39,4 @@ Cloudflare cannot decrypt encrypted payloads, since this operation requires your
 
 ## User role requirements
 
-Only users with the [Super Administrator role](/fundamentals/get-started/setup/account-setup/account-roles/) can enable payload logging or edit the payload logging configuration.
+Only users with the [Super Administrator role](/fundamentals/account-and-billing/account-setup/account-roles/) can enable payload logging or edit the payload logging configuration.

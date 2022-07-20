@@ -671,6 +671,7 @@ html {
   padding: var(--padding-vertical) var(--padding-horizontal);
   font-family: inherit;
   cursor: default;
+  tab-size: 2;
 }
 .CodeBlock > code > * {
   cursor: text;
@@ -2790,13 +2791,13 @@ html[is-docs-page] body {
 }
 .DocsMarkdown ol ol,
 .DocsMarkdown ul ol {
-  list-style-type: lower-roman;
+  list-style-type: lower-alpha;
 }
 .DocsMarkdown ol ol ol,
 .DocsMarkdown ol ul ol,
 .DocsMarkdown ul ol ol,
 .DocsMarkdown ul ul ol {
-  list-style-type: lower-alpha;
+  list-style-type: lower-roman;
 }
 .DocsMarkdown dd {
   margin-left: 0;

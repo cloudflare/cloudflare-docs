@@ -34,4 +34,4 @@ This feature is only available on Enterprise plans.
 
 PII is by default redacted from Gateway Activity logs for all permission roles except the Super Admin and users with the [Cloudflare Zero Trust PII role](/cloudflare-one/cloudflare-teams-roles-permissions/#protecting-personally-identifiable-information-pii) assigned to them. Only the Super Admin can assign roles and determine who has permission to view PII. Redacting PII does not affect the way PII is captured in logs — the data is simply hidden and no information is lost.
 
-To add or remove the Cloudflare Zero Trust PII role for a user, refer to our [Account setup](/fundamentals/get-started/setup/account-setup/manage-account-members/) documentation.
+To add or remove the Cloudflare Zero Trust PII role for a user, refer to our [Account setup](/fundamentals/account-and-billing/account-setup/manage-account-members/) documentation.
