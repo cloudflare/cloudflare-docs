@@ -74,7 +74,7 @@ When a filename includes a placeholder, the `name` must be alphanumeric and cann
 
 ### Using TypeScript
 
-If you prefer to write TypeScript, we declare a `PagesFunction` type in the [@cloudflare/workers-types](https://github.com/cloudflare/workers-types) library which you can use to type-check your Functions. To use this, create a `functions/tsconfig.json` file with the following contents:
+If you prefer to write TypeScript, we declare a `PagesFunction` type in the [@cloudflare/workers-types](https://github.com/cloudflare/workers-types) library which you can use to type-check your Functions. To use this, create a `tsconfig.json` file in your `/functions` folder with the following contents:
 
 ```json
 ---
