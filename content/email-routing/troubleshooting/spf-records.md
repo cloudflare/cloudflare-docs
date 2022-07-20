@@ -8,13 +8,13 @@ meta:
 
 # Troubleshooting SPF records
 
-Having multiple SPF records on your account is not allowed, and will prevent Email Routing from working properly. If your account has multiple SPF records, follow these steps to solve the issue.
+Having multiple [SPF records](https://www.cloudflare.com/learning/dns/dns-records/dns-spf-record/) on your account is not allowed, and will prevent Email Routing from working properly. If your account has multiple SPF records, follow these steps to solve the issue.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Email**. Email Routing will warn you that you have multiple SPF records.
 3. Click **Fix records**.
-4. On the next page, delete the incorrect SPF record. If you are unsure of which SPF record to delete, delete all SPF records.
+4. Delete the incorrect SPF record. If you are unsure of which SPF record to delete, delete all SPF records.
 5. (Optional) If you deleted all SPF records, return to the main Email Routing screen, and click **Fix records**.
-6. (Optional) On the next page, Email Routing will show you the missing SPF record. Click **Add records and enable**.
+6. (Optional) Email Routing will show you the correct, missing SPF record. Click **Add records and enable**.
 
-You should now have your DNS records correctly configured.
+You should now have your SPF records correctly configured.
