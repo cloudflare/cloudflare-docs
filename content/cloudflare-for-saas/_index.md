@@ -8,16 +8,16 @@ weight: 9
 
 {{<render file="_ssl-for-saas-definition.md">}} <br>
 
-For example, a customer may want to use their vanity domain `app.customer.com` to point to an application hosted on your Cloudflare zone `service.saas.com`.
+For example, a customer may want to use their vanity domain `app.customer.com` to point to an application hosted on your Cloudflare zone `service.saas.com`. As a SaaS provider, you can not only manage custom hostnames but also increase security, performance, and reliability for your end customer through Clooudflare products.
 
 ## Benefits
 
-When you use Cloudflare for SaaS, it helps you:
+When you use Cloudflare for SaaS, it helps you to:
 
-*   Efficiently manage the entire SSL lifecycle, including initial issuance and renewal.
-*   Offer a branded visitor experience, leading to increased trust.
-*   Improve SEO rankings.
-*   Increase site speed via HTTP/2.
+*   Provide custom domain support.
+*   Keep your customers' traffic encrypted.
+*   Keep your customers online.
+*   Facilitate fast load times of your customers' domains.
 
 ## Limitations
 
@@ -28,7 +28,13 @@ If your customers already have their applications on Cloudflare, they cannot con
 *   Web Application Firewall (WAF)
 *   SSL settings
 
-For more information on these features, refer to [Hostname Management](/cloudflare-for-saas/ssl/hostname-specific-behavior/).
+For more information on these features, refer to [Hostname management](/cloudflare-for-saas/ssl/hostname-specific-behavior/).
+
+## How it works
+
+Through a suite of easy-to-use products, Cloudflare for SaaS routes traffic from custom hostnames to the origin through a fallback domain. As the SaaS provider, you can extend Cloudflare's products to customer-owned custom domains by adding them to your zone [as custom hostnames](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/). Refer to [Configurations](/cloudflare-for-saas/plans/#configurations) for more detail.
+
+![Pro Case](/cloudflare-for-saas/static/use-cases/Pro.png)
 
 ## Availability
 
