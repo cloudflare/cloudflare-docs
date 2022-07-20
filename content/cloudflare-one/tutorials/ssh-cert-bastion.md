@@ -100,7 +100,7 @@ $ cloudflared tunnel run ssh-pool
 
 You can now configure a DNS record for the Tunnel you have created. Navigate to the Cloudflare dashboard and select the domain you configured in your Access policy and in the `hostname` value of your configuration file.
 
-Open the `DNS` page and click **+Add record**. Select `CNAME` for `Type` and in the `Target` field input the UUID value of your Tunnel followed by `.cfargotunnel.com`. In this example, that value is:
+Open the `DNS` page and click **Add record**. Select `CNAME` for **Type** and in the **Target** field input the UUID value of your Tunnel followed by `.cfargotunnel.com`. In this example, that value is:
 
 ```txt
 79a60ee2-9a98-4f5f-96c7-76c88b2075be.cfargotunnel.com
@@ -112,9 +112,9 @@ Users will now be able to authenticate through Cloudflare Access and connect ove
 
 ## Deploy short-lived certificates
 
-You can extend the Zero Trust security model by replacing long-lived SSH keys with short-lived certificates provided by Cloudflare Access. To do so, navigate to the Zero Trust dashboard and open the `Service Authentication` page. Select the `SSH` tab.
+You can extend the Zero Trust security model by replacing long-lived SSH keys with short-lived certificates provided by Cloudflare Access. To do so, navigate to the Zero Trust dashboard and open the **Service Authentication** page. Select the **SSH** tab.
 
-In the `Application` drop-down, select the application created previously and click **Generate certificate**. Cloudflare Access will display the public key and an audience tag for the generated certificate.
+In the **Application** dropdown, select the application created previously and click **Generate certificate**. Cloudflare Access will display the public key and an audience tag for the generated certificate.
 
 ![Gen Cert Output](/cloudflare-one/static/zero-trust-security/ssh-slc/gen-cert-output.png)
 
@@ -152,7 +152,7 @@ Host cfpipe-ssh-bastion.widgetcorp.tech
 
 When users authenticate through Cloudflare Access, Cloudflare will generate a certificate for the individual using the username from the identity provider (stripped of the email domain). That certificate will then be presented to the SSH server.
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
 The username in the identity provider must match the username on the SSH server.
 

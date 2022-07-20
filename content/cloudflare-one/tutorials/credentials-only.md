@@ -86,11 +86,13 @@ At this point, you have created and configured your Cloudflare Tunnel connection
 
 ## Create DNS records
 
-You can now [route traffic](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) to your Tunnel, and on to your local server, using Cloudflare DNS. Visit the [Cloudflare dashboard](https://dash.cloudflare.com), select a website, and click on the `DNS` tab.
+You can now [route traffic](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) to your Tunnel, and on to your local server, using Cloudflare DNS. Visit the [Cloudflare dashboard](https://dash.cloudflare.com), select a website, and click on the **DNS** tab.
 
-Click `+Add record` and choose `CNAME`. In the `Name` field, add the name of the subdomain of your new site. In the `Content` field, paste the ID of your Tunnel created earlier and append `cfargotunnel.com`.
+Click **Add record** and choose `CNAME`. In the **Name** field, add the name of the subdomain of your new site. In the **Content** field, paste the ID of your Tunnel created earlier and append `cfargotunnel.com`.
 
-`5157d321-5933-4b30-938b-d889ca87e11b.cfargotunnel.com`
+```txt
+5157d321-5933-4b30-938b-d889ca87e11b.cfargotunnel.com
+```
 
 ![Add DNS](/cloudflare-one/static/secure-origin-connections/share-new-site/add-dns.png)
 
