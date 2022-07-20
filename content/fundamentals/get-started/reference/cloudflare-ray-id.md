@@ -21,6 +21,8 @@ Additionally, you can [add filters](/waf/analytics/paid-plans/#adjusting-display
 
 ![Example of adding a new filter in Firewall Analytics for the Allow action](/waf/static/analytics-add-filter-free.png)
 
+Please note that Firewall Analytics may use sampled data to improve performance. If sampled data is applied to your search, you might not see all Firewall Events and filters might not return the expected results. In order to see more events, you'll need select a very small timeframe so it is small enough to display only few events.
+
 ### Logs
 
 Enterprise customers can enable Ray ID as a field in their [Cloudflare Logs](/logs/).
