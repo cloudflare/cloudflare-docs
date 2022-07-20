@@ -51,59 +51,59 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 
 Below is a list of unimplemented bucket-level operations.
 
-{{<table-wrap>}}
+{{<table-wrap style="width:123%">}}
 
 | API Name       | Feature                           |
 | ---------------| --------------------------------- |
-| ❌ [GetBucketLocation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketAccelerateConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAccelerateConfiguration.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketAcl](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketAnalyticsConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAnalyticsConfiguration.html) | ❌ id <br>❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketCors](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketCors.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketLocation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketAccelerateConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAccelerateConfiguration.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketAcl](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketAnalyticsConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAnalyticsConfiguration.html) | ❌ id <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketCors](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketCors.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ❌ [GetBucketIntelligentTieringConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketIntelligentTieringConfiguration.html) | ❌ id |
-| ❌ [GetBucketInventoryConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketInventoryConfiguration.html) | ❌ id <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketLifecycle](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycle.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketLifecycleConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketLogging](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLogging.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketMetricsConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketMetricsConfiguration.html) | ❌ id <br>❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketNotification](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketNotification.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketNotificationConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketNotificationConfiguration.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketOwnershipControls](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketOwnershipControls.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketPolicy](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketPolicy.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketPolicyStatus](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketPolicyStatus.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketReplication](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketReplication.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketRequestPayment](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketRequestPayment.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketTagging](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketTagging.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketVersioning](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketVersioning.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketWebsite](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketWebsite.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetObjectLockConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectLockConfiguration.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [GetPublicAccessBlock](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetPublicAccessBlock.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [ListBucketAnalyticsConfigurations](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBucketAnalyticsConfigurations.html) | ❌ Query Parameters: <br> &emsp; ❌ continuation-token <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [ListBucketIntelligentTieringConfigurations](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBucketIntelligentTieringConfigurations.html) | ❌ Query Parameters: <br> &emsp; ❌ continuation-token <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [ListBucketInventoryConfigurations](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBucketInventoryConfigurations.html) | ❌ Query Parameters: <br> &emsp; ❌ continuation-token <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [ListBucketMetricsConfigurations](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBucketMetricsConfigurations.html) | ❌ Query Parameters: <br> &emsp; ❌ continuation-token <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketAccelerateConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAccelerateConfiguration.html) | ❌ Checksums: <br> &emsp;  ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketAcl](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAcl.html) | Permissions: <br> &emsp; ❌ x-amz-grant-full-control <br> &emsp; x-amz-grant-read <br> &emsp; x-amz-grant-read-acp <br> &emsp; x-amz-grant-write <br> &emsp; x-amz-grant-write-acp <br> ❌ Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketAnalyticsConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAnalyticsConfiguration.html) | ❌ id <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketCors](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketCors.html) | Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketEncryption](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketEncryption.html) | Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketIntelligentTieringConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketIntelligentTieringConfiguration.html) | ❌ id <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketInventoryConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketInventoryConfiguration.html) | ❌ id <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketLifecycle](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycle.html) | Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketLifecycleConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycleConfiguration.html) | Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketLogging](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycle.html) | ❌Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketMetricsConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketMetricsConfiguration.html) | ❌ id <br>❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketNotification](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketNotification.html) | ❌Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketNotificationConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketNotificationConfiguration.html) | ❌ Validation: <br> &emsp; ❌ x-amz-skip-destination-validation <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketOwnershipControls](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketOwnershipControls.html) | ❌Checksums: <br> &emsp; ❌ Content-MD5 <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketPolicy](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketPolicy.html) | ❌ Validation: ❌ &emsp; x-amz-confirm-remove-self-bucket-access <br> ❌Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketReplication](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketReplication.html) | ❌ Object Locking: ❌ &emsp; x-amz-bucket-object-lock-token <br> ❌Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketRequestPayment](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketRequestPayment.html) | ❌Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketTagging](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketTagging.html) | ❌Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketVersioning](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketVersioning.html) | Multi-factor authentication: <br> &emsp;  ❌ x-amz-mfa <br> ❌Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketWebsite](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketWebsite.html) | ❌Checksums: <br> &emsp; ❌ Content-MD5 <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutObjectLockConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObjectLockConfiguration.html) | ❌ Object Locking: ❌ &emsp; x-amz-bucket-object-lock-token ❌Checksums: <br> &emsp; ❌ Content-MD5 <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ❌ [PutPublicAccessBlock](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutPublicAccessBlock.html) | ❌Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketInventoryConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketInventoryConfiguration.html) | ❌ id <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketLifecycle](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycle.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketLifecycleConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketLogging](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLogging.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketMetricsConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketMetricsConfiguration.html) | ❌ id <br>❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketNotification](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketNotification.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketNotificationConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketNotificationConfiguration.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketOwnershipControls](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketOwnershipControls.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketPolicy](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketPolicy.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketPolicyStatus](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketPolicyStatus.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketReplication](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketReplication.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketRequestPayment](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketRequestPayment.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketTagging](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketTagging.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketVersioning](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketVersioning.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetBucketWebsite](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketWebsite.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetObjectLockConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectLockConfiguration.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [GetPublicAccessBlock](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetPublicAccessBlock.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [ListBucketAnalyticsConfigurations](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBucketAnalyticsConfigurations.html) | ❌ Query Parameters: <br> &emsp; ❌ continuation-token <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [ListBucketIntelligentTieringConfigurations](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBucketIntelligentTieringConfigurations.html) | ❌ Query Parameters: <br> &emsp; ❌ continuation-token <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [ListBucketInventoryConfigurations](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBucketInventoryConfigurations.html) | ❌ Query Parameters: <br> &emsp; ❌ continuation-token <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [ListBucketMetricsConfigurations](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBucketMetricsConfigurations.html) | ❌ Query Parameters: <br> &emsp; ❌ continuation-token <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketAccelerateConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAccelerateConfiguration.html) | ❌ Checksums: <br> &emsp;  ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketAcl](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAcl.html) | ❌ Permissions: <br> &emsp; ❌ x-amz-grant-full-control <br> &emsp; ❌ x-amz-grant-read <br> &emsp; ❌ x-amz-grant-read-acp <br> &emsp; ❌ x-amz-grant-write <br> &emsp; ❌ x-amz-grant-write-acp <br> ❌ Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketAnalyticsConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAnalyticsConfiguration.html) | ❌ id <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketCors](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketCors.html) | ❌ Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketEncryption](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketEncryption.html) | ❌ Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketIntelligentTieringConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketIntelligentTieringConfiguration.html) | ❌ id <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketInventoryConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketInventoryConfiguration.html) | ❌ id <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketLifecycle](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycle.html) | ❌ Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketLifecycleConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycleConfiguration.html) | ❌ Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketLogging](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycle.html) | ❌ Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketMetricsConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketMetricsConfiguration.html) | ❌ id <br>❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketNotification](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketNotification.html) | ❌ Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: &emsp; <br> ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketNotificationConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketNotificationConfiguration.html) | ❌ Validation: <br> &emsp; ❌ x-amz-skip-destination-validation <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketOwnershipControls](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketOwnershipControls.html) | ❌ Checksums: <br> &emsp; ❌ Content-MD5 <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketPolicy](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketPolicy.html) | ❌ Validation: <br> &emsp; ❌ x-amz-confirm-remove-self-bucket-access <br> ❌ Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketReplication](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketReplication.html) | ❌ Object Locking: <br> &emsp; ❌ x-amz-bucket-object-lock-token <br> ❌ Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketRequestPayment](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketRequestPayment.html) | ❌ Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketTagging](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketTagging.html) | ❌ Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketVersioning](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketVersioning.html) | ❌ Multi-factor authentication: <br> &emsp; ❌ x-amz-mfa <br> ❌ Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutBucketWebsite](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketWebsite.html) | ❌ Checksums: <br> &emsp; ❌ Content-MD5 <br> ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
+| ❌ [PutObjectLockConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObjectLockConfiguration.html) | ❌ Object Locking: <br> &emsp; ❌ x-amz-bucket-object-lock-token <br> ❌ Checksums: <br> &emsp; ❌ Content-MD5 <br> ❌ Request Payer: <br> &emsp; ❌ x-amz-request-payer <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+| ❌ [PutPublicAccessBlock](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutPublicAccessBlock.html) | ❌ Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 
 {{</table-wrap>}}
 
@@ -143,8 +143,8 @@ Below is a list of unimplemented object-level operations.
 
 | API Name                                                                                | Feature                   |
 | ----------------------------------------------------------------------------------------| ------------------------- |
-| ❌ [ListMultipartUploads](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html) | ❌ Query Parameters: <br> &emsp;  ❌ delimiter <br> &emsp;  ❌ encoding-type <br> &emsp;  ❌ key-marker <br> &emsp;  ❌ max-uploads <br> &emsp;  ❌ prefix <br> &emsp;  ❌ upload-id-marker |
-| ❌ [ListParts](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html)          | ❌ Query Parameters: <br> &emsp;  ❌ max-parts <br> &emsp;  ❌ part-number-marker <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer |
+| ❌ [ListMultipartUploads](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html) | ❌ Query Parameters: <br> &emsp;  ❌ delimiter <br> &emsp;  ❌ encoding-type <br> &emsp;  ❌ key-marker <br> &emsp;  ❌ max-uploads <br> &emsp;  ❌ prefix <br> &emsp; ❌ upload-id-marker |
+| ❌ [ListParts](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html)          | ❌ Query Parameters: <br> &emsp;  ❌ max-parts <br> &emsp;  ❌ part-number-marker <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner <br> ❌ Request Payer: <br> &emsp; ❌ x-amz-request-payer |
 
 {{</table-wrap>}}
 
