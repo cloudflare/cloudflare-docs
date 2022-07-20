@@ -8,7 +8,7 @@ meta:
 
 # Changes to Universal certificates
 
-Cloudflare will stop using Digicert as an issuing certificate authority (CA) for new Universal certificates and instead use one of our [other CAs](/ssl/ssl-tls/certificate-authorities/). This will not affect existing Universal certificates.
+Cloudflare will stop using Digicert as an issuing certificate authority (CA) for new [Universal certificates](/ssl/edge-certificates/universal-ssl/). This will not affect existing Universal certificates.
 
 This process will begin for Enterprise zones on **September 12, 2022**. To identify potentially affected certificates, make an API call to the `/certificate_packs/` endpoint.
 
