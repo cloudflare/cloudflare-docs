@@ -26,7 +26,7 @@ To get started, create a `/functions` directory at the root of your project. Wri
 
 ## Functions routing
 
-Using a `/functions` directory will generate a routing table based on the files present in the directory. You may use JavaScript (`*.js`) or TypeScript (`*.ts`) to write your Functions. A `PagesFunction` type is declared in the [@cloudflare/workers-types](https://github.com/cloudflare/workers-types) library which you can use to type-check your Functions.
+Using a `/functions` directory will generate a routing table based on the files present in the directory. You may use JavaScript (`*.js`) or TypeScript (`*.ts`) to write your Functions.
 
 For example, assume this directory structure:
 
@@ -71,6 +71,40 @@ More specific routes (that is, those with fewer wildcards) take precedence over 
 {{</Aside>}}
 
 When a filename includes a placeholder, the `name` must be alphanumeric and cannot contain spaces. In turn, the URL segment(s) that match the placeholder will be available under the `context.params` object using the filename placeholder as the key.
+
+### Using TypeScript
+
+If you prefer to write TypeScript, we declare a `PagesFunction` type in the [@cloudflare/workers-types](https://github.com/cloudflare/workers-types) library which you can use to type-check your Functions. To use this, create a `functions/tsconfig.json` file with the following contents:
+
+```json
+---
+filename: functions/tsconfig.json
+---
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "lib": ["ES2020"],
+    "types": ["@cloudflare/workers-types"]
+  }
+}
+```
+
+If you already have a `tsconfig.json` at the root of your project, you may wish to explicitly exclude the `functions` directory to avoid conflicts:
+
+```json
+---
+filename: tsconfig.json
+highlight: [3]
+---
+{
+  "include": ["src/**/*"],
+  "exclude": ["functions/**/*"],
+  "compilerOptions": {
+
+  }
+}
+```
 
 ## Writing your first function
 
@@ -366,6 +400,7 @@ export async function onRequest({ env }) {
   return new Response(env.ENV_NAME);
 }
 ```
+
 {{<Aside type= "Note">}}
 
 Adding a binding through the CLI with `--binding` is still supported, and whatever you specify in CLI will take precedence over environment variables in `.dev.vars`
