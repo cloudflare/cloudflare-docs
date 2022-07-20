@@ -31,5 +31,5 @@ Not at this time. Talk to your Cloudflare account team or [Cloudflare Support](h
 ## Is it possible to track cache purge requests in the logs?
 
 Only 2 types of cache purge requests can be found in the logs:
-- the "Purge Everything" requests are logged in the [Audit Log](https://developers.cloudflare.com/logs/reference/log-fields/account/audit_logs/)
+- Purge Everything requests are logged in the [Audit Log](https://developers.cloudflare.com/logs/reference/log-fields/account/audit_logs/).
 - for the "Purge by URL" requests, an entry is logged in the [HTTP Request](https://developers.cloudflare.com/logs/reference/log-fields/zone/http_requests/) where the Cache Status is **PURGE**
