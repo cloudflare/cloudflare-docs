@@ -12,9 +12,9 @@ Having multiple [sender policy framework (SPF) records](https://www.cloudflare.c
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Email**. Email Routing will warn you that you have multiple SPF records.
-3. Click **Fix records**.
+3. Select **Fix records**.
 4. Delete the incorrect SPF record. If you are unsure of which SPF record to delete, delete all SPF records.
-5. (Optional) If you deleted all SPF records, return to the main Email Routing screen, and click **Fix records**.
-6. (Optional) Email Routing will show you the correct, missing SPF record. Click **Add records and enable**.
+5. (Optional) If you deleted all SPF records, return to the main Email Routing screen, and select **Fix records**.
+6. (Optional) Email Routing will show you the correct, missing SPF record. Select **Add records and enable**.
 
 You should now have your SPF records correctly configured.
