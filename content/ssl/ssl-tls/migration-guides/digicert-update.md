@@ -6,7 +6,7 @@ weight: 2
 
 # Digicert update
 
-On October 3rd, 2022, Cloudflare will deprecate DigiCert as a Certificate Authority available for a variety of certificates ([Universal Certificates](/ssl/edge-certificates/universal-ssl/), [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/), and [SSL for SaaS Certificates](/ssl/ssl-for-saas/common-tasks/issuing-certificates/)).
+On October 3rd, 2022, Cloudflare will deprecate DigiCert as a Certificate Authority available for a variety of certificates ([Universal Certificates](/ssl/edge-certificates/universal-ssl/), [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/), and [Cloudflare for SaaS Certificates](/cloudflare-for-saas/ssl/common-tasks/issuing-certificates/)).
 
 This change will not impact existing certificates issued from Digicert that Cloudflare is currently serving, but it will impact new certificate orders and renewals.
 
@@ -187,12 +187,12 @@ If you were previously using Email DCV, you will need to test and integrate with
 
 Our changes will not affect existing SSL for SaaS certificates that Cloudflare is actively serving, but will impact new certificate orders and renewals:
 
-- **New certificate orders**: After October 3, 2022, you will not be able to choose DigiCert as a Certificate Authority for SSL for SaaS certificates. This means that DigiCert will no longer be an option [in the dashboard](/ssl/ssl-for-saas/common-tasks/issuing-certificates/#via-the-dashboard) and any [API calls](/ssl/ssl-for-saas/common-tasks/issuing-certificates/#via-the-api) that are made using `“digicert”` as the CA will fail.
+- **New certificate orders**: After October 3, 2022, you will not be able to choose DigiCert as a Certificate Authority for SSL for SaaS certificates. This means that DigiCert will no longer be an option [in the dashboard](/cloudflare-for-saas/ssl/common-tasks/issuing-certificates/#via-the-dashboard) and any [API calls](/cloudflare-for-saas/ssl/common-tasks/issuing-certificates/#via-the-api) that are made using `“digicert”` as the CA will fail.
 - **Certificate renewals**: After October 10, 2022, Cloudflare will choose an issuing CA on your behalf (Let's Encrypt or Google Trust Services) for certificate renewals.
 
 ### Domain Control Validation (DCV)
 
-CNAME DCV will also be deprecated, requiring customers to use either [HTTP](/ssl/ssl-for-saas/common-tasks/hostname-verification/#http) or [TXT](/ssl/ssl-for-saas/common-tasks/hostname-verification/#txt) DCV.
+CNAME DCV will also be deprecated, requiring customers to use either [HTTP](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#http) or [TXT](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#txt) DCV.
 
 Also, the maximum validity period for certificates will be decreased from 1 year to 90 days. This means that certificates will be renewed - and require DCV - more frequently.
 
@@ -204,11 +204,11 @@ If you want to choose the issuing CA for certificate renewals, send a [`PATCH`](
 
 #### Non-wildcard hostnames
 
-For non-wildcard hostnames, you do not need to make any updates for DCV. Cloudflare will complete DCV by serving the [HTTP token](/ssl/ssl-for-saas/common-tasks/certificate-validation-methods/#http-automatic), so long as the custom hostname is actively proxying through Cloudflare.
+For non-wildcard hostnames, you do not need to make any updates for DCV. Cloudflare will complete DCV by serving the [HTTP token](/cloudflare-for-saas/ssl/common-tasks/certificate-validation-methods/#http-automatic), so long as the custom hostname is actively proxying through Cloudflare.
 
 #### Wildcard hostnames
 
-To validate wildcard hostname, Cloudflare will now require two [TXT DCV tokens](/ssl/ssl-for-saas/common-tasks/hostname-verification/#txt) - one for the apex and one for the wildcard - to be placed at your customer’s authoritative DNS provider in order for the wildcard certificate to issue or renew. This is because - in contrast to DigiCert - Let’s Encrypt and Google Trust Services follow the [ACME Protocol](https://datatracker.ietf.org/doc/html/rfc8555), which requires one DCV token to be placed for every hostname on the certificate.
+To validate wildcard hostname, Cloudflare will now require two [TXT DCV tokens](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#txt) - one for the apex and one for the wildcard - to be placed at your customer’s authoritative DNS provider in order for the wildcard certificate to issue or renew. This is because - in contrast to DigiCert - Let’s Encrypt and Google Trust Services follow the [ACME Protocol](https://datatracker.ietf.org/doc/html/rfc8555), which requires one DCV token to be placed for every hostname on the certificate.
 
 These tokens can be fetched through the [GET custom hostnames endpoint](https://api.cloudflare.com/#custom-hostname-for-a-zone-list-custom-hostnames) when the certificates are in a “pending validation” state during custom hostname creation or during certificate renewals. You can also fetch them through the dashboard.
 
