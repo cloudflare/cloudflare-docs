@@ -94,7 +94,7 @@ Ensure that the machine's firewall permits egress on ports `80`, `443`, and `338
 
 ## Create a Tunnel
 
-Next, [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) with the command below.
+Next, [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#set-up-a-tunnel-locally-cli-setup) with the command below.
 
 ```sh
 $ cloudflared tunnel create <NAME>
@@ -149,9 +149,9 @@ domain in the Cloudflare control panel:
 
 You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
 
-1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com/) and select your account. Select your domain and go to **DNS**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Select your domain and go to **DNS**.
 
-2. Select **+ Add record**. Choose `CNAME` as the record type. For **Name**, choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
+2. Select **Add record**. Choose `CNAME` as the record type. For **Name**, choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
 
 3. For **Target**, input the ID of your Tunnel followed by `.cfargotunnel.com`. For example:
   

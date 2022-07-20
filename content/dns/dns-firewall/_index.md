@@ -2,6 +2,7 @@
 pcx-content-type: overview
 title: DNS Firewall
 weight: 9
+layout: single
 ---
 
 # DNS Firewall

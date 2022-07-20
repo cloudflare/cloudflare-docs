@@ -24,6 +24,12 @@ If there are multiple proxied DNS records for one zone, Cloudflare must prioriti
 
 The fallback origin is where Cloudflare will route traffic sent to your custom hostnames (must be proxied).
 
+{{<Aside type="note">}}
+
+You can also [use a Worker as your origin](/cloudflare-for-saas/ssl/reference/worker-as-origin/) or [create a custom origin server](/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-origin/) to send traffic from one or more custom hostnames somewhere besides your default proxy fallback.
+
+{{</Aside>}}
+
 The CNAME target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#step-5--have-customer-create-a-cname-record).
 
 We suggest using a domain other than your main company domain (example.cloud instead of example.com) to lower risk and add flexibility to your custom hostname management.
@@ -133,8 +139,24 @@ app CNAME john.customers.saasprovider.com
 
 This routes traffic from `app.customer.com` to your origin.
 
-{{<Aside type ="note">}}
+---
 
-When an end customer churns, immediately remove their custom hostname(s) from your account. Otherwise their traffic may continue to route through your zone.
+## Step 6 - Offboard custom hostnames
+
+As a SaaS provider, you must removed a customer's custom hostname from your zone if they decide to churn. Even if the end customer changes the DNS record to point elsewhere, the custom hostname on the SaaS zone will take priority. This will cause its traffic to continue to route to the SaaS zone.
+
+### Remove custom hostname
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and website.
+
+2. Select **SSL/TLS** > **Custom Hostnames**.
+
+3. Select the custom hostname and select **Delete**. 
+
+4. A confirmation window will appear. Acknowledge the warning and select **Delete** again.
+
+{{<Aside type="note">}}
+
+For end customers: if you have recently churned with your service (SaaS) provider but traffic continues to route to them, your service provider likely still has your domain listed as a custom hostname. Contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) for further assistance.
 
 {{</Aside>}}
