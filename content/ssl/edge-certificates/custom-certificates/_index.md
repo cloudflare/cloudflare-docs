@@ -2,6 +2,7 @@
 pcx-content-type: concept
 title: Custom certificates
 weight: 3
+layout: single
 ---
 
 # Custom certificates

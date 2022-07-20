@@ -1,6 +1,7 @@
 ---
 pcx-content-type: faq
 title: Web Analytics FAQ
+layout: single
 ---
 
 # Web Analytics FAQ
@@ -42,6 +43,10 @@ If you used a [manual setup] instead, only those pages that render the JS snippe
 Since only one JS snippet can be rendered and used per page, you cannot have multiple snippets on the same page.
 
 {{</Aside>}}
+
+### My website is proxied through Cloudflare, but Web Analytic's automatic setup is not working.
+
+If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/about/cache-control/) for more information. 
 
 ---
 

@@ -98,7 +98,7 @@ A video guide is also available:
 
 ### Cloudflare logging
 
-Enterprise customers have access to detailed logs of HTTP requests, on their Cloudflare dashboard. Enterprise customers also have access to Cloudflare's Logpush service, which can be configured from the Cloudflare Dashboard or API (for more information about Cloudflare HTTP logging, refer to [Cloudflare Logs](/logs/)).
+Enterprise customers have access to detailed logs of HTTP requests, on their Cloudflare dashboard. Enterprise customers also have access to Cloudflare's Logpush service, which can be configured from the Cloudflare dashboard or API (for more information about Cloudflare HTTP logging, refer to [Cloudflare Logs](/logs/)).
 
 Once a member of your team authenticates to reach a resource behind Access, Cloudflare generates a token for that user that contains their SSO identity. The token is structured as a [JSON Web Token (JWT)](/cloudflare-one/glossary/#json-web-token). Cloudflare relies on an RSA Signature with SHA-256, or RS256, an asymmetric algorithm, to perform that signature. Cloudflare also makes the public key available, so that you can validate their authenticity, as well.
 
@@ -137,7 +137,7 @@ Cloudflare Logpush can be used to gather and send specific request headers from 
 
 ### Using the `cf-access-user` field
 
-In addition to the HTTP request fields available in Cloudflare Enterprise logging, requests made to applications behind Access include the `cf-access-user` field, which contains the user identity string. This offers another tool for auditing user behavior. To add the `cf-access-user` field to your HTTP request logs, you must add it as a custom field. Refer to [Configure custom fields](/logs/reference/logpush-api-configuration/custom-fields/) for instructions.
+In addition to the HTTP request fields available in Cloudflare Enterprise logging, requests made to applications behind Access include the `cf-access-user` field, which contains the user identity string. This offers another tool for auditing user behavior. To add the `cf-access-user` field to your HTTP request logs, you must add it as a custom field. Refer to [Custom fields](/logs/reference/custom-fields/) for instructions.
 
 Keep in mind that Access does not log all interactions. For example, per-request audit logs can indicate that a specific user visited `domain.com/admin` and then `domain.com/admin/panel`, but the logs can only identify user interactions that result in a new HTTP request.
 
@@ -147,6 +147,6 @@ Access integrates with the Cloudflare Logpush API, so you can export per-request
 
 Cloudflare Logpush pushes Enterprise customers' HTTP request logs, including Access user identity, to a cloud storage provider every five minutes.
 
-For instructions on setting up Logpush, refer to [Manage the Logpush API](/logs/get-started/enable-destinations/).
+For instructions on setting up Logpush, refer to [Enable destinations](/logs/get-started/enable-destinations/).
 
-For more on exporting per-request Access logs, refer to [Understanding the Logpush API](/logs/reference/logpush-api-configuration/).
+For more on exporting per-request Access logs, refer to [API configuration](/logs/get-started/api-configuration/).

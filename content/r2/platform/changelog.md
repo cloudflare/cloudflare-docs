@@ -5,6 +5,17 @@ title: Changelog
 
 # Changelog
 
+## 2022-07-14
+
+- Improvements to 500s: we now convert errors, so things that were previously concurrency problems for some operations should now be `TooMuchConcurrency` instead of `InternalError`. We've also reduced the rate of 500s through internal improvements.
+- `ListMultipartUpload` correctly encodes the returned `Key` if the `encoding-type` is specified.
+
+## 2022-07-13
+
+- S3 XML documents sent to R2 that have an XML declaration are not rejected with `400 Bad Request` / `MalformedXML`.
+- Minor S3 XML compatability fix impacting Arq Backup on Windows only (not the Mac version). Response now contains XML declaration tag prefix and the xmlns attribute is present on all top-level tags in the response.
+- Beta `ListMultipartUploads` support.
+
 ## 2022-07-06
 
 - Support the `r2_list_honor_include` compat flag coming up in an upcoming runtime release (default behavior as of 2022-07-14 compat date). Without that compat flag/date, list will continue to function implicitly as `include: ['httpMetadata', 'customMetadata']` regardless of what you specify.
@@ -85,7 +96,7 @@ title: Changelog
 - The S3 API `CopyObject` source parameter now requires a leading slash.
 - The S3 API `CopyObject` operation now returns a `NoSuchBucket` error when copying to a non-existent bucket instead of an internal error.
 - Enforce the requirement for `auto` in SigV4 signing and the `CreateBucket` `LocationConstraint` parameter.
-- The S3 API `CreateBucket` operation now returns the proper `location` response header. 
+- The S3 API `CreateBucket` operation now returns the proper `location` response header.
 
 ## 2022-04-14
 
@@ -95,7 +106,7 @@ title: Changelog
 - Fixed a bug where deleting an object and then another object which is a prefix of the first could result in errors.
 - The S3 API `DeleteObjects` operation no longer returns an error even though an object has been deleted in some cases.
 - Fixed a bug where `startAfter` and `continuationToken` were not working in list operations.
-- The S3 API `ListObjects` operation now correctly renders `Prefix`, `Delimiter`, `StartAfter` and `MaxKeys` in the response. 
+- The S3 API `ListObjects` operation now correctly renders `Prefix`, `Delimiter`, `StartAfter` and `MaxKeys` in the response.
 - The S3 API `ListObjectsV2` now correctly honors the `encoding-type` parameter.
 - The S3 API `PutObject` operation now works with `POST` requests for `s3cmd` compatibility.
 

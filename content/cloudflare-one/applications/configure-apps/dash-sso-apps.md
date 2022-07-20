@@ -44,8 +44,7 @@ To test and enable your SSO application:
 1.  Log in to the [Zero Trust dashboard](https://dash.teams.cloudflare.com/).
 1.  Navigate to **Settings** > **Authentication**.
 1.  In the **Cloudflare dashboard SSO** section, find your email domain.
-1.  Set the toggle value to **Enabled**.
-    1.  This action can only be performed by Account Super Administrators.
+1.  Set the toggle value to **Enabled**. This action can only be performed by Account Super Administrators.
 1.  **Do not** log out or close your browser window. Instead, open a different browser or an incognito window.
 1.  Navigate to the [Cloudflare dashboard](https://dash.cloudflare.com) and log in with your email address from your SSO domain.
 1.  If you can log in successfully, you have successfully set up your SSO application.

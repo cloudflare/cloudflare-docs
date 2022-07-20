@@ -2,6 +2,7 @@
 pcx-content-type: reference
 title: Sorting
 weight: 13
+layout: single
 ---
 
 # Sorting

@@ -2,6 +2,7 @@
 title: Enable Microsoft Azure
 pcx-content-type: how-to
 weight: 63
+layout: single
 meta:
   title: Enable Logpush to Microsoft Azure
 ---
