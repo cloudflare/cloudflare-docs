@@ -43,7 +43,7 @@ The session duration for an application will determine the minimum frequency a u
 
 1.  From the drop-down menu under **Application domain**, select a hostname that will represent the application. The hostname must be an active zone in your Cloudflare account.
 
-    {{<Aside>}}
+    {{<Aside type="note">}}
 When specifying an application domain, you can use wildcards to protect multiple parts of an application that share a root path. For more information on how to use wildcards, refer to the instructions in the [Application paths](/cloudflare-one/policies/access/app-paths/) page.
     {{</Aside>}}
 
