@@ -8,13 +8,9 @@ meta:
 
 # Changes to Universal certificates
 
-Cloudflare will stop using Digicert as an issuing certificate authority (CA) for new [Universal certificates](/ssl/edge-certificates/universal-ssl/). This will not affect existing Universal certificates.
+Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new [Universal certificates](/ssl/edge-certificates/universal-ssl/). This will not affect existing Universal certificates.
 
-This process will begin for Enterprise zones on **September 12, 2022**. To identify potentially affected certificates, make an API call to the `/certificate_packs/` endpoint.
-
-```sh
-GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/ssl/certificate_packs?status=all&type=universal&certificate_authority=digicert
-```
+This process will begin for Enterprise zones on **September 12, 2022**.
 
 The maximum validity period for Universal certificates will also be decreased from 1 year to 90 days.
 
@@ -30,4 +26,4 @@ If your domain is on a [Partial setup](/dns/zone-setups/partial-setup/), Cloudfl
 
 If you are currently pinning your Universal certificate, stop pinning the certificate. This will ensure your certificates are not impacted during the Universal certificate renewal.
 
-If you want to choose the issuing CA for your certificate, [order an Advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
+If you want to choose the issuing CA for your certificate, [order an Advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/). Once that certificate has deployed, [disable Universal SSL](/ssl/edge-certificates/universal-ssl/disable-universal-ssl/) to prevent Cloudflare from issuing the Universal certificate for you.
