@@ -234,7 +234,9 @@ export function highlight(code: string, lang: string): string {
     header?: string;
   } = {};
 
-  if (code.substring(0, 3) === '---') {
+  // Check for a YAML frontmatter,
+  // and ensure it's not something like -----BEGIN CERTIFICATE-----
+  if (code.substring(0, 3) === '---' && code[3] != '-') {
     let index = code.indexOf('---', 3);
     if (index > 3) {
       index += 3;
