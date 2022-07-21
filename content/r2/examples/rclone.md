@@ -45,7 +45,7 @@ acl = private
 
 You may then use the new `rclone` provider for any of your normal workflows.
 
-## Listing buckets & objects
+## List buckets & objects
 
 The [rclone tree](https://rclone.org/commands/rclone_tree/) command can be used to list the contents of the remote, in this case Cloudflare R2.
 
