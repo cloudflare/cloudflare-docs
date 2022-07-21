@@ -74,7 +74,7 @@ Each Custom Hostname requires successful Certificate Validation and Hostname Ver
 
 {{<Aside type="note">}}
 
-Verification checks occur frequently immediately after a hostname is created, but the gaps between check intervals increase over the following 7 days. For more detail, refer to [Hostname verification backoff schedule](/cloudflare-for-saas/ssl/reference/hostname-verification-backoff-schedule/).
+Verification checks occur frequently immediately after a hostname is created, but the gaps between check intervals increase over the following seven days. For more detail, refer to [Hostname verification backoff schedule](/cloudflare-for-saas/ssl/reference/hostname-verification-backoff-schedule/).
 
 {{</Aside>}}
 
