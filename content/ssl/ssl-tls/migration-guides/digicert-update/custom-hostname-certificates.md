@@ -65,9 +65,9 @@ You should update the following values using the [dashboard](/cloudflare-for-saa
  If you update the certificate authority for a wildcard custom hostname to use Let's Encrypt or Google Trust Services, you will now need to add [two DCV tokens](#wildcard-custom-hostnames) for it to validate.
     {{</Aside>}}
 
-- **DCV Method**: You can only update this value when your certificate is up for renewal. If your certificate was previously using **Email** or **CNAME** validation and you do not update this value, Cloudflare will automatically your DCV method to **TXT**.
-    - *Dashboard*: Update the value for **Certificate validation method** to either be [**TXT Validation**](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#txt) or [**HTTP Validation**](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#http) (only available for [non-wildcard custom hostnames](#non-wildcard-custom-hostnames)).
-    - *API*: Update the value sent in the `"method"` field under the SSL object to either be [`"txt"`](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#txt) or [`"http"`](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#http) (only available for [non-wildcard custom hostnames](#non-wildcard-custom-hostnames)).
+- **DCV Method**: You can only update this value when your certificate is up for renewal. If your certificate was previously using **Email** or **CNAME** validation and you do not update this value, Cloudflare will automatically set your DCV method to **TXT** or **HTTP** when the custom hostname comes up for renewal. We will use **HTTP** validation for non-wildcard custom hostname renewals and TXT-based DCV for wildcard custom hostname renewals.
+    - *Dashboard*: Update the value for **Certificate validation method** to either be [**HTTP Validation**](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#http) (only available for [non-wildcard custom hostnames](#non-wildcard-custom-hostnames)) or [**TXT Validation**](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#txt).
+    - *API*: Update the value sent in the `"method"` field under the SSL object to either be [`"http"`](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#http) (only available for [non-wildcard custom hostnames](#non-wildcard-custom-hostnames)) or [`"txt"`](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#txt).
 
 
 {{<Aside type="note">}}
@@ -94,7 +94,7 @@ If your hostname is using another validation method, you will need to [update](h
 
 These tokens can be fetched through the [GET custom hostnames endpoint](https://api.cloudflare.com/#custom-hostname-for-a-zone-list-custom-hostnames) when the certificates are in a “pending validation” state during custom hostname creation or during certificate renewals. You can also fetch them through the dashboard.
 
-For example, here are two tokens highlighted section in the API response.
+For example, here are two tokens highlighted section in the API response. These will need to be placed under the `"_acme-challenge"` DNS label. These tokens are different than the hostname validation tokens.
 
 ```json
 ---
@@ -133,6 +133,8 @@ highlight: [11,12,13,14,15,16,17,18]
 ]
 }
 ```
+
+#### Actions required
 
 As the SaaS provider, you will be responsible for sharing these DCV tokens with your customers. Let’s Encrypt DCV tokens are valid for 7 days and Google Trust Services tokens are valid for 14 days. We recommend that you make this clear to your customers, so that they add the tokens in a timely manner. If your customers take longer than the token validity period to add the record then you will need to fetch updated tokens and share those in order for the certificate to validate and issue.
 
