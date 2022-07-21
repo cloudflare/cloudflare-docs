@@ -2,6 +2,7 @@
 pcx-content-type: reference
 title: Datasets (tables)
 weight: 3
+layout: single
 ---
 
 # Datasets (tables)

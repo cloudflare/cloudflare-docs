@@ -4434,3 +4434,32 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 pre {
   overflow: auto;
 }
+
+.skip-link {
+  background: #f3f3f4;
+  z-index: 1;
+  color: inherit;
+  font-weight: 700;
+  left: 50%;
+  padding: 20px;
+  position: absolute;
+  transform: translateY(-100%);
+  transition: transform 0.3s;
+  opacity: 1;
+}
+
+[theme=dark] .skip-link {
+  background: #242628;
+  color: inherit;
+}
+
+.skip-link:focus {
+  transform: translateY(0%);
+}
+
+@media (max-width: 768px) {
+  .skip-link:focus {
+    transform: translateY(100%);
+  }
+}
+

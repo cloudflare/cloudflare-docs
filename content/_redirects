@@ -129,6 +129,7 @@
 /bots/bot-fight-mode/ /bots/ 301
 /bots/bot-management-enterprise/ /bots/get-started/bm-subscription/ 301
 /bots/bm-subscription/ /bots/get-started/bm-subscription/ 301
+/bots/troubleshooting/ https://support.cloudflare.com/hc/articles/360035387431 301
 
 # byoip
 /byoip/dynamic-advertisement/ /byoip/about/dynamic-advertisement/ 301

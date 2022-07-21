@@ -145,5 +145,5 @@ If your [Cloudflare Tunnel logs](/cloudflare-one/faq/cloudflare-tunnels-faq/#run
 
 ## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
 
-This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domainteam-name) while the [Cloudflare Dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
-Cloudflare Dashboard SSO does not currently support team domain changes. Contact your account team for more details.
+This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domainteam-name) while the [Cloudflare dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
+Cloudflare dashboard SSO does not currently support team domain changes. Contact your account team for more details.
