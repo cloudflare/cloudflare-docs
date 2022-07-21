@@ -198,7 +198,7 @@ $ hugo -b $CF_PAGES_URL
 {{</Aside>}}
 
 
-Set the environment variable `HUGO_VERSION` in your Worker > **Settings** to use a [specific version of Hugo](https://github.com/gohugoio/hugo/releases).
+Set the environment variable `HUGO_VERSION` in your Worker > **Settings** > **Variables** to use a [specific version of Hugo](https://github.com/gohugoio/hugo/releases).
 
 For example, `HUGO_VERSION`: `0.101.0`
   
