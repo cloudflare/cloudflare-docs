@@ -7,7 +7,7 @@ title: Changelog
 
 ## 2022-07-21
 
-- Added dummy implementations of the following operations that mimic the response that a basic AWS S3 bucket will return when first created:
+- Added dummy implementation of the following operation that mimics the response that a basic AWS S3 bucket will return when first created:
   - `GetBucketAcl`
 
 ## 2022-07-20
