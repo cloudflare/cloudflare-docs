@@ -8,7 +8,9 @@ title: Deploy a real-time chat application
 
 # Deploy a real-time chat application
 
-In this tutorial, you will build a serverless, real-time chat application that runs using [Durable Objects](/workers/learning/using-durable-objects.md/using-durable-objects). 
+In this tutorial, you will deploy a serverless, real-time chat application that runs using [Durable Objects](/workers/learning/using-durable-objects.md/using-durable-objects). 
+
+This chat application uses a Durable Object to control each chat room. Users connect to the Object using WebSockets. Messages from one user are broadcast to all the other users. The chat history is also stored in durable storage. Real-time messages are relayed directly from one user to others without going through the storage layer.
 
 To continue with this tutorial, you must:
 1. Install [Wrangler](/workers/wrangler/get-started.md).
@@ -69,3 +71,5 @@ Route = [
 custom domains = true,
 }]
 ```
+
+By completing this tutorial, you have deployed a real-time chap application with Durable Objects and Cloudflare Workers.
