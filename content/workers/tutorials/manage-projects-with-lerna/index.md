@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx-content-type: tutorial
 title: Managing multiple Workers projects with Lerna
+layout: single
 ---
 
 # Managing multiple Workers projects with Lerna

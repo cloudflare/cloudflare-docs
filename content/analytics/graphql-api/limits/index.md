@@ -2,6 +2,7 @@
 pcx-content-type: reference
 title: Limits
 weight: 31
+layout: single
 ---
 
 # Limits

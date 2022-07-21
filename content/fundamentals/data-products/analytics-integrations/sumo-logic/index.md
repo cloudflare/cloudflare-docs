@@ -2,6 +2,7 @@
 pcx-content-type: how-to
 title: Sumo Logic
 weight: 106
+layout: single
 ---
 
 # Sumo Logic

@@ -22,13 +22,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-07-08</td>
-      <td>2022-07-18</td>
-      <td>...1712a123</td>
-      <td>HTTP requests with unusual HTTP headers or URI path (signature #16).</td>
       <td>N/A</td>
-      <td>log</td>
-      <td>New rule blocking requests with unusual attributes.</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
     </tr>
   </tbody>
 </table>

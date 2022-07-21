@@ -2,6 +2,7 @@
 pcx-content-type: concept
 title: Security model
 weight: 0
+layout: single
 ---
 
 # Security model

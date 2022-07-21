@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx-content-type: tutorial
 title: Handle form submissions with Airtable
+layout: single
 ---
 
 # Handle form submissions with Airtable

@@ -40,3 +40,9 @@ Repeat these steps for all of the websites you want to track with Web Analytics.
 For more information on how many sites you can track, refer to [Limits](/analytics/web-analytics/understanding-web-analytics/limits/).
 
 For more information on how to configure which sites or pages you track with Web Analytics, refer to [Rules](/analytics/web-analytics/configuring-web-analytics/rules/).
+
+{{<Aside type="warning" header="Important">}}
+
+If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/about/cache-control/) for more information. 
+
+{{</Aside>}}
