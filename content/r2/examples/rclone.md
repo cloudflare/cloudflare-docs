@@ -80,7 +80,7 @@ $ rclone tree r2demo:user-uploads
 $ rclone copy r2demo:user-uploads/dog.txt dog.txt
 ```
 
-## Generating presigned URLs
+## Generate presigned URLs
 
 You can also generate presigned links which allow you to share public access to a file temporarily using the [rclone link](https://rclone.org/commands/rclone_link/) command.
 
