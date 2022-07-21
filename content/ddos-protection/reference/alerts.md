@@ -65,7 +65,7 @@ Notification type     | WAF/CDN | Spectrum | Spectrum BYOIP | Magic Transit
 HTTP DDoS attack      | Yes     | –        | –              | –
 Layer 3/4 DDoS attack | –       | Yes\*    | Yes            | Yes
 
-\* Only available on an Enterprise plan.
+\* _Only available on an Enterprise plan._
 
 ## Example notification
 
