@@ -44,8 +44,6 @@ Once installed, run the following command in your Terminal to authenticate this 
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account. This will authenticate your instance of `cloudflared` to your Cloudflare account; you will be able to create a Tunnel for any site, not just the site selected.
 
-![Choose Site](/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
-
 Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
 You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
@@ -54,9 +52,9 @@ You can now use `cloudflared` to control Cloudflare Tunnel connections in your C
 
 ## Create and run a Tunnel
 
-You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) that will connect `cloudflared` to Cloudflare's edge. In this example, you can use a single command to perform all of the steps required to connect an application to Cloudflare's edge. The command will perform the following functions:
+You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#set-up-a-tunnel-locally-cli-setup) that will connect `cloudflared` to Cloudflare's edge. In this example, you can use a single command to perform all of the steps required to connect an application to Cloudflare's edge. The command will perform the following functions:
 
-1.  [Create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) with an associated name. That Tunnel can serve traffic for multiple services and multiple hostnames; this example uses a single service and single hostname.
+1.  [Create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#set-up-a-tunnel-locally-cli-setup) with an associated name. That Tunnel can serve traffic for multiple services and multiple hostnames; this example uses a single service and single hostname.
 1.  [Create DNS records](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) for the Tunnel. These DNS records will send traffic to the Tunnel. The records created will not be deleted if the Tunnel is interrupted or if `cloudflared` or your origin service restarts.
 1.  [Configure the Tunnel](/cloudflare-one/connections/connect-apps/configuration/) by sending traffic to the URL specified. In this example, the only configuration argument required is the URL where traffic should be directed.
 1.  [Run the Tunnel](/cloudflare-one/connections/connect-apps/run-tunnel/) and begin serving traffic.

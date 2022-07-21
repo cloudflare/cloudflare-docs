@@ -53,7 +53,7 @@ For more information on this action, refer to the documentation on [Browser Isol
 
 ### Do Not Inspect
 
-{{<Aside type="Warning" header="Warning">}}
+{{<Aside type="warning" header="Warning">}}
 
 When a *Do Not Inspect* rule is created for a given hostname, application, or app type, no traffic will be inspected.
 
@@ -147,6 +147,10 @@ These selectors depend on the `Content-Type` header being present in the request
 | UI name | API example |
 | -- | -- |
 | Upload Mime Type | `http.upload.mime == "image/png\"` |
+
+### DLP Profile
+
+Scans HTTP traffic for the presence of social security numbers and other PII. You must configure the DLP Profile before you can use this selector in your policy. For more information, refer to our [DLP Profile](/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/) documentation.
 
 ### Host
 

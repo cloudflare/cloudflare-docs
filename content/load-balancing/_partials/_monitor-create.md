@@ -24,7 +24,7 @@ You can create a monitor within the [load balancer workflow](/load-balancing/how
 
     *   **Interval**:
         *   By increasing the default, you can improve failover time, but you may also increase load on your servers.
-        *   Minimum time in seconds is 60 (Pro), 10 (Business), and 5 (Enterprise).
+        *   Minimum time in seconds is 60 (Pro), 15 (Business), and 10 (Enterprise).
     *   **Timeout** and **Retries**:
         *   The health check will return unhealthy if it exceeds the duration specified in **Timeout** (and exceeds this duration more times than the specified number of **Retries**).
     *   **Expected Code(s)**: The expected HTTP response codes listed individually (200, 302) or as a range (2xx, 3xx).
@@ -33,7 +33,7 @@ You can create a monitor within the [load balancer workflow](/load-balancing/how
         *   Make sure that the value is relatively static and within the first 100,000 KB of the HTML page.
     *   **Simulate Zone**:
         *   Pushes a request from Cloudflare Health Monitors through the Cloudflare stack as if it were a real visitor request to help analyze behavior or validate a configuration.
-        *   Ensures health checks are compatible with features like [authenticated origin pulls](/ssl/origin-configuration/authenticated-origin-pull/) and [Argo Smart Routing](https://support.cloudflare.com/hc/articles/115000224552).
+        *   Ensures health checks are compatible with features like [authenticated origin pulls](/ssl/origin-configuration/authenticated-origin-pull/) and [Argo Smart Routing](/argo-smart-routing/).
     *   **Follow Redirects**:
         *   Instead of reporting a `301` or `302` code as unhealthy, the health check follows redirects to the final endpoint.
     *   **Configure Request Header(s)**:

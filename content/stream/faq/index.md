@@ -121,6 +121,14 @@ Below are bitrate recommendations for encoding new videos for Stream:
 
 Videos are removed if the subscription is not renewed within 30 days.
 
+### What domains do I need to add to my allowlist if I use Content Security Policy (CSP) directives on my website?
+
+If your website uses Content Security Policy (CSP) directives and you use the provided Stream Player, `videodelivery.net` and `*.cloudflarestream.com` must be included in the `frame-src` or `default-src` directive to allow the player's `<iframe>` element to load.
+
+```http
+Content-Security-Policy: frame-src; 'self' *.videodelivery.net *.cloudflarestream.com
+```
+
 ## Stream Live
 
 ### Do I need a separate Stream Live subscription to use Stream Live?

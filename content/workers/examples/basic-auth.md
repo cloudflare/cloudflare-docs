@@ -89,11 +89,11 @@ async function handleRequest(request) {
  */
 function verifyCredentials(user, pass) {
   if (BASIC_USER !== user) {
-    throw new UnauthorizedException('Invalid username.');
+    throw new UnauthorizedException('Invalid credentials.');
   }
 
   if (BASIC_PASS !== pass) {
-    throw new UnauthorizedException('Invalid password.');
+    throw new UnauthorizedException('Invalid credentials.');
   }
 }
 

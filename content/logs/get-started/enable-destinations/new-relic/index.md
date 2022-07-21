@@ -2,6 +2,7 @@
 title: Enable New Relic
 pcx-content-type: how-to
 weight: 64
+layout: single
 meta:
   title: Enable Logpush to New Relic
 ---
@@ -50,7 +51,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
 - **name** (optional) - Use your domain name as the job name.
 
-- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/reference/logpush-api-configuration/#options).
+- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [API configuration options](/logs/get-started/api-configuration/#options).
 
    {{<Aside type="note" header="Note">}}
    To query Cloudflare logs, New Relic requires fields to be sent as a Unix Timestamp.

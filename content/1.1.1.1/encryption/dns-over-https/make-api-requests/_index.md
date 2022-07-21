@@ -2,13 +2,12 @@
 weight:  1
 pcx-content-type: reference
 title: Make API requests to 1.1.1.1
+layout: single
 meta:
     title: Make API requests to 1.1.1.1 over DoH
 ---
 
 # Make API requests to 1.1.1.1 over DoH
-
-{{<content-column>}}
 
 Cloudflare offers a DNS over HTTPS resolver at:
 
@@ -62,5 +61,3 @@ Cloudflare's DNS over HTTPS resolver supports TLS 1.2 and TLS 1.3.
 | `504` | Resolver timeout while waiting for the query response. |
 
 {{</table-wrap>}}
-
-{{</content-column>}}

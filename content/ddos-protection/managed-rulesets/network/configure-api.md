@@ -1,5 +1,5 @@
 ---
-title: Configure the Managed Ruleset via API
+title: Configure via API
 pcx-content-type: concept
 weight: 3
 meta:

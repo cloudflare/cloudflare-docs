@@ -6,11 +6,11 @@ weight: 7
 
 # Start a live stream
 
-You can start a live stream using the Stream Dashboard or the API. After you subscribe to Stream, you can create Live Inputs and begin sending your live video to Cloudflare Stream using RTMPS or SRT. SRT supports newer video codecs and makes using accessibility features, such as captions and multiple audio tracks, easier.
+You can start a live stream using the Stream dashboard or the API. After you subscribe to Stream, you can create Live Inputs and begin sending your live video to Cloudflare Stream using RTMPS or SRT. SRT supports newer video codecs and makes using accessibility features, such as captions and multiple audio tracks, easier.
 
-## Using the Dashboard
+## Using the dashboard
 
-1. To start a live stream using the Stream Dashboard, click the **Live Inputs** tab.
+1. To start a live stream using the Stream dashboard, click the **Live Inputs** tab.
 2. Click **Create Live Input**.
 3. Enter a name for your Live Input and click **Create Live Input**.
 4. Under **Connection Information** > **Protocol**, choose **RTMPS** or **SRT**.
