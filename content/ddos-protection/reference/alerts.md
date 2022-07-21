@@ -20,6 +20,8 @@ Each notification email includes the following information:
 
 Notifications for HTTP DDoS alerts delivered through webhook or PagerDuty will also include the target hostname.
 
+You will not receive duplicate DDoS alerts within the same one-hour time frame.
+
 Cloudflare automatically sends weekly summaries of detected and mitigated DDoS attacks to Magic Transit and Spectrum BYOIP customers. For more information, refer to [DDoS reports](/ddos-protection/reference/reports/).
 
 ## Set up a notification for DDoS alerts
