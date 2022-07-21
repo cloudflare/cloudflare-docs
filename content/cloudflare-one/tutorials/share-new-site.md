@@ -28,7 +28,7 @@ You can use Cloudflare Tunnel to quickly share projects you are working on with 
 
 1.  [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/)
 1.  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
-1.  [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI)
+1.  [Enable Argo Smart Routing for your account](/argo-smart-routing/get-started/)
 
 ---
 
