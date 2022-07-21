@@ -62,7 +62,7 @@ You should update the following values using the [dashboard](/cloudflare-for-saa
     - *API*: Update the value sent in the `"certificate_authority"` field under the SSL object to either be `"lets_encrypt"` or `"google"`.
 
     {{<Aside type="note">}}
- If you update the certificate authority for a wildcard custom hostname, you will now need to add [two DCV tokens](#wildcard-custom-hostnames) for it to validate.
+ If you update the certificate authority for a wildcard custom hostname to use Let's Encrypt or Google Trust Services, you will now need to add [two DCV tokens](#wildcard-custom-hostnames) for it to validate.
     {{</Aside>}}
 
 - **DCV Method**: You can only update this value when your certificate is up for renewal. If your certificate was previously using **Email** or **CNAME** validation and you do not update this value, Cloudflare will automatically your DCV method to **TXT**.
