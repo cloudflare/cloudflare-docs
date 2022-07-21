@@ -33,23 +33,23 @@ For more information on these features, refer to [Hostname management](/cloudfla
 
 ## How it works
 
-Through a suite of easy-to-use products, Cloudflare for SaaS routes traffic from custom hostnames to the origin through a fallback domain. As the SaaS provider, you can extend Cloudflare's products to customer-owned custom domains by adding them to your zone [as custom hostnames](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/). Cloudflare for SaaS is highly customizable. Three possible configurations are shown below.
+As the SaaS provider, you can extend Cloudflare's products to customer-owned custom domains by adding them to your zone [as custom hostnames](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/). Through a suite of easy-to-use products, Cloudflare for SaaS routes traffic from custom hostnames to an origin, set up on your domain. Cloudflare for SaaS is highly customizable. Three possible configurations are shown below.
 
-### Standard SSL:
+### Standard Cloudflare for SaaS configuration:
 
-Standard SSL is available on all plans.
+Custom hostnames are routed to a default origin server called fallback origin. This configuration is available on all plans.
 
 ![Standard case](/cloudflare-for-saas/static/use-cases/Standard.png)
 
-### SSL with apex proxying:
+### Cloudflare for SaaS with Apex Proxying:
 
-This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex.
+This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. This is avaiable as an add-on for Enterprise plans. For more details, refer to [Apex Proxying](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#apex-verification).
 
 ![Advanced case](/cloudflare-for-saas/static/use-cases/Advanced.png)
 
-### SSL with BYOIP:
+### Cloudflare for SaaS with BYOIP:
 
-This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. Also, you can point to your own IPs if you want to bring an IP range to Cloudflare (instead of Cloudflare provided IPs).
+This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. Also, you can point to your own IPs if you want to bring an IP range to Cloudflare (instead of Cloudflare provided IPs). This is avaiable as an add-on for Enterprise plans.
 
 ![Pro Case](/cloudflare-for-saas/static/use-cases/Pro.png)
 
