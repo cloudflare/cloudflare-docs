@@ -18,7 +18,7 @@ When you use Cloudflare for SaaS, it helps you to:
 *   Keep your customers' traffic encrypted.
 *   Keep your customers online.
 *   Facilitate fast load times of your customers' domains.
-*   Access analytics for all domains.
+*   Gain insight through traffic analytics.
 
 ## Limitations
 
