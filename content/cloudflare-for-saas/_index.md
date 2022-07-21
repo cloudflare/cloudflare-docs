@@ -41,15 +41,15 @@ Standard SSL is available on all plans.
 
 ![Standard case](/cloudflare-for-saas/static/use-cases/Standard.png)
 
-### SSL with Apex Proxying:
+### SSL with apex proxying:
 
-This allows you to support apex domains even if your customers are using a DNS provider that doesn't allow a CNAME at the apex.
+This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex.
 
 ![Advanced case](/cloudflare-for-saas/static/use-cases/Advanced.png)
 
 ### SSL with BYOIP:
 
-This allows you to support apex domains even if your customers are using a DNS provider that doesn't allow a CNAME at the apex. Also, you can point to your own IPs if you want to bring an IP range to Cloudflare (instead of Cloudflare provided IPs).
+This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. Also, you can point to your own IPs if you want to bring an IP range to Cloudflare (instead of Cloudflare provided IPs).
 
 ![Pro Case](/cloudflare-for-saas/static/use-cases/Pro.png)
 
