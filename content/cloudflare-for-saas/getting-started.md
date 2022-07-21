@@ -72,8 +72,15 @@ Each Custom Hostname requires successful Certificate Validation and Hostname Ver
 - [Certificate Validation](/cloudflare-for-saas/ssl/common-tasks/certificate-validation-methods/): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
 - [Hostname Verification](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
 
-Depending on which method you select for each of these options, additional steps might be required for you and your customers.
 {{<Aside type="note">}}
+
+Verification checks occur frequently immediately after a hostname is created, but the gaps between check intervals increase over the following seven days. For more detail, refer to [Hostname verification backoff schedule](/cloudflare-for-saas/ssl/reference/hostname-verification-backoff-schedule/).
+
+{{</Aside>}}
+
+Depending on which method you select for each of these options, additional steps might be required for you and your customers.
+
+{{<Aside type="warning">}}
 You can no longer use HTTP based validation for Wildcard certificates according to the Certificate Authority Browser Forum.
 {{</Aside>}}
 
@@ -141,9 +148,9 @@ This routes traffic from `app.customer.com` to your origin.
 
 ---
 
-## Step 6 - Offboard custom hostnames
+## Step 6 — Offboard custom hostnames
 
-As a SaaS provider, you must removed a customer's custom hostname from your zone if they decide to churn. Even if the end customer changes the DNS record to point elsewhere, the custom hostname on the SaaS zone will take priority. This will cause its traffic to continue to route to the SaaS zone.
+As a SaaS provider, you must remove a customer's custom hostname from your zone if they decide to churn. Even if the end customer changes the DNS record to point elsewhere, the custom hostname on the SaaS zone will take priority. This will cause its traffic to continue to route to the SaaS zone.
 
 ### Remove custom hostname
 
