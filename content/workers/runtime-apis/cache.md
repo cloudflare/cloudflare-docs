@@ -82,7 +82,7 @@ cache.put(request, response);
 
 - {{<code>}}put(request, response){{</code>}} {{<type>}}Promise{{</type>}}
 
-  - Attempts to add to the cache a response keyed to the given request. Returns a promise that resolves to `undefined` regardless of whether the cache successfully stored the response.
+  - Attempts to add a response to the cache, using the given request as the key. Returns a promise that resolves to `undefined` regardless of whether the cache successfully stored the response.
 
 {{</definitions>}}
 
