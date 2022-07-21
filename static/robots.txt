@@ -1,4 +1,4 @@
+Sitemap: https://developers.cloudflare.com/sitemap.xml
+
 User-agent: *
 Disallow: /client-ip-geolocation
-
-Sitemap: https://developers.cloudflare.com/sitemap.xml
