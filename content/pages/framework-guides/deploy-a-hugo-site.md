@@ -204,7 +204,7 @@ For example, `HUGO_VERSION`: `0.101.0`
   
 {{<Aside type="note"}} 
          
-Since Hugo is constantly receiving new updates, it is strongly recommended to use a recent version of Hugo to avoid build errors.
+With Hugo receiving regular updates, it is recommended to use a recent version of Hugo to avoid build errors.
          
 {{</Aside>}}
 
