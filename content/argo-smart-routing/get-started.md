@@ -10,7 +10,7 @@ weight: 2
 
 {{<Aside type="note">}}
 
-If you are an Enterprise user, you can add the permission to your account by contacting your Account Executive or Customer Success Manager.
+If you are an Enterprise user, you can add the Argo permission to your account by contacting your Account Executive or Customer Success Manager.
 
 {{</Aside>}}
 
