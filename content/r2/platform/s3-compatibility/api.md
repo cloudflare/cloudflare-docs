@@ -116,6 +116,14 @@ The following tables are related to object-level operations.
 
 Below is a list of implemented object-level operations. Refer to the Feature column to review which features have been implemented (✅) and have not been implemented (❌).
 
+{{<Aside type="warning">}}
+
+R2 currently has a limitation of 3 concurrent part uploads for the same multipart upload. Utilities commonly have a default multipart upload concurrency above this, make sure you reduce the multipart upload concurrency to 3 or less.
+
+This does not apply to concurrent uploads for different files.
+
+{{</Aside>}}
+
 {{<table-wrap style="width:123%">}}
 
 | API Name                | Feature                   |
