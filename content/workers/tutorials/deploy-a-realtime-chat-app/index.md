@@ -44,7 +44,7 @@ When you are ready to deploy your application, run:
 $ wrangler publish
 ```
 
-Your application will be deployed to a `edge-chat-demo.<YOUR_SUBDOMAIN>.workers.dev` subdomain. 
+Your application will be deployed to your `*.workers.dev` subdomain. 
 
 To deploy your application to a custom domain within the Cloudflare dashboard, go to your Worker > **Triggers** > **Add Custom Domain**.
 
