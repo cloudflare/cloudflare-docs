@@ -63,4 +63,4 @@ custom domains = true,
 
 Generally, [Routes](/workers/platform/routing/routes) are good for use cases where the Worker acts like a 'proxy', making small modifications to the Request, Response, or logging data in between the user and the server. 
 
-[Custom Domains](/workers/platform/routing/custom-domains) are recommended for more in-depth use cases, where your application lives on the Cloudflare network and may optionally communicate with external dependencies.
+[Custom Domains](/workers/platform/routing/custom-domains/) are recommended for more in-depth use cases, where your application lives on the Cloudflare network and may optionally communicate with external dependencies.
