@@ -20,7 +20,7 @@ The following products and features are available on the Cloudflare China Networ
 | [Web Application Firewall (WAF)](/waf/) | WAF Managed Rulesets | Custom rules, pre-configured OWASP rulesets, and Cloudflare Managed Rulesets. |
 | [Web Application Firewall (WAF)](/waf/) | Rate Limiting | Define rate limits for incoming requests matching an expression, and the action to take when those rate limits are reached. |
 | [Bot Management](/bots/) | Bot detection and mitigation | Provides bot identification and protection for a domain. |
-| [Argo Smart Routing](https://support.cloudflare.com/hc/articles/115000224552) | Layer 7 smart routing | Layer 7 (application layer) traffic smart-routed more efficiently to origin. |
+| [Argo Smart Routing](/argo-smart-routing/) | Layer 7 smart routing | Layer 7 (application layer) traffic smart-routed more efficiently to origin. |
 
 ## Developer services
 
