@@ -9,7 +9,7 @@ These are the betas relevant to Cloudflare Workers.
 
 | Product                       | Private Beta | Public Beta | More Info                                                                  | 
 |:---                           |    :----:    |    :----:   | -----------                                                                |
-| Email Workers                 | ✅           |             |[Blog](https://blog.cloudflare.com/announcing-route-to-workers/) |
+| Email Workers                 | ✅           |              | [Blog](https://blog.cloudflare.com/announcing-route-to-workers/) |
 | Custom Domains                |              |  ✅          |[Docs](/workers/platform/routing/custom-domains/)                           |
 | D1 Database                   | ✅           |              |[Blog](https://blog.cloudflare.com/introducing-d1/)                         |
 | Green Compute                 |              |  ✅          |[Blog](https://blog.cloudflare.com/earth-day-2022-green-compute-open-beta/) |
@@ -17,4 +17,4 @@ These are the betas relevant to Cloudflare Workers.
 | R2 Storage                    |              |  ✅          |[Docs](/r2)                                                                 |
 | TCP Workers                   | ✅           |             |[Blog](https://blog.cloudflare.com/introducing-socket-workers/) |
 | Workers Analytics Engine      | ✅           |              |[Blog](https://blog.cloudflare.com/workers-analytics-engine/)               |
-| Workers for Platforms         | ✅           |              |[Blog](https://blog.cloudflare.com/workers-for-platforms/)                  |
+| Workers for Platforms         | ✅           |               | [Blog](https://blog.cloudflare.com/workers-for-platforms/)                  |
