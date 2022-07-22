@@ -8,7 +8,7 @@ weight: 7
 
 Gateway responds to any blocked domain with 0.0.0.0, and does not return that blocked domain's IP address. As a result, the browser will show a default error page, and users will not be able to reach that website. This may cause confusion and lead some users to think that their Internet is not working.
 
-Configuring a block page on the Zero Trust dashboard helps avoid this confusion. Your block page will display information such as the rule ID of the policy blocking the website, a policy-specific block message, your organization's name, and a global message you may want to show — for example, a message explaining that the website has been blocked by Gateway, and whom in the organizations users should contact for support.
+Configuring a custom block page on the Zero Trust dashboard helps avoid this confusion. Your block page will display information such as the rule ID of the policy blocking the website, a policy-specific block message, your organization's name, and a global message you may want to show — for example, a message explaining that the website has been blocked by Gateway, and any points of contact for support within the organization.
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ In order to display the block page, your devices must have the [Cloudflare certi
 
 ## Enable the block page for HTTP policies
 
-The block page is automatically enabled for all HTTP policies. When a user is blocked at the HTTP layer, the block page is displayed.
+Gateway automatically enables a block page for all HTTP policies. When a user is blocked at the HTTP layer, the block page is displayed.
 
 To specify a policy-specific block message:
 
@@ -30,6 +30,8 @@ Users will now see a custom message when they are blocked by this HTTP policy.
 
 ## Enable the block page for DNS policies
 
+For DNS policies, you will need to enable the block page on a per-policy basis.
+
 1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Policies** > **DNS**.
 2. Find the policy for which you would like to display a block page and click **Edit**. You can only enable the block page for policies with a Block action.
 3. Scroll down to the **Configure policy settings** step.
@@ -38,13 +40,11 @@ Users will now see a custom message when they are blocked by this HTTP policy.
 
 Users will now see a block page when they are blocked by this DNS policy.
 
-{{<Aside header="Troubleshooting the block page">}}
+## Troubleshoot the block page
 
 If your users see a "Warning: Potential Security Risk Ahead" message in their browser when visiting a blocked page, check that you have correctly installed the Cloudflare certificate on their device.
 
 ![Error message when visiting a blocked page](/cloudflare-one/static/documentation/policies/https-browser-error.png)
-
-{{</Aside>}}
 
 ## Customize the block page
 
