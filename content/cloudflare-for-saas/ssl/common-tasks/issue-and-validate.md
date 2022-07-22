@@ -77,7 +77,6 @@ Within the `ssl` object in the response, refer to the values present in the `val
 HTTP adds a DCV token to your origin. You can either add that token [manually](#http-manual) to support pre-validation or wait for Cloudflare to add the DCV token [automatically](#http-automatic), which may lead to a few minutes of downtime.
  
 {{<Aside type="warning">}}
-<<<<<<< HEAD:content/cloudflare-for-saas/ssl/common-tasks/issue-and-validate.md
  
 HTTP DCV validation is no longer allowed for wildcard certificates. For more details and next steps, refer to [DCV Validation](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/#dcv-methods).
  
