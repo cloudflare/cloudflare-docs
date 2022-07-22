@@ -20,7 +20,7 @@ Prior to enabling Regional Services for SaaS:
 
 * Ensure that [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) is enabled.
 
-* You must have [access to a custom origin](/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-origin). Using Cloudflare's default fallback origin for Regional Services will lead to an error.
+* You must have [access to a custom origin](/cloudflare-for-saas/start/advanced-settings/custom-origin). Using Cloudflare's default fallback origin for Regional Services will lead to an error.
 
 ---
 
