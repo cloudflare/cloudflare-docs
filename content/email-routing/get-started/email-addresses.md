@@ -6,17 +6,11 @@ weight: 2
 
 # Routes
 
-The Routes page is divided into three main configuration sections:
-
-- Custom addresses
-- Catch-all address
-- Destination addresses
-
-Each section lets you configure different aspects of Email Routing.
+The Routes page allows you to setup and maitain different aspects of Email Routing. It is also here you can create and update your rules. Rules are pairs of custom email addresses paired with a destination address, that allows you to route emails to your preferred inbox.
 
 {{<Aside type="note" header="Note">}}
 
-A custom address and destination address form an email rule. You can enable, disable, and delete email rules.
+A custom address paired with destination address form an email rule. You can enable, disable, and delete email rules.
 
 {{</Aside>}}
 
