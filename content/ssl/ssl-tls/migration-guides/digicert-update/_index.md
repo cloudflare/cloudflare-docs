@@ -4,7 +4,7 @@ title: Digicert update
 weight: 2
 ---
 
-# Digicert update
+# DigiCert update
 
 In the latter half of 2022, Cloudflare will begin deprecating DigiCert as a Certificate Authority available for a variety of certificates ([Universal](/ssl/ssl-tls/migration-guides/digicert-update/universal-certificates/), [Custom Hostname](/ssl/ssl-tls/migration-guides/digicert-update/custom-hostname-certificates/), and Advanced (more details coming soon)).
 
