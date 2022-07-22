@@ -1,12 +1,20 @@
 ---
 pcx-content-type: reference
-title: Common API calls
-weight: 10
+title: Via the API
+weight: 2
+meta:
+    title: Get Started - Via the API
 ---
 
-# Common API calls
+# Get Started - Via the API
 
 As a SaaS provider, you may want to configure and manage Cloudflare for SaaS [via the API](https://api.cloudflare.com/) rather than the [Cloudflare dashboard](https://dash.cloudflare.com/). Below are relevant API calls for creating, editing, and deleting custom hostnames, as well as monitoring, updating, and deleting fallback origins. Further details can be found in the [Cloudflare API documentation](https://api.cloudflare.com/).
+
+{{<Aside type="note">}}
+
+Create your [fallback origin and CNAME target](/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin-and-cname-target) prior to creating custom hostnames.
+
+{{</Aside>}}
 
 ---
 
@@ -22,7 +30,7 @@ As a SaaS provider, you may want to configure and manage Cloudflare for SaaS [vi
 
 ## Fallback origins
 
-Our API includes the following endpoints related to the [fallback origin](/cloudflare-for-saas/getting-started/#step-1--create-fallback-origin-and-cname-target) of a custom hostname:
+Our API includes the following endpoints related to the [fallback origin](/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin-and-cname-target) of a custom hostname:
 
 - [Get fallback origin](https://api.cloudflare.com/#custom-hostname-fallback-origin-for-a-zone-get-fallback-origin-for-custom-hostnames)
 - [Update fallback origin](https://api.cloudflare.com/#custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames)

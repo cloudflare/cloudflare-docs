@@ -14,7 +14,7 @@ meta:
 
 ## Enable mTLS
 
-Once you have [added a custom hostname](/cloudflare-for-saas/getting-started/), you can enable mTLS by using Cloudflare Access. Go to the Cloudflare Zero Trust dashboard and [add mTLS authentication](/cloudflare-one/identity/devices/mutual-tls-authentication/) with a few clicks.
+Once you have [added a custom hostname](/cloudflare-for-saas/start/getting-started/), you can enable mTLS by using Cloudflare Access. Go to the Cloudflare Zero Trust dashboard and [add mTLS authentication](/cloudflare-one/identity/devices/mutual-tls-authentication/) with a few clicks.
 
 {{<Aside type="note">}}
 

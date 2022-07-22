@@ -42,7 +42,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-origin/">Custom origin</a>
+          <a href="/cloudflare-for-saas/start/advanced-settings/custom-origin/">Custom origin</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>

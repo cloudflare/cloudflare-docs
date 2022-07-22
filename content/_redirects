@@ -495,6 +495,10 @@
 /ssl/ssl-for-saas/versioning/ /cloudflare-for-saas/ssl/reference/versioning/ 301
 /cloudflare-for-saas/ssl/common-tasks/certificate-validation-methods/ /cloudflare-for-saas/ssl/common-tasks/issue-and-validate/ 301
 /cloudflare-for-saas/ssl/common-tasks/issuing-certificates/ /cloudflare-for-saas/ssl/common-tasks/issue-and-validate/ 301
+/cloudflare-for-saas/getting-started/ /cloudflare-for-saas/start/getting-started/ 301
+/cloudflare-for-saas/ssl/reference/common-api-calls/ /cloudflare-for-saas/start/common-api-calls/ 301
+/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-origin/ /cloudflare-for-saas/start/advanced-settings/custom-origin/ 301
+/cloudflare-for-saas/related-products/regional-services-for-saas/ /cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ 301
 <!-- Includes dynamic redirects listed at bottom -->
 
 # stream

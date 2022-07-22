@@ -16,7 +16,7 @@ Prior to enabling Regional Services for SaaS:
 
 * Ensure you have access to [Cloudflare for SaaS](/cloudflare-for-saas/#availability).
 
-* If you have 10 or more unique origins, ensure your [fallback origin](/cloudflare-for-saas/getting-started/#step-1--create-fallback-origin-and-cname-target) is set up.
+* If you have 10 or more unique origins, ensure your [fallback origin](/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin-and-cname-target) is set up.
 
 * Ensure that [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) is enabled.
 
