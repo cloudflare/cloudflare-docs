@@ -7,7 +7,9 @@ weight: 3
 # Issue and validate certificates
  
 Once you have [set up your Cloudflare for SaaS application](/cloudflare-for-saas/getting-started/), you can start issuing and validating certificates for your customers.
- 
+
+---
+
 ## Issue new certificates
  
 {{<render file="_issue-certs-preamble.md">}}
@@ -19,6 +21,8 @@ Once you have [set up your Cloudflare for SaaS application](/cloudflare-for-saas
 ### Via the API
  
 {{<render file="_create-custom-hostname-api.md">}}
+
+---
 
 ## Validate certificates
  
