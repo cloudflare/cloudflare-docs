@@ -94,7 +94,7 @@ If your hostname is using another validation method, you will need to [update](h
 
 These tokens can be fetched through the [GET custom hostnames endpoint](https://api.cloudflare.com/#custom-hostname-for-a-zone-list-custom-hostnames) when the certificates are in a “pending validation” state during custom hostname creation or during certificate renewals. You can also fetch them through the dashboard.
 
-For example, here are two tokens highlighted section in the API response. These will need to be placed under the `"_acme-challenge"` DNS label. These tokens are different than the hostname validation tokens.
+For example, here are two tokens highlighted in the API response. These will need to be placed under the `"_acme-challenge"` DNS label. These tokens are different than the hostname validation tokens.
 
 ```json
 ---
