@@ -8,6 +8,8 @@ weight: 1
 
 A _domain_ or _domain name_ is the location of a website or application, or what an end user types into their browser to get to your website (`example.com`).
 
+{{<directory-listing>}}
+
 ## Get a domain name
 
 You can get domain names for your website from a variety of places, such as through popular website builders or dedicated [registrars](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/).
@@ -25,14 +27,6 @@ Cloudflare does not offer web hosting for most websites, though you can deploy a
 For help adding a domain to Cloudflare, refer to our [setup guide](/fundamentals/get-started/setup/add-site/).
 
 Once you finish adding your domain, you likely will want to also [update your domain's nameservers](/dns/zone-setups/full-setup/) to get Cloudflare's performance and security benefits.
-
-## Remove a domain from Cloudflare
-
-For help removing an active domain from Cloudflare, refer to [Removing a domain from Cloudflare](remove-domain/).
-
-## Redirect one domain to another
-
-For help redirecting an active domain, refer to [Redirect one domain to another](redirect-domain/).
 
 ## Get free SSL certificates
 
