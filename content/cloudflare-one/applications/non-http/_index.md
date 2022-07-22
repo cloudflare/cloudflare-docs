@@ -2,6 +2,7 @@
 pcx-content-type: how-to
 title: Add non-HTTP applications
 weight: 5
+layout: single
 ---
 
 # Add non-HTTP applications
@@ -34,7 +35,7 @@ Once enabled, when users authenticate and visit the URL of the application, Clou
 
 {{<Aside>}}
 
-This should only be enabled if a [service token](/cloudflare-one/identity/service-auth/service-tokens/) cannot be used for your automated service.
+This should only be enabled if a [service token](/cloudflare-one/identity/service-tokens/) cannot be used for your automated service.
 
 {{</Aside>}}
 

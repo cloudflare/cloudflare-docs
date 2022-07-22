@@ -11,7 +11,7 @@ The GraphQL Pages Plugin creates a GraphQL server which can respond to `applicat
 ## Installation
 
 ```sh
-npm install @cloudflare/pages-plugin-graphql
+$ npm install @cloudflare/pages-plugin-graphql
 ```
 
 ## Usage

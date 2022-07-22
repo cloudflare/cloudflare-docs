@@ -18,7 +18,53 @@ To configure the tunnels between Cloudflare and your locations, you must provide
   - 169.254.244.0/20
 - **Private IP addresses** — The private IP address assigned to the **Cloudflare** and **customer** sides of the tunnel
 
-For an example GRE tunnel configuration, see [Anycast GRE configuration example](/magic-wan/reference/configuration-examples/#gre-tunnel-configuration-example).
+<details>
+<summary>
+  Edge routing configuration example
+</summary>
+
+<table>
+  <thead>
+    <tr>
+      <th style="min-width:108px">Tunnel</th>
+      <th style="min-width:125px">Customer edge IP</th>
+      <th style="min-width:150px">Private subnet</th>
+      <th style="min-width:100px">Customer private IP</th>
+      <th style="min-width:100px">Cloudflare private IP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>TNL_1_IAD</td>
+      <td>104.18.112.75</td>
+      <td>10.10.10.100/31</td>
+      <td>10.10.10.100</td>
+      <td>10.10.10.101</td>
+    </tr>
+    <tr>
+      <td>TNL_2_IAD</td>
+      <td>104.18.112.75</td>
+      <td>10.10.10.102/31</td>
+      <td>10.10.10.102</td>
+      <td>10.10.10.103</td>
+    </tr>
+    <tr>
+      <td>TNL_3_ATL</td>
+      <td>104.40.112.125</td>
+      <td>10.10.10.104/31</td>
+      <td>10.10.10.104</td>
+      <td>10.10.10.105</td>
+    </tr>
+    <tr>
+      <td>TNL_4_ATL</td>
+      <td>104.40.112.125</td>
+      <td>10.10.10.106/31</td>
+      <td>10.10.10.106</td>
+      <td>10.10.10.107</td>
+    </tr>
+  </tbody>
+</table>
+</details>
 
 ### Add tunnels
 

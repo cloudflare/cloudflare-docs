@@ -2,6 +2,7 @@
 pcx-content-type: reference
 title: Glossary
 weight: 11
+layout: single
 ---
 
 # Glossary
@@ -70,7 +71,7 @@ Each device connected to the Internet has a unique IP address which other machin
 
 By default, DNS queries and responses are sent from a DNS client to a DNS server using the UDP or TCP protocols — which means they’re sent in plaintext, without encryption. This has a huge impact on security: unencrypted queries can be tracked and spoofed by malicious actors, advertisers, ISPs, and others.
 
-[DNS over TLS (DoT)](#dns-over-tls) and [DNS over HTTPS (DoH)](/cloudflare-one/connections/connect-devices/agentless/dns-over-https/) are two standards developed for encrypting plaintext DNS traffic to prevent untrustworthy entities from interpreting and manipulating it. The main difference between DoT and DoH is the port they use to encrypt traffic, and the encryption method they use.
+[DNS over TLS (DoT)](#dns-over-tls) and [DNS over HTTPS (DoH)](/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/) are two standards developed for encrypting plaintext DNS traffic to prevent untrustworthy entities from interpreting and manipulating it. The main difference between DoT and DoH is the port they use to encrypt traffic, and the encryption method they use.
 
 DoH uses port 443, which is the standard HTTPS traffic port, to wrap the DNS request in an HTTPS request. It uses HTTPS and HTTP/2 to encrypt traffic at the application layer. With DoH, DNS queries and responses are camouflaged within other HTTPS traffic, since it all comes and goes from the same port. This means they cannot easily be blocked without blocking all other HTTPS traffic as well, but it also provides users with greater privacy, as network administrators will have no visibility on the DNS queries hidden within the larger flow of HTTPS traffic.
 
@@ -86,7 +87,7 @@ Each location in Cloudflare Zero Trust has a unique DoH subdomain (previously kn
 
 By default, DNS queries and responses are sent from a DNS client to a DNS server using the UDP or TCP protocols — which means they’re sent in plaintext, without encryption. This lack of privacy has a huge impact on security: unencrypted queries can be tracked and spoofed by malicious actors, advertisers, ISPs, and others.
 
-[DNS over TLS (DoT)](/cloudflare-one/connections/connect-devices/agentless/dns-over-tls/) and [DNS over HTTPS (DoH)](#dns-over-https) are two standards developed for encrypting plaintext DNS traffic to prevent untrustworthy entities from interpreting and manipulating it. The main difference between DoT and DoH is the port they use to encrypt traffic, and the encryption method they use.
+[DNS over TLS (DoT)](/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-tls/) and [DNS over HTTPS (DoH)](#dns-over-https) are two standards developed for encrypting plaintext DNS traffic to prevent untrustworthy entities from interpreting and manipulating it. The main difference between DoT and DoH is the port they use to encrypt traffic, and the encryption method they use.
 
 DNS over TLS uses its own port, 853, to wrap DNS requests within a TLS connection. With DoT, the encryption happens at the transport layer, where it adds TLS encryption on top of the user datagram protocol (UDP). Because DoT has a dedicated port, anyone with network visibility can see DoT traffic coming and going, even though the requests and responses themselves are encrypted. This gives administrators the ability to monitor and block DNS queries, which is important for identifying and stopping malicious traffic.
 
@@ -102,7 +103,7 @@ An identity provider (IdP or IDP) stores and manages users' digital identities. 
 
 An open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
 
-## [location](/cloudflare-one/policies/filtering/dns-policies/locations/)
+## [location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/)
 
 Locations are physical entities like offices, homes, retail stores, movie theatres or a data center.
 
@@ -186,15 +187,17 @@ A technology which combines several different application login screens into one
 
 ## team domain
 
-Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Cloudflare Zero Trust configuration. This is where your users will find the apps you've secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/applications/app-launcher/) — and will be able to make login requests to them.
+Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Cloudflare Zero Trust configuration. This is where your users will find the apps you have secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/applications/app-launcher/) — and will be able to make login requests to them.
 
 ## team name
 
-The customizable portion of your [team domain](#team-domain). You can change this name at any time in the Cloudflare Zero Trust dashboard, under **Settings** > **General**. However, changing your team name may disrupt integrations with identity providers and other applications. If you change the team name, you may need to update these configurations to reflect your new team name.
+The customizable portion of your [team domain](#team-domain). You can view your team name in the Cloudflare Zero Trust dashboard under **Settings** > **General**.
 
 | team domain                             | team name        |
 | --------------------------------------- | ---------------- |
 | `<your-team-name>.cloudflareaccess.com` | `your-team-name` |
+
+You can change your team name at any time, unless you have the Cloudflare dashboard SSO feature enabled on your account. Cloudflare dashboard SSO does not currently support team name changes. If you change your team name, you may need to update your identity provider and other third-party integrations to reflect your new team name.
 
 ## Terraform
 

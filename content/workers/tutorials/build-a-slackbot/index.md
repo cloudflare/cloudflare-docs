@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx-content-type: tutorial
 title: Build a Slackbot
+layout: single
 ---
 
 # Build a Slackbot

@@ -20,7 +20,7 @@ In Cloudflare’s system, a user can have multiple accounts and zones. As a resu
 
 ### Using commands
 
-To set up `wrangler` to work with your Cloudflare user, use the following commands:
+To set up Wrangler to work with your Cloudflare user, use the following commands:
 
 - `login`: a command that opens a Cloudflare account login page to authorize Wrangler.
 - `config`: an alternative to `login` that prompts you to enter your `email` and `api` key.
@@ -30,7 +30,7 @@ To set up `wrangler` to work with your Cloudflare user, use the following comman
 
 You can also configure your global user with environment variables. This is the preferred method for using Wrangler in CI (continuous integration) environments.
 
-To customize the authentication tokens that Wrangler uses, you may provide the `CF_ACCOUNT_ID` and `CF_API_TOKEN` environment variables when running any `wrangler` command. The account ID may be obtained from the Cloudflare dashboard in **Overview** and you may [create or reuse an existing API token](#generate-tokens).
+To customize the authentication tokens that Wrangler uses, you may provide the `CF_ACCOUNT_ID` and `CF_API_TOKEN` environment variables when running any Wrangler command. The account ID may be obtained from the Cloudflare dashboard in **Overview** and you may [create or reuse an existing API token](#generate-tokens).
 
 ```sh
 $ CF_ACCOUNT_ID=accountID CF_API_TOKEN=veryLongAPIToken wrangler publish

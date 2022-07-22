@@ -11,7 +11,7 @@ The Sentry Pages Plugin captures and logs all exceptions which occur below it in
 ## Installation
 
 ```sh
-npm install @cloudflare/pages-plugin-sentry
+$ npm install @cloudflare/pages-plugin-sentry
 ```
 
 ## Usage

@@ -39,6 +39,7 @@ Delivery: Exactly Once (QoS 2)          | Not yet supported     | The broker wil
 | Multi-level Wildcard (`#` character)  | Not yet supported | The broker will return a DISCONNECT Reason Code of 0x90 (Topic Name invalid) if a client attempts to subscribe to a topic with a wildcard (`+` or `#` character).|  
 | Shared Subscriptions                  | Not yet supported | Clients that attempt to SUBSCRIBE to a Shared Subscription, which are prefixed with a literal `$share/` string, the server will return a DISCONNECT with Reason Code 0x9E (Shared Subscriptions not supported). |
 | Subscription Identifiers              | Not yet supported | Clients that send a SUBSCRIBE packet with a Subscription Identifier will receive a DISCONNECT with Reason Code of 0xA1 (Subscription Identifiers not supported). |
+| User Properties                       | Not yet supported | [User Properties](https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html#_Toc464547991) included in a PUBLISH packet will not be forwarded to subscribers. |
 
 ## Permissions and IAM
 

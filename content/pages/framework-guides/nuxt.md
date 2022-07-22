@@ -81,6 +81,14 @@ Additionally, you will have access to [preview deployments](/pages/platform/prev
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
 {{</Aside>}}
+  
+{{<Aside type="warning" header="Auto Minify and Nuxt.js">}}
+
+If you are going to use a custom domain that is proxied through Cloudflare, you may run into issues with the Auto Minify feature. If enabled for HTML, it will strip comments which Nuxt.js and some other frameworks may rely on.
+
+Refer to [Using Cloudflare Auto Minify](https://support.cloudflare.com/hc/en-us/articles/200168196-Using-Cloudflare-Auto-Minify) for how to configure this feature.
+
+{{</Aside>}}
 
 ## Learn more
 

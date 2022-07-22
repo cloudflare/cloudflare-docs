@@ -6,24 +6,25 @@ weight: 11
 
 # Temporary authentication
 
-With Cloudflare Access, you can require that users obtain approval before they can access a specific application. For any temporary authentication policy, a user will need to request access at the start of each session and every time their temporary session expires.
-
-## How it works
-
-Administrators can set up an Access policy to require approval before a user is granted access to an application. The administrator will receive an email notification to review and approve/deny the request. Unlike a typical Access policy, the user will have to request access at the end of each session. This allows administrators to define which users should have persistent access and those that must request temporary access.
-
-## Pre-requisites
-
-- Enable [Purpose Justification](/cloudflare-one/policies/access/require-purpose-justification/) on the Access policy for the desired application.
-- If desired, ensure you have a second Access policy for users that should have persistent access. Be sure the policy order is set to allow persistent users through.
+With Cloudflare Access, you can require that users obtain approval before they can access a specific application. The administrator will receive an email notification to approve or deny the request. Unlike a typical Allow policy, the user will have to request access at the end of each session. This allows you to define the users who should have persistent access and those who must request temporary access.
 
 ## Set up temporary authentication
 
-1.  On the Zero Trust Dashboard, navigate to **Access** > **Applications**.
-1.  Select an application and click **Edit**.
-1.  Select the policy you want to configure with purpose justification.
-1.  Open **Optional configurations**.
-1.  Select **Enable temporary authentication**.
-1.  Enter the desired **Approver Emails** (note: these must be email addresses).
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Access** > **Applications**.
+2. Choose an application and select **Edit**.
+3. Choose the **Allow** policy you want to configure and select **Edit**.
+4. Under **Additional settings**, turn on [**Purpose justification**](/cloudflare-one/policies/access/require-purpose-justification/).
+5. Turn on **Temporary authentication**.
+6. Enter the **Email addresses of the approvers**.
+7. Save the policy.
 
-Now when a user accesses an application behind a temporary authentication policy, they will be able to enter their reason for accessing and submit their access request. Approvers will receive an email alert to approve or deny the request. Alternatively, an approval link will be generated that the requesting user can present to the approver. The approver can then grant access for a set amount of time, for a maximum 24 hours).
+Temporary authentication is now enabled for users who match this policy. You can optionally add a second **Allow** policy for users who should have persistent access. Be sure the policy order is set to allow persistent users through.
+
+## Temporary authentication requests
+
+When a user accesses the application, they will be prompted to enter a purpose justification and submit an access request.  The request is automatically emailed to approvers. Alternatively, the user can manually present the approval link to approvers.
+![Temporary authentication request page shown to users](/cloudflare-one/static/documentation/policies/temp-auth-request.png)
+
+Approvers will receive a request similar to the example below. The approver can then grant access for a set amount of time, up to a maximum of 24 hours.
+
+![Temporary authentication approval page shown to administrators](/cloudflare-one/static/documentation/policies/temp-auth-approval.png)

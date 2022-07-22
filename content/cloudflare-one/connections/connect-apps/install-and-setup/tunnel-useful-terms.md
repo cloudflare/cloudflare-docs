@@ -22,9 +22,9 @@ A tunnel UUID is an alphanumeric, unique ID assigned to a tunnel. The tunnel UUI
 
 The `cloudflared tunnel create <NAME>` command creates a tunnel and assigns it a name. Once named, a tunnel is a persistent pathway within which you can stop and start as many [connectors](#connector) as needed, adding stability and ease of use to your tunnel experience. Tunnel names do not need to be hostnames; for example, you can assign your tunnel a name that represents your application/network, a particular server, or the cloud environment where it runs. Just choose any identifier that lets you easily reference a tunnel whenever you need.
 
-## Connector
+## Replica
 
-You can create and configure a tunnel once and run it as multiple different `cloudflared` processes. These processes are known as connectors, or replicas. DNS records and Cloudflare Load Balancers can still point to the tunnel and its UUID, while that tunnel sends traffic to the multiple instances of cloudflared that run through it. Using multiple connectors provides tunnels with high availability, scalability, and elasticity.
+You can create and configure a tunnel once and run it as multiple different `cloudflared` processes. Each of these `cloudflared` processes is called a replica. [Deploying multiple replicas](/cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/) for a tunnel increases the tunnel's availability, scalability, and elasticity.
 
 ## Default `cloudflared` directory
 
@@ -37,7 +37,7 @@ You can create and configure a tunnel once and run it as multiple different `clo
 
 ## Configuration file
 
-This is a `.yaml` file that functions as the operating manual for `cloudflared`. `cloudflared` will automatically look for the configuration file in the [default `cloudflared` directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory), but you can store your configuration file in any directory. It is recommended to always specify the file path for your configuration file whenever you reference it. By creating a configuration file, you can have fine-grained control over how their instance of `cloudflared` will operate. This includes operations like what you want `cloudflared` to do with traffic (for example, proxy websockets to port `xxxx`, or ssh to port `yyyy`), where `cloudflared` should search for authorization (credentials file, tunnel token), and what mode it should run in (for example, [`warp-routing`](/cloudflare-one/connections/connect-networks/private-net/)). In the absence of a configuration file, cloudflared will proxy outbound traffic through port `8080`. For more information on how to create, store, and structure a configuration file, refer to the [dedicated instructions](/cloudflare-one/connections/connect-apps/configuration/local-management/configuration-file/).
+This is a `.yaml` file that functions as the operating manual for `cloudflared`. `cloudflared` will automatically look for the configuration file in the [default `cloudflared` directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory), but you can store your configuration file in any directory. It is recommended to always specify the file path for your configuration file whenever you reference it. By creating a configuration file, you can have fine-grained control over how their instance of `cloudflared` will operate. This includes operations like what you want `cloudflared` to do with traffic (for example, proxy websockets to port `xxxx`, or ssh to port `yyyy`), where `cloudflared` should search for authorization (credentials file, tunnel token), and what mode it should run in (for example, [`warp-routing`](/cloudflare-one/connections/connect-apps/private-net/)). In the absence of a configuration file, cloudflared will proxy outbound traffic through port `8080`. For more information on how to create, store, and structure a configuration file, refer to the [dedicated instructions](/cloudflare-one/connections/connect-apps/configuration/local-management/configuration-file/).
 
 ## Ingress rule
 
@@ -59,4 +59,4 @@ Quick tunnels, when run, will generate a URL that consists of a random subdomain
 
 ## Virtual Networks
 
-A software abstraction that allows you to logically segregate resources on your private network.  [Tunnel Virtual Networks](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/) are especially useful for exposing resources which have overlapping IP routes. To connect to a resource, end users would select a virtual network in their WARP client settings before entering the destination IP.
+A software abstraction that allows you to logically segregate resources on your private network.  [Tunnel Virtual Networks](/cloudflare-one/connections/connect-apps/private-net/tunnel-virtual-networks/) are especially useful for exposing resources which have overlapping IP routes. To connect to a resource, end users would select a virtual network in their WARP client settings before entering the destination IP.

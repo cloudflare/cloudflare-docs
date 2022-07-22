@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Analytics
-weight: 10
+weight: 9
 meta:
   title: Images analytics
 ---
@@ -24,6 +24,6 @@ To check analytics for your Images account:
 
 If you exceed your account's quota, you will not be able to upload more images. Further uploads will be rejected with the message `The given account has reached a service limit`.
 
-If you are an Enterprise customer, contact your Customer Success Manager to increase your Cloudflare Images' quota and avoid this error. You can also [delete images](/images/cloudflare-images/delete-images/) from your account.
+If you are an Enterprise customer, contact your Customer Success Manager to increase your Cloudflare Images' quota and avoid this error. You can also [delete images](/images/cloudflare-images/transform/delete-images/) from your account.
 
-Other customers can click the **Change Subscription** button to avoid this error, or [delete images](/images/cloudflare-images/delete-images/) from their account.
+Other customers can click the **Change Subscription** button to avoid this error, or [delete images](/images/cloudflare-images/transform/delete-images/) from their account.

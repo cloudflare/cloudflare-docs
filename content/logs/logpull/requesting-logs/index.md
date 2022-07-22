@@ -2,6 +2,7 @@
 pcx-content-type: reference
 title: Requesting logs
 weight: 15
+layout: single
 ---
 
 # Requesting logs

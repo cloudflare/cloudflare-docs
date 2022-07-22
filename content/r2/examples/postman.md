@@ -10,7 +10,7 @@ Postman is an API platform that makes interacting with APIs easier. This guide w
 
 ## 1. Purchase R2
 
-This guide assumes that you have made a Cloudflare account and [purchased R2](https://developers.cloudflare.com/r2/get-started/#purchase-r2).
+This guide assumes that you have made a Cloudflare account and [purchased R2](/r2/get-started/#purchase-r2).
 
 ## 2. Explore R2 in Postman
 
@@ -22,7 +22,7 @@ In the [Postman dashboard](https://www.postman.com/cloudflare-r2/workspace/cloud
 
 ![Select **Variables** in the Postman dashboard to continue with the example](/r2/static/postman-variables.png)
 
-To execute basic operations, you must set the `account-id`, `r2-access-key`, and `r2-secret-id` variables in the Postman dashboard > **Variables**.
+To execute basic operations, you must set the `account-id`, `r2-access-key-id`, and `r2-secret-access-key` variables in the Postman dashboard > **Variables**.
 
 To do this:
 
@@ -46,10 +46,10 @@ Guard this token and the **Access Key ID** and **Secret Access Key** closely. Yo
 After you have created your API token in the Cloudflare dashboard:
 
 1. Go to the [Postman dashboard](https://www.postman.com/cloudflare-r2/workspace/cloudflare-r2/collection/20913290-14ddd8d8-3212-490d-8647-88c9dc557659?action=share&creator=20913290&ctx=documentation) > **Variables**.
-2. Copy `Access Key ID` value from the Cloudflare dashboard and paste it into Postman’s `r2-secret-id` variable value and select **Save**.
-3. Copy the `Secret Access Key` value value from the Cloudflare dashboard and paste into Postman’s `r2-access-key` variable value and select **Save**.
+2. Copy `Access Key ID` value from the Cloudflare dashboard and paste it into Postman’s `r2-secret-access-key` variable value and select **Save**.
+3. Copy the `Secret Access Key` value value from the Cloudflare dashboard and paste into Postman’s `r2-access-key-id` variable value and select **Save**.
 
-By now, you should have `account-id`, `r2-secret-id`, and `r2-access-key` set in Postman.
+By now, you should have `account-id`, `r2-secret-access-key`, and `r2-access-key-id` set in Postman.
 
 To verify the token:
 
@@ -78,7 +78,7 @@ You should see a `200 OK` response. If you run the `ListBuckets` request again, 
 
 You will now add an object to your bucket:
 
-1. Go to**Variables** in the Postman dashboard.
+1. Go to **Variables** in the Postman dashboard.
 2. Set `r2-object` to `cat-pic.jpg` and select **Save**.
 3. Select **Cloudflare R2** folder dropdown arrow > **Objects** folder dropdown arrow > **Multipart** folder dropdown arrow > **`PUT`PutObject** and select **Send**.
 4. Go to **Body** and choose **binary** before attaching your cat picture.

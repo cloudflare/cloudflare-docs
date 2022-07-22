@@ -26,7 +26,7 @@ To get started, create a `/functions` directory at the root of your project. Wri
 
 ## Functions routing
 
-Using a `/functions` directory will generate a routing table based on the files present in the directory. You may use JavaScript (`*.js`) or TypeScript (`*.ts`) to write your Functions. A `PagesFunction` type is declared in the [@cloudflare/workers-types](https://github.com/cloudflare/workers-types) library which you can use to type-check your Functions.
+Using a `/functions` directory will generate a routing table based on the files present in the directory. You may use JavaScript (`*.js`) or TypeScript (`*.ts`) to write your Functions.
 
 For example, assume this directory structure:
 
@@ -71,6 +71,40 @@ More specific routes (that is, those with fewer wildcards) take precedence over 
 {{</Aside>}}
 
 When a filename includes a placeholder, the `name` must be alphanumeric and cannot contain spaces. In turn, the URL segment(s) that match the placeholder will be available under the `context.params` object using the filename placeholder as the key.
+
+### Using TypeScript
+
+If you prefer to write TypeScript, we declare a `PagesFunction` type in the [@cloudflare/workers-types](https://github.com/cloudflare/workers-types) library which you can use to type-check your Functions. To use this, create a `tsconfig.json` file in your `/functions` folder with the following contents:
+
+```json
+---
+filename: functions/tsconfig.json
+---
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "lib": ["ES2020"],
+    "types": ["@cloudflare/workers-types"]
+  }
+}
+```
+
+If you already have a `tsconfig.json` at the root of your project, you may wish to explicitly exclude the `functions` directory to avoid conflicts:
+
+```json
+---
+filename: tsconfig.json
+highlight: [3]
+---
+{
+  "include": ["src/**/*"],
+  "exclude": ["functions/**/*"],
+  "compilerOptions": {
+
+  }
+}
+```
 
 ## Writing your first function
 
@@ -306,7 +340,7 @@ export async function onRequest(context) {
 
 ## Adding bindings
 
-While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project. You can also use these bindings in development with [Wrangler](/pages/platform/functions/#develop-and-preview-locally).
+A binding is how your Function (Worker) interacts with external resources. You can add KV, Durable Object, and plain-text bindings to your project. A binding is a runtime variable that the Workers runtime provides to your code. You can also use these bindings in development with [Wrangler](/pages/platform/functions/#develop-and-preview-locally).
 
 ### KV namespace
 
@@ -335,7 +369,9 @@ Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **F
 
 ### Durable Objects locally
 
-Just as you can access kv with `-k` or `--kv` you can access durable objects in your local builds with `-o`, `--do` followed by your Durable object name and class.
+Currently, Durable Objects are not supported in local development mode. To use Durable Objects in your Pages application, deploy a Worker containing a Durable Object. Then add it as a binding to your Pages project as shown in the section above. 
+
+Support for using Durable Objects in local development is actively being worked on and will be available soon.
 
 ### Environment variable
 
@@ -347,15 +383,31 @@ To add environment variables, go to **Account Home** > **Pages** > **your Pages 
 
 ### Adding environment variables locally
 
-When developing locally, you can access environment variables by adding a binding to your Wrangler commands like `npx wrangler pages dev dist --binding ENV_NAME="ENV_VALUE"`. This allows you to then access the environment value in your component by using `env.ENV_NAME`.
+When developing locally, you can access environment variables by adding a `.dev.vars` file to the root directory of your project. Next, define your environment variables and then access them in your component by using `env.ENV_NAME`.
 
-For example, you can run `npx wrangler pages dev dist --binding COLOR="BLUE"` and then:
+For example :
+
+```env
+---
+filename:/.dev.vars
+---
+ENV_NAME = "SUPER_SECRET_KEY"
+```
 
 ```js
+---
+filename: functions/index.js
+---
 export async function onRequest({ env }) {
-  return new Response(env.COLOR);
+  return new Response(env.ENV_NAME);
 }
 ```
+
+{{<Aside type= "Note">}}
+
+Adding a binding through the CLI with `--binding` is still supported, and whatever you specify in CLI will take precedence over environment variables in `.dev.vars`
+
+{{</Aside>}}
 
 Here is a real-world example of using environment variables inside a middleware function. To connect [Sentry](https://www.sentry.io/) to a Cloudflare Worker, you can use [Toucan js](https://github.com/robertcepa/toucan-js) and access your Sentry Data Source Name (DSN) in your function.
 
@@ -383,7 +435,7 @@ In some cases, the built-in routing and middleware system is not desirable for e
 
 When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed **as is** and **must be** written using the [Module Worker syntax](/workers/runtime-apis/fetch-event/#syntax-module-worker).
 
-If you have never used module syntax, refer to the [JavaScript modules blog post to learn more](https://blog.cloudflare.com/workers-javascript-modules/). Using Module Workers enables JavaScript frameworks to generate a Worker as part of the Pages output directory contents.
+If you have never used Module syntax, refer to the [JavaScript modules blog post to learn more](https://blog.cloudflare.com/workers-javascript-modules/). Using Module Workers enables JavaScript frameworks to generate a Worker as part of the Pages output directory contents.
 
 Your custom Module Worker will assume full control of all incoming HTTP requests to your domain. Because of this, your custom Worker is required to make and/or forward requests to your project's static assets.
 
@@ -404,6 +456,8 @@ export default {
   },
 };
 ```
+
+The `env.ASSETS.fetch()` function will allow you to send the user to a modified path which is defined through the `url` parameter. `env` is the object that contains your environment variables and bindings. `ASSETS` is a default Function binding that allows communication between your Function and Pages' asset serving resource. `fetch()` calls to Pages' asset-serving resource and serves the requested asset.
 
 {{<Aside type="warning">}}
 

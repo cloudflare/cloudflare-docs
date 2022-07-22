@@ -58,3 +58,16 @@ Currently, you cannot skip Bot Fight Mode or Super Bot Fight Mode. For more info
 {{</Aside>}}
 
 {{</definitions>}}
+
+## Logging
+
+{{<definitions>}}
+
+- **Log requests matching the skip rule**
+
+  - Dashboard option: **Log matching requests**.
+  - API action parameter: `logging` > `enabled` (boolean, optional).
+  - When disabled, Cloudflare will not log any requests matching the current skip rule, and these requests will not appear in [Firewall Analytics](/waf/analytics/).
+  - If you do not specify this option in the API, the default value is `true` for custom rules with the skip action (logs requests matching the skip rule).
+
+{{</definitions>}}

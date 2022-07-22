@@ -2,6 +2,7 @@
 title: Enable Amazon S3
 pcx-content-type: how-to
 weight: 56
+layout: single
 meta:
   title: Enable Logpush to Amazon S3
 ---

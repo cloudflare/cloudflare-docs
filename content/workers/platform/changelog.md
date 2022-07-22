@@ -5,6 +5,23 @@ title: Changelog
 
 # Changelog
 
+## 2022-06-24
+
+- `wrangler dev` in edge preview mode now supports scheduling alarms.
+- R2 GET requests made with the `range` option now contain the returned range in the `GetObject`’s `range` parameter.
+- Some Web Cryptography API error messages include more information now.
+- Updated V8 from 10.2 to 10.3.
+
+
+## 2022-06-18
+
+- Cron trigger events on Worker scripts using the old `addEventListener` syntax are now treated as failing if there is no event listener registered for `scheduled` events.
+- The `durable_object_alarms` flag no longer needs to be explicitly provided to use DO alarms.
+
+## 2022-06-09
+
+- No externally-visible changes.
+
 ## 2022-06-03
 
 - It is now possible to create standard `TransformStream` instances that can perform transformations on the data. Because this changes the behavior of the default `new TransformStream()` with no arguments, the `transformstream_enable_standard_constructor` compatibility flag is required to enable.

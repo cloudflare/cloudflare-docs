@@ -9,7 +9,7 @@ layout: single
 
 ## Getting Started
 
-To get started creating an API Token, log in to the [Cloudflare Dashboard](https://dash.cloudflare.com) and go to `User Profile` -> `API Tokens` or simply [click here](https://dash.cloudflare.com/profile/api-tokens). From the API Token home screen select `Create Token`.
+To get started creating an API Token, log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and go to `User Profile` -> `API Tokens` or [click here](https://dash.cloudflare.com/profile/api-tokens). From the API Token home screen select `Create Token`.
 
 If you are new to API Tokens or the Cloudflare API, Templates are the quickest way to get started. If you think a specific template matches your needs, go ahead and select it. You will be able to further customize the template after selecting it. If no template matches your use case or you want to build the token from scratch, select `Create Custom Token`
 
@@ -86,7 +86,7 @@ Once you have verified the token is as desired, select `Create Token` to proceed
 
 ## Generating the Token
 
-Once successfully generated, the token secret is only shown once. Make sure to copy the secret to a secure place.
+Once successfully generated, the token secret is **only shown once**. Make sure to copy the secret to a secure place.
 
 *Warning:* Do not store the secret in plaintext where others may be able to access it. Anyone with this token can perform the authorized actions against the resources the token has been granted access to.
 

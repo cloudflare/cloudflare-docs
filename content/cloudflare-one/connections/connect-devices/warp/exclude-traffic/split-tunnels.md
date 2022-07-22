@@ -67,6 +67,15 @@ Domain-based split tunneling works alongside DNS by dynamically excluding or inc
 
 {{</Aside>}}
 
+### Cloudflare Zero Trust domains
+
+Many Cloudflare Zero Trust services rely on traffic going through WARP. If you are using Split Tunnels in Include mode, you will need to manually add the following domains in order for these features to function.
+
+| Feature | Domains to include |
+| --------| ------------------ |
+| [Device posture checks](/cloudflare-one/identity/devices/)| `<your-team-name>.cloudflareaccess.com`, IdP used to authenticate into Access, and the application protected by Access |
+| [WARP session duration](/cloudflare-one/policies/filtering/enforce-sessions/) | `<your-team-name>.cloudflareaccess.com>` and the HTTP or Network resource with the session re-authentication policy |
+
 ## Important platform differences
 
 Domain-based Split Tunnels work differently on mobile clients than on desktop clients. If both mobile and desktop clients will connect to your organization, it is recommended to use Split Tunnels based on IP addresses or CIDR, which work the same across all platforms.
@@ -81,7 +90,7 @@ Due to platform differences, mobile clients can only apply Split Tunnels rules w
 
 - Domain-based Split Tunnels rules are created when the tunnel is established based on the IP address for that domain at that time. The route is refreshed each time the tunnel is established.
 
-- Wildcard domain prefixes (for example, `*.example.com`) are not supported. Because route information must be added when the tunnel starts, these platforms can’t support wildcards. Wildcard domain prefixes can still exist in your configuration, but they will be ignored on these platforms.
+- Wildcard domain prefixes (for example, `*.example.com`) are supported only if they have valid wildcard DNS records. Other wildcard domains are not supported because the client is unable to match wildcard domains to hostnames when starting up the tunnel. Unsupported wildcard domain prefixes can still exist in your configuration, but they will be ignored on mobile platforms.
 
 ## Remove an item from Split Tunnels
 

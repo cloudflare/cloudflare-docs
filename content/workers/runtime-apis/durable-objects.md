@@ -189,7 +189,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 - {{<code>}}delete(keys{{<param-type>}}Array\<string>{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise\<number>{{</type>}}
 
-  - Deletes the provided keys and their associated values. Returns a count of the number of key-value pairs deleted.
+  - Deletes the provided keys and their associated values. Supports up to 128 keys at a time. Returns a count of the number of key-value pairs deleted.
 
     **Supported options:** Same as `put()`, above.
 
@@ -240,7 +240,6 @@ The `put()` method returns a `Promise`, but most applications can discard this p
   - Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts.
 
       <aside class="DocsMarkdown--aside" role="note" data-type="note">
-        <div class="DocsMarkdown--aside-header">Deprecated</div>
         {{<markdown>}}Explicit transactions are no longer necessary. Any series of write operations with no intervening `await` will automatically be submitted atomically, and the system will prevent concurrent events from executing while `await`ing a read operation (unless you use `allowConcurrency: true`). Therefore, a series of reads followed by a series of writes (with no other intervening I/O) are automatically atomic and behave like a transaction.{{</markdown>}}
       </aside>
 

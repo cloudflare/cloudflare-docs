@@ -40,19 +40,26 @@ The following methods are available on the bucket binding object injected into y
 For example, to issue a `PUT` object request using the binding above:
 
 ```js
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
-});
+export default {
+	async fetch(request, env) {
+		const url = new URL(request.url);
+		const key = url.pathname.slice(1);
 
-async function handleRequest(request) {
-  const url = new URL(request.url);
-  const key = url.pathname.slice(1);
+		switch (request.method) {
+			case 'PUT':
+				await env.MY_BUCKET.put(key, request.body);
+				return new Response(`Put ${key} successfully!`);
 
-  switch (request.method) {
-    case "PUT":
-      await MY_BUCKET.put(key, request.body);
-      return new Response(`Put ${key} successfully!`);
-}
+			default:
+				return new Response(`${request.method} is not allowed.`, {
+					status: 405,
+					headers: {
+						Allow: 'PUT',
+					},
+				});
+		}
+	},
+};
 ```
 
 {{<definitions>}}
@@ -143,6 +150,10 @@ async function handleRequest(request) {
 - {{<code>}}customMetadata{{<param-type>}}Record\<string, string>{{</param-type>}}{{</code>}}
 
   - A map of custom, user-defined metadata associated with the object.
+  
+- {{<code>}}range{{</code>}} {{<param-type>}}R2Range{{</param-type>}}
+
+  - A `R2Range` object containing the returned range of the object.
 
 - {{<code>}}writeHttpMetadata(headers{{<param-type>}}Headers{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
@@ -231,14 +242,38 @@ There are 3 variations of arguments that can be used in a range:
 
   - Note that there is a limit on the total amount of data that a single `list` operation can return. If you request data, you may recieve fewer than `limit` results in your response to accomodate metadata.
 
-  This means applications must be careful to avoid code like the following:
+  This means applications must be careful to avoid comparing the amount of returned objects against your `limit`. Instead, use the `truncated` property to determine if the `list` request has more data to be returned.
 
   ```js
-    while (listed.length < limit) {
-      listed = myBucket.list({ limit, include: ['customMetadata'] })
-    }
+  const options = {
+      limit: 500,
+      include: ['customMetadata'],
+  }
+
+  const listed = await env.MY_BUCKET.list(options);
+
+  let truncated = listed.truncated;
+  let cursor = truncated ? listed.cursor : undefined;
+
+  // ❌ - if your limit can't fit into a single response or your
+  // bucket has less objects than the limit, it will get stuck here.
+  while (listed.objects.length < options.limit) {
+    // ...
+  }
+
+  // ✅ - use the truncated property to check if there are more
+  // objects to be returned
+  while (truncated) {
+      const next = await env.MY_BUCKET.list({
+        ...options,
+        cursor: cursor,
+      });
+      listed.objects.push(...next.objects);
+
+      truncated = next.truncated;
+      cursor = next.cursor
+  }
   ```
-  Instead, use the `truncated` property to determine if the `list` request has more data to be returned.
 
 {{</definitions>}}
 
@@ -256,7 +291,7 @@ An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 
   - If true, indicates there are more results to be retrieved for the current `list` request.
 
-- {{<code>}}cursor{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}cursor{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
 
   - A token that can be passed to future `list` calls to resume listing from that point. Only present if truncated is true.
 

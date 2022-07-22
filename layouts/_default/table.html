@@ -8,6 +8,7 @@
   {{- $pages := (where .Site.Pages "Section" .Page.Section).ByParam "updated" -}}
 
   <div class="DocsPage">
+    {{- partial "skipcontent" . -}}
     {{- partial "topbar.mobile" . -}}
     {{- partial "sidebar.nav" . -}}
 
@@ -19,7 +20,7 @@
     <main class="DocsBody">
       <div id="docs-content" data-reach-skip-nav-content></div>
 
-      <div class="DocsContent" page-type="{{ $type }}">
+      <div class="DocsContent"  id="main" page-type="{{ $type }}">
         <article class="DocsMarkdown">
           {{- .Content -}}
 

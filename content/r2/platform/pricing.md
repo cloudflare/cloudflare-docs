@@ -37,15 +37,15 @@ For example:
 
 ### Class A operations
 
-Class A Operations include `ListBuckets`, `PutBucket`, `ListObjects`, `PutObject`, `CopyObject`, `CompleteMultipartUpload`, `CreateMultipartUpload`, `UploadPart`, and `UploadPartCopy`.
+Class A Operations include `ListBuckets`, `PutBucket`, `ListObjects`, `PutObject`, `CopyObject`, `CompleteMultipartUpload`, `CreateMultipartUpload`, `ListMultipartUploads`, `UploadPart`, `UploadPartCopy` and `PutBucketEncryption`.
 
 ### Class B operations
 
-Class B Operations include `HeadBucket`, `HeadObject`, and `GetObject`.
+Class B Operations include `HeadBucket`, `HeadObject`, `GetObject`, `UsageSummary`, `GetBucketEncryption` and `GetBucketLocation`.
 
 ### Free operations
 
-Free operations include `DeleteObject`, `DeleteBucket` and `DeleteMultipartUpload`.
+Free operations include `DeleteObject`, `DeleteBucket` and `AbortMultipartUpload`.
 
 ## R2 billing examples
 

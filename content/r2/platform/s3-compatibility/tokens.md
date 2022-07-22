@@ -26,4 +26,4 @@ You will not be able to access your **Secret Access Key** again after this step.
 
 {{</Aside>}}
 
-The S3 endpoint is available via `https://<ACCOUNT_ID>.r2.cloudflarestorage.com` endpoint. Find your [account ID in the Cloudflare dashboard](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+The S3 endpoint is available via `https://<ACCOUNT_ID>.r2.cloudflarestorage.com` endpoint. Find your [account ID in the Cloudflare dashboard](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).

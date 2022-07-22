@@ -139,7 +139,11 @@ Cloudflare enforces a 270-second idle timeout on TCP connections that go through
 
 If `cloudflared` returns error `error="remote error: tls: handshake failure"`, check to make sure the hostname in question is covered by a SSL certificate. If using a multi-level subdomain, an advanced certificate may be required as the Universal SSL will not cover more than one level of subdomain. This may surface in the browser as `ERR_SSL_VERSION_OR_CIPHER_MISMATCH`.
 
+## My tunnel disconnects at random intervals
+
+If your [Cloudflare Tunnel logs](/cloudflare-one/faq/cloudflare-tunnels-faq/#run-tunnel-with-debug-logging) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to configure system settings on the machine running `cloudflared`. This setting cannot be changed by `cloudflared`.
+
 ## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
 
-This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domainteam-name) while the [Cloudflare Dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
-Cloudflare Dashboard SSO does not currently support team domain changes. Contact support for more details.
+This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domainteam-name) while the [Cloudflare dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
+Cloudflare dashboard SSO does not currently support team domain changes. Contact your account team for more details.

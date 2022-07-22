@@ -2,6 +2,7 @@
 title: Enable Datadog
 pcx-content-type: how-to
 weight: 59
+layout: single
 meta:
   title: Enable Logpush to Datadog
 ---
@@ -73,7 +74,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 ```
 
 - **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
-- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/reference/logpush-api-configuration/#options).
+- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [API configuration options](/logs/get-started/api-configuration/#options).
 
 Example request using cURL:
 

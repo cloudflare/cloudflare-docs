@@ -8,7 +8,7 @@ weight: 2
 
 Browser Isolation is enabled through Secure Web Gateway HTTP policies. By default, no traffic is isolated until an Isolation policy has been added within HTTP policies. To start isolating your traffic, you need to:
 
-1.  Create a [Cloudflare Zero Trust account](https://dash.teams.cloudflare.com/) and select Browser Isolation as an add-on to either your Zero Trust Standard or your Zero Trust Enterprise plan.
+1.  Create a [Cloudflare Zero Trust account](https://dash.teams.cloudflare.com/) and click **Add on Browser Isolation** for either your Zero Trust Standard or your Zero Trust Enterprise plan.
 
 1.  Download the latest version of the [WARP client](/cloudflare-one/connections/connect-devices/warp/download-warp/).
 
@@ -42,7 +42,7 @@ In Chrome, click the padlock to the left of your address bar and select **Certif
 
 ![Cloudflare for Teams Root CA](/cloudflare-one/static/documentation/rbi/cloudflare-gateway-root-ca.png)
 
-**Simplified context menu**. Right-click context menu be simplified.
+**Simplified context menu**. Right-click context menu will be simplified.
 
 ![Simplified right click menu](/cloudflare-one/static/documentation/rbi/isolated-browser.png)
 
@@ -52,12 +52,12 @@ If you would like to temporarily disconnect Browser Isolation, you can do this b
 
 ### macOS
 
-1.  Click on the Cloudflare Logo in the Menu Bar.
-1.  Toggle the blue Connected switch into the Disconnected state.
+1.  Click the **Cloudflare Logo** in the Menu Bar.
+1.  Toggle the blue **Connected** switch into the Disconnected state.
 1.  Refresh your webpage to return to the non-isolated page.
 
 ### Windows
 
-1.  Click on the Cloudflare Logo in the System Tray.
-1.  Toggle the blue Connected switch into the Disconnected state.
+1.  Click the **Cloudflare Logo** in the System Tray.
+1.  Toggle the blue **Connected** switch into the Disconnected state.
 1.  Refresh your webpage to return to the non-isolated page.

@@ -2,6 +2,7 @@
 pcx-content-type: reference
 title: Nested Structures
 weight: 17
+layout: single
 ---
 
 # Nested Structures

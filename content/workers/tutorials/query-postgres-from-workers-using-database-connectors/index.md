@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx-content-type: tutorial
 title: Query Postgres from Workers using a database connector
+layout: single
 ---
 
 # Query Postgres from Workers using a database connector
@@ -189,7 +190,7 @@ $ wrangler publish
 
 ### Set secrets
 
-Create and save [a Client ID and a Client Secret](/cloudflare-one/identity/service-auth/service-tokens) to Worker secrets in case your Tunnel is protected by Cloudflare Access.
+Create and save [a Client ID and a Client Secret](/cloudflare-one/identity/service-tokens) to Worker secrets in case your Tunnel is protected by Cloudflare Access.
 
 ```sh
 $ wrangler secret put CF_CLIENT_ID

@@ -11,6 +11,7 @@ Cloudflare may issue certificates for SSL products from any of the following Cer
 - DigiCert
 - GlobalSign
 - Let’s Encrypt
+- Google Trust Services
 - Sectigo (formerly Comodo)
 
 ## Backup certificates

@@ -55,32 +55,30 @@ You should be familiar with setting up a [Worker](/workers/get-started/guide/) b
 To ensure your Worker can validate incoming requests, you must make the public keys available to your Worker via an [environmental variable](/workers/platform/environment-variables/). To do so, we can fetch the public keys from our Broker:
 
 ```bash
-$ curl -s -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}/publickeys
+$ wrangler pubsub broker public-keys YOUR_BROKER --namespace=NAMESPACE_NAME
 ```
 
-You should receive a HTTP 200 response that resembles the example below, with the public key set from your Worker:
+You should receive a success response that resembles the example below, with the public key set from your Worker:
 
 ```json
-{
-  "keys": [
-    {
-      "use": "sig",
-      "kty": "OKP",
-      "kid": "JDPuYJqHOvqzlakkNFQ9kfN7WsYs5uHndp_ziRdmOCU",
-      "crv": "Ed25519",
-      "alg": "EdDSA",
-      "x": "Phf82R8tG1FdY475-AgtlaWIwH1lLFlfWu5LrsKhyjw"
-    },
-    {
-      "use": "sig",
-      "kty": "OKP",
-      "kid": "qk7Z4hbN738v-m2CKdVaKTav9pU32MAaQXB2tDaQ-_o",
-      "crv": "Ed25519",
-      "alg": "EdDSA",
-      "x": "Bt4kQWcK_XhZP1ZxEflsoYbqaBm9rEDk_jNWPdhxwTI"
-    }
-  ]
-}
+"keys": [
+  {
+    "use": "sig",
+    "kty": "OKP",
+    "kid": "JDPuYJqHOvqzlakkNFQ9kfN7WsYs5uHndp_ziRdmOCU",
+    "crv": "Ed25519",
+    "alg": "EdDSA",
+    "x": "Phf82R8tG1FdY475-AgtlaWIwH1lLFlfWu5LrsKhyjw"
+  },
+  {
+    "use": "sig",
+    "kty": "OKP",
+    "kid": "qk7Z4hbN738v-m2CKdVaKTav9pU32MAaQXB2tDaQ-_o",
+    "crv": "Ed25519",
+    "alg": "EdDSA",
+    "x": "Bt4kQWcK_XhZP1ZxEflsoYbqaBm9rEDk_jNWPdhxwTI"
+  }
+]
 ```
 
 Copy the array of public keys into your `wrangler.toml` as an environmental variable:
@@ -129,7 +127,17 @@ BROKER_PUBLIC_KEYS = '''{
 }'''
 ```
 
-With the `BROKER_PUBLIC_KEYS` environmental variable set, we can now access these in our Worker code:
+With the `BROKER_PUBLIC_KEYS` environmental variable set, we can now access these in our Worker code. The [`@cloudflare/pubsub`](https://www.npmjs.com/package/@cloudflare/pubsub) package allows you to authenticate the incoming request against your Broker's
+public keys.
+
+To install `@cloudflare/pubsub`, you can use `npm` or `yarn`:
+
+```sh
+npm i @cloudflare/pubsub
+```
+
+With `@cloudflare/pubsub` installed, we can now import both the `isValidBrokerRequest` function and our `PubSubMessage` types into
+our Worker code directly:
 
 ```typescript
 ---
@@ -139,108 +147,7 @@ filename: index.ts
 
 /// <reference types="@cloudflare/workers-types" />
 
-const SIGNATURE_FORMAT = "NODE-ED25519";
-
-// PubSubMessage represents an incoming PubSub message.
-// The message includes metadata about the broker, the client, and the payload
-// itself.
-interface PubSubMessage {
-  // Message ID
-  readonly mid: number;
-  // MQTT broker FQDN
-  readonly broker: string;
-  // The MQTT topic the message was sent on.
-  readonly topic: string;
-  // The client ID of the client that published this message.
-  readonly clientId: string;
-  // The unique identifier (JWT ID) used by the client to authenticate, if token
-  // auth was used.
-  readonly jti?: string;
-  // A Unix timestamp (seconds from Jan 1, 1970), set when the Pub/Sub Broker
-  // received the message from the client.
-  readonly receivedAt: number;
-  // An (optional) string with the MIME type of the payload, if set by the
-  // client.
-  readonly contentType: string;
-  // Set to 1 when the payload is a UTF-8 string
-  // https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html#_Toc3901063
-  readonly payloadFormatIndicator: number;
-  // Pub/Sub (MQTT) payloads can be UTF-8 strings, or byte arrays.
-  // You can use payloadFormatIndicator to inspect this before decoding.
-  payload: string | Uint8Array;
-}
-
-// JsonWebKey extended by kid parameter
-interface JsonWebKeyWithKid extends JsonWebKey {
-  // Key Identifier of the JWK
-  readonly kid: string;
-}
-
-// Note: In the future, this will be be built into the Workers runtime for
-// Workers in the same account as the Pub/Sub Broker
-async function isValidBrokerRequest(
-  req: Request,
-  publicKeys: string
-): Promise<boolean> {
-  if (req.method !== "POST") {
-    return false;
-  }
-
-  let signature = req.headers.get("X-Signature-Ed25519");
-  let timestamp = req.headers.get("X-Signature-Timestamp");
-  let keyId = req.headers.get("X-Signature-Key-Id");
-
-  if (signature === null || timestamp === null || keyId === null) {
-    return false;
-  }
-
-  let body = await req.clone().text();
-  let alg = { name: SIGNATURE_FORMAT, namedCurve: SIGNATURE_FORMAT };
-
-  try {
-    // Convert the base64 encoded signature
-    let signatureBuffer = Uint8Array.from(atob(signature), (c) =>
-      c.charCodeAt(0)
-    );
-
-    // Deserialize the encoded list of JWKs associated with our Pub/Sub Broker
-    let publicJWKList: Array<JsonWebKeyWithKid> = JSON.parse(publicKeys).keys;
-
-    // Lookup JWK by Key Identifier
-    let publicJWK = publicJWKList.find((jwk) => jwk.kid === keyId);
-
-    // No JWK in the Set, request can not be verified
-    if (!publicJWK) {
-      return false;
-    }
-
-    // Import the public key from our Broker (in JWK format) so we can verify the
-    // request is from _our_ Broker, and not an untrusted third-party
-    let publicKey = await crypto.subtle.importKey(
-      "jwk",
-      publicJWK,
-      alg,
-      false,
-      ["verify"]
-    );
-
-    if (
-      await crypto.subtle.verify(
-        SIGNATURE_FORMAT,
-        publicKey,
-        signatureBuffer,
-        new TextEncoder().encode(timestamp + body)
-      )
-    ) {
-      return true;
-    }
-  } catch (e) {
-    console.log(e);
-    return false;
-  }
-
-  return false;
-}
+import { isValidBrokerRequest, PubSubMessage } from "@cloudflare/pubsub"
 
 async function pubsub(
   messages: Array<PubSubMessage>,
@@ -295,30 +202,25 @@ const worker = {
 export default worker;
 ```
 
-Once you've published your Worker using `wrangler publish`, you will need to configure your Broker to invoke the Worker. This is done by setting the `on_publish.url` field of your Broker to the _publicly accessible_ URL of your Worker:
+Once you've published your Worker using `wrangler publish`, you will need to configure your Broker to invoke the Worker. This is done by setting the `--on-publish-url` value of your Broker to the _publicly accessible_ URL of your Worker:
 
 ```bash
-$ curl -s -X PATCH -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}?on_publish_url="https://your-worker.your-account.workers.dev"
+$ wrangler pubsub broker update YOUR_BROKER --namespace=NAMESPACE_NAME --on-publish-url="https://your.worker.workers.dev"
 ```
 
-You should receive a HTTP 200 response that resembles the example below, with the URL of your Worker:
+You should receive a success response that resembles the example below, with the URL of your Worker:
 
 ```json
 {
-  "result": {
-    "id": "4c63fa30ee13414ba95be5b56d896fea",
-    "name": "example-broker",
-    "authType": "TOKEN",
-    "created_on": "2022-05-11T23:19:24.356324Z",
-    "modified_on": "2022-05-11T23:19:24.356324Z",
-    "expiration": null,
-    "endpoint": "mqtts://example-broker.namespace.cloudflarepubsub.com:8883",
-    "on_publish": {
-      "url": "https://your-worker.your-account.workers.dev"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+  "id": "4c63fa30ee13414ba95be5b56d896fea",
+  "name": "example-broker",
+  "authType": "TOKEN",
+  "created_on": "2022-05-11T23:19:24.356324Z",
+  "modified_on": "2022-05-11T23:19:24.356324Z",
+  "expiration": null,
+  "endpoint": "mqtts://example-broker.namespace.cloudflarepubsub.com:8883",
+  "on_publish": {
+    "url": "https://your-worker.your-account.workers.dev"
 }
 ```
 
@@ -366,9 +268,9 @@ This metadata includes:
 - a `receivedTimestamp`, set when Pub/Sub first parses and deserializes the message
 - the `mid` (“message id”) of the message. This is a unique ID allowing Pub/Sub to track messages sent to your Worker, including which messages were dropped (if any). The `mid` field is immutable and returning a modified or missing `mid` will likely cause messages to be dropped.
 
-This metadata, including their JavaScript types and whether they are immutable (“`readonly`”), are expressed as the PubSubMessage interface in the [Cloudflare Workers TypeScript type definitions](https://github.com/cloudflare/workers-types).
+This metadata, including their JavaScript types and whether they are immutable (“`readonly`”), are expressed as the `PubSubMessage` interface in the [@cloudflare/pubsub](https://github.com/cloudflare/pubsub) library.
 
-The `PubSubMessage` type may grow to include additional fields over time, and we recommend importing `cloudflare/workers-types` to ensure your code can benefit from any future changes.
+The `PubSubMessage` type may grow to include additional fields over time, and we recommend importing `@cloudflare/pubsub` (instead of copy+pasting) to ensure your code can benefit from any future changes.
 
 ### Batching
 

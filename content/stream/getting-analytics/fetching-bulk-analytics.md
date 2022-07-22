@@ -12,6 +12,12 @@ Cloudflare Stream lets you fetch usage data in bulk using the GraphQL API. Strea
 
 For additional information on using GraphQL, refer to [Get started with GraphQL Analytics API](/analytics/graphql-api/getting-started/).
 
+{{<Aside type="note">}}
+
+You must have the **Account Analytics** permission added to your account to view Stream analytics.
+
+{{</Aside>}}
+
 ## Analytics in the dashboard
 
 To view analytics data from the Cloudflare dashboard:
@@ -63,7 +69,7 @@ If you are newer to GraphQL, refer to [Cloudflare GraphQL analytics for HTTP req
 
 Here is how you would get the view count and minutes viewed for the videos in your Stream account:
 
-1.  Make a query to https://api.cloudflare.com/client/v4/graphql
+1.  Make a query to `https://api.cloudflare.com/client/v4/graphql`
 2.  Include your Cloudflare API token in the headers (see cURL example included on this page)
 3.  It is important that you change the $ACCOUNT\_ID with your account ID and the date range
 4.  The body of the query should contain the following GraphQL Query:
