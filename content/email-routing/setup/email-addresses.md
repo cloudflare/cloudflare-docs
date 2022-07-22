@@ -1,22 +1,14 @@
 ---
-title: Configure email rules and addresses
+title: Configure email rules
 pcx-content-type: how-to
-weight: 3
+weight: 1
 ---
 
-# Routes
+# Configure email rules
 
-The Routes page allows you to setup and maitain different aspects of Email Routing. It is also here you can create and update your rules. Rules are pairs of custom email addresses paired with a destination address, that allows you to route emails to your preferred inbox.
-
-{{<Aside type="note" header="Note">}}
-
-A custom address paired with destination address form an email rule. You can enable, disable, and delete email rules.
-
-{{</Aside>}}
+An email rule is a pair of a custom email address and a destination address. This allows you to route emails to your preferred inbox. You can have multiple custom addresses, to route email from specific providers to specific mail inboxes.
 
 ## Custom addresses
-
-In this section you can create, enable, disable, and edit custom addresses. To add new custom addresses:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Email** > **Routes**.
