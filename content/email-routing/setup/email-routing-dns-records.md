@@ -14,4 +14,4 @@ Click **View DNS records** for a list of the required MX and sender policy frame
 
 ## Start disabling
 
-The **Start disabling** button allows you to delete Email routing from your account or keep your records and migrate to another provider. Refer to [Disable Email Routing](/email-routing/setup/disable-email-routing/) for more information.
+The **Start disabling** button allows you to delete Email Routing from your account or keep your records and migrate to another provider. Refer to [Disable Email Routing](/email-routing/setup/disable-email-routing/) for more information.
