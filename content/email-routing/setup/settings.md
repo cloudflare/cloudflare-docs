@@ -1,7 +1,7 @@
 ---
 title: Settings
 pcx-content-type: reference
-weight: 4
+weight: 1
 meta:
     title: Email Routing settings page
 ---

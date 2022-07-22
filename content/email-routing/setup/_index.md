@@ -1,7 +1,7 @@
 ---
 title: Configure email rules and addresses
 pcx-content-type: how-to
-weight: 2
+weight: 3
 ---
 
 # Routes
