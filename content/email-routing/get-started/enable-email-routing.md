@@ -13,17 +13,17 @@ Enabling Email Routing adds the appropriate MX records to your DNS settings in o
 {{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Email**, and click **Get started**.
+2. Go to **Email**, and select **Get started**.
 3. In **Custom address**, enter the custom email address you want to use (for example, `my-new-email@example.com`).
 4. In **Destination address**, enter the full email address you want your emails to be forwarded to — for example, `your-name@gmail.com`.
 
   {{<Aside type="note">}}If you have several destination addresses linked to the same custom email address (rule), Email Routing will only process the most recent rule. To avoid this, do not link several destination addresses to the same custom address.{{</Aside>}}
 
-5. Click **Create and continue**.
+5. Select **Create and continue**.
 6. Cloudflare will send a verification email to the address provided in the **Destination address** field. You must verify your email address before being able to proceed.
-7. In the verification email Cloudflare sent you, click **Verify email address** > **Go to Email Routing** to activate Email Routing.
-8. Your Destination address should now show **Verified**, under **Status**. Click **Continue**.
-9. Cloudflare needs to add the relevant `MX` and `TXT` records to DNS records for Email Routing to work. This step is automatic and is only needed the first time you configure Email Routing. It is meant to ensure you have the proper records configured in your zone. Click **Add records and finish**.
+7. In the verification email Cloudflare sent you, select **Verify email address** > **Go to Email Routing** to activate Email Routing.
+8. Your Destination address should now show **Verified**, under **Status**. Select **Continue**.
+9. Cloudflare needs to add the relevant `MX` and `TXT` records to DNS records for Email Routing to work. This step is automatic and is only needed the first time you configure Email Routing. It is meant to ensure you have the proper records configured in your zone. Select **Add records and finish**.
 
 Email Routing is now enabled. You can add other custom addresses to your account. 
 

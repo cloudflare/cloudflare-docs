@@ -12,7 +12,7 @@ The Overview page shows you a summary of your account. You can check details suc
 
 ## Email Routing metrics 
 
-In Email Routing metrics you can check metrics related the number of emails received, forwarded, dropped, and rejected. To filter this information by time interval, click the drop-down menu. You can choose preset periods between the previous 30 minutes and 30 days, as well as a custom date range.
+In Email Routing metrics you can check metrics related the number of emails received, forwarded, dropped, and rejected. To filter this information by time interval, select the drop-down menu. You can choose preset periods between the previous 30 minutes and 30 days, as well as a custom date range.
 
 ## Email routing logs
 
