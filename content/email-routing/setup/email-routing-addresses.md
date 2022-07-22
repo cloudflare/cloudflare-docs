@@ -1,10 +1,10 @@
 ---
-title: Configure email rules
+title: Configure rules and addresses
 pcx-content-type: how-to
 weight: 1
 ---
 
-# Configure email rules
+# Configure rules and addresses
 
 An email rule is a pair of a custom email address and a destination address. This allows you to route emails to your preferred inbox. You can have multiple custom addresses, to route email from specific providers to specific mail inboxes.
 
