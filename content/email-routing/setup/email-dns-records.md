@@ -1,5 +1,5 @@
 ---
-title: Email DNS records
+title: DNS records
 pcx-content-type: reference
 weight: 2
 meta:
@@ -8,14 +8,10 @@ meta:
 
 # Email Routing DNS records
 
-Email Routing's Settings section displays the DNS records needed for Email Routing to work. If the DNS records are correctly configured, you will see a green `Email DNS records configured` message. Click **View DNS records** for a list of the required MX records Email Routing is using.
+Email Routing's Settings section allows you to lock or unlock your DNS records, and also view a list of the DNS records needed for Email Routing to work. If your account's DNS records are correctly configured, Email Routing will show you a green `Email DNS records configured` message. 
 
-You can also unlock your DNS records to make additional changes or disable Email Routing, or lock your DNS records.
+Click **View DNS records** for a list of the required MX and sender policy framework (SPF) records Email Routing is using.
 
-## Misconfigured Email Routing records
+## Start disabling
 
-Email Routing warns you when your DNS records are not properly configured. When this happens, Email Routing also shows which records are required, and which records you will have to delete (if any) to activate the service.
-
-To activate Email Routing and clean your DNS records, click **Enable Email Routing**. Email Routing will guide you through this process.
-
-This section will also show you a number of problems that might arise from misconfigured DNS settings, such as having multiple sender policy framework (SPF) records. Refer to [Troubleshooting SPF records](/email-routing/troubleshooting/spf-records/) for details on how to solve this issue.
+The **Start disabling** button allows you to delete Email routing from your account or keep your records and migrate to another provider. Refer to [Disable Email Routing](/email-routing/setup/disable-email-routing/) for more information.

@@ -8,7 +8,7 @@ weight: 1
 
 {{<Aside type="warning" header="Important">}}
 
-Enabling Email Routing adds the appropriate MX records to your DNS settings in order for the service to work. You can [change these MX records](/email-routing/get-started/settings) at any time. However, depending on how you configure them, Email Routing might stop working.
+Enabling Email Routing adds the appropriate MX records to your DNS settings in order for the service to work. You can [change these MX records](/email-routing/setup/email-dns-records/) at any time. However, depending on how you configure them, Email Routing might stop working.
 
 {{</Aside>}}
 
