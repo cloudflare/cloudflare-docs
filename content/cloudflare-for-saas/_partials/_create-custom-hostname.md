@@ -6,7 +6,7 @@ _build:
 ---
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2.  Select your SSL for SaaS application.
+2.  Select your Cloudflare for SaaS application.
 3.  Navigate to **SSL/TLS** > **Custom Hostnames**.
 4.  Click **Add Custom Hostname**.
 5.  Add your customer's hostname `app.customer.com` and set the relevant options, including:

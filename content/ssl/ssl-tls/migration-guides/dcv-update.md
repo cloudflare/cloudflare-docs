@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Changes to HTTP DCV
-weight: 11
+weight: 1
 ---
 
 # Changes to HTTP DCV
