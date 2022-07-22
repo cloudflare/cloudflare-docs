@@ -150,8 +150,10 @@
 /dns/zone-setups/secondary-dns/ /dns/zone-setups/zone-transfers/ 301
 
 # email-routing
-/email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/
-/email-routing/email-routing-options/ /email-routing/get-started/
+/email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
+/email-routing/email-routing-options/ /email-routing/setup/ 301
+/email-routing/get-started/email-addresses/ /email-routing/setup/email-routing-addresses/ 301
+/email-routing/get-started/settings/ /email-routing/setup/ 301
 
 # firewall
 /firewall/cf-firewall-rules/api-shield/ /api-shield/ 301
