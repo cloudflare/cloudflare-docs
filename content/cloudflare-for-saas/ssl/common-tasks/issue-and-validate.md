@@ -75,7 +75,7 @@ HTTP adds a DCV token to your origin. You can either add that token [manually](#
 {{<Aside type="warning">}}
 <<<<<<< HEAD:content/cloudflare-for-saas/ssl/common-tasks/issue-and-validate.md
  
-HTTP DCV validation is no longer allowed for wildcard certificates. For more details and next steps, refer to [Changes to HTTP DCV](/ssl/ssl-tls/dcv-update/).
+HTTP DCV validation is no longer allowed for wildcard certificates. For more details and next steps, refer to [DCV Validation](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/#dcv-methods).
  
 =======
 
