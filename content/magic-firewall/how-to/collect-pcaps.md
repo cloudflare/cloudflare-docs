@@ -8,8 +8,7 @@ meta:
 # Packet Captures (PCAPs) API
 
 The PCAPs API can be used to capture packets destined for a customer origin.
-A packet capture is requested and after the capture is collected the output
-is contained within one or more files in PCAP capture file format.
+A packet capture is requested and after the capture is collected the output is contained within one or more files in PCAP capture file format.
 
 {{<Aside>}}
 
@@ -203,6 +202,8 @@ While the collection is ongoing, the status will be set to `pending` or `running
 ## Download PCAP
 
 Depending on the `type` of PCAP there are multiple ways to obtain your PCAP.
+
+For more information on how to process multiple saved capture files into a single output file, refer to [Wireshark's mergecap documentation](https://www.wireshark.org/docs/man-pages/mergecap.html).
 
 ### Full PCAPs
 
