@@ -60,7 +60,7 @@ HTTP adds a DCV token to your origin. You can either add that token [manually](#
 
 {{<Aside type="warning">}}
 
-Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates. For more details and next steps, refer to [Changes to HTTP DCV](/ssl/ssl-tls/migration-guides/dcv-update/).
+HTTP DCV validation is not allowed for wildcard certificates. For more details and next steps, refer to [Changes to HTTP DCV](/ssl/ssl-tls/migration-guides/dcv-update/).
 
 {{</Aside>}}
 
