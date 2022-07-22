@@ -118,7 +118,7 @@ Below is a list of implemented object-level operations. Refer to the Feature col
 
 {{<Aside type="warning">}}
 
-R2 currently has a limitation of 3 concurrent part uploads for the same multipart upload. Utilities commonly have a default multipart upload concurrency above this, make sure you reduce the multipart upload concurrency to 3 or less.
+R2 currently has a limitation of three concurrent part uploads for the same multipart upload. Utilities commonly have a default multipart upload concurrency above this. Make sure you reduce the multipart upload concurrency to three uploads or less.
 
 This does not apply to concurrent uploads for different files.
 
