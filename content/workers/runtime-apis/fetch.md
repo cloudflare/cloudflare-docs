@@ -21,6 +21,14 @@ Worker-to-Worker `fetch` requests are now possible with [Service bindings](/work
 
 {{</Aside>}}
 
+{{<Aside type="warning" header="Non-standard ports">}}
+
+Workers are unable to `fetch` on non-standard ports. They will default to the default port for that scheme, such as `443` for `https://`.
+
+This behaviour is not present in local development or when using Quick Edit in the dashboard.
+
+{{</Aside>}}
+
 ---
 
 ## Constructor
