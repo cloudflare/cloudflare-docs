@@ -27,10 +27,7 @@ The interface provides active feedback on valid and invalid entries. Valid entri
 To configure a subdomain in your `wrangler.toml`, add the following to your environment:
 
 ```toml
-Route = [
-{pattern = “subdomain.example.com”, 
-custom domains = true,
-}]
+routes = [{ pattern = "subdomain.example.com", custom_domain = true }]
 ```
 
 ## Fetch
