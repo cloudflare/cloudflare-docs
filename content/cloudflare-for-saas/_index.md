@@ -49,7 +49,7 @@ This allows you to support apex domains even if your customers are using a DNS p
 
 ### Cloudflare for SaaS with BYOIP:
 
-This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. Also, you can point to your own IPs if you want to bring an IP range to Cloudflare (instead of Cloudflare provided IPs). This is avaiable as an add-on for Enterprise plans.
+This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. Also, you can point to your own IPs if you want to bring an IP range to Cloudflare (instead of Cloudflare provided IPs). This is avalible as an add-on for Enterprise plans.
 
 ![Pro Case](/cloudflare-for-saas/static/use-cases/Pro.png)
 
