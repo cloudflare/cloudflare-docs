@@ -24,6 +24,12 @@ If there are multiple proxied DNS records for one zone, Cloudflare must prioriti
 
 The fallback origin is where Cloudflare will route traffic sent to your custom hostnames (must be proxied).
 
+{{<Aside type="note">}}
+
+You can also [use a Worker as your origin](/cloudflare-for-saas/ssl/reference/worker-as-origin/) or [create a custom origin server](/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-origin/) to send traffic from one or more custom hostnames somewhere besides your default proxy fallback.
+
+{{</Aside>}}
+
 The CNAME target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#step-5--have-customer-create-a-cname-record).
 
 We suggest using a domain other than your main company domain (example.cloud instead of example.com) to lower risk and add flexibility to your custom hostname management.
@@ -63,11 +69,18 @@ We suggest using a domain other than your main company domain (example.cloud ins
 
 Each Custom Hostname requires successful Certificate Validation and Hostname Verification.
 
-- [Certificate Validation](/cloudflare-for-saas/ssl/common-tasks/certificate-validation-methods/): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
+- [Certificate Validation](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
 - [Hostname Verification](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
 
-Depending on which method you select for each of these options, additional steps might be required for you and your customers.
 {{<Aside type="note">}}
+
+Verification checks occur frequently immediately after a hostname is created, but the gaps between check intervals increase over the following seven days. For more detail, refer to [Hostname verification backoff schedule](/cloudflare-for-saas/ssl/reference/hostname-verification-backoff-schedule/).
+
+{{</Aside>}}
+
+Depending on which method you select for each of these options, additional steps might be required for you and your customers.
+
+{{<Aside type="warning">}}
 You can no longer use HTTP based validation for Wildcard certificates according to the Certificate Authority Browser Forum.
 {{</Aside>}}
 
@@ -107,13 +120,13 @@ With a CNAME in place, the entire process — from validation to issuance to edg
 
 ### Monitor certificate status
 
-For help tracking a certificate's status, refer to [Monitor certificates](/cloudflare-for-saas/ssl/common-tasks/issuing-certificates/).
+For help tracking a certificate's status, refer to [Monitor certificates](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/).
 
 ### View certificates
 
 Once domain validation has been completed, the certificates will be issued and distributed to Cloudflare’s edge.
 
-To view these certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/cloudflare-for-saas/ssl/common-tasks/certificate-validation-methods/)).
+To view these certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/)).
 
 ```sh
 $ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep app.example.com
@@ -135,22 +148,10 @@ This routes traffic from `app.customer.com` to your origin.
 
 ---
 
-## Step 6 - Offboard custom hostnames
+## Step 6 — Offboard custom hostnames
 
-As a SaaS provider, you must removed a customer's custom hostname from your zone if they decide to churn. Even if the end customer changes the DNS record to point elsewhere, the custom hostname on the SaaS zone will take priority. This will cause its traffic to continue to route to the SaaS zone.
+As a SaaS provider, you must remove a customer's custom hostname from your zone if they decide to churn. Even if the end customer changes the DNS record to point elsewhere, the custom hostname on the SaaS zone will take priority. This will cause its traffic to continue to route to the SaaS zone.
 
 ### Remove custom hostname
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and website.
-
-2. Select **SSL/TLS** > **Custom Hostnames**.
-
-3. Select the custom hostname and select **Delete**. 
-
-4. A confirmation window will appear. Acknowledge the warning and select **Delete** again.
-
-{{<Aside type="note">}}
-
-For end customers: if you have recently churned with your service (SaaS) provider but traffic continues to route to them, your service provider likely still has your domain listed as a custom hostname. Contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) for further assistance.
-
-{{</Aside>}}
+{{<render file="_delete-custom-hostname-dash.md">}}

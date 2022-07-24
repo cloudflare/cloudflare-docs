@@ -98,15 +98,17 @@ We recommend running `cloudflared` [as a service](/cloudflare-one/connections/co
 
 ## Create or modify DNS records
 
-You can now [route traffic](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) to your Tunnel, and on to both applications, using Cloudflare DNS. Visit the [Cloudflare dashboard](https://dash.cloudflare.com), select a website, and click on the `DNS` tab.
+You can now [route traffic](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) to your Tunnel, and on to both applications, using Cloudflare DNS. Visit the [Cloudflare dashboard](https://dash.cloudflare.com), select a website, and click on the **DNS** tab.
 
-Click `+Add record` and choose `CNAME`. In the `Name` field, add the name of the subdomain of your new site. In this example, that would be `grafana` and `blog`.
+Click **Add record** and choose `CNAME`. In the **Name** field, add the name of the subdomain of your new site. In this example, that would be `grafana` and `blog`.
 
-In the `Content` field, paste the ID of your Tunnel created earlier and append `cfargotunnel.com`. Repeat this process for the second subdomain - they will both share the same Tunnel address.
+In the **Content** field, paste the ID of your Tunnel created earlier and append `cfargotunnel.com`. Repeat this process for the second subdomain - they will both share the same Tunnel address.
 
 For example, the `CNAME` entry for `grafana` and `blog` should point to the same value; in this example, that would be the following string:
 
-`5157d321-5933-4b30-938b-d889ca87e11b.cfargotunnel.com`
+```txt
+5157d321-5933-4b30-938b-d889ca87e11b.cfargotunnel.com
+```
 
 ![DNS records](/cloudflare-one/static/secure-origin-connections/multi-origin/multi-origin-dns.png)
 

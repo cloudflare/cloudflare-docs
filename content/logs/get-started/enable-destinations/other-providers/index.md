@@ -2,6 +2,7 @@
 title: Enable other providers
 pcx-content-type: how-to
 weight: 66
+layout: single
 meta:
   title: Enable Logpush to other providers
 ---

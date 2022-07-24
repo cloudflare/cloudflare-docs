@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
 title: Cron Triggers
+layout: single
 ---
 
 # Cron Triggers

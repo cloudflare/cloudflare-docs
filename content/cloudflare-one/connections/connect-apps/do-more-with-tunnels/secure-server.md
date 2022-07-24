@@ -50,8 +50,8 @@ Alternatively, you may also use operating system (OS)-level firewall rules to di
 
 1.  Drop all other ingress traffic.
 
-    {{<Aside header="Warning:">}}
-    Be very careful with the following command because if you didn't preserve the current SSH connection or allow new SSH connections, you would be logged out and unable to SSH back into the system again.
+    {{<Aside type="warning" header="Warning">}}
+Be very careful with the following command because if you did not preserve the current SSH connection or allow new SSH connections, you would be logged out and unable to SSH back into the system again.
     {{</Aside>}}
 
     ```sh
@@ -60,9 +60,9 @@ Alternatively, you may also use operating system (OS)-level firewall rules to di
 
 1.  After setting the firewall rules, use this command to check the current `iptables` settings:
 
-```sh
-$ sudo iptables -L
-```
+    ```sh
+    $ sudo iptables -L
+    ```
 
 Run your tunnel and check that all the services specified in `config.yml` should still be accessible to the outside world via the tunnel, but not via the external IP address of the server.
 

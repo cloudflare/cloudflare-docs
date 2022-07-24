@@ -129,6 +129,7 @@
 /bots/bot-fight-mode/ /bots/ 301
 /bots/bot-management-enterprise/ /bots/get-started/bm-subscription/ 301
 /bots/bm-subscription/ /bots/get-started/bm-subscription/ 301
+/bots/troubleshooting/ https://support.cloudflare.com/hc/articles/360035387431 301
 
 # byoip
 /byoip/dynamic-advertisement/ /byoip/about/dynamic-advertisement/ 301
@@ -286,7 +287,6 @@
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/reference/common-configurations/ 301
 
 # logs
-/logs/analytics-integrations/ /fundamentals/data-products/analytics-integrations/ 301
 /logs/get-started/logpush-configuration-api/ /logs/get-started/enable-destinations/ 301
 /logs/get-started/logpush-configuration-api/examples/ /logs/reference/logpush-api-configuration/examples/ 301
 /logs/get-started/logpush-configuration-api/examples/example-logpush-curl/ /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ 301
@@ -493,6 +493,8 @@
 /ssl/ssl-for-saas/uploading-certificates/ /cloudflare-for-saas/ssl/custom-certificates/uploading-certificates/ 301
 /ssl/ssl-for-saas/validation-backoff-schedule/ /ssl/ssl-tls/validation-backoff-schedule/ 301
 /ssl/ssl-for-saas/versioning/ /cloudflare-for-saas/ssl/reference/versioning/ 301
+/cloudflare-for-saas/ssl/common-tasks/certificate-validation-methods/ /cloudflare-for-saas/ssl/common-tasks/issue-and-validate/ 301
+/cloudflare-for-saas/ssl/common-tasks/issuing-certificates/ /cloudflare-for-saas/ssl/common-tasks/issue-and-validate/ 301
 <!-- Includes dynamic redirects listed at bottom -->
 
 # stream
@@ -1020,6 +1022,7 @@
 /browser-isolation/* /cloudflare-one/policies/browser-isolation/ 301
 
 /ssl/custom-certificates/* /ssl/edge-certificates/custom-certificates/:splat 301
+/logs/analytics-integrations/* /fundamentals/data-products/analytics-integrations/:splat 301
 
 # partial redirects (will expand later)
 

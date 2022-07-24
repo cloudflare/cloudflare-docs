@@ -66,7 +66,7 @@ If you are done creating Tunnels, you can delete the `cert.pem` file, leave only
 
 You can now [configure](/cloudflare-one/connections/connect-apps/configuration/) `cloudflared` to route traffic to your local development environment. You can use a configuration file to do so, which makes it easier to start `cloudflared` in the future.
 
-By default, `cloudflared` expects the configuration file at a specific location: `~/.cloudflared/config.yml`. You can modify this location if you want. For this example, we'll keep the default. Create or edit your configuration file using a text editor.
+By default, `cloudflared` expects the configuration file at a specific location: `~/.cloudflared/config.yml`. You can modify this location if you want. For this example, we will keep the default. Create or edit your configuration file using a text editor.
 
 `$ vim ~/.cloudflared/config.yml`
 
@@ -86,11 +86,13 @@ At this point, you have created and configured your Cloudflare Tunnel connection
 
 ## Create DNS records
 
-You can now [route traffic](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) to your Tunnel, and on to your local server, using Cloudflare DNS. Visit the [Cloudflare dashboard](https://dash.cloudflare.com), select a website, and click on the `DNS` tab.
+You can now [route traffic](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) to your Tunnel, and on to your local server, using Cloudflare DNS. Visit the [Cloudflare dashboard](https://dash.cloudflare.com), select a website, and click on the **DNS** tab.
 
-Click `+Add record` and choose `CNAME`. In the `Name` field, add the name of the subdomain of your new site. In the `Content` field, paste the ID of your Tunnel created earlier and append `cfargotunnel.com`.
+Click **Add record** and choose `CNAME`. In the **Name** field, add the name of the subdomain of your new site. In the **Content** field, paste the ID of your Tunnel created earlier and append `cfargotunnel.com`.
 
-`5157d321-5933-4b30-938b-d889ca87e11b.cfargotunnel.com`
+```txt
+5157d321-5933-4b30-938b-d889ca87e11b.cfargotunnel.com
+```
 
 ![Add DNS](/cloudflare-one/static/secure-origin-connections/share-new-site/add-dns.png)
 

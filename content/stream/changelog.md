@@ -29,6 +29,14 @@ The Stream Dashboard now has an analytics panel that shows the number of minutes
 
 The Stream Player can now be configured to use a custom letterbox color, displayed around the video ("letterboxing" or "pillarboxing") when the video's aspect ratio does not match the player's aspect ratio. Refer to the documentation on configuring the Stream Player [here](/stream/viewing-videos/using-the-stream-player/#basic-options).
 
+## 2022-03-10
+
+### Support for SRT live streaming protocol
+
+Cloudflare Stream now supports the SRT live streaming protocol. SRT is a modern, actively maintained streaming video protocol that delivers lower latency, and better resilience against unpredictable network conditions. SRT supports newer video codecs and makes it easier to use accessibility features such as captions and multiple audio tracks.
+
+For more, read the [blog post](https://blog.cloudflare.com/stream-now-supports-srt-as-a-drop-in-replacement-for-rtmp/).
+
 ## 2022-02-17
 
 ### Faster video quality switching in Stream Player
@@ -65,15 +73,136 @@ The [Stream Player](/stream/viewing-videos/using-the-stream-player/) now shows t
 
 You can now configure Stream to send webhooks each time a live stream connects and disconnects. For more information, refer to the [Webhooks documentation](/stream/stream-live/webhooks).
 
+## 2021-12-07
+
+### FedRAMP Support
+
+The Stream Player can now be served from a [FedRAMP](https://www.cloudflare.com/press-releases/2021/cloudflare-hits-milestone-in-fedramp-approval/) compliant subdomain.
+
+## 2021-11-23
+
+### 24/7 Live streaming support
+
+You can now use Cloudflare Stream for 24/7 live streaming.
+
+## 2021-11-17
+
+### Persistent Live Stream IDs
+
+You can now start and stop live broadcasts without having to provide a new video ID to the Stream Player (or your own player) each time the stream starts and stops. [Read the docs](/stream/stream-live/watch-live-stream/#view-by-live-input-id).
+
+## 2021-10-14
+
+### MP4 video file downloads for live videos
+
+Once a live video has ended and been recorded, you can now give viewers the option to download an MP4 video file of the live recording. For more, read the docs [here](/stream/stream-live/download-stream-live-videos/).
+
 ## 2021-09-30
 
 ### Serverless Live Streaming
 
 Stream now supports live video content! For more information, read the [blog post](https://blog.cloudflare.com/stream-live/) and get started by reading the [docs](/stream/stream-live/).
-...
 
 ## 2021-07-26
 
 ### Thumbnail previews in Stream Player seek bar
 
 The Stream Player now displays preview images when viewers hover their mouse over the seek bar, making it easier to skip to a specific part of a video.
+
+### MP4 video file downloads (GA)
+
+All Cloudflare Stream customers can now give viewers the option to download videos uploaded to Stream as an MP4 video file. For more, read the docs [here](/stream/viewing-videos/download-videos/).
+
+## 2021-07-10
+
+### Stream Connect (open beta)
+
+You can now opt-in to the Stream Connect beta, and use Cloudflare Stream to restream live video to any platform that accepts RTMPS input, including Facebook, YouTube and Twitch.
+
+For more, read the [blog post](https://blog.cloudflare.com/restream-with-stream-connect/) or the [docs](/stream/stream-live/simulcasting/).
+
+## 2021-06-10
+
+### Simplified signed URL token generation
+
+You can now obtain a signed URL token via a single API request, without needing to generate signed tokens in your own application. [Read the docs](/stream/viewing-videos/securing-your-stream)
+
+## 2021-06-08
+
+### Stream Connect (closed beta)
+
+You can now use Cloudflare Stream to restream or simulcast live video to any platform that accepts RTMPS input, including Facebook, YouTube and Twitch.
+
+For more, read the [blog post](https://blog.cloudflare.com/restream-with-stream-connect/) or the [docs](/stream/stream-live/simulcasting/).
+
+## 2021-05-03
+
+### MP4 video file downloads (beta)
+
+You can now give your viewers the option to download videos uploaded to Stream as an MP4 video file. For more, read the docs [here](/stream/viewing-videos/download-videos/).
+
+## 2021-03-10
+
+### Stream Player 2.0 (preview)
+
+A brand new version of the Stream Player is now available for preview. New features include:
+
+- Unified controls across desktop and mobile devices
+- Keyboard shortcuts
+- Intelligent mouse cursor interactions with player controls
+- Phased out support for Internet Explorer 11
+
+For more, refer to [this post](https://community.cloudflare.com/t/announcing-the-preview-build-for-stream-player-2-0/243095) on the Cloudflare Community Forum.
+
+## 2021-03-04
+
+### Faster video encoding
+
+Videos uploaded to Cloudflare Stream are now available to view 5x sooner, reducing the time your users wait between uploading and viewing videos.
+
+## 2021-03-29
+
+### Picture quality improvements
+
+Cloudflare Stream now encodes videos with fewer artifacts, resulting in improved video quality for your viewers.
+
+## 2021-03-25
+
+### Improved client bandwidth hints for third-party video players
+
+If you use Cloudflare Stream with a third party player, and send the `clientBandwidthHint` parameter in requests to fetch video manifests, Cloudflare Stream now selects the ideal resolution to provide to your client player more intelligently. This ensures your viewers receive the ideal resolution for their network connection.
+
+## 2021-03-17
+
+### Less bandwidth, identical video quality
+
+Cloudflare Stream now delivers video using 3-10x less bandwidth, with no reduction in quality. This ensures faster playback for your viewers with less buffering, particularly when viewers have slower network connections.
+
+## 2021-01-17
+
+### Removed weekly upload limit, increased max video upload size
+
+- You can now upload videos up to 30GB in size to Cloudflare Stream
+- You can now upload an unlimited number of videos to Cloudflare Stream each week
+
+## 2020-12-14
+
+### Tus support for direct creator uploads
+
+You can now use the [tus protocol](/stream/uploading-videos/direct-creator-uploads/#using-tus-recommended-for-videos-over-200mb) when allowing creators (your end users) to upload their own videos directly to Cloudflare Stream.
+
+In addition, all uploads to Cloudflare Stream made using tus are now faster and more reliable as part of this change.
+
+## 2020-12-09
+
+### Multiple audio track mixdown
+
+Videos with multiple audio tracks (ex: 5.1 surround sound) are now mixed down to stereo when uploaded to Stream. The resulting video, with stereo audio, is now playable in the Stream Player.
+
+## 2020-12-02
+
+### Storage limit notifications
+
+Cloudflare now emails you if your account is using 75% or more of your prepaid video storage, so that you can take action and plan ahead.
+
+...

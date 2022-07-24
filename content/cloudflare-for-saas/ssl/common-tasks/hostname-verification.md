@@ -47,7 +47,7 @@ proxy-fallback.saasprovider.com CNAME proxy-fallback.saasprovider.com.cdn.cloudf
 app.example.com CNAME proxy-fallback.saasprovider.com
 ```
 
-## Apex verification
+## Apex Proxying
 
 If you have an Enterprise account, you can utilize Apex verification (after talking with your account team).
 

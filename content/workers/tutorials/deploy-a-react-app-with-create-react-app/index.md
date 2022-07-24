@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx-content-type: tutorial
 title: Deploy a React app with create‑react‑app
+layout: single
 ---
 
 <!-- Use non-breaking hyphens &#8209; instead of - to improve layout -->

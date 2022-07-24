@@ -4,7 +4,7 @@ pcx-content-type: how-to
 weight: 1
 layout: single
 meta:
-  title: Method — Domain Control Validation — SSL/TLS
+  title: Methods — Domain Control Validation
 ---
 
 # DCV Methods

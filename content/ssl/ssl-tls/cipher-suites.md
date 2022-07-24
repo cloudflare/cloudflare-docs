@@ -40,11 +40,11 @@ We no longer support [RC4 cipher suites](https://blog.cloudflare.com/end-of-the-
 | AES256-SHA256                       | ❌      | ❌      | ✅      | ❌      |
 | AES256-SHA                          | ✅      | ✅      | ✅      | ❌      |
 | DES-CBC3-SHA                        | ✅      | ❌      | ❌      | ❌      |
-| AEAD-AES128-GCM-SHA256 <sup>1</sup>        | ❌      | ❌      | ❌      | ✅      |
-| AEAD-AES256-GCM-SHA384 <sup>1</sup>        | ❌      | ❌      | ❌      | ✅      |
-| AEAD-CHACHA20-POLY1305-SHA256 <sup>1</sup> | ❌      | ❌      | ❌      | ✅      |
+| AEAD-AES128-GCM-SHA256 [^1]         | ❌      | ❌      | ❌      | ✅      |
+| AEAD-AES256-GCM-SHA384 [^1]         | ❌      | ❌      | ❌      | ✅      |
+| AEAD-CHACHA20-POLY1305-SHA256 [^1]  | ❌      | ❌      | ❌      | ✅      |
 
-1. Although TLS 1.3 uses the same cipher suite space as previous versions of TLS, TLS 1.3 cipher suites are defined differently. They only specifying the symmetric ciphers and cannot be used for TLS 1.2. Similarly, TLS 1.2 and lower cipher suites cannot be used with TLS 1.3 (IETF TLS 1.3 draft 21). BoringSSL also hard-codes cipher preferences in this order for TLS 1.3.
+[^1]: _Although TLS 1.3 uses the same cipher suite space as previous versions of TLS, TLS 1.3 cipher suites are defined differently. They only specifying the symmetric ciphers and cannot be used for TLS 1.2. Similarly, TLS 1.2 and lower cipher suites cannot be used with TLS 1.3 (IETF TLS 1.3 draft 21). BoringSSL also hard-codes cipher preferences in this order for TLS 1.3._
 
 ### Custom certificates
 

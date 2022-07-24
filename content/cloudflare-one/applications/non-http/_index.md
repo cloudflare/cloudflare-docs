@@ -2,6 +2,7 @@
 pcx-content-type: how-to
 title: Add non-HTTP applications
 weight: 5
+layout: single
 ---
 
 # Add non-HTTP applications

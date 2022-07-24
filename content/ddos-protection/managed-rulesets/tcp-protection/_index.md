@@ -2,6 +2,7 @@
 title: Advanced TCP Protection
 pcx-content-type: concept
 weight: 5
+layout: single
 meta:
   title: Cloudflare Advanced TCP Protection Managed Ruleset
 ---
