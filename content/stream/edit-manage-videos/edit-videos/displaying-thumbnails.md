@@ -22,7 +22,7 @@ https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.
 
 <img src="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270" alt="Example of thumbnail image generated from video of car driving down highway" />
 
-Using the `poster` query parameter in the embed URL, you can set a thumbnail to any time in your video. If [signed URLs](/stream/edit-manage-videos/manage-video-library/securing-your-stream/) are required, you must use a signed URL instead of video IDs.
+Using the `poster` query parameter in the embed URL, you can set a thumbnail to any time in your video. If [signed URLs](/stream/viewing-videos/securing-your-stream/) are required, you must use a signed URL instead of video IDs.
 
 ```html
 <iframe

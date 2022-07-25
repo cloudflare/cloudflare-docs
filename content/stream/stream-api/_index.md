@@ -1,6 +1,7 @@
 ---
 pcx-content-type: navigation
-title: Stream API
+weight: 7
+title: Stream API Reference
 external_link: https://api.cloudflare.com/#stream-videos-properties
 _build:
   publishResources: false

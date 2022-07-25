@@ -1,7 +1,7 @@
 ---
 pcx-content-type: navigation
 title: Analytics
-weight: 5
+weight: 6
 ---
 
 # Getting analytics

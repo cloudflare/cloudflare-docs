@@ -45,11 +45,11 @@ Additionally, you can control security features through these fields:
 
 - `requireSignedURLs` {{<type>}}boolean{{</type>}} {{<prop-meta>}}default: false{{</prop-meta>}}
 
-  - Limits the permission to view the video to only [signed URLs](/stream/edit-manage-videos/manage-video-library/securing-your-stream/).
+  - Limits the permission to view the video to only [signed URLs](/stream/viewing-videos/securing-your-stream/).
 
 - `allowedOrigins` {{<type>}}array of strings{{</type>}} {{<prop-meta>}}default: _empty_{{</prop-meta>}}
 
-  - Limit the domains this video can be embedded on. Learn more about [allowed origins](/stream/edit-manage-videos/manage-video-library/securing-your-stream/).
+  - Limit the domains this video can be embedded on. Learn more about [allowed origins](/stream/viewing-videos/securing-your-stream/).
 
 - `thumbnailTimestampPct` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 0{{</prop-meta>}}
 

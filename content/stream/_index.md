@@ -142,7 +142,7 @@ https://github.com/cloudflare/cloudflare-docs-engine/issues/281
 
 ### Next steps
 
-*   [Securing your Stream](/stream/edit-manage-videos/manage-video-library/securing-your-stream/)
-*   [Displaying thumbnails to your video](/stream/edit-manage-videos/manage-video-library/securing-your-stream/)
+*   [Securing your Stream](/stream/viewing-videos/securing-your-stream/)
+*   [Displaying thumbnails to your video](/stream/viewing-videos/securing-your-stream/)
 *   [Programmatically controlling the video player](/stream/viewing-videos/using-the-player-api/)
 *   [Uploading without a API token](/stream/uploading-videos/direct-creator-uploads/)

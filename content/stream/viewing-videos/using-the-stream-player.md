@@ -6,7 +6,7 @@ weight: 1
 
 # Use the Stream player
 
-The Stream player can be placed on a web page in an iframe element with the video UID (or [signed token](/stream/edit-manage-videos/manage-video-library/securing-your-stream/)) replacing `$VIDEOID` in the example below.
+The Stream player can be placed on a web page in an iframe element with the video UID (or [signed token](/stream/viewing-videos/securing-your-stream/)) replacing `$VIDEOID` in the example below.
 
 ```html
 <iframe

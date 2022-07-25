@@ -73,7 +73,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 - `allowedorigins`
 
-  - An array of strings listing origins allowed to display the video. This will set the [allowed origins setting](/stream/edit-manage-videos/manage-video-library/securing-your-stream/#security-considerations) for the video.
+  - An array of strings listing origins allowed to display the video. This will set the [allowed origins setting](/stream/viewing-videos/securing-your-stream/#security-considerations) for the video.
 
 - `thumbnailtimestamppct`
 
