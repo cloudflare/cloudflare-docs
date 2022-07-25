@@ -4469,3 +4469,6 @@ pre {
   }
 }
 
+[theme=dark] .littlefoot-footnote__content {
+  background: #242628
+}
