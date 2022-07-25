@@ -1,10 +1,9 @@
 ---
 pcx-content-type: tutorial
-title: Getting Live Webhooks
+title: Receive Live Webhooks
 weight: 10
 ---
-
-# Getting Live Webhooks
+# Receive Live Webhooks
 
 Stream Live supports webhooks that notify your service when an Input connects or disconnects to Stream Live.
 
