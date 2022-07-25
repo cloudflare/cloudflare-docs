@@ -10,13 +10,13 @@ weight: 3
 
 If you are an Enterprise customer, contact your Customer Success Manager to change/cancel your subscriptions, upgrade/downgrade plans and delete accounts.
 
-If you experience website issues, we recommend [temporarily pausing Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare) to evaluate your website's performance.
+If you experience website issues, we recommend [temporarily pausing Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/) to evaluate your website's performance.
 
 ### Actions outside of Cloudflare
 
 * When you remove a domain from Cloudflare, it also prevents your domain from using Cloudflare for DNS resolution. To avoid DNS errors, update your nameservers at your domain registrar to use nameservers not owned by Cloudflare.
 
-    * You can [confirm your nameservers no longer point to Cloudflare](https://support.cloudflare.com/hc/articles/4426809598605).
+    * Refer to [Check if your nameservers are pointing to Cloudflare](https://support.cloudflare.com/hc/articles/4426809598605) to confirm that your nameservers no longer point to Cloudflare.
 
 * If enabled, disable [DNSSEC](/dns/additional-options/dnssec/) by removing the **DS** record at your registrar.
 
