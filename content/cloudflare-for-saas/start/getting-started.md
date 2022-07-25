@@ -1,12 +1,10 @@
 ---
-title: Via the dashboard
+title: Configuration
 pcx-content-type: get-started
 weight: 1
-meta:
-  title: Get started - Via the dashboard
 ---
 
-# Get Started - Via the dashboard
+# Configuration
 
 ---
 
@@ -36,9 +34,7 @@ We suggest using a domain other than your main company domain (example.cloud ins
 
 1.  Create a [new application](/fundamentals/get-started/setup/add-site/) and select the **Free** plan.
 
-2.  Navigate to **DNS**.
-
-3.  Create two DNS records:
+2. [Create two DNS records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records).
 
   *   A proxied *A* or *AAAA* record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
   *   A *CNAME* record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
@@ -55,13 +51,25 @@ We suggest using a domain other than your main company domain (example.cloud ins
 
 5.  Set the **Fallback Origin** via either the dashboard or API.
 
-    - **Dashboard**:
+<details>
+<summary>Using the dashboard</summary>
+<div>
 
-      1.  Navigate to **SSL/TLS** > **Custom Hostnames**.
-      2.  In the **Custom Hostnames** card, enter the hostname for your fallback origin.
-      3.  Click **Add**.
+1.  Navigate to **SSL/TLS** > **Custom Hostnames**.
+2.  In the **Custom Hostnames** card, enter the hostname for your fallback origin.
+3.  Click **Add**.
 
-    - **API**: Using the hostname from the A or AAAA record you just created, [update the fallback origin value](https://api.cloudflare.com/#custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames).
+</div>
+</details>
+
+<details>
+<summary>Using the API</summary>
+<div>
+
+Using the hostname from the A or AAAA record you just created, [update the fallback origin value](https://api.cloudflare.com/#custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames).
+
+</div>
+</details>
 
 ---
 
@@ -92,9 +100,23 @@ Once your account has been provisioned, you are ready to issue certificates.
 
 {{<render file="_issue-certs-preamble.md">}}
 
-### Add custom hostname
+<details>
+<summary>Using the dashboard</summary>
+<div>
 
 {{<render file="_create-custom-hostname.md">}}
+
+</div>
+</details>
+
+<details>
+<summary>Using the API</summary>
+<div>
+
+{{<render file="_create-custom-hostname-api.md">}}
+
+</div>
+</details>
 
 ---
 
@@ -138,6 +160,22 @@ This routes traffic from `app.customer.com` to your origin.
 
 As a SaaS provider, you must remove a customer's custom hostname from your zone if they decide to churn. Even if the end customer changes the DNS record to point elsewhere, the custom hostname on the SaaS zone will take priority. This will cause its traffic to continue to route to the SaaS zone.
 
-### Remove custom hostname
+### Delete custom hostname
+
+<details>
+<summary>Using the dashboard</summary>
+<div>
 
 {{<render file="_delete-custom-hostname-dash.md">}}
+
+</div>
+</details>
+
+<details>
+<summary>Using the API</summary>
+<div>
+
+To delete a custom hostname and any issued certificates using the API, use a [DELETE command](https://api.cloudflare.com/#custom-hostname-for-a-zone-delete-custom-hostname-and-any-issued-ssl-certificates-) on the `DELETE zones/:zone_identifier/custom_hostnames/:identifier` endpoint.
+
+</div>
+</details>
