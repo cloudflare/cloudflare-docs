@@ -1,10 +1,10 @@
 ---
 pcx-content-type: how-to
-title: Upload video file
+title: Upload a video file
 weight: 3
 ---
 
-# Upload video file
+# Upload a video file
 
 ## Basic Uploads (for small videos)
 
