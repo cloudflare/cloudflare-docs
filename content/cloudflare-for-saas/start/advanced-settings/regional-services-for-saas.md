@@ -48,6 +48,8 @@ You cannot enable **Edge TLS Termination** or **IP Access Rules** while using HT
 
 9. Select **Submit** to finish the application.
 
+---
+
 ## Step 2 - Add custom hostnames to Spectrum Application
 
 ### For 10 or more unique origins:
