@@ -111,7 +111,7 @@ The Stream Player now displays preview images when viewers hover their mouse ove
 
 ### MP4 video file downloads (GA)
 
-All Cloudflare Stream customers can now give viewers the option to download videos uploaded to Stream as an MP4 video file. For more, read the docs [here](/stream/viewing-videos/download-videos/).
+All Cloudflare Stream customers can now give viewers the option to download videos uploaded to Stream as an MP4 video file. For more, read the docs [here](/stream/edit-manage-videos/manage-video-library/download-videos/).
 
 ## 2021-07-10
 
@@ -139,7 +139,7 @@ For more, read the [blog post](https://blog.cloudflare.com/restream-with-stream-
 
 ### MP4 video file downloads (beta)
 
-You can now give your viewers the option to download videos uploaded to Stream as an MP4 video file. For more, read the docs [here](/stream/viewing-videos/download-videos/).
+You can now give your viewers the option to download videos uploaded to Stream as an MP4 video file. For more, read the docs [here](/stream/edit-manage-videos/manage-video-library/download-videos/).
 
 ## 2021-03-10
 
