@@ -1,6 +1,6 @@
 ---
 pcx-content-type: navigation
-title: Viewing videos
+title: Playback videos
 weight: 3
 ---
 

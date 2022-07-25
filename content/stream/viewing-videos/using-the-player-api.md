@@ -1,10 +1,10 @@
 ---
 pcx-content-type: reference
-title: Using the player API
+title: Use the player API
 weight: 2
 ---
 
-# Using the player API
+# Use the player API
 
 The SDK provides an API for programmatically controlling the player and listening for player events.
 

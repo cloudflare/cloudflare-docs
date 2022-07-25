@@ -1,10 +1,10 @@
 ---
 pcx-content-type: reference
-title: Using own player
+title: Use your own player
 weight: 3
 ---
 
-# Using own player
+# Use your own player
 
 There could be cases where you might need more control over the Stream player for your use case. Stream is compatible with third-party players that support HLS and DASH manifests with no additional charge.
 

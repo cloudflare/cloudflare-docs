@@ -1,10 +1,10 @@
 ---
 pcx-content-type: reference
-title: Using the Stream player
+title: Use the Stream player
 weight: 1
 ---
 
-# Using the Stream player
+# Use the Stream player
 
 The Stream player can be placed on a web page in an iframe element with the video UID (or [signed token](/stream/viewing-videos/securing-your-stream/)) replacing `$VIDEOID` in the example below.
 
