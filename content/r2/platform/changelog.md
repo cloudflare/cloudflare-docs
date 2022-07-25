@@ -5,6 +5,26 @@ title: Changelog
 
 # Changelog
 
+## 2022-07-21
+
+- Added dummy implementation of the following operation that mimics the response that a basic AWS S3 bucket will return when first created:
+  - `GetBucketAcl`
+
+## 2022-07-20
+
+- Added dummy implementations of the following operations that mimic the response that a basic AWS S3 bucket will return when first created:
+  - `GetBucketVersioning`
+  - `GetBucketLifecycleConfiguration`
+  - `GetBucketReplication`
+  - `GetBucketTagging`
+  - `GetObjectLockConfiguration`
+
+## 2022-07-19
+
+- Fixed an S3 compatibility issue for error responses with MinIO .NET SDK and any other tooling that expects no `xmlns` namespace attribute on the top-level `Error` tag.
+- List continuation tokens prior to 2022-07-01 are no longer accepted and must be obtained again through a new `list` operation.
+- The `list()` binding will now correctly return a smaller limit if too much data would otherwise be returned (previously would return an `Internal Error`).
+
 ## 2022-07-14
 
 - Improvements to 500s: we now convert errors, so things that were previously concurrency problems for some operations should now be `TooMuchConcurrency` instead of `InternalError`. We've also reduced the rate of 500s through internal improvements.

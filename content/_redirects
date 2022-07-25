@@ -150,8 +150,10 @@
 /dns/zone-setups/secondary-dns/ /dns/zone-setups/zone-transfers/ 301
 
 # email-routing
-/email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/
-/email-routing/email-routing-options/ /email-routing/get-started/
+/email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
+/email-routing/email-routing-options/ /email-routing/setup/ 301
+/email-routing/get-started/email-addresses/ /email-routing/setup/email-routing-addresses/ 301
+/email-routing/get-started/settings/ /email-routing/setup/ 301
 
 # firewall
 /firewall/cf-firewall-rules/api-shield/ /api-shield/ 301
@@ -493,6 +495,8 @@
 /ssl/ssl-for-saas/uploading-certificates/ /cloudflare-for-saas/ssl/custom-certificates/uploading-certificates/ 301
 /ssl/ssl-for-saas/validation-backoff-schedule/ /ssl/ssl-tls/validation-backoff-schedule/ 301
 /ssl/ssl-for-saas/versioning/ /cloudflare-for-saas/ssl/reference/versioning/ 301
+/cloudflare-for-saas/ssl/common-tasks/certificate-validation-methods/ /cloudflare-for-saas/ssl/common-tasks/issue-and-validate/ 301
+/cloudflare-for-saas/ssl/common-tasks/issuing-certificates/ /cloudflare-for-saas/ssl/common-tasks/issue-and-validate/ 301
 <!-- Includes dynamic redirects listed at bottom -->
 
 # stream
