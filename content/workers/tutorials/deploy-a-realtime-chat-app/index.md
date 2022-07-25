@@ -34,8 +34,6 @@ $ wrangler login
 
 ## Publish your project
 
-Open the cloned workers-chat-demo repository. To test the chat application in a local environment, run:
-
 When you are ready to deploy your application, run:
 
 ```sh
@@ -100,7 +98,7 @@ deleted_classes = ["ChatRoom", "RateLimiter"]
 
 Then run `wrangler publish`.
 
-To delete your Worker, log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers** > your Worker > **Manage Service** on the right side of the screen > **Delete**. For complete instructions on set up and deletion, refer to the `README.md` in your cloned repository.
+To delete your Worker, log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers** > your Worker > **Manage Service** > **Delete**. For complete instructions on set up and deletion, refer to the `README.md` in your cloned repository.
 
 By completing this tutorial, you have deployed a real-time chat application with Durable Objects and Cloudflare Workers.
 
