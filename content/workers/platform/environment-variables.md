@@ -57,7 +57,7 @@ console.log(STRIPE_TOKEN);
 
 ### Adding secrets via wrangler
 
-Secrets are defined by running [`wrangler secret put <NAME>`](/workers/wrangler/commands/#secret) in your terminal, where `<NAME>` is the name of your binding. You may assign environment-specific secrets by rerunning the command `wrangler secret put <NAME> -e` or `wrangler secret put <NAME> --env`. Keep a detailed list of the secrets used in your code in your `wrangler.toml` file, like the example under `[vars]`:
+Secrets are defined by running [`wrangler secret put <KEY>`](/workers/wrangler/commands/#secret) in your terminal, where `<KEY>` is the name of your binding. You may assign environment-specific secrets by rerunning the command `wrangler secret put <KEY> -e` or `wrangler secret put <KEY> --env`. Keep a detailed list of the secrets used in your code in your `wrangler.toml` file, like the example under `[vars]`:
 
 ```toml
 ---
@@ -72,7 +72,7 @@ filename: wrangler.toml
 # - SPARKPOST_KEY
 # - GTOKEN_PRIVKEY
 # - GTOKEN_KID
-# Run `wrangler secret put <NAME> <VALUE>` for each of these
+# Run `wrangler secret put <KEY> <VALUE>` for each of these
 ```
 
 {{<Aside type="warning">}}
