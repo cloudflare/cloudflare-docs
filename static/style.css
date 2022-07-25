@@ -4418,6 +4418,12 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   color: var(--code--orange);
 }
 
+[theme="dark"] .DocsMarkdown--link > .DocsMarkdown--link-content {
+  background-color: var(--background-color);
+  color: var(--code-orange);
+  border-bottom: 1px solid rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
+}
+
 [theme="dark"] .InlineCodeLink .InlineCode {
   background-color: var(--background-color);
   color: var(--code-orange);
