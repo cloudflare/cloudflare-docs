@@ -45,19 +45,19 @@ Additionally, you can control security features through these fields:
 
 - `requireSignedURLs` {{<type>}}boolean{{</type>}} {{<prop-meta>}}default: false{{</prop-meta>}}
 
-  - Limits the permission to view the video to only [signed URLs](/stream/viewing-videos/securing-your-stream/).
+  - Limits the permission to view the video to only [signed URLs](/stream/edit-manage-videos/manage-video-library/securing-your-stream/).
 
 - `allowedOrigins` {{<type>}}array of strings{{</type>}} {{<prop-meta>}}default: _empty_{{</prop-meta>}}
 
-  - Limit the domains this video can be embedded on. Learn more about [allowed origins](/stream/viewing-videos/securing-your-stream/).
+  - Limit the domains this video can be embedded on. Learn more about [allowed origins](/stream/edit-manage-videos/manage-video-library/securing-your-stream/).
 
 - `thumbnailTimestampPct` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 0{{</prop-meta>}}
 
-  - Sets the timestamp location of [thumbnail](/stream/viewing-videos/displaying-thumbnails/) image to a percentage location of the video from 0 to 1.
+  - Sets the timestamp location of [thumbnail](/stream/edit-manage-videos/edit-videos/displaying-thumbnails/) image to a percentage location of the video from 0 to 1.
 
 - `watermark` {{<type>}}string{{</type>}} {{<prop-meta>}}default: _none_{{</prop-meta>}}
 
-  - `uid` of the watermark profile to be included in this video. Video uploaded by the link will be [watermarks](/stream/uploading-videos/applying-watermarks/) automatically.
+  - `uid` of the watermark profile to be included in this video. Video uploaded by the link will be [watermarks](/stream/edit-manage-videos/edit-videos/applying-watermarks/) automatically.
 
 - `meta` {{<type>}}json map{{</type>}} {{<prop-meta>}}default: _none_{{</prop-meta>}}
   - Set the video's `name` along with any other additional arbitrary keys for metadata to be stored.
@@ -125,7 +125,7 @@ An unsuccessful response might look like:
 
 The `uploadURL` provided in the `result` body of a successful request should be passed along to the end-user to make their upload request.
 
-The `uid` references the reserved media object's unique identifier and can be kept as a reference to query our [API](/stream/uploading-videos/searching/).
+The `uid` references the reserved media object's unique identifier and can be kept as a reference to query our [API](/stream/edit-manage-videos/manage-video-library/searching/).
 
 ## Direct creator upload request from end users
 
@@ -263,8 +263,8 @@ After the creation of a unique one-time upload URL, you may wish to retain the
 
 You can do that two ways:
 
-1.  You can [query the media API](/stream/uploading-videos/searching/) with the UID
+1.  You can [query the media API](/stream/edit-manage-videos/manage-video-library/searching/) with the UID
     to understand it's status.
 
-2.  You can [create a webhook subscription](/stream/uploading-videos/using-webhooks/) to receive notifications
+2.  You can [create a webhook subscription](/stream/edit-manage-videos/manage-video-library/using-webhooks/) to receive notifications
     regarding the status of videos. These notifications include the video's UID.

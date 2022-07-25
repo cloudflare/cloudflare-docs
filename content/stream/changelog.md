@@ -125,7 +125,7 @@ For more, read the [blog post](https://blog.cloudflare.com/restream-with-stream-
 
 ### Simplified signed URL token generation
 
-You can now obtain a signed URL token via a single API request, without needing to generate signed tokens in your own application. [Read the docs](/stream/viewing-videos/securing-your-stream)
+You can now obtain a signed URL token via a single API request, without needing to generate signed tokens in your own application. [Read the docs](/stream/edit-manage-videos/manage-video-library/securing-your-stream)
 
 ## 2021-06-08
 

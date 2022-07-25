@@ -70,7 +70,7 @@ This cURL command tells the Stream API to download the MP4 file and make it avai
 
 ### Step 2: Wait until the video is ready to stream
 
-Because Stream must download and process the video, the video might not be available for a few seconds depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/stream/uploading-videos/using-webhooks/) to be notified when a video is ready for streaming.
+Because Stream must download and process the video, the video might not be available for a few seconds depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/stream/edit-manage-videos/manage-video-library/using-webhooks/) to be notified when a video is ready for streaming.
 
 Use the video UID from the first step to poll the video:
 
@@ -142,7 +142,7 @@ https://github.com/cloudflare/cloudflare-docs-engine/issues/281
 
 ### Next steps
 
-*   [Securing your Stream](/stream/viewing-videos/securing-your-stream/)
-*   [Displaying thumbnails to your video](/stream/viewing-videos/securing-your-stream/)
+*   [Securing your Stream](/stream/edit-manage-videos/manage-video-library/securing-your-stream/)
+*   [Displaying thumbnails to your video](/stream/edit-manage-videos/manage-video-library/securing-your-stream/)
 *   [Programmatically controlling the video player](/stream/viewing-videos/using-the-player-api/)
 *   [Uploading without a API token](/stream/uploading-videos/direct-creator-uploads/)
