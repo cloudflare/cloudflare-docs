@@ -92,7 +92,10 @@ Once your account has been provisioned, you are ready to issue certificates.
 
 {{<render file="_issue-certs-preamble.md">}}
 
+### Add custom hostname
+
 {{<render file="_create-custom-hostname.md">}}
+
 ---
 
 ## Step 4 — Monitor and view certificates
