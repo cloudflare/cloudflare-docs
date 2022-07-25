@@ -33,7 +33,7 @@ tus-upload --chunk-size 5242880 \
 
 ### Step 3: Done
 
-![Screenshot of a video with Cloudflare watermark at top right](../cat.png)
+![Screenshot of a video with Cloudflare watermark at top right](/stream/static/cat.png)
 
 ## Profiles
 
