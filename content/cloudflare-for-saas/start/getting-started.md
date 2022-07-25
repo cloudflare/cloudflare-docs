@@ -92,24 +92,7 @@ Once your account has been provisioned, you are ready to issue certificates.
 
 {{<render file="_issue-certs-preamble.md">}}
 
-<details>
-<summary>Using the dashboard</summary>
-<div>
-
 {{<render file="_create-custom-hostname.md">}}
-
-</div>
-</details>
-
-<details>
-<summary>Using the API</summary>
-<div>
-
-{{<render file="_create-custom-hostname-api.md">}}
-
-</div>
-</details>
-
 ---
 
 ## Step 4 — Monitor and view certificates
