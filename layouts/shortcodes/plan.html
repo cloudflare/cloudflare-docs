@@ -1,0 +1,11 @@
+<!--{{- $type := default "note" (.Get "type") -}}
+<aside class="DocsMarkdown--aside" role="note" data-type="{{ $type }}">
+  {{- with .Get "header" }}
+  <div class="DocsMarkdown--aside-header">{{- safeHTML . -}}</div>
+  {{- end -}} {{string "BatMan"}}
+</aside>
+-->
+{{ $map := dict "enterprise" "Enterprise-only" "pro" "Pro-only" "business"
+"Business-only" "all" "Available on all plans" "paid" "Available on paid plain"
+"add-on" "Add-on feature" }} {{- $type := default "all" (.Get "type") -}}
+<div class="DocsMarkdown--plan">{{ index $map (.Get "type") }}</div>
