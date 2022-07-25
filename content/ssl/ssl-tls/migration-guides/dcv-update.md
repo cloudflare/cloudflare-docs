@@ -18,7 +18,7 @@ This change affects customers using [Advanced certificates](/ssl/edge-certificat
 
 If your application uses a full setup or already uses another method of DCV, you do not need to make any changes. Cloudflare will complete TXT DCV on your behalf
 
-If your application uses a partial (CNAME) setup and also uses HTTP DCV validation, you will need to [change your DCV method](/ssl/edge-certificates/changing-dcv-method/) to either TXT or Email.
+If your application uses a partial (CNAME) setup, wildcard certificates, and HTTP DCV validation, you will need to [change your DCV method](/ssl/edge-certificates/changing-dcv-method/) to either TXT or Email.
 
 ### SSL for SaaS
 
