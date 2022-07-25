@@ -28,7 +28,7 @@ To configure a subdomain in your `wrangler.toml`, add the following to your envi
 
 ```toml
 routes = [
-	{ pattern = "subdomain.example.com", custom_domains = true }
+	{ pattern = "subdomain.example.com", custom_domain = true }
 ]
 ```
 
