@@ -16,7 +16,7 @@ You will have to move or transfer domains from one Cloudflare account to another
 
 {{<Aside type="note">}}
 
-If you have two-factor authentication (2FA) enabled and access to backup codes, you can use those codes to access your Cloudflare account.
+If you have [two-factor authentication (2FA)](https://support.cloudflare.com/hc//articles/200167906) enabled and access to backup codes, you can use those codes to access your Cloudflare account.
 
 {{</Aside>}}
 
@@ -46,7 +46,7 @@ The domain transfer process depends on your DNS settings. If Cloudflare is your 
 
 2. [Add the domain](/fundamentals/get-started/setup/add-site/) to the account (as if you were adding it for the first time).
 
-3. Log in to your domain registrar account and update the nameservers to the provided Cloudflare nameservers.
+3. Log in to your domain registrar account and [update the nameservers](/dns/zone-setups/full-setup/setup/) to the provided Cloudflare nameservers.
 
 4. Finalize the nameserver update by selecting your domain in the dashboard > **Overview** > **Re-check now**.
 
@@ -57,10 +57,3 @@ Once the Cloudflare network recognizes the nameserver change, the domain in the 
 SSL/TLS certificates associated with your previous Cloudflare account will not be transfered to your new account. If your site requires an SSL/TLS certificate prior to domain transfer, refer to [Minimize downtime](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#minimize-downtime).
 
 You can order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) prior to transferring your domain. Once issued, the certificate will enter **Holding Deployment** status until the domain is active. ACM certificates will automatically deploy to active domains. For more information, refer to [Custom certificates](/ssl/ssl-tls/certificate-statuses/#custom-certificates).
-
-## Related resources
-
-* [Securing user access with two-factor authentication](https://support.cloudflare.com/hc//articles/200167906)
-* [Change your authoritative nameservers](/dns/zone-setups/full-setup/setup/)
-* [Get started with SSL/TLS](/ssl/get-started/)
-* [Manage DNS records in Cloudflare](/dns/manage-dns-records/how-to/create-dns-records/)
