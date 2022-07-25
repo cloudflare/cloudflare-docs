@@ -1,10 +1,12 @@
 ---
 pcx-content-type: reference
-title: Remove a domain from Cloudflare
+title: Remove a domain
 weight: 3
+meta:
+    title: Remove a domain from Cloudflare
 ---
 
-# Remove a domain from Cloudflare
+# Remove a domain
 
 ## Before removing your domain
 
@@ -18,7 +20,7 @@ If you experience website issues, we recommend [temporarily pausing Cloudflare](
 
     * Refer to [Check if your nameservers are pointing to Cloudflare](https://support.cloudflare.com/hc/articles/4426809598605) to confirm that your nameservers no longer point to Cloudflare.
 
-* If enabled, disable [DNSSEC](/dns/additional-options/dnssec/) by removing the **DS** record at your registrar.
+* At your registrar, make sure you do not have a **DS** DNS record. This record enables [DNSSEC](/dns/additional-options/dnssec/) and could prevent your DNS records from being changed.
 
 ### Actions within Cloudflare
 
@@ -34,10 +36,8 @@ If you experience website issues, we recommend [temporarily pausing Cloudflare](
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 
-2. Within **Overview**, select **Advanced Actions** > **Remove Site from Cloudflare**. Select **Confirm**.
+2. On the **Overview** page, find **Advanced Actions** and then select **Remove Site from Cloudflare**.
 
-## Related resources
+    ![Remove site from Cloudflare is an option under Advanced Actions](/fundamentals/static/images/get-started/remove-domain.png)
 
-* [Removing Cloudflare subscriptions](/fundamentals/account-and-billing/account-maintenance/cancel-subscription/)
-* [Changing your Cloudflare plan type](https://support.cloudflare.com/hc/en-us/articles/360033922371)
-* [Cancel a Cloudflare account](/fundamentals/account-and-billing/account-maintenance/delete-account/)
+3. Select **Confirm**.
