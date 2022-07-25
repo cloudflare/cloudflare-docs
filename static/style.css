@@ -5042,31 +5042,16 @@ pre {
 
 }
 
-@media (max-width: 951px) {
-  .tab-label{
-    padding: 3px 1px 1px 1px;
-  }
 
-  .tabs>ul>li {
-    padding: 5px;
+@media (max-width: 500px) {
+.tabs>ul {
+   flex-wrap: wrap;
   }
 }
 
-@media (max-width: 1026px) {
-  .tab-label{
-    padding: 3px 1px 1px 1px;
-  }
-
-  .tabs>ul>li {
-    padding: 5px;
-  }
-}
 .tab {
-  max-height: 270px;
   display: none;
   color: #2c3e50;
-  border-bottom: 0.25rem solid #bdc3c7;
-  overflow: auto;
 }
 
 .tab-default {

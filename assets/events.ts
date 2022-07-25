@@ -127,16 +127,12 @@ export function tabs() {
     for (let i = 0; i < wrappers.length; i++) {
       const labels = wrappers[i].querySelectorAll(".tab-label");
       const tabs = wrappers[i].querySelectorAll(".tab");
-      // const defaultTab = wrappers[i].querySelector(".tab-default");
 
       if (tabs.length > 0) {
         // Set the first tab in a group to display
         (tabs[0] as HTMLElement).style.display = "block";
-        // (defaultTab as HTMLElement).style.display = "none";
         for (let i = 0; i < labels.length; i++)
           labels[i].addEventListener("click", $tab);
-      } else {
-        console.log({ wrappers, tabs, labels });
       }
     }
   });
@@ -145,7 +141,6 @@ export function tabs() {
 export function activeTab() {
   var header = document.getElementById("tab-active");
   var tabs = header.getElementsByClassName("tab-label");
-  console.log(tabs)
   for (var i = 0; i < tabs.length; i++) {
     (tabs[i] as HTMLElement).addEventListener("click", function name() {
       let current = document.getElementsByClassName("active");
