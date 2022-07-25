@@ -4,6 +4,7 @@ pcx-content-type: concept
 weight: 3
 meta:
   title: HTTP DDoS Attack Protection Managed Ruleset
+layout: single
 ---
 
 # HTTP DDoS Attack Protection Managed Ruleset
