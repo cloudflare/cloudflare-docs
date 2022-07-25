@@ -28,7 +28,7 @@ WARP does not provide anonymity and is not designed to prevent servers you commu
 
 ## WARP via Local Proxy
 
-Currently, this mode is available on desktop clients only. When WARP is configured as a local proxy, only the applications that you configure to use the proxy (HTTPS or SOCKS5) will have their traffic sent through WARP. This allows you to pick and choose which traffic is encrypted — for example, your web browser or a specific application. Everything else will not be encrypted and will be sent over a regular Internet connection.
+Currently, this mode is available on desktop clients only. When WARP is configured as a local proxy, only the applications that you configure to use the proxy (HTTP or SOCKS5) will have their traffic sent through WARP. This allows you to pick and choose which traffic is encrypted — for example, your web browser or a specific application. Everything else will not be encrypted and will be sent over a regular Internet connection.
 
 Because this feature restricts WARP to just applications configured to use the local proxy, leaving all other traffic over the Internet unencrypted by default, we have hidden it in the **Advanced** menu. To turn it on:
 
