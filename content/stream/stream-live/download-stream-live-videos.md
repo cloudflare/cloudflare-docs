@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Download live stream videos
+weight: 6
 ---
 
 # Download live stream videos

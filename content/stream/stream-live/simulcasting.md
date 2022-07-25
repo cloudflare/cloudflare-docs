@@ -1,7 +1,7 @@
 ---
 pcx-content-type: tutorial
 title: Simulcast (restream) videos
-weight: 9
+weight: 3
 ---
 
 # Simulcast (restream) videos
