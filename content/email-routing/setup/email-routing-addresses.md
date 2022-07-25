@@ -61,7 +61,7 @@ This section lets you manage your destination addresses, and lists all email add
 
 Destination addresses are shared at the account level, and can be reused with any other domain in your account. This means the same destination address will be available to different domains in your account.
 
-To prevent spam, email rules do not become active until after the destination address has been verified. Cloudflare sends a verification email to destination addresses specified in Custom addresses. You have to select **Verify email address** in that email to activate a destination address.
+To prevent spam, email rules do not become active until after the destination address has been verified. Cloudflare sends a verification email to destination addresses specified in **Custom addresses**. You have to select **Verify email address** in that email to activate a destination address.
 
 {{<Aside type="note">}}
 

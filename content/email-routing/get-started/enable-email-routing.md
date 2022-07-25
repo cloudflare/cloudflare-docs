@@ -8,7 +8,7 @@ weight: 1
 
 {{<Aside type="warning" header="Important">}}
 
-Enabling Email Routing adds the appropriate MX records to your DNS settings in order for the service to work. You can [change these MX records](/email-routing/setup/email-routing-dns-records/) at any time. However, depending on how you configure them, Email Routing might stop working.
+Enabling Email Routing adds the appropriate `MX` records to your DNS settings in order for the service to work. You can [change these `MX` records](/email-routing/setup/email-routing-dns-records/) at any time. However, depending on how you configure them, Email Routing might stop working.
 
 {{</Aside>}}
 
@@ -29,6 +29,6 @@ Email Routing is now enabled. You can add other custom addresses to your account
 
 {{<Aside type="note">}}
 
-When Email Routing is configured and running, no other email services can be active in the domain you are configuring. If there are other MX records already configured in DNS, Cloudflare will ask you if you wish to delete them. If you do not delete existing MX records, Email Routing will not be enabled.
+When Email Routing is configured and running, no other email services can be active in the domain you are configuring. If there are other `MX` records already configured in DNS, Cloudflare will ask you if you wish to delete them. If you do not delete existing `MX` records, Email Routing will not be enabled.
 
 {{</Aside>}}

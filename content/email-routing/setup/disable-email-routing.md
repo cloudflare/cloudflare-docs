@@ -8,8 +8,8 @@ weight: 3
 
 Email Routing provides two options for disabling the service:
 
-- **Delete and Disable**: This option will immediately disable Email Routing and remove its MX records. Your custom email addresses will stop working, and your email will not be routed to its final destination.
-- **Unlock and keep DNS records**: (Advanced) This option is recommended if you plan to migrate to another provider. It allows you to add new MX records before disabling the service. Email Routing will stop working when you change your MX records.
+- **Delete and Disable**: This option will immediately disable Email Routing and remove its `MX` records. Your custom email addresses will stop working, and your email will not be routed to its final destination.
+- **Unlock and keep DNS records**: (Advanced) This option is recommended if you plan to migrate to another provider. It allows you to add new `MX` records before disabling the service. Email Routing will stop working when you change your `MX` records.
 
 ## Delete and disable Email Routing
 
