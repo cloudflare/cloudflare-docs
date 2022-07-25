@@ -16,7 +16,7 @@ You will have to move or transfer domains from one Cloudflare account to another
 
 {{<Aside type="note">}}
 
-If you have [two-factor authentication (2FA)](https://support.cloudflare.com/hc//articles/200167906) enabled and access to backup codes, you can use those codes to access your Cloudflare account.
+If you have [two-factor authentication (2FA)](https://support.cloudflare.com/hc/articles/200167906) enabled and access to backup codes, you can use those codes to access your Cloudflare account.
 
 {{</Aside>}}
 
