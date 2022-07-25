@@ -4421,7 +4421,8 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 [theme="dark"] .DocsMarkdown--link > .DocsMarkdown--link-content {
   background-color: var(--background-color);
   color: var(--code-orange);
-  border-bottom: 1px solid rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
+  border-bottom: 1px solid
+    rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
 }
 
 [theme="dark"] .InlineCodeLink .InlineCode {
@@ -4454,7 +4455,7 @@ pre {
   opacity: 1;
 }
 
-[theme=dark] .skip-link {
+[theme="dark"] .skip-link {
   background: #242628;
   color: inherit;
 }
@@ -4469,3 +4470,68 @@ pre {
   }
 }
 
+.DocsMarkdown--beta {
+  /* gray */
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px 8px;
+
+  width: 42px;
+  height: 20px;
+
+  /* Orange/orange[8] - #FBCDA5 */
+
+  background: var(--orange-8);
+  border-radius: 20px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  height: 18px;
+
+  /* 400/fontSizes.1 (12px) */
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  /* identical to box height, or 18px */
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  /* Orange/orange[1] - #482303 */
+
+  color: var(--orange-1);
+}
+
+.DocsMarkdown--description {
+  color: var(--gray-7);
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.DocsMarkdown--plan {
+  /*width: 110px;*/
+  height: 25px;
+
+  /*font-family: 'SF Pro Display';*/
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 155.34%;
+  /* identical to box height, or 25px */
+
+  color: var(--indigo-5);
+
+  /* Inside auto layout */
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+}
