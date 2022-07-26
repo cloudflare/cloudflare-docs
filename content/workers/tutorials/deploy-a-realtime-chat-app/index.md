@@ -50,7 +50,7 @@ To configure a route in your `wrangler.toml`, add the following to your environm
 
 ```toml
 routes = [
-    { pattern = “example.com/about”, zone_id = <YOUR_ZONE_ID> }
+    { pattern = “example.com/about”, zone_id = "<YOUR_ZONE_ID>" }
 ]
 ```
 
@@ -66,14 +66,14 @@ routes = [
 
 To test your live application:
 
-1. Open your `edge-chat-demo.<SUBDOMAIN>.workers.dev` subdomain 
+1. Open your `edge-chat-demo.<SUBDOMAIN>.workers.dev` subdomain.
 
 or 
 
-2. Go to your Worker > **Resources** and select the `edge-chat-demo.<SUBDOMAIN>.workers.dev` route on top of the page.
-3. Enter a name in the **your name** field.
-4. Choose whether to enter a public room or create a private room.
-5. Send the link to other participants. You will be able to view room participants on the right side of the screen.
+1. Go to your Worker > **Resources** and select the `edge-chat-demo.<SUBDOMAIN>.workers.dev` route on top of the page.
+2. Enter a name in the **your name** field.
+3. Choose whether to enter a public room or create a private room.
+4. Send the link to other participants. You will be able to view room participants on the right side of the screen.
 
 ## Uninstall your application
 
