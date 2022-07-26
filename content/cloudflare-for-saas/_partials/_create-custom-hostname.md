@@ -12,7 +12,7 @@ _build:
 5.  Add your customer's hostname `app.customer.com` and set the relevant options, including:
     *   Choosing the [Validation method](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/).
     *   Whether you want to **Enable wildcard**, which adds a `*.<custom-hostname>` SAN to the custom hostname certificate. For more details, refer to [Hostname priority](/ssl/ssl-tls/certificate-and-hostname-priority/#hostname-priority).
-    *   Choosing a value for [Custom origin server](/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-origin/).
+    *   Choosing a value for [Custom origin server](/cloudflare-for-saas/start/advanced-settings/custom-origin/).
 6.  Click **Add Custom Hostname**.
 
 {{<Aside type="warning">}}
