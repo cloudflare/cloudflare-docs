@@ -18,10 +18,4 @@ When turning on Always Online, you are also enabling the Internet Archive integr
 
 {{</Aside>}}
 
-Alternatively, you can also enable Always Online by allowing your origin web server to determine which content to cache for display if your origin web server is offline:
-
-  1.  Disable **Always Online**.
-  2.  Set [Origin Cache Control](/cache/about/cache-control/) for your resources.
-  3.  Enable `stale-if-error` at your origin.
-
 For best practices and limitations for Always Online, refer to [Always Online Best Practices](/cache/best-practices/always-online/).
