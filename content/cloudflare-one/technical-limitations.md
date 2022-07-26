@@ -31,9 +31,9 @@ This page covers limitations for rules, applications, fields, and other features
 | Rules count per application            | 1,000  |
 | Rules count per group                  | 1,000  |
 
-## Maximum name lengths
+## Maximum number of characters
 
-| Feature                | Character Limit |
+| Feature                | Character limit|
 | -----------------------| ----- |
 | Application name       | 350   |
 | Group name             | 350   |
@@ -41,7 +41,7 @@ This page covers limitations for rules, applications, fields, and other features
 | Service token name     | 350   |
 | IdP name               | 350   |
 | Application URL        | 63    |
-| Team Domain            | 63    |
+| Team domain            | 63    |
 
 ## Cloudflare Tunnel limitations
 
