@@ -6,7 +6,7 @@ weight: 9
 
 # Hostname verification backoff schedule
 
-After you create a custom hostname, Cloudflare has to [verify that hostname](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/).
+After you create a custom hostname, Cloudflare has to [verify that hostname](/cloudflare-for-saas/domain-support/hostname-verification/).
 
 Attempts to verify a Custom Hostname are distributed over 7 days (a total of 75 retries). The function that determines the next check varies based on the number of attempts:
 

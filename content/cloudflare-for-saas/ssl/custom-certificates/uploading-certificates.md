@@ -56,4 +56,4 @@ The serial number returned is unique to the issuer, but not globally unique. Add
 
 If you want to switch from maintaining a custom certificate to using one issued by Cloudflare, you can migrate that certificate with zero downtime.
 
-Send a [PATCH request](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname) to your custom hostname with a value for the DCV `method`. As soon as the [certificate is validated](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/) and the [hostname is verified](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/), Cloudflare will remove the old custom certificate and begin serving the new one.
+Send a [PATCH request](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname) to your custom hostname with a value for the DCV `method`. As soon as the [certificate is validated](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/) and the [hostname is verified](/cloudflare-for-saas/domain-support/hostname-verification/), Cloudflare will remove the old custom certificate and begin serving the new one.

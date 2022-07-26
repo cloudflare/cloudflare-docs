@@ -501,6 +501,8 @@
 /cloudflare-for-saas/ssl/reference/common-api-calls/ /cloudflare-for-saas/start/common-api-calls/ 301
 /cloudflare-for-saas/ssl/hostname-specific-behavior/custom-origin/ /cloudflare-for-saas/start/advanced-settings/custom-origin/ 301
 /cloudflare-for-saas/related-products/regional-services-for-saas/ /cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ 301
+/cloudflare-for-saas/ssl/common-tasks/hostname-verification/ /cloudflare-for-saas/domain-support/hostname-verification/
+/cloudflare-for-saas/ssl/hostname-specific-behavior/migrating-custom-hostnames/ /cloudflare-for-saas/domain-support/migrating-custom-hostnames/ 301
 <!-- Includes dynamic redirects listed at bottom -->
 
 # stream

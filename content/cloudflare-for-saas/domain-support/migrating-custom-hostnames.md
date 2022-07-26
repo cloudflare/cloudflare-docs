@@ -16,7 +16,7 @@ If your custom hostname uses a CNAME record, add the custom hostname to the new 
  
 {{<Aside type="note">}}
  
-If you would like to migrate the custom hostname without end customers changing the DNS target, use [apex proxying](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#apex-verification).
+If you would like to migrate the custom hostname without end customers changing the DNS target, use [apex proxying](/cloudflare-for-saas/domain-support/hostname-verification/#apex-verification).
  
 {{</Aside>}}
  
@@ -34,7 +34,7 @@ Once these steps are complete, the custom hostname's traffic will route to the s
  
 ## A record
  
-Through [Apex Proxying](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#apex-verification) or [BYOIP](/byoip/), you can migrate the custom hostname without action from your end customer.
+Through [Apex Proxying](/cloudflare-for-saas/domain-support/hostname-verification/#apex-verification) or [BYOIP](/byoip/), you can migrate the custom hostname without action from your end customer.
 
 1. Verify with the account team that your apex proxying IPs have been assigned to both SaaS zones.
  
