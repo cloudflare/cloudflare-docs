@@ -82,10 +82,9 @@ In this example, all requests destined for example.com and whose paths are prefi
 To configure a route in your `wrangler.toml`, add the following to your environment:
 
 ```toml
-Route = [
-{pattern = “example.com/about”, 
-Zone_id = <YOUR_ZONE_ID>,
-}]
+routes = [
+    { pattern = “example.com/about”, zone_id = <YOUR_ZONE_ID> }
+]
 ```
 
 If you have specified your zone ID in the environment of your `wrangler.toml`, you will not need to write it again in object form.
