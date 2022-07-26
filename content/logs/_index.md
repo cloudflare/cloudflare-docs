@@ -46,4 +46,6 @@ Note, the data from Logpull and Logpush are exactly the same.
 
 ## More resources (WIP)
 
-To be CSS grid or flexbox?
+{{<resource header="Learning Center" href="https://www.google.com/" icon="">}}Resources on cybersecurity and how the Internet works{{</resource>}}
+
+{{<resource header="Learning Center" href="https://www.google.com/" icon="">}}Resources on cybersecurity and how the Internet works{{</resource>}}

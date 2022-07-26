@@ -4130,6 +4130,9 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 .DocsFooter--content ul {
   list-style-type: none;
+  list-style-position: inside;
+  list-style-image: url(/static/icons/icon-48x48.png);
+
   padding: 0;
   margin: 0 0 2em 0;
 }
@@ -4518,9 +4521,10 @@ pre {
 }
 
 .DocsMarkdown--description {
-  color: var(--gray-7);
   font-size: 20px;
   line-height: 24px;
+
+  color: var(--gray-7);
 
   margin-bottom: 1em;
 }
@@ -4536,7 +4540,7 @@ pre {
   line-height: 155.34%;
   /* identical to box height, or 25px */
 
-  color: var(--indigo-5);
+  color: var(--blue-4);
 
   /* Inside auto layout */
   flex: none;
@@ -4544,4 +4548,37 @@ pre {
   flex-grow: 0;
 
   margin-bottom: 1em;
+}
+
+[theme="dark"] .DocsMarkdown--plan {
+  color: var(--indigo-5);
+}
+
+.DocsMarkdown--resource-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.DocsMarkdown--resource {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px;
+  gap: 10px;
+
+  max-width: 50%;
+
+  background-color: #242628;
+  border-radius: 4px;
+}
+.DocsMarkdown--resource:hover {
+  background-color: #2f3133;
+}
+.DocsMarkdown--resource-header {
+  font-size: 20px;
+  text-decoration: underline solid var(--orange);
+}
+.DocsMarkdown--resource-content {
+  color: var(--gray-7);
 }
