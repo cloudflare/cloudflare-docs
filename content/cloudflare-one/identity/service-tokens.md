@@ -31,7 +31,7 @@ This section covers how to create, renew, and revoke a service token.
 
 7. Click **Close**.
 
-You can now use the service token when you create [Service Auth policies](/cloudflare-one/policies/access/). When creating these policies, use the `Service Auth` action to ensure that the identity provider login screen is not required for end users.
+You can now use the service token in your [Access policies](/cloudflare-one/policies/access/) and [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions). When creating these policies, select the `Service Auth` action to ensure that the identity provider login screen is not required for end users.
 
 ## Connect your service to Access
 
