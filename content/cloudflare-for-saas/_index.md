@@ -24,10 +24,10 @@ When you use Cloudflare for SaaS, it helps you to:
 
 If your customers already have their applications on Cloudflare, they cannot control some Cloudflare features for hostnames managed by your Custom Hostnames configuration, including:
 
-*   Page Rules
-*   Firewall Settings
-*   Web Application Firewall (WAF)
-*   SSL settings
+*   Wildcard DNS
+*   Spectrum
+*   Argo
+*   Page Shield
 
 For more information on these features, refer to [Hostname management](/cloudflare-for-saas/ssl/hostname-specific-behavior/).
 

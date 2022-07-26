@@ -1,7 +1,7 @@
 ---
 pcx-content-type: overview
 title: Get Started
-weight: 1
+weight: 2
 meta:
     title: Get Started - Cloudflare for SaaS
 ---
