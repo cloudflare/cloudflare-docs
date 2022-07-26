@@ -57,12 +57,6 @@ Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://da
 
 </div>
 
-{{<Aside type="warning">}}
-
-Currently Cloudflare uses Node `12.18.0` in the Pages build environment, but Remix requires a newer node version >14.0.0 to build on Cloudflare Pages. To set the Node version go to **Settings** > **Environment variables** > **Production** and add `NODE_VERSION = v16.7.0` in the production option.
-
-{{</Aside>}}
-
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `npm`, your project dependencies, and building your site before deploying it.
 
 {{<Aside type="note">}}
@@ -119,6 +113,12 @@ export default function Product() {
 }
 
 ```
+
+Currently, the only way to use Durable Objects when using Cloudflare Pages is by having a separate Worker, creating a binding, and accessing it in `context`. 
+
+You have to do this because there is currently no way to export the Durable Object class from a Pages Function. 
+
+Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/workers/learning/using-durable-objects/)
 
 ## Learn more
 
