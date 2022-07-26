@@ -151,3 +151,30 @@ Response:
    "success" : true
 }
 ```
+## Install the Cloudflare quickstart
+
+You can install the [cloudflare quickstart](https://newrelic.com/instant-observability/cloudflare-network-logs/fc2bb0ac-6622-43c6-8c1f-6a4c26ab5434/?utm_source=external_partners&utm_medium=referral&utm_campaign=global-ever-green-io-partner) in the New Relic Instant Observability page. The dashboards included contain the following information:
+
+### Overview
+
+Get a quick overview of the most important metrics from your websites and applications on the Cloudflare network.
+
+![Cloudflare Network Logs install screen](/fundamentals/static/images/new-relic/dashboard/dash-1.png)
+
+### Security
+
+Get insights on threats to your websites and applications, including number of threats taken action on by the Web Application Firewall (WAF), threats over time, top threat countries, and more.
+
+![Cloudflare Network security metrics screen](/fundamentals/static/images/new-relic/dashboard/dash-2.png)
+
+### Performance
+
+Identify and address performance issues and caching misconfigurations. Metrics include total requests, total versus cached requests, total versus origin requests.
+
+![Cloudflare Network Logs performance metrics screen](/fundamentals/static/images/new-relic/dashboard/dash-3.png)
+
+### Reliability
+
+Get insights on the availability of your websites and Applications. Metrics include, edge response status over time, percentage of `3xx`/`4xx`/`5xx` errors over time, and more.
+
+![Cloudflare Network Logs reliability metrics screen](/fundamentals/static/images/new-relic/dashboard/dash-4.png)
