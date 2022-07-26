@@ -121,7 +121,7 @@ Both `auth_client_id` and `auth_client_secret` are required when using this auth
 
 ### `auth_client_id`
 
-The automatically generated ID when you created your service token](/cloudflare-one/identity/service-tokens/).
+The automatically generated ID when you created your [service token](/cloudflare-one/identity/service-tokens/).
 
 **Value Type:** `string`
 
