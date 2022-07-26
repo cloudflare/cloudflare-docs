@@ -578,9 +578,10 @@ html[is-site-page] .DocsContent {
 
 .TriBlockGrid {
     display: flex;
-    max-width: 90%;
+    max-width: 100%;
     flex-wrap: wrap;
     padding-left: .75em;
+    padding-right: .75em;
     margin-top: 3.5em;
     margin-bottom: 1em;
     justify-content: space-between;
@@ -633,15 +634,15 @@ html[is-site-page] .DocsContent {
 }
 
 .FeaturedContentSectionTitle {
-    padding-left:.75em; 
+    padding-left:.75em;
     margin-bottom: 2em;
 }
 
 .FeaturedContentGrid {
     display: flex;
-    max-width: 90%;
     flex-wrap: wrap;
     padding-left: .75em;
+    padding-right: .75em;
     margin-top: 2em;
     margin-bottom: 1em;
     justify-content: space-between;
@@ -649,14 +650,14 @@ html[is-site-page] .DocsContent {
 
 .FeaturedContentBlock {
     display: flex;
-    width: 15em;
+    width: 16em;
     height: 18em;
     background: #f3f3f4;
     margin-top: 1em;
     margin-bottom: 1em;
     padding-bottom: .5em;
-    padding-left: 1em;
-    padding-right: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
     padding-top: 1.25em;
 }
 
@@ -694,40 +695,11 @@ html[is-site-page] .DocsContent {
     border-top: 1px solid white;
 }
 
-.ConnectBlockGrid {
-    display: flex;
-    max-width: 90%;
-    flex-wrap: wrap;
-    padding-left: .75em;
-    justify-content: space-between;
-}
-
-.ConnectBlock {
-    width: 12em;
-    height: 7em;
-    text-align: center;
-    vertical-align: middle;
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    flex-flow: column;
-    margin-bottom: 2em;
-}
-
-.ConnectBlockGrid a {
-    color: inherit;
-    text-decoration: none;
-    font-size: 1.5em;
-}
-
-[theme=dark] .ConnectBlock {
-    border: 1px solid white;
-}
-
 .ViewProducts {
     padding-left: .75em;
+    padding-right: .75em;
     padding-top: .5em;
-    max-width: 90%;
+    max-width: 100%;
 }
 
 .StartHere a {
