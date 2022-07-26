@@ -40,8 +40,8 @@ This page covers limitations for rules, applications, fields, and other features
 | mTLS certificates name | 350   |
 | Service token name     | 350   |
 | IdP name               | 350   |
-| Application URL        | <= 63 |
-| Team Domain            | <= 63 |
+| Application URL        | 63    |
+| Team Domain            | 63    |
 
 ## Cloudflare Tunnel limitations
 
