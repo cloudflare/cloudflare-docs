@@ -33,7 +33,7 @@ To enable the Cloudflare Logpush service:
 
 8.  Enter or select the following destination information:
 
-    - **Datadog URL Endpoint**, which is `http-intake.logs.datadoghq.com/v1/input`.
+    - **Datadog URL Endpoint**, which is `http-intake.logs.datadoghq.com/v1/input?ddsource=cloudflare`.
     - **Datadog API Key**, can be retrieved by following [these steps](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token).
     
 9.  Click **Validate access**.
