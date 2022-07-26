@@ -2,6 +2,7 @@
 title: Overview
 pcx-content-type: overview
 weight: 1
+layout: overview
 meta:
   title: Cloudflare Logs
 ---

@@ -1,5 +1,8 @@
 <footer class="DocsFooter">
   <div class="DocsFooter--content">
+    {{ if eq .Params.layout "overview"}}
+    
+    <div class="AdditionalResources">
     <ul>
       <li>
         Learn more at the {{- with .File -}} {{- $url := (printf
@@ -17,7 +20,8 @@
         "external.link" (dict "text" "Help Center" "url" $url) }} {{- end -}}
       </li>
     </ul>
-
+  </div>
+  {{ end }}
     <div>
       <span class="DocsFooter--edit-on-gh-link-wrapper">
         {{- with .File -}} {{- $url := (printf
