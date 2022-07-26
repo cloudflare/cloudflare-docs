@@ -1,16 +1,32 @@
 <footer class="DocsFooter">
   <div class="DocsFooter--content">
+    <ul>
+      <li>
+        Learn more at the {{- with .File -}} {{- $url := (printf
+        "https://www.cloudflare.com/learning/") -}} {{- partial "external.link"
+        (dict "text" "Learning Center" "url" $url) }} {{- end -}}
+      </li>
+      <li>
+        Engage with the community on the {{- with .File -}} {{- $url := (printf
+        "https://community.cloudflare.com/") -}} {{- partial "external.link"
+        (dict "text" "Community Forum" "url" $url) }} {{- end -}}
+      </li>
+      <li>
+        Get answers to common question and issues from the {{- with .File -}}
+        {{- $url := (printf "https://support.cloudflare.com/") -}} {{- partial
+        "external.link" (dict "text" "Help Center" "url" $url) }} {{- end -}}
+      </li>
+    </ul>
+
     <div>
       <span class="DocsFooter--edit-on-gh-link-wrapper">
-        {{- with .File -}}
-          {{- $url := (printf "https://github.com/cloudflare/cloudflare-docs/blob/production/content/%s" .Path) -}}
-          {{- partial "external.link" (dict "text" "Edit on GitHub" "url" $url) }}
-        {{- end -}}
+        {{- with .File -}} {{- $url := (printf
+        "https://github.com/cloudflare/cloudflare-docs/blob/production/content/%s"
+        .Path) -}} {{- partial "external.link" (dict "text" "Edit on GitHub"
+        "url" $url) }} {{- end -}}
       </span>
 
-      <span class="DocsFooter--content-dot-spacer">
-        &nbsp; · &nbsp;
-      </span>
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
 
       <span class="DocsFooter--content-time">
         Updated {{ partial "datetime" .Lastmod }}

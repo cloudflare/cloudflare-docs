@@ -20,12 +20,30 @@ These logs are helpful for debugging, identifying configuration adjustments, and
 
 ## Features
 
-Push your request or event logs to your preferred cloud service provider or analytics platform using [Logpush](/logs/get-started/) or [Edge Log Delivery](/logs/edge-log-delivery/). Logs are sent in batches to your configured destination as gzipped files containing data in newline-delimited JSON (also known as [JSON Lines](https://jsonlines.org/) text format). Batch size, latency, push frequency, and available datasets differ between Logpush and Edge Log Delivery. Refer to the individual product pages for details.
+### Logpush
 
-The number of files delivered depends on the number of logs that need to be delivered. More logs equals more batches and therefore more files. The number of files also depends on the number of Cloudflare log-processing servers needed to handle the volume of logs.
+Push your request or event logs to your cloud service provider using Logpush, which can be configured via the Cloudflare dashboard or API.
 
-[Instant Logs](/logs/instant-logs/) allows Enterprise customers to view their HTTP request logs instantly in the Cloudflare dashboard or the CLI. Instant Logs allows customers to actively monitor the traffic flowing through their network and make immediate key decisions that affect their applications. Use Instant Logs to live tail your traffic — it does not require any setup and by design it does not have any retention.
+### Logpull
 
-If you only want to have access to HTTP request logs, you can also use [Logpull](/logs/logpull/). The data from **Logpull** and **Logpush** is exactly the same.
+See logs of HTTP requests with Logpull.
 
-By default, Cloudflare does not retain your HTTP request logs. However, if you are a Spectrum customer, logs of Spectrum events are retained automatically.
+Note, the data from Logpull and Logpush are exactly the same.
+
+---
+
+## Related products (WIP)
+
+* Audit Logs
+
+  * Summarize the history of changes made within your Cloudflare account.
+
+* Web Analytics
+
+  * Provides privacy-first analytics without changing your DNS or using Cloudflare's proxy.
+
+---
+
+## More resources (WIP)
+
+To be CSS grid or flexbox?

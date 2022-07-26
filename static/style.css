@@ -4126,6 +4126,15 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 .DocsFooter--content {
   display: flex;
+  flex-direction: column;
+}
+.DocsFooter--content ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 2em 0;
+}
+.DocsFooter--content ul li {
+  padding-bottom: 1em;
 }
 @media (max-width: 414px) {
   .DocsFooter--edit-on-gh-link-wrapper {
