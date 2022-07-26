@@ -1,12 +1,12 @@
 ---
 title: Parameters
 pcx-content-type: reference
-weight: 5
+weight: 6
 meta:
   title: HTTP DDoS Attack Protection parameters
 ---
 
-# HTTP DDoS Attack Protection parameters
+# Ruleset parameters
 
 Configure the HTTP DDoS Attack Protection Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. You can [configure the Managed Ruleset in the Cloudflare dashboard](/ddos-protection/managed-rulesets/http/configure-dashboard/) or [define overrides via Rulesets API](/ddos-protection/managed-rulesets/http/configure-api/).
 

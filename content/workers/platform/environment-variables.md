@@ -72,7 +72,7 @@ filename: wrangler.toml
 # - SPARKPOST_KEY
 # - GTOKEN_PRIVKEY
 # - GTOKEN_KID
-# Run `echo <VALUE> | wrangler secret put <KEY>` for each of these
+# Run `echo <VALUE> | wrangler secret put <NAME>` for each of these
 ```
 
 {{<Aside type="warning">}}

@@ -19,9 +19,9 @@ To add a custom domain:
 
 ![Adding a custom domain for your Pages project through the Cloudflare dashboard](/pages/platform/media/domains.png)
 
-If you are deploying to an apex domain (for example, `example.com`), then you will need to add your site as a Cloudflare zone and [configure your nameservers](/#configure-nameservers). 
+If you are deploying to an apex domain (for example, `example.com`), then you will need to add your site as a Cloudflare zone and [configure your nameservers](#configure-nameservers). 
 
-If you are deploying to a subdomain, it is not necessary for your site to be a Cloudflare zone. You will need to [add a custom CNAME record](/#add-a-custom-cname-record) to point the domain to your Cloudflare Pages site.
+If you are deploying to a subdomain, it is not necessary for your site to be a Cloudflare zone. You will need to [add a custom CNAME record](#add-a-custom-cname-record) to point the domain to your Cloudflare Pages site.
 
 ### Configure nameservers
 
@@ -39,7 +39,7 @@ If your site is already managed as a Cloudflare zone, the CNAME record will be a
 
 {{<Aside type="note">}}
 
-To ensure a custom domain is added successfully, you must go through the [Add a custom domain](/pages/platform/custom-domains/#add-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [`522` error](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#522error).
+To ensure a custom domain is added successfully, you must go through the [Add a custom domain](#add-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [`522` error](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#522error).
 
 {{</Aside>}}
 

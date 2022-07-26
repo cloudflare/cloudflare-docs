@@ -1,32 +1,18 @@
 ---
-title: Configure email rules and addresses
+title: Configure rules and addresses
 pcx-content-type: how-to
-weight: 2
+weight: 1
 ---
 
-# Routes
+# Configure rules and addresses
 
-The Routes page is divided into three main configuration sections:
-
-- Custom addresses
-- Catch-all address
-- Destination addresses
-
-Each section lets you configure different aspects of Email Routing.
-
-{{<Aside type="note" header="Note">}}
-
-A custom address and destination address form an email rule. You can enable, disable, and delete email rules.
-
-{{</Aside>}}
+An email rule is a pair of a custom email address and a destination address. This allows you to route emails to your preferred inbox. You can have multiple custom addresses, to route email from specific providers to specific mail inboxes.
 
 ## Custom addresses
 
-In this section you can create, enable, disable, and edit custom addresses. To add new custom addresses:
-
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Email** > **Routes**.
-3. Click **Create address**.
+3. Select **Create address**.
 4. In **Custom address**, enter the custom email address you want to use (for example, `my-new-email`).
 5. In the **Action** drop-down menu, choose what this email rule should do. You can choose between _Send to_ or _Drop_. Refer to [Email rule actions](#email-rule-actions) for more information.
 6. In **Destination address**, choose the email address you want your emails to be forwarded to — for example, `your-name@gmail.com`. You can only choose from destination addresses you have already verified. To add new destination addresses, refer to [Destination addresses](#destination-addresses).
@@ -60,7 +46,7 @@ Your email rule is now disabled and will not forward emails to a destination add
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Email** > **Routes**.
-3. In **Custom addresses**, identify the email rule you want to edit, and click **Edit**.
+3. In **Custom addresses**, identify the email rule you want to edit, and select **Edit**.
 4. Make the appropriate changes to this custom address.
 
 ## Catch-all address
@@ -75,7 +61,7 @@ This section lets you manage your destination addresses, and lists all email add
 
 Destination addresses are shared at the account level, and can be reused with any other domain in your account. This means the same destination address will be available to different domains in your account.
 
-To prevent spam, email rules do not become active until after the destination address has been verified. Cloudflare sends a verification email to destination addresses specified in Custom addresses. You have to click **Verify email address** in that email to activate a destination address.
+To prevent spam, email rules do not become active until after the destination address has been verified. Cloudflare sends a verification email to destination addresses specified in **Custom addresses**. You have to select **Verify email address** in that email to activate a destination address.
 
 {{<Aside type="note">}}
 
