@@ -14,7 +14,7 @@ Here is how to enable Always Online in the dashboard:
 
 {{<Aside type="note" header="Note">}}
 
-When turning on Always Online, you are also enabling the the Internet Archive integration.
+When turning on Always Online, you are also enabling the Internet Archive integration.
 
 {{</Aside>}}
 
