@@ -10,12 +10,12 @@ Stream provides four ways to upload videos to cover a diverse set of use cases.
 
 {{<table-wrap>}}
 
-| Upload method                                                              | When to use                                                                                                                                                  |
-| -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [Stream Dashboard](https://dash.cloudflare.com?to=/:account/stream)        | Quick, one-time uploads where automation is not required                                                                                                     |
-| [Copy via link](/stream/uploading-videos/upload-via-link/)                 | The video library is stored in a cloud storage bucket                                                                                                        |
-| [Direct creator uploads](/stream/uploading-videos/direct-creator-uploads/) | The end user is uploading videos but does not have access to your API tokens, such as if you have your users uploading content to your website or mobile app |
-| [Upload video file](/stream/uploading-videos/upload-video-file/)           | When the video file is stored on a computer with access to your API tokens                                                                                   |
+| Upload method                                                              | When to use            |
+| --------------------------------- | -------------------- |
+| [Stream Dashboard](https://dash.cloudflare.com?to=/:account/stream)        | Upload videos from the Stream Dashboard, without writing any code  |
+| [Copy via link](/stream/uploading-videos/upload-via-link/)                 | Upload videos from a URL, such as an S3 bucket or content management system.   |
+| [Direct creator uploads](/stream/uploading-videos/direct-creator-uploads/) | Allow end users of your website or app to upload videos directly to Cloudflare Stream. |
+| [Upload video file](/stream/uploading-videos/upload-video-file/)           | Upload videos when the video file is stored on a computer. |
 
 {{</table-wrap>}}
 
