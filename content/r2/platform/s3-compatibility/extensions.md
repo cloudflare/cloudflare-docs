@@ -63,3 +63,9 @@ The XML response contains a `NextContinuationToken` and `IsTruncated` elements a
 | `ContinuationToken`     |                              | The continuation token that was supplied in the request.                                     |
 | `MaxKeys`               |                              | The max keys that were specified in the request.                                             |
 {{</table-wrap>}}
+
+## PutObject
+
+### Conditional operations in PutObject
+
+PutObject supports conditional uploads via the [If-Match](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match), [If-None-Match](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-None-Match), [If-Modified-Since](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Modified-Since), and [If-Unmodified-Since](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Unmodified-Since) headers. These operate as documented in the HTTP spec and behave similarly to how GetObject/HeadObject interpret these headers, rejecting uploads with 304 NotModified or 412 PreconditionFailed as appropriate when an upload isn't necessary or the preceding state doesn't match respectively.
