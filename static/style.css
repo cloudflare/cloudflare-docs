@@ -4470,30 +4470,32 @@ pre {
   }
 }
 
-.DocsMarkdown--beta {
-  /* gray */
+.DocsMarkdown-beta {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1em;
+}
 
-  /* Auto layout */
-
+.DocsMarkdown--beta-pill {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 4px 8px;
 
+  position: relative;
+  top: 16px;
+
   width: 42px;
-  height: 20px;
+  height: 18px;
 
   /* Orange/orange[8] - #FBCDA5 */
-
   background: var(--orange-8);
   border-radius: 20px;
 
   /* Inside auto layout */
-
   flex: none;
   order: 0;
   flex-grow: 0;
-  height: 18px;
 
   /* 400/fontSizes.1 (12px) */
   font-style: normal;
@@ -4502,12 +4504,7 @@ pre {
   line-height: 150%;
   /* identical to box height, or 18px */
 
-  display: flex;
-  align-items: center;
-  text-align: center;
-
   /* Orange/orange[1] - #482303 */
-
   color: var(--orange-1);
 }
 
@@ -4515,6 +4512,8 @@ pre {
   color: var(--gray-7);
   font-size: 20px;
   line-height: 24px;
+
+  margin-bottom: 1em;
 }
 
 .DocsMarkdown--plan {
@@ -4534,4 +4533,6 @@ pre {
   flex: none;
   order: 2;
   flex-grow: 0;
+
+  margin-bottom: 1em;
 }

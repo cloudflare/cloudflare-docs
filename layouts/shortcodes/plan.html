@@ -6,6 +6,6 @@
 </aside>
 -->
 {{ $map := dict "enterprise" "Enterprise-only" "pro" "Pro-only" "business"
-"Business-only" "all" "Available on all plans" "paid" "Available on paid plain"
-"add-on" "Add-on feature" }} {{- $type := default "all" (.Get "type") -}}
+"Business-only" "all" "Available on all plans" "paid" "Available on paid plans"
+"add-on" "Add-on feature" }}
 <div class="DocsMarkdown--plan">{{ index $map (.Get "type") }}</div>

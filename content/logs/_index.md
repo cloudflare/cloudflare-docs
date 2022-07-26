@@ -6,9 +6,7 @@ meta:
   title: Cloudflare Logs
 ---
 
-# Cloudflare Logs 
-
-{{<beta>}}
+{{<beta>}}Cloudflare Logs{{</beta>}}
 
 {{<description>}}
 Detailed logs of your website's HTTP requests
