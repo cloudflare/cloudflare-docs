@@ -1,5 +1,5 @@
 ---
-updated: 2020-09-22
+updated: 2022-07-26
 difficulty: Beginner
 pcx-content-type: tutorial
 title: Migrating from Netlify to Pages
@@ -92,6 +92,8 @@ If you choose to use a custom domain for your Pages, you can set it to the same 
 
 ## Cleaning up your old application and assigning the domain
 
-In **DNS** on the Cloudflare dashboard, review that you have updated the CNAME record for your domain from Netlify to Cloudflare Pages. With your DNS record updated, requests will go to your Pages application.
+In the Cloudflare dashboard, go to **DNS** and review that you have updated the CNAME record for your domain from Netlify to Cloudflare Pages. With your DNS record updated, requests will go to your Pages application.
+
+In **DNS**, your record's **Content** should be your `<SUBDOMAIN>.pages.dev` subdomain.
 
 With the above steps completed, you have successfully migrated your Netlify project to Cloudflare Pages.
