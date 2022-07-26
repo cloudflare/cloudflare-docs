@@ -50,7 +50,7 @@ To configure a route in your `wrangler.toml`, add the following to your environm
 
 ```toml
 routes = [
-    { pattern = “example.com/about”, zone_id = "<YOUR_ZONE_ID>" }
+    { pattern = "example.com/about", zone_id = "<YOUR_ZONE_ID>" }
 ]
 ```
 
