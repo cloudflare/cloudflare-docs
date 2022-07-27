@@ -63,9 +63,9 @@ Next, in the **Pages** dashboard:
 
 After completing these steps, your Pages project will only be accessible through the `*.pages.dev` subdomain you chose when creating your project.
 
-## Known Issues
+## Known issues
 
-### CAA Records
+### CAA records
 
 Certification Authority Authorization (CAA) records allow you to restrict certificate issuance to specific Certificate Authorities (CAs).
 
