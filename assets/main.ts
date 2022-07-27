@@ -1,7 +1,7 @@
-import * as events from './events';
-import * as contents from './contents';
-import * as timeago from './timeago';
-import * as navs from './navlinks';
+import * as events from "./events";
+import * as contents from "./contents";
+import * as timeago from "./timeago";
+import * as navs from "./navlinks";
 
 declare global {
   interface Window {
@@ -14,12 +14,12 @@ declare global {
 (function () {
   navs.init();
   timeago.init();
-
   events.load();
   events.focus();
   events.mobile();
   events.dropdowns();
   events.copy();
-
+  events.activeTab();
   contents.toc();
+  events.tabs();
 })();
