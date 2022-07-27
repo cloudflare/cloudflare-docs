@@ -707,7 +707,7 @@ html {
   --outdent: 0rem;
   margin-left: calc(var(--outdent) * 0);
   width: calc(100% + var(--outdent) * 2);
-  max-width: calc(100% + var(--outdent) * 2);
+  max-width: calc(100% + var(--outdent) * 0);
   cursor: text;
 }
 
