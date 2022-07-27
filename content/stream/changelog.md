@@ -6,9 +6,15 @@ weight: 8
 
 # Changelog
 
+## 2022-07-26
+
+### Live inputs
+
+The Live Inputs API now supports optional pagination, search, and filter parameters. For more information, refer to the [Live Inputs API documentation](https://api.cloudflare.com/#stream-live-inputs-properties).
+
 ## 2022-05-24
 
-### Picture-in-Picture Support
+### Picture-in-Picture support
 
 The [Stream Player](/stream/viewing-videos/using-the-stream-player/) now displays a button to activate Picture-in-Picture mode, if the viewer's web browser supports the [Picture-in-Picture API](https://developer.mozilla.org/en-US/docs/Web/API/Picture-in-Picture_API).
 
