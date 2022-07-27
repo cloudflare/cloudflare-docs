@@ -6,7 +6,7 @@ weight: 2
  
 # Custom domain support
  
-Cloudflare for SaaS allows end customers to point vanity domains to an application hosted on your Cloudflare zone as the SaaS provider. By adding their domain as a custom hostname on your SaaS zone, you can extend the benefits of Cloudflare to your customers.
+Cloudflare for SaaS allows you, as a SaaS provider, to extend the benefits of Cloudflare products to custom domains by adding them to your zone as custom hostnames. We support adding hostnames that are a subdomain of your zone (for example, `sub.serviceprovider.com`) and vanity domains (for example, `customer.com`) to your SaaS zone.
  
 ## Prerequisites
  
