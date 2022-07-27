@@ -69,7 +69,7 @@ After completing these steps, your Pages project will only be accessible through
 
 Certification Authority Authorization (CAA) records allow you to restrict certificate issuance to specific Certificate Authorities (CAs).
 
-This can cause issues when adding a custom domain to your Pages project if you have CAA records that don't allow Cloudflare to a certificate for your custom domain.
+This can cause issues when adding a [custom domain](/pages/platform/custom-domains/) to your Pages project if you have CAA records that do not allow Cloudflare to a certificate for your custom domain.
 
 To resolve this, add the necessary CAA records to allow Cloudflare to issue a certificate for your custom domain.
 
