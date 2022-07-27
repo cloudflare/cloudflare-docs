@@ -16,11 +16,11 @@ Prior to enabling Regional Services for SaaS:
 
 * Ensure you have access to [Cloudflare for SaaS](/cloudflare-for-saas/#availability).
 
-* If you have 10 or more unique origins, ensure your [fallback origin](/cloudflare-for-saas/getting-started/#step-1--create-fallback-origin-and-cname-target) is set up.
+* If you have 10 or more unique origins, ensure your [fallback origin](/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin-and-cname-target) is set up.
 
 * Ensure that [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) is enabled.
 
-* You must have [access to a custom origin](/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-origin). Using Cloudflare's default fallback origin for Regional Services will lead to an error.
+* You must have [access to a custom origin](/cloudflare-for-saas/start/advanced-settings/custom-origin). Using Cloudflare's default fallback origin for Regional Services will lead to an error.
 
 ---
 
@@ -47,6 +47,8 @@ You cannot enable **Edge TLS Termination** or **IP Access Rules** while using HT
 {{</Aside>}}
 
 9. Select **Submit** to finish the application.
+
+---
 
 ## Step 2 - Add custom hostnames to Spectrum Application
 

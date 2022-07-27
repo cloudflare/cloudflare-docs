@@ -71,8 +71,8 @@ Cloudflare returns a 1016 error when the custom hostname cannot be routed or pro
 
 There are two main causes of error 1016:
 
-1.  Custom Hostname ownership verification is not complete. To check verification status, run an API call to [search for a certificate by hostname](/cloudflare-for-saas/ssl/reference/common-api-calls/) and check the verification error field: `"verification_errors": ["custom hostname does not CNAME to this zone."]`.
-2.  Fallback Origin is not [correctly set](/cloudflare-for-saas/getting-started/#step-1--create-fallback-origin-and-cname-target). Confirm that you have created a DNS record for the fallback origin and also set the fallback origin.
+1.  Custom Hostname ownership verification is not complete. To check verification status, run an API call to [search for a certificate by hostname](/cloudflare-for-saas/start/common-api-calls/) and check the verification error field: `"verification_errors": ["custom hostname does not CNAME to this zone."]`.
+2.  Fallback Origin is not [correctly set](/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin-and-cname-target). Confirm that you have created a DNS record for the fallback origin and also set the fallback origin.
 
 {{<Aside type="note">}}
 

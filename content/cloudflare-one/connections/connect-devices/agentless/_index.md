@@ -10,3 +10,4 @@ If you are unable to install the WARP client on your devices (for example, Windo
 
 - **[DNS filtering](/cloudflare-one/connections/connect-devices/agentless/dns/)** without WARP requires changing your local DNS resolver to Cloudflare.
 - **[HTTP filtering](/cloudflare-one/connections/connect-devices/agentless/pac-files/)** without WARP requires configuring your browser to forward traffic to a Cloudflare proxy server.
+
