@@ -19,24 +19,8 @@
 
     <main class="DocsBody">
       <div id="docs-content" data-reach-skip-nav-content></div>
-
-      <div class="DocsContent" id="main" page-type="{{ $type }}">
+      <div class="DocsContent" id="main" page-type="document">
         <article class="DocsMarkdown">
-            {{ if $beta }}
-                <div class="DocsMarkdown-beta">
-                    <h1>{{- $title -}}</h1>
-                    <div class="DocsMarkdown--beta-pill">Beta</div>
-                </div>
-            {{ else }}
-                <h1 id="{{ $title }}">{{- $title -}}</h1>
-            {{ end }}
-            <div class="DocsMarkdown--description">
-                {{- $shortDescription -}}
-            </div>
-            <div class="DocsMarkdown--plan">
-                {{- $availability -}}
-            </div>
-            {{- $longDescription | .RenderString -}}
             {{- .Content -}}
         </article>
       </div>

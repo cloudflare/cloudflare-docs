@@ -13,13 +13,6 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
-overview: 
-  title: Cloudflare Logs
-  beta: true
-  short_description: Detailed logs of your website’s HTTP requests
-  availability: enterprise
-  long_description: These logs are helpful for debugging, identifying configuration adjustments, and creating analytics, especially when combined with logs from other sources, such as your application server. For information about the types of data Cloudflare collects, refer to [Cloudflare's Data Products](/fundamentals/data-products/).
-
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
