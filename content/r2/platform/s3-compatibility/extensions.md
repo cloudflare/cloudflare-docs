@@ -34,11 +34,11 @@ If using Unicode in object key names, refer to [Unicode Interoperability](/r2/le
 
 ## Auto-creating buckets on upload
 
-If creating buckets on demand, you might initiate an upload with the assumption that a target bucket exists. When the `NoSuchBucket` error is returned, you may want to issue a `CreateBucket` operation. However, this is operationally problematic. If the body has already been partially consumed, the upload will need to be aborted. To solve this, developers use the [HTTP `100`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/100) response to detect whether the body should be sent or if the bucket needs to be created and the upload retried. This is how other object storage providers typically solve this error. However, Cloudflare does not support the HTTP `100` response. Additionally, if the HTTP `100` response was supported, there is still additional latency due to the round trips involved.
+If you are creating buckets on demand, you might initiate an upload with the assumption that a target bucket exists. In this situation, if you received a `NoSuchBucket` error, you would probably issue a `CreateBucket` operation. However, following this approach can cause issues: if the body has already been partially consumed, the upload will need to be aborted. A common solution to this issue, followed by other object storage providers, is to use the [HTTP `100`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/100) response to detect whether the body should be sent, or if the bucket must be created before retrying the upload. However, Cloudflare does not support the HTTP `100` response. Even if the HTTP `100` response was supported, you would still have additional latency due to the round trips involved.
 
-To support being able to send an upload with a streaming body to a bucket that may not exist yet, uploads (such as, `PutObject` / `CreateMultipartUpload`) support a header being specified that will ensure the `NoSuchBucket` error is not returned. If it does not exist at the time of upload, the bucket is implicitly instantiated with the following `CreateBucket` request:
+To support sending an upload with a streaming body to a bucket that may not exist yet, upload operations such as `PutObject` or `CreateMultipartUpload` allow you to specify a header that will ensure the `NoSuchBucket` error is not returned. If the bucket does not exist at the time of upload, it is implicitly instantiated with the following `CreateBucket` request:
 
-```
+```txt
 PUT / HTTP/1.1
 Host: bucket.account.r2.cloudflarestorage.com
 <CreateBucketConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
@@ -52,13 +52,13 @@ This is only useful if you are creating buckets spontaneously because you do not
 
 ### cf-create-bucket-if-missing
 
-Add a `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [above](#auto-creating-buckets-on-upload) for a more detailed explanation of when to use this.
+Add a `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [Auto-creating buckets on upload](#auto-creating-buckets-on-upload) for a more detailed explanation of when to add this header.
 
 ## CreateMultipartUpload
 
 ### cf-create-bucket-if-missing
 
-Add the `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [above](#auto-creating-buckets-on-upload) for a more detailed explanation of when to use this.
+Add a `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [Auto-creating buckets on upload](#auto-creating-buckets-on-upload) for a detailed explanation of when to add this header.
 
 ## CopyObject
 
