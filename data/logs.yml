@@ -13,12 +13,6 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
-overview: 
-  title: Cloudflare Logs
-  beta: true
-  short_description: Detailed logs of your website’s HTTP requests
-  availability: enterprise
-
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com

@@ -12,7 +12,7 @@ weight: 3
 
 ## Prerequisites
 
-Before you can employ Early Hints for SaaS, you need to create a custom hostname. Review [Get Started with Cloudflare for SaaS](/cloudflare-for-saas/getting-started/) if you have not already done so.
+Before you can employ Early Hints for SaaS, you need to create a custom hostname. Review [Get Started with Cloudflare for SaaS](/cloudflare-for-saas/start/getting-started/) if you have not already done so.
 
 ---
 

@@ -4,6 +4,8 @@
   {{- $title := default (replace (title .Section) "-" " ") $DATA.overview.title -}}
   {{- $beta := $DATA.overview.beta -}}
   {{- $shortDescription := $DATA.overview.short_description -}}
+  {{- $availability := $DATA.overview.availability -}}
+  {{- $longDescription := $DATA.overview.long_description -}}
 
   <div class="DocsPage">
     {{- partial "skipcontent" . -}}
@@ -17,20 +19,8 @@
 
     <main class="DocsBody">
       <div id="docs-content" data-reach-skip-nav-content></div>
-
-      <div class="DocsContent" id="main" page-type="{{ $type }}">
+      <div class="DocsContent" id="main" page-type="document">
         <article class="DocsMarkdown">
-            {{ if $beta }}
-                <div class="DocsMarkdown-beta">
-                    <h1>{{- $title -}}</h1>
-                    <div class="DocsMarkdown--beta-pill">Beta</div>
-                </div>
-            {{ else }}
-                <h1 id="{{ $title }}">{{- $title -}}</h1>
-            {{ end }}
-            <div class="DocsMarkdown--description">
-                {{- $shortDescription -}}
-            </div>
             {{- .Content -}}
         </article>
       </div>

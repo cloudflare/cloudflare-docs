@@ -20,7 +20,7 @@ If you would like to migrate the custom hostname without end customers changing 
  
 {{</Aside>}}
  
-1. [Add custom hostname](/cloudflare-for-saas/getting-started/#:~:text=Log%20in%20to%20the%20Cloudflare,Click%20Add%20Custom%20Hostname.) to your new zone.
+1. [Add custom hostname](/cloudflare-for-saas/start/getting-started/#:~:text=Log%20in%20to%20the%20Cloudflare,Click%20Add%20Custom%20Hostname.) to your new zone.
  
 2. Direct your customer to [change the DNS record](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) so that it points to the new zone.
  
@@ -38,7 +38,7 @@ Through [Apex Proxying](/cloudflare-for-saas/ssl/common-tasks/hostname-verificat
 
 1. Verify with the account team that your apex proxying IPs have been assigned to both SaaS zones.
  
-2. [Add custom hostname](/cloudflare-for-saas/getting-started/#:~:text=Log%20in%20to%20the%20Cloudflare,Click%20Add%20Custom%20Hostname.) to the new zone.
+2. [Add custom hostname](/cloudflare-for-saas/start/getting-started/#:~:text=Log%20in%20to%20the%20Cloudflare,Click%20Add%20Custom%20Hostname.) to the new zone.
 
 3. Confirm that the custom hostname has validated in the new zone.
 
@@ -56,7 +56,7 @@ The most recently edited custom hostname will be active. For instance, `example.
  
 If you are migrating custom hostnames that rely on a Wildcard certificate, Cloudflare cannot automatically complete Domain Control Validation (DCV).
  
-1. [Add custom hostname](/cloudflare-for-saas/getting-started/#:~:text=Log%20in%20to%20the%20Cloudflare,Click%20Add%20Custom%20Hostname.) to the new zone.
+1. [Add custom hostname](/cloudflare-for-saas/start/getting-started/#:~:text=Log%20in%20to%20the%20Cloudflare,Click%20Add%20Custom%20Hostname.) to the new zone.
  
 2. Direct your customer to [change the DNS record](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) so that it points to the new zone.
  
