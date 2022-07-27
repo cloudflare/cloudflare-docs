@@ -48,6 +48,11 @@ To restore the original visitor IP address at your origin web server, Cloudflare
 
 {{</Aside>}}
 
+## X-Forwarded-Proto
+
+`X-Forwarded-Proto` is used to identify the protocol (HTTP or HTTPS) that Cloudflare uses to connect to origin web server. By default, it is `http`. Certain [encryption mode](/ssl/origin-configuration/ssl-modes/) may change this header to `https` if the connection is encrypted.
+
+
 ## CF-RAY
 
 The `CF-ray` header (otherwise known as a [Ray ID](/fundamentals/get-started/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor’s request. For example: `CF-RAY: 230b030023ae2822-SJC`.
