@@ -16,6 +16,8 @@ Middleware files are similar to standard Function files. You may export an `onRe
 
 In your `_middleware.{js|ts}` files, you can define a middleware function that handles errors for all your Functions and export it to all the `onRequest` methods. This means the Functions defined within this file will be called on each function request declared in the directory that the middleware lives in. For example:
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 ```js
 ---
 filename: functions/_middleware.js
@@ -36,6 +38,35 @@ const hello = async ({ next }) => {
 
 export const onRequest = [errorHandler, hello];
 ```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+---
+filename: functions/_middleware.ts
+---
+interface Env {}
+
+const errorHandler: PagesFunction<Env> = async ({ next }) => {
+  try {
+    return await next();
+  } catch (err) {
+    if (err instanceof Error) {
+      return new Response(`${err.message}\n${err.stack}`, { status: 500 });
+    } else {
+      return new Response(err, { status: 500 });
+    }
+  }
+};
+
+const hello: PagesFunction<Env> = async ({ next }) => {
+  const response = await next();
+  response.headers.set('X-Hello', 'Hello from functions Middleware!');
+  return response;
+};
+
+export const onRequest = [errorHandler, hello];
+```
+{{</tab>}}
 
 In the function above, you can see that the `errorHandler` and `hello` Functions are exported to all requests so that if this middleware is in the base of the `/functions` directory it will run on all Functions defined in that directory. And if the middleware is defined in a subdirectory such as `/functions/todos/_middleware.ts` it will only run on all requests in that directory.
 
@@ -43,6 +74,8 @@ In the function above, you can see that the `errorHandler` and `hello` Functions
 
 Much like Function handlers, you may export a method-specific handler instead of the generic `onRequest` name. For example, you may want to define an `errorHandler` for all requests and then an additional `hello` function for `GET` requests:
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 ```js
 ---
 filename: functions/hello/_middleware.js
@@ -54,6 +87,20 @@ export const onRequest = [errorHandler];
 
 export const onRequestGet = [errorHandler, hello];
 ```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+---
+filename: functions/hello/_middleware.ts
+---
+import { errorHandler } from '../shared';
+import { hello } from '../custom';
+
+export const onRequest = [errorHandler];
+
+export const onRequestGet = [errorHandler, hello];
+```
+{{</tab>}}
 
 ### Middleware routing
 
@@ -86,6 +133,8 @@ This directory structure has two types of middleware: one that acts on every fil
 
 Within Pages, middleware functions have access to a `context.next` function which, when invoked, will await the next function's execution before the current middleware resumes. The ability to wait for other middleware and/or the final route handler(s) to finish is what allows for use cases like error handling, for example.
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 ```js
 async function errorHandler(context) {
   try {
@@ -100,9 +149,32 @@ async function errorHandler(context) {
 // Attach `errorHandler` to all HTTP requests
 export const onRequest = errorHandler;
 ```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+const errorHandler: PagesFunction<Env> = async (context) => {
+  try {
+    // wait for the next function to finish
+    return await context.next();
+  } catch (err) {
+    // catch and report and errors when running the next function
+     if (err instanceof Error) {
+      return new Response(`${err.message}\n${err.stack}`, { status: 500 });
+    } else {
+      return new Response(err, { status: 500 });
+    }
+  }
+}
+
+// Attach `errorHandler` to all HTTP requests
+export const onRequest = errorHandler;
+```
+{{</tab>}}
 
 Another use case for the `next` function is passing the request cycle from the current middleware function to the next function in the stack if the current function does not end the request-response cycle. Using the `next()` function will pass control to the next middleware function, depending on the order of execution. For example:
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 ```js
 // Attach multiple handlers
 export const onRequest = [
@@ -125,6 +197,33 @@ export const onRequest = [
   },
 ];
 ```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+// TODO(walshy): Again, figure out how to actually TSify this
+
+// Attach multiple handlers
+export const onRequest = [
+  async ({ request, next }) => {
+    try {
+      // Call the next handler in the stack
+      const response = await next();
+      const responseText = await response.text();
+      //~> "Hello from next base middleware"
+      return new Response(responseText + " from middleware");
+    } catch (thrown) {
+      return new Response(`Error ${thrown}`, {
+        status: 500,
+        statusText: "Internal Server Error",
+      });
+    }
+  },
+  ({ request, next }) => {
+    return new Response("Hello from next base middleware");
+  },
+];
+```
+{{</tab>}}
 
 ### Middleware data
 
@@ -132,6 +231,8 @@ Handler functions have the ability to pass data between one another. This is don
 
 More often than not, `context.data` is only relevant from a middleware's perspective, but it is available to all functions regardless.
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 ```js
 ---
 filename: functions/_middleware.js
@@ -151,3 +252,25 @@ export async function onRequest(context) {
   }
 }
 ```
+{{</tab>}}
+{{<tab label="ts">}}
+```js
+---
+filename: functions/_middleware.ts
+---
+export const onRequest: PagesFunction<Env> = async (context) => {
+  let res;
+
+  try {
+    context.data.timestamp = Date.now();
+    res = await context.next();
+  } catch (err) {
+    res = new Response('Oops!', { status: 500 });
+  } finally {
+    let delta = Date.now() - context.data.timestamp;
+    res.headers.set('x-response-timing', delta);
+    return res;
+  }
+}
+```
+{{</tab>}}
