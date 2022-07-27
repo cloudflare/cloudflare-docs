@@ -20,12 +20,27 @@ Workers KV is Cloudflare's globally replicated key-value storage solution. Withi
 
 While developing locally, you can interact with your KV namespace by add `-k, --kv [Namespace binding]` to your run command. For example, if your namespace is bound to `TodoList`, you can access the KV namespace in your local dev by running `npx wrangler pages dev dist --kv TodoList`. The data from this namespace can be accessed using `context.env`.
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 ```js
 export async function onRequest({ env }) {
   const task = await env.TodoList.get("Task:123");
   return new Response(task);
 }
 ```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+interface Env {
+  TodoList: KVNamespace;
+}
+
+export const onRequest: PagesFunction<Env> = async ({ env }) => {
+  const task = await env.TodoList.get("Task:123");
+  return new Response(task);
+}
+```
+{{</tab>}}
 
 ### Durable Object namespace
 

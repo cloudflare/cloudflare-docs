@@ -14,6 +14,9 @@ If you have never used Module syntax, refer to the [JavaScript modules blog post
 
 Your custom Module Worker will assume full control of all incoming HTTP requests to your domain. Because of this, your custom Worker is required to make and/or forward requests to your project's static assets.
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+
 ```js
 ---
 filename: _worker.js
@@ -29,8 +32,38 @@ export default {
     // Without this, the Worker will error and no assets will be served.
     return env.ASSETS.fetch(request);
   },
-};
+}
 ```
+
+{{</tab>}}
+{{<tab label="ts">}}
+
+```ts
+---
+filename: _worker.js
+---
+// Note: You would need to compile your TS into JS and output it as a _worker.js file. We don't read _worker.ts
+
+interface Env {
+  // TODO(walshy): Do we have an easy way to type ASSETS here?
+}
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const url = new URL(request.url);
+    if (url.pathname.startsWith('/api/')) {
+      // TODO: Add your custom /api/* logic here.
+      return new Response('Ok');
+    }
+    // Otherwise, serve the static assets.
+    // Without this, the Worker will error and no assets will be served.
+    return env.ASSETS.fetch(request);
+  },
+}
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 The `env.ASSETS.fetch()` function will allow you to send the user to a modified path which is defined through the `url` parameter. `env` is the object that contains your environment variables and bindings. `ASSETS` is a default Function binding that allows communication between your Function and Pages' asset serving resource. `fetch()` calls to Pages' asset-serving resource and serves the requested asset.
 
