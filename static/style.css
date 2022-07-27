@@ -3379,7 +3379,6 @@ p.DocsMarkdown--small-header {
 .DocsMarkdown--definitions ul li>p:first-child>code:first-child {
   display: inline-block;
   vertical-align: middle;
-  font-weight: 600;
   --padding: 0 0.3em;
 }
 
