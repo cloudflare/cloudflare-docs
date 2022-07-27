@@ -33,7 +33,7 @@ For more information on these features, refer to [Hostname management](/cloudfla
 
 ## How it works
 
-As the SaaS provider, you can extend Cloudflare's products to customer-owned custom domains by adding them to your zone [as custom hostnames](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/). Through a suite of easy-to-use products, Cloudflare for SaaS routes traffic from custom hostnames to an origin, set up on your domain. Cloudflare for SaaS is highly customizable. Three possible configurations are shown below.
+As the SaaS provider, you can extend Cloudflare's products to customer-owned custom domains by adding them to your zone [as custom hostnames](/cloudflare-for-saas/domain-support/hostname-verification/). Through a suite of easy-to-use products, Cloudflare for SaaS routes traffic from custom hostnames to an origin, set up on your domain. Cloudflare for SaaS is highly customizable. Three possible configurations are shown below.
 
 ### Standard Cloudflare for SaaS configuration:
 
@@ -43,7 +43,7 @@ Custom hostnames are routed to a default origin server called fallback origin. T
 
 ### Cloudflare for SaaS with Apex Proxying:
 
-This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. This is avaiable as an add-on for Enterprise plans. For more details, refer to [Apex Proxying](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/#apex-verification).
+This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. This is avaiable as an add-on for Enterprise plans. For more details, refer to [Apex Proxying](/cloudflare-for-saas/domain-support/hostname-verification/#apex-verification).
 
 ![Advanced case](/cloudflare-for-saas/static/use-cases/Advanced.png)
 

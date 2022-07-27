@@ -78,7 +78,7 @@ Using the hostname from the A or AAAA record you just created, [update the fallb
 Each Custom Hostname requires successful Certificate Validation and Hostname Verification.
 
 - [Certificate Validation](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
-- [Hostname Verification](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
+- [Hostname Verification](/cloudflare-for-saas/domain-support/hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
 
 {{<Aside type="note">}}
 
