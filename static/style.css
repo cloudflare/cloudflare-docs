@@ -705,7 +705,7 @@ html {
   background: var(--code-block-background-color);
   color: var(--code-block-color);
   --outdent: 0rem;
-  margin-left: calc(var(--outdent) * -1);
+  margin-left: calc(var(--outdent) * 0);
   width: calc(100% + var(--outdent) * 2);
   max-width: calc(100% + var(--outdent) * 2);
   cursor: text;
