@@ -62,3 +62,26 @@ Next, in the **Pages** dashboard:
 3.  Select the **three dot icon** next to your custom domain > **Remove domain**.
 
 After completing these steps, your Pages project will only be accessible through the `*.pages.dev` subdomain you chose when creating your project.
+
+## Known Issues
+
+### CAA Records
+
+CAA records allow you to restrict certificate issuance to specific Certificate Authorities (CAs).
+
+This can cause issues when adding a custom domain to your Pages project if you have CAA records that don't allow Cloudflare to a certificate for your custom domain.
+
+To resolve this, add the necessary CAA records to allow Cloudflare to issue a certificate for your custom domain.
+
+```
+example.com.            300     IN      CAA     0 issue "comodoca.com"
+example.com.            300     IN      CAA     0 issue "digicert.com; cansignhttpexchanges=yes"
+example.com.            300     IN      CAA     0 issue "letsencrypt.org"
+example.com.            300     IN      CAA     0 issue "pki.goog; cansignhttpexchanges=yes"
+example.com.            300     IN      CAA     0 issuewild "comodoca.com"
+example.com.            300     IN      CAA     0 issuewild "digicert.com; cansignhttpexchanges=yes"
+example.com.            300     IN      CAA     0 issuewild "letsencrypt.org"
+example.com.            300     IN      CAA     0 issuewild "pki.goog; cansignhttpexchanges=yes"
+```
+
+Refer to the [Certification Authority Authorization (CAA) FAQ](https://support.cloudflare.com/hc/en-us/articles/115000310832-Certification-Authority-Authorization-CAA-FAQ) for more information.
