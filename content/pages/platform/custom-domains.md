@@ -67,7 +67,7 @@ After completing these steps, your Pages project will only be accessible through
 
 ### CAA Records
 
-CAA records allow you to restrict certificate issuance to specific Certificate Authorities (CAs).
+Certification Authority Authorization (CAA) records allow you to restrict certificate issuance to specific Certificate Authorities (CAs).
 
 This can cause issues when adding a custom domain to your Pages project if you have CAA records that don't allow Cloudflare to a certificate for your custom domain.
 
