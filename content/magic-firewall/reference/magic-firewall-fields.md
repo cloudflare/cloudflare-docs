@@ -92,6 +92,20 @@ pcx-content-type: reference
         </td>
     </tr>
     <tr>
+      <td valign="top"><code>ip.src.asn</code><br />{{<type>}}Number{{</type>}}</td>
+      <td>
+         <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with source IP address.
+         </p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top"><code>ip.dst.asn</code><br />{{<type>}}Number{{</type>}}</td>
+      <td>
+         <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with destination IP address.
+         </p>
+      </td>
+    </tr>
+    <tr>
         <td><p><code>ip.hdr_len</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
