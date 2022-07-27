@@ -22,7 +22,7 @@ To filter network traffic from a device such as a laptop or phone:
 4. Enable the Gateway proxy:
     1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
     2. Enable **Proxy** for TCP.
-    3. (Optional) Enable **Proxy** for UDP.  All port 443 UDP traffic will be inspected by Gateway except when using QUIC. QUIC traffic will only be proxied.
+    3. (Optional) Select **UDP** to enable Gateway inspection on all port 443 UDP traffic.
 
 ### Connect private networks
 
