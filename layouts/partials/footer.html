@@ -1,27 +1,29 @@
 <footer class="DocsFooter">
   <div class="DocsFooter--content">
     {{ if eq .Params.layout "overview"}}
-    
+
     <div class="AdditionalResources">
-    <ul>
-      <li>
-        Learn more at the {{- with .File -}} {{- $url := (printf
-        "https://www.cloudflare.com/learning/") -}} {{- partial "external.link"
-        (dict "text" "Learning Center" "url" $url) }} {{- end -}}
-      </li>
-      <li>
-        Engage with the community on the {{- with .File -}} {{- $url := (printf
-        "https://community.cloudflare.com/") -}} {{- partial "external.link"
-        (dict "text" "Community Forum" "url" $url) }} {{- end -}}
-      </li>
-      <li>
-        Get answers to common questions and issues from the {{- with .File -}}
-        {{- $url := (printf "https://support.cloudflare.com/") -}} {{- partial
-        "external.link" (dict "text" "Help Center" "url" $url) }} {{- end -}}
-      </li>
-    </ul>
-  </div>
-  {{ end }}
+      <ul>
+        <li id="LearningCenter">
+          Learn more at the {{- with .File -}} {{- $url := (printf
+          "https://www.cloudflare.com/learning/") -}} {{- partial
+          "external.link" (dict "text" "Learning Center" "url" $url) }} {{- end
+          -}}
+        </li>
+        <li>
+          Engage with the community on the {{- with .File -}} {{- $url :=
+          (printf "https://community.cloudflare.com/") -}} {{- partial
+          "external.link" (dict "text" "Community Forum" "url" $url) }} {{- end
+          -}}
+        </li>
+        <li>
+          Get answers to common questions and issues from the {{- with .File -}}
+          {{- $url := (printf "https://support.cloudflare.com/") -}} {{- partial
+          "external.link" (dict "text" "Help Center" "url" $url) }} {{- end -}}
+        </li>
+      </ul>
+    </div>
+    {{ end }}
     <div>
       <span class="DocsFooter--edit-on-gh-link-wrapper">
         {{- with .File -}} {{- $url := (printf

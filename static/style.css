@@ -5366,8 +5366,6 @@ pre {
   font-size: 20px;
   line-height: 24px;
 
-  color: var(--gray-7);
-
   margin-bottom: 1em;
 }
 
@@ -5414,11 +5412,11 @@ pre {
 
   width: 100%;
 
-  background-color: #242628;
+  background-color: #f5f5f6;
   border-radius: 4px;
 }
 .DocsMarkdown--resource:hover {
-  background-color: #2f3133;
+  background-color: #cccfd1;
 }
 .DocsMarkdown--resource-header {
   font-size: 20px;
@@ -5426,5 +5424,11 @@ pre {
   margin-bottom: 10px;
 }
 .DocsMarkdown--resource-content {
-  color: var(--gray-7);
+  color: inherit;
+}
+[theme="dark"] .DocsMarkdown--resource {
+  background-color: #242628;
+}
+[theme="dark"] .DocsMarkdown--resource:hover {
+  background-color: #2f3133;
 }
