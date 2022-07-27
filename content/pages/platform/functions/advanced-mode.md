@@ -16,7 +16,6 @@ Your custom Module Worker will assume full control of all incoming HTTP requests
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
-
 ```js
 ---
 filename: _worker.js
@@ -37,7 +36,6 @@ export default {
 
 {{</tab>}}
 {{<tab label="ts">}}
-
 ```ts
 ---
 filename: _worker.js

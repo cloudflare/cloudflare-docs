@@ -45,6 +45,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 }
 ```
 {{</tab>}}
+{{</tabs>}}
 
 When migrating from a [Module Worker](/workers/runtime-apis/fetch-event/#syntax-module-worker), this signature combines the traditional `fetch` handler's arguments into a single object along with additional, Pages-specific keys.
 
@@ -86,6 +87,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 }
 ```
 {{</tab>}}
+{{</tabs>}}
 
 Another helpful example for handling single path segments can be querying an API for data, for example, [Rick and Morty API](https://rickandmortyapi.com/documentation/#rest) for information on the show characters. You can write a function to show each character on request using the ID to identify them:
 
@@ -118,6 +120,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ params }) => {
 }
 ```
 {{</tab>}}
+{{</tabs>}}
 
 The above will return each character at `/character/{id}` ID being associated with the character.
 
@@ -146,6 +149,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 export const onRequestPut = onRequestPost;
 ```
 {{</tab>}}
+{{</tabs>}}
 
 Additionally, an exported handler may be an array of function handlers. This allows you to easily compose Functions as a group, which may include a mix of shared and/or one-off behaviors:
 
@@ -177,3 +181,4 @@ export const onRequest = [
 ];
 ```
 {{</tab>}}
+{{</tabs>}}

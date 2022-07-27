@@ -41,6 +41,7 @@ export const onRequest: PagesFunction<Env> = async ({ env }) => {
 }
 ```
 {{</tab>}}
+{{</tabs>}}
 
 ### Durable Object namespace
 
@@ -68,16 +69,36 @@ When developing locally, you can access environment variables by adding a bindin
 
 For example, you can run `npx wrangler pages dev dist --binding COLOR="BLUE"` and then:
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 ```js
-export async function onRequest({ env }) {
+export function onRequest({ env }) {
   return new Response(env.COLOR);
 }
 ```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+interface Env {
+  COLOR: string;
+}
+
+export const onRequest: PagesFunction<Env> = ({ env }) => {
+  return new Response(env.COLOR);
+}
+```
+{{</tab>}}
+{{</tabs>}}
 
 Here is a real-world example of using environment variables inside a middleware function. To connect [Sentry](https://www.sentry.io/) to a Cloudflare Worker, you can use [Toucan js](https://github.com/robertcepa/toucan-js) and access your Sentry Data Source Name (DSN) in your function.
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 ```js
-const SentryMiddleware = async ({ request, next, env, waitUntil }) => {
+---
+filename: functions/_middleware.js
+---
+const sentryMiddleware = async ({ request, next, env, waitUntil }) => {
   const sentry = new Toucan({
     dsn: env.SENTRY_DSN,
     context: { waitUntil, request },
@@ -91,5 +112,35 @@ const SentryMiddleware = async ({ request, next, env, waitUntil }) => {
     });
   }
 };
-export const onRequest = [SentryMiddleware];
+
+export const onRequest = [sentryMiddleware];
 ```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+---
+filename: functions/_middleware.ts
+---
+interface Env {
+  SENTRY_DSN: string;
+}
+
+const sentryMiddleware: PagesFunction<Env> = async ({ request, next, env, waitUntil }) => {
+  const sentry = new Toucan({
+    dsn: env.SENTRY_DSN,
+    context: { waitUntil, request },
+  });
+  try {
+    return await next();
+  } catch (thrown) {
+    sentry.captureException(thrown);
+    return new Response(`Error ${thrown}`, {
+      status: 500,
+    });
+  }
+};
+
+export const onRequest = [sentryMiddleware];
+```
+{{</tab>}}
+{{</tabs>}}

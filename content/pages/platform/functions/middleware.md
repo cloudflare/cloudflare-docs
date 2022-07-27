@@ -67,6 +67,7 @@ const hello: PagesFunction<Env> = async ({ next }) => {
 export const onRequest = [errorHandler, hello];
 ```
 {{</tab>}}
+{{</tabs>}}
 
 In the function above, you can see that the `errorHandler` and `hello` Functions are exported to all requests so that if this middleware is in the base of the `/functions` directory it will run on all Functions defined in that directory. And if the middleware is defined in a subdirectory such as `/functions/todos/_middleware.ts` it will only run on all requests in that directory.
 
@@ -101,6 +102,7 @@ export const onRequest = [errorHandler];
 export const onRequestGet = [errorHandler, hello];
 ```
 {{</tab>}}
+{{</tabs>}}
 
 ### Middleware routing
 
@@ -170,6 +172,7 @@ const errorHandler: PagesFunction<Env> = async (context) => {
 export const onRequest = errorHandler;
 ```
 {{</tab>}}
+{{</tabs>}}
 
 Another use case for the `next` function is passing the request cycle from the current middleware function to the next function in the stack if the current function does not end the request-response cycle. Using the `next()` function will pass control to the next middleware function, depending on the order of execution. For example:
 
@@ -224,6 +227,7 @@ export const onRequest = [
 ];
 ```
 {{</tab>}}
+{{</tabs>}}
 
 ### Middleware data
 
@@ -274,3 +278,4 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 }
 ```
 {{</tab>}}
+{{</tabs>}}
