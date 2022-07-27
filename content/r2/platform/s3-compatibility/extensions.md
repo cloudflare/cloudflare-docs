@@ -34,14 +34,9 @@ If using Unicode in object key names, refer to the [Unicode Interoperability tec
 
 ## Auto-creating buckets on upload
 
-If creating buckets on-demand, you might do an opportunistic PUT and then issue a `CreateBucket` if the error returned is `NoSuchBucket`.
-However, this is operationally problematic if the body may have already been partially consumed. Typically to solve this one would use
-HTTP 100 and is indeed how S3 typically solves this. However, this response isn't actually supported by Cloudflare. Additionally,
-even if HTTP 100 existed there's still additional latency involved since the sending of the body starts synchronously in the path of
-ongoing network transfers instead of overlapping in the background.
+If creating buckets on demand, you might initiate an upload with the assumption that a target bucket exists. When the `NoSuchBucket` error is returned, you may want to issue a `CreateBucket` operation. However, this is operationally problematic. If the body has already been partially consumed, the upload will need to be aborted. To solve this, developers use the [HTTP `100`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/100) response to detect whether the body should be sent or if the bucket needs to be created and the upload retried. This is how other object storage providers typically solve this error. However, Cloudflare does not support the HTTP `100` response. Additionally, if the HTTP `100` response was supported, there is still additional latency due to the round trips involved.
 
-To support this, uploads (`PutObject` / `CreateMultipartUpload`) support a header being specified that will ensure `NoSuchBucket` is
-never returned. The bucket is instantiated with the equivalent of the following `CreateBucket` request:
+To support being able to send an upload with a streaming body to a bucket that may not exist yet, uploads (such as, `PutObject` / `CreateMultipartUpload`) support a header being specified that will ensure the `NoSuchBucket` error is not returned. If it does not exist at the time of upload, the bucket is implicitly instantiated with the following `CreateBucket` request:
 ```
 PUT / HTTP/1.1
 Host: bucket.account.r2.cloudflarestorage.com
@@ -50,22 +45,19 @@ Host: bucket.account.r2.cloudflarestorage.com
 </CreateBucketConfiguration>
 ```
 
-This is primarily only useful if you have one bucket per customer in which case the [ListBuckets extension](#ListBuckets) to support accounts with
-greater than 1000 buckets may also be useful.
+This is only useful if you are creating buckets spontaneously because you do not know the name of the bucket or preferred access location ahead of time. For example, you have one bucket per one of your customers and the bucket is created on first upload to the bucket and not during account registration. In these cases, the [ListBuckets extension](#ListBuckets) to support accounts with greater than 1000 buckets may also be useful.
 
 ## PutObject
 
 ### cf-create-bucket-if-missing
 
-Add a header value of `cf-create-bucket-if-missing` with the value `true` to implicitly create the bucket if it does not exist yet.
-See [above](#auto-creating-buckets-on-upload) for a more detailed explanation of when to use it. Usually it's better to split those operations out.
+Add a `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [above](#auto-creating-buckets-on-upload) for a more detailed explanation of when to use this.
 
 ## CreateMultipartUpload
 
 ### cf-create-bucket-if-missing
 
-Add a header value of `cf-create-bucket-if-missing` with the value `true` to implicitly create the bucket if it does not exist yet.
-See [above](#auto-creating-buckets-on-upload) for a more detailed explanation of when to use it. Usually it's better to split those operations out.
+Add the `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [above](#auto-creating-buckets-on-upload) for a more detailed explanation of when to use this.
 
 ## CopyObject
 
