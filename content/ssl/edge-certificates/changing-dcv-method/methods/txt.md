@@ -10,10 +10,6 @@ meta:
 
 {{<render file="_txt-validation-definition.md">}}
 
-## Limitations
-
-If your domain is already active with a partial DNS setup — with Cloudflare or another DNS provider — you cannot use a TXT record for DCV. That domain's TXT record needs to be reserved for forwarding traffic to Cloudflare.
-
 ## Setup
 
 ### Specify DCV method

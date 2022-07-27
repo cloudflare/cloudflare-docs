@@ -2,6 +2,7 @@
 pcx-content-type: get-started
 title: Get started
 weight: 3
+layout: single
 ---
 
 # Get started
@@ -12,9 +13,9 @@ Welcome to Cloudflare Zero Trust. This guide covers the main steps you need to t
 
 - A Cloudflare account
 
-## Start from the Cloudflare Dashboard
+## Start from the Cloudflare dashboard
 
-1. On your Account Home in the [Cloudflare Dashboard](https://dash.cloudflare.com/), click on the **Zero Trust** icon.
+1. On your Account Home in the [Cloudflare dashboard](https://dash.cloudflare.com/), click on the **Zero Trust** icon.
 
 2. On the onboarding screen, choose a [team name](/cloudflare-one/glossary/#team-name).
 
@@ -22,7 +23,7 @@ Welcome to Cloudflare Zero Trust. This guide covers the main steps you need to t
 
 4. Welcome to the Zero Trust dashboard! Your account has been created. You can now explore a list of one-click actions we have designed to help you kickstart your experience with Cloudflare Zero Trust.
 
-    ![Cloudflare Zero Trust Dashboard Home](/cloudflare-one/static/documentation/quickstart/quickstart-page.png)
+    ![Cloudflare Zero Trust dashboard home](/cloudflare-one/static/documentation/quickstart/quickstart-page.png)
 
 ## Install the WARP client on your devices
 

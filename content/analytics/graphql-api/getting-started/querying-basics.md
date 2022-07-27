@@ -168,7 +168,7 @@ Here are some helpful articles about working with the Cloudflare Analytics API a
 
 ### Cloudflare specific
 
-*   [Understanding the Cloudflare Dashboard](https://support.cloudflare.com/hc/en-us/articles/205075117-Understanding-the-Cloudflare-dashboard)
+*   [Understanding the Cloudflare dashboard](https://support.cloudflare.com/hc/en-us/articles/205075117-Understanding-the-Cloudflare-dashboard)
 *   [How to find your zoneTag using the API](https://api.cloudflare.com/#getting-started-resource-ids)
 
 ### General info on the GraphQL framework

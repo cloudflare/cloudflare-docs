@@ -23,8 +23,6 @@ This tutorial covers how to set up Cloudflare as the SSO provider for Hubspot. B
 
 1.  Set the **Application type** to _Hubspot_.
 
-    ![Add fields to the Zero Trust application](/cloudflare-one/static/zero-trust-security/hubspot-saas/hubspot-saas-ui.png)
-
 1.  Use the following Hubspot field mappings:
 
     | Hubspot values | Cloudflare values              |
@@ -52,8 +50,6 @@ This tutorial covers how to set up Cloudflare as the SSO provider for Hubspot. B
     | SSO endpoint     | Identity Provider Single Sign-on URL |
     | Entity ID        | Identity Provider Identifier         |
     | Public key       | Certificate                          |
-
-    ![Add fields to the Zero Trust application](/cloudflare-one/static/zero-trust-security/hubspot-saas/hubspot-certificate.png)
 
 1.  Select **Verify** to validate the integration.
 

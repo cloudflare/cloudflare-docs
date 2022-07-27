@@ -214,11 +214,11 @@ Once you click one of the sites in your account, Cloudflare will download a cert
 
 You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
-![Download Cert](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
+![Download Certificate](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
 
 ### Create a Tunnel
 
-You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
+You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#set-up-a-tunnel-locally-cli-setup) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
 
 Run the following command to create a Tunnel. You can replace `mongodb` with any name that you choose. This command requires the `cert.pem` file.
 
@@ -232,7 +232,7 @@ Cloudflare will create the Tunnel with that name and generate an ID and credenti
 
 The credentials file is separate from the `cert.pem` file. Unlike the `cert.pem` file, the credentials file consists of a token that authenticates only the Named Tunnel you just created. Formatted as `JSON`, the file cannot make changes to your Cloudflare account or create additional Tunnels.
 
-If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, see the table in [this section](/cloudflare-one/connections/connect-apps/create-tunnel/).
+If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, refer to the list of [useful terms](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#certpem).
 
 Store the `JSON` file as a Kubernetes secret.
 
@@ -325,5 +325,3 @@ Host mongodb
 This is a one-time step. When you next attempt to make an SSH connection to the deployment, `cloudflared` will launch a browser window and prompt you to authenticate. Once authenticated, you will be connected if you have a valid session. Once the tunnel is established, all requests to `localhost:27000` on your machine will be forwarded to `/socket/mongodb-27017.sock` on the SSH proxy container.
 
 You can then set MongoDB Compass to connect to `localhost:27000`.
-
-![Compass Config](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/compass-config.png)

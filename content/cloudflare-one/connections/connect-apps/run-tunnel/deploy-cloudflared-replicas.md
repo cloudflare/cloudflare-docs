@@ -86,4 +86,4 @@ This command creates an LB DNS record that points the specified hostname to the 
 In order to create DNS records using `cloudflared`, the [`cert.pem`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#certpem) file must be installed on your system.
 {{</Aside>}}
   
-For more information, refer to our [Cloudflare Load Balancing](https://developers.cloudflare.com/load-balancing/) documentation.
+For more information, refer to our [Cloudflare Load Balancing](/load-balancing/) documentation.

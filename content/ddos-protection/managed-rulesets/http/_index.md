@@ -4,6 +4,7 @@ pcx-content-type: concept
 weight: 3
 meta:
   title: HTTP DDoS Attack Protection Managed Ruleset
+layout: single
 ---
 
 # HTTP DDoS Attack Protection Managed Ruleset
@@ -12,7 +13,7 @@ The Cloudflare HTTP DDoS Attack Protection Managed Ruleset is a set of pre-confi
 
 The HTTP DDoS Attack Protection Managed Ruleset is always enabled — you can only customize its behavior.
 
-The HTTP DDoS Attack Protection Managed Ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The [Firewall Analytics dashboard](/waf/analytics/), available at **Security** > **Overview**, will display additional information on the types of L7 DDoS attacks detected for a specific zone.
+The HTTP DDoS Attack Protection Managed Ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The [Firewall Analytics dashboard](/waf/analytics/), available at **Security** > **Overview**, will display additional information on the types of L7 DDoS attacks detected for a specific zone, including the top HTTP DDoS Managed Rules.
 
 ## Ruleset configuration
 

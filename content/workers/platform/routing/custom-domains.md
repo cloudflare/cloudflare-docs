@@ -7,7 +7,7 @@ title: Custom Domains
 
 ## About Custom Domains
 
-Custom Domains allow your to connect your Worker to a hostname, without having to make changes to your DNS settings or do extra certificate management. Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker.
+Custom Domains allow you to connect your Worker to a hostname, without having to make changes to your DNS settings or do extra certificate management. Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker.
 
 {{<Aside>}}
 Custom Domains are available to use in Open Beta.
@@ -21,6 +21,16 @@ To create a Custom Domain, you must have:
 2. A Worker to invoke.
 
 The interface provides active feedback on valid and invalid entries. Valid entries are hostnames on an active Cloudflare zone. If you attempt to create a Custom Domain on a hostname with an existing DNS record, Cloudflare will confirm that you would like to replace the existing record. Custom Domains can be attached to your Worker via API or within the Cloudflare dashboard under **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Add Custom Domain**.
+
+## Configure your `wrangler.toml`
+
+To configure a subdomain in your `wrangler.toml`, add the following to your environment:
+
+```toml
+routes = [
+	{ pattern = "subdomain.example.com", custom_domain = true }
+]
+```
 
 ## Fetch
 

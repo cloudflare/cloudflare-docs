@@ -14,6 +14,10 @@ This feature is only available to Enterprise customers.
 
 You can apply Gateway HTTP policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file. The PAC file contains a Javascript function which instructs a browser to forward traffic to a proxy server instead of directly to the destination server. When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account, to be filtered by Gateway.
 
+## Prerequisites
+
+Install the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on your device.
+
 ## 1. Generate a proxy endpoint
 
 You can generate a proxy endpoint on the Zero Trust dashboard or through the Cloudflare API.
@@ -54,16 +58,12 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
     --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway/proxy_endpoints \
     --header 'X-Auth-Email: <EMAIL>' \
     --header 'X-Auth-Key: <API_KEY>' \
-    --data '{"name": "any_name", "ips": ["<PUBLIC_IP>"]}'
+    --data '{"name": "any_name", "ips": ["<PUBLIC_IP>", "<PUBLIC_IP2>", "<PUBLIC_IP3>"]}'
     ```
 
-    Replace `<ACCOUNT_ID>`, `<EMAIL>`, and `<API_KEY>` with your [account credentials](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
-
     Replace `<PUBLIC_IP>` with the source IP address of your device in CIDR notation. For example,
-    - **IPv4**: `90.90.241.229/32` (up to `/26`)
-    - **IPv6**: `2601:645:4500:9c0:a945:f47c:23e9:a35b/128`
-
-    You can specify multiple IP addresses per proxy endpoint.
+    - **IPv4**: `90.90.241.229/32` (up to '/25')
+    - **IPv6**: `2601:645:4500:9c0:a945:f47c:23e9:a35b/128` (up to '/109')
 
     After running the command, you should see an output similar to
 
@@ -92,12 +92,14 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
     ```
 
     In the example above, the subdomain is `3ele0ss56t` and the proxy server domain is `3ele0ss56t.proxy.cloudflare-gateway.com`.
+
 </div>
 </details>
 
 ## 2. Test your proxy server
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), create an [HTTP policy](/cloudflare-one/policies/filtering/http-policies/) for testing purposes. For example,
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), create an [HTTP policy](/cloudflare-one/policies/filtering/http-policies/) for testing purposes. For example:
+
     | Selector      | Operator  | Value              | Action |
     | --------------| ----------| -------------------| ------ |
     | Domain        | in        | `example.com`      | Block  |
@@ -110,24 +112,14 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
     ```
 
 {{<Aside type="note">}}
-If curl returns a `401` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double check that curl is not using IPv6 (force the option `-4`).
+
+If curl returns a `401` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that curl is not using IPv6 (use the `-4` option to force IPv4).
+
 {{</Aside>}}
 
 ## 3. Create a PAC file
 
-A PAC file is a text file that specifies which traffic should redirect to the proxy server. You can use the default PAC file or create your own.
-
-### Default PAC file
-
-When you create a proxy server, Cloudflare automatically generates a PAC file on Cloudflare Workers. The default PAC file will redirect all traffic to Cloudflare except for internal traffic. The file is hosted at:
-
- ```txt
- https://proxy-pac.cflr.workers.dev/<your_proxy_subdomain>.pac
- ```
-
-You can use this URL when configuring your browser settings, for example `https://proxy-pac.cflr.workers.dev/3ele0ss56t.pac`.
-
-### Custom PAC file
+A PAC file is a text file that specifies which traffic should redirect to the proxy server.
 
 Below is the default PAC file. You can [customize the file](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file) and host it somewhere your browser can access, such as on an internal web server or on [Cloudflare Workers](/workers/).
 
@@ -164,26 +156,25 @@ All major browsers support PAC files. You can configure individual browsers, or 
 
 The following example demonstrates the setup procedure for Firefox.
 
-1. In Firefox, open the **Settings** menu and scroll down to **Network Settings**.
+1. In Firefox, go to **Settings** and scroll down to **Network Settings**.
 
-![Navigating to Network Settings menu in Firefox](/cloudflare-one/static/documentation/connections/firefox-network-settings.png)
+    ![Navigating to Network Settings menu in Firefox](/cloudflare-one/static/documentation/connections/firefox-network-settings.png)
 
-2. Click **Settings**.
+2. Select **Settings**.
 3. Select **Automatic proxy configuration URL**.
-4. Input the URL where your PAC file is hosted, for example `https://proxy-pac.cflr.workers.dev/3ele0ss56t.pac`.
+4. Enter the URL where your PAC file is hosted, for example `https://proxy-pac.cflr.workers.dev/3ele0ss56t.pac`.
 
-![Input PAC file URL into Firefox](/cloudflare-one/static/documentation/connections/firefox-pac-file.png)
+    ![Enter PAC file URL into Firefox](/cloudflare-one/static/documentation/connections/firefox-pac-file.png)
 
-5. Click **OK**. HTTP traffic from Firefox is now being filtered by Gateway.
+5. Select **OK**. HTTP traffic from Firefox is now being filtered by Gateway.
 
 ## 5. Test your HTTP policy
 
-You can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-the-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
+You can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-your-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
 
 ## Limitations
 
-Currently, the agentless HTTP proxy does not support:
+At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/) or mTLS authentication.
 
-- [Identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/)
-- mTLS authentication
-- Browser isolation policies. Until PAC support is added, you can use the [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/clientless-browser-isolation/) URL to open websites in a remote browser.
+[Browser Isolation](/cloudflare-one/policies/browser-isolation/) is disabled by default, because the lack of user identity information poses a potential security risk. If you want to apply Isolate policies, request access from your account team.
+

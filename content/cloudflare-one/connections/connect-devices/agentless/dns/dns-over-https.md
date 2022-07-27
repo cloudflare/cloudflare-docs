@@ -30,15 +30,15 @@ Browsers can be configured to use any DNS over HTTPS (DoH) endpoint. If you choo
 <summary>Mozilla Firefox</summary>
 <div>
 
-1. In the Firefox menu, select **Settings**.
+1. In Firefox, go to **Settings**.
 2. In the General menu, scroll down to **Network Settings**.
-3. Click **Settings**.
+3. Select **Settings**.
 4. Select **Enable DNS over HTTPS**.
 5. In the **Use Provider** drop-down menu, select _Custom_.
 6. In the **Custom** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
-7. Click **OK**.
+7. Select **OK**.
 8. Enter **about:config** in the address bar.
-9. Click **Accept the risk!** if you see a prompt from Firefox.
+9. Select **Accept the risk!** if you see a prompt from Firefox.
 10. Set **network.trr.bootstrapAddress** to `162.159.36.5`.
 11. Set **network.trr.mode** to `3`.
 
@@ -54,12 +54,11 @@ If you want to disable DoH for your organization so that Gateway can be enforced
 <details>
 <summary>Google Chrome</summary>
 <div>
-1. Click the three-dot menu in your browser.
-2. Click **Settings**.
-3. Click **Privacy and security** > **Security**.
-4. Scroll down and enable **Use secure DNS**.
-5. Select **With Custom**.
-6. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
+
+1. In Chrome, go to **Settings** > **Privacy and security** > **Security**.
+2. Scroll down and turn on **Use secure DNS**.
+3. Select **With Custom**.
+4. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
 
 Read more about [enabling DNS over HTTPS](https://www.chromium.org/developers/dns-over-https) on Chrome.
 
@@ -69,24 +68,24 @@ Read more about [enabling DNS over HTTPS](https://www.chromium.org/developers/dn
 <details>
 <summary>Microsoft Edge</summary>
 <div>
-1. Click the three-dot menu in your browser.
-2. Click **Settings**.
-3. Click **Privacy, Search, and Services**, and scroll down to **Security**.
-4. Enable **Use secure DNS**.
-5. Click **Choose a service provider**.
-6. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
+
+1. In Microsoft Edge, go to **Settings**.
+2. Select **Privacy, Search, and Services**, and scroll down to **Security**.
+3. Turn on **Use secure DNS**.
+4. Select **Choose a service provider**.
+5. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
+
 </div>
 </details>
 
 <details>
 <summary>Brave</summary>
 <div>
-1. Click the menu button in your browser.
-2. Click **Settings**.
-3. Click **Security and Privacy** > **Security**.
-4. Enable **Use secure DNS**.
-5. Select **With Custom**.
-6. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
+
+1. In Brave, go to **Settings** > **Security and Privacy** > **Security**.
+2. Turn on **Use secure DNS**.
+3. Select **With Custom**.
+4. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
 
 </div>
 </details>
@@ -273,7 +272,7 @@ curl -s 'https://<ACCOUNT_ID>.cloudflare-gateway.com/dns-query?name=example.com'
      -H 'CF-Authorization: <USER_DOH_TOKEN>' | jq
 ```
 
-If the site is blocked and you have enabled [**Display block page**](/cloudflare-one/policies/filtering/configuring-block-page/#enable-the-block-page-for-dns-policies) for the policy, the query will return `162.159.36.12` (the IP address of the Gateway block server). If the block page is disabled, the response will be `0.0.0.0`.
+If the site is blocked and you have enabled [**Display block page**](/cloudflare-one/policies/filtering/configuring-block-page/#enable-the-block-page-for-dns-policies) for the policy, the query will return `162.159.36.12` (the IP address of the Gateway block page). If the block page is disabled, the response will be `0.0.0.0`.
 
 <details>
 <summary>Example response</summary>
@@ -308,3 +307,4 @@ If the site is blocked and you have enabled [**Display block page**](/cloudflare
 </details>
 
 You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/analytics/logs/gateway-logs/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/policies/filtering/identity-selectors/).
+

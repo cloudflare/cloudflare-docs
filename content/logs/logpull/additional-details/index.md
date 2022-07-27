@@ -2,6 +2,7 @@
 pcx-content-type: reference
 title: Additional details
 weight: 19
+layout: single
 ---
 
 # Additional details

@@ -14,7 +14,7 @@ There are three steps to get started with Workers Analytics Engine:
 
 All data in Workers Analytics Engine is written to a dataset. A dataset is conceptually like a table in SQL: the rows and columns should have consistent meaning.
 
-To access your dataset from the Workers runtime, you need to create a binding using [Wrangler](https://developers.cloudflare.com/workers/wrangler/configuration/). A binding is like an [environment variable](/workers/platform/environment-variables/) that you can use in the Workers runtime which enables you to write to a dataset. A dataset is created implicitly after you define your binding and begin writing to it from a Worker.
+To access your dataset from the Workers runtime, you need to create a binding using [Wrangler](/workers/wrangler/configuration/). A binding is like an [environment variable](/workers/platform/environment-variables/) that you can use in the Workers runtime which enables you to write to a dataset. A dataset is created implicitly after you define your binding and begin writing to it from a Worker.
 
 In this guide, we will show you how to start using a dataset.
 

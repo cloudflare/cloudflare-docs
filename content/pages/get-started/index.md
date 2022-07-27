@@ -1,6 +1,7 @@
 ---
 pcx-content-type: get-started
 title: Get started
+layout: single
 weight: 2
 ---
 
@@ -137,5 +138,5 @@ In the **Settings** section, you can configure advanced settings, such as changi
 
 ## Related resources
 
-- Set up a [custom domain for your Pages project](/pages/platform/custom-domains/).
-- Set up Access policies to [manage who can view your deployment previews](/pages/platform/preview-deployments/#customizing-preview-deployments-access).
+- Set up a [custom domain for your Pages project](/pages/platform/custom-domains/)
+- Set up Access policies to [manage who can view your deployment previews](/pages/platform/preview-deployments/#customizing-preview-deployments-access)

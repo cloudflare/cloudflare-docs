@@ -179,7 +179,7 @@ The Cloudflare Rules language supports these standard fields:
       </td>
    </tr>
    <tr id="field-http-request-version">
-      <td valign="top"><code>http.request.version</code><br />{{<type>}}Number{{</type>}}</td>
+      <td valign="top"><code>http.request.version</code><br />{{<type>}}String{{</type>}}</td>
       <td>
          <p>Represents the version of the HTTP protocol used. Use this field when you require different checks for different versions.
          </p>
@@ -428,7 +428,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-hostname-metadata">
         <td><code>cf.hostname.metadata</code><br />{{<type>}}String{{</type>}}</td>
         <td>
-          <p>Returns the string representation of the per-hostname <a href="/ssl/ssl-for-saas/hostname-specific-behavior/custom-metadata/">custom metadata</a> JSON object set by SSL for SaaS customers.
+          <p>Returns the string representation of the per-hostname <a href="/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/">custom metadata</a> JSON object set by SSL for SaaS customers.
           </p>
         </td>
     </tr>

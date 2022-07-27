@@ -92,7 +92,7 @@ A Domain-based Message Authentication Reporting and Conformance (DMARC) record h
 
 A [text (TXT) record](https://www.cloudflare.com/learning/dns/dns-records/dns-txt-record/) lets you enter text into the DNS system.
 
-At Cloudflare, these are most commonly used to demonstrate domain ownership prior to issuing SSL/TLS certificates for [your domain](/ssl/edge-certificates/changing-dcv-method/) or an [SSL for SaaS domain](/ssl/ssl-for-saas/common-tasks/certificate-validation-methods/).
+At Cloudflare, these are most commonly used to demonstrate domain ownership prior to issuing SSL/TLS certificates for [your domain](/ssl/edge-certificates/changing-dcv-method/) or an [SSL for SaaS domain](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/).
 
 You could also use these to create email authentication records, but we recommend that you use our [Email Security Wizard](/dns/manage-dns-records/how-to/email-records/#prevent-domain-spoofing) instead.
 

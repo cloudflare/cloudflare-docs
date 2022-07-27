@@ -86,9 +86,7 @@ export default {
         })
       }
 
-      const object = await env.MY_BUCKET.head(objectName, {
-        onlyIf: request.headers,
-      })
+      const object = await env.MY_BUCKET.head(objectName)
 
       if (object === null) {
         return objectNotFound(objectName)

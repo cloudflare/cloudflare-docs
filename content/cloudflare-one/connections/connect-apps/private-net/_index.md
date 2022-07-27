@@ -2,6 +2,7 @@
 pcx-content-type: concept
 title: Private networks
 weight: 5
+layout: single
 meta:
   title: Connect private networks
 ---

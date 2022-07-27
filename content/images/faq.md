@@ -93,6 +93,10 @@ Cloudflare Images supports common web-compatible file formats as input files: JP
 
 Yes. Based on the `Accept` HTTP request header Cloudflare Images will be served in AVIF or WebP format. The transformation of an image to AVIF is compute-intensive but leads to a significant benefit in file-size. We are always weighing cost and benefit when deciding on which format to serve.
 
+### Can Cloudflare Images use the HEIC (HEIF) format?
+
+No. Cloudflare has no plans to support HEIC. This format is based on a patent-encumbered codec, and it is not supported in any browser. Cloudflare can serve images in the AVIF format, which is a version of HEIF with a newer, royalty-free AV1 codec.
+
 ---
 
 ## Cloudflare Image Resizing FAQ
