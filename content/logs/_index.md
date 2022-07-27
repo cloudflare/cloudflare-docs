@@ -39,8 +39,14 @@ Note, the data from Logpull and Logpush are exactly the same.
 
 ---
 
-## More resources (WIP)
+## More resources (WIP) -- this may be easier as a CSS grid
 
-{{<resource header="Learning Center" href="https://www.google.com/" icon="">}}Resources on cybersecurity and how the Internet works{{</resource>}}
+{{<resource-group>}}
 
-{{<resource header="Learning Center" href="https://www.google.com/" icon="">}}Resources on cybersecurity and how the Internet works{{</resource>}}
+{{<resource header="Learning Center" href="https://www.cloudflare.com/learning/HTTP-requests" icon="">}}Learn more about logging HTTP requests{{</resource>}}
+
+{{<resource header="Community Forum" href="https://community.cloudflare.com/tag/log" icon="">}}Engage with Cloudflare staff and other customers using Logs{{</resource>}}
+
+{{<resource header="Help Center" href="https://support.cloudflare.com/" icon="">}}Get answers to common questions and issues{{</resource>}}
+
+{{</resource-group>}}

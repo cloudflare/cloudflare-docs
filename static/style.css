@@ -4556,7 +4556,8 @@ pre {
 
 .DocsMarkdown--resource-group {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
@@ -4565,9 +4566,11 @@ pre {
   flex-direction: column;
   align-items: flex-start;
   padding: 16px;
-  gap: 10px;
+  line-height: 25px;
 
-  max-width: 50%;
+  flex: 1 1 0px;
+
+  width: 45%;
 
   background-color: #242628;
   border-radius: 4px;
