@@ -99,6 +99,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 ## 2. Test your proxy server
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), create an [HTTP policy](/cloudflare-one/policies/filtering/http-policies/) for testing purposes. For example:
+
     | Selector      | Operator  | Value              | Action |
     | --------------| ----------| -------------------| ------ |
     | Domain        | in        | `example.com`      | Block  |
@@ -111,7 +112,9 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
     ```
 
 {{<Aside type="note">}}
+
 If curl returns a `401` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that curl is not using IPv6 (use the `-4` option to force IPv4).
+
 {{</Aside>}}
 
 ## 3. Create a PAC file
@@ -174,3 +177,4 @@ You can test any [supported HTTP policy](#limitations), such as the example poli
 At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/) or mTLS authentication.
 
 [Browser Isolation](/cloudflare-one/policies/browser-isolation/) is disabled by default, because the lack of user identity information poses a potential security risk. If you want to apply Isolate policies, request access from your account team.
+
