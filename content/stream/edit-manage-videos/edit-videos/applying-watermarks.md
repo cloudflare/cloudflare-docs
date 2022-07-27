@@ -1,10 +1,10 @@
 ---
 pcx-content-type: how-to
-title: Applying watermarks
+title: Apply watermarks
 weight: 6
 ---
 
-# Applying watermarks
+# Apply watermarks
 
 You can add watermarks to videos uploaded using the Stream API.
 
@@ -33,7 +33,7 @@ tus-upload --chunk-size 5242880 \
 
 ### Step 3: Done
 
-![Screenshot of a video with Cloudflare watermark at top right](../cat.png)
+![Screenshot of a video with Cloudflare watermark at top right](/stream/static/cat.png)
 
 ## Profiles
 

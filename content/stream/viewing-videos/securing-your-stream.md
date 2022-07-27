@@ -1,10 +1,10 @@
 ---
 pcx-content-type: how-to
-title: Securing your Stream
+title: Secure your Stream
 weight: 4
 ---
 
-# Securing your Stream
+# Secure your Stream
 
 ## Signed URLs / Tokens
 

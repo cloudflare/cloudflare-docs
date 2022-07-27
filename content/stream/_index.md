@@ -70,7 +70,7 @@ This cURL command tells the Stream API to download the MP4 file and make it avai
 
 ### Step 2: Wait until the video is ready to stream
 
-Because Stream must download and process the video, the video might not be available for a few seconds depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/stream/uploading-videos/using-webhooks/) to be notified when a video is ready for streaming.
+Because Stream must download and process the video, the video might not be available for a few seconds depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/stream/edit-manage-videos/manage-video-library/using-webhooks/) to be notified when a video is ready for streaming.
 
 Use the video UID from the first step to poll the video:
 

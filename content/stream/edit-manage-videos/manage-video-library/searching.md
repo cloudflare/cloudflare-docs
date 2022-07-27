@@ -1,9 +1,9 @@
 ---
 pcx-content-type: how-to
-title: Searching over videos
+title: Search for videos
 ---
 
-# Searching over videos
+# Search for videos
 
 You can search for videos by name through the Stream API by adding a `search` query parameter to the [list media files](https://api.cloudflare.com/#stream-videos-list-videos) endpoint.
 

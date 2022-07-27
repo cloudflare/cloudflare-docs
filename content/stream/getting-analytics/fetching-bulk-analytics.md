@@ -1,9 +1,9 @@
 ---
 pcx-content-type: reference
-title: Fetching bulk analytics
+title: Fetch bulk analytics
 ---
 
-# Fetching bulk analytics
+# Fetch bulk analytics
 
 Cloudflare Stream lets you fetch usage data in bulk using the GraphQL API. Stream's GraphQL API exposes two data sets:
 

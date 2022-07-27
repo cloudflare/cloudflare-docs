@@ -1,10 +1,10 @@
 ---
 pcx-content-type: reference
-title: Using the player API
+title: Use the player API
 weight: 2
 ---
 
-# Using the player API
+# Use the player API
 
 The SDK provides an API for programmatically controlling the player and listening for player events.
 
@@ -80,7 +80,7 @@ Some browsers prevent videos with audio from playing automatically. You may add 
 
 - `defaultTextTrack`
 
-  - Will initialize the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [upload the text track](/stream/uploading-videos/adding-captions/). If the specified language code has no captions available, the player will behave as though no language code had been provided.
+  - Will initialize the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [upload the text track](/stream/edit-manage-videos/edit-videos/adding-captions/). If the specified language code has no captions available, the player will behave as though no language code had been provided.
 
     {{<Aside>}}
 

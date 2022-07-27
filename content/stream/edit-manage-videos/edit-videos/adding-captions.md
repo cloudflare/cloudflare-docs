@@ -1,10 +1,10 @@
 ---
 pcx-content-type: how to
-title: Adding captions
+title: Add captions
 weight: 5
 ---
 
-# Adding captions
+# Add captions
 
 Adding captions and subtitles to your video library.
 

@@ -1,10 +1,10 @@
 ---
 pcx-content-type: how-to
-title: Displaying thumbnails
+title: Display thumbnails
 weight: 5
 ---
 
-# Displaying thumbnails
+# Display thumbnails
 
 {{<Aside>}}
 

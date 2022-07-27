@@ -1,10 +1,10 @@
 ---
 pcx-content-type: how-to
-title: Upload video file
+title: Upload a video file
 weight: 3
 ---
 
-# Upload video file
+# Upload a video file
 
 ## Basic Uploads (for small videos)
 
@@ -77,7 +77,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 - `thumbnailtimestamppct`
 
-  - Specify the default thumbnail [timestamp percentage](/stream/viewing-videos/displaying-thumbnails/). Note that percentage is a floating point value between 0.0 and 1.0.
+  - Specify the default thumbnail [timestamp percentage](/stream/edit-manage-videos/edit-videos/displaying-thumbnails/). Note that percentage is a floating point value between 0.0 and 1.0.
 
 - `watermark`
 
