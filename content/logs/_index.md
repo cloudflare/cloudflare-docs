@@ -9,8 +9,6 @@ meta:
 
 {{<plan type="enterprise">}}
 
-These logs are helpful for debugging, identifying configuration adjustments, and creating analytics, especially when combined with logs from other sources, such as your application server. For information about the types of data Cloudflare collects, refer to [Cloudflare's Data Products](/fundamentals/data-products/).
-
 ---
 
 ## Features

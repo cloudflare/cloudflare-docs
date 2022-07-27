@@ -4,6 +4,8 @@
   {{- $title := default (replace (title .Section) "-" " ") $DATA.overview.title -}}
   {{- $beta := $DATA.overview.beta -}}
   {{- $shortDescription := $DATA.overview.short_description -}}
+  {{- $availability := $DATA.overview.availability -}}
+  {{- $longDescription := $DATA.overview.long_description -}}
 
   <div class="DocsPage">
     {{- partial "skipcontent" . -}}
@@ -31,6 +33,10 @@
             <div class="DocsMarkdown--description">
                 {{- $shortDescription -}}
             </div>
+            <div class="DocsMarkdown--plan">
+                {{- $availability -}}
+            </div>
+            {{- $longDescription | .RenderString -}}
             {{- .Content -}}
         </article>
       </div>
