@@ -37,6 +37,10 @@ fi
 
 ## Publish your changes
 
-Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > **Pages** > **Settings** > **Build & deployments** > **Build configurations** > **Edit configurations** > **Build command** > **`bash build.sh`** > **Save**.
+To put your changes into effect:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > **Pages**.
+2. Go to **Settings** > **Build & deployments** > **Build configurations** > **Edit configurations**.
+3. Change the **Build command** to `bash build.sh` and select **Save**.
 
 To test that your build is successful, deploy your project.
