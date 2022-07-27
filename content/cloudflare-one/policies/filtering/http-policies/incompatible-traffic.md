@@ -2,6 +2,7 @@
 pcx-content-type: concept
 title: Incompatible traffic
 weight: 5
+layout: single
 ---
 
 # Traffic incompatible with Gateway inspection
@@ -18,13 +19,13 @@ Gateway does not support TLS decryption for applications which use:
 
 To allow these types of requests through Gateway, you must add a [*Do Not Inspect*](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) HTTP policy for these applications and domains.
 
-## HTTP/3 traffic
+## HTTP/3 traffic in Google Chrome
 
-Gateway does not currently support inspection of HTTP/3 traffic.
-
-### Disable QUIC in Google Chrome
+Gateway does not currently support inspection of HTTP/3 traffic in Google Chrome. This is because Chrome does not trust any certificate signed by a custom root CA even if the certificate is installed on the user's device.
 
 Google Chrome by default enables support for QUIC, which is used to connect to HTTP/3 capable webpages. In order to apply HTTP policies to Google Chrome traffic, you will need to disable QUIC in the browser. This forces the browser to fall back to HTTP/2.
+
+### Disable QUIC in Google Chrome
 
 To manually disable QUIC in the Google Chrome browser:
 
