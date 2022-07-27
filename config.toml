@@ -4,7 +4,7 @@ title = "Cloudflare Docs"
 languageCode = "en"
 DefaultContentLanguage = "en"
 disableHugoGeneratorInject = true
-enableRobotsTXT = true
+enableRobotsTXT = false
 
 disableAliases = true
 disableKinds = ["taxonomy", "taxonomyTerm"]

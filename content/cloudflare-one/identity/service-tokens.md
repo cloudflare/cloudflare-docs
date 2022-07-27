@@ -14,56 +14,51 @@ This section covers how to create, renew, and revoke a service token.
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access** > **Service Auth** > **Service Tokens**.
 
-2. Click **Create Service Token**.
+2. Select **Create Service Token**.
 
 3. Name the service token. The name allows you to easily identify events related to the token in the logs and to revoke the token individually.
 
-4. Select a **Service Token Duration**. This sets the expiration date for the token.
+4. Choose a **Service Token Duration**. This sets the expiration date for the token.
 
-5. Click **Generate token**. You will see the generated `Client ID` and `Client Secret` for the service token.
+5. Select **Generate token**. You will see the generated Client ID and Client Secret for the service token, as well as their respective request headers.
 
-6. Copy the `Client Secret`.
-
-    ![Obtaining the Client ID and Secret for a new service token](/cloudflare-one/static/documentation/identity/users/detail-service-token.png)
+6. Copy the Client Secret.
 
     {{<Aside type="warning" header="Important">}}This is the **only time** Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
     {{</Aside>}}
 
-7. Click **Close**.
-
-You can now use the service token when you create [Service Auth policies](/cloudflare-one/policies/access/). When creating these policies, use the `Service Auth` action to ensure that the identity provider login screen is not required for end users.
+You can now use the service token in your [Access policies](/cloudflare-one/policies/access/) and [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions). When creating these policies, select the `Service Auth` action to ensure that the identity provider login screen is not required for end users.
 
 ## Connect your service to Access
 
-Access expects both values as headers in any request sent to the applications behind Access. Add the following to the headers of any requests and name them as follows:
+To authenticate to an Access application using your service token, add the following to the headers of any request:
 
 `CF-Access-Client-Id: <Client ID>`
 
 `CF-Access-Client-Secret: <Client Secret>`
 
-When a request is made to an application behind our network, the request will submit them both to Access. If the service token is valid, Access generates a JWT scoped to the application. All subsequent requests with that JWT will succeed until the expiration of that JWT.
+If the service token is valid, Access generates a JWT scoped to the application. All subsequent requests with that JWT will succeed until the expiration of that JWT.
 
 ## Renew service tokens
 
 Service tokens expire according to the token duration you selected when you created the token.
 
-To renew the service token,
+To renew the service token:
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access** > **Service Auth** > **Service Tokens**.
 2. Locate the token you want to renew.
-3. To extend the token's lifetime by one year, click **Refresh**.
-4. To extend the token's lifetime by more than a year,
-    1. Click **Edit**.
-    2. Select a new **Service Token Duration**.
-    3. Click **Save**. The expiration date will be extended by the selected amount of time.
+3. To extend the token's lifetime by one year, select **Refresh**.
+4. To extend the token's lifetime by more than a year:
+    1. Select **Edit**.
+    2. Choose a new **Service Token Duration**.
+    3. Select **Save**. The expiration date will be extended by the selected amount of time.
 
 ## Revoke service tokens
 
 If you need to revoke access before the token expires, simply delete the token.
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access** > **Service Auth** > **Service Tokens**.
-
-2. Click **Delete** for the token you need to revoke.
+2. **Delete** the token you need to revoke.
 
 Services that rely on a deleted service token can no longer reach your application.
 
@@ -78,10 +73,10 @@ An alert can be configured to notify a week before a service token expires to al
 To configure a service token expiration alert:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com), navigate to the **Notifications** tab.
-2. Click **Add**.
+2. Select **Add**.
 3. Select _Expiring Access Service Token_.
 4. Enter a name for your alert and an optional description.
 5. (Optional) Add other recipients for the notification email.
-6. Click **Save**.
+6. Select **Save**.
 
 Your alert has been set and is now visible in the **Notifications** tab of the Cloudflare dashboard.

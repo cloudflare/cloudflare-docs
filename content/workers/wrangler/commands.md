@@ -721,13 +721,17 @@ Manage the secret variables for a Worker.
 Create or replace a secret for a Worker.
 
 ```sh
-$ wrangler secret put <NAME> [OPTIONS]
+$ wrangler secret put <KEY> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The variable name for this secret to be accessed in the Worker.
+
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
 
@@ -759,13 +763,17 @@ $ echo "-----BEGIN PRIVATE KEY-----\nM...==\n-----END PRIVATE KEY-----\n" | wran
 Delete a secret for a Worker.
 
 ```sh
-$ wrangler secret delete <NAME> [OPTIONS]
+$ wrangler secret delete <KEY> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The variable name for this secret to be accessed in the Worker.
+  
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
 
@@ -780,6 +788,9 @@ $ wrangler secret list [OPTIONS]
 ```
 
 {{<definitions>}}
+
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment

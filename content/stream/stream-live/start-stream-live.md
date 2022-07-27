@@ -1,7 +1,7 @@
 ---
 pcx-content-type: tutorial
 title: Start a live stream
-weight: 7
+weight: 1
 ---
 
 # Start a live stream

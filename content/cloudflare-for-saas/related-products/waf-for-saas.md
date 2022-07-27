@@ -14,7 +14,7 @@ As a SaaS provider, you may want to apply different security measures to differe
 
 ## Prerequisites
 
-Before you can use WAF for SaaS, you need to create a custom hostname. Review [Get started with Cloudflare for SaaS](/cloudflare-for-saas/getting-started/) if you have not already done so.
+Before you can use WAF for SaaS, you need to create a custom hostname. Review [Get started with Cloudflare for SaaS](/cloudflare-for-saas/start/getting-started/) if you have not already done so.
 
 You can also create a custom hostname through the API:
 

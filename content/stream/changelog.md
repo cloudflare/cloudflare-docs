@@ -1,13 +1,20 @@
 ---
 pcx-content-type: changelog
 title: Changelog
+weight: 8
 ---
 
 # Changelog
 
+## 2022-07-26
+
+### Live inputs
+
+The Live Inputs API now supports optional pagination, search, and filter parameters. For more information, refer to the [Live Inputs API documentation](https://api.cloudflare.com/#stream-live-inputs-properties).
+
 ## 2022-05-24
 
-### Picture-in-Picture Support
+### Picture-in-Picture support
 
 The [Stream Player](/stream/viewing-videos/using-the-stream-player/) now displays a button to activate Picture-in-Picture mode, if the viewer's web browser supports the [Picture-in-Picture API](https://developer.mozilla.org/en-US/docs/Web/API/Picture-in-Picture_API).
 
@@ -28,6 +35,14 @@ The Stream Dashboard now has an analytics panel that shows the number of minutes
 ### Custom letterbox color configuration option for Stream Player
 
 The Stream Player can now be configured to use a custom letterbox color, displayed around the video ("letterboxing" or "pillarboxing") when the video's aspect ratio does not match the player's aspect ratio. Refer to the documentation on configuring the Stream Player [here](/stream/viewing-videos/using-the-stream-player/#basic-options).
+
+## 2022-03-10
+
+### Support for SRT live streaming protocol
+
+Cloudflare Stream now supports the SRT live streaming protocol. SRT is a modern, actively maintained streaming video protocol that delivers lower latency, and better resilience against unpredictable network conditions. SRT supports newer video codecs and makes it easier to use accessibility features such as captions and multiple audio tracks.
+
+For more, read the [blog post](https://blog.cloudflare.com/stream-now-supports-srt-as-a-drop-in-replacement-for-rtmp/).
 
 ## 2022-02-17
 
@@ -123,7 +138,7 @@ You can now obtain a signed URL token via a single API request, without needing 
 
 ### Stream Connect (closed beta)
 
-You can now use Cloudflare Stream to restream live video to any platform that accepts RTMPS input, including Facebook, YouTube and Twitch.
+You can now use Cloudflare Stream to restream or simulcast live video to any platform that accepts RTMPS input, including Facebook, YouTube and Twitch.
 
 For more, read the [blog post](https://blog.cloudflare.com/restream-with-stream-connect/) or the [docs](/stream/stream-live/simulcasting/).
 
