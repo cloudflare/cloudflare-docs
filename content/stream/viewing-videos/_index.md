@@ -1,9 +1,9 @@
 ---
 pcx-content-type: navigation
-title: Play back videos
+title: Play videos
 weight: 3
 ---
 
-# Play back videos
+# Play videos
 
 {{<directory-listing>}}
