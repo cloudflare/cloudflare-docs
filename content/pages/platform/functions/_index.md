@@ -6,34 +6,6 @@ layout: single
 
 # Functions (beta)
 
-{{<tabs labels="js | ts">}}
-{{<tab label="js" default="true">}}
-```js
-async function handler(request) {
-  const base = 'https://example.com';
-  const statusCode = 301;
-  const destination = new URL(request.url, base);
-  return Response.redirect(destination.toString(), statusCode);
-}
-// Initialize Worker
-addEventListener('fetch', event => {
-  event.respondWith(handler(event.request));
-});
-```
-{{</tab>}}
-{{<tab label="ts">}}
-```js
-import meaning from "meaning-of-life";
-export default {
-  async fetch(request: Request): Promise<Response> {
-    return new Response(meaning);
-  },
-};
-```
-
-{{</tab>}}
-{{</tabs>}}
-
 {{<Aside type="note" header="Functions is currently in beta">}}
 
 You can track current issues that the Pages team is fixing in [Known issues](/pages/platform/known-issues/). Let us know any unreported issues by posting in the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev).
