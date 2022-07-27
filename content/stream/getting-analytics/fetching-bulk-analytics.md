@@ -69,13 +69,12 @@ If you are newer to GraphQL, refer to [Cloudflare GraphQL analytics for HTTP req
 
 Here is how you would get the view count and minutes viewed for the videos in your Stream account:
 
-1.  Prerequisite: [Generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with the "Account Analytics" permission
-2.  Make a query to `https://api.cloudflare.com/client/v4/graphql`
-3.  Include your Cloudflare API token in the headers (see cURL example included on this page)
-4.  It is important that you change the `<ACCOUNT_ID>` with your account ID and the date range
-5.  The body of the query should contain the following GraphQL Query:
+>>>>>>> 4cb504424 (Added headers & moved example up)
 
 ```javascript
+---
+header: GraphQL Query
+---
 query {
   viewer {
     accounts(filter:{
@@ -103,16 +102,6 @@ query {
 }
 ```
 
-Here is the exact cURL request:
-
-```bash
-curl --request POST \
---url https://api.cloudflare.com/client/v4/graphql \
---header 'content-type: application/json' \
---header 'Authorization: Bearer <API_TOKEN>' \
---data '{"query":"query {\n  viewer {\n    accounts(filter:{\n      accountTag:\"<ACCOUNT_ID>\"\n\n    }) {\n      videoPlaybackEventsAdaptiveGroups(\n        filter: {\n          date_geq: \"2020-09-01\"\n          date_lt: \"2020-09-25\"\n        }\n        orderBy:[uid_ASC]\n        limit: 10000\n      ) {\n        count\n        sum {\n          timeViewedMinutes\n        }\n        dimensions{\n          uid\n        }\n      }\n    }\n  }\n}\n\n"}'
-```
-
 ### Response
 
 The response will look something like below. Things to remember:
@@ -124,6 +113,9 @@ The response will look something like below. Things to remember:
 *   If a video did not have views in the date range specified, it will NOT be included in the response
 
 ```javascript
+---
+header: GraphQL response
+---
 {
   "data": {
     "viewer": {
@@ -243,6 +235,9 @@ The response will look something like below. Things to remember:
 Here is the exact cURL request:
 
 ```bash
+---
+header: cURL request
+---
 curl --request POST \
 --url https://api.cloudflare.com/client/v4/graphql \
 --header 'content-type: application/json' \
@@ -253,6 +248,9 @@ curl --request POST \
 ### Response
 
 ```graphql
+---
+header: GraphQL response
+---
 {
     "data": {
         "viewer": {
@@ -302,6 +300,9 @@ GraphQL API supports seek pagination: using filters, you can specify the last vi
 The query below will return data for 2 videos that follow video UID `5646153f8dea17f44d542a42e76cfd`:
 
 ```javascript
+---
+header: GraphQL query
+---
 query {
   viewer {
     accounts(filter:{
