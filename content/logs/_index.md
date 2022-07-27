@@ -45,7 +45,7 @@ Note, the data from Logpull and Logpush are exactly the same.
 
 ---
 
-## More resources (WIP) -- this may be easier as a CSS grid
+## More resources (WIP)
 
 {{<resource-group>}}
 
