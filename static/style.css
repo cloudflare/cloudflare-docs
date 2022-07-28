@@ -5124,3 +5124,14 @@ pre {
   }
 }
 
+.littlefoot-footnote__button {
+  max-width: 3em;
+}
+
+[theme=dark] .littlefoot-footnote__content {
+  background: #242628
+}
+
+[theme=dark] .littlefoot-footnote__button {
+  background: rgba(110,110,110,0.5)
+}
