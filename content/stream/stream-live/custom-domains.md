@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Add custom ingest domains
-weight: 5
+weight: 3
 ---
 
 # Add custom ingest domains
