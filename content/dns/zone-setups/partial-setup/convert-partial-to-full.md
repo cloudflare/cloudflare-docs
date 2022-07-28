@@ -24,7 +24,7 @@ Universal SSL only supports first-level subdomains. For more coverage and additi
 
 ## Step 2 — Update settings in authoritative DNS
 
-At least 24 hours prior to converting your application, disable DNSSEC.
+At least 24 hours prior to converting your application, disable DNSSEC at your authoritative DNS provider.
 
 {{<Aside type="note">}}
 
