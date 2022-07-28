@@ -23,7 +23,7 @@ For more details on the `validity_days` parameter used in API calls, refer to [O
 
 ## Benefits of shorter validity periods
 
-Cloudflare only issues certificates with validity periods of 3 months or less for two reasons.
+Cloudflare only issues certificates with validity periods of three months or less for two reasons.
 
 First, shorter-lived certificates limit the damage from key compromise and mistaken issuance. Any compromised key material will be valid for a shorter period of time.
 
