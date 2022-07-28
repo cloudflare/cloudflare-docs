@@ -5428,9 +5428,6 @@ pre {
   text-decoration: underline solid var(--orange);
   margin-bottom: 10px;
 }
-.DocsMarkdown--resource-content {
-  color: inherit;
-}
 [theme="dark"] .DocsMarkdown--resource {
   background-color: #242628;
 }
