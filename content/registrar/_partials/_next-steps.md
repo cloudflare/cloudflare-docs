@@ -7,7 +7,7 @@ _build:
 
 ## Next steps
 
-As mentioned in [Review DNS records in Cloudflare](/dns/zone-setups/full-setup/setup/#review-dns-records-in-cloudflare), when moving your domain to Cloudflare Registrar you might need to configure your DNS records to correctly point traffic to your web host. Cloudflare automatically scans for common records and adds them to your account's DNS page, but the scan is not guaranteed to find all existing DNS records.
+As mentioned in [Review DNS records in Cloudflare](/dns/zone-setups/full-setup/setup/#review-dns-records-in-cloudflare), when moving your domain to Cloudflare Registrar, you might need to configure your DNS records to correctly point traffic to your web host. Cloudflare automatically scans for common records and adds them to your account's DNS page, but the scan is not guaranteed to find all existing DNS records.
 
 Refer to your web host's documentation to learn what type of records you need to configure and where they should point, to avoid downtime.
 
