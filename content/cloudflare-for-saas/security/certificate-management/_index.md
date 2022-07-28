@@ -1,7 +1,7 @@
 ---
 pcx-content-type: overview
 title: Certificate Management
-weight: 5
+weight: 1
 ---
  
 # Certificate Management
