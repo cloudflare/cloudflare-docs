@@ -116,3 +116,5 @@ You can check the status of your transfer in **Account Home** > **Overview** > *
 - **Pending approval**: Your current registrar has received the transfer request. They can now wait up to five days to release the domain. If you want to move faster, you can manually approve the transfer for immediate release in the dashboard of most registrars.
 
 - **Transfer rejected**: your transfer has been rejected. This can occur if you canceled the request at your current registrar instead of approving it. If you still wish to transfer, you can select **Retry** and initiate a new transfer request.
+
+{{<render file="_next-steps.md">}}
