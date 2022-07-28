@@ -19,6 +19,146 @@ This tutorial will briefly touch upon the basics of HTML forms. For a more in-de
 
 This tutorial will make heavy use of Cloudflare Pages and [its Workers integration](/pages/platform/functions/). Refer to the [Get started guide](/pages/get-started/) guide to familiarize yourself with the platform.
 
+{{<tabs labels="js/sw | js/esm | ts/sw | ts/esm">}}
+{{<tab label="js/sw" default="true">}}
+
+```js
+async function handler(request) {
+  const base = 'https://example.com';
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener('fetch', event => {
+  event.respondWith(handler(event.request));
+});
+```
+
+{{</tab>}}
+{{<tab label="js/esm">}}
+
+```js
+async function handler(request) {
+  const base = "https://example.com";
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
+```
+
+{{</tab>}}
+{{<tab label="ts/sw">}}
+
+```js
+async function handler(request) {
+  const base = "https://obinnas.com";
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
+```
+
+{{</tab>}}
+{{<tab label="ts/esm">}}
+
+```js
+import meaning from "meaning-of-life";
+
+export default {
+  async fetch(request: Request): Promise<Response> {
+    return new Response(meaning);
+  },
+};
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+{{<tabs labels="js/sw | js/esm | ts/sw | ts/esm">}}
+{{<tab label="js/sw" default="true">}}
+
+```js
+async function handler(request) {
+  const base = 'https://example.com';
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener('fetch', event => {
+  event.respondWith(handler(event.request));
+});
+```
+
+{{</tab>}}
+{{<tab label="js/esm">}}
+
+```js
+async function handler(request) {
+  const base = "https://example.com";
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
+```
+
+{{</tab>}}
+{{<tab label="ts/sw">}}
+
+```js
+async function handler(request) {
+  const base = "https://obinnas.com";
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
+```
+
+{{</tab>}}
+{{<tab label="ts/esm">}}
+
+```js
+import meaning from "meaning-of-life";
+
+export default {
+  async fetch(request: Request): Promise<Response> {
+    return new Response(meaning);
+  },
+};
+```
+
+{{</tab>}}
+{{</tabs>}}
+
 ## Overview
 
 On the web, forms are a common point of interaction between the user and the web document. They allow a user to enter data and, generally, submit their data to a server. A form is comprised of at least one form input, which can vary from text fields to dropdowns to checkboxes and more.
@@ -97,6 +237,7 @@ The rest of this tutorial will focus on building an HTML form on Pages, includin
 The source code for this example is [available on GitHub](https://github.com/cloudflare/submit.pages.dev). It is a live Pages application with a [live demo](https://submit.pages.dev/) available, too.
 
 {{</Aside>}}
+
 
 ### Setup
 

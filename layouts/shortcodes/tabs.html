@@ -4,7 +4,7 @@
   <nav role="navigation" class="tabs">
     <ul id="tab-active">
       {{ range $idx, $txt := $labels }} {{- $link := replace $txt "/" "-"}}
-      <li class="tab-label-wrapper " >
+      <li class="tab-label-wrapper "  data-id="{{$idx}}" >
         {{ if or (eq $link "js-sw") }}
         <a class="tab-label active" href="#" data-link="tab-{{$link}}">
           <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"

@@ -126,8 +126,9 @@ export function tabs() {
   addEventListener("load", () => {
     for (let i = 0; i < wrappers.length; i++) {
       const labels = wrappers[i].querySelectorAll(".tab-label");
+      console.log("labels", labels)
       const tabs = wrappers[i].querySelectorAll(".tab");
-
+      console.log("tabs", tabs)
       if (tabs.length > 0) {
         // Set the first tab in a group to display
         (tabs[0] as HTMLElement).style.display = "block";
