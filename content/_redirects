@@ -509,6 +509,7 @@
 /cloudflare-for-saas/ssl/custom-certificates/certificate-signing-requests/ /cloudflare-for-saas/security/certificate-management/custom-certificates/certificate-signing-requests/ 301
 /cloudflare-for-saas/ssl/common-tasks/enforce-mtls/ /cloudflare-for-saas/security/certificate-management/enforce-mtls/ 301
 /cloudflare-for-saas/related-products/waf-for-saas/ /cloudflare-for-saas/security/waf-for-saas/_index.md 301
+/cloudflare-for-saas/related-products/early-hints-for-saas/ /cloudflare-for-saas/performance/early-hints-for-saas/ 301
 <!-- Includes dynamic redirects listed at bottom -->
 
 # stream
