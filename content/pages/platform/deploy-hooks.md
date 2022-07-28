@@ -11,9 +11,13 @@ With Deploy Hooks, you can trigger deployments using event sources beyond commit
 - Implement a fully customized CI/CD pipeline, deploying only under desired conditions
 - Schedule a CRON trigger to update your website on a fixed timeline
 
-To create a Deploy Hook, navigate from **Account Home** to **Pages** and select your desired Pages project. Navigate to **Settings** > **Builds & deployments** and select **Add deploy hook** to start configuration.
+To create a Deploy Hook:
 
-![Adding a deploy hook on the Cloudflare dashboard](/pages/platform/media/deploy-hooks-add.png)
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > **Pages**.
+2. Select your Pages project.
+3. Go to **Settings** > **Builds & deployments** and select **Add deploy hook** to start configuration.
+
+![Add a deploy hook on the Cloudflare dashboard](/pages/platform/media/deploy-hooks-add.png)
 
 ## Parameters needed
 
