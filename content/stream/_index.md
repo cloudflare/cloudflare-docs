@@ -47,9 +47,9 @@ This cURL command tells the Stream API to download the MP4 file and make it avai
 ```json
 {
   "result": {
-    "uid": "8d717d9d1b0920ea247a4eebd747b1fd",
-    "preview": "https://watch.cloudflarestream.com/8d717d9d1b0920ea247a4eebd747b1fd",
-    "thumbnail": "https://videodelivery.net/8d717d9d1b0920ea247a4eebd747b1fd/thumbnails/thumbnail.jpg",
+    "uid": "b236bde30eb07b9d01318940e5fc3eda",
+    "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/watch",
+    "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
     "readyToStream": false,
     "status": {
       "state": "downloading"
@@ -86,9 +86,9 @@ highlight: [6]
 ---
 {
   "result": {
-    "uid": "8d717d9d1b0920ea247a4eebd747b1fd",
-    "preview": "https://watch.cloudflarestream.com/8d717d9d1b0920ea247a4eebd747b1fd",
-    "thumbnail": "https://videodelivery.net/8d717d9d1b0920ea247a4eebd747b1fd/thumbnails/thumbnail.jpg",
+    "uid": "b236bde30eb07b9d01318940e5fc3eda",
+    "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/watch",
+    "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
     "readyToStream": true,
     "status": {
       "state": "ready"
@@ -113,7 +113,7 @@ The `uid` of the video can be used refer to the video after uploading and can be
 
 ```html
 <iframe
-  src="https://iframe.videodelivery.net/$VIDEO_UID"
+  src="https://customer-m033z5x00ks6nunl.iframe.cloudflarestream.com/$VIDEO_UID"
   title="Example Stream video"
   frameBorder="0"
   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
@@ -132,7 +132,7 @@ https://github.com/cloudflare/cloudflare-docs-engine/issues/281
   <div className="AspectRatio" style={{"--aspect-ratio": "calc(16 / 9)"}}>
     <iframe
       className="AspectRatio--content"
-      src="https://iframe.videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81?muted=true"
+      src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/iframe?muted=true"
       title="Example Stream video"
       frameBorder="0"
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
