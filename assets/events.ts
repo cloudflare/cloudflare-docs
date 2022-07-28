@@ -140,13 +140,15 @@ export function tabs() {
 
 export function activeTab() {
   var header = document.getElementById("tab-active");
-  var tabs = header.getElementsByClassName("tab-label");
-  for (var i = 0; i < tabs.length; i++) {
-    (tabs[i] as HTMLElement).addEventListener("click", function name() {
-      let current = document.getElementsByClassName("active");
-      current[0].className = current[0].className.replace(" active", "");
-      this.className += " active";
-    });
+  if (header) {
+    var tabs = header.getElementsByClassName("tab-label");
+    for (var i = 0; i < tabs.length; i++) {
+      (tabs[i] as HTMLElement).addEventListener("click", function name() {
+        let current = document.getElementsByClassName("active");
+        current[0].className = current[0].className.replace(" active", "");
+        this.className += " active";
+      });
+    }
   }
 }
 
