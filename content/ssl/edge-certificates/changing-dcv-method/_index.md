@@ -1,6 +1,7 @@
 ---
 title: Domain Control Validation (DCV)
 pcx-content-type: concept
+layout: single
 weight: 5
 meta:
   title: Domain Control Validation (DCV) — SSL/TLS

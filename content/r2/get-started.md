@@ -93,7 +93,7 @@ You will need to bind your bucket to a Worker.
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), or [R2 Buckets](#api). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](https://github.com/workers/platform/environment-variables) documentation for more information.
+A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), or [R2 Buckets](#api). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/platform/environment-variables/) documentation for more information.
 
 A binding is defined in the `wrangler.toml` file of your Worker project's directory.
 
@@ -132,7 +132,7 @@ Find more detailed information on configuring your Worker in the [Wrangler Confi
 
 Within your Worker code, your bucket is now available under the `MY_BUCKET` variable and you can begin interacting with it.
 
-An R2 bucket is able to READ, LIST, WRITE, and DELETE objects. You can see an example of all operations below using the Service Worker syntax. Add the following snippet into your project's `index.js` file:
+An R2 bucket is able to READ, LIST, WRITE, and DELETE objects. You can see an example of all operations below using the Module Worker syntax. Add the following snippet into your project's `index.js` file:
 
 ```js
 export default {

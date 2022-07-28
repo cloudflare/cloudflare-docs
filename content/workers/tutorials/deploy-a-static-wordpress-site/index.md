@@ -4,6 +4,7 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx-content-type: tutorial
 title: Deploy a static WordPress site
+layout: single
 ---
 
 # Deploy a static WordPress site

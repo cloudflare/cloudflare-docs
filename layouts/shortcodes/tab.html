@@ -1,0 +1,9 @@
+{{- $label := replace (.Get "label") "/" "-"}} 
+{{- $default := .Get "default"
+-}}
+
+{{ if eq $default "true"}}
+<div class="tab tab-default" id="tab-{{$label}}">{{ $.Inner | markdownify }}</div>
+{{ else }}
+<div class="tab" id="tab-{{$label}}">{{ $.Inner | markdownify }}</div>
+{{ end }}

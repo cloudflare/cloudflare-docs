@@ -1,7 +1,7 @@
 ---
 pcx-content-type: tutorial
 title: Watch live streams
-weight: 8
+weight: 2
 ---
 
 # Watch live streams

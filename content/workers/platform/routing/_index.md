@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
 title: Routing
+layout: single
 ---
 
 # Routing
@@ -37,8 +38,30 @@ Custom Domains can stack on top of each other. For example, if you have Worker A
 
 Routes can `fetch()` Custom Domains and take precedence if configured on the same hostname. If you would like to run a logging Worker in front of your application, for example, you can create a Custom Domain on your application Worker for `app.example.com`, and create a Route for your logging Worker at `app.example.com/*`.  Calling `fetch()` will invoke the application Worker on your Custom Domain. Note that Routes cannot be the target of a same-zone `fetch()` call.
 
+## Configure your `wrangler.toml`
+
+To configure a route in your `wrangler.toml`, add the following to your environment:
+
+```toml
+Route = [
+{pattern = “example.com/about”, 
+Zone_id = <YOUR_ZONE_ID>,
+}]
+```
+
+If you have specified your zone ID in the environment of your `wrangler.toml`, you will not need to write it again in object form.
+
+To configure a subdomain in your `wrangler.toml`, add the following to your environment:
+
+```toml
+Route = [
+{pattern = “subdomain.example.com”, 
+custom domains = true,
+}]
+```
+
 ## What is best for me?
 
 Generally, [Routes](/workers/platform/routing/routes) are good for use cases where the Worker acts like a 'proxy', making small modifications to the Request, Response, or logging data in between the user and the server. 
 
-[Custom Domains](/workers/platform/routing/custom-domains) are recommended for more in-depth use cases, where your application lives on the Cloudflare network and may optionally communicate with external dependencies.
+[Custom Domains](/workers/platform/routing/custom-domains/) are recommended for more in-depth use cases, where your application lives on the Cloudflare network and may optionally communicate with external dependencies.

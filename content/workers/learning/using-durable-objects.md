@@ -16,6 +16,8 @@ For a high-level introduction to Durable Objects, refer to [the announcement blo
 
 For details on the specific Durable Object APIs, refer to the [Runtime API documentation](/workers/runtime-apis/durable-objects/).
 
+[The Workers community on Discord](https://discord.gg/cloudflaredev) has a #durable-objects channel where you can ask questions, show off what you are building, and discuss Durable Objects with other developers.
+
 ## Using Durable Objects
 
 Durable Objects are named instances of a class you define. Like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
@@ -171,7 +173,7 @@ When a Worker talks to a Durable Object, it does so through a stub object. The c
 
 The fetch handler in the example below implements the Worker that talks to the Durable Object. Note that the fetch handler is written using a new kind of Workers syntax based on ES Modules. This syntax is required for scripts that export Durable Objects classes, but is not required for scripts that make calls to Durable Objects. However, Workers written in the modules syntax (including Durable Objects) cannot share a script with Workers written in the Service Worker syntax.
 
-We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script (written in the modules format) not only because it is convenient, but also because as of today it is not possible to upload a script to the runtime that does not implement a fetch handler.
+We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script (written in the modules format) for convenience, but it is not required.
 
 ES Modules differ from regular JavaScript files in that they have imports and exports. [As shown earlier](/workers/learning/using-durable-objects/#writing-a-class-that-defines-a-durable-object), you wrote `export class DurableObjectExample` when defining our class. To implement a fetch handler, you must export a method named `fetch` in an `export default {}` block.
 
@@ -555,4 +557,4 @@ To solve this you can either do less work per request, or send fewer requests, f
 
 #### Error: Durable Object storage operation exceeded timeout which caused object to be reset.
 
-To prevent indefinite locking, there is a limit on how much time storage operations can take. In objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact support.
+To prevent indefinite locking, there is a limit on how much time storage operations can take. In objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact your Cloudflare account team.

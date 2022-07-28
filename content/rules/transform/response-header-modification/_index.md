@@ -26,6 +26,8 @@ To modify HTTP headers in the **request**, refer to [HTTP Request Header Modific
 
 * You cannot modify the value of certain headers such as `server`, `eh-cache-tag`, or `eh-cdn-cache-control`.
 
+* Currently you cannot reference [IP Lists](/firewall/cf-firewall-rules/rules-lists/) in expressions of HTTP Response Header Modification Rules.
+
 * The HTTP response header removal operation will remove all response headers with the provided name.
 
 * If you modify the value of an existing HTTP response header using an expression that evaluates to an empty string (`""`) or an undefined value, the HTTP response header is **removed**.

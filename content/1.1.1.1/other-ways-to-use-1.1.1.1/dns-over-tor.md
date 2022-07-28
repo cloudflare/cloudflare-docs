@@ -66,14 +66,6 @@ $ PORT=853; socat TCP4-LISTEN:${PORT},reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpn
 
 From here, you can follow the regular guide for [setting up 1.1.1.1](/1.1.1.1/setup/), except you should always use `127.0.0.1` instead of `1.1.1.1`. If you need to access the proxy from another device, simply replace `127.0.0.1` in `socat` commands with your local IP address.
 
-### DNS over UDP
-
-Note that the Tor network does not support UDP connections, which is why some hacking is needed. If your client only supports UDP connections, the solution is to encapsulate packets to port `UDP:53` on localhost as TCP packets, using the following `socat` command:
-
-```sh
-$ socat UDP4-LISTEN:53,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:253,socksport=9150
-```
-
 ### DNS over HTTPS
 
 [As explained in the blog post](https://blog.cloudflare.com/welcome-hidden-resolver/), our favorite way of using the hidden resolver is using DNS over HTTPS (DoH). To set it up:

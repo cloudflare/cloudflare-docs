@@ -76,7 +76,7 @@ The console displays the output of any calls to `console.log` that were called f
 
 There are two ways to preview and deploy a Workers script: on [a site on Cloudflare](/fundamentals/get-started/setup/add-site/) or on a [workers.dev](https://workers.dev/) account. If you'd like to only explore Workers capabilities, you can avoid any setup through the [playground](#playground).
 
-### Cloudflare Dashboard
+### Cloudflare dashboard
 
 To preview a script, begin by [logging in](https://www.cloudflare.com/a/login) to your Cloudflare dashboard.
 

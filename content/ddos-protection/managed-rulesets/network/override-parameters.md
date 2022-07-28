@@ -1,12 +1,12 @@
 ---
 title: Parameters
 pcx-content-type: reference
-weight: 4
+weight: 5
 meta:
   title: Network-layer DDoS Attack Protection parameters
 ---
 
-# Network-layer DDoS Attack Protection parameters
+# Ruleset parameters
 
 Define overrides for the Network-layer DDoS Attack Protection Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. You can [define overrides in the Cloudflare dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/) or [define overrides via Rulesets API](/ddos-protection/managed-rulesets/network/configure-api/).
 

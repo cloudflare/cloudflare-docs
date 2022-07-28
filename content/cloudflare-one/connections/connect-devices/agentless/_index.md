@@ -1,15 +1,13 @@
 ---
 pcx-content-type: navigation
 title: Agentless options
-weight: 3
+weight: 2
 ---
 
 # Agentless options
 
-{{<Aside type="warning">}}
+If you are unable to install the WARP client on your devices (for example, Windows Server does not support the WARP client), you can use agentless options to perform a subset of Gateway functions.
 
-Enrolling devices using static IP addresses may prevent users from connecting to some public Wi-Fi networks that use captive portals.
+- **[DNS filtering](/cloudflare-one/connections/connect-devices/agentless/dns/)** without WARP requires changing your local DNS resolver to Cloudflare.
+- **[HTTP filtering](/cloudflare-one/connections/connect-devices/agentless/pac-files/)** without WARP requires configuring your browser to forward traffic to a Cloudflare proxy server.
 
-{{</Aside>}}
-
-{{<directory-listing>}}
