@@ -32,7 +32,6 @@ As a best practice, you should also delete the previous [zone activation TXT rec
   
 {{</Aside>}}
 
-After deleting your zone activation TXT record, wait for its Time to Live (TTL) to expire.
 
 ## Step 3 — Convert to full setup
 
