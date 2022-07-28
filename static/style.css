@@ -5112,7 +5112,6 @@ pre {
 [theme=dark] .skip-link {
   background: #242628;
   color: var(--code-orange);
-  font-weight: 600;
 }
 
 .skip-link:focus {
