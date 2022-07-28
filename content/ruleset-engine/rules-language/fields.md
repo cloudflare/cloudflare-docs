@@ -1081,6 +1081,8 @@ You can only use HTTP response fields in:
 * [Rate limiting rules](/waf/rate-limiting-rules/)
 * Filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rulesets/) ruleset
 
+Specific fields may have additional limitations.
+
 {{</Aside>}}
 
 The Cloudflare Rules language supports these HTTP response fields:
@@ -1093,37 +1095,6 @@ The Cloudflare Rules language supports these HTTP response fields:
    </tr>
   </thead>
   <tbody>
-   <tr id="field-cf-response-1xxx_code">
-      <td valign="top"><code>cf.response.1xxx_code</code><br />{{<type>}}Integer{{</type>}}</td>
-      <td>
-         <p>Contains the specific code for 1xxx Cloudflare errors. Use this field to differentiate between 1xxx errors associated with the same HTTP status code. The default value is <code>0</code>. For a list of 1xxx errors, refer to <a href="https://support.cloudflare.com/hc/articles/360029779472">Troubleshooting Cloudflare 1XXX errors</a>.
-         </p>
-         <p>Example value:
-         <br /><code class="InlineCode">1020</code>
-         </p>
-      </td>
-   </tr>
-   <tr id="field-cf-response-error_type">
-      <td valign="top"><code>cf.response.error_type</code><br />{{<type>}}String{{</type>}}</td>
-      <td>
-        <p>Contains a string with the type of error in the response being returned. The default value is an empty string (<code>""</code>).
-        </p>
-        <p>The available values are the following:</p>
-        <ul>
-          <li><code>managed_challenge</code></li>
-          <li><code>iuam_basic</code></li>
-          <li><code>legacy_challenge</code></li>
-          <li><code>ip_block</code></li>
-          <li><code>waf_block</code></li>
-          <li><code>5xx</code></li>
-          <li><code>1xxx</code></li>
-          <li><code>always_online</code></li>
-          <li><code>country_challenge</code></li>
-          <li><code>ratelimit</code></li>
-        </ul>
-        <p>You can use this field to customize the response for a specific type of error (for example, all 1xxx errors or all WAF block actions).</p>
-      </td>
-   </tr>
    <tr id="field-http-response-code">
       <td valign="top"><code>http.response.code</code><br />{{<type>}}Integer{{</type>}}</td>
       <td>
@@ -1204,6 +1175,39 @@ The Cloudflare Rules language supports these HTTP response fields:
          <br />
          <code class="InlineCode">["This header value is longer than 10 bytes"]</code>
          </p>
+      </td>
+   </tr>
+   <tr id="field-cf-response-1xxx_code">
+      <td valign="top"><code>cf.response.1xxx_code</code><br />{{<type>}}Integer{{</type>}}</td>
+      <td>
+         <p>Contains the specific code for 1xxx Cloudflare errors. Use this field to differentiate between 1xxx errors associated with the same HTTP status code. The default value is <code>0</code>. For a list of 1xxx errors, refer to <a href="https://support.cloudflare.com/hc/articles/360029779472">Troubleshooting Cloudflare 1XXX errors</a>.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">1020</code>
+         </p>
+         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/response-header-modification/">HTTP response header modifications</a> and <a href="/rules/custom-error-responses/">custom error responses</a>.</p>
+      </td>
+   </tr>
+   <tr id="field-cf-response-error_type">
+      <td valign="top"><code>cf.response.error_type</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+        <p>Contains a string with the type of error in the response being returned. The default value is an empty string (<code>""</code>).
+        </p>
+        <p>The available values are the following:</p>
+        <ul>
+          <li><code>managed_challenge</code></li>
+          <li><code>iuam_basic</code></li>
+          <li><code>legacy_challenge</code></li>
+          <li><code>ip_block</code></li>
+          <li><code>waf_block</code></li>
+          <li><code>5xx</code></li>
+          <li><code>1xxx</code></li>
+          <li><code>always_online</code></li>
+          <li><code>country_challenge</code></li>
+          <li><code>ratelimit</code></li>
+        </ul>
+        <p>You can use this field to customize the response for a specific type of error (for example, all 1xxx errors or all WAF block actions).</p>
+        <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/response-header-modification/">HTTP response header modifications</a> and <a href="/rules/custom-error-responses/">custom error responses</a>.</p>
       </td>
    </tr>
   </tbody>
