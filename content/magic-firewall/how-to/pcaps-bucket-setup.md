@@ -211,3 +211,5 @@ header: Bucket list response example
 The list of buckets associated with your account displays.
 </div>
 </details>
+
+To learn how to collect packet captures, refer to [Collect packet captures](/magic-firewall/how-to/collect-pcaps).
