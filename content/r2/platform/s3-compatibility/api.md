@@ -153,7 +153,6 @@ Below is a list of unimplemented object-level operations.
 
 | API Name                                                                                | Feature                   |
 | ----------------------------------------------------------------------------------------| ------------------------- |
-| ❌ [ListMultipartUploads](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html) | ❌ Query Parameters: <br> &emsp;  ❌ delimiter <br> &emsp;  ❌ encoding-type <br> &emsp;  ❌ key-marker <br> &emsp;  ❌ max-uploads <br> &emsp;  ❌ prefix <br> &emsp; ❌ upload-id-marker |
 | ❌ [ListParts](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html)          | ❌ Query Parameters: <br> &emsp;  ❌ max-parts <br> &emsp;  ❌ part-number-marker <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner <br> ❌ Request Payer: <br> &emsp; ❌ x-amz-request-payer |
 
 {{</table-wrap>}}
