@@ -10,7 +10,7 @@ This guide will instruct you how to set build commands on specific branches. You
 
 ## Set up 
 
-Create a `.sh` file in your project directory. You can choose your file's name, but we advise you name the file `build.sh`. 
+Create a `.sh` file in your project directory. You can choose your file's name, but we recommend you name the file `build.sh`. 
 
 In the following script, you will use the `CF_PAGES_BRANCH` environment variable to check which branch is currently being built. Populate your `.sh` file with the following:
 
