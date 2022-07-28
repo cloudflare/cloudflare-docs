@@ -11,6 +11,6 @@ As mentioned in [Review DNS records in Cloudflare](/dns/zone-setups/full-setup/s
 
 Refer to your web host's documentation to learn what type of records you need to configure and where they should point, to avoid downtime.
 
-For example, Netlify asks customers that host websites with them to add a `CNAME` record pointing `<YOUR-DOMAIN>` to `apex-loadbalancer.netlify.com`, and the `www` record to `<YOUR-DOMAIN>.netlify.app`.
+For example, Netlify asks customers that host websites with them to add a `CNAME` record pointing `<YOUR-DOMAIN>` to `apex-loadbalancer.netlify.com`, and another `CNAME` record pointing `www` to `<YOUR-DOMAIN>.netlify.app`, depending on which one is the primary domain.
 
 ![An example of DNS management in Cloudflare's DNS dashboard](/registrar/static/dns-management.png)
