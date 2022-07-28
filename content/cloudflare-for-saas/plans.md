@@ -51,7 +51,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/cloudflare-for-saas/ssl/custom-certificates/">Custom certificates</a>
+          <a href="/cloudflare-for-saas/security/certificate-management/custom-certificates/">Custom certificates</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>
@@ -60,7 +60,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/cloudflare-for-saas/ssl/custom-certificates/certificate-signing-requests/">CSR support</a>
+          <a href="/cloudflare-for-saas/security/certificate-management/custom-certificates/certificate-signing-requests/">CSR support</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>
@@ -90,7 +90,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/cloudflare-for-saas/ssl/common-tasks/enforce-mtls/">mTLS support</a>
+          <a href="/cloudflare-for-saas/security/certificate-management/enforce-mtls/">mTLS support</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>

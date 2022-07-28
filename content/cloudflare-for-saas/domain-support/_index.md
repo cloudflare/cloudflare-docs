@@ -1,7 +1,7 @@
 ---
 pcx-content-type: overview
 title: Custom domain support
-weight: 2
+weight: 3
 ---
  
 # Custom domain support

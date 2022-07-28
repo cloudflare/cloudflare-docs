@@ -1,7 +1,7 @@
 ---
-pcx-content-type:
+pcx-content-type: overview
 title: WAF for SaaS
-weight: 2
+weight: 1
 ---
 
 # WAF for SaaS

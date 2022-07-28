@@ -1,7 +1,7 @@
 ---
 pcx-content-type: overview
 title: Related Products
-weight: 3
+weight: 5
 ---
 
 # Related Products

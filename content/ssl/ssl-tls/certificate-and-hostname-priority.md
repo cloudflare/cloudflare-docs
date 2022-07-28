@@ -32,7 +32,7 @@ For any given hostname, Cloudflare uses the following order to determine which c
 
 {{<Aside type="warning">}}
 
-If you [issue a custom hostname certificate](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/) with wildcards enabled, you cannot update TLS settings for these wildcard hostnames.
+If you [issue a custom hostname certificate](/cloudflare-for-saas/security/certificate-management/issue-and-validate/) with wildcards enabled, you cannot update TLS settings for these wildcard hostnames.
 
 {{</Aside>}}
 

@@ -78,7 +78,7 @@ HTTP adds a DCV token to your origin. You can either add that token [manually](#
  
 {{<Aside type="warning">}}
  
-HTTP DCV validation is no longer allowed for wildcard certificates. For more details and next steps, refer to [DCV Validation](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/#dcv-methods).
+HTTP DCV validation is no longer allowed for wildcard certificates. For more details and next steps, refer to [DCV Validation](/cloudflare-for-saas/security/certificate-management/issue-and-validate/#dcv-methods).
  
 
 
@@ -116,7 +116,7 @@ On the next check cycle, Cloudflare will ask the CA to recheck the URL, complete
  
 If you value simplicity and your customers can handle a few minutes of downtime, you can rely on Cloudflare automatic HTTP validation.
  
-Once you create a new hostname [via the dashboard](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/#via-the-dashboard) or [via the API](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/#via-the-api) and choose the `http` validation method, all your customers have to do is add a CNAME to your `$CNAME_TARGET` and Cloudflare will take care of the rest.
+Once you create a new hostname [via the dashboard](/cloudflare-for-saas/security/certificate-management/issue-and-validate/#via-the-dashboard) or [via the API](/cloudflare-for-saas/security/certificate-management/issue-and-validate/#via-the-api) and choose the `http` validation method, all your customers have to do is add a CNAME to your `$CNAME_TARGET` and Cloudflare will take care of the rest.
  
 <details>
 <summary>What happens after you create the custom hostname</summary>

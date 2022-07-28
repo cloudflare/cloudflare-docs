@@ -55,7 +55,7 @@ To find wildcard custom hostnames specifically that are using DigiCert certifica
 
 #### Update values
 
-You should update the following values using the [dashboard](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/#via-the-dashboard-1) or the [API](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/#via-the-api-1):
+You should update the following values using the [dashboard](/cloudflare-for-saas/security/certificate-management/issue-and-validate/#via-the-dashboard-1) or the [API](/cloudflare-for-saas/security/certificate-management/issue-and-validate/#via-the-api-1):
 
 - **Certificate Authority**: When you update this value, it will immediately reissue the certificate. Cloudflare will continue serving the previous certificate until the new one is validated. If the certificate was previously using DigiCert and you do not update this value, Cloudflare will choose the issuing CA upon renewal.
     - *Dashboard*: Update the value for **SSL certificate authority** to either be **Let's Encrypt** or **Google Trust Services**.
@@ -80,7 +80,7 @@ After your DigiCert certificate is renewed, the API will return a new certificat
 
 ### Non-wildcard custom hostnames
 
-For non-wildcard hostnames, you can use HTTP DCV to automatically perform DCV as long as the custom hostname is proxying traffic through Cloudflare. Cloudflare will complete DCV on the hostname's behalf by serving the [HTTP token](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/#http-automatic).
+For non-wildcard hostnames, you can use HTTP DCV to automatically perform DCV as long as the custom hostname is proxying traffic through Cloudflare. Cloudflare will complete DCV on the hostname's behalf by serving the [HTTP token](/cloudflare-for-saas/security/certificate-management/issue-and-validate/#http-automatic).
 
 If your hostname is using another validation method, you will need to [update](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname) the `"method"` field in the SSL object to be `"http"`.
 
