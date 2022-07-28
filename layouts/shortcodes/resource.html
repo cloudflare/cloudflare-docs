@@ -1,12 +1,16 @@
 {{- $url := .Get "href" -}}
 
-<a class="Button DocsMarkdown--resource" href="{{ $url }}"
-  >{{- with .Get "header" }}
+<a class="Button DocsMarkdown--resource" href="{{ $url }}">
+  {{- with .Get "header" -}}
   <div class="DocsMarkdown--resource-header">
-    {{- safeHTML . -}}{{- partialCached "external.icon" . -}}
+    {{- safeHTML . -}}
+    {{- if strings.HasPrefix $url "http" -}}
+        {{- partialCached "external.icon" . -}}
+    {{- end -}}
   </div>
   {{- end -}}
-  <span class="DocsMarkdown--resource-content"
-    >{{- .Page.RenderString .Inner -}}</span
-  >
+
+  <span class="DocsMarkdown--resource-content">
+    {{- .Page.RenderString .Inner -}}
+  </span>
 </a>
