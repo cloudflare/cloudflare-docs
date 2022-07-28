@@ -4469,6 +4469,10 @@ pre {
   }
 }
 
+.littlefoot-footnote__button {
+  max-width: 3em;
+}
+
 [theme=dark] .littlefoot-footnote__content {
   background: #242628
 }
