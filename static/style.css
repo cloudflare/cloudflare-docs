@@ -5405,6 +5405,11 @@ pre {
   grid-gap: 20px;
   grid-auto-rows: 1fr;
 }
+@media (max-width: 768px) {
+  .DocsMarkdown--resource-group {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
 
 .DocsMarkdown--resource {
   display: flex;
