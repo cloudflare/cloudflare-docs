@@ -4782,19 +4782,24 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   }
 }
 
-.DocsFooter--content {
-  display: flex;
-  flex-direction: column;
-}
-.DocsFooter--content ul {
-  list-style-type: none;
-  list-style-position: inside;
-  list-style-image: url(/static/icons/icon-48x48.png);
+.DocsFooter--content .AdditionalResources {
+  display: grid;
+  grid-template-columns: 2.5em 1fr;
+  grid-auto-rows: 3em;
 
-  padding: 0;
-  margin: 0 0 2em 0;
+  padding-bottom: 2em;
 }
-.DocsFooter--content ul li {
+.AdditionalResources--icon {
+  color: inherit;
+  flex-shrink: 0;
+  fill: white;
+  height: 1.75em;
+  width: 1.75em;
+}
+.AdditionalResources--icon path {
+  fill: inherit;
+}
+.DocsFooter--content-additional-wrapper {
   padding-bottom: 1em;
 }
 
@@ -5396,9 +5401,9 @@ pre {
 
 .DocsMarkdown--resource-group {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-gap: 20px;
   grid-auto-rows: 1fr;
-  gap: 20px;
 }
 
 .DocsMarkdown--resource {
