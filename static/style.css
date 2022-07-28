@@ -5100,7 +5100,7 @@ pre {
   background: #f3f3f4;
   z-index: 1;
   color: inherit;
-  font-weight: 700;
+  font-weight: 600;
   left: 50%;
   padding: 20px;
   position: absolute;
@@ -5111,7 +5111,7 @@ pre {
 
 [theme=dark] .skip-link {
   background: #242628;
-  color: inherit;
+  color: var(--code-orange);
 }
 
 .skip-link:focus {
