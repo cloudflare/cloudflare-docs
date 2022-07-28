@@ -4792,7 +4792,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 .AdditionalResources--icon {
   color: inherit;
   flex-shrink: 0;
-  fill: white;
+  fill: var(--color);
   height: 1.75em;
   width: 1.75em;
 }
