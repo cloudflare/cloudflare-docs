@@ -1,8 +1,7 @@
 ---
 title: Use rules lists
 pcx-content-type: how-to
-meta:
-  title: Define a Rules List
+weight: 3
 ---
 
 # Define a Rules List
