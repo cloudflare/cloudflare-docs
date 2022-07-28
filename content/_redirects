@@ -503,6 +503,12 @@
 /cloudflare-for-saas/related-products/regional-services-for-saas/ /cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ 301
 /cloudflare-for-saas/ssl/common-tasks/hostname-verification/ /cloudflare-for-saas/domain-support/hostname-verification/
 /cloudflare-for-saas/ssl/hostname-specific-behavior/migrating-custom-hostnames/ /cloudflare-for-saas/domain-support/migrating-custom-hostnames/ 301
+/cloudflare-for-saas/ssl/custom-certificates/ /cloudflare-for-saas/security/certificate-management/custom-certificates/ 301
+/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/ /cloudflare-for-saas/security/certificate-management/issue-and-validate/ 301
+/cloudflare-for-saas/ssl/custom-certificates/uploading-certificates/ /cloudflare-for-saas/security/certificate-management/custom-certificates/uploading-certificates/ 301
+/cloudflare-for-saas/ssl/custom-certificates/certificate-signing-requests/ /cloudflare-for-saas/security/certificate-management/custom-certificates/certificate-signing-requests/ 301
+/cloudflare-for-saas/ssl/common-tasks/enforce-mtls/ /cloudflare-for-saas/security/certificate-management/enforce-mtls/ 301
+/cloudflare-for-saas/related-products/waf-for-saas/ /cloudflare-for-saas/security/waf-for-saas/_index.md 301
 <!-- Includes dynamic redirects listed at bottom -->
 
 # stream
