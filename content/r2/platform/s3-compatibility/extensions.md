@@ -30,7 +30,35 @@ These headers map to the `httpMetadata` field in the R2 bindings:
 | `Expires`             | `httpMetadata.expires`            |
 {{</table-wrap>}}
 
-If using Unicode in object key names, refer to the [Unicode Interoperability technical notes](/r2/learning/unicode-interoperability/).
+If using Unicode in object key names, refer to [Unicode Interoperability](/r2/learning/unicode-interoperability/).
+
+## Auto-creating buckets on upload
+
+If you are creating buckets on demand, you might initiate an upload with the assumption that a target bucket exists. In this situation, if you received a `NoSuchBucket` error, you would probably issue a `CreateBucket` operation. However, following this approach can cause issues: if the body has already been partially consumed, the upload will need to be aborted. A common solution to this issue, followed by other object storage providers, is to use the [HTTP `100`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/100) response to detect whether the body should be sent, or if the bucket must be created before retrying the upload. However, Cloudflare does not support the HTTP `100` response. Even if the HTTP `100` response was supported, you would still have additional latency due to the round trips involved.
+
+To support sending an upload with a streaming body to a bucket that may not exist yet, upload operations such as `PutObject` or `CreateMultipartUpload` allow you to specify a header that will ensure the `NoSuchBucket` error is not returned. If the bucket does not exist at the time of upload, it is implicitly instantiated with the following `CreateBucket` request:
+
+```txt
+PUT / HTTP/1.1
+Host: bucket.account.r2.cloudflarestorage.com
+<CreateBucketConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+   <LocationConstraint>auto</LocationConstraint>
+</CreateBucketConfiguration>
+```
+
+This is only useful if you are creating buckets spontaneously because you do not know the name of the bucket or preferred access location ahead of time. For example, you have one bucket per one of your customers and the bucket is created on first upload to the bucket and not during account registration. In these cases, the [ListBuckets extension](#ListBuckets) to support accounts with greater than 1000 buckets may also be useful.
+
+## PutObject
+
+### cf-create-bucket-if-missing
+
+Add a `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [Auto-creating buckets on upload](#auto-creating-buckets-on-upload) for a more detailed explanation of when to add this header.
+
+## CreateMultipartUpload
+
+### cf-create-bucket-if-missing
+
+Add a `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [Auto-creating buckets on upload](#auto-creating-buckets-on-upload) for a detailed explanation of when to add this header.
 
 ## CopyObject
 
