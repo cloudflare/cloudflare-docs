@@ -6,13 +6,13 @@ title: Set build commands per branch
 
 # Set build commands per branch
 
-This guide will instruct you how to set build commands on specific branches. You will use the `CF_PAGES_BRANCH` environment variable to run a script on a `staging` branch as opposed to your `production` branch. This guide assumes that you have a Cloudflare account and a Pages project.
+This guide will instruct you how to set build commands on specific branches. You will use the `CF_PAGES_BRANCH` environment variable to run a script on a specified branch as opposed to your Production branch. This guide assumes that you have a Cloudflare account and a Pages project.
 
 ## Set up 
 
 Create a `.sh` file in your project directory. You can choose your file's name, but we advise you name the file `build.sh`. 
 
-Use the `CF_PAGES_BRANCH` environment variable to check which branch is currently being built. Populate your `.sh` file with the following:
+In the following script, you will use the `CF_PAGES_BRANCH` environment variable to check which branch is currently being built. Populate your `.sh` file with the following:
 
 ```sh
 # !/bin/bash
