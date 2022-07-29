@@ -104,7 +104,7 @@ async function handleRequest(request) {
 
 ## Authenticated origin
 
-To ensure good performance, Cloudflare Image Resizing caches resized images. Since it would not be safe to share images customized for individual visitors, it is generally not recommended to resize images stored with restricted access. However, in cases where the customer agrees to store such images in public cache, Cloudflare supports resizing images through Workers. At the moment, this is only supported on authenticated AWS S3 origins:
+To ensure good performance, Cloudflare Image Resizing caches resized images. Since it would not be safe to share images customized for individual visitors, it is generally not recommended to resize images stored with restricted access. However, in cases where the customer agrees to store such images in public cache, Cloudflare supports resizing images through Workers. At the moment, this is supported on authenticated AWS, Azure, SecureAuth origins and origins behind Cloudflare Access:
 
 ```js
 ---
@@ -126,9 +126,19 @@ fetch(private_url, {
 
 When using this code, the following headers are passed through to the origin, and allow your request to be successful:
 
-*   `Authorization`
-*   `Cookie`
-*   `x-amz-content-sha256`
-*   `x-amz-date`
+- `Authorization`
+- `Cookie`
+- `x-amz-content-sha256`
+- `x-amz-date`
+- `x-ms-date`
+- `x-ms-version`
+- `x-sa-date`
+- `cf-access-client-id`
+- `cf-access-client-secret`
 
-For more information, refer to [Authenticating Requests (AWS Signature Version 4)](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html).
+For more information, refer to:
+
+- [AWS docs](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html)
+- [Azure docs](https://docs.microsoft.com/en-us/rest/api/storageservices/List-Containers2#request-headers)
+- [Cloudflare Zero Trust docs](/cloudflare-one/identity/service-tokens/)
+- [SecureAuth docs](https://docs.secureauth.com/2104/en/authentication-api-guide.html)

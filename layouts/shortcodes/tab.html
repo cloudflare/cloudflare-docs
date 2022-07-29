@@ -3,7 +3,7 @@
 -}}
 
 {{ if eq $default "true"}}
-<div class="tab tab-default" id="tab-{{$label}}">{{ $.Inner | markdownify }}</div>
+<div class="tab tab-default" id="tab-{{$label}}-UNIQUE_ID">{{ $.Inner | markdownify }}</div>
 {{ else }}
-<div class="tab" id="tab-{{$label}}">{{ $.Inner | markdownify }}</div>
+<div class="tab" id="tab-{{$label}}-UNIQUE_ID">{{ $.Inner | markdownify }}</div>
 {{ end }}

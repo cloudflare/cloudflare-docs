@@ -4994,7 +4994,7 @@ pre {
   background: #f3f3f4;
   z-index: 1;
   color: inherit;
-  font-weight: 600;
+  font-weight: 700;
   left: 50%;
   padding: 20px;
   position: absolute;
@@ -5005,7 +5005,7 @@ pre {
 
 [theme=dark] .skip-link {
   background: #242628;
-  color: var(--code-orange);
+  color: inherit;
 }
 
 .skip-link:focus {
@@ -5018,3 +5018,14 @@ pre {
   }
 }
 
+.littlefoot-footnote__button {
+  max-width: 3em;
+}
+
+[theme=dark] .littlefoot-footnote__content {
+  background: #242628
+}
+
+[theme=dark] .littlefoot-footnote__button {
+  background: rgba(110,110,110,0.5)
+}

@@ -1,3 +1,6 @@
+# homepage
+/docs/ /products/ 301
+
 # 1dot1_redirect
 /1.1.1.1/1.1.1.1-for-families/ /1.1.1.1/setup/ 301
 /1.1.1.1/1.1.1.1-for-families/android/ /1.1.1.1/setup/android/ 301
@@ -95,7 +98,7 @@
 /analytics/graphql-api/migration-guides/network-analytics-v2/about/ /analytics/graphql-api/migration-guides/network-analytics-v2/differences/ 301
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
 /analytics/web-analytics/change-log/ /analytics/web-analytics/changelog/ 301
-/analytics/web-analytics/about/ /analytics/web-analytics/ 301 
+/analytics/web-analytics/about/ /analytics/web-analytics/ 301
 
 # argo-tunnel
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
@@ -378,7 +381,7 @@
 /pages/how-to/deploy-a-vue-application/ /pages/framework-guides/deploy-a-vue-application/ 301
 /pages/how-to/deploy-a-zola-site/ /pages/framework-guides/deploy-a-zola-site/ 301
 /pages/how-to/elderjs/ /pages/framework-guides/elderjs/ 301
-/pages/platform/github-integration/ /pages/platform/git-integration/ 301 
+/pages/platform/github-integration/ /pages/platform/git-integration/ 301
 /pages/platform/direct-uploads/ /pages/platform/direct-upload/ 301
 
 
@@ -503,7 +506,7 @@
 /cloudflare-for-saas/related-products/regional-services-for-saas/ /cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ 301
 /cloudflare-for-saas/ssl/common-tasks/hostname-verification/ /cloudflare-for-saas/domain-support/hostname-verification/
 /cloudflare-for-saas/ssl/hostname-specific-behavior/migrating-custom-hostnames/ /cloudflare-for-saas/domain-support/migrating-custom-hostnames/ 301
-<!-- Includes dynamic redirects listed at bottom -->
+# Includes dynamic redirects listed at bottom
 
 # stream
 /stream/analytics/ /stream/getting-analytics/ 301
@@ -1013,7 +1016,7 @@
 /argo-tunnel/run-tunnel/run-as-service/* /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/:splat 301
 /docs-engine/* https://github.com/cloudflare/cloudflare-docs/blob/production/README.md 301
 
-<!-- Cloudflare for SaaS -->
+# Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-saas/ssl/common-tasks/:splat 301
 /ssl/ssl-for-saas/custom-certificates/* /cloudflare-for-saas/ssl/custom-certificates/:splat
 /ssl/ssl-for-saas/hostname-specific-behavior/* /cloudflare-for-saas/ssl/hostname-specific-behavior/:splat
