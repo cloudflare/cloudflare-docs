@@ -154,12 +154,12 @@ header: Sample PCAP example response
  <div class="special-class" markdown="1">
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet capture**, select **Start to capture**.
-3. Select the **Captures** tab and select **Start to capture**.
-4. From **Packet Capture configuration**, choose a capture type and select **Next**.
+2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
+3. Select the **Captures** tab and select **Start a capture**.
+4. From **Packet captures - Capture configuration**, choose a capture type and select **Next**.
 5. Fill out the required fields to begin the capture and then select **Start**.
 
-The main **Packet Capture** page displays and displays a list of captures.
+The main **Packet captures** page displays and displays a list of captures.
 </div>
 </details>
 
@@ -220,7 +220,7 @@ While the collection is in process, the status returns `pending` or `running`. A
  <div class="special-class" markdown="1">
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet capture**, select **Start to capture**.
+2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
 3. From the **Packet Capture** page, select the **Captures** tab.
 
 </div>

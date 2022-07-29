@@ -34,9 +34,9 @@ Refer to the [Amazon S3](/logs/get-started/enable-destinations/aws-s3/#manage-vi
  <div class="special-class" markdown="1">
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet capture**, select **Start to capture**.
-3. From the **Packet Capture** page, select the **Buckets** tab.
-4. Select **Create bucket**.
+2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
+3. From the **Packet captures** page, select the **Buckets** tab.
+4. Select **Add a bucket**.
 5. Under **Bucket configuration**, select a bucket service and select **Next**.
 6. Enter the information related to your bucket for your service provider.
 7. When you are done, select **Next**.
@@ -142,7 +142,7 @@ If the `status` shows `success`, the bucket is configured and ready to use.
 
 1. From the **Prove ownership** step of the **Bucket configuration**, locate the **Ownership token** field.
 2. In the **Ownership token** field, enter the ownership token for your service provider.
-3. When you are done, select **Create**. The Packet Captures page displays.
+3. When you are done, select **Create**. The **Packet captures** page displays.
 
 The **Buckets** tab displays a list of the buckets associated with your account. Refer to the **Status** column to see the status of your bucket configuration.
 
@@ -205,8 +205,8 @@ header: Bucket list response example
  <div class="special-class" markdown="1">
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet capture**, select **Start to capture**.
-3. From the **Packet Capture** page, select the **Buckets** tab.
+2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
+3. From the **Packet captures** page, select the **Buckets** tab.
 
 The list of buckets associated with your account displays.
 </div>
