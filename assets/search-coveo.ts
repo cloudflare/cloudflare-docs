@@ -9,9 +9,8 @@
   function setReferrerValue() {
     console.log('Success');
     let referrer = (document.referrer.match("(?:developers\.cloudflare\.com|docs\.cloudflare\.com|cloudflare\-docs\-7ou\.pages\.dev)(\/.+?\/)"));
-    if (referrer[1]) {
-      console.log(referrer);
-      return referrer;
+    if (referrer !== null) {
+      return referrer[1];
     }
   }
 
