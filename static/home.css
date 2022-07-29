@@ -673,6 +673,12 @@ html[is-site-page] .DocsContent {
     padding-top: 1.25em;
 }
 
+@media (max-width:570px)  {
+    .FeaturedContentBlock {
+        width: unset;
+    };
+}
+
 [theme=dark] .FeaturedContentBlock {
     background: #242628
 }
