@@ -591,8 +591,8 @@ html[is-site-page] .DocsContent {
     width: 20em;
     height: 16.5em;
     background: #f3f3f4;
-    padding-top: .25em;
-    padding-left: 1.25em;
+    padding-top: .5em;
+    padding-left: 2em;
     margin-bottom: 1em;
 }
 
@@ -625,8 +625,17 @@ html[is-site-page] .DocsContent {
 .TriBlockHeader p {
     font-size: 1.25em;
     font-weight: bold;
-    padding-top: .25em;
-    padding-left: .5em;
+    padding: .5em 0 .75em .5em;
+}
+
+/* Docs-wide style overrides for tri */
+
+.DocsMarkdown .TriBlock ul {
+    padding-left: 0;
+}
+
+.DocsMarkdown .TriBlockHeader p {
+    margin-bottom: 0;
 }
 
 [theme=dark] .TriBlockHeader img {
@@ -4450,8 +4459,8 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 .DocsMarkdown details summary {
-    padding: 0 .8em;
-    line-height: 2;
+    padding: 0 2em;
+    line-height: 3;
     background: rgba(var(--color-rgb), .05);
     border-radius: .25em;
     font-weight: 600;
