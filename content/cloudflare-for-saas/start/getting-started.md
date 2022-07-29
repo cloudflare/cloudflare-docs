@@ -24,7 +24,7 @@ The fallback origin is where Cloudflare will route traffic sent to your custom h
 
 {{<Aside type="note">}}
 
-You can also [use a Worker as your origin](/cloudflare-for-saas/workers-for-platforms/workers-as-origin/) or [create a custom origin server](/cloudflare-for-saas/start/advanced-settings/custom-origin/) to send traffic from one or more custom hostnames somewhere besides your default proxy fallback.
+You can also [use a Worker as your origin](/cloudflare-for-saas/workers-for-platforms/worker-as-origin/) or [create a custom origin server](/cloudflare-for-saas/start/advanced-settings/custom-origin/) to send traffic from one or more custom hostnames somewhere besides your default proxy fallback.
 
 {{</Aside>}}
 
