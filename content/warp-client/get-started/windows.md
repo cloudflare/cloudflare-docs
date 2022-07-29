@@ -11,7 +11,7 @@ meta:
 1. [Download Cloudflare WARP for Windows](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release).
 2. Navigate to your predefined download folder and open the executable file to install WARP.
 3. Follow the instructions to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
-4. Click **Next** and **Accept** Cloudflare's privacy policy.
+4. Select **Next** and **Accept** Cloudflare's privacy policy.
 5. Turn on the toggle to enable WARP.
 
 WARP is now running and protecting your Internet connection.
@@ -40,6 +40,6 @@ The Windows application places log files in two locations based on what part of 
 
 ## How to remove the application
 
-1. Click the **Start** menu and search for **Settings**. You can also press <kbd>⊞ Win</kbd> + <kbd>i</kbd>).
+1. Select the **Start** menu and search for **Settings**. You can also press <kbd>⊞ Win</kbd> + <kbd>i</kbd>).
 2. Select **Apps** > **App & Features**.
 3. Scroll down to Cloudflare WARP and select **Uninstall**.
