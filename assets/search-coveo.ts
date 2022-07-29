@@ -6,6 +6,13 @@
   let dataset = tag && tag.dataset;
   let { org, token } = dataset || {};
 
+  function setReferrerValue() {
+    console.log('Success');
+    let referrer = (document.referrer.match("[\.pages\.dev|\.com](\/.+?\/)")[1]);
+    console.log(referrer);
+    return referrer;
+  }
+
   function loadCustomSearchBox() {
     let element = $('#DocsSearch--input') || $('#SiteSearch--input');
     const CustomSearchbox = (function(_super) {
@@ -71,8 +78,13 @@
     coveo.$$(root).on("afterInitialization", (e, args) => {
       let pipelineContext = coveo.$$(root).find(".CoveoPipelineContext");
       pipelineContext = coveo.get(pipelineContext);
-      pipelineContext.setContextValue("referrer", document.referrer.match("[\.pages\.dev|\.com](\/.+?\/)")[1]);
+      pipelineContext.setContextValue("referrer", setReferrerValue());
     })
+
+    coveo.$$(root).on('changeAnalyticsCustomData', (e, args) => {
+      if (args.type === 'ClickEvent' || args.type === 'CustomEvent'){
+        args.metaObject.context_referrer = setReferrerValue();
+      }});
 
     // Hacky fix to manually control search/loading icons
     function showLoadingToggle(bool) {
