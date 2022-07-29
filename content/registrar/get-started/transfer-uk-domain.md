@@ -38,3 +38,5 @@ For security reasons, domains transferred to Cloudflare Registrar are locked for
 
 - The domain is locked or suspended.
 - The nameservers were updated after the checkout process.
+
+{{<render file="_next-steps.md">}}

@@ -43,10 +43,9 @@ Routes can `fetch()` Custom Domains and take precedence if configured on the sam
 To configure a route in your `wrangler.toml`, add the following to your environment:
 
 ```toml
-Route = [
-{pattern = “example.com/about”, 
-Zone_id = <YOUR_ZONE_ID>,
-}]
+routes = [
+    { pattern = "example.com/about", zone_id = "<YOUR_ZONE_ID>" }
+]
 ```
 
 If you have specified your zone ID in the environment of your `wrangler.toml`, you will not need to write it again in object form.
@@ -54,10 +53,9 @@ If you have specified your zone ID in the environment of your `wrangler.toml`, y
 To configure a subdomain in your `wrangler.toml`, add the following to your environment:
 
 ```toml
-Route = [
-{pattern = “subdomain.example.com”, 
-custom domains = true,
-}]
+routes = [
+	{ pattern = "subdomain.example.com", custom_domain = true }
+]
 ```
 
 ## What is best for me?

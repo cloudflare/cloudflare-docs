@@ -40,11 +40,10 @@ const reader = readable.getReader();
 
 - {{<code>}}cancel(reason{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}void{{</type>}}
 
-      *   Cancels the stream. `reason` is an optional human-readable string indicating the reason for cancellation. `reason` will be passed to the underlying source’s cancel algorithm -- if this readable stream is one side of a [TransformStream](/workers/runtime-apis/streams/transformstream/), then its cancel algorithm causes the transform’s writable side to become errored with `reason`.
+  - Cancels the stream. `reason` is an optional human-readable string indicating the reason for cancellation. `reason` will be passed to the underlying source’s cancel algorithm -- if this readable stream is one side of a [TransformStream](/workers/runtime-apis/streams/transformstream/), then its cancel algorithm causes the transform’s writable side to become errored with `reason`.
 
-          {{<Aside type="warning" header="Warning">}}
-
-  Any data not yet read is lost.
+  {{<Aside type="warning" header="Warning">}}
+Any data not yet read is lost.
   {{</Aside>}}
 
 - `releaseLock()` {{<type>}}void{{</type>}}

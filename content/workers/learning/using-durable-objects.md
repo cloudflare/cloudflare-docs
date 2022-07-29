@@ -221,7 +221,7 @@ export default {
 
 Learn more about communicating with a Durable Object in the [Workers Durable Objects API reference](/workers/runtime-apis/durable-objects/#accessing-a-durable-object-from-a-worker).
 
-{{<Aside header="String-derived IDs versus system-generated IDs">}}
+{{<Aside type="note" header="String-derived IDs versus system-generated IDs">}}
 
 In the above example, you used a string-derived object ID by calling the `idFromName()` function on the binding. You can also ask the system to generate random unique IDs. System-generated unique IDs have better performance characteristics, but require that you store the ID somewhere in order to access the object again later. Refer to the [API reference documentation](/workers/runtime-apis/durable-objects/#accessing-a-durable-object-from-a-worker) for more information.
 

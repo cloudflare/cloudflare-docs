@@ -3367,7 +3367,7 @@ p.DocsMarkdown--small-header {
   padding: 0;
 }
 
-.DocsMarkdown--definitions ul li:not(:last-child) {
+.DocsMarkdown--definitions>ul>li:not(:last-child) {
   margin-bottom: 1.5em;
 }
 
@@ -3382,9 +3382,12 @@ p.DocsMarkdown--small-header {
   --padding: 0 0.3em;
 }
 
-.DocsMarkdown--definitions ul li>ul {
+.DocsMarkdown--definitions>ul>li>ul {
   list-style: none;
   padding-left: 2em;
+}
+
+.DocsMarkdown--definitions ul>li>ul {
   margin-top: 0.25em;
 }
 
@@ -5121,3 +5124,14 @@ pre {
   }
 }
 
+.littlefoot-footnote__button {
+  max-width: 3em;
+}
+
+[theme=dark] .littlefoot-footnote__content {
+  background: #242628
+}
+
+[theme=dark] .littlefoot-footnote__button {
+  background: rgba(110,110,110,0.5)
+}

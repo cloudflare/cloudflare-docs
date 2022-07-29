@@ -92,7 +92,7 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
     ```
 
     {{<Aside type="note">}}
-    Refer to the documentation on [Routes](/workers/platform/routing/routes/) to configure a `route` properly.
+Refer to the documentation on [Routes](/workers/platform/routing/routes/) to configure a `route` properly.
     {{</Aside>}}
 
 Learn more about [configuring your project](/workers/get-started/guide/#7-configure-your-project-for-deployment).
