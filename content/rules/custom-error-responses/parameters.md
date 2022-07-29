@@ -3,7 +3,7 @@ title: Parameters
 pcx-content-type: reference
 weight: 3
 meta:
-  title: Custom error responses parameter reference
+  title: Custom error response parameters
 ---
 
 # Parameter reference
