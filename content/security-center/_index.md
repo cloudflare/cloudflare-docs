@@ -3,10 +3,10 @@ title: Overview
 pcx-content-type: overview
 weight: 1
 meta:
-  title: Cloudflare Security Center (beta)
+  title: Cloudflare Security Center
 ---
 
-# Cloudflare Security Center (beta)
+# Cloudflare Security Center
 
 Cloudflare Security Center brings together our suite of security products, our security expertise, and unique Internet intelligence as a unified security intelligence solution. Security Center enables you to strengthen your security posture by:
 
@@ -29,6 +29,6 @@ Cloudflare Security Center brings together our suite of security products, our s
 
 ## Availability
 
-Cloudflare Security Center is available in beta to customers on all plans. If you have any comments, questions, or bugs to report, contact us at securitycenter@cloudflare.com or create a post in the [Cloudflare Community forum](https://community.cloudflare.com/c/security/security-center/65).
+Cloudflare Security Center is available to customers on all plans. If you have any comments, questions, or bugs to report, contact us at securitycenter@cloudflare.com or create a post in the [Cloudflare Community forum](https://community.cloudflare.com/c/security/security-center/65).
 
 The frequency of security scans depends on your Cloudflare plan — refer to [Scan frequency](/security-center/about/#scan-frequency) for more information.
