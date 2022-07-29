@@ -1,7 +1,7 @@
 ---
 title: Deprecation - Version 1
 pcx-content-type: reference
-weight: 11
+weight: 5
 meta:
   title: Deprecation notice for SSL for SaaS - Version 1
 ---

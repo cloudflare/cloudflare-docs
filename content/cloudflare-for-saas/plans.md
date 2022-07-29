@@ -31,7 +31,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/cloudflare-for-saas/ssl/reference/hostname-analytics/">Custom analytics</a>
+          <a href="/cloudflare-for-saas/hostname-analytics/">Custom analytics</a>
         </strong>
       </td>
       <td colspan="2" style="text-align:center">

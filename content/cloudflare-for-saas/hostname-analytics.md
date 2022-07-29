@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Hostname analytics
-weight: 6
+weight: 7
 ---
 
 # Hostname analytics

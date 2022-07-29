@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Connection request details
-weight: 3
+weight: 1
 ---
 
 # Connection request details

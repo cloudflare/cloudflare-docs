@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting
 pcx-content-type: reference
-weight: 12
+weight: 3
 meta:
   title: Troubleshooting Cloudflare for SaaS
 ---
