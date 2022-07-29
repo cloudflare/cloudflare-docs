@@ -7,14 +7,14 @@ weight: 9
 # Edit a Notification
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Click **Notifications** on the upper right corner.
-3. Click **Edit** on the Notification you want to modify.
-4. Make changes as needed and click **Save**.
+2. Select **Notifications**.
+3. Select **Edit** on the Notification you want to modify.
+4. Make changes as needed and select **Save**.
 
 The browser will navigate back to the list of Notifications.
 
 {{<Aside type="note" header="Note">}}
 
-You can also disable and/or delete Notifications. To disable a Notification, click the **Enabled** toggle. To delete it, click **Delete**.
+You can also disable and/or delete Notifications. To disable a Notification, select the **Enabled** toggle. To delete it, select **Delete**.
 
 {{</Aside>}}

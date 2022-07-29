@@ -16,12 +16,12 @@ There are a variety of services you can connect to Cloudflare using webhooks to 
 To set up webhooks:
 
 1. Go to [Notifications](https://dash.cloudflare.com/?to=/:account/notifications) on the Cloudflare dashboard.
-2. Click **Destinations**.
-3. In the **Webhooks** card, click **Create**.
+2. Select **Destinations**.
+3. In the **Webhooks** card, select **Create**.
 4. Give your webhook a name, so you can identify it later.
 5. In the **URL** field, enter the URL of the third-party service you previously set up and want to connect to your Cloudflare account.
 6. If needed, insert the **Secret**. Secrets are how webhooks are encrypted and vary according to the service you are connecting to Cloudflare.
-7. Click **Save and Test** to finish setting up your webhook.
+7. Select **Save and Test** to finish setting up your webhook.
 
 The new webhook will appear in the **Webhooks** card.
 
@@ -29,7 +29,7 @@ The new webhook will appear in the **Webhooks** card.
 
 If you use a service that is not covered by Cloudflare's currently available webhooks, you can configure your own. Follow steps 1-6 above, and enter a valid webhook URL. It is always recommended to use a secret for generic webhooks. Cloudflare will send your secret in the `cf-webhook-auth` header of every request made. If this header is not present, or is not your specified value, you should reject the webhook.
 
-After clicking **Save and Test**, your webhook should now be configured as a destination you can use to attach to policies.
+After selecting **Save and Test**, your webhook should now be configured as a destination you can use to attach to policies.
 
 When Cloudflare sends you a webhook, it will have the following schema:
 
