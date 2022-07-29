@@ -1,6 +1,6 @@
 baseURL = "https://developers.cloudflare.com"
 
-title = "Cloudflare Developers"
+title = "Cloudflare Docs"
 languageCode = "en"
 DefaultContentLanguage = "en"
 disableHugoGeneratorInject = true

@@ -5,7 +5,7 @@ title: Redirecting www to domain apex
 
 # Redirecting www to domain apex
 
-In this tutorial, you will learn how to redirect the `www` subdomain to your apex domain (`example.com`). This is a common question and can be achieved by using [Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427).
+In this guide, you will learn how to redirect the `www` subdomain to your apex domain (`example.com`). This is a common question and can be achieved by using [Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427).
 
 {{<Aside type= "note">}}
 
