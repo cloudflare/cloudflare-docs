@@ -23,7 +23,7 @@ To allow these types of requests through Gateway, you must add a [*Do Not Inspec
 
 Gateway does not currently support inspection of HTTP/3 traffic in Google Chrome. This is because Chrome does not trust any certificate signed by a custom root CA even if the certificate is installed on the user's device.
 
-Google Chrome by default enables support for QUIC, which is used to connect to HTTP/3 capable webpages. In order to apply HTTP policies to Google Chrome traffic, you will need to disable QUIC in the browser. This forces the browser to fall back to HTTP/2.
+Google Chrome by default enables support for QUIC, which is used to connect to HTTP/3 capable webpages. In order to filter HTTP traffic, you will need to disable QUIC in Chrome. This forces the browser to fall back to HTTP/2, allowing you to apply HTTP policies.
 
 ### Disable QUIC in Google Chrome
 
