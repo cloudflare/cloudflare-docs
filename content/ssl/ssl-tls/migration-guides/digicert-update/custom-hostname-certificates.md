@@ -9,7 +9,7 @@ meta:
 
 # Custom hostnames
 
-On **September 26, 2022**, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new [custom hostname certificates](/cloudflare-for-saas/ssl/). This will not affect existing custom hostname certificates.
+On **September 26, 2022**, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new [custom hostname certificates](/cloudflare-for-saas/certificate-management/). This will not affect existing custom hostname certificates.
 
 On **October 31, 2022**, Cloudflare will stop using DigiCert as the CA for custom hostname certificate renewals. This will not affect existing custom hostname certificates, but only certificate renewals.
 
