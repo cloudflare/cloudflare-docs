@@ -15,7 +15,7 @@ When you want to customize the behavior for specific custom hostnames, explore t
 
 *   For more than 125 hostnames:
 
-    *   [**Custom metadata**](/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/): Configure additional settings for custom hostnames using Cloudflare Workers to define per-hostname behavior.
+    *   [**Custom metadata**](/cloudflare-for-saas/workers-for-platforms/custom-metadata/): Configure additional settings for custom hostnames using Cloudflare Workers to define per-hostname behavior.
     *   **Enforce specific protocols**: Using a [PATCH request](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname), you can enforce a minimum TLS version and enable TLS 1.3 and HTTP/2.
     *   [**Custom origin servers**](/cloudflare-for-saas/start/advanced-settings/custom-origin/): {{<render file="_custom-origin-server-definition.md">}}
     *   [**Migrating custom hostnames**](/cloudflare-for-saas/domain-support/migrating-custom-hostnames/): Shift hostnames between multiple zones to enable or disable various configurations, origins, or products.

@@ -113,7 +113,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/">Custom metadata</a>
+          <a href="/cloudflare-for-saas/workers-for-platforms/custom-metadata/">Custom metadata</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>
