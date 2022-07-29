@@ -270,8 +270,8 @@ Once the sample PCAP collection is complete, you can download the PCAP by specif
  <div class="special-class" markdown="1">
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet capture**, select **Start to capture**.
-3. From the **Packet Capture** page, select the **Captures** tab.
+2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
+3. From the **Packet captures** page, select the **Captures** tab.
 4. Locate your packet capture you want to download and under **Captures**, select the link to open download it.
 
 Packet captures are available to download when the **Status** displays **Success**. 
@@ -334,8 +334,8 @@ header: List response example
  <div class="special-class" markdown="1">
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet capture**, select **Start to capture**.
-3. From the **Packet Capture** page, select the **Captures** tab.
+2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
+3. From the **Packet captures** page, select the **Captures** tab.
 
 The list of captures associated with your account displays.
 
