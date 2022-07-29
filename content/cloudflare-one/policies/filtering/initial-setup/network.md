@@ -2,13 +2,11 @@
 title: Network filtering
 pcx-content-type: how-to
 weight: 2
-meta:
-  title: Set up Network filtering
 ---
 
-# Set up Network filtering
+# Set up network filtering
 
-Secure Web Gateway allows you to inspect Network traffic and control which websites and non-HTTP applications users can access.
+Secure Web Gateway allows you to inspect network traffic and control which websites and non-HTTP applications users can access.
 
 ## 1. Connect to Gateway
 
@@ -39,12 +37,6 @@ To filter traffic from private networks, refer to the [Cloudflare Tunnel guide](
     3. Note the **Public IP**.
 5. In the Zero Trust dashboard, navigate to **Logs** > **Gateway** > **Network**.  Before building Network policies,  make sure you see Network logs from the Source IP assigned to your device.
 
-## 3. Add recommended policies
+## 3. Add policies
 
-To create a new DNS policy, navigate to **Gateway** > **Policies** > **DNS** in the Zero Trust dashboard. We recommend adding the following policy:
-
-  {{<render file="_policies-recommended.md">}}
-
-## 4. Add optional policies
-
-Refer to our list of [common Network policies](/cloudflare-one/policies/filtering/network-policies/common-policies) for other policies you may want to create.
+To create a new network policy, navigate to **Gateway** > **Policies** > **Network** in the Zero Trust dashboard. Refer to our list of [common network policies](/cloudflare-one/policies/filtering/network-policies/common-policies) for policies you may want to create.

@@ -4,9 +4,9 @@ title: Common policies
 weight: 1
 ---
 
-# Common Network policies
+# Common network policies
 
-The following policies are commonly used to secure Network traffic.
+The following policies are commonly used to secure network traffic.
 
 {{<render file="_policies-optional.md">}}
 
@@ -41,4 +41,4 @@ The following example consists of two policies: the first allows specific users 
 | ---------------| --------------| ---------------------| ------ |
 | Destination IP | in            | `10.0.0.0/8`         | Block  |
 
-Refer to the [Network policies page](/cloudflare-one/policies/filtering/network-policies/) for a comprehensive list of other selectors, operators, and actions.
+Refer to the [network policies page](/cloudflare-one/policies/filtering/network-policies/) for a comprehensive list of other selectors, operators, and actions.
