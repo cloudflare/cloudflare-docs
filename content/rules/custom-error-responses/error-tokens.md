@@ -3,7 +3,7 @@ title: Error tokens
 pcx-content-type: reference
 weight: 4
 meta:
-  title: Custom error response error tokens
+  title: Custom error response tokens
 ---
 
 # Error tokens
