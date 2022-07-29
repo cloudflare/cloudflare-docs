@@ -72,6 +72,6 @@ After the association is complete, the JSON blob is added to the defined custom 
  
 {{<Aside type = "note">}}
  
-While this tutorial uses Cloudflare Managed Rulesets, you can also create a custom ruleset and deploy on your custom hostnames. To do this, select **Browse Rulesets** > **Create new ruleset**. For examples of a low/medium/high ruleset, refer to [WAF for SaaS]( )
+While this tutorial uses Cloudflare Managed Rulesets, you can also create a custom ruleset and deploy on your custom hostnames. To do this, select **Browse Rulesets** > **Create new ruleset**. For examples of a low/medium/high ruleset, refer to [WAF for SaaS](/cloudflare-for-saas/security/waf-for-saas/).
  
 {{</Aside>}}
