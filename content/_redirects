@@ -521,7 +521,6 @@
 /cloudflare-for-saas/ssl/reference/hostname-verification-backoff-schedule/ /cloudflare-for-saas/reference/hostname-verification-backoff-schedule/ 301
 /cloudflare-for-saas/ssl/reference/versioning/ /cloudflare-for-saas/reference/versioning/ 301
 /cloudflare-for-saas/ssl/troubleshooting/ /cloudflare-for-saas/reference/troubleshooting/ 301
-/cloudflare-for-saas/ssl/ /cloudflare-for-saas/security/certificate-management/ 301
 /cloudflare-for-saas/hostname-specific-behavior/ /cloudflare-for-saas/domain-support/ 301
 <!-- Includes dynamic redirects listed at bottom -->
 # Includes dynamic redirects listed at bottom
