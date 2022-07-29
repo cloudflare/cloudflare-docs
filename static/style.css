@@ -1398,6 +1398,7 @@ html {
 
 p>code,
 span>code,
+a>code,
 div>code,
 li>code,
 td>code,
@@ -3109,7 +3110,8 @@ html[is-docs-page] body {
   --background-color-alpha: 0.15;
 }
 
-.DocsMarkdown--link-content>code {
+.DocsMarkdown--link-content>code,
+a>code {
   --padding: 0;
   --background: transparent;
 }
