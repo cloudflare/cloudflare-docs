@@ -6,7 +6,7 @@ weight: 2
 
 # Set up network filtering
 
-Secure Web Gateway allows you to inspect network traffic and control which websites and non-HTTP applications users can access.
+Secure Web Gateway allows you to apply policies at the network level (Layers 3 and 4) to control which websites and non-HTTP applications users can access.
 
 ## 1. Connect to Gateway
 
