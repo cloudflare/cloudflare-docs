@@ -12,6 +12,8 @@ You can configure an Amazon S3 or Google Cloud Platform bucket to use as a targe
 
 ## Set up a bucket
 
+Learn how to set up a bucket for use with full packet captures.
+
 <details>
 <summary>
   API
@@ -91,8 +93,6 @@ header: Ownership challenge response example
   "messages": []
 }
 ```
-
-
 
 Validate the bucket by inserting the copied text in the `ownership_text` below:
 
