@@ -8,7 +8,7 @@ meta:
  
 # Managed Rulesets per Custom Hostname
  
-If you are interested in [WAF for SaaS](/cloudflare-for-saas/related-products/waf-for-saas/) but unsure of where to start, Cloudflare recommends using Managed Rulesets. The Cloudflare security team creates and manages a variety of rules designed to detect common attack vectors and protect applications from vulnerabilities. These rules are offered in managed rulesets, like Cloudflare Managed and OWASP, which can be deployed with different settings and sensitivity levels.
+If you are interested in [WAF for SaaS](/cloudflare-for-saas/security/waf-for-saas/) but unsure of where to start, Cloudflare recommends using Managed Rulesets. The Cloudflare security team creates and manages a variety of rules designed to detect common attack vectors and protect applications from vulnerabilities. These rules are offered in managed rulesets, like Cloudflare Managed and OWASP, which can be deployed with different settings and sensitivity levels.
  
 ---
  
@@ -18,9 +18,9 @@ WAF for SaaS is available with certain Enterprise plans. To verify access, conta
  
 If you would like to deploy a managed ruleset at the account level, refer  to the [Ruleset Engine documentation](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/). 
  
-Ensure you have reviewed [Get Started with Cloudflare for SaaS](/cloudflare-for-saas/getting-started/) and familiarize yourself with [WAF for SaaS](/cloudflare-for-saas/related-products/waf-for-saas/). 
+Ensure you have reviewed [Get Started with Cloudflare for SaaS](/cloudflare-for-saas/getting-started/) and familiarize yourself with [WAF for SaaS](/cloudflare-for-saas/security/waf-for-saas/). 
  
-Customers can automate the [custom metadata](/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/) tagging by adding it to the custom hostnames at creation. For more information on tagging a custom hostname with custom metadata, refer to the [API documentation](/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/).
+Customers can automate the [custom metadata](/cloudflare-for-saas/workers-for-platforms/custom-metadata/) tagging by adding it to the custom hostnames at creation. For more information on tagging a custom hostname with custom metadata, refer to the [API documentation](https://api.cloudflare.com/).
  
 ---
  
@@ -28,7 +28,7 @@ Customers can automate the [custom metadata](/cloudflare-for-saas/ssl/hostname-s
  
 1. Outline `security_tag` buckets. These are fully customizable with no strict limit on quantity. For example, you can set `security_tag` to `low`,`medium`, and `high` as a default, with one tag per custom hostname.
  
-2. If you have not already done so, [associate your custom metadata to custom hostnames](/cloudflare-for-saas/related-products/waf-for-saas#step-1---associate-custom-metadata-to-a-custom-hostname)by including the `security_tag`in the custom metadata associated with the custom hostname. The JSON blob associated with the custom hostname is fully customizable.
+2. If you have not already done so, [associate your custom metadata to custom hostnames](/cloudflare-for-saas/security/waf-for-saas#step-1---associate-custom-metadata-to-a-custom-hostname)by including the `security_tag`in the custom metadata associated with the custom hostname. The JSON blob associated with the custom hostname is fully customizable.
  
 {{<Aside type="note">}}
  
