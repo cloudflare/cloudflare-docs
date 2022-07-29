@@ -9,7 +9,7 @@ weight: 5
 If an image is marked to require a signed URL, it cannot be accessed without a token _unless_ it is being requested for a Variant that is set to always allow public access.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Click **Images** > **Keys**.
+2. Select **Images** > **Keys**.
 3. Copy your key and use it to generate an expiring tokenized URL. Here is an example Worker script that takes in a regular URL without a signed token and returns a tokenized URL that expires after one day. You can, however, set this expiration period to whatever you need, by changing the `const EXPIRATION` value.
 
   ```js
