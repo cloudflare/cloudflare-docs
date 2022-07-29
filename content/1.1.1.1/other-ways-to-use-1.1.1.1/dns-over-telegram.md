@@ -12,9 +12,9 @@ You will also need to add the 1.1.1.1 bot to your friends list in Telegram befor
 ## Add 1.1.1.1 bot to your Telegram friends list
 
 1. Open the Telegram app.
-2. Click **Contacts**.
+2. Select **Contacts**.
 3. Search for `onedotonedotonedotonedotbot`.
-4. Click the **1.1.1.1 bot** when it appears in the search results, and press **Start**.
+4. Select the **1.1.1.1 bot** when it appears in the search results, and press **Start**.
 
 ## Perform DNS lookups
 
