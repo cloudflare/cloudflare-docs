@@ -435,7 +435,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-random_seed">
         <td><code>cf.random_seed</code><br />{{<type>}}Bytes{{</type>}}</td>
         <td>
-          <p>Returns per-request random bytes that you can use in the <a href="/ruleset-engine/rules-language/functions/#function-uuidv4"><code class="InlineCode">uuidv4()</code></a> function.
+          <p>Returns per-request random bytes that you can use in the <a href="/ruleset-engine/rules-language/functions/#function-uuidv4"><code>uuidv4()</code></a> function.
           </p>
         </td>
     </tr>
