@@ -6,8 +6,7 @@ weight: 4
  
 # Performance
 
-Cloudflare for SaaS facilitates higher performance for custom hostnames within your SaaS zone through the following products:
+Cloudflare for SaaS allows you to deliver the best performance to your end customers by helping enable you to reduce latency through:
 
-* [Argo Smart Routing for SaaS](/cloudflare-for-saas/performance/argo-for-saas/) allows you to uniformly increase loading speed for all custom hostnames on your zone.
-* [Early Hints for SaaS](/cloudflare-for-saas/performance/early-hints-for-saas/) provides faster loading speeds for individual custom hostnames through [custom metadata](/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/).
-* Using a [custom origin server](/cloudflare-for-saas/start/advanced-settings/custom-origin/) increases scalability by allowing you to route traffic from one or more custom hostnames to somewhere other than your default proxy fallback.
+* [Argo Smart Routing for SaaS](/cloudflare-for-saas/performance/argo-for-saas/) calculates and optimizes the fastest path for requests to travel to your origin.
+* [Early Hints for SaaS](/cloudflare-for-saas/performance/early-hints-for-saas/) provides faster loading speeds for individual custom hostnames by allowing the broswer to begin loading responses while the origin server is compiling the full response.
