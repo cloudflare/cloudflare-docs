@@ -2,7 +2,7 @@
 updated: 2020-12-10
 category: 🔐 Zero Trust
 difficulty: Advanced
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Zero Trust GitLab SSH & HTTP
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Early Hints
-pcx-content-type: concept
+pcx_content_type: concept
 ---
 
 # Early Hints

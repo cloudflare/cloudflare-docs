@@ -1,6 +1,6 @@
 ---
 title: Use rules lists
-pcx-content-type: how-to
+pcx_content_type: how-to
 meta:
   title: Define a Rules List
 ---

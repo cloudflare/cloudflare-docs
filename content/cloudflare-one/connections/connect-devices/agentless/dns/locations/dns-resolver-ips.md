@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: DNS resolver IPs and hostnames
 layout: single
 weight: 2

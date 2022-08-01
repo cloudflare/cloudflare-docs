@@ -1,6 +1,6 @@
 ---
 type: table
-pcx-content-type: changelog
+pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
 layout: list

@@ -4,7 +4,7 @@ summary: Given the cookie name, get the value of a cookie. You can also use
   cookies for A/B testing.
 tags:
   - Headers
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Cookie parsing
 weight: 1001
 layout: example

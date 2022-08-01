@@ -1,6 +1,6 @@
 ---
 title: Best practices
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 5
 ---
 

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: overview
+pcx_content_type: overview
 title: Cloudflare for SaaS
 weight: 9
 ---

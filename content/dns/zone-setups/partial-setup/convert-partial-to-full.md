@@ -1,6 +1,6 @@
 ---
 title: Convert to full setup
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 3
 meta:
   title: Convert partial setup to full setup

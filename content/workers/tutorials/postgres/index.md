@@ -2,7 +2,7 @@
 updated: 2021-06-10
 difficulty: Intermediate
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Build data-driven applications with Workers and PostgreSQL
 layout: single
 ---

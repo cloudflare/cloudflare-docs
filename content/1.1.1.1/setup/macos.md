@@ -1,6 +1,6 @@
 ---
 weight: 9
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: macOS
 meta:
     title: Set up 1.1.1.1 on macOS

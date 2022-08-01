@@ -2,7 +2,7 @@
 updated: 2020-07-25
 difficulty: Intermediate
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Deploy a static WordPress site
 layout: single
 ---

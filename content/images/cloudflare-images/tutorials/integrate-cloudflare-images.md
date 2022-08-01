@@ -2,7 +2,7 @@
 updated: 2022-05-11
 difficulty: Intermediate
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Integrate Cloudflare Images on your website
 ---
 # Integrate Cloudflare Images on your website

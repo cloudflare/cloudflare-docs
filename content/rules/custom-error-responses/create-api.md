@@ -1,6 +1,6 @@
 ---
 title: Create via API
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 2
 meta:
   title: Create custom error responses via API

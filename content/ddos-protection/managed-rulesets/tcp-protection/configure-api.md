@@ -1,6 +1,6 @@
 ---
 type: overview
-pcx-content-type: reference
+pcx_content_type: reference
 title: Configure via API
 weight: 3
 layout: list

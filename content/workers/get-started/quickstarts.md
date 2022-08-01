@@ -1,6 +1,6 @@
 ---
 type: overview
-pcx-content-type: get-started
+pcx_content_type: get-started
 title: Quickstarts
 weight: 3
 layout: list

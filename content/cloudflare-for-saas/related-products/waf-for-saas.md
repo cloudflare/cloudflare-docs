@@ -1,5 +1,5 @@
 ---
-pcx-content-type:
+pcx_content_type:
 title: WAF for SaaS
 weight: 2
 ---

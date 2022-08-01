@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: SAML | Active Directory®
 weight: 6
 ---

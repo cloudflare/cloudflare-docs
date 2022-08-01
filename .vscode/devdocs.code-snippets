@@ -56,7 +56,7 @@
         "body": [
             "---",
             "title: ${1:title}",
-            "pcx-content-type: ${2|overview,concept,how-to,configuration,reference,navigation,best-practices,faq,tutorial,glossary|}",
+            "pcx_content_type: ${2|overview,concept,how-to,configuration,reference,navigation,best-practices,faq,tutorial,glossary|}",
             "weight: TODO",
             "---",
             "",

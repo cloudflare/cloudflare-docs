@@ -2,7 +2,7 @@
 updated: 2020-11-28
 category: 🛡️ Web Gateway
 difficulty: Beginner
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Review Gateway blocks
 ---
 

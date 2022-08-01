@@ -1,6 +1,6 @@
 ---
 title: Phish submissions
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 6
 ---
 

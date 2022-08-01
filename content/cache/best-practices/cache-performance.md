@@ -1,6 +1,6 @@
 ---
 title: Cache performance
-pcx-content-type: how-to
+pcx_content_type: how-to
 ---
 
 # Cache performance

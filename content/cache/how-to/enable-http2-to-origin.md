@@ -1,6 +1,6 @@
 ---
 title: Enable HTTP/2 to Origin
-pcx-content-type: how-to
+pcx_content_type: how-to
 ---
 
 # Enable HTTP/2 to Origin

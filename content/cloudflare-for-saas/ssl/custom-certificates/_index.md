@@ -1,6 +1,6 @@
 ---
 title: Custom certificates
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 5
 ---
 

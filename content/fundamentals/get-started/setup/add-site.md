@@ -1,6 +1,6 @@
 ---
 title: Add a site
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 2
 ---
 

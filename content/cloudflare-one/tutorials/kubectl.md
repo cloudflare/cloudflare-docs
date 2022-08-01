@@ -1,7 +1,7 @@
 ---
 updated: 2022-07-19
 category: 🔐 Zero Trust
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Connect through Cloudflare Access using kubectl
 ---
 

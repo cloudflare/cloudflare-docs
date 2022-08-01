@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Zone Analytics to GraphQL Analytics
 weight: 12
 ---

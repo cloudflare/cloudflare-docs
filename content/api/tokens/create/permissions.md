@@ -1,6 +1,6 @@
 ---
 type: overview
-pcx-content-type: reference
+pcx_content_type: reference
 title: API token permissions
 weight: 11
 layout: list

@@ -1,6 +1,6 @@
 ---
 title: Nameserver assignment
-pcx-content-type: reference
+pcx_content_type: reference
 ---
 
 # Nameserver assignment

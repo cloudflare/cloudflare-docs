@@ -2,7 +2,7 @@
 updated: 2022-07-14
 category: 🔐 Zero Trust
 difficulty: Advanced
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Configure Zero Trust Network Access in Cloudflare Zero Trust
 ---
 

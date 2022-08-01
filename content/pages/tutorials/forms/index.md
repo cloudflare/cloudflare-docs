@@ -2,7 +2,7 @@
 updated: 2022-07-28
 difficulty: Beginner
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Create an HTML form
 layout: single
 ---

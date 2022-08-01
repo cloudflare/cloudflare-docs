@@ -1,6 +1,6 @@
 ---
 weight: 12
-pcx-content-type: reference
+pcx_content_type: reference
 title: Check connection to 1.1.1.1
 meta:
     title: Check 1.1.1.1 DNS connection

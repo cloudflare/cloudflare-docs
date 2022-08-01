@@ -1,6 +1,6 @@
 ---
 title: Extended ruleset
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 3
 meta:
   title: Extended suggested ruleset
