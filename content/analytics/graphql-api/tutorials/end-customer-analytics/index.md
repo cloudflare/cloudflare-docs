@@ -7,19 +7,19 @@ title: Querying End Customer Analytics with GraphQL
  
 In this example, we are going to use the GraphQL Analytics API to query end customer analytics for SaaS providers over a specified period of time.
  
-The following API call will request the number of visits and edge response bytes for the custom hostname `image.theburritobot.com` over a four days. Be sure to replace `CLOUDFLARE_ACCOUT_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your email and API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
+The following API call will request the number of visits and edge response bytes for the custom hostname `image.theburritobot.com` over a four days period. Be sure to replace `CLOUDFLARE_ACCOUT_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your email and API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
  
 ## API Call
  
 ```json
 curl 'https://api.cloudflare.com/client/v4/graphql' \
 -H 'Accept: application/json' \
--H 'Authorization: Bearer XX' \
---data-binary '{"query":"query RequestsAndDataTransferByHostname($zoneTag: string, $filter:filter) {\n      viewer {\n        zones(filter: {zoneTag: $zoneTag}) {\n          httpRequestsAdaptiveGroups(limit: 10, filter: $filter)\n           {\n            sum {\n              visits\n              edgeResponseBytes\n            }\n            dimensions{\n              datetimeHour\n            }\n          }\n        }\n      }\n    }","variables":{"zoneTag":"4e6d50a41172bca54f222576aec3fc2b","filter":{"datetime_geq":"2022-07-20T11:00:00Z","datetime_lt":"2022-07-24T12:00:00Z","clientRequestHTTPHost":"no-o2o-shaz.theburritobot.com","requestSource":"eyeball"}}}' \
+-H 'Authorization: Bearer CLOUDFLARE_API_TOKEN \
+--data-binary '{"query":"query RequestsAndDataTransferByHostname($zoneTag: string, $filter:filter) {\n      viewer {\n        zones(filter: {zoneTag: $zoneTag}) {\n          httpRequestsAdaptiveGroups(limit: 10, filter: $filter)\n           {\n            sum {\n              visits\n              edgeResponseBytes\n            }\n            dimensions{\n              datetimeHour\n            }\n          }\n        }\n      }\n    }","variables":{"zoneTag":"CLOUDFLARE_ZONE_ID","filter":{"datetime_geq":"2022-07-20T11:00:00Z","datetime_lt":"2022-07-24T12:00:00Z","clientRequestHTTPHost":"hostname.example.com","requestSource":"eyeball"}}}' \
 --compressed | jq .
 ```
  
-The returned results will be in JSON (as requested), so piping the output to `jq` will make them easier to read, like in the following example:
+The returned results will be in JSON format (as requested), so piping the output to `jq` will make them easier to read, like in the following example:
  
 ```json
 {
