@@ -1,10 +1,10 @@
 ---
 pcx-content-type: overview
-title: Workers for Platform
+title: Workers for Platforms
 weight: 6
 ---
  
-# Workers
+# Workers for Platforms
  
 Using Cloudflare [Workers](/workers/) allows you to improve performance and scalability by hosting your application entirely through our network. 
  
