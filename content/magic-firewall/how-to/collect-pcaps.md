@@ -41,7 +41,7 @@ Currently, you can only send one collect request per minute for simple PCAPs, an
 
 **Full PCAPs**
 
-`filter_v1` can be left empty to collect all packets without any filtering.
+Leave `filter_v1` empty to collect all packets without any filtering.
 
 ```bash
 ---
@@ -90,7 +90,7 @@ header: Full PCAP example response
 ```
 **Simple PCAPs**
 
-`filter_v1` can be left empty to collect all packets without any filtering.
+Leave `filter_v1` to collect all packets without any filtering.
 
 ```bash
 ---
