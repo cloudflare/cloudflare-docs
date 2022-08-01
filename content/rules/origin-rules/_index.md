@@ -12,7 +12,7 @@ Origin Rules allow you to customize where the incoming traffic will go and with 
 * [Host Header Override](/rules/origin-rules/features/#host-header-override): Overrides the `Host` header of incoming requests.
 * [Resolve Override](/rules/origin-rules/features/#resolve-override): Overrides the resolved hostname of incoming requests.
 * [Destination Port Override](/rules/origin-rules/features/#destination-port-override): Overrides the resolved destination port of incoming requests.
-* [SNI Override](/rules/origin-rules/features/#sni-override): Overrides the [Server Name Indication (SNI)](/fundamentals/glossary/#server-name-indication-sni) value of incoming requests.
+* [SNI Override](/rules/origin-rules/features/#sni-override): Overrides the Server Name Indication (SNI) value of incoming requests.
 
 The Origin Rule expression will determine when these overrides are applied.
 
