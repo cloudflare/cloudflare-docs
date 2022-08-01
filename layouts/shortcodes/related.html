@@ -1,0 +1,6 @@
+{{- $header := .Get "header" -}} {{- $url := .Get "href" -}}
+
+<div class="DocsMarkdown--related-product">
+  <a class="DocsMarkdown--resource-header" href="{{ $url }}">{{ $header }}</a>
+  <p>{{- .Page.RenderString .Inner -}}</p>
+</div>

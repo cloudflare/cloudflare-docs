@@ -5446,9 +5446,10 @@ pre {
   gap: 1em;
   align-items: center;
 }
-.DocsMarkdown--feature {
-}
 .DocsMarkdown--feature-button {
   display: flex;
   justify-content: flex-end;
+}
+.DocsMarkdown--related-product {
+  color: inherit;
 }

@@ -37,15 +37,15 @@ Note, the data from Logpull and Logpush is exactly the same.
 
 ---
 
-## Related products (WIP)
+## Related products
 
-* Audit Logs
+{{<related header="Audit Logs" href="/fundamentals/account-and-billing/account-security/review-audit-logs/">}}
+Summarize the history of changes made within your Cloudflare account.
+{{</related>}}
 
-  * Summarize the history of changes made within your Cloudflare account.
-
-* Web Analytics
-
-  * Provides privacy-first analytics without changing your DNS or using Cloudflare's proxy.
+{{<related header="Web Analytics" href="/analytics/web-analytics/">}}
+Provides privacy-first analytics without changing your DNS or using Cloudflare's proxy.
+{{</related>}}
 
 ---
 
