@@ -151,3 +151,7 @@ Response:
    "success" : true
 }
 ```
+
+ {{<Aside type="note" header="Note">}}
+To analyze and visualize Cloudflare metrics using the Cloudflare Network Logs quickstart, follow the steps in the [New Relic Analytics integration page](/fundamentals/data-products/analytics-integrations/new-relic/).   
+{{</Aside>}}
