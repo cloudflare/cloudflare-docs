@@ -178,3 +178,36 @@ header: Response
 
 </div>
 </details>
+
+<details>
+<summary>Example: Add a rule that overrides the SNI value of incoming requests</summary>
+<div>
+
+The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single Origin Rule — overriding the SNI value of incoming requests addressed at `admin.example.com` — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+
+```json
+---
+header: Request
+---
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
+-d '{
+  "rules": [
+    {
+      "expression": "http.host eq \"admin.example.com\"",
+      "description": "SNI Override for the admin area",
+      "action": "route",
+      "action_parameters": {
+        "sni": {
+          "value": "sni.example.com"
+        }
+      }
+    }
+  ]
+}'
+```
+
+</div>
+</details>
