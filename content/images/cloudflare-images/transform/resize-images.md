@@ -43,7 +43,7 @@ Selecting the **Always allow public access** option will make a particular varia
 ## How to resize an image
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. CliSelectck **Images** > **Variants**.
+2. Select **Images** > **Variants**.
 3. Name your variant and select **Add New Variant**.
 4. Define variables for your new variant, such as resizing options, type of fit and what do to with metadata.
 

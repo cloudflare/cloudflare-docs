@@ -10,6 +10,6 @@ To edit which PagerDuty services are connected to your Cloudflare account, you f
 1. Sign in to your [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Go to **Notifications** and select **Destinations** on the left side of your dashboard.
 3. In the **Connected notification services** card, select **View** on the PagerDuty service you want to disconnect.
-4. Select **Disconnect** and select **Confirm**.
+4. Select **Disconnect** > **Confirm**.
 5. Go to your [PagerDuty account](https://www.pagerduty.com/) and make the required changes.
 6. Reconnect [PagerDuty to Cloudflare](/fundamentals/notifications/create-notifications/create-pagerduty/).
