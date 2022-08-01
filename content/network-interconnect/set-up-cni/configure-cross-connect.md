@@ -1,6 +1,6 @@
 ---
 title: Configure the cross-connect
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 5
 meta:
   title: Configure the network cross-connect

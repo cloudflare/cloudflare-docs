@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Cloudflare dashboard SSO application
 weight: 4
 ---

@@ -1,6 +1,6 @@
 ---
 title: How it works
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 4
 meta:
   title: How Bulk Redirects work

@@ -1,7 +1,7 @@
 ---
 title: Configure `aws-sdk-go` for R2
 summary: Example of how to configure `aws-sdk-go` to use R2.
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 1001
 layout: example
 ---

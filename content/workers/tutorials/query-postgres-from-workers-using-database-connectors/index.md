@@ -2,7 +2,7 @@
 updated: 2021-11-15
 difficulty: Beginner
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Query Postgres from Workers using a database connector
 layout: single
 ---

@@ -1,6 +1,6 @@
 ---
 title: Enable S3-compatible endpoints
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 57
 layout: single
 meta:

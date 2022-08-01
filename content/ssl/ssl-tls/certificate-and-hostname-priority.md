@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Certificate and hostname priority
 weight: 4
 ---

@@ -1,6 +1,6 @@
 ---
 type: overview
-pcx-content-type: reference
+pcx_content_type: reference
 title: Settings by plan
 weight: 0
 layout: list

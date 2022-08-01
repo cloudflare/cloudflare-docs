@@ -1,7 +1,12 @@
 ---
 title: Deprecation - Version 1
+<<<<<<< HEAD:content/cloudflare-for-saas/reference/versioning.md
 pcx-content-type: reference
 weight: 5
+=======
+pcx_content_type: reference
+weight: 11
+>>>>>>> production:content/cloudflare-for-saas/ssl/reference/versioning.md
 meta:
   title: Deprecation notice for SSL for SaaS - Version 1
 ---

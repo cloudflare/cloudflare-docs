@@ -1,6 +1,6 @@
 ---
 title: Prefix delegations
-pcx-content-type: concept
+pcx_content_type: concept
 ---
 
 # Prefix delegations

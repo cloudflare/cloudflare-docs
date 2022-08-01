@@ -1,7 +1,12 @@
 ---
 title: Troubleshooting
+<<<<<<< HEAD:content/cloudflare-for-saas/reference/troubleshooting.md
 pcx-content-type: reference
 weight: 3
+=======
+pcx_content_type: reference
+weight: 12
+>>>>>>> production:content/cloudflare-for-saas/ssl/troubleshooting.md
 meta:
   title: Troubleshooting Cloudflare for SaaS
 ---

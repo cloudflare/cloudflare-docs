@@ -348,6 +348,7 @@
 /magic-transit/get-started/configure-tunnels/specify-ip-addresses-for-endpoint-health-checks/ /magic-transit/how-to/run-endpoint-health-checks/ 301
 /magic-transit/get-started/configure-tunnels/specify-prefixes-to-advertise/ /magic-transit/how-to/advertise-prefixes/ 301
 /magic-transit/get-started/requirements/ /magic-transit/prerequisites/ 301
+/magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/ /magic-transit/how-to/configure-tunnels/ 301
 
 # magic-wan
 /magic-wan/on-ramp/ /magic-wan/tutorials/on-ramp/ 301

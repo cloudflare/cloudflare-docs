@@ -1,6 +1,6 @@
 ---
 title: Manage custom certificates
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 6
 meta:
   title: Manage custom certificates — Cloudflare for SaaS

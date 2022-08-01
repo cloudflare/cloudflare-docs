@@ -1,6 +1,6 @@
 ---
 title: Create a waiting room
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 1
 meta:
   title: Create a waiting room 

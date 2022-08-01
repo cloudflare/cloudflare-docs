@@ -1,5 +1,5 @@
 ---
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Transfer your domain to Cloudflare
 weight: 5
 ---

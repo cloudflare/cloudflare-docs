@@ -1,6 +1,6 @@
 ---
 title: ReadableStream DefaultReader
-pcx-content-type: configuration
+pcx_content_type: configuration
 meta:
   title: ReadableStreamDefaultReader
 ---

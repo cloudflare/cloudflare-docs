@@ -1,6 +1,6 @@
 ---
 title: What is a filter?
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 1
 ---
 

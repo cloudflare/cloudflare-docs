@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 8
 title: SSL for SaaS
 ---

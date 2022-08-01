@@ -1,6 +1,6 @@
 ---
 title: Configure Transform Rules
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 6
 meta:
   title: Configure Transform Rules with Terraform

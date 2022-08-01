@@ -2,7 +2,7 @@
 updated: 2021-08-03
 category: 🔐 Zero Trust
 difficulty: Intermediate
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Configure AWS SSO with Access for SaaS
 ---
 

@@ -565,6 +565,13 @@ html[is-site-page] .DocsContent {
     justify-content: center;
 }
 
+@media (max-width: 570px) {
+    .CommunityBlock {
+        padding-left: 0;
+        padding-right: 2em;
+    }
+}
+
 .CommunityBlock img {
     height: 2.5em;
     width: 2.5em;
@@ -578,7 +585,6 @@ html[is-site-page] .DocsContent {
 
 .TriBlockGrid {
     display: flex;
-    max-width: 100%;
     flex-wrap: wrap;
     padding-left: .75em;
     padding-right: .75em;
@@ -587,13 +593,24 @@ html[is-site-page] .DocsContent {
     justify-content: space-between;
 }
 
-.TriBlock {
+.TriBlock {    
+    display: flex;
     width: 20em;
     height: 16.5em;
     background: #f3f3f4;
-    padding-top: .5em;
-    padding-left: 2em;
+    padding: .5em 2em;
     margin-bottom: 1em;
+}
+
+@media (max-width: 780px) {
+    .TriBlock {
+        width: unset;
+    }
+
+    .TriBlockGrid {
+        display: inline-block;
+        width: 100%;
+    }
 }
 
 [theme=dark] .TriBlock {
@@ -603,9 +620,8 @@ html[is-site-page] .DocsContent {
 .TriBlock a {
     font-size: .90em;
     color: #0055DC;
-    text-decoration: underline;
     --background-color: transparent;
-    --border-bottom-color-rgb: #0055DC;
+    --border-bottom-color-rgb: 0, 85, 220;
     --border-bottom-color-alpha: .3;
 }
 
@@ -672,6 +688,12 @@ html[is-site-page] .DocsContent {
     padding-left: 2em;
     padding-right: 2em;
     padding-top: 1.25em;
+}
+
+@media (max-width:570px)  {
+    .FeaturedContentBlock {
+        width: unset;
+    };
 }
 
 [theme=dark] .FeaturedContentBlock {
@@ -4491,6 +4513,16 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     border-top: 0;
     border-bottom-left-radius: .25em;
     border-bottom-right-radius: .25em
+}
+
+@media (max-width:560px) {
+    .DocsMarkdown details summary+div {
+        padding: 1em;
+    }
+
+    .ProductGrid {
+        padding: 0;
+    }
 }
 
 .DocsMarkdown details[open] {

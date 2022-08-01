@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: When does Cloudflare crawl my site?
 ---
 

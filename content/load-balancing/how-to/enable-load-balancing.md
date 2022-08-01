@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 5
 title: Enable Load Balancing
 ---

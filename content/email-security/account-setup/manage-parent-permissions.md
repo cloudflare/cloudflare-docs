@@ -1,6 +1,6 @@
 ---
 title: Manage parent permissions
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 2
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Parameters
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 6
 meta:
   title: HTTP DDoS Attack Protection parameters

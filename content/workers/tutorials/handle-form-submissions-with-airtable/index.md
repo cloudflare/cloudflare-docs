@@ -2,7 +2,7 @@
 updated: 2021-06-17
 difficulty: Beginner
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Handle form submissions with Airtable
 layout: single
 ---

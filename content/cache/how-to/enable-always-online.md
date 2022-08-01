@@ -1,6 +1,6 @@
 ---
 title: Enable Always Online
-pcx-content-type: how-to
+pcx_content_type: how-to
 ---
 
 # Enable Always Online

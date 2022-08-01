@@ -1,6 +1,6 @@
 ---
 title: Use cases
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 8
 meta:
   title: Common Bulk Redirect use cases

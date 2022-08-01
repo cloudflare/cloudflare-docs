@@ -1,6 +1,6 @@
 ---
 title: 2 – Track your history
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 3
 meta:
   title: Track your history

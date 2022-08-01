@@ -1,6 +1,6 @@
 ---
 title: API JSON objects
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 7
 meta:
   title: Bulk Redirects API JSON objects

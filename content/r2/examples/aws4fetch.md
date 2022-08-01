@@ -1,7 +1,7 @@
 ---
 title: Configure `aws4fetch` for R2
 summary: Example of how to configure `aws4fetch` to use R2.
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 1001
 layout: example
 ---

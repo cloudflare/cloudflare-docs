@@ -1,7 +1,7 @@
 ---
 title: Overview
 type: overview
-pcx-content-type: overview
+pcx_content_type: overview
 weight: 1
 layout: list
 meta:
@@ -31,6 +31,12 @@ Cloudflare Zero Trust replaces legacy security perimeters with our global edge, 
 * Execute all browser code in the cloud
 * Mitigate the impact of attacks
 * Seamless, lightning-fast end user experience
+
+**A Cloud Access Security Broker to safeguard data in the cloud.**
+
+* Protect users and sensitive data at rest in SaaS applications
+* Detect insider threats and unsanctioned application usage, or Shadow IT
+* Ensure best practices to prevent data leaks and compliance violations
 
 ![](/cloudflare-one/static/documentation/teams-no-background.png)
 
