@@ -5449,4 +5449,6 @@ pre {
 .DocsMarkdown--feature {
 }
 .DocsMarkdown--feature-button {
+  display: flex;
+  justify-content: flex-end;
 }

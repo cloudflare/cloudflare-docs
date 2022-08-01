@@ -19,7 +19,7 @@ These logs are helpful for debugging, identifying configuration adjustments, and
 
 ---
 
-## Features
+## Features (WIP)
 
 {{<feature header="Logpush" href="/logs/get-started/">}}
 

@@ -14,9 +14,10 @@
   <div class="DocsMarkdown--feature">{{- .Page.RenderString .Inner -}}</div>
   <div class="DocsMarkdown--feature-button">
     <a
-      class="Button Button-is-docs-secondary DocsMarkdown--link-content"
+      class="Button Button-is-docs-primary DocsMarkdown--link-content"
       href="{{ $url }}"
-      >Use {{ $header }}</a
+      >Use {{ $header }} {{- if strings.HasPrefix $url "http" -}} {{-
+      partialCached "external.icon" . -}} {{- end -}}</a
     >
   </div>
 </div>
