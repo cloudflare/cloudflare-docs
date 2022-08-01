@@ -18,7 +18,7 @@
             </div>
           </a>
         </div>
-
+        {{- if eq .Page.RelPermalink "/search/" -}}
         <div class="SiteHeader--search CoveoSearchInterface">
           <div class="SiteSearch">
             <div class="SiteSearch--input-wrapper">
@@ -42,6 +42,9 @@
             </div>
           </div>
         </div>
+        {{- else -}}
+        {{- partial "topbar.search" . -}}
+        {{- end -}}
 
         <div class="SiteHeader--nav">
           <a class="SiteHeader--nav-link" href="/products/"><span>Products</span></a>
