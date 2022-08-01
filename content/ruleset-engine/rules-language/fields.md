@@ -951,7 +951,7 @@ The Cloudflare Rules language supports these HTTP header fields:
 
 {{<Aside type="note">}}
 
-Access to HTTP body is an add-on product of the Cloudflare Enterprise plan.
+Access to HTTP request body fields requires a Cloudflare Enterprise plan, except for the `http.request.body.mime` field.
 
 {{</Aside>}}
 
