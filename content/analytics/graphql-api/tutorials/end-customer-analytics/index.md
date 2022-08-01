@@ -1,6 +1,6 @@
 ---
 pcx-content-type: tutorial
-title: Querying End Customer Analytics with GraphQL
+title: Querying HTTP events by hostname with GraphQL
 ---
  
 # Querying HTTP events by hostname with GraphQL
