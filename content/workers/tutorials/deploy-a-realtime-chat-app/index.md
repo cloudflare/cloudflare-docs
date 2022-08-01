@@ -2,7 +2,7 @@
 updated: 2022-07-21
 difficulty: Intermediate
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Deploy a real-time chat application
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Attack coverage
-pcx-content-type: reference
+pcx_content_type: reference
 type: overview
 weight: 3
 layout: list

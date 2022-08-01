@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Control origin access
 weight: 8
 ---
@@ -140,5 +140,5 @@ For more information, refer to:
 
 - [AWS docs](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html)
 - [Azure docs](https://docs.microsoft.com/en-us/rest/api/storageservices/List-Containers2#request-headers)
-- [Cloudflare Zero Trust docs](https://developers.cloudflare.com/cloudflare-one/identity/service-tokens/)
+- [Cloudflare Zero Trust docs](/cloudflare-one/identity/service-tokens/)
 - [SecureAuth docs](https://docs.secureauth.com/2104/en/authentication-api-guide.html)

@@ -1,6 +1,6 @@
 ---
 title: Using Wrangler (Command Line Interface)
-pcx-content-type: reference
+pcx_content_type: reference
 type: example
 summary: How to manage Pub/Sub with Wrangler, the Cloudflare CLI.
 ---

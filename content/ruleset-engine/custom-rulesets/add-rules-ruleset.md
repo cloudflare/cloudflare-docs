@@ -1,6 +1,6 @@
 ---
 title: Add rules to a custom ruleset
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 3
 ---
 

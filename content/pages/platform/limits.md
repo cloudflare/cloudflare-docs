@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Limits
 ---
 
@@ -43,6 +43,6 @@ Your Pages site can be managed by an unlimited number of users via the Cloudflar
 
 ## Sites
 
-Cloudflare Pages supports deploying 100 sites to your account. If you need to raise this limit, contact your Cloudfalre account team.
+Cloudflare Pages supports deploying 100 sites to your account. If you need to raise this limit, contact your Cloudflare account team.
 
 In order to protect against abuse of the service, Cloudflare may temporarily disable your ability to create new Pages projects, if you are deploying a large number of applications in a short amount of time. Email workers-support@cloudflare.com if you need this restriction removed.

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Ecommerce
 weight: 6
 meta:
@@ -21,14 +21,14 @@ Right now, Zaraz is compatible with Google Analytics 3 (Universal Analytics), Go
 You do not need to map ecommerce events to triggers. Zaraz will automatically forward data using the right format to the tools with ecommerce support.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and website.
-2. Click **Zaraz** > **Settings**.
+2. Select **Zaraz** > **Settings**.
 3. Enable **Ecommerce tracking**.
-4. Click **Save**.
+4. Select **Save**.
 5. Go to **Zaraz** > **Tools**.
-6. Locate the tool you want to use with ecommerce tracking and click **Edit**.
-7. Click **Settings**.
+6. Locate the tool you want to use with ecommerce tracking and select **Edit**.
+7. Select **Settings**.
 8. Under **Advanced**, enable **Ecommerce tracking**.
-9. Click **Save**.
+9. Select **Save**.
 
 ## Add ecommerce tracking to your website
 

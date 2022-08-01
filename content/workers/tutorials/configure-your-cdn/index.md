@@ -2,7 +2,7 @@
 updated: 2020-04-15
 difficulty: Beginner
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Configure your CDN
 layout: single
 ---

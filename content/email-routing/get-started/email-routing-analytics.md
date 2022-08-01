@@ -1,6 +1,6 @@
 ---
 title: Analytics
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 3
 meta:
     title: Email Routing analytics
@@ -16,4 +16,4 @@ In Email Routing metrics you can check metrics related the number of emails rece
 
 ## Email routing logs
 
-This section allows you to sort through emails received, and check Email Routing actions - for example, `Forwarded`, `Dropped`, or `Rejected`. Click a specific email to expand its details and check information regarding the [SPF](https://datatracker.ietf.org/doc/html/rfc7208), [DKIM](https://datatracker.ietf.org/doc/html/rfc6376), and [DMARC](https://datatracker.ietf.org/doc/html/rfc7489) statuses. Depending on the information shown, you can opt to mark an email as spam or block the sender.
+This section allows you to sort through emails received, and check Email Routing actions - for example, `Forwarded`, `Dropped`, or `Rejected`. Select a specific email to expand its details and check information regarding the [SPF](https://datatracker.ietf.org/doc/html/rfc7208), [DKIM](https://datatracker.ietf.org/doc/html/rfc6376), and [DMARC](https://datatracker.ietf.org/doc/html/rfc7489) statuses. Depending on the information shown, you can opt to mark an email as spam or block the sender.

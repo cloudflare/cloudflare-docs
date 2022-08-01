@@ -1,6 +1,6 @@
 ---
 title: Available fields and functions
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 3
 meta:
   title: Available fields and functions for HTTP response header modification

@@ -1,6 +1,6 @@
 ---
 weight: 5
-pcx-content-type: navigation
+pcx_content_type: navigation
 title: Other ways to use 1.1.1.1
 ---
 

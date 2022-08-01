@@ -1,5 +1,5 @@
 ---
-pcx-content-type: content
+pcx_content_type: content
 title: Early Hints for SaaS
 weight: 3
 ---

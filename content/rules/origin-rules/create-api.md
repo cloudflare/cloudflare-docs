@@ -1,6 +1,6 @@
 ---
 title: Create a rule via API
-pcx-content-type: how-to
+pcx_content_type: how-to
 type: overview
 weight: 4
 layout: list

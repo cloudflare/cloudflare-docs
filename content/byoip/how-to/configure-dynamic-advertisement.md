@@ -1,6 +1,6 @@
 ---
 title: Configure dynamic advertisement
-pcx-content-type: how-to
+pcx_content_type: how-to
 ---
 
 # Configure dynamic advertisement

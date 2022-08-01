@@ -2,7 +2,7 @@
 updated: 2020-08-25
 difficulty: Beginner
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: GitHub SMS notifications using Twilio
 layout: single
 ---

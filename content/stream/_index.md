@@ -1,6 +1,6 @@
 ---
 title: Getting started
-pcx-content-type: overview
+pcx_content_type: overview
 weight: 1
 meta:
   title: Cloudflare Stream

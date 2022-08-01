@@ -5,7 +5,7 @@ summary: Sign and verify a request using the HMAC and SHA-256 algorithms or
 tags:
   - Security
   - WebCrypto
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Sign requests
 weight: 1001
 layout: example

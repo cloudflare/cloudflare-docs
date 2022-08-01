@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Tunnel availability and failover
 layout: single
 weight: 11

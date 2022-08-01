@@ -1,6 +1,6 @@
 ---
 title: Generate a key pair
-pcx-content-type: how-to
+pcx_content_type: how-to
 type: overview
 weight: 2
 layout: list

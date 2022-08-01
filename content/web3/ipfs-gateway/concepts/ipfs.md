@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Interplanetary File System (IPFS)
 weight: 1
 ---

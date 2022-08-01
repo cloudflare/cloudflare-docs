@@ -50,8 +50,8 @@
         </div>
 
         <div class="SiteHeader--nav">
-          <a class="SiteHeader--nav-link" href="/docs"><span>Docs</span></a>
-          <a class="SiteHeader--nav-link" href="/sponsorships"><span>Sponsorships</span></a>
+          <a class="SiteHeader--nav-link" href="/products/"><span>Products</span></a>
+          <a class="SiteHeader--nav-link" href="/sponsorships/"><span>Sponsorships</span></a>
           <a class="SiteHeader--nav-link" href="https://cloudflare.github.io"><span>Open Source</span></a>
           <a class="SiteHeader--nav-link" href="https://blog.cloudflare.com/serverlist/"><span>Newsletter</span></a>
         </div>
@@ -61,16 +61,24 @@
         </div>
       </div>
 
+      {{ if not .IsHome }}
       <div class="SiteHeader---shadow"></div>
       <div class="SiteHeader---shadow-cover"></div>
+      {{ end }}
 
       <main class="DocsBody">
+        {{ if .IsHome }}
+        <div class="HeroImage">
+        {{ end }}
         <div id="docs-content" data-reach-skip-nav-content></div>
         <div class="DocsContent" page-type="developers-site">
           <article class="DocsMarkdown">
             {{- .Content -}}
           </article>
         </div>
+      {{ if .IsHome }}
+      </div>
+      {{ end }}
       </main>
     </div>
 

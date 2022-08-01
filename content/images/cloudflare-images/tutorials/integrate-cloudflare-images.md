@@ -2,7 +2,7 @@
 updated: 2022-05-11
 difficulty: Intermediate
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Integrate Cloudflare Images on your website
 ---
 # Integrate Cloudflare Images on your website
@@ -36,9 +36,9 @@ The demo website we are going to use for this tutorial is not (yet) using Cloudf
 
 ![The demo website has lots of thumbnail images of cakes.](/images/static/tutorials/integrate-cloudflare-images/step-01-cakes.jpg)
 
-Clicking on an image displays a bigger version of it, as well as its URL, real size and display size.
+Selecting an image displays a bigger version of it, as well as its URL, real size and display size.
 
-![Clicking the thumnail shows a bigger version of the image, and its real size.](/images/static/tutorials/integrate-cloudflare-images/step-01-cake.jpg)
+![Selecting the thumnail shows a bigger version of the image, and its real size.](/images/static/tutorials/integrate-cloudflare-images/step-01-cake.jpg)
 
 On this example, the image was served with a very high-resolution of 4288x2848 pixels, but is displayed at a much lower resolution. This means most of the pixels we downloaded were wasted upon display.
 
@@ -202,7 +202,7 @@ Here is the relevant extract of this file (edited for brevity):
 
 This configuration provides an `image_url` function that is used when building the HTML of the website to generate our image URLs. In this case, the images are also served by Cloudflare Images on the default delivery domain `https://imagedelivery.net`.
 
-Once deployed, your website will have [much smaller thumbnails](https://imagejam.net/step-2/), all resized and optimized by Cloudflare Images. Clicking on an image, will show that, as expected, they are being served by Cloudflare Images. Their URL will be similar to `https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
+Once deployed, your website will have [much smaller thumbnails](https://imagejam.net/step-2/), all resized and optimized by Cloudflare Images. Selecting an image, will show that, as expected, they are being served by Cloudflare Images. Their URL will be similar to `https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
 
 ![The URL for the image shows it's being served by Cloudflare images](/images/static/tutorials/integrate-cloudflare-images/step-02-cake.jpg)
 
@@ -248,7 +248,7 @@ Here is the relevant extract of this file (edited for brevity):
 },
 ```
 
-Once deployed, every image will be served from the custom domain. You can check this by [browsing the cake gallery](https://imagejam.net/step-3/cakes/) page for step 3. Clicking any image will show that its URL is as expected `https://imagejam.net/cdn-cgi/imagedelivery/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
+Once deployed, every image will be served from the custom domain. You can check this by [browsing the cake gallery](https://imagejam.net/step-3/cakes/) page for step 3. Selecting any image will show that its URL is as expected `https://imagejam.net/cdn-cgi/imagedelivery/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
 
 ![The URL for the image shows that it is being served from a custom domain](/images/static/tutorials/integrate-cloudflare-images/step-03-cake.jpg)
 

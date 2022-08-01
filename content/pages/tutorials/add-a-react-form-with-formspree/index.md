@@ -2,7 +2,7 @@
 updated: 2021-11-30
 difficulty: Beginner
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 layout: single
 title: Add a React form with Formspree
 ---

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Transfer domain out from Cloudflare
 meta:
     title: Transfer domain from Cloudflare to another registrar

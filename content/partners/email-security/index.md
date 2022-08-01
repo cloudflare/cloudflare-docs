@@ -1,6 +1,6 @@
 ---
 title: Area 1 Email Security
-pcx-content-type: navigation
+pcx_content_type: navigation
 weight: 4
 ---
 

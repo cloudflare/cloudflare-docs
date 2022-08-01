@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Delete variants
 weight: 6
 ---
@@ -17,8 +17,8 @@ Deleting a variant is a global action that will affect other images that contain
 ## Delete a variant using the dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Click **Images** > **Variants**.
-3. Find the variant you want to remove and click **Delete**.
+2. Select **Images** > **Variants**.
+3. Find the variant you want to remove and select **Delete**.
 
 {{<Aside type="note" header="Note">}}
 

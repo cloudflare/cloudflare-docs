@@ -1,7 +1,7 @@
 ---
-title: Set up bucket for PCAPs
-pcx-content-type: how-to
 weight: 4
+title: PCAPs bucket setup
+pcx_content_type: how-to
 ---
 
 # Set up a bucket for full packet captures
