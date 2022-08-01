@@ -3,6 +3,7 @@ title: Tutorials
 type: home
 layout: home
 ---
+<h1 style="width:100%;text-align:center;padding-bottom:1em;">Tutorials</h1>
 <noscript>
   <h2>Tutorials</h2>
   <p>
@@ -10,78 +11,28 @@ layout: home
   </p>
 </noscript>
 <div id="searchresults" class="CoveoSearchInterface" data-enable-history="true">
-  <script class="CoveoPipelineContext" type="text/context"></script>
   <div class="CoveoFolding"></div>
-  <div class="CoveoAnalytics" data-search-hub="Developer_docs"></div>
-  <!-- empty tab section
-  <div class="coveo-tab-section"></div>
-  -->
-  <div class="coveo-search-section">
-    <div class="CoveoSearchbox" data-enable-omnibox="true"></div>
-  </div>
+  <div class="CoveoAnalytics" data-search-hub="Docs_Tutorials"></div>
   <div class="coveo-main-section">
     <div class="coveo-facet-column">
       <div class="CoveoDynamicFacetManager">
-        <div class="CoveoDynamicFacet" data-title="Source" data-field="@customer_facing_source" data-id="source" data-number-of-values="" data-sort-criteria="score"></div>
-        <div class="CoveoDynamicFacet" data-title="Product" data-field="@product" data-number-of-values="5" data-sort-criteria="occurrences"></div>
-        <div class="CoveoDynamicFacet" data-field="@language" data-number-of-values="" data-title="Language" data-sort-criteria="score"></div>
+        <div class="CoveoDynamicFacet" data-title="Product" data-field="@product" data-number-of-values="10" data-sort-criteria="occurrences" data-enable-collapse='false'></div>
       </div>
     </div>
     <div class="coveo-results-column">
-      <div class="CoveoShareQuery"></div>
-      <div class="CoveoPreferencesPanel">
-        <div class="CoveoResultsPreferences"></div>
-        <div class="CoveoResultsFiltersPreferences"></div>
-      </div>
-      <div class="CoveoTriggers"></div>
-      <div class="CoveoBreadcrumb"></div>
-      <div class="CoveoDidYouMean"></div>
-      <div class="coveo-results-header">
-        <div class="coveo-summary-section">
-          <span class="CoveoQuerySummary"><div class="coveo-show-if-no-results"></div></span>
-          <span class="CoveoQueryDuration"></span>
-        </div>
-        <div class="coveo-result-layout-section">
-          <span class="CoveoResultLayout"></span>
-        </div>
-        <div class="coveo-sort-section">
-        </div>
-      </div>
-      <div class="CoveoHiddenQuery"></div>
       <div class="CoveoErrorReport" data-pop-up="false"></div>
-      <div class="CoveoResultList" data-layout="list" data-wait-animation="fade" data-auto-select-fields-to-include="true">
-        <script id="Default" class="result-template" type="text/html" data-layout="list">
+      <div class="CoveoResultList" data-layout="card" data-wait-animation="fade">
+        <script id="Default" class="result-template" type="text/html">
           <div class="coveo-result-frame">
-            <div class="coveo-result-cell" style="vertical-align: top;padding-left: 16px;">
+            <div class="coveo-result-row" style="margin-top:0;">
+            <div class="coveo-result-cell" style="Wvertical-align:top;width:100%;text-align:center;font-size:1.5em;">
+              //   Tutorial   //
+              </div>
+              </div>
               <div class="coveo-result-row" style="margin-top:0;">
                 <div class="coveo-result-cell" style="vertical-align:top;font-size:16px;" role="heading" aria-level="2">
-                  <a class="CoveoResultLink"></a>
+                  <a class="CoveoResultLink" data-always-open-in-new-window='true' data-field="@title"></a>
                 </div>
-                <div class="coveo-result-cell" style="width:120px;text-align:right;font-size:12px">
-                  <div class="coveo-result-row">
-                  </div>
-                </div>
-              </div>
-              <div class="coveo-result-row" style="margin-top:10px;">
-                <div class="coveo-result-cell">
-                  <span class="CoveoExcerpt"></span>
-                </div>
-              </div>
-              <div class="coveo-result-row" style="margin-top:10px;">
-                <div class="coveo-result-cell">
-                  <span class="CoveoFieldValue" data-field="@customer_facing_source" data-text-caption="Source:"></span>
-                  <span class="CoveoFieldValue" data-field="@product" data-split-values="true" data-text-caption="Product:"></span>
-                  <span class="CoveoFieldValue" data-field="@language" data-text-caption="Language:"></span>
-                </div>
-              </div>
-              <div class="coveo-result-row" style="margin-top:10px;">
-                <div class="coveo-result-cell">
-                  <div class="CoveoPrintableUri"></div>
-                </div>
-              </div>
-              <div class="coveo-result-row">
-                <div class="coveo-result-cell">
-                  <div class="CoveoMissingTerms"></div>
                 </div>
               </div>
             </div>
