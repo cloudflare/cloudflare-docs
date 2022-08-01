@@ -258,7 +258,7 @@ App Workers do not count towards this limit.
 
 Workers KV supports:
 
-- Up to 100 Namespaces per account
+- Up to 100 namespaces per account
 - Unlimited keys per namespace
 - Unlimited storage per namespace (except on the free tier, which is limited to 1 GB total across all namespaces in an account)
 - Keys of up to 512 bytes
