@@ -20,10 +20,13 @@ Granular bot scores are only available to Enterprise customers who have purchase
 
 Customers with a Pro plan or higher can automatically see bot traffic divided into groups by going to **Security** > **Bots**.
 
-- **Automated**: Bot scores of 1.
-- **Likely automated**: Bots scores of 2 through 29.
-- **Likely human**: Bot scores of 30 through 99.
-- **Verified bot**: Non-malicious automated traffic (used to power search engines and other applications).
+| Category | Range |
+| ---- | ---- |
+| **Not computed** | Bot scores of 0. |
+| **Automated** | Bot scores of 1. |
+| **Likely automated** | Bot scores of 2 through 29. |
+| **Likely human** | Bot scores of 30 through 99. |
+| **Verified bot** | Non-malicious automated traffic (used to power search engines and other applications). |
 
 ## How Cloudflare generates bot scores
 
