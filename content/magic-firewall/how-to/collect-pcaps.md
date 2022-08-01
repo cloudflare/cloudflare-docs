@@ -6,7 +6,7 @@ weight: 5
 
 # Collect packet captures (PCAPs)
 
-After a packet capture is requested and the capture is collected, the output is contained within one or more files in PCAP  file format. Before starting a `full` type packet capture, you must first follow instructions for [configuring a bucket](../pcaps-bucket-setup).
+After a packet capture is requested and the capture is collected, the output is contained within one or more files in PCAP file format. Before starting a `full` type packet capture, you must first follow instructions for [configuring a bucket](../pcaps-bucket-setup).
 
 {{<Aside>}}
 
