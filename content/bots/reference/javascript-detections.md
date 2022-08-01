@@ -8,7 +8,7 @@ layout: list
 
 # JavaScript detections
 
-Cloudflare's bot products include JavaScript detections via a lightweight, invisible code injection that honors Cloudflare’s [strict privacy standards](https://www.cloudflare.com/privacypolicy/). A small amount of JavaScript is injected into client devices using [Google’s Picasso fingerprinting technique](https://research.google/pubs/pub45581/). Picasso results are factored into bot scores and help Cloudflare classify traffic as automated or human.
+Cloudflare's bot products include JavaScript detections via a lightweight, invisible code injection that honors Cloudflare’s [strict privacy standards](https://www.cloudflare.com/privacypolicy/). A small amount of JavaScript is injected into client devices using [Google’s Picasso fingerprinting technique](https://research.google/pubs/pub45581/). Picasso results are factored into bot scores and help Cloudflare classify traffic as automated or human.  `BotScoreSrc: Not Computed` and a score of 0 are relevant to Picasso JavaScript Fingerprinting requests. These are exempt from being blocked by any firewall rules. 
 
 This detection technique gathers general data about the machines reaching Cloudflare. For example, Cloudflare might learn that a particular user is accessing Cloudflare via Google Chrome on a MacBook Pro. Because there are millions of people using Google Chrome on a MacBook Pro, Cloudflare cannot identify specific individuals. Cloudflare also takes steps to anonymize and phase out data for added privacy.
 
