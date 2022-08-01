@@ -12,6 +12,26 @@ Each variant has several properties, including the width and height of resized i
 
 ![Configure variants in Cloudflare Images](/images/static/variants.png)
 
+## How to resize an image
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Select **Images** > **Variants**.
+3. Name your variant and select **Add New Variant**.
+4. Define variables for your new variant, such as resizing options, type of fit and what do to with metadata.
+
+### Resize via API
+
+You can also create variants via API:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/variants" \
+  -H "Authorization: Bearer <API_TOKEN>" \     
+  -H "Content-Type: application/json" \
+  --data '{"id":"<NAME_OF_THE_VARIANT>","options":{"fit":"scale-down","metadata":"none","width":1366,"height":768},"neverRequireSignedURLs":true}
+```
+
+Refer to the [API documentation](https://api.cloudflare.com/#cloudflare-images-variants-properties) for more information regarding creating variants via API.
+
 ## Fit options
 
 The **Fit** property describes how the width and height dimensions should be interpreted. The chart below describes each of the options:
@@ -38,24 +58,4 @@ Variants allow you to choose what to do with your image's metadata information, 
 
 ## Override image-level access
 
-Selecting the **Always allow public access** option will make a particular variant always publicly accessible, even when [making images private](/images/cloudflare-images/make-an-image-private/). 
-
-## How to resize an image
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Select **Images** > **Variants**.
-3. Name your variant and select **Add New Variant**.
-4. Define variables for your new variant, such as resizing options, type of fit and what do to with metadata.
-
-### Resize via API
-
-You can also create variants via API:
-
-```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/variants" \
-  -H "Authorization: Bearer <API_TOKEN>" \     
-  -H "Content-Type: application/json" \
-  --data '{"id":"<NAME_OF_THE_VARIANT>","options":{"fit":"scale-down","metadata":"none","width":1366,"height":768},"neverRequireSignedURLs":true}
-```
-
-Refer to the [API documentation](https://api.cloudflare.com/#cloudflare-images-variants-properties) for more information regarding creating variants via API.
+Selecting the **Always allow public access** option will make a particular variant always publicly accessible, even when [making images private](/images/cloudflare-images/make-an-image-private/).
