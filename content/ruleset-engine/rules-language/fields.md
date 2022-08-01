@@ -1065,6 +1065,18 @@ The Cloudflare Rules language supports these HTTP body fields:
          </p>
       </td>
     </tr>
+    <tr id="field-http-request-body-mime">
+      <td valign="top"><code>http.request.body.mime</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+        <p>The MIME type of the request detected from the request body.
+        </p>
+        <p>Supports the most common MIME types of the following general categories: video, audio, image, application, text.
+        </p>
+        <p>Example:
+        <br /><code class="InlineCode">image/jpeg</code>
+        </p>
+      </td>
+    </tr>
   </tbody>
 </table>
 
