@@ -21,7 +21,7 @@ Currently, when a packet capture is requested, packets flowing at the edge throu
 Cloudflare supports two types of packet captures:
 
 - **Simple**: Simple packets are best for debugging and providing a global picture across all data centers. Simple packets generate single, smaller files and only contain the first 160 bytes of the payload. Sampled packets are collected across all edge metals to build a PCAP file.
-- **Full**: Full packets are best for targeted data collection with a detailed view into a single data center. Full packets generate multiple large files, and they are captured within a given point-of-presence or data center and sent to either a GCP or AWS bucket specified by the user. T
+- **Full**: Full packets are best for targeted data collection with a detailed view into a single data center. Full packets generate multiple large files, and they are captured within a given data center and sent to either a GCP or AWS bucket specified by the user.
 
 <details>
 <summary>
@@ -29,11 +29,11 @@ Cloudflare supports two types of packet captures:
 </summary>
  <div class="special-class" markdown="1">
 
-The PCAPs API needs both `system` and `type` to be specified in order to start a capture. A PCAP's `system` is the product or logical subsystem where packets are captured, and a PCAP's `type` is how the captured packets are built into a PCAP file.
+The PCAPs API needs both `system` and `type` to be specified to start a capture. A PCAP's `system` is the product or logical subsystem where packets are captured, and a PCAP's `type` is how the captured packets are built into a PCAP file.
 
 To create a simple PCAP request, send a JSON body with the required parameter listed at [Create simple PCAP request](https://api.cloudflare.com/#magic-pcap-collection-create-simple-pcap-request).
 
-For full PCAP requests, refer to the required parameters listed at [Create full PCAP requests](https://api.cloudflare.com/#magic-pcap-collection-create-full-pcap-request). Note that full packet captures require two additional parameters than simple packets.
+For full PCAP requests, refer to the required parameters listed at [Create full PCAP requests](https://api.cloudflare.com/#magic-pcap-collection-create-full-pcap-request). Note that full packet captures require two more parameters than simple packets.
 
 The full PCAP request endpoint also contains optional fields you can use to limit the amount of packets captured. Both full and simple packet requests contain an optional `filter_v1` parameter you can use to filter packets by IPv4 Source address, for example. For a full list of the filter options, refer to the parameter lists above.
 
@@ -159,7 +159,7 @@ header: Simple PCAP example response
 4. From **Packet captures - Capture configuration**, choose a capture type and select **Next**.
 5. Fill out the required fields to begin the capture and then select **Start**.
 
-The main **Packet captures** page displays and displays a list of captures.
+The main **Packet captures** page displays a list of captures.
 </div>
 </details>
 
