@@ -1075,6 +1075,8 @@ The Cloudflare Rules language supports these HTTP body fields:
         <p>Example:
         <br /><code class="InlineCode">image/jpeg</code>
         </p>
+        <p>This field is available on all Cloudflare plans.
+        </p>
       </td>
     </tr>
   </tbody>
