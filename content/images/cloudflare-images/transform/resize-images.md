@@ -38,13 +38,13 @@ Variants allow you to choose what to do with your image's metadata information, 
 
 ## Override image-level access
 
-Clicking the **Always allow public access** option will make a particular variant always publicly accessible, even when [making images private](/images/cloudflare-images/make-an-image-private/). 
+Selecting the **Always allow public access** option will make a particular variant always publicly accessible, even when [making images private](/images/cloudflare-images/make-an-image-private/). 
 
 ## How to resize an image
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Click **Images** > **Variants**.
-3. Name your variant and click **Add New Variant**.
+2. Select **Images** > **Variants**.
+3. Name your variant and select **Add New Variant**.
 4. Define variables for your new variant, such as resizing options, type of fit and what do to with metadata.
 
 ### Resize via API

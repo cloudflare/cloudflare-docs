@@ -10,7 +10,7 @@ meta:
 
 Email Routing's Settings section allows you to lock or unlock your DNS records, and also view a list of the DNS records needed for Email Routing to work. If the DNS records in your account are correctly configured, Email Routing will show you a green `Email DNS records configured` message. 
 
-Click **View DNS records** for a list of the required `MX` and sender policy framework (SPF) records Email Routing is using. If you are having trouble with your account's DNS records, refer to the [Troubleshooting](/email-routing/troubleshooting/) section.
+Select **View DNS records** for a list of the required `MX` and sender policy framework (SPF) records Email Routing is using. If you are having trouble with your account's DNS records, refer to the [Troubleshooting](/email-routing/troubleshooting/) section.
 
 ## Start disabling
 

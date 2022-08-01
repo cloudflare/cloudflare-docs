@@ -13,4 +13,4 @@ meta:
 3. Navigate to the virtual network associated with your virtual machine (VM).
 4. Select **DNS Servers** > **Custom**, and add two entries:
     {{<render file="_ipv4.md">}}
-5. Click **Save**.
+5. Select **Save**.

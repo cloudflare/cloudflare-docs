@@ -13,10 +13,10 @@ Refer to [Resize images](/images/cloudflare-images/transform/resize-images/) to 
 To apply blur to an image:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Click **Images**.
-3. In the Images dashboard, click **Variants**.
-4. Find the variant you want to apply blur to, and click **Edit** > **Customization Options**.
+2. Select **Images**.
+3. In the Images dashboard, select **Variants**.
+4. Find the variant you want to apply blur to, and select **Edit** > **Customization Options**.
 5. Use the slider to adjust the blurring effect. You can use the preview image to see how strong the blurring effect will be.
-6. Click **Save**.
+6. Select **Save**.
 
 You now have a variant with a blurring effect applied to your image.
