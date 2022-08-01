@@ -7,7 +7,7 @@ title: Querying HTTP events by hostname with GraphQL
  
 In this example, we are going to use the GraphQL Analytics API to to query aggregated metrics about HTTP events by hostname over a specific period of time.
  
-The following API call will request the number of visits and edge response bytes for the custom hostname `hostname.example.com` over a four day period. Be sure to replace `CLOUDFLARE_ZONE_ID` AND `CLOUDFLARE_API_TOKEN` with your email and API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
+The following API call will request the number of visits and edge response bytes for the custom hostname `hostname.example.com` over a four day period. Be sure to replace `CLOUDFLARE_ZONE_ID` AND `CLOUDFLARE_API_TOKEN` with your zone ID and API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
  
 ## API Call
  
