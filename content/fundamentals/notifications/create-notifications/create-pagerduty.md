@@ -30,7 +30,7 @@ According to PagerDuty, you need an account with the following permissions to ad
 3. Select **Destinations** on the left side of your dashboard.
 4. In the **Connected notification services** card, select **Connect**.
 5. Log in to your PagerDuty account to connect it to your Cloudflare account.
-6. Select the services you want to use and select **Connect**.
+6. Choose the services you want to use and select **Connect**.
 7. The browser will navigate back to your Cloudflare dashboard. Select **Continue**.
 
 Your new connected PagerDuty will appear in the **Connected notification services** card.
