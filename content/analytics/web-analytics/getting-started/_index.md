@@ -16,7 +16,7 @@ meta:
 3. In **Set up hostname**, write your website's hostname.
 4. Select the message box that appears to choose the hostname you have input and select **Done**.
 5. Copy the JS snippet from **Manage site**. This is also where you can later edit the hostname you have just added.
-6. (Optional) select **View Analytics sites** to go back on the Web Analytics interface. If you prefer to continue setting up Web Analytics website, continue reading.
+6. (Optional) Select **View Analytics sites** to go back on the Web Analytics interface. If you prefer to continue setting up Web Analytics website, continue reading.
 7. Add the JS snippet to any of your website’s HTML pages before the ending body tag.
 
 Web analytics is now set up on your website, but it may take a few minutes for Web Analytics data to appear.
