@@ -951,7 +951,7 @@ The Cloudflare Rules language supports these HTTP header fields:
 
 {{<Aside type="note">}}
 
-Access to HTTP body is an add-on product of the Cloudflare Enterprise plan.
+Access to HTTP request body fields requires a Cloudflare Enterprise plan, except for the `http.request.body.mime` field.
 
 {{</Aside>}}
 
@@ -1063,6 +1063,20 @@ The Cloudflare Rules language supports these HTTP body fields:
          <p>Example value:
          <br /><code class="InlineCode">["admin"]</code>
          </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-body-mime">
+      <td valign="top"><code>http.request.body.mime</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+        <p>The MIME type of the request detected from the request body.
+        </p>
+        <p>Supports the most common MIME types of the following general categories: video, audio, image, application, text.
+        </p>
+        <p>Example:
+        <br /><code class="InlineCode">image/jpeg</code>
+        </p>
+        <p>This field is available on all Cloudflare plans.
+        </p>
       </td>
     </tr>
   </tbody>
