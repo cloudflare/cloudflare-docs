@@ -5439,3 +5439,14 @@ pre {
 [theme="dark"] .DocsMarkdown--resource:hover {
   background-color: #2f3133;
 }
+
+.DocsMarkdown--feature-group {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 1em;
+  align-items: center;
+}
+.DocsMarkdown--feature {
+}
+.DocsMarkdown--feature-button {
+}

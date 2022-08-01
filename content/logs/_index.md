@@ -19,17 +19,21 @@ These logs are helpful for debugging, identifying configuration adjustments, and
 
 ---
 
-## Features (WIP)
+## Features
 
-### Logpush
+{{<feature header="Logpush" href="/logs/get-started/">}}
 
 Push your request or event logs to your cloud service provider using Logpush, which can be configured via the Cloudflare dashboard or API.
 
-### Logpull
+{{</feature>}}
+
+{{<feature header="Logpull" href="/logs/logpull/">}}
 
 See logs of HTTP requests with Logpull.
 
-Note, the data from Logpull and Logpush are exactly the same.
+Note, the data from Logpull and Logpush is exactly the same.
+
+{{</feature>}}
 
 ---
 
@@ -49,10 +53,10 @@ Note, the data from Logpull and Logpush are exactly the same.
 
 {{<resource-group>}}
 
-{{<resource header="Learning Center" href="https://www.cloudflare.com/learning/HTTP-requests" icon="">}}Learn more about logging HTTP requests{{</resource>}}
+{{<resource header="Learning Center" href="https://www.cloudflare.com/learning/HTTP-requests">}}Learn more about logging HTTP requests{{</resource>}}
 
-{{<resource header="Community Forum" href="https://community.cloudflare.com/tag/log" icon="">}}Engage with Cloudflare staff and other customers using Logs{{</resource>}}
+{{<resource header="Community Forum" href="https://community.cloudflare.com/tag/log">}}Engage with Cloudflare staff and other customers using Logs{{</resource>}}
 
-{{<resource header="Help Center" href="https://support.cloudflare.com/" icon="">}}Get answers to common questions and issues{{</resource>}}
+{{<resource header="Help Center" href="https://support.cloudflare.com/">}}Get answers to common questions and issues{{</resource>}}
 
 {{</resource-group>}}
