@@ -32,6 +32,10 @@
 <meta name="twitter:creator" content="{{ $META.author }}"/>
 <meta name="twitter:card" content="summary_large_image"/>
 
+{{- with .Context.Params.pcx_content_type -}}
+<meta name="pcx_content_type" content= "{{ . }}" />
+{{- end -}}
+
 <link rel="icon" href="/favicon-32x32.png"/>
 <link rel="canonical" href="{{ .Context.Permalink }}"/>
 <link rel="sitemap" href="/sitemap.xml" type="application/xml"/>
