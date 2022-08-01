@@ -10,11 +10,11 @@ meta:
 
 Create [different overrides](/rules/origin-rules/features/) by including different action parameters in the `action_parameters` field:
 
-Override type | Parameter to include
+Override type | What to include
 --------------|---------------------
-Host Header Override | [`host_header`](#host-header-override-parameters) (parameter)
-Resolve Override / Destination Port Override| [`origin`](#resolve-override-and-destination-port-override-parameters) (object)
-SNI Override | [`sni`](#sni-override-parameters) (object)
+Host Header Override | [`host_header` parameter](#host-header-override-parameters)
+Resolve Override / Destination Port Override| [`origin` object](#resolve-override-and-destination-port-override-parameters)
+SNI Override | [`sni` object](#sni-override-parameters)
 
 {{<Aside type="note">}}
 The same Origin Rule can have different types of overrides. Refer to [Configuring several overrides in the same rule](#configuring-several-overrides-in-the-same-rule) for a syntax example.
