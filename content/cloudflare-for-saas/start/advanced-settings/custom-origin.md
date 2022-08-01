@@ -50,7 +50,7 @@ Choose how your custom hostname populates the SNI value with SNI rewrites:
 
 * Currently, SNI Rewrite is not supported for wildcard custom hostnames. Subdomains covered by a wildcard custom hostname send the custom origin server name as the SNI value.
 
-* SNI overrides defined using an Origin Rule will take precedence over SNI rewrite options.
+* SNI overrides defined using an Origin Rule will take precedence over SNI rewrites.
 
 {{</Aside>}}
 
