@@ -1,8 +1,7 @@
 ---
 title: Add rules
+weight: 1
 pcx_content_type: how-to
-meta:
-  title: Rules
 ---
 
 # Rules
