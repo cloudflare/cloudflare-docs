@@ -16,19 +16,15 @@ These steps help you set up Centrify as your identity provider:
 
 1.  Click **Apps**.
 
-    ![Centrify Security Overview](/cloudflare-one/static/documentation/identity/centrify/centrify-1.png)
-
 1.  Click **Add Web Apps**.
 
 1.  Select the **Custom** tab and click **Add OpenID Connect**.
 
 1.  On the **Add Web App** screen click **Yes** to create an OpenID Connect application.
 
-    ![Add Web App screen](/cloudflare-one/static/documentation/identity/centrify/centrify-3.png)
-
 1.  Enter an **Application ID**.
 
-    ![Centrify Settings](/cloudflare-one/static/documentation/identity/centrify/centrify-4.png)
+    ![Centrify Settings with Application ID added](/cloudflare-one/static/documentation/identity/centrify/centrify-4.png)
 
 1.  Click **Save**.
 
@@ -40,30 +36,25 @@ These steps help you set up Centrify as your identity provider:
 
 1.  Under **Authorized Redirect URIs** click **Add**.
 
-    ![Centrify OpenID Connect](/cloudflare-one/static/documentation/identity/centrify/centrify-5.png)
-
 1.  Under **Authorized Redirect URIs** enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-1.  Click **Save**.
+    ![Centrify Trust Identity Provider Configuration with team domain and callback](/cloudflare-one/static/documentation/identity/centrify/centrify-6.png)
 
-    ![Centrify Trust](/cloudflare-one/static/documentation/identity/centrify/centrify-6.png)
+1.  Click **Save**.
 
 1.  Take note of the Client ID, Client Secret, OpenID Connect Issuer URL, and Application ID from the Settings tab.
 
          {{<Aside>}}
-
     Do not use the forward slash from the **Settings** tab.
     {{</Aside>}}
 
 1.  Navigate to the **User Access** tab.
 
 1.  Select the roles to grant access to your application.
-
-    ![Centrify User Access](/cloudflare-one/static/documentation/identity/centrify/centrify-7.png)
 
 1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
