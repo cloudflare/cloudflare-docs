@@ -85,7 +85,7 @@
   src="{{ $script.RelPermalink }}" defer
   data-token="{{ $coveo.tutorial_token }}"
   data-org="{{ $coveo.org }}"
-></script>}}
+></script>
 {{- else if $coveo -}}
   {{- partial "script" (dict "src" "search.redirect.ts" "defer" true) -}}
 {{- end -}}
