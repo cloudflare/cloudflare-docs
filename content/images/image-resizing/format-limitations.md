@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Formats and limitations
 meta:
     title: Supported formats and limitations

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Use curl to query the Analytics API
 weight: 61
 ---

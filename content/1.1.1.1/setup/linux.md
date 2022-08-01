@@ -1,6 +1,6 @@
 ---
 weight: 8
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Linux
 meta:
     title: Set up 1.1.1.1 on Linux

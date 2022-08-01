@@ -1,6 +1,6 @@
 ---
 title: Validity periods
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 8
 meta:
   title: Certificate validity periods

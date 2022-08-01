@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: 1.1.1.1 Public DNS Resolver
 ---
 

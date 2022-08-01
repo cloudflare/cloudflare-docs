@@ -1,7 +1,7 @@
 ---
 title: Using R2 in a Worker
 summary: A demo of how to use R2 in a Worker.
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 1001
 layout: example
 ---

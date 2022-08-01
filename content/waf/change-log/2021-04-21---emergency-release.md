@@ -1,7 +1,7 @@
 ---
 title: 2021-04-21 – Emergency
 type: table
-pcx-content-type: changelog
+pcx_content_type: changelog
 weight: 942
 layout: list
 meta:

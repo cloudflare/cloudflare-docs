@@ -1,5 +1,5 @@
 ---
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Adjust the sensitivity of a specific HTTP DDoS rule to Low
 weight: 6
 ---

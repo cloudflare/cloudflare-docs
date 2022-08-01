@@ -1,6 +1,6 @@
 ---
 title: File scanning
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 3
 layout: list
 ---

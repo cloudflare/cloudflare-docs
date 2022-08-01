@@ -1,6 +1,6 @@
 ---
 title: Error tokens
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 4
 meta:
   title: Custom error response tokens

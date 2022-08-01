@@ -1,6 +1,6 @@
 ---
 title: '2: User access'
-pcx-content-type: get-started
+pcx_content_type: get-started
 weight: 3
 meta:
   title: 'Step 2: User access'

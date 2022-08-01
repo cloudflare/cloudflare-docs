@@ -1,6 +1,6 @@
 ---
 title: Enable Datadog
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 59
 layout: single
 meta:

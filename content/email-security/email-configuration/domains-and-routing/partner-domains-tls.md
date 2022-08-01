@@ -1,6 +1,6 @@
 ---
 title: Partner Domains TLS
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 3
 ---
 

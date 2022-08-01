@@ -1,6 +1,6 @@
 ---
 title: Parameters
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 3
 meta:
   title: Custom error response parameters

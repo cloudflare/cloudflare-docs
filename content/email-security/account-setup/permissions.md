@@ -1,6 +1,6 @@
 ---
 title: Permissions
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 5
 ---
 

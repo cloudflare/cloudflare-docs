@@ -1,6 +1,6 @@
 ---
 weight:  1
-pcx-content-type: reference
+pcx_content_type: reference
 title: Make API requests to 1.1.1.1
 layout: single
 meta:

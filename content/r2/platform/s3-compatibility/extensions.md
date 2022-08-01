@@ -1,6 +1,6 @@
 ---
 title: Extensions
-pcx-content-type: concept
+pcx_content_type: concept
 ---
 
 # Extensions

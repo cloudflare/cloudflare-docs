@@ -1,6 +1,6 @@
 ---
 title: Update a rule in a ruleset
-pcx-content-type: reference
+pcx_content_type: reference
 type: overview
 weight: 8
 layout: list

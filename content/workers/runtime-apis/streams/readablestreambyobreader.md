@@ -1,6 +1,6 @@
 ---
 title: ReadableStream BYOBReader
-pcx-content-type: configuration
+pcx_content_type: configuration
 meta:
   title: ReadableStreamBYOBReader
 ---

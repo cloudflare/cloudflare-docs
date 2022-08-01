@@ -1,6 +1,6 @@
 ---
 title: Get started
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 1
 meta:
   title: Get started with Workers Analytics Engine

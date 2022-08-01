@@ -2,7 +2,7 @@
 updated: 2020-06-01
 difficulty: Beginner
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Deploy a React app with create‑react‑app
 layout: single
 ---

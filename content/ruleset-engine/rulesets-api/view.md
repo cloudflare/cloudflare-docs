@@ -1,6 +1,6 @@
 ---
 title: List and view rulesets
-pcx-content-type: reference
+pcx_content_type: reference
 type: overview
 weight: 4
 layout: list

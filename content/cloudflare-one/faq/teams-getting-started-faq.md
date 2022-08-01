@@ -1,5 +1,5 @@
 ---
-pcx-content-type: faq
+pcx_content_type: faq
 title: Getting started with Cloudflare Zero Trust
 weight: 2
 ---

@@ -1,6 +1,6 @@
 ---
 title: Configure BGP
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 6
 meta:
   title: Configure the BGP session

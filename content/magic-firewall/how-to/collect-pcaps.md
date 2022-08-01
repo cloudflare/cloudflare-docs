@@ -1,6 +1,6 @@
 ---
 title: Collect PCAPs
-pcx-content-type: how-to
+pcx_content_type: how-to
 meta:
   title: Packet Captures (PCAPs) API
 ---

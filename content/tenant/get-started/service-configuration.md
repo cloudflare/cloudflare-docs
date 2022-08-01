@@ -1,7 +1,7 @@
 ---
 title: '4: Service configuration'
 weight: 4
-pcx-content-type: get-started
+pcx_content_type: get-started
 meta:
   title: 'Step 4: Service configuration'
 ---

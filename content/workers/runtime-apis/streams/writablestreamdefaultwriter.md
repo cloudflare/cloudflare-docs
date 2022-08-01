@@ -1,6 +1,6 @@
 ---
 title: WritableStream DefaultWriter
-pcx-content-type: configuration
+pcx_content_type: configuration
 meta:
   title: WritableStreamDefaultWriter
 ---

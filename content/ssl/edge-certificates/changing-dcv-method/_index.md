@@ -1,6 +1,6 @@
 ---
 title: Domain Control Validation (DCV)
-pcx-content-type: concept
+pcx_content_type: concept
 layout: single
 weight: 5
 meta:
