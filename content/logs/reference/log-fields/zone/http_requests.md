@@ -18,6 +18,7 @@ The descriptions below detail the fields available for `http_requests`.
 | BotScoreSrc | Detection engine responsible for generating the Bot Score. <br />Possible values are <em>Not Computed</em> \| <em>Heuristics</em> \| <em>Machine Learning</em> \| <em>Behavioral Analysis</em> \| <em>Verified Bot</em> \| <em>JS Fingerprinting</em> \| <em>Cloudflare Service</em> | string |
 | BotTags | Type of bot traffic (if available). Refer to [Bot Tags](/bots/concepts/cloudflare-bot-tags/) for the list of potential values. Available in Logpush v2 only. | array[string] |
 | CacheCacheStatus | Cache status. <br />Possible values are <em>unknown</em> \| <em>miss</em> \| <em>expired</em> \| <em>updating</em> \| <em>stale</em> \| <em>hit</em> \| <em>ignored</em> \| <em>bypass</em> \| <em>revalidated</em> \| <em>dynamic</em> \| <em>stream_hit</em> \| <em>deferred</em> <br />"dynamic" means that a request is not eligible for cache. This can mean, for example that it was blocked by the firewall. Refer to [Cloudflare cache responses](/cache/about/default-cache-behavior/#cloudflare-cache-responses) for more details. | string |
+| CacheReserveUsed | Cache Reserve was used to serve this request. Available in Logpush v2 only. | bool |
 | CacheResponseBytes | Number of bytes returned by the cache | int |
 | CacheResponseStatus (deprecated) | HTTP status code returned by the cache to the edge. All requests (including non-cacheable ones) go through the cache. Refer also to CacheCacheStatus field. | int |
 | CacheTieredFill | Tiered Cache was used to serve this request | bool |
@@ -96,6 +97,7 @@ The descriptions below detail the fields available for `http_requests`.
 | WorkerStatus | Status returned from worker daemon | string |
 | WorkerSubrequest | Whether or not this request was a worker subrequest | bool |
 | WorkerSubrequestCount | Number of subrequests issued by a worker when handling this request | int |
+| WorkerWallTimeUs | Real-time in microseconds elapsed between start and end of worker invocation | int |
 | ZoneID | Internal zone ID | int |
 | ZoneName | The human-readable name of the zone (e.g. 'cloudflare.com'). Available in Logpush v2 only. | string |
 
