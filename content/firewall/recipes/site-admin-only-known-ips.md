@@ -22,8 +22,7 @@ To prevent attackers from successfully using a permutation of `/wp-admin/` such 
     <tr>
       <td>
         <code>
-          not (ip.src in {10.20.30.40 192.168.1.0/24} and lower(http.request.uri.path) contains
-          "/wp-admin")
+          (not ip.src in {10.20.30.40 192.168.1.0/24} and lower(http.request.uri.path) contains "/wp-admin")
         </code>
       </td>
       <td>
