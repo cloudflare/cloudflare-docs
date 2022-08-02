@@ -30,7 +30,7 @@
       location.pathname.startsWith('/tutorials')
         loadSearchResults();
     } else {
-      setTimeout(check, 25);
+      setTimeout(check, 20);
     }
   })();
 })();
