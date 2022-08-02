@@ -17,7 +17,7 @@ Each variant has several properties, including the width and height of resized i
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Select **Images** > **Variants**.
 3. Name your variant and select **Add New Variant**.
-4. Define variables for your new variant, such as resizing options, type of fit and what do to with metadata.
+4. Define variables for your new variant, such as resizing options, type of fit, and what do to with metadata.
 
 ### Resize via API
 
