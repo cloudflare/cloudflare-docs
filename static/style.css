@@ -5413,8 +5413,9 @@ pre {
 
 .DocsMarkdown--resource {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  gap: 0.5em;
+
   padding: 20px;
   line-height: 25px;
 
@@ -5428,11 +5429,21 @@ pre {
 .DocsMarkdown--resource:hover {
   background-color: var(--gray-8);
 }
+.DocsMarkdown--resource-icon {
+  height: 32px;
+  width: 32px;
+}
+.DocsMarkdown--resource-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .DocsMarkdown--resource-header {
   font-size: 20px;
   text-decoration: underline solid var(--orange);
   margin-bottom: 10px;
 }
+
 [theme="dark"] .DocsMarkdown--resource {
   background-color: #242628;
 }
