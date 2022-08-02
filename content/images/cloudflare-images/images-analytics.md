@@ -26,4 +26,4 @@ If you exceed your account's quota, you will not be able to upload more images. 
 
 If you are an Enterprise customer, contact your Customer Success Manager to increase your Cloudflare Images' quota and avoid this error. You can also [delete images](/images/cloudflare-images/transform/delete-images/) from your account.
 
-Other customers can select the **Change Subscription** button to avoid this error, or [delete images](/images/cloudflare-images/transform/delete-images/) from their account.
+Non-Enterprise customers can select **Change Subscription** to change their account type, increase their quota limit and avoid this error, or [delete images](/images/cloudflare-images/transform/delete-images/) from their account.
