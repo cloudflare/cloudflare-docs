@@ -17,7 +17,6 @@ Workers KV is an eventually consistent, global, low-latency, key-value data stor
 It is ideal for projects that require:
 
 * High volumes of reads and/or repeated reads to the same keys.
-* High request rates and work with large amounts of data.
 * Per-object time-to-live (TTL).
 * Asset storage for websites.
 
@@ -30,12 +29,11 @@ To get started with KV:
 
 ## R2 (beta)
 
-R2 is S3-compatible blob storage that allows developers to store large amounts of unstructured data without egress fees.
+R2 is S3-compatible blob storage that allows developers to store large amounts of unstructured data without egress fees associated with typical cloud storage services.
 
 It is ideal for projects that require:
 
-* Long-term storage and storage for files which are infrequently accessed.
-* Affordable and economic storage and operations.
+* Storage for files which are infrequently accessed.
 * Large object storage.
 * Strong consistency per object.
 
@@ -49,20 +47,24 @@ To get started with R2:
 
 {{<table-wrap>}}
 
-| Feature                                   | KV           | R2 (beta)    |
-| ----------------------------------------- | ------------ | ------------ |
-| Maximum upload size                       | 25 MiB       | 5 GB         |
-| Read your writes                          | No           | Yes          |
-| Cached                                    | Always       | Can be       |
-| S3-compatible API                         | No           | Yes          |
-| TTL expiration                            | Object-level | Bucket-level |
+| Feature                                       | KV           | R2 (beta)    |
+| --------------------------------------------- | ------------ | ------------ |
+| Maximum size per value                        | 25 MiB       | 5 TB         |
+| Consistency model                             | Eventual     | Strong       |
+| Cached                                        | Always       | Can be by using [Cache API](/workers/runtime-apis/cache/) in a Worker |
+| S3-compatible API                             | No           | Yes          |
+| TTL expiration                                | Object-level | Not currently available |
 | Maximum operations per second across a bucket | Unlimited    | <1000        |
 
 {{</table-wrap>}}
 
 ## Durable Objects
 
-Durable Objects provide low-latency coordination and consistent storage for the Workers platform through global uniqueness and a transactional storage API. Durable Objects are persistent Workers with consistent memory accessible from other Workers. Each Durable Object has its own consistent KV storage. With Durable Objects, you can sync writes to other storage objects such as KV or third parties.
+Durable Objects provide low-latency coordination and consistent storage for the Workers platform through global uniqueness and a transactional storage API.
+
+- Global Uniqueness guarantees that there will be a single instance of a Durable Object class with a given ID running at once, across the world. Requests for a Durable Object ID are routed by the Workers runtime to the Cloudflare data center that owns the Durable Object.
+
+- The transactional storage API provides strongly consistent key-value storage to the Durable Object. Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
 
 It is ideal for projects that require:
 
