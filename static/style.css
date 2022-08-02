@@ -5450,6 +5450,17 @@ pre {
   display: flex;
   justify-content: flex-end;
 }
+@media (max-width: 768px) {
+  .DocsMarkdown--feature-group {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-bottom: 1em;
+  }
+  .DocsMarkdown--feature-button {
+    justify-content: flex-start;
+  }
+}
+
 .DocsMarkdown--related-product {
   color: inherit;
 }
