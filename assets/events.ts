@@ -112,6 +112,7 @@ export function clipboardButton() {
     if (navigator.clipboard) {
       console.log(blocks[i]);
       let button = document.createElement("button");
+      button.className = "copyCode-button";
       button.innerText = copyButtonLabel;
       button.addEventListener("click", $clicktoClipboard);
       blocks[i].appendChild(button);
