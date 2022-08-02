@@ -1,14 +1,14 @@
 ---
-title: Storage objects guide
+title: Storage options guide
 pcx-content-type: concept
 weight: 2
 meta:
-  title: Storage objects guide
+  title: Storage options guide
 ---
 
-# Storage objects guide
+# Storage options guide
 
-The Cloudflare Workers platform provides multiple storage. This guide will inform you on which storage object is appropriate based on your project's use case.
+The Cloudflare Workers platform provides multiple storage options. This guide will inform you on which storage option is appropriate based on your project's use case.
 
 ## KV
 
@@ -68,7 +68,6 @@ It is ideal for projects that require:
 
 * Real-time collaboration (such as a chat application or a game server).
 * Consistent storage.
-* Relational storage.
 * Data locality.
 
 To get started with Durable Objects:
