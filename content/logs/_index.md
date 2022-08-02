@@ -19,7 +19,7 @@ These logs are helpful for debugging, identifying configuration adjustments, and
 
 ---
 
-## Features (WIP)
+## Features
 
 {{<feature header="Logpush" href="/logs/get-started/">}}
 
@@ -31,9 +31,9 @@ Push your request or event logs to your cloud service provider using Logpush, wh
 
 See logs of HTTP requests with Logpull.
 
-Note, the data from Logpull and Logpush is exactly the same.
-
 {{</feature>}}
+
+Note, the data from Logpull and Logpush is exactly the same.
 
 ---
 
@@ -60,3 +60,5 @@ Provides privacy-first analytics without changing your DNS or using Cloudflare's
 {{<resource header="Help Center" href="https://support.cloudflare.com/">}}Get answers to common questions and issues{{</resource>}}
 
 {{</resource-group>}}
+
+<img src="/icons/resources/help-giving.svg">

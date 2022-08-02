@@ -11,7 +11,9 @@
   <span>{{ $header }}</span>
 </h3>
 <div class="DocsMarkdown--feature-group">
-  <div class="DocsMarkdown--feature">{{- .Page.RenderString .Inner -}}</div>
+  <div>
+    <p>{{- .Page.RenderString .Inner -}}</p>
+  </div>
   <div class="DocsMarkdown--feature-button">
     <a
       class="Button Button-is-docs-primary DocsMarkdown--link-content"
