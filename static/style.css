@@ -5440,6 +5440,7 @@ pre {
 }
 .DocsMarkdown--resource-header {
   font-size: 20px;
+  color: var(--color);
   text-decoration: underline solid var(--orange);
   margin-bottom: 10px;
 }
