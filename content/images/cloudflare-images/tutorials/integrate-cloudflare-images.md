@@ -210,7 +210,7 @@ Note as well that the displayed size now matches the real size of the image much
 
 ### Adaptive Optimized Format Delivery
 
-Another great built-in feature of Cloudflare Images is [Adaptive Optimized Format Delivery](/images/cloudflare-images/serve-images/#adaptive-optimized-format-delivery). This feature allows Cloudflare Images to automatically serve the best image format to the browser.
+Another great built-in feature of Cloudflare Images is [Adaptive Optimized Format Delivery](/images/cloudflare-images/serve-images/adaptive-images-format/). This feature allows Cloudflare Images to automatically serve the best image format to the browser.
 
 Inspecting the details of this image reveals that Cloudflare Images converted it to AVIF, shaving close to 50% in file size in the process, when compared to a JPG of the same resolution. This was made while maintaining the same quality.
 
