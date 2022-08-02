@@ -6,7 +6,7 @@ pcx_content_type: tutorial
 title: Use  to expose a Kubernetes app to the Internet
 ---
 
-# Use `cloudflared` to expose a Kubernetes app to the Internet
+# Use cloudflared to expose a Kubernetes app to the Internet
 
 You can use [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) to connect applications and servers to Cloudflare's network. Tunnel relies on a piece of software, [cloudflared](https://github.com/cloudflare/cloudflared), to create those connections.
 
