@@ -38,31 +38,3 @@ In this example:
 * `public` is the variant name.
 
 When a client requests an image, Cloudflare Images will pick the optimal format between WebP, PNG, JPEG and GIF. The format Cloudflare serves to the user is determined by client headers and the image type.
-
-## Adaptive optimized format delivery
-
-Cloudflare Images automatically serves AVIF and WebP when the browser supports these efficient image formats, regardless of the format you upload. 
-
-The first format that Cloudflare Images will try to serve is AVIF. It will fall back to WebP if the browser does not support AVIF. If the browser does not support either AVIF or WebP, Cloudflare Images will default to serving the [image format you uploaded](/images/cloudflare-images/upload-images/supported-formats/).
-
-## Serving images from custom domains
-
-Image delivery is supported from all customer domains under the same Cloudflare account. To serve images through custom domains, an image URL should be adjusted to the following format:
-
-```txt
-https://example.com/cdn-cgi/imagedelivery/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME>
-```
-
-Example with a custom domain:
-
-```txt
-https://example.com/cdn-cgi/imagedelivery/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/public
-```
-
-In this example, `<ACCOUNT_HASH>`, `<IMAGE_ID>` and `<VARIANT_NAME>` are the same, but the hostname and prefix path is different:
-
-* `example.com`: Cloudflare proxied domain under the same account as the Cloudflare Images.
-* `/cdn-cgi/imagedelivery`: Path to trigger `cdn-cgi` image proxy.
-* `ZWd9g1K7eljCn_KDTu_MWA`: The Images account hash.
-* `083eb7b2-5392-4565-b69e-aff66acddd00`: The image ID.
-* `public`: The variant name.

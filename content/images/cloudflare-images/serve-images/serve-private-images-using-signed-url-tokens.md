@@ -1,7 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Serve private images using signed URL tokens
-weight: 5
+title: Private images with tokens
+layout: single
+meta:
+  title: Serve private images using signed URL tokens
+weight: 3
 ---
 
 # Serve private images using signed URL tokens
