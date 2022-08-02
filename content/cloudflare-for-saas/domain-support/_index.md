@@ -1,7 +1,7 @@
 ---
 pcx_content_type: overview
 title: Custom domain support
-weight: 2
+weight: 3
 ---
  
 # Custom domain support
@@ -17,6 +17,6 @@ Ensure you have reviewed [Get Started with Cloudflare for SaaS](/cloudflare-for-
  
 {{<Aside type="note">}}
  
-To further customize hostname specific behavior, refer to [custom metadata](/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/).
+To further customize hostname specific behavior, refer to [custom metadata](/cloudflare-for-saas/workers-for-platforms/custom-metadata/).
  
 {{</Aside>}}
