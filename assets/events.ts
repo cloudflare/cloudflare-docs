@@ -88,6 +88,64 @@ export function copy() {
     btns[i].addEventListener("click", $copy);
 }
 
+function $clicktoClipboard(ev: MouseEvent) {
+  const button = ev.target as HTMLElement;
+  const pre = button.parentElement;
+  console.log("pre", pre);
+  if (pre) {
+    const code = pre.getElementsByTagName("code")[0];
+    const text = code.innerText;
+    if (text) {
+      try {
+        navigator.clipboard.writeText(text);
+      } catch (err) {
+        /* no support */
+      }
+    }
+  }
+}
+
+export function clipboardButton() {
+  const copyButtonLabel = "Copy Code";
+  let blocks = document.getElementsByClassName("CodeBlock");
+  for (let i = 0; i < blocks.length; i++) {
+    if (navigator.clipboard) {
+      console.log(blocks[i]);
+      let button = document.createElement("button");
+      button.innerText = copyButtonLabel;
+      button.addEventListener("click", $clicktoClipboard);
+      blocks[i].appendChild(button);
+    }
+  }
+}
+// function $copyCodeToBoard(ev:MouseEvent){
+//   const button = ev.target as HTMLElement;
+//   const code = button.parentElement;
+//   let codes = code.querySelector("code");
+//   let text = codes.innerText;
+//   navigator.clipboard.writeText(text);
+
+//   button.innerText = "Code Copied";
+
+//   setTimeout(() => {
+//     button.innerText = "Copy Code";
+//   }, 1000);
+// }
+
+// export function copyClipboard(){
+//   const copyButtonLabel = "Copy Code";
+//   let blocks = document.getElementsByClassName("CodeBlock");
+//   for (let i = 0; i < blocks.length; i++) {
+//     let block =blocks[i] as HTMLElement;
+//     if(navigator.clipboard){
+//       let button = document.createElement("button");
+//       button.innerText = copyButtonLabel;
+//       button.addEventListener("click",$copyCodeToBoard);
+//       button.className = "CodeBlock--copy-button";
+//     }
+//   }
+// }
+
 // add focus attribute to activeElement if keyboard trigger
 export function focus() {
   let isTAB = false;
@@ -145,7 +203,7 @@ export function tabs() {
 
 export function activeTab() {
   const blocks = document.getElementsByClassName("tab-active");
-  if(blocks){
+  if (blocks) {
     for (const block of blocks) {
       const blockId = block.getAttribute("block-id");
 
