@@ -15,9 +15,9 @@ jobs:
     name: Compiles
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - uses: actions/setup-node@v2
         with:
           node-version: 16

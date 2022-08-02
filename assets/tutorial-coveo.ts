@@ -6,6 +6,8 @@
   let dataset = tag && tag.dataset;
   let { org, token } = dataset || {};
 
+  
+
   function loadSearchResults() {
     // The following line shows you how you could configure an endpoint against which to perform your search.
     coveo.SearchEndpoint.configureCloudV2Endpoint(org, token);
@@ -16,7 +18,9 @@
     coveo.init(root);
 
     coveo.SearchEndpoint.configureCloudV2Endpoint(org, token);
-  }
+}
+
+  
 
   // init
   (function check() {
