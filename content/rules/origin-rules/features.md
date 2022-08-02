@@ -56,17 +56,12 @@ For more information, refer to the [API instructions](/rules/origin-rules/create
 
 This feature allows you to override the Server Name Indication (SNI) [^1] value of a request. For more information, refer to [What is SNI (Server Name Indication)?](https://www.cloudflare.com/learning/ssl/what-is-sni/) in the Learning Center.
 
-The SNI value in the SNI Override must be one of the following:
-
-* A hostname in the current zone.
-* A hostname that is a subdomain of the current zone.
-* A hostname of an active zone in your Cloudflare account.
+The SNI Override value must be a valid hostname on the same Cloudflare account (possibly on a different zone).
 
 For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#sni-override-parameters).
 
 {{<Aside type="note" header="Notes">}}
 * Currently, you can only use a static value in an SNI Override.
-* You cannot create an SNI Override that points to a third-party domain.
 * An SNI Override will take precedence over [SNI rewrites of custom origins](/cloudflare-for-saas/start/advanced-settings/custom-origin/#sni-rewrites) when using Cloudflare for SaaS.
 {{</Aside>}}
 
