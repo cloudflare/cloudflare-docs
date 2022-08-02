@@ -1,6 +1,6 @@
 ---
 title: Plans
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 1
 meta:
   title: Plans — Cloudflare for SaaS
@@ -31,7 +31,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/cloudflare-for-saas/ssl/reference/hostname-analytics/">Custom analytics</a>
+          <a href="/cloudflare-for-saas/hostname-analytics/">Custom analytics</a>
         </strong>
       </td>
       <td colspan="2" style="text-align:center">
@@ -51,7 +51,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/cloudflare-for-saas/ssl/custom-certificates/">Custom certificates</a>
+          <a href="/cloudflare-for-saas/security/certificate-management/custom-certificates/">Custom certificates</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>
@@ -60,7 +60,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/cloudflare-for-saas/ssl/custom-certificates/certificate-signing-requests/">CSR support</a>
+          <a href="/cloudflare-for-saas/security/certificate-management/custom-certificates/certificate-signing-requests/">CSR support</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>
@@ -90,7 +90,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/cloudflare-for-saas/ssl/common-tasks/enforce-mtls/">mTLS support</a>
+          <a href="/cloudflare-for-saas/security/certificate-management/enforce-mtls/">mTLS support</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>
@@ -113,7 +113,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/">Custom metadata</a>
+          <a href="/cloudflare-for-saas/workers-for-platforms/custom-metadata/">Custom metadata</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>

@@ -1,6 +1,6 @@
 ---
 title: Ruleset logic
-pcx-content-type: concept
+pcx_content_type: concept
 meta:
   title: Magic Firewall ruleset logic
 ---

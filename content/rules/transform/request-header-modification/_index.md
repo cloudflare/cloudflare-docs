@@ -1,6 +1,6 @@
 ---
 title: Request Header Modification Rules
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 3
 meta:
   title: HTTP Request Header Modification Rules

@@ -1,6 +1,6 @@
 ---
 title: Megaport
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 4
 meta:
   title: Megaport Users

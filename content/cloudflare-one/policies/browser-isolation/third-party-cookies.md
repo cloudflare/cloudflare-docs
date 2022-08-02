@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 hidden: true
 title: Enable third-party cookies
 weight: 4

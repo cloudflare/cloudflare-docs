@@ -1,6 +1,6 @@
 ---
 title: Configure via API
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 3
 meta:
   title: Configure Network-layer DDoS Attack Protection via API

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Filtering
 weight: 11
 layout: single
@@ -172,6 +172,9 @@ httpRequestsAdaptiveGroups(
 WHERE datetime="2018-01-01T10:00:00Z"
   AND ((clientCountryName = "US") OR (clientCountryName = "GB"))
 ```
+### Filter end users
+
+Add the `requestSource` filter for `eyeball` to return request, data transfer, and visit data about only the end users of your website. This will exclude actions taken by Cloudflare products (for example, cache purge,  healthchecks, Workers subrequests) on your zone.  
 
 ## Subqueries (advanced filters)
 

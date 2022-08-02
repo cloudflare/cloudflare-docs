@@ -1,6 +1,6 @@
 ---
 title: Plans
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 2
 ---
 

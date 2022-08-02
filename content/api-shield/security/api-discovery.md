@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 type: overview
 title: API Discovery
 weight: 1

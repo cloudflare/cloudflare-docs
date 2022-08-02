@@ -1,6 +1,6 @@
 ---
 title: Enable Datadog
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 59
 layout: single
 meta:
@@ -33,9 +33,9 @@ To enable the Cloudflare Logpush service:
 
 8.  Enter or select the following destination information:
 
-    - **Datadog URL Endpoint**
-    - **Datadog API Key**
-
+    - **Datadog URL Endpoint**, which is `http-intake.logs.datadoghq.com/v1/input?ddsource=cloudflare`.
+    - **Datadog API Key**, can be retrieved by following [these steps](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token).
+    
 9.  Click **Validate access**.
 
 10. Click **Save and Start Pushing** to finish enabling Logpush.
@@ -65,7 +65,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 - **destination_conf** - A log destination consisting of an endpoint URL, authorization header, and zero or more optional parameters that Datadog supports in the string format below.
 
   - **\<DATADOG_ENDPOINT_URL>**: The Datadog HTTP logs intake endpoint, which is `http-intake.logs.datadoghq.com/v1/input`.
-  - **\<DATADOG_API_KEY>**: The Datadog API token. For example, `20e6d94e8c57924ad1be3c29bcaee0197d`.
+  - **\<DATADOG_API_KEY>**: The Datadog API token can be retrieved by following [these steps](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token). For example, `20e6d94e8c57924ad1be3c29bcaee0197d`.
   - **ddsource**: Set to `cloudflare`.
   - **service**, **host**, **ddtags**: Optional parameters allowed by Datadog.
 

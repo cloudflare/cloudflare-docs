@@ -1,6 +1,6 @@
 ---
 title: DNS filtering
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 1
 meta:
   title: Set up DNS filtering

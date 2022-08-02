@@ -107,7 +107,12 @@ export function focus() {
 function $tab(ev: MouseEvent) {
   ev.preventDefault();
 
-  let tabs = document.querySelectorAll(".tab");
+  // Get the tabs for this tab block
+  const tabBlockId = (ev.target as HTMLElement).getAttribute("data-id");
+
+  let tabs = document.querySelectorAll(
+    `div[tab-wrapper-id="${tabBlockId}"] > .tab`
+  );
 
   for (let i = 0; i < tabs.length; i++) {
     (tabs[i] as HTMLElement).style.display = "none";
@@ -116,7 +121,7 @@ function $tab(ev: MouseEvent) {
   let target = ev.target;
   let link = (target as HTMLElement).getAttribute("data-link");
 
-  document.getElementById(link).style.display = "block";
+  document.getElementById(`${link}-${tabBlockId}`).style.display = "block";
 }
 
 export function tabs() {
@@ -139,14 +144,21 @@ export function tabs() {
 }
 
 export function activeTab() {
-  var header = document.getElementById("tab-active");
-  var tabs = header.getElementsByClassName("tab-label");
-  for (var i = 0; i < tabs.length; i++) {
-    (tabs[i] as HTMLElement).addEventListener("click", function name() {
-      let current = document.getElementsByClassName("active");
-      current[0].className = current[0].className.replace(" active", "");
-      this.className += " active";
-    });
+  const blocks = document.getElementsByClassName("tab-active");
+  if(blocks){
+    for (const block of blocks) {
+      const blockId = block.getAttribute("block-id");
+
+      var tabs = block.querySelectorAll(`.tab-label`);
+      for (var i = 0; i < tabs.length; i++) {
+        (tabs[i] as HTMLElement).addEventListener("click", function name() {
+          let current = block.querySelector(`.active`);
+
+          current.classList.remove("active");
+          this.classList.add("active");
+        });
+      }
+    }
   }
 }
 

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Administration
 weight: 10
 ---
@@ -13,7 +13,7 @@ Railgun can be load-balanced and multiple Railgun daemons can be used per activa
 ## Adding a Railgun
 
 1. Navigate to the [Railgun page](https://dash.cloudflare.com/?to=/:account/configurations/railgun).
-2. In **Enter new Railgun name text box**, enter a descriptive title for your Railgun, and click the `Create` button.
+2. In **Enter new Railgun name text box**, enter a descriptive title for your Railgun, and select the **Create** button.
 3. Within your Railgun configuration file, update `activation.public_ip` to the public IP or a hostname which resolves to the public IP of your Railgun’s server and set the `activation.token` to the activation key displayed on the page.
 4. Start the Railgun daemon so that it can proceed with activation.
 5. If everything went smoothly, the red icon will change to a green checkmark after refreshing the page and the Railgun can then be toggled on.

@@ -1,6 +1,6 @@
 ---
 title: Get started
-pcx-content-type: get-started
+pcx_content_type: get-started
 weight: 1
 meta:
   title: Get started with Keyless SSL

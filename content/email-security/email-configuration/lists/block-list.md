@@ -1,6 +1,6 @@
 ---
 title: Block lists
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 3
 ---
 

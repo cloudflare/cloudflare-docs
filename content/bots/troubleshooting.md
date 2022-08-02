@@ -1,5 +1,5 @@
 ---
-pcx-content-type: navigation
+pcx_content_type: navigation
 title: FAQs
 external_link: https://support.cloudflare.com/hc/articles/360035387431
 weight: 11

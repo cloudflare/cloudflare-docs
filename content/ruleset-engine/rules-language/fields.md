@@ -1,6 +1,6 @@
 ---
 title: Fields
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 6
 meta:
   title: Fields reference
@@ -428,14 +428,14 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-hostname-metadata">
         <td><code>cf.hostname.metadata</code><br />{{<type>}}String{{</type>}}</td>
         <td>
-          <p>Returns the string representation of the per-hostname <a href="/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/">custom metadata</a> JSON object set by SSL for SaaS customers.
+          <p>Returns the string representation of the per-hostname <a href="/cloudflare-for-saas/workers-for-platforms/custom-metadata/">custom metadata</a> JSON object set by SSL for SaaS customers.
           </p>
         </td>
     </tr>
     <tr id="field-cf-random_seed">
         <td><code>cf.random_seed</code><br />{{<type>}}Bytes{{</type>}}</td>
         <td>
-          <p>Returns per-request random bytes that you can use in the <a href="/ruleset-engine/rules-language/functions/#function-uuidv4"><code class="InlineCode">uuidv4()</code></a> function.
+          <p>Returns per-request random bytes that you can use in the <a href="/ruleset-engine/rules-language/functions/#function-uuidv4"><code>uuidv4()</code></a> function.
           </p>
         </td>
     </tr>
@@ -951,7 +951,7 @@ The Cloudflare Rules language supports these HTTP header fields:
 
 {{<Aside type="note">}}
 
-Access to HTTP body is an add-on product of the Cloudflare Enterprise plan.
+Access to HTTP request body fields requires a Cloudflare Enterprise plan, except for the `http.request.body.mime` field.
 
 {{</Aside>}}
 
@@ -1065,6 +1065,20 @@ The Cloudflare Rules language supports these HTTP body fields:
          </p>
       </td>
     </tr>
+    <tr id="field-http-request-body-mime">
+      <td valign="top"><code>http.request.body.mime</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+        <p>The MIME type of the request detected from the request body.
+        </p>
+        <p>Supports the most common MIME types of the following general categories: video, audio, image, application, text.
+        </p>
+        <p>Example:
+        <br /><code class="InlineCode">image/jpeg</code>
+        </p>
+        <p>This field is available on all Cloudflare plans.
+        </p>
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -1077,8 +1091,11 @@ The Rules language includes fields that represent properties of HTTP response re
 You can only use HTTP response fields in:
 
 * [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/)
+* [Custom error responses](/rules/custom-error-responses/)
 * [Rate limiting rules](/waf/rate-limiting-rules/)
 * Filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rulesets/) ruleset
+
+Specific fields may have additional limitations.
 
 {{</Aside>}}
 
@@ -1172,6 +1189,39 @@ The Cloudflare Rules language supports these HTTP response fields:
          <br />
          <code class="InlineCode">["This header value is longer than 10 bytes"]</code>
          </p>
+      </td>
+   </tr>
+   <tr id="field-cf-response-1xxx_code">
+      <td valign="top"><code>cf.response.1xxx_code</code><br />{{<type>}}Integer{{</type>}}</td>
+      <td>
+         <p>Contains the specific code for 1xxx Cloudflare errors. Use this field to differentiate between 1xxx errors associated with the same HTTP status code. The default value is <code>0</code>. For a list of 1xxx errors, refer to <a href="https://support.cloudflare.com/hc/articles/360029779472">Troubleshooting Cloudflare 1XXX errors</a>.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">1020</code>
+         </p>
+         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/response-header-modification/">HTTP response header modifications</a> and <a href="/rules/custom-error-responses/">custom error responses</a>.</p>
+      </td>
+   </tr>
+   <tr id="field-cf-response-error_type">
+      <td valign="top"><code>cf.response.error_type</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+        <p>Contains a string with the type of error in the response being returned. The default value is an empty string (<code>""</code>).
+        </p>
+        <p>The available values are the following:</p>
+        <ul>
+          <li><code>managed_challenge</code></li>
+          <li><code>iuam_basic</code></li>
+          <li><code>legacy_challenge</code></li>
+          <li><code>ip_block</code></li>
+          <li><code>waf_block</code></li>
+          <li><code>5xx</code></li>
+          <li><code>1xxx</code></li>
+          <li><code>always_online</code></li>
+          <li><code>country_challenge</code></li>
+          <li><code>ratelimit</code></li>
+        </ul>
+        <p>You can use this field to customize the response for a specific type of error (for example, all 1xxx errors or all WAF block actions).</p>
+        <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/response-header-modification/">HTTP response header modifications</a> and <a href="/rules/custom-error-responses/">custom error responses</a>.</p>
       </td>
    </tr>
   </tbody>

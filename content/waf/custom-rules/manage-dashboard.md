@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Manage custom rules in the dashboard
 weight: 6
 ---

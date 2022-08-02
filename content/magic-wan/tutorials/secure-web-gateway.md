@@ -1,6 +1,6 @@
 ---
 title: Secure Web Gateway
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 meta:
   title: Connect to Secure Web Gateway with Magic WAN
 ---

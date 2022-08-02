@@ -1424,6 +1424,7 @@ html {
 
 p > code,
 span > code,
+a > code,
 div > code,
 li > code,
 td > code,
@@ -3149,9 +3150,6 @@ html[is-docs-page] body {
   );
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
   box-shadow: var(--focus-shadow);
-}
-
-.DocsMarkdown--link .DocsMarkdown--link-content {
   background-color: var(--background-color);
   border-bottom: 1px solid
     rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
@@ -3194,7 +3192,8 @@ html[is-docs-page] body {
   --background-color-alpha: 0.15;
 }
 
-.DocsMarkdown--link-content > code {
+.DocsMarkdown--link-content > code,
+a > code {
   --padding: 0;
   --background: transparent;
 }
@@ -3451,7 +3450,7 @@ p.DocsMarkdown--small-header {
   padding: 0;
 }
 
-.DocsMarkdown--definitions ul li:not(:last-child) {
+.DocsMarkdown--definitions > ul > li:not(:last-child) {
   margin-bottom: 1.5em;
 }
 
@@ -3463,13 +3462,15 @@ p.DocsMarkdown--small-header {
 .DocsMarkdown--definitions ul li > p:first-child > code:first-child {
   display: inline-block;
   vertical-align: middle;
-  font-weight: 600;
   --padding: 0 0.3em;
 }
 
-.DocsMarkdown--definitions ul li > ul {
+.DocsMarkdown--definitions > ul > li > ul {
   list-style: none;
   padding-left: 2em;
+}
+
+.DocsMarkdown--definitions ul > li > ul {
   margin-top: 0.25em;
 }
 
@@ -3612,27 +3613,58 @@ code .DocsMarkdown--prop-meta {
   background-color: rgba(var(--blue-4-rgb), 0.1);
 }
 
-.DocsMarkdown--aside[data-type="note"] .DocsMarkdown--link {
-  --background-color-rgb: var(--blue-4-rgb);
-  --border-bottom-color-rgb: var(--blue-2-rgb);
-}
-
 [theme="dark"] .DocsMarkdown--aside[data-type="note"] {
   border-left-color: rgba(var(--blue-4-rgb), 0.8);
   background-color: rgba(var(--blue-6-rgb), 0.05);
 }
 
-[theme="dark"] .DocsMarkdown--aside[data-type="note"] .DocsMarkdown--link {
-  color: inherit;
-  --background-color-rgb: var(--blue-6-rgb);
+.DocsMarkdown--aside a {
   --background-color-alpha: 0.1;
+  --border-bottom-color-alpha: 0.35;
+  color: inherit;
+  text-decoration: none;
+  background-color: rgba(
+    var(--background-color-rgb),
+    var(--background-color-alpha)
+  );
+  border-bottom: 1px solid
+    rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
+}
+
+.DocsMarkdown--aside a:hover {
+  --background-color-alpha: 0.2;
+}
+
+.DocsMarkdown--aside[data-type="note"] a {
+  --background-color-rgb: var(--blue-4-rgb);
+  --border-bottom-color-rgb: var(--blue-2-rgb);
+}
+
+.DocsMarkdown--aside[data-type="warning"] a {
+  --background-color-rgb: var(--orange-rgb);
+  --border-bottom-color-rgb: var(--orange-3-rgb);
+}
+
+[theme="dark"] .DocsMarkdown--aside[data-type="note"] a {
+  color: var(--code-orange);
+  --background-color-rgb: var(--blue-6-rgb);
+  --background-color-alpha: 0.05;
   --border-bottom-color-rgb: var(--blue-7-rgb);
 }
 
-[theme="dark"]
-  .DocsMarkdown--aside[data-type="note"]
-  .DocsMarkdown--link:hover {
-  --background-color-alpha: 0.2;
+[theme="dark"] .DocsMarkdown--aside[data-type="note"] a:hover {
+  --background-color-alpha: 0.1;
+}
+
+[theme="dark"] .DocsMarkdown--aside[data-type="warning"] a {
+  color: var(--code-orange);
+  --background-color-rgb: var(--orange-rgb);
+  --background-color-alpha: 0.05;
+  --border-bottom-color-rgb: var(--orange-3-rgb);
+}
+
+[theme="dark"] .DocsMarkdown--aside[data-type="warning"] a:hover {
+  --background-color-alpha: 0.1;
 }
 
 .DocsMarkdown a[name]:not([href]):before,
@@ -3707,6 +3739,37 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   border-spacing: 0;
   border: 0;
   --border-color: rgba(var(--color-rgb), 0.1);
+}
+
+.DocsMarkdown table a {
+  --background-color-rgb: var(--orange-rgb);
+  --background-color-alpha: 0.08;
+  --border-bottom-color-rgb: var(--orange-3-rgb);
+  --border-bottom-color-alpha: 0.3;
+  text-decoration: none;
+  color: #1d1f20;
+  background-color: rgba(
+    var(--background-color-rgb),
+    var(--background-color-alpha)
+  );
+  border-bottom: 1px solid
+    rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
+}
+
+.DocsMarkdown table a:hover {
+  --background-color-alpha: 0.15;
+}
+
+[theme="dark"] .DocsMarkdown table a {
+  --background-color-rgb: var(--orange-rgb);
+  --background-color-alpha: 0.03;
+  --border-bottom-color-rgb: var(--orange-rgb);
+  --border-bottom-color-alpha: 0.35;
+  color: var(--code-orange);
+}
+
+[theme="dark"] .DocsMarkdown table a:hover {
+  --background-color-alpha: 0.08;
 }
 
 .DocsMarkdown th {
@@ -3869,160 +3932,6 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 
 .DocsMarkdown--table-wrap-inner {
   display: flex;
-}
-
-.DocsMarkdown--table-wrap
-  > div
-  > table
-  > tbody
-  > tr
-  > td
-  > ul
-  > li
-  > ul
-  > li
-  > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-.DocsMarkdown--table-wrap
-  > div
-  > table
-  > tbody
-  > tr:nth-child(4)
-  > td:nth-child(2)
-  > ul
-  > li:nth-child(4)
-  > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-.DocsMarkdown--table-wrap
-  > div
-  > table
-  > tbody
-  > tr:nth-child(5)
-  > td:nth-child(2)
-  > ul
-  > li:nth-child(3)
-  > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-.DocsMarkdown--table-wrap
-  > div
-  > table
-  > tbody
-  > tr:nth-child(6)
-  > td:nth-child(2)
-  > ul
-  > li:nth-child(4)
-  > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-http-request-timestamp-sec > td:nth-child(2) > p:nth-child(4) > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-ip-src-lat > td:nth-child(2) > p:nth-child(3) > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-ip-src-lon > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-ip-src-city > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-ip-geoip-country > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-ip-geoip-subdivision-1-iso-code > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-ip-geoip-subdivision-2-iso-code > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-raw-http-request-full-uri > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-raw-http-request-uri > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-raw-http-request-uri-path > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-raw-http-request-uri-query > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-cf-bot_management-ja3_hash > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-cf-edge-server_ip > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-cf-hostname-metadata > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-cf-random_seed > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-raw-http-request-uri-args > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-raw-http-request-uri-args-names > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-raw-http-request-uri-args-values > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-http-request-headers-names > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-#field-http-request-accepted_languages > td > p > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
 }
 
 .DocsMarkdown--table-wrap table {
@@ -5103,53 +5012,6 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   }
 }
 
-[theme="dark"] .DocsMarkdown td > a {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-}
-
-[theme="light"] .DocsMarkdown td > a {
-  background-color: var(--background-color);
-  color: #1d1f20;
-}
-
-[theme="dark"] .DocsMarkdown td > strong > a {
-  color: var(--orange);
-}
-
-[theme="light"] .DocsMarkdown--aside > p > a {
-  background-color: var(--background-color);
-  color: #1d1f20;
-}
-
-.DocsContent
-  > article
-  > div
-  > div
-  > table
-  > tbody
-  > tr:nth-child(4)
-  > td:nth-child(1)
-  > a {
-  background-color: #f3802014;
-  color: #1d1f20;
-}
-
-[theme="light"]
-  .DocsMarkdown--aside
-  > .DocsMarkdown--link
-  > .DocsMarkdown--link-content {
-  /* background-color: var(--background-color); */
-  color: var(--code--orange);
-}
-
-[theme="dark"] .DocsMarkdown--link > .DocsMarkdown--link-content {
-  background-color: var(--background-color);
-  color: var(--code-orange);
-  border-bottom: 1px solid
-    rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
-}
-
 [theme="dark"] .InlineCodeLink .InlineCode {
   background-color: var(--background-color);
   color: var(--code-orange);
@@ -5158,10 +5020,6 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 [theme="light"] .atry .InlineCode {
   background-color: var(--background-color);
   color: var(--code-orange);
-}
-
-[theme="dark"] .DocsMarkdown--aside > p > a {
-  color: var(--orange);
 }
 
 pre {
@@ -5475,4 +5333,15 @@ pre {
 
 .DocsMarkdown--related-product {
   color: inherit;
+}
+.littlefoot-footnote__button {
+  max-width: 3em;
+}
+
+[theme="dark"] .littlefoot-footnote__content {
+  background: #242628;
+}
+
+[theme="dark"] .littlefoot-footnote__button {
+  background: rgba(110, 110, 110, 0.5);
 }

@@ -1,6 +1,6 @@
 ---
 title: Location-Aware DDoS Protection
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 4
 ---
 

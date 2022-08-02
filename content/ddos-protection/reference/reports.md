@@ -1,6 +1,6 @@
 ---
 title: Reports
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 3
 meta:
   title: DDoS reports

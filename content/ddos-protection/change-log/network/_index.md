@@ -1,6 +1,6 @@
 ---
 title: Network-layer DDoS Managed Ruleset
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 1
 meta:
   title: Changelog for the Network-layer DDoS Managed Ruleset

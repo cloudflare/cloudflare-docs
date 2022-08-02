@@ -5,7 +5,7 @@ summary: Set up an A/B test by controlling what response is served based on
   on the origin, bypassing random assignment.
 tags:
   - Originless
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: A/B testing with same-URL direct access
 weight: 1001
 layout: example

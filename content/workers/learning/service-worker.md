@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Using Service Worker syntax
 weight: 0
 ---

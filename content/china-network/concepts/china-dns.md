@@ -1,6 +1,6 @@
 ---
 title: China Authoritative DNS
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 4
 ---
 

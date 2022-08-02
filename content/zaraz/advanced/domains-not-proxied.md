@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Domains not proxied by Cloudflare
 weight: 0
 meta:

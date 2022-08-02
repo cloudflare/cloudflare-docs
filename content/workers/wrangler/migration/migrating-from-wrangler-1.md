@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Migrating from Wrangler 1
 weight: 1
 ---
@@ -12,7 +12,7 @@ Wrangler 2 ships with new features and improvements that may require some change
 
 The CLI itself will guide you through the upgrade process.
 
-{{<Aside type="node">}}
+{{<Aside type="note">}}
 To learn more about the improvements to Wrangler, refer to the [Comparing Wrangler 1 & 2 page](/workers/wrangler/compare-v1-v2/).
 {{</Aside>}}
 

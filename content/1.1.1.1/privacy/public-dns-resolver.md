@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: 1.1.1.1 Public DNS Resolver
 ---
 
@@ -13,7 +13,7 @@ The 1.1.1.1 public DNS resolver is governed by our [Privacy Policy](https://www.
 
 -----
 
-Nearly everything on the Internet starts with a DNS request. DNS is the Internet’s directory. Click on a link, open an app, send an email, and the first thing your phone or computer does is ask its directory: where can I find this?
+Nearly everything on the Internet starts with a DNS request. DNS is the Internet’s directory. Select a link, open an app, send an email, and the first thing your phone or computer does is ask its directory: where can I find this?
 
 Unfortunately, by default, DNS is usually slow and insecure. Your ISP, and anyone else listening in on the Internet, can see every site you visit and every app you use — even if their content is encrypted. Creepily, some DNS providers sell data about your Internet activity or use it to target you with ads.
 

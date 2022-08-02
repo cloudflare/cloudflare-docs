@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Serve images
 layout: single
 weight: 7
@@ -25,7 +25,7 @@ https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME>
 
 In this example, you need to replace `<ACCOUNT_HASH>` with your Images account hash and the `<IMAGE_ID>` and `<VARIANT_NAME>` to begin serving images. 
 
-All the information you need to create an image delivery URL is under the **Developer Resources** section. You can also click **Preview** next to the image you want to serve. This will open a preview of the image with an **Image URL** you can copy. This link will have a fully formed Images URL. Here is an example of what that looks like:
+All the information you need to create an image delivery URL is under the **Developer Resources** section. You can also select **Preview** next to the image you want to serve. This will open a preview of the image with an **Image URL** you can copy. This link will have a fully formed Images URL. Here is an example of what that looks like:
 
 ```txt
 https://imagedelivery.net/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/public

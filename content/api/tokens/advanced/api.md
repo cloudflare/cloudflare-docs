@@ -1,6 +1,6 @@
 ---
 title: Creating tokens via API
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 11
 meta:
   title: Creating API tokens via the API

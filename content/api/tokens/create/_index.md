@@ -1,5 +1,5 @@
 ---
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Creating API tokens
 weight: 2
 layout: single

@@ -3,7 +3,7 @@ type: example
 summary: Set multiple Cron Triggers on three different schedules.
 tags:
   - Middleware
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Multiple Cron Triggers
 weight: 1001
 layout: example

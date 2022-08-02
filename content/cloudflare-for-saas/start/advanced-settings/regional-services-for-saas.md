@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Regional Services for SaaS
 weight: 2
 ---
@@ -60,7 +60,7 @@ You cannot enable **Edge TLS Termination** or **IP Access Rules** while using HT
 
 3. Point each custom hostname to the Spectrum app by selecting **Custom origin server** and inputting your origin.
 
-4. If you are creating a new custom hostname, select **Add Custom Hostname** and follow the instructions to [verify custom hostname](/cloudflare-for-saas/ssl/common-tasks/hostname-verification/). Otherwise, select **Save**.
+4. If you are creating a new custom hostname, select **Add Custom Hostname** and follow the instructions to [verify custom hostname](/cloudflare-for-saas/domain-support/hostname-verification/). Otherwise, select **Save**.
 
 6. Navigate to **DNS**.
 
