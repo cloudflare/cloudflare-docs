@@ -106,6 +106,49 @@ export default {
 };
 ```
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+
+{{</tab>}}
+{{<tab label="js">}}
+
+```js
+export default {
+  async fetch(request, env, ctx) {
+    return new Response("Hello World!");
+  },
+};
+```
+
+{{</tab>}}
+{{<tab label="ts">}}
+
+```ts
+export interface Env {
+	// Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
+	// MY_KV_NAMESPACE: KVNamespace;
+	//
+	// Example binding to Durable Object. Learn more at https://developers.cloudflare.com/workers/runtime-apis/durable-objects/
+	// MY_DURABLE_OBJECT: DurableObjectNamespace;
+	//
+	// Example binding to R2. Learn more at https://developers.cloudflare.com/workers/runtime-apis/r2/
+	// MY_BUCKET: R2Bucket;
+}
+
+export default {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext
+	): Promise<Response> {
+		return new Response("Hello World!");
+	},
+};
+```
+
+{{</tab>}}
+{{</tabs>}}
+
 This code block consists of four parts:
 
 1. The `export` statement: `export default`
