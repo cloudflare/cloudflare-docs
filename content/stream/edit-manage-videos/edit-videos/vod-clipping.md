@@ -3,13 +3,13 @@ pcx-content-type: how to
 title: Clip videos
 ---
 
-## Clip Videos on Demand (VOD)
+# Clip videos
 
-With Video on Demand (VOD) clipping – also referred to as "trimming" or changing the length of the video, you can change the start and end points of a video so your users only see a specific "clip" of the video. For example, if you have a 20 minute video but only need to show the first five minutes, you can clip the video that specific segment.
+With video clipping – also referred to as "trimming" or changing the length of the video, you can change the start and end points of a video so your users only see a specific "clip" of the video. For example, if you have a 20 minute video but only need to show the first five minutes, you can clip the video that specific segment.
 
 Before you can use VOD clipping, you will need an API token. For more information on creating an API token, refer to [Creating API tokens](/api/tokens/create/).
 
-## Clip videos
+## Required parameters
 
 To clip your video, determine the start and end times you want to use from the existing video to create the new video. Use that `videoUID` and the start end times to make your request.
 
