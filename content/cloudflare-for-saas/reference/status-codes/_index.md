@@ -6,7 +6,7 @@ weight: 4
 
 # Status codes
 
-We have many different status codes. They can be related to:
+Cloudflare uses many different status codes for Cloudflare for SaaS. They can be related to:
 
 *   [Custom hostnames](/cloudflare-for-saas/reference/status-codes//custom-hostnames/)
 *   [Specific certificate authorities](/cloudflare-for-saas/reference/status-codes//certificate-authority-specific/)

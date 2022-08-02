@@ -8,7 +8,7 @@ meta:
  
 # Managed Rulesets per Custom Hostname
  
-If you are interested in [WAF for SaaS](/cloudflare-for-saas/security/waf-for-saas/) but unsure of where to start, Cloudflare recommends using Managed Rulesets. The Cloudflare security team creates and manages a variety of rules designed to detect common attack vectors and protect applications from vulnerabilities. These rules are offered in managed rulesets, like Cloudflare Managed and OWASP, which can be deployed with different settings and sensitivity levels.
+If you are interested in [WAF for SaaS](/cloudflare-for-saas/security/waf-for-saas/) but unsure of where to start, Cloudflare recommends using Managed Rulesets. The Cloudflare security team creates and manages a variety of rules designed to detect common attack vectors and protect applications from vulnerabilities. These rules are offered in [managed rulesets](/waf/managed-rulesets/), like Cloudflare Managed and OWASP, which can be deployed with different settings and sensitivity levels.
  
 ---
  
@@ -28,7 +28,7 @@ Customers can automate the [custom metadata](/cloudflare-for-saas/workers-for-pl
  
 1. Outline `security_tag` buckets. These are fully customizable with no strict limit on quantity. For example, you can set `security_tag` to `low`,`medium`, and `high` as a default, with one tag per custom hostname.
  
-2. If you have not already done so, [associate your custom metadata to custom hostnames](/cloudflare-for-saas/security/waf-for-saas#step-1---associate-custom-metadata-to-a-custom-hostname)by including the `security_tag`in the custom metadata associated with the custom hostname. The JSON blob associated with the custom hostname is fully customizable.
+2. If you have not already done so, [associate your custom metadata to custom hostnames](/cloudflare-for-saas/security/waf-for-saas#step-1---associate-custom-metadata-to-a-custom-hostname) by including the `security_tag`in the custom metadata associated with the custom hostname. The JSON blob associated with the custom hostname is fully customizable.
  
 {{<Aside type="note">}}
  
