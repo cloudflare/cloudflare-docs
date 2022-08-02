@@ -96,7 +96,7 @@ $ wrangler dev
 
 With your new project generated, you can begin to write your code.
 
-After running the `wrangler init` command to generate your Worker, the `index.js` or `index.ts` file will be populated with the code below:
+After running the `wrangler init` command to generate your Worker, the `index.js` or `index.ts` file will be populated with the code below::
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
