@@ -16,7 +16,7 @@ If you are interested in [WAF for SaaS](/cloudflare-for-saas/security/waf-for-sa
  
 WAF for SaaS is available with certain Enterprise plans. To verify access, contact your account manager.
  
-If you would like to deploy a managed ruleset at the account level, refer  to the [Ruleset Engine documentation](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/). 
+If you would like to deploy a managed ruleset at the account level, refer to the [Ruleset Engine documentation](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/). 
  
 Ensure you have reviewed [Get Started with Cloudflare for SaaS](/cloudflare-for-saas/start/getting-started/) and familiarize yourself with [WAF for SaaS](/cloudflare-for-saas/security/waf-for-saas/). 
  
