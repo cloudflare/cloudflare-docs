@@ -66,11 +66,7 @@ routes = [
 
 To test your live application:
 
-1. Open your `edge-chat-demo.<SUBDOMAIN>.workers.dev` subdomain.
-
-or 
-
-1. Go to your Worker > **Resources** and select the `edge-chat-demo.<SUBDOMAIN>.workers.dev` route on top of the page.
+1. Open your `edge-chat-demo.<SUBDOMAIN>.workers.dev` subdomain. Your subdomain can be found in the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers** > your Worker > **Resources** > select the `edge-chat-demo.<SUBDOMAIN>.workers.dev` route.
 2. Enter a name in the **your name** field.
 3. Choose whether to enter a public room or create a private room.
 4. Send the link to other participants. You will be able to view room participants on the right side of the screen.
