@@ -41,7 +41,7 @@ Previously, in version 1 of the `direct_upload` endpoint, the ID was an identifi
 
 {{</Aside>}}
 
-With version 2 of `direct_upload`, a new draft image record is created when you invoke this endpoint. It will not appear on a [list of images](https://api.cloudflare.com/#cloudflare-images-list-images), but  it is possible to fetch an image record with the provided ID to check its current status. In the example below, `<Image_ID>` is the `id` received from the response when requesting a one-time upload URL with the `direct_upload` endpoint.
+With version 2 of `direct_upload`, a new draft image record is created when you invoke this endpoint. It will not appear on a [list of images](https://api.cloudflare.com/#cloudflare-images-list-images), but  it is possible to fetch an image record with the provided ID to check its current status. In the example below, `<IMAGE_ID>` is the `id` received from the response when requesting a one-time upload URL with the `direct_upload` endpoint.
 
 ```bash
 curl  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/<IMAGE_ID> \
