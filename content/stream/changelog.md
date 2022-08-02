@@ -8,7 +8,7 @@ weight: 8
 
 ## 2022-08-02
 
-### Clip video start and end times using the Stream API
+### Clip videos using the Stream API
 
 You can now change the start and end times of a video uploaded to Cloudflare Stream. For more information, refer to [VOD clipping](/stream/edit-manage-videos/edit-videos/vod-clipping).
 
