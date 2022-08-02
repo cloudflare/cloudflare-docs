@@ -23,8 +23,8 @@ The Disk Encryption device posture attribute ensures that disks are encrypted on
 
 To enable the Disk Encryption check:
 
-1.  On the Zero Trust Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
-1.  Click **+Add**.
+1.  On the Zero Trust Dashboard, navigate to **Settings** > **WARP Client** > **Device posture**.
+1.  Click **Add new**.
 1.  Select **Disk Encryption**.
 1.  Enter a descriptive name for the check.
 1.  Select your operating system.

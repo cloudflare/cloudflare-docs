@@ -27,9 +27,9 @@ The File Check device posture attribute checks for the presence of a file on a d
 
 To enable File Check:
 
-1.  On the Zero Trust Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
+1.  On the Zero Trust Dashboard, navigate to **Settings** > **WARP Client** > **Device posture**.
 
-1.  Click **+Add**.
+1.  Click **Add new**.
 
 1.  Select **File Check**.
 
@@ -54,6 +54,12 @@ Your device posture attribute is now visible on the **Device posture** page.
 ## Determine the signing thumbprint
 
 The process to determine the signing thumbprint of a file varies depending on the operating system. This is how you would look up the signing thumbprint of the Cloudflare WARP application on macOS and Windows.
+
+{{<Aside>}}
+
+When setting up new device posture checks, we recommend first testing them without setting certificate thumbprint or SHA256 checksum values.
+
+{{</Aside>}}
 
 ### On macOS
 
@@ -90,6 +96,12 @@ Get-AuthenticodeSignature -FilePath c:\myfile.exe
 ## Determine the SHA-256 value
 
 The SHA-256 value almost always changes between versions of a file/application.
+
+{{<Aside>}}
+
+When setting up new device posture checks, we recommend first testing them without setting certificate thumbprint or SHA256 checksum values.
+
+{{</Aside>}}
 
 ### On macOS
 

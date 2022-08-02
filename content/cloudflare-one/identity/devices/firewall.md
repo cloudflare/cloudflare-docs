@@ -23,8 +23,8 @@ The Firewall device posture attribute ensures that a firewall is running on a de
 
 To enable the Firewall check:
 
-1.  On the Zero Trust Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
-1.  Click **+Add**.
+1.  On the Zero Trust Dashboard, navigate to **Settings** > **WARP Client** > **Device posture**.
+1.  Click **Add new**.
 1.  Select **Firewall**.
 1.  Enter a descriptive name for the check.
 1.  Select your operating system.

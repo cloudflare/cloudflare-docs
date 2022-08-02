@@ -42,6 +42,14 @@ To retrieve those values:
 1.  Click **Save**.
 1.  Click **Test Provider** to ensure the values have been entered correctly.
 
+## Configure the posture check
+
+1.  On the Zero Trust Dashboard, navigate to **Settings** > **WARP Client** > **Service provider checks**.
+1.  Click **Add new**.
+1.  Select the provider you created in the section above.
+1.  Enter the required fields
+1.  Click **Save**.
+
 ## Configure compliance settings
 
 Workspace ONE posture checks work with the Compliance flags in Workspace ONE. All compliance tests must pass for the device to be considered compliant.

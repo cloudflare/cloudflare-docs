@@ -23,9 +23,9 @@ Cloudflare Zero Trust can check if [SentinelOne](https://www.sentinelone.com/) i
 
 Before you start, make sure SentinelOne is installed on your machine.
 
-1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team > Devices > Device posture**.
+1.  On the Zero Trust Dashboard, navigate to **Settings** > **WARP Client** > **Device posture**.
 
-1.  Select **+Add**.
+1.  Click **Add new**.
 
     ![Device posture attributes](/cloudflare-one/static/documentation/identity/devices/device-posture-partners.png)
 

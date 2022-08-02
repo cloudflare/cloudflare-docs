@@ -27,9 +27,9 @@ The Application Check device posture attribute checks that a specific applicatio
 
 To enable Application Check:
 
-1.  On the Zero Trust Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
+1.  On the Zero Trust Dashboard, navigate to **Settings** > **WARP Client** > **Device posture**.
 
-1.  Click **+Add**.
+1.  Click **Add new**.
 
 1.  Select **Application Check**.
 

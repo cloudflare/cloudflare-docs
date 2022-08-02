@@ -47,6 +47,14 @@ To retrieve those values:
 1. Click **Save**.
 1. Click **Test Provider** to ensure the values have been entered correctly.
 
+## Configure the posture check
+
+1.  On the Zero Trust Dashboard, navigate to **Settings** > **WARP Client** > **Service provider checks**.
+1.  Click **Add new**.
+1.  Select the provider you created in the section above.
+1.  Enter the required fields
+1.  Click **Save**.
+
 ## Additional Resources
 
 The Microsoft Endpoint Manager device posture check relies on information from the Microsoft Graph API. Refer to Microsoft's [ComplianceState](https://docs.microsoft.com/en-us/graph/api/resources/intune-devices-compliancestate?view=graph-rest-1.0) and [List managedDevices](https://docs.microsoft.com/en-us/graph/api/intune-devices-manageddevice-list?view=graph-rest-1.0) documentation for a list of properties returned by the API.

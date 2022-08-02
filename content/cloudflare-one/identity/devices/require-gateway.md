@@ -28,7 +28,9 @@ The process involves two steps:
 
 ## Set up a device posture check
 
-1.  On your [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **My Team > Devices > Device Posture**.
+1.  On the Zero Trust Dashboard, navigate to **Settings** > **WARP Client** > **Device posture**.
+
+1.  Click **Add new**.
 
     ![Device Posture](/cloudflare-one/static/documentation/identity/devices/device-posture.png)
 

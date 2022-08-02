@@ -69,14 +69,6 @@ Once saved, any device attempting to reach the application will need to connect 
 
 ## Determine the serial number
 
-Operating systems display version numbers in different ways. This section covers how to retrieve the version number in each OS, in a format matching what the OS Version posture check expects.
-
-{{<Aside type="note">}}
-
-You must ensure the version is entered is a valid `x.x.x` SemVer. If the command below only returns a value of `x.x`, you must append a `.0` so the complete version follows the `x.x.0` format.
-
-{{</Aside>}}
-
 ### On macOS
 
 1.  Open a terminal window.

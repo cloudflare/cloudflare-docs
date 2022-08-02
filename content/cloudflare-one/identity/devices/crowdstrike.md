@@ -41,6 +41,14 @@ To retrieve those values:
 1.  Click **Save**.
 1.  Click **Test Provider** to ensure the values have been entered correctly.
 
+## Configure the posture check
+
+1.  On the Zero Trust Dashboard, navigate to **Settings** > **WARP Client** > **Service provider checks**.
+1.  Click **Add new**.
+1.  Select the provider you created in the section above.
+1.  Enter the required fields
+1.  Click **Save**.
+
 ## ZTA Score
 
 This information is gathered from the [CrowdStrike Zero Trust Assessment APIs](https://falcon.us-2.crowdstrike.com/documentation/156/zero-trust-assessment-apis).

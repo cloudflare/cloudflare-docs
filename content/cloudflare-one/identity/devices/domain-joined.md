@@ -23,8 +23,8 @@ The Domain Joined device posture attribute ensures that a user is a member of a 
 
 To enable the Domain Joined check:
 
-1.  On the Zero Trust Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
-1.  Click **+Add**.
+1.  On the Zero Trust Dashboard, navigate to **Settings** > **WARP Client** > **Device posture**.
+1.  Click **Add new**.
 1.  Select **Domain Joined**.
 1.  Enter a descriptive name for the check.
 1.  Enter the domain you want Domain Joined to check for.
