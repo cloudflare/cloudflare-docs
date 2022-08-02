@@ -34,6 +34,11 @@ filename: _redirects
 /blog/* https://blog.my.domain/:splat
 /products/:code/:name /products?code=:code&name=:name
 ```
+{{<Aside type= "note">}}
+
+Since the _redirects file needs to be present in the served root directory, some frameworks may not work right now as Cloudflare only deploys the build directory like the _site folder in case of Jekyll.
+
+{{</Aside>}}
 
 A project is limited to 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Each redirect declaration has a 1,000-character limit. Malformed definitions are ignored. If there are multiple redirects for the same `source` path, the topmost redirect is applied.
 
