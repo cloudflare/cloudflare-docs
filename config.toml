@@ -5,6 +5,7 @@ languageCode = "en"
 DefaultContentLanguage = "en"
 disableHugoGeneratorInject = true
 enableRobotsTXT = false
+publishDir = "/public"
 
 disableAliases = true
 disableKinds = ["taxonomy", "taxonomyTerm"]
