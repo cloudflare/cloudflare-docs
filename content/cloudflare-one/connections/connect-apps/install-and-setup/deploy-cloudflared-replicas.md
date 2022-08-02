@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Tunnel availability and failover
 layout: single
-weight: 11
+weight: 6
 ---
 
 # Tunnel availability and failover

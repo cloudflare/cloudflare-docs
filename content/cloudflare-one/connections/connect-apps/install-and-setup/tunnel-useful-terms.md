@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Useful terms
-weight: 6
+weight: 2
 ---
 
 # Useful terms

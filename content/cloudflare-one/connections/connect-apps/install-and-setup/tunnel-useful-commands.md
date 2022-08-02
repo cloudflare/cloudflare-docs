@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
-title: Useful commands
-weight: 7
+title: Tunnel Command Line Interface
+weight: 4
 ---
 
 # Useful commands
