@@ -5,7 +5,6 @@ languageCode = "en"
 DefaultContentLanguage = "en"
 disableHugoGeneratorInject = true
 enableRobotsTXT = false
-lastmod = ["lastmod", ":git", "date", "publishDate"]
 
 disableAliases = true
 disableKinds = ["taxonomy", "taxonomyTerm"]
