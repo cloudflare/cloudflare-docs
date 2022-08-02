@@ -3,7 +3,7 @@ pcx-content-type: how to
 title: Clip videos
 ---
 
-## Clip videos on Demand (VOD)
+## Clip Videos on Demand (VOD)
 
 With Video on Demand (VOD) clipping, you can trim a video down to a specific segment. For example, if you have a three hour video but only need a 20 second segment, you can clip the video that specific segment.
 
