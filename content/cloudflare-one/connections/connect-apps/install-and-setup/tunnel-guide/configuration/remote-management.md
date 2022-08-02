@@ -6,7 +6,7 @@ weight: 2
 
 # Remote management
 
-If you created a Cloudflare Tunnel from the Zero Trust Dashboard, the tunnel [runs as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/) on your OS. You can modify the Cloudflare Tunnel service with one or more [configuration options](/cloudflare-one/connections/connect-apps/configuration/arguments/).
+If you created a Cloudflare Tunnel from the Zero Trust Dashboard, the tunnel [runs as a service](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/as-a-service/) on your OS. You can modify the Cloudflare Tunnel service with one or more [configuration options](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/configuration/arguments/).
 
 ## Linux
 

@@ -94,7 +94,7 @@ You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-a
     $ cloudflared tunnel run grafana
     ```
 
-This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/#create-route-and-configure-the-tunnel) for long-lived connections.
+This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/as-a-service/#create-route-and-configure-the-tunnel) for long-lived connections.
 
 ## Route private IP ranges through WARP
 

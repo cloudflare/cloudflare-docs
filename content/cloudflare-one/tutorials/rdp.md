@@ -110,7 +110,7 @@ C:\Cloudflared\bin\cloudflared.exe tunnel list
 
 ## Configure the Tunnel
 
-You can now [configure the Tunnel](/cloudflare-one/connections/connect-apps/configuration/) to serve traffic.
+You can now [configure the Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/configuration/) to serve traffic.
 
 1.  Create a `YAML` file that `cloudflared` can reach. By default `cloudflared` will look for the file in the `C:\Users\%USERNAME%\.cloudflared\` folder of your Windows machine.
 
@@ -147,7 +147,7 @@ domain in the Cloudflare control panel:
 
 {{</Aside>}}
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/configuration/local-management/ingress/).
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Select your domain and go to **DNS**.
 
@@ -169,7 +169,7 @@ You can now run the Tunnel to connect the target service to Cloudflare. Use the 
 C:\Cloudflared\bin\cloudflared.exe tunnel run <NAME>
 ```
 
-We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/) that is configured to launch on start.
+We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/as-a-service/) that is configured to launch on start.
 
 ## Connect from a client machine
 

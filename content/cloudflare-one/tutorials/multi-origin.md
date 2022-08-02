@@ -60,7 +60,7 @@ Cloudflare will create the Tunnel with that name and generate an ID and credenti
 
 ## Configure `cloudflared`
 
-You can now [configure](/cloudflare-one/connections/connect-apps/configuration/) `cloudflared` to route traffic to both applications for one or many hostnames using [ingress rules](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
+You can now [configure](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/configuration/) `cloudflared` to route traffic to both applications for one or many hostnames using [ingress rules](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/configuration/local-management/ingress/).
 
 By default, `cloudflared` expects the configuration file at a specific location: `~/.cloudflared/config.yml`. You can modify this location if you want. For this example, we'll keep the default. Create or edit your configuration file using a text editor.
 
@@ -94,7 +94,7 @@ At this point, you have created and configured your Cloudflare Tunnel connection
 
 `$ cloudflared tunnel run`
 
-We recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/) in production. You can also run `cloudflared` [with the Cloudflare Load Balancer](/cloudflare-one/tutorials/migrate-lb-tunnel/) alongside traditional, IP-exposed, origin servers during a migration for a zero-downtime cutover.
+We recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide//as-a-service/) in production. You can also run `cloudflared` [with the Cloudflare Load Balancer](/cloudflare-one/tutorials/migrate-lb-tunnel/) alongside traditional, IP-exposed, origin servers during a migration for a zero-downtime cutover.
 
 ## Create or modify DNS records
 
