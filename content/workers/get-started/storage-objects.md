@@ -51,7 +51,7 @@ To get started with R2:
 | --------------------------------------------- | ------------ | ------------ |
 | Maximum size per value                        | 25 MiB       | 5 TB         |
 | Consistency model                             | Eventual     | Strong       |
-| Cached                                        | Always       | Can be by using [Cache API](/workers/runtime-apis/cache/) in a Worker |
+| Cached                                        | Always       | Possible when using [Cache API](/workers/runtime-apis/cache/) in a Worker |
 | S3-compatible API                             | No           | Yes                     |
 | TTL expiration                                | Object-level | Not currently available |
 | Maximum operations per second                 | Unlimited    | <1,000/bucket           |
