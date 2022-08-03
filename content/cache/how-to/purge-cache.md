@@ -162,7 +162,7 @@ Example: If you purge `foo.com/bar`, any asset that starts with `foo.com/bar` wi
 
 Purge resources that use Cache Keys via the [Cloudflare API](https://api.cloudflare.com/#zone-purge-files-by-url). If you use [Cloudflare’s Purge by URL](https://api.cloudflare.com/#zone-purge-files-by-url), include the headers and query strings that are in your custom Cache Key. 
 
-At the moment, it is not possible to purge a URL stored through Cache API that uses a custom cache key set by a Worker, instead you should use a [custom key created by Page Rule](/cache/how-to/create-cache-keys/). Alternatively, you can also purge your assets using [cache-tags](/cache/how-to/purge-cache/#purge-using-cache-tags).
+At the moment, it is not possible to purge a URL stored through Cache API that uses a custom cache key set by a Worker. Instead, use a [custom key created by Page Rules](/cache/how-to/create-cache-keys/). Alternatively, purge your assets using [cache-tags](/cache/how-to/purge-cache/#purge-using-cache-tags).
 
 To purge `device_type` or `geo,` use `CF-Device-Type` or `CF-IPCountry`. `lang` cannot currently be purged. [Purge by Tag / Host](https://api.cloudflare.com/#zone-purge-files-by-cache-tags-or-host) & [Purge Everything](https://api.cloudflare.com/#zone-purge-all-files) are not impacted by the use of custom Cache Keys.
 
