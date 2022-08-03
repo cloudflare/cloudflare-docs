@@ -234,7 +234,7 @@ Customers who want to be warned about changes to server health as determined by 
 
 Multiple filters available:
 
-- Customers can can search for and add health checks from their list of health checks. 
+- Customers can search for and add health checks from their list of health checks.
 - Customers can choose a trigger to fire the notification. Available triggers are:
   - Becomes unhealthy
   - Becomes healthy
@@ -791,7 +791,7 @@ Stream notifications are entirely customizable by the customer. Action will depe
 
 Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in firewall events.
 
-For more information, refer to [WAF alerts](/waf/alerts/).
+For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
 **Other options / filters**
 
@@ -816,7 +816,7 @@ Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to id
 
 Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in firewall events.
 
-For more information, refer to [WAF alerts](/waf/alerts/).
+For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
 **Other options / filters**
 
