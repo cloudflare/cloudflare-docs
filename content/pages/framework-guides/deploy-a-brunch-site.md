@@ -20,7 +20,7 @@ $ npm install -g brunch
 Brunch maintains a library of community-provided [skeletons](https://brunch.io/skeletons) to offer you a boilerplate for your project. Browse the library to choose a skeleton, or run Brunch's recommended `es6` skeleton with the `brunch new` command:
 
 ```sh
-$ $ brunch new proj -s es6
+$ brunch new proj -s es6
 ```
 
 {{<render file="_tutorials-before-you-start.md">}}
@@ -35,7 +35,7 @@ Deploy your site to Pages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/.
 2. In **Account Home**, select **Pages** > **Create a project**. 
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select *Brunch* as your **Framework preset**. Your selection will provide the following information.
 
 <div>
 
@@ -48,8 +48,6 @@ Deploy your site to Pages:
 </div>
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
-
-{{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 
