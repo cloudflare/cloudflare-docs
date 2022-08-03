@@ -52,6 +52,12 @@ Ask your customer to create a TXT record named the **name** and containing the *
 #### Email
  
 {{<render file="../../ssl/_partials/_email-validation-definition.md">}}
+
+{{<Aside type="note">}}
+
+With the [upcoming change](/ssl/ssl-tls/migration-guides/digicert-update/custom-hostname-certificates/) to certificates issued by DigiCert, email DCV will soon be unsupported..
+
+{{</Aside>}}
  
 {{<render file="_ssl-for-saas-create-hostname.md">}}
  
@@ -65,6 +71,12 @@ Ask your customer to create a TXT record named the **name** and containing the *
 #### CNAME (manual)
  
 {{<render file="../../ssl/_partials/_dcv-cname-definition.md">}}
+
+{{<Aside type="note">}}
+
+With the [upcoming change](/ssl/ssl-tls/migration-guides/digicert-update/custom-hostname-certificates/) to certificates issued by DigiCert, CNAME DCV will soon be unsupported.
+
+{{</Aside>}}
  
 Since this method is only available using the API, you need to make a [POST request](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) and set a `"method":"cname"` parameter.
  

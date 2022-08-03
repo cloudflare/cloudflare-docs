@@ -10,6 +10,12 @@ meta:
 
 {{<render file="_email-validation-definition.md">}}
 
+{{<Aside type="note">}}
+
+With the [upcoming change](/ssl/ssl-tls/migration-guides/digicert-update/advanced-certificates/) to certificates issued by DigiCert, email DCV will soon be unsupported.
+
+{{</Aside>}}
+
 ## Limitations
 
 Based on your chosen Certificate Authority, you may not be able to use email verification with [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
