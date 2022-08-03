@@ -18,6 +18,8 @@ meta:
 
 ### View DCV values
 
+Once you specify your chosen validation method, you can access the validation values by:
+
 {{<render file="_generic-view-validation-status.md">}}
 
 Once you locate your certificate, find the following values:
