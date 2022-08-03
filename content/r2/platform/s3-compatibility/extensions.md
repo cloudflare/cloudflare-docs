@@ -17,7 +17,7 @@ HTTP header names and values may only contain ASCII characters, which is a small
 Be mindful when using both Workers and S3 API endpoints to access the same data. If the R2 metadata keys contain Unicode, they are stripped when accessed through the S3 API and the `x-amz-missing-meta` header is set to the number of keys that were omitted.
 {{</Aside>}}
 
-These headers map to the `httpMetadata` field in the [R2 bindings]():
+These headers map to the `httpMetadata` field in the [R2 bindings](/workers/platform/bindings/):
 
 {{<table-wrap>}}
 | HTTP Header           | Property Name                     |
