@@ -388,7 +388,7 @@ Cloudflare D1 is Cloudflare's first SQL database built on SQLite. Since D1 is cu
 
 ### Using D1 database locally 
 
-While developing locally, you can interact with a D1 database by adding `--d1=<BINDING> ` to your run command. For example, if your database is bound to `NORTHWIND_DB`, you can access this database in local dev by running `npx wrangler pages dev dist --d1=NORTHWIND_DB`. You can access the binding from  `context.env` (e.g. 'context.env.NORTHWIND_DB') 
+While developing locally, you can interact with a D1 database by adding `--d1=<BINDING> ` to your run command. For example, if your database is bound to `NORTHWIND_DB`, you can access this database in local dev by running `npx wrangler pages dev dist --d1=NORTHWIND_DB`. You can access the binding from  `context.env` (e.g. `context.env.NORTHWIND_DB`) 
 
 ```js
 export async function onRequestGet({ env }) => {
