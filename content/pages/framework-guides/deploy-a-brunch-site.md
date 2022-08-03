@@ -23,7 +23,6 @@ Brunch maintains a library of community-provided [skeletons](https://brunch.io/s
 $ brunch new proj -s es6
 ```
 
-
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Create a GitHub repository
@@ -35,8 +34,8 @@ In your terminal, `cd` into your new Brunch project directory and run:
 ```sh
 $ git init
 $ git add -A
-$ git commit -m "<YOUR COMMIT MESSAGE>"
-$ git remote add origin <YOUR NEW GITHUB REPOSITORY URL>
+$ git commit -m "<YOUR_COMMIT_MESSAGE>"
+$ git remote add origin <YOUR_NEW_GITHUB_REPOSITORY_URL>
 $ git push -u origin main
 ```
 
@@ -50,7 +49,7 @@ Deploy your site to Pages:
 2. In **Account Home**, select **Pages** > **Create a project**. 
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select *Brunch* as your **Framework preset**. Your selection will provide the following information.
 
-<div>
+{{<table-wrap>}}
 
 | Configuration option | Value                       |
 | -------------------- | --------------------------- |
@@ -58,7 +57,7 @@ Deploy your site to Pages:
 | Build command        | `brunch build --production` |
 | Build directory      | `public`                    |
 
-</div>
+{{</table-wrap>}}
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
