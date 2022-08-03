@@ -44,6 +44,8 @@ Assets stored in the cache through [Cache API](/workers/runtime-apis/cache/) ope
 
   - Available to Enterprise Customers, [Cache Tags](/cache/how-to/purge-cache/#add-cache-tag-http-response-headers) can be added to requests dynamically in a Worker by calling `response.headers.append()` and appending `Cache-Tag` values dynamically to that request. Once set, those tags can be used to selectively purge assets from cache without invalidating all cached assets on a zone. 
 
+- At the moment, it is not possible to purge a URL stored through Cache API that uses a custom cache key set by a Worker, instead you should use a [custom key created by Page Rule](/cache/how-to/create-cache-keys/). Alternatively, you can also purge your assets using [cache-tags](/cache/how-to/purge-cache/#purge-using-cache-tags).
+
 ---
 
 ## Edge versus browser caching
