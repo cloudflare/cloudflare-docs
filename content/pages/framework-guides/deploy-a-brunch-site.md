@@ -69,7 +69,3 @@ Every time you commit new code to your Brunch site, Cloudflare Pages will automa
 ## Related resources
 
 By completing this guide, you have successfully deployed your Brunch site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
-
-
-
-
