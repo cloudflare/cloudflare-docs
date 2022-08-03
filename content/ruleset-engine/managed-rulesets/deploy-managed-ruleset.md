@@ -24,7 +24,7 @@ Use the following workflow to deploy a Managed Ruleset to a phase at the account
 The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of your account (`<ACCOUNT_ID>`) by creating a rule that executes the Managed Ruleset. The rules in the Managed Ruleset are executed when the zone name matches one of `example.com` or `anotherexample.com`.
 
 {{<Aside type="warning">}}
-You can only deploy rulesets at the account level that handle traffic for zones on an Enterprise plan. The expression of your `execute` rule must include `AND zone.level eq "ENT"` or else the API operation will fail.
+Managed Rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must include `AND zone.level eq "ENT"` or else the API operation will fail.
 {{</Aside>}}
 
 ```json

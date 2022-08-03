@@ -21,8 +21,10 @@ To deploy a custom ruleset in your account, follow these general steps:
 
 For more information, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets/) in the Ruleset Engine documentation.
 
-{{<Aside type="warning">}}
+{{<Aside type="warning" header="Important">}}
 
-You can only deploy custom rulesets that handle incoming traffic of zones on an Enterprise plan. You must include `AND zone.level eq "ENT"` in the expression of the rule deploying the ruleset or else the API operation will fail.
+* Deployed custom rulesets will only apply to incoming traffic of zones on an Enterprise plan. You must include `AND zone.level eq "ENT"` in the expression of the rule deploying the custom ruleset or else the API operation will fail.
+
+* Currently, you can only deploy custom rulesets to a phase at the account level.
 
 {{</Aside>}}
