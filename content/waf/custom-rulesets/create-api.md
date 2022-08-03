@@ -8,7 +8,13 @@ weight: 3
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to work with custom rulesets using an API.
 
-To deploy a custom ruleset to your account, you must follow these general steps:
+{{<Aside type="note">}}
+
+This feature is only available for customers on an Enterprise plan.
+
+{{</Aside>}}
+
+To deploy a custom ruleset in your account, follow these general steps:
 
 1. Create a custom ruleset, if it does not exist.
 2. Deploy the custom ruleset to your account.
