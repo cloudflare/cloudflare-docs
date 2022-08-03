@@ -5187,6 +5187,7 @@ pre {
   }
 }
 
+/* Beta pill */
 .DocsMarkdown-beta {
   display: flex;
   flex-direction: row;
@@ -5205,26 +5206,23 @@ pre {
   width: 42px;
   height: 18px;
 
-  /* Orange/orange[8] - #FBCDA5 */
   background: var(--orange-8);
   border-radius: 20px;
 
-  /* Inside auto layout */
   flex: none;
   order: 0;
   flex-grow: 0;
 
-  /* 400/fontSizes.1 (12px) */
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 150%;
   /* identical to box height, or 18px */
 
-  /* Orange/orange[1] - #482303 */
   color: var(--orange-1);
 }
 
+/* Product tagline */
 .DocsMarkdown--description {
   font-size: 20px;
   line-height: 24px;
@@ -5232,6 +5230,7 @@ pre {
   margin-bottom: 1em;
 }
 
+/* Product availability */
 .DocsMarkdown--plan {
   /*width: 110px;*/
   height: 25px;
@@ -5257,6 +5256,36 @@ pre {
   color: var(--indigo-5);
 }
 
+/* 'Features' section */
+.DocsMarkdown--feature-group {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 1em;
+  align-items: center;
+}
+
+.DocsMarkdown--feature-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .DocsMarkdown--feature-group {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-bottom: 1em;
+  }
+  .DocsMarkdown--feature-button {
+    justify-content: flex-start;
+  }
+}
+
+/* 'Related products' section */
+.DocsMarkdown--related-product {
+  color: inherit;
+}
+
+/* 'More resources' section */
 .DocsMarkdown--resource-group {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -5314,33 +5343,6 @@ pre {
 
 [theme="dark"] .DocsMarkdown--resource:hover {
   background-color: #2f3133;
-}
-
-.DocsMarkdown--feature-group {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  gap: 1em;
-  align-items: center;
-}
-
-.DocsMarkdown--feature-button {
-  display: flex;
-  justify-content: flex-end;
-}
-
-@media (max-width: 768px) {
-  .DocsMarkdown--feature-group {
-    grid-template-columns: 1fr;
-    gap: 0;
-    padding-bottom: 1em;
-  }
-  .DocsMarkdown--feature-button {
-    justify-content: flex-start;
-  }
-}
-
-.DocsMarkdown--related-product {
-  color: inherit;
 }
 
 .littlefoot-footnote__button {
