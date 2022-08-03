@@ -428,7 +428,7 @@ All Cloudflare plans.
 
 **Who is it for?**
 
-BYOIP customers who want to receive a notification when their prefixes are advertised in places they should not be.
+[BYOIP customers](/byoip/) who want to receive a notification when their prefixes are advertised in places they should not be.
 
 **Other options / filters**
 
@@ -461,7 +461,7 @@ None.
 
 **Included with**
 
-Access and Cloudflare for SaaS.
+[Access](/cloudflare-one/identity/devices/mutual-tls-authentication/) and [Cloudflare for SaaS](/cloudflare-for-saas/security/certificate-management/enforce-mtls/).
 
 **What should you do if you receive one?**
 
@@ -484,7 +484,7 @@ None.
 
 **Included with**
 
-When a advanced certificate is validated, issued, renewed, or expired.
+When an advanced certificate is validated, issued, renewed, or expired.
 
 **What should you do if you receive one?**
 
