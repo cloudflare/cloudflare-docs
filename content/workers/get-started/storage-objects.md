@@ -12,7 +12,7 @@ The Cloudflare Workers platform provides multiple storage options. This guide wi
 
 ## KV
 
-Workers KV is an eventually consistent, global, low-latency, key-value data store. 
+Workers KV is an eventually consistent key-value data store that caches on the edge.
 
 It is ideal for projects that require:
 
