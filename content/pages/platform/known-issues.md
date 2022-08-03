@@ -23,7 +23,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - A GitHub or GitLab account cannot be attached to more than one Cloudflare account.
 
-## Build configurations 
+## Build configuration
 
 - `*.pages.dev` subdomains currently cannot be changed. If you need to change your `*.pages.dev` subdomain, delete your project and create a new one.
 - Hugo builds automatically run an old version. To run the latest version of Hugo (for example, `0.80.0`), you will need to set an environment variable. Set `HUGO_VERSION` to `0.80.0` or the Hugo version of your choice.
