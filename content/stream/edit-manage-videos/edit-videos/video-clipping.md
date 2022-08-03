@@ -5,9 +5,11 @@ title: Clip videos
 
 # Clip videos
 
-With video clipping – also referred to as "trimming" or changing the length of the video, you can change the start and end points of a video so your users only see a specific "clip" of the video. For example, if you have a 20 minute video but only need to show the first five minutes, you can clip the video that specific segment.
+With video clipping, also referred to as "trimming" or changing the length of the video, you can change the start and end points of a video so viewers only see a specific "clip" of the video. For example, if you have a 20 minute video but only need to show the first five minutes, you can clip the video to that specific section.
 
-Before you can use VOD clipping, you will need an API token. For more information on creating an API token, refer to [Creating API tokens](/api/tokens/create/).
+## Prerequisites
+
+Before you can clip a video, you will need an API token. For more information on creating an API token, refer to [Creating API tokens](/api/tokens/create/).
 
 ## Required parameters
 
@@ -27,8 +29,27 @@ header: Required parameters
 - **`clippedFromVideoUID`**: The unique identifier for the video used to create the new, clipped video.
 - **`startTimeSeconds`**: The timestamp from the existing video that indicates when the new video begins.
 - **`endTimeSeconds`**: The timestamp from the existing video that indicates when the new video ends.
+</br></br>
 
-You can check whether your video is ready to play from the [Cloudflare dashboard](https://dash.cloudflare.com/) under **Stream** > **Videos**. While the clipped video processes, the video status response displays **Queued**. When the clipping process is complete, the video status changes to **Ready** and displays the new name of the clipped video and the new duration.
+```bash
+---
+header: Example: Clip a video
+highlight: [5,6,7]
+---
+curl --location --request POST 'https://api.staging.cloudflare.com/client/v4/accounts/<YOUR_ACCOUND_ID_HERE>/stream/clip' \
+--header 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "clippedFromVideoUID": "0ea62994907491cf9ebefb0a34c1e2c6",
+    "startTimeSeconds": 10,
+    "endTimeSeconds": 15,
+    "meta": {
+      "name": "overriding-filename-clip.mp4"
+    }
+}'
+```
+
+You can check whether your video is ready to play after selecting your account from the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream). While the clipped video processes, the video status response displays **Queued**. When the clipping process is complete, the video status changes to **Ready** and displays the new name of the clipped video and the new duration.
 
 To receive a notification when your video is done processing and ready to play, you can subscribe to webhook notifications. For more information on webhooks, refer to [Use webhooks](/stream/edit-manage-videos/manage-video-library/using-webhooks/).
 
@@ -38,7 +59,7 @@ When you clip a video, you can also specify a new name for the clipped video. In
 
 ```bash
 ---
-header: Example request for specifying a custom name
+header: Example: Specify a custom name
 highlight: [6]
 ---
 {
@@ -53,13 +74,13 @@ highlight: [6]
 
 When the video clipping is complete, the video with the new name displays in your Cloudflare dashboard in the list videos.
 
-## Use custom watermark profiles
+## Add a watermark
 
 You can clip a video and also add a custom watermark. For more information on watermarks and uploading a watermark profile, refer to [Apply watermarks](/stream/edit-manage-videos/edit-videos).
 
 ```bash
 ---
-header: Example request for a clipped video with a custom name and watermark profile
+header: Example: Clip a video, set a new video name, and apply a watermark
 highlight: [5,6,9]
 ---
 {
@@ -75,15 +96,13 @@ highlight: [5,6,9]
 }
 ```
 
-After the video processing is complete, the video displays the watermark you specified on the video.
-
 ## Require signed URLs
 
-You can clip a video and also require a signed URL, which makes a video private and accessible only to certain users. For more information about signed URLs, refer to [Secure your Stream](/stream/viewing-videos/securing-your-stream/).
+You can clip a video and also [require a signed URL]((/stream/viewing-videos/securing-your-stream/)), which makes a video private and accessible only to certain users. 
 
 ```bash
 ---
-header: Example request with a required signed URL
+header: Example: Clip a video and require signed URLs
 highlight: [5]
 ---
 {
@@ -105,7 +124,7 @@ You can clip a video and also specify a thumbnail for your video using a percent
 
 ```bash
 ---
-header: Example request for a clipped video with a thumbnail requested at the 50% mark
+header: Example: Clip a video with a thumbnail generated at the 50% mark
 highlight: [5]
 ---
 {
