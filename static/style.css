@@ -718,7 +718,7 @@ html {
   font-size: .9rem;
   padding: .15rem;
   background: transparent;
-  background-color: #828282;
+  background-color: #bcbabb;
   color: #1e1e1e;
   border: ridge 1px #7b7b7c;
   border-radius: 5px;
@@ -727,7 +727,7 @@ html {
 
 .copyCode-button:hover {
   cursor: pointer;
-  background-color: #bcbabb;
+  background-color:  #828282;
 }
 
 [theme="light"] .CodeBlock-is-light-in-light-theme {
