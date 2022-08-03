@@ -22,7 +22,7 @@
     }
 
     // is '/' or SHIFT+'s' or COMMAND+'k'
-    if (key === 191 || (ev.shiftKey && key === 83) || (ev.metaKey && key === 75)) {
+    if (ev.key === '/' || (ev.shiftKey && key === 83) || (ev.key === 'k' && (ev.metaKey || ev.ctrlKey))) {
       ev.preventDefault();
       window.scrollTo(0, 0);
       element.focus();
