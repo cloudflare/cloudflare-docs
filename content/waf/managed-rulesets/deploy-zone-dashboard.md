@@ -1,14 +1,16 @@
 ---
-title: Deploy Managed Rulesets for a zone
+title: Deploy in the dashboard for a zone
 pcx_content_type: how-to
 weight: 5
 meta:
-  title: Deploy Managed Rulesets for a zone in the dashboard
+  title: Deploy a Managed Ruleset in the dashboard for a zone
 ---
 
-# Deploy Managed Rulesets for a zone in the dashboard
+# Deploy a Managed Ruleset in the dashboard for a zone
 
-You can enable and configure Managed Rulesets for a zone in **Security** > **WAF** > **Managed rules**.
+You can deploy and configure Managed Rulesets for a zone in **Security** > **WAF** > **Managed rules**.
+
+If you wish to deploy a Managed Ruleset for all Enterprise zones in your account, refer to [Deploy a Managed Ruleset in the dashboard for an account](/waf/managed-rulesets/deploy-account-dashboard/).
 
 ![Example Managed Rules configuration in the Managed rules tab under Security > WAF. There is a configured rule for executing the Cloudflare Managed Ruleset, and there are two Managed Rulesets available for deployment.](/waf/static/waf-managed-rules-tab.png)
 
@@ -80,48 +82,11 @@ To view the rules of a Managed Ruleset:
 
 ### Configure a single rule in a Managed Ruleset
 
-You can configure one or more rules in the Browse Managed Ruleset interface.
-
-Do the following:
-
-1. Search for a rule using the available filters. You can search for tags.
-
-2. Find the rule you want to configure in the results list.
-
-3. In the result line for the rule you want to change, select the desired value for a field in the displayed drop-down lists. For example, select the rule action in the **Action** dropdown.
-
-    In some Managed Rulesets, you can also change the status of a rule using the toggle available on the right.
-
-    ![The Browse rules page displaying the list of rules in the Cloudflare Managed Ruleset. In this interface you can override the behavior of specific rules.](/waf/static/waf-browse-rules.png)
-
-4. Select **Next**, and then select **Save**.
+{{<render file="_managed-ruleset-configure-single-rule.md">}}
 
 ### Configure rules in bulk in a Managed Ruleset
 
-You can configure several rules at once in the Browse Managed Ruleset interface.
-
-Do the following:
-
-1. Enter search terms in the available input to find the rules you want to configure. You can search for tags.
-
-    ![Example of filtering rules by the wordpress tag in the Browse rules page](/waf/static/waf-selected-tag.png)
-
-2. In the results list, select the checkbox on the left of all the rules you want to configure.
-
-    Alternatively, select a tag name under the search input to filter the rules with that tag, and then select the checkboxes for the rules you want to configure.
-
-3. Update one or more fields for the selected rules using the drop-down lists displayed in the top right corner of the table.
-
-    ![Selecting all rules in a page displays additional drop-down lists above the table to override the behavior of several rules at once.](/waf/static/waf-modify-selected-rules.png)
-
-4. Select **Next**.
-
-5. If you selected a tag, a dialog appears asking you if any new rules with the selected tag should be configured with the field values you selected.
-
-    * Select **Do not apply to new rules** to apply your configurations to the selected rules only.
-    * Select **Apply to new rules** if you want to apply your configurations to any new rules with the select tag.
-
-6. Select **Save**.
+{{<render file="_managed-ruleset-configure-rules-in-bulk.md">}}
 
 ### Specify a custom expression for the ruleset
 
