@@ -4040,6 +4040,33 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   height: 100%;
 }
 
+@media (min-width:769px) {
+  .DocsSearch--input-wrapper {
+    display: flex;
+    align-items: baseline;
+    border: 1px solid rgba(217, 217, 217, .5);
+    border-radius: 5px;
+    border-left: none;
+  }
+
+  [theme=dark] .DocsSearch--input-wrapper {
+    border: 1px solid rgba(217, 217, 217, .2);
+    border-left: none;
+  }
+}
+
+@media (min-width:1025px) {
+  .slashPlaceholder {
+    margin-right: .5em;
+  }
+}
+
+@media (max-width:1025px) {
+  .slashPlaceholder {
+    visibility: hidden;
+  }
+}
+
 .DocsSearch--input {
   color: inherit;
   width: 100%;
