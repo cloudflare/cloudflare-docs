@@ -106,7 +106,7 @@ function $clicktoClipboard(ev: MouseEvent) {
 
 export function clipboardButton() {
   const copyButtonLabel = "Copy Code";
-  let blocks = document.getElementsByClassName("chroma");
+  let blocks = document.getElementsByClassName("CodeBlock");
   for (let i = 0; i < blocks.length; i++) {
     if (navigator.clipboard) {
       let button = document.createElement("button");
