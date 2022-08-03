@@ -32,11 +32,15 @@
                 </div>
 
                 <div class="DocsTutorials--column" data-column="updated">
-                  <span class="DocsTutorials--column-text">Updated</span>
+                  <span class="DocsTutorials--column-text">Last Updated</span>
                 </div>
 
                 <div class="DocsTutorials--column" data-column="type">
                   <span class="DocsTutorials--column-text">{{ $column_text }}</span>
+                </div>
+
+                <div class="DocsTutorials--column" data-column="difficulty">
+                  <span class="DocsTutorials--column-text">Difficulty</span>
                 </div>
 
                 <div class="DocsTutorials--column" data-column="length">
@@ -70,6 +74,10 @@
 
                     <div class="DocsTutorials--column" data-column="type">
                       {{- index .Params $column_param -}}
+                    </div>
+
+                     <div class="DocsTutorials--column" data-column="difficulty">
+                      {{ .Params.difficulty }}
                     </div>
 
                     <div class="DocsTutorials--column" data-column="length">
