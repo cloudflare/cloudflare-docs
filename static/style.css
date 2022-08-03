@@ -720,7 +720,7 @@ html {
   background: transparent;
   background-color: #bcbabb;
   color: #1e1e1e;
-  border: ridge 1px #7b7b7c;
+  border: solid 1px #7b7b7c;
   border-radius: 5px;
   text-shadow: #c4c4c4 0 0 2px;
 }
