@@ -5282,7 +5282,14 @@ pre {
 
 /* 'Related products' section */
 .DocsMarkdown--related-product {
-  color: inherit;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  column-gap: 0.75em;
+  align-items: start;
+}
+
+.DocsMarkdown--related-product-logo {
+  fill: var(--orange);
 }
 
 /* 'More resources' section */
