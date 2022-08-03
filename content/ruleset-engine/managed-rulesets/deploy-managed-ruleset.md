@@ -17,11 +17,15 @@ Use the following workflow to deploy a Managed Ruleset to a phase at the account
 1. Get your account ID.
 2. Get the ID of the Managed Ruleset you wish to deploy. Refer to [List existing rulesets](/ruleset-engine/rulesets-api/view/#list-existing-rulesets) for details.
 3. Identify the phase where you want to deploy the Managed Ruleset. Ensure that the Managed Ruleset belongs to the same phase where you want to deploy it. To learn more about the available phases supported by each Cloudflare product, check the specific documentation for that product.
-4. Add a rule to the account-level phase entry point ruleset that executes the Managed Ruleset.
+4. Add a rule to the account-level phase entry point ruleset that executes the Managed Ruleset. The rule expression must include `AND zone.level eq "ENT"` so that it only applies to zones on an Enterprise plan.
 
 ### Example
 
 The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of your account (`<ACCOUNT_ID>`) by creating a rule that executes the Managed Ruleset. The rules in the Managed Ruleset are executed when the zone name matches one of `example.com` or `anotherexample.com`.
+
+{{<Aside type="warning">}}
+You can only deploy rulesets at the account level that handle traffic for zones on an Enterprise plan. The expression of your `execute` rule must include `AND zone.level eq "ENT"` or else the API operation will fail.
+{{</Aside>}}
 
 ```json
 ---

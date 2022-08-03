@@ -14,6 +14,10 @@ Before you begin:
 
 To deploy a custom ruleset, add a rule that executes the custom ruleset. Define the rule scope in the rule expression.
 
+{{<Aside type="warning">}}
+You must include `AND zone.level eq "ENT"` in the expression of the rule deploying the ruleset or else the API operation will fail.
+{{</Aside>}}
+
 ## Example
 
 The following `PUT` request adds a rule that executes a custom ruleset when the zone name matches `example.com`.
@@ -30,7 +34,7 @@ curl -X PUT \
     {
       "action":"execute",
       "description":"Execute custom ruleset",
-      "expression": "cf.zone.name == \"example.com\"",
+      "expression": "cf.zone.name == \"example.com\" AND zone.level eq \"ENT\"",
       "action_parameters": {
         "id":"<CUSTOM_RULESET_ID>"
       }
@@ -68,7 +72,7 @@ header: Response
           "id": "<CUSTOM_RULESET_ID>",
           "version": "latest"
         },
-        "expression": "cf.zone.name == \"example.com\"",
+        "expression": "cf.zone.name == \"example.com\" AND zone.level eq \"ENT\"",
         "last_updated": "2021-03-18T18:35:14.135697Z",
         "ref": "<PHASE_RULE_REF>",
         "enabled": true
@@ -81,7 +85,7 @@ header: Response
           "id": "<EXECUTED_RULESET_ID_1>",
           "version": "latest"
         },
-        "expression": "cf.zone.name eq  \"example.com\"",
+        "expression": "cf.zone.name eq  \"example.com\" AND zone.level eq \"ENT\"",
         "last_updated": "2021-03-16T15:51:49.180378Z",
         "ref": "<EXISTING_PHASE_RULE_REF_1>",
         "enabled": true
@@ -94,7 +98,7 @@ header: Response
           "id": "<EXECUTED_RULESET_ID_2>",
           "version": "latest"
         },
-        "expression": "cf.zone.name eq  \"example.com\"",
+        "expression": "cf.zone.name eq  \"example.com\" AND zone.level eq \"ENT\"",
         "last_updated": "2021-03-16T15:50:29.861157Z",
         "ref": "<EXISTING_PHASE_RULE_REF_2>",
         "enabled": true
