@@ -21,7 +21,7 @@
       return location.assign(redirect);
     }
 
-    // is '/' or SHIFT+'s' or CTRL+'k'
+    // is '/' or SHIFT+'s' or COMMAND+'k'
     if (key === 191 || (ev.shiftKey && key === 83) || (ev.metaKey && key === 75)) {
       ev.preventDefault();
       window.scrollTo(0, 0);
