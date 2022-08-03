@@ -5,7 +5,7 @@ title: Clip videos
 
 # Clip videos
 
-With video clipping, also referred to as "trimming" or changing the length of the video, you can change the start and end points of a video so viewers only see a specific "clip" of the video. For example, if you have a 20 minute video but only need to show the first five minutes, you can clip the video to that specific section.
+With video clipping, also referred to as "trimming" or changing the length of the video, you can change the start and end points of a video so viewers only see a specific "clip" of the video. For example, if you have a 20 minute video where the first five minutes include event setup and waiting for the event to start, you can clip the video to remove the first five minutes and start when the event actually begins.
 
 ## Prerequisites
 
