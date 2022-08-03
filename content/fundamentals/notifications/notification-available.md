@@ -471,12 +471,12 @@ Upload a [renewed certificate](/cloudflare-one/identity/devices/mutual-tls-authe
 </details>
 
 <details>
-<summary>Dedicated SSL Alert</summary>
+<summary>Advanced Certificate Alert</summary>
 <div>
 
 **Who is it for?**
 
-Customers with dedicated certificates that want to be alerted on validation, issuance, renewal, and expiration of certificates.
+Customers with [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) that want to be alerted on validation, issuance, renewal, and expiration of certificates.
 
 **Other options / filters**
 
@@ -484,7 +484,7 @@ None.
 
 **Included with**
 
-When a dedicated certificate is validated, issued, renewed, or expired.
+When a advanced certificate is validated, issued, renewed, or expired.
 
 **What should you do if you receive one?**
 
