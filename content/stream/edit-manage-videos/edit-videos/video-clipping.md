@@ -98,7 +98,7 @@ highlight: [5,6,9]
 
 ## Require signed URLs
 
-You can clip a video and also [require a signed URL](/stream/viewing-videos/securing-your-stream/), which makes a video private and accessible only to certain users. 
+When clipping a video, you can make a video private and accessible only to certain users by [requiring a signed URL](/stream/viewing-videos/securing-your-stream/).
 
 ```bash
 ---
