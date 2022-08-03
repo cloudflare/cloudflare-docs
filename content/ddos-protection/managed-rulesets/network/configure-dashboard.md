@@ -20,7 +20,7 @@ For more information on the available parameters and allowed values, refer to [M
 ## Override all the rules in the ruleset
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-1. In the account home page, open **Firewall Rulesets** and go to **DDoS**.
+1. In the account home page, open **Application Security** and go to **DDoS**.
 1. Click **Deploy a DDoS override**.
 1. In **Set scope**, specify if you wish to apply the override to all incoming packets or to a subset of the packets.
 1. If you are creating an override for a subset of the incoming packets, define the expression that matches the incoming packets you wish to target in the override, using either the Rule Builder or the Expression Editor.
@@ -34,7 +34,7 @@ For more information on the available parameters and allowed values, refer to [M
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
-1. In the account home page, open **Firewall Rulesets** and go to **DDoS**.
+1. In the account home page, go to **Application Security** > **DDoS**.
 
 1. Click **Deploy a DDoS override**.
 

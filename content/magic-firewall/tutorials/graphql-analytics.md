@@ -25,7 +25,7 @@ In your browser's address bar, the URL should show `https://dash.cloudflare.com/
 
 ### Obtain the rule ID for a firewall rule
 
-1. From the Cloudflare dashboard, click **Firewall Rulesets** > **Magic Firewall**.
+1. From the Cloudflare dashboard, click **Application Security** > **Magic Firewall**.
 2. After the **Magic Firewall Rules** page displays, open your web browser's Developer Tools.
 3. From the **Developer Tools** pane, switch to the **Network** tab.
 4. From the **Network** tab, clear the network content.
