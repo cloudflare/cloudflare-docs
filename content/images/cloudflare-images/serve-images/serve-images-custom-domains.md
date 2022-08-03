@@ -7,7 +7,6 @@ meta:
 weight: 2
 ---
 
-
 # Serve images from custom domains
 
 Image delivery is supported from all customer domains under the same Cloudflare account. To serve images through custom domains, an image URL should be adjusted to the following format:
