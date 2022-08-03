@@ -33,8 +33,11 @@ You can define a configuration that affects an entire Managed Ruleset, or config
 
 Cloudflare evaluates different types of rules when processing incoming requests. The rule execution order is the following:
 
-* [Firewall rules](/firewall/cf-firewall-rules/), available in **Security** > **WAF** > **Firewall rules**
-* [Custom rules](/waf/custom-rules/), available in **Security** > **WAF** > **Custom rules**
-* [Rate limiting rules](/waf/rate-limiting-rules/), available in **Security** > **WAF** > **Rate limiting rules**
-* [Managed Rulesets](/waf/managed-rulesets/), available in **Security** > **WAF** > **Managed rules**
-* [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128) (previous version), available in **Security** > **WAF** > **Rate limiting rules**
+1. [Firewall rules](/firewall/cf-firewall-rules/)
+2. [Custom rulesets](/waf/custom-rulesets/)
+3. [Custom rules](/waf/custom-rules/)
+4. [Rate limiting rules](/waf/rate-limiting-rules/)
+5. [Managed Rulesets](/waf/managed-rulesets/)
+6. [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128) (previous version)
+
+For more information on the Ruleset Engine phases where each WAF feature will execute, refer to [WAF phases](/waf/reference/phases/).
