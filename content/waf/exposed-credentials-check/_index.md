@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Automated exposed credentials check
-weight: 8
+weight: 9
 ---
 
 # Automated exposed credentials check
