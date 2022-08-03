@@ -6,9 +6,9 @@ weight: 7
 
 # Custom rulesets
 
-Custom rulesets are collections of custom rules that you can deploy at the account level. You can apply a custom ruleset to all incoming traffic of zones on an Enterprise plan or to a subset of incoming requests.
+Custom rulesets are collections of custom rules that you can deploy at the account level.
 
-Like [custom rules](/waf/custom-rules/) at the zone level, custom rulesets allow you to control incoming traffic by filtering requests. You can perform actions like *Block* or *JS Challenge* on incoming requests according to rules you define.
+Like [custom rules](/waf/custom-rules/) at the zone level, custom rulesets allow you to control incoming traffic by filtering requests. You can apply a custom ruleset to all incoming traffic of zones on an Enterprise plan or to a subset of incoming requests.
 
 {{<Aside type="note">}}
 
