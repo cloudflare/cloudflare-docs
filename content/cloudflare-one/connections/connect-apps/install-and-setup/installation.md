@@ -42,15 +42,15 @@ Alternatively, [download the latest Darwin amd64 release directly](https://githu
 
 ## Windows
 
-| Type       | 32-bit                                                                                                     | 64-bit                                                                                                       |
-| ---------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Executable | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-386.exe) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe) |
+Download and install `cloudflared` via winget in either Powershell or CMD:
 
-{{<Aside>}}
+```batch
+winget install cloudflared
+```
+  
+Alternatively, download the [32](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-386.exe) or [64](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe) bit release directly
 
-Instances of `cloudflared` do not automatically update on Windows. You will need to perform manual updates.
-
-{{</Aside>}}
+Instances of `cloudflared` do not automatically update on Windows. To update run ``winget upgrade cloudflared``
 
 ## Docker
 
