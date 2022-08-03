@@ -46,7 +46,7 @@ Wrangler 2 drops support for project types, including `type = webpack` and confi
 
 To do that, you will need to add it as a dependency:
 
-```sh
+```
 npm install --save-dev webpack@^4.46.0 webpack-cli wranglerjs-compat-webpack-plugin
 # or
 yarn add --dev webpack@4.46.0 webpack-cli wranglerjs-compat-webpack-plugin
