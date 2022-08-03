@@ -49,7 +49,7 @@ Provides privacy-first analytics without changing your DNS or using Cloudflare's
 
 ---
 
-## More resources (WIP)
+## More resources
 
 {{<resource-group>}}
 

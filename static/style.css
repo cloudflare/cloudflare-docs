@@ -5284,18 +5284,23 @@ pre {
   background-color: var(--gray-9);
   border-radius: 4px;
 }
+
 .DocsMarkdown--resource:hover {
   background-color: var(--gray-8);
 }
+
 .DocsMarkdown--resource-icon {
   height: 32px;
   width: 32px;
+  flex-shrink: 0;
 }
+
 .DocsMarkdown--resource-text {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
+
 .DocsMarkdown--resource-header {
   font-size: 20px;
   color: var(--color);
@@ -5306,6 +5311,7 @@ pre {
 [theme="dark"] .DocsMarkdown--resource {
   background-color: #242628;
 }
+
 [theme="dark"] .DocsMarkdown--resource:hover {
   background-color: #2f3133;
 }
@@ -5316,10 +5322,12 @@ pre {
   gap: 1em;
   align-items: center;
 }
+
 .DocsMarkdown--feature-button {
   display: flex;
   justify-content: flex-end;
 }
+
 @media (max-width: 768px) {
   .DocsMarkdown--feature-group {
     grid-template-columns: 1fr;
@@ -5334,6 +5342,7 @@ pre {
 .DocsMarkdown--related-product {
   color: inherit;
 }
+
 .littlefoot-footnote__button {
   max-width: 3em;
 }
