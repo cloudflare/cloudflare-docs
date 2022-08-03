@@ -51,11 +51,11 @@ curl --location --request POST 'https://api.staging.cloudflare.com/client/v4/acc
 
 You can check whether your video is ready to play after selecting your account from the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream). While the clipped video processes, the video status response displays **Queued**. When the clipping process is complete, the video status changes to **Ready** and displays the new name of the clipped video and the new duration.
 
-To receive a notification when your video is done processing and ready to play, you can subscribe to webhook notifications. For more information on webhooks, refer to [Use webhooks](/stream/edit-manage-videos/manage-video-library/using-webhooks/).
+To receive a notification when your video is done processing and ready to play, you can [subscribe to webhook notifications](/stream/edit-manage-videos/manage-video-library/using-webhooks/).
 
-## Add a custom video name
+## Set video name
 
-When you clip a video, you can also specify a new name for the clipped video. In the request below, the `name` field indicates the new name to use for the clipped video.
+When you clip a video, you can also specify a new name for the clipped video. In the example below, the `name` field indicates the new name to use for the clipped video.
 
 ```bash
 ---
@@ -72,7 +72,7 @@ highlight: [6]
 }
 ```
 
-When the video clipping is complete, the video with the new name displays in your Cloudflare dashboard in the list videos.
+When the video has been clipped and processed, the video with the new name displays in your Cloudflare dashboard in the list videos.
 
 ## Add a watermark
 
@@ -98,7 +98,7 @@ highlight: [5,6,9]
 
 ## Require signed URLs
 
-You can clip a video and also [require a signed URL]((/stream/viewing-videos/securing-your-stream/)), which makes a video private and accessible only to certain users. 
+You can clip a video and also [require a signed URL](/stream/viewing-videos/securing-your-stream/), which makes a video private and accessible only to certain users. 
 
 ```bash
 ---
