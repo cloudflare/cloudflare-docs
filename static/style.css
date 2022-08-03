@@ -713,12 +713,13 @@ html {
 
 .copyCode-button{
   position: absolute;
-  top: 0px;
-  right:0px;
+  top: 5px;
+  right:5px;
   font-size: .9rem;
   padding: .15rem;
+  background: transparent;
   background-color: #828282;
-  color: 1e1e1e;
+  color: #1e1e1e;
   border: ridge 1px #7b7b7c;
   border-radius: 5px;
   text-shadow: #c4c4c4 0 0 2px;
