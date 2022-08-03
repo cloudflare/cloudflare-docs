@@ -37,4 +37,4 @@ In this example:
 * `083eb7b2-5392-4565-b69e-aff66acddd00` is the image ID.
 * `public` is the variant name.
 
-When a client requests an image, Cloudflare Images will pick the optimal format between WebP, PNG, JPEG and GIF. The format Cloudflare serves to the user is determined by client headers and the image type.
+When a client requests an image, Cloudflare Images will pick the optimal format. This is determined by client headers and the image type. Refer to [Adaptive optimized format delivery](/images/cloudflare-images/serve-images/adaptive-images-format/) for more information.
