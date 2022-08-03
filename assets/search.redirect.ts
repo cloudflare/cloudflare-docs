@@ -22,7 +22,7 @@
     }
 
     // is '/' or SHIFT+'s' or CTRL+'k'
-    if (key === 191 || (ev.shiftKey && key === 83) || (ev.ctrlKey && key === 75)) {
+    if (key === 191 || (ev.shiftKey && key === 83) || (ev.metaKey && key === 75)) {
       ev.preventDefault();
       window.scrollTo(0, 0);
       element.focus();
