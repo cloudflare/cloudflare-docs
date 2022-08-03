@@ -67,7 +67,9 @@ The following rulesets run in a response phase:
 
 ## Phases of deployed Managed Rulesets
 
-When you enable a Managed Ruleset in **Security** > **WAF** > **Managed rules**, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase.
+When you deploy a Managed Ruleset for a zone in **Security** > **WAF** > **Managed rules**, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase.
+
+When you deploy a Managed Ruleset in **Account Home** > **Account Security** > **Web Application Firewall** > **Managed rules**, you are deploying that Managed Ruleset to the account-level `http_request_firewall_managed` phase.
 
 Other Managed Rulesets, like DDoS Managed Rulesets, are deployed to a different phase. Refer to the specific Managed Ruleset documentation for details.
 
