@@ -25,7 +25,7 @@ To get started with KV:
 * Read how [KV works](/workers/learning/how-kv-works/).
 * Create a [KV namespace](/workers/wrangler/workers-kv/).
 * Review the [KV Runtime API](/workers/runtime-apis/kv/).
-* Learn about KV [Limits](https://developers.cloudflare.com/workers/platform/limits/#kv-limits).
+* Learn about KV [Limits](/workers/platform/limits/#kv-limits).
 
 ## R2 (beta)
 
@@ -39,9 +39,9 @@ It is ideal for projects that require:
 
 To get started with R2:
 
-* Read the [Get started guide](https://developers.cloudflare.com/r2/get-started/).
-* Learn about R2 [Limits](https://developers.cloudflare.com/r2/platform/limits/).
-* Review the [R2 Runtime API](https://developers.cloudflare.com/r2/runtime-apis/).
+* Read the [Get started guide](/r2/get-started/).
+* Learn about R2 [Limits](/r2/platform/limits/).
+* Review the [R2 Runtime API](/r2/runtime-apis/).
 
 ## R2 and KV comparison
 
@@ -54,7 +54,7 @@ To get started with R2:
 | Cached                                        | Always       | Possible when using [Cache API](/workers/runtime-apis/cache/) in a Worker |
 | S3-compatible API                             | No           | Yes                     |
 | TTL expiration                                | Object-level | Not currently available |
-| Maximum operations per second                 | Unlimited    | <1,000/bucket           |
+| Maximum operations per second                 | Unlimited    |  < 1,000/bucket           |
 
 {{</table-wrap>}}
 
