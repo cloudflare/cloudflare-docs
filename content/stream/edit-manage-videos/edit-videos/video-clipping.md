@@ -5,7 +5,7 @@ title: Clip videos
 
 # Clip videos
 
-With video clipping, also referred to as "trimming" or changing the length of the video, you can change the start and end points of a video so viewers only see a specific "clip" of the video. For example, if you have a 20 minute video where the first five minutes include event setup and waiting for the event to start, you can clip the video to remove the first five minutes and start when the event actually begins.
+With video clipping, also referred to as "trimming" or changing the length of the video, you can change the start and end points of a video so viewers only see a specific "clip" of the video. For example, if you have a 20 minute video where the first five minutes include event setup and waiting for the event to start, you can clip the video to remove the first five minutes and start when the event begins.
 
 ## Prerequisites
 
@@ -13,7 +13,7 @@ Before you can clip a video, you will need an API token. For more information on
 
 ## Required parameters
 
-To clip your video, determine the start and end times you want to use from the existing video to create the new video. Use that `videoUID` and the start end times to make your request.
+To clip your video, determine the start and end times you want to use from the existing video to create the new video. Use the `videoUID` and the start end times to make your request.
 
 ```bash
 ---
@@ -72,11 +72,11 @@ highlight: [6]
 }
 ```
 
-When the video has been clipped and processed, the video with the new name displays in your Cloudflare dashboard in the list videos.
+When the video has been clipped and processed, your newly named video displays in your Cloudflare dashboard in the list videos.
 
 ## Add a watermark
 
-You can clip a video and also add a custom watermark. For more information on watermarks and uploading a watermark profile, refer to [Apply watermarks](/stream/edit-manage-videos/edit-videos).
+You can also add a custom watermark to your video. For more information on watermarks and uploading a watermark profile, refer to [Apply watermarks](/stream/edit-manage-videos/edit-videos).
 
 ```bash
 ---
@@ -120,7 +120,7 @@ After the video clipping is complete, you can open the Cloudflare dashboard and 
 
 ## Specify thumbnail percentages
 
-You can clip a video and also specify a thumbnail for your video using a percentage value. To convert the thumbnail's timestamp from seconds to a percentage, divide the timestamp you want to use by the total duration of the video. For more information about thumbnails, refer to [Display thumbnails](/stream/edit-manage-videos/edit-videos/displaying-thumbnails).
+You can also specify a thumbnail for your video using a percentage value. To convert the thumbnail's timestamp from seconds to a percentage, divide the timestamp you want to use by the total duration of the video. For more information about thumbnails, refer to [Display thumbnails](/stream/edit-manage-videos/edit-videos/displaying-thumbnails).
 
 ```bash
 ---
