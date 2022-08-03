@@ -14,10 +14,10 @@ The [Workers R2 API](/r2/runtime-apis/) supports Unicode in keys and values nati
 HTTP header names and values may only contain ASCII characters, which is a small subset of the Unicode character library. To easily accommodate users, R2 adheres to [RFC2047](https://datatracker.ietf.org/doc/html/rfc2047) and automatically decodes all `x-amz-meta-*` header values before storage. On retrieval, any metadata values with unicode are RFC2047-encoded before rendering the response. The length limit for metadata values is applied to the decoded Unicode value.
 
 {{<Aside type="warning" header="Metadata variance">}}
-Be mindful when using both Workers and S3 API endpoints to access the same data. If the R2 metadata keys contain Unicode, they are stripped when accessed through the through S3 API and the `x-amz-missing-meta` header is set to the number of keys that were omitted.
+Be mindful when using both Workers and S3 API endpoints to access the same data. If the R2 metadata keys contain Unicode, they are stripped when accessed through the S3 API and the `x-amz-missing-meta` header is set to the number of keys that were omitted.
 {{</Aside>}}
 
-These headers map to the `httpMetadata` field in the R2 bindings:
+These headers map to the `httpMetadata` field in the [R2 bindings]():
 
 {{<table-wrap>}}
 | HTTP Header           | Property Name                     |
@@ -46,7 +46,7 @@ Host: bucket.account.r2.cloudflarestorage.com
 </CreateBucketConfiguration>
 ```
 
-This is only useful if you are creating buckets spontaneously because you do not know the name of the bucket or preferred access location ahead of time. For example, you have one bucket per one of your customers and the bucket is created on first upload to the bucket and not during account registration. In these cases, the [ListBuckets extension](#ListBuckets) to support accounts with greater than 1000 buckets may also be useful.
+This is only useful if you are creating buckets on demand because you do not know the name of the bucket or the preferred access location ahead of time. For example, you have one bucket per one of your customers and the bucket is created on first upload to the bucket and not during account registration. In these cases, the [`ListBuckets` extension](#ListBuckets) to support accounts with more than 1,000 buckets may also be useful.
 
 ## PutObject
 
