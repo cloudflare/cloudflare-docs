@@ -8,6 +8,7 @@ weight: 1
 
 Wrangler is a command-line tool for building [Cloudflare Workers](https://workers.cloudflare.com/).
 
+
 {{<Aside type="note">}}
 
 Wrangler has launched a new version. If you are looking for the Wrangler 1 documentation, you can find it [here](/workers/wrangler/cli-wrangler/install-update/).
@@ -15,6 +16,8 @@ Wrangler has launched a new version. If you are looking for the Wrangler 1 docum
 If you previously had Wrangler 1 installed or were working on a Wrangler 1 project, refer to the [Migration guide](/workers/wrangler/migration/migrating-from-wrangler-1/).
 
 {{</Aside>}}
+
+<div style="position: relative; padding-top: 56.25%;"><iframe src="https://iframe.videodelivery.net/6ce3c7bd51288e1e8439f50ad63eda1d?poster=https%3A%2F%2Fcloudflarestream.com%2F6ce3c7bd51288e1e8439f50ad63eda1d%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe></div>
 
 ## Install
 
