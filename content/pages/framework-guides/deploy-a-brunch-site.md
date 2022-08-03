@@ -17,13 +17,12 @@ $ npm install -g brunch
 
 ## Create a Brunch project
 
-Brunch maintains a library of community-provided [skeletons](https://brunch.io/skeletons) to offer you a boilerplate for your project. Browse the library to choose a skeleton, or run Brunch's recommended `es6` skeleton with the `brunch new` command:
+Brunch maintains a library of community-provided [skeletons](https://brunch.io/skeletons) to offer you a boilerplate for your project. Run Brunch's recommended `es6` skeleton with the `brunch new` command:
 
 ```sh
 $ brunch new proj -s es6
 ```
 
-Then `cd` into your new directory.
 
 {{<render file="_tutorials-before-you-start.md">}}
 
@@ -31,13 +30,13 @@ Then `cd` into your new directory.
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new).
 
-In your new Brunch project directory, run:
+In your terminal, `cd` into your new Brunch project directory and run:
 
 ```sh
 $ git init
 $ git add -A
 $ git commit -m "<YOUR COMMIT MESSAGE>"
-$ git remote add origin <YOUR GITHUB REPOSITORY URL>
+$ git remote add origin <YOUR NEW GITHUB REPOSITORY URL>
 $ git push -u origin main
 ```
 
