@@ -762,6 +762,8 @@ html {
   font-size: .8em;
   right: 10px;
   opacity: 0.8;
+  box-shadow: none;
+  border: none;
 }
 
 
