@@ -71,7 +71,7 @@ Stream logs stored in R2 that match the provided query parameters.
 ## Example API request
 
 ```bash
-curl -s -g -X GET \ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logs/retrieve?start=2022-06-01T16:00:00Z&end=2022-06-01T16:05:00Z&bucket=cloudflare-logs&prefix=http_requests/exmaple.com/{DATE}' \
+curl -s -g -X GET  'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logs/retrieve?start=2022-06-01T16:00:00Z&end=2022-06-01T16:05:00Z&bucket=cloudflare-logs&prefix=http_requests/exmaple.com/{DATE}' \
 -H "X-Auth-Email: <EMAIL>" \
 -H "X-Auth-Key: <API_KEY>" \ 
 -H "R2-Access-Key-Id: R2_ACCESS_KEY_ID" \
