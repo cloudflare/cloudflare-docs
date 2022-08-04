@@ -4862,6 +4862,8 @@ pre {
   overflow: auto;
 }
 
+/* Styles for tab switcher */
+
 .tabs-wrapper {
   width: 100%;
   max-width: 700px;
@@ -4915,8 +4917,8 @@ pre {
 }
 
 .active,.tab-label-wrapper:hover, .tab-label-wrapper a:hover {
-  background-color: rgba(var(--gray-3-rgb), 0.19) !important;
-  color: rgb(29, 31,32) !important;
+  background-color: rgb(243, 243, 244) !important;
+  color: rgb(216 216 218) !important;
 }
 
 [theme="dark"] .active, .tab-label-wrapper:hover,

@@ -20,6 +20,115 @@ Cloudflare Workers provides a serverless [execution environment](https://www.clo
 
 Previously, you could only add dynamic functionality to your Pages site by manually deploying a Worker using Wrangler, which meant that your application is written across both Pages and Workers. Functions allow you to leverage the Workers platform directly from within a Pages project by utilizing a project's filesystem convention. This enables you to deploy your entire site – both its static and dynamic content – when you `git push`.
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+```js
+export async function onRequest(context) {
+  // Contents of context object
+  const {
+    request, // same as existing Worker API
+    env, // same as existing Worker API
+    params, // if filename includes [id] or [[path]]
+    waitUntil, // same as ctx.waitUntil in existing Worker API
+    next, // used for middleware or to fetch assets
+    data, // arbitrary space for passing data between middlewares
+  } = context;
+
+  return new Response("Hello, world!");
+}
+```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+interface Env {}
+
+export const onRequest: PagesFunction<Env> = async (context) => {
+  // Contents of context object
+  const {
+    request, // same as existing Worker API
+    env, // same as existing Worker API
+    params, // if filename includes [id] or [[path]]
+    waitUntil, // same as ctx.waitUntil in existing Worker API
+    next, // used for middleware or to fetch assets
+    data, // arbitrary space for passing data between middlewares
+  } = context;
+
+  return new Response("Hello, world!");
+}
+```
+{{</tab>}}
+{{</tabs>}}
+
+{{<tabs labels="js/sw | js/esm | ts/sw | ts/esm">}}
+{{<tab label="js/sw" default="true">}}
+
+```js
+async function handler(request) {
+  const base = 'https://example.com';
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener('fetch', event => {
+  event.respondWith(handler(event.request));
+});
+```
+
+{{</tab>}}
+{{<tab label="js/esm">}}
+
+```js
+async function handler(request) {
+  const base = "https://example.com";
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
+```
+
+{{</tab>}}
+{{<tab label="ts/sw">}}
+
+```js
+async function handler(request) {
+  const base = "https://obinnas.com";
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
+```
+
+{{</tab>}}
+{{<tab label="ts/esm">}}
+
+```js
+import meaning from "meaning-of-life";
+
+export default {
+  async fetch(request: Request): Promise<Response> {
+    return new Response(meaning);
+  },
+};
+```
+
+{{</tab>}}
+{{</tabs>}}
+
 ## Setup
 
 To get started, create a `/functions` directory at the root of your project. Writing your Functions files in this directory will automatically generate a Worker with custom functionality at the predesignated routes.
