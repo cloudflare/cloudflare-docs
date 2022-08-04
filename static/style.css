@@ -713,7 +713,7 @@ html {
 
 .copyCode-button{
   position: absolute;
-  top: 5px;
+  top: 1px;
   right:5px;
   font-size: .9rem;
   padding: .15rem;
@@ -736,7 +736,7 @@ html {
 
 [theme="dark"] .copyCode-button {
   position: absolute;
-  top: 5px;
+  top: 1px;
   right: 5px;
   font-size: .9rem;
   padding: .15rem;
