@@ -739,17 +739,18 @@ html {
   text-shadow: #c4c4c4 0 0 2px;
 }
 
-.copyCode-button:hover:focus {
+.copyCode-button:hover,
+.copyCode-button:focus {
   cursor: pointer;
   background-color:  #828282;
 }
 
-[theme="dark"] .copyCode-button:hover:focus {
+[theme="dark"] .copyCode-button:hover, .copyCode-button:focus {
   cursor: pointer;
   background-color: var(--code-block-background-color)
 }
 
-.copyCode-button:hover:focus:after{
+.copyCode-button:hover::after, .copyCode-button:focus::after{
   position: absolute;
   width:auto;
   min-width: 80px;
