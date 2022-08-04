@@ -1,6 +1,6 @@
 ---
 title: 6 – Revert configuration
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 7
 meta:
   title: Revert configuration

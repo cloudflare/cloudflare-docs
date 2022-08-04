@@ -1,6 +1,6 @@
 ---
 title: Fields
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 6
 meta:
   title: Fields reference
@@ -428,14 +428,14 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-hostname-metadata">
         <td><code>cf.hostname.metadata</code><br />{{<type>}}String{{</type>}}</td>
         <td>
-          <p>Returns the string representation of the per-hostname <a href="/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/">custom metadata</a> JSON object set by SSL for SaaS customers.
+          <p>Returns the string representation of the per-hostname <a href="/cloudflare-for-saas/workers-for-platforms/custom-metadata/">custom metadata</a> JSON object set by SSL for SaaS customers.
           </p>
         </td>
     </tr>
     <tr id="field-cf-random_seed">
         <td><code>cf.random_seed</code><br />{{<type>}}Bytes{{</type>}}</td>
         <td>
-          <p>Returns per-request random bytes that you can use in the <a href="/ruleset-engine/rules-language/functions/#function-uuidv4"><code class="InlineCode">uuidv4()</code></a> function.
+          <p>Returns per-request random bytes that you can use in the <a href="/ruleset-engine/rules-language/functions/#function-uuidv4"><code>uuidv4()</code></a> function.
           </p>
         </td>
     </tr>
@@ -951,7 +951,7 @@ The Cloudflare Rules language supports these HTTP header fields:
 
 {{<Aside type="note">}}
 
-Access to HTTP body is an add-on product of the Cloudflare Enterprise plan.
+Access to HTTP request body fields requires a Cloudflare Enterprise plan, except for the `http.request.body.mime` field.
 
 {{</Aside>}}
 
@@ -1063,6 +1063,20 @@ The Cloudflare Rules language supports these HTTP body fields:
          <p>Example value:
          <br /><code class="InlineCode">["admin"]</code>
          </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-body-mime">
+      <td valign="top"><code>http.request.body.mime</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+        <p>The MIME type of the request detected from the request body.
+        </p>
+        <p>Supports the most common MIME types of the following general categories: video, audio, image, application, text.
+        </p>
+        <p>Example:
+        <br /><code class="InlineCode">image/jpeg</code>
+        </p>
+        <p>This field is available on all Cloudflare plans.
+        </p>
       </td>
     </tr>
   </tbody>

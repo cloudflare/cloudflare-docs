@@ -1,6 +1,6 @@
 ---
 title: Configuration
-pcx-content-type: get-started
+pcx_content_type: get-started
 weight: 1
 ---
 
@@ -24,7 +24,7 @@ The fallback origin is where Cloudflare will route traffic sent to your custom h
 
 {{<Aside type="note">}}
 
-You can also [use a Worker as your origin](/cloudflare-for-saas/ssl/reference/worker-as-origin/) or [create a custom origin server](/cloudflare-for-saas/start/advanced-settings/custom-origin/) to send traffic from one or more custom hostnames somewhere besides your default proxy fallback.
+You can also [use a Worker as your origin](/cloudflare-for-saas/workers-for-platforms/worker-as-origin/) or [create a custom origin server](/cloudflare-for-saas/start/advanced-settings/custom-origin/) to send traffic from one or more custom hostnames somewhere besides your default proxy fallback.
 
 {{</Aside>}}
 
@@ -77,12 +77,12 @@ Using the hostname from the A or AAAA record you just created, [update the fallb
 
 Each Custom Hostname requires successful Certificate Validation and Hostname Verification.
 
-- [Certificate Validation](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
+- [Certificate Validation](/cloudflare-for-saas/security/certificate-management/issue-and-validate/): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
 - [Hostname Verification](/cloudflare-for-saas/domain-support/hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
 
 {{<Aside type="note">}}
 
-Verification checks occur frequently immediately after a hostname is created, but the gaps between check intervals increase over the following seven days. For more detail, refer to [Hostname verification backoff schedule](/cloudflare-for-saas/ssl/reference/hostname-verification-backoff-schedule/).
+Verification checks occur frequently immediately after a hostname is created, but the gaps between check intervals increase over the following seven days. For more detail, refer to [Hostname verification backoff schedule](/cloudflare-for-saas/start/hostname-verification-backoff-schedule/).
 
 {{</Aside>}}
 
@@ -128,13 +128,13 @@ With a CNAME in place, the entire process — from validation to issuance to edg
 
 ### Monitor certificate status
 
-For help tracking a certificate's status, refer to [Monitor certificates](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/).
+For help tracking a certificate's status, refer to [Monitor certificates](/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
 
 ### View certificates
 
 Once domain validation has been completed, the certificates will be issued and distributed to Cloudflare’s edge.
 
-To view these certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/)).
+To view these certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/cloudflare-for-saas/security/certificate-management/issue-and-validate/)).
 
 ```sh
 $ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep app.example.com

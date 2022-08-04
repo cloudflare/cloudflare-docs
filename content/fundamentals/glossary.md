@@ -1,6 +1,6 @@
 ---
 title: Glossary
-pcx-content-type: glossary
+pcx_content_type: glossary
 weight: 8
 ---
 

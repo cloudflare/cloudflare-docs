@@ -4,7 +4,7 @@ summary: Get all geolocation data fields and display them in HTML.
 tags:
   - Originless
   - Geolocation
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: 'Geolocation: Hello World'
 weight: 1001
 layout: example

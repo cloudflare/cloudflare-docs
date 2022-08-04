@@ -1,5 +1,5 @@
 ---
-pcx-content-type: faq
+pcx_content_type: faq
 title: FAQ
 weight: 5
 ---
@@ -55,7 +55,7 @@ Cloudflare Images (CI) is an end-to-end solution that offers storage, resizing, 
 <summary>Available optimizations</summary>
 <div>
 
-**CI** - For more information on Cloudflare Images optimizations refer to [Transform images](/images/cloudflare-images/transform/).
+**CI** - For more information on Cloudflare Images optimizations refer to [Edit images](/images/cloudflare-images/transform/).
 
 **IR** - For more information on Image Resizing optimizations refer to [URL format options](/images/image-resizing/url-format/#options).
 
@@ -83,11 +83,11 @@ No, you only get billed for the number of original images. There is no extra cos
 
 ### Is there a limit on the file size for uploaded images?
 
-Yes, the uploaded image file must be less than or equal to 10 MB.
+Refer to [Supported image formats](/images/cloudflare-images/upload-images/supported-formats/) for more information.
 
 ### Which file formats does Cloudflare Images support?
 
-Cloudflare Images supports common web-compatible file formats as input files: JPEG, PNG, GIF (including animations), and WebP.
+Refer to [Supported image formats](/images/cloudflare-images/upload-images/supported-formats/) for more information.
 
 ### Can Cloudflare Images convert my images to AVIF or WebP?
 
@@ -107,7 +107,7 @@ Refer to our [Plans](https://www.cloudflare.com/plans/) page for up-to-date info
 
 ### Is there a limit on image size or file size for Image Resizing?
 
-Yes. Maximum image size is 100 megapixels (for example, 10,000×10,000 pixels large). Maximum file size is 70 MB. GIF animations are limited to 100 megapixels total (sum of sizes of all frames).
+Refer to [Supported formats and limitations](/images/image-resizing/format-limitations/) for more information.
 
 ### Resizing failed and I received an error response with a code. What does it mean?
 

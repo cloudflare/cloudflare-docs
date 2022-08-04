@@ -1,7 +1,7 @@
 {{ define "main" }}
   {{- $type := default "overview" .Params.type -}}
-  {{- $column_text := default "Difficulty" .Params.column_text -}}
-  {{- $column_param := default "difficulty" .Params.column_param -}}
+  {{- $column_text := default "Type" .Params.column_text -}}
+  {{- $column_param := default "content_type" .Params.column_param -}}
 
   {{- $current := .Page.RelPermalink -}}
   {{- $len := len (split $current "/") -}}
@@ -32,11 +32,15 @@
                 </div>
 
                 <div class="DocsTutorials--column" data-column="updated">
-                  <span class="DocsTutorials--column-text">Updated</span>
+                  <span class="DocsTutorials--column-text">Last Updated</span>
                 </div>
 
                 <div class="DocsTutorials--column" data-column="type">
                   <span class="DocsTutorials--column-text">{{ $column_text }}</span>
+                </div>
+
+                <div class="DocsTutorials--column" data-column="difficulty">
+                  <span class="DocsTutorials--column-text">Difficulty</span>
                 </div>
 
                 <div class="DocsTutorials--column" data-column="length">
@@ -70,6 +74,10 @@
 
                     <div class="DocsTutorials--column" data-column="type">
                       {{- index .Params $column_param -}}
+                    </div>
+
+                     <div class="DocsTutorials--column" data-column="difficulty">
+                      {{ .Params.difficulty }}
                     </div>
 
                     <div class="DocsTutorials--column" data-column="length">

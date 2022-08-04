@@ -1,6 +1,6 @@
 ---
 title: Setup
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 1
 meta:
   title: Set up a partial (CNAME) zone

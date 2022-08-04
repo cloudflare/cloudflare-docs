@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Challenge Solve Rate (CSR)
 weight: 2
 ---

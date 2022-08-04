@@ -1,6 +1,6 @@
 ---
 title: S3 API Compatibility
-pcx-content-type: reference
+pcx_content_type: reference
 ---
 
 # S3 API compatibility

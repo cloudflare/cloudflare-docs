@@ -1,6 +1,6 @@
 ---
 title: Set WordPress rules to Block
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 2
 meta:
   title: Use tag overrides to set WordPress rules to Block

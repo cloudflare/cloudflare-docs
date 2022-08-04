@@ -1,5 +1,5 @@
 ---
-pcx-content-type: overview
+pcx_content_type: overview
 title: Cloudflare for SaaS
 weight: 9
 ---
@@ -28,8 +28,6 @@ If your customers already have their applications on Cloudflare, they cannot con
 *   Spectrum
 *   Argo
 *   Page Shield
-
-For more information on these features, refer to [Hostname management](/cloudflare-for-saas/ssl/hostname-specific-behavior/).
 
 ## How it works
 

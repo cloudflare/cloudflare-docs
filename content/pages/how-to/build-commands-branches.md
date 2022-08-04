@@ -1,6 +1,6 @@
 ---
 updated: 2022-07-27
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Set build commands per branch
 ---
 

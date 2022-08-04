@@ -1,6 +1,6 @@
 ---
 title: Authentication and authorization
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 1
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: API
-pcx-content-type: concept
+pcx_content_type: concept
 layout: single
 weight: 2
 meta:

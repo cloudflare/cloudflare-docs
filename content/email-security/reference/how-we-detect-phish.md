@@ -1,6 +1,6 @@
 ---
 title: How we detect phish
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 1
 layout: list
 ---

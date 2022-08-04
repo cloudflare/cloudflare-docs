@@ -1,14 +1,14 @@
 ---
-pcx-content-type: concept
-title: Routing
+pcx_content_type: concept
+title: Custom Domains
 layout: single
 ---
 
-# Routing
+# Custom Domains
 
 ## Background
 
-Routing lets customers connect a Worker to the Internet, allowing it to receive HTTP requests on their Cloudflare zones. There are two ways to route to a Worker: 
+To allow a Worker to receive inbound HTTP requests, you must connect it to an external endpoint that it can be accessed by. There are two ways to route to a Worker: 
 
 1. [Custom Domains](/workers/platform/routing/custom-domains).
 
@@ -18,7 +18,7 @@ and
 
 Routes add Workers functionality to your existing proxied (orange-clouded) hostnames, as a proxy in front of your application server. 
 
-Custom Domains can replace the proxy (orange-cloud) process entirely. Custom Domains automatically attach a Worker to your hostname by creating a DNS record and an SSL certificate on your behalf. Custom Domains can also be invoked within the same zone via `fetch()`, unlike Routes.
+Custom Domains automatically attach a Worker to your hostname by creating a DNS record and an SSL certificate on your behalf. Custom Domains can also be invoked within the same zone via `fetch()`, unlike Routes.
 
 ## Custom Domains
 
@@ -60,6 +60,6 @@ routes = [
 
 ## What is best for me?
 
-Generally, [Routes](/workers/platform/routing/routes) are good for use cases where the Worker acts like a 'proxy', making small modifications to the Request, Response, or logging data in between the user and the server. 
-
 [Custom Domains](/workers/platform/routing/custom-domains/) are recommended for more in-depth use cases, where your application lives on the Cloudflare network and may optionally communicate with external dependencies.
+
+Generally, [Routes](/workers/platform/routing/routes) are good for use cases where the Worker acts like a 'proxy', making small modifications to the Request, Response, or logging data in between the user and the server. 

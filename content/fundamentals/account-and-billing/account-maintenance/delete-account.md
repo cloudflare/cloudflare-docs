@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Delete your Cloudflare account
 weight: 2
 ---
@@ -49,8 +49,6 @@ Deleting your account is permanent. Any accounts where you are the primary owner
 3. Select **Continue to delete user**.
 
 4. Follow the prompts to finish deleting your account.
-
-The email associated with a deleted account cannot be reused for up to a year after deactivation.
 
 {{<Aside type="note">}}
 

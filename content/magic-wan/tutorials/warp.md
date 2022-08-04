@@ -1,6 +1,6 @@
 ---
 title: WARP
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 meta:
   title: Use WARP as an on-ramp
 ---

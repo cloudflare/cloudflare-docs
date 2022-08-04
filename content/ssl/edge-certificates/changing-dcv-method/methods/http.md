@@ -1,6 +1,6 @@
 ---
 title: HTTP
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 3
 meta:
   title: HTTP method — Domain Control Validation — SSL/TLS

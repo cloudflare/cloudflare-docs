@@ -1,7 +1,7 @@
 ---
 title: Actions
 type: overview
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 31
 layout: list
 meta:

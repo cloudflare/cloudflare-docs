@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 type: overview
 title: Create custom rules via API
 weight: 3

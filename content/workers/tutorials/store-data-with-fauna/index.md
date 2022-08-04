@@ -2,7 +2,7 @@
 updated: 2021-11-04
 difficulty: Beginner
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Create a serverless, globally distributed REST API with Fauna
 layout: single
 ---

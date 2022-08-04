@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Use dynamic IP addresses
 weight: 6
 ---

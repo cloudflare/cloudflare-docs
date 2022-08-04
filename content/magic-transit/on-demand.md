@@ -1,6 +1,6 @@
 ---
 title: On-demand
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 7
 meta:
   title: Magic Transit on-demand

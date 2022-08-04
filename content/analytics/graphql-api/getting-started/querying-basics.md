@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Querying basics
 weight: 21
 ---
@@ -56,7 +56,8 @@ query
       firewallEventsAdaptive(
           filter: {
             datetime_gt: "2020-08-03T02:07:05Z",
-            datetime_lt: "2020-08-03T17:07:05Z" 
+            datetime_lt: "2020-08-03T17:07:05Z",
+            requestSource: "eyeball" 
           },
           limit: 2,
           orderBy: [datetime_DESC, rayName_DESC])
@@ -74,7 +75,7 @@ query
 
 *   `zones(filter: { zoneTag: "11111111"})` confines the query to search to one zone.
 *   `firewallEventsAdaptive` is the large dataset that you want to query against. The set of data returned is defined by the following:
-    *   `filter:{}` limits the scope to firewall events between two times: `datetime_gt` (greater than) and `datetime_lt` (less than).
+    *   `filter:{}` limits the scope to firewall events between two times: `datetime_gt` (greater than) and `datetime_lt` (less than). Adding the `requestSource` filter for `eyeball` returns data only about the end users of your website and excludes actions taken by Cloudflare products (for example, cache purge, healthchecks, Workers subrequests).
     *   `limit: 2` limits the results to 2 (the maximum value is 10,000).
     *   `orderBy` sorts the results, first by `datetime_DESC`, the datetime field , in descending order, and then by the rayname, also in descending order.
     *   The list of fields: `action` (Allow, Block, Challenge), `datetime`, `rayName` (the RayID), `clientRequestHTTPHost` (the host the client requested), and `userAgent`.

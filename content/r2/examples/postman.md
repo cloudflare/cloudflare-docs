@@ -1,7 +1,7 @@
 ---
 title: Using R2 with Postman
 summary: Learn how to configure Postman to interact with R2.
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 1001
 layout: example
 ---

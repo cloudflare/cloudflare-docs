@@ -1,6 +1,6 @@
 ---
 title: Pro
-pcx-content-type: get-started
+pcx_content_type: get-started
 weight: 2
 meta:
   title: Get started with Super Bot Fight Mode (Pro)

@@ -1,6 +1,6 @@
 ---
 title: Web standards
-pcx-content-type: configuration
+pcx_content_type: configuration
 meta:
   title: JavaScript and web standards
 ---

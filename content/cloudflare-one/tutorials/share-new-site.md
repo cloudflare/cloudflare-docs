@@ -2,7 +2,7 @@
 updated: 2020-11-28
 category: 🌐 Connections
 difficulty: Beginner
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Share development environments
 ---
 

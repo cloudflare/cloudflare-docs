@@ -1,6 +1,6 @@
 ---
 title: Development Mode
-pcx-content-type: how-to
+pcx_content_type: how-to
 ---
 
 # Development Mode

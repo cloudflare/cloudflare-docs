@@ -1,6 +1,6 @@
 ---
 title: Test Email Routing
-pcx-content-type: get-started
+pcx_content_type: get-started
 weight: 2
 ---
 

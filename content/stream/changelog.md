@@ -1,5 +1,5 @@
 ---
-pcx-content-type: changelog
+pcx_content_type: changelog
 title: Changelog
 weight: 8
 ---
