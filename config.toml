@@ -1,6 +1,6 @@
 baseURL = "https://developers.cloudflare.com"
 
-title = "Cloudflare Developers"
+title = "Cloudflare Docs"
 languageCode = "en"
 DefaultContentLanguage = "en"
 disableHugoGeneratorInject = true
@@ -22,6 +22,7 @@ paginatePath = "page" # default
 [params.coveo]
 org = "cloudflareproduction7iy98g48"
 token = "xx2b20a6dc-ce86-41cb-ad18-90bd2568dcdb"
+tutorial_token = "xxa5a7d4c9-db72-424d-860d-ae68ff7f60ac"
 
 [sitemap]
   changefreq = "daily"

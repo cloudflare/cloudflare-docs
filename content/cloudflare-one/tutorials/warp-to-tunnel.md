@@ -2,7 +2,7 @@
 updated: 2022-07-15
 category: 🌐 Connections
 difficulty: Advanced
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Connect from WARP to a private network on Cloudflare using Cloudflare Tunnel
 ---
 

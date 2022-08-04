@@ -1,6 +1,6 @@
 ---
 title: WAF ML
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 2
 meta:
   title: WAF ML (Machine Learning)

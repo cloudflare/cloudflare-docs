@@ -1,6 +1,6 @@
 ---
 title: Get started
-pcx-content-type: get-started
+pcx_content_type: get-started
 weight: 5
 meta:
   title: Get started with APO

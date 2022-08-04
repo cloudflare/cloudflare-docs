@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Private hostnames and IPs
 weight: 5
 ---

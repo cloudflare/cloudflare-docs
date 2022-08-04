@@ -1,6 +1,6 @@
 ---
 title: '1: Provisioning resources'
-pcx-content-type: get-started
+pcx_content_type: get-started
 weight: 2
 meta:
   title: 'Step 1: Provisioning resources'

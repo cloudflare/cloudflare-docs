@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Origin Rules (beta)
 weight: 6
 layout: single

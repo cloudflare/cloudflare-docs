@@ -1,5 +1,5 @@
 ---
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Start a live stream
 weight: 1
 ---

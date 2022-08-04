@@ -1,7 +1,7 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Workers Services
-weight: 0
+weight: 13
 layout: single
 ---
 

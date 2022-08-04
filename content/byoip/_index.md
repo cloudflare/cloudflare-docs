@@ -1,6 +1,6 @@
 ---
 title: Overview
-pcx-content-type: overview
+pcx_content_type: overview
 weight: 1
 meta:
   title: Bringing Your Own IPs to Cloudflare

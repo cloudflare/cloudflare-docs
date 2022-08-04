@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 type: overview
 title: HTTP Strict Transport Security (HSTS)
 weight: 4

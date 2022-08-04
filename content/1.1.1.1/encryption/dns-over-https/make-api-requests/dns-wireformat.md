@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: DNS Wireformat
 meta:
     title: Using DNS Wireformat

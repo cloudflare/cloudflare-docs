@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 type: overview
 title: Determining the rate
 weight: 12

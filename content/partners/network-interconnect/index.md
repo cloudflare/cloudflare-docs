@@ -1,6 +1,6 @@
 ---
 title: Network Interconnect
-pcx-content-type: navigation
+pcx_content_type: navigation
 weight: 4
 meta:
   title: Cloudflare Network Interconnect

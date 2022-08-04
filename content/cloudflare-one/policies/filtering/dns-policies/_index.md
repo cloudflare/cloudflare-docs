@@ -1,5 +1,5 @@
 ---
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: DNS policies
 layout: single
 weight: 2

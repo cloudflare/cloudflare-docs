@@ -2,7 +2,7 @@
 title: Plans
 type: overview
 hideChildren: true
-pcx-content-type: navigation
+pcx_content_type: navigation
 weight: 4
 layout: list
 meta:

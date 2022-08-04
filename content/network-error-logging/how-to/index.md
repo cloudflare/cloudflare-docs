@@ -1,6 +1,6 @@
 ---
 title: How to
-pcx-content-type: how-to
+pcx_content_type: how-to
 layout: single
 meta:
   title: View Reports

@@ -1,6 +1,6 @@
 ---
 title: Enable Splunk
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 64
 layout: single
 meta:

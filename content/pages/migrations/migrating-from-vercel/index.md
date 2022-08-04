@@ -1,7 +1,7 @@
 ---
 updated: 2020-09-23
 difficulty: Beginner
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 layout: single
 title: Migrating from Vercel to Pages
 ---

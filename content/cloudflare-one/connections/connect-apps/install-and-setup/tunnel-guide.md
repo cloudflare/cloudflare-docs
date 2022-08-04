@@ -1,6 +1,6 @@
 ---
 title: Tunnel guide
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 1
 meta:
   title: Set up your first tunnel

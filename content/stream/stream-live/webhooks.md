@@ -1,7 +1,7 @@
 ---
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Receive Live Webhooks
-weight: 10
+weight: 6
 ---
 # Receive Live Webhooks
 

@@ -2,7 +2,7 @@
 updated: 2020-06-29
 difficulty: Beginner
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Hello World in Rust
 layout: single
 ---

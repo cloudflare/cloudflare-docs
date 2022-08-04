@@ -1,6 +1,6 @@
 ---
 title: Get started
-pcx-content-type: get-started
+pcx_content_type: get-started
 weight: 3
 meta:
   title: Get started with Cache

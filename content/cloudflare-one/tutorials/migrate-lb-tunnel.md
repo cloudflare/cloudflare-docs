@@ -1,7 +1,7 @@
 ---
 updated: 2021-01-12
 category: 🌐 Connections
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Migrate to Named Tunnels with Load Balancer
 ---
 
