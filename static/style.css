@@ -724,6 +724,14 @@ html {
   border-radius: 3px;
   text-shadow: #c4c4c4 0 0 2px;
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+  -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.copyCode-button::-webkit-scrollbar {
+  display: none;
 }
 
 [theme="dark"] .copyCode-button {
@@ -739,6 +747,14 @@ html {
   border-radius: 3px;
   text-shadow: #c4c4c4 0 0 2px;
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+  -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+[theme="dark"] .copyCode-button::-webkit-scrollbar {
+  display: none;
 }
 
 .copyCode-button:hover,
