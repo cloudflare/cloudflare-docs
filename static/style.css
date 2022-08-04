@@ -785,8 +785,15 @@ html {
   box-shadow: none;
   border: none;
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+    -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
 }
 
+.copyCode-button::after::-webkit-scrollbar {
+  display: none;
+}
 
 [theme="light"] .CodeBlock-is-light-in-light-theme {
   --code-block-background-color: var(--code-block-background-color-light-theme);
