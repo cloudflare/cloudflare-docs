@@ -27,3 +27,9 @@ DNS requests to domain names entered here will not be encrypted, monitored or su
 Traffic excluded from WARP by Split Tunnel configuration will not be encrypted, managed or monitored by Cloudflare Gateway.
 
 {{</Aside>}}
+
+{{<Aside type="warning">}}
+
+Split Tunnel configuration only impacts the flow of IP traffic. DNS requests are still sent to Gateway unless otherwise specified in the Domain Fallback configuration as noted above.
+
+{{</Aside>}}
