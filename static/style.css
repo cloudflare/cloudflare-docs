@@ -715,6 +715,92 @@ html {
   cursor: text;
 }
 
+.copyCode-button {
+  position: absolute;
+  top: 1px;
+  right: 5px;
+  font-size: 0.9rem;
+  padding: 0.15rem;
+  background: transparent;
+  color: #1e1e1e;
+  border: none;
+  box-shadow: 0 0 0 1px var(--gray-6);
+  border-radius: 3px;
+  text-shadow: #c4c4c4 0 0 2px;
+  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.copyCode-button::-webkit-scrollbar {
+  display: none;
+}
+
+[theme="dark"] .copyCode-button {
+  position: absolute;
+  top: 1px;
+  right: 5px;
+  font-size: 0.9rem;
+  padding: 0.15rem;
+  background: transparent;
+  color: var(--gray-7);
+  border: none;
+  box-shadow: 0 0 0 1px var(--gray-3);
+  border-radius: 3px;
+  text-shadow: #c4c4c4 0 0 2px;
+  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+[theme="dark"] .copyCode-button::-webkit-scrollbar {
+  display: none;
+}
+
+.copyCode-button:hover,
+.copyCode-button:focus {
+  cursor: pointer;
+  background-color: #828282;
+  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+}
+
+[theme="dark"] .copyCode-button:hover,
+.copyCode-button:focus {
+  cursor: pointer;
+  background-color: var(--code-block-background-color);
+  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+}
+
+.copyCode-button:hover::after,
+.copyCode-button:focus::after {
+  position: absolute;
+  width: auto;
+  min-width: 80px;
+  content: attr(data-tooltip);
+  background-color: #828282;
+  border-radius: 2px;
+  color: #fff;
+  padding: 0.3rem 0.2rem;
+  font-size: 0.8em;
+  right: 10px;
+  opacity: 0.8;
+  box-shadow: none;
+  border: none;
+  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.copyCode-button::after::-webkit-scrollbar {
+  display: none;
+}
+
 [theme="light"] .CodeBlock-is-light-in-light-theme {
   --code-block-background-color: var(--code-block-background-color-light-theme);
   --code-block-color: currentColor;
@@ -4137,6 +4223,35 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   height: 100%;
 }
 
+@media (min-width: 769px) {
+  .DocsSearch--input-wrapper {
+    display: flex;
+    align-items: baseline;
+    border: 1px solid rgba(217, 217, 217, 0.5);
+    border-left: none;
+    border-top: none;
+  }
+
+  [theme="dark"] .DocsSearch--input-wrapper {
+    border: 1px solid rgba(217, 217, 217, 0.2);
+    border-left: none;
+    border-top: none;
+  }
+}
+
+@media (min-width: 1025px) {
+  .slashPlaceholder {
+    margin-right: 1em;
+    color: inherit;
+  }
+}
+
+@media (max-width: 1025px) {
+  .slashPlaceholder {
+    visibility: hidden;
+  }
+}
+
 .DocsSearch--input {
   color: inherit;
   width: 100%;
@@ -4200,20 +4315,6 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   opacity: 1;
 }
 
-.DocsSearch--input-bottom-border {
-  position: absolute;
-  left: 0;
-  width: 50%;
-  bottom: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgba(var(--color-rgb), 0.07) 0,
-    rgba(var(--color-rgb), 0.07) calc(100% - 6em),
-    rgba(var(--color-rgb), 0)
-  );
-}
-
 [theme="dark"] .DocsSearch--input {
   background: linear-gradient(
     90deg,
@@ -4221,116 +4322,6 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     rgba(var(--shadow-color-rgb), 0.1) calc(30% - 6em),
     rgba(var(--shadow-color-rgb), 0) 30%
   );
-}
-
-[theme="dark"] .DocsSearch--input-bottom-border {
-  bottom: -1px;
-}
-
-[theme="dark"] .DocsSearch--input-bottom-border:before {
-  content: "";
-  display: block;
-  position: absolute;
-  top: -1px;
-  width: 100%;
-  bottom: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgba(var(--shadow-color-rgb), 0.5) 0,
-    rgba(var(--shadow-color-rgb), 0.5) calc(100% - 6em),
-    rgba(var(--shadow-color-rgb), 0)
-  );
-}
-
-.DocsSearch .algolia-autocomplete {
-  --dropdown-text-indent: var(--text-indent);
-  --suggestion-item-vertical-padding: 0.5em;
-  display: block !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: auto !important;
-  width: var(--docs-body-width) !important;
-  z-index: 1 !important;
-  background: var(--background-color);
-  --box-shadow: 0 3rem 6rem -1.2rem rgba(var(--shadow-color-rgb), 0.25),
-    0 3rem 6rem -3rem rgba(var(--shadow-color-rgb), 0.3);
-  --backdrop-box-shadow-alpha: 0.07;
-  --backdrop-box-shadow: 0 0 0 999em
-    rgba(var(--shadow-color-rgb), var(--backdrop-box-shadow-alpha));
-  box-shadow: var(--box-shadow), var(--backdrop-box-shadow);
-  border-radius: 0 0 0.5em 0.5em;
-  will-change: opacity;
-  transition: opacity 0.15s ease;
-}
-
-[theme="dark"] .DocsSearch .algolia-autocomplete {
-  --dark-theme-shadow-offset: 1px;
-  --dropdown-text-indent: calc(
-    var(--text-indent) - var(--dark-theme-shadow-offset)
-  );
-  --box-shadow: 0 0 0 1px rgb(var(--shadow-color-rgb), 0.3),
-    0 0.3em 2em rgb(var(--shadow-color-rgb), 0.3);
-  --backdrop-box-shadow-alpha: 0.3;
-  background: var(--gray-0);
-  margin-left: var(--dark-theme-shadow-offset);
-}
-
-.DocsSearch .algolia-autocomplete:not([data-expanded="true"]),
-.DocsSearch .algolia-autocomplete[style*="display: none"] {
-  opacity: 0;
-  --backdrop-box-shadow: none;
-  pointer-events: none;
-}
-
-@supports (
-  (-webkit-backdrop-filter: blur(1em)) or (backdrop-filter: blur(1em))
-) {
-  .DocsSearch .algolia-autocomplete {
-    background: rgba(var(--background-color-rgb), 0.8);
-    -webkit-backdrop-filter: saturate(200%) blur(1.25em);
-    backdrop-filter: saturate(200%) blur(1.25em);
-  }
-
-  [theme="dark"] .DocsSearch .algolia-autocomplete {
-    background: rgba(var(--gray-0-rgb), 0.8);
-  }
-
-  @media not all and (min-resolution: 0.001dpcm) {
-    @media {
-      .DocsSearch .algolia-autocomplete {
-        background: rgba(var(--background-color-rgb), 1);
-      }
-    }
-  }
-}
-
-.DocsSearch .algolia-autocomplete [class|="ds-dataset"] > :first-child {
-  position: relative;
-  --padding-top: calc(var(--docs-header-height) + 0.66rem);
-  padding: var(--padding-top) var(--dropdown-text-indent) 0;
-}
-
-.DocsSearch .algolia-autocomplete [class|="ds-dataset"] > :first-child:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: var(--docs-header-height);
-  margin-top: -1px;
-  height: 1px;
-  background: rgba(var(--color-rgb), 0.07);
-}
-
-[theme="dark"]
-  .DocsSearch
-  .algolia-autocomplete
-  [class|="ds-dataset"]
-  > :first-child:before {
-  margin-top: 0;
-  background: rgba(var(--color-rgb), 0.07);
-  box-shadow: 0 -1px rgba(var(--shadow-color-rgb), 0.2),
-    0 calc(var(--docs-header-height) * -1) rgba(var(--shadow-color-rgb), 0.1);
 }
 
 .DocsSearch .ds-suggestion {
