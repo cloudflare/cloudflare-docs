@@ -65,7 +65,7 @@ Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was a
 
 ## How can I troubleshoot a Tunnel that was configured from the Zero Trust dashboard?
 
-### Ensure that only one instance of cloudflared is installed as a service
+### Ensure that only one instance of `cloudflared` is installed as a service
 
 If you are unable to create a Tunnel using the installation script ("cloudflared service is already installed"), ensure that no other cloudflared instances are running as a service on this machine. Only a single instance of cloudflared may run as a service on any given machine. Instead, we recommend adding additional routes to your existing Tunnel.  Alternatively, you can run `sudo cloudflared service uninstall` to uninstall cloudflared.
 
