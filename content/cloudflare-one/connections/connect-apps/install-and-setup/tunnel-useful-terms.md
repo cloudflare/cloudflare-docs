@@ -24,7 +24,7 @@ The `cloudflared tunnel create <NAME>` command creates a tunnel and assigns it a
 
 ## Connector
 
-The connector, simply called `cloudflared`, establishes connectivity from your origin server to the Cloudflare global network. Each instance of the connector will be given a unique connector id which can be surfaced by running `cloudflared tunnel info <NAME or UUID>` or visiting the Zero Trust dashboard. Our connector offers high-availability by design, creating four long-lived connections to two distinct data centers within Cloudflare’s global network. This means that whether an individual connection, server, or data center goes down, your origin remains available.
+The connector, referred to as `cloudflared`, establishes connectivity from your origin server to the Cloudflare global network. Our connector offers high availability by creating four long-lived connections to two distinct data centers within Cloudflare’s global network. This built-in redundancy means that if an individual connection, server, or data center goes down, your origin remains available.
   
 ## Replica
 
