@@ -7,7 +7,7 @@ layout: list
 
 # WAF phases
 
-The Web Application Firewall provides the following [phases](/ruleset-engine/about/phases/) where you create rules:
+The Web Application Firewall provides the following [phases](/ruleset-engine/about/phases/) where you can create rulesets and rules:
 
 - `http_request_firewall_custom`
 - `http_ratelimit`
