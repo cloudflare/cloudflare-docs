@@ -53,10 +53,8 @@ Provides privacy-first analytics without changing your DNS or using Cloudflare's
 
 {{<resource-group>}}
 
-{{<resource header="Learning Center" href="https://www.cloudflare.com/learning/HTTP-requests" icon="learning-center-book">}}Learn more about logging HTTP requests{{</resource>}}
+{{<resource header="Plans" href="https://www.cloudflare.com/products/cloudflare-logs/" icon="documentation-clipboard">}}Compare available Cloudflare plans{{</resource>}}
 
-{{<resource header="Community Forum" href="https://community.cloudflare.com/tag/log" icon="user-multi">}}Engage with Cloudflare staff and other customers using Logs{{</resource>}}
-
-{{<resource header="Help Center" href="https://support.cloudflare.com/" icon="help-giving">}}Get answers to common questions and issues{{</resource>}}
+{{<resource header="Pricing" href="https://www.cloudflare.com/plans/#overview" icon="price">}}Explore pricing options for Logs{{</resource>}}
 
 {{</resource-group>}}
