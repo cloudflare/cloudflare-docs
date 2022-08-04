@@ -76,7 +76,7 @@ To add a KV namespace or Durable Object binding to your Remix application, refer
 
 ### Using a binding in your Remix application
 
-If you have created a KV namespace binding called `PRODUCTS_KV`, you will access it in your Remix application by first importing the `LoaderFunction` from `@remix-run/cloudflare-pages`. The `LoaderFunction` allows you to access data from different points in your Remix application. 
+If you have created a KV namespace binding called `PRODUCTS_KV`, you can access its data in a [Remix `loader` function](https://remix.run/docs/en/v1/guides/data-loading#cloudflare-kv). 
 
 The following code block shows an example of accessing a KV namespace in Remix. 
 
@@ -85,23 +85,26 @@ The following code block shows an example of accessing a KV namespace in Remix.
 filename: app/routes/products/$productId.tsx
 highlight: [9,10,11,12,13,18,21]
 ---
-import type { LoaderFunction } from "@remix-run/cloudflare";
+import type { LoaderArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare"; 
 import { useLoaderData } from "@remix-run/react";
 
-export const loader: LoaderFunction = async ({
-  context, params,
+export const loader = async ({
+  context,
   params,
-}) => {
+}: LoaderArgs) => {
   return json(
-    await context.PRODUCTS_KV.get(`product-${params.productId}`, {
+    await context.PRODUCTS_KV.get<{ name: string }>(`product-${params.productId}`, {
       type: "json",
     })
   );
 };
 
 export default function Product() {
-  const product = useLoaderData();
+  const product = useLoaderData<typeof loader>();
+  
+  if (!product) throw new Response(null, { status: 404 })
+  
   return (
     <div>
       <p>Product</p>
@@ -118,7 +121,7 @@ Currently, the only way to use Durable Objects when using Cloudflare Pages is by
 
 You have to do this because there is currently no way to export the Durable Object class from a Pages Function. 
 
-Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/workers/learning/using-durable-objects/)
+Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/workers/learning/using-durable-objects/).
 
 ## Learn more
 
