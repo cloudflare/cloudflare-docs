@@ -98,6 +98,8 @@ function $clicktoClipboard(ev: MouseEvent) {
     if (text) {
       try {
         navigator.clipboard.writeText(text);
+        button.setAttribute("data-tooltip", "Copied");
+        setTimeout(() => { button.setAttribute("data-tooltip", "Copy code to clipboard"); }, 1000);
       } catch (err) {
         /* no support */
       }
@@ -112,7 +114,7 @@ export function clipboardButton() {
     if (navigator.clipboard) {
       let button = document.createElement("button");
       button.className = "copyCode-button";
-      button.setAttribute("Title", copyButtonLabel);
+      button.setAttribute("data-tooltip", copyButtonLabel);
       button.innerHTML += `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" style= "width:1rem; pointer-events: none;" aria-label="Copy to clipboard button" focusable="true"><title>Copy Button</title><path d="M832 64H296c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h496v688c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8V96c0-17.7-14.3-32-32-32zM704 192H192c-17.7 0-32 14.3-32 32v530.7c0 8.5 3.4 16.6 9.4 22.6l173.3 173.3c2.2 2.2 4.7 4 7.4 5.5v1.9h4.2c3.5 1.3 7.2 2 11 2H704c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32zM382 896h-.2L232 746.2v-.2h150v150z"></path></svg>`;
       button.addEventListener("click", $clicktoClipboard);
       blocks[i].appendChild(button);
