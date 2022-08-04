@@ -64,7 +64,7 @@ You can **deploy** the Managed Rulesets provided by WAF to the following phases:
 
 When you deploy a Managed Ruleset for a zone in the dashboard in **Security** > **WAF** > **Managed rules**, you are deploying that ruleset to the `http_request_firewall_managed` phase of the selected zone.
 
-When you deploy a Managed Ruleset in the dashboard in **Account Home** > **Application Security** > **WAF**, you are deploying that ruleset to the `http_request_firewall_managed` phase of the account.
+When you deploy a Managed Ruleset in the dashboard in **Account Home** > **Application Security** > **WAF** > **Managed rulesets**, you are deploying that ruleset to the `http_request_firewall_managed` phase of the account.
 
 {{</Aside>}}
 
