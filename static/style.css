@@ -4045,19 +4045,21 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     display: flex;
     align-items: baseline;
     border: 1px solid rgba(217, 217, 217, .5);
-    border-radius: 5px;
     border-left: none;
+    border-top: none;
   }
 
   [theme=dark] .DocsSearch--input-wrapper {
     border: 1px solid rgba(217, 217, 217, .2);
     border-left: none;
+    border-top: none;
   }
 }
 
 @media (min-width:1025px) {
   .slashPlaceholder {
-    margin-right: .5em;
+    margin-right: 1em;
+    color: inherit;
   }
 }
 
