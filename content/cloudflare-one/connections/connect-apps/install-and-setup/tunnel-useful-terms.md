@@ -28,7 +28,7 @@ The connector, referred to as `cloudflared`, establishes connectivity from your 
   
 ## Replica
 
-You can create and configure a tunnel once and run that tunnel through multiple, unique instances of the connector, `cloudflared`. These instances are known as connectors, or replicas. DNS records and Cloudflare Load Balancers will still point to the tunnel and its DNS Record (UUID.cfargotunnel.com), while that tunnel sends traffic to the multiple instances of cloudflared that run through it. Today, there is no guarentee about which connector will be chosen. Replicas are often deployed to provide tunnels with high availability in the event a given host running cloudflared is interupted or taken offline. 
+You can create and configure a tunnel once and run that tunnel through multiple, unique instances of the connector, `cloudflared`. These instances are known as replicas. DNS records and Cloudflare Load Balancers will still point to the tunnel and its DNS Record (`UUID.cfargotunnel.com`), while that tunnel sends traffic to the multiple instances of `cloudflared` that run through it. Today, there is no guarantee about which replica will be chosen. Replicas are often deployed to provide tunnels with high availability in the event a given host running `cloudflared` is interrupted or taken offline. 
 
 ## Default `cloudflared` directory
 
