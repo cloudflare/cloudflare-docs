@@ -359,7 +359,7 @@ export async function onRequest({ env }) {
 }
 ```
 
-### R2 
+### R2 bucket
 
 Cloudflare R2 is Cloudflare's blob storage solution that allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services. Within Pages, you can choose from a list of R2 buckets that you created from the dashboard by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **R2 buckets**. Select an _R2 bucket_ from the list of your existing R2 buckets. You will need to repeat this step for both the **Production** and **Preview** environments. 
 
@@ -367,11 +367,10 @@ Cloudflare R2 is Cloudflare's blob storage solution that allows developers to st
 
 ### Using R2 buckets locally
 
-While developing locally, you can interact with an R2 bucket by adding `--r2=<BINDING>` to your run command. For example, if your bucket is bound to `R2`, you can access this bucket in local dev by running `npx wrangler pages dev dist --r2=R2`. The data from this namespace can be accessed using `context.env`. 
+While developing locally, you can interact with an R2 bucket by adding `--r2=<BINDING>` to your run command. For example, if your bucket is bound to `R2`, you can access this bucket in local dev by running `npx wrangler pages dev dist --r2=BUCKET`. The can interact with this binding by using `context.env` (e.g. `context.env.BUCKET`). 
 
 ```js
-
-export async function onRequestGet({ env }) => {
+export async function onRequestGet({ env }) {
   const obj = await env.R2.get('some-key');
   if (obj === null) {
     return new Response('Not found', { status: 404 });
@@ -380,7 +379,7 @@ export async function onRequestGet({ env }) => {
 }
 ```
 
-### D1 
+### D1 database
 
 Cloudflare D1 is Cloudflare's first SQL database built on SQLite. Since D1 is currently in closed beta, you will need access to use it in your account. If you have access to D1, within Pages, you can choose from a list of D1 databases that you created from the dashboard by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **D1 Databases**. Select a _D1 database_ from the list of your existing D1 databases. You must repeat this step for both the **Production** and **Preview** environments. 
 
@@ -388,17 +387,16 @@ Cloudflare D1 is Cloudflare's first SQL database built on SQLite. Since D1 is cu
 
 ### Using D1 database locally 
 
-While developing locally, you can interact with a D1 database by adding `--d1=<BINDING> ` to your run command. For example, if your database is bound to `NORTHWIND_DB`, you can access this database in local dev by running `npx wrangler pages dev dist --d1=NORTHWIND_DB`. You can access the binding from  `context.env` (e.g. `context.env.NORTHWIND_DB`) 
+While developing locally, you can interact with a D1 database by adding `--d1=<BINDING> ` to your run command. For example, if your database is bound to `NORTHWIND_DB`, you can access this database in local dev by running `npx wrangler pages dev dist --d1=NORTHWIND_DB`. The can interact with this binding by using `context.env` (e.g. `context.env. NORTHWIND_DB `).
 
 ```js
-export async function onRequestGet({ env }) => {
-const ps = env.NORTHWIND_DB.prepare('SELECT * from users');
-const data = await ps.first();
+export async function onRequestGet({ env }) {
+  const ps = env.NORTHWIND_DB.prepare('SELECT * from users');
+  const data = await ps.first();
 
-return Response.json(data);
+  return Response.json(data);
 }
 ```
-
 
 ### Durable Object namespace
 
