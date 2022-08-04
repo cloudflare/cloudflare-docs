@@ -720,8 +720,9 @@ html {
   background: transparent;
   /* background-color: #bcbabb; */
   color: #1e1e1e;
-  border: solid 1px #7b7b7c;
-  border-radius: 5px;
+  border: none;
+  box-shadow: 0 0 0 1px var(--gray-6);
+  border-radius: 3px;
   text-shadow: #c4c4c4 0 0 2px;
 }
 
@@ -732,12 +733,16 @@ html {
 
 .copyCode-button:hover::after{
   position: absolute;
+  width:auto;
+  min-width: 150px;
   content: attr(data-tooltip);
   background-color: #828282;
-  border-radius: 5px;
+  border-radius: 2px;
   color: #fff;
-  padding: .5rem 1rem;
+  padding: .3rem 0.2rem;
   font-size: .8em;
+  right: 10px;
+  opacity: 0.8;
 }
 
 [theme="light"] .CodeBlock-is-light-in-light-theme {
