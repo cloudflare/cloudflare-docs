@@ -725,9 +725,28 @@ html {
   text-shadow: #c4c4c4 0 0 2px;
 }
 
+[theme="dark"] .copyCode-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: .9rem;
+  padding: .15rem;
+  background: transparent;
+  color: var(--gray-7);
+  border: none;
+  box-shadow: 0 0 0 1px var(--gray-3);
+  border-radius: 3px;
+  text-shadow: #c4c4c4 0 0 2px;
+}
+
 .copyCode-button:hover {
   cursor: pointer;
   background-color:  #828282;
+}
+
+[theme="dark"] .copyCode-button:hover {
+  cursor: pointer;
+  background-color: var(--code-block-background-color)
 }
 
 .copyCode-button:hover::after{
@@ -743,6 +762,7 @@ html {
   right: 10px;
   opacity: 0.8;
 }
+
 
 [theme="light"] .CodeBlock-is-light-in-light-theme {
   --code-block-background-color: var(--code-block-background-color-light-theme);
