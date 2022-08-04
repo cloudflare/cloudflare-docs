@@ -6,7 +6,7 @@ weight: 117
 
 # R2 Log Retrieval (beta)
 
-Cloudflare’s log retrieval API allows you to query logs from R2 by providing a time range. This functionality is available in beta via the API documented here.
+Cloudflare’s Log Retrieval API allows you to query logs from R2 by providing a time range. This functionality is available in beta via the API documented here.
 
 ## Before getting started
 
