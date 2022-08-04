@@ -359,6 +359,20 @@ export async function onRequest({ env }) {
 }
 ```
 
+### Durable Object namespace
+
+Durable Objects are Cloudflare's strongly consistent coordination primitive that power capabilities such as connecting WebSockets, handling state, and building applications. As with Workers KV, you first have to [create the Durable Object](/workers/learning/using-durable-objects/#uploading-a-durable-object-worker). You can then configure it as a binding to your Pages project.
+
+Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Object bindings**. Select **Add binding** and input a **Variable name** and select a _Durable Object namespace_ from the list of your existing Durable Objects. You will need to repeat this for both the **Production** and **Preview** environments.
+
+![Editing a Durable Object namespace Binding and adding a Variable name](/pages/platform/media/DO-functions.png)
+
+### Durable Objects locally
+
+Currently, Durable Objects are not supported in local development mode. To use Durable Objects in your Pages application, deploy a Worker containing a Durable Object. Then add it as a binding to your Pages project as shown in the section above. 
+
+Support for using Durable Objects in local development is actively being worked on and will be available soon.
+
 ### R2 bucket
 
 Cloudflare R2 is Cloudflare's blob storage solution that allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services. Within Pages, you can choose from a list of R2 buckets that you created from the dashboard by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **R2 buckets**. Select an _R2 bucket_ from the list of your existing R2 buckets. You will need to repeat this step for both the **Production** and **Preview** environments. 
@@ -381,7 +395,13 @@ export async function onRequestGet({ env }) {
 
 ### D1 database
 
-Cloudflare D1 is Cloudflare's first SQL database built on SQLite. Since D1 is currently in closed beta, you will need access to use it in your account. If you have access to D1, within Pages, you can choose from a list of D1 databases that you created from the dashboard by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **D1 Databases**. Select a _D1 database_ from the list of your existing D1 databases. You must repeat this step for both the **Production** and **Preview** environments. 
+{{<Aside type="note" header="D1 database is currently in private beta">}}
+
+D1 is currently in private beta, you will need access to use it in your account. Let us know any issues by posting in the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev).
+
+{{</Aside>}}
+
+Cloudflare D1 is Cloudflare's first SQL database built on SQLite. If you have access to D1, within Pages, you can choose from a list of D1 databases that you created from the dashboard by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **D1 Databases**. Select a _D1 database_ from the list of your existing D1 databases. You must repeat this step for both the **Production** and **Preview** environments. 
 
 ![Editing a D1 database Binding and adding a Variable name](/pages/platform/media/d1-test-database.png)
 
@@ -398,19 +418,6 @@ export async function onRequestGet({ env }) {
 }
 ```
 
-### Durable Object namespace
-
-Durable Objects are Cloudflare's strongly consistent coordination primitive that power capabilities such as connecting WebSockets, handling state, and building applications. As with Workers KV, you first have to [create the Durable Object](/workers/learning/using-durable-objects/#uploading-a-durable-object-worker). You can then configure it as a binding to your Pages project.
-
-Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Object bindings**. Select **Add binding** and input a **Variable name** and select a _Durable Object namespace_ from the list of your existing Durable Objects. You will need to repeat this for both the **Production** and **Preview** environments.
-
-![Editing a Durable Object namespace Binding and adding a Variable name](/pages/platform/media/DO-functions.png)
-
-### Durable Objects locally
-
-Currently, Durable Objects are not supported in local development mode. To use Durable Objects in your Pages application, deploy a Worker containing a Durable Object. Then add it as a binding to your Pages project as shown in the section above. 
-
-Support for using Durable Objects in local development is actively being worked on and will be available soon.
 
 ### Environment variable
 
