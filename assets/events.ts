@@ -100,7 +100,7 @@ function $clicktoClipboard(ev: MouseEvent) {
         navigator.clipboard.writeText(text);
         //show tooltip
         button.setAttribute("data-tooltip", "Copied");
-        setTimeout(() => { button.setAttribute("data-tooltip", "Copy code"); }, 1000);
+        setTimeout(() => { button.setAttribute("data-tooltip", "Copy to clipboard"); }, 1000);
       } catch (err) {
         /* no support */
       }
@@ -109,7 +109,7 @@ function $clicktoClipboard(ev: MouseEvent) {
 }
 
 export function clipboardButton() {
-  const copyButtonLabel = "Copy code";
+  const copyButtonLabel = "Copy to clipboard";
   let blocks = document.getElementsByClassName("CodeBlock");
   for (let i = 0; i < blocks.length; i++) {
     if (navigator.clipboard) {
