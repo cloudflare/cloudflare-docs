@@ -61,7 +61,7 @@ To log external visitor IPs, you will need to [configure an alternative method](
 
 ## Why does the name "warp" and "argo" appear in some legacy materials?
 
-Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was added to the Argo product family, we changed the name to Argo Tunnel to match. Once we no longer required users to purchase Argo to create Tunnels, we changed the name to Cloudflare Tunnel to match. This one is here to stay.
+Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was added to the Argo product family, we changed the name to Argo Tunnel to match. Once we no longer required users to purchase Argo to create Tunnels, we renamed Argo Tunnel to Cloudflare Tunnel.
 
 ## How can I troubleshoot a Tunnel that was configured from the Zero Trust dashboard?
 
