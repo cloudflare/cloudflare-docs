@@ -105,15 +105,13 @@ Try querying a shorter time range if you are running into this limit.
 ## FAQs
 
 - What is the time delay between when an event happens and when I can query for it?
+
 Logpush delivers logs in batches as soon as possible, generally in less than one minute. After this, logs can be accessed using the retrieval API.
 
-- Does R2 have retention?
+- Does R2 have retention controls?
+
 R2 does not currently have retention controls in place. You can query back as far as when you created the Logpush job.
 
 - Which datasets is the retrieval API compatible with?
+
 The retrieval API is compatible with all the datasets we support. The full list is available on the [Log fields](/logs/reference/log-fields/) section.
-
-
-
-
-
