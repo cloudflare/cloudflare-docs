@@ -99,7 +99,7 @@ function $clicktoClipboard(ev: MouseEvent) {
       try {
         navigator.clipboard.writeText(text);
         button.setAttribute("data-tooltip", "Copied");
-        setTimeout(() => { button.setAttribute("data-tooltip", "Copy code to clipboard"); }, 1000);
+        setTimeout(() => { button.setAttribute("data-tooltip", "Copy code"); }, 1000);
       } catch (err) {
         /* no support */
       }
