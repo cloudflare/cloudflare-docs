@@ -230,3 +230,40 @@ export function dropdowns() {
     }
   });
 }
+
+export function toggleSidebar() {
+
+  
+
+  let item = document.querySelector('.DocsSidebar')
+  let classes = item.classList;
+  classes.toggle("hidden");
+
+  let item2 = document.querySelector('.DocsToolbar')
+  let classes2 = item2.classList;
+  classes2.toggle("expanded");
+
+  let item3 = document.querySelector('.DocsContent')
+  let classes3 = item3.classList;
+  classes3.toggle("expanded");
+
+  let item4 = document.querySelector('.DocsMarkdown')
+  let classes4 = item4.classList;
+  classes4.toggle("expanded");
+
+  let attr = 'is-visually-hidden';
+  let navLinks = document.querySelector('.DocsSidebar--nav-item')
+  let viewMore = document.querySelector('.DocsSidebar--section-more')
+  let productName = document.querySelector('.DocsSidebar--docs-title-section a div span span')
+  let docName = document.querySelector('.DocsSidebar--header-section a div span')
+  
+  let isHidden = navLinks.hasAttribute(attr);
+  let isHidden2 = viewMore.hasAttribute(attr);
+  let isHidden3 = productName.hasAttribute(attr);
+  let isHidden4 = docName.hasAttribute(attr);
+
+  navLinks.toggleAttribute(attr, !isHidden);
+  viewMore.toggleAttribute(attr, !isHidden2);
+  productName.toggleAttribute(attr, !isHidden3);
+  docName.toggleAttribute(attr, !isHidden4);
+}

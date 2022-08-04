@@ -2240,6 +2240,51 @@ html[is-docs-page] body {
   top: auto;
 }
 
+.DocsSidebar.hidden {
+  width: 4.5em;
+}
+
+.DocsToolbar.expanded {
+  left: 4.5em;
+}
+
+.DocsContent.expanded {
+  padding-left: 0em;
+  padding-right: 0em;
+  margin-left: -10em;
+}
+
+.DocsMarkdown.expanded {
+  padding-right: 0em;
+}
+
+.DocsSidebar.hidden .DocsSidebar--nav-item {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  padding: 0;
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  -webkit-clip-path: inset(0 0 99.9% 99.9%);
+  clip-path: inset(0 0 99.9% 99.9%);
+  overflow: hidden;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+[is-minimized] {
+  opacity: 1;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  width: 50px;
+}
+
+.DocsSidebar [is-minimized] >* {
+  border: 1px solid pink;
+}
+
 [theme="dark"] .DocsSidebar {
   --sidebar-background-color: var(--gray-0F);
 }
