@@ -4942,6 +4942,7 @@ pre {
   position: relative;
   margin-top: 3rem;
   box-shadow: 0 1px rgba(var(--shadow-color-rgb), 0.12);
+  height: 2.4rem;
 }
 
 .tabs-content-wrapper {
@@ -4963,7 +4964,6 @@ pre {
 
 .tabs>ul>li {
   margin-bottom: 0;
-  border-bottom: 1px solid rgba(var(--color-rgb), 0.05);
 }
 
 
