@@ -718,7 +718,6 @@ html {
   font-size: .9rem;
   padding: .15rem;
   background: transparent;
-  /* background-color: #bcbabb; */
   color: #1e1e1e;
   border: none;
   box-shadow: 0 0 0 1px var(--gray-6);
