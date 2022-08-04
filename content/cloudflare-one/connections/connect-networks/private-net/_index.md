@@ -17,7 +17,7 @@ To connect a private network to Cloudflare's edge, follow the guide below. You c
 ## Before you start
 
 *   [Install](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) `cloudflared`.
-*   [Enable HTTP filtering](/cloudflare-one/policies/filtering/http-policies/) by toggling the **Proxy** setting under **Settings** > **Network** > **Firewall** to enabled. By default, this forward TCP trafic to Gateway. Check the box for UDP traffic if you would like this traffic to be forwarded to Gateway as well.
+*   [Set up HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/).
 *   [Create device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) to determine which devices can enroll to your Zero Trust organization.
 *   [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/) on the devices you want to allow into your network.
 *   (optional) [Integrate your preferred identity provider](/cloudflare-one/identity/idp-integration/) with Cloudflare Zero Trust.
