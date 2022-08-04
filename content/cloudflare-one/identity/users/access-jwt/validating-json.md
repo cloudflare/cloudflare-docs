@@ -6,23 +6,23 @@ weight: 1
 
 # Validate JWTs
 
-Requests to your application will include the Access JWT as a `CF_Authorization` cookie. Cloudflare signs the Access JWT with a key pair unique to your account. To verify the JWT, you will need to provide the public key located at the following URL: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`.
+When Cloudflare sends a request to your origin, the request will include an [application token](/cloudflare-one/identity/users/access-jwt/application-token/) as a `Cf-Access-Jwt-Assertion` request header and as a `CF_Authorization` cookie.
+
+Cloudflare signs the token with a key pair unique to your account. You can validate the token with your public key to ensure that that the request came from Access and not a malicious third party.
 
 ## Access signing keys
 
-By default, the Access signing key rotates every 6 weeks. This means you will need to programmatically or manually update keys as they rotate. Previous keys are valid for 7 days after rotation to allow time for you to make the update.
+The public key for the signing key pair is located at `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`.
 
-Keys can also be manually rotated using the [API](https://api.cloudflare.com/#access-keys-configuration-rotate-access-keys). This can be done for testing or security purposes.
+By default, the Access rotates the signing key every 6 weeks. This means you will need to programmatically or manually update your keys as they rotate. Previous keys remain valid for 7 days after rotation to allow time for you to make the update.
 
-{{<Aside type="note">}}
-Because the token rotates, validate tokens using the external endpoint rather than saving the public key as a hard-coded value.  
-{{</Aside>}}
+You can also manually rotate the key using the [API](https://api.cloudflare.com/#access-keys-configuration-rotate-access-keys). This can be done for testing or security purposes.
 
-As shown in the example below, `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs` contains two public keys: the current key and the previous key.
+As shown in the example below, `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs` contains two public keys: the current key used to sign all new tokens, and the previous key that has been rotated out.
 
 * `keys`: both keys in JWK format
 * `public_cert`: current key in PEM format
-* `public_certs`: both keys in PEM format.
+* `public_certs`: both keys in PEM format
 
 ```txt
 {
@@ -61,31 +61,40 @@ As shown in the example below, `https://<your-team-name>.cloudflareaccess.com/cd
 }
 ```
 
+{{<Aside type="note" header="Avoid key rotation issues">}}
+- Validate tokens using the external endpoint rather than saving the public key as a hard-coded value. 
+- Do not fetch the current key from `public_cert`, since your origin may inadvertently read an expired cached value. from an outdated cache. Instead, match the `kid` value in the JWT to the corresponding certificate in `public_certs`.
+{{</Aside>}}
+
 ## Verify the JWT manually
 
 To verify the token manually:
 
-1. Go to [jwt.io](https://jwt.io/).
+1. Copy the JWT from the `CF_Authorization` cookie or from the `Cf-Access-Jwt-Assertion` request header.
 
-2. Select the RS256 algorithm.
+2. Go to [jwt.io](https://jwt.io/).
 
-3. Paste the JWT into the **Encoded** box.
+3. Select the RS256 algorithm.
 
-4. Get the `kid` value located in the **Header** box.
+4. Paste the JWT into the **Encoded** box.
 
-5. Get your public key:
+5. Get the `kid` value located in the **Header** box.
+
+6. Get your public key:
 
     1. Go to `https://<your-team-name>/cdn-cgi/access/certs`.
-    2. Under `public_certs`, locate the entry with the `kid` value you found in Step 4.
+    2. Under `public_certs`, locate the entry with the `kid` value you found in Step 5.
     3. Copy the `cert` value.
 
-6. In the **Verify Signature** box, paste the `cert` value into the **Public Key** field.
+7. In the **Verify Signature** box, paste the `cert` value into the **Public Key** field.
 
-7. Ensure that the signature says **verified**.
+8. Ensure that the signature says **verified**.
 
-You can now trust that this request to your application was sent by Access.
+You can now trust that this request was sent by Access.
 
 ## Programmatic verification
+
+You can run an automated script on your origin server to validate incoming requests. The provided sample code gets the application token from a request and checks its signature against your public key. You will need to insert your own team domain and Application Audience (AUD) tag into the sample code.
 
 ### Get your AUD tag
 
@@ -93,7 +102,7 @@ You can now trust that this request to your application was sent by Access.
 2. Select **Edit** for your application.
 3. On the **Overview** tab, copy the **Application Audience (AUD) Tag**.
 
-You can now paste the AUD tag into your token validation script.
+You can now paste the AUD into your token validation script.
 
 ### Golang example
 
