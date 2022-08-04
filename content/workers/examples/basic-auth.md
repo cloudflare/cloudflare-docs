@@ -5,7 +5,7 @@ tags:
   - Security
   - Originless
   - Authentication
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: HTTP Basic Authentication
 weight: 1001
 layout: example
@@ -89,11 +89,11 @@ async function handleRequest(request) {
  */
 function verifyCredentials(user, pass) {
   if (BASIC_USER !== user) {
-    throw new UnauthorizedException('Invalid username.');
+    throw new UnauthorizedException('Invalid credentials.');
   }
 
   if (BASIC_PASS !== pass) {
-    throw new UnauthorizedException('Invalid password.');
+    throw new UnauthorizedException('Invalid credentials.');
   }
 }
 

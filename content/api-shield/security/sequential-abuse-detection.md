@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 type: overview
 title: Sequential Abuse Detection (Beta)
 weight: 4
@@ -9,8 +9,6 @@ layout: list
 # Sequential Abuse Detection (Beta)
 
 Sequential Abuse Detection uncovers endpoint abuse by looking for irregular traffic across multiple endpoints.
-
-{{<render file="_availability.md">}}
 
 ## Process
 
@@ -23,3 +21,7 @@ Requests tend to come to endpoints in predictable patterns. For example, a login
 When requests go straight to `/login-successful`, they are not following the typical pattern and might be malicious. Sequential Abuse Detection identifies these common patterns in your API traffic and flags traffic that does not match these patterns.
 
 {{<render file="_blog-post.md">}}
+
+## Availability
+
+Sequential Abuse Detection is only available for Enterprise customers and is currently enabled by request. If you are interested in using this product, contact your account team.

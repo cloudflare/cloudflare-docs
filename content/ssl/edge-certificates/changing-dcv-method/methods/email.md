@@ -1,6 +1,6 @@
 ---
 title: Email
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 2
 meta:
   title: Email method — Domain Control Validation — SSL/TLS

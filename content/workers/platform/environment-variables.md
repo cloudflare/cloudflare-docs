@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Environment variables
 ---
 
@@ -57,7 +57,7 @@ console.log(STRIPE_TOKEN);
 
 ### Adding secrets via wrangler
 
-Secrets are defined by running [`wrangler secret put <NAME>`](/workers/wrangler/commands/#secret) in your terminal, where `<NAME>` is the name of your binding. You may assign environment-specific secrets by rerunning the command `wrangler secret put <NAME> -e` or `wrangler secret put <NAME> --env`. Keep a list of the secrets used in your code in your `wrangler.toml` file, like the example under `[secrets]`:
+Secrets are defined by running [`wrangler secret put <KEY>`](/workers/wrangler/commands/#secret) in your terminal, where `<KEY>` is the name of your binding. You may assign environment-specific secrets by rerunning the command `wrangler secret put <KEY> -e` or `wrangler secret put <KEY> --env`. Keep a detailed list of the secrets used in your code in your `wrangler.toml` file, like the example under `[vars]`:
 
 ```toml
 ---
@@ -72,7 +72,7 @@ filename: wrangler.toml
 # - SPARKPOST_KEY
 # - GTOKEN_PRIVKEY
 # - GTOKEN_KID
-# Run `wrangler secret put <NAME> <VALUE>` for each of these
+# Run `echo <VALUE> | wrangler secret put <NAME>` for each of these
 ```
 
 {{<Aside type="warning">}}
@@ -117,7 +117,7 @@ To add environment variables, such as `vars` and `secret`:
 
 1.  Go to your **Workers script** > **Settings** > **Add variable** under **Environment Variables**.
 2.  Input a **Variable name** and its **value**, which will be made available to your Worker.
-3.  If your variable is a secret, select **Encrypt** to protect its value. This will prevent the value from being visible via `wrangler` and the dashboard.
+3.  If your variable is a secret, select **Encrypt** to protect its value. This will prevent the value from being visible via Wrangler and the dashboard.
 4.  (Optional) To add multiple environment variables, select **Add variable**.
 5.  Select **Save** to implement your changes.
 
@@ -147,4 +147,4 @@ Your completed Workers dashboard, with environment variables and KV namespace bi
 
 ## Comparing secrets and environment variables
 
-Secrets are environment variables. The difference is secret values are not visible within `wrangler` or dashboard interfaces after you define them. This means that sensitive data, including passwords or API tokens, should always be encrypted to prevent data leaks. To your Worker, there is no difference between an environment variable and a secret. The secret's value is passed through as defined.
+Secrets are environment variables. The difference is secret values are not visible within Wrangler or dashboard interfaces after you define them. This means that sensitive data, including passwords or API tokens, should always be encrypted to prevent data leaks. To your Worker, there is no difference between an environment variable and a secret. The secret's value is passed through as defined.

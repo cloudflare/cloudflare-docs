@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Parameters
 weight: 2
 ---
@@ -10,7 +10,7 @@ Each client supports the following set of parameters as part of their deployment
 
 {{<Aside type="note">}}
 
-Most of the parameters listed below are also configurable in the Zero Trust Dashboard under **Settings** > **Devices**. In the event of conflicting settings, the WARP client will always give precedence to settings on the local device (for example, in your` mdm.xml` or `com.cloudflare.warp.plist` files).
+Most of the parameters listed below are also configurable in the Zero Trust Dashboard under **Settings** > **Devices**. In the event of conflicting settings, the WARP client will always give precedence to settings on the local device (for example, in your `mdm.xml` or `com.cloudflare.warp.plist` files).
 
 {{</Aside>}}
 
@@ -115,13 +115,13 @@ When the WARP client is deployed via MDM, the in-app **Send Feedback** button is
 Devices that connect to Cloudflare Zero Trust with Service Token authentication are not subject to identity-based rules.
 {{</Aside>}}
 
-Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a pre-generated [Service Token](/cloudflare-one/identity/service-tokens/).
+Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a [service token](/cloudflare-one/identity/service-tokens/). Before you can authenticate clients using the service token, you must add a new rule to your [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) that includes the token, with the **Rule action** set to `Service Auth`.
 
 Both `auth_client_id` and `auth_client_secret` are required when using this authentication method.
 
 ### `auth_client_id`
 
-The automatically generated ID when you created your [Service Token](/cloudflare-one/identity/service-tokens/).
+The automatically generated ID when you created your [service token](/cloudflare-one/identity/service-tokens/).
 
 **Value Type:** `string`
 
@@ -129,7 +129,7 @@ The automatically generated ID when you created your [Service Token](/cloudflare
 
 ### `auth_client_secret`
 
-The automatically generated secret when you created your [Service Token](/cloudflare-one/identity/service-tokens/).
+The automatically generated secret when you created your [service token](/cloudflare-one/identity/service-tokens/).
 
 **Value Type:** `string`
 

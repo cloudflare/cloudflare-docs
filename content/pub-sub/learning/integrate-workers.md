@@ -1,6 +1,6 @@
 ---
 title: Integrate with Workers
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 2
 ---
 
@@ -55,32 +55,30 @@ You should be familiar with setting up a [Worker](/workers/get-started/guide/) b
 To ensure your Worker can validate incoming requests, you must make the public keys available to your Worker via an [environmental variable](/workers/platform/environment-variables/). To do so, we can fetch the public keys from our Broker:
 
 ```bash
-$ curl -s -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}/publickeys
+$ wrangler pubsub broker public-keys YOUR_BROKER --namespace=NAMESPACE_NAME
 ```
 
-You should receive a HTTP 200 response that resembles the example below, with the public key set from your Worker:
+You should receive a success response that resembles the example below, with the public key set from your Worker:
 
 ```json
-{
-  "keys": [
-    {
-      "use": "sig",
-      "kty": "OKP",
-      "kid": "JDPuYJqHOvqzlakkNFQ9kfN7WsYs5uHndp_ziRdmOCU",
-      "crv": "Ed25519",
-      "alg": "EdDSA",
-      "x": "Phf82R8tG1FdY475-AgtlaWIwH1lLFlfWu5LrsKhyjw"
-    },
-    {
-      "use": "sig",
-      "kty": "OKP",
-      "kid": "qk7Z4hbN738v-m2CKdVaKTav9pU32MAaQXB2tDaQ-_o",
-      "crv": "Ed25519",
-      "alg": "EdDSA",
-      "x": "Bt4kQWcK_XhZP1ZxEflsoYbqaBm9rEDk_jNWPdhxwTI"
-    }
-  ]
-}
+"keys": [
+  {
+    "use": "sig",
+    "kty": "OKP",
+    "kid": "JDPuYJqHOvqzlakkNFQ9kfN7WsYs5uHndp_ziRdmOCU",
+    "crv": "Ed25519",
+    "alg": "EdDSA",
+    "x": "Phf82R8tG1FdY475-AgtlaWIwH1lLFlfWu5LrsKhyjw"
+  },
+  {
+    "use": "sig",
+    "kty": "OKP",
+    "kid": "qk7Z4hbN738v-m2CKdVaKTav9pU32MAaQXB2tDaQ-_o",
+    "crv": "Ed25519",
+    "alg": "EdDSA",
+    "x": "Bt4kQWcK_XhZP1ZxEflsoYbqaBm9rEDk_jNWPdhxwTI"
+  }
+]
 ```
 
 Copy the array of public keys into your `wrangler.toml` as an environmental variable:
@@ -204,30 +202,25 @@ const worker = {
 export default worker;
 ```
 
-Once you've published your Worker using `wrangler publish`, you will need to configure your Broker to invoke the Worker. This is done by setting the `on_publish.url` field of your Broker to the _publicly accessible_ URL of your Worker:
+Once you've published your Worker using `wrangler publish`, you will need to configure your Broker to invoke the Worker. This is done by setting the `--on-publish-url` value of your Broker to the _publicly accessible_ URL of your Worker:
 
 ```bash
-$ curl -s -X PATCH -H "X-Auth-Email: ${CF_API_EMAIL}" -H "X-Auth-Key: ${CF_API_KEY}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}" --data '{"on_publish":{"url":"https://your.worker.workers.dev"}}'
+$ wrangler pubsub broker update YOUR_BROKER --namespace=NAMESPACE_NAME --on-publish-url="https://your.worker.workers.dev"
 ```
 
-You should receive a HTTP 200 response that resembles the example below, with the URL of your Worker:
+You should receive a success response that resembles the example below, with the URL of your Worker:
 
 ```json
 {
-  "result": {
-    "id": "4c63fa30ee13414ba95be5b56d896fea",
-    "name": "example-broker",
-    "authType": "TOKEN",
-    "created_on": "2022-05-11T23:19:24.356324Z",
-    "modified_on": "2022-05-11T23:19:24.356324Z",
-    "expiration": null,
-    "endpoint": "mqtts://example-broker.namespace.cloudflarepubsub.com:8883",
-    "on_publish": {
-      "url": "https://your-worker.your-account.workers.dev"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+  "id": "4c63fa30ee13414ba95be5b56d896fea",
+  "name": "example-broker",
+  "authType": "TOKEN",
+  "created_on": "2022-05-11T23:19:24.356324Z",
+  "modified_on": "2022-05-11T23:19:24.356324Z",
+  "expiration": null,
+  "endpoint": "mqtts://example-broker.namespace.cloudflarepubsub.com:8883",
+  "on_publish": {
+    "url": "https://your-worker.your-account.workers.dev"
 }
 ```
 

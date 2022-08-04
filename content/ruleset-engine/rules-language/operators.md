@@ -1,6 +1,6 @@
 ---
 title: Operators and grouping symbols
-pcx-content-type: reference
+pcx_content_type: reference
 type: overview
 weight: 3
 layout: list

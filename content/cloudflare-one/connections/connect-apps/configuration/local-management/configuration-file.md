@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Configuration file
 weight: 2
 ---
@@ -29,7 +29,7 @@ tunnel: The tunnel UUID
 credentials-file: /path/your-tunnels-credentials-file.json
 ```
 
-If you’re [exposing a private network](/cloudflare-one/connections/connect-networks/private-net/), you need to add the `warp-routing` key and set it to `true`:
+If you’re [exposing a private network](/cloudflare-one/connections/connect-apps/private-net/), you need to add the `warp-routing` key and set it to `true`:
 
 ```txt
 tunnel: The tunnel UUID

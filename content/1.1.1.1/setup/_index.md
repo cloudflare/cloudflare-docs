@@ -1,6 +1,6 @@
 ---
 weight: 2
-pcx-content-type: reference
+pcx_content_type: reference
 title: Set up
 layout: single
 meta:
@@ -9,7 +9,7 @@ meta:
 
 # Set up Cloudflare 1.1.1.1 resolver
 
-By default, the DNS server your devices use is provided by your Internet provider. To start using 1.1.1.1 for your DNS queries, you will need to change the DNS settings in your device or router.
+By default, the [DNS server](https://www.cloudflare.com/learning/dns/what-is-dns/) your devices use is provided by your Internet provider. To start using 1.1.1.1 for your DNS queries, you will need to change the DNS settings in your device or router.
 
 You can also set up 1.1.1.1 for Families for an added layer of protection on your home network against malware and adult content. 1.1.1.1 for Families leverages Cloudflare's global network to ensure that it is fast and secure around the world, and includes the same [strong privacy guarantees](/1.1.1.1/privacy/public-dns-resolver/) that we committed to when we launched 1.1.1.1.
 

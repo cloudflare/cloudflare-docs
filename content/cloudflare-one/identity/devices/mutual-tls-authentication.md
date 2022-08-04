@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Mutual TLS
 weight: 5
 ---
@@ -74,7 +74,7 @@ To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.team
 
 {{<Aside type="warning">}}
 
-Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the WARP client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/cloudflare-one/policies/filtering/http-policies/configuration-guidelines/#enabling-mTLS-authentication) for the domain.
+Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the WARP client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) for the domain.
 {{</Aside>}}
 
 ## Test using cURL
@@ -82,15 +82,15 @@ Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device
 Test for the site using mTLS by attempting to curl the site without a client certificate.
 This curl command example is for the site `example.com` that has an [Access policy](/cloudflare-one/policies/access/) set for `https://auth.example.com`:
 
-```curl
-curl -sv https://auth.example.com
+```sh
+$ curl -sv https://auth.example.com
 ```
 
 Without a client certificate in the request, a `403 forbidden` response displays and the site cannot be accessed.
 Add your client certificate information to the request:
 
-```curl
-curl -sv https://auth.example.com --cert example.pem --key key.pem
+```sh
+$ curl -sv https://auth.example.com --cert example.pem --key key.pem
 ```
 
 When the authentication process completes successfully, a `CF_Authorization Set-Cookie` header returns in the response.
@@ -182,25 +182,25 @@ Returning to the terminal, generate a client certificate that will authenticate 
 
 1.  Create a file named `client-csr.json` and add the following JSON blob:
 
-```json
-{
-  "CN": "James Royal",
-  "hosts": [""],
-  "key": {
-    "algo": "rsa",
-    "size": 4096
-  },
-  "names": [
+    ```json
     {
-      "C": "US",
-      "L": "Austin",
-      "O": "Access",
-      "OU": "Access Admins",
-      "ST": "Texas"
+      "CN": "James Royal",
+      "hosts": [""],
+      "key": {
+        "algo": "rsa",
+        "size": 4096
+      },
+      "names": [
+        {
+          "C": "US",
+          "L": "Austin",
+          "O": "Access",
+          "OU": "Access Admins",
+          "ST": "Texas"
+        }
+      ]
     }
-  ]
-}
-```
+    ```
 
 2.  Now, use the following command to generate a client certificate with the Cloudflare PKI toolkit:
 
@@ -239,8 +239,8 @@ You can use the Cloudflare PKI toolkit to generate a certificate revocation list
 
 2.  Create the CRL with the following command.
 
-    ```bash
-    cfssl gencrl serials.txt ../mtls-test/ca.pem ../mtls-test/ca-key.pem | base64 -D > ca.crl
+    ```sh
+    $ cfssl gencrl serials.txt ../mtls-test/ca.pem ../mtls-test/ca-key.pem | base64 -D > ca.crl
     ```
 
     You will need to add this to your server or enforce the revocation in a Cloudflare Worker. An example Worker Script can be [found on the Cloudflare GitHub repository](https://github.com/cloudflare/access-crl-worker-template)

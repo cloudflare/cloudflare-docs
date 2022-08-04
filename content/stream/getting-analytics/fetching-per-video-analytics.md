@@ -1,10 +1,10 @@
 ---
-pcx-content-type: reference
-title: Fetching per-video analytics
+pcx_content_type: reference
+title: Fetch per-video analytics
 weight: 3
 ---
 
-# Fetching per-video analytics
+# Fetch per-video analytics
 
 Cloudflare measures the following metrics for every video play:
 

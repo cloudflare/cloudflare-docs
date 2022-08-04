@@ -2,7 +2,7 @@
 updated: 2021-08-03
 category: 🔐 Zero Trust
 difficulty: Intermediate
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Configure AWS SSO with Access for SaaS
 ---
 
@@ -75,13 +75,13 @@ For this tutorial, you will need:
 
 1.  Paste the Cloudflare IdP metadata into your AWS account with these mappings:
 
-        | Cloudflare value | AWS value |
-        | ----- | ---- |
-        | **SSO Endpoint** | **IdP Sign-in URL** |
-        | **Access Entity ID** | **IdP Issuer URL** |
-        | **Public Key** | **IdP Certificate** |
+    | Cloudflare value     | AWS value           |
+    | -------------------- | ------------------- |
+    | **SSO Endpoint**     | **IdP Sign-in URL** |
+    | **Access Entity ID** | **IdP Issuer URL**  |
+    | **Public Key**       | **IdP Certificate** |
 
-         {{<Aside type="note">}}
+    {{<Aside type="note">}}
 
     The Public key must be transformed into a fingerprint. To do that:
 
@@ -89,21 +89,23 @@ For this tutorial, you will need:
 1.  Paste the Public Key into VIM or another code editor.
 1.  Wrap the value in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
 1.  Set the file extension to `.crt` and save.
+
     {{</Aside>}}
 
 1.  Click **Next: Review**.
 
 1.  Set Provisioning to _Manual_.
 
-        ![AWS settings](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-settings.png)
+    ![AWS settings](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-settings.png)
 
-         {{<Aside type="Warning" header="Important">}}
+    {{<Aside type="warning" header="Important">}}
 
     Access for SaaS does not currently support System for Cross-domain Identity Management (SCIM). Please make sure that:
 
 1.  Users are created in both your identity provider and AWS
 1.  Users have matching usernames in your identity provider and AWS.
 1.  Usernames are email addresses. This is the only format AWS supports with third-party SSO providers.
+
     {{</Aside>}}
 
 ## Test your connection

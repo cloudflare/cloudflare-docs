@@ -1,6 +1,7 @@
 ---
-pcx-content-type: navigation
+pcx_content_type: navigation
 title: Workers Sites
+layout: single
 ---
 
 # Workers Sites

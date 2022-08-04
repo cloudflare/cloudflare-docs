@@ -1,6 +1,6 @@
 ---
 title: File scanning
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 3
 layout: list
 ---
@@ -10,7 +10,7 @@ layout: list
 WAF file scanning scans files being uploaded to your application.
 
 {{<Aside type="note">}}
-This feature is only available to select customers. Contact your account team to get access.
+This feature is only available for select customers on an Enterprise plan. Contact your account team to get access.
 {{</Aside>}}
 
 WAF file scanning will automatically attempt to detect uploaded files and scan them for malicious content and malware. The scan results, along with additional metadata, will be exposed as fields available in WAF custom rules, allowing you to implement fine-grained mitigation rules.

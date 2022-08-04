@@ -1,7 +1,7 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Migrating to module Workers
-weight: 0
+weight: 8
 ---
 
 # Migrating to module Workers

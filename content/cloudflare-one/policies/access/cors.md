@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: CORS
 weight: 4
 ---
@@ -14,7 +14,7 @@ When you protect a site with Cloudflare Access, Cloudflare checks every HTTP req
 
 - [Preflighted requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#preflighted_requests) cause the browser to send an OPTIONS request before sending the actual request. The OPTIONS request checks which methods and headers are allowed by the origin.
 
-{{<Aside type="Warning" header="Important">}}
+{{<Aside type="warning" header="Important">}}
 
 - Do not troubleshoot CORS in Incognito mode, as this will cause disruptions with Access due to `CF-Authorization` being blocked as a third-party cookie on cross origin requests.
 
@@ -240,6 +240,6 @@ In general, we recommend the following steps when troubleshooting CORS issues:
 2. Ensure that the application has set `credentials: 'same-origin'` in all fetch or XHR requests.
 3. If you are using the [cross-origin setting](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) on script tags, these must be set to "use-credentials".
 
-{{<Aside type="Warning" header="CORS is failing on the same domain">}}
+{{<Aside type="warning" header="CORS is failing on the same domain">}}
 CORS checks do not occur on the same domain. If this error occurs, it is likely the request is being sent without the `CF-Authorization` cookie.
 {{</Aside>}}

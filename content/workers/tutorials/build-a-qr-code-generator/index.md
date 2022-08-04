@@ -2,8 +2,9 @@
 updated: 2020-03-09
 difficulty: Beginner
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Build a QR code generator
+layout: single
 ---
 
 # Build a QR code generator

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: External Evaluation rules
 weight: 4
 ---
@@ -28,19 +28,19 @@ You can set up External Evaluation rules using any API service, but to get start
 1. Open a terminal and clone our example project.
 
     ```sh
-    wrangler generate my-worker https://github.com/cloudflare/workers-access-external-auth-example
+    $ wrangler generate my-worker https://github.com/cloudflare/workers-access-external-auth-example
     ```
 
 2. Navigate to the project directory.
 
     ```sh
-    cd my-worker
+    $ cd my-worker
     ```
 
 3. Create a [Workers KV namespace](/workers/wrangler/workers-kv/) to store the key. The binding name should be `KV` if you want to run the example as written.
 
     ```sh
-    wrangler kv:namespace create "KV"
+    $ wrangler kv:namespace create "KV"
     ```
 
     The command will output the binding name and KV namespace ID, for example `{ binding = "KV", id = "3e56d0300d714e7994c209d7aff3ccbe" }`.
@@ -79,7 +79,7 @@ You can set up External Evaluation rules using any API service, but to get start
 2. Publish the Worker to your Workers account.
 
     ```sh
-    wrangler publish
+    $ wrangler publish
     ```
 
     The Worker will be deployed to your `*.workers.dev` subdomain at `my-worker.<YOUR_SUBDOMAIN>.workers.dev`.
@@ -122,7 +122,7 @@ To debug your External Evaluation rule:
 1. Navigate to your Worker directory.
 
     ```sh
-    cd my-worker
+    $ cd my-worker
     ```
 
 2. Open `wrangler.toml` in a text editor and set the `debug` variable to `TRUE`.
@@ -130,13 +130,13 @@ To debug your External Evaluation rule:
 3. Publish your changes.
 
     ```sh
-    wrangler publish
+    $ wrangler publish
     ```
 
 4. Next, start a session to output realtime logs from your Worker.
 
     ```sh
-    wrangler tail -f pretty
+    $ wrangler tail -f pretty
     ```
 
 5. Log in to your Access application.

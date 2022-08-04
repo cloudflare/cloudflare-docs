@@ -1,7 +1,7 @@
 ---
 title: Overview
 type: overview
-pcx-content-type: overview
+pcx_content_type: overview
 weight: 1
 ---
 
@@ -29,7 +29,7 @@ Cloudflare's Web3 gateways are available to all customers as a paid add-on.
 
 Review the following resources to learn more about Cloudflare's Web3 gateways:
 
-- [How the gateways work](/web3/about/) details how Cloudflare's gateways translate HTTP requests something understood by Web3 protocols.
+- [How the gateways work](/web3/about/) provides details on how Cloudflare's gateways translate HTTP requests into something understood by Web3 protocols.
 - [Get started](/web3/get-started/) offers a quickstart tutorial for new users.
 - [How to](/web3/how-to/) provides task guides for common procedures.
 - [IPFS Gateway](/web3/ipfs-gateway/) has information specific to Cloudflare's gateway to the Interplanetary File System (IPFS).

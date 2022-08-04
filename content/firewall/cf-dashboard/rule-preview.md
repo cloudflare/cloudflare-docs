@@ -1,6 +1,6 @@
 ---
 title: Preview rules
-pcx-content-type: concept
+pcx_content_type: concept
 type: table
 weight: 3
 layout: list

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 7
 title: Load balancing with DNS records
 ---
@@ -14,7 +14,7 @@ Use this setup for simple, [round-robin load balancing](https://www.cloudflare.c
 
 The following example illustrates how you would distribute traffic intended for `www.example.com`. Though the example uses `A` records, you could also use `AAAA` records.
 
-After [creating an account](/fundamentals/get-started/setup/account-setup/create-account/) and [updating your nameservers](/dns/zone-setups/full-setup/setup/) for `example.com`, you might [create multiple DNS records](/dns/manage-dns-records/how-to/create-dns-records/) for your `www` subdomain:
+After [creating an account](/fundamentals/account-and-billing/account-setup/create-account/) and [updating your nameservers](/dns/zone-setups/full-setup/setup/) for `example.com`, you might [create multiple DNS records](/dns/manage-dns-records/how-to/create-dns-records/) for your `www` subdomain:
 
 | Type | Name  | IPv4 address |
 | ---- | ----- | ------------ |

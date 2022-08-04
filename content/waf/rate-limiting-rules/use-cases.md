@@ -1,6 +1,6 @@
 ---
 title: Common use cases
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 20
 meta:
   title: Common rate limiting use cases

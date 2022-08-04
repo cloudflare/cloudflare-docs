@@ -1,10 +1,10 @@
 ---
-pcx-content-type: tutorial
-title: Simulcasting
-weight: 9
+pcx_content_type: tutorial
+title: Simulcast (restream) videos
+weight: 5
 ---
 
-# Simulcasting
+# Simulcast (restream) videos
 
 Simulcasting lets you forward your live stream to third-party platforms such as YouTube Live and Facebook Live. To begin simulcasting, select an input and add one or more Outputs:
 

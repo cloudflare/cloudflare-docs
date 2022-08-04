@@ -1,6 +1,7 @@
 ---
 title: Form expressions
-pcx-content-type: concept
+weight: 2
+pcx_content_type: concept
 meta:
   title: Form an expression
 ---

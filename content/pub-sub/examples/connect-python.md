@@ -1,6 +1,6 @@
 ---
 title: Connect with Python
-pcx-content-type: reference
+pcx_content_type: reference
 type: example
 summary: Connect to a Broker using Python 3
 ---

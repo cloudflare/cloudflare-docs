@@ -1,5 +1,5 @@
 ---
-pcx-content-type: get-started
+pcx_content_type: get-started
 title: Get started
 weight: 3
 ---
@@ -10,7 +10,7 @@ Use this tutorial to start using Cloudflare's Web3 Gateways to the IPFS and Ethe
 
 ## Before you begin
 
-Before you start, make sure the you have [set up an account](/fundamentals/get-started/setup/account-setup/) and [added your website](/fundamentals/get-started/setup/add-site/) to Cloudflare.
+Before you start, make sure the you have [set up an account](/fundamentals/account-and-billing/account-setup/) and [added your website](/fundamentals/get-started/setup/add-site/) to Cloudflare.
 
 ## Step 1 - Subscribe to a gateway
 

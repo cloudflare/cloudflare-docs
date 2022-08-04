@@ -1,6 +1,6 @@
 ---
 weight: 7
-pcx-content-type: reference
+pcx_content_type: reference
 title: Terms of use
 ---
 

@@ -1,7 +1,8 @@
 ---
 title: Enable Sumo Logic
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 66
+layout: single
 meta:
   title: Enable Logpush to Sumo Logic
 ---

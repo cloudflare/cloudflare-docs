@@ -2,11 +2,11 @@
 updated: 2021-05-11
 category: 🌐 Connections
 Difficulty: Advanced
-pcx-content-type: tutorial
-title: Use  to expose a Kubernetes app to the Internet
+pcx_content_type: tutorial
+title: Use cloudflared to expose a Kubernetes app to the Internet
 ---
 
-# Use `cloudflared` to expose a Kubernetes app to the Internet
+# Use cloudflared to expose a Kubernetes app to the Internet
 
 You can use [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) to connect applications and servers to Cloudflare's network. Tunnel relies on a piece of software, [cloudflared](https://github.com/cloudflare/cloudflared), to create those connections.
 
@@ -62,8 +62,6 @@ $ kubectl create secret generic tunnel-credentials \
 1.  Now create a CNAME targeting `.cfargotunnel.com`. In this example, the tunnel ID is ef824aef-7557-4b41-a398-4684585177ad, so create a CNAME record specifically targeting `ef824aef-7557-4b41-a398-4684585177ad.cfargotunnel.com`.
 
 You can also create multiple CNAME records targeting the same Tunnel, if desired.
-
-![Create CNAME](/cloudflare-one/static/secure-origin-connections/replica-support/create-cname.png)
 
 Alternatively, you can perform this step from the command line by running `cloudflared tunnel route dns <tunnel> <hostname>`. For example, `cloudflared tunnel route dns example-tunnel tunnel.example.com`. You can use a similar method to route traffic to `cloudflared` from a [Cloudflare Load Balancer](https://www.cloudflare.com/load-balancing/), see [docs](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) for details.
 

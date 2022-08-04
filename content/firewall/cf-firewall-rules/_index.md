@@ -1,6 +1,6 @@
 ---
 title: About
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 2
 meta:
   title: About Cloudflare Firewall Rules

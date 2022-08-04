@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-pcx-content-type: faq
+pcx_content_type: faq
 weight: 7
 meta:
   title: Troubleshoot Transform Rules
@@ -8,6 +8,6 @@ meta:
 
 # Troubleshoot Transform Rules
 
-After configuring a Transform Rule, you may get runtime errors related to the rule configuration.
+When troubleshooting a rule configuration, review the [Transform Rules evaluation](/rules/transform/#transform-rules-evaluation) section to understand how and when your Transform Rule is evaluated for each request.
 
-For more information on these errors, refer to [Troubleshooting Cloudflare 1XXX errors](https://support.cloudflare.com/hc/articles/360029779472).
+For more information on runtime errors related to Transform Rules configuration, refer to [Troubleshooting Cloudflare 1XXX errors](https://support.cloudflare.com/hc/articles/360029779472).

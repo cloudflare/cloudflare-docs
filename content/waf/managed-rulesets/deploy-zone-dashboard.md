@@ -1,6 +1,6 @@
 ---
 title: Deploy Managed Rulesets for a zone
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 5
 meta:
   title: Deploy Managed Rulesets for a zone in the dashboard

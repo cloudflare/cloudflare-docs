@@ -1,6 +1,6 @@
 ---
 title: Magic Firewall functions
-pcx-content-type: reference
+pcx_content_type: reference
 meta:
   title: Magic Firewall Functions
 ---

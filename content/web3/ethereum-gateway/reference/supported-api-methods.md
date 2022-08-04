@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Supported API methods
 weight: 1
 meta:
@@ -31,18 +31,18 @@ For a full list of RPC API methods, refer to the [JSON-RPC specification](https:
 | eth_accounts                            |                     ❌                       |
 | eth_blockNumber                         |                     ✅                       |
 | eth_chainId                             |                     ✅                       |
-| eth_getBalance\*                        |                     ✅                       |
-| eth_getStorageAt\*                      |                     ✅                      |
-| eth_getTransactionCount\*               |                     ✅                       |
+| eth_getBalance[^1]                       |                     ✅                       |
+| eth_getStorageAt[^1]                      |                     ✅                      |
+| eth_getTransactionCount[^1]               |                     ✅                       |
 | eth_getBlockTransactionCountByHash      |                     ✅                       |
 | eth_getBlockTransactionCountByNumber    |                     ✅                       |
 | eth_getUncleCountByBlockHash            |                     ✅                       |
 | eth_getUncleCountByBlockNumber          |                     ✅                       |
-| eth_getCode\*                           |                     ✅                       |
+| eth_getCode[^1]                          |                     ✅                       |
 | eth_sign                                |                     ❌                        |
 | eth_sendTransaction                     |                     ❌                        |
 | eth_sendRawTransaction                  |                     ✅                       |
-| eth_call\*                              |                     ✅                       |
+| eth_call[^1]                              |                     ✅                       |
 | eth_estimateGas                         |                     ✅                       |
 | eth_getBlockByHash                      |                     ✅                       |
 | eth_getBlockByNumber                    |                     ✅                       |
@@ -62,10 +62,10 @@ For a full list of RPC API methods, refer to the [JSON-RPC specification](https:
 | eth_uninstallFilter                     |                     ❌                        |
 | eth_getFilterChanges                    |                     ❌                        |
 | eth_getFilterLogs                       |                     ❌                        |
-| eth_getLogs\*                           |                     ✅                       |
+| eth_getLogs[^1]                           |                     ✅                       |
 | eth_getWork                             |                     ✅                       |
 | eth_submitWork                          |                     ✅                       |
 | eth_submitHashrate                      |                     ✅                       |
 | eth_getProof                            |                     ✅                       |
 
-> RPC API methods followed by "\*" are only supported for the latest 128 blocks
+[^1]: Only supported for the latest 128 blocks.

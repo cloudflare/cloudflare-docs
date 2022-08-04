@@ -2,7 +2,7 @@
 updated: 2020-11-28
 category: 🛡️ Web Gateway
 difficulty: Beginner
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Review Gateway blocks
 ---
 
@@ -35,17 +35,14 @@ In this example, a Cloudflare Gateway DNS filtering rule has been applied to all
 
 Once deployed, Cloudflare Gateway will begin to block DNS queries to sites categorized by Cloudflare as social media networks. You can review each block in the Zero Trust dashboard.
 
-Navigate to the `Logs` section of the sidebar and choose `Gateway`.
+1. Navigate to the **Logs** section of the sidebar and choose **Gateway**.
 
-![Logs](/cloudflare-one/static/secure-web-gateway/review-gateway-block/logs-page.png)
-
-Click the **Filter** action to filter by date range, user, action, and policy. In this example, choose `Blocked` as the action taken.
+2. Click the **Filter** action to filter by date range, user, action, and policy. In this example, choose `Blocked` as the action taken.
 
 ![Blocked](/cloudflare-one/static/secure-web-gateway/review-gateway-block/blocked.png)
 
-You can expand the record to identify more information about the event, including user identity if you have deployed the [Zero Trust agent](/cloudflare-one/connections/connect-devices/).
+3. Expand the record to identify more information about the event, including user identity if you have deployed the [Zero Trust agent](/cloudflare-one/connections/connect-devices/).
 
-![Blocked Expand](/cloudflare-one/static/secure-web-gateway/review-gateway-block/blocked-expand.png)
 
 ## Review block reason
 
@@ -57,16 +54,12 @@ Review details about the domain blocked by Cloudflare by clicking **View domain 
 
 If you need to allow a specific hostname that was blocked as part of a larger group, you can create an exception in Cloudflare Gateway.
 
-Return to the `Policies` page in the `Gateway` section. Add a new policy by clicking **Create a policy**.
+1. Return to the `Policies` page in the `Gateway` section. Add a new policy by clicking **Create a policy**.
 
-Choose `DNS Domain` and input the domain to be allowed as the value. Select `Allow` as the action and create the policy.
+2. Choose `DNS Domain` and input the domain to be allowed as the value. Select `Allow` as the action and create the policy.
 
-![Facebook Allow](/cloudflare-one/static/secure-web-gateway/review-gateway-block/allow-rule.png)
+3. Cloudflare Gateway enforces policies in an order from top-to-bottom. Drag the new policy to the top of the list.
 
-Cloudflare Gateway enforces policies in an order from top-to-bottom. Drag the new policy to the top of the list.
-
-![Initial Order](/cloudflare-one/static/secure-web-gateway/review-gateway-block/before-order.png)
-
-Once added to the top of the list, DNS queries to this host will be allowed based on the first matching rule before DNS queries to other social media sites are blocked with the subsequent rules.
+4. Once added to the top of the list, DNS queries to this host will be allowed based on the first matching rule before DNS queries to other social media sites are blocked with the subsequent rules.
 
 ![Saved Order](/cloudflare-one/static/secure-web-gateway/review-gateway-block/after-order.png)

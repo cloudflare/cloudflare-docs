@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Using Railgun with Origin CA Certificates
 weight: 24
 ---
