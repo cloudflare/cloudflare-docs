@@ -1,5 +1,5 @@
 ---
-pcx-content-type: navigation
+pcx_content_type: navigation
 title: Adjusting DDoS rules
 weight: 6
 ---

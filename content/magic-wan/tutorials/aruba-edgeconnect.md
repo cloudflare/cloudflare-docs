@@ -1,10 +1,10 @@
 ---
-title: Aruba EdgeConnect SD-WAN
-pcx-content-type: tutorial
+title: Aruba EdgeConnect Enterprise
+pcx_content_type: tutorial
 weight: 1
 ---
 
-# Aruba EdgeConnect SD-WAN
+# Aruba EdgeConnect Enterprise
 
 Cloudflare partners with Aruba’s EdgeConnect SD-WAN solution to provide users with an integrated solution. The EdgeConnect appliances manage subnets associated with branch offices or retail locations. Anycast tunnels are set up between the EdgeConnect appliances and Cloudflare to securely route traffic. 
 
@@ -21,8 +21,8 @@ Note that north-south traffic routed through Cloudflare’s Secure Web Gateway i
 Before setting up a connection between EdgeConnect and Cloudflare, you must have:
 
 - A contract that includes Magic WAN and Secure Web Gateway.
-- Received two Cloudflare GRE endpoints (Anycast IP address).
-- Determined a private static /31 IP pair to use with each GRE tunnel. The /31 pairs should be from a different private subnet, separate from the private subnets used behind each EdgeConnect appliance.
+- Received two Cloudflare endpoints (Anycast IP address).
+- Determined a private static /31 IP pair to use with each tunnel. The /31 pairs should be from a different private subnet, separate from the private subnets used behind each EdgeConnect appliance.
 - The EdgeConnect devices used in this tutorial and on v9.0. 
 
 ## Example scenario 
@@ -85,6 +85,8 @@ The Deployment screenshot displays several different IP addresses and interfaces
 ## 1. Define a common site on the Orchestrator
 
 For all EdgeConnect devices using Cloudflare, modify the devices to put them on the same site. This disables automatic IPSec tunnel creation between the EdgeConnect devices using the same labels for the WAN interfaces in use.
+
+This step is only required if Cloudflare is used for east-west traffic routing.
 
 ## 2. Configure overlay policies 
 

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Monitor waiting room status
 weight: 3
 ---
@@ -89,6 +89,8 @@ The value of `queue_all` indicates whether all traffic is forced to queue in the
 
 Waiting rooms queue traffic at the data-center level to increase scalability, letting each data center make decisions independently.
 
-Because of this design, a waiting room might queue traffic from a specific data centers before the waiting room reaches its limit of `new_users_per_minute`.
+Because of this design, a waiting room might queue traffic from a specific data center before the waiting room reaches its limit of `new_users_per_minute` or `total_active_users`.
 
-To stop a waiting room from active queueing, increase the minimum values for `new_users_per_minute` and `total_active_users`.
+Waiting Room also continuously monitors the rate of users entering throughout each minute, and not just at the end of the minute. Therefore, if at the beginning of your minute, a large fraction of your set `new_users_per_minute` value already joined, we may start queueing users, even if the overall `new_users_per_minute` value that is reached for that minute is not hit.
+
+To help prevent a waiting room from active queueing, increase the values for `new_users_per_minute` and/or `total_active_users`.

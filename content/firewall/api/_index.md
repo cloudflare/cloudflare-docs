@@ -1,6 +1,6 @@
 ---
 title: Manage rules via the APIs
-pcx-content-type: navigation
+pcx_content_type: navigation
 weight: 4
 meta:
   title: Manage firewall rules via the APIs

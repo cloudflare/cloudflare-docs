@@ -1,5 +1,5 @@
 ---
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: DNS over Discord
 ---
 
@@ -72,7 +72,7 @@ Example:
 
 ### Refreshing existing results
 
-You can refresh the DNS lookup results by clicking the Refresh button. Clicking it will trigger the bot to re-request the DNS query in the message, and update the results in the message. Any user can click this button.
+You can refresh the DNS lookup results by selecting the Refresh button. Selecting it will trigger the bot to re-request the DNS query in the message, and update the results in the message. Any user can select this button.
 
 The refresh button is available on all responses to the `/dig` command, including those that resulted in an error, such as an unknown domain or no records found.
 

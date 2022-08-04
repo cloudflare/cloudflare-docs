@@ -1,6 +1,6 @@
 ---
 title: How Pub/Sub works
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 1
 ---
 

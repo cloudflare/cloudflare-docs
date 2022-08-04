@@ -1,6 +1,6 @@
 ---
 title: Cache behavior
-pcx-content-type: concept
+pcx_content_type: concept
 ---
 # Cache behavior
 

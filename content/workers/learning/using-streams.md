@@ -1,7 +1,7 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Using Streams
-weight: 0
+weight: 11
 ---
 
 # Using Streams
@@ -64,6 +64,6 @@ The Streams API is only available inside of the [Request context](/workers/runti
 
 ## Related resources
 
-- [Streams API Reference](/workers/runtime-apis/streams/)
+- [Streams API reference](/workers/runtime-apis/streams/)
 - [MDN’s Streams API documentation](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
-- [Streams API Specification](https://streams.spec.whatwg.org/)
+- [Streams API spec](https://streams.spec.whatwg.org/)

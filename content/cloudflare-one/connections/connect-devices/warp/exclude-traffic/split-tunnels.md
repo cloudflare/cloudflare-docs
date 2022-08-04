@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Split Tunnels
 weight: 6
 ---
@@ -66,6 +66,15 @@ Domain-based split tunneling works alongside DNS by dynamically excluding or inc
 4. If a DNS result has been previously cached, it will not be dynamically added in the Split Tunnel result until the next time the DNS lookup happens.
 
 {{</Aside>}}
+
+### Cloudflare Zero Trust domains
+
+Many Cloudflare Zero Trust services rely on traffic going through WARP. If you are using Split Tunnels in Include mode, you will need to manually add the following domains in order for these features to function.
+
+| Feature | Domains to include |
+| --------| ------------------ |
+| [Device posture checks](/cloudflare-one/identity/devices/)| `<your-team-name>.cloudflareaccess.com`, IdP used to authenticate into Access, and the application protected by Access |
+| [WARP session duration](/cloudflare-one/policies/filtering/enforce-sessions/) | `<your-team-name>.cloudflareaccess.com>` and the HTTP or Network resource with the session re-authentication policy |
 
 ## Important platform differences
 

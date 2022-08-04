@@ -2,8 +2,9 @@
 updated: 2021-06-17
 difficulty: Beginner
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Handle form submissions with Airtable
+layout: single
 ---
 
 # Handle form submissions with Airtable
@@ -114,9 +115,9 @@ If you would like to follow along with this example, you can directly copy the `
 
 ## Create a serverless function
 
-In order to handle the form submission, you will create and deploy a Workers serverless function that parses the incoming form data and prepares it for submission to Airtable.
+To handle the form submission, you will create and deploy a Workers serverless function that parses the incoming form data and prepares it for submission to Airtable.
 
-To begin, use `wrangler` to create a new function, called `airtable-form-handler`, and navigate to it in your terminal:
+To begin, use Wrangler to create a new function, called `airtable-form-handler`, and navigate to it in your terminal:
 
 ```sh
 ---

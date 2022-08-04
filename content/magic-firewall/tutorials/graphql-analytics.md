@@ -1,6 +1,6 @@
 ---
 title: GraphQL Analytics
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 1
 meta:
   title: GraphQL Analytics

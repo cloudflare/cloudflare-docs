@@ -2,7 +2,7 @@
 updated: 2021-03-09
 category: 🔐 Zero Trust
 difficulty: Intermediate
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Salesforce with Access for SaaS configuration
 ---
 
@@ -36,8 +36,6 @@ title: Salesforce with Access for SaaS configuration
 1.  Set the desired policy configuration for user access.
 1.  Click Add application.
 1.  Next, take note of the **SSO endpoint**, the **Access Entity ID or Issuer**, and the **Public Key**.
-
-![Setup SaaS IdPs](/cloudflare-one/static/documentation/applications/saas-integrate.png)
 
 ## Create a certificate file
 

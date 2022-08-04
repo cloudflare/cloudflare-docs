@@ -1,9 +1,9 @@
 ---
 type: overview
-pcx-content-type: reference
+pcx_content_type: reference
 title: Network Analytics v1 to Network Analytics v2
 weight: 14
-layout: list
+layout: single
 ---
 
 # Network Analytics v1 to Network Analytics v2
@@ -99,3 +99,12 @@ The following example queries the top 20 logs of traffic dropped by mitigation s
   }
 }
 ```
+
+## Final remarks
+
+The `mitigationSystem` field can take one the following values:
+
+* `dosd` for [DDoS Managed Rulesets](/ddos-protection/managed-rulesets/) (Network-layer DDoS Attack Protection or HTTP DDoS Attack Protection).
+* `flowtrackd` for [Advanced TCP Protection](/ddos-protection/managed-rulesets/tcp-protection/).
+* `magic-firewall` for [Magic Firewall](/magic-firewall/).
+* Empty string for unmitigated traffic.

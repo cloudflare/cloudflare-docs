@@ -1,6 +1,6 @@
 ---
 title: Overview
-pcx-content-type: overview
+pcx_content_type: overview
 layout: single
 weight: 1
 meta:

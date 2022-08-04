@@ -1,7 +1,7 @@
 ---
 updated: 2021-02-02
 category: 🛡️ Web Gateway
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Configure local domains and split tunnel mode
 ---
 
@@ -46,9 +46,7 @@ You can deploy Cloudflare Zero Trust in split tunnel mode and exclude IP address
 
 By default, Cloudflare Zero Trust excludes IP addresses commonly used for private routing, including those defined in [RFC 1918](https://tools.ietf.org/html/rfc1918). Everything listed under **Split Tunnel entries** will be excluded. To delete an IP address from the list of excluded IP addresses, toggle the box to the left of the IP address range and click **Confirm delete**.
 
-To add IP addresses to the default list, input the address or CIDR in the **Selector** field. You can add an optional description and click **Add**.
-
-![Split Tunnel](/cloudflare-one/static/secure-web-gateway/split-tunnel/split-tunnel-entries.png)
+To add IP addresses to the default list, input the address or CIDR in the **Selector** field. You can add an optional description and click **Save Destination**.
 
 ## Enroll devices
 

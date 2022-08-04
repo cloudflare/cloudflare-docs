@@ -1,7 +1,7 @@
 ---
 title: 2020-03-02 – Emergency
 type: table
-pcx-content-type: changelog
+pcx_content_type: changelog
 weight: 982
 layout: list
 meta:

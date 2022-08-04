@@ -1,5 +1,5 @@
 ---
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Parse Cloudflare Logs JSON data
 weight: 86
 ---

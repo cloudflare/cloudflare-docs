@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Configuration options
 weight: 0
 ---
@@ -79,9 +79,9 @@ The number of ports in an origin port range must match the number of ports speci
 Connections to a port within a port range at the edge will be proxied to the equivalent port offset in the origin range.
 For example, in the configurations above, a connection to `range.example.com:1005` would be proxied to port 3005 on the origin.
 
-## IP Access Rules
+## IP Access rules
 
-If IP Access Rules is enabled for a Spectrum application, Cloudflare will respect the IP Access Rules created under **Security** > **WAF** > **Tools** for that domain. Cloudflare only respects rules created for specific IP addresses, IP blocks, countries, or ASNs for Spectrum applications. Spectrum will also only respect rules created with the actions `allow` or `block`.
+If IP Access rules are enabled for a Spectrum application, Cloudflare will respect the IP Access rules created under **Security** > **WAF** > **Tools** for that domain. Cloudflare only respects rules created for specific IP addresses, IP blocks, countries, or ASNs for Spectrum applications. Spectrum will also only respect rules created with the actions `allow` or `block`.
 
 ## Edge TLS Termination
 

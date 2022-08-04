@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Kubernetes
 weight: 41
 ---
@@ -13,7 +13,7 @@ Both options rely on Cloudflare's Load Balancer to send traffic for a single hos
 | Before you start                                                               |
 | ------------------------------------------------------------------------------ |
 | [Enable Cloudflare Load Balancers](/load-balancing/how-to/create-load-balancer/) |
-| [Create a tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/)  |
+| [Create a tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/)  |
 
 ## Deploy `cloudflared` to an upstream service
 

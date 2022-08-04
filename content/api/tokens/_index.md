@@ -1,6 +1,6 @@
 ---
 title: API tokens
-pcx-content-type: overview
+pcx_content_type: overview
 weight: 7
 meta:
   title: API tokens and keys

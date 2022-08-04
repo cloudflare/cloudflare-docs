@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Load balancers
 weight: 51
 ---
@@ -8,7 +8,7 @@ weight: 51
 
 | Before you start                                                                             |
 | -------------------------------------------------------------------------------------------- |
-| 1. [Create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/)                |
+| 1. [Create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/)                |
 | 2. [Configure the Tunnel](/cloudflare-one/connections/connect-apps/configuration/)           |
 | 3. [Create a Load Balancer pool in Cloudflare](/load-balancing/how-to/create-load-balancer/) |
 

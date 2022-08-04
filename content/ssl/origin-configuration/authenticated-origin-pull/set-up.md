@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Set up authenticated origin pulls
 weight: 2
 ---
@@ -8,7 +8,7 @@ weight: 2
 
 Set up authenticated origin pulls via one of the following options:
 
-- [Zone-Level Authenticated Origin Pull using **Cloudflare** certificates](#zone-level--cloudflare-certificates)
+- [Zone-Level Authenticated Origin Pull using **Cloudflare** certificate](#zone-level--cloudflare-certificate)
 - [Zone-Level Authenticated Origin Pull using **customer** certificates](#zone-level--customer-certificates)
 - [Per-Hostname Authenticated Origin Pull using customer certificates](#per-hostname--customer-certificates)
 

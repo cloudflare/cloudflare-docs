@@ -1,9 +1,9 @@
 ---
-pcx-content-type: reference
-title: Fetching bulk analytics
+pcx_content_type: reference
+title: Fetch bulk analytics
 ---
 
-# Fetching bulk analytics
+# Fetch bulk analytics
 
 Cloudflare Stream lets you fetch usage data in bulk using the GraphQL API. Stream's GraphQL API exposes two data sets:
 
@@ -69,7 +69,7 @@ If you are newer to GraphQL, refer to [Cloudflare GraphQL analytics for HTTP req
 
 Here is how you would get the view count and minutes viewed for the videos in your Stream account:
 
-1.  Make a query to https://api.cloudflare.com/client/v4/graphql
+1.  Make a query to `https://api.cloudflare.com/client/v4/graphql`
 2.  Include your Cloudflare API token in the headers (see cURL example included on this page)
 3.  It is important that you change the $ACCOUNT\_ID with your account ID and the date range
 4.  The body of the query should contain the following GraphQL Query:
@@ -337,6 +337,5 @@ Here are the steps to implementing pagination:
 
 ## Limitations
 
-*   Only Cloudflare API keys, not API tokens can be used with the Stream GraphQL API for now
 *   Maximum query interval in a single query is 31 days
 *   Maximum data retention period is 90 days

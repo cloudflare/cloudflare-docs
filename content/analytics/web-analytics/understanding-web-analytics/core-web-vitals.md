@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Core Web Vitals
 weight: 6
 ---
@@ -19,8 +19,9 @@ Core Web Vitals is currently only supported in Chromium browsers, with Safari an
 Vitals Explorer enables you to easily pinpoint which elements in a web page are affecting the user’s experience while browsing your website, in a visual form.
 To find Vitals Explorer:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Web Analytics**.
-2. Select your website and click **Core Web Vitals**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Select the **Analytics** drop-down and choose **Web Analytics**.
+3. Select your website and select **Core Web Vitals**.
 
 Vitals Explorer is divided into three main sections, each one with information about a specific feature that affects user experience:
 
@@ -32,9 +33,9 @@ Each of these metrics represents an impact to the user experience, which is quan
 
 Cloudflare Web Analytics offers interactive exploration in Core Web Vitals by allowing you to filter data by Country, Host, Path, Referrer, Device Type, Browser, or Operating System, and identify which users are the most impacted.
 
-Below each graph, the Debug View section has the top five elements with a negative impact on each metric. Clicking on the elements shown in the data table gives you more details about them.
+Below each graph, the Debug View section has the top five elements with a negative impact on each metric. Selecting the elements shown in the data table gives you more details about them.
 
-Each table — LCP, FID, and CLS — also shows you the performance of these elements in the 75th percentile (P75) at a glance. Clicking in each row of the table lets you expand the element and have access to more information, including P50, P90 and P99 metrics.
+Each table — LCP, FID, and CLS — also shows you the performance of these elements in the 75th percentile (P75) at a glance. Selecting in each row of the table lets you expand the element and have access to more information, including P50, P90 and P99 metrics.
 
 These numbers refer to how an element performs relatively to others in your page. For example, if an element takes 3,900 ms to load and is in the 75 percentile, this means that it is slower to load than 75% of the elements in your page.
 
@@ -63,6 +64,6 @@ Web Analytics uses its lightweight JavaScript beacon to collect the information 
 
 Layout information is a JSON value that includes width, height, x axis position, y axis position, left, right, top, and bottom. These values represent the layout shifts that happen on the page.
 
-- **CurrentRect**: Captures the layout information of the DOM element with the largest area, after the shift in the page has occurred. This JSON value is shown as **Current** in the **Debug View** section. To access it, scroll to the **Cumulative Layout Shifts (CLS)** graphic > **Debug View**. Click on any element from that table to access the **Layout Shifts** section, where **Current** is presented.
+- **CurrentRect**: Captures the layout information of the DOM element with the largest area, after the shift in the page has occurred. This JSON value is shown as **Current** in the **Debug View** section. To access it, scroll to the **Cumulative Layout Shifts (CLS)** graphic > **Debug View**. Select any element from that table to access the **Layout Shifts** section, where **Current** is presented.
 
-- **PreviousRect**: Captures the layout information of the DOM element with the largest area, before the shift in the page has occurred. This JSON value is shown as **Previous** in the **Debug View** section. To access it, scroll to the **Cumulative Layout Shifts (CLS)** graphic > **Debug View**. Click on any element from that table to access the **Layout Shifts** section, where **Previous** is presented.
+- **PreviousRect**: Captures the layout information of the DOM element with the largest area, before the shift in the page has occurred. This JSON value is shown as **Previous** in the **Debug View** section. To access it, scroll to the **Cumulative Layout Shifts (CLS)** graphic > **Debug View**. Select any element from that table to access the **Layout Shifts** section, where **Previous** is presented.

@@ -1,9 +1,10 @@
 ---
 title: Configure a rule with the Skip action
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 4
 meta:
   title: Configure a custom rule with the Skip action
+layout: single
 ---
 
 # Configure a custom rule with the Skip action
@@ -24,9 +25,7 @@ For more information on the available options, refer to [Available skip options]
 
 5. Under **Choose action**, select *Skip* from the dropdown.
 
-    <div class="large-img">
-      <img alt="Skip action options in custom rules" src="/waf/static/custom-rules/skip-action-options.png"/>
-    </div>
+    ![Available Skip action options when configuring a custom rule](/waf/static/custom-rules/skip-action-options.png)
 
 6. Configure the desired [skip options](/waf/custom-rules/skip/options/).
 

@@ -6,7 +6,7 @@ demo: https://returning-json.workers-sites-examples.workers.dev
 tags:
   - JSON
   - Originless
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Return JSON
 weight: 2
 layout: example

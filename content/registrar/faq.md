@@ -1,5 +1,5 @@
 ---
-pcx-content-type: faq
+pcx_content_type: faq
 title: FAQ
 weight: 6
 ---
@@ -146,7 +146,7 @@ The .US registry requires that domain contact data is displayed in the public WH
 
 ### .US domain transfers
 
-Transferring a `.us` domain works in a similar way to other domains, but always requires approval via the Form of Authorization (FOA) email. You must click the approve link within five days for the transfer to proceed. If you do not respond, the transfer request will be cancelled.
+Transferring a `.us` domain works in a similar way to other domains, but always requires approval via the Form of Authorization (FOA) email. You must select the approve link within five days for the transfer to proceed. If you do not respond, the transfer request will be cancelled.
 
 Refer to [Transfer your domain to Cloudflare](/registrar/get-started/transfer-domain-to-cloudflare/) for more information.
 

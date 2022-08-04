@@ -2,7 +2,7 @@
 updated: 2021-03-16
 category: 🔐 Zero Trust
 difficulty: Advanced
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Output an app's token to a variable with one command
 ---
 
@@ -69,7 +69,7 @@ You can add the following function to your file, replacing `https://jira.company
 
 ```bash
 function login-jira() {
-  export JIRA_TOKEN=$(cloudflared access login https://jira.cfops.it/ | sed '/^[[:space:]]*$/d' | tail -n 1)
+  export JIRA_TOKEN=$(cloudflared access login https://jira.company.com | sed '/^[[:space:]]*$/d' | tail -n 1)
   echo $JIRA_TOKEN
 }
 ```
@@ -92,7 +92,7 @@ You can add the following function to your file, replacing `https://jira.company
 
 ```bash
 function login-jira() {
-  export JIRA_TOKEN=$(cloudflared access login https://jira.cfops.it/ | sed '/^[[:space:]]*$/d' | tail -n 1)
+  export JIRA_TOKEN=$(cloudflared access login https://jira.company.com | sed '/^[[:space:]]*$/d' | tail -n 1)
   echo $JIRA_TOKEN
 }
 ```

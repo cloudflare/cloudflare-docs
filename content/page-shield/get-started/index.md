@@ -1,7 +1,8 @@
 ---
 title: Get started
-pcx-content-type: get-started
+pcx_content_type: get-started
 weight: 2
+layout: single
 meta:
   title: Get started with Cloudflare Page Shield
 ---

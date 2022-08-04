@@ -1,7 +1,7 @@
 ---
 updated: 2021-08-19
 category: 🔐 Zero Trust
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Integrate Microsoft MCAS with Cloudflare Zero Trust
 ---
 
@@ -71,15 +71,11 @@ curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=all
 
 Your list is now ready to be referenced by Gateway HTTP policies.
 
-![List of hostnames](/cloudflare-one/static/secure-web-gateway/microsoft-mcas/mcas-list.png)
-
 ## Creating an HTTP policy
 
 1.  Navigate to **Gateway** > **Policies** > **HTTP policies**.
 
 1.  Click **Create a policy**.
-
-    ![List of hostnames](/cloudflare-one/static/secure-web-gateway/microsoft-mcas/mcas-policy.png)
 
 1.  Set the expression to:
 
@@ -91,4 +87,4 @@ Your list is now ready to be referenced by Gateway HTTP policies.
 
 Now when trying to visit one of the MCAS defined sites, the user will be blocked.
 
-![List of hostnames](/cloudflare-one/static/secure-web-gateway/microsoft-mcas/mcas-block-page.png)
+![Access Restricted](/cloudflare-one/static/secure-web-gateway/microsoft-mcas/mcas-block-page.png)

@@ -1,6 +1,6 @@
 ---
 title: Verify APO works
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 9
 ---
 

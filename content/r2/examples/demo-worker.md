@@ -1,7 +1,7 @@
 ---
 title: Using R2 in a Worker
 summary: A demo of how to use R2 in a Worker.
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 1001
 layout: example
 ---
@@ -10,7 +10,7 @@ Below is an example Worker that exposes an R2 bucket to the Internet and demonst
 
 ```ts
 interface Env {
-  BUCKET: R2Bucket
+  MY_BUCKET: R2Bucket
 }
 
 function parseRange(encoded: string | null): undefined | { offset: number, length: number } {
@@ -25,6 +25,7 @@ function parseRange(encoded: string | null): undefined | { offset: number, lengt
 
   return {
     offset: Number(parts[0]),
+    end:    Number(parts[1]),
     length: Number(parts[1]) + 1 - Number(parts[0]),
   }
 }
@@ -59,7 +60,7 @@ export default {
         }
         console.log(JSON.stringify(options))
 
-        const listing = await env.BUCKET.list(options)
+        const listing = await env.MY_BUCKET.list(options)
         return new Response(JSON.stringify(listing), {headers: {
           'content-type': 'application/json; charset=UTF-8',
         }})
@@ -67,7 +68,7 @@ export default {
 
       if (request.method === 'GET') {
         const range = parseRange(request.headers.get('range'))
-        const object = await env.BUCKET.get(objectName, {
+        const object = await env.MY_BUCKET.get(objectName, {
           range,
           onlyIf: request.headers,
         })
@@ -79,6 +80,9 @@ export default {
         const headers = new Headers()
         object.writeHttpMetadata(headers)
         headers.set('etag', object.httpEtag)
+        if (range) {
+          headers.set("content-range", `bytes ${range.offset}-${range.end}/${object.size}`)
+        }
         const status = object.body ? (range ? 206 : 200) : 304
         return new Response(object.body, {
           headers,
@@ -86,9 +90,7 @@ export default {
         })
       }
 
-      const object = await env.BUCKET.head(objectName, {
-        onlyIf: request.headers,
-      })
+      const object = await env.MY_BUCKET.head(objectName)
 
       if (object === null) {
         return objectNotFound(objectName)
@@ -102,7 +104,7 @@ export default {
       })
     }
     if (request.method === 'PUT' || request.method == 'POST') {
-      const object = await env.BUCKET.put(objectName, request.body, {
+      const object = await env.MY_BUCKET.put(objectName, request.body, {
         httpMetadata: request.headers,
       })
       return new Response(null, {
@@ -112,7 +114,7 @@ export default {
       })
     }
     if (request.method === 'DELETE') {
-      await env.BUCKET.delete(url.pathname.slice(1))
+      await env.MY_BUCKET.delete(url.pathname.slice(1))
       return new Response()
     }
 

@@ -1,7 +1,8 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Datasets (tables)
 weight: 3
+layout: single
 ---
 
 # Datasets (tables)
@@ -28,6 +29,7 @@ The following datasets (and associated nodes) are available in Cloudflare Analyt
 | :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
 | Firewall Activity Log       | `firewallEventsAdaptive` `firewallEventsAdaptiveByTimeGroups`                                                                  |
 | Firewall Analytics          | `firewallEventsAdaptiveGroups`                                                                                                 |
+| Gateway Analytics               | `gatewayL4SessionsAdaptiveGroups` `gatewayL7RequestsAdaptiveGroups` `gatewayResolverQueriesAdaptiveGroups` `gatewayResolverByCategoryAdaptiveGroups`              |
 | Health Check Analytics      | `healthCheckEventsAdaptive` `healthCheckEventsAdaptiveGroups`                                                                  |
 | HTTP Requests               | `httpRequestsAdaptiveGroups` `httpRequests1mGroups` `httpRequests1hGroups`  `httpRequests1dGroups`                             |
 | Image Resizing Analytics    | `imageResizingRequests1mGroups`                                                                                                |
@@ -49,6 +51,7 @@ Beta datasets are available to Enterprise customers for testing and exploration.
 | Dataset (product) | Node                                                                                                        |
 | :----------------- | :---------------------------------------------------------------------------------------------------------- |
 | Web Analytics      | `rumPageloadEventsAdaptiveGroups` `rumPerformanceEventsAdaptiveGroups` `rumWebVitalsEventsAdaptiveGroups`   |
+| Waiting Room      | `waitingRoomAnalyticsAdaptive` `waitingRoomAnalyticsAdaptiveGroups`   |
 
 {{</table-wrap>}}
 

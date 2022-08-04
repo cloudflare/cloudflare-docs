@@ -1,6 +1,6 @@
 ---
 title: Enable Tiered Cache
-pcx-content-type: how-to
+pcx_content_type: how-to
 ---
 
 # Enable Tiered Cache

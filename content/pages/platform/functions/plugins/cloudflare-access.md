@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Cloudflare Access
 weight: 1
 ---
@@ -73,7 +73,7 @@ export const onRequest: PagesFunction = async ({ data }) => {
 };
 ```
 
-The `getIdentity` function takes an object with two properties: a `jwt` string, and a `domain` string. It returns a `Promise` of [the object returned by the `/cdn-cgi/accesss/get-identity` endpoint](https://developers.cloudflare.com/cloudflare-one/identity/users/validating-json/#groups-within-a-jwt). This is particularly useful if you want to use a user's group membership for something like application permissions.
+The `getIdentity` function takes an object with two properties: a `jwt` string, and a `domain` string. It returns a `Promise` of [the object returned by the `/cdn-cgi/access/get-identity` endpoint](/cloudflare-one/identity/users/validating-json/#groups-within-a-jwt). This is particularly useful if you want to use a user's group membership for something like application permissions.
 
 For convience, this same information can be fetched for the current request's JWT with the `data.cloudflareAccess.JWT.getIdentity` function, (assuming you have already validated the request with the Plugin as above):
 
