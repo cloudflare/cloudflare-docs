@@ -28,7 +28,7 @@ Alternatively, API tokens with Logs edit permissions can also be used for authen
 
 ## List files
 
-List relevant R2 objects containing logs matching the provided query parameters.
+List relevant R2 objects containing logs matching the provided query parameters, using the endpoint `GET /accounts/{accountId}/logs/list`.
 
 ### Query parameters
 
@@ -50,7 +50,7 @@ List relevant R2 objects containing logs matching the provided query parameters.
 
 ## Retrieve Logs
 
-Stream logs stored in R2 that match the provided query parameters.
+Stream logs stored in R2 that match the provided query parameters, using the endpoint `GET /accounts/{accountId}/logs/retrieve`.
 
 ### Query parameters
 
