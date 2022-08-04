@@ -1,6 +1,7 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Cron Triggers
+layout: single
 ---
 
 # Cron Triggers
@@ -19,7 +20,7 @@ To respond to a Cron Trigger, you must add a [`"scheduled"` event](/workers/runt
 
 {{</Aside>}}
 
-![After selecting Triggers, add a trigger to execute time-based Workers](./media/workers-schedule-editor.png)
+![After selecting Triggers, add a trigger to execute time-based Workers](/workers/platform/cron-triggers/media/workers-schedule-editor.png)
 
 ## Supported cron expressions
 
@@ -82,7 +83,7 @@ A recommended way for testing your Cron Trigger is to first deploy it to a test 
 
 Users can review the execution history of their Cron Triggers in **Past Events** under [**Triggers**](https://dash.cloudflare.com/?to=/:account/workers) or through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api).
 
-![Review the activity log of past cron triggers in Past Events](./media/workers-past-events.png)
+![Review the activity log of past cron triggers in Past Events](/workers/platform/cron-triggers/media/workers-past-events.png)
 
 It can take up to 30 minutes before events are displayed in **Past Events** when creating a new Worker or changing a Worker's name.
 

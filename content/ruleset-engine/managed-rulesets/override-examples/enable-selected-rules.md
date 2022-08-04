@@ -1,6 +1,6 @@
 ---
 title: Enable only selected rules
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 4
 meta:
   title: Use rulesets and rule overrides to only enable selected rules

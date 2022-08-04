@@ -1,6 +1,6 @@
 ---
 title: HTTP DDoS Managed Ruleset
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 2
 meta:
   title: Changelog for the HTTP DDoS Managed Ruleset

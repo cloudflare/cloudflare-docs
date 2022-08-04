@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Challenge Solve Rate (CSR)
 weight: 2
 ---
@@ -24,6 +24,6 @@ The CSR provides an indication of automated traffic:
 
 {{<Aside type="warning" header="Important">}}
 
-For customers on a Free plan, any rules configured with the _Legacy CAPTCHA_ action now use Managed Challenges. For more information, see [Understanding Cloudflare Captchas and Challenge Passage](https://support.cloudflare.com/hc/articles/200170136#managed-challenge).
+For customers on a Free plan, any rules configured with the _Legacy CAPTCHA_ action now use Managed Challenges. For more information, refer to [Cloudflare challenges](/fundamentals/get-started/concepts/cloudflare-challenges/).
 
 {{</Aside>}}

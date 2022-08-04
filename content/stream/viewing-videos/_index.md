@@ -1,9 +1,9 @@
 ---
-pcx-content-type: navigation
-title: Viewing videos
+pcx_content_type: navigation
+title: Play videos
 weight: 3
 ---
 
-# Viewing videos
+# Play videos
 
 {{<directory-listing>}}

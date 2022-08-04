@@ -2,7 +2,7 @@
 updated: 2020-12-10
 category: 🔐 Zero Trust
 difficulty: Advanced
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Zero Trust GitLab SSH & HTTP
 ---
 
@@ -39,7 +39,7 @@ This example uses a macOS machine to configure the Droplet. Copy the IP address 
 
 Open Terminal and run the following command, replacing the IP address with the IP assigned by Digital Ocean.
 
-```bash
+```sh
 $ ssh root@134.209.124.123
 ```
 
@@ -47,17 +47,17 @@ Next, install GitLab. This example uses the [Ubuntu package](https://about.gitla
 
 Run the following commands to begin.
 
-```bash
-sudo apt-get update
+```sh
+$ sudo apt-get update
 
-sudo apt-get install -y curl openssh-server ca-certificates
-curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
+$ sudo apt-get install -y curl openssh-server ca-certificates
+$ curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
 ```
 
 The commands above download the GitLab software to this machine. You must now install it. This is the first place this tutorial will diverge from the operations in the GitLab documentation. The next step in the GitLab-provided tutorial sets an external hostname. Instead, you can just install the software.
 
-```bash
-sudo apt-get install gitlab-ee
+```sh
+$ sudo apt-get install gitlab-ee
 ```
 
 After a minute or so, GitLab will be installed.
@@ -66,14 +66,14 @@ After a minute or so, GitLab will be installed.
 
 However, the application is not running yet. You can check to see what ports are listening to confirm by using `ss`.
 
-```bash
-sudo ss -lntup
+```sh
+$ sudo ss -lntup
 ```
 
 The result should be only the services currently active on the machine:
 
 <!-- ![Just Services](/cloudflare-one/static/zero-trust-security/gitlab/just-services.png) -->
-```
+```bash
 $ sudo ss -lntup
 Netid   State    Recv-Q   Send-Q     Local Address:Port     Peer Address:Port   Process
 udp     UNCONN   0        0                      *:9094                *:*
@@ -83,15 +83,15 @@ tcp     LISTEN   0        128                 [::]:22               [::]:*      
 
 To start GitLab, run the software's reconfigure command.
 
-```bash
-sudo gitlab-ctl reconfigure
+```sh
+$ sudo gitlab-ctl reconfigure
 ```
 
 GitLab will launch its component services. Once complete, confirm that GitLab is running and listening on both ports 22 and 80.
 
 ![GitLab Services](/cloudflare-one/static/zero-trust-security/gitlab/gitlab-services.png)
 
-```
+```bash
 $ sudo ss -lntup
 Netid   State    Recv-Q   Send-Q     Local Address:Port     Peer Address:Port   Process
 udp     UNCONN   0        0                      *:9094                *:*
@@ -100,11 +100,11 @@ tcp     LISTEN   0        4096           127.0.0.1:8150          0.0.0.0:*
 tcp     LISTEN   0        128              0.0.0.0:22            0.0.0.0:*       users:(("sshd",pid=29,fd=3))
 tcp     LISTEN   0        4096           127.0.0.1:8151          0.0.0.0:*
 tcp     LISTEN   0        4096           127.0.0.1:3000          0.0.0.0:*
-tcp     LISTEN   0        4096           127.0.0.1:8153          0.0.0.0:*       
+tcp     LISTEN   0        4096           127.0.0.1:8153          0.0.0.0:*
 tcp     LISTEN   0        4096           127.0.0.1:8154          0.0.0.0:*
 tcp     LISTEN   0        4096           127.0.0.1:8155          0.0.0.0:*
 tcp     LISTEN   0        511              0.0.0.0:8060          0.0.0.0:*       users:(("nginx",pid=324,fd=8))
-tcp     LISTEN   0        4096           127.0.0.1:9121          0.0.0.0:*                                                 
+tcp     LISTEN   0        4096           127.0.0.1:9121          0.0.0.0:*
 tcp     LISTEN   0        4096           127.0.0.1:9090          0.0.0.0:*
 tcp     LISTEN   0        4096           127.0.0.1:9187          0.0.0.0:*
 tcp     LISTEN   0        4096           127.0.0.1:9093          0.0.0.0:*
@@ -114,7 +114,7 @@ tcp     LISTEN   0        511              0.0.0.0:80            0.0.0.0:*      
 tcp     LISTEN   0        4096           127.0.0.1:9168          0.0.0.0:*
 tcp     LISTEN   0        4096           127.0.0.1:8082          0.0.0.0:*
 tcp     LISTEN   0        128                 [::]:22               [::]:*       users:(("sshd",pid=29,fd=4))
-tcp     LISTEN   0        4096                   *:9094                *:* 
+tcp     LISTEN   0        4096                   *:9094                *:*
 ```
 
 Users connect to GitLab over SSH (port 22 here) and HTTP for the web app (port 80). In the next step, you will make it possible for users to try both through Cloudflare Access. I'll leave this running and head over to the Cloudflare dashboard.
@@ -135,9 +135,7 @@ For GitLab, start by building two policies. Users will connect to GitLab in a co
 
 Before you build the rule, you'll need to follow [these instructions](/cloudflare-one/setup/) to set up Cloudflare Access in your account.
 
-Once enabled, navigate to the `Applications` page in the Zero Trust Dashboard. Click `Add an application`.
-
-![Applications Page](/cloudflare-one/static/documentation/applications/add-saas-application.png)
+Once enabled, navigate to the **Applications** page in the Zero Trust Dashboard. Select **Add an application**.
 
 Choose self-hosted from the options presented.
 
@@ -147,15 +145,11 @@ In the policy builder, you will be prompted to add a subdomain that will represe
 
 This example uses `gitlab.widgetcorp.tech` for the web application and `gitlab-ssh.widgetcorp.tech` for SSH connectivity.
 
-![App Picker](/cloudflare-one/static/secure-origin-connections/share-new-site/configure-app.png)
-
-While on this page, you can decide which identity providers will be allowed to authenticate. By default, all configured providers are allowed. Click `Next` to build rules to determine who can reach the application.
+While on this page, you can decide which identity providers will be allowed to authenticate. By default, all configured providers are allowed. Select **Next** to build rules to determine who can reach the application.
 
 You can then add rules to determine who can reach the site.
 
-![Add Rules](/cloudflare-one/static/secure-origin-connections/share-new-site/add-rules.png)
-
-Click `Next` and `Next` again on the `Setup` page - this example does not require advanced CORS configuration. Repeat these steps for the second application, `gitlab-ssh.widgetcorp.tech`.
+Select **Next** and **Next** again on the **Setup** page - this example does not require advanced CORS configuration. Repeat these steps for the second application, `gitlab-ssh.widgetcorp.tech`.
 
 ## Cloudflare Tunnel
 
@@ -163,22 +157,20 @@ Cloudflare Tunnel creates a secure, outbound-only, connection between this machi
 
 Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install that on the Digital Ocean machine with the two commands below.
 
-```bash
-sudo wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-sudo dpkg -i ./cloudflared-linux-amd64.deb
+```sh
+$ sudo wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+$ sudo dpkg -i ./cloudflared-linux-amd64.deb
 ```
 
 Once installed, authenticate the instance of `cloudflared` with the following command.
 
-`cloudflared login`
+```sh
+$ cloudflared login
+```
 
 The command will print a URL that you must visit to login with your Cloudflare account.
 
-![Self Hosted](/cloudflare-one/static/zero-trust-security/gitlab/leave-running.png)
-
 Choose a website that you have added into your account.
-
-![Choose Site](/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
 
 Once you click one of the sites in your account, Cloudflare will download a certificate file to authenticate this instance of `cloudflared`. You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
@@ -188,25 +180,23 @@ Once you click one of the sites in your account, Cloudflare will download a cert
 
 You can now connect GitLab to Cloudflare using Cloudflare Tunnel.
 
-First, create a new Tunnel by running the following command.
+1. Create a new Tunnel by running the following command.
 
-```bash
-cloudflared tunnel create gitlab
+```sh
+$ cloudflared tunnel create gitlab
 ```
 
-`cloudflared` will generate a unique ID for this Tunnel. You can use this Tunnel both for SSH and HTTP traffic.
+`cloudflared` will generate a unique ID for this Tunnel, for example `6ff42ae2-765d-4adf-8112-31c55c1551ef`. You can use this Tunnel both for SSH and HTTP traffic.
 
-![Self Hosted](/cloudflare-one/static/zero-trust-security/gitlab/tunnel-create.png)
-
-Next, you will need to configure Cloudflare Tunnel to proxy traffic to both destinations. The configuration below will take traffic bound for the DNS record that will be created for the web app and the DNS record to represent SSH traffic to the right port.
+2. You will need to configure Cloudflare Tunnel to proxy traffic to both destinations. The configuration below will take traffic bound for the DNS record that will be created for the web app and the DNS record to represent SSH traffic to the right port.
 
 You use the text editor of your choice to edit the configuration file. The example relies on `Vi`.
 
-```bash
-vim ~/.cloudflared/config.yml
+```sh
+$ vim ~/.cloudflared/config.yml
 ```
 
-Next, configure the Tunnel to serve traffic.
+3. Configure the Tunnel to serve traffic.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -224,21 +214,21 @@ ingress:
 
 ![Self Hosted](/cloudflare-one/static/zero-trust-security/gitlab/config-file.png)
 
-You can test that the configuration file is set correctly with the following command.
+4. You can test that the configuration file is set correctly with the following command:
 
-```bash
-cloudflared tunnel ingress validate
+```sh
+$ cloudflared tunnel ingress validate
 ```
 
 `cloudflared` should indicate the Tunnel is okay. You can now begin running the Tunnel.
 
-```bash
-cloudflared tunnel run
+```sh
+$ cloudflared tunnel run
 ```
 
 ![Tunnel Run](/cloudflare-one/static/zero-trust-security/gitlab/tunnel-run.png)
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
 This command should be run as a `systemd` service for long-term use; if it terminates, GitLab will be unavailable.
 
@@ -248,21 +238,19 @@ This command should be run as a `systemd` service for long-term use; if it termi
 
 You can now create DNS records for GitLab in the Cloudflare dashboard. Remember, you will still need two records - one for the web application and one for SSH traffic.
 
-In the DNS tab, choose the website where you built your [Access policies](/cloudflare-one/policies/access/). Click `+Add record` and select `CNAME` from type. In the `Name` field, input `gitlab`. In the `Target` field, input the ID of the Tunnel created followed by `cfargotunnel.com`. In this example, that value is:
+In the **DNS** tab, choose the website where you built your [Access policies](/cloudflare-one/policies/access/). Click **Add record** and select `CNAME` from type. In the **Name** field, input `gitlab`. In the **Target** field, input the ID of the Tunnel created followed by `cfargotunnel.com`. In this example, that value is:
 
-    6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
+```txt
+6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
+```
 
-![Add DNS](/cloudflare-one/static/zero-trust-security/gitlab/add-dns.png)
-
-Click `Save`. Repeat the process again by creating a second `CNAME` record, with the same `Target`, but input `gitlab-ssh` for the `Name`. Both records should then appear, pointing to the same Tunnel. The ingress rules defined in the configuration file above will direct traffic to the appropriate port.
+Click **Save**. Repeat the process again by creating a second `CNAME` record, with the same **Target**, but input `gitlab-ssh` for the **Name**. Both records should then appear, pointing to the same Tunnel. The ingress rules defined in the configuration file above will direct traffic to the appropriate port.
 
 ![View DNS](/cloudflare-one/static/zero-trust-security/gitlab/view-dns.png)
 
 ### Connecting to the web application
 
 You can now test the end-to-end configuration for the web application. Visit the subdomain created for the web application. Cloudflare Access will prompt you to authenticate. Login with your provider.
-
-![Access Login](/cloudflare-one/static/zero-trust-security/gitlab/access-login.png)
 
 Once authenticated, you should see the GitLab web application.
 
@@ -274,9 +262,7 @@ Register your own account and create a Blank project to test SSH in the next ste
 
 GitLab will create a new project and repository.
 
-![New Project](/cloudflare-one/static/zero-trust-security/gitlab/new-project.png)
-
-{{<Aside>}}
+{{<Aside type="note">}}
 
 To pull or push code, you must also add an SSH key to your profile in GitLab.
 
@@ -286,24 +272,26 @@ To pull or push code, you must also add an SSH key to your profile in GitLab.
 
 To push and pull code over SSH, you will need to install `cloudflared` on the client machine as well. This example uses a macOS laptop. On macOS, you can install `cloudflared` with the following command.
 
-    $ brew install cloudflare/cloudflare/cloudflared
+```sh
+$ brew install cloudflare/cloudflare/cloudflared
+```
 
 While you need to install `cloudflared`, you do not need to wrap your SSH commands in any unique way. Instead, you will need to make a one-time change to your SSH configuration file.
 
-```bash
-vim /Users/samrhea/.ssh/config
+```sh
+$ vim /Users/samrhea/.ssh/config
 ```
 
 Input the following values; replacing `gitlab-ssh.widgetcorp.tech` with the hostname you created.
 
-```bash
+```txt
 Host gitlab-ssh.widgetcorp.tech
   ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
 ```
 
 You can now test the SSH flow by attempting to clone the project created earlier.
 
-```bash
+```sh
 $ git clone git@gitlab-ssh.widgetcorp.tech:samrhea/demo
 ```
 
@@ -315,12 +303,10 @@ $ git clone git@gitlab-ssh.widgetcorp.tech:samrhea/demo
 
 You can now configure your Digital Ocean firewall with a single rule, block any inbound traffic, to prevent direct access.
 
-![Download Cert](/cloudflare-one/static/zero-trust-security/gitlab/disable-ingress.png)
+![Set Rules](/cloudflare-one/static/zero-trust-security/gitlab/disable-ingress.png)
 
 Cloudflare Tunnel will continue to run outbound-only connections and I can avoid this machine getting caught up in a crypto mining operation, or something worse.
 
 ## View logs
 
 You can also view logs of the events that are allowed and blocked. Open the `Access` page of the `Logs` section in the Zero Trust Dashboard.
-
-![View Logs](/cloudflare-one/static/zero-trust-security/gitlab/view-logs.png)

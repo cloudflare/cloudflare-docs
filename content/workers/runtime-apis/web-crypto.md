@@ -1,5 +1,5 @@
 ---
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Web Crypto
 ---
 
@@ -102,7 +102,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
     - {{<code>}}data{{<param-type>}}ArrayBuffer{{</param-type>}}{{</code>}}
 
-- {{<code>}}verify(algorithm, key, signature, data){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
+- {{<code>}}verify(algorithm, key, signature, data){{</code>}} {{<type>}}Promise\<boolean>{{</type>}}
 
   - Returns a Promise that fulfills with a Boolean value indicating if the signature given as a parameter matches the text, algorithm, and key that are also given as parameters.
 

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Enterprise
 weight: 4
 meta:
@@ -12,9 +12,7 @@ meta:
 
 ## Secure origin connections
 
-When you secure origin connections, it prevents attackers from discovering and overloading your origin server with requests.
-
-- **DNS**: Set up [proxied (orange-clouded) DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) and [change your domain nameservers](/dns/zone-setups/full-setup/), which will also require that you [allow Cloudflare IP addresses](https://support.cloudflare.com/hc/articles/201897700) at your origin.
+{{<render file="_origin-secure-dns.md">}}
 - **SSL**:
   - To encrypt all traffic between Cloudflare and your server, [choose Strict (SSL-Only Origin Pull)](/ssl/origin-configuration/ssl-modes/#strict-ssl-only-origin-pull) SSL/TLS mode (requires server configuration)
   - To validate requests are coming from the Cloudflare network, [set up authenticated origin pulls](/ssl/origin-configuration/authenticated-origin-pull/).

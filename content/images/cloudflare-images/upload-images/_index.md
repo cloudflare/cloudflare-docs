@@ -1,7 +1,7 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Upload images
-weight: 3
+weight: 4
 meta:
     title: API token to upload images
 ---

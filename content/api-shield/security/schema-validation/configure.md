@@ -1,6 +1,6 @@
 ---
 title: Configure
-pcx-content-type: how-to
+pcx_content_type: how-to
 type: overview
 layout: list
 meta:

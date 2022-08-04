@@ -1,5 +1,5 @@
 ---
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Access
 layout: single
 weight: 2
@@ -135,6 +135,7 @@ Here is a list of all the criteria you can apply:
 - **Access groups** — `example-team`
 - **Emails** — `you@company.com`
 - **Emails ending in** — `@company.com`
+- **External Evaluation** - allows or denies access based on custom logic in an external API. For more information, refer to the [External Evaluation rules](/cloudflare-one/policies/access/external-evaluation/) page.
 - **IP ranges** — `192.168.100.14` (supports IPv4 and IPv6).
 - **Country** – uses the IP address to determine country.
 - **Everyone** — allows, denies, or bypasses access to everyone.

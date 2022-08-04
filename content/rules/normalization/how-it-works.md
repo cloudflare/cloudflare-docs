@@ -1,6 +1,6 @@
 ---
 title: How it works
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 3
 meta:
   title: How URL normalization works

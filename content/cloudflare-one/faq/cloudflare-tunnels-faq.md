@@ -1,5 +1,5 @@
 ---
-pcx-content-type: faq
+pcx_content_type: faq
 title: Tunnels
 weight: 4
 ---
@@ -124,4 +124,4 @@ Before contacting the Cloudflare support team:
 
 ### End users are having issues connecting to private networks through the WARP client.
 
-If your end users are experiencing issues while accessing resources on private networks [exposed via Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/private-net/), ensure you include [WARP Client logs](/cloudflare-one/faq/teams-devices-faq/#how-do-i-retrieve-warp-client-logs) when contacting Cloudflare support. These logs will help Cloudflare support understand the overall architecture of your machine and networks.
+If your end users are experiencing issues while accessing resources on private networks [exposed via Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/private-net/), ensure you include [WARP Client logs](/cloudflare-one/faq/teams-devices-faq/#how-do-i-retrieve-warp-client-logs) when contacting Cloudflare support. These logs will help Cloudflare support understand the overall architecture of your machine and networks.

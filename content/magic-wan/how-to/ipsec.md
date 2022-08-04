@@ -1,5 +1,5 @@
 ---
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Set up IPsec tunnels
 ---
 
@@ -11,7 +11,7 @@ To learn more about Anycast IPsec, refer to [What is IPsec?](https://www.cloudfl
 
 Before you begin, make sure you already have an Account ID and API Key.
 
-For a list of supported devices, refer to [IPsec supported devices](/magic-wan/reference/ipsec-supported-devices).
+For a list of compatible devices, refer to [Device compatibility](/magic-wan/reference/device-compatibility/).
 
 ## IPsec process
 
@@ -75,4 +75,4 @@ To set up your static routes, refer to [Configure static routes](/magic-wan/how-
 - Remote Port of 500
 - 0s reauth time or no reauth
 - 4h rekey time
-- Disable anti-replay protection
+- Disable [anti-replay protection](/magic-wan/reference/anti-replay-protection/)

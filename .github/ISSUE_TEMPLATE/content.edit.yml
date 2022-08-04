@@ -13,19 +13,21 @@ body:
         - Analytics
         - API
         - API Shield
+        - Argo Smart Routing
         - Automatic Platform Optimization
         - Bots
         - BYOIP
         - Cache
         - China Network
         - Client IP Geolocation
+        - Cloudflare for SaaS
         - Cloudflare One
         - DDoS Protection
         - DNS
         - Email Routing
+        - Email Security
         - Firewall
         - Fundamentals
-        - HTTP/3
         - Image Optimization
         - Load Balancing
         - Logs

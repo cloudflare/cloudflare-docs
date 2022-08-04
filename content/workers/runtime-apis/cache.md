@@ -1,5 +1,5 @@
 ---
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Cache
 ---
 
@@ -82,7 +82,7 @@ cache.put(request, response);
 
 - {{<code>}}put(request, response){{</code>}} {{<type>}}Promise{{</type>}}
 
-  - Adds to the cache a response keyed to the given request. Returns a promise that resolves to `undefined` once the cache stores the response.
+  - Attempts to add a response to the cache, using the given request as the key. Returns a promise that resolves to `undefined` regardless of whether the cache successfully stored the response.
 
 {{</definitions>}}
 

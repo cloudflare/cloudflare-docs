@@ -1,6 +1,6 @@
 ---
 title: Edge and Browser Cache TTL
-pcx-content-type: concept
+pcx_content_type: concept
 ---
 
 # Edge and Browser Cache TTL

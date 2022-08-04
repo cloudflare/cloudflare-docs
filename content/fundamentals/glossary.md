@@ -1,6 +1,6 @@
 ---
 title: Glossary
-pcx-content-type: glossary
+pcx_content_type: glossary
 weight: 8
 ---
 
@@ -225,7 +225,7 @@ The Internet is a global system of computer networks that provides a wide range 
 
 Locations in Cloudflare for Teams are physical entities like offices, homes, retail stores, movie theatres or a data center.
 
-**Relevant links:** [Locations](/cloudflare-one/policies/filtering/dns-policies/locations/)
+**Relevant links:** [Locations](/cloudflare-one/connections/connect-devices/agentless/dns/locations/)
 
 ## member or user
 

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Use Pages Functions for A/B testing
 ---
 
@@ -112,7 +112,15 @@ export const onRequest = [abTest]
 
 If the cookie value is not present, you will have to assign one. Generate a percentage (from 0-99) by using: `Math.floor(Math.random() * 100)`. Your default cookie version is given a value of `current`.
 
-If the percentage of the number generated is lower than `50`, you will assign the cookie version to `new`. Based on the percentage randomly generated, you will set the cookie and serve the assets. After the conditional block, pass the request to `next()`. This will pass the request to Pages. This will result in 50% of users getting the new homepage.
+If the percentage of the number generated is lower than `50`, you will assign the cookie version to `new`. Based on the percentage randomly generated, you will set the cookie and serve the assets. After the conditional block, pass the request to `next()`. This will pass the request to Pages. This will result in 50% of users getting the `/test` homepage.
+
+The `env.ASSETS.fetch()` function will allow you to send the user to a modified path which is defined through the `url` parameter. `env` is the object that contains your environment variables and bindings. `ASSETS` is a default Function binding that allows communication between your Function and Pages' asset serving resource. `fetch()` calls to the Pages asset-serving resource and returns the asset (`/test` homepage) to your website's visitor.
+
+{{<Aside type="note" header="Binding">}}
+
+A Function is a Worker that executes on your Pages project to add dynamic functionality. A binding is how your Function (Worker) interacts with external resources. A binding is a runtime variable that the Workers runtime provides to your code.
+
+{{</Aside>}}
 
 ```js
 ---
@@ -158,6 +166,6 @@ export const onRequest = [abTest];
 
 ## Deploy to Cloudflare Pages
 
-Now that you have set up your `functions/_middleware.js` file in your project you are ready to deploy with Pages. Push your project changes to GitHub/GitLab.
+After you have set up your `functions/_middleware.js` file in your project you are ready to deploy with Pages. Push your project changes to GitHub/GitLab.
 
 After you have deployed your application, you will see your middleware Function in the Cloudflare dashboard under **Pages** > **Settings** > **Functions** > **Configuration**. 

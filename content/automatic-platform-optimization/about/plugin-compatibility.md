@@ -1,6 +1,6 @@
 ---
 title: Plugin compatibility
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 4
 ---
 
@@ -43,4 +43,4 @@ The Cloudflare APO Wordpress plugin does not support multisite WordPress install
 
 ## Plugins and services that may cause issues
 
-- [Imunify360](https://docs.imunify360.com/webshield/#captcha)
+- [Imunify360](https://docs.imunify360.com/features/#webshield)

@@ -1,6 +1,6 @@
 ---
 title: Business
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 3
 meta:
   title: Super Bot Fight Mode (Business) Analytics
@@ -14,7 +14,7 @@ Business and Enterprise customers without Bot Management can use **Bot Analytics
 
 To use Bot Analytics, open the Cloudflare dashboard and select **Security** > **Bots**.
 
-![View Bot Analytics in the Cloudflare Dashboard. For more details, keep reading.](/bots/static/bot-analytics-dashboard-biz.png)
+![View Bot Analytics in the Cloudflare dashboard. For more details, keep reading.](/bots/static/bot-analytics-dashboard-biz.png)
 
 ## Features
 

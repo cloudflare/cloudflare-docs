@@ -1,6 +1,6 @@
 ---
 title: Quickstart
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 layout: single
 weight: 1
 meta:
@@ -38,12 +38,3 @@ For specific guidance on making API calls, see the following:
 *   The specific [Developer Docs section](/) for a service for how to guides.
 *   [API schema docs](https://api.cloudflare.com) for request and response payloads for each endpoint.
 *   If you are using [golang](https://github.com/cloudflare/cloudflare-go) or [Hashicorp's Terraform](https://github.com/cloudflare/terraform-provider-cloudflare) you can leverage our 1st party libraries to integrate with Cloudflare's API.
-
-## Rate Limits
-
-The global rate limit for our API is 1200 requests per 5 minutes. If you exceed this, all API calls for the next 5 minutes will be blocked, receiving a HTTP 429 response.
-
-Some specific API calls have their own limits and are documented separately, such as the Cache Purge APIs:
-
-* https://api.cloudflare.com/#zone-purge-files-by-url
-* https://api.cloudflare.com/#zone-purge-files-by-cache-tags,-host-or-prefix

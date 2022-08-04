@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 type: overview
 title: API Discovery
 weight: 1
@@ -9,8 +9,6 @@ layout: list
 # API Discovery
 
 Most development teams struggle to keep track of their APIs. Cloudflare API Discovery helps you map out and understand your attack surface area.
-
-{{<render file="_availability.md">}}
 
 ## Process
 
@@ -40,3 +38,7 @@ This process currently requires a session identifier, like an authorization toke
 To better understand your API traffic, you can also see [API requests](https://dash.cloudflare.com/?to=/:account/:zone/analytics/traffic/api-requests) in your application dashboard.
 
 This view adds a lightweight filter to application requests so you can better identify API traffic. If you want a more sophisticated understanding of API traffic, check out [Bot Tags](/bots/concepts/cloudflare-bot-tags/).
+
+## Availability
+
+API Discovery is only available for Enterprise customers. If you are an Enterprise customer and interested in this product, contact your account team.

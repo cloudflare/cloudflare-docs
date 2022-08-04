@@ -1,6 +1,6 @@
 ---
 title: 4 – Improve performance
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 5
 meta:
   title: Improve performance and reliability

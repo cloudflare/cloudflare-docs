@@ -1,6 +1,7 @@
 ---
-pcx-content-type: get-started
+pcx_content_type: get-started
 title: Get started
+layout: single
 weight: 2
 ---
 
@@ -12,7 +13,7 @@ There are three ways to set up a Pages project:
 
 1. Connecting your [Git provider](/pages/get-started/#connecting-your-git-provider-to-pages) to Pages.
 2. Deploying your prebuilt assets right to Pages with [Direct Uploads](/pages/platform/direct-upload/).
-3. Using [Wrangler](https://developers.cloudflare.com/workers/wrangler/commands/#pages) from the command line.
+3. Using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
 
 This guide will take you through the Git setup option.
 
@@ -137,5 +138,5 @@ In the **Settings** section, you can configure advanced settings, such as changi
 
 ## Related resources
 
-- Set up a [custom domain for your Pages project](/pages/platform/custom-domains/).
-- Set up Access policies to [manage who can view your deployment previews](/pages/platform/preview-deployments/#customizing-preview-deployments-access).
+- Set up a [custom domain for your Pages project](/pages/platform/custom-domains/)
+- Set up Access policies to [manage who can view your deployment previews](/pages/platform/preview-deployments/#customizing-preview-deployments-access)

@@ -1,7 +1,7 @@
 ---
 updated: 2021-09-27
 category: 🔐 Zero Trust
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Protecting DocuSign with Access for SaaS
 ---
 

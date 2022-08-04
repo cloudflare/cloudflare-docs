@@ -1,7 +1,7 @@
 ---
 title: Free
 type: document
-pcx-content-type: reference
+pcx_content_type: reference
 hidden: true
 weight: 1
 meta:

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Log the payload of matched rules
 weight: 8
 ---
@@ -36,3 +36,7 @@ Make sure you store your private key safely. If you lose the private key, config
 Cloudflare cannot decrypt encrypted payloads, since this operation requires your private key. Cloudflare staff will never ask for the private key.
 
 {{</Aside>}}
+
+## User role requirements
+
+Only users with the [Super Administrator role](/fundamentals/account-and-billing/account-setup/account-roles/) can enable payload logging or edit the payload logging configuration.

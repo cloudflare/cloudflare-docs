@@ -3,7 +3,14 @@ title: Search results
 type: home
 layout: home
 ---
+<noscript>
+  <h2>Search</h2>
+  <p>
+    JavaScript is disabled in your browser. You must enable it in order to search the docs.
+  </p>
+</noscript>
 <div id="searchresults" class="CoveoSearchInterface" data-enable-history="true">
+  <script class="CoveoPipelineContext" type="text/context"></script>
   <div class="CoveoFolding"></div>
   <div class="CoveoAnalytics" data-search-hub="Developer_docs"></div>
   <!-- empty tab section
@@ -14,9 +21,11 @@ layout: home
   </div>
   <div class="coveo-main-section">
     <div class="coveo-facet-column">
-      <div class="CoveoDynamicFacet" data-title="Source" data-field="@customer_facing_source" data-id="source" data-number-of-values="" data-sort-criteria="score"></div>
-      <div class="CoveoDynamicFacet" data-title="Product" data-field="@product" data-number-of-values="5" data-sort-criteria="occurrences"></div>
-      <div class="CoveoDynamicFacet" data-field="@language" data-number-of-values="" data-title="Language" data-sort-criteria="score"></div>
+      <div class="CoveoDynamicFacetManager">
+        <div class="CoveoDynamicFacet" data-title="Source" data-field="@customer_facing_source" data-id="source" data-number-of-values="" data-sort-criteria="score"></div>
+        <div class="CoveoDynamicFacet" data-title="Product" data-field="@product" data-number-of-values="5" data-sort-criteria="occurrences"></div>
+        <div class="CoveoDynamicFacet" data-field="@language" data-number-of-values="" data-title="Language" data-sort-criteria="score"></div>
+      </div>
     </div>
     <div class="coveo-results-column">
       <div class="CoveoShareQuery"></div>
@@ -83,4 +92,4 @@ layout: home
       <div class="CoveoResultsPerPage"></div>
     </div>
   </div>
-</div> 
+</div>

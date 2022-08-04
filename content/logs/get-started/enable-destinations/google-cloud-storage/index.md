@@ -1,7 +1,8 @@
 ---
 title: Enable Google Cloud Storage
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 61
+layout: single
 meta:
   title: Enable Logpush to Google Cloud Storage
 ---

@@ -1,6 +1,6 @@
 ---
 title: Configure WAF Managed Rulesets
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 2
 meta:
   title: Configure WAF Managed Rulesets with Terraform

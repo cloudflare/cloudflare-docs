@@ -1,6 +1,6 @@
 ---
 title: iOS
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 0
 meta:
   title: iOS mobile client

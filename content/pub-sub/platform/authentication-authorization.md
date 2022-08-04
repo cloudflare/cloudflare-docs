@@ -1,6 +1,6 @@
 ---
 title: Authentication and authorization
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 1
 ---
 
@@ -37,17 +37,17 @@ To generate a single token for a broker named `example-broker` in `your-namespac
 For example, to generate five valid tokens with an automatically generated Client ID for each token:
 
 ```bash
-# GET /accounts/:account_id/pubsub/namespaces/:namespace_name/brokers/:broker_name/credentials
-curl https://api.cloudflare.com/client/v4/accounts/<abcdef>/brokers/namespaces/your-namespace/brokers/example-broker/credentials?number=5&type=TOKEN&topicAcl="#"
+$ wrangler pubsub broker issue example-broker --number=5 --expiration=48h
 ```
 
-This will return an array of Client IDs and signed JSON Web Tokens. Each Client ID has the name of the broker it is associated with prepended to the token to simplify debugging and troubleshooting:
+You should receive a scucess response that resembles the example below, which is a map of Client IDs and their associated tokens.
 
-```bash
-[
-   "yourbroker01G18XKFVJ53DVBNK3KFPH9CX9": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJicm9rZXIiOiJicm9rZXIubmFtZXNwYWNlIiwiZXhwIjoxNTE2MjQyNjIyLCJpYXQiOjE1MTYyMzkwMjIsImNsaWVudElkIjoiMDFHMThXWEdTRkFOU0VGSEdOQ1E4SFc5QjMiLCJqdGkiOiIwMUcxOFhLRlZKNTNEVkJOSzNLRlBIOUNYOSJ9.qw_GcI5gxvqTabnhYYpvEW_WqSs48IjBSSAp2NAdDkE"
-   // four other tokens
-]
+```json
+{
+  "01G3A5GBJE5P3GPXJZ72X4X8SA": "eyJhbGciOiJFZERTQSIsImtpZCI6IkpEUHVZSnFIT3Zxemxha2tORlE5a2ZON1dzWXM1dUhuZHBfemlSZG1PQ1UifQ.
+  not-a-real-token.ZZL7PNittVwJOeMpFMn2CnVTgIz4AcaWXP9NqMQK0D_iavcRv_p2DVshg6FPe5xCdlhIzbatT6gMyjMrOA2wBg",
+  "01G3A5GBJECX5DX47P9RV1C5TV": "eyJhbGciOiJFZERTQSIsImtpZCI6IkpEUHVZSnFIT3Zxemxha2tORlE5a2ZON1dzWXM1dUhuZHBfemlSZG1PQ1UifQ.also-not-a-real-token.WrhK-VTs_IzOEALB-T958OojHK5AjYBC5ZT9xiI_6ekdQrKz2kSPGnvZdUXUsTVFDf9Kce1Smh-mw1sF2rSQAQ",
+}
 ```
 
 ## Configuring Clients
@@ -75,25 +75,53 @@ An JSON Web Token (JWT) issued by Pub/Sub will include the following claims.
 
 ## Revoking Credentials
 
-To revoke a credential, which immediately invalidates it and prevents any clients from connecting with it, issue a POST request to the `/revocations` endpoint of the Pub/Sub API with the `jti` (unique token identifier) as a query parameter.
+To revoke a credential, which immediately invalidates it and prevents any clients from connecting with it, you can use `wrangler pubsub broker revoke [...]` or issue a POST request to the `/revocations` endpoint of the Pub/Sub API with the `jti` (unique token identifier).
 
 This will add the token to a revocation list. When using JWTs, you can revoke the JWT based on its unique `jti` claim. To revoke multiple tokens at once, provide a list of token identifiers.
 
 ```bash
-# POST /accounts/:account_id/brokers/namespaces/:namespace_name/brokers/:broker_name/revocations
-curl -X POST https://api.cloudflare.com/client/v4/accounts/<abcdef>/brokers/namespaces/your-namespace/brokers/example-broker/revocations?jti=01G18XX6VC9ZEYZQ7AYD5D5TVP,01G18XXDR6JG9VTB605VQKPQZ2
-# Will return a HTTP 200 - OK
+$ wrangler pubsub broker revoke example-broker --namespace=NAMESPACE_NAME --jti=JTI_ONE --jti=JTI_TWO
 ```
 
-You can also list all currently revoked tokens by making a GET request to the `/revocations` endpoint, or unrevoke a token by issuing a DELETE request to the `/revocations` endpoint with the `jti` as a query parameter.
+You can also list all currently revoked tokens by using `wrangler pubsub broker show-revocations [...]` or by making a GET request to the `/revocations` endpoint.
+
+You can _unrevoke_ a token by using `wrangler pubsub broker unrevoke [...]` or by issuing a DELETE request to the `/revocations` endpoint with the `jti` as a query parameter.
 
 ## Credential Lifetime and Expiration
 
-By default, per-broker credentials do not expire, in order to simplify credential management.
+Credentials can be set to expire at a Broker-level that applies to all credentials, and/or at a per-credential level.
 
-We strongly recommend setting a per-broker expiration configuration via the **Expiration** field, which will implicitly set an expiration timestamp for all credentials generated for that broker via the `exp` JWT claim. Using short-lived credentials – for example, 7 to 30 days – with an automatic rotation policy can reduce the risk of credential compromise and the need to actively revoke credentials after-the-fact.
+* By default, credentials do not expire, in order to simplify credential management.
+* Credentials will inherit the shortest of the expirations set, if both the Broker and the issued credential have an expiration set.
 
-You can use Pub/Sub itself to issue fresh credentials to clients using [Cron Triggers](/workers/platform/cron-triggers/) or a separate HTTP endpoint that clients can use to refresh their local token store.
+To set an expiry for each set of credentials issued by setting the `expiration` value when requesting credentials: in this case, we specify 1 day (`1d`):
+
+```bash
+$ wrangler pubsub broker issue example-broker --namespace=NAMESPACE_NAME --expiration=1d
+```
+
+This will return a token that expires 1 day (24 hours) from issuance:
+
+```json
+{
+  "01G3A5GBJE5P3GPXJZ72X4X8SA": "eyJhbGciOiJFZERTQSIsImtpZCI6IkpEUHVZSnFIT3Zxemxha2tORlE5a2ZON1dzWXM1dUhuZHBfemlSZG1PQ1UifQ.
+  not-a-real-token.ZZL7PNittVwJOeMpFMn2CnVTgIz4AcaWXP9NqMQK0D_iavcRv_p2DVshg6FPe5xCdlhIzbatT6gMyjMrOA2wBg"
+}
+```
+
+To set a Broker-level global expiration on an existing Pub/Sub Broker, set the `expiration` field on the Broker to the seconds any credentials issued should inherit:
+
+```bash
+$ wrangler pubsub broker update YOUR_BROKER --namespace=NAMESPACE_NAME --expiration=7d
+```
+
+This will cause any token issued by the Broker to have a default expiration of 7 days. You can make this _shorter_ by passing the `--expiration` flag to `wrangler pubsub broker issue [...]`. If you set a longer `--expiration` than the Broker itself has, the Broker's expiration will be used instead (shortest wins).
+
+### Best Practices
+
+* We strongly recommend setting a per-broker expiration configuration via the **expiration** (integer seconds) field, which will implicitly set an expiration timestamp for all credentials generated for that broker via the `exp` JWT claim.
+* Using short-lived credentials – for example, 7 to 30 days – with an automatic rotation policy can reduce the risk of credential compromise and the need to actively revoke credentials after-the-fact.
+* You can use Pub/Sub itself to issue fresh credentials to clients using [Cron Triggers](/workers/platform/cron-triggers/) or a separate HTTP endpoint that clients can use to refresh their local token store.
 
 ## Authorization and Access Control
 

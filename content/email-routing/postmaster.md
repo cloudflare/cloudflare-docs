@@ -1,7 +1,7 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Postmaster
-weight: 4
+weight: 6
 ---
 
 # Postmaster
@@ -111,12 +111,11 @@ This has no effect to the end user's experience, though. The message headers wil
 
 ## Spam and abusive traffic
 
-Handling spam and abusive traffic is essential to any email provider. Below is a list of how Email Routing tackles this issue:
+Handling spam and abusive traffic is essential to any email provider. Email Routing filters emails based on advanced anti-spam criteria, [powered by Area 1](https://blog.cloudflare.com/why-we-are-acquiring-area-1/). When Email Routing detects and blocks a spam email, you will receive a message with details explaining what happened. For example:
 
-- Email Routing provides reverse DNS PTR records to all of its SMTP egress ranges. PTR records are often used as a reputation parameter.
-- Email Routing rejects emails whose SPF validation results in a hard fail.
-- Email Routing refuses to send email to poorly configured SMTP servers — for example, servers with broken TLS certificates.
-- Email Routing requires double opt-in to confirm ownership of new destination addresses. Email Routing sends an email with a timed verification link to the new address specified by the user. The destination address is only usable after the customer clicks that link.
+```txt
+554 <YOUR_IP_ADDRESS> found on one or more DNSBLs (abusixip). Refer to https://developers.cloudflare.com/email-routing/postmaster/#spam-and-abusive-traffic/
+```
 
 ## SMTP errors
 

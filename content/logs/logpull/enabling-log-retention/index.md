@@ -1,7 +1,8 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Enabling log retention
 weight: 13
+layout: single
 ---
 
 # Enabling log retention

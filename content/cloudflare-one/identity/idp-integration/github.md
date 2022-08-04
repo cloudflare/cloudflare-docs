@@ -1,12 +1,12 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: GitHub
 weight: 13
 ---
 
 # GitHub
 
-Cloudflare Zero Trust allows your to connect to your applications using their GitHub login. Administrators can build rules for specific individuals or using GitHub organizations. You do not need to have a GitHub organization to use the integration.
+Cloudflare Zero Trust allows your team to connect to your applications using their GitHub login. Administrators can build rules for specific individuals or using GitHub organizations. You do not need to have a GitHub organization to use the integration.
 
 ## Set up GitHub Access
 

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: faq
+pcx_content_type: faq
 title: Policies
 weight: 5
 ---
@@ -22,7 +22,7 @@ Bypassing the L7 firewall results in no HTTP traffic inspection, and logging is 
 
 ## **I see an error when browsing Google-related pages. What is the problem?**
 
-If you have enabled the WARP client and are sending requests through Gateway, you need to [disable the QUIC protocol](/cloudflare-one/policies/filtering/http-policies/configuration-guidelines/#enabling-access-to-Google-services) within Google Chrome. This will prevent you from encountering issues such as users who are able to connect to Google-related sites and services (like YouTube) that are explicitly blocked by a Gateway policy.
+If you have enabled the WARP client and are sending requests through Gateway, you need to [disable the QUIC protocol](/cloudflare-one/policies/filtering/http-policies/incompatible-traffic/#disable-quic-in-google-chrome) within Google Chrome. This will prevent you from encountering issues such as users who are able to connect to Google-related sites and services (like YouTube) that are explicitly blocked by a Gateway policy.
 
 Google Chrome uses QUIC to connect to all Google services by default. This means all requests to Google services via the Google Chrome browser use UDP instead of TCP. **At this time, Gateway does not support inspection of QUIC traffic, and requests using QUIC will bypass Gateway HTTP policies**. Gateway does prevent standard HTTP requests from negotiating to using QUIC with the `Alt-Svc` header by removing this header from HTTP requests.
 
