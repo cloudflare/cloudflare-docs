@@ -5,11 +5,11 @@ title: Clip videos
 
 # Clip videos
 
-With video clipping, also referred to as "trimming" or changing the length of the video, you can change the start and end points of a video so viewers only see a specific "clip" of the video. For example, if you have a 20 minute video where the first five minutes include event setup and waiting for the event to start, you can clip the video to remove the first five minutes and start when the event begins.
+With video clipping, also referred to as "trimming" or changing the length of the video, you can change the start and end points of a video so viewers only see a specific "clip" of the video. For example, if you have a 20 minute video but only want to share a five minute clip from the middle of the video, you can clip the video to remove the content before and after the five minute clip.
 
 {{<Aside type="note" header="Note:">}}
 
-At this time, video clipping only works with videos on demand. 
+Video clipping does not work with recordings of live streams. 
 
 {{</Aside>}}
 
@@ -49,10 +49,7 @@ curl --location --request POST 'https://api.staging.cloudflare.com/client/v4/acc
     "clippedFromVideoUID": "0ea62994907491cf9ebefb0a34c1e2c6",
     "startTimeSeconds": 10,
     "endTimeSeconds": 15,
-    "meta": {
-      "name": "overriding-filename-clip.mp4"
-    }
-}'
+    }'
 ```
 
 You can check whether your video is ready to play after selecting your account from the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream). While the clipped video processes, the video status response displays **Queued**. When the clipping process is complete, the video status changes to **Ready** and displays the new name of the clipped video and the new duration.
@@ -124,9 +121,9 @@ highlight: [5]
 
 After the video clipping is complete, you can open the Cloudflare dashboard and video list to locate your video. When you select the video, the **Settings** tab displays a checkmark next to **Require Signed URLs**.
 
-## Specify thumbnail percentages
+## Specify a thumbnail image
 
-You can also specify a thumbnail for your video using a percentage value. To convert the thumbnail's timestamp from seconds to a percentage, divide the timestamp you want to use by the total duration of the video. For more information about thumbnails, refer to [Display thumbnails](/stream/edit-manage-videos/edit-videos/displaying-thumbnails).
+You can also specify a thumbnail image for your video using a percentage value. To convert the thumbnail's timestamp from seconds to a percentage, divide the timestamp you want to use by the total duration of the video. For more information about thumbnails, refer to [Display thumbnails](/stream/edit-manage-videos/edit-videos/displaying-thumbnails).
 
 ```bash
 ---
