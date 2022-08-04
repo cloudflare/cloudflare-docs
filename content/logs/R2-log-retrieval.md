@@ -24,7 +24,7 @@ The following headers are required for all API calls:
 - `X-Auth-Email` - the Cloudflare account email address associated with the domain
 - `X-Auth-Key` - the Cloudflare API key
 
-Alternatively, API tokens with Logs Edit permissions can also be used for authentication:
+Alternatively, API tokens with Logs edit permissions can also be used for authentication:
 - `Authorization: Bearer <API_TOKEN>`
 
 ## List files
