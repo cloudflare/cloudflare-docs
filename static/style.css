@@ -4987,7 +4987,7 @@ pre {
 
 [theme="dark"] .active, .tab-label-wrapper:hover,
 [theme="dark"] .tab-label-wrapper a:hover {
-  background-color: rgba(var(--orange-rgb), 0.08) !important;
+  background-color: rgb(43 44 46) !important;
   color: var(--code-orange) !important;
 }
 
