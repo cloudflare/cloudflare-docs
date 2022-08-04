@@ -85,7 +85,7 @@ Additionally, if you want to receive the raw GZIP bytes without them being trans
 
 ## Limits
 
-HTTP status code 422 will be returned if the time range between the start and end parameters is too wide.
+HTTP status code `422` will be returned if the time range between the start and end parameters is too wide.
 
 ```bash
 {
