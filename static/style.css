@@ -723,6 +723,7 @@ html {
   box-shadow: 0 0 0 1px var(--gray-6);
   border-radius: 3px;
   text-shadow: #c4c4c4 0 0 2px;
+  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
 }
 
 [theme="dark"] .copyCode-button {
@@ -737,17 +738,20 @@ html {
   box-shadow: 0 0 0 1px var(--gray-3);
   border-radius: 3px;
   text-shadow: #c4c4c4 0 0 2px;
+  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
 }
 
 .copyCode-button:hover,
 .copyCode-button:focus {
   cursor: pointer;
   background-color:  #828282;
+  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
 }
 
 [theme="dark"] .copyCode-button:hover, .copyCode-button:focus {
   cursor: pointer;
-  background-color: var(--code-block-background-color)
+  background-color: var(--code-block-background-color);
+  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
 }
 
 .copyCode-button:hover::after, .copyCode-button:focus::after{
@@ -764,6 +768,7 @@ html {
   opacity: 0.8;
   box-shadow: none;
   border: none;
+  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
 }
 
 
