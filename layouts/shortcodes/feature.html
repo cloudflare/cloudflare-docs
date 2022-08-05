@@ -14,6 +14,7 @@
   <div>
     <p>{{- .Page.RenderString .Inner -}}</p>
   </div>
+  {{- if $url -}}
   <div class="DocsMarkdown--feature-button">
     <a
       class="Button Button-is-docs-primary DocsMarkdown--link-content"
@@ -22,4 +23,5 @@
       partialCached "external.icon" . -}} {{- end -}}</a
     >
   </div>
+  {{- end -}}
 </div>
