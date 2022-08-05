@@ -2246,31 +2246,31 @@ html[is-docs-page] body {
   }
 }
 
-.toggleSidebar.enabled button svg {
+.toggleSidebar.collapsed button svg {
   transform:rotate(180deg);
 }
 
 @media (min-width: 769px) {
 
-.DocsSidebar.hidden {
+.DocsSidebar.collapsed {
   width: 4.5em;
 }
 
-.DocsToolbar.expanded {
+.DocsToolbar.collapsed {
   left: 4.5em;
 }
 
-.DocsContent.expanded {
+.DocsContent.collapsed {
   padding-left: 0em;
   padding-right: 0em;
   margin-left: -10em;
 }
 
-.DocsMarkdown.expanded {
+.DocsMarkdown.collapsed {
   padding-right: 0em;
 }
 
-.DocsSidebar.hidden .DocsSidebar--nav-item {
+.DocsSidebar.collapsed .DocsSidebar--nav-item {
   position: absolute;
   height: 1px;
   width: 1px;
