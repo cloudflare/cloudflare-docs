@@ -72,7 +72,6 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/ZONE/custom_hostnames/
         }
       }
     }'
-
 ```
 
 To get the ID of a single hostname in the list, make this API call:
