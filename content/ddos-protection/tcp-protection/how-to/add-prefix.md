@@ -6,11 +6,11 @@ weight: 2
 
 # Add a prefix
 
-{{<Aside type="note" header="Before you start">}}
+## Before you start
 
-Cloudflare recommends that you switch any Advanced TCP Protection rules currently in mitigation mode to monitoring mode before adding a new prefix to Advanced TCP Protection.
+Cloudflare recommends that you switch any Advanced TCP Protection rules currently in mitigation mode to monitoring mode before adding a new prefix to Advanced TCP Protection. Refer to [Rule settings](/ddos-protection/tcp-protection/rule-settings/#mode) for more information on execution modes.
 
-{{</Aside>}}
+---
 
 To add a [prefix](/ddos-protection/tcp-protection/concepts/#prefixes) to Advanced TCP Protection:
 
@@ -22,3 +22,9 @@ To add a [prefix](/ddos-protection/tcp-protection/concepts/#prefixes) to Advance
 
 4. Expand the **Add existing prefix** section and select **Add** next to the prefix you wish to add.<br>
 Alternatively, enter a prefix and (optionally) a description in **Prefix** and **Description**, respectively, and select **Add**.
+
+{{<Aside type="note" header="Note">}}
+
+The **Add existing prefix** list will not display [delegated prefixes](/byoip/about/prefix-delegations/) or leased prefixes. You can add these prefixes manually in the Cloudflare dashboard or [using the API](/ddos-protection/tcp-protection/api-configuration/).
+
+{{</Aside>}}

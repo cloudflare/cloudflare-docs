@@ -22,7 +22,7 @@ Advanced TCP Protection rules have three execution modes: monitoring mode, mitig
 
     * Use monitoring mode when onboarding new prefixes to Magic Transit or when performing changes to Advanced TCP Protection.
 
-    * It is recommended that you use monitoring mode before Mitigation mode.
+    * When first setting up or when making changes, the Advanced TCP Protection system will need to re-learn your legitimate TCP connections. Therefore, it is recommended that you use monitoring mode before mitigation mode to avoid impact to your legitimate traffic.
 
 * **​​Mitigation mode**
 
@@ -43,6 +43,8 @@ Advanced TCP Protection rules can have one of the following scopes:
 * **Global**: The rule will apply to all incoming packets.
 * **Region**: The rule will apply to incoming packets in a selected region.
 * **Data center**: The rule will apply to incoming packets in the selected Cloudflare data center.
+
+The rule scope allows you to adjust the system's tolerance for out-of-state packets in locations where you may have more or less traffic than usual, or due to any other networking reasons.
 
 Besides defining rules with one of the above scopes, you must also select the [prefixes](/ddos-protection/tcp-protection/concepts/#prefixes) that you wish to protect with Advanced TCP Protection.
 
