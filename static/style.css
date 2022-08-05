@@ -5031,6 +5031,7 @@ pre {
   position: relative;
   margin-top: 3rem;
   box-shadow: 0 1px rgba(var(--shadow-color-rgb), 0.12);
+  height: 2.4rem;
 }
 
 .tabs-content-wrapper {
@@ -5043,7 +5044,7 @@ pre {
   margin: 0;
   display: flex;
   width: 100%;
-  background-color: rgb(243 243 244);
+  background-color: rgb(216 216 218);
 }
 
 [theme="dark"] .tabs > ul {
@@ -5052,7 +5053,6 @@ pre {
 
 .tabs > ul > li {
   margin-bottom: 0;
-  border-bottom: 1px solid rgba(var(--color-rgb), 0.05);
 }
 
 .tab-switch {
@@ -5071,14 +5071,14 @@ pre {
 .active,
 .tab-label-wrapper:hover,
 .tab-label-wrapper a:hover {
-  background-color: rgba(var(--gray-3-rgb), 0.19) !important;
+  background-color: rgb(243 243 244) !important;
   color: rgb(29, 31, 32) !important;
 }
 
 [theme="dark"] .active,
 .tab-label-wrapper:hover,
 [theme="dark"] .tab-label-wrapper a:hover {
-  background-color: rgba(var(--orange-rgb), 0.08);
+  background-color: rgb(43 44 46) !important;
   color: var(--code-orange) !important;
 }
 
