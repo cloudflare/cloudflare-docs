@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Route traffic
+title: Plublic hostnames
 weight: 5
 ---
 
