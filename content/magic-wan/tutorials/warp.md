@@ -7,7 +7,7 @@ meta:
 
 # WARP on-ramp to Magic WAN
 
-Use WARP as an on-ramp to Magic WAN and route traffic from user devices with WARP installed to any network connected with Magic IP-layer tunnels (Anycast [GRE](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/), [IPsec](/magic-wan/how-to/ipsec/), or [CNI](/network-interconnect/)).
+Use WARP as an on-ramp to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (Anycast [GRE](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/), [IPsec](/magic-wan/how-to/ipsec/), or [CNI](/network-interconnect/)).
 
 ## Prerequisites
 
