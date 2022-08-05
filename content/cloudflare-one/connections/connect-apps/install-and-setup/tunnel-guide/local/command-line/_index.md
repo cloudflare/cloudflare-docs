@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Command line interface
-weight: 4
+weight: 1
 ---
 
 # Command line interface

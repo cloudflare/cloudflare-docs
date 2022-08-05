@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Secure the Server
-weight: 7
+weight: 1
 ---
 
 # Secure the Server

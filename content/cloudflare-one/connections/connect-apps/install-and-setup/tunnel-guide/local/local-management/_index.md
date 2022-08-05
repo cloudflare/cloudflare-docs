@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Local management
-weight: 3
+weight: 2
 ---
 
 # Local management

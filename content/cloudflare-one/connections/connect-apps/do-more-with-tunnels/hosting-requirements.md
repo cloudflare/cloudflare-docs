@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Tunnel Hosting Requirements
-weight: 8
+weight: 6
 ---
 
 # Tunnel hosting requirements

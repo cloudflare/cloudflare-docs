@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Migrate legacy tunnels
-weight: 2
+weight: 4
 meta:
   title: Migrate legacy tunnels to named tunnels
 ---
