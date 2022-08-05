@@ -130,6 +130,7 @@ There are a few different possible root causes behind the `websocket: bad handsh
 - WebSockets are not enabled. To enable them, navigate to `dash.cloudflare.com` > **Network**.
 - Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to _Off_. To resolve, set the SSL/TLS encryption mode to any setting other than _Off_.
 - Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
+- Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/identity/users/session-management/#binding-cookie) enabled. To disable the cookie, go to **Access** > **Applications** and edit the application settings.
 
 ## Connections are timing out after 270 seconds
 

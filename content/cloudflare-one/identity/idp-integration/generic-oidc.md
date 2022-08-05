@@ -51,7 +51,8 @@ To test that your connection is working, navigate to **Authentication** > **Logi
     "client_secret": "<your client secret>",
     "auth_url": "https://accounts.google.com/o/oauth2/auth",
     "token_url": "https://accounts.google.com/o/oauth2/token",
-    "certs_url": "https://www.googleapis.com/oauth2/v3/certs"
+    "certs_url": "https://www.googleapis.com/oauth2/v3/certs",
+    "scopes": ["openid", "email", "profile"]
   },
   "type": "oidc",
   "name": "Generic Google"
