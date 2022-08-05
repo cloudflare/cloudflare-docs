@@ -25,7 +25,7 @@ Before you can employ Early Hints for SaaS, you need to create a custom hostname
 3. If you are [creating a new custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), make an API call such as the example below, specifying `"early_hints": "on"`:
 
 ```json
-curl -X POST "https://api.cloudflare.com/client/v4/zones/ZONE_ID/custom_hostnames" \
+curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
     -H "X-Auth-Email: {email}" \
     -H "X-Auth-Key: {key}" \
     -H "Content-Type: application/json" \
@@ -49,7 +49,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/ZONE_ID/custom_hostname
 4. For an existing custom hostname, locate the `CUSTOM_HOSTNAME_ID` via a `GET` call:
 
 ```json
-curl -X GET "https://api.cloudflare.com/client/v4/zones/ZONE/custom_hostnames?hostname=CUSTOM_HOSTNAME" \
+curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames?hostname=CUSTOM_HOSTNAME" \
     -H "X-Auth-Email: {email}" \
     -H "X-Auth-Key: {key}" \
     -H "Content-Type: application/json"
@@ -59,7 +59,7 @@ Then make an API call such as the example below, specifying `"early_hints": "on"
 
 ```json
 $ curl -sXPATCH \
-curl -X PATCH "https://api.cloudflare.com/client/v4/zones/ZONE/custom_hostnames/CUSTOM_HOSTNAME_ID" \
+curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/CUSTOM_HOSTNAME_ID" \
     -H "X-Auth-Email: {email}" \
     -H "X-Auth-Key: {key}" \
     -H "Content-Type: application/json" \
