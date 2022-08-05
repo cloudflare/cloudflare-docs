@@ -381,11 +381,11 @@ Cloudflare R2 is Cloudflare's blob storage solution that allows developers to st
 
 ### Using R2 buckets locally
 
-While developing locally, you can interact with an R2 bucket by adding `--r2=<BINDING>` to your run command. For example, if your bucket is bound to `R2`, you can access this bucket in local dev by running `npx wrangler pages dev dist --r2=BUCKET`. The can interact with this binding by using `context.env` (e.g. `context.env.BUCKET`). 
+While developing locally, you can interact with an R2 bucket by adding `--r2=<BINDING>` to your run command. For example, if your bucket is bound to `BUCKET`, you can access this bucket in local dev by running `npx wrangler pages dev dist --r2=BUCKET`. The can interact with this binding by using `context.env` (e.g. `context.env.BUCKET`). 
 
 ```js
 export async function onRequestGet({ env }) {
-  const obj = await env.R2.get('some-key');
+  const obj = await env.BUCKET.get('some-key');
   if (obj === null) {
     return new Response('Not found', { status: 404 });
   }
