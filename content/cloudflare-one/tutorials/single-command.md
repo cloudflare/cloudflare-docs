@@ -57,7 +57,7 @@ You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-a
 1.  [Create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/) with an associated name. That Tunnel can serve traffic for multiple services and multiple hostnames; this example uses a single service and single hostname.
 1.  [Create DNS records](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) for the Tunnel. These DNS records will send traffic to the Tunnel. The records created will not be deleted if the Tunnel is interrupted or if `cloudflared` or your origin service restarts.
 1.  [Configure the Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/) by sending traffic to the URL specified. In this example, the only configuration argument required is the URL where traffic should be directed.
-1.  [Run the Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/run-tunnel.md) and begin serving traffic.
+1.  [Run the Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/run-tunnel/) and begin serving traffic.
 
 Run the following command to perform all of the functions listed above, replacing the `--hostname` value with a hostname in your Cloudflare account as well as the `--url` and `--name` values with the URL of your service and the name you would like to assign to the Tunnel.
 
