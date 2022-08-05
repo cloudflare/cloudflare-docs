@@ -22,16 +22,7 @@ Before you can employ Early Hints for SaaS, you need to create a custom hostname
 
 2. Locate your Authentication Key by selecting **My Profile** > **API tokens** > **Global API Key**.
 
-3. If you would like to enable Early Hints for a preexisting custom hostname, locate your custom hostname ID by making a `GET` request to the API:
-
-```json
-curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
-    -H "X-Auth-Email: {email}" \
-    -H "X-Auth-Key: {key}" \
-    -H "Content-Type: application/json"
-```
-
-If you are [creating a new custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), make an API call such as the example below, specifying `"early_hints": "on"`:
+3. If you are [creating a new custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), make an API call such as the example below, specifying `"early_hints": "on"`:
 
 ```json
 curl -X POST "https://api.cloudflare.com/client/v4/zones/ZONE_ID/custom_hostnames" \
@@ -55,7 +46,16 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/ZONE_ID/custom_hostname
     }'
 ```
 
-4. For an existing custom hostname, an API call such as the example below, specifying `"early_hints": "on"`:
+4. For an existing custom hostname, locate the `CUSTOM_HOSTNAME_ID` via a `GET` call:
+
+```json
+curl -X GET "https://api.cloudflare.com/client/v4/zones/ZONE/custom_hostnames?hostname=CUSTOM_HOSTNAME" \
+    -H "X-Auth-Email: {email}" \
+    -H "X-Auth-Key: {key}}" \
+    -H "Content-Type: application/json"
+```
+
+Then make an API call such as the example below, specifying `"early_hints": "on"`:
 
 ```json
 $ curl -sXPATCH \
@@ -72,13 +72,4 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/ZONE/custom_hostnames/
         }
       }
     }'
-```
-
-To get the ID of a single hostname in the list, make this API call:
-
-```json
-curl -X GET "https://api.cloudflare.com/client/v4/zones/ZONE/custom_hostnames?hostname=CUSTOM_HOSTNAME" \
-    -H "X-Auth-Email: {email}" \
-    -H "X-Auth-Key: {key}}" \
-    -H "Content-Type: application/json"
 ```
