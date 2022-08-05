@@ -87,7 +87,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 ### Additional supported headers
 
-Setting a creator value in the `Upload-Creator` header can be used to identify the creator of the video content, linking the way you identify your users or creators to videos in your Stream account. For more, read the [blog post](https://blog.cloudflare.com/stream-creator-management/)
+Setting a creator value in the `Upload-Creator` header can be used to [identify the creator](/stream/edit-manage-videos/manage-video-library/creator-id/) of the video content, linking the way you identify your users or creators to videos in your Stream account.
 
 ### Getting the video ID when using TUS
 
