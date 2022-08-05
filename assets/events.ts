@@ -262,8 +262,11 @@ export function toggleSidebar() {
   let isHidden3 = productName.hasAttribute(attr);
   let isHidden4 = docName.hasAttribute(attr);
 
-  navLinks.toggleAttribute(attr, !isHidden);
   viewMore.toggleAttribute(attr, !isHidden2);
   productName.toggleAttribute(attr, !isHidden3);
   docName.toggleAttribute(attr, !isHidden4);
+
+  let item5 = document.querySelector('.DocsSidebar--sections .toggleSidebar')
+  let classes5 = item5.classList;
+  classes5.toggle("enabled");
 }

@@ -2240,6 +2240,18 @@ html[is-docs-page] body {
   top: auto;
 }
 
+@media (max-width: 769px) {
+  .toggleSidebar {
+    visibility: hidden;
+  }
+}
+
+.toggleSidebar.enabled button svg {
+  transform:rotate(180deg);
+}
+
+@media (min-width: 769px) {
+
 .DocsSidebar.hidden {
   width: 4.5em;
 }
@@ -2280,9 +2292,6 @@ html[is-docs-page] body {
   transform: translateZ(0);
   width: 50px;
 }
-
-.DocsSidebar [is-minimized] >* {
-  border: 1px solid pink;
 }
 
 [theme="dark"] .DocsSidebar {
