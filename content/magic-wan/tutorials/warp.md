@@ -40,7 +40,7 @@ You should be able to access Private IP addresses specified in the Split Tunnel 
 
 Route packets back to WARP devices from services behind an Anycast GRE or other type tunnel.
 
-WARP devices will be assigned IP addresses from the Magic WARP Virtual IP (VIP) space.
+WARP devices will be assigned IP addresses from the Magic WARP Virtual IP (VIP) space. To view your virtual IP address, open the **Cloudflare Zero Trust** dashboard and select **My Team** > **Devices**.
 
 All packets with a destination IP in the VIP space need to be routed back through the tunnel. For example, with a single GRE tunnel named `gre1`, in Linux, the following command would add a routing rule that would route such packets:
 
