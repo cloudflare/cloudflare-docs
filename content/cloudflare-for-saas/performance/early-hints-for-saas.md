@@ -51,7 +51,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/ZONE_ID/custom_hostname
 ```json
 curl -X GET "https://api.cloudflare.com/client/v4/zones/ZONE/custom_hostnames?hostname=CUSTOM_HOSTNAME" \
     -H "X-Auth-Email: {email}" \
-    -H "X-Auth-Key: {key}}" \
+    -H "X-Auth-Key: {key}" \
     -H "Content-Type: application/json"
 ```
 
