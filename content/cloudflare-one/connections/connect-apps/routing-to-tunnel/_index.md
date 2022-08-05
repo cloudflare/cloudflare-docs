@@ -10,4 +10,4 @@ Cloudflare can route traffic to your Cloudflare Tunnel connection using a [DNS r
 
 You can configure either option from the Cloudflare dashboard by pointing a DNS CNAME record or a Load Balancer pool to the Cloudflare Tunnel subdomain for your connection. You can also associate these records with your Tunnel from `cloudflared` directly.
 
-Cloudflare Tunnel can also be configured to route traffic to multiple hostnames to [multiple services](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/) in your environment.
+Cloudflare Tunnel can also be configured to route traffic to multiple hostnames to [multiple services](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/) in your environment.

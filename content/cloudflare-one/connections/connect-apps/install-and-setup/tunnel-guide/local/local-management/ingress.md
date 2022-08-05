@@ -8,7 +8,7 @@ weight: 3
 
 Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service. 
 
-To specify which local services a request should be proxied to, you can define ingress rules in the [configuration file](/cloudflare-one/connections/connect-apps/configuration/local-management/configuration-file/).
+To specify which local services a request should be proxied to, you can define ingress rules in the [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/).
 
 ## Requirements
 

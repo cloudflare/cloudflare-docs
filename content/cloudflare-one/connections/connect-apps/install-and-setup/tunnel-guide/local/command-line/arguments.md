@@ -6,7 +6,7 @@ weight: 4
 
 # Configuration flags
 
-This page lists general-purpose configuration options for a Cloudflare Tunnel. You can add these flags to the `cloudflared tunnel run` command for [remotely-managed](/cloudflare-one/connections/connect-apps/configuration/remote-management/) and [locally-managed](/cloudflare-one/connections/connect-apps/configuration/local-management/) tunnels.
+This page lists general-purpose configuration options for a Cloudflare Tunnel. You can add these flags to the `cloudflared tunnel run` command for [remotely-managed](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/remote-management/) and [locally-managed](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/) tunnels.
 
 **Example:** The following command runs the `mytunnel` tunnel by proxying traffic to port `8000` and disabling chunked transfer encoding.
 

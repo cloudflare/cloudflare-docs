@@ -48,11 +48,11 @@ The application will default to the Cloudflare settings of the hostname in your 
 
 If you have a tunnel to a port or ssh port, you **should not** run a TCP health check.
 
-Instead, set up a health check endpoint in `cloudflared` — for example, an [ingress entry rule](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/configuration/local-management/ingress/) that returns a fixed http status response — and create an **HTTP** [monitor](/load-balancing/understand-basics/monitors/) for that endpoint. This monitor will only verify that your server is reachable, **not** whether it is up and can accept requests.
+Instead, set up a health check endpoint in `cloudflared` — for example, an [ingress entry rule](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/install-and-setup/tunnel-guide/local/local-management/ingress/) that returns a fixed http status response — and create an **HTTP** [monitor](/load-balancing/understand-basics/monitors/) for that endpoint. This monitor will only verify that your server is reachable, **not** whether it is up and can accept requests.
 
 ### Named Tunnels and replicas
 
-A load balancer maintains [session affinity](/load-balancing/understand-basics/session-affinity/) by treating an entire Named Tunnel as an origin server, meaning that it does not distinguish between Named Tunnels [running as replicas](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/deploy-cloudflared-replicas/).
+A load balancer maintains [session affinity](/load-balancing/understand-basics/session-affinity/) by treating an entire Named Tunnel as an origin server, meaning that it does not distinguish between Named Tunnels [running as replicas](/cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/).
 
 To maintain session affinity for individual service instances running behind tunnel replicas, use different Named Tunnel IDs.
 
@@ -62,4 +62,4 @@ If you notice traffic imbalances across origin servers in different locations, y
 
 `cloudflared` connections give preference to tunnels that terminate in the same data center (local connections). This behavior can impact how connections are weighted and traffic is distributed.
 
-The solution depends on the type of tunnel being used. If running Classic Tunnels, put your origins in different pools. If running [Named Tunnels replicas](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/deploy-cloudflared-replicas/) (using a shared ID), switch to separate Named Tunnels as distinct origins.
+The solution depends on the type of tunnel being used. If running Classic Tunnels, put your origins in different pools. If running [Named Tunnels replicas](/cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/) (using a shared ID), switch to separate Named Tunnels as distinct origins.
