@@ -32,4 +32,4 @@ A tunnel's status depends on the health of its connections:
 
 Follow our [step-by-step guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/) on how to get your first tunnel up and running. The guide covers how to download, install and authenticate `cloudflared`, create your first tunnel, route traffic through it, and ultimately run your tunnel.
 
-You can familiarize yourself with Cloudflare Tunnel concepts and terminology by checking out the [Useful Terms page](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/). For a list of common tunnel commands, refer to the [Useful Commands page](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-commands/).
+You can familiarize yourself with Cloudflare Tunnel concepts and terminology by checking out the [Useful Terms page](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/). For a list of common tunnel commands, refer to the [Useful Commands page](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/command-line/tunnel-useful-commands/).

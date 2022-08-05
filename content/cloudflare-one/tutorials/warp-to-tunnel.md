@@ -47,7 +47,7 @@ If you already have `cloudflared` installed, make sure to update to the latest v
 
 ## Create a Tunnel
 
-You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#set-up-a-tunnel-locally-cli-setup) that will connect `cloudflared` to Cloudflare's edge.
+You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/) that will connect `cloudflared` to Cloudflare's edge.
 
 1. Begin by creating a Tunnel with an associated name. This example uses the name `grafana`.
 
@@ -94,7 +94,7 @@ You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-a
     $ cloudflared tunnel run grafana
     ```
 
-This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/as-a-service/#create-route-and-configure-the-tunnel) for long-lived connections.
+This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/#create-route-and-configure-the-tunnel) for long-lived connections.
 
 ## Route private IP ranges through WARP
 

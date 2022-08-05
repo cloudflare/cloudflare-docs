@@ -22,7 +22,7 @@ If you are using Legacy Tunnel today you can migrate to Named Tunnel deployment 
 
 10 minutes
 
-See additional documentation for working with [Kubernetes](/cloudflare-one/connections/connect-apps/routing-to-tunnel/kubernetes/).
+See additional documentation for working with [Kubernetes](/cloudflare-one/connections/connect-apps/deployment-guide/kubernetes/).
 
 ---
 
