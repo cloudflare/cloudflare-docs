@@ -12,6 +12,76 @@ You can track current issues that the Pages team is fixing in [Known issues](/pa
 
 {{</Aside>}}
 
+{{<tabs labels="js/sw | js/esm | ts/sw | ts/esm">}}
+{{<tab label="js/sw" default="true">}}
+
+```js
+async function handler(request) {
+  const base = 'https://example.com';
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener('fetch', event => {
+  event.respondWith(handler(event.request));
+});
+```
+
+{{</tab>}}
+{{<tab label="js/esm">}}
+
+```js
+async function handler(request) {
+  const base = "https://example.com";
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
+```
+
+{{</tab>}}
+{{<tab label="ts/sw">}}
+
+```js
+async function handler(request) {
+  const base = "https://obinnas.com";
+  const statusCode = 301;
+
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
+}
+
+// Initialize Worker
+addEventListener("fetch", (event) => {
+  event.respondWith(handler(event.request));
+});
+```
+
+{{</tab>}}
+{{<tab label="ts/esm">}}
+
+```js
+import meaning from "meaning-of-life";
+
+export default {
+  async fetch(request: Request): Promise<Response> {
+    return new Response(meaning);
+  },
+};
+```
+
+{{</tab>}}
+{{</tabs>}}
+
 With Pages, you can now build full-stack applications by executing code on the Cloudflare network with help from [Cloudflare Workers](https://workers.cloudflare.com/). Functions enable you to run server-side code to enable dynamic functionality without running a dedicated server. With Functions, you can introduce application aspects such as authenticating, querying databases, handling form submissions, or working with middleware.
 
 ## Built with Cloudflare Workers
