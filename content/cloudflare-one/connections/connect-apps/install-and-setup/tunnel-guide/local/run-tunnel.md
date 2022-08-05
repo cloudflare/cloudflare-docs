@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Run a tunnel
-weight: 6
+weight: 1
 ---
 
 # Run a tunnel
