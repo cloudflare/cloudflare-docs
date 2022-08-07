@@ -32,16 +32,16 @@ provider "cloudflare" {
   api_token = "your-api-token"
 }
 
-variable "zone_id" {
-  default = "e097e1136dc79bc1149e32a8a6bde5ef"
-}
-
 variable "domain" {
   default = "example.com"
 }
 
+data "cloudflare_zone" "Zone" {
+  name = var.domain
+}
+
 resource "cloudflare_record" "www" {
-  zone_id = var.zone_id
+  zone_id = data.cloudflare_zone.Zone.zone_id
   name    = "www"
   value   = "203.0.113.10"
   type    = "A"
