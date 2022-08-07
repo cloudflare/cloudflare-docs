@@ -81,6 +81,12 @@ At a minimum, `name`, `main` and `compatibility_date` are required to publish a 
 
   - The usage model of your Worker. Refer to [usage models](/workers/platform/pricing/#usage-models).
 
+- `rules`  {{<type-link href="#bundling">}}Rule{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - An ordered list of rules that define which modules to import, and what type to import them as. You will
+    need to specify rules to use `Text`, `Data` and `CompiledWasm` modules, or when you wish to have a `.js`
+    file be treated as an `ESModule` instead of `CommonJS`.
+
 - `build` {{<type-link href="#build">}}Build{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - Configures a custom build step to be run by Wrangler when building your Worker. Refer to [build](#build).
@@ -391,6 +397,27 @@ services = [
   { binding = "TEST_BINDING", service = "TEST_WORKER" }
 ]
 ```
+
+## Bundling
+
+You can bundle assets into your Worker using the `rules` key, making these available to
+be imported when your Worker is invoked. The `rules` key will be an array of the below object.
+
+{{<definitions>}}
+
+- `type` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The type of asset. Must be one of `ESModule`, `CommonJS`, `CompiledWasm`, `Text` or `Data`.
+
+- `globs` {{<type>}}string[]{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - An array of glob rules (e.g `["**/*.md"]`). Refer to [glob](https://man7.org/linux/man-pages/man7/glob.7.html).
+
+- `fallthrough` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - TODO
+
+{{</definitions>}}
 
 ## Local development settings
 
