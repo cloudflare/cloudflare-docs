@@ -443,6 +443,25 @@ be imported when your Worker is invoked. The `rules` key will be an array of the
 
 {{</definitions>}}
 
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+rules = [
+  { type = "Text", globs = ["**/*.md"], fallthrough = true }
+]
+```
+
+### Importing assets within a Worker
+
+You can import and refer to these assets within your Worker, like so:
+
+```js
+// do things
+```
+
 ## Local development settings
 
 You can configure various aspects of local development, such as the local protocol or port.
