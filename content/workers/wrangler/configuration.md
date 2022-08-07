@@ -567,6 +567,29 @@ include = ["upload_dir"]
 exclude = ["ignore_dir"]
 ```
 
+## Proxy Support
+
+Corporate networks will often have proxies on their networks and this can sometimes cause connectivity issues. To
+configure Wrangler with the appropriate proxy details, use the below environmental variables:
+
+- `https_proxy`
+- `HTTPS_PROXY`
+- `http_proxy`
+- `HTTP_PROXY`
+
+To configure this on MacOS, add `HTTP_PROXY=http://<YOUR_PROXY_HOST>:<YOUR_PROXY_PORT>` before your Wrangler commands.
+
+Example:
+
+```bash
+HTTP_PROXY=http://localhost:8080 wrangler dev
+```
+
+If your IT team has configured your computer's proxy settings, be aware that the first non-empty environment variable
+in this list will be used when Wrangler makes outgoing requests.
+
+For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only use `https_proxy` for outgoing requests.
+
 ## Example configuration
 
 ```toml
