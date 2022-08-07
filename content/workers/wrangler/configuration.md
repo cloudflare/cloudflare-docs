@@ -164,7 +164,8 @@ Example: `"example.com/*"`
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the `pattern` is an SSL for SaaS custom hostname. Defaults to `false`.
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`.
+    Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
 
 {{</definitions>}}
 
@@ -185,7 +186,8 @@ Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the `pattern` is an SSL for SaaS custom hostname. Defaults to `false`.
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`.
+    Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
 
 {{</definitions>}}
 
@@ -204,13 +206,17 @@ SSL for SaaS, this is effectively a simple route.
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the `pattern` is an SSL for SaaS custom hostname. Defaults to `false`.
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`.
+    Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
 
 {{</definitions>}}
 
 Example:
 
 ```toml
+---
+header: wrangler.toml
+---
 route = { pattern = "example.com/*", custom_domain: true }
 ```
 
@@ -230,6 +236,9 @@ Refer to [supported cron expressions](/workers/platform/cron-triggers/#supported
 Example:
 
 ```toml
+---
+header: wrangler.toml
+---
 [triggers]
 crons = ["1 * * * *"]
 ```
@@ -259,6 +268,9 @@ Refer to [custom builds](/workers/wrangler/custom-builds/).
 Example:
 
 ```toml
+---
+header: wrangler.toml
+---
 [build]
 command = "npm run build"
 cwd = "build_cwd"
@@ -298,6 +310,9 @@ To bind Durable Objects to your Worker, assign an array of the below object to t
 Example:
 
 ```toml
+---
+header: wrangler.toml
+---
 durable_objects.bindings = [
   { name = "TEST_OBJECT", class_name = "TEST_CLASS" }
 ]
@@ -330,6 +345,9 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
 Example:
 
 ```toml
+---
+header: wrangler.toml
+---
 kv_namespaces = [
   { binding = "TEST_NAMESPACE", id = "TEST_ID" }
 ]
@@ -361,6 +379,9 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
 Example:
 
 ```toml
+---
+header: wrangler.toml
+---
 r2_buckets  = [
   { binding = "TEST_BUCKET", bucket_name = "TEST_BUCKET"}
 ]
@@ -393,6 +414,9 @@ To bind other Workers to your Worker, assign an array of the below object to the
 Example:
 
 ```toml
+---
+header: wrangler.toml
+---
 services = [
   { binding = "TEST_BINDING", service = "TEST_WORKER" }
 ]
@@ -450,6 +474,9 @@ You can configure various aspects of local development, such as the local protoc
 Example:
 
 ```toml
+---
+header: wrangler.toml
+---
 [dev]
 ip = "192.168.1.1"
 port = "8080"
@@ -457,6 +484,21 @@ local_protocol = "http"
 ```
 
 {{<definitions>}}
+
+### Environmental Variables
+
+When developing locally, you can create a `.dev.vars` file in the project root which allows you to define variables
+that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and
+`[vars]` in `wrangler.toml`.
+
+This file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
+
+```bash
+---
+header: .dev.vars
+---
+SECRET_KEY = "value"
+```
 
 ## Node compatibility
 
