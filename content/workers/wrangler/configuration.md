@@ -502,8 +502,6 @@ port = "8080"
 local_protocol = "http"
 ```
 
-{{<definitions>}}
-
 ### Environmental Variables
 
 When developing locally, you can create a `.dev.vars` file in the project root which allows you to define variables
@@ -529,6 +527,45 @@ can't be replicated as Workers has no concept of a filesystem.
 
 This is currently powered by `@esbuild-plugins/node-globals-polyfill`
 which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
+
+## Workers Sites
+
+{{<Aside type="note" header="Cloudflare Pages">}}
+Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
+{{</Aside>}}
+
+Workers Sites allows you to host static websites, or dynamic websites using frameworks like Vue or React, on Workers.
+Refer to [Workers Sites](/workers/platform/sites).
+
+{{<definitions>}}
+
+- `bucket` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The directory containing your static assets. It must be a path relative to your `wrangler.toml` file.
+
+- `include` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - An exclusive list of .gitignore-style patterns that match file  or directory names from your bucket location.
+    Only matched items will be uploaded.
+
+- `exclude` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  -  A list of .gitignore-style patterns that match files or directories in your bucket that should be
+     excluded from uploads.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+[site]
+bucket = "./public"
+include = ["upload_dir"]
+exclude = ["ignore_dir"]
+```
 
 ## Example configuration
 
