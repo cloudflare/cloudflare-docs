@@ -42,7 +42,7 @@ header: Required parameters
 header: Example: Clip a video
 highlight: [5,6,7]
 ---
-curl --location --request POST 'https://api.staging.cloudflare.com/client/v4/accounts/<YOUR_ACCOUND_ID_HERE>/stream/clip' \
+curl --location --request POST 'https://api.cloudflare.com/client/v4/accounts/<YOUR_ACCOUND_ID_HERE>/stream/clip' \
 --header 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -153,7 +153,7 @@ highlight: [6,14,21,35,36]
     "result": {
         "uid": "85b15292b6751af4a7cca9389701485f",
         "creator": null,
-        "thumbnail": "https://staging.cloudflarestream.com/85b15292b6751af4a7cca9389701485f/thumbnails/thumbnail.jpg",
+        "thumbnail": "https://cloudflarestream.com/85b15292b6751af4a7cca9389701485f/thumbnails/thumbnail.jpg",
         "thumbnailTimestampPct": 0.5,
         "readyToStream": false,
         "status": {
@@ -167,7 +167,7 @@ highlight: [6,14,21,35,36]
         "created": "2022-07-18T17:16:44.528685Z",
         "modified": "2022-07-18T17:16:44.528685Z",
         "size": 0,
-        "preview": "https://staging.cloudflarestream.com/85b15292b6751af4a7cca9389701485f/watch",
+        "preview": "https://cloudflarestream.com/85b15292b6751af4a7cca9389701485f/watch",
         "allowedOrigins": [],
         "requireSignedURLs": false,
         "uploaded": null,
@@ -180,8 +180,8 @@ highlight: [6,14,21,35,36]
             "height": -1
         },
         "playback": {
-            "hls": "https://staging.cloudflarestream.com/85b15292b6751af4a7cca9389701485f/manifest/video.m3u8",
-            "dash": "https://staging.cloudflarestream.com/85b15292b6751af4a7cca9389701485f/manifest/video.mpd"
+            "hls": "https://cloudflarestream.com/85b15292b6751af4a7cca9389701485f/manifest/video.m3u8",
+            "dash": "https://cloudflarestream.com/85b15292b6751af4a7cca9389701485f/manifest/video.mpd"
         },
         "watermark": null,
         "clippedFrom": "0ea62994907491cf9ebefb0a34c1e2c6"
