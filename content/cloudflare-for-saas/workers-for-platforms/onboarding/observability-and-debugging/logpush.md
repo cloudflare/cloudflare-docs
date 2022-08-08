@@ -15,5 +15,5 @@ Logpush allows you to:
     
 To get raw HTTP logs, we recommend using our Logpush service: 
 
-* [Configuration](https://developers.cloudflare.com/logs/reference/logpush-api-configuration)
-* [Available fields](https://developers.cloudflare.com/logs/reference/log-fields/zone/http_requests)
+* [Configuration](/logs/get-started/api-configuration/)
+* [Available fields](/logs/reference/log-fields/zone/http_requests)
