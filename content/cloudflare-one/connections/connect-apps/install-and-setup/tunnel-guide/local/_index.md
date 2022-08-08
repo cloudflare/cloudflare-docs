@@ -2,13 +2,19 @@
 title: Command line guide
 pcx_content_type: how-to
 weight: 2
-meta:
-  title: Set up your first tunnel through the command line
+layout: single
 ---
 
-# Set up a tunnel locally (CLI setup)
+# Set up a tunnel locally
 
 Follow this step-by-step guide to get your first tunnel up and running using the CLI.
+
+## Prerequisites
+
+Before you start, make sure you:
+
+* [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/).
+* [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708).
 
 ## 1. Download and install `cloudflared`
 
