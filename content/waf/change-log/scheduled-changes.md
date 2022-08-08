@@ -44,7 +44,7 @@ layout: list
       <td>2022-08-08</td>
       <td>2022-08-15</td>
       <td>Log</td>
-      <td>100502</td>
+      <td>N/A</td>
       <td>...9b16ea5e</td>
       <td>CVE-2020-13443</td>
       <td>N/A</td>
@@ -53,7 +53,7 @@ layout: list
       <td>2022-08-08</td>
       <td>2022-08-15</td>
       <td>Log</td>
-      <td>100231</td>
+      <td>N/A</td>
       <td>...94700cae</td>
       <td>Drupal, Magento, PHP - Deserialization - CVE:CVE-2019-6340, CVE:CVE-2016-4010 - 2</td>
       <td>N/A</td>
@@ -62,7 +62,7 @@ layout: list
       <td>2022-08-08</td>
       <td>2022-08-15</td>
       <td>Disable</td>
-      <td>100451</td>
+      <td>N/A</td>
       <td>...8e2e15a5</td>
       <td>SQLi - Strict</td>
       <td>N/A</td>
@@ -71,7 +71,7 @@ layout: list
       <td>2022-08-08</td>
       <td>2022-08-15</td>
       <td>Disable</td>
-      <td>100146C</td>
+      <td>N/A</td>
       <td>...25ba9d7c</td>
       <td>SSRF - Cloud</td>
       <td>N/A</td>
@@ -80,7 +80,7 @@ layout: list
       <td>2022-08-08</td>
       <td>2022-08-15</td>
       <td>Disable</td>
-      <td>100146B</td>
+      <td>N/A</td>
       <td>...8242627b</td>
       <td>SSRF - Local</td>
       <td>N/A</td>
@@ -89,7 +89,7 @@ layout: list
       <td>2022-08-08</td>
       <td>2022-08-15</td>
       <td>Disable</td>
-      <td>100146</td>
+      <td>N/A</td>
       <td>...74a51804</td>
       <td>SSRF - Host</td>
       <td>N/A</td>
