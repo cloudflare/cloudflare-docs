@@ -1,5 +1,5 @@
 ---
-title: Set up a Tunnel
+title: Set up a tunnel
 pcx_content_type: navigation
 weight: 1
 meta:
