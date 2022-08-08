@@ -16,7 +16,7 @@ There are several things that must be done for a trace Worker script to receive 
 
 Once these things are done, each time the Workers runtime encounters an event that would trigger the pipeline – for example, a `fetch` event – it will collect trace data as it runs Workers to handle the event. Then, once all work triggered by that event is complete – including tasks registered via `waitUntil()` – the collected trace data is submitted to the trace Worker by calling its registered handler. Note that this happens even if a Worker failed due to an exception or running out of memory or CPU time.
 
-Sample trace Worker:
+**Sample trace Worker**:
 ```json
 addEventListener("trace", event => {
   event.waitUntil(fetch("http://example.com/trace", {
@@ -26,7 +26,7 @@ addEventListener("trace", event => {
 })
 ```
 
-Corresponding data:
+**Corresponding data**:
 ```json
 [
   {
@@ -73,12 +73,12 @@ This is the type of the parameter that gets passed to the trace event handler.<b
 <br>
 Like `FetchEvent`, `TraceEvent` extends the generic `Event` type, so it also has `stopImmediatePropagation()` and `preventDefault()` methods.
 
-#### Properties
+**Properties**
 * `traces`: an array of `TraceItems`. <br>
 
 One `TraceItem` is collected for each event that triggers a Worker or pipeline, including the toplevel pipeline.  This means that in the common tracing case – where a user worker is alone in a traced pipeline – traces will contain two elements: one for the pipeline itself and one for the user Worker.  Currently, the pipeline `TraceItem` does not contain useful information. Thus a trace Worker will typically want to ignore the first element and look at traces[1] instead.
 
-#### Methods
+**Methods**
 * `waitUntil()`: takes a promise that extends the lifetime of the event.<br>
 <br>
 This is similar to `FetchEvent.waitUntil()`. However, unlike fetch event handlers, trace handlers do not return a value. This is the only way for trace Workers to do asynchronous work.
@@ -91,7 +91,7 @@ This is similar to `FetchEvent.waitUntil()`. However, unlike fetch event handler
 The trace information collected for one invocation of a Worker stage or pipeline.
 <br>
 
-#### Properties
+**Properties**
 * `scriptName`: a string containing the script name given in the pipeline, or null if the script name is not set/populated.
 * `event`: Contains information about the Worker’s triggering event.
     * For fetch events: a `FetchEventInfo` object
@@ -122,7 +122,7 @@ Note that outcome is not the same as HTTP status.  A Worker can have an `ok` out
 <div>
 Contains details about the FetchEvent that triggered a worker invocation as well as information about the response that the worker sent.
 
-#### Properties
+**Properties**
 * request: `TraceRequest`
 * response: `TraceResponse`
 
@@ -136,16 +136,16 @@ Contains details about the FetchEvent that triggered a worker invocation as well
 Contains properties that selectively mirror properties on the `event.request` of `FetchEvent`.
 <br>
 
-#### Properties
+**Properties**
 * `cf`: a JavaScript Object containing the data from `FetchEvent.request.cf`
 * `headers`: a dictionary of header name/value entries (redacted by default).  Header names are lower-cased, and the values associated with duplicate header names are concatenated, with the string ", " (comma space) interleaved (similar to https://fetch.spec.whatwg.org/#concept-header-list-get).
 * `method`: a string containing the data from `FetchEvent.request.method`
 * `url`: a string containing `FetchEvent.request.url` (redacted by default)
 
-#### Methods
+**Methods**
 * `getUnredacted()`: returns a `TraceRequest` object with unredacted properties
 
-#### Redaction
+**Redaction**
 
 Since one of the anticipated use cases for trace Workers is to record request information to various places, some of the properties of `TraceReques`t are redacted by default to make it harder to accidentally record sensitive information like user credentials or API tokens.  The redactions use heuristic rules, so they are subject to false positives and negatives; clients can call `getUnredacted()` to bypass redaction, but they should always be careful about what information is retained, whether using the redaction or not.
 
@@ -162,7 +162,7 @@ Since one of the anticipated use cases for trace Workers is to record request in
 Contains properties that reflect information about a response.
 <br>
 
-#### Properties
+**Properties**
 * `status`: the HTTP status code as a number
 
 </div>
@@ -174,7 +174,7 @@ Contains properties that reflect information about a response.
 Records information sent to consolte functions.
 <br>
 
-#### Properties
+**Properties**
 * `timestamp`: a number indicating milliseconds since time origin
 * `level`: a string indicating the console function that was called, one of:
     * `debug`
@@ -200,7 +200,7 @@ Records information sent to consolte functions.
 Records an unhandled exception that occurred during the Worker invocation.
 <br>
 
-#### Properties
+**Properties**
 * `timestamp`: a number indicating milliseconds since time origin
 * `message`: a string, typically the error description (for example, `"x" is not a function`
 * `name`: a string, typically the error type (for example, `Error` or `TypeError`)

@@ -7,3 +7,13 @@ meta:
 ---
 
 # Logpush - Workers for Platforms
+
+Logpush allows you to:
+* Capture historical errors
+* Aggregate metrics you may want to expose to your customer, like number of innovations, etc
+* Get CPU data from a Worker
+    
+To get raw HTTP logs, we recommend using our Logpush service: 
+
+* [Configuration](https://developers.cloudflare.com/logs/reference/logpush-api-configuration)
+* [Available fields](https://developers.cloudflare.com/logs/reference/log-fields/zone/http_requests)
