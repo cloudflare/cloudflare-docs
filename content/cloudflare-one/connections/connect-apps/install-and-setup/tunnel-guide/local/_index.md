@@ -1,5 +1,5 @@
 ---
-title: Command line guide
+title: Via the command line
 pcx_content_type: how-to
 weight: 2
 layout: single
