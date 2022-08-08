@@ -27,7 +27,7 @@ The following endpoints are additions/changes to the Workers API, all prefixed w
       <td>
         <strong>POST</strong>
       </td>
-      <td>/dispatch/namespaces</td>
+      <td><code>/dispatch/namespaces</code></td>
       <td style="text-align:left">
         Creates a new namespace. For now, it requires only a name.
       </td>
@@ -51,9 +51,10 @@ The following endpoints are additions/changes to the Workers API, all prefixed w
           PUT/PATCH 
         </strong>
       </td>
-      <td>/dispatch/namespaces/:name</td>
+      <td><code>/dispatch/namespaces/:name
+      </code></td>
       <td style="text-align:left">
-        Updates a namespace. Both `PATH` and `PATCH` behave the same and will rename the namespace. `PUT` can also be used to create a namespace, but the name field is required and won't be inferred from the request.
+        Updates a namespace. Both <code>PATH</code> and <code>PATCH</code> behave the same and will rename the namespace. <code>PUT</code> can also be used to create a namespace, but the name field is required and won't be inferred from the request.
       </td>
       <td>{<br>
     "name": "my-namespace"
@@ -75,8 +76,8 @@ The following endpoints are additions/changes to the Workers API, all prefixed w
          PUT
         </strong>
       </td>
-      <td>/dispatch/namespaces/:name/scripts/:name</td>
-      <td style="text-align:left">This is the same as our standard Worker upload API but will upload the worker *to a namespace* instead of to your account in general. Workers uploaded this way will not appear on your dashboard. Instead, you will need to be listed using the API with GET call:  `GET /dispatch/namespaces/:name/scripts`. They also won't be valid options for routes.
+      <td><code>/dispatch/namespaces/:name/scripts/:name</code></td>
+      <td style="text-align:left">This is the same as our standard Worker upload API but will upload the worker <em>to a namespace</em> instead of to your account in general. Workers uploaded this way will not appear on your dashboard.  They also won't be valid options for routes.Instead, you will need to be listed using the API with GET call: <code>GET /dispatch/namespaces/:name/scripts</code>.
       <br> 
       <br>
       To run workers uploaded to this endpoint, you will need a non-namespaced script with a namespace binding. </td>
@@ -89,7 +90,7 @@ The following endpoints are additions/changes to the Workers API, all prefixed w
           DELETE
         </strong>
       </td>
-      <td>/dispatch/namespaces/:name/scripts/:name</td>
+      <td><code>/dispatch/namespaces/:name/scripts/:name</code></td>
       <td style="text-align:left">Deletes a script from a namespace. This will fully delete the given script, immediately making it unavailable to all of the namespace bindings referencing this namespace.</td>
       <td></td>
       <td></td>
@@ -100,11 +101,11 @@ The following endpoints are additions/changes to the Workers API, all prefixed w
          GET
         </strong>
       </td>
-      <td>/dispatch/namespaces/:name/scripts?limit=:limit&cursor=:cursor&tags=:tagList</td>
-      <td style="text-align:left">Lists the Workers that have been uploaded to this namespace. This endpoint is paginated using the query parameters `limit` (to limit the number of results given, default and max of 1000) and `cursor` (for fetching pages after the first).
+      <td><code>/dispatch/namespaces/:name/scripts?limit=:limit&cursor=:cursor&tags=:tagList</code></td>
+      <td style="text-align:left">Lists the Workers that have been uploaded to this namespace. This endpoint is paginated using the query parameters <code>limit</code> (to limit the number of results given, default and max of 1000) and <code>cursor</code> (for fetching pages after the first).
       <br>
       <br>
-      It also accepts the query parameter `tags`, which is a comma-separated list of script `tags` and whether or not they should be included in the response, in the format `tag-name:[yes|no]`.
+      It also accepts the query parameter <code>tags</code>, which is a comma-separated list of script <code>tags</code> and whether or not they should be included in the response, in the format <code>tag-name:[yes|no]</code>.
       <br>
       <br>
       In the API wrapper, pagination results are also included.
