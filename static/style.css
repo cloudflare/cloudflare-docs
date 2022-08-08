@@ -713,7 +713,7 @@ html {
 
 .copyCode-button{
   position: absolute;
-  top: 1px;
+  top: 5px;
   right:5px;
   font-size: .9rem;
   padding: .15rem;
