@@ -766,7 +766,7 @@ html {
 
 [theme="dark"] .copyCode-button:hover, .copyCode-button:focus {
   cursor: pointer;
-  background-color: var(--code-block-background-color);
+  background-color: #4b4b4b;
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
 }
 
