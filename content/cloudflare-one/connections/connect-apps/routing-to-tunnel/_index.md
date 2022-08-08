@@ -1,10 +1,12 @@
 ---
 pcx_content_type: concept
-title: Plublic hostnames
+title: Public hostnames
 weight: 5
 ---
 
-# Route traffic
+# Public hostname resources
+
+With Cloudflare Tunnel, you can expose your HTTP resources to the Internet via a public hostname. For example, you can add a route that points `docs.example.com` to `localhost:8080`. Anyone can now view your local application by going to `docs.example.com` in their web browser.
 
 Cloudflare can route traffic to your Cloudflare Tunnel connection using a [DNS record](/cloudflare-one/connections/connect-apps/routing-to-tunnel/dns/) or Cloudflare’s [Load Balancer](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) product.
 
