@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Useful commands
-weight: 2
+weight: 6
 ---
 
 # Useful commands

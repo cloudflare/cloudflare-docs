@@ -1,10 +1,10 @@
 ---
 pcx_content_type: navigation
-title: Local management
+title: Configuration
 weight: 3
 ---
 
-# Local management
+# Configure a local tunnel
 
 If you set up your tunnel through the CLI, the tunnel runs as an instance of `cloudflared` on your machine.  You can configure `cloudflared` properties by modifying [command line parameters](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/command-line/arguments/) or by editing the tunnel configuration file.
 
