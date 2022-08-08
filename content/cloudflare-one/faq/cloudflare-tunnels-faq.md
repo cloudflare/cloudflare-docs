@@ -75,7 +75,7 @@ If you are unable to save your Tunnel's public hostname ("An A, AAAA, or CNAME r
 
 ### Run Tunnel with debug logging
 
-If you created a Cloudflare Tunnel from the Zero Trust dashboard, the tunnel runs as a service on your OS. You can modify the Cloudflare Tunnel service with one or more configuration options. To learn more, refer to our [remote management](/cloudflare-one/connections/connect-apps/configuration/remote-management/) documentation. 
+If you created a Cloudflare Tunnel from the Zero Trust dashboard, the tunnel runs as a service on your OS. You can modify the Cloudflare Tunnel service with one or more configuration options. To learn more, refer to our [remote management](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/remote-management/) documentation.
 
 ## How can I troubleshoot a Tunnel that was configured through the CLI?
 
