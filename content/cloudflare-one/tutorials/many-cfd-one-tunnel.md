@@ -3,7 +3,7 @@ updated: 2021-05-11
 category: 🌐 Connections
 Difficulty: Advanced
 pcx_content_type: tutorial
-title: Use  to expose a Kubernetes app to the Internet
+title: Use cloudflared to expose a Kubernetes app to the Internet
 ---
 
 # Use cloudflared to expose a Kubernetes app to the Internet

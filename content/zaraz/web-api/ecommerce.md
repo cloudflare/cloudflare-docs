@@ -91,7 +91,6 @@ To create a complete tracking event, you need to add an event and one or more pa
 | `checkout_id`            | String | Checkout ID.                                                                                |
 | `order_id`               | String | Internal ID of order/transaction/purchase.                                                  |
 | `affiliation`            | String | Name of affiliate from which the order occurred.                                            |
-| `subtotal`               | Number | Order total after discounts but before adding taxes and shipping.                           |
 | `total`                  | Number | Revenue with discounts and coupons added in.                                                |
 | `revenue`                | Number | Revenue excluding shipping and tax.                                                         |
 | `shipping`               | Number | Cost of shipping for transaction.                                                           |
