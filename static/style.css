@@ -760,7 +760,7 @@ html {
 .copyCode-button:hover,
 .copyCode-button:focus {
   cursor: pointer;
-  background-color:  #f3f3f4 !important;
+  background-color: #828282;
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
 }
 
