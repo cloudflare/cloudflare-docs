@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: Tunnel Administration
+title: Tunnel administration
 weight: 5
 ---
 
