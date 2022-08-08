@@ -30,7 +30,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostna
     -H "X-Auth-Key: {key}" \
     -H "Content-Type: application/json" \
     --data '
-    {"hostname": "HOSTNAME",
+    {"hostname": "<HOSTNAME>",
       "ssl": {
         "method": "http",
         "type": "dv",
