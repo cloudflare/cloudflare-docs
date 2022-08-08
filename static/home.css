@@ -5426,3 +5426,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
         display: none
     }
 }
+
+.slashPlaceholder {
+      visibility: hidden;
+}

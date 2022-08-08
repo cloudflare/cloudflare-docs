@@ -85,6 +85,10 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 {{</definitions>}}
 
+### Additional supported headers
+
+Setting a creator value in the `Upload-Creator` header can be used to [identify the creator](/stream/edit-manage-videos/manage-video-library/creator-id/) of the video content, linking the way you identify your users or creators to videos in your Stream account.
+
 ### Getting the video ID when using TUS
 
 When an initial TUS request is made, Stream responds with a URL in the location header. While this URL may contain the video ID, it is not recommend to parse this URL to get the ID.

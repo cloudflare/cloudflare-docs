@@ -1,6 +1,6 @@
 ---
 pcx-content-type: overview
-title: Workers for Platforms
+title: Workers
 weight: 6
 ---
  

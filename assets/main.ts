@@ -17,6 +17,7 @@ declare global {
   events.focus();
   events.mobile();
   events.dropdowns();
+  events.clipboardButton();
   events.copy();
   contents.toc();
   events.activeTab();

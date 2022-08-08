@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Integrations
-weight: 0
+weight: 14
 ---
 
 # Integrations

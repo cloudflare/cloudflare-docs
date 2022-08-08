@@ -24,7 +24,7 @@ export const OWNERS: Record<string, string[]> = {
   "ddos-protection": ["pedrosousa"],
   dns: ["kodster28"],
   "email-routing": ["marciocloudflare"],
-  "email-security": ["kodster28"],
+  "email-security": ["marciocloudflare"],
   firewall: ["pedrosousa"],
   fundamentals: ["kodster28"],
   images: ["marciocloudflare"],
