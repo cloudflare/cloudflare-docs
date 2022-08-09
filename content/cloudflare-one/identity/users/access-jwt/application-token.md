@@ -54,7 +54,7 @@ The payload contains the actual claim and user information to pass to the applic
 
 | Field           | Description                               |
 |-----------------|-------------------------------------------|
-| aud             | The AUD tag for the application to which the token is issued. |
+| aud             | The audience tag for the application to which the token is issued. |
 | email           | The email address of the authenticated user. |
 | exp             | The expiration timestamp for the token. |
 | iat             | The issuance timestamp for the token. |
