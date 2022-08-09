@@ -80,9 +80,6 @@ The refresh button is available on all responses to the `/dig` command, includin
 
 By default, the DNS over Discord bot uses Cloudflare's 1.1.1.1 DNS service. You can run the DNS lookup with alternate DNS providers by selecting the dropdown below the result. This shows you a list of available providers. Selecting a new provider updates the results in the message. Any user can change the DNS provider.
 
-</div>
-</details>
-
 ## `multi-dig` command
 
 If you want to look up multiple DNS record types at once, use the `/multi-dig` command. This allows you to specify any supported DNS record type, and multiple types separated by a space.
@@ -173,7 +170,6 @@ As with the `/dig` command, any user can press the refresh button to refresh the
 Like the `/dig` command, you can change the DNS provider when using the `/multi-dig` command. The menu appears after each set of DNS results (or after each block of results if more than 10 record types are requested).
 
 This menu can be used be any user to change the DNS provider used for the lookup.
-
 
 ## `whois` command
 
