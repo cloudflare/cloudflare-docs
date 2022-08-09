@@ -1,19 +1,21 @@
 {{- $filename := .Page.RelPermalink -}}
-<script>
-    console.log({{$filename}})
-</script>
 {{- $learningPath := (index .Site.Data.learning_paths $filename) -}}
 
 {{- if $learningPath -}}
-{{- $learningPath.title -}}
-<br>
-{{- $learningPath.description -}}
+<div class="header">
+<h1>{{- $learningPath.title -}}</h1>
+<p><em>Learning path</em></p>
+<p>{{- $learningPath.description -}}</p>
+</div>
 
+<div class="background">
 {{- range $index, $module := $learningPath.modules -}}
-{{.title}}
-<br>
-{{.description}}
-<br>
+
+<div class="learningPathModule">
+<div class="moduleHeader">
+<h2>{{.title}}</h2>
+<p>{{.description}}</p>
+</div>
 {{- if eq $index 0 -}}
 <details open>
 {{ else }}
@@ -24,7 +26,7 @@
     <ul>
     {{- range .pages -}}
     {{ if isset . "external_link_title" }}
-        <li><a href="{{.url_path}}">{{.external_link_title}}</a></li>
+        <li><a href="{{.url_path}}">{{.external_link_title}}  {{- partialCached "external.icon" . -}}</a></li>
     {{ else }}
     {{ with $.Site.GetPage (replaceRE "/$" "" .url_path) }}
     
@@ -36,12 +38,20 @@
 
 </div>
 </details>
+</div>
 
 
 {{ end }}
+
 {{ else }}
 
 Does not match the full url path of an existing learning path.
 
 {{end}}
+
+<div class="GoBack">
+    <a href="/learning-paths/">View other learning paths</a>
+</div>
+
+</div>
 

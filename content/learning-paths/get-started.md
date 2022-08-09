@@ -5,6 +5,4 @@ layout: home
 pcx_content_type: learning-path
 ---
 
-# Get started with Cloudflare
-
 {{<learning-path>}}

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Learning paths
-weight: 1
+layout: home
 ---
 
 # Learning paths

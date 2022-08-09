@@ -1,0 +1,62 @@
+.background {
+    background: #f3f3f4;
+    margin-top: 0px;
+    border-top: 2px solid #242628;
+}
+
+[theme=dark] .background {
+    background: #242628;
+    border-top: 2px solid #f3f3f4;
+}
+
+.learningPathModule {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 3em auto auto auto;
+    border: 1px solid #242628;
+    padding: 0em 1em 1em 1em;
+    border-radius: .5em;
+    background: linear-gradient(var(--background-color),
+    rgba(var(--background-color-rgb), 0));
+}
+
+[theme=dark] .learningPathModule {
+    border: 1px solid #f3f3f4;
+    background-color: rgb(var(--background-color-rgb));
+}
+
+.moduleHeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.background a {
+    color: #0055DC;
+    font-size: 1.1em;
+    font-weight: 300;
+}
+
+[theme=dark] .background a {
+    color: #ff9e40;
+}
+
+details div ul li {
+    list-style: none;
+    line-height: 4;
+    padding-left: 0;
+    border-bottom: .5px solid #242628;
+}
+
+[theme=dark] details div ul li {
+    border-bottom: .5px solid #f3f3f4;
+}
+
+.GoBack {
+    margin-top: 5em;
+    padding-bottom: 10em;
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+}
