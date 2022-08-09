@@ -143,6 +143,8 @@ Routes are specified in the `wrangler.toml` configuration file.
 
 ## Other deprecated behaviour
 
+- Wrangler defined routes will no-longer be added alongside routes added in the dashboard if you have a `route` or `routes` key in your `wrangler.toml`. It will instead only keep routes defined in `wrangler.toml`. To manage routes via the dashboard only, remove any `route`/`routes` keys from your `wrangler.toml` and add `workers_dev = false`.
+
 - Wrangler will no longer use `index.js` in the directory where `wrangler dev` is called as the entry point to a Worker. Use the `main` configuration field, or explicitly pass it as a command line argument, for example: `wrangler dev index.js`.
 
 - Wrangler will no longer assume that bare specifiers are file names if they are not represented as a path. For example, in a folder like so:
