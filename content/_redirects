@@ -990,6 +990,7 @@
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
 /cloudflare-one/identity/service-auth/service-tokens/ /cloudflare-one/identity/service-tokens/ 301
+/cloudflare-one/identity/users/validating-json/ /cloudflare-one/identity/users/access-jwt/ 301
 
 /cloudflare-one/policies/lists/ /cloudflare-one/policies/filtering/lists 301
 /cloudflare-one/policies/zero-trust/ /cloudflare-one/policies/access/ 301
