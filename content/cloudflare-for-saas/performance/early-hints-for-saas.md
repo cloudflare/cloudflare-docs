@@ -58,8 +58,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnam
 Then make an API call such as the example below, specifying `"early_hints": "on"`:
 
 ```json
-$ curl -sXPATCH \
-curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/CUSTOM_HOSTNAME_ID" \
+$ curl -sXPATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/CUSTOM_HOSTNAME_ID" \
     -H "X-Auth-Email: {email}" \
     -H "X-Auth-Key: {key}" \
     -H "Content-Type: application/json" \
