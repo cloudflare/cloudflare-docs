@@ -49,6 +49,6 @@ Reduce latency and protect from DDoS attacks using the Cloudflare network.
 
 {{<resource header="Plans" href="https://www.cloudflare.com/plans/#overview" icon="documentation-clipboard">}}Compare available Cloudflare plans{{</resource>}}
 
-{{<resource header="Pricing" href="https://dash.cloudflare.com/?to=/:account/:zone/traffic/" icon="price">}}Explore pricing options for Argo in the Dashboard{{</resource>}}
+{{<resource header="Pricing" href="https://dash.cloudflare.com/?to=/:account/:zone/traffic/" icon="price">}}Explore pricing options for Argo in the dashboard{{</resource>}}
 
 {{</resource-group>}}
