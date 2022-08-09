@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Downloads
-weight: 2
+weight: 5
 ---
 
 # Downloads

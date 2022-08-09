@@ -12,7 +12,7 @@ If you are running [quick tunnels](/cloudflare-one/connections/connect-apps/inst
 
 {{</Aside>}}
 
-Configuring tunnels through a YAML file (what we refer to as a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file)) allows you to have fine-grained control over how an instance of `cloudflared` will operate. In your configuration file you can specify top-level properties for your `cloudflared` instance, as well as configure origin-specific properties by writing [ingress rules](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/) and adding parameters to them.
+Configuring tunnels through a YAML file (what we refer to as a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file)) allows you to have fine-grained control over how an instance of `cloudflared` will operate. In your configuration file you can specify top-level properties for your `cloudflared` instance, as well as configure origin-specific properties by writing [ingress rules](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/) and adding parameters to them.
 
 In the absence of a configuration file, `cloudflared` will proxy outbound traffic through port 8080.
 
@@ -41,14 +41,14 @@ warp-routing:
 ### Ingress rules
 
 Once your top-level configuration is complete, you can begin addressing origin-specific configurations. By writing ingress rules in the configuration file, you can specify which local services a request should be proxied to.
-Refer to the [ingress rules page](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/) for more information on writing ingress rules and how they work.
+Refer to the [ingress rules page](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/) for more information on writing ingress rules and how they work.
 
 ## Creating a configuration file
 
 You can create your configuration file using any text editor. For example, to create a configuration file in the [default `cloudflared` directory](#naming-and-storing-a-configuration-file) with vim:
 
 1.  `cd` into your system's default directory for `cloudflared`.
-1.  Open vim and type in the necessary [keys and values](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/#origin-configuration).
+1.  Open vim and type in the necessary [keys and values](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/#origin-configuration).
 1.  Name and save your file by typing `:wq config.yaml` and exit vim.
 
 Confirm that the configuration file has been successfully created by running:
@@ -69,7 +69,7 @@ $ cloudflared tunnel --config /path/your-config-file.yaml run tunnel-name
 
 ## Editing a configuration file
 
-When making changes to the configuration file for a given tunnel, we suggest relying on [`cloudflared` replicas](/cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/) to propagate the new configuration with minimal downtime.
+When making changes to the configuration file for a given tunnel, we suggest relying on [`cloudflared` replicas](/cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/) to propagate the new configuration with minimal downtime.
 
 1.  Have a `cloudflared` instance running with the original version of the configuration file.
 1.  Start a `cloudflared` replica running with the updated version of the configuration file.

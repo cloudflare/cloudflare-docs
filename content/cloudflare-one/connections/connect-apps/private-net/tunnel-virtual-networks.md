@@ -87,7 +87,7 @@ We now have two overlapping IP addresses routed over `staging-vnet` and `product
  
 ## Enable Virtual Networks
 
-1. Within your staging environment, create a [configuration file](/cloudflare-one/connections/connect-apps/configuration/local-management/configuration-file/) for `staging-tunnel`. The configuration file will be structured as follows:
+1. Within your staging environment, create a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/) for `staging-tunnel`. The configuration file will be structured as follows:
    
     ```txt
     tunnel: <Tunnel-UUID>
