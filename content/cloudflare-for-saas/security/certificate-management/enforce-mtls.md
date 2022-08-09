@@ -12,6 +12,8 @@ meta:
 
 [Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/) allows you to choose a cryptographic standard per custom hostname. Cloudflare recommends TLS 1.2 to comply with the Payment Card Industry (PCI) Security Standards Council. 
 
+[Cipher suites](/ssl/ssl-tls/cipher-suites/) are a combination of ciphers used to negotiate security settings during the [SSL/TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). As a SaaS provider, you can specify configurations for cipher suites [on your zone](https://api.cloudflare.com/#zone-settings-change-ciphers-setting) as a whole and cipher suites on [individual custom hostnames](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) via the API.
+
 ## Enable mTLS
 
 Once you have [added a custom hostname](/cloudflare-for-saas/start/getting-started/), you can enable mTLS by using Cloudflare Access. Go to the Cloudflare Zero Trust dashboard and [add mTLS authentication](/cloudflare-one/identity/devices/mutual-tls-authentication/) with a few clicks.
@@ -35,3 +37,19 @@ Currently, you cannot add mTLS policies for custom hostnames using [API Shield](
 {{<Aside type="note">}}
 While TLS 1.3 is the most recent and secure version, it is not supported by some older devices. Refer to Cloudflare's recommendations when [deciding what version to use](/ssl/edge-certificates/additional-options/minimum-tls/#decide-what-version-to-use).
 {{</Aside>}}
+
+## Cipher suites
+
+<details>
+<summary>Cipher suites for zone</summary>
+<div>
+
+Refer to  [change ciphers setting on a zone](https://api.cloudflare.com/#zone-settings-change-ciphers-setting).
+</div></details>
+
+<details>
+<summary>Cipher suites per custom hostname</summary>
+<div>
+
+Refer to [SSL properties of a custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname).
+</div></details>
