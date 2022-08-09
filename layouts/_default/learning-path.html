@@ -1,0 +1,72 @@
+{{ define "main" }}
+  {{- $type := default "overview" .Params.type -}}
+  {{- $filename := .RelPermalink -}}
+
+  <div class="DocsPage">
+    {{- partial "skipcontent" . -}}
+    {{- partial "topbar.mobile" . -}}
+    {{- partial "sidebar.nav" . -}}
+
+    <div class="DocsToolbar">
+      {{- partial "topbar.search" . -}}
+      {{- partial "topbar.tools" . -}}
+    </div>
+
+    <main class="DocsBody">
+      <div id="docs-content" data-reach-skip-nav-content></div>
+
+      <div class="DocsContent" id="main" page-type="{{ $type }}">
+        <article class="DocsMarkdown">
+          <h1>{{ .Title }}</h1>
+          <br>
+          {{- $learningPath := (index .Site.Data.learning_paths $filename) -}}
+          
+          {{- if $learningPath -}}
+            {{- $learningPath.title -}}
+            <br>
+            {{- $learningPath.description -}}
+
+            {{- range $index, $module := $learningPath.modules -}}
+            {{.title}}
+            <br>
+            {{.description}}
+            <br>
+            {{- if eq $index 0 -}}
+            <details open>
+            {{ else }}
+            <details>
+            {{ end }}
+            <summary>Contains {{len .pages}} units</summary>
+            <div>
+
+                {{- range .pages -}}
+                {{ with $.GetPage (replaceRE "/$" "" .) }}
+                <ul>
+                    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+                </ul>
+                {{- end -}}
+                {{- end -}}
+
+            </div>
+            </details>
+            
+
+            {{ end }}
+          {{ else }}
+
+          Does not match the full url path of an existing learning path.
+
+          {{end}}
+         
+
+          
+
+
+
+        </article>
+      </div>
+    </main>
+
+    {{ partial "footer" . }}
+  </div>
+{{ end }}

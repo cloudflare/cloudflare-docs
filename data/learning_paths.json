@@ -1,0 +1,56 @@
+{
+    "/learning-paths/get-started/":
+    {
+        "title": "Get started with Cloudflare",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "modules": [
+            {
+                "title": "Concepts",
+                "description": "Concepts explain the basic ideas behind how Cloudflare works and how you can work with Cloudflare.",
+                "pages": [
+                    "/fundamentals/get-started/concepts/what-is-cloudflare/",
+                    "/fundamentals/get-started/concepts/how-cloudflare-works/",
+                    "/fundamentals/get-started/concepts/cloudflare-ip-addresses/",
+                    "/fundamentals/get-started/concepts/cloudflare-challenges/",
+                    "/fundamentals/get-started/concepts/network-layers/"
+                ]
+            },
+            {
+                "title": "Setup",
+                "description": "To get the security, performance, and reliability benefits of Cloudflare, you need to set up Cloudflare on your domain.",
+                "pages": [
+                    "/fundamentals/account-and-billing/account-setup/",
+                    "/fundamentals/get-started/setup/minimize-downtime/",
+                    "/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/",
+                    "/fundamentals/get-started/setup/add-site/"
+                ]
+            }
+        ]
+    },
+    "/learning-paths/other/": {
+        "title": "Test other one",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "modules": [
+            {
+                "title": "Concepts",
+                "description": "Concepts explain the basic ideas behind how Cloudflare works and how you can work with Cloudflare.",
+                "pages": [
+                    "/fundamentals/get-started/concepts/what-is-cloudflare/",
+                    "/fundamentals/get-started/concepts/how-cloudflare-works/",
+                    "/fundamentals/get-started/concepts/cloudflare-ip-addresses/",
+                    "/fundamentals/get-started/concepts/cloudflare-challenges/"
+                ]
+            },
+            {
+                "title": "Setup",
+                "description": "To get the security, performance, and reliability benefits of Cloudflare, you need to set up Cloudflare on your domain.",
+                "pages": [
+                    "/fundamentals/account-and-billing/account-setup/",
+                    "/fundamentals/get-started/setup/minimize-downtime/",
+                    "/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/",
+                    "/fundamentals/get-started/setup/add-site/"
+                ]
+            }
+        ]
+    }
+}
