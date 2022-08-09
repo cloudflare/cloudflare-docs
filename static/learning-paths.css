@@ -1,11 +1,11 @@
 .background {
-    background: #f3f3f4;
+    background:rgba(var(--gray-6-rgb));
     margin-top: 0px;
     border-top: 2px solid #242628;
 }
 
 [theme=dark] .background {
-    background: #242628;
+    background: #404242;
     border-top: 2px solid #f3f3f4;
 }
 
@@ -18,7 +18,7 @@
     padding: 0em 1em 1em 1em;
     border-radius: .5em;
     background: linear-gradient(var(--background-color),
-    rgba(var(--background-color-rgb), 0));
+    rgba(var(--background-color-rgb)));
 }
 
 [theme=dark] .learningPathModule {
