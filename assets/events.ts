@@ -92,7 +92,7 @@ function $clicktoClipboard(ev: MouseEvent) {
   const button = ev.target as HTMLElement;
   const pre = button.parentElement;
   if (pre) {
-    const code = pre.getElementsByTagName("code")[0];
+    const code = pre.getElementsByTagName("code")[0] ;
     const text = code.innerText;
     if (text) {
       try {
