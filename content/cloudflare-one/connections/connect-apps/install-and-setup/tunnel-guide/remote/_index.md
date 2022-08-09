@@ -5,7 +5,7 @@ weight: 1
 layout: single
 ---
 
-# Set up a tunnel remotely
+# Set up a tunnel through the dashboard
 
 Follow this step-by-step guide to get your first tunnel up and running using the Zero Trust dashboard.
 
