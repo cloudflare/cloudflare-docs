@@ -1,7 +1,10 @@
 ---
+title: Get started with Cloudflare
+type: developers-site
+layout: home
 pcx_content_type: learning-path
-title: Get started
-layout: learning-path
 ---
 
-# Get started
+# Get started with Cloudflare
+
+{{<learning-path>}}

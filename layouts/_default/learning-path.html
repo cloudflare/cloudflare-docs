@@ -4,13 +4,13 @@
 
   <div class="DocsPage">
     {{- partial "skipcontent" . -}}
-    {{- partial "topbar.mobile" . -}}
-    {{- partial "sidebar.nav" . -}}
+    
+    {{- partial "topbar.search" . -}}
 
-    <div class="DocsToolbar">
-      {{- partial "topbar.search" . -}}
-      {{- partial "topbar.tools" . -}}
-    </div>
+   
+
+        <div class="SiteHeader--theme-toggle">
+          {{- partialCached "topbar.theme" . -}}
 
     <main class="DocsBody">
       <div id="docs-content" data-reach-skip-nav-content></div>
@@ -38,14 +38,18 @@
             {{ end }}
             <summary>Contains {{len .pages}} units</summary>
             <div>
-
-                {{- range .pages -}}
-                {{ with $.GetPage (replaceRE "/$" "" .) }}
                 <ul>
-                    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+                {{- range .pages -}}
+                {{ if isset . "external_link_title" }}
+                    <li><a href="{{.url_path}}">{{.external_link_title}}</a></li>
+                {{ else }}
+                {{ with $.GetPage (replaceRE "/$" "" .url_path) }}
+                
+                <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+                {{- end -}}
+                {{- end -}}
+                {{- end -}}
                 </ul>
-                {{- end -}}
-                {{- end -}}
 
             </div>
             </details>

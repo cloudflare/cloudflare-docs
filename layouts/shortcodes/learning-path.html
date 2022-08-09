@@ -1,0 +1,47 @@
+{{- $filename := .Page.RelPermalink -}}
+<script>
+    console.log({{$filename}})
+</script>
+{{- $learningPath := (index .Site.Data.learning_paths $filename) -}}
+
+{{- if $learningPath -}}
+{{- $learningPath.title -}}
+<br>
+{{- $learningPath.description -}}
+
+{{- range $index, $module := $learningPath.modules -}}
+{{.title}}
+<br>
+{{.description}}
+<br>
+{{- if eq $index 0 -}}
+<details open>
+{{ else }}
+<details>
+{{ end }}
+<summary>Contains {{len .pages}} units</summary>
+<div>
+    <ul>
+    {{- range .pages -}}
+    {{ if isset . "external_link_title" }}
+        <li><a href="{{.url_path}}">{{.external_link_title}}</a></li>
+    {{ else }}
+    {{ with $.Site.GetPage (replaceRE "/$" "" .url_path) }}
+    
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+    {{- end -}}
+    {{- end -}}
+    {{- end -}}
+    </ul>
+
+</div>
+</details>
+
+
+{{ end }}
+{{ else }}
+
+Does not match the full url path of an existing learning path.
+
+{{end}}
+

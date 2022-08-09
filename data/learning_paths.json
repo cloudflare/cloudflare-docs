@@ -8,21 +8,43 @@
                 "title": "Concepts",
                 "description": "Concepts explain the basic ideas behind how Cloudflare works and how you can work with Cloudflare.",
                 "pages": [
-                    "/fundamentals/get-started/concepts/what-is-cloudflare/",
-                    "/fundamentals/get-started/concepts/how-cloudflare-works/",
-                    "/fundamentals/get-started/concepts/cloudflare-ip-addresses/",
-                    "/fundamentals/get-started/concepts/cloudflare-challenges/",
-                    "/fundamentals/get-started/concepts/network-layers/"
+                    {
+                    "url_path": "https://www.cloudflare.com/learning/cdn/what-is-a-cdn/",
+                    "external_link_title": "What is a Content Delivery Network (CDN)"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/concepts/what-is-cloudflare/"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/concepts/how-cloudflare-works/"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/concepts/cloudflare-ip-addresses/"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/concepts/cloudflare-challenges/"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/concepts/network-layers/"
+                    }
                 ]
             },
             {
                 "title": "Setup",
                 "description": "To get the security, performance, and reliability benefits of Cloudflare, you need to set up Cloudflare on your domain.",
                 "pages": [
-                    "/fundamentals/account-and-billing/account-setup/",
-                    "/fundamentals/get-started/setup/minimize-downtime/",
-                    "/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/",
-                    "/fundamentals/get-started/setup/add-site/"
+                    {
+                    "url_path": "/fundamentals/account-and-billing/account-setup/"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/setup/minimize-downtime/"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/setup/add-site/"
+                    }
                 ]
             }
         ]
