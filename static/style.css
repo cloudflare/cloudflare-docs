@@ -2231,6 +2231,11 @@ html[is-docs-page] body {
   --text-indent: calc(var(--content-indent) + var(--logo-size) + var(--docs-logo-lockup-gap) + 0.1em);
   width: var(--docs-sidebar-width);
   z-index: 2;
+  transition: width 150ms ease-in-out;
+    transition-property: width;
+    transition-duration: 150ms;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0s;
 }
 
 .DocsSidebar [is-visually-hidden] {
@@ -2238,6 +2243,22 @@ html[is-docs-page] body {
   clip-path: none;
   left: -10000px;
   top: auto;
+}
+
+.toggleSidebar {
+  width: 2em; 
+  height: 2em;
+}
+
+[theme=dark] .toggleSidebar {
+  filter: invert(100%) sepia(4%) saturate(159%) hue-rotate(297deg) brightness(116%) contrast(100%);
+}
+
+.toggleSidebar button {
+  border:none;
+  background-color:transparent;
+  outline:none;
+  cursor:pointer;
 }
 
 @media (max-width: 769px) {
@@ -2284,13 +2305,6 @@ html[is-docs-page] body {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-[is-minimized] {
-  opacity: 1;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  width: 50px;
 }
 }
 
@@ -3046,6 +3060,11 @@ html[is-docs-page] body {
 .DocsContent {
   padding: 2.6rem var(--docs-content-gap) 3.5rem;
   min-height: calc(100vh - 12.5em);
+  transition: padding 150ms ease-in-out;
+    transition-property: padding;
+    transition-duration: 150ms;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0s;
 }
 
 .DocsContent[page-type="document"] {
@@ -4000,6 +4019,11 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   display: flex;
   height: var(--docs-header-height);
   z-index: 2;
+  transition: left 150ms ease-in-out;
+    transition-property: left;
+    transition-duration: 150ms;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0s;
 }
 
 .DocsToolbar--search {
