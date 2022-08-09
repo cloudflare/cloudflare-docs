@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Configuration
-weight: 3
+weight: 1
 ---
 
 # Configure a local tunnel
