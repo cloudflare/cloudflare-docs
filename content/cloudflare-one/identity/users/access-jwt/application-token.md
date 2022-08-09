@@ -61,7 +61,7 @@ The payload contains the actual claim and user information to pass to the applic
 | nbf             | The not-before timestamp for the token, used to checks if the token was received before it should be used.|
 | iss             | The Cloudflare Access domain URL for the application.|
 | type            | The type of Access token (`app` for application token or `org` for global session token).|
-| identity_nonce  | A number used to get the [user's identity](#user-identity).|
+| identity_nonce  | A nonce used to get the [user's identity](#user-identity).|
 | sub             | The ID of the user. |
 | country         | The country where the user authenticated from. |
 
