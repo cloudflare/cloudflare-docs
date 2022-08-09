@@ -80,10 +80,10 @@ You must ensure the version is entered is a valid `x.x.x` SemVer. If the command
 ### On macOS
 
 1.  Open a terminal window.
-1.  Use the `system_profiler` command to check for the value of `SPHardwareDataTypeng` and retrieve the serial number.
+1.  Use the `system_profiler` command to check for the value of `SPHardwareDataType` and retrieve the serial number.
 
 ```txt
-system_profiler SPHardwareDataTypeng
+system_profiler SPHardwareDataType
 ```
 
 ### On Windows
