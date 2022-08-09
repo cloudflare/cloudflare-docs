@@ -44,13 +44,24 @@
 
 details div ul li {
     list-style: none;
-    line-height: 4;
     padding-left: 0;
     border-bottom: .5px solid #242628;
 }
 
 [theme=dark] details div ul li {
     border-bottom: .5px solid #f3f3f4;
+}
+
+@media (min-width: 599px) {
+    details div ul li {
+        line-height: 4;
+    }
+}
+
+@media (max-width: 599px) {
+    details div ul li {
+        line-height: 1.5;
+    }
 }
 
 .GoBack {
