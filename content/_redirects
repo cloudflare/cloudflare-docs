@@ -967,8 +967,7 @@
 /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/windows/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/windows/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-commands/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/tunnel-useful-commands/ 301
 /cloudflare-one/connections/connect-apps/configuration/private-networks/ /cloudflare-one/connections/connect-apps/private-net/ 301
-/cloudflare-one/connections/connect-apps/routing-to-tunnel/dns/ /cloudflare-one/connections/connect-apps/routing-to-tunnel/dns/ 301
-/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/ /cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/ 301
+
 /cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/ /cloudflare-one/connections/connect-apps/deployment-guides/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/aws/ /cloudflare-one/connections/connect-apps/deployment-guides/aws/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/azure/ /cloudflare-one/connections/connect-apps/deployment-guides/azure/ 301
