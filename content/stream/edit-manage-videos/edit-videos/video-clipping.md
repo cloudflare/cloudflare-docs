@@ -123,7 +123,7 @@ After the video clipping is complete, you can open the Cloudflare dashboard and 
 
 ## Specify a thumbnail image
 
-You can also specify a thumbnail image for your video using a percentage value. To convert the thumbnail's timestamp from seconds to a percentage, divide the timestamp you want to use by the total duration of the video. For more information about thumbnails, refer to [Display thumbnails](/stream/edit-manage-videos/edit-videos/displaying-thumbnails).
+You can also specify a thumbnail image for your video using a percentage value. To convert the thumbnail's timestamp from seconds to a percentage, divide the timestamp you want to use by the total duration of the video. For more information about thumbnails, refer to [Display thumbnails](/stream/edit-manage-videos/viewing-videos/displaying-thumbnails).
 
 ```bash
 ---

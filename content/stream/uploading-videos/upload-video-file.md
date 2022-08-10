@@ -77,7 +77,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 - `thumbnailtimestamppct`
 
-  - Specify the default thumbnail [timestamp percentage](/stream/edit-manage-videos/edit-videos/displaying-thumbnails/). Note that percentage is a floating point value between 0.0 and 1.0.
+  - Specify the default thumbnail [timestamp percentage](/stream/edit-manage-videos/viewing-videos/displaying-thumbnails/). Note that percentage is a floating point value between 0.0 and 1.0.
 
 - `watermark`
 

@@ -53,7 +53,7 @@ Additionally, you can control security features through these fields:
 
 - `thumbnailTimestampPct` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 0{{</prop-meta>}}
 
-  - Sets the timestamp location of [thumbnail](/stream/edit-manage-videos/edit-videos/displaying-thumbnails/) image to a percentage location of the video from 0 to 1.
+  - Sets the timestamp location of [thumbnail](/stream/edit-manage-videos/viewing-videos/displaying-thumbnails/) image to a percentage location of the video from 0 to 1.
 
 - `watermark` {{<type>}}string{{</type>}} {{<prop-meta>}}default: _none_{{</prop-meta>}}
 

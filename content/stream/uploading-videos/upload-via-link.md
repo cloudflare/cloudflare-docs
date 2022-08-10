@@ -71,7 +71,7 @@ Because Stream must download and encode the video, the video might not be availa
 
 The `uid` of the video can be used refer to the video after uploading and can be used to play it using the [Stream video player](/stream/viewing-videos/using-the-stream-player/).
 
-If you're using your own player or rendering the video in a mobile app, view information on [using your own player](/stream/viewing-videos/using-the-player-api/).
+If you're using your own player or rendering the video in a mobile app, view information on [using your own player](/stream/viewing-videos/using-the-stream-player/using-the-player-api/).
 
 <!--
 Update to Stream component once available
