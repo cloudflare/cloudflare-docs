@@ -12,7 +12,7 @@ You can install `cloudflared` as a system service on Windows.
 
 ## Configure `cloudflared` as a service
 
-By default, Cloudflare Tunnel expects all of the configuration to exist in the `%USERPROFILE%\.cloudflared\config.yml` [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file). The available options are documented on the [configuration file reference](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/), but at a minimum you must specify the following arguments to run as a service:
+By default, Cloudflare Tunnel expects all of the configuration to exist in the `%USERPROFILE%\.cloudflared\config.yml` [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file). The available options are documented on the [configuration file reference](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/), but at a minimum you must specify the following arguments to run as a service:
 
 | Argument           | Description                                          |
 | ------------------ | ---------------------------------------------------- |
@@ -65,7 +65,7 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
     This will generate a [credentials file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#credentials-file) in `.json` format.
 
-10. [Create a configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#4-create-a-configuration-file) with the following content:
+10. [Create a configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/#4-create-a-configuration-file) with the following content:
 
     ```text
     tunnel: <Tunnel ID>
@@ -124,7 +124,7 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 ## Next steps
 
-You can now [route traffic through your tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#5-start-routing-traffic). If you add IP routes or otherwise change the configuration, restart the service to load the new configuration:
+You can now [route traffic through your tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/#5-start-routing-traffic). If you add IP routes or otherwise change the configuration, restart the service to load the new configuration:
 
 ```bash
 $ sc stop cloudflared

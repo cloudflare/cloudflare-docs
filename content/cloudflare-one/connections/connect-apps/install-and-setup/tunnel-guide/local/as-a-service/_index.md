@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Run as a service
-weight: 6
+weight: 4
 ---
 
 # Run as a service

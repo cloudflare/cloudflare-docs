@@ -11,12 +11,38 @@ The following API call will request the number of visits and edge response bytes
  
 ## API Call
  
-```json
-curl 'https://api.cloudflare.com/client/v4/graphql' \
--H 'Accept: application/json' \
--H 'Authorization: Bearer CLOUDFLARE_API_TOKEN \
---data-binary '{"query":"query RequestsAndDataTransferByHostname($zoneTag: string, $filter:filter) {\n      viewer {\n        zones(filter: {zoneTag: $zoneTag}) {\n          httpRequestsAdaptiveGroups(limit: 10, filter: $filter)\n           {\n            sum {\n              visits\n              edgeResponseBytes\n            }\n            dimensions{\n              datetimeHour\n            }\n          }\n        }\n      }\n    }","variables":{"zoneTag":"CLOUDFLARE_ZONE_ID","filter":{"datetime_geq":"2022-07-20T11:00:00Z","datetime_lt":"2022-07-24T12:00:00Z","clientRequestHTTPHost":"hostname.example.com","requestSource":"eyeball"}}}' \
---compressed | jq .
+```bash
+echo '{ "query":
+  "query RequestsAndDataTransferByHostname($zoneTag: string, $filter:filter) {
+    viewer {
+      zones(filter: {zoneTag: $zoneTag}) {
+        httpRequestsAdaptiveGroups(limit: 10, filter: $filter) {
+          sum {
+            visits
+            edgeResponseBytes
+          }
+          dimensions {
+            datetimeHour
+          }
+        }
+      }
+    }
+  }",
+  "variables": {
+    "zoneTag": "CLOUDFLARE_ZONE_ID",
+    "filter": {
+      "datetime_geq": "2022-07-20T11:00:00Z",
+      "datetime_lt": "2022-07-24T12:00:00Z",
+      "clientRequestHTTPHost": "hostname.example.com",
+      "requestSource": "eyeball"
+    }
+  }
+}' | tr -d '\n' | curl \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer CLOUDFLARE_API_TOKEN' \
+  -s \
+  -d @-  \
+  https://api.cloudflare.com/client/v4/graphql | jq .
 ```
  
 The returned results will be in JSON format (as requested), so piping the output to `jq` will make them easier to read, like in the following example:
