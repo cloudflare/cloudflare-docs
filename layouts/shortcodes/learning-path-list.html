@@ -1,4 +1,5 @@
 {{- $data := .Site.Data.learning_paths -}}
+{{- $numTrails := len $data -}}
 {{ $product_array := slice }}
 {{ $difficulty_array := slice }}
 {{ $role_array := slice }}
@@ -14,6 +15,46 @@
 {{- end -}}
 {{- end -}}
 
-<script>console.log({{$product_array}})</script>
-<script>console.log({{$role_array}})</script>
-<script>console.log({{$difficulty_array}})</script>
+<div class="headerInfo">
+<p class="numTrails">{{$numTrails}} results</p>
+<p>Learning paths guide you through modules and projects so you can get started with Cloudflare as quickly as possible.</p>
+</div>
+
+<div class="selectorDropdowns">
+<div>
+<label for="products">Products</label>
+<select name="products" id="products">
+    {{- range $product_array -}}
+    <option value="{{.}}">{{.}}</option>
+    {{- end -}}
+</select>
+</div>
+
+<div>
+<label for="difficulty">Difficulty</label>
+<select name="difficulty" id="difficulty">
+    {{- range $difficulty_array -}}
+    <option value="{{.}}">{{.}}</option>
+    {{- end -}}
+</select>
+</div>
+
+<div>
+<label for="roles">Roles</label>
+<select name="roles" id="roles">
+    {{- range $role_array -}}
+    <option value="{{.}}">{{.}}</option>
+    {{- end -}}
+</select>
+</div>
+</div>
+
+<div class="pathGrid">
+    {{- range $key, $path := $data -}}
+    <div class="individualPath">
+    <p class="pathHeading">Learning path</p>
+    <a href="{{ $key }}"><h2>{{.title}}</h2></a>
+    <p>{{.description}}</p>
+    </div>
+    {{- end -}}
+</div>

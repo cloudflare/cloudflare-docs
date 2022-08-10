@@ -1,3 +1,74 @@
+.selectorDropdowns {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    border-top: 1px solid #242628;
+    border-bottom: 1px solid #242628;
+    padding: .5em 0 .5em 0;
+}
+
+[theme=dark] .selectorDropdowns {
+    border-top: 1px solid #f3f3f4;
+    border-bottom: 1px solid #f3f3f4;
+}
+
+.selectorDropdowns div {
+    margin-right: 2em;
+    display: flex;
+    flex-direction: column;
+    padding: .75em;
+    justify-content: center;
+}
+
+.selectorDropdowns div label {
+    padding-bottom: .3em;
+}
+
+.selectorDropdowns div select {
+    width: 15em;
+    height: 2.25em;
+}
+
+.pathGrid {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-top: 2em;
+}
+
+.pathGrid a {
+    color: #0055DC;
+}
+
+[theme=dark] .pathGrid a {
+    color: #ff9e40;
+}
+
+.individualPath {
+    border: 2px solid #f3f3f4;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content:end;
+    padding: .5em;
+    max-width: 100%;
+    margin-bottom: 1em;
+    height: 10em;
+}
+
+[theme=dark] .individualPath {
+    border: 2px solid #242628;
+}
+
+.pathHeading {
+    margin-top: .5em;
+    opacity: 70%;
+}
+
+.individualPath a h2 {
+    margin-top: 0em;
+}
+
 .background {
     background:rgba(var(--gray-6-rgb));
     margin-top: 0px;
@@ -35,7 +106,7 @@
 .background a {
     color: #0055DC;
     font-size: 1.1em;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 [theme=dark] .background a {
