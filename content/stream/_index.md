@@ -144,5 +144,5 @@ https://github.com/cloudflare/cloudflare-docs-engine/issues/281
 
 *   [Securing your Stream](/stream/viewing-videos/securing-your-stream/)
 *   [Displaying thumbnails to your video](/stream/viewing-videos/securing-your-stream/)
-*   [Programmatically controlling the video player](/stream/viewing-videos/using-stream-player/using-the-player-api/)
+*   [Programmatically controlling the video player](/stream/viewing-videos/using-the-stream-player/using-the-player-api/)
 *   [Uploading without a API token](/stream/uploading-videos/direct-creator-uploads/)
