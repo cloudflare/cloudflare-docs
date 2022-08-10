@@ -27,7 +27,7 @@ After the first scan, CASB will automatically scan your application on a frequen
 
 ## View security findings
 
-In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), navigate to **CASB** > **Findings**. You will see a list of all security issues detected.
+In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), navigate to **CASB** > **Findings**. You will see a list of all security issues detected and steps for resolving each issue.
 
 ### Severity levels
 
