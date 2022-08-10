@@ -12,8 +12,9 @@
                 "description": "Concepts explain the basic ideas behind how Cloudflare works and how you can work with Cloudflare.",
                 "pages": [
                     {
+                    "external_link": true,
                     "url_path": "https://www.cloudflare.com/learning/cdn/what-is-a-cdn/",
-                    "external_link_title": "What is a Content Delivery Network (CDN)"
+                    "link_title": "What is a Content Delivery Network (CDN)"
                     },
                     {
                     "url_path": "/fundamentals/get-started/concepts/what-is-cloudflare/"
@@ -28,7 +29,8 @@
                     "url_path": "/fundamentals/get-started/concepts/cloudflare-challenges/"
                     },
                     {
-                    "url_path": "/fundamentals/get-started/concepts/network-layers/"
+                    "url_path": "/fundamentals/get-started/concepts/network-layers/",
+                    "link_title": "How Cloudflare protects different layers of your network"
                     }
                 ]
             },

@@ -24,6 +24,7 @@
 <div>
 <label for="products">Products</label>
 <select name="products" id="products">
+    <option value="all">Select...</option>
     {{- range $product_array -}}
     <option value="{{.}}">{{.}}</option>
     {{- end -}}
@@ -33,6 +34,7 @@
 <div>
 <label for="difficulty">Difficulty</label>
 <select name="difficulty" id="difficulty">
+    <option value="all">Select...</option>
     {{- range $difficulty_array -}}
     <option value="{{.}}">{{.}}</option>
     {{- end -}}
@@ -42,6 +44,7 @@
 <div>
 <label for="roles">Roles</label>
 <select name="roles" id="roles">
+    <option value="all">Select...</option>
     {{- range $role_array -}}
     <option value="{{.}}">{{.}}</option>
     {{- end -}}
