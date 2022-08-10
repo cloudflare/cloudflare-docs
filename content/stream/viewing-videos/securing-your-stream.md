@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Secure your Stream
-weight: 4
+weight: 3
 ---
 
 # Secure your Stream
