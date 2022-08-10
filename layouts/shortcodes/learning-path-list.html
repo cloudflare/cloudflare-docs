@@ -23,7 +23,7 @@
 <div class="selectorDropdowns">
 <div>
 <label for="products">Products</label>
-<select name="products" id="products">
+<select name="data-products" id="products_filter" onchange="filterResults(this)">
     <option value="all">Select...</option>
     {{- range $product_array -}}
     <option value="{{.}}">{{.}}</option>
@@ -33,7 +33,7 @@
 
 <div>
 <label for="difficulty">Difficulty</label>
-<select name="difficulty" id="difficulty">
+<select name="data-difficulty" id="difficulty_filter" onchange="filterResults(this)">
     <option value="all">Select...</option>
     {{- range $difficulty_array -}}
     <option value="{{.}}">{{.}}</option>
@@ -43,7 +43,7 @@
 
 <div>
 <label for="roles">Roles</label>
-<select name="roles" id="roles">
+<select name="data-roles" id="roles_filter" onchange="filterResults(this)">
     <option value="all">Select...</option>
     {{- range $role_array -}}
     <option value="{{.}}">{{.}}</option>
@@ -52,9 +52,35 @@
 </div>
 </div>
 
+<script>
+    function filterResults(selectedOption) {
+        
+        let eachPath = document.getElementsByClassName("individualPath")
+
+        for (const item of eachPath) {
+            if(selectedOption.value === "all") {
+                if (item.hasAttribute('is-visually-hidden')) {
+                    item.toggleAttribute('is-visually-hidden')
+                }
+            }
+
+            else if (!item.getAttribute(selectedOption.name).includes(selectedOption.value)) {
+                item.setAttribute('is-visually-hidden', '');
+            }
+            else {
+                if (item.hasAttribute('is-visually-hidden')) {
+                    item.toggleAttribute('is-visually-hidden')
+                }
+            }
+        }
+    }
+</script>
+
 <div class="pathGrid">
     {{- range $key, $path := $data -}}
-    <div class="individualPath">
+    {{- $role_list := delimit .roles ", " -}}
+    {{- $product_list := delimit .products ", " -}}
+    <div class="individualPath" data-products="{{ $product_list }}" data-roles="{{ $role_list }}" data-difficulty="{{.difficulty}}">
     <p class="pathHeading">Learning path</p>
     <a href="{{ $key }}"><h2>{{.title}}</h2></a>
     <p>{{.description}}</p>

@@ -267,3 +267,52 @@ export function dropdowns() {
     }
   });
 }
+
+
+/* export function filterResults(this) {
+
+ /*  const filters = document.getElementsByName("selectorDropdowns");
+  
+  if(filters){
+    let filter_ids = ["products_filter", "roles_filter", "difficulty_filter"]
+    
+    for (const filter of filter_ids) {
+      const filterElement = document.getElementById(filter);
+      filterElement.addEventListener("change", function (){
+        
+        
+        console.log(this.value);
+        
+      });
+    } */
+    
+
+    
+    
+    
+  
+
+
+
+  /* 
+  
+    const result = document.querySelector("#search div"); 
+    result.style.display = "block"; 
+    if (searchBox.value.length > 0) { 
+      const results = index.search(searchBox.value); 
+      result.innerHTML = results
+        .slice(0, MAX_SEARCH_RESULTS)
+        .map(x => `<a href="${x.item.url}"> 
+          <img src="${x.item.cover || ""}" 
+             width="40" height="40"> 
+          <h3>${x.item.title}</h3> 
+          <span>${x.item.content.substr(0,40)}</span> 
+        </a>`)
+        .join(""); 
+    } else { 
+      result.innerHTML = ''; 
+    } 
+  }, 
+  ... 
+}
+ */

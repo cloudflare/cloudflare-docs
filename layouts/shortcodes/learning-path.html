@@ -26,13 +26,13 @@
     <ul>
     {{- range .pages -}}
     {{ if isset . "external_link" }}
-        <li><a href="{{.url_path}}">{{.link_title}}  {{- partialCached "external.icon" . -}}</a></li>
+        <li><a href="{{.url_path}}" target="_blank">{{.link_title}}  {{- partialCached "external.icon" . -}}</a></li>
     {{ else if isset . "link_title"}}
-        <li><a href="{{.url_path}}">{{.link_title}}</a></li>
+        <li><a href="{{.url_path}}" target="_blank">{{.link_title}}</a></li>
     {{ else }}
     {{ with $.Site.GetPage (replaceRE "/$" "" .url_path) }}
     
-    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+    <li><a href="{{ .RelPermalink }}" target="_blank">{{ .Title }}</a></li>
     {{- end -}}
     {{- end -}}
     {{- end -}}
