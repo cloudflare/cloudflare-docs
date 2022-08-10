@@ -5,4 +5,5 @@ import * as timeago from './timeago';
   timeago.init();
   events.focus();
   events.mobile();
+  events.filterList();
 })();

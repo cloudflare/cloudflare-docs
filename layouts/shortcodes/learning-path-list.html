@@ -63,7 +63,6 @@
                     item.toggleAttribute('is-visually-hidden')
                 }
             }
-
             else if (!item.getAttribute(selectedOption.name).includes(selectedOption.value)) {
                 item.setAttribute('is-visually-hidden', '');
             }
@@ -73,17 +72,19 @@
                 }
             }
         }
+
+        let paths = document.getElementsByClassName("individualPath")
+        let count = 0
+
+        for (const item of paths) {
+            if (!item.hasAttribute('is-visually-hidden')) {
+                count += 1;
+            }
+        }
+
+        console.log(count)
     }
 </script>
 
-<div class="pathGrid">
-    {{- range $key, $path := $data -}}
-    {{- $role_list := delimit .roles ", " -}}
-    {{- $product_list := delimit .products ", " -}}
-    <div class="individualPath" data-products="{{ $product_list }}" data-roles="{{ $role_list }}" data-difficulty="{{.difficulty}}">
-    <p class="pathHeading">Learning path</p>
-    <a href="{{ $key }}"><h2>{{.title}}</h2></a>
-    <p>{{.description}}</p>
-    </div>
-    {{- end -}}
+<div class="pathGrid" id="pathGrid">
 </div>

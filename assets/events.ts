@@ -1,3 +1,5 @@
+ import * as learningPath from "./learning_paths.json"
+
 let SEARCH_ID = /^(Docs|Site)Search/;
 let SEARCH_INPUT: HTMLElement;
 
@@ -267,6 +269,30 @@ export function dropdowns() {
     }
   });
 }
+
+export function filterList() {
+  if (window.location.pathname === "/learning-paths/" || window.location.pathname === "/learning-paths") {
+    
+    const pathGrid = document.getElementById("pathGrid"); 
+    window.onload = (event) => {
+      for (let key in learningPath) {
+        if (key !== 'default') {
+        pathGrid.insertAdjacentHTML("beforeend", 
+        `<div class="individualPath">
+         <p class="pathHeading">Learning path</p>
+         <a href="${ learningPath[key] }"><h2>${ learningPath[key]["title"] }</h2></a>
+         <p>${ learningPath[key]["description"] }</p>
+         </div>`
+         )
+      }
+    }
+    }
+
+    // add filtering function
+}
+} 
+
+
 
 
 /* export function filterResults(this) {
