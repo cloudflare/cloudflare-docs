@@ -6,4 +6,4 @@ layout: home
 
 # Learning paths
 
-{{<directory-listing>}}
+{{<learning-path-list>}}

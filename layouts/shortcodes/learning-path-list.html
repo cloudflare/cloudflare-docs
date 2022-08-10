@@ -1,0 +1,19 @@
+{{- $data := .Site.Data.learning_paths -}}
+{{ $product_array := slice }}
+{{ $difficulty_array := slice }}
+{{ $role_array := slice }}
+{{- range $data -}}
+{{ with .products }}
+{{- $product_array = union $product_array . -}}
+{{- end -}}
+{{ with .roles }}
+{{- $role_array = union $role_array . -}}
+{{- end -}}
+{{ with .difficulty }}
+{{- $difficulty_array = $difficulty_array | append . -}}
+{{- end -}}
+{{- end -}}
+
+<script>console.log({{$product_array}})</script>
+<script>console.log({{$role_array}})</script>
+<script>console.log({{$difficulty_array}})</script>
