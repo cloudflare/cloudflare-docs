@@ -55,7 +55,7 @@ $ curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostn
     -H "Content-Type: application/json"
 ```
 
-Then make an API call such as the example below, specifying `"early_hints": "on"`:
+5. Then make an API call such as the example below, specifying `"early_hints": "on"`:
 
 ```json
 $ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{id}" \
