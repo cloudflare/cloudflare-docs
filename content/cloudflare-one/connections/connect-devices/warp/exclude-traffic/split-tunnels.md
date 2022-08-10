@@ -52,9 +52,9 @@ The domain will appear in the list of Split Tunnel entries.
 
 Valid domains include:
 
-- `example.com`
-- `example.example.com`
-- `*.example.com`
+- `example.com` which will only split tunnel on an exact match of `example.com`, but not a subdomain such as `www.example.com`
+- `example.example.com` which will only only split tunnel on an exact match of `example.example.com` but not `example.com` or a subdomain such as `www.example.example.com`
+- `*.example.com` which will only split tunnel on a subdomain of `example.com` (ex. `www.example.com`) but not on `example.com`
 
 {{<Aside type="warning" header="Using domains in Split Tunnels">}}
 
