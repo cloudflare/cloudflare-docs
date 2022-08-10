@@ -1,6 +1,6 @@
 ---
 title: Android
-weight: 6
+weight: 3
 ---
 
 # Android

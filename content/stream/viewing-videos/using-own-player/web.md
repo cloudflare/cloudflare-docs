@@ -1,6 +1,6 @@
 ---
-title: Web player
-weight: 6
+title: Web
+weight: 1
 ---
 
-# Web player
+# Web
