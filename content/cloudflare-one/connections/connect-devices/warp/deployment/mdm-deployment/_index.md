@@ -28,7 +28,7 @@ The WARP Client for Windows allows for an automated install via tools like Intun
 To install the WARP client, run the following command:
 
 ```txt
-Cloudflare_WARP_Release-x64.msi /quiet ORGANIZATION="exampleorg" SERVICE_MODE="warp" SUPPORT_URL="http://support.example.com"
+msiexec /i "Cloudflare_WARP_Release-x64.msi" /qn ORGANIZATION="exampleorg" SUPPORT_URL="http://support.example.com"
 ```
 
 Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument.
