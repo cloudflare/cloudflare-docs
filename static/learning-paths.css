@@ -5,11 +5,16 @@
 
 .selectorDropdowns {
     display: flex;
-    flex-direction: row;
     justify-content: flex-start;
     border-top: 1px solid #242628;
     border-bottom: 1px solid #242628;
     padding: .5em 0 .5em 0;
+}
+
+@media (max-width:950px) {
+    .selectorDropdowns {
+        flex-direction: column;
+    }
 }
 
 [theme=dark] .selectorDropdowns {
