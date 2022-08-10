@@ -69,12 +69,11 @@ Domain-based split tunneling works alongside DNS by dynamically excluding or inc
 
 ### Cloudflare Zero Trust domains
 
-Many Cloudflare Zero Trust services rely on traffic going through WARP. If you are using Split Tunnels in Include mode, you will need to manually add the following domains in order for these features to function.
+Many Cloudflare Zero Trust services rely on traffic going through WARP, such as [device posture checks](/cloudflare-one/identity/devices/) and [WARP sesssion durations](/cloudflare-one/policies/filtering/enforce-sessions/). If you are using Split Tunnels in Include mode, you will need to manually add the following domains in order for these features to function:
 
-| Feature | Domains to include |
-| --------| ------------------ |
-| [Device posture checks](/cloudflare-one/identity/devices/)| `<your-team-name>.cloudflareaccess.com`, IdP used to authenticate into Access, and the application protected by Access |
-| [WARP session duration](/cloudflare-one/policies/filtering/enforce-sessions/) | `<your-team-name>.cloudflareaccess.com>` and the HTTP or Network resource with the session re-authentication policy |
+- The IdP used to authenticate to Cloudflare Zero Trust
+- `<your-team-name>.cloudflareaccess.com`
+- The application protected by the Access or Gateway policy
 
 ## Important platform differences
 
