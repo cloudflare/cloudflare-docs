@@ -23,7 +23,7 @@
 <div class="selectorDropdowns">
 <div>
 <label for="products">Products</label>
-<select name="data-products" id="products_filter" onchange="filterResults(this)">
+<select class="selectorFilter" name="data-products" id="products">
     <option value="all">Select...</option>
     {{- range $product_array -}}
     <option value="{{.}}">{{.}}</option>
@@ -33,7 +33,7 @@
 
 <div>
 <label for="difficulty">Difficulty</label>
-<select name="data-difficulty" id="difficulty_filter" onchange="filterResults(this)">
+<select class="selectorFilter" name="data-difficulty" id="difficulty">
     <option value="all">Select...</option>
     {{- range $difficulty_array -}}
     <option value="{{.}}">{{.}}</option>
@@ -43,7 +43,7 @@
 
 <div>
 <label for="roles">Roles</label>
-<select name="data-roles" id="roles_filter" onchange="filterResults(this)">
+<select class="selectorFilter" name="data-roles" id="roles">
     <option value="all">Select...</option>
     {{- range $role_array -}}
     <option value="{{.}}">{{.}}</option>
@@ -51,40 +51,6 @@
 </select>
 </div>
 </div>
-
-<script>
-    function filterResults(selectedOption) {
-        
-        let eachPath = document.getElementsByClassName("individualPath")
-
-        for (const item of eachPath) {
-            if(selectedOption.value === "all") {
-                if (item.hasAttribute('is-visually-hidden')) {
-                    item.toggleAttribute('is-visually-hidden')
-                }
-            }
-            else if (!item.getAttribute(selectedOption.name).includes(selectedOption.value)) {
-                item.setAttribute('is-visually-hidden', '');
-            }
-            else {
-                if (item.hasAttribute('is-visually-hidden')) {
-                    item.toggleAttribute('is-visually-hidden')
-                }
-            }
-        }
-
-        let paths = document.getElementsByClassName("individualPath")
-        let count = 0
-
-        for (const item of paths) {
-            if (!item.hasAttribute('is-visually-hidden')) {
-                count += 1;
-            }
-        }
-
-        console.log(count)
-    }
-</script>
 
 <div class="pathGrid" id="pathGrid">
 </div>

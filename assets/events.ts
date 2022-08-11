@@ -1,5 +1,3 @@
- import * as learningPath from "./learning_paths.json"
-
 let SEARCH_ID = /^(Docs|Site)Search/;
 let SEARCH_INPUT: HTMLElement;
 
