@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Tunnel permissions
-weight: 5
+weight: 3
 ---
 
 # Tunnel permissions

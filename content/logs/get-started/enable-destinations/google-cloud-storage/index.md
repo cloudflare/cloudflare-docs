@@ -62,3 +62,7 @@ To enable Logpush to GCS:
 Logpush will not work if there is a retention policy on your bucket because this policy prevents overwrites. If you are using the policy to enforce deletion, you can use a lifecycle rule instead. Refer to [object lifecycle management from GCS](https://cloud.google.com/storage/docs/lifecycle).
 
 {{</Aside>}}
+
+{{<Aside type="note" header="Note">}}
+To analyze your Cloudflare Logs data using the Google Cloud Platform (GCP), follow the steps in the [Google Cloud Analytics integration page](/fundamentals/data-products/analytics-integrations/google-cloud/).
+{{</Aside>}}

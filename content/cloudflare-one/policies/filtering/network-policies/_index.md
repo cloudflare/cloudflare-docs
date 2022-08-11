@@ -181,7 +181,7 @@ The IP address of the user making the request.
 
 ### Source Port
 
-The IP address of the user making the request.
+The source port of the user making the request.
 
 | UI name     | API example              |
 | ----------- | ------------------------ |
