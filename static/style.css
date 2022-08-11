@@ -5250,7 +5250,7 @@ pre {
 /* 'Features' section */
 .DocsMarkdown--feature-group {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: minmax(0, 3fr) 1fr;
   gap: 1em;
   align-items: center;
 }
@@ -5258,6 +5258,7 @@ pre {
 .DocsMarkdown--feature-button {
   display: flex;
   justify-content: flex-end;
+  white-space: nowrap;
 }
 
 @media (max-width: 768px) {
