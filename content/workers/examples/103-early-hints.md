@@ -1,11 +1,11 @@
 ---
 type: example
-summary: Push static assets to a client's browser without waiting for HTML to render.
+summary: Allow a client to request static assets while waiting for the HTML response.
 tags:
   - Middleware
   - Headers
 pcx_content_type: configuration
-title: HTTP2 server push
+title: 103 Early Hints
 weight: 1001
 layout: example
 ---
@@ -17,11 +17,11 @@ const HTML = `
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Server push test</title>
-    <link rel="stylesheet" href="http2_push/h2p/test.css">
+    <title>Early Hints test</title>
+    <link rel="stylesheet" href="/test.css">
 </head>
 <body>
-    <h1>Server push test page</h1>
+    <h1>Early Hints test page</h1>
 </body>
 </html>
 `;
@@ -35,11 +35,11 @@ async function handleRequest(request) {
       },
     });
   } else {
-    // Serve raw HTML using HTTP/2 for the CSS file
+    // Serve raw HTML using Early Hints for the CSS file
     return new Response(HTML, {
       headers: {
         'content-type': 'text/html',
-        'Link': '</http2_push/h2p/test.css>; rel=preload; as=style',
+        'Link': '</test.css>; rel=preload; as=style',
       },
     });
   }
