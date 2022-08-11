@@ -49,3 +49,9 @@ addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
 });
 ```
+
+{{<Aside type="note">}}
+
+At the time of writing, 103 Early Hints are only supported in Chrome 103 or later. To view up-to-date info on which browsers support Early Hints, check [here](https://caniuse.com/mdn-http_status_103).
+
+{{</Aside>}}
