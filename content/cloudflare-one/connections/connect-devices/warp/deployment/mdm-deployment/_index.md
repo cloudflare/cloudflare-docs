@@ -7,7 +7,7 @@ weight: 1
 
 # Managed deployment
 
-Organizations can deploy WARP automatically to their fleet of devices in a single operation. This can be done using [mobility management solutions](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/partners/) like Intune or JAMF, or by executing an `.msi` file on desktop machines.
+Organizations can deploy WARP automatically to their fleet of devices in a single operation. The WARP client is compatible with the vast majority of managed deployment workflows, including [mobility management solutions](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/partners/) such as Intune or JAMF, or by executing an `.msi` file on desktop machines.
 
 This page provides generic instructions for an automated deployment. If you want to deploy the WARP client manually, refer to the [instructions for manual deployment](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
 
