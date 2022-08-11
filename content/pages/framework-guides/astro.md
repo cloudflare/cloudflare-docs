@@ -21,7 +21,7 @@ Create a new project directory (for example, `astro-site`) and then initiate Ast
 
 ```sh
 $ mkdir astro-site && cd astro-site
-$ npm init astro
+$ npm create astro@latest
 ```
 
 During `init`, Astro will ask you which project type you would like to set up. Your answers will not affect the rest of this tutorial. Select an answer ideal for your project.
@@ -44,6 +44,63 @@ $ git commit -m "initial commit"
 
 # Send commit to new GitHub repo
 $ git push -u origin main
+```
+
+## Using Pages Functions
+
+[Pages Functions](/pages/platform/functions/) enable you to run server-side code to add dynamic functionality without running a dedicated server.
+
+To get started, create a `/functions` directory at the root of your project. Writing your Functions files in this directory automatically generates a Worker with custom functionality at the predesignated routes. To learn more about writing Functions, see the [Pages Functions documentation](/pages/platform/functions/).
+
+### Astro Configuration
+
+You can also deploy an Astro SSR site to Cloudflare Pages using the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme).
+
+To enable an SSR site and deploy to Cloudflare Pages, you will need to:
+
+1. Add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) to your project's `package.json` by running:
+
+```sh
+$ npm install --save-dev @astrojs/cloudflare
+```
+
+2. Add the following to your `astro.config.mjs` file:
+
+```js
+--- 
+filename: astro.config.mjs
+highlight:[2,5,6]
+---
+import { defineConfig } from 'astro/config';
+import cloudflare from '@astrojs/cloudflare';
+export default defineConfig({
+  output: 'server',
+  adapter: cloudflare()
+});
+```
+
+### Modes
+
+There are currently two modes supported when using Pages Functions with the [`@astrojs/cloudflare`](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) adapter. 
+
+1. **Advanced** mode: This mode is used when you want to run your function in `advanced` mode which picks up the `_worker.js` in `dist`, or a directory mode where pages will compile the worker out of a functions folder in the project root.  
+
+{{<Aside type="note">}}
+
+If no mode is set, the default  is `"advanced"`
+
+{{</Aside>}}
+
+2. **directory** mode: This mode is used when you want to run your function in `directory` mode, which means the adapter will compile the client side part of you app the same way, but it will move the worker script into a `functions` folder in the project root. The adaptor will only ever place a `[[path]].js` in that folder, allowing you to add additional plugins and pages middleware which can be checked into version control.
+
+```ts 
+---
+filename: astro.config.mjs
+highlight:[2]
+---
+export default defineConfig({
+  adapter: cloudflare({ mode: "directory" }),
+});
 ```
 
 ## Deploying with Cloudflare Pages
