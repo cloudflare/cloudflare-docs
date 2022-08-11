@@ -270,75 +270,28 @@ export function dropdowns() {
   });
 }
 
-export function filterList() {
-  if (window.location.pathname === "/learning-paths/" || window.location.pathname === "/learning-paths") {
-    
-    const pathGrid = document.getElementById("pathGrid"); 
-    window.onload = (event) => {
-      for (let key in learningPath) {
-        if (key !== 'default') {
-        pathGrid.insertAdjacentHTML("beforeend", 
-        `<div class="individualPath">
-         <p class="pathHeading">Learning path</p>
-         <a href="${ learningPath[key] }"><h2>${ learningPath[key]["title"] }</h2></a>
-         <p>${ learningPath[key]["description"] }</p>
-         </div>`
-         )
-      }
-    }
-    }
+export function toggleSidebar() {
 
-    // add filtering function
-}
-} 
-
-
-
-
-/* export function filterResults(this) {
-
- /*  const filters = document.getElementsByName("selectorDropdowns");
-  
-  if(filters){
-    let filter_ids = ["products_filter", "roles_filter", "difficulty_filter"]
-    
-    for (const filter of filter_ids) {
-      const filterElement = document.getElementById(filter);
-      filterElement.addEventListener("change", function (){
-        
-        
-        console.log(this.value);
-        
+  const toggleButton = document.getElementsByClassName("toggleSidebar");
+  if(toggleButton){
+    let div = document.querySelector(".DocsSidebar--sections .toggleSidebar")
+    let btn = div.querySelector("button");
+    btn.addEventListener("click", () => {
+      let classToggleList = ['.DocsSidebar', '.DocsToolbar', '.DocsContent', '.DocsMarkdown', '.DocsSidebar--sections .toggleSidebar'];
+      
+      classToggleList.forEach(function(querySelector){
+        let item = document.querySelector(querySelector);
+        item.classList.toggle('collapsed');
       });
-    } */
-    
 
-    
-    
-    
-  
+      let attr = 'is-visually-hidden';
+      let attrToggleList = ['.DocsSidebar--nav-item', '.DocsSidebar--section-more', '.DocsSidebar--docs-title-section a div span span', '.DocsSidebar--header-section a div span'];
 
-
-
-  /* 
-  
-    const result = document.querySelector("#search div"); 
-    result.style.display = "block"; 
-    if (searchBox.value.length > 0) { 
-      const results = index.search(searchBox.value); 
-      result.innerHTML = results
-        .slice(0, MAX_SEARCH_RESULTS)
-        .map(x => `<a href="${x.item.url}"> 
-          <img src="${x.item.cover || ""}" 
-             width="40" height="40"> 
-          <h3>${x.item.title}</h3> 
-          <span>${x.item.content.substr(0,40)}</span> 
-        </a>`)
-        .join(""); 
-    } else { 
-      result.innerHTML = ''; 
-    } 
-  }, 
-  ... 
+      attrToggleList.forEach(function(querySelector){
+        let item = document.querySelector(querySelector);
+        let isHidden = item.hasAttribute(attr);
+        item.toggleAttribute(attr, !isHidden);
+      });
+  });
+  }
 }
- */
