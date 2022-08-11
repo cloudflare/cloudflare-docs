@@ -23,7 +23,7 @@ Free, Pro, and Business users can enable Argo in their [Cloudflare dashboard](ht
 
 ## Features
 
-{{<feature header="Analytics" href="analytics">}}
+{{<feature header="Analytics" href="/analytics/">}}
 
 Argo Smart Routing includes comprehensive analytics to compare performance improvements with and without Argo enabled.
 
