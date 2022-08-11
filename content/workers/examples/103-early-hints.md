@@ -9,6 +9,13 @@ title: 103 Early Hints
 weight: 1001
 layout: example
 ---
+To ensure Early Hints are enabled, go to the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/:zone/speed/optimization) under Your Domain -> Speed -> Optimization and enable the Early Hints toggle.
+
+{{<Aside type="note">}}
+
+At the time of writing, 103 Early Hints are only supported in Chrome 103 or later. To view up-to-date info on which browsers support Early Hints, check [here](https://caniuse.com/mdn-http_status_103).
+
+{{</Aside>}}
 
 ```js
 const CSS = `body { color: red; }`;
@@ -49,9 +56,3 @@ addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
 });
 ```
-
-{{<Aside type="note">}}
-
-At the time of writing, 103 Early Hints are only supported in Chrome 103 or later. To view up-to-date info on which browsers support Early Hints, check [here](https://caniuse.com/mdn-http_status_103).
-
-{{</Aside>}}
