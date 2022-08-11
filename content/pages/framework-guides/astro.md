@@ -69,6 +69,7 @@ $ npm install --save-dev @astrojs/cloudflare
 ```js
 --- 
 filename: astro.config.mjs
+highlight: [2,5]
 ---
 import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
@@ -92,9 +93,11 @@ If no mode is set, the default  is `"advanced"`
 
 2. **directory** mode: This mode is used when you want to run your function in `directory` mode, which means the adapter will compile the client side part of you app the same way, but it will move the worker script into a `functions` folder in the project root. The adaptor will only ever place a `[[path]].js` in that folder, allowing you to add additional plugins and pages middleware which can be checked into version control.
 
+
 ```js
 --- 
 filename: astro.config.mjs
+highlight: [2]
 ---
 export default defineConfig({
   adapter: cloudflare({ mode: "directory" }),
