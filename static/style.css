@@ -2357,10 +2357,10 @@ html[is-docs-page] body {
   width: var(--docs-sidebar-width);
   z-index: 2;
   transition: width 150ms ease-in-out;
-    transition-property: width;
-    transition-duration: 150ms;
-    transition-timing-function: ease-in-out;
-    transition-delay: 0s;
+  transition-property: width;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s;
 }
 
 .DocsSidebar [is-visually-hidden] {
@@ -2371,19 +2371,20 @@ html[is-docs-page] body {
 }
 
 .toggleSidebar {
-  width: 2em; 
+  width: 2em;
   height: 2em;
 }
 
-[theme=dark] .toggleSidebar {
-  filter: invert(100%) sepia(4%) saturate(159%) hue-rotate(297deg) brightness(116%) contrast(100%);
+[theme="dark"] .toggleSidebar {
+  filter: invert(100%) sepia(4%) saturate(159%) hue-rotate(297deg)
+    brightness(116%) contrast(100%);
 }
 
 .toggleSidebar button {
-  border:none;
-  background-color:transparent;
-  outline:none;
-  cursor:pointer;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
 }
 
 @media (max-width: 769px) {
@@ -2393,44 +2394,43 @@ html[is-docs-page] body {
 }
 
 .toggleSidebar.collapsed button svg {
-  transform:rotate(180deg);
+  transform: rotate(180deg);
 }
 
 @media (min-width: 769px) {
+  .DocsSidebar.collapsed {
+    width: 4.5em;
+  }
 
-.DocsSidebar.collapsed {
-  width: 4.5em;
-}
+  .DocsToolbar.collapsed {
+    left: 4.5em;
+  }
 
-.DocsToolbar.collapsed {
-  left: 4.5em;
-}
+  .DocsContent.collapsed {
+    padding-left: 0em;
+    padding-right: 0em;
+    margin-left: -10em;
+  }
 
-.DocsContent.collapsed {
-  padding-left: 0em;
-  padding-right: 0em;
-  margin-left: -10em;
-}
+  .DocsMarkdown.collapsed {
+    padding-right: 0em;
+  }
 
-.DocsMarkdown.collapsed {
-  padding-right: 0em;
-}
-
-.DocsSidebar.collapsed .DocsSidebar--nav-item {
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  padding: 0;
-  border: 0;
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
-  -webkit-clip-path: inset(0 0 99.9% 99.9%);
-  clip-path: inset(0 0 99.9% 99.9%);
-  overflow: hidden;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
+  .DocsSidebar.collapsed .DocsSidebar--nav-item {
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    padding: 0;
+    border: 0;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+    -webkit-clip-path: inset(0 0 99.9% 99.9%);
+    clip-path: inset(0 0 99.9% 99.9%);
+    overflow: hidden;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
 }
 
 [theme="dark"] .DocsSidebar {
@@ -3226,10 +3226,10 @@ html[is-docs-page] body {
   padding: 2.6rem var(--docs-content-gap) 3.5rem;
   min-height: calc(100vh - 12.5em);
   transition: padding 150ms ease-in-out;
-    transition-property: padding;
-    transition-duration: 150ms;
-    transition-timing-function: ease-in-out;
-    transition-delay: 0s;
+  transition-property: padding;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s;
 }
 
 .DocsContent[page-type="document"] {
@@ -4203,10 +4203,10 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   height: var(--docs-header-height);
   z-index: 2;
   transition: left 150ms ease-in-out;
-    transition-property: left;
-    transition-duration: 150ms;
-    transition-timing-function: ease-in-out;
-    transition-delay: 0s;
+  transition-property: left;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s;
 }
 
 .DocsToolbar--search {
