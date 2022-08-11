@@ -27,34 +27,36 @@ Domains included in your Split Tunnel configuration are still resolved by Gatewa
 
 To set up Split Tunnels:
 
-1. On the Zero Trust dashboard, navigate to **Settings** > **Network**.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Network**.
 
-2. Under **Split Tunnels**, select the mode you want to choose.
+2. Under **Split Tunnels**, choose a Split Tunnel mode:
 
     - **(default) Exclude IPs and domains** — All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
     - **Include IPs and Domains** — Only traffic destined to the IP address or domains you specify will be sent to Cloudflare Gateway.
 
-3. If you want to add or remove items from your Split Tunnels configuration, click **Manage**.
+3. If you want to add or remove items from your Split Tunnels configuration, select **Manage**.
 
     On this page, you will find a list of the IPs and domains Cloudflare Zero Trust excludes or includes, depending on the mode you have selected.
 
 ## Add an IP address
 
-On the Split Tunnels page, choose **IP Address** from the list of selectors and enter the IP address or CIDR you want to exclude or include. Next, add an optional description in the relevant field. Then, click **Save destination**.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Network**.
+2. Scroll down to **Split Tunnels** and select **Manage**.
+3. In the **Selector** dropdown, select _IP Address_.
+4. Enter the IP address or CIDR you want to exclude or include.
+5. Enter an optional description and then select **Save destination**.
 
 The IP address will appear in the list of Split Tunnel entries.
 
 ## Add a domain
 
-On the Split Tunnels page, choose **Domain** from the list of selectors and enter the domain you want to exclude or include. Next, add an optional description in the relevant field. Then, click **Save destination**.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Network**.
+2. Scroll down to **Split Tunnels** and select **Manage**.
+3. In the **Selector** dropdown, select _Domain_.
+4. Enter a [valid domain](#valid-domains) to exclude or include.
+5. Enter an optional description and then select **Save destination**.
 
 The domain will appear in the list of Split Tunnel entries.
-
-Valid domains include:
-
-- `example.com`
-- `example.example.com`
-- `*.example.com`
 
 {{<Aside type="warning" header="Using domains in Split Tunnels">}}
 
@@ -67,14 +69,23 @@ Domain-based split tunneling works alongside DNS by dynamically excluding or inc
 
 {{</Aside>}}
 
+### Valid domains
+
+{{<table-wrap>}}
+| Split tunnel domain | Matches        | Does not match |
+| ------------------- | -------------- | --------------- |
+| `example.com`       | exact match of `example.com` | subdomains such as `www.example.com` |
+| `example.example.com` | exact match of `example.example.com` | `example.com` or subdomains such as `www.example.example.com` |
+| `*.example.com`    | subdomains such as `www.example.com` | `example.com` |
+{{</table-wrap>}}
+
 ### Cloudflare Zero Trust domains
 
-Many Cloudflare Zero Trust services rely on traffic going through WARP. If you are using Split Tunnels in Include mode, you will need to manually add the following domains in order for these features to function.
+Many Cloudflare Zero Trust services rely on traffic going through WARP, such as [device posture checks](/cloudflare-one/identity/devices/) and [WARP sesssion durations](/cloudflare-one/policies/filtering/enforce-sessions/). If you are using Split Tunnels in Include mode, you will need to manually add the following domains in order for these features to function:
 
-| Feature | Domains to include |
-| --------| ------------------ |
-| [Device posture checks](/cloudflare-one/identity/devices/)| `<your-team-name>.cloudflareaccess.com`, IdP used to authenticate into Access, and the application protected by Access |
-| [WARP session duration](/cloudflare-one/policies/filtering/enforce-sessions/) | `<your-team-name>.cloudflareaccess.com>` and the HTTP or Network resource with the session re-authentication policy |
+- The IdP used to authenticate to Cloudflare Zero Trust
+- `<your-team-name>.cloudflareaccess.com`
+- The application protected by the Access or Gateway policy
 
 ## Important platform differences
 

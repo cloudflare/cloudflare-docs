@@ -336,7 +336,7 @@
 /magic-transit/set-up/provide-configuration-data/ /magic-transit/get-started/configure-tunnels/ 301
 /magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities/ /magic-transit/get-started/configure-tunnels/assign-tunnel-route-priorities/ 301
 /magic-transit/set-up/provide-configuration-data/map-routes-for-prefixes-smaller-than-24/ /magic-transit/get-started/configure-tunnels/assign-tunnel-route-priorities/#map-route-prefixes-smaller-than-24 301
-/magic-transit/set-up/provide-configuration-data/specify-gre-tunnel-endpoints/ /magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/ 301
+/magic-transit/set-up/provide-configuration-data/specify-gre-tunnel-endpoints/ /magic-transit/how-to/configure-tunnels/ 301
 /magic-transit/set-up/provide-configuration-data/specify-ip-addresses-for-endpoint-health-checks/ /magic-transit/get-started/configure-tunnels/specify-ip-addresses-for-endpoint-health-checks/ 301
 /magic-transit/set-up/provide-configuration-data/specify-prefixes-to-advertise/ /magic-transit/get-started/configure-tunnels/specify-prefixes-to-advertise/ 301
 /magic-transit/set-up/requirements/ /magic-transit/get-started/requirements/ 301
@@ -348,7 +348,6 @@
 /magic-transit/get-started/configure-tunnels/specify-ip-addresses-for-endpoint-health-checks/ /magic-transit/how-to/run-endpoint-health-checks/ 301
 /magic-transit/get-started/configure-tunnels/specify-prefixes-to-advertise/ /magic-transit/how-to/advertise-prefixes/ 301
 /magic-transit/get-started/requirements/ /magic-transit/prerequisites/ 301
-/magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/ /magic-transit/how-to/configure-tunnels/ 301
 
 # magic-wan
 /magic-wan/on-ramp/ /magic-wan/tutorials/on-ramp/ 301
@@ -523,7 +522,6 @@
 /cloudflare-for-saas/ssl/reference/versioning/ /cloudflare-for-saas/reference/versioning/ 301
 /cloudflare-for-saas/ssl/troubleshooting/ /cloudflare-for-saas/reference/troubleshooting/ 301
 /cloudflare-for-saas/hostname-specific-behavior/ /cloudflare-for-saas/domain-support/ 301
-<!-- Includes dynamic redirects listed at bottom -->
 # Includes dynamic redirects listed at bottom
 
 # stream
@@ -935,6 +933,8 @@
 
 # cloudflare-one / zero-trust
 
+/cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare /cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare 301
+
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/analytics/logs/gateway-logs/manage-pii/ 301
 
 /cloudflare-one/applications/arbitrary-tcp/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
@@ -943,18 +943,38 @@
 /cloudflare-one/applications/non-HTTP/RDP/ /cloudflare-one/tutorials/rdp/ 301
 /cloudflare-one/applications/non-HTTP/SMB-file-shares/ /cloudflare-one/tutorials/smb/ 301
 
-/cloudflare-one/connections/connect-apps/configuration/config/ /cloudflare-one/connections/connect-apps/configuration/arguments/ 301
-/cloudflare-one/connections/connect-apps/configuration/ingress/ /cloudflare-one/connections/connect-apps/configuration/local-management/ingress/ 301
-/argo-tunnel/configuration/ingress/ /cloudflare-one/connections/connect-apps/configuration/local-management/ingress/ 301
-/argo-tunnel/faq/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
-/cloudflare-one/connections/connect-apps/configuration/configuration-file/ /cloudflare-one/connections/connect-apps/configuration/local-management/configuration-file/ 301
-/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/ /cloudflare-one/connections/connect-apps/configuration/local-management/ingress/ 301
-/cloudflare-one/connections/connect-apps/configuration/private-networks/ /cloudflare-one/connections/connect-networks/private-net/ 301
-/cloudflare-one/connections/connect-apps/create-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
-/cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare/ /cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare/ 301
+/cloudflare-one/connections/connect-apps/configuration/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/setup/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
-/cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/ /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/ 301
-/cloudflare-one/connections/connect-apps/trycloudflare/ /cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/ /cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/ 301
+/cloudflare-one/connections/connect-apps/create-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
+/cloudflare-one/connections/connect-apps/configuration/remote-management/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/remote-management/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/run-tunnel/ 301
+/cloudflare-one/connections/connect-apps/configuration/local-management/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ 301
+/cloudflare-one/connections/connect-apps/configuration/local-management/configuration-file/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/ 301
+/cloudflare-one/connections/connect-apps/configuration/configuration-file/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/ 301
+/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/ 301
+/cloudflare-one/connections/connect-apps/configuration/ingress/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/ 301
+/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/ 301
+/argo-tunnel/configuration/ingress/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/ 301
+/cloudflare-one/connections/connect-apps/configuration/config/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/ 301
+/cloudflare-one/connections/connect-apps/configuration/arguments/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/linux/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/linux/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/macos/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/macos/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/windows/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/windows/ 301
+/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-commands/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/tunnel-useful-commands/ 301
+/cloudflare-one/connections/connect-apps/configuration/private-networks/ /cloudflare-one/connections/connect-apps/private-net/ 301
+
+/cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/ /cloudflare-one/connections/connect-apps/deployment-guides/ 301
+/cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/aws/ /cloudflare-one/connections/connect-apps/deployment-guides/aws/ 301
+/cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/azure/ /cloudflare-one/connections/connect-apps/deployment-guides/azure/ 301
+/cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/google-cloud-platform/ /cloudflare-one/connections/connect-apps/deployment-guides/google-cloud-platform/ 301
+/cloudflare-one/connections/connect-apps/routing-to-tunnel/kubernetes/ /cloudflare-one/connections/connect-apps/deployment-guides/kubernetes/ 301
+/cloudflare-one/connections/connect-apps/configuration/ports-and-ips/ /cloudflare-one/connections/connect-apps/do-more-with-tunnels/ports-and-ips/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare/ /cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare/ 301
+/cloudflare-one/connections/connect-apps/trycloudflare/ /cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare/ 301
+/argo-tunnel/faq/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
 
 /cloudflare-one/connections/connect-browsers/ /cloudflare-one/policies/browser-isolation/ 301
 /cloudflare-one/connections/connect-browsers/configuration/ /cloudflare-one/policies/browser-isolation/configuration/ 301
@@ -992,6 +1012,7 @@
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
 /cloudflare-one/identity/service-auth/service-tokens/ /cloudflare-one/identity/service-tokens/ 301
+/cloudflare-one/identity/users/validating-json/ /cloudflare-one/identity/users/access-jwt/ 301
 
 /cloudflare-one/policies/lists/ /cloudflare-one/policies/filtering/lists 301
 /cloudflare-one/policies/zero-trust/ /cloudflare-one/policies/access/ 301
