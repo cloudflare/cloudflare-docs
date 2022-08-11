@@ -17,10 +17,9 @@ At the time of publication, Astro is in early beta. Refer to the Astro [GitHub r
 
 ## Setting up a new project
 
-Create a new project directory (for example, `astro-site`) and then initiate Astro's official setup tool by running [`npm init`](https://docs.npmjs.com/cli/v6/commands/npm-init) in your terminal inside that new `astro-site` directory:
+Create a new project directory and then initiate Astro's official setup tool by running:
 
 ```sh
-$ mkdir astro-site && cd astro-site
 $ npm create astro@latest
 ```
 
