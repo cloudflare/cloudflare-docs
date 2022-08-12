@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Downloads
-weight: 2
+weight: 5
 ---
 
 # Downloads
@@ -29,6 +29,15 @@ Alternatively, download the latest release directly.
 | .rpm   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-aarch64.rpm) |
 
 {{</table-wrap>}}
+
+{{<Aside type="note">}}
+If you see the following error when running `apt-get update`:
+
+`E: The repository 'https://pkg.cloudflare.com buster Release' does not have a Release file.`
+
+This is due to a recent update which now points the `cloudflared` repository to `pkg.cloudflare.com/cloudflared` instead of `pkg.cloudflare.com`. To resolve, refer to the instructions in the [package repository](https://pkg.cloudflare.com/).
+
+{{</Aside>}}
 
 ## macOS
 

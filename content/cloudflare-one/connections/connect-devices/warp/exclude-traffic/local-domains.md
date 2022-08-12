@@ -21,7 +21,7 @@ By default, Cloudflare Zero Trust excludes common top level domains used for loc
 
 {{<Aside type="warning">}}
 
-Traffic destined to domains entered in the Local Domain Fallback configuration is still subject to Split Tunnel rules. If you want to prevent traffic from being sent to a specific domain or IP address, you must also enter that in the Split Tunnel configuration.
+Local Domain Fallback configuration only impacts where DNS requests get resolved, not the flow of traffic destined to those domains. If you want to prevent traffic from being sent to a specific domain or IP address, you must add those domains or IPs to your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) configuration.
 
 {{</Aside>}}
 
