@@ -10,7 +10,12 @@ weight: 1001
 layout: example
 ---
 
-To serve images from a custom domain, you can create Worker like the example below:
+To serve images from a custom domain:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select you account > select **Workers**.
+3. Select **Create a service**.
+4. In your Workers, select **Quick edit** and paste the following code.
 
 {{<tabs labels="js/esm | ts/esm">}}
 {{<tab label="js/esm" default="true">}}
