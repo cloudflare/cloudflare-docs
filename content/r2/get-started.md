@@ -283,5 +283,6 @@ By completing this guide, you have successfully installed Wrangler and deployed 
 
 ## Related resources
 
-1. [Workers Tutorials](/workers/tutorials/)
-2. [Workers Examples](/workers/examples/)
+* Generate an [S3 Auth token](/r2/platform/s3-compatibility/tokens/)
+* Review the [R2 Runtime API](/r2/runtime-apis/)
+* Explore the [R2 examples](/r2/examples/)

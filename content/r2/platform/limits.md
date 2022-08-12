@@ -5,21 +5,15 @@ pcx_content_type: concept
 
 # Limits
 
-{{<Aside type="note">}}
-
-We want to encourage you to build any application you can dream up, and realize that doesn't always fit within our limits. 
-
-To increase any of our limits, [please fill out our form!](https://forms.gle/ukpeZVLWLnKeixDu7)
-
-{{</Aside>}}
-
 ## Account plan limits
+
+To increase any limits needed for your project, fill out the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
 {{<table-wrap>}}
 
 | Feature                         | Limit                                 |
 | ------------------------------- | ------------------------------------- |
-| Bucket                          | 1000 buckets per account              |
+| Bucket                          | 1,000 buckets per account              |
 | Data storage per bucket         | Unlimited                             |
 | Object size                     | 5 TB per object<sup>1</sup>           |
 | Maximum upload size<sup>3</sup> | 5 GB<sup>2</sup>                      |
@@ -36,4 +30,3 @@ constrained by [Workers request limits](/workers/platform/limits#request-limits)
 Review the [Examples](/r2/examples/) on how to use SDKs with the S3 API to upload large files.<br>
 <sup>4</sup> During [open beta](/workers/platform/betas/), the number of operations per bucket will be temporarily restricted.
 
-To increase these limits, contact your Cloudflare account team.

@@ -80,8 +80,6 @@ In your project directory, `wrangler init` has generated the following files:
 3. `package.json`: A minimal Node dependencies configuration file. Only generated if indicated in `wrangler init` command.
 4. `tsconfig.json`: TypeScript configuration that includes [Workers types](https://github.com/cloudflare/workers-types). Only generated if indicated in `wrangler init` command.
 
----
-
 ## 4. Run your development server
 
 After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command to start a local server for developing your Worker. This will allow you to test your Worker in development. 
@@ -89,8 +87,6 @@ After you have created your first Worker, run the [`wrangler dev`](/workers/wran
 ```sh
 $ wrangler dev
 ```
-
----
 
 ## 5. Write code
 
