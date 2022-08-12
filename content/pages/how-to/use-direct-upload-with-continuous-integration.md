@@ -129,9 +129,6 @@ jobs:
  Publish-to-Pages:
    docker:
      - image: cimg/node:18
-     environment:
-        CLOUDFLARE_ACCOUNT_ID: $CLOUDFLARE_ACCOUNT_ID
-        CLOUDFLARE_API_TOKEN: $CLOUDFLARE_API_TOKEN
 
    steps:
      - checkout
