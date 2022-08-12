@@ -21,6 +21,8 @@ Create a new project directory and then initiate Astro's official setup tool by 
 
 ```sh
 $ npm create astro@latest
+# cd into created project
+$ cd <project-name>
 ```
 
 During `init`, Astro will ask you which project type you would like to set up. Your answers will not affect the rest of this tutorial. Select an answer ideal for your project.
