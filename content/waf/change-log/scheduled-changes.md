@@ -29,7 +29,7 @@ layout: list
       <td>100135DBETA</td>
       <td>...99de0930</td>
       <td>XSS - JS On Events</td>
-      <td>This detection will replace ... 99de0930 on new WAF and 100135D on legacy</td>
+      <td>This detection will replace ...aa290ad9 on new WAF and 100135D on legacy</td>
     </tr>
     <tr>
       <td>2022-08-08</td>
