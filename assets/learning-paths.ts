@@ -43,7 +43,7 @@ function getSelectValues(array) {
         for (const dropdown of selectorDropdowns) {
             dropdown.addEventListener("change", () => {
                 filteredPaths = JSON.parse(JSON.stringify(paths))
-                let selectedOptions = getSelectValues(["products", "roles", "difficulty"]);
+                let selectedOptions = getSelectValues(["products", "roles", "difficulty"])
                 if (selectedOptions[0][1] === 'all' && selectedOptions[1][1] === 'all' && selectedOptions[2][1] === 'all') {
                     passed = filteredPaths
                 } else {
