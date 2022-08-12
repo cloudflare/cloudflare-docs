@@ -53,16 +53,8 @@ function getSelectValues(array) {
                     } 
                     
                     passed = filteredPaths.filter(element => element[option[0]].includes(option[1]));    
-
-                    /* for (const i in filteredPaths) {
-                        console.log(`${filteredPaths[i].path} contains ${filteredPaths[i][option[0]]}`)
-                        if (!filteredPaths[i][option[0]].includes(option[1])) {
-                            console.log(`${filteredPaths[i].path}`)
-                            filteredPaths.splice(i, 1)
-                        }
-                        } */
-                    }
                 }
+            }
                 buildHtml(pathGrid, passed)
             }
         )}

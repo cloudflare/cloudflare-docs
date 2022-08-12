@@ -11,7 +11,7 @@
 {{- $role_array = union $role_array . -}}
 {{- end -}}
 {{ with .difficulty }}
-{{- $difficulty_array = $difficulty_array | append . -}}
+{{- $difficulty_array = $difficulty_array | append . | uniq -}}
 {{- end -}}
 {{- end -}}
 
