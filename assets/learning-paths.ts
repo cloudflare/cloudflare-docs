@@ -38,7 +38,7 @@ function getSelectValues(array) {
         window.onload = (event) => {
             buildHtml(pathGrid, paths)
       }
-        const selectorDropdowns =  document.getElementsByClassName("selectorFilter");
+        /* const selectorDropdowns =  document.getElementsByClassName("selectorFilter");
         let passed = []
         for (const dropdown of selectorDropdowns) {
             dropdown.addEventListener("change", () => {
@@ -69,11 +69,11 @@ function getSelectValues(array) {
                     } 
                     
                     passed = filteredPaths.filter(element => element[option[0]].includes(option[1]));    
-                } */
+                } 
             }
                 buildHtml(pathGrid, passed)
-            }
-        )}
+            } 
+        )} */
         
   }
 })();
