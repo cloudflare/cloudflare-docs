@@ -38,7 +38,7 @@ function getSelectValues(array) {
         window.onload = (event) => {
             buildHtml(pathGrid, paths)
       }
-        /* const selectorDropdowns =  document.getElementsByClassName("selectorFilter");
+        const selectorDropdowns =  document.getElementsByClassName("selectorFilter");
         let passed = []
         for (const dropdown of selectorDropdowns) {
             dropdown.addEventListener("change", () => {
@@ -60,20 +60,11 @@ function getSelectValues(array) {
                             return element;
                         }
                     })
+                }
                         
-                        
-                
-                /* for (const option of selectedOptions) {
-                    if(option[1] === 'all') {
-                        continue
-                    } 
-                    
-                    passed = filteredPaths.filter(element => element[option[0]].includes(option[1]));    
-                } 
-            }
                 buildHtml(pathGrid, passed)
-            } 
-        )} */
+            }
+        )}
         
   }
 })();
