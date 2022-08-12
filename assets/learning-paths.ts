@@ -37,7 +37,9 @@ function getSelectValues(array) {
       
         window.onload = (event) => {
             buildHtml(pathGrid, paths)
-      }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
         const selectorDropdowns =  document.getElementsByClassName("selectorFilter");
         let passed = []
         for (const dropdown of selectorDropdowns) {
@@ -65,6 +67,7 @@ function getSelectValues(array) {
                 buildHtml(pathGrid, passed)
             }
         )}
-        
+    })  
   }
+
 })();
