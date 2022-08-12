@@ -73,7 +73,7 @@ Allows the user to turn off the WARP switch and disconnect the client.
 **Value:**
 
 - `false` &mdash; (default) The user is able to turn the switch on/off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
-- `true` &mdash; The user is prevented from turning off the switch.
+- `true` &mdash; The user is prevented from turning off the switch. The WARP Agent will start in the connected state with this is set to true.
 
 On new deployments, you must also include the `auto_connect` parameter with at least a value of `0`. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
 
@@ -85,7 +85,9 @@ This parameter replaces the old `enabled` property, which can no longer be used 
 
 ### `auto_connect`
 
-If switch has been turned off by user, the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value &mdash; usually just enough time for a user to log in to hotel or airport WiFi.
+If switch has been turned off by user, the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value &mdash; usually just enough time for a user to log in to hotel or airport WiFi. If any value is specified for `auto_connect` the default state the app will always be Connected (ex. after reboot, after initial install, etc.)
+
+
 
 **Value Type:** `integer`
 
