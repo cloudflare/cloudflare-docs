@@ -1,4 +1,4 @@
-import * as learningPath from "./learning_paths.json"
+import * as learningPath from "./json/learning_paths.json"
 
 let paths = learningPath["default"];
 var filteredPaths = JSON.parse(JSON.stringify(paths))
@@ -39,24 +39,31 @@ function getSelectValues(array) {
             buildHtml(pathGrid, paths)
       }
         const selectorDropdowns =  document.getElementsByClassName("selectorFilter");
+        let passed = []
         for (const dropdown of selectorDropdowns) {
             dropdown.addEventListener("change", () => {
                 filteredPaths = JSON.parse(JSON.stringify(paths))
                 let selectedOptions = getSelectValues(["products", "roles", "difficulty"]);
+                if (selectedOptions[0][1] === 'all' && selectedOptions[1][1] === 'all' && selectedOptions[2][1] === 'all') {
+                    passed = filteredPaths
+                } else {
                 for (const option of selectedOptions) {
                     if(option[1] === 'all') {
                         continue
-                    } else {
-                        for (const i in filteredPaths) {
-                            if (filteredPaths[i][option[0]].includes(option[1])) {
-                                continue
-                                } else {
-                                    filteredPaths.splice(i, 1)
-                                }
-                            }
+                    } 
+                    
+                    passed = filteredPaths.filter(element => element[option[0]].includes(option[1]));    
+
+                    /* for (const i in filteredPaths) {
+                        console.log(`${filteredPaths[i].path} contains ${filteredPaths[i][option[0]]}`)
+                        if (!filteredPaths[i][option[0]].includes(option[1])) {
+                            console.log(`${filteredPaths[i].path}`)
+                            filteredPaths.splice(i, 1)
                         }
+                        } */
                     }
-                buildHtml(pathGrid, filteredPaths)
+                }
+                buildHtml(pathGrid, passed)
             }
         )}
         

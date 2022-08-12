@@ -55,10 +55,10 @@
         ]
     },
     {
-        "title": "Test other one",
         "path": "/learning-paths/other/",
+        "title": "Test other one",
         "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
-        "products": ["Workers", "Pages"],
+        "products": ["Workers", "Pages", "Rules"],
         "difficulty": "Moderate",
         "roles": ["Test", "Network admin"],
         "modules": [
@@ -87,6 +87,61 @@
                         "url_path": "/fundamentals/get-started/concepts/network-layers/",
                         "link_title": "How Cloudflare protects different layers of your network"
                         }
+                ]
+            },
+            {
+                "title": "Setup",
+                "description": "To get the security, performance, and reliability benefits of Cloudflare, you need to set up Cloudflare on your domain.",
+                "pages": [
+                    {
+                    "url_path": "/fundamentals/account-and-billing/account-setup/"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/setup/minimize-downtime/"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/setup/add-site/"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "path": "/learning-paths/octagon/",
+        "title": "Kody",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"],
+        "modules": [
+            {
+                "title": "Concepts",
+                "description": "Concepts explain the basic ideas behind how Cloudflare works and how you can work with Cloudflare.",
+                "pages": [
+                    {
+                    "external_link": true,
+                    "url_path": "https://www.cloudflare.com/learning/cdn/what-is-a-cdn/",
+                    "link_title": "What is a Content Delivery Network (CDN)"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/concepts/what-is-cloudflare/"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/concepts/how-cloudflare-works/"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/concepts/cloudflare-ip-addresses/"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/concepts/cloudflare-challenges/"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/concepts/network-layers/",
+                    "link_title": "How Cloudflare protects different layers of your network"
+                    }
                 ]
             },
             {
