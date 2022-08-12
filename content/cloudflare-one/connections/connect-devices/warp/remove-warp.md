@@ -30,6 +30,12 @@ You may be prompted to provide your credentials while removing the application.
 
 {{</Aside>}}
 
+{{<Aside type="note">}}
+
+You can bypass the "Are you sure" prompt by passing `-f` as a paramter to the macOS uninstall command above.
+
+{{</Aside>}}
+
 ## iOS and Android
 
 1. Find the 1.1.1.1 application on the home screen.
