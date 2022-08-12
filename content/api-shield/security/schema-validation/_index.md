@@ -38,6 +38,7 @@ API Shield has the ability to identify body specifications in uploaded schemas a
 {{<Aside type="note" header="Note:">}}
 
 Customers who already use Schema Validation but uploaded their schemas prior to the implementation of this feature must re-upload their schemas to receive Body Inspection benefits.
+
 {{</Aside>}}
 
 ## Availability
