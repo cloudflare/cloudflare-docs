@@ -36,6 +36,7 @@ Regular expression support is a paid add-on in the Enterprise plan.
 API Shield has the ability to identify body specifications in uploaded schemas and validate the data of incoming API requests.
 
 {{<Aside type="note" header="Note:">}}
+
 Customers who already use Schema Validation but uploaded their schemas prior to the implementation of this feature must re-upload their schemas to receive Body Inspection benefits.
 {{</Aside>}}
 
