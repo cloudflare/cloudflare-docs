@@ -191,7 +191,6 @@ You can test your Function [locally using Wrangler](/pages/platform/functions/#d
 
 ## Related resources
 
-- [HTML forms](/pages/tutorials/forms/)
-- [Plugins documentation](/pages/platform/functions/plugins/)
-- [Functions documentation](/pages/platform/functions/)
+- [Build an HTML form](/pages/tutorials/forms/)
+- [Pages Functions documentation](/pages/platform/functions/)
 
