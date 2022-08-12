@@ -1,9 +1,13 @@
 import * as learningPath from "./learning_paths.json"
 
 let paths = learningPath["default"];
+var filteredPaths = JSON.parse(JSON.stringify(paths))
 
 function buildHtml(destination, array) {
     destination.innerHTML = '';
+    if (array.length === 0) {
+        destination.insertAdjacentHTML("beforeend", "<p>Your search returned no results. Try using a different combination of filters.</p>")
+    } else {
     for (let key in array) {
         destination.insertAdjacentHTML("beforeend", 
         `<div class="individualPath">
@@ -13,6 +17,7 @@ function buildHtml(destination, array) {
          </div>`
          )
     }
+}
 }
 
 function getSelectValues(array) {
@@ -33,11 +38,10 @@ function getSelectValues(array) {
         window.onload = (event) => {
             buildHtml(pathGrid, paths)
       }
-
         const selectorDropdowns =  document.getElementsByClassName("selectorFilter");
         for (const dropdown of selectorDropdowns) {
             dropdown.addEventListener("change", () => {
-                let filteredPaths = paths
+                filteredPaths = JSON.parse(JSON.stringify(paths))
                 let selectedOptions = getSelectValues(["products", "roles", "difficulty"]);
                 for (const option of selectedOptions) {
                     if(option[1] === 'all') {
@@ -52,62 +56,9 @@ function getSelectValues(array) {
                             }
                         }
                     }
-                
-                console.log(filteredPaths)
                 buildHtml(pathGrid, filteredPaths)
             }
         )}
-      // add filtering function
+        
   }
 })();
-  
- 
-  
-  
-  /* export function filterResults(this) {
-  
-   /*  const filters = document.getElementsByName("selectorDropdowns");
-    
-    if(filters){
-      let filter_ids = ["products_filter", "roles_filter", "difficulty_filter"]
-      
-      for (const filter of filter_ids) {
-        const filterElement = document.getElementById(filter);
-        filterElement.addEventListener("change", function (){
-          
-          
-          console.log(this.value);
-          
-        });
-      } */
-      
-  
-      
-      
-      
-    
-  
-  
-  
-    /* 
-    
-      const result = document.querySelector("#search div"); 
-      result.style.display = "block"; 
-      if (searchBox.value.length > 0) { 
-        const results = index.search(searchBox.value); 
-        result.innerHTML = results
-          .slice(0, MAX_SEARCH_RESULTS)
-          .map(x => `<a href="${x.item.url}"> 
-            <img src="${x.item.cover || ""}" 
-               width="40" height="40"> 
-            <h3>${x.item.title}</h3> 
-            <span>${x.item.content.substr(0,40)}</span> 
-          </a>`)
-          .join(""); 
-      } else { 
-        result.innerHTML = ''; 
-      } 
-    }, 
-    ... 
-  }
-   */

@@ -1,15 +1,23 @@
 {{- $filename := .Page.RelPermalink -}}
-{{- $learningPath := (index .Site.Data.learning_paths $filename) -}}
+{{- $data := .Site.Data.learning_paths2 -}}
 
-{{- if $learningPath -}}
+{{- range where $data "path" $filename -}}
+
+{{ with .resources.ByType "json" }}
+	{{ range . }}
+		<p>{{ .RelPermalink }}</p>
+	{{ end }}
+{{ end }}
+
+
 <div class="header">
-<h1>{{- $learningPath.title -}}</h1>
+<h1>{{- .title -}}</h1>
 <p><em>Learning path</em></p>
-<p>{{- $learningPath.description -}}</p>
+<p>{{- .description -}}</p>
 </div>
 
 <div class="background">
-{{- range $index, $module := $learningPath.modules -}}
+{{- range $index, $module := .modules -}}
 
 <div class="learningPathModule">
 <div class="moduleHeader">
@@ -42,14 +50,7 @@
 </details>
 </div>
 
-
-{{ end }}
-
-{{ else }}
-
-Does not match the full url path of an existing learning path.
-
-{{end}}
+{{- end -}}
 
 <div class="GoBack">
     <a href="/learning-paths/">View other learning paths</a>
@@ -57,3 +58,4 @@ Does not match the full url path of an existing learning path.
 
 </div>
 
+{{- end -}}

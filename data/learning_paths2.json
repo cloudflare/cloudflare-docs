@@ -1,6 +1,6 @@
-{
-    "/learning-paths/get-started/":
+[
     {
+        "path": "/learning-paths/get-started/",
         "title": "Get started with Cloudflare",
         "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
         "products": ["Cloudflare Essentials", "DNS", "SSL", "Cache", "Rules"],
@@ -54,12 +54,13 @@
             }
         ]
     },
-    "/learning-paths/other/": {
+    {
         "title": "Test other one",
+        "path": "/learning-paths/other/",
         "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
         "products": ["Workers", "Pages"],
         "difficulty": "Moderate",
-        "roles": ["Test"],
+        "roles": ["Test", "Network admin"],
         "modules": [
             {
                 "title": "Concepts",
@@ -108,4 +109,4 @@
             }
         ]
     }
-}
+]
