@@ -38,7 +38,7 @@ layout: list
       <td>100005BETA</td>
       <td>...c4ab1381</td>
       <td>DotNetNuke - File Inclusion - CVE:CVE-2018-9126, CVE:CVE-2011-1892</td>
-      <td>N/A</td>
+      <td>This detection will replace ...1bc977d1</td>
     </tr>
     <tr>
       <td>2022-08-08</td>
