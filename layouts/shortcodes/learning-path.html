@@ -1,8 +1,5 @@
 {{- $filename := .Page.RelPermalink -}}
 {{- $data := .Site.Data.learning_paths -}}
-{{- $data2 := resources.Get "/learning_path.json" -}}
-
-<script>console.log({{$data2}})</script>
 
 {{- range where $data "path" $filename -}}
 

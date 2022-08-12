@@ -31,43 +31,47 @@ function getSelectValues(array) {
     return selected_values;
 }
 
-(function () {
+export function loadResults() {
     if (window.location.pathname === "/learning-paths/" || window.location.pathname === "/learning-paths") {
         const pathGrid = document.getElementById("pathGrid"); 
       
         window.onload = (event) => {
             buildHtml(pathGrid, paths)
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-        const selectorDropdowns =  document.getElementsByClassName("selectorFilter");
-        let passed = []
-        for (const dropdown of selectorDropdowns) {
-            dropdown.addEventListener("change", () => {
-                filteredPaths = JSON.parse(JSON.stringify(paths))
-                let selectedOptions = getSelectValues(["products", "roles", "difficulty"])
-                if (selectedOptions[0][1] === 'all' && selectedOptions[1][1] === 'all' && selectedOptions[2][1] === 'all') {
-                    passed = filteredPaths
-                } else {
-                    passed = filteredPaths.filter(function(element) {
-                        let failed = false;
-                        for (const option of selectedOptions) {
-                            if(option[1] === 'all') {
-                                continue
-                            } else if (!element[option[0]].includes(option[1])) {
-                                    failed = true;
-                            }
-                        }
-                        if (!failed) {
-                            return element;
-                        }
-                    })
-                }
-                        
-                buildHtml(pathGrid, passed)
-            }
-        )}
-    })  
   }
 
-})();
+};
+
+export function filterResults() {
+    
+    const pathGrid = document.getElementById("pathGrid");
+    if (pathGrid) {
+    const selectorDropdowns =  document.getElementsByClassName("selectorFilter");
+    let passed = []
+    for (const dropdown of selectorDropdowns) {
+        dropdown.addEventListener("change", () => {
+            filteredPaths = JSON.parse(JSON.stringify(paths))
+            let selectedOptions = getSelectValues(["products", "roles", "difficulty"])
+            if (selectedOptions[0][1] === 'all' && selectedOptions[1][1] === 'all' && selectedOptions[2][1] === 'all') {
+                passed = filteredPaths
+            } else {
+                passed = filteredPaths.filter(function(element) {
+                    let failed = false;
+                    for (const option of selectedOptions) {
+                        if(option[1] === 'all') {
+                            continue
+                        } else if (!element[option[0]].includes(option[1])) {
+                                failed = true;
+                        }
+                    }
+                    if (!failed) {
+                        return element;
+                    }
+                })
+            }
+                    
+            buildHtml(pathGrid, passed)
+        }
+    )}
+}
+}
