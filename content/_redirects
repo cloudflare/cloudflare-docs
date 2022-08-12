@@ -336,7 +336,7 @@
 /magic-transit/set-up/provide-configuration-data/ /magic-transit/get-started/configure-tunnels/ 301
 /magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities/ /magic-transit/get-started/configure-tunnels/assign-tunnel-route-priorities/ 301
 /magic-transit/set-up/provide-configuration-data/map-routes-for-prefixes-smaller-than-24/ /magic-transit/get-started/configure-tunnels/assign-tunnel-route-priorities/#map-route-prefixes-smaller-than-24 301
-/magic-transit/set-up/provide-configuration-data/specify-gre-tunnel-endpoints/ /magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/ 301
+/magic-transit/set-up/provide-configuration-data/specify-gre-tunnel-endpoints/ /magic-transit/how-to/configure-tunnels/ 301
 /magic-transit/set-up/provide-configuration-data/specify-ip-addresses-for-endpoint-health-checks/ /magic-transit/get-started/configure-tunnels/specify-ip-addresses-for-endpoint-health-checks/ 301
 /magic-transit/set-up/provide-configuration-data/specify-prefixes-to-advertise/ /magic-transit/get-started/configure-tunnels/specify-prefixes-to-advertise/ 301
 /magic-transit/set-up/requirements/ /magic-transit/get-started/requirements/ 301
@@ -348,7 +348,6 @@
 /magic-transit/get-started/configure-tunnels/specify-ip-addresses-for-endpoint-health-checks/ /magic-transit/how-to/run-endpoint-health-checks/ 301
 /magic-transit/get-started/configure-tunnels/specify-prefixes-to-advertise/ /magic-transit/how-to/advertise-prefixes/ 301
 /magic-transit/get-started/requirements/ /magic-transit/prerequisites/ 301
-/magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/ /magic-transit/how-to/configure-tunnels/ 301
 
 # magic-wan
 /magic-wan/on-ramp/ /magic-wan/tutorials/on-ramp/ 301
@@ -523,7 +522,6 @@
 /cloudflare-for-saas/ssl/reference/versioning/ /cloudflare-for-saas/reference/versioning/ 301
 /cloudflare-for-saas/ssl/troubleshooting/ /cloudflare-for-saas/reference/troubleshooting/ 301
 /cloudflare-for-saas/hostname-specific-behavior/ /cloudflare-for-saas/domain-support/ 301
-<!-- Includes dynamic redirects listed at bottom -->
 # Includes dynamic redirects listed at bottom
 
 # stream
@@ -992,6 +990,7 @@
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
 /cloudflare-one/identity/service-auth/service-tokens/ /cloudflare-one/identity/service-tokens/ 301
+/cloudflare-one/identity/users/validating-json/ /cloudflare-one/identity/users/access-jwt/ 301
 
 /cloudflare-one/policies/lists/ /cloudflare-one/policies/filtering/lists 301
 /cloudflare-one/policies/zero-trust/ /cloudflare-one/policies/access/ 301
