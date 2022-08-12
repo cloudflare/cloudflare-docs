@@ -47,13 +47,29 @@ function getSelectValues(array) {
                 if (selectedOptions[0][1] === 'all' && selectedOptions[1][1] === 'all' && selectedOptions[2][1] === 'all') {
                     passed = filteredPaths
                 } else {
-                for (const option of selectedOptions) {
+                    passed = filteredPaths.filter(function(element) {
+                        let failed = false;
+                        for (const option of selectedOptions) {
+                            if(option[1] === 'all') {
+                                continue
+                            } else if (!element[option[0]].includes(option[1])) {
+                                    failed = true;
+                            }
+                        }
+                        if (!failed) {
+                            return element;
+                        }
+                    })
+                        
+                        
+                
+                /* for (const option of selectedOptions) {
                     if(option[1] === 'all') {
                         continue
                     } 
                     
                     passed = filteredPaths.filter(element => element[option[0]].includes(option[1]));    
-                }
+                } */
             }
                 buildHtml(pathGrid, passed)
             }
