@@ -49,7 +49,7 @@ export default {
 {{</tab>}}
 {{</tabs>}}
 
-Another way you can serve images from a custom domain is by using the `cdn-cgi/imagedelivery` prefix path which is used as path to trigger cdn-cgi image proxy.
+Another way you can serve images from a custom domain is by using the `cdn-cgi/imagedelivery` prefix path which is used as path to trigger `cdn-cgi` image proxy.
 
 Here's an example, the hostname is a Cloudflare proxied domain under the same account as the Image, followed with the prefix path and the image `<ACCOUNT_HASH>`, `<IMAGE_ID>` and `<VARIANT_NAME>` which can be found in the Images dashboard.
 
