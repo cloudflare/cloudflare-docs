@@ -17,7 +17,7 @@ To ensure Early Hints are enabled:
 
 {{<Aside type="note">}}
 
-Currently, 103 Early Hints are only supported in Chrome 103 or later. To view up-to-date information on which browsers support Early Hints, refer to [caniuse.com](https://caniuse.com/mdn-http_status_103).
+Currently, `103 Early Hints` are only supported in Chrome 103 or later. To view up-to-date information on which browsers support Early Hints, refer to [caniuse.com](https://caniuse.com/mdn-http_status_103).
 
 {{</Aside>}}
 
