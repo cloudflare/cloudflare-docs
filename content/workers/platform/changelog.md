@@ -5,6 +5,14 @@ title: Changelog
 
 # Changelog
 
+## 2022-08-12
+
+- A `Headers` object with the `range` header can now be used for range within `R2GetOptions` for the `get` R2 binding.
+- When headers are used for `onlyIf` within `R2GetOptions` for the `get` R2 binding, they now correctly compare against the second granularity. This allows correctly round-tripping to the browser and back. Additionally, `secondsGranularity` is now an option that can be passed into options constructed by hand to specify this when constructing outside Headers for the same effect.
+- Fixed the TypeScript type of `DurableObjectState.id` in workers-types to always be a `DurableObjectId`.
+- Validation errors during Worker upload for module scripts now include correct line and column numbers.
+- Bugfix, Profiling tools and flame graphs via Chrome’s debug tools now properly report information.
+
 ## 2022-06-24
 
 - `wrangler dev` in edge preview mode now supports scheduling alarms.
