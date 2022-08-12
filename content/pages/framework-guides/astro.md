@@ -55,22 +55,21 @@ To get started, create a `functions` directory at the root of your project. Writ
 
 ### Astro Configuration
 
-You can also deploy an Astro SSR site to Cloudflare Pages using the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme).
+You can also deploy an Astro Server-side Rendered (SSR) site to Cloudflare Pages using the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme). SSR sites render on Pages Functions and allow for dynamic functionality and customizations.
 
 To enable an SSR site and deploy to Cloudflare Pages, you will need to:
 
 1. Add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) to your project's `package.json` by running:
 
 ```sh
-$ npm install --save-dev @astrojs/cloudflare
+$ npm run astro add cloudflare
 ```
 
-2. Add the following to your `astro.config.mjs` file:
+2. Add `output: 'server'` to your `astro.config.mjs` file, similar to the following (yours may be slightly different):
 
 ```js
 --- 
 filename: astro.config.mjs
-highlight: [2,5]
 ---
 import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
@@ -92,15 +91,16 @@ If no mode is set, the default  is `"advanced"`
 
 {{</Aside>}}
 
-2. **Directory** mode: This mode is used when you want to run your function in `directory` mode, which means the adapter will compile the client side part of you app the same way, but it will move the worker script into a `functions` folder in the project root. The adaptor will only ever place a `[[path]].js` in that folder, allowing you to add additional plugins and pages middleware which can be checked into version control.
+2. **Directory** mode: This mode is used when you want to run your function in `directory` mode, which means the adapter will compile the client side part of you app the same way, but it will move the worker script into a `functions` folder in the project root. The adapter will only ever place a `[[path]].js` in that folder, allowing you to add [Pages Plugins](/pages/platform/functions/plugins/) and [Middleware](/pages/platform/functions/#adding-middleware) which can be checked into version control.
 
-
+To use Directory mode, modify your `astro.config.mjs` file to add `mode: "directory"` to the adapter configuration:
 ```js
 --- 
 filename: astro.config.mjs
 highlight: [2]
 ---
 export default defineConfig({
+  output: 'server',
   adapter: cloudflare({ mode: "directory" }),
 });
 ```
