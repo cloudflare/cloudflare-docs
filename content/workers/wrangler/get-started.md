@@ -63,7 +63,7 @@ Attempting to login via OAuth...
 Successfully logged in.
 ```
 
-If you prefer to use API tokens for authentication, such as in headless or continuous integration environments, refer to [running in CI/CD](https://developers.cloudflare.com/workers/wrangler/ci-cd/).
+If you prefer to use API tokens for authentication, such as in headless or continuous integration environments, refer to [Running Wrangler in CI/CD](/workers/wrangler/ci-cd/).
 
 Open the browser, log in to your account, and select **Allow**. This will send an OAuth Token to Wrangler so it can deploy your scripts to Cloudflare.
 
