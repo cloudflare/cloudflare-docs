@@ -100,9 +100,9 @@ Example: POST body for successful video encoding
 
  ```bash
 {
-  "uid": "d98ecbca0f8803646848c7eda78eb1f9",
+  "uid": "b236bde30eb07b9d01318940e5fc3eda",
   "creator": null,
-  "thumbnail": "https://customer-ce3d67rtmy3k8d1t.staging.cloudflarestream.com/d98ecbca0f8803646848c7eda78eb1f9/thumbnails/thumbnail.jpg",
+  "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
   "thumbnailTimestampPct": 0,
   "readyToStream": true,
   "status": {
@@ -121,7 +121,7 @@ Example: POST body for successful video encoding
   "created": "2022-06-30T17:53:12.512033Z",
   "modified": "2022-06-30T17:53:21.774299Z",
   "size": 383631,
-  "preview": "https://watch-stage.videodelivery.net/d98ecbca0f8803646848c7eda78eb1f9?staging=true",
+  "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/watch",
   "allowedOrigins": [],
   "requireSignedURLs": false,
   "uploaded": "2022-06-30T17:53:12.511981Z",
@@ -134,8 +134,8 @@ Example: POST body for successful video encoding
     "height": 320
   },
   "playback": {
-    "hls": "https://customer-ce3d67rtmy3k8d1t.staging.cloudflarestream.com/d98ecbca0f8803646848c7eda78eb1f9/manifest/video.m3u8",
-    "dash": "https://customer-ce3d67rtmy3k8d1t.staging.cloudflarestream.com/d98ecbca0f8803646848c7eda78eb1f9/manifest/video.mpd"
+    "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8",
+    "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.mpd"
   },
   "watermark": null
 }

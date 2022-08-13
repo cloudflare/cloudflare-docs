@@ -22,7 +22,7 @@ https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e
 
 <img src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg?time=1s&height=270" alt="Example of thumbnail image generated from example video" />
 
-Using the `poster` query parameter in the embed URL, you can set a thumbnail to any time in your video. If [signed URLs](/stream/viewing-videos/securing-your-stream/) are required, you must use a signed URL instead of video IDs.
+Using the `poster` query parameter in the embed URL, you can set a thumbnail to any time in your video. If [signed URLs](/stream/viewing-videos/securing-your-stream/) are required, you must use a signed URL instead of video UIDs.
 
 ```html
 <iframe

@@ -226,7 +226,7 @@ The response will look something like below. Things to remember:
 
 - Date and time an event occurred at Cloudflare's edge
 - Media source for the minutes viewed
-- Video ID
+- Video UID
 - ISO 3166 alpha2 country code from the client
 
 ### Filters
@@ -298,7 +298,7 @@ curl --request POST \
 
 GraphQL API supports seek pagination: using filters, you can specify the last video UID so the response only includes data for videos after the last video UID.
 
-The query below will return data for 2 videos that follow video id `5646153f8dea17f44d542a42e76cfd`:
+The query below will return data for 2 videos that follow video UID `5646153f8dea17f44d542a42e76cfd`:
 
 ```javascript
 query {
@@ -332,8 +332,8 @@ query {
 Here are the steps to implementing pagination:
 
 1.  Call the first query without uid\_gt filter to get the first set of videos
-2.  Grab the last video ID from the response from the first query
-3.  Call next query by specifying uid\_gt property and set it to the last video ID. This will return the next set of videos
+2.  Grab the last video UID from the response from the first query
+3.  Call next query by specifying uid\_gt property and set it to the last video UID. This will return the next set of videos
 
 ## Limitations
 

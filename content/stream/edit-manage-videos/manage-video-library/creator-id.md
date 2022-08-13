@@ -167,10 +167,10 @@ highlight: [36]
       "modified": "2014-01-02T02:20:00Z",
       "uploadExpiry": "2014-01-02T02:20:00Z",
       "playback": {
-        "hls": "https://videodelivery.net/ea95132c15732412d22c1476fa83f27a/manifest/video.m3u8",
-        "dash": "https://videodelivery.net/ea95132c15732412d22c1476fa83f27a/manifest/video.mpd"
+        "hls": "https://customer-<CODE>.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/manifest/video.m3u8",
+        "dash": "https://customer-<CODE>.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/manifest/video.mpd"
       },
-      "preview": "https://watch.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a",
+      "preview": "https://customer-<CODE>.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/watch",
       "readyToStream": true,
       "requireSignedURLs": true,
       "size": 4190963,
@@ -180,7 +180,7 @@ highlight: [36]
         "errorReasonCode": "",
         "errorReasonText": ""
       },
-      "thumbnail": "https://videodelivery.net/ea95132c15732412d22c1476fa83f27a/thumbnails/thumbnail.jpg",
+      "thumbnail": "https://customer-<CODE>.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/thumbnails/thumbnail.jpg",
       "thumbnailTimestampPct": 0.529241,
       "creator": "some-creator-id",
       "uid": "ea95132c15732412d22c1476fa83f27a",

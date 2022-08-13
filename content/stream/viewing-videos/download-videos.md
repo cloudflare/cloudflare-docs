@@ -36,7 +36,7 @@ header: Response
   "result": {
     "default": {
       "status": "inprogress",
-      "url": "https://videodelivery.net/<VIDEO_UID>/downloads/default.mp4",
+      "url": "https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4",
       "percentComplete": 75.0
     }
   },

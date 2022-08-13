@@ -39,7 +39,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy
     "created": "2020-10-16T20:20:17.872170843Z",
     "modified": "2020-10-16T20:20:17.872170843Z",
     "size": 9032701,
-    "preview": "https://watch.cloudflarestream.com/4544715edbe00808d89aec0a3a765c40",
+    "preview": "https://customer-<CODE>.cloudflarestream.com/4544715edbe00808d89aec0a3a765c40/watch",
     "allowedOrigins": [],
     "requireSignedURLs": false,
     "uploaded": "2020-10-16T20:20:17.872170843Z",

@@ -202,7 +202,7 @@ var size = fs.statSync(path).size;
 var mediaId = '';
 
 var options = {
-  endpoint: 'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT ID}/stream',
+  endpoint: 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream',
   headers: {
     Authorization: 'Bearer <API_TOKEN>',
   },

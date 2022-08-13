@@ -8,12 +8,12 @@ weight: 2
 
 When an input begins receiving the live stream, a new video with HLS and DASH URLs is automatically created as long as the mode property for the input is set to `automatic`.
 
-## View by video id
+## View by video UID
 
-One live input can have multiple video ids associated with it. In order to get the video id representing the current live stream for a given input, make a `GET` request to the `/stream` endpoint:
+One live input can have multiple video UIDs associated with it. In order to get the video UID representing the current live stream for a given input, make a `GET` request to the `/stream` endpoint:
 
 ```bash
-GET https://api.cloudflare.com/client/v4/accounts/{account}/stream/live_inputs/{live-input-uid}/videos
+GET https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<LIVE_INPUT_UID>/videos
 ```
 
 The response will contain the HLS/DASH URL that can be used to play the current live video as well as any previously recorded live videos:
@@ -155,7 +155,7 @@ To get the embed code or HLS Manifest URL for your video:
 Live streams are automatically recorded. To get a list of recorded streams for a given input id, make the same `GET` request as you would to get the live video and filter for videos where the state property is set to `ready`:
 
 ```bash
-GET https://dash.cloudflare.com/api/v4/accounts/{account}/stream/live_inputs/{live-input-id}/videos
+GET https://dash.cloudflare.com/api/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<LIVE_INPUT_UID>/videos
 ```
 
 This is what a response looks like:

@@ -34,7 +34,7 @@ During or after uploading a video to Stream, you can now specify a value for a n
 
 ### Analytics panel in Stream Dashboard
 
-The Stream Dashboard now has an analytics panel that shows the number of minutes of both live and recorded video delivered. This view can be filtered by **Creator ID**, **Video ID**, and **Country**. For more in-depth analytics data, refer to the [bulk analytics documentation](/stream/getting-analytics/fetching-bulk-analytics/)
+The Stream Dashboard now has an analytics panel that shows the number of minutes of both live and recorded video delivered. This view can be filtered by **Creator ID**, **Video UID**, and **Country**. For more in-depth analytics data, refer to the [bulk analytics documentation](/stream/getting-analytics/fetching-bulk-analytics/)
 
 ## 2022-03-16
 
@@ -102,7 +102,7 @@ You can now use Cloudflare Stream for 24/7 live streaming.
 
 ### Persistent Live Stream IDs
 
-You can now start and stop live broadcasts without having to provide a new video ID to the Stream Player (or your own player) each time the stream starts and stops. [Read the docs](/stream/stream-live/watch-live-stream/#view-by-live-input-id).
+You can now start and stop live broadcasts without having to provide a new video UID to the Stream Player (or your own player) each time the stream starts and stops. [Read the docs](/stream/stream-live/watch-live-stream/#view-by-live-input-id).
 
 ## 2021-10-14
 

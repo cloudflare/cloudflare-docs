@@ -13,7 +13,7 @@ The SDK provides an API for programmatically controlling the player and listenin
 ```html
 <!-- You can use styles and CSS on this iframe element where the video player will appear -->
 <iframe
-  src="https://iframe.videodelivery.net/<VIDEO_UID>"
+  src="https://customer-<CODE>.iframe.cloudflarestream.com/<VIDEO_UID>"
   style="border: none"
   height="720"
   width="1280"
@@ -22,7 +22,7 @@ The SDK provides an API for programmatically controlling the player and listenin
   id="stream-player"
 ></iframe>
 
-<script src="https://embed.videodelivery.net/embed/sdk.latest.js"></script>
+<script src="https://embed.cloudflarestream.com/embed/sdk.latest.js"></script>
 
 <!-- Your JavaScript code below-->
 <script>
