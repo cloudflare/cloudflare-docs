@@ -49,13 +49,13 @@ curl 'https://api.cloudflare.com/client/v4/organizations/{ORG_ID}/load_balancers
 
 ```json
 {
-  "description": "Spectrum Health Check",
-  "type": "tcp",
-  "port": 2048,
-  "interval": 30,
-  "retries": 2,
-  "timeout": 5,
-  "method": "connection_established"
+	"description": "Spectrum Health Check",
+	"type": "tcp",
+	"port": 2048,
+	"interval": 30,
+	"retries": 2,
+	"timeout": 5,
+	"method": "connection_established"
 }
 ```
 

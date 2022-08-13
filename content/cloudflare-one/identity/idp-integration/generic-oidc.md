@@ -14,19 +14,19 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 2. When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
-    ```txt
-    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
-    ```
+   ```txt
+   https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+   ```
 
 3. Copy the content of these fields:
 
-    - Client ID
-    - Client secret
-    - Auth URL: The `authorization_endpoint` URL of your IdP
-    - Token URL: The `token_endpoint` URL of your IdP
-    - Certificate URL: The `jwks_uri` endpoint of your IdP to allow the IdP keys to sign the tokens
+   - Client ID
+   - Client secret
+   - Auth URL: The `authorization_endpoint` URL of your IdP
+   - Token URL: The `token_endpoint` URL of your IdP
+   - Certificate URL: The `jwks_uri` endpoint of your IdP to allow the IdP keys to sign the tokens
 
-    You can find these values on your identity provider’s **OIDC discovery endpoint**. Some providers call this the “well-known URL”.
+   You can find these values on your identity provider’s **OIDC discovery endpoint**. Some providers call this the “well-known URL”.
 
 4. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Authentication**.
 
@@ -48,15 +48,15 @@ To test that your connection is working, navigate to **Authentication** > **Logi
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>",
-    "auth_url": "https://accounts.google.com/o/oauth2/auth",
-    "token_url": "https://accounts.google.com/o/oauth2/token",
-    "certs_url": "https://www.googleapis.com/oauth2/v3/certs",
-    "scopes": ["openid", "email", "profile"]
-  },
-  "type": "oidc",
-  "name": "Generic Google"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>",
+		"auth_url": "https://accounts.google.com/o/oauth2/auth",
+		"token_url": "https://accounts.google.com/o/oauth2/token",
+		"certs_url": "https://www.googleapis.com/oauth2/v3/certs",
+		"scopes": ["openid", "email", "profile"]
+	},
+	"type": "oidc",
+	"name": "Generic Google"
 }
 ```

@@ -22,13 +22,15 @@ To configure:
 
     ```json
     ---
-    highlight: [3,4,5]
+    highlight: [4,5,6]
     ---
-    "action_parameters": {
-      // ...
-      "matched_data": {
-        "public_key": "<PUBLIC_KEY_VALUE>"
-      }
+    {
+    	"action_parameters": {
+    		// ...
+    		"matched_data": {
+    			"public_key": "<PUBLIC_KEY_VALUE>"
+    		}
+    	}
     }
     ```
 
@@ -40,7 +42,7 @@ You can generate a public key [in the command line](/waf/managed-rulesets/payloa
 
 The following example updates rule `<RULE_ID_1>` that executes the Cloudflare Managed Ruleset for zone `<ZONE_ID>`, configuring payload logging with the provided public key.
 
-```json
+```bash
 ---
 header: Request
 highlight: [9,10,11]
@@ -68,44 +70,44 @@ The response includes the complete ruleset after updating the rule.
 header: Response
 ---
 {
-  "result": {
-    "id": "<ZONE_LEVEL_RULESET_ID>",
-    "name": "Zone-level Ruleset 1",
-    "description": "",
-    "kind": "zone",
-    "version": "3",
-    "rules": [
-      {
-        "id": "<RULE_ID_1>",
-        "version": "1",
-        "action": "execute",
-        "action_parameters": {
-          "id": "<CLOUDFLARE_MANAGED_RULESET_ID>",
-          "version": "latest",
-          "matched_data": {
-            "public_key": "<YOUR_PUBLIC_KEY>"
-          }
-        },
-        "expression": "true",
-        "description": "Executes the Cloudflare Managed Ruleset",
-        "last_updated": "2021-06-28T18:08:14.003361Z",
-        "ref": "<RULE_REF_1>",
-        "enabled": true
-      },
-      // ...
-    ],
-    "last_updated": "2021-06-28T18:08:14.003361Z",
-    "phase": "http_request_firewall_managed"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<ZONE_LEVEL_RULESET_ID>",
+		"name": "Zone-level Ruleset 1",
+		"description": "",
+		"kind": "zone",
+		"version": "3",
+		"rules": [
+			{
+				"id": "<RULE_ID_1>",
+				"version": "1",
+				"action": "execute",
+				"action_parameters": {
+					"id": "<CLOUDFLARE_MANAGED_RULESET_ID>",
+					"version": "latest",
+					"matched_data": {
+						"public_key": "<YOUR_PUBLIC_KEY>"
+					}
+				},
+				"expression": "true",
+				"description": "Executes the Cloudflare Managed Ruleset",
+				"last_updated": "2021-06-28T18:08:14.003361Z",
+				"ref": "<RULE_REF_1>",
+				"enabled": true
+			}
+			// ...
+		],
+		"last_updated": "2021-06-28T18:08:14.003361Z",
+		"phase": "http_request_firewall_managed"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
 For more information on deploying Managed Rulesets via API, refer to [Deploy a Managed Ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/) in the Ruleset Engine documentation.
 
-***
+---
 
 ## Disable payload logging
 
@@ -119,11 +121,11 @@ The following example rule executes a Managed Ruleset with payload logging disab
 
 ```json
 {
-  "action": "execute",
-  "action_parameters": {
-    "id": "<MANAGED_RULESET_ID>"
-  },
-  "expression": "true",
-  "description": ""
+	"action": "execute",
+	"action_parameters": {
+		"id": "<MANAGED_RULESET_ID>"
+	},
+	"expression": "true",
+	"description": ""
 }
 ```

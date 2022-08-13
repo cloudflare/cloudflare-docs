@@ -22,5 +22,5 @@ To create an alert webhook in Area 1:
 3. Go to **Email Configuration** > **Domains & Routing** > **Alert Webhooks**.
 4. Click **New Webhook**.
 5. Select an **App Type**.
-7. Enter the **Target**.
-8. Click **Publish Webhook**.
+6. Enter the **Target**.
+7. Click **Publish Webhook**.

@@ -6,7 +6,7 @@ weight: 3
 
 # Ingress rules
 
-Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service. 
+Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service.
 
 To specify which local services a request should be proxied to, you can define ingress rules in the [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/).
 
@@ -89,17 +89,17 @@ ingress:
 
 With the catch-all rule, you can set `cloudflared` to respond to traffic with an HTTP status.
 
-| Service                 | Description                                                                                      | Example `service` value           |
-| ----------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------- |
-| HTTP/S                  | Incoming HTTP requests are proxied directly to your local service.                               | `https://localhost:8000`          |
-| HTTP over Unix socket | Just like HTTP, but using a Unix socket instead.                                               | `unix:/home/production/echo.sock` |
-| HTTPS over Unix socket | Just like HTTPS, but using a Unix socket instead.                                               | `unix+tls:/home/production/echo.sock` |
-| TCP                     | TCP connections are proxied to your local service.                                               | `tcp://localhost:2222`            |
-| SSH                     | SSH connections are proxied to your local service. [Learn more](/cloudflare-one/tutorials/ssh/). | `ssh://localhost:22`              |
-| RDP                     | RDP connections are proxied to your local service. [Learn more](/cloudflare-one/tutorials/rdp/). | `rdp://localhost:3389`            |
-| kubectl bastion mode    | `cloudflared` will act like a jumphost, allowing access to any local address.                    | `bastion`                         |
-| Hello World             | Test server for validating your Cloudflare Tunnel setup.                                         | `hello_world`                     |
-| HTTP status             | Responds to all requests with the given HTTP status.                                             | `http_status:404`                 |
+| Service                | Description                                                                                      | Example `service` value               |
+| ---------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------- |
+| HTTP/S                 | Incoming HTTP requests are proxied directly to your local service.                               | `https://localhost:8000`              |
+| HTTP over Unix socket  | Just like HTTP, but using a Unix socket instead.                                                 | `unix:/home/production/echo.sock`     |
+| HTTPS over Unix socket | Just like HTTPS, but using a Unix socket instead.                                                | `unix+tls:/home/production/echo.sock` |
+| TCP                    | TCP connections are proxied to your local service.                                               | `tcp://localhost:2222`                |
+| SSH                    | SSH connections are proxied to your local service. [Learn more](/cloudflare-one/tutorials/ssh/). | `ssh://localhost:22`                  |
+| RDP                    | RDP connections are proxied to your local service. [Learn more](/cloudflare-one/tutorials/rdp/). | `rdp://localhost:3389`                |
+| kubectl bastion mode   | `cloudflared` will act like a jumphost, allowing access to any local address.                    | `bastion`                             |
+| Hello World            | Test server for validating your Cloudflare Tunnel setup.                                         | `hello_world`                         |
+| HTTP status            | Responds to all requests with the given HTTP status.                                             | `http_status:404`                     |
 
 ## Origin configuration
 

@@ -6,11 +6,11 @@ weight: 51
 
 # Load balancers
 
-| Before you start                                                                             |
-| -------------------------------------------------------------------------------------------- |
-| 1. [Create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/)                |
-| 2. [Configure the Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#configure-tunnels/)           |
-| 3. [Create a Load Balancer pool in Cloudflare](/load-balancing/how-to/create-load-balancer/) |
+| Before you start                                                                                                       |
+| ---------------------------------------------------------------------------------------------------------------------- |
+| 1. [Create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/)                         |
+| 2. [Configure the Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#configure-tunnels/) |
+| 3. [Create a Load Balancer pool in Cloudflare](/load-balancing/how-to/create-load-balancer/)                           |
 
 ## Route traffic from the dashboard
 

@@ -22,11 +22,11 @@ The following `PUT` request uses the [Update ruleset](/ruleset-engine/rulesets-a
 
 In this example:
 
-*   `"id": "<MANAGED_RULESET_ID>"` adds a rule to the phase entry point ruleset to execute a Managed Ruleset for requests in the specified zone (`<ZONE_ID>`).
-*   `"enabled": false` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
-*   `"rules": [{"id": "<RULE_ID_1>", "action": "block", "enabled": true}, {"id": "<RULE_ID_2>", "action": "log", "enabled": true}]` defines a list of overrides at the rule level to enable two individual rules.
+- `"id": "<MANAGED_RULESET_ID>"` adds a rule to the phase entry point ruleset to execute a Managed Ruleset for requests in the specified zone (`<ZONE_ID>`).
+- `"enabled": false` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
+- `"rules": [{"id": "<RULE_ID_1>", "action": "block", "enabled": true}, {"id": "<RULE_ID_2>", "action": "log", "enabled": true}]` defines a list of overrides at the rule level to enable two individual rules.
 
-```json
+```bash
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
@@ -34,11 +34,11 @@ curl -X PUT \
   "rules": [
     {
       "action": "execute",
-      "expression": "true", 
+      "expression": "true",
       "action_parameters": {
         "id": "<MANAGED_RULESET_ID>",
         "overrides": {
-          "enabled": false,          
+          "enabled": false,
           "rules": [
             {
               "id": "<RULE_ID_1>",
@@ -48,7 +48,7 @@ curl -X PUT \
             {
               "id": "<RULE_ID_2>",
               "action": "log",
-              "enabled": true              
+              "enabled": true
             }
           ]
         }
@@ -69,11 +69,11 @@ The following `PUT` request uses the [Update ruleset](/ruleset-engine/rulesets-a
 
 In this example:
 
-*   `"id": "<MANAGED_RULESET_ID>"` adds a rule to the phase entry point ruleset to execute a Managed Ruleset for requests addressed to `example.com`.
-*   `"enabled": false` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
-*   `"rules": [{"id": "<RULE_ID_1>", "action": "block", "enabled": true}, {"id": "<RULE_ID_2>", "action": "log", "enabled": true}]` defines a list of overrides at the rule level to enable two individual rules.
+- `"id": "<MANAGED_RULESET_ID>"` adds a rule to the phase entry point ruleset to execute a Managed Ruleset for requests addressed to `example.com`.
+- `"enabled": false` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
+- `"rules": [{"id": "<RULE_ID_1>", "action": "block", "enabled": true}, {"id": "<RULE_ID_2>", "action": "log", "enabled": true}]` defines a list of overrides at the rule level to enable two individual rules.
 
-```json
+```bash
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
@@ -81,7 +81,7 @@ curl -X PUT \
   "rules": [
     {
       "action": "execute",
-      "expression": "cf.zone.name eq \"example.com\"", 
+      "expression": "cf.zone.name eq \"example.com\"",
       "action_parameters": {
         "id": "<MANAGED_RULESET_ID>",
         "overrides": {

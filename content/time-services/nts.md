@@ -12,7 +12,7 @@ Network Time Security (NTS) provides cryptographic security for the client-serve
 
 The NTS protocol is divided into two phases:
 
-1. **NTS key exchange**: Establishes the necessary key material between the NTP client and the server, using a [Transport Layer Security (TLS) handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/) (the same public key infrastructure as the web). Once the keys are exchanged, the TLS channel is closed and the protocol enters the second phase. 
+1. **NTS key exchange**: Establishes the necessary key material between the NTP client and the server, using a [Transport Layer Security (TLS) handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/) (the same public key infrastructure as the web). Once the keys are exchanged, the TLS channel is closed and the protocol enters the second phase.
 2. **NTP authentication**: Authenticates NTP time syncronization packets using the results of the TLS handshake. For more information, refer to [RFC 8915](https://tools.ietf.org/html/rfc8915).
 
 ## Next steps

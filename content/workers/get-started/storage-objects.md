@@ -16,16 +16,16 @@ Workers KV is an eventually consistent key-value data store that caches on the e
 
 It is ideal for projects that require:
 
-* High volumes of reads and/or repeated reads to the same keys.
-* Per-object time-to-live (TTL).
-* Asset storage for websites.
+- High volumes of reads and/or repeated reads to the same keys.
+- Per-object time-to-live (TTL).
+- Asset storage for websites.
 
 To get started with KV:
 
-* Read how [KV works](/workers/learning/how-kv-works/).
-* Create a [KV namespace](/workers/wrangler/workers-kv/).
-* Review the [KV Runtime API](/workers/runtime-apis/kv/).
-* Learn about KV [Limits](/workers/platform/limits/#kv-limits).
+- Read how [KV works](/workers/learning/how-kv-works/).
+- Create a [KV namespace](/workers/wrangler/workers-kv/).
+- Review the [KV Runtime API](/workers/runtime-apis/kv/).
+- Learn about KV [Limits](/workers/platform/limits/#kv-limits).
 
 ## R2 (beta)
 
@@ -33,28 +33,28 @@ R2 is S3-compatible blob storage that allows developers to store large amounts o
 
 It is ideal for projects that require:
 
-* Storage for files which are infrequently accessed.
-* Large object storage.
-* Strong consistency per object.
+- Storage for files which are infrequently accessed.
+- Large object storage.
+- Strong consistency per object.
 
 To get started with R2:
 
-* Read the [Get started guide](/r2/get-started/).
-* Learn about R2 [Limits](/r2/platform/limits/).
-* Review the [R2 Runtime API](/r2/runtime-apis/).
+- Read the [Get started guide](/r2/get-started/).
+- Learn about R2 [Limits](/r2/platform/limits/).
+- Review the [R2 Runtime API](/r2/runtime-apis/).
 
 ## R2 and KV comparison
 
 {{<table-wrap>}}
 
-| Feature                                       | KV           | R2 (beta)    |
-| --------------------------------------------- | ------------ | ------------ |
-| Maximum size per value                        | 25 MiB       | 5 TB         |
-| Consistency model                             | Eventual     | Strong       |
-| Cached                                        | Always       | Possible when using [Cache API](/workers/runtime-apis/cache/) in a Worker |
-| S3-compatible API                             | No           | Yes                     |
-| TTL expiration                                | Object-level | Not currently available |
-| Maximum operations per second                 | Unlimited    |  < 1,000/bucket           |
+| Feature                       | KV           | R2 (beta)                                                                 |
+| ----------------------------- | ------------ | ------------------------------------------------------------------------- |
+| Maximum size per value        | 25 MiB       | 5 TB                                                                      |
+| Consistency model             | Eventual     | Strong                                                                    |
+| Cached                        | Always       | Possible when using [Cache API](/workers/runtime-apis/cache/) in a Worker |
+| S3-compatible API             | No           | Yes                                                                       |
+| TTL expiration                | Object-level | Not currently available                                                   |
+| Maximum operations per second | Unlimited    | < 1,000/bucket                                                            |
 
 {{</table-wrap>}}
 
@@ -68,13 +68,13 @@ Durable Objects provide low-latency coordination and consistent storage for the 
 
 It is ideal for projects that require:
 
-* Real-time collaboration (such as a chat application or a game server).
-* Consistent storage.
-* Data locality.
+- Real-time collaboration (such as a chat application or a game server).
+- Consistent storage.
+- Data locality.
 
 To get started with Durable Objects:
 
-* Read the [introductory blog post](https://blog.cloudflare.com/introducing-workers-durable-objects/).
-* Get started with [Durable Objects](/workers/learning/using-durable-objects/).
-* Review the [Durable Objects Runtime API](/workers/runtime-apis/durable-objects/).
-* Learn about Durable Objects [Limits](/workers/platform/limits/#durable-objects-limits/).
+- Read the [introductory blog post](https://blog.cloudflare.com/introducing-workers-durable-objects/).
+- Get started with [Durable Objects](/workers/learning/using-durable-objects/).
+- Review the [Durable Objects Runtime API](/workers/runtime-apis/durable-objects/).
+- Learn about Durable Objects [Limits](/workers/platform/limits/#durable-objects-limits/).

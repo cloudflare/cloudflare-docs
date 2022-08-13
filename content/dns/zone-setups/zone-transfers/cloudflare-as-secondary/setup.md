@@ -3,7 +3,7 @@ pcx_content_type: tutorial
 title: Setup
 weight: 2
 meta:
-   title: Set up incoming zone transfers (Cloudflare as Secondary)
+  title: Set up incoming zone transfers (Cloudflare as Secondary)
 ---
 
 # Set up incoming zone transfers (Cloudflare as Secondary)
@@ -34,6 +34,7 @@ You will also need the following information from your Primary DNS provider:
 Make sure your account team has enabled your zone for Secondary DNS.
 
 Get the following values from your Cloudflare account:
+
 - [Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/)
 - [Zone ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/)
 - [Nameserver names](/dns/zone-setups/full-setup/setup/#get-nameserver-names), which should have **secondary** in the name.
@@ -69,12 +70,12 @@ To create a peer server using the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Manage Account** > **Configurations**.
 3. Click **DNS Zone Transfers**.
-4. For **Peer DNS servers**, click **Create**. 
+4. For **Peer DNS servers**, click **Create**.
 5. Enter the following information, paying particular attention to:
-    - **IP**: Specifies where Cloudflare sends transfer requests to.
-    - **Port**: Specifies the IP Port for the transfer IP.
-    - **Enable incremental (IXFR) zone transfers**: Specifies if Cloudflare sends IXFR requests in addition to the default AXFR requests.
-    - **Link a an existing TSIG**: If desired, link the TSIG you [previously created](#step-1---create-tsig-optional). 
+   - **IP**: Specifies where Cloudflare sends transfer requests to.
+   - **Port**: Specifies the IP Port for the transfer IP.
+   - **Enable incremental (IXFR) zone transfers**: Specifies if Cloudflare sends IXFR requests in addition to the default AXFR requests.
+   - **Link a an existing TSIG**: If desired, link the TSIG you [previously created](#step-1---create-tsig-optional).
 6. Click **Create**.
 
 ### Using the API
@@ -93,13 +94,13 @@ To create a secondary zone using the dashboard:
 4. Click **Add site**.
 5. Select your plan type.
 6. Choose a value for **Zone refresh**, which controls the number of seconds between zone updates from your primary DNS server.
-    {{<Aside type="warning">}}Cloudflare will not use the REFRESH value inside the SOA record that is served by your primary provider. Instead the value of zone refresh configured for your secondary zone on Cloudflare will be used to determine the interval after which the SOA serial of the primary zone will be checked for changes.
-    {{</Aside>}}
+   {{<Aside type="warning">}}Cloudflare will not use the REFRESH value inside the SOA record that is served by your primary provider. Instead the value of zone refresh configured for your secondary zone on Cloudflare will be used to determine the interval after which the SOA serial of the primary zone will be checked for changes.
+   {{</Aside>}}
 7. Select the peer server you [previously created](#step-2---create-peer-server). If needed, you can link more than one peer server to a zone.
 8. Click **Continue**.
 9. Review the list of transferred records and click **Continue**.
-    {{<Aside type="note">}} If no records appear, you may have misconfigured the TSIG or the IP address of the peer server or the [Access Control List](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#cloudflare-as-secondary) was improperly configured at your primary DNS provider.
-    {{</Aside>}}
+   {{<Aside type="note">}} If no records appear, you may have misconfigured the TSIG or the IP address of the peer server or the [Access Control List](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#cloudflare-as-secondary) was improperly configured at your primary DNS provider.
+   {{</Aside>}}
 10. Click **Initiate zone transfer**.
 
 ### Using the API

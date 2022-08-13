@@ -16,35 +16,30 @@ $ npm install @cloudflare/pages-plugin-graphql
 
 ## Usage
 
-```typescript
+```ts
 ---
 filename: functions/graphql.ts
 ---
-import graphQLPlugin from "@cloudflare/pages-plugin-graphql";
-import {
-  graphql,
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLString,
-} from "graphql";
+import graphQLPlugin from '@cloudflare/pages-plugin-graphql';
+import { graphql, GraphQLSchema, GraphQLObjectType, GraphQLString } from 'graphql';
 
 const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: "RootQueryType",
-    fields: {
-      hello: {
-        type: GraphQLString,
-        resolve() {
-          return "Hello, world!";
-        },
-      },
-    },
-  }),
+	query: new GraphQLObjectType({
+		name: 'RootQueryType',
+		fields: {
+			hello: {
+				type: GraphQLString,
+				resolve() {
+					return 'Hello, world!';
+				},
+			},
+		},
+	}),
 });
 
 export const onRequest: PagesFunction = graphQLPlugin({
-  schema,
-  graphql,
+	schema,
+	graphql,
 });
 ```
 

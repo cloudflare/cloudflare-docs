@@ -35,22 +35,22 @@ Your rules may also vary based on the [nature of your site](/bots/get-started/bm
 When a request is definitely automated (score of 1) or likely automated (scores 2 through 29) and is _not_ on the list of known good bots, Cloudflare **blocks** the request.
 
 <table style="table-layout:fixed; width:100%">
-  <thead>
-    <tr>
-      <th>Expression</th>
-      <th style="width:20%">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>(cf.bot_management.score lt 30) and not (cf.bot_management.verified_bot)</code>
-      </td>
-      <td>
-        <em>Block</em>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Expression</th>
+			<th style="width:20%">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<code>(cf.bot_management.score lt 30) and not (cf.bot_management.verified_bot)</code>
+			</td>
+			<td>
+				<em>Block</em>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 ### Exempt API traffic
@@ -60,25 +60,25 @@ Since Bot Management detects automated users, you need to explicitly allow your 
 This example offers the same protection as the browser-only rule, but allows automated traffic to your API.
 
 <table style="table-layout:fixed; width:100%">
-  <thead>
-    <tr>
-      <th>Expression</th>
-      <th style="width:20%">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>
-          (cf.bot_management.score lt 30) and not (cf.bot_management.verified_bot) and not
-          (http.request.uri.path contains "/api")
-        </code>
-      </td>
-      <td>
-        <em>Block</em>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Expression</th>
+			<th style="width:20%">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<code>
+					(cf.bot_management.score lt 30) and not (cf.bot_management.verified_bot) and not
+					(http.request.uri.path contains "/api")
+				</code>
+			</td>
+			<td>
+				<em>Block</em>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 ### Adjust for mobile traffic
@@ -88,51 +88,51 @@ Since Bot Management can be more sensitive to mobile traffic, you may want to ad
 If you are handling requests from your own mobile application, you could potentially allow it based on its specific [JA3 fingerprint](/bots/concepts/ja3-fingerprint/).
 
 <table style="table-layout:fixed; width:100%">
-  <thead>
-    <tr>
-      <th>Expression</th>
-      <th style="width:20%">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>(cf.bot_management.ja3_hash eq df669e7ea913f1ac0c0cce9a201a2ec1)</code>
-      </td>
-      <td>
-        <em>Allow</em>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Expression</th>
+			<th style="width:20%">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<code>(cf.bot_management.ja3_hash eq df669e7ea913f1ac0c0cce9a201a2ec1)</code>
+			</td>
+			<td>
+				<em>Allow</em>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 Otherwise, you could set lower thresholds for mobile traffic. The following rules would block definitely automated mobile traffic and challenge likely automated traffic.
 
 <table style="table-layout:fixed; width:100%">
-  <thead>
-    <tr>
-      <th>Expression</th>
-      <th style="width:20%">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>(cf.bot_management.score lt 2) and (http.user_agent contains "App_Name 2.0")</code>
-      </td>
-      <td>
-        <em>Block</em>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>(cf.bot_management.score lt 30) and (http.user_agent contains "App_Name 2.0")</code>
-      </td>
-      <td>
-        <em>Challenge</em>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Expression</th>
+			<th style="width:20%">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<code>(cf.bot_management.score lt 2) and (http.user_agent contains "App_Name 2.0")</code>
+			</td>
+			<td>
+				<em>Block</em>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<code>(cf.bot_management.score lt 30) and (http.user_agent contains "App_Name 2.0")</code>
+			</td>
+			<td>
+				<em>Challenge</em>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 ### Layer rules

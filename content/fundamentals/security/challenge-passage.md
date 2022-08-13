@@ -18,7 +18,7 @@ When Cloudflare evaluates a `cf_clearance` cookie, a few extra minutes are inclu
 
 ## Customize the Challenge Passage
 
-By default, the `cf_clearance` cookie has a lifetime of 30 minutes. Cloudflare recommends a setting between 15 and 45 minutes.  
+By default, the `cf_clearance` cookie has a lifetime of 30 minutes. Cloudflare recommends a setting between 15 and 45 minutes.
 
 To update the Challenge Passage (and the value of the `cf_clearance` cookie):
 

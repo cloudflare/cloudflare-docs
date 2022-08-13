@@ -16,17 +16,17 @@ $ npm install @cloudflare/pages-plugin-static-forms
 
 ## Usage
 
-```typescript
+```ts
 ---
 filename: functions/_middleware.ts
 ---
-import staticFormsPlugin from "@cloudflare/pages-plugin-static-forms";
+import staticFormsPlugin from '@cloudflare/pages-plugin-static-forms';
 
 export const onRequest: PagesFunction = staticFormsPlugin({
-  respondWith: ({ formData, name }) => {
-    const email = formData.get('email')
-    return new Response(`Hello, ${email}! Thank you for submitting the ${name} form.`)
-  }
+	respondWith: ({ formData, name }) => {
+		const email = formData.get('email');
+		return new Response(`Hello, ${email}! Thank you for submitting the ${name} form.`);
+	},
 });
 ```
 
@@ -34,13 +34,14 @@ export const onRequest: PagesFunction = staticFormsPlugin({
 ---
 filename: public/sales-enquiry.html
 ---
+
 <body>
-  <h1>Sales enquiry</h1>
-  <form data-static-form-name="sales">
-    <label>Email address <input type="email" name="email" /></label>
-    <label>Message <textarea name="message"></textarea></label>
-    <button type="Submit">
-  </form>
+	<h1>Sales enquiry</h1>
+	<form data-static-form-name="sales">
+		<label>Email address <input type="email" name="email" /></label>
+		<label>Message <textarea name="message"></textarea></label>
+		<button type="submit"></button>
+	</form>
 </body>
 ```
 

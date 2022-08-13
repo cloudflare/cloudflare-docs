@@ -14,16 +14,18 @@ Cloudflare’s Log Retrieval API allows you to query logs from R2 by providing a
 - Create an [R2 access key](/r2/platform/s3-compatibility/tokens/) with at least R2 read permissions.
 - Ensure that you have Logshare read permissions.
 - Alternatively, create a Cloudflare API token with the following permissions:
-    - Account scope
-    - Logs read permissions
+  - Account scope
+  - Logs read permissions
 
 ## Authentication
 
 The following headers are required for all API calls:
+
 - `X-Auth-Email` - the Cloudflare account email address associated with the domain
 - `X-Auth-Key` - the Cloudflare API key
 
 Alternatively, API tokens with Logs edit permissions can also be used for authentication:
+
 - `Authorization: Bearer <API_TOKEN>`
 
 ## List files
@@ -73,7 +75,7 @@ Stream logs stored in R2 that match the provided query parameters, using the end
 ```bash
 curl -s -g -X GET  'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logs/retrieve?start=2022-06-01T16:00:00Z&end=2022-06-01T16:05:00Z&bucket=cloudflare-logs&prefix=http_requests/exmaple.com/{DATE}' \
 -H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \ 
+-H "X-Auth-Key: <API_KEY>" \
 -H "R2-Access-Key-Id: R2_ACCESS_KEY_ID" \
 -H "R2-Secret-Access-Key: R2_SECRET_ACCESS_KEY" | jq .
 ```
@@ -88,15 +90,16 @@ HTTP status code `422` will be returned if the time range between the start and 
 
 ```json
 {
-    "result": null,
-    "success": false,
-    "messages": [],
-    "errors": [
-        {
-            "code": 1002,
-            "message": "Time range returned too many results. Try reducing the time range and try again."
-        }
-    ]
+	"result": null,
+	"success": false,
+	"messages": [],
+	"errors": [
+		{
+			"code": 1002,
+			"message": "Time range returned too many results. Try reducing the time range and try again."
+		}
+	]
+}
 ```
 
 Try querying a shorter time range if you are running into this limit.

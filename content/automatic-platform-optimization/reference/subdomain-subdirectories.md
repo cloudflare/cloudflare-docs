@@ -37,22 +37,22 @@ The `cf-edge-cache: no-cache` instructs the APO service to bypass caching for no
 
 ```js
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
+	event.respondWith(handleRequest(event.request));
 });
 
 async function handleRequest(request) {
-  /**
-   * Response properties are immutable. To change them, construct a new
-   * Response object. Response headers can be modified through the headers `set` method.
-   */
-  const originalResponse = await fetch(request);
+	/**
+	 * Response properties are immutable. To change them, construct a new
+	 * Response object. Response headers can be modified through the headers `set` method.
+	 */
+	const originalResponse = await fetch(request);
 
-  let response = new Response(originalResponse.body, originalResponse);
+	let response = new Response(originalResponse.body, originalResponse);
 
-  // Add a header using set method
-  response.headers.set('cf-edge-cache', 'no-cache');
+	// Add a header using set method
+	response.headers.set('cf-edge-cache', 'no-cache');
 
-  return response;
+	return response;
 }
 ```
 

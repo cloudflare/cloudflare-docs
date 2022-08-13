@@ -9,7 +9,7 @@ Below are limits observed by the Cloudflare Free plan. For more details on remov
 
 {{<Aside type="note">}}
 
-We want to encourage you to build any application you can dream up, and realize that doesn't always fit within our limits. 
+We want to encourage you to build any application you can dream up, and realize that doesn't always fit within our limits.
 
 To increase any of our limits, [please fill out our form!](https://forms.gle/ukpeZVLWLnKeixDu7)
 
@@ -47,7 +47,7 @@ A `_redirects` file can have a maximum of 2,000 static redirects and 100 dynamic
 
 ## Users
 
-Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your Git project – you can manage both public and private repositories, open issues, and accept pull requests via  without impacting your Pages site.
+Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your Git project – you can manage both public and private repositories, open issues, and accept pull requests via without impacting your Pages site.
 
 ## Sites
 

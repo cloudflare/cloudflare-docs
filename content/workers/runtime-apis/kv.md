@@ -94,7 +94,7 @@ To associate some metadata with a key-value pair, set `metadata` to any arbitrar
 
 ```js
 await NAMESPACE.put(key, value, {
-  metadata: { someMetadataKey: "someMetadataValue" },
+	metadata: { someMetadataKey: 'someMetadataValue' },
 });
 ```
 
@@ -115,17 +115,17 @@ Note that `get` may return stale values -- if a given key has recently been read
 An example of reading a key from within a Worker:
 
 ```js
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
+addEventListener('fetch', event => {
+	event.respondWith(handleRequest(event.request));
 });
 
 async function handleRequest(request) {
-  const value = await NAMESPACE.get("first-key");
-  if (value === null) {
-    return new Response("Value not found", { status: 404 });
-  }
+	const value = await NAMESPACE.get('first-key');
+	if (value === null) {
+		return new Response('Value not found', { status: 404 });
+	}
 
-  return new Response(value);
+	return new Response(value);
 }
 ```
 
@@ -136,7 +136,7 @@ You can [read key-value pairs from the command line with Wrangler](/workers/wran
 You can pass in an options object with a `type` parameter to the `get` method:
 
 ```js
-NAMESPACE.get(key, { type: "text" });
+NAMESPACE.get(key, { type: 'text' });
 ```
 
 The `type` parameter can be any of:
@@ -195,14 +195,14 @@ You can use a list operation to see all of the keys that live in a given namespa
 An example:
 
 ```js
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
+addEventListener('fetch', event => {
+	event.respondWith(handleRequest(event.request));
 });
 
 async function handleRequest(request) {
-  const value = await NAMESPACE.list();
+	const value = await NAMESPACE.list();
 
-  return new Response(value.keys);
+	return new Response(value.keys);
 }
 ```
 
@@ -214,8 +214,8 @@ Changes may take up to 60 seconds to be visible when listing keys.
 
 The `list` method has this signature (in TypeScript):
 
-```js
-NAMESPACE.list({prefix?: string, limit?: number, cursor?: string})
+```ts
+NAMESPACE.list({ prefix: string, limit: number, cursor: string });
 ```
 
 All arguments are optional:
@@ -228,15 +228,15 @@ The `list` method returns a promise which resolves with an object that looks lik
 
 ```json
 {
-  "keys": [
-    {
-      "name": "foo",
-      "expiration": 1234,
-      "metadata": { "someMetadataKey": "someMetadataValue" }
-    }
-  ],
-  "list_complete": false,
-  "cursor": "6Ck1la0VxJ0djhidm1MdX2FyD"
+	"keys": [
+		{
+			"name": "foo",
+			"expiration": 1234,
+			"metadata": { "someMetadataKey": "someMetadataValue" }
+		}
+	],
+	"list_complete": false,
+	"cursor": "6Ck1la0VxJ0djhidm1MdX2FyD"
 }
 ```
 
@@ -249,8 +249,8 @@ Additionally, if `list_complete` is `false`, there are more keys to fetch, even 
 Note that if your values fit in [the metadata-size limit](/workers/platform/limits/#kv-limits), you may consider storing them in metadata instead. This is more efficient than a `list` followed by a `get` per key. When using `put`, you can leave the `value` parameter empty and instead include a property in the metadata object:
 
 ```js
-await NAMESPACE.put(key, "", {
-  metadata: { value: value },
+await NAMESPACE.put(key, '', {
+	metadata: { value: value },
 });
 ```
 
@@ -259,14 +259,14 @@ await NAMESPACE.put(key, "", {
 You can also list all of the keys starting with a particular prefix. For example, you may have structured your keys with a user, a user ID, and key names, separated by colons (for example, `user:1:<key>`). You could get the keys for user number one by doing this:
 
 ```js
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
+addEventListener('fetch', event => {
+	event.respondWith(handleRequest(event.request));
 });
 
 async function handleRequest(request) {
-  const value = await NAMESPACE.list({ prefix: "user:1:" });
+	const value = await NAMESPACE.list({ prefix: 'user:1:' });
 
-  return new Response(value.keys);
+	return new Response(value.keys);
 }
 ```
 
@@ -317,13 +317,13 @@ kv_namespaces = [
 With this, the deployed Worker will have a `TODO` global variable. Any methods on the `TODO` binding will map to the KV namespace with an ID of `06779da6940b431db6e566b4846d64db` – which you called `My Tasks` earlier.
 
 ```js
-addEventListener("fetch", async (event) => {
-  // Get the value for the "to-do:123" key
-  // NOTE: Relies on the `TODO` KV binding that maps to the "My Tasks" namespace.
-  let value = await TODO.get("to-do:123");
+addEventListener('fetch', async event => {
+	// Get the value for the "to-do:123" key
+	// NOTE: Relies on the `TODO` KV binding that maps to the "My Tasks" namespace.
+	let value = await TODO.get('to-do:123');
 
-  // Return the value, as is, for the Response
-  event.respondWith(new Response(value));
+	// Return the value, as is, for the Response
+	event.respondWith(new Response(value));
 });
 ```
 
@@ -345,15 +345,15 @@ The documentation above assumes you are using the original Service Worker syntax
 
 ```js
 export class DurableObject {
-  constructor(state, env) {
-    this.state = state;
-    this.env = env;
-  }
+	constructor(state, env) {
+		this.state = state;
+		this.env = env;
+	}
 
-  async fetch(request) {
-    const valueFromKV = await this.env.NAMESPACE.get("someKey");
-    return new Response(valueFromKV);
-  }
+	async fetch(request) {
+		const valueFromKV = await this.env.NAMESPACE.get('someKey');
+		return new Response(valueFromKV);
+	}
 }
 ```
 

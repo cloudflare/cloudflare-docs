@@ -34,22 +34,22 @@ A successful response will return information about the live input.
 
 ```json
 {
-  "uid": "f256e6ea9341d51eea64c9454659e576",
-  "rtmps": {
-    "url": "rtmps://live.cloudflare.com:443/live/",
-    "streamKey": "MTQ0MTcjM3MjI1NDE3ODIyNTI1MjYyMjE4NTI2ODI1NDcxMzUyMzcf256e6ea9351d51eea64c9454659e576"
-  },
-  "created": "2021-09-23T05:05:53.451415Z",
-  "modified": "2021-09-23T05:05:53.451415Z",
-  "meta": {
-    "name": "My Live Stream"
-  },
-  "status": null,
-  "recording": {
-    "mode": "automatic",
-    "requireSignedURLs": false,
-    "allowedOrigins": ["*.example.com"]
-  }
+	"uid": "f256e6ea9341d51eea64c9454659e576",
+	"rtmps": {
+		"url": "rtmps://live.cloudflare.com:443/live/",
+		"streamKey": "MTQ0MTcjM3MjI1NDE3ODIyNTI1MjYyMjE4NTI2ODI1NDcxMzUyMzcf256e6ea9351d51eea64c9454659e576"
+	},
+	"created": "2021-09-23T05:05:53.451415Z",
+	"modified": "2021-09-23T05:05:53.451415Z",
+	"meta": {
+		"name": "My Live Stream"
+	},
+	"status": null,
+	"recording": {
+		"mode": "automatic",
+		"requireSignedURLs": false,
+		"allowedOrigins": ["*.example.com"]
+	}
 }
 ```
 

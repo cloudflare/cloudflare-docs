@@ -18,13 +18,13 @@ When a request is received on one of Cloudflare’s edge servers for a URL match
 filename: ~/my-worker/index.js
 ---
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
+	event.respondWith(handleRequest(event.request));
 });
 
 async function handleRequest(request) {
-  return new Response('Hello worker!', {
-    headers: { 'content-type': 'text/plain' },
-  });
+	return new Response('Hello worker!', {
+		headers: { 'content-type': 'text/plain' },
+	});
 }
 ```
 

@@ -8,8 +8,8 @@ weight: 6
 
 Cloudflare Access generates two types of audit logs:
 
-*   **[Authentication audit logs](#authentication-audit-logs)** maintain a record of authentication events.
-*   **[Per-request audit logs](#per-request-audit-logs)** record HTTP requests to protected URI paths.
+- **[Authentication audit logs](#authentication-audit-logs)** maintain a record of authentication events.
+- **[Per-request audit logs](#per-request-audit-logs)** record HTTP requests to protected URI paths.
 
 ## Authentication Audit Logs
 
@@ -27,19 +27,19 @@ Authentication audit logs do not capture actions the user takes once they have a
 
 Access authentication logs contain the following fields:
 
-| Field | Description |
-|-------|-------------|
-| **user\_email** |  The email address of the authenticating user. |
-| **ip\_address** |  The IP address of the authenticating user. |
-| **app\_uid** | The unique identifier for the protected application. |
-| **add\_domain** |  The URL of the protected application. |
-| **action** | The event that occurred, such as a login attempt. |
-| **allowed** | The result of the authentication event. |
-| **created\_at** | The event timestamp. |
-| **connection**  | The IdP used to authenticate. |
-| **country** | The country associated with the user’s IP address. |
-| **ray\_id** | A unique identifier for every request through Cloudflare. |
-| **app\_type** | The type specifies if the app is self-hosted or SaaS. |
+| Field          | Description                                               |
+| -------------- | --------------------------------------------------------- |
+| **user_email** | The email address of the authenticating user.             |
+| **ip_address** | The IP address of the authenticating user.                |
+| **app_uid**    | The unique identifier for the protected application.      |
+| **add_domain** | The URL of the protected application.                     |
+| **action**     | The event that occurred, such as a login attempt.         |
+| **allowed**    | The result of the authentication event.                   |
+| **created_at** | The event timestamp.                                      |
+| **connection** | The IdP used to authenticate.                             |
+| **country**    | The country associated with the user’s IP address.        |
+| **ray_id**     | A unique identifier for every request through Cloudflare. |
+| **app_type**   | The type specifies if the app is self-hosted or SaaS.     |
 
 ### Access Requests Audit API endpoint
 
@@ -49,12 +49,12 @@ The [Access Requests Audit](https://api.cloudflare.com/#access-requests-access-r
 
 #### Optional fields
 
-| Name /type | Description/example | Constraints |
-| ---------- | ------------------- | ----------- |
-| limit (number) | Limit the number of results `25`. | - |
-| direction (string) | Change the direction of the chronological sorting `"desc"`. | default value: `desc`, valid values: `desc`, `asc` |
-| since (date-time string) | 	The time the query begins `"2020-07-01T05:20:00Z"`. | read only |
-| until (date-time string)	| The time the query ends `"2020-10-01T05:20:00Z"`. | read only |
+| Name /type               | Description/example                                         | Constraints                                        |
+| ------------------------ | ----------------------------------------------------------- | -------------------------------------------------- |
+| limit (number)           | Limit the number of results `25`.                           | -                                                  |
+| direction (string)       | Change the direction of the chronological sorting `"desc"`. | default value: `desc`, valid values: `desc`, `asc` |
+| since (date-time string) | The time the query begins `"2020-07-01T05:20:00Z"`.         | read only                                          |
+| until (date-time string) | The time the query ends `"2020-10-01T05:20:00Z"`.           | read only                                          |
 
 #### cURL (example)
 
@@ -69,22 +69,22 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/699d98642c564d2e855e9
 
 ```json
 {
-  "success": true,
-  "errors": [],
-  "messages": [],
-  "result": [
-    {
-      "user_email": "michelle@example.com",
-      "ip_address": "198.41.129.166",
-      "app_uid": "df7e2w5f-02b7-4d9d-af26-8d1988fca630",
-      "app_domain": "test.example.com/admin",
-      "action": "login",
-      "connection": "saml",
-      "allowed": false,
-      "created_at": "2014-01-01T05:20:00.12345Z",
-      "ray_id": "187d944c61940c77"
-    }
-  ]
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result": [
+		{
+			"user_email": "michelle@example.com",
+			"ip_address": "198.41.129.166",
+			"app_uid": "df7e2w5f-02b7-4d9d-af26-8d1988fca630",
+			"app_domain": "test.example.com/admin",
+			"action": "login",
+			"connection": "saml",
+			"allowed": false,
+			"created_at": "2014-01-01T05:20:00.12345Z",
+			"ray_id": "187d944c61940c77"
+		}
+	]
 }
 ```
 
@@ -94,7 +94,7 @@ Users who have authenticated through Access have access to authorized URL paths 
 
 A video guide is also available:
 
-<StreamVideo id="19987899aa95453b6bbdb7e6b4431223"/>
+<StreamVideo id="19987899aa95453b6bbdb7e6b4431223" />
 
 ### Cloudflare logging
 
@@ -107,32 +107,34 @@ When a user requests a given URL, Access appends the user identity from that tok
 Cloudflare Logpush can be used to gather and send specific request headers from the requests made to sites behind Access. Once enabled, you can then configure the destination where Cloudflare should send these logs. When enabled with the Access user identity field, the logs will export to your systems as JSON similar to the logs below.
 
 ```json
-{
-   "ClientIP": "198.51.100.206",
-   "ClientRequestHost": "jira.widgetcorp.tech",
-   "ClientRequestMethod": "GET",
-   "ClientRequestURI": "/secure/Dashboard/jspa",
-   "ClientRequestUserAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36",
-   "EdgeEndTimestamp": "2019-11-10T09:51:07Z",
-   "EdgeResponseBytes": 4600,
-   "EdgeResponseStatus": 200,
-   "EdgeStartTimestamp": "2019-11-10T09:51:07Z",
-   "RayID": "5y1250bcjd621y99",
-   "RequestHeaders":{"cf-access-user":"srhea"}
-},
-{
-   "ClientIP": "198.51.100.206",
-   "ClientRequestHost": "jira.widgetcorp.tech",
-   "ClientRequestMethod": "GET",
-   "ClientRequestURI": "/browse/EXP-12",
-   "ClientRequestUserAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36",
-   "EdgeEndTimestamp": "2019-11-10T09:51:27Z",
-   "EdgeResponseBytes": 4570,
-   "EdgeResponseStatus": 200,
-   "EdgeStartTimestamp": "2019-11-10T09:51:27Z",
-   "RayID": "yzrCqUhRd6DVz72a",
-   "RequestHeaders":{"cf-access-user":"srhea"}
-}
+[
+	{
+		"ClientIP": "198.51.100.206",
+		"ClientRequestHost": "jira.widgetcorp.tech",
+		"ClientRequestMethod": "GET",
+		"ClientRequestURI": "/secure/Dashboard/jspa",
+		"ClientRequestUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36",
+		"EdgeEndTimestamp": "2019-11-10T09:51:07Z",
+		"EdgeResponseBytes": 4600,
+		"EdgeResponseStatus": 200,
+		"EdgeStartTimestamp": "2019-11-10T09:51:07Z",
+		"RayID": "5y1250bcjd621y99",
+		"RequestHeaders": { "cf-access-user": "srhea" }
+	},
+	{
+		"ClientIP": "198.51.100.206",
+		"ClientRequestHost": "jira.widgetcorp.tech",
+		"ClientRequestMethod": "GET",
+		"ClientRequestURI": "/browse/EXP-12",
+		"ClientRequestUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36",
+		"EdgeEndTimestamp": "2019-11-10T09:51:27Z",
+		"EdgeResponseBytes": 4570,
+		"EdgeResponseStatus": 200,
+		"EdgeStartTimestamp": "2019-11-10T09:51:27Z",
+		"RayID": "yzrCqUhRd6DVz72a",
+		"RequestHeaders": { "cf-access-user": "srhea" }
+	}
+]
 ```
 
 ### Using the `cf-access-user` field

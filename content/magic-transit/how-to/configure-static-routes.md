@@ -18,16 +18,17 @@ You can also create and edit static routes using [Magic Transit Static Routes AP
 <details>
 <summary>Edge routing configuration example</summary>
 
-| Tunnel             | Subnet               |    Priority   |
-| ------------------ | -------------------- | ------------- |
-| TUNNEL_1_IAD       | **103.21.244.0/24**  | 100           |
-| TUNNEL_2_IAD       | **103.21.244.0/24**  | 100           |
-| TUNNEL_3_ATL       | **103.21.244.0/24**  | 100           |
-| TUNNEL_4_ATL       | **103.21.244.0/24**  | 100           |
-| TUNNEL_1_IAD       | 103.21.245.0/24      | 200           |
-| TUNNEL_2_IAD       | 103.21.245.0/24      | 200           |
-| TUNNEL_3_ATL       | 103.21.245.0/24      | 100           |
-| TUNNEL_4_ATL       | 103.21.245.0/24      | 100           |
+| Tunnel       | Subnet              | Priority |
+| ------------ | ------------------- | -------- |
+| TUNNEL_1_IAD | **103.21.244.0/24** | 100      |
+| TUNNEL_2_IAD | **103.21.244.0/24** | 100      |
+| TUNNEL_3_ATL | **103.21.244.0/24** | 100      |
+| TUNNEL_4_ATL | **103.21.244.0/24** | 100      |
+| TUNNEL_1_IAD | 103.21.245.0/24     | 200      |
+| TUNNEL_2_IAD | 103.21.245.0/24     | 200      |
+| TUNNEL_3_ATL | 103.21.245.0/24     | 100      |
+| TUNNEL_4_ATL | 103.21.245.0/24     | 100      |
+
 </details>
 
 For more on how Cloudflare uses ECMP packet forwarding, refer to [Traffic steering](/magic-transit/about/traffic-steering/).
@@ -36,10 +37,10 @@ For more on how Cloudflare uses ECMP packet forwarding, refer to [Traffic steeri
 
 You must provide your prefixes and the tunnels they should be mapped to in order for Cloudflare to route your traffic from the edge to your data centers via Anycast tunnels. Use the table below as reference.
 
-| Prefix          | Tunnel        |
-| --------------- | ------------- |
-| 103.21.244.0/29 | TUNNEL_1_IAD  |
-| 103.21.244.8/29 | TUNNEL_2_ATL  |
+| Prefix          | Tunnel       |
+| --------------- | ------------ |
+| 103.21.244.0/29 | TUNNEL_1_IAD |
+| 103.21.244.8/29 | TUNNEL_2_ATL |
 
 The minimum advertising prefix is /24, but because Cloudflare uses Anycast tunnels as an outer wrapper for your traffic, we can route prefixes within that /24 to different tunnel end points.
 

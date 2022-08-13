@@ -53,11 +53,11 @@ If you have GitHub two-factor authentication enabled, you will need to first log
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>"
-  },
-  "type": "github",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>"
+	},
+	"type": "github",
+	"name": "my example idp"
 }
 ```

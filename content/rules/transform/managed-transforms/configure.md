@@ -12,7 +12,7 @@ weight: 1
 
 2. Go to **Rules** > **Transform Rules**.
 
-    ![Access the Managed Transform settings from Rules > Transform Rules in the Cloudflare dashboard.](/rules/static/transform/managed-transforms-card.png)
+   ![Access the Managed Transform settings from Rules > Transform Rules in the Cloudflare dashboard.](/rules/static/transform/managed-transforms-card.png)
 
 3. Click **Managed Transforms**.
 
@@ -35,7 +35,7 @@ Each Managed Transform item will optionally contain a `conflicts_with` array inf
 
 The response will only include available Managed Transforms according to your Cloudflare plan and product subscriptions.
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -48,51 +48,47 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/managed_headers" \
 header: Response
 ---
 {
-  "result": {
-    "managed_request_headers": [
-      {
-        "id": "add_bot_protection_headers",
-        "enabled": false,
-        "has_conflict": false
-      },
-      {
-        "id": "add_visitor_location_headers",
-        "enabled": false,
-        "has_conflict": false
-      },
-      {
-        "id": "add_true_client_ip_headers",
-        "enabled": false,
-        "has_conflict": false,
-        "conflicts_with": [
-          "remove_visitor_ip_headers"
-        ]
-      },
-      {
-        "id": "remove_visitor_ip_headers",
-        "enabled": false,
-        "has_conflict": false,
-        "conflicts_with": [
-          "add_true_client_ip_headers"
-        ]
-      }
-    ],
-    "managed_response_headers": [
-      {
-        "id": "remove_x-powered-by_header",
-        "enabled": false,
-        "has_conflict": false
-      },
-      {
-        "id": "add_security_headers",
-        "enabled": false,
-        "has_conflict": false
-      }
-    ]
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"managed_request_headers": [
+			{
+				"id": "add_bot_protection_headers",
+				"enabled": false,
+				"has_conflict": false
+			},
+			{
+				"id": "add_visitor_location_headers",
+				"enabled": false,
+				"has_conflict": false
+			},
+			{
+				"id": "add_true_client_ip_headers",
+				"enabled": false,
+				"has_conflict": false,
+				"conflicts_with": ["remove_visitor_ip_headers"]
+			},
+			{
+				"id": "remove_visitor_ip_headers",
+				"enabled": false,
+				"has_conflict": false,
+				"conflicts_with": ["add_true_client_ip_headers"]
+			}
+		],
+		"managed_response_headers": [
+			{
+				"id": "remove_x-powered-by_header",
+				"enabled": false,
+				"has_conflict": false
+			},
+			{
+				"id": "add_security_headers",
+				"enabled": false,
+				"has_conflict": false
+			}
+		]
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -102,7 +98,7 @@ Add the Managed Transforms you wish to change to the request body, and update th
 
 Make sure you include the Managed Transforms you are updating in the correct JSON object (`managed_request_headers` or `managed_response_headers`).
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -133,50 +129,46 @@ The response will include all the available Managed Transforms and their new sta
 header: Response
 ---
 {
-  "result": {
-    "managed_request_headers": [
-      {
-        "id": "add_bot_protection_headers",
-        "enabled": false,
-        "has_conflict": false
-      },
-      {
-        "id": "add_visitor_location_headers",
-        "enabled": true,
-        "has_conflict": false
-      },
-      {
-        "id": "add_true_client_ip_headers",
-        "enabled": false,
-        "has_conflict": false,
-        "conflicts_with": [
-          "remove_visitor_ip_headers"
-        ]
-      },
-      {
-        "id": "remove_visitor_ip_headers",
-        "enabled": false,
-        "has_conflict": false,
-        "conflicts_with": [
-          "add_true_client_ip_headers"
-        ]
-      }
-    ],
-    "managed_response_headers": [
-      {
-        "id": "remove_x-powered-by_header",
-        "enabled": true,
-        "has_conflict": false
-      },
-      {
-        "id": "add_security_headers",
-        "enabled": false,
-        "has_conflict": false
-      }
-    ]
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"managed_request_headers": [
+			{
+				"id": "add_bot_protection_headers",
+				"enabled": false,
+				"has_conflict": false
+			},
+			{
+				"id": "add_visitor_location_headers",
+				"enabled": true,
+				"has_conflict": false
+			},
+			{
+				"id": "add_true_client_ip_headers",
+				"enabled": false,
+				"has_conflict": false,
+				"conflicts_with": ["remove_visitor_ip_headers"]
+			},
+			{
+				"id": "remove_visitor_ip_headers",
+				"enabled": false,
+				"has_conflict": false,
+				"conflicts_with": ["add_true_client_ip_headers"]
+			}
+		],
+		"managed_response_headers": [
+			{
+				"id": "remove_x-powered-by_header",
+				"enabled": true,
+				"has_conflict": false
+			},
+			{
+				"id": "add_security_headers",
+				"enabled": false,
+				"has_conflict": false
+			}
+		]
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```

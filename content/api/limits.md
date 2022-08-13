@@ -10,5 +10,5 @@ The global rate limit for our API is 1200 requests per 5 minutes. If you exceed 
 
 Some specific API calls have their own limits and are documented separately, such as the Cache Purge APIs:
 
-* https://api.cloudflare.com/#zone-purge-files-by-url
-* https://api.cloudflare.com/#zone-purge-files-by-cache-tags,-host-or-prefix
+- https://api.cloudflare.com/#zone-purge-files-by-url
+- https://api.cloudflare.com/#zone-purge-files-by-cache-tags,-host-or-prefix

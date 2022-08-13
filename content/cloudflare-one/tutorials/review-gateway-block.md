@@ -43,7 +43,6 @@ Once deployed, Cloudflare Gateway will begin to block DNS queries to sites categ
 
 3. Expand the record to identify more information about the event, including user identity if you have deployed the [Zero Trust agent](/cloudflare-one/connections/connect-devices/).
 
-
 ## Review block reason
 
 Review details about the domain blocked by Cloudflare by clicking **View domain details in Radar**. Cloudflare Radar provides information like site ranking, certificate history, and WHOIS information. If you believe the site was not categorized appropriately, click `Submit Categorization Feedback` beneath the `Content Categories` section.

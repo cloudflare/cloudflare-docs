@@ -10,19 +10,19 @@ This page lists the default account limits for rules, applications, fields, and 
 
 ## Access
 
-| Feature                                | Limit |
-| -------------------------------------- | ----- |
-| Applications count                     | 500   |
-| Audit Logpush jobs                     | 5     |
-| Email addresses per rule               | 1,000  |
-| Group count                            | 300   |
-| Group size                             | 1,000  |
-| IP addresses per rule                  | 1,000  |
-| mTLS root certificates                 | 50    |
-| Service tokens count                   | 50    |
-| IdP count                              | 50    |
-| Rules count per application            | 1,000  |
-| Rules count per group                  | 1,000  |
+| Feature                     | Limit |
+| --------------------------- | ----- |
+| Applications count          | 500   |
+| Audit Logpush jobs          | 5     |
+| Email addresses per rule    | 1,000 |
+| Group count                 | 300   |
+| Group size                  | 1,000 |
+| IP addresses per rule       | 1,000 |
+| mTLS root certificates      | 50    |
+| Service tokens count        | 50    |
+| IdP count                   | 50    |
+| Rules count per application | 1,000 |
+| Rules count per group       | 1,000 |
 
 ## Gateway
 
@@ -46,12 +46,12 @@ This page lists the default account limits for rules, applications, fields, and 
 
 ## Maximum number of characters
 
-| Feature                | Character limit|
-| -----------------------| ----- |
-| Application name       | 350   |
-| Group name             | 350   |
-| mTLS certificates name | 350   |
-| Service token name     | 350   |
-| IdP name               | 350   |
-| Application URL        | 63    |
-| Team domain            | 63    |
+| Feature                | Character limit |
+| ---------------------- | --------------- |
+| Application name       | 350             |
+| Group name             | 350             |
+| mTLS certificates name | 350             |
+| Service token name     | 350             |
+| IdP name               | 350             |
+| Application URL        | 63              |
+| Team domain            | 63              |

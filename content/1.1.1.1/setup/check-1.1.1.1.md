@@ -3,7 +3,7 @@ weight: 12
 pcx_content_type: reference
 title: Check connection to 1.1.1.1
 meta:
-    title: Check 1.1.1.1 DNS connection
+  title: Check 1.1.1.1 DNS connection
 ---
 
 # Check if you are connected to 1.1.1.1

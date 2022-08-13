@@ -31,6 +31,7 @@ For the purpose of this tutorial, the integration will refer to a scenario with 
 The central branch office has a 192.168.30.0/24 network with the SD-WAN appliance terminating the Anycast GRE tunnel.
 
 ![Table of routing information for central  branch](/magic-wan/static/viptela-gre-routing-table.png)
+
 </div>
 </details>
 
@@ -66,34 +67,35 @@ To create a Secure Internet Gateway (SIG) using vManage:
 1. From **Cisco vManage** under **Configuration**, click **Generic** and **Add Tunnel**.
 2. Refer to the table below for the setting fields and their options.
 
-|     Setting             |   Type/Detail                          |
-|-------------------------|----------------------------------------|
-| **Global Template**     | Factory_Default_Global_CISCO_Template  |
-| **Cisco Banner**        | Factory_Default_Retail_Banner          |
-| **Policy**              | Branch-Local-Policy                    |
+| Setting             | Type/Detail                           |
+| ------------------- | ------------------------------------- |
+| **Global Template** | Factory_Default_Global_CISCO_Template |
+| **Cisco Banner**    | Factory_Default_Retail_Banner         |
+| **Policy**          | Branch-Local-Policy                   |
 
 **Transport & Management VPN settings**
 
-|     Setting                        |   Type/Detail                   |
-|------------------------------------|---------------------------------|
-| **Cisco VPN 0**                    | GCP-Branch-VPN0                 |
-| **Cisco Secure Internet Gateway**  | Branch-SIG-GRE-Template         |
-| **Cisco VPN Interface Ethernet**   | GCP-Branch-Public-Internet-TLOC |
-| **Cisco VPN Interface Ethernet**   | GCP-VPN0-Interface              |
-| **Cisco VPN 512**                  | Default_AWS_TGW_CSR_VPN512_V01  |
+| Setting                           | Type/Detail                     |
+| --------------------------------- | ------------------------------- |
+| **Cisco VPN 0**                   | GCP-Branch-VPN0                 |
+| **Cisco Secure Internet Gateway** | Branch-SIG-GRE-Template         |
+| **Cisco VPN Interface Ethernet**  | GCP-Branch-Public-Internet-TLOC |
+| **Cisco VPN Interface Ethernet**  | GCP-VPN0-Interface              |
+| **Cisco VPN 512**                 | Default_AWS_TGW_CSR_VPN512_V01  |
 
 **Basic Information settings**
 
-|     Setting        |   Type/Detail                           |
-|--------------------|-----------------------------------------|
+| Setting            | Type/Detail                             |
+| ------------------ | --------------------------------------- |
 | **Cisco System**   | Default_BootStrap_Cisco_System_Template |
 | **Cisco Loging**   | Default_Logging_Cisco_V01               |
 | **Cisco AAA**      | AWS-Branch-AAA-Template                 |
 | **Cisco BFD**      | Default_BFD_Cisco-V01                   |
-| **Cisco OMP**      |  Default_AWS_TGW_CSR_OMP_IPv46_...      |
+| **Cisco OMP**      | Default*AWS_TGW_CSR_OMP_IPv46*...       |
 | **Cisco Security** | Default_Security_Cisco_V01              |
 
 When creating the Feature Template, you can choose values that apply globally or that are device specific. For example, the **Tunnel Source IP Address**, **Interface Name** and fields from **Update Tunnel** are device specific and should be chosen accordingly.
+
 </div>
 </details>
 
@@ -112,24 +114,25 @@ To create a Secure Internet Gateway (SIG) using vManage:
 1. From **Cisco vManage** under **Configuration**, click **Generic** and **Add Tunnel**.
 2. Refer to the table below for the setting fields and their options.
 
-|     Setting                                       |   Type/Detail                     |
-|---------------------------------------------------|-----------------------------------|
-| **Tunnel Type**                                   | IPsec                             |
-| **Interface Name (1..255)**                       | Global                            |
-| **Description**                                   | IP                                |
-| **Tunnel Source IP Address**                      | Device-Specific                   |
-| **IPv4 addresses**                                | Device-Specific                   |
-| **Tunnel Route-via Interface**                    | Device-Specific                   |
-| **Tunnel Destination IP Address/FQDN(Ipsec)**     | Device-Specific                   |
-| **Preshared key**                                 | Device-Specific                  |
-| **IPsec Rekey Interval (under advanced options)** | Default                           |
-| **IPsec Replay Window**                           | Default                           |
-| **IPSec Cipher Suite**                            | Global (AES 256 CBC SHA 256)      |
+| Setting                                           | Type/Detail                        |
+| ------------------------------------------------- | ---------------------------------- |
+| **Tunnel Type**                                   | IPsec                              |
+| **Interface Name (1..255)**                       | Global                             |
+| **Description**                                   | IP                                 |
+| **Tunnel Source IP Address**                      | Device-Specific                    |
+| **IPv4 addresses**                                | Device-Specific                    |
+| **Tunnel Route-via Interface**                    | Device-Specific                    |
+| **Tunnel Destination IP Address/FQDN(Ipsec)**     | Device-Specific                    |
+| **Preshared key**                                 | Device-Specific                    |
+| **IPsec Rekey Interval (under advanced options)** | Default                            |
+| **IPsec Replay Window**                           | Default                            |
+| **IPSec Cipher Suite**                            | Global (AES 256 CBC SHA 256)       |
 | **Perfect Forward Secrecy**                       | Global (Group-14 2048-bit modulus) |
+
 </div>
 </details>
 
-## 2. (IPsec only) Create a non-default feature template 
+## 2. (IPsec only) Create a non-default feature template
 
 For compatibility, you will need to disable replay protection, which is not an option through the templates, by creating a CLI template in addition to the feature template created in the previous step.
 
@@ -145,11 +148,12 @@ In the image above, replay is disabled and the `local key-id` is set to a variab
 </summary>
  <div class="special-class" markdown="1">
 
-From vManage, click **Configuration** > **Templates**. You should see the newly created template where you will update the device values. 
+From vManage, click **Configuration** > **Templates**. You should see the newly created template where you will update the device values.
 
 Because the template was created to add GRE tunnels, you only need to update the device values. Note that **VPN0** is the default, and the WAN interface used to build the tunnel must be part of **VPN0**.
 
 ![Update template fields for GRE tunnel](/magic-wan/static/viptela-update-device-template-gre.png)
+
 </div>
 </details>
 
@@ -159,11 +163,12 @@ Because the template was created to add GRE tunnels, you only need to update the
 </summary>
  <div class="special-class" markdown="1">
 
-From **vManage**, click **Configuration** > **Templates**. You should see the newly created template where you will update the device values. 
+From **vManage**, click **Configuration** > **Templates**. You should see the newly created template where you will update the device values.
 
 In the example below, the template is the **GCP-Branch-Template**. Note that **VPN0** is the default, and the WAN interface used to build the tunnel needs to be part of VPN0.
 
 ![Update template fields for IPsec tunnel](/magic-wan/static/viptela-update-device-template-ipsec.png)
+
 </div>
 </details>
 
@@ -178,6 +183,7 @@ In the example below, the template is the **GCP-Branch-Template**. Note that **V
 Refer to [Configure tunnel endpoints](/magic-wan/how-to/configure-tunnels) for more information on creating a GRE tunnel.
 
 ![Established GRE tunne in Cloudflash dashboard](/magic-wan/static/viptela-gre-tunnel.png)
+
 </div>
 </details>
 
@@ -281,6 +287,7 @@ header: Response
 "messages": []
 }
 ```
+
 </div>
 </details>
 
@@ -310,6 +317,7 @@ Define static routes on the 8000v router so Cloudflare can route traffic between
 For the purpose of the tutorial, create a route for the subnet 10.1.2.0/24 on the GCP branch to be routed via the established IPSec tunnel between the 8000v appliance and Cloudflare
 
 Refer to [Configure static routes](/magic-wan/how-to/configure-static-routes) for more information on configuring your static routes.
+
 </div>
 </details>
 
@@ -344,6 +352,7 @@ The traceroute shows the path going from the client (10.1.2.23)<br>
 This validates the east-west traffic flow through Cloudflare Magic WAN.
 
 ![East-west traffic ping](/magic-wan/static/viptela-east-west-ping.png)
+
 </div> 
 </details>
 

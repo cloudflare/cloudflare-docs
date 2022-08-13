@@ -10,9 +10,10 @@ meta:
 
 {{<Aside type="note" header="Requirements">}}
 Network Analytics v2 requires the following:
-* A Cloudflare Enterprise plan.
-* Cloudflare Magic Transit or Spectrum.
-{{</Aside>}}
+
+- A Cloudflare Enterprise plan.
+- Cloudflare Magic Transit or Spectrum.
+  {{</Aside>}}
 
 ## View the Network Analytics dashboard
 

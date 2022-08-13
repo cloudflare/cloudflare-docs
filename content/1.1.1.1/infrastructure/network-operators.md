@@ -15,9 +15,9 @@ The 1.1.1.1 resolver was designed with a privacy-first approach. Refer to our [d
 
 There are multiple ways to use 1.1.1.1 as an operator:
 
-* Including a [DNS over HTTPS](/1.1.1.1/encryption/dns-over-https/) or [DNS over TLS](/1.1.1.1/encryption/dns-over-tls/) proxy on end-user routers or devices (best for privacy).
-* Pushing 1.1.1.1 to devices via DHCP/PPP within an operator network (recommended; most practical).
-* Having a DNS proxy on a edge router make requests to 1.1.1.1 on behalf of all connected devices.
+- Including a [DNS over HTTPS](/1.1.1.1/encryption/dns-over-https/) or [DNS over TLS](/1.1.1.1/encryption/dns-over-tls/) proxy on end-user routers or devices (best for privacy).
+- Pushing 1.1.1.1 to devices via DHCP/PPP within an operator network (recommended; most practical).
+- Having a DNS proxy on a edge router make requests to 1.1.1.1 on behalf of all connected devices.
 
 Where possible, we recommend using encrypted transports (DNS over HTTPS or TLS) for queries, as this provides the highest degree of privacy for users over last-mile networks.
 
@@ -35,11 +35,11 @@ The publicly available endpoints for 1.1.1.1 are detailed in the following table
 
 {{<table-wrap>}}
 
-Resolver | IP Addresses | DNS over HTTPS endpoint | DNS over TLS endpoint
----|---|---|---
-1.1.1.1 (unfiltered) | `1.1.1.1` / `1.0.0.1` | `https://cloudflare-dns.com/dns-query` | `cloudflare-dns.com`
-Families (Malware) | `1.1.1.2` / `1.0.0.2` | `https://security.cloudflare-dns.com/dns-query` | `security.cloudflare-dns.com`
-Families (Adult Content + Malware) | `1.1.1.3` / `1.0.0.3` | `https://family.cloudflare-dns.com/dns-query` | `family.cloudflare-dns.com`
+| Resolver                           | IP Addresses          | DNS over HTTPS endpoint                         | DNS over TLS endpoint         |
+| ---------------------------------- | --------------------- | ----------------------------------------------- | ----------------------------- |
+| 1.1.1.1 (unfiltered)               | `1.1.1.1` / `1.0.0.1` | `https://cloudflare-dns.com/dns-query`          | `cloudflare-dns.com`          |
+| Families (Malware)                 | `1.1.1.2` / `1.0.0.2` | `https://security.cloudflare-dns.com/dns-query` | `security.cloudflare-dns.com` |
+| Families (Adult Content + Malware) | `1.1.1.3` / `1.0.0.3` | `https://family.cloudflare-dns.com/dns-query`   | `family.cloudflare-dns.com`   |
 
 {{</table-wrap>}}
 
@@ -51,7 +51,7 @@ Operators using 1.1.1.1 for typical Internet-facing applications and/or users sh
 
 Best practices include:
 
-* Avoiding tunneling or proxying all queries from a single IP address at high rates. Distributing queries across multiple public IPs will improve this without impacting cache hit rates (caches are regional).
-* A high rate of "uncacheable" responses (such as `SERVFAIL`) against the same domain may be rate limited to protect upstream, authoritative nameservers. Many authoritative nameservers enforce their own rate limits, and we strive to avoid overloading third party infrastructure where possible.
+- Avoiding tunneling or proxying all queries from a single IP address at high rates. Distributing queries across multiple public IPs will improve this without impacting cache hit rates (caches are regional).
+- A high rate of "uncacheable" responses (such as `SERVFAIL`) against the same domain may be rate limited to protect upstream, authoritative nameservers. Many authoritative nameservers enforce their own rate limits, and we strive to avoid overloading third party infrastructure where possible.
 
 If you are a network operator and still have outstanding questions, contact `resolver@cloudflare.com` with your use case and we will be happy to discuss further.

@@ -14,23 +14,23 @@ This `ipsec.conf` file is typically located in the `/etc` directory of the Linux
 ### Phase 1
 
 - **Encryption**
-    - AES-CBC with 256-bit key length
-    - AES-GCM with 256-bit key length
+  - AES-CBC with 256-bit key length
+  - AES-GCM with 256-bit key length
 - **Integrity**
-    - SHA-256
+  - SHA-256
 - **Diffie-Hellman group**
-    - DH group 14 (2048-bit MODP group)
+  - DH group 14 (2048-bit MODP group)
 - **PRF**
-    - SHA-512
+  - SHA-512
 
 ### Phase 2
 
 - **Encryption**
-    - AES with 256-bit key length
+  - AES with 256-bit key length
 - **Integrity**
-    - SHA-256
+  - SHA-256
 - **Diffie-Hellman group**
-    - DH group 14 (2048-bit MODP group)
+  - DH group 14 (2048-bit MODP group)
 
 ## Configuration template
 

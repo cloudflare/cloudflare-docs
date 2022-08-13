@@ -19,24 +19,24 @@ formatted as a JSON object. For example:
 
 ```json
 {
-  "servers": [
-    {
-      "name": "Cloudflare-Roughtime",
-      "publicKeyType": "ed25519",
-      "publicKey": "gD63hSj3ScS+wuOeGrubXlq35N1c5Lby/S+T7MNTjxo=",
-      "addresses": [
-        {
-          "protocol": "udp",
-          "address": "roughtime.cloudflare.com:2002"
-        }
-      ]
-    }
-  ]
+	"servers": [
+		{
+			"name": "Cloudflare-Roughtime",
+			"publicKeyType": "ed25519",
+			"publicKey": "gD63hSj3ScS+wuOeGrubXlq35N1c5Lby/S+T7MNTjxo=",
+			"addresses": [
+				{
+					"protocol": "udp",
+					"address": "roughtime.cloudflare.com:2002"
+				}
+			]
+		}
+	]
 }
 ```
 
 It includes each server's _root public key_. When the server starts, it
-generates an _online_ public/secret key pair. The root secret key is used to create a _delegation_ for the online public key and the online secret key is used to sign the response. 
+generates an _online_ public/secret key pair. The root secret key is used to create a _delegation_ for the online public key and the online secret key is used to sign the response.
 
 The delegation serves the same function as a traditional [X.509 certificate](https://en.wikipedia.org/wiki/X.509) on the web. The client first uses the root public key to verify the delegation, then uses the online public key to verify the response.
 
@@ -47,7 +47,7 @@ server (currently only [Ed25519](https://en.wikipedia.org/wiki/EdDSA) is support
 
 ## TLS
 
-A good starting example would be to sync a TLS client or server using a single Roughtime server. That would involve computing the time difference between our clock and the Roughtime sever's. 
+A good starting example would be to sync a TLS client or server using a single Roughtime server. That would involve computing the time difference between our clock and the Roughtime sever's.
 
 The first step is to load the configuration file (be sure to
 import `github.com/cloudflare/roughtime`):
@@ -93,7 +93,7 @@ For a full working example, check out our
 
 ## Desktop alerts
 
-A more general way to use Roughtime is to create desktop alerts that warn you when your clock is skewed. 
+A more general way to use Roughtime is to create desktop alerts that warn you when your clock is skewed.
 
 On Ubuntu GNU/Linux, you can do something like this:
 

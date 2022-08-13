@@ -16,26 +16,26 @@ $ npm install @cloudflare/pages-plugin-hcaptcha
 
 ## Usage
 
-```typescript
+```ts
 ---
 filename: functions/register.ts
 ---
-import hCaptchaPlugin from "@cloudflare/pages-plugin-hcaptcha";
+import hCaptchaPlugin from '@cloudflare/pages-plugin-hcaptcha';
 
 export const onRequestPost: PagesFunction[] = [
-  hcaptchaPlugin({
-    secret: "0x0000000000000000000000000000000000000000",
-    sitekey: "10000000-ffff-ffff-ffff-000000000001",
-  }),
-  (async ({ request }) => {
-    // Request has been validated as coming from a human
+	hcaptchaPlugin({
+		secret: '0x0000000000000000000000000000000000000000',
+		sitekey: '10000000-ffff-ffff-ffff-000000000001',
+	}),
+	async ({ request }) => {
+		// Request has been validated as coming from a human
 
-    const formData = await request.formData()
+		const formData = await request.formData();
 
-    // Store user credentials
+		// Store user credentials
 
-    return new Response("Successfully registered!")
-  })
+		return new Response('Successfully registered!');
+	},
 ];
 ```
 

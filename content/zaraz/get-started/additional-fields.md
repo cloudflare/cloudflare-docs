@@ -12,7 +12,7 @@ If we take Universal Google Analytics as an example, a default field would be yo
 
 ## Add an additional field to a specific action
 
-Adding an additional field to an action will attach it to this action only, and will not affect your other actions. 
+Adding an additional field to an action will attach it to this action only, and will not affect your other actions.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
 2. Select **Zaraz** > **Tools**.

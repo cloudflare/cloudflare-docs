@@ -17,10 +17,10 @@ The Web Crypto API is implemented through the `SubtleCrypto` interface, accessib
 const myText = new TextEncoder().encode('Hello world!');
 
 const myDigest = await crypto.subtle.digest(
-  {
-    name: 'SHA-256',
-  },
-  myText // The data you want to hash as an ArrayBuffer
+	{
+		name: 'SHA-256',
+	},
+	myText // The data you want to hash as an ArrayBuffer
 );
 
 console.log(new Uint8Array(myDigest));
@@ -132,18 +132,18 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
 - {{<code>}}generateKey(algorithm, extractable, keyUsages){{</code>}} {{<type>}}Promise\<CryptoKey> | Promise\<CryptoKeyPair>{{</type>}}
 
-    - Returns a Promise that fulfills with a newly-generated `CryptoKey`, for symmetrical algorithms, or a `CryptoKeyPair`, containing two newly generated keys, for asymmetrical algorithms. For example, to generate a new AES-GCM key:
+  - Returns a Promise that fulfills with a newly-generated `CryptoKey`, for symmetrical algorithms, or a `CryptoKeyPair`, containing two newly generated keys, for asymmetrical algorithms. For example, to generate a new AES-GCM key:
 
-    ```js
-    let keyPair = await crypto.subtle.generateKey(
-      {
-        name: 'AES-GCM',
-        length: '256',
-      },
-      true,
-      ['encrypt', 'decrypt']
-    );
-    ```
+  ```js
+  let keyPair = await crypto.subtle.generateKey(
+  	{
+  		name: 'AES-GCM',
+  		length: '256',
+  	},
+  	true,
+  	['encrypt', 'decrypt']
+  );
+  ```
 
   **Parameters:**
 
@@ -319,7 +319,9 @@ If a feature only implements the operation partially, details are listed.
     - Unlike NodeJS, Cloudflare will not support raw import of private keys.
     - The algorithm implementation may change over time. While Cloudflare cannot guarantee it at this time, Cloudflare will strive to maintain backward compatibility and compatibility with NodeJS's behavior. Any notable compatibility notes will be communicated in release notes and via this developer document.
 
-2.  <a name="footnote-2"></a> MD5 is not part of the WebCrypto standard but is supported in Cloudflare Workers for interacting with legacy systems that require MD5. MD5 is considered a weak algorithm — do not rely upon MD5 for security.
+2.  <a name="footnote-2"></a> MD5 is not part of the WebCrypto standard but is supported in Cloudflare
+    Workers for interacting with legacy systems that require MD5. MD5 is considered a weak algorithm
+    — do not rely upon MD5 for security.
 
 ---
 

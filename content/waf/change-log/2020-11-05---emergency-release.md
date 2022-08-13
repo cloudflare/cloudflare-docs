@@ -11,6 +11,7 @@ meta:
 # 2020-11-05 – Emergency release
 
 {{<table-wrap>}}
+
 <table style="width: 100%">
   <thead>
     <tr>

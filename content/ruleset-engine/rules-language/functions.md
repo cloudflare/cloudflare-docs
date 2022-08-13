@@ -39,7 +39,7 @@ The Rules language supports these transformation functions:
     <br />
 
     <code class="InlineCode" style="width:100%">
-      any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
+    	any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
     </code>
 
 - <code id="function-all">all({{<type>}}Array{{</type>}}\<{{<param-type>}}Boolean{{</param-type>}}\>)</code> {{<type>}}Boolean{{</type>}}
@@ -64,7 +64,7 @@ The Rules language supports these transformation functions:
 
   - Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
 
-  - *Example:*<br />
+  - _Example:_<br />
     If `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
 {{<Aside type="warning">}}
@@ -83,8 +83,8 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
 - <code id="function-lookup_json_string">lookup_json_string(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
 
   - Returns the string value associated with the supplied `key` in `field`.<br/>
-  The `field` must be a string representation of a valid JSON object.<br/>
-  The `key` can be an attribute name, a zero-based position number in a JSON array, or a combination of these two options (as extra function parameters), while following the hierarchy of the JSON object to obtain a specific value.
+    The `field` must be a string representation of a valid JSON object.<br/>
+    The `key` can be an attribute name, a zero-based position number in a JSON array, or a combination of these two options (as extra function parameters), while following the hierarchy of the JSON object to obtain a specific value.
 
   - _Examples:_
 
@@ -124,27 +124,27 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
 
 - <code id="function-regex_replace">regex\_replace(source{{<param-type>}}String{{</param-type>}}, regular\_expression{{<param-type>}}String{{</param-type>}}, replacement{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
 
-    - Replaces a part of a source string matched by a regular expression with a replacement string, returning the result. The replacement string can contain references to regular expression capture groups.
+  - Replaces a part of a source string matched by a regular expression with a replacement string, returning the result. The replacement string can contain references to regular expression capture groups.
 
-    - *Examples:*
+  - _Examples:_
 
-      Literal match replace:<br />
-      `regex_replace("/foo/bar", "/bar$", "/baz") == "/foo/baz"`
+    Literal match replace:<br />
+    `regex_replace("/foo/bar", "/bar$", "/baz") == "/foo/baz"`
 
-      If there is no match, the input string does not change:<br />
-      `regex_replace("/x", "^/y$", "/mumble") == "/x"`
+    If there is no match, the input string does not change:<br />
+    `regex_replace("/x", "^/y$", "/mumble") == "/x"`
 
-      Match is case sensitive by default:<br />
-      `regex_replace("/foo", "^/FOO$", "/x") == "/foo"`
+    Match is case sensitive by default:<br />
+    `regex_replace("/foo", "^/FOO$", "/x") == "/foo"`
 
-      When there are multiple matches, only one replacement occurs (the first one):<br />
-      `regex_replace("/a/a", "/a", "/b") == "/b/a"`
+    When there are multiple matches, only one replacement occurs (the first one):<br />
+    `regex_replace("/a/a", "/a", "/b") == "/b/a"`
 
-      Escape a `$` in the replacement string by prefixing it with another `$`:<br />
-      `regex_replace("/b", "^/b$", "/b$$") == "/b$"`
+    Escape a `$` in the replacement string by prefixing it with another `$`:<br />
+    `regex_replace("/b", "^/b$", "/b$$") == "/b$"`
 
-      Replace with capture groups:<br />
-      `regex_replace("/foo/a/path", "^/foo/([^/]*)/(.*)$", "/bar/${2}/${1}") == "/bar/path/a/"`
+    Replace with capture groups:<br />
+    `regex_replace("/foo/a/path", "^/foo/([^/]*)/(.*)$", "/bar/${2}/${1}") == "/bar/path/a/"`
 
 {{<Aside type="warning">}}
 You can only use the `regex_replace()` function in [rewrite expressions of Transform Rules](/rules/transform/). Additionally, the first argument must be a field under `http.request.headers` or `http.request.uri`.
@@ -163,7 +163,7 @@ You can only use the `regex_replace()` function in [rewrite expressions of Trans
 
   - Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
 
-  - *Example:*<br />
+  - _Example:_<br />
     If `http.request.uri.path` is `"/blog/first-post"`, then `starts_with(http.request.uri.path, "/blog")` will return `true`.
 
 {{<Aside type="warning">}}
@@ -174,7 +174,7 @@ The `starts_with()` function is not available in [firewall rules](/firewall/).
 
   - Returns the string representation of an Integer, Boolean, or IP address value.
 
-  - *Examples:*
+  - _Examples:_
 
     ```txt
     to_string(cf.bot_management.score) == '5'

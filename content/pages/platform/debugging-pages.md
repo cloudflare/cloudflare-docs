@@ -21,15 +21,17 @@ Possible errors in your build log are included in the following sections.
 
 ### Initializing build environment
 
-Possible errors in this step could be caused by improper installation during git integration. 
+Possible errors in this step could be caused by improper installation during git integration.
 
 To fix this in GitHub:
+
 1. Log in to your Github account.
-2. Go to **Settings**  from your user icon > find **Applications** under Integrations.
+2. Go to **Settings** from your user icon > find **Applications** under Integrations.
 3. Find **Cloudflare Pages** > **Configure** > scroll down and select **Uninstall**.
-4. Readd the repository on the Cloudflare dashboard. 
+4. Readd the repository on the Cloudflare dashboard.
 
 To fix this in GitLab:
+
 1. Log in to your GitLab account.
 2. Go to **Preferences** from your user icon > **Applications**.
 3. Find **Cloudflare Pages** > scroll down and select **Revoke**.
@@ -44,7 +46,7 @@ Make sure to also review your submodule configuration by going to the `.gitmodul
 
 Example of a valid configuration:
 
-```js
+```
 [submodule "example"]
 	path = example/path
 	url = git://github.com/example/repo.git
@@ -52,12 +54,14 @@ Example of a valid configuration:
 
 Example of an invalid configuration:
 
-```js
+```
 [submodule "example"]
 	path = example/path
 ```
+
 or
-```js
+
+```
 [submodule "example"]
         url = git://github.com/example/repo.git
 ```
@@ -68,9 +72,9 @@ Possible errors in this step could be caused by faulty setup in your Pages proje
 
 ### Deploying to Cloudflare's global network
 
-Possible errors in this step could be caused by incorrect Pages Functions configuration. Refer to the [Functions](/pages/platform/functions/) documentation for more information on Functions setup. 
+Possible errors in this step could be caused by incorrect Pages Functions configuration. Refer to the [Functions](/pages/platform/functions/) documentation for more information on Functions setup.
 
-If you are not using Functions or have reviewed that your Functions configuration does not contain any errors, review the [Cloudflare Status site](https://www.cloudflarestatus.com/) for Cloudflare network issues that could be causing the build failure. 
+If you are not using Functions or have reviewed that your Functions configuration does not contain any errors, review the [Cloudflare Status site](https://www.cloudflarestatus.com/) for Cloudflare network issues that could be causing the build failure.
 
 ## Differences between `pages.dev` and custom domains
 
@@ -87,4 +91,3 @@ If you are experiencing errors on your custom domain but not on your `pages.dev`
 If you need additional guidance on build errors, contact your Cloudflare account team (Enterprise) or refer to the [Support Center](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support) for guidance on contacting Cloudflare Support.
 
 You can also ask questions in the Pages section of the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev).
-

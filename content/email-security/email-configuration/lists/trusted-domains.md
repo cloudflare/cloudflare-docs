@@ -29,8 +29,8 @@ To add a trusted domain:
 4. Click **+ Add Domain**.
 5. The exact flow varies based on what you select for your **Pattern Type**:
 
-    - **Domain**: Allows you to specify a particular domain and then adjust triggers for *Proximity Domain* and *Recent Domain*.
-    - **Create Regex**: Allows you to create Regex rules for the domain name, top-level domain (TLDs), and subdomains and then adjust triggers for *Proximity Domain* and *Recent Domain*.
+   - **Domain**: Allows you to specify a particular domain and then adjust triggers for _Proximity Domain_ and _Recent Domain_.
+   - **Create Regex**: Allows you to create Regex rules for the domain name, top-level domain (TLDs), and subdomains and then adjust triggers for _Proximity Domain_ and _Recent Domain_.
 
 6. Click **Save**.
 

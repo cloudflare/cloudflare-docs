@@ -15,7 +15,7 @@ A `ScheduledEvent` can be handled in Workers functions written using the Service
 
 ```js
 addEventListener('scheduled', event => {
-  event.waitUntil(handleScheduled(event));
+	event.waitUntil(handleScheduled(event));
 });
 ```
 
@@ -54,9 +54,9 @@ A `ScheduledEvent` can be handled in Workers functions written using the Module 
 
 ```js
 export default {
-  async scheduled(event, env, ctx) {
-    ctx.waitUntil(doSomeTaskOnASchedule());
-  },
+	async scheduled(event, env, ctx) {
+		ctx.waitUntil(doSomeTaskOnASchedule());
+	},
 };
 ```
 

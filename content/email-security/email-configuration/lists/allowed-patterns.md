@@ -18,21 +18,21 @@ To create a new allowed pattern:
 4. Click **+ New Pattern**.
 5. Enter the pattern information:
 
-    - **Allowed Pattern**: Enter one of the following types of pattern:
+   - **Allowed Pattern**: Enter one of the following types of pattern:
 
-        - *Email addresses*, which must be a valid email.
-        - *IP addresses*, which can only be IPv4. IPv6 and CIDR are invalid entries.
-        - *Regular expressions*, which must be [valid](https://www.freeformatter.com/java-regex-tester.html) Java expressions.
-    
-    - **Allow Type**: Choose one or more of the following types:
+     - _Email addresses_, which must be a valid email.
+     - _IP addresses_, which can only be IPv4. IPv6 and CIDR are invalid entries.
+     - _Regular expressions_, which must be [valid](https://www.freeformatter.com/java-regex-tester.html) Java expressions.
 
-        - *Trusted Sender*: Messages will bypass all [detections](/email-security/reference/dispositions-and-attributes/) and link following by Area 1. Typically, only applies to phishing simulations from vendors such as KnowB4.
-        - *Exempt Recipient*: Will exempt messages from all Area 1 [detections](/email-security/reference/dispositions-and-attributes/) intended for recipients matching this pattern (email address or regular expression only). Typically, this only applies to submission mailboxes for user reporting to security.
-        - *Acceptable Sender*: Will exempt messages from the `Spam`, `Spoof`, and `Bulk` [dispositions](/email-security/reference/dispositions-and-attributes/#available-values) (but not `Malicious` or `Suspicious`). Commonly used for external domains and sources that send mail on behalf of your organization, such as marketing emails or internal tools.
-    
-    - **Notes**: Provide additional notes about the allowed pattern.
+   - **Allow Type**: Choose one or more of the following types:
 
-6. Choose whether to **Verify Sender**, which applies the `Spoof` [disposition](/email-security/reference/dispositions-and-attributes/#available-values) for emails failing the SPF/DKIM/DMARC domain policy (only applicable for *Trusted Sender* and *Acceptable Sender*). 
+     - _Trusted Sender_: Messages will bypass all [detections](/email-security/reference/dispositions-and-attributes/) and link following by Area 1. Typically, only applies to phishing simulations from vendors such as KnowB4.
+     - _Exempt Recipient_: Will exempt messages from all Area 1 [detections](/email-security/reference/dispositions-and-attributes/) intended for recipients matching this pattern (email address or regular expression only). Typically, this only applies to submission mailboxes for user reporting to security.
+     - _Acceptable Sender_: Will exempt messages from the `Spam`, `Spoof`, and `Bulk` [dispositions](/email-security/reference/dispositions-and-attributes/#available-values) (but not `Malicious` or `Suspicious`). Commonly used for external domains and sources that send mail on behalf of your organization, such as marketing emails or internal tools.
+
+   - **Notes**: Provide additional notes about the allowed pattern.
+
+6. Choose whether to **Verify Sender**, which applies the `Spoof` [disposition](/email-security/reference/dispositions-and-attributes/#available-values) for emails failing the SPF/DKIM/DMARC domain policy (only applicable for _Trusted Sender_ and _Acceptable Sender_).
 7. Click **Save**.
 
 ### CSV uploads
@@ -42,7 +42,7 @@ You can also upload a CSV file of multiple allowed patterns. The CSV file must b
 An example file would look like this:
 
 ```txt
-Pattern, Notes, Verify Email, Trusted Sender, 
+Pattern, Notes, Verify Email, Trusted Sender,
 Exempt Recipient, Acceptable Sender
 whale@notaphish.com, not a phish, true, true, false, true
 ```

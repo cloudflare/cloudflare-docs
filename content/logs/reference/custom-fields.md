@@ -22,145 +22,147 @@ Create a rule configuring the list of custom fields in the `http_log_custom_fiel
 The `action_parameters` object that you must include in the rule that configures the list of custom fields should have the following structure:
 
 ```json
-"action_parameters": {
-  "request_fields": [
-    { "name": "<http_request_header_name_1_in_lower_case>" },
-    { "name": "<http_request_header_name_2_in_lower_case>" },
-    // ...
-  ],
-  "response_fields": [
-    { "name": "<http_response_header_name_1_in_lower_case>" },
-    { "name": "<http_response_header_name_2_in_lower_case>" },
-    // ...
-  ],
-  "cookie_fields": [
-    { "name": "<cookie_name_1>" },
-    { "name": "<cookie_name_2>" },
-    // ...
-  ]
+{
+	"action_parameters": {
+		"request_fields": [
+			{ "name": "<http_request_header_name_1_in_lower_case>" },
+			{ "name": "<http_request_header_name_2_in_lower_case>" }
+			// ...
+		],
+		"response_fields": [
+			{ "name": "<http_response_header_name_1_in_lower_case>" },
+			{ "name": "<http_response_header_name_2_in_lower_case>" }
+			// ...
+		],
+		"cookie_fields": [
+			{ "name": "<cookie_name_1>" },
+			{ "name": "<cookie_name_2>" }
+			// ...
+		]
+	}
 }
 ```
 
 Ensure that your rule definition complies with the following:
 
-* You must include at least one of the following arrays in the `action_parameters` object: `request_fields`, `response_fields`, and `cookie_fields`.
-* You must enter HTTP request and response header names in lower case.
-* Cookie names are case sensitive — you must enter cookie names with the same capitalization they have in the HTTP request.
-* You must set the rule expression to `true`.
+- You must include at least one of the following arrays in the `action_parameters` object: `request_fields`, `response_fields`, and `cookie_fields`.
+- You must enter HTTP request and response header names in lower case.
+- Cookie names are case sensitive — you must enter cookie names with the same capitalization they have in the HTTP request.
+- You must set the rule expression to `true`.
 
 Perform the following steps to create the rule:
 
 1. Use the [List existing rulesets](/ruleset-engine/rulesets-api/view/#list-existing-rulesets) operation to check if there is already a ruleset for the `http_log_custom_fields` phase at the zone level (you can only have one zone ruleset per phase):
 
-    ```bash
-    curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
-    -H "X-Auth-Email: <EMAIL>" \
-    -H "X-Auth-Key: <API_KEY>"
-    ```
+   ```bash
+   curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
+   -H "X-Auth-Email: <EMAIL>" \
+   -H "X-Auth-Key: <API_KEY>"
+   ```
 
-    If there is a ruleset for the `http_log_custom_fields` phase at the zone level, take note of the ruleset ID.
+   If there is a ruleset for the `http_log_custom_fields` phase at the zone level, take note of the ruleset ID.
 
 2. (Optional) If the response did not include a ruleset with `"kind": "zone"` and `"phase": "http_log_custom_fields"`, create the phase entry point ruleset using the [Create ruleset](/ruleset-engine/rulesets-api/create/) operation:
 
-    ```json
-    curl -X POST \
-    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
-    -H "X-Auth-Email: <EMAIL>" \
-    -H "X-Auth-Key: <API_KEY>" \
-    -d '{
-      "name": "Zone-level phase entry point",
-      "kind": "zone",
-      "description": "This ruleset configures custom log fields.",
-      "phase": "http_log_custom_fields"
-    }'
-    ```
+   ```bash
+   curl -X POST \
+   "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
+   -H "X-Auth-Email: <EMAIL>" \
+   -H "X-Auth-Key: <API_KEY>" \
+   -d '{
+     "name": "Zone-level phase entry point",
+     "kind": "zone",
+     "description": "This ruleset configures custom log fields.",
+     "phase": "http_log_custom_fields"
+   }'
+   ```
 
-    Take note of the ruleset ID included in the response.
+   Take note of the ruleset ID included in the response.
 
 3. Use the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation to define the rules of the entry point ruleset you found (or created in the previous step), adding a rule with the custom fields configuration. The rules you include in the request will replace all the rules in the ruleset.
 
-    The following example configures custom fields with the names of the HTTP request headers, HTTP response headers, and cookies you wish to include in Logpush logs:
+   The following example configures custom fields with the names of the HTTP request headers, HTTP response headers, and cookies you wish to include in Logpush logs:
 
-    ```json
-    curl -X PUT \
-    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
-    -H "X-Auth-Email: <EMAIL>" \
-    -H "X-Auth-Key: <API_KEY>" \
-    -d '{
-      "rules": [
-        {
-          "action": "log_custom_field",
-          "expression": "true",
-          "description": "Set Logpush custom fields for HTTP requests",
-          "action_parameters": {
-            "request_fields": [
-              { "name": "content-type" },
-              { "name": "x-forwarded-for"},
-              { "name": "host" }
-            ],
-            "response_fields": [
-              { "name": "server" },
-              { "name": "content-type" },
-              { "name": "allow" }
-            ],
-            "cookie_fields": [
-              { "name": "__ga" },
-              { "name": "accountNumber" },
-              { "name": "__cfruid"}
-            ]
-          }
-        }
-      ]
-    }'
-    ```
+   ```bash
+   curl -X PUT \
+   "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
+   -H "X-Auth-Email: <EMAIL>" \
+   -H "X-Auth-Key: <API_KEY>" \
+   -d '{
+     "rules": [
+       {
+         "action": "log_custom_field",
+         "expression": "true",
+         "description": "Set Logpush custom fields for HTTP requests",
+         "action_parameters": {
+           "request_fields": [
+             { "name": "content-type" },
+             { "name": "x-forwarded-for"},
+             { "name": "host" }
+           ],
+           "response_fields": [
+             { "name": "server" },
+             { "name": "content-type" },
+             { "name": "allow" }
+           ],
+           "cookie_fields": [
+             { "name": "__ga" },
+             { "name": "accountNumber" },
+             { "name": "__cfruid"}
+           ]
+         }
+       }
+     ]
+   }'
+   ```
 
-    Example response:
+   Example response:
 
-    ```json
-    {
-      "result": {
-        "id": "<RULESET_ID>",
-        "name": "Zone-level phase entry point",
-        "description": "This ruleset configures custom log fields.",
-        "kind": "zone",
-        "version": "2",
-        "rules": [
-          {
-            "id": "<RULE_ID_1>",
-            "version": "1",
-            "action": "log_custom_field",
-            "action_parameters": {
-              "request_fields": [
-                { "name": "content-type" },
-                { "name": "x-forwarded-for"},
-                { "name": "host" }
-              ],
-              "response_fields": [
-                { "name": "server" },
-                { "name": "content-type" },
-                { "name": "allow" }
-              ],
-              "cookie_fields": [
-                { "name": "__ga" },
-                { "name": "accountNumber" },
-                { "name": "__cfruid"}
-              ]
-            },
-            "expression": "true",
-            "description": "Set Logpush custom fields for HTTP requests",
-            "last_updated": "2021-11-21T11:02:08.769537Z",
-            "ref": "<RULE_REF_1>",
-            "enabled": true
-          }
-        ],
-        "last_updated": "2021-11-21T11:02:08.769537Z",
-        "phase": "http_log_custom_fields"
-      },
-      "success": true,
-      "errors": [],
-      "messages": []
-    }
-    ```
+   ```json
+   {
+   	"result": {
+   		"id": "<RULESET_ID>",
+   		"name": "Zone-level phase entry point",
+   		"description": "This ruleset configures custom log fields.",
+   		"kind": "zone",
+   		"version": "2",
+   		"rules": [
+   			{
+   				"id": "<RULE_ID_1>",
+   				"version": "1",
+   				"action": "log_custom_field",
+   				"action_parameters": {
+   					"request_fields": [
+   						{ "name": "content-type" },
+   						{ "name": "x-forwarded-for" },
+   						{ "name": "host" }
+   					],
+   					"response_fields": [
+   						{ "name": "server" },
+   						{ "name": "content-type" },
+   						{ "name": "allow" }
+   					],
+   					"cookie_fields": [
+   						{ "name": "__ga" },
+   						{ "name": "accountNumber" },
+   						{ "name": "__cfruid" }
+   					]
+   				},
+   				"expression": "true",
+   				"description": "Set Logpush custom fields for HTTP requests",
+   				"last_updated": "2021-11-21T11:02:08.769537Z",
+   				"ref": "<RULE_REF_1>",
+   				"enabled": true
+   			}
+   		],
+   		"last_updated": "2021-11-21T11:02:08.769537Z",
+   		"phase": "http_log_custom_fields"
+   	},
+   	"success": true,
+   	"errors": [],
+   	"messages": []
+   }
+   ```
 
 ## 2. Include the custom fields in your Logpush job
 
@@ -168,10 +170,10 @@ Next, include `Cookies`, `RequestHeaders`, and/or `ResponseHeaders`, depending o
 
 For example, consider the following request that creates a job that includes custom fields:
 
-```json
+```bash
 curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs" \
--H "X-Auth-Email: <EMAIL>" \ 
+-H "X-Auth-Email: <EMAIL>" \
 -H "X-Auth-Key: <API_KEY>" \
 -d '{
   "name":"<DOMAIN_NAME>",
@@ -190,5 +192,5 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 
 ## Final remarks
 
-* You can configure up to 40 custom fields across all field types (HTTP request headers, HTTP response headers, and cookies) per zone.
-* The maximum length of custom field data is 8 KB. Any data over this limit will be truncated.
+- You can configure up to 40 custom fields across all field types (HTTP request headers, HTTP response headers, and cookies) per zone.
+- The maximum length of custom field data is 8 KB. Any data over this limit will be truncated.

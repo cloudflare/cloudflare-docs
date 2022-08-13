@@ -10,9 +10,9 @@ layout: example
 
 ```json
 {
-  "okta": {
-    "name": "admins",
-    "identity_provider_id": "ca298b82-93b5-41bf-bc2d-10493f09b761"
-  }
+	"okta": {
+		"name": "admins",
+		"identity_provider_id": "ca298b82-93b5-41bf-bc2d-10493f09b761"
+	}
 }
 ```

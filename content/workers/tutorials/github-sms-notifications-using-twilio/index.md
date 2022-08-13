@@ -78,7 +78,7 @@ Your generated `index.js` should look like this:
 filename: index.js
 ---
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
+	event.respondWith(handleRequest(event.request));
 });
 
 /**
@@ -86,9 +86,9 @@ addEventListener('fetch', event => {
  * @param {Request} request
  */
 async function handleRequest(request) {
-  return new Response('Hello worker!', {
-    headers: { 'content-type': 'text/plain' },
-  });
+	return new Response('Hello worker!', {
+		headers: { 'content-type': 'text/plain' },
+	});
 }
 ```
 
@@ -99,25 +99,25 @@ Begin by modifying the starter code to handle a `POST` response and renaming the
 filename: index.js
 ---
 function simpleResponse(statusCode, message) {
-  let resp = {
-    message: message,
-    status: statusCode,
-  };
+	let resp = {
+		message: message,
+		status: statusCode,
+	};
 
-  return new Response(JSON.stringify(resp), {
-    headers: { 'Content-Type': 'application/json' },
-    status: statusCode,
-  });
+	return new Response(JSON.stringify(resp), {
+		headers: { 'Content-Type': 'application/json' },
+		status: statusCode,
+	});
 }
 
 addEventListener('fetch', event => {
-  event.respondWith(githubWebhookHandler(event.request));
+	event.respondWith(githubWebhookHandler(event.request));
 });
 
 async function githubWebhookHandler(request) {
-  if (request.method !== 'POST') {
-    return simpleResponse(200, 'Please send a POST request :)');
-  }
+	if (request.method !== 'POST') {
+		return simpleResponse(200, 'Please send a POST request :)');
+	}
 }
 ```
 
@@ -128,22 +128,22 @@ Next, validate that the request is sent with the right secret key. GitHub attach
 filename: index.js - githubWebhookHandler()
 ---
 async function githubWebhookHandler(request) {
-  if (request.method !== 'POST') {
-    return simpleResponse(200, 'Please send a POST request :)');
-  }
-  try {
-    const formData = await request.json();
-    const headers = await request.headers;
-    const action = headers.get('X-GitHub-Event');
-    const repo_name = formData.repository.full_name;
-    const sender_name = formData.sender.login;
+	if (request.method !== 'POST') {
+		return simpleResponse(200, 'Please send a POST request :)');
+	}
+	try {
+		const formData = await request.json();
+		const headers = await request.headers;
+		const action = headers.get('X-GitHub-Event');
+		const repo_name = formData.repository.full_name;
+		const sender_name = formData.sender.login;
 
-    if (!checkSignature(formData, headers)) {
-      return simpleResponse(403, 'Wrong password, try again :P');
-    }
-  } catch (e) {
-    return simpleResponse(200, `Error:  ${e}`);
-  }
+		if (!checkSignature(formData, headers)) {
+			return simpleResponse(403, 'Wrong password, try again :P');
+		}
+	} catch (e) {
+		return simpleResponse(200, `Error:  ${e}`);
+	}
 }
 ```
 
@@ -156,17 +156,17 @@ filename: index.js
 const crypto = require('crypto');
 
 async function createHexSignature(requestBody) {
-  let hmac = crypto.createHmac('sha1', SECRET_TOKEN);
-  hmac.update(requestBody, 'utf-8');
+	let hmac = crypto.createHmac('sha1', SECRET_TOKEN);
+	hmac.update(requestBody, 'utf-8');
 
-  return hmac.digest('hex');
+	return hmac.digest('hex');
 }
 
 async function checkSignature(formData, headers) {
-  let expectedSignature = await createHexSignature(formData);
-  let actualSignature = headers.get('X-Hub-Signature');
+	let expectedSignature = await createHexSignature(formData);
+	let actualSignature = headers.get('X-Hub-Signature');
 
-  return expectedSignature === actualSignature;
+	return expectedSignature === actualSignature;
 }
 ```
 
@@ -197,28 +197,28 @@ Construct your headers and body in the format shown in the Twilio reference page
 filename: index.js - sendText()
 ---
 async function sendText(message) {
-  const endpoint = 'https://api.twilio.com/2010-04-01/Accounts/' + ACCOUNT_SID + '/Messages.json';
+	const endpoint = 'https://api.twilio.com/2010-04-01/Accounts/' + ACCOUNT_SID + '/Messages.json';
 
-  let encoded = new URLSearchParams();
-  encoded.append('To', RECIPIENT);
-  encoded.append('From', '+19388887573');
-  encoded.append('Body', message);
+	let encoded = new URLSearchParams();
+	encoded.append('To', RECIPIENT);
+	encoded.append('From', '+19388887573');
+	encoded.append('Body', message);
 
-  let token = btoa(ACCOUNT_SID + ':' + AUTH_TOKEN);
+	let token = btoa(ACCOUNT_SID + ':' + AUTH_TOKEN);
 
-  const request = {
-    body: encoded,
-    method: 'POST',
-    headers: {
-      'Authorization': `Basic ${token}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  };
+	const request = {
+		body: encoded,
+		method: 'POST',
+		headers: {
+			'Authorization': `Basic ${token}`,
+			'Content-Type': 'application/x-www-form-urlencoded',
+		},
+	};
 
-  let result = await fetch(endpoint, request);
-  result = await result.json();
+	let result = await fetch(endpoint, request);
+	result = await result.json();
 
-  return new Response(JSON.stringify(result), request);
+	return new Response(JSON.stringify(result), request);
 }
 ```
 
@@ -234,26 +234,24 @@ Modify your `githubWebhookHandler` to send a text message using the `sendText` f
 
 ```js
 async function githubWebhookHandler(request) {
-  if (request.method !== "POST") {
-    return simpleResponse(200, "Please send a POST request :)");
-  }
-  try {
-    const formData = await request.json();
-    const headers = await request.headers;
-    const action = headers.get("X-GitHub-Event");
-    const repo_name = formData.repository.full_name;
-    const sender_name = formData.sender.login;
+	if (request.method !== 'POST') {
+		return simpleResponse(200, 'Please send a POST request :)');
+	}
+	try {
+		const formData = await request.json();
+		const headers = await request.headers;
+		const action = headers.get('X-GitHub-Event');
+		const repo_name = formData.repository.full_name;
+		const sender_name = formData.sender.login;
 
-    if (!checkSignature(formData, headers)) {
-      return simpleResponse(403, "Wrong password, try again :P");
-    }
+		if (!checkSignature(formData, headers)) {
+			return simpleResponse(403, 'Wrong password, try again :P');
+		}
 
-    return await sendText(
-      `${sender_name} casted spell: ${action} onto your repo ${repo_name}`
-    );
-  } catch (e) {
-    return simpleResponse(200, `Error:  ${e}`);
-  }
+		return await sendText(`${sender_name} casted spell: ${action} onto your repo ${repo_name}`);
+	} catch (e) {
+		return simpleResponse(200, `Error:  ${e}`);
+	}
 }
 ```
 

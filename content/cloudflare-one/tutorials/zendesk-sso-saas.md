@@ -32,43 +32,43 @@ For this tutorial, you will need:
 
 4. Input the following values in the Zero Trust application configuration:
 
-    | Zero Trust field                   | Value                                           |
-    |------------------------------------|-------------------------------------------------|
-    | **Entity ID**                      | `https://<yoursubdomain>.zendesk.com`           |
-    | **Assertion Consumer Service URL** | contents of **SAML SSO URL** in Zendesk account |
-    | **Name ID Format**                 | _Email_                                         |
+   | Zero Trust field                   | Value                                           |
+   | ---------------------------------- | ----------------------------------------------- |
+   | **Entity ID**                      | `https://<yoursubdomain>.zendesk.com`           |
+   | **Assertion Consumer Service URL** | contents of **SAML SSO URL** in Zendesk account |
+   | **Name ID Format**                 | _Email_                                         |
 
 5. (Optional) Configure these Attribute Statements to include a user’s first and last name:
 
-    | Cloudflare attribute name | IdP attribute value                                               |
-    |---------------------------|-------------------------------------------------------------------|
-    | `<first name>`            | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname` |
-    | `<last name>`             | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname`   |
+   | Cloudflare attribute name | IdP attribute value                                               |
+   | ------------------------- | ----------------------------------------------------------------- |
+   | `<first name>`            | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname` |
+   | `<last name>`             | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname`   |
 
-    Zendesk will [use the user's email address as their name](https://support.zendesk.com/hc/en-us/articles/203663676#topic_dzb_gl5_2v) if the name is not provided.
+   Zendesk will [use the user's email address as their name](https://support.zendesk.com/hc/en-us/articles/203663676#topic_dzb_gl5_2v) if the name is not provided.
 
-    ![Zendesk attributes](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-attributes.png)
+   ![Zendesk attributes](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-attributes.png)
 
 6. To determine who can access Zendesk, [create an Access policy](/cloudflare-one/policies/access/).
 
 7. Copy the values from the Cloudflare IdP fields and add them to the following Zendesk fields:
 
-    | Cloudflare IdP field                        | Zendesk field               |
-    |---------------------------------------------|-----------------------------|
-    | **SSO Endpoint**                            | **SAML SSO URL**            |
-    | **Public Key** (transformed to fingerprint) | **Certificate Fingerprint** |
+   | Cloudflare IdP field                        | Zendesk field               |
+   | ------------------------------------------- | --------------------------- |
+   | **SSO Endpoint**                            | **SAML SSO URL**            |
+   | **Public Key** (transformed to fingerprint) | **Certificate Fingerprint** |
 
-    To transform the public key into a fingerprint, use a [fingerprint calculator](https://www.samltool.com/fingerprint.php):
+   To transform the public key into a fingerprint, use a [fingerprint calculator](https://www.samltool.com/fingerprint.php):
 
-    1. Copy the public key value and paste it into **X.509 cert**.
+   1. Copy the public key value and paste it into **X.509 cert**.
 
-    2. Wrap the value with `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+   2. Wrap the value with `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
 
-    3. Set **Algorithm** to _SHA256_ and select **Calculate Fingerprint**.
+   3. Set **Algorithm** to _SHA256_ and select **Calculate Fingerprint**.
 
-    4. Copy the **Formatted FingerPrint** value.
+   4. Copy the **Formatted FingerPrint** value.
 
-    ![Zendesk fingerprint](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-fingerprint.png)
+   ![Zendesk fingerprint](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-fingerprint.png)
 
 8. Go to `https://<yourdomain>.zendesk.com/admin/security/staff_members` and enable **External Authentication** > **Single Sign On**.
 

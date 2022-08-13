@@ -12,23 +12,23 @@ The descriptions below detail the fields available for `gateway_network`.
 
 {{<table-wrap>}}
 
-| Field | Value | Type |
-| -- | -- | -- |
-| AccountID | Cloudflare account tag | string |
-| Action | Action performed by gateway on the session | string |
-| Datetime | The date and time the corresponding network session was made (for example, '2021-07-27T00:01:07Z') | int or string |
-| DestinationIP | Destination IP of the network session | string |
-| DestinationPort | Destination port of the network session | int |
-| DeviceID | UUID of the device where the network session originated from | string |
-| Email | Email associated with the user identity where the network sesion originated from | string |
-| OverrideIP | Overriden IP of the network session, if any | string |
-| OverridePort | Overriden port of the network session, if any | int |
-| PolicyID | Identifier of the policy/rule that was applied, if any | string |
-| SNI | Content of the SNI for the TLS network session, if any | string |
-| SessionID | The session identifier of this network session | string |
-| SourceIP | Source IP of the network session | string |
-| SourcePort | Source port of the network session | int |
-| Transport | Transport protocol used for this session. <br />Possible values are <em>tcp</em> \| <em>quic</em> \| <em>udp</em> | string |
-| UserID | User identity where the network session originated from | string |
+| Field           | Value                                                                                                             | Type          |
+| --------------- | ----------------------------------------------------------------------------------------------------------------- | ------------- |
+| AccountID       | Cloudflare account tag                                                                                            | string        |
+| Action          | Action performed by gateway on the session                                                                        | string        |
+| Datetime        | The date and time the corresponding network session was made (for example, '2021-07-27T00:01:07Z')                | int or string |
+| DestinationIP   | Destination IP of the network session                                                                             | string        |
+| DestinationPort | Destination port of the network session                                                                           | int           |
+| DeviceID        | UUID of the device where the network session originated from                                                      | string        |
+| Email           | Email associated with the user identity where the network sesion originated from                                  | string        |
+| OverrideIP      | Overriden IP of the network session, if any                                                                       | string        |
+| OverridePort    | Overriden port of the network session, if any                                                                     | int           |
+| PolicyID        | Identifier of the policy/rule that was applied, if any                                                            | string        |
+| SNI             | Content of the SNI for the TLS network session, if any                                                            | string        |
+| SessionID       | The session identifier of this network session                                                                    | string        |
+| SourceIP        | Source IP of the network session                                                                                  | string        |
+| SourcePort      | Source port of the network session                                                                                | int           |
+| Transport       | Transport protocol used for this session. <br />Possible values are <em>tcp</em> \| <em>quic</em> \| <em>udp</em> | string        |
+| UserID          | User identity where the network session originated from                                                           | string        |
 
 {{</table-wrap>}}

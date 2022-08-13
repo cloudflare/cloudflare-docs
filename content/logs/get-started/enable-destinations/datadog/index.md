@@ -35,7 +35,7 @@ To enable the Cloudflare Logpush service:
 
     - **Datadog URL Endpoint**, which is `http-intake.logs.datadoghq.com/v1/input?ddsource=cloudflare`.
     - **Datadog API Key**, can be retrieved by following [these steps](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token).
-    
+
 9.  Click **Validate access**.
 
 10. Click **Save and Start Pushing** to finish enabling Logpush.
@@ -91,20 +91,20 @@ Response:
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "id": 100,
-    "dataset": "http_requests",
-    "enabled": false,
-    "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
-    "destination_conf": "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>",
-    "last_complete": null,
-    "last_error": null,
-    "error_message": null
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"id": 100,
+		"dataset": "http_requests",
+		"enabled": false,
+		"name": "<DOMAIN_NAME>",
+		"logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+		"destination_conf": "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>",
+		"last_complete": null,
+		"last_error": null,
+		"error_message": null
+	},
+	"success": true
 }
 ```
 
@@ -123,20 +123,20 @@ Response:
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "id": 100,
-    "dataset": "http_requests",
-    "enabled": true,
-    "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
-    "destination_conf": "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>",
-    "last_complete": null,
-    "last_error": null,
-    "error_message": null
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"id": 100,
+		"dataset": "http_requests",
+		"enabled": true,
+		"name": "<DOMAIN_NAME>",
+		"logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+		"destination_conf": "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>",
+		"last_complete": null,
+		"last_error": null,
+		"error_message": null
+	},
+	"success": true
 }
 ```
 

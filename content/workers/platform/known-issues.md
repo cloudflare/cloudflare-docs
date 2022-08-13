@@ -26,10 +26,10 @@ Consider two different Workers, each deployed to the same zone. Worker A is assi
 You will notice that all examples trigger Worker B. This includes the final example, which exemplifies the unexpected behavior.
 
 When adding a wildcard on a subdomain, here are how the following URLs will be resolved:
-    
-    // (A) *.example.com/a 
-    // (B) a.example.com/* 
-    
+
+    // (A) *.example.com/a
+    // (B) a.example.com/*
+
     "a.example.com/a"
     // -> B
 

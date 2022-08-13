@@ -52,7 +52,6 @@ To restore the original visitor IP address at your origin web server, Cloudflare
 
 `X-Forwarded-Proto` is used to identify the protocol (HTTP or HTTPS) that Cloudflare uses to connect to origin web server. By default, it is `http`. Certain [encryption mode](/ssl/origin-configuration/ssl-modes/) may change this header to `https` if the connection is encrypted.
 
-
 ## CF-RAY
 
 The `CF-ray` header (otherwise known as a [Ray ID](/fundamentals/get-started/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor’s request. For example: `CF-RAY: 230b030023ae2822-SJC`.
@@ -63,7 +62,7 @@ Enterprise customers can also see all requests via [Cloudflare Logs](/logs/).
 
 ## CF-IPCountry
 
-The `CF-IPCountry` header contains a two-character country code of the originating visitor’s country. Besides the  [ISO-3166-1 alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html), Cloudflare uses the `XX` country code when the country information is unknown.
+The `CF-IPCountry` header contains a two-character country code of the originating visitor’s country. Besides the [ISO-3166-1 alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html), Cloudflare uses the `XX` country code when the country information is unknown.
 
 To add this header to requests, along with other HTTP headers with location information for the visitor's IP address, [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/configure/).
 

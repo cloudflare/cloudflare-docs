@@ -12,10 +12,10 @@ Adds a single rule to an existing ruleset. Use this endpoint to add a rule witho
 
 Use one of the following API endpoints:
 
-| Operation | Method + Endpoint |
-|-----------|-------------------|
+| Operation                                      | Method + Endpoint                                         |
+| ---------------------------------------------- | --------------------------------------------------------- |
 | [Add an individual rule][ar-account] (account) | `POST /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules` |
-| Add an individual rule (zone) | `POST /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules` |
+| Add an individual rule (zone)                  | `POST /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules`       |
 
 [ar-account]: https://api.cloudflare.com/#account-rulesets-add-an-individual-rule
 
@@ -31,7 +31,7 @@ The following example adds a rule to ruleset `<RULESET_ID>` of zone `<ZONE_ID>`.
 <summary>Request</summary>
 <div>
 
-```json
+```bash
 curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d '{
@@ -52,39 +52,39 @@ The response includes the complete ruleset after adding the rule.
 
 ```json
 {
-  "result": {
-    "id": "<RULESET_ID>",
-    "name": "Zone Ruleset 1",
-    "description": "My phase entry point ruleset at the zone level",
-    "kind": "zone",
-    "version": "11",
-    "rules": [
-      {
-        "id": "<RULE_ID_1>",
-        "version": "1",
-        "action": "challenge",
-        "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-        "last_updated": "2020-11-23T11:36:24.192361Z",
-        "ref": "<RULE_REF_1>",
-        "enabled": true
-      },
-      {
-        "id": "<NEW_RULE_ID>",
-        "version": "1",
-        "action": "js_challenge",
-        "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
-        "description": "challenge GB and FR or based on IP Reputation",
-        "last_updated": "2021-06-22T12:35:58.144683Z",
-        "ref": "<NEW_RULE_REF>",
-        "enabled": true
-      }
-    ],
-    "last_updated": "2021-06-22T12:35:58.144683Z",
-    "phase": "http_request_firewall_custom"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<RULESET_ID>",
+		"name": "Zone Ruleset 1",
+		"description": "My phase entry point ruleset at the zone level",
+		"kind": "zone",
+		"version": "11",
+		"rules": [
+			{
+				"id": "<RULE_ID_1>",
+				"version": "1",
+				"action": "challenge",
+				"expression": "not http.request.uri.path matches \"^/api/.*$\"",
+				"last_updated": "2020-11-23T11:36:24.192361Z",
+				"ref": "<RULE_REF_1>",
+				"enabled": true
+			},
+			{
+				"id": "<NEW_RULE_ID>",
+				"version": "1",
+				"action": "js_challenge",
+				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+				"description": "challenge GB and FR or based on IP Reputation",
+				"last_updated": "2021-06-22T12:35:58.144683Z",
+				"ref": "<NEW_RULE_REF>",
+				"enabled": true
+			}
+		],
+		"last_updated": "2021-06-22T12:35:58.144683Z",
+		"phase": "http_request_firewall_custom"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

@@ -114,7 +114,7 @@ All Cloudflare Workers applications start by listening for `fetch` events, which
 filename: index.js
 ---
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
+	event.respondWith(handleRequest(event.request));
 });
 
 /**
@@ -122,7 +122,7 @@ addEventListener('fetch', event => {
  * @param {Request} request
  */
 async function handleRequest(request) {
-  return new Response('Hello worker!', { status: 200 });
+	return new Response('Hello worker!', { status: 200 });
 }
 ```
 
@@ -154,14 +154,14 @@ import { Router } from 'itty-router';
 // Create a new router
 const router = Router();
 
-router.post("/lookup", lookup);
-router.post("/webhook", webhook);
+router.post('/lookup', lookup);
+router.post('/webhook', webhook);
 
-router.all("*", () => new Response("404, not found!", { status: 404 }))
+router.all('*', () => new Response('404, not found!', { status: 404 }));
 
-addEventListener('fetch', (e) => {
-  e.respondWith(router.handle(e.request))
-})
+addEventListener('fetch', e => {
+	e.respondWith(router.handle(e.request));
+});
 ```
 
 First, import the `Router` class from `itty-router`.
@@ -205,14 +205,14 @@ import { Router } from 'itty-router';
 // Create a new router
 const router = Router();
 
-router.post("/lookup", lookup);
-router.post("/webhook", webhook);
+router.post('/lookup', lookup);
+router.post('/webhook', webhook);
 
-router.all("*", () => new Response("404, not found!", { status: 404 }))
+router.all('*', () => new Response('404, not found!', { status: 404 }));
 
-addEventListener('fetch', (e) => {
-  e.respondWith(router.handle(e.request))
-})
+addEventListener('fetch', e => {
+	e.respondWith(router.handle(e.request));
+});
 ```
 
 ### Creating the lookup route
@@ -271,9 +271,9 @@ highlight: [1, 2, 3, 4, 5, 6, 7]
 import qs from 'qs';
 
 export default async request => {
-  const body = await request.text();
-  const params = qs.parse(body);
-  const text = params['text'].trim();
+	const body = await request.text();
+	const params = qs.parse(body);
+	const text = params['text'].trim();
 };
 ```
 
@@ -285,8 +285,8 @@ filename: src/utils/github.js
 ---
 const ghIssueRegex = /(?<owner>\w*)\/(?<repo>\w*)\#(?<issue_number>\d*)/;
 export const parseGhIssueString = text => {
-  const match = text.match(ghIssueRegex);
-  return match ? match.groups : null;
+	const match = text.match(ghIssueRegex);
+	return match ? match.groups : null;
 };
 ```
 
@@ -302,10 +302,10 @@ import qs from 'qs';
 import { parseGhIssueString } from '../utils/github';
 
 export default async request => {
-  const body = await request.text();
-  const params = qs.parse(body);
-  const text = params['text'].trim();
-  const { owner, repo, issue_number } = parseGhIssueString(text);
+	const body = await request.text();
+	const params = qs.parse(body);
+	const text = params['text'].trim();
+	const { owner, repo, issue_number } = parseGhIssueString(text);
 };
 ```
 
@@ -320,14 +320,14 @@ highlight: [7, 8, 9, 10, 11]
 ---
 const ghIssueRegex = /(?<owner>\w*)\/(?<repo>\w*)\#(?<issue_number>\d*)/;
 export const parseGhIssueString = text => {
-  const match = text.match(ghIssueRegex);
-  return match ? match.groups : null;
+	const match = text.match(ghIssueRegex);
+	return match ? match.groups : null;
 };
 
 export const fetchGitHubIssue = (owner, repo, issue_number) => {
-  const url = `https://api.github.com/repos/${owner}/${repo}/issues/${issue_number}`;
-  const headers = { 'User-Agent': 'simple-worker-slack-bot' };
-  return fetch(url, { headers });
+	const url = `https://api.github.com/repos/${owner}/${repo}/issues/${issue_number}`;
+	const headers = { 'User-Agent': 'simple-worker-slack-bot' };
+	return fetch(url, { headers });
 };
 ```
 
@@ -343,13 +343,13 @@ import qs from 'qs';
 import { fetchGitHubIssue, parseGhIssueString } from '../utils/github';
 
 export default async request => {
-  const body = await request.text();
-  const params = qs.parse(body);
-  const text = params['text'].trim();
-  const { owner, repo, issue_number } = parseGhIssueString(text);
+	const body = await request.text();
+	const params = qs.parse(body);
+	const text = params['text'].trim();
+	const { owner, repo, issue_number } = parseGhIssueString(text);
 
-  const response = await fetchGitHubIssue(owner, repo, issue_number);
-  const issue = await response.json();
+	const response = await fetchGitHubIssue(owner, repo, issue_number);
+	const issue = await response.json();
 };
 ```
 
@@ -375,15 +375,15 @@ Create another file, `src/utils/slack.js`, to contain the function `constructGhI
 filename: src/utils/slack.js
 ---
 export const constructGhIssueSlackMessage = (issue, issue_string) => {
-  const issue_link = `<${issue.html_url}|${issue_string}>`;
-  const user_link = `<${issue.user.html_url}|${issue.user.login}>`;
-  const date = new Date(Date.parse(issue.created_at)).toLocaleDateString();
+	const issue_link = `<${issue.html_url}|${issue_string}>`;
+	const user_link = `<${issue.user.html_url}|${issue.user.login}>`;
+	const date = new Date(Date.parse(issue.created_at)).toLocaleDateString();
 
-  const text_lines = [
-    `*${issue.title} - ${issue_link}*`,
-    issue.body,
-    `*${issue.state}* - Created by ${user_link} on ${date}`,
-  ];
+	const text_lines = [
+		`*${issue.title} - ${issue_link}*`,
+		issue.body,
+		`*${issue.state}* - Created by ${user_link} on ${date}`,
+	];
 };
 ```
 
@@ -405,30 +405,30 @@ filename: src/utils/slack.js
 highlight: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
 ---
 export const constructGhIssueSlackMessage = (issue, issue_string) => {
-  const issue_link = `<${issue.html_url}|${issue_string}>`;
-  const user_link = `<${issue.user.html_url}|${issue.user.login}>`;
-  const date = new Date(Date.parse(issue.created_at)).toLocaleDateString();
+	const issue_link = `<${issue.html_url}|${issue_string}>`;
+	const user_link = `<${issue.user.html_url}|${issue.user.login}>`;
+	const date = new Date(Date.parse(issue.created_at)).toLocaleDateString();
 
-  const text_lines = [
-    `*${issue.title} - ${issue_link}*`,
-    issue.body,
-    `*${issue.state}* - Created by ${user_link} on ${date}`,
-  ];
+	const text_lines = [
+		`*${issue.title} - ${issue_link}*`,
+		issue.body,
+		`*${issue.state}* - Created by ${user_link} on ${date}`,
+	];
 
-  return [
-    {
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: text_lines.join('\n'),
-      },
-      accessory: {
-        type: 'image',
-        image_url: issue.user.avatar_url,
-        alt_text: issue.user.login,
-      },
-    },
-  ];
+	return [
+		{
+			type: 'section',
+			text: {
+				type: 'mrkdwn',
+				text: text_lines.join('\n'),
+			},
+			accessory: {
+				type: 'image',
+				image_url: issue.user.avatar_url,
+				alt_text: issue.user.login,
+			},
+		},
+	];
 };
 ```
 
@@ -447,23 +447,23 @@ import { fetchGitHubIssue, parseGhIssueString } from '../utils/github';
 import { constructGhIssueSlackMessage } from '../utils/slack';
 
 export default async request => {
-  const body = await request.text();
-  const params = qs.parse(body);
-  const text = params['text'].trim();
-  const { owner, repo, issue_number } = parseGhIssueString(text);
+	const body = await request.text();
+	const params = qs.parse(body);
+	const text = params['text'].trim();
+	const { owner, repo, issue_number } = parseGhIssueString(text);
 
-  const response = await fetchGitHubIssue(owner, repo, issue_number);
-  const issue = await response.json();
+	const response = await fetchGitHubIssue(owner, repo, issue_number);
+	const issue = await response.json();
 
-  const blocks = constructGhIssueSlackMessage(issue, text);
+	const blocks = constructGhIssueSlackMessage(issue, text);
 
-  return new Response(
-    JSON.stringify({
-      blocks,
-      response_type: 'in_channel',
-    }),
-    { headers: { 'Content-type': 'application/json' } }
-  );
+	return new Response(
+		JSON.stringify({
+			blocks,
+			response_type: 'in_channel',
+		}),
+		{ headers: { 'Content-type': 'application/json' } }
+	);
 };
 ```
 
@@ -486,29 +486,29 @@ import { fetchGitHubIssue, parseGhIssueString } from '../utils/github';
 import { constructGhIssueSlackMessage } from '../utils/slack';
 
 export default async request => {
-  try {
-    const body = await request.text();
-    const params = qs.parse(body);
-    const text = params['text'].trim();
-    const { owner, repo, issue_number } = parseGhIssueString(text);
+	try {
+		const body = await request.text();
+		const params = qs.parse(body);
+		const text = params['text'].trim();
+		const { owner, repo, issue_number } = parseGhIssueString(text);
 
-    const response = await fetchGitHubIssue(owner, repo, issue_number);
-    const issue = await response.json();
+		const response = await fetchGitHubIssue(owner, repo, issue_number);
+		const issue = await response.json();
 
-    const blocks = constructGhIssueSlackMessage(issue, text);
+		const blocks = constructGhIssueSlackMessage(issue, text);
 
-    return new Response(
-      JSON.stringify({
-        blocks,
-        response_type: 'in_channel',
-      }),
-      { headers: { 'Content-type': 'application/json' } }
-    );
-  } catch (err) {
-    const errorText =
-      'Uh-oh! We couldn’t find the issue you provided. We can only find public issues in the following format: `owner/repo#issue_number`.';
-    return new Response(errorText);
-  }
+		return new Response(
+			JSON.stringify({
+				blocks,
+				response_type: 'in_channel',
+			}),
+			{ headers: { 'Content-type': 'application/json' } }
+		);
+	} catch (err) {
+		const errorText =
+			'Uh-oh! We couldn’t find the issue you provided. We can only find public issues in the following format: `owner/repo#issue_number`.';
+		return new Response(errorText);
+	}
 };
 ```
 
@@ -545,10 +545,10 @@ highlight: [1, 2, 3, 4, 5, 6, 7, 8]
 import { constructGhIssueSlackMessage } from '../utils/slack';
 
 export default async request => {
-  const body = await request.text();
-  const { action, issue, repository } = JSON.parse(body);
-  const prefix_text = `An issue was ${action}:`;
-  const issue_string = `${repository.owner.login}/${repository.name}#${issue.number}`;
+	const body = await request.text();
+	const { action, issue, repository } = JSON.parse(body);
+	const prefix_text = `An issue was ${action}:`;
+	const issue_string = `${repository.owner.login}/${repository.name}#${issue.number}`;
 };
 ```
 
@@ -568,11 +568,11 @@ highlight: [8]
 import { constructGhIssueSlackMessage } from '../utils/slack';
 
 export default async request => {
-  const body = await request.text();
-  const { action, issue, repository } = JSON.parse(body);
-  const prefix_text = `An issue was ${action}:`;
-  const issue_string = `${repository.owner.login}/${repository.name}#${issue.number}`;
-  const blocks = constructGhIssueSlackMessage(issue, issue_string, prefix_text);
+	const body = await request.text();
+	const { action, issue, repository } = JSON.parse(body);
+	const prefix_text = `An issue was ${action}:`;
+	const issue_string = `${repository.owner.login}/${repository.name}#${issue.number}`;
+	const blocks = constructGhIssueSlackMessage(issue, issue_string, prefix_text);
 };
 ```
 
@@ -588,31 +588,31 @@ highlight: [1, 20]
 const compact = array => array.filter(el => el);
 
 export const constructGhIssueSlackMessage = (issue, issue_string, prefix_text) => {
-  const issue_link = `<${issue.html_url}|${issue_string}>`;
-  const user_link = `<${issue.user.html_url}|${issue.user.login}>`;
-  const date = new Date(Date.parse(issue.created_at)).toLocaleDateString();
+	const issue_link = `<${issue.html_url}|${issue_string}>`;
+	const user_link = `<${issue.user.html_url}|${issue.user.login}>`;
+	const date = new Date(Date.parse(issue.created_at)).toLocaleDateString();
 
-  const text_lines = [
-    prefix_text,
-    `*${issue.title} - ${issue_link}*`,
-    issue.body,
-    `*${issue.state}* - Created by ${user_link} on ${date}`,
-  ];
+	const text_lines = [
+		prefix_text,
+		`*${issue.title} - ${issue_link}*`,
+		issue.body,
+		`*${issue.state}* - Created by ${user_link} on ${date}`,
+	];
 
-  return [
-    {
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: compact(text_lines).join('\n'),
-      },
-      accessory: {
-        type: 'image',
-        image_url: issue.user.avatar_url,
-        alt_text: issue.user.login,
-      },
-    },
-  ];
+	return [
+		{
+			type: 'section',
+			text: {
+				type: 'mrkdwn',
+				text: compact(text_lines).join('\n'),
+			},
+			accessory: {
+				type: 'image',
+				image_url: issue.user.avatar_url,
+				alt_text: issue.user.login,
+			},
+		},
+	];
 };
 ```
 
@@ -626,19 +626,19 @@ highlight: [10, 11, 12, 13, 14, 15, 16]
 import { constructGhIssueSlackMessage } from '../utils/slack';
 
 export default async request => {
-  const body = await request.text();
-  const { action, issue, repository } = JSON.parse(body);
-  const prefix_text = `An issue was ${action}:`;
-  const issue_string = `${repository.owner.login}/${repository.name}#${issue.number}`;
-  const blocks = constructGhIssueSlackMessage(issue, issue_string, prefix_text);
+	const body = await request.text();
+	const { action, issue, repository } = JSON.parse(body);
+	const prefix_text = `An issue was ${action}:`;
+	const issue_string = `${repository.owner.login}/${repository.name}#${issue.number}`;
+	const blocks = constructGhIssueSlackMessage(issue, issue_string, prefix_text);
 
-  const postToSlack = await fetch(SLACK_WEBHOOK_URL, {
-    body: JSON.stringify({ blocks }),
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-  });
+	const postToSlack = await fetch(SLACK_WEBHOOK_URL, {
+		body: JSON.stringify({ blocks }),
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+	});
 
-  return new Response('OK');
+	return new Response('OK');
 };
 ```
 
@@ -674,24 +674,24 @@ highlight: [4, 18, 19, 20, 21]
 import { constructGhIssueSlackMessage } from '../utils/slack';
 
 export default async request => {
-  try {
-    const body = await request.text();
-    const { action, issue, repository } = JSON.parse(body);
-    const prefix_text = `An issue was ${action}:`;
-    const issue_string = `${repository.owner.login}/${repository.name}#${issue.number}`;
-    const blocks = constructGhIssueSlackMessage(issue, issue_string, prefix_text);
+	try {
+		const body = await request.text();
+		const { action, issue, repository } = JSON.parse(body);
+		const prefix_text = `An issue was ${action}:`;
+		const issue_string = `${repository.owner.login}/${repository.name}#${issue.number}`;
+		const blocks = constructGhIssueSlackMessage(issue, issue_string, prefix_text);
 
-    const postToSlack = await fetch(SLACK_WEBHOOK_URL, {
-      body: JSON.stringify({ blocks }),
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    });
+		const postToSlack = await fetch(SLACK_WEBHOOK_URL, {
+			body: JSON.stringify({ blocks }),
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+		});
 
-    return new Response('OK');
-  } catch (err) {
-    const errorText = 'Unable to handle webhook';
-    return new Response(errorText, { status: 500 });
-  }
+		return new Response('OK');
+	} catch (err) {
+		const errorText = 'Unable to handle webhook';
+		return new Response(errorText, { status: 500 });
+	}
 };
 ```
 

@@ -54,14 +54,14 @@ You can create your configuration file using any text editor. For example, to cr
 Confirm that the configuration file has been successfully created by running:
 
 ```sh
-$ cat config.yaml 
+$ cat config.yaml
 ```
 
 ## Naming and storing a configuration file
 
 `cloudflared` will automatically look for a `config.yaml` or `config.yml` file in the [default `cloudflared` directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory).
 
-You can give your configuration file a custom name and store it in any directory. However, when running tunnel, make sure to add the `--config` flag and specify the new path.  
+You can give your configuration file a custom name and store it in any directory. However, when running tunnel, make sure to add the `--config` flag and specify the new path.
 
 ```sh
 $ cloudflared tunnel --config /path/your-config-file.yaml run tunnel-name

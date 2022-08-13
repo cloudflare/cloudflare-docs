@@ -38,7 +38,7 @@ You may change the Usage Model for individual Workers without affecting your acc
 
 ### Same features
 
-Worker size, number of Workers, and available memory are not affected by plan type. The Unbound usage model includes a higher number of subrequests. Refer to [Limits](/workers/platform/limits/). 
+Worker size, number of Workers, and available memory are not affected by plan type. The Unbound usage model includes a higher number of subrequests. Refer to [Limits](/workers/platform/limits/).
 
 ### Workers Unbound billing examples
 

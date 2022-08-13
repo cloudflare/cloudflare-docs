@@ -24,7 +24,7 @@ Before you can employ Early Hints for SaaS, you need to create a custom hostname
 
 3. If you are [creating a new custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), make an API call such as the example below, specifying `"early_hints": "on"`:
 
-```json
+```bash
 $ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
     -H "X-Auth-Email: {email}" \
     -H "X-Auth-Key: {key}" \
@@ -48,7 +48,7 @@ $ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_host
 
 4. For an existing custom hostname, locate the `id` of that hostname via a `GET` call:
 
-```json
+```bash
 $ curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames?hostname={hostname}" \
     -H "X-Auth-Email: {email}" \
     -H "X-Auth-Key: {key}" \
@@ -57,7 +57,7 @@ $ curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostn
 
 5. Then make an API call such as the example below, specifying `"early_hints": "on"`:
 
-```json
+```bash
 $ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{id}" \
     -H "X-Auth-Email: {email}" \
     -H "X-Auth-Key: {key}" \
@@ -76,4 +76,4 @@ $ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hos
     }'
 ```
 
-Currently, all options within `settings` are required in order to prevent those options from being set to default. You can pull the current settings state prior to updating Early Hints by leveraging the output that returns the `id` for the hostname. 
+Currently, all options within `settings` are required in order to prevent those options from being set to default. You can pull the current settings state prior to updating Early Hints by leveraging the output that returns the `id` for the hostname.

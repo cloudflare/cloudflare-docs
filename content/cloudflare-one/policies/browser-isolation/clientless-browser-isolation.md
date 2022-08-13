@@ -34,9 +34,9 @@ When users visit a website through the [Clientless Web Isolation URL](#use-the-r
 
 For example, if you use a third-party Secure Web Gateway to block `example.com`, users can still access the page in the remote browser by visiting `https://<your-team-name>.cloudflareaccess.com/browser/https://www.example.com/`. To block `https://<your-team-name>.cloudflareaccess.com/browser/https://www.example.com/`, simply create a Cloudflare Gateway HTTP policy to block `example.com`:
 
-| Selector | Operator | Value           | Action         |
-| ---------| ---------| ----------------| -------------- |
-| Domain   | in       | `example.com`   | Block          |
+| Selector | Operator | Value         | Action |
+| -------- | -------- | ------------- | ------ |
+| Domain   | in       | `example.com` | Block  |
 
 ### Connect private networks
 
@@ -86,19 +86,26 @@ To turn on or off the address bar, users can right-click on any isolated page an
 If you want to isolate a website without Cloudflare WARP installed, you will need to redirect traffic to the Clientless Web Isolation [prefixed URL](#use-the-remote-browser). One way to do this is through a third-party Secure Web Gateway. To redirect users to the remote browser, you can implement a custom block page similar to the example shown below.
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-<title>Redirecting website to a remote browser</title>
-<script>
-    window.location.href = 'https://<your-team-name>.cloudflareaccess.com/browser/<URL>}';
-</script>
-<noscript>
-    <meta http-equiv="refresh" content="0; url=https://<your-team-name>.cloudflareaccess.com/browser/<URL>" />
-</noscript>
-</head>
-<body>
-<p>This website is being redirected to a remote browser. Click <a href="https://<your-team-name>.cloudflareaccess.com/browser/<URL>">here</a> if you are not automatically redirected.</p>
-</body>
+	<head>
+		<title>Redirecting website to a remote browser</title>
+		<script>
+			window.location.href = 'https://<your-team-name>.cloudflareaccess.com/browser/<URL>}';
+		</script>
+		<noscript>
+			<meta
+				http-equiv="refresh"
+				content="0; url=https://<your-team-name>.cloudflareaccess.com/browser/<URL>"
+			/>
+		</noscript>
+	</head>
+	<body>
+		<p>
+			This website is being redirected to a remote browser. Click
+			<a href="https://<your-team-name>.cloudflareaccess.com/browser/<URL>">here</a> if you are not
+			automatically redirected.
+		</p>
+	</body>
 </html>
 ```

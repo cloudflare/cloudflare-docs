@@ -4,7 +4,7 @@ title: Customize a waiting room
 weight: 2
 ---
 
-# Customize a waiting room 
+# Customize a waiting room
 
 A waiting room can be customized from the dashboard or via API.
 
@@ -61,12 +61,12 @@ The following content in the `<main>` section of the template HTML code displays
 
 ```html
 <h2 id="time-remaining">
-  <noscript>
-    {{#waitTimeKnown}}Your estimated wait time is {{waitTimeFormatted}}...{{/waitTimeKnown}}
-    {{^waitTimeKnown}}{{#queueIsFull}}The estimated wait time is greater than a day. You will
-    automatically be placed in the queue once space is available.{{/queueIsFull}}
-    {{^queueIsFull}}Your estimated wait time is unavailable.{{/queueIsFull}}{{/waitTimeKnown}}
-  </noscript>
+	<noscript>
+		{{#waitTimeKnown}}Your estimated wait time is {{waitTimeFormatted}}...{{/waitTimeKnown}}
+		{{^waitTimeKnown}}{{#queueIsFull}}The estimated wait time is greater than a day. You will
+		automatically be placed in the queue once space is available.{{/queueIsFull}}
+		{{^queueIsFull}}Your estimated wait time is unavailable.{{/queueIsFull}}{{/waitTimeKnown}}
+	</noscript>
 </h2>
 ```
 
@@ -74,23 +74,23 @@ The following script within the `<body>` section after `<main>` fetches the wait
 
 ```html
 <script type="text/javascript">
-  var remainingEl = document.getElementById('time-remaining');
-  var waitTime = {{waitTime}};
-  var waitTimeKnown = {{waitTimeKnown}};
+	var remainingEl = document.getElementById('time-remaining');
+	var waitTime = {{waitTime}};
+	var waitTimeKnown = {{waitTimeKnown}};
 
-  var remainingString = 'Your estimated wait time is ';
+	var remainingString = 'Your estimated wait time is ';
 
-  if (!waitTimeKnown) {
-    remainingString += 'unavailable.'
-  } else {
-    if (waitTime === 1) {
-      remainingString += waitTime + ' minute...';
-    } else {
-      remainingString += waitTime + ' minutes...';
-    }
-  }
+	if (!waitTimeKnown) {
+	  remainingString += 'unavailable.'
+	} else {
+	  if (waitTime === 1) {
+	    remainingString += waitTime + ' minute...';
+	  } else {
+	    remainingString += waitTime + ' minutes...';
+	  }
+	}
 
-  remainingEl.innerText = remainingString;
+	remainingEl.innerText = remainingString;
 </script>
 ```
 
@@ -179,9 +179,9 @@ POST https://api.cloudflare.com/client/v4/zones/<zone_id>/waiting_rooms/preview
 In the request body, include the customized HTML content in the `custom_html` field:
 
 ```html
-{
-    "custom_html": "<p>Include custom HTML here</p>"
-}
+{ "custom_html": "
+<p>Include custom HTML here</p>
+" }
 ```
 
 Note that you pass HTML content to the preview endpoint in the `custom_html` field, but when you are using the API to configure a waiting room, you pass the HTML content in the `custom_page_html` field.

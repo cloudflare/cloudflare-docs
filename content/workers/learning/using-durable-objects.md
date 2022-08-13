@@ -38,7 +38,7 @@ The first parameter passed to the class constructor contains state specific to t
 
 ```js
 export class DurableObjectExample {
-  constructor(state, env) {}
+	constructor(state, env) {}
 }
 ```
 
@@ -48,11 +48,11 @@ Workers communicate with a Durable Object via the Fetch API. Like a Worker, a Du
 
 ```js
 export class DurableObjectExample {
-  constructor(state, env) {}
+	constructor(state, env) {}
 
-  async fetch(request) {
-    return new Response("Hello World");
-  }
+	async fetch(request) {
+		return new Response('Hello World');
+	}
 }
 ```
 
@@ -70,17 +70,17 @@ Durable Objects gain access to a [persistent storage API](/workers/runtime-apis/
 
 ```js
 export class DurableObjectExample {
-  constructor(state, env) {
-    this.state = state;
-  }
+	constructor(state, env) {
+		this.state = state;
+	}
 
-  async fetch(request) {
-    let ip = request.headers.get("CF-Connecting-IP");
-    let data = await request.text();
-    let storagePromise = this.state.storage.put(ip, data);
-    await storagePromise;
-    return new Response(ip + " stored " + data);
-  }
+	async fetch(request) {
+		let ip = request.headers.get('CF-Connecting-IP');
+		let data = await request.text();
+		let storagePromise = this.state.storage.put(ip, data);
+		await storagePromise;
+		return new Response(ip + ' stored ' + data);
+	}
 }
 ```
 
@@ -104,21 +104,21 @@ Variables in a Durable Object will maintain state as long as your Durable Object
 
 ```js
 export class Counter {
-  constructor(state, env) {
-    this.state = state;
-    // `blockConcurrencyWhile()` ensures no requests are delivered until
-    // initialization completes.
-    this.state.blockConcurrencyWhile(async () => {
-      let stored = await this.state.storage.get("value");
-      // After initialization, future reads do not need to access storage.
-      this.value = stored || 0;
-    });
-  }
+	constructor(state, env) {
+		this.state = state;
+		// `blockConcurrencyWhile()` ensures no requests are delivered until
+		// initialization completes.
+		this.state.blockConcurrencyWhile(async () => {
+			let stored = await this.state.storage.get('value');
+			// After initialization, future reads do not need to access storage.
+			this.value = stored || 0;
+		});
+	}
 
-  // Handle HTTP requests from clients.
-  async fetch(request) {
-    // use this.value rather than storage
-  }
+	// Handle HTTP requests from clients.
+	async fetch(request) {
+		// use this.value rather than storage
+	}
 }
 ```
 
@@ -139,7 +139,6 @@ As part of Durable Objects, Workers can act as WebSocket endpoints – including
 While technically any Worker can speak WebSocket in this way, WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated events to be sent back to the existing socket connection. Without Durable Objects, there is no way to send an event to the specific Worker holding a WebSocket. With Durable Objects, you can forward the WebSocket to an Object. Messages can then be addressed to that Object by its unique ID, and the Object can then forward those messages down the WebSocket to the client.
 
 For more information, refer to [Using WebSockets](/workers/learning/using-websockets/). For an example of WebSockets in action within Durable Objects, review the [example chat application](https://github.com/cloudflare/workers-chat-demo).
-
 
 ### Alarms in Durable Objects
 
@@ -184,38 +183,38 @@ ES Modules differ from regular JavaScript files in that they have imports and ex
 // `addEventHandler("fetch", event => { ... })`; this is just new syntax for
 // essentially the same thing.
 export default {
-  // In modules-syntax workers, bindings are delivered as a property of the
-  // environment object passed as the second parameter when an event handler or
-  // class constructor is invoked. This is new compared to pre-ES Module workers,
-  // in which bindings show up as global variables.
-  async fetch(request, env) {
-    // Derive an object ID from the URL path. `EXAMPLE_CLASS` is the Durable
-    // Object binding that you will read how to configure in the next section.
-    // `EXAMPLE_CLASS.idFromName()` always returns the same ID when given the
-    // same string as input (and called on the same class), but never the same
-    // ID for two different strings (or for different classes). So, in this
-    // case, you are creating a new object for each unique path.
-    let id = env.EXAMPLE_CLASS.idFromName(new URL(request.url).pathname);
+	// In modules-syntax workers, bindings are delivered as a property of the
+	// environment object passed as the second parameter when an event handler or
+	// class constructor is invoked. This is new compared to pre-ES Module workers,
+	// in which bindings show up as global variables.
+	async fetch(request, env) {
+		// Derive an object ID from the URL path. `EXAMPLE_CLASS` is the Durable
+		// Object binding that you will read how to configure in the next section.
+		// `EXAMPLE_CLASS.idFromName()` always returns the same ID when given the
+		// same string as input (and called on the same class), but never the same
+		// ID for two different strings (or for different classes). So, in this
+		// case, you are creating a new object for each unique path.
+		let id = env.EXAMPLE_CLASS.idFromName(new URL(request.url).pathname);
 
-    // Construct the stub for the Durable Object using the ID. A stub is a
-    // client object used to send messages to the Durable Object.
-    let stub = env.EXAMPLE_CLASS.get(id);
+		// Construct the stub for the Durable Object using the ID. A stub is a
+		// client object used to send messages to the Durable Object.
+		let stub = env.EXAMPLE_CLASS.get(id);
 
-    // Forward the request to the Durable Object. Note that `stub.fetch()` has
-    // the same signature as the global `fetch()` function, except that the
-    // request is always sent to the object, regardless of the request's URL.
-    //
-    // The first time you send a request to a new object, the object will be
-    // created for us. If you do not store durable state in the object, it will
-    // automatically be deleted later (and recreated if you request it again).
-    // If you do store durable state, then the object may be evicted from memory
-    // but its durable state will be kept around permanently.
-    let response = await stub.fetch(request);
+		// Forward the request to the Durable Object. Note that `stub.fetch()` has
+		// the same signature as the global `fetch()` function, except that the
+		// request is always sent to the object, regardless of the request's URL.
+		//
+		// The first time you send a request to a new object, the object will be
+		// created for us. If you do not store durable state in the object, it will
+		// automatically be deleted later (and recreated if you request it again).
+		// If you do store durable state, then the object may be evicted from memory
+		// but its durable state will be kept around permanently.
+		let response = await stub.fetch(request);
 
-    // You received an HTTP response back. You could process it in the usual
-    // ways, but in this case, you will just return it to the client.
-    return response;
-  },
+		// You received an HTTP response back. You could process it in the usual
+		// ways, but in this case, you will just return it to the client.
+		return response;
+	},
 };
 ```
 
@@ -423,7 +422,7 @@ In particular, a Durable Object may be superseded in this way in the event of a 
 
 The Workers editor in [the Cloudflare dashboard](https://dash.cloudflare.com/) allows you to interactively edit and preview your Worker and Durable Objects. Note that in the editor Durable Objects can only be talked to by a preview request if the Worker being previewed both exports the Durable Object class and binds to it. Durable Objects exported by other Workers cannot be talked to in the editor preview.
 
-[`wrangler dev`](/workers/wrangler/commands/#dev) has read access to Durable Object storage, but writes will be kept in memory and will not affect persistent data. However, if you specify the `script_name` explicitly in the Durable Object binding, then writes will affect persistent data. [Wrangler 2](/workers/wrangler/compare-v1-v2/) will emit a warning in that case. 
+[`wrangler dev`](/workers/wrangler/commands/#dev) has read access to Durable Object storage, but writes will be kept in memory and will not affect persistent data. However, if you specify the `script_name` explicitly in the Durable Object binding, then writes will affect persistent data. [Wrangler 2](/workers/wrangler/compare-v1-v2/) will emit a warning in that case.
 
 ### Object location
 
@@ -443,77 +442,77 @@ The complete example code is included for both the Worker and the Durable Object
 // Worker
 
 export default {
-  async fetch(request, env) {
-    return await handleRequest(request, env);
-  },
+	async fetch(request, env) {
+		return await handleRequest(request, env);
+	},
 };
 
 async function handleRequest(request, env) {
-  let url = new URL(request.url);
-  let name = url.searchParams.get("name");
-  if (!name) {
-    return new Response(
-      "Select a Durable Object to contact by using" +
-        " the `name` URL query string parameter. e.g. ?name=A"
-    );
-  }
+	let url = new URL(request.url);
+	let name = url.searchParams.get('name');
+	if (!name) {
+		return new Response(
+			'Select a Durable Object to contact by using' +
+				' the `name` URL query string parameter. e.g. ?name=A'
+		);
+	}
 
-  // Every unique ID refers to an individual instance of the Counter class that
-  // has its own state. `idFromName()` always returns the same ID when given the
-  // same string as input (and called on the same class), but never the same
-  // ID for two different strings (or for different classes).
-  let id = env.COUNTER.idFromName(name);
+	// Every unique ID refers to an individual instance of the Counter class that
+	// has its own state. `idFromName()` always returns the same ID when given the
+	// same string as input (and called on the same class), but never the same
+	// ID for two different strings (or for different classes).
+	let id = env.COUNTER.idFromName(name);
 
-  // Construct the stub for the Durable Object using the ID. A stub is a
-  // client object used to send messages to the Durable Object.
-  let obj = env.COUNTER.get(id);
+	// Construct the stub for the Durable Object using the ID. A stub is a
+	// client object used to send messages to the Durable Object.
+	let obj = env.COUNTER.get(id);
 
-  // Send a request to the Durable Object, then await its response.
-  let resp = await obj.fetch(request.url);
-  let count = await resp.text();
+	// Send a request to the Durable Object, then await its response.
+	let resp = await obj.fetch(request.url);
+	let count = await resp.text();
 
-  return new Response(`Durable Object '${name}' count: ${count}`);
+	return new Response(`Durable Object '${name}' count: ${count}`);
 }
 
 // Durable Object
 
 export class Counter {
-  constructor(state, env) {
-    this.state = state;
-  }
+	constructor(state, env) {
+		this.state = state;
+	}
 
-  // Handle HTTP requests from clients.
-  async fetch(request) {
-    // Apply requested action.
-    let url = new URL(request.url);
+	// Handle HTTP requests from clients.
+	async fetch(request) {
+		// Apply requested action.
+		let url = new URL(request.url);
 
-    // Durable Object storage is automatically cached in-memory, so reading the
-    // same key every request is fast. (That said, you could also store the
-    // value in a class member if you prefer.)
-    let value = (await this.state.storage.get("value")) || 0;
+		// Durable Object storage is automatically cached in-memory, so reading the
+		// same key every request is fast. (That said, you could also store the
+		// value in a class member if you prefer.)
+		let value = (await this.state.storage.get('value')) || 0;
 
-    switch (url.pathname) {
-      case "/increment":
-        ++value;
-        break;
-      case "/decrement":
-        --value;
-        break;
-      case "/":
-        // Just serve the current value.
-        break;
-      default:
-        return new Response("Not found", { status: 404 });
-    }
+		switch (url.pathname) {
+			case '/increment':
+				++value;
+				break;
+			case '/decrement':
+				--value;
+				break;
+			case '/':
+				// Just serve the current value.
+				break;
+			default:
+				return new Response('Not found', { status: 404 });
+		}
 
-    // You do not have to worry about a concurrent request having modified the
-    // value in storage because "input gates" will automatically protect against
-    // unwanted concurrency. So, read-modify-write is safe. For more details,
-    // refer to: https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/
-    await this.state.storage.put("value", value);
+		// You do not have to worry about a concurrent request having modified the
+		// value in storage because "input gates" will automatically protect against
+		// unwanted concurrency. So, read-modify-write is safe. For more details,
+		// refer to: https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/
+		await this.state.storage.put('value', value);
 
-    return new Response(value);
-  }
+		return new Response(value);
+	}
 }
 ```
 

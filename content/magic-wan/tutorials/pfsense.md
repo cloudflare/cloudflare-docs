@@ -23,13 +23,13 @@ Refer to the image below for guidance on which values to use.
 
 ![General configuration dialog for interface setup for a policy based configuration](/magic-wan/static/pfsense-interface-config.png)
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Enable**                | ✔️ Enable interface |
-| **Description**           | LAN                |
-|**IPv4 Configuration Type**| Static IPv4        |
-|**IPv6 Configuration Type**| Static IPv6        |
-| **MSS**                   | 1446               |
+| Field                       | Value               |
+| --------------------------- | ------------------- |
+| **Enable**                  | ✔️ Enable interface |
+| **Description**             | LAN                 |
+| **IPv4 Configuration Type** | Static IPv4         |
+| **IPv6 Configuration Type** | Static IPv6         |
+| **MSS**                     | 1446                |
 
 ## Phase 1
 
@@ -41,21 +41,21 @@ Refer to the image below for guidance on which values to use.
 
 ![pfSense IPsec phase 1 setting values for a policy based configuration](/magic-wan/static/pfsense-p1-settings.png)
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Description**           | Name               |
-| **Key Exchange Version**  | IKE v2             |
-| **Internet Protocol**     | IPv4               |
-| **Interface**             | WAN                |
-| **Remote Gateway**        | &lt;Anycast IP provided by Cloudflare> |
+| Field                    | Value                                  |
+| ------------------------ | -------------------------------------- |
+| **Description**          | Name                                   |
+| **Key Exchange Version** | IKE v2                                 |
+| **Internet Protocol**    | IPv4                                   |
+| **Interface**            | WAN                                    |
+| **Remote Gateway**       | &lt;Anycast IP provided by Cloudflare> |
 
 ![pfSense IPsec phase 1 expiration and replacement values for a policy based configuration](/magic-wan/static/pfsense-p1-expiration-replacement.png)
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Life Time**             | 28800              |
-| **Rekey Time**            | 14400              |
-| **Reauth Time**           | 0                  |
+| Field           | Value |
+| --------------- | ----- |
+| **Life Time**   | 28800 |
+| **Rekey Time**  | 14400 |
+| **Reauth Time** | 0     |
 
 </div>
 </details>
@@ -66,23 +66,24 @@ Refer to the image below for guidance on which values to use.
 </summary>
  <div class="special-class" markdown="1">
 
- ![pfSense IPsec phase 1 setting values for a route based configuration](/magic-wan/static/pfsense-p1-settings.png)
+![pfSense IPsec phase 1 setting values for a route based configuration](/magic-wan/static/pfsense-p1-settings.png)
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Description**           | Name               |
-| **Key Exchange Version**  | IKE v2             |
-| **Internet Protocol**     | IPv4               |
-| **Interface**             | WAN                |
-| **Remote Gateway**        | &lt;Anycast IP provided by Cloudflare> |
+| Field                    | Value                                  |
+| ------------------------ | -------------------------------------- |
+| **Description**          | Name                                   |
+| **Key Exchange Version** | IKE v2                                 |
+| **Internet Protocol**    | IPv4                                   |
+| **Interface**            | WAN                                    |
+| **Remote Gateway**       | &lt;Anycast IP provided by Cloudflare> |
 
- ![pfSense IPsec phase 1 expiration and replacement values for a route based configuration](/magic-wan/static/pfsense-p1-expiration-replacement.png)
+![pfSense IPsec phase 1 expiration and replacement values for a route based configuration](/magic-wan/static/pfsense-p1-expiration-replacement.png)
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Life Time**             | 28800              |
-| **Rekey Time**            | 14400              |
-| **Reauth Time**           | 0                  |
+| Field           | Value |
+| --------------- | ----- |
+| **Life Time**   | 28800 |
+| **Rekey Time**  | 14400 |
+| **Reauth Time** | 0     |
+
 </div>
 </details>
 
@@ -93,34 +94,34 @@ Refer to the image below for guidance on which values to use.
   Policy-based configuration
 </summary>
  <div class="special-class" markdown="1">
- 
 
 ![pfSense IPsec phase 2 general information values](/magic-wan/static/pfsense-p2-general-info.png)
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Description**           | Name               |
-| **Mode**                  | Tunnel IPv4        |
-| **Local Network**         | &lt;Local Network to be tunneled> |
-| **NAT/BINAT translation** | None               |
+| Field                     | Value                                   |
+| ------------------------- | --------------------------------------- |
+| **Description**           | Name                                    |
+| **Mode**                  | Tunnel IPv4                             |
+| **Local Network**         | &lt;Local Network to be tunneled>       |
+| **NAT/BINAT translation** | None                                    |
 | **Remote Network**        | Remote network available via the tunnel |
 
 ![pfSense IPsec phase 2 key exchange values](/magic-wan/static/pfsense-p2-key-exchange.png)
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Protocol**              | ESP                |
-| **Encryption Algorithm**  | ✔️ AES128-GCM, 128 bits |
-| **PFS key group**         | 14 (2048 bit)      |
+| Field                    | Value                   |
+| ------------------------ | ----------------------- |
+| **Protocol**             | ESP                     |
+| **Encryption Algorithm** | ✔️ AES128-GCM, 128 bits |
+| **PFS key group**        | 14 (2048 bit)           |
 
 ![pfSense IPsec phase 2 key exchange values](/magic-wan/static/pfsense-p2-expiration-replacement.png)
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Life Time**             | 3600               |
-| **Rekey Time**            | 3240               |
-| **Rand Time**             | 360                |
-| **Automatically ping host**| Specify an IP address available via the tunnel. Refer to the Description field for more information.    |
+| Field                       | Value                                                                                                |
+| --------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **Life Time**               | 3600                                                                                                 |
+| **Rekey Time**              | 3240                                                                                                 |
+| **Rand Time**               | 360                                                                                                  |
+| **Automatically ping host** | Specify an IP address available via the tunnel. Refer to the Description field for more information. |
+
 </div>
 </details>
 
@@ -134,29 +135,30 @@ Refer to the image below for guidance on which values to use.
 
 ![pfSense IPsec phase 2 network settings for a route based configuration](/magic-wan/static/pfsense-p2-networks-route-based.png)
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Description**           | Name               |
-| **Mode**                  | Routed (VTI)       |
-| **Local Network**         | &lt;Local Tunnel Inside IP> |
-| **Remote Network**        | &lt;Remote Tunnel Inside IP>|
+| Field              | Value                        |
+| ------------------ | ---------------------------- |
+| **Description**    | Name                         |
+| **Mode**           | Routed (VTI)                 |
+| **Local Network**  | &lt;Local Tunnel Inside IP>  |
+| **Remote Network** | &lt;Remote Tunnel Inside IP> |
 
 ![pfSense IPsec phase 2 key exchange values for a route based configuration](/magic-wan/static/pfsense-p2-key-exchange.png)
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Protocol**              | ESP                |
-| **Encryption Algorithm**  | ✔️ AES128-GCM, 128 bits |
-| **PFS key group**         | 14 (2048 bit)      |
+| Field                    | Value                   |
+| ------------------------ | ----------------------- |
+| **Protocol**             | ESP                     |
+| **Encryption Algorithm** | ✔️ AES128-GCM, 128 bits |
+| **PFS key group**        | 14 (2048 bit)           |
 
 ![pfSense IPsec phase 2 key exchange values](/magic-wan/static/pfsense-p2-expiration-replacement.png)
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Life Time**             | 3600               |
-| **Rekey Time**            | 3240               |
-| **Rand Time**             | 360                |
-| **Automatically ping host**| Specify an IP address available via the tunnel. Refer to the Description field for more information.    |
+| Field                       | Value                                                                                                |
+| --------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **Life Time**               | 3600                                                                                                 |
+| **Rekey Time**              | 3240                                                                                                 |
+| **Rand Time**               | 360                                                                                                  |
+| **Automatically ping host** | Specify an IP address available via the tunnel. Refer to the Description field for more information. |
+
 </div>
 </details>
 
@@ -176,13 +178,13 @@ Refer to the image below for guidance on which values to use.
 
 ![General configuration dialog for interface setup for a policy based configuration](/magic-wan/static/pfsense-interface-config.png)
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Enable**                | ✔️ Enable interface |
-| **Description**           | LAN                |
-|**IPv4 Configuration Type**| Static IPv4        |
-|**IPv6 Configuration Type**| Static IPv6        |
-| **MSS**                   | 1446               |
+| Field                       | Value               |
+| --------------------------- | ------------------- |
+| **Enable**                  | ✔️ Enable interface |
+| **Description**             | LAN                 |
+| **IPv4 Configuration Type** | Static IPv4         |
+| **IPv6 Configuration Type** | Static IPv6         |
+| **MSS**                     | 1446                |
 
 4. From the pfSense WebGUI, select **Interfaces** > **Assignments**.
 

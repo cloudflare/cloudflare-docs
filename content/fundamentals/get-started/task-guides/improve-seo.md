@@ -37,7 +37,7 @@ To make sure your domain is accessible over HTTPS:
 
 ### Enable Crawler Hints
 
-With [Crawler Hints](/cache/about/crawler-hints/), search engines and other bot-powered experiences have the freshest version of your content, translating into happier users and ultimately influencing search rankings. 
+With [Crawler Hints](/cache/about/crawler-hints/), search engines and other bot-powered experiences have the freshest version of your content, translating into happier users and ultimately influencing search rankings.
 
 ### Enable Automatic Signed Exchanges (SXGs)
 

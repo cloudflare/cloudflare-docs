@@ -156,10 +156,10 @@ Routes are specified in the `wrangler.toml` configuration file.
   where the content of `index.js` is:
 
   ```js
-  import SomeDependency from "some-dependency.js";
+  import SomeDependency from 'some-dependency.js';
 
-  addEventListener("fetch", (event) => {
-    // ...
+  addEventListener('fetch', event => {
+  	// ...
   });
   ```
 

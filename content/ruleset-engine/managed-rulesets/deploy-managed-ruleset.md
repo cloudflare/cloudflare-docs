@@ -23,7 +23,7 @@ Use the following workflow to deploy a Managed Ruleset to a phase at the account
 
 The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of your account (`<ACCOUNT_ID>`) by creating a rule that executes the Managed Ruleset. The rules in the Managed Ruleset are executed when the zone name matches one of `example.com` or `anotherexample.com`.
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -44,7 +44,7 @@ curl -X PUT \
 }'
 ```
 
-```json
+```bash
 ---
 header: Response
 ---
@@ -93,7 +93,7 @@ Use the following workflow to deploy a Managed Ruleset to a phase at the zone le
 
 The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of a given zone (`<ZONE_ID>`) by creating a rule that executes the Managed Ruleset.
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -119,34 +119,34 @@ curl -X PUT \
 header: Response
 ---
 {
-  "result": {
-    "id": "<ZONE_PHASE_RULESET_ID>",
-    "name": "Zone-level phase entry point",
-    "description": "",
-    "kind": "zone",
-    "version": "3",
-    "rules": [
-      {
-        "id": "<RULE_ID_1>",
-        "version": "1",
-        "action": "execute",
-        "action_parameters": {
-          "id": "<CLOUDFLARE_MANAGED_RULESET_ID>",
-          "version": "latest"
-        },
-        "expression": "true",
-        "description": "Execute Cloudflare Managed Ruleset on my zone-level phase entry point",
-        "last_updated": "2021-03-18T18:08:14.003361Z",
-        "ref": "<RULE_REF_1>",
-        "enabled": true
-      }
-    ],
-    "last_updated": "2021-03-18T18:08:14.003361Z",
-    "phase": "http_request_firewall_managed"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<ZONE_PHASE_RULESET_ID>",
+		"name": "Zone-level phase entry point",
+		"description": "",
+		"kind": "zone",
+		"version": "3",
+		"rules": [
+			{
+				"id": "<RULE_ID_1>",
+				"version": "1",
+				"action": "execute",
+				"action_parameters": {
+					"id": "<CLOUDFLARE_MANAGED_RULESET_ID>",
+					"version": "latest"
+				},
+				"expression": "true",
+				"description": "Execute Cloudflare Managed Ruleset on my zone-level phase entry point",
+				"last_updated": "2021-03-18T18:08:14.003361Z",
+				"ref": "<RULE_REF_1>",
+				"enabled": true
+			}
+		],
+		"last_updated": "2021-03-18T18:08:14.003361Z",
+		"phase": "http_request_firewall_managed"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

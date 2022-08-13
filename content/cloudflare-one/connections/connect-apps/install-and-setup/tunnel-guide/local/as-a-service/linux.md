@@ -27,21 +27,21 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 1. Install the `cloudflared` service.
 
-    ```sh
-    $ cloudflared service install
-    ```
+   ```sh
+   $ cloudflared service install
+   ```
 
 2. Start the service.
 
-    ```sh
-    $ systemctl start cloudflared
-    ```
+   ```sh
+   $ systemctl start cloudflared
+   ```
 
 3. (Optional) View the status of the service.
 
-    ```sh
-    $ systemctl status cloudflared
-    ```
+   ```sh
+   $ systemctl status cloudflared
+   ```
 
 ## Next steps
 

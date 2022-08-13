@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: About Cloudflare Analytics
 weight: 1
 meta:
-    title: A quick overview of Cloudflare Analytics
+  title: A quick overview of Cloudflare Analytics
 ---
 
 # About Cloudflare Analytics
@@ -18,10 +18,10 @@ Refer to [Types of analytics](/fundamentals/data-products/types-of-analytics/) f
 
 The underlying datasets that Cloudflare Analytics captures and processes share the following characteristics:
 
-* All metrics reflect traffic proxied through the Cloudflare network (also known as orange-clouded), as configured via DNS records in the Cloudflare DNS app. Note that for a [CNAME setup](/dns/zone-setups/partial-setup/), Cloudflare is unable to offer DNS metrics.
-* Cloudflare does not count traffic for unproxied DNS records. However, if your site is not proxied through Cloudflare but Cloudflare is your authoritative DNS server, then we are able to collect DNS metrics.
-* Cloudflare can only proxy information for traffic targeting [specific ports](/fundamentals/get-started/reference/network-ports/).
-* In determining the originating country, Cloudflare uses the IP address associated with each request. Learn about [Configuring Cloudflare IP Geolocation](https://support.cloudflare.com/hc/articles/200168236).
+- All metrics reflect traffic proxied through the Cloudflare network (also known as orange-clouded), as configured via DNS records in the Cloudflare DNS app. Note that for a [CNAME setup](/dns/zone-setups/partial-setup/), Cloudflare is unable to offer DNS metrics.
+- Cloudflare does not count traffic for unproxied DNS records. However, if your site is not proxied through Cloudflare but Cloudflare is your authoritative DNS server, then we are able to collect DNS metrics.
+- Cloudflare can only proxy information for traffic targeting [specific ports](/fundamentals/get-started/reference/network-ports/).
+- In determining the originating country, Cloudflare uses the IP address associated with each request. Learn about [Configuring Cloudflare IP Geolocation](https://support.cloudflare.com/hc/articles/200168236).
 
 ## Apparent data discrepancies
 
@@ -37,9 +37,9 @@ Finally, it is likely that unique visitor data from the Cloudflare Analytics app
 
 You may not be seeing metrics on Cloudflare Analytics for the following reasons:
 
-* You only recently signed up for Cloudflare. Metrics are delayed 24 hours for domains on a free Cloudflare plan.
-* If you signed up directly with Cloudflare, your nameservers might not be pointing to Cloudflare at your registrar just yet. Registrars can take 24-72 hours to update their nameservers. Metrics will not start gathering until we detect the nameservers pointing to Cloudflare.
-* If you signed up through a Cloudflare [hosting partner option](https://www.cloudflare.com/partners/), something might not be configured correctly. Contact the hosting partner for support.
-* Some browser extensions designed to block ads may prevent analytics from loading. To address this issue, disable the ad block extension or allow `cloudflare.com` on it.
+- You only recently signed up for Cloudflare. Metrics are delayed 24 hours for domains on a free Cloudflare plan.
+- If you signed up directly with Cloudflare, your nameservers might not be pointing to Cloudflare at your registrar just yet. Registrars can take 24-72 hours to update their nameservers. Metrics will not start gathering until we detect the nameservers pointing to Cloudflare.
+- If you signed up through a Cloudflare [hosting partner option](https://www.cloudflare.com/partners/), something might not be configured correctly. Contact the hosting partner for support.
+- Some browser extensions designed to block ads may prevent analytics from loading. To address this issue, disable the ad block extension or allow `cloudflare.com` on it.
 
 {{<Aside type="note">}}Activations through a hosting partner works via a [CNAME setup](/dns/zone-setups/partial-setup/) on the `www` record. If most of your traffic actually goes to `domain.com`, [forward your traffic](/rules/bulk-redirects/) from `domain.com` to `www.domain.com`.{{</Aside>}}

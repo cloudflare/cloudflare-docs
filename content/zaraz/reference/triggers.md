@@ -31,21 +31,21 @@ Zaraz matches the variable you input in **Variable name** with the text under **
 
 When matching based on a System property, you will often want to add a second rule that matches `{{ client.__zarazTrack }}` to `Pageview`. Otherwise, your trigger will be valid for every other event happening on this page too. Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how to add more than one condition to a trigger.
 
-
 **Trigger example: All pages under `/blog`**
 
 {{<table-wrap>}}
 
-| Rule type    | Variable name               | Match operation | Match string |
-| ------------ | --------------------------- | --------------- | ------------ |
-| _Match rule_ | `{{ system.page.url.pathname }}` | _Starts with_      | `/blog`   |
+| Rule type    | Variable name                    | Match operation | Match string |
+| ------------ | -------------------------------- | --------------- | ------------ |
+| _Match rule_ | `{{ system.page.url.pathname }}` | _Starts with_   | `/blog`      |
+
 {{</table-wrap>}}
 
 {{<table-wrap>}}
 
 | Rule type    | Variable name               | Match operation | Match string |
-| ---------------- | ----- | ------------ | --------------- |
-| _Match rule_ | `{{ client.__zarazTrack }}` | _Equals_      | `Pageview`   |
+| ------------ | --------------------------- | --------------- | ------------ |
+| _Match rule_ | `{{ client.__zarazTrack }}` | _Equals_        | `Pageview`   |
 
 {{</table-wrap>}}
 
@@ -53,17 +53,17 @@ When matching based on a System property, you will often want to add a second ru
 
 {{<table-wrap>}}
 
-| Rule type    | Variable name               | Match operation | Match string |
-| ------------ | --------------------------- | --------------- | ------------ |
-| _Match rule_ | `{{ system.cookies.isLoggedIn }}` | _Equals_      | `true`   |
+| Rule type    | Variable name                     | Match operation | Match string |
+| ------------ | --------------------------------- | --------------- | ------------ |
+| _Match rule_ | `{{ system.cookies.isLoggedIn }}` | _Equals_        | `true`       |
 
 {{</table-wrap>}}
 
 {{<table-wrap>}}
 
 | Rule type    | Variable name               | Match operation | Match string |
-| ---------------- | ----- | ------------ | --------------- |
-| _Match rule_ | `{{ client.__zarazTrack }}` | _Equals_      | `Pageview`   |
+| ------------ | --------------------------- | --------------- | ------------ |
+| _Match rule_ | `{{ client.__zarazTrack }}` | _Equals_        | `Pageview`   |
 
 {{</table-wrap>}}
 
@@ -83,8 +83,8 @@ Tracks clicks in a web page. You can set up click listeners using CSS selectors 
 {{<table-wrap>}}
 
 | Rule type        | Type  | Selector     | Wait for actions |
-| ---------------- | ----- | ------------ | --------------- |
-| _Click listener_ | _CSS_ | `#my-button` | `500`           |
+| ---------------- | ----- | ------------ | ---------------- |
+| _Click listener_ | _CSS_ | `#my-button` | `500`            |
 
 {{</table-wrap>}}
 
@@ -93,16 +93,16 @@ To improve the performance of the web page, you can limit a Click listener to a 
 {{<table-wrap>}}
 
 | Rule type        | Type  | Selector    | Wait for actions |
-| ---------------- | ----- | ----------- | --------------- |
-| _Click listener_ | _CSS_ | `#myButton` | `500`           |
+| ---------------- | ----- | ----------- | ---------------- |
+| _Click listener_ | _CSS_ | `#myButton` | `500`            |
 
 {{</table-wrap>}}
 
 {{<table-wrap>}}
 
-| Rule type    | Variable name               | Match operation | Match string |
-| ---------------- | ----- | ------------ | --------------- |
-| _Match rule_ | `{{ system.page.url.pathname }}` | _Equals_      | `/my-page-path`   |
+| Rule type    | Variable name                    | Match operation | Match string    |
+| ------------ | -------------------------------- | --------------- | --------------- |
+| _Match rule_ | `{{ system.page.url.pathname }}` | _Equals_        | `/my-page-path` |
 
 {{</table-wrap>}}
 
@@ -115,8 +115,8 @@ Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how
 {{<table-wrap>}}
 
 | Rule type        | Type    | Selector                                         | Wait for actions |
-| ---------------- | ------- | ------------------------------------------------ | --------------- |
-| _Click listener_ | _XPath_ | `/html/body//*[contains(text(), 'Add To Cart')]` | `500`           |
+| ---------------- | ------- | ------------------------------------------------ | ---------------- |
+| _Click listener_ | _XPath_ | `/html/body//*[contains(text(), 'Add To Cart')]` | `500`            |
 
 {{</table-wrap>}}
 
@@ -153,7 +153,7 @@ To improve the performance of the web page, you can limit a Form submission trig
 
 | Rule type    | Variable name                    | Match operation | Match string    |
 | ------------ | -------------------------------- | --------------- | --------------- |
-| _Match rule_ | `{{ system.page.url.pathname }}` | _Equals_      | `/my-page-path` |
+| _Match rule_ | `{{ system.page.url.pathname }}` | _Equals_        | `/my-page-path` |
 
 {{</table-wrap>}}
 
@@ -192,7 +192,7 @@ The above Timer will fire once, after five seconds. To improve the performance o
 
 | Rule type    | Variable name                    | Match operation | Match string    |
 | ------------ | -------------------------------- | --------------- | --------------- |
-| _Match rule_ | `{{ system.page.url.pathname }}` | _Equals_      | `/my-page-path` |
+| _Match rule_ | `{{ system.page.url.pathname }}` | _Equals_        | `/my-page-path` |
 
 {{</table-wrap>}}
 

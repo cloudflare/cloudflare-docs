@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Integrate Cloudflare Images on your website
 ---
+
 # Integrate Cloudflare Images on your website
 
 ## Overview
@@ -51,12 +52,12 @@ In our Cloudflare Pages website demo, URLs for image delivery are defined in the
 Here is the relevant extract of this file (edited for brevity):
 
 ```js
-{
-    name: "Step 1",
-    image_url: function(image_name, variant, config) {
-        return config.site_url + "/images/" + variant + "/" + image_name;
-    }
-},
+const step = {
+	name: 'Step 1',
+	image_url: function (image_name, variant, config) {
+		return config.site_url + '/images/' + variant + '/' + image_name;
+	},
+};
 ```
 
 This configuration provides an `image_url` function used when building the HTML of the website, that generates the URLs to our website's images — in this case, served directly by the website and **not** by Cloudflare Images.
@@ -83,58 +84,57 @@ Here is that script, slightly edited for illustrative purposes:
 ---
 filename: "scripts/migrate/bulkupload.js"
 ---
-
 // URL where your original images are accessible
-const imageOriginURL = "https://imagejam.s3.amazonaws.com/";
+const imageOriginURL = 'https://imagejam.s3.amazonaws.com/';
 const images = [
-    "cakes/aliet-kitchen-qrDbj7OV2EU-unsplash-ツ.jpg",
-    "cakes/amirali-mirhashemian-cZFU60dKB6U-unsplash.jpg",
-    // obtain the list of images to import in any way...
+	'cakes/aliet-kitchen-qrDbj7OV2EU-unsplash-ツ.jpg',
+	'cakes/amirali-mirhashemian-cZFU60dKB6U-unsplash.jpg',
+	// obtain the list of images to import in any way...
 ];
 
 bulkUpload();
 
 async function bulkUpload() {
-    for(image_name in images) {
-        await upload(image_name, process.env.CF_IMAGES_ACCOUNT_ID, process.env.CF_IMAGES_API_KEY);
-    }
+	for (image_name in images) {
+		await upload(image_name, process.env.CF_IMAGES_ACCOUNT_ID, process.env.CF_IMAGES_API_KEY);
+	}
 }
 
 async function upload(imageName, CF_IMAGES_ACCOUNT_ID, CF_IMAGES_API_KEY) {
-    // Upload image to Cloudflare Images
-    // CF Images will download the image hosted at the provided URL and store it
-    // Leverages Upload by URL and Custom ID features of Cloudflare Images
-    // see https://developers.cloudflare.com/images/cloudflare-images/upload-images/custom-id/
+	// Upload image to Cloudflare Images
+	// CF Images will download the image hosted at the provided URL and store it
+	// Leverages Upload by URL and Custom ID features of Cloudflare Images
+	// see https://developers.cloudflare.com/images/cloudflare-images/upload-images/custom-id/
 
-    console.log(`Uploading to Cloudflare Images: ${imageName}`);
+	console.log(`Uploading to Cloudflare Images: ${imageName}`);
 
-    const body = new FormData();
-    // tell CF Images to fetch this image for us
-    body.append("url", imageOriginURL + imageName);
-    // tell CF Images that we want our image to have this ID (ie, its current name)
-    body.append("id", imageName); 
+	const body = new FormData();
+	// tell CF Images to fetch this image for us
+	body.append('url', imageOriginURL + imageName);
+	// tell CF Images that we want our image to have this ID (ie, its current name)
+	body.append('id', imageName);
 
-    try {
-        const res = await fetch(
-            `https://api.cloudflare.com/client/v4/accounts/${CF_IMAGES_ACCOUNT_ID}/images/v1`,
-            {
-                method: "POST",
-                headers: { "Authorization": `Bearer ${CF_IMAGES_API_KEY}` },
-                body,
-            }
-        );
+	try {
+		const res = await fetch(
+			`https://api.cloudflare.com/client/v4/accounts/${CF_IMAGES_ACCOUNT_ID}/images/v1`,
+			{
+				method: 'POST',
+				headers: { Authorization: `Bearer ${CF_IMAGES_API_KEY}` },
+				body,
+			}
+		);
 
-        if (res.status !== 200 && res.status !== 409) {
-            throw new Error("HTTP " + res.status + " : " + await res.text());
-        }
+		if (res.status !== 200 && res.status !== 409) {
+			throw new Error('HTTP ' + res.status + ' : ' + (await res.text()));
+		}
 
-        if (res.status === 409) {
-            // 409: image already exists, imported by a previous run
-            console.log("Already exist: " + imageName);
-        }
-    } catch (e) {
-        console.log("ERROR:" + e);
-    }
+		if (res.status === 409) {
+			// 409: image already exists, imported by a previous run
+			console.log('Already exist: ' + imageName);
+		}
+	} catch (e) {
+		console.log('ERROR:' + e);
+	}
 }
 ```
 
@@ -153,10 +153,8 @@ Now that your website images [have been imported](#migrate-images-to-cloudflare-
 
 For instance, our original image `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg` is served on the URL `https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
 
-![Cake with red fruits on top, and a fork on the side.](
-https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public
-)  
-(*Photo by Aditya Joshi - Unsplash*)
+![Cake with red fruits on top, and a fork on the side.](https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public)
+(_Photo by Aditya Joshi - Unsplash_)
 
 If we inspect the URL:
 
@@ -178,7 +176,6 @@ For this tutorial, we created a second variant named `thumb` with 200x200 pixels
 
 Using the same image as before but with the `thumb` variant, we get a [much smaller file](https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-%E3%83%84.jpg/thumb).
 
-
 ![The previous cake image, but smaller due to the new variant applied](https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/thumb)
 
 This variant is used in the thumbnails pages of our website gallery.
@@ -192,12 +189,19 @@ Now, let us update our website to serve images using Cloudflare Images. In our d
 Here is the relevant extract of this file (edited for brevity):
 
 ```js
-{
-    name: "Step 2",
-    image_url: function(image_name, variant, config) {
-        return "https://imagedelivery.net/" + config.cloudflare_images_account_hash + "/" + image_name + "/" + variant;
-    }
-},
+const step = {
+	name: 'Step 2',
+	image_url: function (image_name, variant, config) {
+		return (
+			'https://imagedelivery.net/' +
+			config.cloudflare_images_account_hash +
+			'/' +
+			image_name +
+			'/' +
+			variant
+		);
+	},
+};
 ```
 
 This configuration provides an `image_url` function that is used when building the HTML of the website to generate our image URLs. In this case, the images are also served by Cloudflare Images on the default delivery domain `https://imagedelivery.net`.
@@ -240,12 +244,20 @@ In our Cloudflare Pages demo website, the custom domain options is done in [`/co
 Here is the relevant extract of this file (edited for brevity):
 
 ```js
-{
-    name: "Step 3",
-    image_url: function(image_name, variant, config) {
-        return config.site_url + "/cdn-cgi/imagedelivery/" + config.cloudflare_images_account_hash + "/" + image_name + "/" + variant;
-    }
-},
+const step = {
+	name: 'Step 3',
+	image_url: function (image_name, variant, config) {
+		return (
+			config.site_url +
+			'/cdn-cgi/imagedelivery/' +
+			config.cloudflare_images_account_hash +
+			'/' +
+			image_name +
+			'/' +
+			variant
+		);
+	},
+};
 ```
 
 Once deployed, every image will be served from the custom domain. You can check this by [browsing the cake gallery](https://imagejam.net/step-3/cakes/) page for step 3. Selecting any image will show that its URL is as expected `https://imagejam.net/cdn-cgi/imagedelivery/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
@@ -266,30 +278,38 @@ Here is the relevant extract of this file (edited for brevity):
 
 ```js
 async function handleRequest(request) {
-  const url = new URL(request.url);
+	const url = new URL(request.url);
 
-  const { variant, imageName } = extractVariant(url);
-  if (!variant || !imageName) {
-    return notFound();
-  }
+	const { variant, imageName } = extractVariant(url);
+	if (!variant || !imageName) {
+		return notFound();
+	}
 
-  // Use Cloudflare Images to deliver image ✨
-  // by constructing the CF Images URL with parts extracted from
-  // the original website image URLs that this worker intercepts
-  return fetch("https://imagedelivery.net/" + config.cloudflare_images_account_hash + "/" + imageName + "/" + variant, {
-    // relay request headers to Cloudflare Images,
-    // to inform about the media types accepted by the HTTP client
-    headers: request.headers,
-  });
+	// Use Cloudflare Images to deliver image ✨
+	// by constructing the CF Images URL with parts extracted from
+	// the original website image URLs that this worker intercepts
+	return fetch(
+		'https://imagedelivery.net/' +
+			config.cloudflare_images_account_hash +
+			'/' +
+			imageName +
+			'/' +
+			variant,
+		{
+			// relay request headers to Cloudflare Images,
+			// to inform about the media types accepted by the HTTP client
+			headers: request.headers,
+		}
+	);
 }
 
 function extractVariant(url) {
-  // takes website URLs like /images/public/cakes/gateau.jpg
-  // and identifies the variant (here, "public")
-  // and imageName ( here, "cakes/gateau.jpg")
-  const parts = url.pathname.replace("/images/", "").split("/");
-  const variant = parts.shift();
-  return { variant: variant, imageName: parts.join("/") };
+	// takes website URLs like /images/public/cakes/gateau.jpg
+	// and identifies the variant (here, "public")
+	// and imageName ( here, "cakes/gateau.jpg")
+	const parts = url.pathname.replace('/images/', '').split('/');
+	const variant = parts.shift();
+	return { variant: variant, imageName: parts.join('/') };
 }
 ```
 
@@ -319,7 +339,7 @@ If you enjoyed this tutorial, refer to the [Cloudflare Images Documentation](/im
 
 The bulk upload script featured in this tutorial needs Cloudflare Images API credentials in the form of two environment variables:
 
-- `CF_IMAGES_ACCOUNT_ID` 
+- `CF_IMAGES_ACCOUNT_ID`
 - `CF_IMAGES_API_KEY`.
 
 You can get them both in your Cloudflare dashboard 👇:

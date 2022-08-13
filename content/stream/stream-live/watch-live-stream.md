@@ -20,82 +20,82 @@ The response will contain the HLS/DASH URL that can be used to play the current 
 
 ```json
 {
-  "result": [
-    {
-      "uid": "55b9b5ce48c3968c6b514c458959d6a",
-      "thumbnail": "https://videodelivery.net/55b9b5ce48c3968c6b514c458959d6a/thumbnails/thumbnail.jpg",
-      "thumbnailTimestampPct": 0,
-      "readyToStream": false,
-      "status": {
-        "state": "live-inprogress",
-        "errorReasonCode": "",
-        "errorReasonText": ""
-      },
-      "meta": {
-        "name": "Stream Live Test 23 Sep 21 05:44 UTC"
-      },
-      "created": "2021-09-23T05:44:30.453838Z",
-      "modified": "2021-09-23T05:44:30.453838Z",
-      "size": 0,
-      "preview": "https://watch.videodelivery.net/55b9b5ce48c3968c6b514c458959d6a",
-      "allowedOrigins": [],
-      "requireSignedURLs": false,
-      "uploaded": "2021-09-23T05:44:30.453812Z",
-      "uploadExpiry": null,
-      "maxSizeBytes": null,
-      "maxDurationSeconds": null,
-      "duration": -1,
-      "input": {
-        "width": -1,
-        "height": -1
-      },
-      "playback": {
-        "hls": "https://videodelivery.net/55b9b5ce48c3968c6b514c458959d6a/manifest/video.m3u8",
-        "dash": "https://videodelivery.net/55b9b5ce48c3968c6b514c458959d6a/manifest/video.mpd"
-      },
-      "watermark": null,
-      "liveInput": "34036a0695ab5237ce757ac53fd158a2"
-    },
-    {
-      "uid": "2ba59740c897a197df70814fd5ad991",
-      "thumbnail": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/thumbnails/thumbnail.jpg",
-      "thumbnailTimestampPct": 0,
-      "readyToStream": true,
-      "status": {
-        "state": "ready",
-        "pctComplete": "100.000000",
-        "errorReasonCode": "",
-        "errorReasonText": ""
-      },
-      "meta": {
-        "name": "CFTV Staging 22 Sep 21 22:12 UTC"
-      },
-      "created": "2021-09-22T22:12:53.587306Z",
-      "modified": "2021-09-23T00:14:05.591333Z",
-      "size": 0,
-      "preview": "https://watch.videodelivery.net/2ba59740c897a197df70814fd5ad991",
-      "allowedOrigins": [],
-      "requireSignedURLs": false,
-      "uploaded": "2021-09-22T22:12:53.587288Z",
-      "uploadExpiry": null,
-      "maxSizeBytes": null,
-      "maxDurationSeconds": null,
-      "duration": 7272,
-      "input": {
-        "width": 640,
-        "height": 360
-      },
-      "playback": {
-        "hls": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.m3u8",
-        "dash": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.mpd"
-      },
-      "watermark": null,
-      "liveInput": "34036a0695ab5237ce757ac53fd158a2"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"uid": "55b9b5ce48c3968c6b514c458959d6a",
+			"thumbnail": "https://videodelivery.net/55b9b5ce48c3968c6b514c458959d6a/thumbnails/thumbnail.jpg",
+			"thumbnailTimestampPct": 0,
+			"readyToStream": false,
+			"status": {
+				"state": "live-inprogress",
+				"errorReasonCode": "",
+				"errorReasonText": ""
+			},
+			"meta": {
+				"name": "Stream Live Test 23 Sep 21 05:44 UTC"
+			},
+			"created": "2021-09-23T05:44:30.453838Z",
+			"modified": "2021-09-23T05:44:30.453838Z",
+			"size": 0,
+			"preview": "https://watch.videodelivery.net/55b9b5ce48c3968c6b514c458959d6a",
+			"allowedOrigins": [],
+			"requireSignedURLs": false,
+			"uploaded": "2021-09-23T05:44:30.453812Z",
+			"uploadExpiry": null,
+			"maxSizeBytes": null,
+			"maxDurationSeconds": null,
+			"duration": -1,
+			"input": {
+				"width": -1,
+				"height": -1
+			},
+			"playback": {
+				"hls": "https://videodelivery.net/55b9b5ce48c3968c6b514c458959d6a/manifest/video.m3u8",
+				"dash": "https://videodelivery.net/55b9b5ce48c3968c6b514c458959d6a/manifest/video.mpd"
+			},
+			"watermark": null,
+			"liveInput": "34036a0695ab5237ce757ac53fd158a2"
+		},
+		{
+			"uid": "2ba59740c897a197df70814fd5ad991",
+			"thumbnail": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/thumbnails/thumbnail.jpg",
+			"thumbnailTimestampPct": 0,
+			"readyToStream": true,
+			"status": {
+				"state": "ready",
+				"pctComplete": "100.000000",
+				"errorReasonCode": "",
+				"errorReasonText": ""
+			},
+			"meta": {
+				"name": "CFTV Staging 22 Sep 21 22:12 UTC"
+			},
+			"created": "2021-09-22T22:12:53.587306Z",
+			"modified": "2021-09-23T00:14:05.591333Z",
+			"size": 0,
+			"preview": "https://watch.videodelivery.net/2ba59740c897a197df70814fd5ad991",
+			"allowedOrigins": [],
+			"requireSignedURLs": false,
+			"uploaded": "2021-09-22T22:12:53.587288Z",
+			"uploadExpiry": null,
+			"maxSizeBytes": null,
+			"maxDurationSeconds": null,
+			"duration": 7272,
+			"input": {
+				"width": 640,
+				"height": 360
+			},
+			"playback": {
+				"hls": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.m3u8",
+				"dash": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.mpd"
+			},
+			"watermark": null,
+			"liveInput": "34036a0695ab5237ce757ac53fd158a2"
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -119,12 +119,12 @@ This is a response for an input ID with an active live stream:
 
 ```json
 {
-      // indicates if the ID provided is for an input or a video
-    "isInput": true,
-    // returns the active video ID or null for an input ID, otherwise returns the provided video ID
-    "videoUID": "55b9b5ce48c3968c6b514c458959d6a",
-    // if isInput is true, indicates if the input is actively streaming or not
-    "live": true
+	// indicates if the ID provided is for an input or a video
+	"isInput": true,
+	// returns the active video ID or null for an input ID, otherwise returns the provided video ID
+	"videoUID": "55b9b5ce48c3968c6b514c458959d6a",
+	// if isInput is true, indicates if the input is actively streaming or not
+	"live": true
 }
 ```
 
@@ -132,9 +132,9 @@ Or if the input ID does not have an active live stream:
 
 ```json
 {
-    "isInput": true,
-    "videoUID": null,
-    "live": false
+	"isInput": true,
+	"videoUID": null,
+	"live": false
 }
 ```
 
@@ -162,47 +162,47 @@ This is what a response looks like:
 
 ```json
 {
-  "result": [
-...
-    {
-      "uid": "2ba59740c897a197df70814fd5ad991",
-      "thumbnail": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/thumbnails/thumbnail.jpg",
-      "thumbnailTimestampPct": 0,
-      "readyToStream": true,
-      "status": {
-        "state": "ready",
-        "pctComplete": "100.000000",
-        "errorReasonCode": "",
-        "errorReasonText": ""
-      },
-      "meta": {
-        "name": "Stream Live Test 22 Sep 21 22:12 UTC"
-      },
-      "created": "2021-09-22T22:12:53.587306Z",
-      "modified": "2021-09-23T00:14:05.591333Z",
-      "size": 0,
-      "preview": "https://watch.videodelivery.net/2ba59740c897a197df70814fd5ad991",
-      "allowedOrigins": [],
-      "requireSignedURLs": false,
-      "uploaded": "2021-09-22T22:12:53.587288Z",
-      "uploadExpiry": null,
-      "maxSizeBytes": null,
-      "maxDurationSeconds": null,
-      "duration": 7272,
-      "input": {
-        "width": 640,
-        "height": 360
-      },
-      "playback": {
-        "hls": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.m3u8",
-        "dash": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.mpd"
-      },
-      "watermark": null,
-      "liveInput": "34036a0695ab5237ce757ac53fd158a2"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		// ...
+		{
+			"uid": "2ba59740c897a197df70814fd5ad991",
+			"thumbnail": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/thumbnails/thumbnail.jpg",
+			"thumbnailTimestampPct": 0,
+			"readyToStream": true,
+			"status": {
+				"state": "ready",
+				"pctComplete": "100.000000",
+				"errorReasonCode": "",
+				"errorReasonText": ""
+			},
+			"meta": {
+				"name": "Stream Live Test 22 Sep 21 22:12 UTC"
+			},
+			"created": "2021-09-22T22:12:53.587306Z",
+			"modified": "2021-09-23T00:14:05.591333Z",
+			"size": 0,
+			"preview": "https://watch.videodelivery.net/2ba59740c897a197df70814fd5ad991",
+			"allowedOrigins": [],
+			"requireSignedURLs": false,
+			"uploaded": "2021-09-22T22:12:53.587288Z",
+			"uploadExpiry": null,
+			"maxSizeBytes": null,
+			"maxDurationSeconds": null,
+			"duration": 7272,
+			"input": {
+				"width": 640,
+				"height": 360
+			},
+			"playback": {
+				"hls": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.m3u8",
+				"dash": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.mpd"
+			},
+			"watermark": null,
+			"liveInput": "34036a0695ab5237ce757ac53fd158a2"
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```

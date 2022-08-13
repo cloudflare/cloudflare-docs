@@ -14,7 +14,7 @@ weight: 2
 
 3. Select the **Windows** tab, then click **(+)**.
 
-    ![Configuring WARP in the JumpCloud **Windows** tab](/cloudflare-one/static/documentation/connections/jumpcloud.png)
+   ![Configuring WARP in the JumpCloud **Windows** tab](/cloudflare-one/static/documentation/connections/jumpcloud.png)
 
 4. In the **Software Name** field, enter a unique display name.
 
@@ -29,6 +29,7 @@ weight: 2
 9. Click **save**.
 
 10. Select the device(s) you want to deploy the app to:
+
     - **Single device**: Go to the **Devices** tab and select the target device.
     - **Device group**: Go to the **Device Groups** tab and select the target device group.
 
@@ -46,15 +47,16 @@ Verify that Cloudflare WARP was installed by selecting the app and viewing the *
 
 3. Select the **Apple** tab, then click **(+)**.
 
-    ![Configuring WARP in the JumpCloud **Apple** tab](/cloudflare-one/static/documentation/connections/jumpcloud-mac.png)
+   ![Configuring WARP in the JumpCloud **Apple** tab](/cloudflare-one/static/documentation/connections/jumpcloud-mac.png)
 
 4. In the **Software Description** field, enter a unique display name.
 
 5. In the **Software Package URL**, enter the URL location of the `Cloudflare_WARP.pkg` file. If you do not already have the installer package, [download it here](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos).
 
 6. Select the device(s) you want to deploy the app to:
-    - **Single device**: Go to the **Devices** tab and select the target device. To select all devices, select the checkbox next to **Type**.
-    - **Device group**: Go to the **Device Groups** tab and select the target device group. To select all device groups, select the checkbox next to **Type**.
+
+   - **Single device**: Go to the **Devices** tab and select the target device. To select all devices, select the checkbox next to **Type**.
+   - **Device group**: Go to the **Device Groups** tab and select the target device group. To select all device groups, select the checkbox next to **Type**.
 
 7. Click **save** to install the client.
 

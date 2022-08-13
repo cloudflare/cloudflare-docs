@@ -36,25 +36,25 @@ The firewall rule below blocks requests to `example.com` that do not include a v
 The rule supplies the value of the secret key shared between the website and Cloudflare as the first argument to the [HMAC validation function](/ruleset-engine/rules-language/functions/#hmac-validation), and it uses the value of `http.request.uri` for the [MessageMAC](/ruleset-engine/rules-language/functions/#messagemac):
 
 <table>
-  <thead>
-    <tr>
-      <th>Expression</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>
-          http.host eq "downloads.example.com" and not is_timed_hmac_valid_v0("secretKey",
-          http.request.uri, 10800, http.request.timestamp.sec,8)
-        </code>
-      </td>
-      <td>
-        <em>Block</em>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Expression</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<code>
+					http.host eq "downloads.example.com" and not is_timed_hmac_valid_v0("secretKey",
+					http.request.uri, 10800, http.request.timestamp.sec,8)
+				</code>
+			</td>
+			<td>
+				<em>Block</em>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 The `is_timed_hmac_valid_v0()` function compares the value of a MAC generated using `secretKey` to the value encoded in `http.request.uri`.

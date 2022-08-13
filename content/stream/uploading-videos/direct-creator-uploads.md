@@ -147,37 +147,37 @@ size, the user will receive a `4xx` response.
 ```html
 <!DOCTYPE html>
 <html lang="en">
-  <head></head>
-  <body>
-    <form id="form">
-      <input type="file" accept="video/*" id="video" />
-      <button type="submit">Upload Video</button>
-    </form>
-    <script>
-      async function getOneTimeUploadUrl() {
-        // The real implementation of this function should make an API call to your server
-        // where a unique one-time upload URL should be generated and returned to the browser.
-        // Here we will use a fake one that looks real but won't actually work.
-        return 'https://upload.videodelivery.net/f65014bc6ff5419ea86e7972a047ba22';
-      }
+	<head></head>
+	<body>
+		<form id="form">
+			<input type="file" accept="video/*" id="video" />
+			<button type="submit">Upload Video</button>
+		</form>
+		<script>
+			async function getOneTimeUploadUrl() {
+				// The real implementation of this function should make an API call to your server
+				// where a unique one-time upload URL should be generated and returned to the browser.
+				// Here we will use a fake one that looks real but won't actually work.
+				return 'https://upload.videodelivery.net/f65014bc6ff5419ea86e7972a047ba22';
+			}
 
-      const form = document.getElementById('form');
-      const videoInput = document.getElementById('video');
+			const form = document.getElementById('form');
+			const videoInput = document.getElementById('video');
 
-      form.addEventListener('submit', async e => {
-        e.preventDefault();
-        const oneTimeUploadUrl = await getOneTimeUploadUrl();
-        const video = videoInput.files[0];
-        const formData = new FormData();
-        formData.append('file', video);
-        const uploadResult = await fetch(oneTimeUploadUrl, {
-          method: 'POST',
-          body: formData,
-        });
-        form.innerHTML = '<h3>Upload successful!</h3>';
-      });
-    </script>
-  </body>
+			form.addEventListener('submit', async e => {
+				e.preventDefault();
+				const oneTimeUploadUrl = await getOneTimeUploadUrl();
+				const video = videoInput.files[0];
+				const formData = new FormData();
+				formData.append('file', video);
+				const uploadResult = await fetch(oneTimeUploadUrl, {
+					method: 'POST',
+					body: formData,
+				});
+				form.innerHTML = '<h3>Upload successful!</h3>';
+			});
+		</script>
+	</body>
 </html>
 ```
 
@@ -192,6 +192,7 @@ To get around this, you can request a one-time tokenized URL by making a POST re
 ```bash
 curl -H "Authorization: bearer $TOKEN" -X POST -H 'Tus-Resumable: 1.0.0' -H 'Upload-Length: $VIDEO_SIZE' 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true'
 ```
+
 In the example above, replace $VIDEO_SIZE with your video's size in bytes, as per the [TUS specification](https://tus.io/protocols/resumable-upload.html).
 
 The response will contain a `Location` header which provides the one-time URL the client can use to upload the video using tus.
@@ -200,7 +201,7 @@ Here is a demo Cloudflare Worker script which returns the one-time upload URL:
 
 ```js
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
+	event.respondWith(handleRequest(event.request));
 });
 
 /**
@@ -208,29 +209,29 @@ addEventListener('fetch', event => {
  * @param {Request} request
  */
 async function handleRequest(request) {
-  const response = await fetch(
-    'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true',
-    {
-      method: 'POST',
-      headers: {
-        'Authorization': 'bearer $TOKEN',
-        'Tus-Resumable': '1.0.0',
-        'Upload-Length': request.headers.get('Upload-Length'),
-        'Upload-Metadata': request.headers.get('Upload-Metadata'),
-      },
-    }
-  );
+	const response = await fetch(
+		'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true',
+		{
+			method: 'POST',
+			headers: {
+				'Authorization': 'bearer $TOKEN',
+				'Tus-Resumable': '1.0.0',
+				'Upload-Length': request.headers.get('Upload-Length'),
+				'Upload-Metadata': request.headers.get('Upload-Metadata'),
+			},
+		}
+	);
 
-  const destination = response.headers.get('Location');
+	const destination = response.headers.get('Location');
 
-  return new Response(null, {
-    headers: {
-      'Access-Control-Expose-Headers': 'Location',
-      'Access-Control-Allow-Headers': '*',
-      'Access-Control-Allow-Origin': '*',
-      'Location': destination,
-    },
-  });
+	return new Response(null, {
+		headers: {
+			'Access-Control-Expose-Headers': 'Location',
+			'Access-Control-Allow-Headers': '*',
+			'Access-Control-Allow-Origin': '*',
+			'Location': destination,
+		},
+	});
 }
 ```
 

@@ -234,7 +234,7 @@ Customers who want to be warned about changes to server health as determined by 
 
 Multiple filters available:
 
-- Customers can can search for and add health checks from their list of health checks. 
+- Customers can can search for and add health checks from their list of health checks.
 - Customers can choose a trigger to fire the notification. Available triggers are:
   - Becomes unhealthy
   - Becomes healthy
@@ -265,7 +265,7 @@ Customers who want to be warned about status changes (enabled/disabled) in their
 
 Multiple filters available:
 
-- Customers can search for and add pools from their list of pools. 
+- Customers can search for and add pools from their list of pools.
 - Customers can also choose the trigger that fires the notification. Available triggers are:
   - Load Balancing pool enabled
   - Load Balancing pool disabled
@@ -294,13 +294,13 @@ Customers who want to be warned about [changes in health status](/load-balancing
 
 Multiple filters available:
 
-- Customers can search for and add pools from their list of pools, as well as **Include future pools** (if all pools are selected). 
+- Customers can search for and add pools from their list of pools, as well as **Include future pools** (if all pools are selected).
 - Customers can also choose the trigger that fires the notification. Available options are:
-  - *Health status trigger*:
+  - _Health status trigger_:
     - Becomes unhealthy or healthy
     - Becomes unhealthy
     - Becomes healthy
-  - *Event source trigger*:
+  - _Event source trigger_:
     - Health status changes in either pool or origin
     - Health status changes in pool
     - Health status changes in origin
@@ -378,7 +378,7 @@ Enterprise customers who want to receive a notification when Cloudflare is unabl
 
 Multiple filters available:
 
-- Customers can search and add domains from their list of domains. 
+- Customers can search and add domains from their list of domains.
 - Customers can also choose the trigger that fires the notification. Available triggers are:
   - Low sensitivity
   - Medium sensitivity
@@ -453,7 +453,7 @@ Confirm your traffic is healthy: reach out to your transit providers to ensure y
 
 **Who is it for?**
 
-Access customers that use client certificates for mutual TLS authentication. 
+Access customers that use client certificates for mutual TLS authentication.
 
 **Other options / filters**
 
@@ -499,7 +499,7 @@ Action only needed if notification is about a certificate that failed to be issu
 
 **Who is it for?**
 
-Customers that upload their own certificate to use with hostname-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server. 
+Customers that upload their own certificate to use with hostname-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
 
 **Other options / filters**
 
@@ -511,7 +511,7 @@ Authenticated Origin Pull.
 
 **What should you do if you receive one?**
 
-Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/#per-hostname--customer-certificates). 
+Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/#per-hostname--customer-certificates).
 
 </div>
 </details>
@@ -577,7 +577,7 @@ None.
 Authenticated Origin Pull
 
 **What should you do if you receive one?**
-Upload a renewed certificate to use for [zone-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/). 
+Upload a renewed certificate to use for [zone-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/).
 
 </div>
 </details>
@@ -763,7 +763,7 @@ Customers who are using Stream and want to receive webhooks with the status of t
 
 **Other options / filters**
 
-Customers can input Stream Live IDs to receive notifications only about those inputs. If left blank, customers will receive a list for all inputs. 
+Customers can input Stream Live IDs to receive notifications only about those inputs. If left blank, customers will receive a list for all inputs.
 
 The following input states will fire notifications. Customers can toggle them on or off:
 

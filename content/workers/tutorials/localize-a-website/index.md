@@ -67,9 +67,9 @@ filename: public/index.html
 <!-- source clipped from i18n-example site -->
 
 <div class="inner">
-  <h1 data-i18n-key="headline">Example Site</h1>
-  <p data-i18n-key="subtitle">This is my example site. Depending o...</p>
-  <p data-i18n-key="disclaimer">Disclaimer: the initial translations...</p>
+	<h1 data-i18n-key="headline">Example Site</h1>
+	<p data-i18n-key="subtitle">This is my example site. Depending o...</p>
+	<p data-i18n-key="disclaimer">Disclaimer: the initial translations...</p>
 </div>
 ```
 
@@ -90,8 +90,8 @@ To implement translations on the site, take the HTML response retrieved from KV 
 filename: workers-site/index.js
 ---
 async function handleEvent(event) {
-  const response = await getAssetFromKV(event);
-  return new HTMLRewriter().on('[data-i18n-key]', new ElementHandler()).transform(response);
+	const response = await getAssetFromKV(event);
+	return new HTMLRewriter().on('[data-i18n-key]', new ElementHandler()).transform(response);
 }
 ```
 
@@ -106,9 +106,9 @@ In [How it works](#understanding-data-i18n-key), the documentation describes `da
 filename: workers-site/index.js
 ---
 class ElementHandler {
-  element(element) {
-    const i18nKey = element.getAttribute('data-i18n-key');
-  }
+	element(element) {
+		const i18nKey = element.getAttribute('data-i18n-key');
+	}
 }
 ```
 
@@ -120,14 +120,14 @@ filename: workers-site/index.js
 highlight: [1,2,3,8]
 ---
 const strings = {
-  headline: 'Beispielseite',
+	headline: 'Beispielseite',
 };
 
 class ElementHandler {
-  element(element) {
-    const i18nKey = element.getAttribute('data-i18n-key');
-    const string = strings[i18nKey];
-  }
+	element(element) {
+		const i18nKey = element.getAttribute('data-i18n-key');
+		const string = strings[i18nKey];
+	}
 }
 ```
 
@@ -139,17 +139,17 @@ filename: workers-site/index.js
 highlight: [9,10,11]
 ---
 const strings = {
-  headline: 'Beispielseite',
+	headline: 'Beispielseite',
 };
 
 class ElementHandler {
-  element(element) {
-    const i18nKey = element.getAttribute('data-i18n-key');
-    const string = strings[i18nKey];
-    if (string) {
-      element.setInnerContent(string);
-    }
-  }
+	element(element) {
+		const i18nKey = element.getAttribute('data-i18n-key');
+		const string = strings[i18nKey];
+		if (string) {
+			element.setInnerContent(string);
+		}
+	}
 }
 ```
 
@@ -185,69 +185,69 @@ import parser from 'accept-language-parser';
 const DEBUG = false;
 
 addEventListener('fetch', event => {
-  event.respondWith(handleEvent(event));
+	event.respondWith(handleEvent(event));
 });
 
 const strings = {
-  de: {
-    title: 'Beispielseite',
-    headline: 'Beispielseite',
-    subtitle:
-      'Dies ist meine Beispielseite. Abhängig davon, wo auf der Welt Sie diese Site besuchen, wird dieser Text in die entsprechende Sprache übersetzt.',
-    disclaimer:
-      'Haftungsausschluss: Die anfänglichen Übersetzungen stammen von Google Translate, daher sind sie möglicherweise nicht perfekt!',
-    tutorial: 'Das Tutorial für dieses Projekt finden Sie in der Cloudflare Workers-Dokumentation.',
-    copyright: 'Design von HTML5 UP.',
-  },
+	de: {
+		title: 'Beispielseite',
+		headline: 'Beispielseite',
+		subtitle:
+			'Dies ist meine Beispielseite. Abhängig davon, wo auf der Welt Sie diese Site besuchen, wird dieser Text in die entsprechende Sprache übersetzt.',
+		disclaimer:
+			'Haftungsausschluss: Die anfänglichen Übersetzungen stammen von Google Translate, daher sind sie möglicherweise nicht perfekt!',
+		tutorial: 'Das Tutorial für dieses Projekt finden Sie in der Cloudflare Workers-Dokumentation.',
+		copyright: 'Design von HTML5 UP.',
+	},
 };
 
 class ElementHandler {
-  constructor(countryStrings) {
-    this.countryStrings = countryStrings;
-  }
+	constructor(countryStrings) {
+		this.countryStrings = countryStrings;
+	}
 
-  element(element) {
-    const i18nKey = element.getAttribute('data-i18n-key');
-    if (i18nKey) {
-      const translation = this.countryStrings[i18nKey];
-      if (translation) {
-        element.setInnerContent(translation);
-      }
-    }
-  }
+	element(element) {
+		const i18nKey = element.getAttribute('data-i18n-key');
+		if (i18nKey) {
+			const translation = this.countryStrings[i18nKey];
+			if (translation) {
+				element.setInnerContent(translation);
+			}
+		}
+	}
 }
 
 async function handleEvent(event) {
-  const url = new URL(event.request.url);
-  try {
-    let options = {};
-    if (DEBUG) {
-      options = {
-        cacheControl: {
-          bypassCache: true,
-        },
-      };
-    }
-    const languageHeader = event.request.headers.get('Accept-Language');
-    const language = parser.pick(['de'], languageHeader);
-    const countryStrings = strings[language] || {};
+	const url = new URL(event.request.url);
+	try {
+		let options = {};
+		if (DEBUG) {
+			options = {
+				cacheControl: {
+					bypassCache: true,
+				},
+			};
+		}
+		const languageHeader = event.request.headers.get('Accept-Language');
+		const language = parser.pick(['de'], languageHeader);
+		const countryStrings = strings[language] || {};
 
-    const response = await getAssetFromKV(event, options);
+		const response = await getAssetFromKV(event, options);
 
-    return new HTMLRewriter()
-      .on('[data-i18n-key]', new ElementHandler(countryStrings))
-      .transform(response);
-  } catch (e) {
-    if (DEBUG) {
-      return new Response(e.message || e.toString(), {
-        status: 404,
-      });
-    } else {
-      return new Response(`"${defaultKeyModifier(url.pathname)}" not found`, {
-        status: 404,
-      });
-    }
-  }
+		return new HTMLRewriter()
+			.on('[data-i18n-key]', new ElementHandler(countryStrings))
+			.transform(response);
+	} catch (e) {
+		if (DEBUG) {
+			return new Response(e.message || e.toString(), {
+				status: 404,
+			});
+		} else {
+			return new Response(`"${defaultKeyModifier(url.pathname)}" not found`, {
+				status: 404,
+			});
+		}
+	}
 }
 ```
 

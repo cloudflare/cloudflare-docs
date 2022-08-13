@@ -61,30 +61,31 @@ This example routes certain content requests from our webserver to a different o
 <strong>When incoming requests match</strong>:
 
 {' '}
+
 <table style="width:100%">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Operator</th>
-      <th>Value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>URI Path</td>
-      <td>contains</td>
-      <td>
-        <code>/content</code>
-      </td>
-    </tr>
-    <tr>
-      <td>URI Query String</td>
-      <td>contains</td>
-      <td>
-        <code>webserver</code>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Field</th>
+			<th>Operator</th>
+			<th>Value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>URI Path</td>
+			<td>contains</td>
+			<td>
+				<code>/content</code>
+			</td>
+		</tr>
+		<tr>
+			<td>URI Query String</td>
+			<td>contains</td>
+			<td>
+				<code>webserver</code>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 <strong>Then</strong>:

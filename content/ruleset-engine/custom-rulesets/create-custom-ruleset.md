@@ -8,14 +8,14 @@ weight: 2
 
 Use the [Create account ruleset](https://api.cloudflare.com/#account-rulesets-create-account-ruleset) API operation to create a custom ruleset, making sure that you:
 
-* Set the `kind` field to `custom`.
-* Specify the name of the phase where you want to create the custom ruleset in the `phase` field.
+- Set the `kind` field to `custom`.
+- Specify the name of the phase where you want to create the custom ruleset in the `phase` field.
 
 ## Example
 
 The following request creates a new custom ruleset:
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -36,18 +36,18 @@ The response includes the ruleset ID of the new custom ruleset in the `id` field
 header: Response
 ---
 {
-  "result": {
-    "id": "f82ccda3d21f4a02825d3fe45b5e1c10",
-    "name": "Custom Ruleset 1",
-    "description": "My First Custom Ruleset",
-    "kind": "custom",
-    "version": "1",
-    "last_updated": "2021-03-09T10:27:30.636197Z",
-    "phase": "http_request_firewall_custom"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "f82ccda3d21f4a02825d3fe45b5e1c10",
+		"name": "Custom Ruleset 1",
+		"description": "My First Custom Ruleset",
+		"kind": "custom",
+		"version": "1",
+		"last_updated": "2021-03-09T10:27:30.636197Z",
+		"phase": "http_request_firewall_custom"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

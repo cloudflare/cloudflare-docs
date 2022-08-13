@@ -12,9 +12,9 @@ To do this, you would create a corresponding [`A`, `AAAA`, or `CNAME` record](/d
 
 {{<example>}}
 
-| Type | Name  | IPv4 address | Proxy status |
-| ---- | ----- | ------------ | ------------ |
-| A    | `@` | `192.0.2.1`  | Proxied      |
+| Type | Name | IPv4 address | Proxy status |
+| ---- | ---- | ------------ | ------------ |
+| A    | `@`  | `192.0.2.1`  | Proxied      |
 
 {{</example>}}
 

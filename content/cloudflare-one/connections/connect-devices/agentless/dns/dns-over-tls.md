@@ -32,7 +32,7 @@ Depending on your operating system, you can choose from a variety of standalone 
 To configure your DoT client, enter the following IP address and the DoT hostname for your location (for example, `9y65g5srsm.cloudflare-gateway.com`):
 
 ```text
-Hostname: <DoT hostname> 
+Hostname: <DoT hostname>
 IP address: 162.159.36.5
 ```
 

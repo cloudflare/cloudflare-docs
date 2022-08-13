@@ -37,12 +37,12 @@ To set up Split Tunnels:
 
 2. Under **Split Tunnels**, choose a Split Tunnel mode:
 
-    - **(default) Exclude IPs and domains** — All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
-    - **Include IPs and Domains** — Only traffic destined to the IP address or domains you specify will be sent to Cloudflare Gateway.
+   - **(default) Exclude IPs and domains** — All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
+   - **Include IPs and Domains** — Only traffic destined to the IP address or domains you specify will be sent to Cloudflare Gateway.
 
 3. If you want to add or remove items from your Split Tunnels configuration, select **Manage**.
 
-    On this page, you will find a list of the IPs and domains Cloudflare Zero Trust excludes or includes, depending on the mode you have selected.
+   On this page, you will find a list of the IPs and domains Cloudflare Zero Trust excludes or includes, depending on the mode you have selected.
 
 ## Add an IP address
 
@@ -78,11 +78,11 @@ Domain-based split tunneling works alongside DNS by dynamically excluding or inc
 ### Valid domains
 
 {{<table-wrap>}}
-| Split tunnel domain | Matches        | Does not match |
+| Split tunnel domain | Matches | Does not match |
 | ------------------- | -------------- | --------------- |
-| `example.com`       | exact match of `example.com` | subdomains such as `www.example.com` |
+| `example.com` | exact match of `example.com` | subdomains such as `www.example.com` |
 | `example.example.com` | exact match of `example.example.com` | `example.com` or subdomains such as `www.example.example.com` |
-| `*.example.com`    | subdomains such as `www.example.com` | `example.com` |
+| `*.example.com` | subdomains such as `www.example.com` | `example.com` |
 {{</table-wrap>}}
 
 ### Cloudflare Zero Trust domains

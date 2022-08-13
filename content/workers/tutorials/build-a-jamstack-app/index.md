@@ -49,7 +49,7 @@ All Cloudflare Workers applications start by listening for `fetch` events, which
 filename: index.js
 ---
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
+	event.respondWith(handleRequest(event.request));
 });
 
 /**
@@ -57,7 +57,7 @@ addEventListener('fetch', event => {
  * @param {Request} request
  */
 async function handleRequest(request) {
-  return new Response('Hello worker!', { status: 200 });
+	return new Response('Hello worker!', { status: 200 });
 }
 ```
 
@@ -110,18 +110,18 @@ Start storing data by defining an initial set of data, which you will put inside
 filename: index.js
 ---
 async function handleRequest(request) {
-  const defaultData = {
-    todos: [
-      {
-        id: 1,
-        name: 'Finish the Cloudflare Workers blog post',
-        completed: false,
-      },
-    ],
-  };
-  TODOS.put('data', JSON.stringify(defaultData));
+	const defaultData = {
+		todos: [
+			{
+				id: 1,
+				name: 'Finish the Cloudflare Workers blog post',
+				completed: false,
+			},
+		],
+	};
+	TODOS.put('data', JSON.stringify(defaultData));
 
-  // ...previous code
+	// ...previous code
 }
 ```
 
@@ -135,29 +135,29 @@ filename: index.js
 lines: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 ---
 const defaultData = {
-  todos: [
-    {
-      id: 1,
-      name: 'Finish the Cloudflare Workers blog post',
-      completed: false,
-    },
-  ],
+	todos: [
+		{
+			id: 1,
+			name: 'Finish the Cloudflare Workers blog post',
+			completed: false,
+		},
+	],
 };
 
 const setCache = data => TODOS.put('data', data);
 const getCache = () => TODOS.get('data');
 
 async function getTodos(request) {
-  // ... previous code
+	// ... previous code
 
-  let data;
-  const cache = await getCache();
-  if (!cache) {
-    await setCache(JSON.stringify(defaultData));
-    data = defaultData;
-  } else {
-    data = JSON.parse(cache);
-  }
+	let data;
+	const cache = await getCache();
+	if (!cache) {
+		await setCache(JSON.stringify(defaultData));
+		data = defaultData;
+	} else {
+		data = JSON.parse(cache);
+	}
 }
 ```
 
@@ -185,10 +185,10 @@ const html = `<!DOCTYPE html>
 `;
 
 async function handleRequest(request) {
-  const response = new Response(html, {
-    headers: { 'Content-Type': 'text/html' },
-  });
-  return response;
+	const response = new Response(html, {
+		headers: { 'Content-Type': 'text/html' },
+	});
+	return response;
 }
 ```
 
@@ -275,11 +275,11 @@ filename: index.js
 highlight: [2]
 ---
 async function handleRequest(request) {
-  const body = html(JSON.stringify(data.todos).replace(/</g, '\\u003c'));
-  const response = new Response(body, {
-    headers: { 'Content-Type': 'text/html' },
-  });
-  return response;
+	const body = html(JSON.stringify(data.todos).replace(/</g, '\\u003c'));
+	const response = new Response(body, {
+		headers: { 'Content-Type': 'text/html' },
+	});
+	return response;
 }
 ```
 
@@ -297,29 +297,29 @@ filename: index.js
 highlight: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 ---
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
+	event.respondWith(handleRequest(event.request));
 });
 
 const setCache = data => TODOS.put('data', data);
 
 async function updateTodos(request) {
-  const body = await request.text();
-  try {
-    JSON.parse(body);
-    await setCache(body);
-    return new Response(body, { status: 200 });
-  } catch (err) {
-    return new Response(err, { status: 500 });
-  }
+	const body = await request.text();
+	try {
+		JSON.parse(body);
+		await setCache(body);
+		return new Response(body, { status: 200 });
+	} catch (err) {
+		return new Response(err, { status: 500 });
+	}
 }
 
 async function handleRequest(request) {
-  if (request.method === 'PUT') {
-    return updateTodos(request);
-  } else {
-    // Defined in previous code block
-    return getTodos(request);
-  }
+	if (request.method === 'PUT') {
+		return updateTodos(request);
+	} else {
+		// Defined in previous code block
+		return getTodos(request);
+	}
 }
 ```
 
@@ -337,7 +337,7 @@ const html = todos => `
 <html>
   <!-- existing content -->
   <div>
-    <input type="text" name="name" placeholder="A new todo"></input>
+    <input type="text" name="name" placeholder="A new todo">
     <button id="create">Create</button>
   </div>
   <!-- existing script -->
@@ -580,33 +580,33 @@ filename: index.js
 highlight: [2, 3, 5, 20, 21, 24]
 ---
 async function getTodos(request) {
-  const ip = request.headers.get('CF-Connecting-IP');
-  const myKey = `data-${ip}`;
-  let data;
-  const cache = await getCache(myKey);
-  if (!cache) {
-    await setCache(myKey, JSON.stringify(defaultData));
-    data = defaultData;
-  } else {
-    data = JSON.parse(cache);
-  }
-  const body = html(JSON.stringify(data.todos || []).replace(/</g, '\\u003c'));
-  return new Response(body, {
-    headers: { 'Content-Type': 'text/html' },
-  });
+	const ip = request.headers.get('CF-Connecting-IP');
+	const myKey = `data-${ip}`;
+	let data;
+	const cache = await getCache(myKey);
+	if (!cache) {
+		await setCache(myKey, JSON.stringify(defaultData));
+		data = defaultData;
+	} else {
+		data = JSON.parse(cache);
+	}
+	const body = html(JSON.stringify(data.todos || []).replace(/</g, '\\u003c'));
+	return new Response(body, {
+		headers: { 'Content-Type': 'text/html' },
+	});
 }
 
 async function updateTodos(request) {
-  const body = await request.text();
-  const ip = request.headers.get('CF-Connecting-IP');
-  const myKey = `data-${ip}`;
-  try {
-    JSON.parse(body);
-    await setCache(myKey, body);
-    return new Response(body, { status: 200 });
-  } catch (err) {
-    return new Response(err, { status: 500 });
-  }
+	const body = await request.text();
+	const ip = request.headers.get('CF-Connecting-IP');
+	const myKey = `data-${ip}`;
+	try {
+		JSON.parse(body);
+		await setCache(myKey, body);
+		return new Response(body, { status: 200 });
+	} catch (err) {
+		return new Response(err, { status: 500 });
+	}
 }
 ```
 
@@ -633,7 +633,7 @@ const html = todos => `
       <div class="bg-white shadow-md rounded px-8 pt-6 py-8 mb-4">
         <h1 class="block text-grey-800 text-md font-bold mb-2">Todos</h1>
         <div class="flex">
-          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-800 leading-tight focus:outline-none focus:shadow-outline" type="text" name="name" placeholder="A new todo"></input>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-800 leading-tight focus:outline-none focus:shadow-outline" type="text" name="name" placeholder="A new todo">
           <button class="bg-blue-500 hover:bg-blue-800 text-white font-bold ml-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline" id="create" type="submit">Create</button>
         </div>
         <div class="mt-4" id="todos"></div>
@@ -706,45 +706,45 @@ const setCache = (key, data) => TODOS.put(key, data);
 const getCache = key => TODOS.get(key);
 
 async function getTodos(request) {
-  const ip = request.headers.get('CF-Connecting-IP');
-  const myKey = `data-${ip}`;
-  let data;
-  const cache = await getCache(myKey);
-  if (!cache) {
-    await setCache(myKey, JSON.stringify(defaultData));
-    data = defaultData;
-  } else {
-    data = JSON.parse(cache);
-  }
-  const body = html(JSON.stringify(data.todos || []).replace(/</g, '\\u003c'));
-  return new Response(body, {
-    headers: { 'Content-Type': 'text/html' },
-  });
+	const ip = request.headers.get('CF-Connecting-IP');
+	const myKey = `data-${ip}`;
+	let data;
+	const cache = await getCache(myKey);
+	if (!cache) {
+		await setCache(myKey, JSON.stringify(defaultData));
+		data = defaultData;
+	} else {
+		data = JSON.parse(cache);
+	}
+	const body = html(JSON.stringify(data.todos || []).replace(/</g, '\\u003c'));
+	return new Response(body, {
+		headers: { 'Content-Type': 'text/html' },
+	});
 }
 
 async function updateTodos(request) {
-  const body = await request.text();
-  const ip = request.headers.get('CF-Connecting-IP');
-  const myKey = `data-${ip}`;
-  try {
-    JSON.parse(body);
-    await setCache(myKey, body);
-    return new Response(body, { status: 200 });
-  } catch (err) {
-    return new Response(err, { status: 500 });
-  }
+	const body = await request.text();
+	const ip = request.headers.get('CF-Connecting-IP');
+	const myKey = `data-${ip}`;
+	try {
+		JSON.parse(body);
+		await setCache(myKey, body);
+		return new Response(body, { status: 200 });
+	} catch (err) {
+		return new Response(err, { status: 500 });
+	}
 }
 
 async function handleRequest(request) {
-  if (request.method === 'PUT') {
-    return updateTodos(request);
-  } else {
-    return getTodos(request);
-  }
+	if (request.method === 'PUT') {
+		return updateTodos(request);
+	} else {
+		return getTodos(request);
+	}
 }
 
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
+	event.respondWith(handleRequest(event.request));
 });
 ```
 

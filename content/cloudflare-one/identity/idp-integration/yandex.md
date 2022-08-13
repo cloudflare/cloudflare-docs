@@ -56,11 +56,11 @@ To set up Yandex for Cloudflare Access:
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>"
-  },
-  "type": "yandex",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>"
+	},
+	"type": "yandex",
+	"name": "my example idp"
 }
 ```

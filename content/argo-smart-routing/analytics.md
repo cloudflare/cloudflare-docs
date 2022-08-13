@@ -24,6 +24,6 @@ Detailed performance data within **Origin Performance (Argo)** will only display
 
 The dashboard displays two different views for performance data:
 
-* **Origin Response Time**: A histogram shows response time from your origin to the Cloudflare network. The blue bars show TTFB without Argo, while the orange bars show TTFB where Argo found a Smart Route.
+- **Origin Response Time**: A histogram shows response time from your origin to the Cloudflare network. The blue bars show TTFB without Argo, while the orange bars show TTFB where Argo found a Smart Route.
 
-* **Geography**: A map shows the improvement in response time at each Cloudflare data center.
+- **Geography**: A map shows the improvement in response time at each Cloudflare data center.

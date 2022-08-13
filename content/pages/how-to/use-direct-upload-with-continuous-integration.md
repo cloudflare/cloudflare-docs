@@ -126,24 +126,24 @@ filename: .circleci/config.yml
 ---
 version: 2.1
 jobs:
- Publish-to-Pages:
-   docker:
-     - image: cimg/node:18
-     environment:
+  Publish-to-Pages:
+    docker:
+      image: cimg/node:18
+      environment:
         CLOUDFLARE_ACCOUNT_ID: $CLOUDFLARE_ACCOUNT_ID
         CLOUDFLARE_API_TOKEN: $CLOUDFLARE_API_TOKEN
 
-   steps:
-     - checkout
-     # Run your project's build step
-     - run: npm install && npm run build
-     # Publish with wrangler
-     - run: npx wrangler pages publish dist --project-name=<PROJECT NAME> # Replace dist with the name of your build folder and input your project name
+    steps:
+      - checkout
+      # Run your project's build step
+      - run: npm install && npm run build
+      # Publish with wrangler
+      - run: npx wrangler pages publish dist --project-name=<PROJECT NAME> # Replace dist with the name of your build folder and input your project name
 
 workflows:
- Publish-to-Pages-workflow:
-   jobs:
-     - Publish-to-Pages
+  Publish-to-Pages-workflow:
+    jobs:
+      - Publish-to-Pages
 ```
 
 Your continuous integration workflow is broken down into jobs when using CircleCI. From the code block above, you can see that you first define a list of jobs that run on each commit. For example, your repository will run on a prebuilt docker image `cimg/node:18`. It first checks out the repository with the Node version specified in the image.
@@ -176,7 +176,7 @@ filename: .travis.yml
 ---
 language: node_js
 node_js:
-  - "18.0.0" # You can specify more versions of Node you want your CI process to support
+  - '18.0.0' # You can specify more versions of Node you want your CI process to support
 branches:
   only:
     - travis-ci-test # Specify what branch you want your CI process to run on

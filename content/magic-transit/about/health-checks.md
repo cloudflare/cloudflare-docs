@@ -6,7 +6,7 @@ weight: 0
 
 # Health checks
 
-Magic Transit health checks monitor network status and the health of specific network components. To monitor the health of a specific route, each Cloudflare edge server associated with your network sends a multicast "heartbeat" every few seconds to construct a list of live, peer IP addresses. This approach utilizes consistent hashing, and as a result, Magic Transit can consistently assign tunnels to servers in a way that is resilient to server failures and does not require extra coordination between servers beyond heartbeats. 
+Magic Transit health checks monitor network status and the health of specific network components. To monitor the health of a specific route, each Cloudflare edge server associated with your network sends a multicast "heartbeat" every few seconds to construct a list of live, peer IP addresses. This approach utilizes consistent hashing, and as a result, Magic Transit can consistently assign tunnels to servers in a way that is resilient to server failures and does not require extra coordination between servers beyond heartbeats.
 
 Because Cloudflare sends probes asynchronously, origin routers typically receive several hundred per minute. This allows Magic Transit to detect failures almost immediately.
 

@@ -27,9 +27,9 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to fil
 
 ## Create a DNS filtering policy
 
-You can [build a policy](/cloudflare-one/policies/filtering/dns-policies/) that will filter DNS queries for known malicious hostnames and other types of threats. 
+You can [build a policy](/cloudflare-one/policies/filtering/dns-policies/) that will filter DNS queries for known malicious hostnames and other types of threats.
 
-1. Navigate to the **Policies** page. 
+1. Navigate to the **Policies** page.
 2. On the DNS tab, click **Create a DNS policy**.
 
 3. Assign the policy a name and add an optional description. Next, build an expression to determine what is blocked.

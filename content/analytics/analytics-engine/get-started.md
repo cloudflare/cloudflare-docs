@@ -46,13 +46,13 @@ For example, suppose you are collecting air quality samples. Each data point wou
 This is how it translates into code:
 
 ```js
-  async fetch(request, env) {
-    env.WEATHER.writeDataPoint({
-      'blobs': ["Seattle", "USA", "pro_sensor_9000"],
-      'doubles': [25, 0.5]
-    });
-    return new Response("OK!");
-  }
+async function fetch(request, env) {
+	env.WEATHER.writeDataPoint({
+		blobs: ['Seattle', 'USA', 'pro_sensor_9000'],
+		doubles: [25, 0.5],
+	});
+	return new Response('OK!');
+}
 ```
 
 In our initial version, developers are responsible for **providing fields in a consistent order**, so that they have the same semantics when querying. In a future iteration, we plan to let developers name their blobs and doubles in the binding, and then use these names when writing data points in the runtime.
@@ -74,12 +74,12 @@ In the following example, we use the SQL API to query the top 10 cities that had
 Here's how we represent that as SQL:
 
 ```sql
-SELECT blob1 as city, avg(double2) as avg_humidity 
-FROM analytics_engine 
-WHERE dataset = 'WEATHER' 
-  AND double1 > 0 
-GROUP BY city 
-ORDER BY avg_humidity 
+SELECT blob1 as city, avg(double2) as avg_humidity
+FROM analytics_engine
+WHERE dataset = 'WEATHER'
+  AND double1 > 0
+GROUP BY city
+ORDER BY avg_humidity
 DESC LIMIT 10
 ```
 
@@ -97,11 +97,11 @@ Workers Analytics Engine is optimized for powering time series analytics that ca
 
 ```sql
 SELECT
-  intDiv(toUInt32(timestamp), 300) * 300 as t, 
-  blob1 as city, 
+  intDiv(toUInt32(timestamp), 300) * 300 as t,
+  blob1 as city,
   avg(double2) as avg_humidity
 FROM analytics_engine
-WHERE 
+WHERE
   dataset = 'WEATHER'
   AND timestamp >= now() - INTERVAL '1' DAY
   AND double1 > 0
@@ -109,4 +109,4 @@ GROUP BY t, city
 ORDER BY t, avg_humidity desc
 ```
 
-This query first rounds the `timestamp` field to the nearest five minutes. Then we group by that field and city, and calculate the average humidity in each city for a five minute period. 
+This query first rounds the `timestamp` field to the nearest five minutes. Then we group by that field and city, and calculate the average humidity in each city for a five minute period.

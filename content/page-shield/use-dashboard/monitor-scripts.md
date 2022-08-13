@@ -8,7 +8,7 @@ meta:
 
 # Monitor scripts on your site
 
-Once you have [activated Page Shield](/page-shield/get-started/), review the Active Scripts dashboard to see which [active scripts](/page-shield/reference/script-statuses/) are running on your domain. 
+Once you have [activated Page Shield](/page-shield/get-started/), review the Active Scripts dashboard to see which [active scripts](/page-shield/reference/script-statuses/) are running on your domain.
 
 If you see unexpected scripts on the dashboard, check them for signs of malicious activity.
 

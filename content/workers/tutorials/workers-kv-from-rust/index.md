@@ -80,7 +80,7 @@ You can now access this KV namespace as the variable `KV_FROM_RUST` in JavaScrip
 filename: worker/worker.js
 ---
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
+	event.respondWith(handleRequest(event.request));
 });
 
 const { handle } = wasm_bindgen;
@@ -91,9 +91,9 @@ const instance = wasm_bindgen(wasm);
  * @param {Request} request
  */
 async function handleRequest(request) {
-  await instance;
+	await instance;
 
-  return await handle(KV_FROM_RUST, request);
+	return await handle(KV_FROM_RUST, request);
 }
 ```
 

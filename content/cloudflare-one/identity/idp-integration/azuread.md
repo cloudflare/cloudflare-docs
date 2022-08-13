@@ -24,9 +24,9 @@ You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare Zero T
 
 5. Enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
-    ```txt
-    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
-    ```
+   ```txt
+   https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+   ```
 
 6. Click **Register**.
 
@@ -104,13 +104,13 @@ Azure AD exposes directory groups in a format that consists of random strings, t
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>",
-    "directory_id": "<your azure directory uuid>",
-    "support_groups": true
-  },
-  "type": "azureAD",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>",
+		"directory_id": "<your azure directory uuid>",
+		"support_groups": true
+	},
+	"type": "azureAD",
+	"name": "my example idp"
 }
 ```

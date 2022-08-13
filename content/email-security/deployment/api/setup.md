@@ -3,7 +3,7 @@ title: Setup
 pcx_content_type: tutorial
 weight: 1
 meta:
-   title: Setup - API deployment
+  title: Setup - API deployment
 ---
 
 # API deployment setup
@@ -14,15 +14,15 @@ When you first get started with Area 1, you will need to set up a way to connect
 
 Send messages to Area 1 via BCC configurations within your email provider:
 
-   - [GSuite BCC Setup](/email-security/static/GSuite-BCC-Setup.pdf)
-   - [Office 365 BCC Setup](/email-security/static/O365_Bcc_setup.pdf)
+- [GSuite BCC Setup](/email-security/static/GSuite-BCC-Setup.pdf)
+- [Office 365 BCC Setup](/email-security/static/O365_Bcc_setup.pdf)
 
 ## Journalling setup
 
- Send messages to Area 1 via a Journalling configuration within your email provider:
+Send messages to Area 1 via a Journalling configuration within your email provider:
 
-   - [GSuite Journalling Setup](/email-security/static/GSuite-Journalling-Setup.pdf)
-   - [Office 365 Journalling Setup](/email-security/static/Deployment_and_Configuration_Guide_for_O365_using_Journaling.pdf)
+- [GSuite Journalling Setup](/email-security/static/GSuite-Journalling-Setup.pdf)
+- [Office 365 Journalling Setup](/email-security/static/Deployment_and_Configuration_Guide_for_O365_using_Journaling.pdf)
 
 ## Next steps
 

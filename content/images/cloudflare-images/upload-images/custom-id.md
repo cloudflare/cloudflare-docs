@@ -31,21 +31,21 @@ curl --request POST \
   --form 'id=<PATH_TO_YOUR_IMAGE>'
 ```
 
-You will then receive a response similar to this: 
+You will then receive a response similar to this:
 
 ```json
 {
-  "result": {
-    "id": "<PATH_TO_YOUR_IMAGE>",
-    "filename": "<YOUR_IMAGE>",
-    "uploaded": "2022-04-20T09:51:09.559Z",
-    "requireSignedURLs": false,
-    "variants": ["https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/<PATH_TO_YOUR_IMAGE>/public"]
-  },
-  "result_info": null,
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<PATH_TO_YOUR_IMAGE>",
+		"filename": "<YOUR_IMAGE>",
+		"uploaded": "2022-04-20T09:51:09.559Z",
+		"requireSignedURLs": false,
+		"variants": ["https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/<PATH_TO_YOUR_IMAGE>/public"]
+	},
+	"result_info": null,
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

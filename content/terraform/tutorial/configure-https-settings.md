@@ -16,9 +16,9 @@ You will use a new Git branch for the changes and then merge it into the `master
 
 In this step, modify the Terraform configuration to enable the following settings:
 
-* [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/)
-* [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/)
-* [Strict SSL mode](/ssl/origin-configuration/ssl-modes/#strict)
+- [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/)
+- [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/)
+- [Strict SSL mode](/ssl/origin-configuration/ssl-modes/#strict)
 
 Strict mode requires a valid SSL certificate on your origin — use the [Cloudflare Origin CA](/ssl/origin-configuration/origin-ca/) to generate one.
 

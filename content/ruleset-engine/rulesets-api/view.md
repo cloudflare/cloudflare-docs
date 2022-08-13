@@ -60,20 +60,20 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
 
 ```json
 {
-  "result": [
-    {
-      "id": "<PHASE_RULESET_ID>",
-      "name": "Zone-level phase entry point",
-      "description": "",
-      "kind": "zone",
-      "version": "5",
-      "last_updated": "2021-03-18T18:30:08.122758Z",
-      "phase": "http_request_firewall_managed"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"id": "<PHASE_RULESET_ID>",
+			"name": "Zone-level phase entry point",
+			"description": "",
+			"kind": "zone",
+			"version": "5",
+			"last_updated": "2021-03-18T18:30:08.122758Z",
+			"phase": "http_request_firewall_managed"
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -129,30 +129,30 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>
 
 ```json
 {
-  "result": {
-    "id": "<RULESET_ID>",
-    "name": "Zone-level phase entry point",
-    "description": "Executes a Managed Ruleset.",
-    "kind": "zone",
-    "version": "3",
-    "rules": [
-      {
-        "id": "<RULE_ID>",
-        "version": "1",
-        "action": "execute",
-        "expression": "true",
-        "action_parameters": {
-          "id": "<MANAGED_RULESET_ID>"
-        },
-        "last_updated": "2021-03-17T15:42:37.917815Z"
-      }
-    ],
-    "last_updated": "2021-03-17T15:42:37.917815Z",
-    "phase": "http_request_firewall_managed"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<RULESET_ID>",
+		"name": "Zone-level phase entry point",
+		"description": "Executes a Managed Ruleset.",
+		"kind": "zone",
+		"version": "3",
+		"rules": [
+			{
+				"id": "<RULE_ID>",
+				"version": "1",
+				"action": "execute",
+				"expression": "true",
+				"action_parameters": {
+					"id": "<MANAGED_RULESET_ID>"
+				},
+				"last_updated": "2021-03-17T15:42:37.917815Z"
+			}
+		],
+		"last_updated": "2021-03-17T15:42:37.917815Z",
+		"phase": "http_request_firewall_managed"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -202,29 +202,29 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>
 
 ```json
 {
-  "result": [
-    {
-      "id": "<RULESET_ID>",
-      "name": "Zone Ruleset 1",
-      "description": "",
-      "kind": "zone",
-      "version": "1",
-      "last_updated": "2021-02-17T11:15:13.128705Z",
-      "phase": "http_request_firewall_managed"
-    },
-    {
-      "id": "<RULESET_ID>",
-      "name": "Zone Ruleset 1",
-      "description": "",
-      "kind": "zone",
-      "version": "2",
-      "last_updated": "2021-02-17T11:24:06.869326Z",
-      "phase": "http_request_firewall_managed"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"id": "<RULESET_ID>",
+			"name": "Zone Ruleset 1",
+			"description": "",
+			"kind": "zone",
+			"version": "1",
+			"last_updated": "2021-02-17T11:15:13.128705Z",
+			"phase": "http_request_firewall_managed"
+		},
+		{
+			"id": "<RULESET_ID>",
+			"name": "Zone Ruleset 1",
+			"description": "",
+			"kind": "zone",
+			"version": "2",
+			"last_updated": "2021-02-17T11:24:06.869326Z",
+			"phase": "http_request_firewall_managed"
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -273,30 +273,30 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>
 
 ```json
 {
-  "result": {
-    "id": "<RULESET_ID>",
-    "name": "Zone-level phase entry point",
-    "description": "Executes a Managed Ruleset.",
-    "kind": "zone",
-    "version": "3",
-    "rules": [
-      {
-        "id": "<RULE_ID>",
-        "version": "1",
-        "action": "execute",
-        "expression": "true",
-        "action_parameters": {
-          "id": "<MANAGED_RULESET_ID>"
-        },
-        "last_updated": "2021-03-17T15:42:37.917815Z"
-      }
-    ],
-    "last_updated": "2021-03-17T15:42:37.917815Z",
-    "phase": "http_request_firewall_managed"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<RULESET_ID>",
+		"name": "Zone-level phase entry point",
+		"description": "Executes a Managed Ruleset.",
+		"kind": "zone",
+		"version": "3",
+		"rules": [
+			{
+				"id": "<RULE_ID>",
+				"version": "1",
+				"action": "execute",
+				"expression": "true",
+				"action_parameters": {
+					"id": "<MANAGED_RULESET_ID>"
+				},
+				"last_updated": "2021-03-17T15:42:37.917815Z"
+			}
+		],
+		"last_updated": "2021-03-17T15:42:37.917815Z",
+		"phase": "http_request_firewall_managed"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -337,48 +337,48 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULES
 
 ```json
 {
-  "result": {
-    "id": "<MANAGED_RULESET_ID>",
-    "name": "Cloudflare Managed Ruleset",
-    "description": "Managed Ruleset created by Cloudflare",
-    "kind": "managed",
-    "version": "4",
-    "rules": [
-      {
-        "id": "<RULE_ID_1>",
-        "version": "3",
-        "action": "log",
-        "categories": [
-          "cve-2014-5265",
-          "cve-2014-5266",
-          "cve-2014-5267",
-          "dos",
-          "drupal",
-          "wordpress"
-        ],
-        "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
-        "last_updated": "2021-03-19T16:54:32.942986Z",
-        "ref": "<RULE_REF_1>",
-        "enabled": true
-      },
-      {
-        "id": "<RULE_ID_2>",
-        "version": "3",
-        "action": "block",
-        "categories": ["broken-access-control", "cve-2018-12895", "wordpress"],
-        "description": "Wordpress - Broken Access Control - CVE:CVE-2018-12895",
-        "last_updated": "2021-03-19T16:54:32.942986Z",
-        "ref": "<RULE_REF_2>",
-        "enabled": true
-      }
-      // (...)
-    ],
-    "last_updated": "2021-03-19T16:54:32.942986Z",
-    "phase": "http_request_firewall_managed"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<MANAGED_RULESET_ID>",
+		"name": "Cloudflare Managed Ruleset",
+		"description": "Managed Ruleset created by Cloudflare",
+		"kind": "managed",
+		"version": "4",
+		"rules": [
+			{
+				"id": "<RULE_ID_1>",
+				"version": "3",
+				"action": "log",
+				"categories": [
+					"cve-2014-5265",
+					"cve-2014-5266",
+					"cve-2014-5267",
+					"dos",
+					"drupal",
+					"wordpress"
+				],
+				"description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
+				"last_updated": "2021-03-19T16:54:32.942986Z",
+				"ref": "<RULE_REF_1>",
+				"enabled": true
+			},
+			{
+				"id": "<RULE_ID_2>",
+				"version": "3",
+				"action": "block",
+				"categories": ["broken-access-control", "cve-2018-12895", "wordpress"],
+				"description": "Wordpress - Broken Access Control - CVE:CVE-2018-12895",
+				"last_updated": "2021-03-19T16:54:32.942986Z",
+				"ref": "<RULE_REF_2>",
+				"enabled": true
+			}
+			// (...)
+		],
+		"last_updated": "2021-03-19T16:54:32.942986Z",
+		"phase": "http_request_firewall_managed"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

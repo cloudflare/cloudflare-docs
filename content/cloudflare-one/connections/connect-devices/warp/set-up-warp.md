@@ -11,6 +11,7 @@ meta:
 This is a high-level, step-by-step walkthrough on how to get started with WARP in your organization. From downloading the client to sending the first queries to Cloudflare's edge, here is a guide on how to do it for the first time.
 
 ## Gateway with WARP (default)
+
 This mode enables our complete suite of [device security features](/cloudflare-one/connections/connect-devices/warp/#gateway-with-warp-default).
 
 ### 1. Create a Cloudflare Zero Trust account.
@@ -35,7 +36,8 @@ Advanced security features including HTTP traffic inspection require users to in
 
 Choose one of the [different ways](/cloudflare-one/connections/connect-devices/warp/deployment/) to deploy the WARP client, depending on what works best for your organization.
 
-### 6. Log in to your organization's Cloudflare Zero Trust instance from your devices. 
+### 6. Log in to your organization's Cloudflare Zero Trust instance from your devices.
+
 On your device, navigate to the Settings section in the WARP client and insert your organization's team name.
 
 Next, build [Secure Web Gateway policies](/cloudflare-one/policies/filtering/) to filter DNS, HTTP, and Network traffic on your devices.

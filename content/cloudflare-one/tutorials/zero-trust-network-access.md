@@ -34,9 +34,9 @@ To start, enroll your devices into the WARP client. The WARP client is responsib
 
 1. Define [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) under **Settings** > **Devices** > **Device enrollment permissions** > **Manage**.
 
-    In this example, we require that users have a hard key inserted and are connecting from the United States.
+   In this example, we require that users have a hard key inserted and are connecting from the United States.
 
-    ![Example device enrollment rules requiring US-based users with hardware authentication keys](/cloudflare-one/static/zero-trust-security/ztna/device-enrollment-rules.png)
+   ![Example device enrollment rules requiring US-based users with hardware authentication keys](/cloudflare-one/static/zero-trust-security/ztna/device-enrollment-rules.png)
 
 2. To enroll your device into your Zero Trust account, select the WARP client, and select **Settings** > **Account** > **Login with Cloudflare Zero Trust**.
 
@@ -54,30 +54,30 @@ Next, you will need to configure your private network server to connect to Cloud
 
 4. Authenticate `cloudflared` on the server by running the following command, then follow the prompt to authenticate via URL provided.
 
-    ```sh
-    $ cloudflared tunnel login
-    ```
+   ```sh
+   $ cloudflared tunnel login
+   ```
 
 5. Create a tunnel for the device:
 
-    ```sh
-    $ cloudflared tunnel create <TUNNEL NAME>
-    ```
+   ```sh
+   $ cloudflared tunnel create <TUNNEL NAME>
+   ```
 
 6. To find your tunnel ID, run `cloudflared tunnel list`. Create a YAML config file for the tunnel with the following configuration:
 
-    ```txt
-    tunnel: <YOUR TUNNEL ID>
-    credentials-file: /root/.cloudflared/<YOUR TUNNEL ID>.json
-    warp-routing:
-      enabled: true
-    ```
+   ```txt
+   tunnel: <YOUR TUNNEL ID>
+   credentials-file: /root/.cloudflared/<YOUR TUNNEL ID>.json
+   warp-routing:
+     enabled: true
+   ```
 
 7. Run the tunnel:
 
-    ```sh
-    $ cloudflared tunnel run <TUNNEL NAME>
-    ```
+   ```sh
+   $ cloudflared tunnel run <TUNNEL NAME>
+   ```
 
 ![Example terminal running cloudflared tunnel](/cloudflare-one/static/zero-trust-security/ztna/run-tunnel.png)
 
@@ -87,27 +87,27 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
 
 1. Route the private IP addresses of your server’s network to Cloudflare, where:
 
-    - `10.0.0.0/8` is the IP or CIDR range of your server
-    - `8e343b13-a087-48ea-825f-9783931ff2a5` is your tunnel ID
+   - `10.0.0.0/8` is the IP or CIDR range of your server
+   - `8e343b13-a087-48ea-825f-9783931ff2a5` is your tunnel ID
 
-    ```sh
-    $ cloudflared tunnel route ip add 10.0.0.0/8 8e343b13-a087-48ea-825f-9783931ff2a5
-    ```
+   ```sh
+   $ cloudflared tunnel route ip add 10.0.0.0/8 8e343b13-a087-48ea-825f-9783931ff2a5
+   ```
 
 2. Log in to your [Zero Trust dashboard](https://dash.teams.cloudflare.com/), select your account, and go to **Gateway** > **Policies**.
 
 3. [Create a network policy](/cloudflare-one/policies/filtering/network-policies/) to allow traffic from specific users to reach that application. For example:
 
-    | Selector       | Operator      | Value           | Action |
-    |----------------|---------------|-----------------|--------|
-    | Destination IP | in            | `10.0.0.0/8`    | Allow  |
-    | User Email     | matches regex | `*@example.com` |        |
+   | Selector       | Operator      | Value           | Action |
+   | -------------- | ------------- | --------------- | ------ |
+   | Destination IP | in            | `10.0.0.0/8`    | Allow  |
+   | User Email     | matches regex | `*@example.com` |        |
 
 4. Create a second network policy to block all traffic to the IP range that was routed. For example:
 
-    | Selector       | Operator      | Value           | Action |
-    |----------------|---------------|-----------------|--------|
-    | Destination IP | in            | `10.0.0.0/8`    | Block  |
+   | Selector       | Operator | Value        | Action |
+   | -------------- | -------- | ------------ | ------ |
+   | Destination IP | in       | `10.0.0.0/8` | Block  |
 
 5. To verify you do not have the desired target private IP range in the Split Tunnel configuration menu, go to **Settings** > **Network** > **Split Tunnels**.
 

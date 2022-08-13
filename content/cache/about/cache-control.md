@@ -79,188 +79,190 @@ Additional directives that influence cache behavior are listed below.
 The table below lists directives and their behaviors when Origin Cache-Control is disabled and when it's enabled.
 
 <table>
-  <tbody>
-    <th colspan="5" rowspan="1">
-      Directive
-    </th>
-    <th colspan="5" rowspan="1">
-      Origin Cache-control disabled behavior
-    </th>
-    <th colspan="5" rowspan="1">
-      Origin Cache-control enabled behavior
-    </th>
-    <tr>
-      <td colspan="5" rowspan="1">
-        <code>s-maxage=0</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        Will not cache
-      </td>
-      <td colspan="5" rowspan="1">
-        Caches and always revalidates
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        <code>max-age=0</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        Will not cache
-      </td>
-      <td colspan="5" rowspan="1">
-        Caches and always revalidates
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        <code>no-cache</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        Will not cache
-      </td>
-      <td colspan="5" rowspan="1">
-        Caches and always revalidates. Does not serve stale.
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        <code>no-cache=#headers</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        Will not cache at all
-      </td>
-      <td colspan="5" rowspan="1">
-        Caches if headers mentioned in <code>no-cache=#headers</code> do not exist. Always
-        revalidates if any header mentioned in <code>no-cache=#headers</code> is present.
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        <code>Private=#headers</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        Will not cache at all
-      </td>
-      <td colspan="5" rowspan="1">
-        Does not cache <code>#headers</code> values mentioned in <code>Private=#headers</code> directive.
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        <code>must-revalidate</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        Cache directive is ignored and stale is served.
-      </td>
-      <td colspan="5" rowspan="1">
-        Does not serve stale. Must revalidate for CDN but not for browser.
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        <code>proxy-revalidate</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        Cache directive is ignored and stale is served.
-      </td>
-      <td colspan="5" rowspan="1">
-        Does not serve stale. Must revalidate for CDN but not for browser.
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        <code>no-transform</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        May (un)Gzip, Polish, email filter, etc.
-      </td>
-      <td colspan="5" rowspan="1">
-        Does not transform body.
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        <code>s-maxage=delta, delta>1</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        Same as <code>max-age</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        <code>Max-age</code> and <code>proxy-revalidate</code>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        <code>immutable</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        Not proxied downstream
-      </td>
-      <td colspan="5" rowspan="1">
-        Proxied downstream. Browser facing, does not impact caching proxies.
-      </td>
-    </tr>
-  </tbody>
+	<tbody>
+		<th colspan="5" rowspan="1">
+			Directive
+		</th>
+		<th colspan="5" rowspan="1">
+			Origin Cache-control disabled behavior
+		</th>
+		<th colspan="5" rowspan="1">
+			Origin Cache-control enabled behavior
+		</th>
+		<tr>
+			<td colspan="5" rowspan="1">
+				<code>s-maxage=0</code>
+			</td>
+			<td colspan="5" rowspan="1">
+				Will not cache
+			</td>
+			<td colspan="5" rowspan="1">
+				Caches and always revalidates
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				<code>max-age=0</code>
+			</td>
+			<td colspan="5" rowspan="1">
+				Will not cache
+			</td>
+			<td colspan="5" rowspan="1">
+				Caches and always revalidates
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				<code>no-cache</code>
+			</td>
+			<td colspan="5" rowspan="1">
+				Will not cache
+			</td>
+			<td colspan="5" rowspan="1">
+				Caches and always revalidates. Does not serve stale.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				<code>no-cache=#headers</code>
+			</td>
+			<td colspan="5" rowspan="1">
+				Will not cache at all
+			</td>
+			<td colspan="5" rowspan="1">
+				Caches if headers mentioned in <code>no-cache=#headers</code> do not exist. Always
+				revalidates if any header mentioned in <code>no-cache=#headers</code> is present.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				<code>Private=#headers</code>
+			</td>
+			<td colspan="5" rowspan="1">
+				Will not cache at all
+			</td>
+			<td colspan="5" rowspan="1">
+				Does not cache <code>#headers</code> values mentioned in <code>Private=#headers</code>{' '}
+				directive.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				<code>must-revalidate</code>
+			</td>
+			<td colspan="5" rowspan="1">
+				Cache directive is ignored and stale is served.
+			</td>
+			<td colspan="5" rowspan="1">
+				Does not serve stale. Must revalidate for CDN but not for browser.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				<code>proxy-revalidate</code>
+			</td>
+			<td colspan="5" rowspan="1">
+				Cache directive is ignored and stale is served.
+			</td>
+			<td colspan="5" rowspan="1">
+				Does not serve stale. Must revalidate for CDN but not for browser.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				<code>no-transform</code>
+			</td>
+			<td colspan="5" rowspan="1">
+				May (un)Gzip, Polish, email filter, etc.
+			</td>
+			<td colspan="5" rowspan="1">
+				Does not transform body.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				<code>s-maxage=delta, delta>1</code>
+			</td>
+			<td colspan="5" rowspan="1">
+				Same as <code>max-age</code>
+			</td>
+			<td colspan="5" rowspan="1">
+				<code>Max-age</code> and <code>proxy-revalidate</code>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				<code>immutable</code>
+			</td>
+			<td colspan="5" rowspan="1">
+				Not proxied downstream
+			</td>
+			<td colspan="5" rowspan="1">
+				Proxied downstream. Browser facing, does not impact caching proxies.
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 Certain scenarios also affect Origin Cache-Control behavior when it is enabled or disabled.
 
 <table>
-  <tbody>
-    <th colspan="5" rowspan="1">
-      Condition
-    </th>
-    <th colspan="5" rowspan="1">
-      Origin Cache-control disabled behavior
-    </th>
-    <th colspan="5" rowspan="1">
-      Origin Cache-control enabled behavior
-    </th>
-    <tr>
-      <td colspan="5" rowspan="1">
-        Presence of <code>Authorization</code> header
-      </td>
-      <td colspan="5" rowspan="1">
-        Content may be cached
-      </td>
-      <td colspan="5" rowspan="1">
-        Content is cached only if <code>must-revalidate</code>, <code>public</code>, or <code>s-maxage</code> is also present
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        Use of <code>no-cache</code> header
-      </td>
-      <td colspan="5" rowspan="1">
-        In logs, <code>cacheStatus=miss</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        In logs, <code>cacheStatus=bypass</code>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        Origin response has <code>Set-Cookie</code> header and default cache level is used
-      </td>
-      <td colspan="5" rowspan="1">
-        Content may be cached with stripped <code>set-cookie</code> header
-      </td>
-      <td colspan="5" rowspan="1">
-        Content is not cached
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        Browser Cache TTL is set
-      </td>
-      <td colspan="5" rowspan="1">
-        Cache-Control returned to eyeball does not include <code>private</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        If origin returns <code>private</code> in Cache-Control then preserve it
-      </td>
-    </tr>
-  </tbody>
+	<tbody>
+		<th colspan="5" rowspan="1">
+			Condition
+		</th>
+		<th colspan="5" rowspan="1">
+			Origin Cache-control disabled behavior
+		</th>
+		<th colspan="5" rowspan="1">
+			Origin Cache-control enabled behavior
+		</th>
+		<tr>
+			<td colspan="5" rowspan="1">
+				Presence of <code>Authorization</code> header
+			</td>
+			<td colspan="5" rowspan="1">
+				Content may be cached
+			</td>
+			<td colspan="5" rowspan="1">
+				Content is cached only if <code>must-revalidate</code>, <code>public</code>, or{' '}
+				<code>s-maxage</code> is also present
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				Use of <code>no-cache</code> header
+			</td>
+			<td colspan="5" rowspan="1">
+				In logs, <code>cacheStatus=miss</code>
+			</td>
+			<td colspan="5" rowspan="1">
+				In logs, <code>cacheStatus=bypass</code>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				Origin response has <code>Set-Cookie</code> header and default cache level is used
+			</td>
+			<td colspan="5" rowspan="1">
+				Content may be cached with stripped <code>set-cookie</code> header
+			</td>
+			<td colspan="5" rowspan="1">
+				Content is not cached
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				Browser Cache TTL is set
+			</td>
+			<td colspan="5" rowspan="1">
+				Cache-Control returned to eyeball does not include <code>private</code>
+			</td>
+			<td colspan="5" rowspan="1">
+				If origin returns <code>private</code> in Cache-Control then preserve it
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 ## Examples
@@ -268,46 +270,46 @@ Certain scenarios also affect Origin Cache-Control behavior when it is enabled o
 Review the examples below to learn which directives to use with the Cache-Control header to control specific caching behavior.
 
 <details>
-  <summary>Cache a static asset</summary>
-  <div>
-    <code>Cache-Control: public, max-age=86400</code>
-  </div>
+	<summary>Cache a static asset</summary>
+	<div>
+		<code>Cache-Control: public, max-age=86400</code>
+	</div>
 </details>
 
 <details>
-  <summary>Ensure a secret asset is never cached</summary>
-  <div>
-    <code>Cache-Control: no-store</code>
-  </div>
+	<summary>Ensure a secret asset is never cached</summary>
+	<div>
+		<code>Cache-Control: no-store</code>
+	</div>
 </details>
 
 <details>
-  <summary>Cache assets on browsers but not on proxy caches</summary>
-  <div>
-    <code>Cache-Control: private, max-age=3600</code>
-  </div>
+	<summary>Cache assets on browsers but not on proxy caches</summary>
+	<div>
+		<code>Cache-Control: private, max-age=3600</code>
+	</div>
 </details>
 
 <details>
-  <summary>Cache assets in client and proxy caches, but prefer revalidation when served</summary>
-  <div>
-    <code>Cache-Control: public, no-cache</code>
-  </div>
+	<summary>Cache assets in client and proxy caches, but prefer revalidation when served</summary>
+	<div>
+		<code>Cache-Control: public, no-cache</code>
+	</div>
 </details>
 
 <details>
-  <summary>Cache assets in proxy caches but REQUIRE revalidation by the proxy when served</summary>
-  <div>
-    <code>Cache-Control: public, no-cache, proxy-revalidate</code> or
-    <code>Cache-Control: public, s-maxage=0</code>
-  </div>
+	<summary>Cache assets in proxy caches but REQUIRE revalidation by the proxy when served</summary>
+	<div>
+		<code>Cache-Control: public, no-cache, proxy-revalidate</code> or
+		<code>Cache-Control: public, s-maxage=0</code>
+	</div>
 </details>
 
 <details>
-  <summary>Cache assets in proxy caches, but REQUIRE revalidation by any cache when served</summary>
-  <div>
-    <code>Cache-Control: public, no-cache, must-revalidate</code>
-  </div>
+	<summary>Cache assets in proxy caches, but REQUIRE revalidation by any cache when served</summary>
+	<div>
+		<code>Cache-Control: public, no-cache, must-revalidate</code>
+	</div>
 </details>
 
 <details>
@@ -335,12 +337,12 @@ With this configuration, Cloudflare attempts to revalidate the content with the 
 </details>
 
 <details>
-  <summary>
-    Cache assets for different amounts of time on Cloudflare and in visitor browsers
-  </summary>
-  <div>
-    <code>Cache-Control: public, max-age=7200, s-maxage=3600</code>
-  </div>
+	<summary>
+		Cache assets for different amounts of time on Cloudflare and in visitor browsers
+	</summary>
+	<div>
+		<code>Cache-Control: public, max-age=7200, s-maxage=3600</code>
+	</div>
 </details>
 
 <details>

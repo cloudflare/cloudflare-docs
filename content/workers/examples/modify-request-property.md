@@ -21,46 +21,46 @@ const someHost = 'example.com';
 const someUrl = 'https://foo.example.com/api.js';
 
 async function handleRequest(request) {
-  /**
-   * The best practice is to only assign new RequestInit properties
-   * on the request object using either a method or the constructor
-   */
-  const newRequestInit = {
-    // Change method
-    method: 'POST',
-    // Change body
-    body: JSON.stringify({ bar: 'foo' }),
-    // Change the redirect mode.
-    redirect: 'follow',
-    // Change headers, note this method will erase existing headers
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    // Change a Cloudflare feature on the outbound response
-    cf: { apps: false },
-  };
+	/**
+	 * The best practice is to only assign new RequestInit properties
+	 * on the request object using either a method or the constructor
+	 */
+	const newRequestInit = {
+		// Change method
+		method: 'POST',
+		// Change body
+		body: JSON.stringify({ bar: 'foo' }),
+		// Change the redirect mode.
+		redirect: 'follow',
+		// Change headers, note this method will erase existing headers
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		// Change a Cloudflare feature on the outbound response
+		cf: { apps: false },
+	};
 
-  // Change just the host
-  const url = new URL(someUrl);
+	// Change just the host
+	const url = new URL(someUrl);
 
-  url.hostname = someHost;
+	url.hostname = someHost;
 
-  // Best practice is to always use the original request to construct the new request
-  // to clone all the attributes. Applying the URL also requires a constructor
-  // since once a Request has been constructed, its URL is immutable.
-  const newRequest = new Request(url.toString(), new Request(request, newRequestInit));
+	// Best practice is to always use the original request to construct the new request
+	// to clone all the attributes. Applying the URL also requires a constructor
+	// since once a Request has been constructed, its URL is immutable.
+	const newRequest = new Request(url.toString(), new Request(request, newRequestInit));
 
-  // Set headers using method
-  newRequest.headers.set('X-Example', 'bar');
-  newRequest.headers.set('Content-Type', 'application/json');
-  try {
-    return await fetch(newRequest);
-  } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500 });
-  }
+	// Set headers using method
+	newRequest.headers.set('X-Example', 'bar');
+	newRequest.headers.set('Content-Type', 'application/json');
+	try {
+		return await fetch(newRequest);
+	} catch (e) {
+		return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+	}
 }
 
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
+	event.respondWith(handleRequest(event.request));
 });
 ```

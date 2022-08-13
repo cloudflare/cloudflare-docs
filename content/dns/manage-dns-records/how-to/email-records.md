@@ -16,15 +16,15 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
 
 1.  An **A** or **AAAA** record for your mail subdomain that points to the IP address of your mail server.
 
-     | **Type** | **Name** | **IPv4 address** | **Proxy status** |
-     | -------- | -------- | ---------------- | ---------------- |
-     | A        | `mail`   | `192.0.2.1`      | Proxied          |
+    | **Type** | **Name** | **IPv4 address** | **Proxy status** |
+    | -------- | -------- | ---------------- | ---------------- |
+    | A        | `mail`   | `192.0.2.1`      | Proxied          |
 
 2.  An **MX** record that points to that subdomain.
 
-      | **Type** | **Name** | **Mail server**    | **TTL** |
-      | -------- | -------- | ------------------ | ------- |
-      | MX       | `@`      | `mail.example.com` | Auto    |
+    | **Type** | **Name** | **Mail server**    | **TTL** |
+    | -------- | -------- | ------------------ | ------- |
+    | MX       | `@`      | `mail.example.com` | Auto    |
 
 ---
 

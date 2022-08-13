@@ -28,7 +28,7 @@ Cloudflare Access provides a user-facing portal, the [App Launcher](https://blog
 
 2. Under **App Launcher**, select **Manage**.
 
-    The App Launcher works like other Access policies - you can define who is able to reach the App Launcher. When users visit the App Launcher, Cloudflare Access will display only the applications they have permission to reach.
+   The App Launcher works like other Access policies - you can define who is able to reach the App Launcher. When users visit the App Launcher, Cloudflare Access will display only the applications they have permission to reach.
 
 3. To define who is able to use the App Launcher, select **Add a rule**.
 
@@ -52,20 +52,20 @@ Users can copy the data to share it with an administrator. The data is structure
 
 ```json
 {
-  "id": "103616583934998960058",
-  "name": "Sam Rhea",
-  "email": "srhea@cloudflare.com",
-  "idp": {
-    "id": "7d373bcc-73cb-4d52-97a7-099a93b5587f",
-    "type": "google"
-  },
-  "geo": {
-    "country": "PT"
-  },
-  "user_uuid": "78f51e22-2a9f-4f51-a60f-bf97d097fb59",
-  "devicePosture": {},
-  "account_id": "1c787a4e7a6972171826b9c0bdd5a4ee",
-  "auth_cert": "",
-  "ip": "85.XXX.XXX.XX"
+	"id": "103616583934998960058",
+	"name": "Sam Rhea",
+	"email": "srhea@cloudflare.com",
+	"idp": {
+		"id": "7d373bcc-73cb-4d52-97a7-099a93b5587f",
+		"type": "google"
+	},
+	"geo": {
+		"country": "PT"
+	},
+	"user_uuid": "78f51e22-2a9f-4f51-a60f-bf97d097fb59",
+	"devicePosture": {},
+	"account_id": "1c787a4e7a6972171826b9c0bdd5a4ee",
+	"auth_cert": "",
+	"ip": "85.XXX.XXX.XX"
 }
 ```

@@ -3,7 +3,7 @@ weight: 11
 pcx_content_type: how-to
 title: Windows
 meta:
-    title: Set up 1.1.1.1 on Windows
+  title: Set up 1.1.1.1 on Windows
 ---
 
 # Set up 1.1.1.1 - Windows

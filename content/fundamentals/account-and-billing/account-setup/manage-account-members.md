@@ -17,31 +17,31 @@ To add a member to your account:
 3. For **Invite members**, enter one or more email addresses.
 4. Choose the associated roles.
 
-    <details>
-    <summary>Available roles (non-Enterprise)</summary>
-    <div>
-    
-    {{<render file="_account-roles-non-ent.md">}}
+      <details>
+<summary>Available roles (non-Enterprise)</summary>
+<div>
 
-    </div>
-    </details>
+   {{<render file="_account-roles-non-ent.md">}}
 
-    <details>
-    <summary>Available roles (Enterprise)</summary>
-    <div>
-    
-    If you have an account on an Enterprise plan, you can assign multiple roles to additional members, scoping permissions broadly or narrowly as needed.
+      </div>
+</details>
 
-    To add a new member as a non-administrator (the default role):
-    
-    1. Click **More roles**.
-    2. Select another role.
-    3. De-select **Administrator**.
+      <details>
+<summary>Available roles (Enterprise)</summary>
+<div>
 
-    For a full list of available roles and associated permissions, go to the [**Account Members**](https://dash.cloudflare.com/?to=/:account/members) page within the dashboard or refer to [Available roles](/fundamentals/account-and-billing/account-setup/account-roles/#enterprise-roles).
+   If you have an account on an Enterprise plan, you can assign multiple roles to additional members, scoping permissions broadly or narrowly as needed.
 
-    </div>
-    </details>
+   To add a new member as a non-administrator (the default role):
+
+   1. Click **More roles**.
+   2. Select another role.
+   3. De-select **Administrator**.
+
+   For a full list of available roles and associated permissions, go to the [**Account Members**](https://dash.cloudflare.com/?to=/:account/members) page within the dashboard or refer to [Available roles](/fundamentals/account-and-billing/account-setup/account-roles/#enterprise-roles).
+
+      </div>
+</details>
 
 5. (Optional) Click **Direct add** to add the member to your account without requiring an email invitation.
 6. Click **Invite**.
@@ -58,7 +58,7 @@ To revoke a member's access to your account:
 
 ## Change Super Administrator
 
-If you or someone in your organization leaves or loses access to email, you must change who is assigned the Super Administrator role. However, the process differs based on your plan type. 
+If you or someone in your organization leaves or loses access to email, you must change who is assigned the Super Administrator role. However, the process differs based on your plan type.
 
 ### Enterprise customers
 

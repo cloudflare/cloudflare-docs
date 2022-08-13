@@ -49,24 +49,24 @@ An element handler responds to any incoming element, when attached using the `.o
 
 ```js
 class ElementHandler {
-  element(element) {
-    // An incoming element, such as `div`
-    console.log(`Incoming element: ${element.tagName}`);
-  }
+	element(element) {
+		// An incoming element, such as `div`
+		console.log(`Incoming element: ${element.tagName}`);
+	}
 
-  comments(comment) {
-    // An incoming comment
-  }
+	comments(comment) {
+		// An incoming comment
+	}
 
-  text(text) {
-    // An incoming piece of text
-  }
+	text(text) {
+		// An incoming piece of text
+	}
 }
 
 async function handleRequest(req) {
-  const res = await fetch(req);
+	const res = await fetch(req);
 
-  return new HTMLRewriter().on('div', new ElementHandler()).transform(res);
+	return new HTMLRewriter().on('div', new ElementHandler()).transform(res);
 }
 ```
 
@@ -76,21 +76,21 @@ A document handler represents the incoming HTML document. A number of functions 
 
 ```js
 class DocumentHandler {
-  doctype(doctype) {
-    // An incoming doctype, such as <!DOCTYPE html>
-  }
+	doctype(doctype) {
+		// An incoming doctype, such as <!DOCTYPE html>
+	}
 
-  comments(comment) {
-    // An incoming comment
-  }
+	comments(comment) {
+		// An incoming comment
+	}
 
-  text(text) {
-    // An incoming piece of text
-  }
+	text(text) {
+		// An incoming piece of text
+	}
 
-  end(end) {
-    // The end of the document
-  }
+	end(end) {
+		// The end of the document
+	}
 }
 ```
 
@@ -100,17 +100,17 @@ All functions defined on both element and document handlers can return either `v
 
 ```js
 class UserElementHandler {
-  async element(element) {
-    let response = await fetch(new Request('/user'));
+	async element(element) {
+		let response = await fetch(new Request('/user'));
 
-    // fill in user info using response
-  }
+		// fill in user info using response
+	}
 }
 
 async function handleRequest(req) {
-  const res = await fetch(req);
+	const res = await fetch(req);
 
-  return new HTMLRewriter().on('div:user_info', new UserElementHandler()).transform(res);
+	return new HTMLRewriter().on('div:user_info', new UserElementHandler()).transform(res);
 }
 ```
 
@@ -280,9 +280,9 @@ The `comments` function on an element handler allows developers to query and man
 
 ```js
 class ElementHandler {
-  comments(comment) {
-    // An incoming comment element, such as <!-- My comment -->
-  }
+	comments(comment) {
+		// An incoming comment element, such as <!-- My comment -->
+	}
 }
 ```
 
@@ -327,10 +327,10 @@ The `doctype` function on a document handler allows developers to query a docume
 
 ```js
 class DocumentHandler {
-  doctype(doctype) {
-    // An incoming doctype element, such as
-    // <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-  }
+	doctype(doctype) {
+		// An incoming doctype element, such as
+		// <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+	}
 }
 ```
 
@@ -357,9 +357,9 @@ The `end` function on a document handler allows developers to append content to 
 
 ```js
 class DocumentHandler {
-  end(end) {
-    // The end of the document
-  }
+	end(end) {
+		// The end of the document
+	}
 }
 ```
 
@@ -470,22 +470,22 @@ If a handler throws an exception, parsing is immediately halted, the transformed
 
 ```js
 async function handle(request) {
-  let oldResponse = await fetch(request);
-  let newResponse = new HTMLRewriter()
-    .on('*', {
-      element(element) {
-        throw new Error('A really bad error.');
-      },
-    })
-    .transform(oldResponse);
+	let oldResponse = await fetch(request);
+	let newResponse = new HTMLRewriter()
+		.on('*', {
+			element(element) {
+				throw new Error('A really bad error.');
+			},
+		})
+		.transform(oldResponse);
 
-  // At this point, an expression like `await newResponse.text()`
-  // will throw `new Error("A really bad error.")`.
-  // Thereafter, any use of `newResponse.body` will throw the same error,
-  // and `oldResponse.body` will be closed.
+	// At this point, an expression like `await newResponse.text()`
+	// will throw `new Error("A really bad error.")`.
+	// Thereafter, any use of `newResponse.body` will throw the same error,
+	// and `oldResponse.body` will be closed.
 
-  // Alternatively, this will produce a truncated response to the client:
-  return newResponse;
+	// Alternatively, this will produce a truncated response to the client:
+	return newResponse;
 }
 ```
 

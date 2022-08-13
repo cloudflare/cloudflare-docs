@@ -140,11 +140,11 @@ Edit `package.json` and add the `build` script:
 
 ```json
 {
-  // ...
-  "scripts": {
-    "build": "worktop build index.js"
-    // ...
-  }
+	// ...
+	"scripts": {
+		"build": "worktop build index.js"
+		// ...
+	}
 }
 ```
 
@@ -174,29 +174,29 @@ Create a `utils.js` file in the project folder and paste the following code:
 header: utils.js
 ---
 export function getFaunaError(error) {
-  const { code, description } = error.requestResult.responseContent.errors[0];
-  let status;
+	const { code, description } = error.requestResult.responseContent.errors[0];
+	let status;
 
-  switch (code) {
-    case 'unauthorized':
-    case 'authentication failed':
-      status = 401;
-      break;
-    case 'permission denied':
-      status = 403;
-      break;
-    case 'instance not found':
-      status = 404;
-      break;
-    case 'instance not unique':
-    case 'contended transaction':
-      status = 409;
-      break;
-    default:
-      status = 500;
-  }
+	switch (code) {
+		case 'unauthorized':
+		case 'authentication failed':
+			status = 401;
+			break;
+		case 'permission denied':
+			status = 403;
+			break;
+		case 'instance not found':
+			status = 404;
+			break;
+		case 'instance not unique':
+		case 'contended transaction':
+			status = 409;
+			break;
+		default:
+			status = 500;
+	}
 
-  return { code, description, status };
+	return { code, description, status };
 }
 ```
 
@@ -210,20 +210,35 @@ Replace the contents of your `index.js` file with the skeleton of your API:
 ---
 header: index.js (skeleton)
 ---
-import {Router, listen} from 'worktop';
+import { Router, listen } from 'worktop';
 import faunadb from 'faunadb';
-import {getFaunaError} from './utils.js';
+import { getFaunaError } from './utils.js';
 
 const router = new Router();
 
 const faunaClient = new faunadb.Client({
-  secret: FAUNA_SECRET,
+	secret: FAUNA_SECRET,
 });
 
-const {Create, Collection, Match, Index, Get, Ref, Paginate, Sum, Delete, Add, Select, Let, Var, Update} = faunadb.query;
+const {
+	Create,
+	Collection,
+	Match,
+	Index,
+	Get,
+	Ref,
+	Paginate,
+	Sum,
+	Delete,
+	Add,
+	Select,
+	Let,
+	Var,
+	Update,
+} = faunadb.query;
 
 router.add('GET', '/', async (request, response) => {
-  response.send(200, 'hello world');
+	response.send(200, 'hello world');
 });
 
 listen(router.run);
@@ -236,7 +251,7 @@ Examine the initialization of the Fauna client:
 header: Instantiating the Fauna client
 ---
 const faunaClient = new faunadb.Client({
-  secret: FAUNA_SECRET,
+	secret: FAUNA_SECRET,
 });
 ```
 
@@ -251,30 +266,27 @@ Add your first Worktop route to the `index.js` file. This route accepts `POST` r
 header: Creating product documents
 ---
 router.add('POST', '/products', async (request, response) => {
-  try {
-    const {serialNumber, title, weightLbs} = await request.body();
+	try {
+		const { serialNumber, title, weightLbs } = await request.body();
 
-    const result = await faunaClient.query(
-      Create(
-        Collection('Products'),
-        {
-          data: {
-            serialNumber,
-            title,
-            weightLbs,
-            quantity: 0
-          }
-        }
-      )
-    );
+		const result = await faunaClient.query(
+			Create(Collection('Products'), {
+				data: {
+					serialNumber,
+					title,
+					weightLbs,
+					quantity: 0,
+				},
+			})
+		);
 
-    response.send(200, {
-      productId: result.ref.id
-    });
-  } catch (error) {
-    const faunaError = getFaunaError(error);
-    response.send(faunaError.status, faunaError);
-  }
+		response.send(200, {
+			productId: result.ref.id,
+		});
+	} catch (error) {
+		const faunaError = getFaunaError(error);
+		response.send(faunaError.status, faunaError);
+	}
 });
 ```
 
@@ -284,17 +296,14 @@ This route applies an FQL query written in JavaScript that creates a new documen
 ---
 header: Create query in FQL inside JavaScript
 ---
-Create(
-  Collection('Products'),
-  {
-    data: {
-      serialNumber,
-      title,
-      weightLbs,
-      quantity: 0
-    }
-  }
-)
+Create(Collection('Products'), {
+	data: {
+		serialNumber,
+		title,
+		weightLbs,
+		quantity: 0,
+	},
+});
 ```
 
 To review what a document looks like, navigate to the **Shell** tab in the Fauna dashboard and run the following query:
@@ -303,17 +312,14 @@ To review what a document looks like, navigate to the **Shell** tab in the Fauna
 ---
 header: Create query in pure FQL
 ---
-Create(
-  Collection('Products'),
-  {
-    data: {
-      serialNumber: "A48432348",
-      title: "Gaming Console",
-      weightLbs: 5,
-      quantity: 0
-    }
-  }
-)
+Create(Collection('Products'), {
+	data: {
+		serialNumber: 'A48432348',
+		title: 'Gaming Console',
+		weightLbs: 5,
+		quantity: 0,
+	},
+});
 ```
 
 Fauna returns the created document:
@@ -322,17 +328,16 @@ Fauna returns the created document:
 ---
 header: Newly created document
 ---
-{
-  ref: Ref(Collection("Products"), "<document_id>"),
-  ts: <timestamp>,
-  data: {
-    serialNumber: "A48432348",
-    title: "Gaming Console",
-    weightLbs: 5,
-    quantity: 0
-  }
-}
-
+const response = {
+	ref: Ref(Collection('Products'), '<document_id>'),
+	ts: timestamp,
+	data: {
+		serialNumber: 'A48432348',
+		title: 'Gaming Console',
+		weightLbs: 5,
+		quantity: 0,
+	},
+};
 ```
 
 - **ref** - A [reference][fql-reference] to the newly created document.
@@ -346,7 +351,7 @@ Examining the route you create, when the query is successful, the ID of the newl
 header: Returning the new document ID
 ---
 response.send(200, {
-  productId: result.ref.id
+	productId: result.ref.id,
 });
 ```
 
@@ -371,19 +376,16 @@ Add the following route to your `index.js` file. This route accepts `GET` reques
 header: Retrieving product documents
 ---
 router.add('GET', '/products/:productId', async (request, response) => {
-  try {
-    const productId = request.params.productId;
+	try {
+		const productId = request.params.productId;
 
-    const result = await faunaClient.query(
-      Get(Ref(Collection('Products'), productId))
-    );
+		const result = await faunaClient.query(Get(Ref(Collection('Products'), productId)));
 
-    response.send(200, result);
-
-  } catch (error) {
-    const faunaError = getFaunaError(error);
-    response.send(faunaError.status, faunaError);
-  }
+		response.send(200, result);
+	} catch (error) {
+		const faunaError = getFaunaError(error);
+		response.send(faunaError.status, faunaError);
+	}
 });
 ```
 
@@ -393,7 +395,7 @@ The FQL query uses the [Get][fql-get] function to retrieve a full document from 
 ---
 header: Retrieving a document by ID in FQL inside JavaScript
 ---
-Get(Ref(Collection('Products'), productId))
+Get(Ref(Collection('Products'), productId));
 ```
 
 If the document exists, return it in the response body:
@@ -416,18 +418,16 @@ The logic to delete product documents is similar to the logic for retrieving pro
 header: Deleting product documents
 ---
 router.add('DELETE', '/products/:productId', async (request, response) => {
-  try {
-    const productId = request.params.productId;
+	try {
+		const productId = request.params.productId;
 
-    const result = await faunaClient.query(
-      Delete(Ref(Collection('Products'), productId))
-    );
+		const result = await faunaClient.query(Delete(Ref(Collection('Products'), productId)));
 
-    response.send(200, result);
-  } catch (error) {
-    const faunaError = getFaunaError(error);
-    response.send(faunaError.status, faunaError);
-  }
+		response.send(200, result);
+	} catch (error) {
+		const faunaError = getFaunaError(error);
+		response.send(faunaError.status, faunaError);
+	}
 });
 ```
 
@@ -439,7 +439,7 @@ When the delete operation is successful, Fauna returns the deleted document and 
 
 Before deploying your Worker, test it locally by using Wrangler's [dev][wrangler-dev] command:
 
-```js
+```bash
 ---
 header: Testing your Worker locally
 ---
@@ -468,7 +468,7 @@ You should receive a `200` response similar to the following:
 header: Create product response
 ---
 {
-  "productId": "<document_id>"
+	"productId": "<document_id>"
 }
 ```
 
@@ -497,13 +497,21 @@ The response should be the new document serialized to JSON:
 header: Read product response
 ---
 {
-  "ref": {"@ref":{"id":"<document_id>","collection":{"@ref":{"id":"Products","collection":{"@ref":{"id":"collections"}}}}}},"ts":1617887459975000,
-  "data": {
-    "serialNumber": "H56N33834",
-    "title": "Bluetooth Headphones",
-    "weightLbs":0.5,
-    "quantity":0
-  }
+	"ref": {
+		"@ref": {
+			"id": "<document_id>",
+			"collection": {
+				"@ref": { "id": "Products", "collection": { "@ref": { "id": "collections" } } }
+			}
+		}
+	},
+	"ts": 1617887459975000,
+	"data": {
+		"serialNumber": "H56N33834",
+		"title": "Bluetooth Headphones",
+		"weightLbs": 0.5,
+		"quantity": 0
+	}
 }
 ```
 
@@ -533,36 +541,30 @@ Add the following route to your `index.js` file. This route responds to HTTP `PA
 header: Updating inventory quantity
 ---
 router.add('PATCH', '/products/:productId/add-quantity', async (request, response) => {
-  try {
-    const productId = request.params.productId;
-    const {quantity} = await request.body();
+	try {
+		const productId = request.params.productId;
+		const { quantity } = await request.body();
 
-    const result = await faunaClient.query(
-      Let(
-        {
-          productRef: Ref(Collection('Products'), productId),
-          productDocument: Get(Var('productRef')),
-          currentQuantity: Select(['data', 'quantity'], Var('productDocument'))
-        },
-        Update(
-          Var('productRef'),
-          {
-            data: {
-              quantity: Add(
-                Var('currentQuantity'),
-                quantity
-              )
-            }
-          }
-        )
-      )
-    );
+		const result = await faunaClient.query(
+			Let(
+				{
+					productRef: Ref(Collection('Products'), productId),
+					productDocument: Get(Var('productRef')),
+					currentQuantity: Select(['data', 'quantity'], Var('productDocument')),
+				},
+				Update(Var('productRef'), {
+					data: {
+						quantity: Add(Var('currentQuantity'), quantity),
+					},
+				})
+			)
+		);
 
-    response.send(200, result);
-  } catch (error) {
-    const faunaError = getFaunaError(error);
-    response.send(faunaError.status, faunaError);
-  }
+		response.send(200, result);
+	} catch (error) {
+		const faunaError = getFaunaError(error);
+		response.send(faunaError.status, faunaError);
+	}
 });
 ```
 
@@ -573,23 +575,17 @@ Examine the FQL query in more detail:
 header: Update query in FQL inside JavaScript
 ---
 Let(
-  {
-    productRef: Ref(Collection('Products'), productId),
-    productDocument: Get(Var('productRef')),
-    currentQuantity: Select(['data', 'quantity'], Var('productDocument'))
-  },
-  Update(
-    Var('productRef'),
-    {
-      data: {
-        quantity: Add(
-          Var('currentQuantity'),
-          quantity
-        )
-      }
-    }
-  )
-)
+	{
+		productRef: Ref(Collection('Products'), productId),
+		productDocument: Get(Var('productRef')),
+		currentQuantity: Select(['data', 'quantity'], Var('productDocument')),
+	},
+	Update(Var('productRef'), {
+		data: {
+			quantity: Add(Var('currentQuantity'), quantity),
+		},
+	})
+);
 ```
 
 This query uses the FQL [Let][fql-let] function to set some variables for use later in the query:
@@ -606,17 +602,11 @@ After declaring the variables, `Let` accepts an FQL expression as a second param
 ---
 header: Updating a product document
 ---
-Update(
-  Var('productRef'),
-  {
-    data: {
-      quantity: Add(
-        Var('currentQuantity'),
-        quantity
-      )
-    }
-  }
-)
+Update(Var('productRef'), {
+	data: {
+		quantity: Add(Var('currentQuantity'), quantity),
+	},
+});
 ```
 
 The FQL [Update][fql-update] function only updates the provided properties of a document. In this example, only the `quantity` property is updated.
@@ -649,14 +639,21 @@ The response should be the entire updated document with five additional items in
 header: Update product response
 ---
 {
-  "ref": {"@ref":{"id":"<document_id>","collection":{"@ref":{"id":"Products","collection":{"@ref":{"id":"collections"}}}}}},
-  "ts": 1617890383200000,
-  "data": {
-    "serialNumber": "H56N33834",
-    "title": "Bluetooth Headphones",
-    "weightLbs": 0.5,
-    "quantity": 5
-  }
+	"ref": {
+		"@ref": {
+			"id": "<document_id>",
+			"collection": {
+				"@ref": { "id": "Products", "collection": { "@ref": { "id": "collections" } } }
+			}
+		}
+	},
+	"ts": 1617890383200000,
+	"data": {
+		"serialNumber": "H56N33834",
+		"title": "Bluetooth Headphones",
+		"weightLbs": 0.5,
+		"quantity": 5
+	}
 }
 ```
 
@@ -706,124 +703,113 @@ format = "service-worker"
 // Copyright Fauna, Inc.
 // SPDX-License-Identifier: MIT-0
 
-import { Router, listen } from "worktop";
-import faunadb from "faunadb";
-import { getFaunaError } from "./utils.js";
+import { Router, listen } from 'worktop';
+import faunadb from 'faunadb';
+import { getFaunaError } from './utils.js';
 
 const router = new Router();
 
 const faunaClient = new faunadb.Client({
-  secret: FAUNA_SECRET,
+	secret: FAUNA_SECRET,
 });
 
 const {
-  Create,
-  Collection,
-  Match,
-  Index,
-  Get,
-  Ref,
-  Paginate,
-  Sum,
-  Delete,
-  Add,
-  Select,
-  Let,
-  Var,
-  Update,
+	Create,
+	Collection,
+	Match,
+	Index,
+	Get,
+	Ref,
+	Paginate,
+	Sum,
+	Delete,
+	Add,
+	Select,
+	Let,
+	Var,
+	Update,
 } = faunadb.query;
 
-router.add("GET", "/", async (request, response) => {
-  response.send(200, "hello world");
+router.add('GET', '/', async (request, response) => {
+	response.send(200, 'hello world');
 });
 
-router.add("POST", "/products", async (request, response) => {
-  try {
-    const { serialNumber, title, weightLbs } = await request.body();
+router.add('POST', '/products', async (request, response) => {
+	try {
+		const { serialNumber, title, weightLbs } = await request.body();
 
-    const result = await faunaClient.query(
-      Create(Collection("Products"), {
-        data: {
-          serialNumber,
-          title,
-          weightLbs,
-          quantity: 0,
-        },
-      })
-    );
+		const result = await faunaClient.query(
+			Create(Collection('Products'), {
+				data: {
+					serialNumber,
+					title,
+					weightLbs,
+					quantity: 0,
+				},
+			})
+		);
 
-    response.send(200, {
-      productId: result.ref.id,
-    });
-  } catch (error) {
-    const faunaError = getFaunaError(error);
-    response.send(faunaError.status, faunaError);
-  }
+		response.send(200, {
+			productId: result.ref.id,
+		});
+	} catch (error) {
+		const faunaError = getFaunaError(error);
+		response.send(faunaError.status, faunaError);
+	}
 });
 
-router.add("GET", "/products/:productId", async (request, response) => {
-  try {
-    const productId = request.params.productId;
+router.add('GET', '/products/:productId', async (request, response) => {
+	try {
+		const productId = request.params.productId;
 
-    const result = await faunaClient.query(
-      Get(Ref(Collection("Products"), productId))
-    );
+		const result = await faunaClient.query(Get(Ref(Collection('Products'), productId)));
 
-    response.send(200, result);
-  } catch (error) {
-    const faunaError = getFaunaError(error);
-    response.send(faunaError.status, faunaError);
-  }
+		response.send(200, result);
+	} catch (error) {
+		const faunaError = getFaunaError(error);
+		response.send(faunaError.status, faunaError);
+	}
 });
 
-router.add("DELETE", "/products/:productId", async (request, response) => {
-  try {
-    const productId = request.params.productId;
+router.add('DELETE', '/products/:productId', async (request, response) => {
+	try {
+		const productId = request.params.productId;
 
-    const result = await faunaClient.query(
-      Delete(Ref(Collection("Products"), productId))
-    );
+		const result = await faunaClient.query(Delete(Ref(Collection('Products'), productId)));
 
-    response.send(200, result);
-  } catch (error) {
-    const faunaError = getFaunaError(error);
-    response.send(faunaError.status, faunaError);
-  }
+		response.send(200, result);
+	} catch (error) {
+		const faunaError = getFaunaError(error);
+		response.send(faunaError.status, faunaError);
+	}
 });
 
-router.add(
-  "PATCH",
-  "/products/:productId/add-quantity",
-  async (request, response) => {
-    try {
-      const productId = request.params.productId;
-      const { quantity } = await request.body();
+router.add('PATCH', '/products/:productId/add-quantity', async (request, response) => {
+	try {
+		const productId = request.params.productId;
+		const { quantity } = await request.body();
 
-      const result = await faunaClient.query(
-        Let(
-          {
-            productRef: Ref(Collection("Products"), productId),
-            productDocument: Get(Var("productRef")),
-            currentQuantity: Select(
-              ["data", "quantity"],
-              Var("productDocument")
-            ),
-          },
-          Update(Var("productRef"), {
-            data: {
-              quantity: Add(Var("currentQuantity"), quantity),
-            },
-          })
-        )
-      );
+		const result = await faunaClient.query(
+			Let(
+				{
+					productRef: Ref(Collection('Products'), productId),
+					productDocument: Get(Var('productRef')),
+					currentQuantity: Select(['data', 'quantity'], Var('productDocument')),
+				},
+				Update(Var('productRef'), {
+					data: {
+						quantity: Add(Var('currentQuantity'), quantity),
+					},
+				})
+			)
+		);
 
-      response.send(200, result);
-    } catch (error) {
-      const faunaError = getFaunaError(error);
-      response.send(faunaError.status, faunaError);
-    }
-  }
-);
+		response.send(200, result);
+	} catch (error) {
+		const faunaError = getFaunaError(error);
+		response.send(faunaError.status, faunaError);
+	}
+});
 
 listen(router.run);
 ```
@@ -840,29 +826,29 @@ listen(router.run);
 // SPDX-License-Identifier: MIT-0
 
 export function getFaunaError(error) {
-  const { code, description } = error.requestResult.responseContent.errors[0];
-  let status;
+	const { code, description } = error.requestResult.responseContent.errors[0];
+	let status;
 
-  switch (code) {
-    case "unauthorized":
-    case "authentication failed":
-      status = 401;
-      break;
-    case "permission denied":
-      status = 403;
-      break;
-    case "instance not found":
-      status = 404;
-      break;
-    case "instance not unique":
-    case "contended transaction":
-      status = 409;
-      break;
-    default:
-      status = 500;
-  }
+	switch (code) {
+		case 'unauthorized':
+		case 'authentication failed':
+			status = 401;
+			break;
+		case 'permission denied':
+			status = 403;
+			break;
+		case 'instance not found':
+			status = 404;
+			break;
+		case 'instance not unique':
+		case 'contended transaction':
+			status = 409;
+			break;
+		default:
+			status = 500;
+	}
 
-  return { code, description, status };
+	return { code, description, status };
 }
 ```
 

@@ -13,17 +13,17 @@ An IP Access rule will apply a certain action to incoming traffic based on the v
 
 ## IP address
 
-Type         | Example value
--------------|--------------
-IPv4 address | `192.0.2.3`
-IPv6 address | `2001:db8::`
+| Type         | Example value |
+| ------------ | ------------- |
+| IPv4 address | `192.0.2.3`   |
+| IPv6 address | `2001:db8::`  |
 
 ## IP range
 
 {{<table-wrap>}}
 
 | Type             | Example value    | Start of range | End of range                             |                    Number of addresses |
-|------------------|------------------|----------------|------------------------------------------|---------------------------------------:|
+| ---------------- | ---------------- | -------------- | ---------------------------------------- | -------------------------------------: |
 | IPv4 `/24` range | `192.0.2.0/24`   | `192.0.2.0`    | `192.0.2.255`                            |                                    256 |
 | IPv4 `/16` range | `192.168.0.0/16` | `192.168.0.0`  | `192.168.255.255`                        |                                 65,536 |
 | IPv6 `/64` range | `2001:db8::/64`  | `2001:db8::`   | `2001:db8:0000:0000:ffff:ffff:ffff:ffff` |             18,446,744,073,709,551,616 |
@@ -36,22 +36,23 @@ IPv6 address | `2001:db8::`
 
 You can specify a country by name or two-letter [ISO-3166-1 alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html). For example:
 
-* `US`
-* `germany`
-* `CN`
+- `US`
+- `germany`
+- `CN`
 
 Cloudflare uses the following special country alpha-2 codes that are not part of the ISO:
 
-* `T1`: [Tor exit nodes](https://support.cloudflare.com/hc/articles/203306930) (country name: `Tor`)
-* `XX`: Unknown/reserved
+- `T1`: [Tor exit nodes](https://support.cloudflare.com/hc/articles/203306930) (country name: `Tor`)
+- `XX`: Unknown/reserved
 
 {{<Aside type="note" header="Notes about country blocking">}}
-* Block by country is only available on Enterprise plans.
-* IP addresses globally allowed by Cloudflare will override an IP Access rule country block, but they will not override a country block via [firewall rules](/firewall/).
-{{</Aside>}}
+
+- Block by country is only available on Enterprise plans.
+- IP addresses globally allowed by Cloudflare will override an IP Access rule country block, but they will not override a country block via [firewall rules](/firewall/).
+  {{</Aside>}}
 
 ## Autonomous System Number (ASN)
 
-Type | Example value
------|--------------
-ASN  | `AS13335`
+| Type | Example value |
+| ---- | ------------- |
+| ASN  | `AS13335`     |

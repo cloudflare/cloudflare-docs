@@ -5,7 +5,7 @@ title: Set up IPsec tunnels
 
 # Set up IPsec tunnels
 
-Use Anycast IPsec as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's edge and define static routes to direct traffic down the correct tunnel. 
+Use Anycast IPsec as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's edge and define static routes to direct traffic down the correct tunnel.
 
 To learn more about Anycast IPsec, refer to [What is IPsec?](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/).
 
@@ -17,7 +17,7 @@ For a list of compatible devices, refer to [Device compatibility](/magic-wan/ref
 
 Review the information below to learn more about phases to establish IPsec connections.
 
- - **Initial Exchange:** (sometimes called Phase 1) IPsec peers negotiate and establish a secure tunnel between them for exchanging further IKE messages, including those exchanged in the Auth Exchange. Security Associations (SAs), containing crypto policies, that are established in this phase are often referred to as IKE SAs.
+- **Initial Exchange:** (sometimes called Phase 1) IPsec peers negotiate and establish a secure tunnel between them for exchanging further IKE messages, including those exchanged in the Auth Exchange. Security Associations (SAs), containing crypto policies, that are established in this phase are often referred to as IKE SAs.
 
 - **Auth Exchange:** (sometimes called Phase 2) Using the secure tunnel established in the Initial Exchange, the IPsec peers further negotiate and establish an ESP IPsec tunnel that encrypts user traffic. Security Associations (SAs) established in this phase are often referred to as IPsec SAs or sometimes Child SAs.
 
@@ -39,14 +39,17 @@ To set up your static routes, refer to [Configure static routes](/magic-wan/how-
 
 ### Phase 1
 
-- **Encryption**: 
+- **Encryption**:
+
   - AES-GCM-16 with 128-bit or 256-bit key length
   - AES-CBC with 256-bit key length
 
 - **Integrity** (sometimes referred to as Authentication):
+
   - SHA2-256
 
 - **Diffie-Hellman group**:
+
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
 
@@ -57,11 +60,13 @@ To set up your static routes, refer to [Configure static routes](/magic-wan/how-
 
 ### Phase 2
 
-- **Encryption**: 
+- **Encryption**:
+
   - AES-GCM-16 with 128-bit or 256-bit key length
   - AES-CBC with 256-bit key length
 
 - **Integrity** (sometimes referred to as Authentication):
+
   - SHA2-256
   - SHA-1
 

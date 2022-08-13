@@ -44,30 +44,30 @@ curl -X DELETE \
 
 ```json
 {
-  "result": {
-    "id": "<RULESET_ID>",
-    "name": "Custom Ruleset 1",
-    "description": "My first custom ruleset",
-    "kind": "custom",
-    "version": "12",
-    "rules": [
-      {
-        "id": "<RULE_ID_2>",
-        "version": "2",
-        "action": "js_challenge",
-        "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
-        "description": "challenge GB and FR or based on IP Reputation",
-        "last_updated": "2021-07-22T12:54:58.144683Z",
-        "ref": "<RULE_REF_2>",
-        "enabled": true
-      }
-    ],
-    "last_updated": "2021-07-22T12:54:58.144683Z",
-    "phase": "http_request_firewall_custom"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<RULESET_ID>",
+		"name": "Custom Ruleset 1",
+		"description": "My first custom ruleset",
+		"kind": "custom",
+		"version": "12",
+		"rules": [
+			{
+				"id": "<RULE_ID_2>",
+				"version": "2",
+				"action": "js_challenge",
+				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+				"description": "challenge GB and FR or based on IP Reputation",
+				"last_updated": "2021-07-22T12:54:58.144683Z",
+				"ref": "<RULE_REF_2>",
+				"enabled": true
+			}
+		],
+		"last_updated": "2021-07-22T12:54:58.144683Z",
+		"phase": "http_request_firewall_custom"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

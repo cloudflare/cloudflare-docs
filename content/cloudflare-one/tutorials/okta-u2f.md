@@ -57,7 +57,6 @@ You can test with a hardkey by logging out of Okta and returning to the list of 
 
 You can use this information to build a rule in Access. Navigate to the `Applications` list in the Cloudflare Access section of the dashboard. Choose an application that you have already built or create a new one. This example adds the requirement to an existing application.
 
-
 Click **Edit** to edit the existing `Allow` rule.
 
 Add a `Require` rule and select `Authentication Method` from the list. Choose `hwk` as the required `Authentication Method`. Click **Save rule**.

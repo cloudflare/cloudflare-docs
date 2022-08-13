@@ -1,9 +1,9 @@
 ---
-title: "3: Enabling services"
+title: '3: Enabling services'
 pcx_content_type: get-started
 weight: 4
 meta:
-  title: "Step 3: Enabling services"
+  title: 'Step 3: Enabling services'
 ---
 
 # Step 3: Enabling services
@@ -18,7 +18,7 @@ Refer to [Create Zone](https://api.cloudflare.com/#zone-create-zone) for more in
 
 Example of how to create a zone:
 
-```json
+```bash
 curl -X POST https://api.cloudflare.com/client/v4/zones \
 -H 'Content-Type: application/json' \
 -H 'x-auth-email: <x-auth-email>' \
@@ -39,7 +39,7 @@ Refer to [Zone Subscription](https://api.cloudflare.com/#zone-subscription-prope
 
 Example of how to create a zone subscription:
 
-```json
+```bash
 curl -X POST https://api.cloudflare.com/client/v4/zones/<zone id>/subscription \
 -H 'Content-Type: application/json' \
 -H 'x-auth-email: <x-auth-email>' \
@@ -53,9 +53,9 @@ curl -X POST https://api.cloudflare.com/client/v4/zones/<zone id>/subscription \
 
 Allowed rate plans are:
 
-*   PARTNERS\_PRO
-*   PARTNERS\_BIZ
-*   PARTNERS\_ENT
+- PARTNERS_PRO
+- PARTNERS_BIZ
+- PARTNERS_ENT
 
 These are the same plans that customers buy in the dashboard. Additionally, depending on your agreement there may be additional services you can select such as `page_rules`. These are specified as `component_values` in the subscriptions creation request.
 
@@ -63,15 +63,15 @@ An example of a `POST` for such a request may look like this:
 
 ```json
 {
-  "rate_plan":{
-    "id":"PARTNERS_BIZ"
-  },
-  "component_values":[
-    {
-      "name":"dedicated_certificates_custom",
-      "value":1
-    }
-  ]
+	"rate_plan": {
+		"id": "PARTNERS_BIZ"
+	},
+	"component_values": [
+		{
+			"name": "dedicated_certificates_custom",
+			"value": 1
+		}
+	]
 }
 ```
 
@@ -83,7 +83,7 @@ Refer to [Account Subscriptions](https://api.cloudflare.com/#account-subscriptio
 
 Example of how to create an account subscription:
 
-```json
+```bash
 curl -X POST https://api.cloudflare.com/client/v4/accounts/<account id>/subscriptions \
 -H 'Content-Type: application/json' \
 -H 'x-auth-email: <x-auth-email>' \
@@ -97,7 +97,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/<account id>/subscrip
 
 Once you have added the necessary features, you or your customer can move on to configuring the various services and fine-tuning settings.
 
-***
+---
 
 ## Next step
 

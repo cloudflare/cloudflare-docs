@@ -30,7 +30,7 @@ To create a custom rule, add a rule to the `http_request_firewall_custom` phase 
 
 This example request replaces all rules in the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`, defining a single custom rule that challenges requests from the United Kingdom or France with a threat score greater than `10`:
 
-```json
+```bash
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_custom/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
@@ -49,7 +49,7 @@ curl -X PUT \
 
 This example request replaces all rules in the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`, defining a single custom rule with a [custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for blocked requests:
 
-```json
+```bash
 ---
 highlight: [10,11,12,13,14,15,16]
 ---
@@ -73,4 +73,3 @@ curl -X PUT \
   ]
 }'
 ```
-

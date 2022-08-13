@@ -11,9 +11,9 @@ A Service binding allows you to send HTTP requests to another Worker without tho
 
 Service bindings allow you to:
 
-* Segment multiple use cases into separate Workers Services that can be explicitly invoked from your code.
-* Achieve better composability on the Workers platform using service-oriented architecture.
-* Create private microservices, to be conditionally invoked from other edge-facing services.
+- Segment multiple use cases into separate Workers Services that can be explicitly invoked from your code.
+- Achieve better composability on the Workers platform using service-oriented architecture.
+- Create private microservices, to be conditionally invoked from other edge-facing services.
 
 While the interface among Service bindings is HTTP, the networking is not. Unlike the typical microservice architecture, where services communicate over a network and can suffer from latency or interruption, Service bindings are a zero-cost abstraction. When one Worker invokes another, there is no network delay and the request is executed immediately.
 
@@ -23,9 +23,9 @@ While the interface among Service bindings is HTTP, the networking is not. Unlik
 
 To manage a Workers Service binding:
 
-1. Log in to the Cloudflare dashboard > Account Home > [Workers](https://dash.cloudflare.com/?zone=workers). 
+1. Log in to the Cloudflare dashboard > Account Home > [Workers](https://dash.cloudflare.com/?zone=workers).
 2. Select your **Worker**.
-3. Go to **Settings**> **Variables** > **Service bindings** > **Edit variables**. 
+3. Go to **Settings**> **Variables** > **Service bindings** > **Edit variables**.
 
 You can also change the environment of a Workers Service binding, so you can target a specific version of a Workers Service.
 
@@ -41,7 +41,7 @@ In the following example, you will create a `gateway` Worker that invokes an `au
 
 ### Gateway Worker and Service bindings usage
 
-First, you will create both a `gateway` and `auth` Worker. Once they are set up, go to the `gateway` Worker. In order to bind and call the [authentication](#authentication-workers-service) Worker, the `gateway` Worker needs to set up a Service binding. 
+First, you will create both a `gateway` and `auth` Worker. Once they are set up, go to the `gateway` Worker. In order to bind and call the [authentication](#authentication-workers-service) Worker, the `gateway` Worker needs to set up a Service binding.
 
 To manage Service bindings, go to Account Home > [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Settings**> **Variables** > **Service bindings** > **Edit variables**.
 
@@ -51,21 +51,21 @@ Once added, the `gateway` Worker can access the Workers Service binding directly
 
 ```js
 export default {
-  async fetch(request, env) {
-    // Fetch AUTH service and pass request
-    const authResponse = await env.auth.fetch(request.clone());
+	async fetch(request, env) {
+		// Fetch AUTH service and pass request
+		const authResponse = await env.auth.fetch(request.clone());
 
-    // Return response from the AUTH service if the response status is not 200
-    // It would return 403 'x-custom-token does not match, request not allowed' response in such case
-    if (authResponse.status !== 200) {
-      return authResponse;
-    }
+		// Return response from the AUTH service if the response status is not 200
+		// It would return 403 'x-custom-token does not match, request not allowed' response in such case
+		if (authResponse.status !== 200) {
+			return authResponse;
+		}
 
-    // Request allowed
-    // You can write application logic here
-    // In this case we delegate the logic to an `application` Worker
-    return await env.application.fetch(request)
-  },
+		// Request allowed
+		// You can write application logic here
+		// In this case we delegate the logic to an `application` Worker
+		return await env.application.fetch(request);
+	},
 };
 ```
 
@@ -83,14 +83,14 @@ The following authentication Workers Service code responds with a status code `2
 
 ```js
 export default {
-  async fetch(request, env) {
-    // Read x-custom-token header and make sure it matches SECRET_TOKEN
-    if (request.headers.get('x-custom-token') === env.SECRET_TOKEN) {
-      return new Response('Request allowed', { status: 200 });
-    } else {
-      return new Response('x-custom-token does not match, request not allowed', { status: 403 });
-    }
-  },
+	async fetch(request, env) {
+		// Read x-custom-token header and make sure it matches SECRET_TOKEN
+		if (request.headers.get('x-custom-token') === env.SECRET_TOKEN) {
+			return new Response('Request allowed', { status: 200 });
+		} else {
+			return new Response('x-custom-token does not match, request not allowed', { status: 403 });
+		}
+	},
 };
 ```
 

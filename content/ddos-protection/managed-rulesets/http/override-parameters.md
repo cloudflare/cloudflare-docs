@@ -40,8 +40,8 @@ The action that will be performed for requests that match specific rules of Clou
 
 - **Log**
 
-    - API value: `"log"`.
-    - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting HTTP DDoS attacks. Recommended for validating a rule before committing to a more severe action.
+  - API value: `"log"`.
+  - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting HTTP DDoS attacks. Recommended for validating a rule before committing to a more severe action.
 
 {{<Aside type="note">}}
 

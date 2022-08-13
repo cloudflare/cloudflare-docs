@@ -8,9 +8,9 @@ weight: 4
 
 The Edit option, available from the main Images screen, is your one-stop location for options related with a specific image. Selecting **Edit** on the image you are interested in, opens a new page with all the options available, such as:
 
-* Require Signed URLs to use with that particular image
-* cURL command you can use as an example to access the image
-* Fully-formed URLs for all the variants configured in your account. 
+- Require Signed URLs to use with that particular image
+- cURL command you can use as an example to access the image
+- Fully-formed URLs for all the variants configured in your account.
 
 To edit an image:
 

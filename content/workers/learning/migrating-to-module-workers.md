@@ -24,16 +24,16 @@ With the Service Worker syntax, the example Worker looks like:
 
 ```js
 async function handler(request) {
-  const base = 'https://example.com';
-  const statusCode = 301;
+	const base = 'https://example.com';
+	const statusCode = 301;
 
-  const destination = new URL(request.url, base);
-  return Response.redirect(destination.toString(), statusCode);
+	const destination = new URL(request.url, base);
+	return Response.redirect(destination.toString(), statusCode);
 }
 
 // Initialize Worker
 addEventListener('fetch', event => {
-  event.respondWith(handler(event.request));
+	event.respondWith(handler(event.request));
 });
 ```
 
@@ -41,13 +41,13 @@ Module Workers replace the `addEventListener` syntax with an object definition, 
 
 ```js
 export default {
-  fetch(request) {
-    const base = 'https://example.com';
-    const statusCode = 301;
+	fetch(request) {
+		const base = 'https://example.com';
+		const statusCode = 301;
 
-    const destination = new URL(request.url, base);
-    return Response.redirect(destination.toString(), statusCode);
-  },
+		const destination = new URL(request.url, base);
+		return Response.redirect(destination.toString(), statusCode);
+	},
 };
 ```
 
@@ -59,13 +59,13 @@ This example code:
 
 ```js
 async function triggerEvent(event) {
-  // Fetch some data
-  console.log('cron processed', event.scheduledTime);
+	// Fetch some data
+	console.log('cron processed', event.scheduledTime);
 }
 
 // Initialize Worker
 addEventListener('scheduled', event => {
-  event.waitUntil(triggerEvent(event));
+	event.waitUntil(triggerEvent(event));
 });
 ```
 
@@ -73,14 +73,14 @@ Then becomes:
 
 ```js
 async function triggerEvent(event) {
-  // Fetch some data
-  console.log('cron processed', event.scheduledTime);
+	// Fetch some data
+	console.log('cron processed', event.scheduledTime);
 }
 
 const worker = {
-  async scheduled(event, env, ctx) {
-    ctx.waitUntil(triggerEvent(event));
-  },
+	async scheduled(event, env, ctx) {
+		ctx.waitUntil(triggerEvent(event));
+	},
 };
 
 export default worker;
@@ -94,11 +94,11 @@ Then replace:
 
 ```js
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
+	event.respondWith(handleRequest(event.request));
 });
 
 async function handleRequest(request) {
-  return new Response('Hello world');
+	return new Response('Hello world');
 }
 ```
 
@@ -106,9 +106,9 @@ With:
 
 ```js
 export default {
-  fetch() {
-    return new Response('Hello world');
-  },
+	fetch() {
+		return new Response('Hello world');
+	},
 };
 ```
 

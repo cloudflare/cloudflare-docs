@@ -46,7 +46,7 @@ The `addEventListener` function defines triggers for a Worker script to execute.
 
 ```js
 addEventListener('fetch', event => {
-  event.respondWith(new Response('Hello world'));
+	event.respondWith(new Response('Hello world'));
 });
 ```
 
@@ -54,6 +54,6 @@ addEventListener('fetch', event => {
 
 ```js
 addEventListener('scheduled', event => {
-  event.waitUntil(handleScheduled(event));
+	event.waitUntil(handleScheduled(event));
 });
 ```

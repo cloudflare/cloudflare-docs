@@ -17,34 +17,34 @@ This example comprises two rules:
 Since the _Allow_ action has precedence over _Block_, Cloudflare grants access to requests that satisfy Rule 1 and blocks all other requests to `dev.www.example.com`:
 
 <table>
-  <thead>
-    <tr>
-      <th>Execution order</th>
-      <th>Expression</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>
-        <code>
-          (http.cookie contains "devaccess=james" or http.cookie contains "devaccess=matt" or
-          http.cookie contains "devaccess=michael") and http.host eq "dev.www.example.com")
-        </code>
-      </td>
-      <td>
-        <em>Allow</em>
-      </td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>
-        <code>http.host eq "dev.www.example.com"</code>
-      </td>
-      <td>
-        <em>Block</em>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Execution order</th>
+			<th>Expression</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>1</td>
+			<td>
+				<code>
+					(http.cookie contains "devaccess=james" or http.cookie contains "devaccess=matt" or
+					http.cookie contains "devaccess=michael") and http.host eq "dev.www.example.com")
+				</code>
+			</td>
+			<td>
+				<em>Allow</em>
+			</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>
+				<code>http.host eq "dev.www.example.com"</code>
+			</td>
+			<td>
+				<em>Block</em>
+			</td>
+		</tr>
+	</tbody>
 </table>

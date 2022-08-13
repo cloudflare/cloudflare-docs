@@ -25,7 +25,7 @@ The `cloudflared tunnel create <NAME>` command creates a tunnel and assigns it a
 ## Connector
 
 The connector, referred to as `cloudflared`, establishes connectivity from your origin server to the Cloudflare global network. Our connector offers high availability by creating four long-lived connections to two distinct data centers within Cloudflare’s global network. This built-in redundancy means that if an individual connection, server, or data center goes down, your origin remains available.
-  
+
 ## Replica
 
 You can create and configure a tunnel once and run that tunnel through multiple, unique instances of the connector, `cloudflared`. These instances are known as replicas. DNS records and Cloudflare Load Balancers will still point to the tunnel and its DNS Record (`UUID.cfargotunnel.com`), while that tunnel sends traffic to the multiple instances of `cloudflared` that run through it. Today, there is no guarantee about which replica will be chosen. Replicas are often deployed to provide tunnels with high availability in the event a given host running `cloudflared` is interrupted or taken offline.
@@ -63,4 +63,4 @@ Quick tunnels, when run, will generate a URL that consists of a random subdomain
 
 ## Virtual Networks
 
-A software abstraction that allows you to logically segregate resources on your private network.  [Tunnel Virtual Networks](/cloudflare-one/connections/connect-apps/private-net/tunnel-virtual-networks/) are especially useful for exposing resources which have overlapping IP routes. To connect to a resource, end users would select a virtual network in their WARP client settings before entering the destination IP.
+A software abstraction that allows you to logically segregate resources on your private network. [Tunnel Virtual Networks](/cloudflare-one/connections/connect-apps/private-net/tunnel-virtual-networks/) are especially useful for exposing resources which have overlapping IP routes. To connect to a resource, end users would select a virtual network in their WARP client settings before entering the destination IP.

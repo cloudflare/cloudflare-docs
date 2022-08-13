@@ -8,12 +8,12 @@ weight: 2
 
 Users can implement a positive security model with Cloudflare Tunnel by restricting traffic originating from `cloudflared`. The parameters below can be configured for egress traffic inside of a firewall.
 
-| Destination | Port | Protocols |
-| ----------- | -------- | --------- |
+| Destination                 | Port | Protocols                              |
+| --------------------------- | ---- | -------------------------------------- |
 | `region1.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
 | `region2.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
-| `api.cloudflare.com`        | 443  | TCP (HTTPS) |
-| `update.argotunnel.com`     | 443  | TCP (HTTPS) |
+| `api.cloudflare.com`        | 443  | TCP (HTTPS)                            |
+| `update.argotunnel.com`     | 443  | TCP (HTTPS)                            |
 
 {{<Aside type="note">}}
 
@@ -112,6 +112,7 @@ update.argotunnel.com.	190	IN	A	172.64.155.89
 ```
 
 ## Test connectivity with PowerShell
+
 On Windows, you can use PowerShell commands if `dig` is not available.
 
 To test DNS:
@@ -144,4 +145,3 @@ To test ports:
     InterfaceAlias   : Ethernet
     SourceAddress    : 10.0.2.15
     TcpTestSucceeded : True
-

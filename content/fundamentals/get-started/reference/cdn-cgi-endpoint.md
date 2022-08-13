@@ -12,10 +12,10 @@ This endpoint is managed and served by Cloudflare. It cannot be modified or cust
 
 A few examples include (but are not limited to):
 
-* [JavaScript detection](/bots/reference/javascript-detections/) used by Cloudflare bot products (`example.com/cdn-cgi/challenge-platform/`)
-* [Web analytics](/analytics/web-analytics/getting-started/#sites-proxied-through-cloudflare) for a website proxied through Cloudflare (`example.com/cdn-cgi/rum`)
-* [Image resizing](/images/image-resizing/url-format/) in the new URLs you would use for images (`example.com/cdn-cgi/image/`)
-* [Email address obfuscation](https://support.cloudflare.com/hc/articles/200170016) used to hide email addresses from malicious bots (`example.com/cdn-cgi/l/email-protection`)
+- [JavaScript detection](/bots/reference/javascript-detections/) used by Cloudflare bot products (`example.com/cdn-cgi/challenge-platform/`)
+- [Web analytics](/analytics/web-analytics/getting-started/#sites-proxied-through-cloudflare) for a website proxied through Cloudflare (`example.com/cdn-cgi/rum`)
+- [Image resizing](/images/image-resizing/url-format/) in the new URLs you would use for images (`example.com/cdn-cgi/image/`)
+- [Email address obfuscation](https://support.cloudflare.com/hc/articles/200170016) used to hide email addresses from malicious bots (`example.com/cdn-cgi/l/email-protection`)
 
 ## Recommended exclusions
 
@@ -27,7 +27,7 @@ To prevent scanner errors, omit the `/cdn-cgi/` endpoint from your security scan
 
 ### Disallow using robots.txt
 
-`/cdn-cgi/` also can cause issues with various web crawlers. 
+`/cdn-cgi/` also can cause issues with various web crawlers.
 
 Search engine crawlers can encounter errors when crawling these endpoints and — though these errors do not impact site rankings — they may surface in your [webmaster dashboard](https://support.cloudflare.com/hc/articles/200169806).
 

@@ -16,13 +16,13 @@ You can create IP Access rules in the Cloudflare dashboard or via API.
 2. Navigate to **Security** > **WAF** > **Tools**.
 3. Under **IP Access Rules**, enter the following details:
 
-    1. For **Value**, enter an IP address, IP range, country code/name, or Autonomous System Number (ASN). For details, refer to [Parameters](/waf/tools/ip-access-rules/parameters/).
-    2. Select an [action](/waf/tools/ip-access-rules/actions/).
-    3. For **Zone**, select whether the rule applies to the current website only or to all websites in the account.
-    4. (Optional) Enter a note for the rule (for example, `Payment Gateway`).
+   1. For **Value**, enter an IP address, IP range, country code/name, or Autonomous System Number (ASN). For details, refer to [Parameters](/waf/tools/ip-access-rules/parameters/).
+   2. Select an [action](/waf/tools/ip-access-rules/actions/).
+   3. For **Zone**, select whether the rule applies to the current website only or to all websites in the account.
+   4. (Optional) Enter a note for the rule (for example, `Payment Gateway`).
+
 4. Click **Add**.
 
 ## Using the API
 
 Use the Cloudflare API to programmatically create IP Access rules. For more information, refer to [Get IP Access rules](https://api.cloudflare.com/#ip-access-rules-for-a-user-get-ip-access-rules).
-

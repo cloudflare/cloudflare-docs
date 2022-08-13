@@ -22,10 +22,10 @@ You will need the email address associated with your Cloudflare account, Cloudfl
 4. On the **Configure Mitigations** page, locate the **Cloudflare** section.
 5. Click **Edit** next to the Cloudflare branded mitigation to edit and review the information.
 
-    In the example below under section two, the Cloudflare email address, Account ID, and API token are used to send the API call to Cloudflare to begin advertising routes and turn on Magic Transit for the customer’s network.
+   In the example below under section two, the Cloudflare email address, Account ID, and API token are used to send the API call to Cloudflare to begin advertising routes and turn on Magic Transit for the customer’s network.
 
-    ![Kentik mitigation setup](/magic-transit/static/kentik-setup.png)
-    
+   ![Kentik mitigation setup](/magic-transit/static/kentik-setup.png)
+
 6. After reviewing the information, click **Update Mitigation Platform**.
 7. Click **Menu** > **Library**.
 8. On the **Library** page, in the search field, enter **Cloudflare**.
@@ -40,7 +40,7 @@ For additional information about Kentik and Magic Transit, refer to [Kentik's Ma
 2. From the navigation menu, select **IP Prefixes**.
 3. Referring to the example scenario, the prefix protected by Cloudflare displays a **Withdrawn** status.
 
-    After a DDoS attacks occurs, the status changes to **Advertised** which indicates the network is protected.
+   After a DDoS attacks occurs, the status changes to **Advertised** which indicates the network is protected.
 
 ## Analytics
 

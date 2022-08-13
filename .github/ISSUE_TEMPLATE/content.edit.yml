@@ -1,6 +1,6 @@
 name: Request content update
 description: Request documentation content edits and/or clarifications.
-labels: ["documentation", "content:edit"]
+labels: ['documentation', 'content:edit']
 body:
   - type: dropdown
     id: products
@@ -9,7 +9,7 @@ body:
     attributes:
       label: Which Cloudflare product does this pertain to?
       options:
-        - "1.1.1.1"
+        - '1.1.1.1'
         - Analytics
         - API
         - API Shield

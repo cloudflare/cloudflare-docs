@@ -11,14 +11,14 @@ layout: list
 
 This page provides examples of creating WAF custom rules in a zone or account using Terraform. The examples cover the following scenarios:
 
-* Zone-level configurations:
+- Zone-level configurations:
 
-    * [Add a custom rule to a zone](#add-a-custom-rule-to-a-zone)
+  - [Add a custom rule to a zone](#add-a-custom-rule-to-a-zone)
 
-* Account-level configurations:
+- Account-level configurations:
 
-    * [Create and deploy a custom ruleset](#create-and-deploy-a-custom-ruleset)
-    * [Add a custom rule checking for exposed credentials](#add-a-custom-rule-checking-for-exposed-credentials)
+  - [Create and deploy a custom ruleset](#create-and-deploy-a-custom-ruleset)
+  - [Add a custom rule checking for exposed credentials](#add-a-custom-rule-checking-for-exposed-credentials)
 
 For more information on custom rules, refer to [Custom rules](/waf/custom-rules/) in the Cloudflare WAF documentation.
 

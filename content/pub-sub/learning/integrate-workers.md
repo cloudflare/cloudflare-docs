@@ -20,9 +20,9 @@ You can use one, many or all of these integrations as needed.
 
 "On-Publish" hooks are a powerful way to filter and modify messages as they are published to your Pub/Sub Broker.
 
-* The Worker runs as a "post-publish" hook where messages are accepted by the broker, passed to the Worker, and messages are only sent to clients who subscribed to the topic after the Worker returns a valid HTTP response.
-* If the Worker does not return a response (intentionally or not), or returns an HTTP status code other than HTTP 200, the message is dropped.
-* All `PUBLISH` messages (packets) published to your Broker are sent to the Worker. Other MQTT packets, such as CONNECT or AUTH packets, are automatically handled for you by Pub/Sub.
+- The Worker runs as a "post-publish" hook where messages are accepted by the broker, passed to the Worker, and messages are only sent to clients who subscribed to the topic after the Worker returns a valid HTTP response.
+- If the Worker does not return a response (intentionally or not), or returns an HTTP status code other than HTTP 200, the message is dropped.
+- All `PUBLISH` messages (packets) published to your Broker are sent to the Worker. Other MQTT packets, such as CONNECT or AUTH packets, are automatically handled for you by Pub/Sub.
 
 ### Connect a Worker to a Broker
 
@@ -38,18 +38,18 @@ To connect a Worker to a Pub/Sub Broker as an on-publish hook, you'll need to:
 2. Configure the broker to send messages to the Worker by setting the `on_publish.url` field on your Broker.
 3. **Important**: Verify the signature of the payload using the public keys associated with your Broker to confirm the request was from your Pub/Sub Broker, and **not** an untrusted third-party or another broker.
 4. Inspect or mutate the message (the HTTP request payload) as you see fit!
-5. Return an HTTP 200 OK with a well-formed response, which allows the broker to send the message on to any subscribers. 
+5. Return an HTTP 200 OK with a well-formed response, which allows the broker to send the message on to any subscribers.
 
 The following is an end-to-end example showing how to:
 
-* Authenticate incoming requests from Pub/Sub (and reject those not from Pub/Sub)
-* Replace the payload of a message on a specific topic
-* Return the message to the Broker so that it can forward it to subscribers
+- Authenticate incoming requests from Pub/Sub (and reject those not from Pub/Sub)
+- Replace the payload of a message on a specific topic
+- Return the message to the Broker so that it can forward it to subscribers
 
 {{<Aside type="note">}}
 
 You should be familiar with setting up a [Worker](/workers/get-started/guide/) before continuing with this example.
-  
+
 {{</Aside>}}
 
 To ensure your Worker can validate incoming requests, you must make the public keys available to your Worker via an [environmental variable](/workers/platform/environment-variables/). To do so, we can fetch the public keys from our Broker:
@@ -61,24 +61,26 @@ $ wrangler pubsub broker public-keys YOUR_BROKER --namespace=NAMESPACE_NAME
 You should receive a success response that resembles the example below, with the public key set from your Worker:
 
 ```json
-"keys": [
-  {
-    "use": "sig",
-    "kty": "OKP",
-    "kid": "JDPuYJqHOvqzlakkNFQ9kfN7WsYs5uHndp_ziRdmOCU",
-    "crv": "Ed25519",
-    "alg": "EdDSA",
-    "x": "Phf82R8tG1FdY475-AgtlaWIwH1lLFlfWu5LrsKhyjw"
-  },
-  {
-    "use": "sig",
-    "kty": "OKP",
-    "kid": "qk7Z4hbN738v-m2CKdVaKTav9pU32MAaQXB2tDaQ-_o",
-    "crv": "Ed25519",
-    "alg": "EdDSA",
-    "x": "Bt4kQWcK_XhZP1ZxEflsoYbqaBm9rEDk_jNWPdhxwTI"
-  }
-]
+{
+	"keys": [
+		{
+			"use": "sig",
+			"kty": "OKP",
+			"kid": "JDPuYJqHOvqzlakkNFQ9kfN7WsYs5uHndp_ziRdmOCU",
+			"crv": "Ed25519",
+			"alg": "EdDSA",
+			"x": "Phf82R8tG1FdY475-AgtlaWIwH1lLFlfWu5LrsKhyjw"
+		},
+		{
+			"use": "sig",
+			"kty": "OKP",
+			"kid": "qk7Z4hbN738v-m2CKdVaKTav9pU32MAaQXB2tDaQ-_o",
+			"crv": "Ed25519",
+			"alg": "EdDSA",
+			"x": "Bt4kQWcK_XhZP1ZxEflsoYbqaBm9rEDk_jNWPdhxwTI"
+		}
+	]
+}
 ```
 
 Copy the array of public keys into your `wrangler.toml` as an environmental variable:
@@ -86,7 +88,7 @@ Copy the array of public keys into your `wrangler.toml` as an environmental vari
 {{<Aside type="note">}}
 
 Your public keys will be unique to your own Pub/Sub Broker: you should ensure you're copying the keys associated with your own Broker.
-  
+
 {{</Aside>}}
 
 ```toml
@@ -139,7 +141,7 @@ npm i @cloudflare/pubsub
 With `@cloudflare/pubsub` installed, we can now import both the `isValidBrokerRequest` function and our `PubSubMessage` types into
 our Worker code directly:
 
-```typescript
+```ts
 ---
 filename: index.ts
 ---
@@ -147,56 +149,56 @@ filename: index.ts
 
 /// <reference types="@cloudflare/workers-types" />
 
-import { isValidBrokerRequest, PubSubMessage } from "@cloudflare/pubsub"
+import { isValidBrokerRequest, PubSubMessage } from '@cloudflare/pubsub';
 
 async function pubsub(
-  messages: Array<PubSubMessage>,
-  env: any,
-  ctx: ExecutionContext
+	messages: Array<PubSubMessage>,
+	env: any,
+	ctx: ExecutionContext
 ): Promise<Array<PubSubMessage>> {
-  // Messages may be batched at higher throughputs, so we should loop over
-  // the incoming messages and process them as needed.
-  for (let msg of messages) {
-    console.log(msg);
-    // Replace the message contents in our topic - named "test/topic"
-    // as a simple example
-    if (msg.topic.startsWith("test/topic")) {
-      msg.payload = `replaced text payload at ${Date.now()}`;
-    }
-  }
+	// Messages may be batched at higher throughputs, so we should loop over
+	// the incoming messages and process them as needed.
+	for (let msg of messages) {
+		console.log(msg);
+		// Replace the message contents in our topic - named "test/topic"
+		// as a simple example
+		if (msg.topic.startsWith('test/topic')) {
+			msg.payload = `replaced text payload at ${Date.now()}`;
+		}
+	}
 
-  return messages;
+	return messages;
 }
 
 const worker = {
-  async fetch(req: Request, env: any, ctx: ExecutionContext) {
-    // Retrieve this from your Broker's "publicKey" field.
-    //
-    // Each Broker has a unique key to distinguish between your Broker vs. others
-    // We store these keys in environmental variables (https://developers.cloudflare.com/workers/platform/environment-variables/)
-    // to avoid needing to fetch them on every request.
-    let publicKeys = env.BROKER_PUBLIC_KEYS;
+	async fetch(req: Request, env: any, ctx: ExecutionContext) {
+		// Retrieve this from your Broker's "publicKey" field.
+		//
+		// Each Broker has a unique key to distinguish between your Broker vs. others
+		// We store these keys in environmental variables (https://developers.cloudflare.com/workers/platform/environment-variables/)
+		// to avoid needing to fetch them on every request.
+		let publicKeys = env.BROKER_PUBLIC_KEYS;
 
-    // Critical: you must validate the incoming request is from your Broker.
-    //
-    // In the future, Workers will be able to do this on your behalf for Workers
-    // in the same account as your Pub/Sub Broker.
-    if (await isValidBrokerRequest(req, publicKeys)) {
-      // Parse the PubSub message
-      let incomingMessages: Array<PubSubMessage> = await req.json();
+		// Critical: you must validate the incoming request is from your Broker.
+		//
+		// In the future, Workers will be able to do this on your behalf for Workers
+		// in the same account as your Pub/Sub Broker.
+		if (await isValidBrokerRequest(req, publicKeys)) {
+			// Parse the PubSub message
+			let incomingMessages: Array<PubSubMessage> = await req.json();
 
-      // Pass the messages to our pubsub handler, and capture the returned
-      // message.
-      let outgoingMessages = await pubsub(incomingMessages, env, ctx);
+			// Pass the messages to our pubsub handler, and capture the returned
+			// message.
+			let outgoingMessages = await pubsub(incomingMessages, env, ctx);
 
-      // Re-serialize the messages and return a HTTP 200.
-      // The Content-Type is optional, but must either by
-      // "application/octet-stream" or left empty.
-      return new Response(JSON.stringify(outgoingMessages), { status: 200 });
-    }
+			// Re-serialize the messages and return a HTTP 200.
+			// The Content-Type is optional, but must either by
+			// "application/octet-stream" or left empty.
+			return new Response(JSON.stringify(outgoingMessages), { status: 200 });
+		}
 
-    return new Response("not a valid Broker request", { status: 403 });
-  },
+		return new Response('not a valid Broker request', { status: 403 });
+	},
 };
 
 export default worker;
@@ -212,15 +214,16 @@ You should receive a success response that resembles the example below, with the
 
 ```json
 {
-  "id": "4c63fa30ee13414ba95be5b56d896fea",
-  "name": "example-broker",
-  "authType": "TOKEN",
-  "created_on": "2022-05-11T23:19:24.356324Z",
-  "modified_on": "2022-05-11T23:19:24.356324Z",
-  "expiration": null,
-  "endpoint": "mqtts://example-broker.namespace.cloudflarepubsub.com:8883",
-  "on_publish": {
-    "url": "https://your-worker.your-account.workers.dev"
+	"id": "4c63fa30ee13414ba95be5b56d896fea",
+	"name": "example-broker",
+	"authType": "TOKEN",
+	"created_on": "2022-05-11T23:19:24.356324Z",
+	"modified_on": "2022-05-11T23:19:24.356324Z",
+	"expiration": null,
+	"endpoint": "mqtts://example-broker.namespace.cloudflarepubsub.com:8883",
+	"on_publish": {
+		"url": "https://your-worker.your-account.workers.dev"
+	}
 }
 ```
 
@@ -234,26 +237,26 @@ Below is an example of a PubSub message sent over HTTP to a Worker:
 
 ```json
 [
-    {
-        "mid": 0,
-        "broker": "my-broker.my-namespace.cloudflarepubsub.com",
-        "topic": "us/external/metrics/abc-456-def-123/request_count",
-        "clientId": "broker01G24VP1T3B51JJ0WJQJWCSY61",
-        "receivedAt": 1651578191,
-        "contentType": null,
-        "payloadFormatIndicator": 1,
-        "payload": "<payload>"
-    },
-    {
-        "mid": 1,
-        "broker": "my-broker.my-namespace.cloudflarepubsub.com",
-        "topic": "ap/external/metrics/abc-456-def-123/transactions_processed",
-        "clientId": "broker01G24VS053KYGNBBX8RH3T7CY5",
-        "receivedAt": 1651578193,
-        "contentType": null,
-        "payloadFormatIndicator": 1,
-        "payload": "<payload>"
-    }
+	{
+		"mid": 0,
+		"broker": "my-broker.my-namespace.cloudflarepubsub.com",
+		"topic": "us/external/metrics/abc-456-def-123/request_count",
+		"clientId": "broker01G24VP1T3B51JJ0WJQJWCSY61",
+		"receivedAt": 1651578191,
+		"contentType": null,
+		"payloadFormatIndicator": 1,
+		"payload": "<payload>"
+	},
+	{
+		"mid": 1,
+		"broker": "my-broker.my-namespace.cloudflarepubsub.com",
+		"topic": "ap/external/metrics/abc-456-def-123/transactions_processed",
+		"clientId": "broker01G24VS053KYGNBBX8RH3T7CY5",
+		"receivedAt": 1651578193,
+		"contentType": null,
+		"payloadFormatIndicator": 1,
+		"payload": "<payload>"
+	}
 ]
 ```
 
@@ -297,4 +300,3 @@ Some common failure modes can result in messages not being sent to subscribed cl
 - Returning an invalid or unstructured body, a body or payload that exceeds size limits, or returning no body at all.
 
 Because the Worker is acting as the "server" in the HTTP request-response lifecycle, invalid responses from your Worker can fail silently, as the Broker can no longer return an error response.
-

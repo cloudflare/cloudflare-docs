@@ -8,11 +8,11 @@ weight: 2
 
 You will have to move or transfer domains from one Cloudflare account to another if you:
 
-* Manage a multi-user organization and need to segment domain access by user.
+- Manage a multi-user organization and need to segment domain access by user.
 
-* Receive a `Cloudflare is already hosting under a different account` error.
+- Receive a `Cloudflare is already hosting under a different account` error.
 
-* Lose access to your email address or Cloudflare account.
+- Lose access to your email address or Cloudflare account.
 
 {{<Aside type="note">}}
 
@@ -24,9 +24,9 @@ If you have [two-factor authentication (2FA)](https://support.cloudflare.com/hc/
 
 To transfer a domain from one Cloudflare account to another, you will need:
 
-* Access to your domain registrar.
+- Access to your domain registrar.
 
-* At least one Cloudflare account associated with the domain.
+- At least one Cloudflare account associated with the domain.
 
 ## Transfer your domain
 

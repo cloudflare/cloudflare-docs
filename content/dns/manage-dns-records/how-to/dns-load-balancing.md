@@ -26,7 +26,7 @@ The exact behavior of your DNS routing would depend on the [proxy status](/dns/m
 
 ### All records unproxied
 
-If all associated records were unproxied, any request to Cloudflare's nameservers would return the three `A` records you previously added. 
+If all associated records were unproxied, any request to Cloudflare's nameservers would return the three `A` records you previously added.
 
 Each client (oftentimes a browser), would decide which IP address to send the request to. If one IP address fails, the client would choose another option. All requests would be sent directly to the origin server (to `192.0.1.X`).
 

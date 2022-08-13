@@ -26,27 +26,27 @@ Workers functions are written in [JavaScript](https://www.cloudflare.com/learnin
 header: Setting custom headers with a Workers function
 ---
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
+	event.respondWith(handleRequest(event.request));
 });
 
 async function handleRequest(request) {
-  // This proxies your Pages application under the condition that your Worker script is deployed on the same custom domain as your Pages project
-  const response = await fetch(request);
+	// This proxies your Pages application under the condition that your Worker script is deployed on the same custom domain as your Pages project
+	const response = await fetch(request);
 
-  // Clone the response so that it is no longer immutable
-  const newResponse = new Response(response.body, response);
+	// Clone the response so that it is no longer immutable
+	const newResponse = new Response(response.body, response);
 
-  // Add a custom header with a value
-  newResponse.headers.append('x-workers-hello', 'Hello from Cloudflare Workers');
+	// Add a custom header with a value
+	newResponse.headers.append('x-workers-hello', 'Hello from Cloudflare Workers');
 
-  // Delete headers
-  newResponse.headers.delete('x-header-to-delete');
-  newResponse.headers.delete('x-header2-to-delete');
+	// Delete headers
+	newResponse.headers.delete('x-header-to-delete');
+	newResponse.headers.delete('x-header2-to-delete');
 
-  // Adjust the value for an existing header
-  newResponse.headers.set('x-header-to-change', 'NewValue');
+	// Adjust the value for an existing header
+	newResponse.headers.set('x-header-to-change', 'NewValue');
 
-  return newResponse;
+	return newResponse;
 }
 ```
 

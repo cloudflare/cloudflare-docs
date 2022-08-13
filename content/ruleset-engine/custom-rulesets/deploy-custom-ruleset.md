@@ -18,7 +18,7 @@ To deploy a custom ruleset, add a rule that executes the custom ruleset. Define 
 
 The following `PUT` request adds a rule that executes a custom ruleset when the zone name matches `example.com`.
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -47,7 +47,7 @@ curl -X PUT \
 
 The response displays the rules in your phase.
 
-```json
+```bash
 ---
 header: Response
 ---

@@ -32,14 +32,14 @@ Worker-to-Worker `fetch` requests are now possible with [Service bindings](/work
 highlight: [8]
 ---
 addEventListener('fetch', event => {
-  // NOTE: can’t use fetch here, as we’re not in an async scope yet
-  event.respondWith(eventHandler(event));
+	// NOTE: can’t use fetch here, as we’re not in an async scope yet
+	event.respondWith(eventHandler(event));
 });
 
 async function eventHandler(event) {
-  // fetch can be awaited here since `event.respondWith()` waits for the Promise it receives to settle
-  const resp = await fetch(event.request);
-  return resp;
+	// fetch can be awaited here since `event.respondWith()` waits for the Promise it receives to settle
+	const resp = await fetch(event.request);
+	return resp;
 }
 ```
 

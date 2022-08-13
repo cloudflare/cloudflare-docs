@@ -56,15 +56,15 @@ You should see this reflected in your `package.json` file:
 
 ```json
 {
-  "name": "my-worker",
-  "version": "x.y.z",
-  // ...
-  "devDependencies": {
-    // ...
-    "wranglerjs-compat-webpack-plugin": "^x.y.z",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^x.y.z"
-  }
+	"name": "my-worker",
+	"version": "x.y.z",
+	// ...
+	"devDependencies": {
+		// ...
+		"wranglerjs-compat-webpack-plugin": "^x.y.z",
+		"webpack": "^4.46.0",
+		"webpack-cli": "^x.y.z"
+	}
 }
 ```
 
@@ -73,13 +73,11 @@ You should see this reflected in your `package.json` file:
 Modify your `webpack.config.js` file to include the plugin you just installed.
 
 ```js
-const {
-  WranglerJsCompatWebpackPlugin,
-} = require("wranglerjs-compat-webpack-plugin");
+const { WranglerJsCompatWebpackPlugin } = require('wranglerjs-compat-webpack-plugin');
 
 module.exports = {
-  // ...
-  plugins: [new WranglerJsCompatWebpackPlugin()],
+	// ...
+	plugins: [new WranglerJsCompatWebpackPlugin()],
 };
 ```
 
@@ -87,13 +85,13 @@ module.exports = {
 
 ```json
 {
-  "name": "my-worker",
-  "verion": "2.0.0",
-  // ...
-  "scripts": {
-    "build": "webpack" // <-- Add this line!
-    // ...
-  }
+	"name": "my-worker",
+	"verion": "2.0.0",
+	// ...
+	"scripts": {
+		"build": "webpack" // <-- Add this line!
+		// ...
+	}
 }
 ```
 

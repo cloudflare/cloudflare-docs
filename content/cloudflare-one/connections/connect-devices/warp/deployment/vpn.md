@@ -14,9 +14,9 @@ For the most stable and consistent connection, we recommend using Cloudflare Tun
 
 The Cloudflare WARP client is compatible with most third-party VPN configurations assuming the following requirements are met:
 
-* **WARP must be responsible for resolving all DNS traffic on your device.** The WARP client captures all DNS traffic and sends it to Gateway for policy enforcement. For WARP to function, DNS configuration settings must be disabled on your VPN. You can use features like [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) to route DNS requests to a server behind your third-party VPN or firewall, but the WARP client must still proxy that traffic.
+- **WARP must be responsible for resolving all DNS traffic on your device.** The WARP client captures all DNS traffic and sends it to Gateway for policy enforcement. For WARP to function, DNS configuration settings must be disabled on your VPN. You can use features like [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) to route DNS requests to a server behind your third-party VPN or firewall, but the WARP client must still proxy that traffic.
 
-* **All traffic relating to the third-party VPN must bypass the WARP client.** You can configure [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) to exclude your VPN server from WARP.
+- **All traffic relating to the third-party VPN must bypass the WARP client.** You can configure [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) to exclude your VPN server from WARP.
 
 ## Configuring for compatibility
 
@@ -26,8 +26,8 @@ We recommend the following workflow when configuring WARP alongside a third-part
 2. In the Zero Trust dashboard, navigate to **Settings** > **Network** and ensure that **Split Tunnels** is set to **Exclude IPs and domains**.
 3. Under **Split Tunnels**, click **Manage** and [add the following IP addresses](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/#add-an-ip-address) to your Exclude list:
 
-    * The IP address of the server your third-party VPN connects to.
-    * The private IP address space your third-party VPN exposes.
+   - The IP address of the server your third-party VPN connects to.
+   - The private IP address space your third-party VPN exposes.
 
 4. (Optional) If your company uses fully qualified domain names such as `example.local`, follow [these instructions](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/)to exclude your local domains from Gateway processing.
 

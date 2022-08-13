@@ -29,6 +29,6 @@ If you are on Workers Unbound, you will also see duration and [egress data usage
 
 Turn usage notifications on or off:
 
-1. Go to **Account Home** > **Notifications**. 
-2. Select **Add** and scroll down to Workers to find **Workers Usage Report** and **Workers Weekly Summary**. 
+1. Go to **Account Home** > **Notifications**.
+2. Select **Add** and scroll down to Workers to find **Workers Usage Report** and **Workers Weekly Summary**.
 3. After you enable notifications and add recipients, edit or turn off notifications by returning to **Notifications**.

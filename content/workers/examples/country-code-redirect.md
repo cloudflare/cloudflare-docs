@@ -15,8 +15,8 @@ layout: example
  * @param {Object} countryMap
  */
 const countryMap = {
-  US: 'https://example.com/us',
-  EU: 'https://eu.example.com/',
+	US: 'https://example.com/us',
+	EU: 'https://eu.example.com/',
 };
 
 /**
@@ -24,19 +24,19 @@ const countryMap = {
  * @param {Request} request
  */
 function redirect(request) {
-  // Use the cf object to obtain the country of the request
-  // more on the cf object: https://developers.cloudflare.com/workers/runtime-apis/request#incomingrequestcfproperties
-  const country = request.cf.country;
+	// Use the cf object to obtain the country of the request
+	// more on the cf object: https://developers.cloudflare.com/workers/runtime-apis/request#incomingrequestcfproperties
+	const country = request.cf.country;
 
-  if (country != null && country in countryMap) {
-    const url = countryMap[country];
-    return Response.redirect(url);
-  } else {
-    return fetch(request);
-  }
+	if (country != null && country in countryMap) {
+		const url = countryMap[country];
+		return Response.redirect(url);
+	} else {
+		return fetch(request);
+	}
 }
 
 addEventListener('fetch', event => {
-  event.respondWith(redirect(event.request));
+	event.respondWith(redirect(event.request));
 });
 ```

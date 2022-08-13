@@ -3,14 +3,14 @@ title: About
 pcx_content_type: concept
 weight: 2
 meta:
-    title: What is a registrar
+  title: What is a registrar
 ---
 
 # What is a registrar?
 
 ![There are several parties involved in the domain registration. Read more about this in this page.](/registrar/static/domain-registry-process.png)
 
-There are several steps you have to take before getting your website online and one of the first is making sure you have the address you want. 
+There are several steps you have to take before getting your website online and one of the first is making sure you have the address you want.
 
 You have to buy your Internet address, also known as domain, from a registrar. Registrars are businesses that handle the reservation of domain names, as well as the assignment of IP addresses to those domains.
 

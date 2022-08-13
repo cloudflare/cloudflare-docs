@@ -26,11 +26,11 @@ Example of rule definition:
 
 ```json
 {
-  "expression": "<RULE_EXPRESSION>",
-  "action": "skip",
-  "action_parameters": {
-    "ruleset": "current"
-  }
+	"expression": "<RULE_EXPRESSION>",
+	"action": "skip",
+	"action_parameters": {
+		"ruleset": "current"
+	}
 }
 ```
 
@@ -44,11 +44,11 @@ Example of rule definition:
 
 ```json
 {
-  "expression": "<RULE_EXPRESSION>",
-  "action": "skip",
-  "action_parameters": {
-    "rulesets": ["{waf-managed-ruleset-id-1}", "{waf-managed-ruleset-id-2}"]
-  }
+	"expression": "<RULE_EXPRESSION>",
+	"action": "skip",
+	"action_parameters": {
+		"rulesets": ["{waf-managed-ruleset-id-1}", "{waf-managed-ruleset-id-2}"]
+	}
 }
 ```
 
@@ -62,14 +62,14 @@ The following example defines a rule with `skip` action that will skip rules `A`
 
 ```json
 {
-  "expression": "<RULE_EXPRESSION>",
-  "action": "skip",
-  "action_parameters": {
-    "rules": {
-      "{waf-managed-ruleset-id-1}": ["{rule-id-A}", "{rule-id-B}"],
-      "{waf-managed-ruleset-id-2}": ["{rule-id-X}"]
-    }
-  }
+	"expression": "<RULE_EXPRESSION>",
+	"action": "skip",
+	"action_parameters": {
+		"rules": {
+			"{waf-managed-ruleset-id-1}": ["{rule-id-A}", "{rule-id-B}"],
+			"{waf-managed-ruleset-id-2}": ["{rule-id-X}"]
+		}
+	}
 }
 ```
 

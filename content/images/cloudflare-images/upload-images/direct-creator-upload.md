@@ -22,14 +22,14 @@ You will receive a response similar to this:
 
 ```json
 {
-  "result": {
-    "id": "2cdc28f0-017a-49c4-9ed7-87056c83901",
-    "uploadURL": "https://upload.imagedelivery.net/2cdc28f0-017a-49c4-9ed7-87056c83901"
-  },
-  "result_info": null,
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "2cdc28f0-017a-49c4-9ed7-87056c83901",
+		"uploadURL": "https://upload.imagedelivery.net/2cdc28f0-017a-49c4-9ed7-87056c83901"
+	},
+	"result_info": null,
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -41,7 +41,7 @@ Previously, in version 1 of the `direct_upload` endpoint, the ID was an identifi
 
 {{</Aside>}}
 
-With version 2 of `direct_upload`, a new draft image record is created when you invoke this endpoint. It will not appear on a [list of images](https://api.cloudflare.com/#cloudflare-images-list-images), but  it is possible to fetch an image record with the provided ID to check its current status. In the example below, `<IMAGE_ID>` is the `id` received from the response when requesting a one-time upload URL with the `direct_upload` endpoint.
+With version 2 of `direct_upload`, a new draft image record is created when you invoke this endpoint. It will not appear on a [list of images](https://api.cloudflare.com/#cloudflare-images-list-images), but it is possible to fetch an image record with the provided ID to check its current status. In the example below, `<IMAGE_ID>` is the `id` received from the response when requesting a one-time upload URL with the `direct_upload` endpoint.
 
 ```bash
 curl  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/<IMAGE_ID> \
@@ -53,22 +53,22 @@ You will receive a response similar to this:
 
 ```json
 {
-  "result": {
-    "id": "2cdc28f0-017a-49c4-9ed7-87056c83901",
-    "metadata": {
-      "key": "value":
-    },
-    "uploaded": "2022-01-31T16:39:28.458Z",
-    "requireSignedURLs": true,
-    "variants": [
-      "https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/public",
-      "https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/thumbnail" 
-    ],
-    "draft": true
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "2cdc28f0-017a-49c4-9ed7-87056c83901",
+		"metadata": {
+			"key": "value"
+		},
+		"uploaded": "2022-01-31T16:39:28.458Z",
+		"requireSignedURLs": true,
+		"variants": [
+			"https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/public",
+			"https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/thumbnail"
+		],
+		"draft": true
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -78,16 +78,12 @@ Your back-end endpoint should return the `uploadURL` property to the client, ena
 
 ```html
 <html>
- <body>
-   <form
-     action="INSERT_UPLOAD_URL_HERE"
-     method="post"
-     enctype="multipart/form-data"
-   >
-     <input type="file" id="myFile" name="file" />
-     <input type="submit" />
-   </form>
- </body>
+	<body>
+		<form action="INSERT_UPLOAD_URL_HERE" method="post" enctype="multipart/form-data">
+			<input type="file" id="myFile" name="file" />
+			<input type="submit" />
+		</form>
+	</body>
 </html>
 ```
 

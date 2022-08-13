@@ -40,14 +40,14 @@ When your application needs specialized routing (`CNAME` setup or custom hosts l
 
 The Cloudflare API supports the following commands for pools. Examples are given for user-level endpoint but apply to the account-level endpoint as well.
 
-| Command | Method | Endpoint |
-| --- | --- | --- |
-|  [Create Pool](https://api.cloudflare.com/#account-load-balancer-pools-create-pool) | `POST` | `accounts/:account_id/load_balancers/pools` |
-| [Delete Pool](https://api.cloudflare.com/#account-load-balancer-pools-delete-pool) | `DELETE` | `accounts/:account_id/load_balancers/pools/:id` | 
-| [List Pools](https://api.cloudflare.com/#account-load-balancer-pools-list-pools) | `GET` | `accounts/:account_id/load_balancers/pools` |
-| [Pool Details](https://api.cloudflare.com/#account-load-balancer-pools-pool-details) | `GET` | `accounts/:account_id/load_balancers/pools/:id` |
-| [Pool Health Details](https://api.cloudflare.com/#account-load-balancer-pools-pool-health-details) | `GET` | `account/:account_id/load_balancers/pools/:id/health` |
-| [Overwrite specific properties](https://api.cloudflare.com/#account-load-balancer-pools-patch-pool) | `PATCH` | `accounts/:account_id/load_balancers/pools/:id` |
-| [Overwrite existing pool](https://api.cloudflare.com/#account-load-balancer-pools-update-pool) | `PUT` | `accounts/:account_id/load_balancers/pools/:id` |
-| [Preview Pool](https://api.cloudflare.com/#account-load-balancer-pools-preview-pool) | `POST` | `account/:account_id/load_balancers/pools/:id/preview` |
-| [List Pool References](https://api.cloudflare.com/#account-load-balancer-pools-list-pool-references) | `GET` | `accounts/:account_id/load_balancers/pools/:id/references` |
+| Command                                                                                              | Method   | Endpoint                                                   |
+| ---------------------------------------------------------------------------------------------------- | -------- | ---------------------------------------------------------- |
+| [Create Pool](https://api.cloudflare.com/#account-load-balancer-pools-create-pool)                   | `POST`   | `accounts/:account_id/load_balancers/pools`                |
+| [Delete Pool](https://api.cloudflare.com/#account-load-balancer-pools-delete-pool)                   | `DELETE` | `accounts/:account_id/load_balancers/pools/:id`            |
+| [List Pools](https://api.cloudflare.com/#account-load-balancer-pools-list-pools)                     | `GET`    | `accounts/:account_id/load_balancers/pools`                |
+| [Pool Details](https://api.cloudflare.com/#account-load-balancer-pools-pool-details)                 | `GET`    | `accounts/:account_id/load_balancers/pools/:id`            |
+| [Pool Health Details](https://api.cloudflare.com/#account-load-balancer-pools-pool-health-details)   | `GET`    | `account/:account_id/load_balancers/pools/:id/health`      |
+| [Overwrite specific properties](https://api.cloudflare.com/#account-load-balancer-pools-patch-pool)  | `PATCH`  | `accounts/:account_id/load_balancers/pools/:id`            |
+| [Overwrite existing pool](https://api.cloudflare.com/#account-load-balancer-pools-update-pool)       | `PUT`    | `accounts/:account_id/load_balancers/pools/:id`            |
+| [Preview Pool](https://api.cloudflare.com/#account-load-balancer-pools-preview-pool)                 | `POST`   | `account/:account_id/load_balancers/pools/:id/preview`     |
+| [List Pool References](https://api.cloudflare.com/#account-load-balancer-pools-list-pool-references) | `GET`    | `accounts/:account_id/load_balancers/pools/:id/references` |

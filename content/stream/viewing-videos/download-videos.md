@@ -79,13 +79,11 @@ header: Response
 
 ## Customize download file name
 
-You can customize the name of downloadable files by adding the `filename` query string parameter at the end of the URL. 
+You can customize the name of downloadable files by adding the `filename` query string parameter at the end of the URL.
 
 In the example below, adding `?filename=MY_VIDEO.mp4` to the URL will change the file name to `MY_VIDEO.mp4`.
 
-`
-https://videodelivery.net/$VIDEOID/downloads/default.mp4?filename=MY_VIDEO.mp4
-`
+`https://videodelivery.net/$VIDEOID/downloads/default.mp4?filename=MY_VIDEO.mp4`
 
 ## Retrieve downloads
 
@@ -110,25 +108,23 @@ For more details about using signed URLs with videos, refer to [Securing your St
 highlight: [6]
 ---
 {
-    "sub": $VIDEOID,
-    "kid": $KEYID,
-    "exp": 1537460365,
-    "nbf": 1537453165,
-    "downloadable": true,
-    "accessRules": [
-      {
-        "type": "ip.geoip.country",
-        "action": "allow",
-        "country": [
-          "GB"
-        ]
-      },
-      {
-        "type": "any",
-        "action": "block"
-      }
-    ]
-  }
+	"sub": "$VIDEOID",
+	"kid": "$KEYID",
+	"exp": 1537460365,
+	"nbf": 1537453165,
+	"downloadable": true,
+	"accessRules": [
+		{
+			"type": "ip.geoip.country",
+			"action": "allow",
+			"country": ["GB"]
+		},
+		{
+			"type": "any",
+			"action": "block"
+		}
+	]
+}
 ```
 
 ## Billing for MP4 downloads

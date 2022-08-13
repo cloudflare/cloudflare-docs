@@ -1,1 +1,13 @@
-[{"kind": "PLANNED", "rule_id": "...b757316c", "rule_ref": "UR0016-BETA", "description": "BETA - HTTP requests with unusual HTTP headers or URI path (signature #16).", "comments": "Improve the accuracy of the rule to detect more attacks.", "previous_action": null, "new_action": "log", "announcement_date": "2022-08-11", "release_date": "2022-08-16"}]
+[
+	{
+		"kind": "PLANNED",
+		"rule_id": "...b757316c",
+		"rule_ref": "UR0016-BETA",
+		"description": "BETA - HTTP requests with unusual HTTP headers or URI path (signature #16).",
+		"comments": "Improve the accuracy of the rule to detect more attacks.",
+		"previous_action": null,
+		"new_action": "log",
+		"announcement_date": "2022-08-11",
+		"release_date": "2022-08-16"
+	}
+]

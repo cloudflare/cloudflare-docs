@@ -20,23 +20,23 @@ This example uses the [`http.referer`](/ruleset-engine/rules-language/fields/#fi
 The `not` operator matches HTTP referrals that are not from partner sites, and the action blocks them:
 
 <table>
-  <thead>
-    <tr>
-      <th>Expression</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>
-          not (http.referer contains "example.com" or http.referer eq "www.example.net" or
-          http.referer eq "www.cloudflare.com")
-        </code>
-      </td>
-      <td>
-        <em>Block</em>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Expression</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<code>
+					not (http.referer contains "example.com" or http.referer eq "www.example.net" or
+					http.referer eq "www.cloudflare.com")
+				</code>
+			</td>
+			<td>
+				<em>Block</em>
+			</td>
+		</tr>
+	</tbody>
 </table>

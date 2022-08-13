@@ -5,7 +5,7 @@ title: Runtime APIs
 
 # R2
 
-The in-Worker R2 API is accessed by binding an R2 bucket to a [Worker](/workers). The Worker you write can expose external access to  buckets via a route or manipulate R2 objects internally.
+The in-Worker R2 API is accessed by binding an R2 bucket to a [Worker](/workers). The Worker you write can expose external access to buckets via a route or manipulate R2 objects internally.
 
 The R2 API includes some extensions and semantic differences from the S3 API. If you need S3 compatibility, consider using the [S3-compatible API](/r2/platform/s3-compatibility/).
 
@@ -81,7 +81,7 @@ export default {
 - {{<code>}}delete(key{{<param-type>}}string{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}void {{</param-type>}}>{{</type>}}{{</code>}}
 
   - Deletes the given {{<code>}}value{{</code>}} and metadata under the associated {{<code>}}key{{</code>}}. Once the delete succeeds, returns {{<code>}}void{{</code>}}.
-   - R2 deletes are strongly consistent. Once the Promise resolves, all subsequent read operations will no longer see this key value pair globally.
+  - R2 deletes are strongly consistent. Once the Promise resolves, all subsequent read operations will no longer see this key value pair globally.
 
 - {{<code>}}list(options{{<param-type>}}R2ListOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Objects{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
@@ -150,14 +150,14 @@ export default {
 - {{<code>}}customMetadata{{<param-type>}}Record\<string, string>{{</param-type>}}{{</code>}}
 
   - A map of custom, user-defined metadata associated with the object.
-  
+
 - {{<code>}}range{{</code>}} {{<param-type>}}R2Range{{</param-type>}}
 
   - A `R2Range` object containing the returned range of the object.
 
 - {{<code>}}writeHttpMetadata(headers{{<param-type>}}Headers{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
-  -  Retrieves the `httpMetadata` from the `R2Object` and applies their corresponding HTTP headers to the `Headers` input object. Refer to [HTTP Metadata](#http-metadata).
+  - Retrieves the `httpMetadata` from the `R2Object` and applies their corresponding HTTP headers to the `Headers` input object. Refer to [HTTP Metadata](#http-metadata).
 
 {{</definitions>}}
 
@@ -170,7 +170,7 @@ export default {
 - {{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}{{</code>}}
 
   - Specifies that the object should only be returned given satisfaction of certain conditions in the `R2Conditional`. Refer to [Conditional operations](#conditional-operations).
-  
+
 - {{<code>}}range{{<param-type>}}R2Range{{</param-type>}}{{</code>}}
 
   - Specifies that only a specific length (from an optional offset) or suffix of bytes from the object should be returned. Refer to [Ranged reads](#ranged-reads).
@@ -183,9 +183,9 @@ export default {
 
 There are 3 variations of arguments that can be used in a range:
 
-* An offset with an optional length.
-* An optional offset with a length.
-* A suffix.
+- An offset with an optional length.
+- An optional offset with a length.
+- A suffix.
 
 {{<definitions>}}
 
@@ -196,7 +196,7 @@ There are 3 variations of arguments that can be used in a range:
 - {{<code>}}length{{<param-type>}}number{{</param-type>}}{{</code>}}
 
   - The number of bytes to return. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
-  
+
 - {{<code>}}suffix{{<param-type>}}number{{</param-type>}}{{</code>}}
 
   - The number of bytes to return from the end of the file, starting from the last byte. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
@@ -226,18 +226,23 @@ There are 3 variations of arguments that can be used in a range:
 {{<definitions>}}
 
 - {{<code>}}limit{{<param-type>}}number{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+
   - The number of results to return. Defaults to `1000`, with a maximum of `1000`.
 
 - {{<code>}}prefix{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
-  - The prefix to match keys against. Keys will only be returned if they start with given prefix. 
+
+  - The prefix to match keys against. Keys will only be returned if they start with given prefix.
 
 - {{<code>}}cursor{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+
   - An opaque token that indicates where to continue listing objects from. A cursor can be retrieved from a previous list operation.
 
 - {{<code>}}delimiter{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+
   - The character to use when grouping keys.
 
 - {{<code>}}include{{<param-type>}}Array\<string\>{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+
   - Can include `httpMetadata` and/or `customMetadata`. If included, items returned by the list will include the specified metadata.
 
   - Note that there is a limit on the total amount of data that a single `list` operation can return. If you request data, you may recieve fewer than `limit` results in your response to accomodate metadata.
@@ -246,9 +251,9 @@ There are 3 variations of arguments that can be used in a range:
 
   ```js
   const options = {
-      limit: 500,
-      include: ['customMetadata'],
-  }
+  	limit: 500,
+  	include: ['customMetadata'],
+  };
 
   const listed = await env.MY_BUCKET.list(options);
 
@@ -258,20 +263,20 @@ There are 3 variations of arguments that can be used in a range:
   // ❌ - if your limit can't fit into a single response or your
   // bucket has less objects than the limit, it will get stuck here.
   while (listed.objects.length < options.limit) {
-    // ...
+  	// ...
   }
 
   // ✅ - use the truncated property to check if there are more
   // objects to be returned
   while (truncated) {
-      const next = await env.MY_BUCKET.list({
-        ...options,
-        cursor: cursor,
-      });
-      listed.objects.push(...next.objects);
+  	const next = await env.MY_BUCKET.list({
+  		...options,
+  		cursor: cursor,
+  	});
+  	listed.objects.push(...next.objects);
 
-      truncated = next.truncated;
-      cursor = next.cursor
+  	truncated = next.truncated;
+  	cursor = next.cursor;
   }
   ```
 
@@ -298,14 +303,14 @@ An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 - {{<code>}}delimitedPrefixes{{<param-type>}}Array\<{{<type>}}string{{</type>}}\>{{</param-type>}}{{</code>}}
 
   - If a delimiter has been specified, contains all prefixes between the specified prefix and the next occurence of the delimiter.
-  
-  - For example, if no prefix is provided and the delimiter is '/', `foo/bar/baz` would return `foo` as a delimited prefix. If `foo/` was passed as a prefix with the same structure and delimiter, `foo/bar` would be returned as a delimited prefix. 
+
+  - For example, if no prefix is provided and the delimiter is '/', `foo/bar/baz` would return `foo` as a delimited prefix. If `foo/` was passed as a prefix with the same structure and delimiter, `foo/bar` would be returned as a delimited prefix.
 
 {{</definitions>}}
 
 ### Conditional operations
 
-You can pass an `R2Conditional` object to `R2GetOptions`.  If the condition check fails, the body will not be returned. This will make `get()` have lower latency.
+You can pass an `R2Conditional` object to `R2GetOptions`. If the condition check fails, the body will not be returned. This will make `get()` have lower latency.
 
 {{<definitions>}}
 
@@ -325,13 +330,13 @@ You can pass an `R2Conditional` object to `R2GetOptions`.  If the condition chec
 
   - Performs the operation if the object was uploaded after the given date.
 
- {{</definitions>}}
+{{</definitions>}}
 
 For more information about conditional requests, refer to [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
 
 ### HTTP Metadata
 
-Generally, these fields match the HTTP metadata passed when the object was created.  They can be overridden when issuing `GET` requests, in which case, the given values will be echoed back in the response.
+Generally, these fields match the HTTP metadata passed when the object was created. They can be overridden when issuing `GET` requests, in which case, the given values will be echoed back in the response.
 
 {{<definitions>}}
 
@@ -347,4 +352,4 @@ Generally, these fields match the HTTP metadata passed when the object was creat
 
 - {{<code>}}cacheExpiry{{<param-type>}}Date{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
 
- {{</definitions>}}
+{{</definitions>}}

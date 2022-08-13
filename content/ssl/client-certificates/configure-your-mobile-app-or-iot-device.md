@@ -19,77 +19,79 @@ Temperatures are stored in [Workers KV](/workers/learning/how-kv-works/) using t
 The example API code below saves a temperature and timestamp into KV when a POST is made and returns the most recent five temperatures when a GET request is made.
 
 ```js
-const defaultData = { temperatures: [] }
+const defaultData = { temperatures: [] };
 
-const getCache = key => TEMPERATURES.get(key)
-const setCache = (key, data) => TEMPERATURES.put(key, data)
+const getCache = key => TEMPERATURES.get(key);
+const setCache = (key, data) => TEMPERATURES.put(key, data);
 
 async function addTemperature(request) {
+	// Pull previously recorded temperatures for this client.
+	const ip = request.headers.get('CF-Connecting-IP');
+	const cacheKey = `data-${ip}`;
+	let data;
+	const cache = await getCache(cacheKey);
+	if (!cache) {
+		await setCache(cacheKey, JSON.stringify(defaultData));
+		data = defaultData;
+	} else {
+		data = JSON.parse(cache);
+	}
 
-    // Pull previously recorded temperatures for this client.
-    const ip = request.headers.get('CF-Connecting-IP')
-    const cacheKey = `data-${ip}`
-    let data
-    const cache = await getCache(cacheKey)
-    if (!cache) {
-        await setCache(cacheKey, JSON.stringify(defaultData))
-        data = defaultData
-    } else {
-        data = JSON.parse(cache)
-    }
+	// Append the recorded temperatures with the submitted reading (assuming it has both temperature and a timestamp).
+	try {
+		const body = await request.text();
+		const val = JSON.parse(body);
 
-    // Append the recorded temperatures with the submitted reading (assuming it has both temperature and a timestamp).
-    try {
-        const body = await request.text()
-        const val = JSON.parse(body)
-
-        if (val.temperature && val.time) {
-            data.temperatures.push(val)
-            await setCache(cacheKey, JSON.stringify(data))
-            return new Response("", { status: 201 })
-        } else {
-            return new Response("Unable to parse temperature and/or timestamp from JSON POST body", { status: 400 })
-        }
-    } catch (err) {
-        return new Response(err, { status: 500 })
-    }
+		if (val.temperature && val.time) {
+			data.temperatures.push(val);
+			await setCache(cacheKey, JSON.stringify(data));
+			return new Response('', { status: 201 });
+		} else {
+			return new Response('Unable to parse temperature and/or timestamp from JSON POST body', {
+				status: 400,
+			});
+		}
+	} catch (err) {
+		return new Response(err, { status: 500 });
+	}
 }
 
-function compareTimestamps(a,b) {
-    return -1 * (Date.parse(a.time) - Date.parse(b.time))
+function compareTimestamps(a, b) {
+	return -1 * (Date.parse(a.time) - Date.parse(b.time));
 }
 
 // Return the 5 most recent temperature measurements.
 async function getTemperatures(request) {
-    const ip = request.headers.get('CF-Connecting-IP')
-    const cacheKey = `data-${ip}`
+	const ip = request.headers.get('CF-Connecting-IP');
+	const cacheKey = `data-${ip}`;
 
-    const cache = await getCache(cacheKey)
-    if (!cache) {
-        return new Response(JSON.stringify(defaultData), { status: 200, headers: { 'content-type': 'application/json' } })
-    } else {
-        data = JSON.parse(cache)
-        const retval = JSON.stringify(data.temperatures.sort(compareTimestamps).splice(0,5))
-        return new Response(retval, { status: 200, headers: { 'content-type': 'application/json' } })
-    }
+	const cache = await getCache(cacheKey);
+	if (!cache) {
+		return new Response(JSON.stringify(defaultData), {
+			status: 200,
+			headers: { 'content-type': 'application/json' },
+		});
+	} else {
+		data = JSON.parse(cache);
+		const retval = JSON.stringify(data.temperatures.sort(compareTimestamps).splice(0, 5));
+		return new Response(retval, { status: 200, headers: { 'content-type': 'application/json' } });
+	}
 }
 
 async function handleRequest(request) {
-
-    if (request.method === 'POST') {
-        return addTemperature(request)
-    } else {
-        return getTemperatures(request)
-    }
-
+	if (request.method === 'POST') {
+		return addTemperature(request);
+	} else {
+		return getTemperatures(request);
+	}
 }
 
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request))
-})
+	event.respondWith(handleRequest(event.request));
+});
 ```
 
-***
+---
 
 ## Step 1 — Validate API
 
@@ -114,7 +116,7 @@ $ curl -v -H "Content-Type: application/json" -d '{"temperature":'''$TEMPERATURE
 
 A GET request to the `temps` endpoint returns the most recent readings, including the one submitted in the example above:
 
-```json
+```bash
 $ curl -s https://shield.upinatoms.com/temps | jq .
 [
   {
@@ -132,7 +134,7 @@ $ curl -s https://shield.upinatoms.com/temps | jq .
 ]
 ```
 
-***
+---
 
 ## Step 2 — Create Cloudflare-issued certificates
 
@@ -252,7 +254,7 @@ $ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-T
 
 ```
 
-***
+---
 
 ## Step 3 — Embed the client certificate in your mobile app
 
@@ -341,7 +343,7 @@ private OkHttpClient setUpClient() {
 
 The above function returns an `OkHttpClient` embedded with the client certificate. You can now use this client to make HTTP requests to your API endpoint protected with mTLS.
 
-***
+---
 
 ## Step 4 — Embed the client certificate on your IoT device
 
@@ -401,13 +403,13 @@ Request body:  {"temperature": "36.5", "time": "2020-09-28T15:56:45Z"}
 Response status code: 201
 ```
 
-***
+---
 
 ## Step 5 — Enable mTLS
 
 After creating Cloudflare-issued certificates, the next step is to [enable mTLS](/ssl/client-certificates/enable-mtls/) for the hosts you want to protect with API Shield.
 
-***
+---
 
 ## Step 6 — Configure API Shield to require client certificates
 

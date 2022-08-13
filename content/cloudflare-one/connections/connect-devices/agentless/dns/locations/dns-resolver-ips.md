@@ -58,9 +58,9 @@ Each location in Cloudflare Zero Trust has a unique DoH subdomain (previously kn
 
 In the example below, the DoH subdomain is: `65y9p2vm1u`.
 
-| DNS over HTTPS hostname | DoH subdomain |
-| --- | --- |
-| `https://65y9p2vm1u.cloudflare-gateway.com/dns-query` | `65y9p2vm1u` |
+| DNS over HTTPS hostname                               | DoH subdomain |
+| ----------------------------------------------------- | ------------- |
+| `https://65y9p2vm1u.cloudflare-gateway.com/dns-query` | `65y9p2vm1u`  |
 
 ## Send specific queries to Gateway
 

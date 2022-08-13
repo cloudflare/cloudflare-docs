@@ -123,7 +123,7 @@ Finally, add `@nuxtjs/sanity` as a **build module** in your Nuxt configuration:
 filename: nuxt.config.js
 ---
 {
-  buildModules: ['@nuxtjs/sanity'];
+	buildModules: ['@nuxtjs/sanity'];
 }
 ```
 
@@ -141,38 +141,38 @@ filename: pages/index.vue
 ---
 
 <template>
-  <div class="container">
-    <div>
-      <h1 class="title">My Blog</h1>
-    </div>
-    <div class="posts">
-      <div v-for="post in posts" :key="post._id">
-        <h2><a v-bind:href="post.slug.current" v-text="post.title" /></h2>
-      </div>
-    </div>
-  </div>
+	<div class="container">
+		<div>
+			<h1 class="title">My Blog</h1>
+		</div>
+		<div class="posts">
+			<div v-for="post in posts" :key="post._id">
+				<h2><a v-bind:href="post.slug.current" v-text="post.title" /></h2>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
-  import { groq } from '@nuxtjs/sanity';
+	import { groq } from '@nuxtjs/sanity';
 
-  export default {
-    async asyncData({ $sanity }) {
-      const query = groq`*[_type == "post"]`;
-      const posts = await $sanity.fetch(query);
-      return { posts };
-    },
-  };
+	export default {
+		async asyncData({ $sanity }) {
+			const query = groq`*[_type == "post"]`;
+			const posts = await $sanity.fetch(query);
+			return { posts };
+		},
+	};
 </script>
 
 <style>
-  .container {
-    margin: 2rem;
-    min-height: 100vh;
-  }
-  .posts {
-    margin: 2rem 0;
-  }
+	.container {
+		margin: 2rem;
+		min-height: 100vh;
+	}
+	.posts {
+		margin: 2rem 0;
+	}
 </style>
 ```
 
@@ -186,7 +186,7 @@ header: Inspecting the v-for directive
 ---
 
 <div v-for="post in posts" :key="post._id">
-  <h2><a v-bind:href="post.slug.current" v-text="post.title" /></h2>
+	<h2><a v-bind:href="post.slug.current" v-text="post.title" /></h2>
 </div>
 ```
 
@@ -216,11 +216,11 @@ filename: pages/_slug.vue
 ---
 
 <script>
-  export default {
-    async asyncData({ params, $sanity }) {
-      console.log(params); // { slug: "hello-world" }
-    },
-  };
+	export default {
+		async asyncData({ params, $sanity }) {
+			console.log(params); // { slug: "hello-world" }
+		},
+	};
 </script>
 ```
 
@@ -232,41 +232,41 @@ filename: pages/_slug.vue
 ---
 
 <template>
-  <div class="container">
-    <div v-if="post">
-      <h1 class="title" v-text="post.title" />
-      <div class="content"></div>
-    </div>
-    <h4><a href="/">← Go back</a></h4>
-  </div>
+	<div class="container">
+		<div v-if="post">
+			<h1 class="title" v-text="post.title" />
+			<div class="content"></div>
+		</div>
+		<h4><a href="/">← Go back</a></h4>
+	</div>
 </template>
 
 <script>
-  import { groq } from '@nuxtjs/sanity';
+	import { groq } from '@nuxtjs/sanity';
 
-  export default {
-    async asyncData({ params, $sanity }) {
-      const query = groq`*[_type == "post" && slug.current == "${params.slug}"][0]`;
-      const post = await $sanity.fetch(query);
-      return { post };
-    },
-  };
+	export default {
+		async asyncData({ params, $sanity }) {
+			const query = groq`*[_type == "post" && slug.current == "${params.slug}"][0]`;
+			const post = await $sanity.fetch(query);
+			return { post };
+		},
+	};
 </script>
 
 <style>
-  .container {
-    margin: 2rem;
-    min-height: 100vh;
-  }
+	.container {
+		margin: 2rem;
+		min-height: 100vh;
+	}
 
-  .content {
-    margin: 2rem 0;
-    max-width: 38rem;
-  }
+	.content {
+		margin: 2rem 0;
+		max-width: 38rem;
+	}
 
-  p {
-    margin: 1rem 0;
-  }
+	p {
+		margin: 1rem 0;
+	}
 </style>
 ```
 
@@ -303,7 +303,7 @@ In your Nuxt configuration, `nuxt.config.js`, import that file as part of the `p
 filename: nuxt.config.js
 ---
 {
-  plugins: ['@/plugins/sanity-blocks.js'];
+	plugins: ['@/plugins/sanity-blocks.js'];
 }
 ```
 
@@ -316,43 +316,43 @@ highlight: [6]
 ---
 
 <template>
-  <div class="container">
-    <div v-if="post">
-      <h1 class="title" v-text="post.title" />
-      <div class="content">
-        <block-content :blocks="child" v-for="child in post.body" :key="child._id" />
-      </div>
-    </div>
-    <h4><a href="/">← Go back</a></h4>
-  </div>
+	<div class="container">
+		<div v-if="post">
+			<h1 class="title" v-text="post.title" />
+			<div class="content">
+				<block-content :blocks="child" v-for="child in post.body" :key="child._id" />
+			</div>
+		</div>
+		<h4><a href="/">← Go back</a></h4>
+	</div>
 </template>
 
 <script>
-  import { groq } from '@nuxtjs/sanity';
+	import { groq } from '@nuxtjs/sanity';
 
-  export default {
-    async asyncData({ params, $sanity }) {
-      const query = groq`*[_type == "post" && slug.current == "${params.slug}"][0]`;
-      const post = await $sanity.fetch(query);
-      return { post };
-    },
-  };
+	export default {
+		async asyncData({ params, $sanity }) {
+			const query = groq`*[_type == "post" && slug.current == "${params.slug}"][0]`;
+			const post = await $sanity.fetch(query);
+			return { post };
+		},
+	};
 </script>
 
 <style>
-  .container {
-    margin: 2rem;
-    min-height: 100vh;
-  }
+	.container {
+		margin: 2rem;
+		min-height: 100vh;
+	}
 
-  .content {
-    margin: 2rem 0;
-    max-width: 38rem;
-  }
+	.content {
+		margin: 2rem 0;
+		max-width: 38rem;
+	}
 
-  p {
-    margin: 1rem 0;
-  }
+	p {
+		margin: 1rem 0;
+	}
 </style>
 ```
 
@@ -365,48 +365,48 @@ highlight: [11, 12, 13, 39]
 ---
 
 <template>
-  <div class="container">
-    <div>
-      <h1 class="title">My Blog</h1>
-    </div>
-    <div class="posts">
-      <div v-for="post in posts" :key="post._id">
-        <h2><a v-bind:href="post.slug.current" v-text="post.title" /></h2>
-        <div class="summary">
-          <block-content
-            :blocks="post.body[0]"
-            v-bind:key="post.body[0]._id"
-            v-if="post.body.length"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="container">
+		<div>
+			<h1 class="title">My Blog</h1>
+		</div>
+		<div class="posts">
+			<div v-for="post in posts" :key="post._id">
+				<h2><a v-bind:href="post.slug.current" v-text="post.title" /></h2>
+				<div class="summary">
+					<block-content
+						:blocks="post.body[0]"
+						v-bind:key="post.body[0]._id"
+						v-if="post.body.length"
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
-  import { groq } from '@nuxtjs/sanity';
+	import { groq } from '@nuxtjs/sanity';
 
-  export default {
-    async asyncData({ $sanity }) {
-      const query = groq`*[_type == "post"]`;
-      const posts = await $sanity.fetch(query);
-      return { posts };
-    },
-  };
+	export default {
+		async asyncData({ $sanity }) {
+			const query = groq`*[_type == "post"]`;
+			const posts = await $sanity.fetch(query);
+			return { posts };
+		},
+	};
 </script>
 
 <style>
-  .container {
-    margin: 2rem;
-    min-height: 100vh;
-  }
-  .posts {
-    margin: 2rem 0;
-  }
-  .summary {
-    margin-top: 0.5rem;
-  }
+	.container {
+		margin: 2rem;
+		min-height: 100vh;
+	}
+	.posts {
+		margin: 2rem 0;
+	}
+	.summary {
+		margin-top: 0.5rem;
+	}
 </style>
 ```
 

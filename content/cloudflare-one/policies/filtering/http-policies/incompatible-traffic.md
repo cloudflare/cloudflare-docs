@@ -16,7 +16,7 @@ Gateway does not support TLS decryption for applications which use:
 - Self-signed certificates
 - Mutual TLS (mTLS) authentication
 
-To allow these types of requests through Gateway, you must add a [*Do Not Inspect*](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) HTTP policy for these applications and domains.
+To allow these types of requests through Gateway, you must add a [_Do Not Inspect_](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) HTTP policy for these applications and domains.
 
 ## HTTP/3 traffic
 

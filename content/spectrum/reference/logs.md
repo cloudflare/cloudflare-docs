@@ -31,7 +31,7 @@ Spectrum [log events](/logs/reference/log-fields/) can be configured through the
 | 447  | Error while reading from or writing to an established origin connection (ECONNREFUSED).            |
 | 448  | Origin connection closed due to a broken pipe (EPIPE).                                             |
 | 490  | Client TLS error on established connection.                                                        |
-| 495  | Client connection received an error (ECONNREFUSED).                                                       |
+| 495  | Client connection received an error (ECONNREFUSED).                                                |
 | 496  | Client host is unreachable (EHOSTUNREACH).                                                         |
 | 497  | A timeout event (ETIMEDOUT) occurred on an established connection to client.                       |
 | 498  | Established client connection closed due to broken pipe (EPIPE).                                   |

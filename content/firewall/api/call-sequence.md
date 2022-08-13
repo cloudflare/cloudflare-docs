@@ -24,7 +24,7 @@ In this sequence, a single `POST` request to the `/firewall/rules` endpoint take
 
 Below is an example call and response using this method:
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -40,10 +40,10 @@ curl -X POST \
     },
     "action": "block"
   }
-]' 
+]'
 ```
 
-```json
+```bash
 ---
 header: Response
 ---
@@ -69,8 +69,8 @@ header: Response
 
 However, this approach has some disadvantages:
 
-* The firewall rules client has to implement error and exception handling for every potential failure occurring in both the firewall rules and the filters APIs.
-* To protect against accidentally modifying or deleting filters used by other Cloudflare features, the `PUT` or `DELETE` operations are not allowed.
+- The firewall rules client has to implement error and exception handling for every potential failure occurring in both the firewall rules and the filters APIs.
+- To protect against accidentally modifying or deleting filters used by other Cloudflare features, the `PUT` or `DELETE` operations are not allowed.
 
 By default, if either the filter or rule is invalid, neither will be created.
 

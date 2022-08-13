@@ -4,7 +4,7 @@ title: HTTP
 weight: 1
 ---
 
-#  Enable Gateway proxy with PAC files
+# Enable Gateway proxy with PAC files
 
 {{<Aside type="note">}}
 
@@ -33,9 +33,9 @@ All devices you add to the proxy endpoint will be able to access your Cloudflare
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **Gateway** > **Proxy Endpoints**.
 2. Click **Create endpoint**.
 3. Give your endpoint any name.
-4. Enter the public source IP address of your device(s) in CIDR notation.  For example,
-    - **IPv4**: `90.90.241.229/32` (up to `/26`)
-    - **IPv6**: `2601:645:4500:9c0:a945:f47c:23e9:a35b/128`
+4. Enter the public source IP address of your device(s) in CIDR notation. For example,
+   - **IPv4**: `90.90.241.229/32` (up to `/26`)
+   - **IPv6**: `2601:645:4500:9c0:a945:f47c:23e9:a35b/128`
 5. Click **Save endpoint** and confirm the endpoint creation.
 
 Your Cloudflare proxy server domain is of the form:
@@ -53,45 +53,46 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 1. Run the following command:
 
-    ```bash
-    curl --request POST \
-    --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway/proxy_endpoints \
-    --header 'X-Auth-Email: <EMAIL>' \
-    --header 'X-Auth-Key: <API_KEY>' \
-    --data '{"name": "any_name", "ips": ["<PUBLIC_IP>", "<PUBLIC_IP2>", "<PUBLIC_IP3>"]}'
-    ```
+   ```bash
+   curl --request POST \
+   --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway/proxy_endpoints \
+   --header 'X-Auth-Email: <EMAIL>' \
+   --header 'X-Auth-Key: <API_KEY>' \
+   --data '{"name": "any_name", "ips": ["<PUBLIC_IP>", "<PUBLIC_IP2>", "<PUBLIC_IP3>"]}'
+   ```
 
-    Replace `<PUBLIC_IP>` with the source IP address of your device in CIDR notation. For example,
-    - **IPv4**: `90.90.241.229/32` (up to '/25')
-    - **IPv6**: `2601:645:4500:9c0:a945:f47c:23e9:a35b/128` (up to '/109')
+   Replace `<PUBLIC_IP>` with the source IP address of your device in CIDR notation. For example,
 
-    After running the command, you should see an output similar to
+   - **IPv4**: `90.90.241.229/32` (up to '/25')
+   - **IPv6**: `2601:645:4500:9c0:a945:f47c:23e9:a35b/128` (up to '/109')
 
-    ```bash
-    {
-    "result": {
-        "id": "d969d7bf-ec28-4291-9af0-86825f472c21",
-        "name": "test",
-        "created_at": "2022-03-02T10:57:18.094789Z",
-        "updated_at": "2022-03-02T10:57:18.094789Z",
-        "ips": [
-        "90.90.241.229/32"
-        ],
-        "subdomain": "3ele0ss56t"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
-    }
-    ```
+   After running the command, you should see an output similar to
+
+   ```bash
+   {
+   "result": {
+       "id": "d969d7bf-ec28-4291-9af0-86825f472c21",
+       "name": "test",
+       "created_at": "2022-03-02T10:57:18.094789Z",
+       "updated_at": "2022-03-02T10:57:18.094789Z",
+       "ips": [
+       "90.90.241.229/32"
+       ],
+       "subdomain": "3ele0ss56t"
+   },
+   "success": true,
+   "errors": [],
+   "messages": []
+   }
+   ```
 
 2. Note the `subdomain` value returned by the API. Your Cloudflare proxy server domain is of the form:
 
-    ```txt
-    <SUBDOMAIN>.proxy.cloudflare-gateway.com
-    ```
+   ```txt
+   <SUBDOMAIN>.proxy.cloudflare-gateway.com
+   ```
 
-    In the example above, the subdomain is `3ele0ss56t` and the proxy server domain is `3ele0ss56t.proxy.cloudflare-gateway.com`.
+   In the example above, the subdomain is `3ele0ss56t` and the proxy server domain is `3ele0ss56t.proxy.cloudflare-gateway.com`.
 
 </div>
 </details>
@@ -100,16 +101,16 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), create an [HTTP policy](/cloudflare-one/policies/filtering/http-policies/) for testing purposes. For example:
 
-    | Selector      | Operator  | Value              | Action |
-    | --------------| ----------| -------------------| ------ |
-    | Domain        | in        | `example.com`      | Block  |
+   | Selector | Operator | Value         | Action |
+   | -------- | -------- | ------------- | ------ |
+   | Domain   | in       | `example.com` | Block  |
 
 2. Verify that nothing is returned by a `curl` command:
 
-    ```bash
-    $ curl -4 -p -x https://3ele0ss56t.proxy.cloudflare-gateway.com https://example.com
-    $
-    ```
+   ```bash
+   $ curl -4 -p -x https://3ele0ss56t.proxy.cloudflare-gateway.com https://example.com
+   $
+   ```
 
 {{<Aside type="note">}}
 
@@ -124,22 +125,23 @@ A PAC file is a text file that specifies which traffic should redirect to the pr
 Below is the default PAC file. You can [customize the file](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file) and host it somewhere your browser can access, such as on an internal web server or on [Cloudflare Workers](/workers/).
 
 ```js
-function FindProxyForURL(url,host)
-{
-    // No proxy for private (RFC 1918) IP addresses (intranet sites)
-    if (isInNet(dnsResolve(host), "10.0.0.0", "255.0.0.0") ||
-        isInNet(dnsResolve(host), "172.16.0.0", "255.240.0.0") ||
-        isInNet(dnsResolve(host), "192.168.0.0", "255.255.0.0")) {
-         return "DIRECT";
-    }
- 
-    // No proxy for localhost
-    if (isInNet(dnsResolve(host), "127.0.0.0", "255.0.0.0")) {
-        return "DIRECT";
-    }
- 
-    // Proxy all
-    return "HTTPS 3ele0ss56t.proxy.cloudflare-gateway.com:443";
+function FindProxyForURL(url, host) {
+	// No proxy for private (RFC 1918) IP addresses (intranet sites)
+	if (
+		isInNet(dnsResolve(host), '10.0.0.0', '255.0.0.0') ||
+		isInNet(dnsResolve(host), '172.16.0.0', '255.240.0.0') ||
+		isInNet(dnsResolve(host), '192.168.0.0', '255.255.0.0')
+	) {
+		return 'DIRECT';
+	}
+
+	// No proxy for localhost
+	if (isInNet(dnsResolve(host), '127.0.0.0', '255.0.0.0')) {
+		return 'DIRECT';
+	}
+
+	// Proxy all
+	return 'HTTPS 3ele0ss56t.proxy.cloudflare-gateway.com:443';
 }
 ```
 
@@ -148,7 +150,7 @@ function FindProxyForURL(url,host)
 - Make sure the directive used for the endpoint is `HTTPS` and not `PROXY`.
 - You must use a PAC file instead of configuring the endpoint directly in the proxy configuration of the browser. This is because modern browsers still do not support HTTPS proxies without PAC files.
 - Use a proper text editor such as VSCode to avoid added characters.
-{{</Aside>}}
+  {{</Aside>}}
 
 ## 4. Configure your browser
 
@@ -158,13 +160,13 @@ The following example demonstrates the setup procedure for Firefox.
 
 1. In Firefox, go to **Settings** and scroll down to **Network Settings**.
 
-    ![Navigating to Network Settings menu in Firefox](/cloudflare-one/static/documentation/connections/firefox-network-settings.png)
+   ![Navigating to Network Settings menu in Firefox](/cloudflare-one/static/documentation/connections/firefox-network-settings.png)
 
 2. Select **Settings**.
 3. Select **Automatic proxy configuration URL**.
 4. Enter the URL where your PAC file is hosted, for example `https://proxy-pac.cflr.workers.dev/3ele0ss56t.pac`.
 
-    ![Enter PAC file URL into Firefox](/cloudflare-one/static/documentation/connections/firefox-pac-file.png)
+   ![Enter PAC file URL into Firefox](/cloudflare-one/static/documentation/connections/firefox-pac-file.png)
 
 5. Select **OK**. HTTP traffic from Firefox is now being filtered by Gateway.
 
@@ -177,4 +179,3 @@ You can test any [supported HTTP policy](#limitations), such as the example poli
 At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/) or mTLS authentication.
 
 [Browser Isolation](/cloudflare-one/policies/browser-isolation/) is disabled by default, because the lack of user identity information poses a potential security risk. If you want to apply Isolate policies, request access from your account team.
-

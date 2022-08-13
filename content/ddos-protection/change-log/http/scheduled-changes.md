@@ -8,6 +8,7 @@ layout: list
 # Scheduled changes
 
 {{<table-wrap>}}
+
 <table style="width: 100%">
   <thead>
     <tr>

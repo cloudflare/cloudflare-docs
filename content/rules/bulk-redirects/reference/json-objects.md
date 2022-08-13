@@ -14,14 +14,14 @@ A fully populated Bulk Redirect Rule object has the following JSON structure:
 
 ```json
 {
-  "action": "redirect",
-  "expression": "http.request.full_uri in $<LIST_NAME>",
-  "action_parameters": {
-    "from_list": {
-      "name": "<LIST_NAME>",
-      "key": "http.request.full_uri"
-    }
-  }
+	"action": "redirect",
+	"expression": "http.request.full_uri in $<LIST_NAME>",
+	"action_parameters": {
+		"from_list": {
+			"name": "<LIST_NAME>",
+			"key": "http.request.full_uri"
+		}
+	}
 }
 ```
 
@@ -44,18 +44,18 @@ A fully populated URL Redirect List item object has the following JSON structure
 
 ```json
 {
-  "id": "7c5dae5552338874e5053f2534d2767a",
-  "redirect": {
-    "source_url": "https://example.com/blog",
-    "target_url": "https://example.com/blog/latest",
-    "status_code": 301,
-    "include_subdomains": false,
-    "subpath_matching": false,
-    "preserve_query_string": false,
-    "preserve_path_suffix": true
-  },
-  "created_on": "2021-10-11T12:39:02Z",
-  "modified_on": "2021-10-11T12:39:02Z"
+	"id": "7c5dae5552338874e5053f2534d2767a",
+	"redirect": {
+		"source_url": "https://example.com/blog",
+		"target_url": "https://example.com/blog/latest",
+		"status_code": 301,
+		"include_subdomains": false,
+		"subpath_matching": false,
+		"preserve_query_string": false,
+		"preserve_path_suffix": true
+	},
+	"created_on": "2021-10-11T12:39:02Z",
+	"modified_on": "2021-10-11T12:39:02Z"
 }
 ```
 

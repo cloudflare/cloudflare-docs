@@ -50,11 +50,11 @@ Wrangler 2 introduces a number of new features for developing and deploying a Wo
 
 ## Configuration
 
-| Property              | 1   | 2   | Notes                                                                          |
-| --------------------- | --- | --- | ------------------------------------------------------------------------------ |
-| `type = "webpack"`    | ✅  | ❌  | Removed, refer to [this guide](/workers/wrangler/migration/eject-webpack/#migrate-webpack-projects-from-wrangler-version-1) to migrate.                                        |
-| `type = "rust"`       | ✅  | ❌  | Removed, use [`workers-rs`](https://github.com/cloudflare/workers-rs) instead. |
-| `type = "javascript"` | ✅  | 🚧  | No longer required, can be omitted.                                            |
+| Property              | 1   | 2   | Notes                                                                                                                                   |
+| --------------------- | --- | --- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `type = "webpack"`    | ✅  | ❌  | Removed, refer to [this guide](/workers/wrangler/migration/eject-webpack/#migrate-webpack-projects-from-wrangler-version-1) to migrate. |
+| `type = "rust"`       | ✅  | ❌  | Removed, use [`workers-rs`](https://github.com/cloudflare/workers-rs) instead.                                                          |
+| `type = "javascript"` | ✅  | 🚧  | No longer required, can be omitted.                                                                                                     |
 
 ## Features
 

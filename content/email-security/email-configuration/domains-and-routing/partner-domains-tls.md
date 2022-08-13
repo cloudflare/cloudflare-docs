@@ -16,8 +16,8 @@ To require that email from a specific domain passes SSL/TLS inspection:
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Domains & Routing** > **Partner Domains TLS**.
 4. Click **New Partner Domain**.
-4. Enter a **Domain** and any **Notes**.
-5. Click **Save**.
+5. Enter a **Domain** and any **Notes**.
+6. Click **Save**.
 
 ## Exempt TLS inspection
 

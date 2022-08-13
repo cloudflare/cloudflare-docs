@@ -6,9 +6,9 @@ pcx_content_type: how-to
 
 # Set up a bucket for full packet captures
 
-Before you can begin a full packet capture, you must first configure a bucket that Cloudflare can use to upload your files. 
+Before you can begin a full packet capture, you must first configure a bucket that Cloudflare can use to upload your files.
 
-You can configure an Amazon S3 or Google Cloud Platform bucket to use as a target. 
+You can configure an Amazon S3 or Google Cloud Platform bucket to use as a target.
 
 ## Set up a bucket
 
@@ -20,7 +20,7 @@ Learn how to set up a bucket for use with full packet captures.
 </summary>
  <div class="special-class" markdown="1">
 
-Before you can begin using a bucket, you must first enable destinations. 
+Before you can begin using a bucket, you must first enable destinations.
 
 Refer to the [Amazon S3](/logs/get-started/enable-destinations/aws-s3/#manage-via-api) or [Google Cloud Storage](/logs/get-started/enable-destinations/google-cloud-storage/#manage-via-api) documentation and follow the steps for those specific services.
 
@@ -195,6 +195,7 @@ header: Bucket list response example
   "messages": []
 }
 ```
+
 </div>
 </details>
 
@@ -209,6 +210,7 @@ header: Bucket list response example
 3. From the **Packet captures** page, select the **Buckets** tab.
 
 The list of buckets associated with your account displays.
+
 </div>
 </details>
 

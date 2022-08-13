@@ -7,16 +7,17 @@ weight: 3
 # Understand Cloudflare invoices
 
 You will receive an invoice in the **Billing** section of your Cloudflare account when you:
-* Change your Cloudflare plan type
-* Upgrade or downgrade to or from a paid plan
-* Add a new domain to a Cloudflare account
-* Enable or renew a subscription or add-on service
+
+- Change your Cloudflare plan type
+- Upgrade or downgrade to or from a paid plan
+- Add a new domain to a Cloudflare account
+- Enable or renew a subscription or add-on service
 
 For any historical invoices not included in the **Billing** section, [contact Cloudflare support](https://support.cloudflare.com/hc/articles/200172476).
 
 {{<Aside type="note">}}
 
-Enterprise customers receive invoices directly from the Cloudflare accounting team. 
+Enterprise customers receive invoices directly from the Cloudflare accounting team.
 
 {{</Aside>}}
 
@@ -34,10 +35,11 @@ To enable Cloudflare invoice emails, which are sent when you add or remove subsc
 
 4. In the **Billing email preferences** card, toggle the notification switch to **On**.
 
-Once enabled, you will receive invoices via email: 
-* within one business day of initial set-up
-* every month at the end of your billing period
-* within one business day for all new purchases
+Once enabled, you will receive invoices via email:
+
+- within one business day of initial set-up
+- every month at the end of your billing period
+- within one business day for all new purchases
 
 ## Download invoice
 

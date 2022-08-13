@@ -68,4 +68,3 @@ To prevent spam, email rules do not become active until after the destination ad
 Deleting a destination address automatically disables all email rules that use that email address as destination.
 
 {{</Aside>}}
-

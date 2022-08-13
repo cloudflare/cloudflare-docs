@@ -119,20 +119,20 @@ Use the instructions under Installation to install the toolkit, and ensure that 
 
       ```json
       {
-        "CN": "Access Testing CA",
-        "key": {
-          "algo": "rsa",
-          "size": 4096
-        },
-        "names": [
-          {
-            "C": "US",
-            "L": "Austin",
-            "O": "Access Testing",
-            "OU": "TX",
-            "ST": "Texas"
-          }
-        ]
+      	"CN": "Access Testing CA",
+      	"key": {
+      		"algo": "rsa",
+      		"size": 4096
+      	},
+      	"names": [
+      		{
+      			"C": "US",
+      			"L": "Austin",
+      			"O": "Access Testing",
+      			"OU": "TX",
+      			"ST": "Texas"
+      		}
+      	]
       }
       ```
 
@@ -140,21 +140,21 @@ Use the instructions under Installation to install the toolkit, and ensure that 
 
       ```json
       {
-        "signing": {
-          "default": {
-            "expiry": "8760h"
-          },
-          "profiles": {
-            "server": {
-              "usages": ["signing", "key encipherment", "server auth"],
-              "expiry": "8760h"
-            },
-            "client": {
-              "usages": ["signing", "key encipherment", "client auth"],
-              "expiry": "8760h"
-            }
-          }
-        }
+      	"signing": {
+      		"default": {
+      			"expiry": "8760h"
+      		},
+      		"profiles": {
+      			"server": {
+      				"usages": ["signing", "key encipherment", "server auth"],
+      				"expiry": "8760h"
+      			},
+      			"client": {
+      				"usages": ["signing", "key encipherment", "client auth"],
+      				"expiry": "8760h"
+      			}
+      		}
+      	}
       }
       ```
 
@@ -184,21 +184,21 @@ Returning to the terminal, generate a client certificate that will authenticate 
 
     ```json
     {
-      "CN": "James Royal",
-      "hosts": [""],
-      "key": {
-        "algo": "rsa",
-        "size": 4096
-      },
-      "names": [
-        {
-          "C": "US",
-          "L": "Austin",
-          "O": "Access",
-          "OU": "Access Admins",
-          "ST": "Texas"
-        }
-      ]
+    	"CN": "James Royal",
+    	"hosts": [""],
+    	"key": {
+    		"algo": "rsa",
+    		"size": 4096
+    	},
+    	"names": [
+    		{
+    			"C": "US",
+    			"L": "Austin",
+    			"O": "Access",
+    			"OU": "Access Admins",
+    			"ST": "Texas"
+    		}
+    	]
     }
     ```
 
@@ -220,14 +220,15 @@ The instructions here cover usage with a computer running macOS.
 
 1.  In the same working directory, run the following command to add the client certificate into the macOS Keychain.
 
-    {{<Aside type="warning" header="Important">}}
-The command adds the client certificate to the trusted store on your device. **Only** proceed if you are comfortable doing so and intend to keep these testing certificates safeguarded.
+        {{<Aside type="warning" header="Important">}}
+
+    The command adds the client certificate to the trusted store on your device. **Only** proceed if you are comfortable doing so and intend to keep these testing certificates safeguarded.
     {{</Aside>}}
 
-    ```sh
-    $ open client.pem
-    $ security import client-key.pem -k ~/Library/Keychains/login.keychain-db
-    ```
+        ```sh
+        $ open client.pem
+        $ security import client-key.pem -k ~/Library/Keychains/login.keychain-db
+        ```
 
 2.  Click on the certificate in the Keychain list to set the certificate to trusted. Confirm that the certificate is listed in _My Certificates_.
 

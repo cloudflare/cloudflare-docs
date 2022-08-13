@@ -45,6 +45,7 @@ Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprec
 ## ​Does 1.1.1.1 send EDNS client subnet header?
 
 1.1.1.1 is a privacy centric resolver so it does not send any client IP information and does not send the EDNS Client Subnet Header to authoritative servers. The exception is the single Akamai debug domain `whoami.ds.akahelp.net` to aid in cross-provider debugging. However, Cloudflare does not send ECS to any of Akamai's production domains, such as `akamaihd.net` or similar.
+
 ## Does 1.1.1.1 support IPv6?
 
 1.1.1.1 has full IPv6 support.

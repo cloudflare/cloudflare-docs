@@ -18,12 +18,12 @@ layout: example
  * @param {string} html
  */
 function rawHtmlResponse(html) {
-  const init = {
-    headers: {
-      'content-type': 'text/html;charset=UTF-8',
-    },
-  };
-  return new Response(html, init);
+	const init = {
+		headers: {
+			'content-type': 'text/html;charset=UTF-8',
+		},
+	};
+	return new Response(html, init);
 }
 
 /**
@@ -32,27 +32,27 @@ function rawHtmlResponse(html) {
  * @param {Request} request the incoming request to read from
  */
 async function readRequestBody(request) {
-  const { headers } = request;
-  const contentType = headers.get('content-type') || '';
+	const { headers } = request;
+	const contentType = headers.get('content-type') || '';
 
-  if (contentType.includes('application/json')) {
-    return JSON.stringify(await request.json());
-  } else if (contentType.includes('application/text')) {
-    return request.text();
-  } else if (contentType.includes('text/html')) {
-    return request.text();
-  } else if (contentType.includes('form')) {
-    const formData = await request.formData();
-    const body = {};
-    for (const entry of formData.entries()) {
-      body[entry[0]] = entry[1];
-    }
-    return JSON.stringify(body);
-  } else {
-    // Perhaps some other type of data was submitted in the form
-    // like an image, or some other binary data.
-    return 'a file';
-  }
+	if (contentType.includes('application/json')) {
+		return JSON.stringify(await request.json());
+	} else if (contentType.includes('application/text')) {
+		return request.text();
+	} else if (contentType.includes('text/html')) {
+		return request.text();
+	} else if (contentType.includes('form')) {
+		const formData = await request.formData();
+		const body = {};
+		for (const entry of formData.entries()) {
+			body[entry[0]] = entry[1];
+		}
+		return JSON.stringify(body);
+	} else {
+		// Perhaps some other type of data was submitted in the form
+		// like an image, or some other binary data.
+		return 'a file';
+	}
 }
 
 const someForm = `
@@ -79,22 +79,22 @@ const someForm = `
   `;
 
 async function handleRequest(request) {
-  const reqBody = await readRequestBody(request);
-  const retBody = `The request body sent in was ${reqBody}`;
-  return new Response(retBody);
+	const reqBody = await readRequestBody(request);
+	const retBody = `The request body sent in was ${reqBody}`;
+	return new Response(retBody);
 }
 
 addEventListener('fetch', event => {
-  const { request } = event;
-  const { url } = request;
+	const { request } = event;
+	const { url } = request;
 
-  if (url.includes('form')) {
-    return event.respondWith(rawHtmlResponse(someForm));
-  }
-  if (request.method === 'POST') {
-    return event.respondWith(handleRequest(request));
-  } else if (request.method === 'GET') {
-    return event.respondWith(new Response(`The request was a GET`));
-  }
+	if (url.includes('form')) {
+		return event.respondWith(rawHtmlResponse(someForm));
+	}
+	if (request.method === 'POST') {
+		return event.respondWith(handleRequest(request));
+	} else if (request.method === 'GET') {
+		return event.respondWith(new Response(`The request was a GET`));
+	}
 });
 ```

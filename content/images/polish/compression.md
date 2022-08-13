@@ -26,7 +26,6 @@ The Lossless option attempts to strip most metadata, like EXIF data, but does no
 
 This option attempts to remove EXIF data from GIF, PNG, and JPEG files. However, it only applies lossless compression to GIF and PNG files, as JPEG files are inherently lossy.
 
-
 ### Lossy
 
 The Lossy option attempts to strip most metadata and compresses images by approximately 15 percent. When uncompressed, some of the redundant information from the original image is lost. On average, using Lossy mode reduces file size by 48 percent.

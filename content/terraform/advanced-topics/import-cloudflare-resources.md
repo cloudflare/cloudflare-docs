@@ -206,9 +206,9 @@ When you run `cf-terraforming import ...`, you will obtain a list of `terraform 
 
 1. Run the following command:
 
-    ```sh
-    $ cf-terraforming import --resource-type "cloudflare_record" --email $CLOUDFLARE_EMAIL --key $CLOUDFLARE_API_KEY --zone $CLOUDFLARE_ZONE_ID
-    ```
+   ```sh
+   $ cf-terraforming import --resource-type "cloudflare_record" --email $CLOUDFLARE_EMAIL --key $CLOUDFLARE_API_KEY --zone $CLOUDFLARE_ZONE_ID
+   ```
 
 2. Copy each `terraform import ...` command included in the output and run it. Terraform will import each resource individually into Terraform state.
 

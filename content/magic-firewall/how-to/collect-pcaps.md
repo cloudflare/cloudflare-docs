@@ -88,6 +88,7 @@ header: Full PCAP example response
       "messages": []
     }
 ```
+
 **Simple PCAPs**
 
 Leave `filter_v1` to collect all packets without any filtering.
@@ -160,6 +161,7 @@ header: Simple PCAP example response
 5. Fill out the required fields to begin the capture and then select **Start**.
 
 The main **Packet captures** page displays a list of captures.
+
 </div>
 </details>
 
@@ -208,6 +210,7 @@ header: Simple PCAP example result
       "messages": []
     }
 ```
+
 While the collection is in process, the status returns `pending` or `running`. After the PCAP is ready, the status changes to `success`.
 
 </div>
@@ -274,7 +277,7 @@ Once the simple PCAP collection is complete, you can download the PCAP by specif
 3. From the **Packet captures** page, select the **Captures** tab.
 4. Locate your packet capture you want to download and under **Captures**, select the link to open download it.
 
-Packet captures are available to download when the **Status** displays **Success**. 
+Packet captures are available to download when the **Status** displays **Success**.
 
 </div>
 </details>

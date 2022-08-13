@@ -86,11 +86,11 @@ If your visitors encounter issues using a major browser besides Internet Explore
 
 ## Resolve a CAPTCHA
 
-If a visitor encounters a CAPTCHA, Cloudflare employees cannot remove that Captcha. Only the website owner can configure their Cloudflare settings to stop the CAPTCHA. 
+If a visitor encounters a CAPTCHA, Cloudflare employees cannot remove that Captcha. Only the website owner can configure their Cloudflare settings to stop the CAPTCHA.
 
 When observing a Cloudflare Captcha page, a visitor could:
 
-- Successfully pass the Captcha to visit the website. Cookies and JavaScript support are required in browser settings to pass the captcha.  
-- Request the website owner to allow their IP address. 
+- Successfully pass the Captcha to visit the website. Cookies and JavaScript support are required in browser settings to pass the captcha.
+- Request the website owner to allow their IP address.
 - Scan their computer for malicious programs (it may be infected).
 - Check their antivirus or firewall service to make sure it is not blocking access to the CAPTCHA image.

@@ -29,7 +29,7 @@ Add any existing rules in the ruleset to the request by including their rule ID 
 
 This example defines a rate limiting rule based on three characteristics applied to URL paths starting with `/api/` and with action `block`.
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -62,7 +62,7 @@ curl -X PUT \
 
 This example request defines a [custom response](/waf/rate-limiting-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for requests blocked due to rate limiting.
 
-```json
+```bash
 ---
 header: Request
 highlight: [12,13,14,15,16]
@@ -103,7 +103,7 @@ curl -X PUT \
 
 This example request creates a rate limiting rule that does not consider requests for cached assets when calculating the rate.
 
-```json
+```bash
 ---
 header: Request
 highlight: [20]
@@ -142,7 +142,7 @@ curl -X PUT \
 
 This example configures a complexity-based rate limiting rule that takes the `my-score` HTTP response header into account to calculate a total complexity score for the client. The counter with the total score is updated when there is a match for the rate limiting rule's counting expression (in this case, the same as the rule expression). When this total score becomes larger than `400` during a 60-second period, any later client requests will be blocked for a period of 600 seconds (10 minutes).
 
-```json
+```bash
 ---
 header: Request
 highlight: [17,18]

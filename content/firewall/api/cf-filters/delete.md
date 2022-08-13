@@ -25,17 +25,17 @@ curl -X DELETE \
 header: Response
 ---
 {
-  "result": [
-    {
-      "id": "<FILTER_ID_1>"
-    },
-    {
-      "id": "<FILTER_ID_2>"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"id": "<FILTER_ID_1>"
+		},
+		{
+			"id": "<FILTER_ID_2>"
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -58,13 +58,13 @@ curl -X DELETE \
 header: Response
 ---
 {
-  "result": [
-    {
-      "id": "<FILTER_ID>"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"id": "<FILTER_ID>"
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```

@@ -11,5 +11,5 @@ To update the language preference for your profile:
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Go to **My Profile**
-3. For **Language Preference**, select a value. 
+3. For **Language Preference**, select a value.
 4. Your dashboard display will update to the new language automatically.

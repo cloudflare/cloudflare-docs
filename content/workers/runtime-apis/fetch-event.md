@@ -19,7 +19,7 @@ Incoming HTTP requests can be handled by assigning a `"fetch"` event handler:
 
 ```js
 addEventListener('fetch', event => {
-  event.respondWith(new Response('Hello'));
+	event.respondWith(new Response('Hello'));
 });
 ```
 
@@ -61,9 +61,9 @@ While an incoming HTTP request is still given the `"fetch"` name, a Module Worke
 
 ```js
 export default {
-  fetch(request, env, context) {
-    return new Response('Hello');
-  },
+	fetch(request, env, context) {
+		return new Response('Hello');
+	},
 };
 ```
 
@@ -116,13 +116,13 @@ If no `fetch` event handler calls `respondWith`, then the runtime forwards the r
 ```js
 // Format: Service Worker
 addEventListener('fetch', event => {
-  let { pathname } = new URL(event.request.url);
+	let { pathname } = new URL(event.request.url);
 
-  // Allow "/ignore/*" URLs to hit origin
-  if (pathname.startsWith('/ignore/')) return;
+	// Allow "/ignore/*" URLs to hit origin
+	if (pathname.startsWith('/ignore/')) return;
 
-  // Otherwise, respond with something
-  event.respondWith(handler(event));
+	// Otherwise, respond with something
+	event.respondWith(handler(event));
 });
 ```
 
@@ -140,23 +140,23 @@ filename: service-worker.js
 ---
 // Format: Service Worker
 addEventListener('fetch', event => {
-  event.respondWith(handler(event));
+	event.respondWith(handler(event));
 });
 
 async function handler(event) {
-  // Forward / Proxy original request
-  let res = await fetch(event.request);
+	// Forward / Proxy original request
+	let res = await fetch(event.request);
 
-  // Add custom header(s)
-  res = new Response(res.body, res);
-  res.headers.set('x-foo', 'bar');
+	// Add custom header(s)
+	res = new Response(res.body, res);
+	res.headers.set('x-foo', 'bar');
 
-  // Cache the response
-  // NOTE: Does NOT block / wait
-  event.waitUntil(caches.default.put(event.request, res.clone()));
+	// Cache the response
+	// NOTE: Does NOT block / wait
+	event.waitUntil(caches.default.put(event.request, res.clone()));
 
-  // Done
-  return res;
+	// Done
+	return res;
 }
 ```
 
@@ -166,21 +166,21 @@ filename: module-worker.mjs
 ---
 // Format: Module Worker
 export default {
-  async fetch(request, env, context) {
-    // Forward / Proxy original request
-    let res = await fetch(request);
+	async fetch(request, env, context) {
+		// Forward / Proxy original request
+		let res = await fetch(request);
 
-    // Add custom header(s)
-    res = new Response(res.body, res);
-    res.headers.set('x-foo', 'bar');
+		// Add custom header(s)
+		res = new Response(res.body, res);
+		res.headers.set('x-foo', 'bar');
 
-    // Cache the response
-    // NOTE: Does NOT block / wait
-    context.waitUntil(caches.default.put(request, res.clone()));
+		// Cache the response
+		// NOTE: Does NOT block / wait
+		context.waitUntil(caches.default.put(request, res.clone()));
 
-    // Done
-    return res;
-  },
+		// Done
+		return res;
+	},
 };
 ```
 
@@ -200,9 +200,9 @@ filename: service-worker.js
 ---
 // Format: Service Worker
 addEventListener('fetch', event => {
-  // Proxy to origin on unhandled/uncaught exceptions
-  event.passThroughOnException();
-  throw new Error('Oops');
+	// Proxy to origin on unhandled/uncaught exceptions
+	event.passThroughOnException();
+	throw new Error('Oops');
 });
 ```
 
@@ -212,10 +212,10 @@ filename: module-worker.mjs
 ---
 // Format: Module Worker
 export default {
-  async fetch(request, env, context) {
-    // Proxy to origin on unhandled/uncaught exceptions
-    context.passThroughOnException();
-    throw new Error('Oops');
-  },
+	async fetch(request, env, context) {
+		// Proxy to origin on unhandled/uncaught exceptions
+		context.passThroughOnException();
+		throw new Error('Oops');
+	},
 };
 ```

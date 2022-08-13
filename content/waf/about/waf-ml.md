@@ -25,37 +25,51 @@ To maximize protection, Cloudflare recommends that you use both Managed Rulesets
 Currently, WAF ML provides the following scores:
 
 <table>
-  <thead>
-    <tr>
-      <th style="width: 17%">Score</th>
-      <th style="width: 33%">Field</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-  <tr>
-    <td><strong>WAF Attack Score</strong></td>
-    <td><code>cf.waf.ml.score</code></td>
-    <td>A global score from 1 to 99 that combines the score of each attack vector into a single score.<br/>
-      This is the standard WAF ML score to detect variants of attack patterns.</td>
-  </tr>
-  <tr>
-    <td><strong>WAF SQLi Attack Score</strong></td>
-    <td><code>cf.waf.ml.score.sqli</code></td>
-    <td>An attack score from 1 to 99 classifying the SQL injection (SQLi) attack vector.</td>
-  </tr>
-  <tr>
-    <td><strong>WAF XSS Attack Score</strong></td>
-    <td><code>cf.waf.ml.score.xss</code></td>
-    <td>An attack score from 1 to 99 classifying the cross-site scripting (XSS) attack vector.</td>
-  </tr>
+	<thead>
+		<tr>
+			<th style="width: 17%">Score</th>
+			<th style="width: 33%">Field</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+	<tr>
+		<td>
+			<strong>WAF Attack Score</strong>
+		</td>
+		<td>
+			<code>cf.waf.ml.score</code>
+		</td>
+		<td>
+			A global score from 1 to 99 that combines the score of each attack vector into a single score.
+			<br />
+			This is the standard WAF ML score to detect variants of attack patterns.
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<strong>WAF SQLi Attack Score</strong>
+		</td>
+		<td>
+			<code>cf.waf.ml.score.sqli</code>
+		</td>
+		<td>An attack score from 1 to 99 classifying the SQL injection (SQLi) attack vector.</td>
+	</tr>
+	<tr>
+		<td>
+			<strong>WAF XSS Attack Score</strong>
+		</td>
+		<td>
+			<code>cf.waf.ml.score.xss</code>
+		</td>
+		<td>An attack score from 1 to 99 classifying the cross-site scripting (XSS) attack vector.</td>
+	</tr>
 </table>
 
 You can use the fields for these scores in expressions of [custom rules](/waf/custom-rules/) and [firewall rules](/waf/firewall-rules/), where:
 
-* A score of `1` indicates that the request is almost certainly malicious.
-* A score of `99` indicates that the request is likely clean.
+- A score of `1` indicates that the request is almost certainly malicious.
+- A score of `99` indicates that the request is likely clean.
 
 The available scores are independent of each other. Namely, the WAF Attack Score is not a sum of the other scores.
 
@@ -85,5 +99,5 @@ After making sure that your rule is logging the correct requests, change the rul
 
 ## Additional remarks
 
-* The WAF ML Attack Score is different from Threat Score and Bot Score. WAF ML Attack Score identifies variation of attacks that WAF Managed Rulesets do not catch. Bot Score identifies bots, while Threat Score measures IP reputation across Cloudflare services.
-* The WAF ML Attack Score is not available yet in Cloudflare Logpush.
+- The WAF ML Attack Score is different from Threat Score and Bot Score. WAF ML Attack Score identifies variation of attacks that WAF Managed Rulesets do not catch. Bot Score identifies bots, while Threat Score measures IP reputation across Cloudflare services.
+- The WAF ML Attack Score is not available yet in Cloudflare Logpush.

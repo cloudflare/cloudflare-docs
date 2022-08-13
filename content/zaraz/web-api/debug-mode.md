@@ -15,11 +15,11 @@ You can set this cookie manually or via the `zaraz.debug` helper function availa
 4. Open a web browser and access its Developer Tools. For example, to access Developer Tools in Google Chrome, select **View** > **Developer** > **Developer Tools**.
 5. Select the **Console** pane and enter the following command to create a debug cookie:
 
-    ```js
-    zaraz.debug("YOUR_DEBUG_KEY")
-    ```
+   ```js
+   zaraz.debug('YOUR_DEBUG_KEY');
+   ```
 
-6.  Refresh your browser to see the debug logs. They will appear in the Console pane.
+6. Refresh your browser to see the debug logs. They will appear in the Console pane.
 
 Zaraz’s debug mode is now enabled. To exit debug mode, just remove the cookie with `zaraz.debug()`.
 

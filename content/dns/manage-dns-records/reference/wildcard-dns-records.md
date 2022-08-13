@@ -18,9 +18,9 @@ To create a wildcard DNS record, [create a DNS record](/dns/manage-dns-records/h
 
 {{<example>}}
 
-| Type | Name  | IPv4 address | Proxy status |
-| --- | --- | --- | --- |
-| `A`    | `*` | `192.0.2.1`  | Proxied      |
+| Type | Name | IPv4 address | Proxy status |
+| ---- | ---- | ------------ | ------------ |
+| `A`  | `*`  | `192.0.2.1`  | Proxied      |
 
 {{</example>}}
 
@@ -28,9 +28,9 @@ You can also create a wildcard DNS record specifically for a deeper subdomain. F
 
 {{<example>}}
 
-| Type | Name  | IPv4 address | Proxy status |
-| --- | --- | --- | --- |
-| `A`    | `*.www` | `192.0.2.2`  | Proxied      |
+| Type | Name    | IPv4 address | Proxy status |
+| ---- | ------- | ------------ | ------------ |
+| `A`  | `*.www` | `192.0.2.2`  | Proxied      |
 
 {{</example>}}
 

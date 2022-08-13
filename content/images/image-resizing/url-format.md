@@ -15,18 +15,22 @@ https://<ZONE>/cdn-cgi/image/<OPTIONS>/<SOURCE-IMAGE>
 Here is a breakdown of each part of the URL:
 
 {{<definitions>}}
+
 - `<ZONE>`
+
   - Your domain name on Cloudflare. Unlike other third-party image resizing services, Image Resizing does not use a separate domain name for an API. Every Cloudflare zone with Image Resizing enabled can handle resizing itself. In URLs used on your website this part can be omitted, so that URLs start with `/cdn-cgi/image/`.
 
 - `/cdn-cgi/image/`
+
   - A fixed prefix that identifies that this is a special path handled by Cloudflare's built-in Worker.
 
 - `<OPTIONS>`
+
   - A comma-separated list of options such as `width`, `height`, and `quality`.
 
 - `<SOURCE-IMAGE>`
   - An absolute path on the origin server, or an absolute URL (starting with `https://` or `http://`), pointing to an image to resize. The path is not URL-encoded, so the resizing URL can be safely constructed by concatenating `/cdn-cgi/image/options` and the original image URL. For example: `/cdn-cgi/image/width=100/https://s3.example.com/bucket/image.png`.
-{{</definitions>}}
+    {{</definitions>}}
 
 Here is an example of an URL with `<OPTIONS>` set to `width=80,quality=75` and a `<SOURCE-IMAGE>` of `uploads/avatar1.jpg`:
 

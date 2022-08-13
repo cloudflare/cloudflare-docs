@@ -26,16 +26,16 @@ If you are experiencing Page Rule errors when running Workers, contact your Clou
 
 The following Page Rules may not work as expected when an incoming request is matched to a Worker route:
 
-*   Always Online
-*   Always Use HTTPS
-*   Auto Minify
-*   Automatic HTTPS Rewrites
-*   Disable Apps
-*   Email Obfuscation
-*   Forwarding URL
-*   Host Header Override
-*   Mirage
-*   Rocket Loader
+- Always Online
+- Always Use HTTPS
+- Auto Minify
+- Automatic HTTPS Rewrites
+- Disable Apps
+- Email Obfuscation
+- Forwarding URL
+- Host Header Override
+- Mirage
+- Rocket Loader
 
 This is because the default setting of these Page Rules will be disabled when Cloudflare recognizes that the request is headed to a Worker.
 

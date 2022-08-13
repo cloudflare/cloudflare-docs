@@ -9,20 +9,20 @@ layout: single
 
 This article presents examples of queries you can use to populate your own dashboard.
 
-*   [Parameters and filters](#parameters-and-filters)
-*   [Timeseries graph](#timeseries-graph)
-*   [Activity log](#activity-log)
-*   [Top N cards - source](#top-n-cards---source)
-*   [Top N cards - destination](#top-n-cards---destination)
-*   [TCP Flags](#tcp-flags)
-*   [Executive summary](#executive-summary)
+- [Parameters and filters](#parameters-and-filters)
+- [Timeseries graph](#timeseries-graph)
+- [Activity log](#activity-log)
+- [Top N cards - source](#top-n-cards---source)
+- [Top N cards - destination](#top-n-cards---destination)
+- [TCP Flags](#tcp-flags)
+- [Executive summary](#executive-summary)
 
 Use this workflow to build and test queries:
 
-*   Install and configure the [GraphiQL](https://www.electronjs.org/apps/graphiql) app to authenticate to the Cloudflare Analytics GraphQL API. Cloudflare recommends token authentication. Refer to [Configure an Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/), for more information.
-*   Construct the queries in the GraphiQL. You can use the introspective documentation in the GraphQL client to explore the nodes available. For further information about queries, refer to [Querying basics](/analytics/graphql-api/getting-started/querying-basics/).
-*   Test your queries by running them from GraphiQL or by passing them as the payload in a cURL request to the GraphQL API endpoint.
-*   Use the queries in your application to provide data for your dashboard widgets.
+- Install and configure the [GraphiQL](https://www.electronjs.org/apps/graphiql) app to authenticate to the Cloudflare Analytics GraphQL API. Cloudflare recommends token authentication. Refer to [Configure an Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/), for more information.
+- Construct the queries in the GraphiQL. You can use the introspective documentation in the GraphQL client to explore the nodes available. For further information about queries, refer to [Querying basics](/analytics/graphql-api/getting-started/querying-basics/).
+- Test your queries by running them from GraphiQL or by passing them as the payload in a cURL request to the GraphQL API endpoint.
+- Use the queries in your application to provide data for your dashboard widgets.
 
 ## Parameters and filters
 
@@ -37,13 +37,10 @@ The following example queries for data with dates greater than or equal to `date
 header: Account and query time interval settings
 ---
 {
-  "accountTag": "{account-id}",
-  "filter": {
-    "AND":[
-      {"date_geq": "2020-01-19"},
-      {"date_leq": "2020-01-20"}
-    ]
-  }
+	"accountTag": "{account-id}",
+	"filter": {
+		"AND": [{ "date_geq": "2020-01-19" }, { "date_leq": "2020-01-20" }]
+	}
 }
 ```
 
@@ -54,53 +51,56 @@ When you want an aggregated view of data, use the `Groups` query nodes. For exam
 {{<table-wrap>}}
 
 <table>
-  <thead>
-  <tr>
-   <th><strong>Time Selection</strong>
-   </th>
-   <th><strong>Query node</strong>
-   </th>
-   <th><strong>datetimeDimension</strong>
-   </th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-   <td>Last week</td>
-   <td>ipFlows1dGroups</td>
-   <td>date</td>
-  </tr>
-  <tr>
-   <td>Last month</td>
-   <td>ipFlows1dGroups</td>
-   <td>date</td>
-  </tr>
-  <tr>
-   <td>24 hours</td>
-   <td>ipFlows1mGroups</td>
-   <td>datetimeFifteenMinutes</td>
-  </tr>
-  <tr>
-   <td>12 hours</td>
-   <td>ipFlows1mGroups</td>
-   <td>datetimeFifteenMinutes</td>
-  </tr>
-  <tr>
-   <td>6 hours</td>
-   <td>ipFlows1mGroups</td>
-   <td>datetimeFiveMinutes</td>
-  </tr>
-  <tr>
-   <td>30 mins</td>
-   <td>ipFlows1mGroups</td>
-   <td>datetimeMinute</td>
-  </tr>
-  <tr>
-   <td>Custom range</td>
-   <td>Dependent on range selected</td>
-   <td>Dependent on range selected</td>
-  </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>
+				<strong>Time Selection</strong>
+			</th>
+			<th>
+				<strong>Query node</strong>
+			</th>
+			<th>
+				<strong>datetimeDimension</strong>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Last week</td>
+			<td>ipFlows1dGroups</td>
+			<td>date</td>
+		</tr>
+		<tr>
+			<td>Last month</td>
+			<td>ipFlows1dGroups</td>
+			<td>date</td>
+		</tr>
+		<tr>
+			<td>24 hours</td>
+			<td>ipFlows1mGroups</td>
+			<td>datetimeFifteenMinutes</td>
+		</tr>
+		<tr>
+			<td>12 hours</td>
+			<td>ipFlows1mGroups</td>
+			<td>datetimeFifteenMinutes</td>
+		</tr>
+		<tr>
+			<td>6 hours</td>
+			<td>ipFlows1mGroups</td>
+			<td>datetimeFiveMinutes</td>
+		</tr>
+		<tr>
+			<td>30 mins</td>
+			<td>ipFlows1mGroups</td>
+			<td>datetimeMinute</td>
+		</tr>
+		<tr>
+			<td>Custom range</td>
+			<td>Dependent on range selected</td>
+			<td>Dependent on range selected</td>
+		</tr>
+	</tbody>
 </table>
 
 {{</table-wrap>}}
@@ -110,38 +110,41 @@ The table below lists the start and end time attributes that are valid for query
 {{<table-wrap>}}
 
 <table>
-  <thead>
-  <tr>
-   <th><strong>Query node</strong>
-   </th>
-   <th><strong>Start day / time filter</strong>
-   </th>
-   <th><strong>End day / time filter</strong>
-   </th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-   <td>ipFlows1mGroups</td>
-   <td>datetimeMinute_geq</td>
-   <td>datetimeMinute_leq</td>
-  </tr>
-  <tr>
-   <td>ipFlows1mAttacksGroups</td>
-   <td>date_geq</td>
-   <td>date_leq</td>
-  </tr>
-  <tr>
-   <td>ipFlows1hGroups</td>
-   <td>datetimeHour_geq </td>
-   <td>datetimeHour_leq</td>
-  </tr>
-  <tr>
-   <td>ipFlows1dGroups</td>
-   <td>date_geq</td>
-   <td>date_leq</td>
-  </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>
+				<strong>Query node</strong>
+			</th>
+			<th>
+				<strong>Start day / time filter</strong>
+			</th>
+			<th>
+				<strong>End day / time filter</strong>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>ipFlows1mGroups</td>
+			<td>datetimeMinute_geq</td>
+			<td>datetimeMinute_leq</td>
+		</tr>
+		<tr>
+			<td>ipFlows1mAttacksGroups</td>
+			<td>date_geq</td>
+			<td>date_leq</td>
+		</tr>
+		<tr>
+			<td>ipFlows1hGroups</td>
+			<td>datetimeHour_geq </td>
+			<td>datetimeHour_leq</td>
+		</tr>
+		<tr>
+			<td>ipFlows1dGroups</td>
+			<td>date_geq</td>
+			<td>date_leq</td>
+		</tr>
+	</tbody>
 </table>
 
 {{</table-wrap>}}
@@ -383,7 +386,7 @@ This query extracts the number of TCP packets from the minute-wise rollups of IP
 Add the following line to the filter to indicate that you want to view TCP data:
 
 ```json
-{ ipProtocol: 'TCP' }
+{ "ipProtocol": "TCP" }
 ```
 
 ```graphql

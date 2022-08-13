@@ -97,8 +97,8 @@ pub fn parse() -> String {
 Update your `worker/worker.js` to use the new code:
 
 ```js
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
+addEventListener('fetch', event => {
+	event.respondWith(handleRequest(event.request));
 });
 
 const { parse } = wasm_bindgen;
@@ -109,11 +109,11 @@ const instance = wasm_bindgen(wasm);
  * @param {Request} request
  */
 async function handleRequest(request) {
-  await instance;
-  const output = parse();
-  let res = new Response(output, { status: 200 });
-  res.headers.set("Content-type", "text/html");
-  return res;
+	await instance;
+	const output = parse();
+	let res = new Response(output, { status: 200 });
+	res.headers.set('Content-type', 'text/html');
+	return res;
 }
 ```
 

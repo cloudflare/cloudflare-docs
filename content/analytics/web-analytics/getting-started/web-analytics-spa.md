@@ -14,9 +14,9 @@ To disable measuring SPAs, add the `spa` option with a value of `false` in the d
 
 ```html
 <script
-  defer
-  src="https://static.cloudflareinsights.com/beacon.min.js"
-  data-cf-beacon=' {"token": "42e216b9090ru59384ygu891dce9eecde", "spa": false} '
+	defer
+	src="https://static.cloudflareinsights.com/beacon.min.js"
+	data-cf-beacon=' {"token": "42e216b9090ru59384ygu891dce9eecde", "spa": false} '
 ></script>
 ```
 
@@ -24,7 +24,7 @@ If you are using Google Tag Manager (GTM), use the query string to pass the spa 
 
 ```html
 <script
-  defer
-  src="https://static.cloudflareinsights.com/beacon.min.js?token=42e216b9090ru59384ygu891dce9eecde&spa=false"
+	defer
+	src="https://static.cloudflareinsights.com/beacon.min.js?token=42e216b9090ru59384ygu891dce9eecde&spa=false"
 ></script>
 ```

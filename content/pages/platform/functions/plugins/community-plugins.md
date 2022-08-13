@@ -13,10 +13,9 @@ The following are some of the community-maintained Pages Plugins. If you have cr
 
   Given a folder of assets in multiple formats, this Plugin will automatically negotiate with a client to serve an optimized version of a requested asset.
 
-
 - [cloudflare-pages-plugin-trpc](https://github.com/toyamarinyon/cloudflare-pages-plugin-trpc)
 
-    Allows developers to quickly create a tRPC server with a Cloudflare Pages Function.
+  Allows developers to quickly create a tRPC server with a Cloudflare Pages Function.
 
 - [pages-plugin-twind](https://github.com/helloimalastair/twind-plugin)
 

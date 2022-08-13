@@ -61,93 +61,95 @@ Cloudflare cacheable file limits:
 The output of the `CF-Cache-Status header` shows whether or not a resource is cached. To investigate cache responses returned by the `CF-Cache-Status` header, use services like [Redbot](https://redbot.org/), [webpagetest.org](http://www.webpagetest.org/), or a visual tool like [Chrome’s Dr. Flare plugin](https://community.cloudflare.com/t/community-tip-dr-flare-debug-tool-for-cloudflare-chrome-extension/110166).
 
 <table>
-  <tbody>
-    <th colspan="4" rowspan="1">
-      Status
-    </th>
-    <th colspan="4" rowspan="1">
-      Description
-    </th>
-    <tr>
-      <td colspan="5" rowspan="1">
-        HIT
-      </td>
-      <td colspan="5" rowspan="1">
-        The resource was found in Cloudflare’s cache.
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        MISS
-      </td>
-      <td colspan="5" rowspan="1">
-        The resource was not found in Cloudflare’s cache and was served from the origin web server.
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        NONE
-      </td>
-      <td colspan="5" rowspan="1">
-        Cloudflare generated response. The resource is not eligible for caching.
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        EXPIRED
-      </td>
-      <td colspan="5" rowspan="1">
-        The resource was found in Cloudflare’s cache but was expired and served from the origin web
-        server.
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        STALE
-      </td>
-      <td colspan="5" rowspan="1">
-        The resource was served from Cloudflare’s cache but was expired. Cloudflare could not
-        contact the origin to retrieve an updated resource.
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        BYPASS
-      </td>
-      <td colspan="5" rowspan="1">
-        The origin server instructed Cloudflare to bypass cache via a Cache-Control header set to <code>no-cache</code>,<code>private</code>, or <code>max-age=0</code> even though
-        Cloudflare originally preferred to cache the asset. BYPASS is returned when enabling <a href="/cache/about/cache-control/">Origin Cache-Control</a>. Cloudflare also sets BYPASS when
-        your origin web server sends cookies in the response header.
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        REVALIDATED
-      </td>
-      <td colspan="5" rowspan="1">
-        The resource is served from Cloudflare’s cache but is stale. The resource was revalidated by
-        either an <code>If-Modified-Since</code> header or an <code>If-None-Match header</code>.
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        UPDATING
-      </td>
-      <td colspan="5" rowspan="1">
-        The resource was served from Cloudflare’s cache and was expired, but the origin web server
-        is updating the resource. UPDATING is typically only seen for very popular cached resources.
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        DYNAMIC
-      </td>
-      <td colspan="5" rowspan="1">
-        Cloudflare does not consider the asset eligible to cache and your Cloudflare settings do not
-        explicitly instruct Cloudflare to cache the asset. Instead, the asset was requested from the
-        origin web server. Use <a href="/cache/how-to/create-page-rules/">Page Rules</a> to implement
-        custom caching options.
-      </td>
-    </tr>
-  </tbody>
+	<tbody>
+		<th colspan="4" rowspan="1">
+			Status
+		</th>
+		<th colspan="4" rowspan="1">
+			Description
+		</th>
+		<tr>
+			<td colspan="5" rowspan="1">
+				HIT
+			</td>
+			<td colspan="5" rowspan="1">
+				The resource was found in Cloudflare’s cache.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				MISS
+			</td>
+			<td colspan="5" rowspan="1">
+				The resource was not found in Cloudflare’s cache and was served from the origin web server.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				NONE
+			</td>
+			<td colspan="5" rowspan="1">
+				Cloudflare generated response. The resource is not eligible for caching.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				EXPIRED
+			</td>
+			<td colspan="5" rowspan="1">
+				The resource was found in Cloudflare’s cache but was expired and served from the origin web
+				server.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				STALE
+			</td>
+			<td colspan="5" rowspan="1">
+				The resource was served from Cloudflare’s cache but was expired. Cloudflare could not
+				contact the origin to retrieve an updated resource.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				BYPASS
+			</td>
+			<td colspan="5" rowspan="1">
+				The origin server instructed Cloudflare to bypass cache via a Cache-Control header set to{' '}
+				<code>no-cache</code>,<code>private</code>, or <code>max-age=0</code> even though Cloudflare
+				originally preferred to cache the asset. BYPASS is returned when enabling{' '}
+				<a href="/cache/about/cache-control/">Origin Cache-Control</a>. Cloudflare also sets BYPASS
+				when your origin web server sends cookies in the response header.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				REVALIDATED
+			</td>
+			<td colspan="5" rowspan="1">
+				The resource is served from Cloudflare’s cache but is stale. The resource was revalidated by
+				either an <code>If-Modified-Since</code> header or an <code>If-None-Match header</code>.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				UPDATING
+			</td>
+			<td colspan="5" rowspan="1">
+				The resource was served from Cloudflare’s cache and was expired, but the origin web server
+				is updating the resource. UPDATING is typically only seen for very popular cached resources.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				DYNAMIC
+			</td>
+			<td colspan="5" rowspan="1">
+				Cloudflare does not consider the asset eligible to cache and your Cloudflare settings do not
+				explicitly instruct Cloudflare to cache the asset. Instead, the asset was requested from the
+				origin web server. Use <a href="/cache/how-to/create-page-rules/">Page Rules</a> to
+				implement custom caching options.
+			</td>
+		</tr>
+	</tbody>
 </table>

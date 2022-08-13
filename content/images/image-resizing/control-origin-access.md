@@ -11,14 +11,14 @@ You can serve resized images without giving access to the original image. Images
 All these behaviors are completely customizable, because they are handled by custom code of a script running [on the edge in a Cloudflare Worker](/images/image-resizing/resize-with-workers/).
 
 ```js
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
+addEventListener('fetch', event => {
+	event.respondWith(handleRequest(event.request));
+});
 
 async function handleRequest(request) {
-  // Here you can compute arbitrary imageURL and
-  // resizingOptions from any request data ...
-  return fetch(imageURL, {cf:{image:resizingOptions}})
+	// Here you can compute arbitrary imageURL and
+	// resizingOptions from any request data ...
+	return fetch(imageURL, { cf: { image: resizingOptions } });
 }
 ```
 
@@ -36,17 +36,19 @@ When testing Image Resizing, make sure you deploy the script and test it from a 
 
 ```js
 async function handleRequest(request) {
-  const resizingOptions = {/* resizing options will be demonstrated in the next example */}
+	const resizingOptions = {
+		/* resizing options will be demonstrated in the next example */
+	};
 
-  const hiddenImageOrigin = "https://secret.example.com/hidden-directory"
-  const requestURL = new URL(request.url)
-  // Append the request path such as "/assets/image1.jpg" to the hiddenImageOrigin.
-  // You could also process the path to add or remove directories, modify filenames, etc.
-  const imageURL = hiddenImageOrigin + requestURL.path
-  // This will fetch image from the given URL, but to the website's visitors this
-  // will appear as a response to the original request. Visitor’s browser will
-  // not see this URL.
-  return fetch(imageURL, {cf:{image:resizingOptions}})
+	const hiddenImageOrigin = 'https://secret.example.com/hidden-directory';
+	const requestURL = new URL(request.url);
+	// Append the request path such as "/assets/image1.jpg" to the hiddenImageOrigin.
+	// You could also process the path to add or remove directories, modify filenames, etc.
+	const imageURL = hiddenImageOrigin + requestURL.path;
+	// This will fetch image from the given URL, but to the website's visitors this
+	// will appear as a response to the original request. Visitor’s browser will
+	// not see this URL.
+	return fetch(imageURL, { cf: { image: resizingOptions } });
 }
 ```
 
@@ -56,18 +58,18 @@ On top of protecting the original image URL, you can also validate that only cer
 
 ```js
 async function handleRequest(request) {
-  const imageURL = … // detail omitted in this example, see the previous example
+	const imageURL = '...'; // detail omitted in this example, see the previous example
 
-  const requestURL = new URL(request.url)
-  const resizingOptions = {
-    width: requestURL.searchParams.get("width"),
-  }
-  // If someone tries to manipulate your image URLs to reveal higher-resolution images,
-  // you can catch that and refuse to serve the request (or enforce a smaller size, etc.)
-  if (resizingOptions.width > 1000) {
-    throw Error("We don’t allow viewing images larger than 1000 pixels wide")
-  }
-  return fetch(imageURL, {cf:{image:resizingOptions}})
+	const requestURL = new URL(request.url);
+	const resizingOptions = {
+		width: requestURL.searchParams.get('width'),
+	};
+	// If someone tries to manipulate your image URLs to reveal higher-resolution images,
+	// you can catch that and refuse to serve the request (or enforce a smaller size, etc.)
+	if (resizingOptions.width > 1000) {
+		throw Error('We don’t allow viewing images larger than 1000 pixels wide');
+	}
+	return fetch(imageURL, { cf: { image: resizingOptions } });
 }
 ```
 
@@ -77,28 +79,34 @@ You do not have to include actual pixel dimensions in the URL. You can embed siz
 
 ```js
 async function handleRequest(request) {
-  const requestURL = new URL(request.url)
-  const resizingOptions = {}
+	const requestURL = new URL(request.url);
+	const resizingOptions = {};
 
-  // The regex selects the first path component after the "images"
-  // prefix, and the rest of the path (e.g. "/images/first/rest")
-  const match = requestURL.path.match(/images\/([^/]+)\/(.+)/)
+	// The regex selects the first path component after the "images"
+	// prefix, and the rest of the path (e.g. "/images/first/rest")
+	const match = requestURL.path.match(/images\/([^/]+)\/(.+)/);
 
-  // You can require the first path component to be one of the
-  // predefined sizes only, and set actual dimensions accordingly.
-  switch (match && match[1]) {
-    case "small": resizingOptions.width = 300; break;
-    case "medium": resizingOptions.width = 600; break;
-    case "large": resizingOptions.width = 900; break;
-    default:
-      throw Error("invalid size");
-  }
+	// You can require the first path component to be one of the
+	// predefined sizes only, and set actual dimensions accordingly.
+	switch (match && match[1]) {
+		case 'small':
+			resizingOptions.width = 300;
+			break;
+		case 'medium':
+			resizingOptions.width = 600;
+			break;
+		case 'large':
+			resizingOptions.width = 900;
+			break;
+		default:
+			throw Error('invalid size');
+	}
 
-  // The remainder of the path may be used to locate the original
-  // image, e.g. here "/images/small/image1.jpg" would map to
-  // "https://storage.example.com/bucket/image1.jpg" resized to 300px.
-  const imageURL = "https://storage.example.com/bucket/" + match[2]
-  return fetch(imageURL, {cf:{image:resizingOptions}})
+	// The remainder of the path may be used to locate the original
+	// image, e.g. here "/images/small/image1.jpg" would map to
+	// "https://storage.example.com/bucket/image1.jpg" resized to 300px.
+	const imageURL = 'https://storage.example.com/bucket/' + match[2];
+	return fetch(imageURL, { cf: { image: resizingOptions } });
 }
 ```
 
@@ -112,16 +120,16 @@ highlight: [9]
 ---
 // generate signed headers (application specific)
 const signedHeaders = generatedSignedHeaders();
- 
+
 fetch(private_url, {
-  headers: signedHeaders
-  cf: {
-    image: {
-      format: "auto",
-      "origin-auth": "share-publicly"
-     }
-  }
-})
+	headers: signedHeaders,
+	cf: {
+		image: {
+			'format': 'auto',
+			'origin-auth': 'share-publicly',
+		},
+	},
+});
 ```
 
 When using this code, the following headers are passed through to the origin, and allow your request to be successful:

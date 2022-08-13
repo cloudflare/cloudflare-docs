@@ -89,7 +89,7 @@ Command Result : No Error
 
 ## 2. Generate RSA and ECDSA key pairs and certificate signing requests (CSRs)
 
-Before running the commands below, check with your information security and/or cryptography team to confirm the approved key creation procedures for your organization.  
+Before running the commands below, check with your information security and/or cryptography team to confirm the approved key creation procedures for your organization.
 
 When you perform this operation, you need define the ID field for the newly generated keys. It must be set to a big-endian hexadecimal integer value.
 

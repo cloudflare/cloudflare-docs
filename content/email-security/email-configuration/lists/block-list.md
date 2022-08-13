@@ -18,13 +18,13 @@ To create a new blocked pattern:
 4. Click **+ New Sender**.
 5. Enter the pattern information:
 
-    - **Sender**: Enter one of the following types of pattern:
+   - **Sender**: Enter one of the following types of pattern:
 
-        - *Email addresses*, which must be a valid email.
-        - *IP addresses*, which can only be IPv4. IPv6 and CIDR are invalid entries.
-        - *Regular expressions*, which must be [valid](https://www.freeformatter.com/java-regex-tester.html) Java expressions.
-    
-    - **Notes**: Provide additional notes about the blocked sender pattern.
+     - _Email addresses_, which must be a valid email.
+     - _IP addresses_, which can only be IPv4. IPv6 and CIDR are invalid entries.
+     - _Regular expressions_, which must be [valid](https://www.freeformatter.com/java-regex-tester.html) Java expressions.
+
+   - **Notes**: Provide additional notes about the blocked sender pattern.
 
 6. Click **Save**.
 

@@ -20,14 +20,14 @@ Be mindful when using both Workers and S3 API endpoints to access the same data.
 These headers map to the `httpMetadata` field in the [R2 bindings](/workers/platform/bindings/):
 
 {{<table-wrap>}}
-| HTTP Header           | Property Name                     |
+| HTTP Header | Property Name |
 |---------------------- | --------------------------------- |
-| `Content-Encoding`    | `httpMetadata.contentEncoding`    |
-| `Content-Type`        | `httpMetadata.contentType`        |
-| `Content-Language`    | `httpMetadata.contentLanguage`    |
+| `Content-Encoding` | `httpMetadata.contentEncoding` |
+| `Content-Type` | `httpMetadata.contentType` |
+| `Content-Language` | `httpMetadata.contentLanguage` |
 | `Content-Disposition` | `httpMetadata.contentDisposition` |
-| `Cache-Control`       | `httpMetadata.cacheControl`       |
-| `Expires`             | `httpMetadata.expires`            |
+| `Cache-Control` | `httpMetadata.cacheControl` |
+| `Expires` | `httpMetadata.expires` |
 {{</table-wrap>}}
 
 If using Unicode in object key names, refer to [Unicode Interoperability](/r2/learning/unicode-interoperability/).
@@ -71,25 +71,25 @@ The `x-amz-metadata-directive` allows a `MERGE` value, in addition to the standa
 `ListBuckets` supports all the same search parameters as `ListObjectsV2` in R2 because some customers may have more than 1,000 buckets. Because tooling, like existing S3 libraries, may not expose a way to set these search parameters, these values may also be sent in via headers. Values in headers take precedence over the search parameters.
 
 {{<table-wrap>}}
-| Search parameter     | HTTP Header             | Meaning                                                           |
+| Search parameter | HTTP Header | Meaning |
 |--------------------- | ----------------------- | ----------------------------------------------------------------- |
-| `prefix`             | `cf-prefix`             | Show buckets with this prefix only.                               |
-| `start-after`        | `cf-start-after`        | Show buckets whose name appears lexicographically in the account. |
-| `continuation-token` | `cf-continuation-token` | Resume listing from a previously returned continuation token.     |
-| `max-keys`           | `cf-max-keys`           | Return this maximum number of buckets. Default and max is `1000`.   |
+| `prefix` | `cf-prefix` | Show buckets with this prefix only. |
+| `start-after` | `cf-start-after` | Show buckets whose name appears lexicographically in the account. |
+| `continuation-token` | `cf-continuation-token` | Resume listing from a previously returned continuation token. |
+| `max-keys` | `cf-max-keys` | Return this maximum number of buckets. Default and max is `1000`. |
 {{</table-wrap>}}
 
 The XML response contains a `NextContinuationToken` and `IsTruncated` elements as appropriate. Since these may not be accessible from existing S3 APIs, these are also available in response headers:
 
 {{<table-wrap>}}
-| XML Response Element    | HTTP Response Header         | Meaning                                                                                      |
+| XML Response Element | HTTP Response Header | Meaning |
 | ----------------------- | ---------------------------- | -------------------------------------------------------------------------------------------- |
-| `IsTruncated`           | `cf-is-truncated`            | This is set to `true` if the list of buckets returned is not all the buckets on the account. |
+| `IsTruncated` | `cf-is-truncated` | This is set to `true` if the list of buckets returned is not all the buckets on the account. |
 | `NextContinuationToken` | `cf-next-continuation-token` | This is set to continuation token to pass on a subsequent `ListBuckets` to resume the listing. |
-| `StartAfter`            |                              | This is the start-after value that was passed in on the request.                             |
-| `KeyCount`              |                              | The number of buckets returned.                                                              |
-| `ContinuationToken`     |                              | The continuation token that was supplied in the request.                                     |
-| `MaxKeys`               |                              | The max keys that were specified in the request.                                             |
+| `StartAfter` | | This is the start-after value that was passed in on the request. |
+| `KeyCount` | | The number of buckets returned. |
+| `ContinuationToken` | | The continuation token that was supplied in the request. |
+| `MaxKeys` | | The max keys that were specified in the request. |
 {{</table-wrap>}}
 
 ## PutObject

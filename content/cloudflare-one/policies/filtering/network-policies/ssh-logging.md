@@ -12,8 +12,8 @@ You can create network policies to manage and monitor SSH access to your applica
 
 ## Prerequisites
 
-* [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/) on end-user devices.
-* [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on end-user devices.
+- [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/) on end-user devices.
+- [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on end-user devices.
 
 ## 1. Ensure Unix usernames match user SSO identities
 
@@ -25,17 +25,17 @@ Cloudflare Gateway will take the identity from a token and, using short-lived ce
 
 Instead of traditional SSH keys, short-lived certificates are used to authenticate traffic between Cloudflare and your origin.
 
-To create a root certificate and get its public key: 
+To create a root certificate and get its public key:
 
-1. Make a request to the Cloudflare API with your email address and API key as request headers. 
+1. Make a request to the Cloudflare API with your email address and API key as request headers.
 
-    ```bash
-    curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/gateway_ca"\
-        -H "X-Auth-Email: <EMAIL>" \
-        -H "X-Auth-Key: <API_KEY>"
-    ```
+   ```bash
+   curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/gateway_ca"\
+       -H "X-Auth-Email: <EMAIL>" \
+       -H "X-Auth-Key: <API_KEY>"
+   ```
 
-    Refer to [Getting access to the Cloudflare API](/api) for help finding your Account ID and API key.
+   Refer to [Getting access to the Cloudflare API](/api) for help finding your Account ID and API key.
 
 2. A success response will include a `public_key` value. Save the key or keep it somewhere convenient for configuring your server.
 
@@ -98,17 +98,17 @@ If you enabled **SSH Command Logging** in an [Audit SSH policy](#7-create-an-aud
 
 2. Using the `ssh-log-cli` utility, generate a public and private key pair.
 
-    ```bash
-    $ ./ssh-log-cli generate-key-pair -o sshkey
-    $ ls
-    README.md	ssh-log-cli	sshkey	sshkey.pub
-    ```
+   ```bash
+   $ ./ssh-log-cli generate-key-pair -o sshkey
+   $ ls
+   README.md	ssh-log-cli	sshkey	sshkey.pub
+   ```
 
-    This command outputs two files, an `sshkey.pub` public key and a matching `sshkey` private key.
+   This command outputs two files, an `sshkey.pub` public key and a matching `sshkey` private key.
 
 3. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
 
-4. In the **SSH encryption public key** field, paste the contents of `sshkey.pub` and click **Save**.  Note that this a different public key from the `ca.pub` file you used to configure the origin server.
+4. In the **SSH encryption public key** field, paste the contents of `sshkey.pub` and click **Save**. Note that this a different public key from the `ca.pub` file you used to configure the origin server.
 
 All proxied SSH commands are immediately encrypted using this public key. The matching private key is required to [view logs](#view-ssh-logs).
 
@@ -120,8 +120,8 @@ All proxied SSH commands are immediately encrypted using this public key. The ma
 
 3. To decrypt the log, follow the instructions in the [SSH Logging CLI repository](https://github.com/cloudflare/ssh-log-cli/). The following example uses the private key generated in [Configure SSH Command Logging](#configure-ssh-command-logging):
 
-    ```bash
-    $ ./ssh-log-cli decrypt -i sshlog -k sshkey
-    ```
+   ```bash
+   $ ./ssh-log-cli decrypt -i sshlog -k sshkey
+   ```
 
-    This command outputs a `sshlog-decrypted.zip` file with the decrypted logs.
+   This command outputs a `sshlog-decrypted.zip` file with the decrypted logs.

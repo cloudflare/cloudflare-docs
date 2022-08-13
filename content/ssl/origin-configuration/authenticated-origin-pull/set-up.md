@@ -34,35 +34,38 @@ To enable Authenticated Origin Pull globally on a zone:
 
 3.  Configure your [origin web server](#server-installation-instructions) to accept client certificates:
 
-    <details>
+        <details>
+
     <summary>Apache example</summary>
-    <div>
+<div>
 
-    For this example, you would have saved the [certificate](#certificate-value) `/path/to/origin-pull-ca.pem`.
+        For this example, you would have saved the [certificate](#certificate-value) `/path/to/origin-pull-ca.pem`.
 
-    ```txt
-    SSLVerifyClient require
-    SSLVerifyDepth 1
-    SSLCACertificateFile /path/to/origin-pull-ca.pem
-    ```
+        ```txt
+        SSLVerifyClient require
+        SSLVerifyDepth 1
+        SSLCACertificateFile /path/to/origin-pull-ca.pem
+        ```
 
-     </div>
+         </div>
+
     </details>
 
-    <details>
+        <details>
+
     <summary>NGINX example</summary>
-    <div>
+<div>
 
-    For this example, you would have saved the [certificate](#certificate-value) to `/etc/nginx/certs/cloudflare.crt`.
+        For this example, you would have saved the [certificate](#certificate-value) to `/etc/nginx/certs/cloudflare.crt`.
 
-    ```txt
-    ssl_client_certificate /etc/nginx/certs/cloudflare.crt;
-    ssl_verify_client on;
-    ```
+        ```txt
+        ssl_client_certificate /etc/nginx/certs/cloudflare.crt;
+        ssl_verify_client on;
+        ```
 
-    </div>
+        </div>
 
-    </details>
+        </details>
 
 4.  Enable **Authenticated Origin Pulls**:
 

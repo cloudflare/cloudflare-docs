@@ -11,6 +11,7 @@ meta:
 # 2021-03-06 – Emergency release
 
 {{<table-wrap>}}
+
 <table style="width: 100%">
   <thead>
     <tr>

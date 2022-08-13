@@ -7,7 +7,7 @@ title: Limits
 
 {{<Aside type="note">}}
 
-We want to encourage you to build any application you can dream up, and realize that doesn't always fit within our limits. 
+We want to encourage you to build any application you can dream up, and realize that doesn't always fit within our limits.
 
 To increase any of our limits, [please fill out our form!](https://forms.gle/ukpeZVLWLnKeixDu7)
 
@@ -17,16 +17,16 @@ To increase any of our limits, [please fill out our form!](https://forms.gle/ukp
 
 {{<table-wrap>}}
 
-| Feature                                                                         | Free      | Paid (Bundled and Unbound)      |
-| ------------------------------------------------------------------------------- | --------- | --------- |
-| [Subrequests](#subrequests)                                                     | 50/request| 50/request (Bundled),<br> 1000/request (Unbound)|
-| [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
-| [Environment variables](#environment-variables)                                 | 64/Worker | 64/Worker |
-| [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
-| [Worker size](#worker-size)                                                     | 1 MB      | 1 MB      |
-| [Number of Workers](#number-of-workers)                                         | 30        | 100       |
-| [Number of Cron Triggers<br/>per Worker](#number-of-schedules)                  | 3         | 3         |
-| [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 90        |
+| Feature                                                                         | Free       | Paid (Bundled and Unbound)                       |
+| ------------------------------------------------------------------------------- | ---------- | ------------------------------------------------ |
+| [Subrequests](#subrequests)                                                     | 50/request | 50/request (Bundled),<br> 1000/request (Unbound) |
+| [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6          | 6                                                |
+| [Environment variables](#environment-variables)                                 | 64/Worker  | 64/Worker                                        |
+| [Environment variable<br/>size](#environment-variables)                         | 5 KB       | 5 KB                                             |
+| [Worker size](#worker-size)                                                     | 1 MB       | 1 MB                                             |
+| [Number of Workers](#number-of-workers)                                         | 30         | 100                                              |
+| [Number of Cron Triggers<br/>per Worker](#number-of-schedules)                  | 3          | 3                                                |
+| [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5          | 90                                               |
 
 {{</table-wrap>}}
 
@@ -177,13 +177,13 @@ Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to
 
 ## CPU runtime
 
-Most Workers requests consume less than a millisecond. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is capped at various limits depending on your plan, usage model, and Worker type. 
+Most Workers requests consume less than a millisecond. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is capped at various limits depending on your plan, usage model, and Worker type.
 
-* A Worker may consume up to **10 milliseconds** on the Free plan.
-* A Worker or [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **50 milliseconds** with the Bundled usage model on the Paid Plan.
-* A Worker may consume up to **30 seconds** with the Unbound usage model on the Paid Plan.
-* A [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **30 seconds** with the Unbound usage model on the Paid Plan, when the schedule interval is less than 1 hour.
-* A [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **15 minutes** with the Unbound usage model on the Paid Plan, when the schedule interval is greater than 1 hour.
+- A Worker may consume up to **10 milliseconds** on the Free plan.
+- A Worker or [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **50 milliseconds** with the Bundled usage model on the Paid Plan.
+- A Worker may consume up to **30 seconds** with the Unbound usage model on the Paid Plan.
+- A [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **30 seconds** with the Unbound usage model on the Paid Plan, when the schedule interval is less than 1 hour.
+- A [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **15 minutes** with the Unbound usage model on the Paid Plan, when the schedule interval is greater than 1 hour.
 
 There is no limit on the real runtime for a Worker. As long as the client that sent the request remains connected, the Worker can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/workers/runtime-apis/fetch-event/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
 

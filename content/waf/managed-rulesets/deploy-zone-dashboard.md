@@ -49,9 +49,9 @@ To configure rule field values for all the rules in a Managed Ruleset:
 
 4. Under **Ruleset configuration**, set one or more rule fields from the available values in the drop-down lists.
 
-    For example, select the action to perform for all the rules in the ruleset from the **Ruleset action** drop-down list.
+   For example, select the action to perform for all the rules in the ruleset from the **Ruleset action** drop-down list.
 
-    ![The Configure Managed Ruleset page displaying the available options to override all the rules in the ruleset. In the displayed Managed Ruleset you can override the ruleset action.](/waf/static/waf-configure-ruleset.png)
+   ![The Configure Managed Ruleset page displaying the available options to override all the rules in the ruleset. In the displayed Managed Ruleset you can override the ruleset action.](/waf/static/waf-configure-ruleset.png)
 
 5. Click **Save**.
 
@@ -71,9 +71,9 @@ To view the rules of a Managed Ruleset:
 
 4. Click **Browse rules**.
 
-    The Browse Managed Ruleset interface displays.
+   The Browse Managed Ruleset interface displays.
 
-    ![The Browse rules page displaying the list of rules in the Cloudflare Managed Ruleset](/waf/static/waf-browse-rules.png)
+   ![The Browse rules page displaying the list of rules in the Cloudflare Managed Ruleset](/waf/static/waf-browse-rules.png)
 
 ### Configure a single rule in a Managed Ruleset
 
@@ -87,13 +87,13 @@ Do the following:
 
 3. In the result line for the rule you want to change, select the desired value for a field in the displayed drop-down lists. For example, select the rule action in the **Action** dropdown.
 
-    In some Managed Rulesets, you can also change the status of a rule using the toggle available on the right.
+   In some Managed Rulesets, you can also change the status of a rule using the toggle available on the right.
 
-    ![The Browse rules page displaying the list of rules in the Cloudflare Managed Ruleset. In this interface you can override the behavior of specific rules.](/waf/static/waf-browse-rules.png)
+   ![The Browse rules page displaying the list of rules in the Cloudflare Managed Ruleset. In this interface you can override the behavior of specific rules.](/waf/static/waf-browse-rules.png)
 
 4. Click **Next**.
 
-    The Configure Managed Ruleset interface displays, listing the configuration you just defined.
+   The Configure Managed Ruleset interface displays, listing the configuration you just defined.
 
 5. Click **Save**.
 
@@ -105,19 +105,19 @@ Do the following:
 
 1. Enter search terms in the available input to find the rules you want to configure. You can search for tags.
 
-    ![Example of filtering rules by the wordpress tag in the Browse rules page](/waf/static/waf-selected-tag.png)
+   ![Example of filtering rules by the wordpress tag in the Browse rules page](/waf/static/waf-selected-tag.png)
 
 2. In the results list, click the checkbox on the left of all the rules you want to configure.
 
-    Alternatively, click a tag name under the search input to filter the rules with that tag, and then click the checkboxes for the rules you want to configure.
+   Alternatively, click a tag name under the search input to filter the rules with that tag, and then click the checkboxes for the rules you want to configure.
 
 3. Update one or more fields for the selected rules using the drop-down lists displayed in the top right corner of the table.
 
-    ![Selecting all rules in a page displays additional drop-down lists above the table to override the behavior of several rules at once.](/waf/static/waf-modify-selected-rules.png)
+   ![Selecting all rules in a page displays additional drop-down lists above the table to override the behavior of several rules at once.](/waf/static/waf-modify-selected-rules.png)
 
 4. Click **Next**.
 
-    {{<Aside type="note" header="Note">}}
+   {{<Aside type="note" header="Note">}}
 
 If you selected a tag, you get a dialog asking you if any new rules with the selected tag should be configured with the field values you selected.
 

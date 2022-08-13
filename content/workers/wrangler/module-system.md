@@ -36,13 +36,13 @@ $ npm i meaning-of-life
 
 Then, open `/src/index.ts' and add:
 
-```typescript
-import meaning from "meaning-of-life";
+```ts
+import meaning from 'meaning-of-life';
 
 export default {
-  async fetch(request: Request): Promise<Response> {
-    return new Response(meaning);
-  },
+	async fetch(request: Request): Promise<Response> {
+		return new Response(meaning);
+	},
 };
 ```
 

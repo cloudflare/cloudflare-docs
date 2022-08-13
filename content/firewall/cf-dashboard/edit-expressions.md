@@ -8,8 +8,8 @@ weight: 2
 
 In the Cloudflare dashboard, there are two options for editing [expressions](/ruleset-engine/rules-language/expressions/):
 
-* **Expression Builder**: Allows you to create expressions using drop-down lists, emphasizing a visual approach to defining an expression.
-* **Expression Editor**: A text-only interface that supports advanced features, such as grouping symbols and functions for transforming and validating values.
+- **Expression Builder**: Allows you to create expressions using drop-down lists, emphasizing a visual approach to defining an expression.
+- **Expression Editor**: A text-only interface that supports advanced features, such as grouping symbols and functions for transforming and validating values.
 
 In general, you can switch back and forth between the Expression Builder and the Expression Editor. However, the Expression Builder does not support [nested expressions](#create-nested-expressions).
 
@@ -46,10 +46,10 @@ The Expression Editor supports parentheses as [grouping symbols](/ruleset-engine
 The following rule expression example challenges any visitor who is not from Malaysia and tries to access WordPress URI paths.
 
 ```txt
-((http.request.uri.path contains "/xmlrpc.php") or (http.request.uri.path 
-contains "/wp-login.php") or (http.request.uri.path contains "/wp-admin/" 
-and not http.request.uri.path contains "/wp-admin/admin-ajax.php" and not 
-http.request.uri.path contains "/wp-admin/theme-editor.php")) and 
+((http.request.uri.path contains "/xmlrpc.php") or (http.request.uri.path
+contains "/wp-login.php") or (http.request.uri.path contains "/wp-admin/"
+and not http.request.uri.path contains "/wp-admin/admin-ajax.php" and not
+http.request.uri.path contains "/wp-admin/theme-editor.php")) and
 ip.geoip.country ne "MY"
 ```
 
@@ -61,9 +61,9 @@ Cloudflare validates all expressions before saving them, so if your expression h
 
 ```txt
 Filter parsing error (1:313): ((http.request.uri.path contains
-"/xmlrpc.php") or (http.request.uri.path contains "/wp-login.php") or 
-(http.request.uri.path contains "/wp-admin/" and not 
-http.request.uri.path contains "/wp-admin/admin-ajax.php" and not 
-http.request.uri.path contains "/wp-admin/theme-editor.php")) and 
+"/xmlrpc.php") or (http.request.uri.path contains "/wp-login.php") or
+(http.request.uri.path contains "/wp-admin/" and not
+http.request.uri.path contains "/wp-admin/admin-ajax.php" and not
+http.request.uri.path contains "/wp-admin/theme-editor.php")) and
 ip.geoip.country ne "MY") ^ unrecognised input
 ```

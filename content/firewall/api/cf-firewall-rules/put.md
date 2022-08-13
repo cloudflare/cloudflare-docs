@@ -12,7 +12,7 @@ This example updates several firewall rules using a single API call.
 
 You can include up to 25 rules in the JSON object array (`-d` flag) to update as a batch. The batch is handled as a transaction.
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -51,24 +51,24 @@ To update the filter, use the [Filters API](/firewall/api/cf-filters/).
 header: Response
 ---
 {
-  "result": [
-    {
-      "id": "<RULE_ID>",
-      "paused": false,
-      "description": "Challenge site",
-      "action": "challenge",
-      "priority": null,
-      "filter": {
-        "id": "<FILTER_ID>",
-        "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-        "paused": false,
-        "description": "not /api"
-      }
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"id": "<RULE_ID>",
+			"paused": false,
+			"description": "Challenge site",
+			"action": "challenge",
+			"priority": null,
+			"filter": {
+				"id": "<FILTER_ID>",
+				"expression": "not http.request.uri.path matches \"^/api/.*$\"",
+				"paused": false,
+				"description": "not /api"
+			}
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -78,13 +78,13 @@ This example updates the firewall rule with ID `<RULE_ID>`.
 
 You must include the following fields in the request body:
 
-*   `id`
-*   `action`
-*   `filter.id`
+- `id`
+- `action`
+- `filter.id`
 
 All other fields are optional.
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -105,7 +105,7 @@ curl -X PUT \
     "paused": false,
     "description": "Login from office"
   }
-}' 
+}'
 ```
 
 ```json
@@ -113,22 +113,22 @@ curl -X PUT \
 header: Response
 ---
 {
-  "result": {
-    "id": "<RULE_ID>",
-    "paused": false,
-    "description": "Do not challenge login from office IPv6",
-    "action": "allow",
-    "priority": null,
-    "filter": {
-      "id": "<FILTER_ID>",
-      "expression": "ip.src in {2400:cb00::/32 2803:f800::/32 2c0f:f248::/32 2a06:98c0::/29} and (http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")",
-      "paused": false,
-      "description": "Login from office"
-    }
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<RULE_ID>",
+		"paused": false,
+		"description": "Do not challenge login from office IPv6",
+		"action": "allow",
+		"priority": null,
+		"filter": {
+			"id": "<FILTER_ID>",
+			"expression": "ip.src in {2400:cb00::/32 2803:f800::/32 2c0f:f248::/32 2a06:98c0::/29} and (http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")",
+			"paused": false,
+			"description": "Login from office"
+		}
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

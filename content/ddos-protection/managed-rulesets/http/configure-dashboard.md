@@ -27,7 +27,7 @@ For more information on the available parameters and allowed values, refer to [M
 
 1. In **Ruleset configuration**, select the action and sensitivity values for all the rules in the HTTP DDoS Attack Protection Managed Ruleset.
 
-    ![Configuring the action and sensitivity of all the rules in the HTTP DDoS Managed Ruleset.](/ddos-protection/static/ddos/ddos-configure-ruleset.png)
+   ![Configuring the action and sensitivity of all the rules in the HTTP DDoS Managed Ruleset.](/ddos-protection/static/ddos/ddos-configure-ruleset.png)
 
 1. Click **Save**.
 
@@ -43,11 +43,11 @@ For more information on the available parameters and allowed values, refer to [M
 
 1. Search for the rules you wish to configure using the available filters. You can search for tags.
 
-    ![Configuring the action and sensitivity of specific rules in the HTTP DDoS Managed Ruleset.](/ddos-protection/static/ddos/ddos-configure-rules.png)
+   ![Configuring the action and sensitivity of specific rules in the HTTP DDoS Managed Ruleset.](/ddos-protection/static/ddos/ddos-configure-rules.png)
 
 1. To configure a single rule, select the desired value for a field in the displayed dropdowns next to the rule.
 
-    To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a Managed Ruleset](/waf/managed-rulesets/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
+   To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a Managed Ruleset](/waf/managed-rulesets/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
 
 1. Click **Next**.
 

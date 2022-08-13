@@ -30,7 +30,7 @@ To create a new custom rule:
 
 5. In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
-    ![Custom rule creation page in the Cloudflare dashboard](/waf/static/custom-rules/firewall-custom-rule-create.png)
+   ![Custom rule creation page in the Cloudflare dashboard](/waf/static/custom-rules/firewall-custom-rule-create.png)
 
 6. Under **If incoming requests match...**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
@@ -46,14 +46,14 @@ When you select the _Block_ action in a custom rule you can optionally define a 
 
 The custom response has three settings:
 
-* **Response type**: Choose a content type or the default WAF block response from the list. The available custom response types are the following:
+- **Response type**: Choose a content type or the default WAF block response from the list. The available custom response types are the following:
 
-    | Dashboard value | API value |
-    |---|---|
-    | Custom HTML | `"text/html"` |
-    | Custom Text | `"text/plain"` |
-    | Custom JSON | `"application/json"` |
-    | Custom XML | `"text/xml"` |
+  | Dashboard value | API value            |
+  | --------------- | -------------------- |
+  | Custom HTML     | `"text/html"`        |
+  | Custom Text     | `"text/plain"`       |
+  | Custom JSON     | `"application/json"` |
+  | Custom XML      | `"text/xml"`         |
 
-* **Response code**: Choose an HTTP status code for the response, in the range 400-499. The default response code is 403.
-* **Response body**: The body of the response. Configure a valid body according to the response type you selected.
+- **Response code**: Choose an HTTP status code for the response, in the range 400-499. The default response code is 403.
+- **Response body**: The body of the response. Configure a valid body according to the response type you selected.

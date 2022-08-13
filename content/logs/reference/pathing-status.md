@@ -69,16 +69,16 @@ Certain combinations of pathing have been labeled in the Cloudflare **Threat Ana
 
 {{<table-wrap>}}
 
-| Pathing                 | Label                |
-| ----------------------- | -------------------- |
-| `bic.ban.unknown`       | Bad browser          |
-| `hot.ban.unknown`       | Blocked hotlink      |
-| `hot.ban.ip`            |                      |
-| `macro.ban.ip`          | Bad IP               |
-| `user.ban.ctry`         | Country block        |
-| `user.ban.ip`           | IP block (user)      |
-| `user.ban.ipr16`        | IP range block (/16) |
-| `user.ban.ipr24`        | IP range block (/24) |
+| Pathing           | Label                |
+| ----------------- | -------------------- |
+| `bic.ban.unknown` | Bad browser          |
+| `hot.ban.unknown` | Blocked hotlink      |
+| `hot.ban.ip`      |                      |
+| `macro.ban.ip`    | Bad IP               |
+| `user.ban.ctry`   | Country block        |
+| `user.ban.ip`     | IP block (user)      |
+| `user.ban.ipr16`  | IP range block (/16) |
+| `user.ban.ipr24`  | IP range block (/24) |
 
 {{</table-wrap>}}
 
@@ -134,7 +134,7 @@ These occur for actions triggered from users based on the configuration for a sp
 | EdgePathingStatus                                                                                                 | Description                                                              | EdgePathingOp | EdgePathingSrc | Status Code |
 | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ------------- | -------------- | ----------- |
 | `Asnum`<br/> `ip`<br/> `ipr24`<br/> `ipr16`<br/> `ip6`<br/> `ip6r64`<br/> `ip6r48`<br/> `ip6r32`<br/> `ctry`<br/> | The request was blocked.                                                 | `ban`         | `user`         | `403`       |
-| `Asnum`<br/> `ip`<br/> `ipr24`<br/> `ipr16`<br/> `ip6`<br/> `ip6r64`<br/> `ip6r48`<br/> `ip6r32`<br/> `ctr`<br/>  | <ul><li>The request was allowed.</li><li>WAF will not execute.</li></ul> | `wl`          | `user`         |      n/a       |
+| `Asnum`<br/> `ip`<br/> `ipr24`<br/> `ipr16`<br/> `ip6`<br/> `ip6r64`<br/> `ip6r48`<br/> `ip6r32`<br/> `ctr`<br/>  | <ul><li>The request was allowed.</li><li>WAF will not execute.</li></ul> | `wl`          | `user`         | n/a         |
 
 {{</table-wrap>}}
 
@@ -218,14 +218,14 @@ The macro stage is comprised of many different paths. They are categorized by th
 {{<table-wrap>}}
 
 | EdgePathingStatus | Description                                                                                                                                                                                                                            | EdgePathingOp | EdgePathingSrc |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | -------------- | ----------- |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | -------------- | --- |
 | `nr`              | There is no reputation data for the IP and no action is being taken (if IUAM is on, a JS challenge is served).                                                                                                                         | `wl`          | `macro`        |
 | `wl`              | IP is explicitly allowlisted.                                                                                                                                                                                                          | `wl`          | `macro`        |
 | `scan`            | IP is explicitly allowlisted and categorized as a security scanner.                                                                                                                                                                    | `wl`          | `macro`        |
 | `mon`             | IP is explicitly allowlisted and categorized as a Monitoring Service.                                                                                                                                                                  | `wl`          | `macro`        |
 | `bak`             | IP is explicitly allowlisted and categorized as a Backup Service.                                                                                                                                                                      | `wl`          | `macro`        |
 | `mob`             | IP is explicitly allowlisted and categorized as Mobile Proxy Service.                                                                                                                                                                  | `wl`          | `macro`        |
-| `se`              | IP is explicitly allowlisted as it belongs to a search engine crawler and no action is taken.                                                                                                                                          | `wl`          | `macro`        |             |
+| `se`              | IP is explicitly allowlisted as it belongs to a search engine crawler and no action is taken.                                                                                                                                          | `wl`          | `macro`        |     |
 | `grey`            | IP is greylisted (suspected to be bad) but the request was either for a favicon or security is turned off and as such, it is allowlisted.                                                                                              | `wl`          | `macro`        |
 | `bad_ok`          | The reputation score of the IP is bad (or is a TOR IP) but the request was either for a favicon or security is turned off and as such, it is allowlisted. Alternatively, the threat score of the IP is in the accepted security level. | `wl`          | `macro`        |
 | `unknown`         | The `pathing_status` is unknown and the request is being processed as normal.                                                                                                                                                          | `wl`          | `macro`        |

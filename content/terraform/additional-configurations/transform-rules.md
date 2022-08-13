@@ -11,8 +11,8 @@ layout: list
 
 This page provides examples of creating Transform Rules in a zone using Terraform. The examples cover the following scenarios:
 
-* [Create a URL Rewrite Rule](#create-a-url-rewrite-rule)
-* [Create an HTTP Request Header Modification Rule](#create-an-http-request-header-modification-rule)
+- [Create a URL Rewrite Rule](#create-a-url-rewrite-rule)
+- [Create an HTTP Request Header Modification Rule](#create-an-http-request-header-modification-rule)
 
 For more information on Transform Rules, refer to [Transform Rules](/rules/transform/).
 
@@ -49,9 +49,9 @@ For more information on rewriting URLs, refer to [URL Rewrite Rules](/rules/tran
 
 The following configuration example performs the following adjustments to HTTP request headers:
 
-* Adds a `my-header-1` header to the request with a static value.
-* Adds a `my-header-2` header to the request with a dynamic value defined by an expression.
-* Deletes the `existing-header` header from the request, if it exists.
+- Adds a `my-header-1` header to the request with a static value.
+- Adds a `my-header-2` header to the request with a dynamic value defined by an expression.
+- Deletes the `existing-header` header from the request, if it exists.
 
 ```tf
 resource "cloudflare_ruleset" "transform_modify_request_headers" {
@@ -91,9 +91,9 @@ For more information on modifying request headers, refer to [HTTP Request Header
 
 The following configuration example performs the following adjustments to HTTP response headers:
 
-* Adds a `my-header-1` header to the response with a static value.
-* Adds a `my-header-2` header to the response with a dynamic value defined by an expression.
-* Deletes the `existing-header` header from the response, if it exists.
+- Adds a `my-header-1` header to the response with a static value.
+- Adds a `my-header-2` header to the response with a dynamic value defined by an expression.
+- Deletes the `existing-header` header from the response, if it exists.
 
 ```tf
 resource "cloudflare_ruleset" "transform_modify_response_headers" {

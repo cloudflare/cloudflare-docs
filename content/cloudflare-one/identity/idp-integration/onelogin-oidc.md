@@ -64,12 +64,12 @@ To test that your connection is working, navigate to **Authentication > Login me
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>",
-    "onelogin_account": "https://mycompany.onelogin.com"
-  },
-  "type": "onelogin",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>",
+		"onelogin_account": "https://mycompany.onelogin.com"
+	},
+	"type": "onelogin",
+	"name": "my example idp"
 }
 ```

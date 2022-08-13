@@ -61,7 +61,7 @@ To add items to an IP List:
 
 1. In the **Add items to list** page, add an IP Address and an optional description in the text inputs.
 
-    As you enter information into a text input, a new row of inputs displays below the current one. To delete any of the IP addresses that you have entered, click **X**.
+   As you enter information into a text input, a new row of inputs displays below the current one. To delete any of the IP addresses that you have entered, click **X**.
 
 1. Click **Add to list** to add the new items.
 
@@ -118,7 +118,7 @@ When uploading CSV data, keep in mind that duplicate data is treated as follows:
 
 1. Select the checkboxes next to the items that you want to delete. To select all the items, use the checkbox in the column header:
 
-    ![Selecting individual list items to delete from an IP List](/firewall/static/lists-delete-items.png)
+   ![Selecting individual list items to delete from an IP List](/firewall/static/lists-delete-items.png)
 
 1. Click **Remove** to delete the selected items from the list.
 

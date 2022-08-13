@@ -20,9 +20,9 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 5. Enter any name for the application. In the **Sign-in redirect URIs** field, input your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
-    ```txt
-    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
-    ```
+   ```txt
+   https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+   ```
 
 6. Select the desired **Assignment** option and click **Save**.
 
@@ -30,7 +30,7 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 8. Scroll down to the **OpenID ConnectID Token** and click **Edit**.
 
-    ![Configuring the Groups claim filter in Okta](/cloudflare-one/static/documentation/identity/okta/okta-2.png)
+   ![Configuring the Groups claim filter in Okta](/cloudflare-one/static/documentation/identity/okta/okta-2.png)
 
 9. Set the **Groups claim filter** to _Matches regex_ and its value to `.*`.
 
@@ -42,17 +42,18 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 12. Under **Login methods**, click **Add new** and select **Okta** as your identity provider.
 
-14. Fill in the following information:
-    * **Name**: Name your identity provider
-    * **App ID**: Enter your Okta Client ID.
-    * **Client secret**: Enter your Okta Client secret.
-    * **Okta account URL**: Enter your Okta domain, for example `https://<your-domain>.okta.com`.
+13. Fill in the following information:
 
-15. (Optional) Create an Okta API token and enter it in the Zero Trust dashboard (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
+    - **Name**: Name your identity provider
+    - **App ID**: Enter your Okta Client ID.
+    - **Client secret**: Enter your Okta Client secret.
+    - **Okta account URL**: Enter your Okta domain, for example `https://<your-domain>.okta.com`.
 
-16. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+14. (Optional) Create an Okta API token and enter it in the Zero Trust dashboard (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
 
-17. Click **Save**.
+15. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+
+16. Click **Save**.
 
 To test that your connection is working, navigate to **Settings** > **Authentication** > **Login methods** and click **Test** next to Okta.
 
@@ -60,8 +61,8 @@ To test that your connection is working, navigate to **Settings** > **Authentica
 
 If you encounter the error `Failed to fetch user/group information from the identity`, double-check your Okta configuration:
 
-* If you have more than 100 Okta groups, ensure you include the API token.
-* The request may be blocked by the [ThreatInsights feature](https://help.okta.com/en/prod/Content/Topics/Security/threat-insight/ti-index.htm) within Okta.
+- If you have more than 100 Okta groups, ensure you include the API token.
+- The request may be blocked by the [ThreatInsights feature](https://help.okta.com/en/prod/Content/Topics/Security/threat-insight/ti-index.htm) within Okta.
 
 {{</Aside>}}
 
@@ -69,12 +70,12 @@ If you encounter the error `Failed to fetch user/group information from the iden
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>",
-    "okta_account": "https://dev-abc123.oktapreview.com"
-  },
-  "type": "okta",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>",
+		"okta_account": "https://dev-abc123.oktapreview.com"
+	},
+	"type": "okta",
+	"name": "my example idp"
 }
 ```

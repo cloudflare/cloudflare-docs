@@ -49,12 +49,12 @@ For direct origins:
 
 ```json
 {
-  "protocol": "tcp/1000-2000",
-  "dns": {
-    "type": "CNAME",
-    "name": "range.example.com"
-  },
-  "origin_direct": ["tcp://192.0.2.1:3000-4000"]
+	"protocol": "tcp/1000-2000",
+	"dns": {
+		"type": "CNAME",
+		"name": "range.example.com"
+	},
+	"origin_direct": ["tcp://192.0.2.1:3000-4000"]
 }
 ```
 
@@ -62,16 +62,16 @@ For DNS origins:
 
 ```json
 {
-  "protocol": "tcp/1000-2000",
-  "dns": {
-    "type": "CNAME",
-    "name": "range.example.com"
-  },
-  "origin_dns": {
-    "name": "origin.example.com",
-    "ttl": 1200
-  },
-  "origin_port": "3000-4000"
+	"protocol": "tcp/1000-2000",
+	"dns": {
+		"type": "CNAME",
+		"name": "range.example.com"
+	},
+	"origin_dns": {
+		"name": "origin.example.com",
+		"ttl": 1200
+	},
+	"origin_port": "3000-4000"
 }
 ```
 

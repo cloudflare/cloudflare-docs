@@ -111,8 +111,8 @@ Use _IP with NAT support_ to handle situations such as requests under NAT sharin
 
 If the rule expression includes [HTTP request body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields) or [IP Lists](/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/), then:
 
-* The rule counting expression, defined in the **Increment counter when** parameter, cannot include any of the [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields).
-* You must enable the **Also apply rate limiting to cached assets** parameter.
+- The rule counting expression, defined in the **Increment counter when** parameter, cannot include any of the [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields).
+- You must enable the **Also apply rate limiting to cached assets** parameter.
 
 ## Recommendations
 

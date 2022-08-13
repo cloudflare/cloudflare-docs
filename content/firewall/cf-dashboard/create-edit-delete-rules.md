@@ -28,9 +28,9 @@ Firewall rule expressions have a 4 KB limit (approximately 4,000 text characters
 
 5. Under **When incoming requests match**, use the **Field** drop-down list to choose an HTTP property (refer to [Fields reference](/ruleset-engine/rules-language/fields/) for details). For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value**.
 
-    Alternatively, use the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) to define the rule expression.
+   Alternatively, use the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) to define the rule expression.
 
-    ![Example firewall rule expression with a selected field, operator, and value](/firewall/static/firewall-rules-expression-builder-value.png)
+   ![Example firewall rule expression with a selected field, operator, and value](/firewall/static/firewall-rules-expression-builder-value.png)
 
 6. Use the **Operator** drop-down list to choose a comparison operator. For an expression to match, the value of the request **Field** and the value specified in the **Value** input must satisfy the comparison operator.
 
@@ -74,6 +74,6 @@ Once there are more than 200 total rules (including inactive rules), you must ma
 
 ## Test firewall rules with Rule Preview
 
-Rule Preview allows customers on an Enterprise plan to understand the potential impact of a new firewall rule, by testing it against a sample of requests drawn from the last 72 hours of traffic. 
+Rule Preview allows customers on an Enterprise plan to understand the potential impact of a new firewall rule, by testing it against a sample of requests drawn from the last 72 hours of traffic.
 
 Rule Preview is built into the **Create firewall rule** and **Edit firewall rule** panels so that you can test a rule as you edit it. For more information, refer to [Preview rules](/firewall/cf-dashboard/rule-preview/).

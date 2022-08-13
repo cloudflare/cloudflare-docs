@@ -24,7 +24,7 @@ To install the Cloudflare root certificate, follow the steps found [here](/cloud
 ## I see a Cloudflare Gateway error page when browsing to a website.
 
 <div class="medium-img">
-  <img alt="Questions" src="/cloudflare-one/static/documentation/faq/http-error-page.png" />
+	<img alt="Questions" src="/cloudflare-one/static/documentation/faq/http-error-page.png" />
 </div>
 
 We present an HTTP error page in the following cases:
@@ -68,7 +68,7 @@ A browser isolation session is a connection from your local browser to a remote 
 ## I see `Error 400 admin_policy_enforced` when using GSuite as an identity provider.
 
 <div class="small-img">
-  <img alt="Google Error 400" src="/cloudflare-one/static/documentation/faq/google-error-400.png" />
+	<img alt="Google Error 400" src="/cloudflare-one/static/documentation/faq/google-error-400.png" />
 </div>
 
 This is due to a Google policy change requiring you to set your Google Admin console to trust your applications:

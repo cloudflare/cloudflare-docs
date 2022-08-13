@@ -13,15 +13,15 @@ JavaScript or TypeScript users may continue to use the [`aws4fetch`](https://www
 You must pass in the R2 configuration credentials when instantiating your `S3` service client:
 
 ```ts
-import { AwsClient } from "aws4fetch";
+import { AwsClient } from 'aws4fetch';
 
 const R2_URL = `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`;
 
 const client = new AwsClient({
-  accessKeyId: ACCESS_KEY_ID,
-  secretAccessKey: SECRET_ACCESS_KEY,
-  service: "s3",
-  region: "auto",
+	accessKeyId: ACCESS_KEY_ID,
+	secretAccessKey: SECRET_ACCESS_KEY,
+	service: 's3',
+	region: 'auto',
 });
 
 const ListBucketsResult = await client.fetch(R2_URL);
@@ -43,8 +43,8 @@ console.log(await ListBucketsResult.text());
 //     </Owner>
 // </ListAllMyBucketsResult>
 
-const ListObjectsV2Result = await client.fetch(`${R2_URL}/my-bucket-name?list-type=2`)
-console.log(await ListObjectsV2Result.text())
+const ListObjectsV2Result = await client.fetch(`${R2_URL}/my-bucket-name?list-type=2`);
+console.log(await ListObjectsV2Result.text());
 // <ListBucketResult>
 //   <Name>my-bucket-name</Name>
 //   <Contents>

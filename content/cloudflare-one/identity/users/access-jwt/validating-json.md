@@ -20,9 +20,9 @@ You can also manually rotate the key using the [API](https://api.cloudflare.com/
 
 As shown in the example below, `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs` contains two public keys: the current key used to sign all new tokens, and the previous key that has been rotated out.
 
-* `keys`: both keys in JWK format
-* `public_cert`: current key in PEM format
-* `public_certs`: both keys in PEM format
+- `keys`: both keys in JWK format
+- `public_cert`: current key in PEM format
+- `public_certs`: both keys in PEM format
 
 ```txt
 {
@@ -62,9 +62,10 @@ As shown in the example below, `https://<your-team-name>.cloudflareaccess.com/cd
 ```
 
 {{<Aside type="note" header="Avoid key rotation issues">}}
-- Validate tokens using the external endpoint rather than saving the public key as a hard-coded value. 
+
+- Validate tokens using the external endpoint rather than saving the public key as a hard-coded value.
 - Do not fetch the current key from `public_cert`, since your origin may inadvertently read an expired cached value. from an outdated cache. Instead, match the `kid` value in the JWT to the corresponding certificate in `public_certs`.
-{{</Aside>}}
+  {{</Aside>}}
 
 ## Verify the JWT manually
 
@@ -82,9 +83,9 @@ To verify the token manually:
 
 6. Get your public key:
 
-    1. Go to `https://<your-team-name>/cdn-cgi/access/certs`.
-    2. Under `public_certs`, locate the entry with the `kid` value you found in Step 5.
-    3. Copy the `cert` value.
+   1. Go to `https://<your-team-name>/cdn-cgi/access/certs`.
+   2. Under `public_certs`, locate the entry with the `kid` value you found in Step 5.
+   3. Copy the `cert` value.
 
 7. In the **Verify Signature** box, paste the `cert` value into the **Public Key** field.
 
@@ -247,4 +248,3 @@ def hello_world():
 if __name__ == '__main__':
     app.run()
 ```
-

@@ -6,7 +6,7 @@ weight: 3
 
 # Workers KV
 
-Workers KV is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare's data centers after access. 
+Workers KV is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare's data centers after access.
 
 To learn more about how KV works, refer to [How KV works](/workers/learning/how-kv-works).
 
@@ -18,7 +18,7 @@ You can interact with KV via Wrangler and the Cloudflare dashboard. This page wi
 
 Wrangler allows you to create, list, and delete KV namespaces. It also allows you to put, list, get, and delete entries within your KV namespace.
 
-KV operations are scoped to your account. To use Workers KV with your Worker, the first thing you must do is create a KV namespace. This is done with the `kv:namespace` subcommand. 
+KV operations are scoped to your account. To use Workers KV with your Worker, the first thing you must do is create a KV namespace. This is done with the `kv:namespace` subcommand.
 
 To create a KV namespace with Wrangler:
 
@@ -66,7 +66,7 @@ Writing the value "<VALUE>" to key "<KEY>" on namespace e29b263ab50e42ce9b637fa8
 You can now access the binding from within a Worker. In your Worker, use the KV `.get()` command to fetch the data you stored in your KV database:
 
 ```js
-let value = await <YOUR_BINDING>.get("KEY");
+let value = await YOUR_BINDING.get('KEY');
 ```
 
 Instead of `--binding`, you may use `--namespace-id` to specify which KV namespace should receive the operation:
@@ -154,6 +154,6 @@ $ wrangler kv:key get --binding "MY_KV" --env=production "<KEY>"
 
 ## Related resources
 
-* [Environments](/workers/platform/environments/)
-* [`kv` command documentation](/workers/wrangler/commands#kv)
-* [`wrangler.toml` configuration documentation](/workers/wrangler/configuration)
+- [Environments](/workers/platform/environments/)
+- [`kv` command documentation](/workers/wrangler/commands#kv)
+- [`wrangler.toml` configuration documentation](/workers/wrangler/configuration)

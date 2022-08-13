@@ -35,28 +35,28 @@ Only [certain locations](https://cloud.google.com/kms/docs/locations#hsm-regions
 Create a key, including the following information:
 
 <table>
-  <thead>
-    <tr>
-      <th width="25%">Field</th>
-      <th width="25%">Value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Key ring</td>
-      <td>
-        The key ring you created in <b>Step 2</b>
-      </td>
-    </tr>
-    <tr>
-      <td>Protection level</td>
-      <td>HSM</td>
-    </tr>
-    <tr>
-      <td>Purpose</td>
-      <td>Asymmetric Encrypt</td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th width="25%">Field</th>
+			<th width="25%">Value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Key ring</td>
+			<td>
+				The key ring you created in <b>Step 2</b>
+			</td>
+		</tr>
+		<tr>
+			<td>Protection level</td>
+			<td>HSM</td>
+		</tr>
+		<tr>
+			<td>Purpose</td>
+			<td>Asymmetric Encrypt</td>
+		</tr>
+	</tbody>
 </table>
 
 ---

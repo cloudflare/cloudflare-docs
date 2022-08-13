@@ -563,11 +563,11 @@ This command takes a JSON file as an argument with a list of key-value pairs to 
 
 ```json
 [
-  {
-    "key": "test_key",
-    "value": "test_value",
-    "expiration_ttl": 3600
-  }
+	{
+		"key": "test_key",
+		"value": "test_value",
+		"expiration_ttl": 3600
+	}
 ]
 ```
 
@@ -575,11 +575,11 @@ KV namespace values can only store strings. In order to save complex a value, st
 
 ```json
 [
-  {
-    "key": "test_key",
-    "value": "{\"name\": \"test_value\"}",
-    "expiration_ttl": 3600
-  }
+	{
+		"key": "test_key",
+		"value": "{\"name\": \"test_value\"}",
+		"expiration_ttl": 3600
+	}
 ]
 ```
 
@@ -727,9 +727,11 @@ $ wrangler secret put <KEY> [OPTIONS]
 {{<definitions>}}
 
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
   - The variable name for this secret to be accessed in the Worker.
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -770,8 +772,8 @@ $ wrangler secret delete <KEY> [OPTIONS]
 
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The variable name for this secret to be accessed in the Worker.
-  
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -790,6 +792,7 @@ $ wrangler secret list [OPTIONS]
 {{<definitions>}}
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}

@@ -11,6 +11,7 @@ meta:
 # 2019-09-26 – Emergency release
 
 {{<table-wrap>}}
+
 <table style="width: 100%">
   <thead>
     <tr>

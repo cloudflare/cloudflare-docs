@@ -7,15 +7,15 @@ summary: Connect to a Broker using Python 3
 
 # Connect with Python
 
-Below is an example using the [paho.mqtt.python](https://github.com/eclipse/paho.mqtt.python) package with the TOKEN authentication mode configured on a Broker. 
+Below is an example using the [paho.mqtt.python](https://github.com/eclipse/paho.mqtt.python) package with the TOKEN authentication mode configured on a Broker.
 
 The example below creates a simple subscriber, sends a message to the configured topic, and waits until the message is received before exiting.
 
 Make sure to set environmental variables for the following before running the example:
 
-* `BROKER_FQDN` - e.g. `YOUR-BROKER.YOUR-NAMESPACE.cloudflarepubsub.com` without the port or `mqtts://` scheme
-* `BROKER_TOKEN` (a valid auth token)
-* `BROKER_TOPIC` - e.g. `test/topic` or `hello/world`
+- `BROKER_FQDN` - e.g. `YOUR-BROKER.YOUR-NAMESPACE.cloudflarepubsub.com` without the port or `mqtts://` scheme
+- `BROKER_TOKEN` (a valid auth token)
+- `BROKER_TOPIC` - e.g. `test/topic` or `hello/world`
 
 The example below uses Python 3.8, but should run on Python 3.6 and above.
 

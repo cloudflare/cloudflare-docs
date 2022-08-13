@@ -46,16 +46,16 @@ The form code:
 
 ```html
 <form method="POST" action="/">
-  <label for="name">Full Name</label>
-  <input id="name" type="text" name="name" pattern="[A-Za-z]+" required />
+	<label for="name">Full Name</label>
+	<input id="name" type="text" name="name" pattern="[A-Za-z]+" required />
 
-  <label for="email">Email Address</label>
-  <input id="email" type="email" name="email" required />
+	<label for="email">Email Address</label>
+	<input id="email" type="email" name="email" required />
 
-  <label for="message">Message</label>
-  <textarea id="message" name="message" required></textarea>
+	<label for="message">Message</label>
+	<textarea id="message" name="message" required></textarea>
 
-  <button type="submit">Submit</button>
+	<button type="submit">Submit</button>
 </form>
 ```
 
@@ -73,27 +73,27 @@ Copy and paste the following content into your `public/index.html` file, which i
 
 ```html
 <html lang="en">
-  <head>
-    <meta charset="utf8" />
-    <title>Form Demo</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-  </head>
-  <body>
-    <!-- the form from above -->
+	<head>
+		<meta charset="utf8" />
+		<title>Form Demo</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+	</head>
+	<body>
+		<!-- the form from above -->
 
-    <form method="POST" action="/">
-      <label for="name">Full Name</label>
-      <input id="name" type="text" name="name" pattern="[A-Za-z]+" required />
+		<form method="POST" action="/">
+			<label for="name">Full Name</label>
+			<input id="name" type="text" name="name" pattern="[A-Za-z]+" required />
 
-      <label for="email">Email Address</label>
-      <input id="email" type="email" name="email" required />
+			<label for="email">Email Address</label>
+			<input id="email" type="email" name="email" required />
 
-      <label for="message">Message</label>
-      <textarea id="message" name="message" required></textarea>
+			<label for="message">Message</label>
+			<textarea id="message" name="message" required></textarea>
 
-      <button type="submit">Submit</button>
-    </form>
-  </body>
+			<button type="submit">Submit</button>
+		</form>
+	</body>
 </html>
 ```
 
@@ -125,7 +125,7 @@ Copy the `Form Endpoint` URL and paste it into the `action` attribute of the for
 
 ```html
 <form method="POST" action="https://formspree.io/f/mqldaqwx">
-  <!-- replace with your own formspree endpoint -->
+	<!-- replace with your own formspree endpoint -->
 </form>
 ```
 

@@ -162,10 +162,10 @@ Any defined [environment variables](/workers/platform/environment-variables/) (t
 With this configuration, the `ENVIRONMENT` variable can be used to call specific code depending on the given environment:
 
 ```js
-if (ENVIRONMENT === "staging") {
-  // staging-specific code
-} else if (ENVIRONMENT === "production") {
-  // production-specific code
+if (ENVIRONMENT === 'staging') {
+	// staging-specific code
+} else if (ENVIRONMENT === 'production') {
+	// production-specific code
 }
 ```
 

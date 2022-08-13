@@ -45,206 +45,212 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
 ## List and view rulesets
 
 <table>
-  <thead>
-    <tr>
-      <th>Operation</th>
-      <th>Method</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody style="vertical-align:top">
-    <tr>
-      <td>
-        <a href="/ruleset-engine/rulesets-api/view/#list-existing-rulesets">List existing rulesets</a>
-      </td>
-      <td>
-        <code>GET</code>
-      </td>
-      <td>
-        <p>Returns the list of existing rulesets at the account level or at the zone level.</p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="/ruleset-engine/rulesets-api/view/#view-a-specific-ruleset">View a specific ruleset</a>
-      </td>
-      <td>
-        <code>GET</code>
-      </td>
-      <td>
-        <p>Returns the properties of the most recent version of a specific ruleset.</p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="/ruleset-engine/rulesets-api/view/#list-all-versions-of-a-ruleset">
-          List all versions of a ruleset
-        </a>
-      </td>
-      <td>
-        <code>GET</code>
-      </td>
-      <td>
-        <p>Returns a list of all the versions of a ruleset.</p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="/ruleset-engine/rulesets-api/view/#view-a-specific-version-of-a-ruleset">
-          View a specific version of a ruleset
-        </a>
-      </td>
-      <td>
-        <code>GET</code>
-      </td>
-      <td>
-        <p>Returns the configuration of a specific version of a ruleset, including its rules.</p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="/ruleset-engine/rulesets-api/view/#list-rules-in-a-managed-ruleset-with-a-specific-tag">
-          List rules in a Managed Ruleset with a specific tag
-        </a>
-      </td>
-      <td>
-        <code>GET</code>
-      </td>
-      <td>
-        <p>Returns a list of all the rules in a Managed Ruleset with a specific tag.</p>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Operation</th>
+			<th>Method</th>
+			<th>Notes</th>
+		</tr>
+	</thead>
+	<tbody style="vertical-align:top">
+		<tr>
+			<td>
+				<a href="/ruleset-engine/rulesets-api/view/#list-existing-rulesets">
+					List existing rulesets
+				</a>
+			</td>
+			<td>
+				<code>GET</code>
+			</td>
+			<td>
+				<p>Returns the list of existing rulesets at the account level or at the zone level.</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="/ruleset-engine/rulesets-api/view/#view-a-specific-ruleset">
+					View a specific ruleset
+				</a>
+			</td>
+			<td>
+				<code>GET</code>
+			</td>
+			<td>
+				<p>Returns the properties of the most recent version of a specific ruleset.</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="/ruleset-engine/rulesets-api/view/#list-all-versions-of-a-ruleset">
+					List all versions of a ruleset
+				</a>
+			</td>
+			<td>
+				<code>GET</code>
+			</td>
+			<td>
+				<p>Returns a list of all the versions of a ruleset.</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="/ruleset-engine/rulesets-api/view/#view-a-specific-version-of-a-ruleset">
+					View a specific version of a ruleset
+				</a>
+			</td>
+			<td>
+				<code>GET</code>
+			</td>
+			<td>
+				<p>Returns the configuration of a specific version of a ruleset, including its rules.</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="/ruleset-engine/rulesets-api/view/#list-rules-in-a-managed-ruleset-with-a-specific-tag">
+					List rules in a Managed Ruleset with a specific tag
+				</a>
+			</td>
+			<td>
+				<code>GET</code>
+			</td>
+			<td>
+				<p>Returns a list of all the rules in a Managed Ruleset with a specific tag.</p>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 ## Create rulesets
 
 <table>
-  <thead>
-    <tr>
-      <th>Operation</th>
-      <th>Verb</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody style="vertical-align:top">
-    <tr>
-      <td>
-        <a href="/ruleset-engine/rulesets-api/create/">Create ruleset</a>
-      </td>
-      <td>
-        <code>POST</code>
-      </td>
-      <td>
-        <p>Creates a new ruleset or a new phase entry point.</p>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Operation</th>
+			<th>Verb</th>
+			<th>Notes</th>
+		</tr>
+	</thead>
+	<tbody style="vertical-align:top">
+		<tr>
+			<td>
+				<a href="/ruleset-engine/rulesets-api/create/">Create ruleset</a>
+			</td>
+			<td>
+				<code>POST</code>
+			</td>
+			<td>
+				<p>Creates a new ruleset or a new phase entry point.</p>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 ## Update and deploy rulesets
 
 <table>
-  <thead>
-    <tr>
-      <th>Operation</th>
-      <th>Verb</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody style="vertical-align:top">
-    <tr>
-      <td>
-        <a href="/ruleset-engine/rulesets-api/update/">Update or deploy a ruleset</a>
-      </td>
-      <td>
-        <code>PUT</code>
-      </td>
-      <td>
-        <p>
-          Updates the basic properties of a ruleset and the list of rules in the ruleset.
-          <br />
-          Allows you to configure the execution of Managed Rulesets.
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="/ruleset-engine/rulesets-api/add-rule/">Add rule to ruleset</a>
-      </td>
-      <td>
-        <code>POST</code>
-      </td>
-      <td>
-        <p>
-          Adds a single rule to an existing ruleset.
-          <br />
-          Allows you to add a single rule without having to include all the existing ruleset rules
-          in the request.
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="/ruleset-engine/rulesets-api/update-rule/">Update a rule in a ruleset</a>
-      </td>
-      <td>
-        <code>PATCH</code>
-      </td>
-      <td>
-        <p>
-          Updates the definition of a single rule within a ruleset.
-          <br />
-          Allows you to change the order of a rule in a ruleset.
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="/ruleset-engine/rulesets-api/delete-rule/">Delete a rule in a ruleset</a>
-      </td>
-      <td>
-        <code>DELETE</code>
-      </td>
-      <td>
-        <p>Deletes a single rule in a ruleset.</p>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Operation</th>
+			<th>Verb</th>
+			<th>Notes</th>
+		</tr>
+	</thead>
+	<tbody style="vertical-align:top">
+		<tr>
+			<td>
+				<a href="/ruleset-engine/rulesets-api/update/">Update or deploy a ruleset</a>
+			</td>
+			<td>
+				<code>PUT</code>
+			</td>
+			<td>
+				<p>
+					Updates the basic properties of a ruleset and the list of rules in the ruleset.
+					<br />
+					Allows you to configure the execution of Managed Rulesets.
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="/ruleset-engine/rulesets-api/add-rule/">Add rule to ruleset</a>
+			</td>
+			<td>
+				<code>POST</code>
+			</td>
+			<td>
+				<p>
+					Adds a single rule to an existing ruleset.
+					<br />
+					Allows you to add a single rule without having to include all the existing ruleset rules
+					in the request.
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="/ruleset-engine/rulesets-api/update-rule/">Update a rule in a ruleset</a>
+			</td>
+			<td>
+				<code>PATCH</code>
+			</td>
+			<td>
+				<p>
+					Updates the definition of a single rule within a ruleset.
+					<br />
+					Allows you to change the order of a rule in a ruleset.
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="/ruleset-engine/rulesets-api/delete-rule/">Delete a rule in a ruleset</a>
+			</td>
+			<td>
+				<code>DELETE</code>
+			</td>
+			<td>
+				<p>Deletes a single rule in a ruleset.</p>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 ## Delete rulesets
 
 <table>
-  <thead>
-    <tr>
-      <th>Operation</th>
-      <th>Verb</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody style="vertical-align:top">
-    <tr>
-      <td>
-        <a href="/ruleset-engine/rulesets-api/delete/#delete-ruleset">Delete ruleset</a>
-      </td>
-      <td>
-        <code>DELETE</code>
-      </td>
-      <td>
-        <p>Deletes all the versions of a ruleset.</p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="/ruleset-engine/rulesets-api/delete/#delete-ruleset-version">Delete ruleset version</a>
-      </td>
-      <td>
-        <code>DELETE</code>
-      </td>
-      <td>
-        <p>Deletes a specific version of a ruleset.</p>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Operation</th>
+			<th>Verb</th>
+			<th>Notes</th>
+		</tr>
+	</thead>
+	<tbody style="vertical-align:top">
+		<tr>
+			<td>
+				<a href="/ruleset-engine/rulesets-api/delete/#delete-ruleset">Delete ruleset</a>
+			</td>
+			<td>
+				<code>DELETE</code>
+			</td>
+			<td>
+				<p>Deletes all the versions of a ruleset.</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="/ruleset-engine/rulesets-api/delete/#delete-ruleset-version">
+					Delete ruleset version
+				</a>
+			</td>
+			<td>
+				<code>DELETE</code>
+			</td>
+			<td>
+				<p>Deletes a specific version of a ruleset.</p>
+			</td>
+		</tr>
+	</tbody>
 </table>

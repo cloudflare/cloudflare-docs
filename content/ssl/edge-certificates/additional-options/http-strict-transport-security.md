@@ -81,57 +81,57 @@ To disable HSTS on your website:
 ## Configuration settings
 
 <table style="width:100%">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Required</th>
-      <th>Description</th>
-      <th>Options</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Enable HSTS (Strict-Transport-Security)</td>
-      <td>Yes</td>
-      <td>Serves HSTS headers to browsers for all HTTPS requests.</td>
-      <td>Off / On</td>
-    </tr>
-    <tr>
-      <td>Max Age Header (max-age)</td>
-      <td>Yes</td>
-      <td>Specifies duration for a browser HSTS policy and requires HTTPS on your website.</td>
-      <td>Disable, or a range from 1 to 12 months</td>
-    </tr>
-    <tr>
-      <td>Apply HSTS policy to subdomains (includeSubDomains)</td>
-      <td>No</td>
-      <td>
-        Applies the HSTS policy from a parent domain to subdomains. Subdomains are inaccessible if
-        they do not support HTTPS.
-      </td>
-      <td>Off / On</td>
-    </tr>
-    <tr>
-      <td>Preload</td>
-      <td>No</td>
-      <td>
-        Permits browsers to automatically preload HSTS configuration. Prevents an attacker from
-        downgrading a first request from HTTPS to HTTP. Preload can make a website without HTTPS
-        completely inaccessible.
-      </td>
-      <td>Off / On</td>
-    </tr>
-    <tr>
-      <td>No-Sniff Header</td>
-      <td>No</td>
-      <td>
-        Sends the <code>X-Content-Type-Options: nosniff</code> header to prevent Internet Explorer
-        and Chrome from automatically detecting a content type other than those explicitly specified
-        by the Content-Type header.
-      </td>
-      <td>Off / On</td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Required</th>
+			<th>Description</th>
+			<th>Options</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Enable HSTS (Strict-Transport-Security)</td>
+			<td>Yes</td>
+			<td>Serves HSTS headers to browsers for all HTTPS requests.</td>
+			<td>Off / On</td>
+		</tr>
+		<tr>
+			<td>Max Age Header (max-age)</td>
+			<td>Yes</td>
+			<td>Specifies duration for a browser HSTS policy and requires HTTPS on your website.</td>
+			<td>Disable, or a range from 1 to 12 months</td>
+		</tr>
+		<tr>
+			<td>Apply HSTS policy to subdomains (includeSubDomains)</td>
+			<td>No</td>
+			<td>
+				Applies the HSTS policy from a parent domain to subdomains. Subdomains are inaccessible if
+				they do not support HTTPS.
+			</td>
+			<td>Off / On</td>
+		</tr>
+		<tr>
+			<td>Preload</td>
+			<td>No</td>
+			<td>
+				Permits browsers to automatically preload HSTS configuration. Prevents an attacker from
+				downgrading a first request from HTTPS to HTTP. Preload can make a website without HTTPS
+				completely inaccessible.
+			</td>
+			<td>Off / On</td>
+		</tr>
+		<tr>
+			<td>No-Sniff Header</td>
+			<td>No</td>
+			<td>
+				Sends the <code>X-Content-Type-Options: nosniff</code> header to prevent Internet Explorer
+				and Chrome from automatically detecting a content type other than those explicitly specified
+				by the Content-Type header.
+			</td>
+			<td>Off / On</td>
+		</tr>
+	</tbody>
 </table>
 
 {{<Aside type="note">}}

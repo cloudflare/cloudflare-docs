@@ -20,23 +20,23 @@ The following URL Redirect parameters control the matching behavior between the 
 
 - **Subpath matching** {{<prop-meta>}}(default: false){{</prop-meta>}}
 
-    - If true, the URL Redirect will apply to all paths under the given source path. For example, consider the following source and target URLs of a URL Redirect:
+  - If true, the URL Redirect will apply to all paths under the given source path. For example, consider the following source and target URLs of a URL Redirect:
 
-        — Source URL: `https://example.com/foo/`
+    — Source URL: `https://example.com/foo/`
 
-        — Target URL: `https://example.com/qux/`
+    — Target URL: `https://example.com/qux/`
 
-    - With this configuration and **Subpath matching** enabled, an incoming request to `example.com/foo/bar` will be redirected to `https://example.com/qux/bar`.
+  - With this configuration and **Subpath matching** enabled, an incoming request to `example.com/foo/bar` will be redirected to `https://example.com/qux/bar`.
 
 - **Include subdomains** {{<prop-meta>}}(default: false){{</prop-meta>}}
 
-    - If true, the source URL hostname of the URL Redirect will also apply to all its subdomains. For example, consider the following source and target URLs of a URL Redirect:
+  - If true, the source URL hostname of the URL Redirect will also apply to all its subdomains. For example, consider the following source and target URLs of a URL Redirect:
 
-        — Source URL: `https://example.com/about`
+    — Source URL: `https://example.com/about`
 
-        — Target URL: `https://example.com/newpage`
+    — Target URL: `https://example.com/newpage`
 
-    - With this configuration and **Includes subdomains** enabled, incoming requests to `http://a.example.com/about` and `http://a.b.example.com/about` would also match, in addition to the specified domain with no subdomain (`https://example.com/about`).
+  - With this configuration and **Includes subdomains** enabled, incoming requests to `http://a.example.com/about` and `http://a.b.example.com/about` would also match, in addition to the specified domain with no subdomain (`https://example.com/about`).
 
 {{</definitions>}}
 
@@ -50,27 +50,27 @@ The following parameters configure how Cloudflare determines the path and query 
 
 - **Preserve query string** {{<prop-meta>}}(default: false){{</prop-meta>}}
 
-    - If true, the final target URL will keep the query string of the original request. For example, consider the following source and target URLs of a URL Redirect:
+  - If true, the final target URL will keep the query string of the original request. For example, consider the following source and target URLs of a URL Redirect:
 
-        — Source URL: `https://example.com/about`
+    — Source URL: `https://example.com/about`
 
-        — Target URL: `https://example.com/newpage`
+    — Target URL: `https://example.com/newpage`
 
-    - With this configuration and **Preserve query string** enabled, an incoming request to `http://example.com/about?q=term` would be redirected to `https://example.com/newpage?q=term`. If **Preserve query string** is disabled, the same incoming request would be redirected to `https://example.com/newpage`.
+  - With this configuration and **Preserve query string** enabled, an incoming request to `http://example.com/about?q=term` would be redirected to `https://example.com/newpage?q=term`. If **Preserve query string** is disabled, the same incoming request would be redirected to `https://example.com/newpage`.
 
 - **Preserve path suffix** {{<prop-meta>}}(default: true){{</prop-meta>}}
 
-    - Defines if the final target URL will include the parts of the request path that did not match the URL Redirect's source URL.
+  - Defines if the final target URL will include the parts of the request path that did not match the URL Redirect's source URL.
 
-    - When **Subpath matching** is enabled, the path that was not matched is copied over to the final target URL. For example, consider the following source and target URLs of a URL Redirect:
+  - When **Subpath matching** is enabled, the path that was not matched is copied over to the final target URL. For example, consider the following source and target URLs of a URL Redirect:
 
-        — Source URL: `https://example.com/a/`
+    — Source URL: `https://example.com/a/`
 
-        — Target URL: `https://example.com/b/`
+    — Target URL: `https://example.com/b/`
 
-    - An incoming request to `https://example.com/a/foo` will be redirected to `https://example.com/b/foo`.
+  - An incoming request to `https://example.com/a/foo` will be redirected to `https://example.com/b/foo`.
 
-    - If you set **Preserve path suffix** to false, the same request will still match the redirect, but it will be redirected to `https://example.com/b/`.
+  - If you set **Preserve path suffix** to false, the same request will still match the redirect, but it will be redirected to `https://example.com/b/`.
 
 {{</definitions>}}
 
@@ -86,7 +86,7 @@ The URL of an incoming request matches a URL Redirect in a list if:
 
 3. The path is the same as the source URL. If **Subpath matching** is enabled, Cloudflare also considers the subpaths of the path in the URL Redirect's source URL when determining if there is a match. For example, a URL Redirect with its source URL defined as `example.com/blog` will also match requests to `example.com/blog/foo` and `example.com/blog/bar`.
 
-    {{<Aside type="note" header="Note">}}
+   {{<Aside type="note" header="Note">}}
 
 URL Redirects with **Subpath matching** enabled are only considered for request paths with 16 or fewer slashes. For example, if there is a configured URL Redirect with source URL set to `example.com/foo` and with **Subpath matching** enabled:
 

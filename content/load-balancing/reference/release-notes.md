@@ -10,11 +10,11 @@ weight: 0
 
 After 30 September 2021, we will make the following changes to the Load Balancing GraphQL schema:
 
-*   Deprecate nodes:
-    *   `loadBalancingRequestsGroups` will be deprecated for `loadBalancingRequestsAdaptiveGroups`
-    *   `loadBalancingRequests` will be deprecated for `loadBalancingRequestsAdaptive`
-*   Deprecate the `date` field (replace it with the existing `datetime` field)
-*   Add the `sampleInterval` field
+- Deprecate nodes:
+  - `loadBalancingRequestsGroups` will be deprecated for `loadBalancingRequestsAdaptiveGroups`
+  - `loadBalancingRequests` will be deprecated for `loadBalancingRequestsAdaptive`
+- Deprecate the `date` field (replace it with the existing `datetime` field)
+- Add the `sampleInterval` field
 
 <details>
 <summary>Example query using new fields</summary>
@@ -22,11 +22,11 @@ After 30 September 2021, we will make the following changes to the Load Balancin
 
 The following example:
 
-*   Replaces `loadBalancingRequestsGroups` with `loadBalancingRequestsAdaptiveGroups`
-*   Replaces `date` with `datetime`
-*   Uses the new `sampleInterval` field
+- Replaces `loadBalancingRequestsGroups` with `loadBalancingRequestsAdaptiveGroups`
+- Replaces `date` with `datetime`
+- Uses the new `sampleInterval` field
 
-```json
+```
 query {
   viewer {
     zones(filter: { zoneTag: "your Zone ID" }) {

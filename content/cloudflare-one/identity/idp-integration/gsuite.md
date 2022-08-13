@@ -30,19 +30,20 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 6. Return to the **APIs & Services** page and go to **Credentials**.
 
-    ![Location of credential settings at the top of the Google Cloud Platform dashboard.](/cloudflare-one/static/documentation/identity/google/click-configure-consent.png)
+   ![Location of credential settings at the top of the Google Cloud Platform dashboard.](/cloudflare-one/static/documentation/identity/google/click-configure-consent.png)
 
 7. You will see a warning that you need to configure a consent screen. Select **Configure Consent Screen**.
 
 8. To configure the consent screen:
-    1. Choose **Internal** as the User Type. This limits authorization requests to users in your Google Workspace and blocks users who have regular Gmail addresses.
-    2. Name the application, add a support email, and input contact fields. Google Cloud Platform requires an email in your account.
-    3. The **Scopes** page can be left blank.
-    4. The summary page will load and you can save and exit.
+
+   1. Choose **Internal** as the User Type. This limits authorization requests to users in your Google Workspace and blocks users who have regular Gmail addresses.
+   2. Name the application, add a support email, and input contact fields. Google Cloud Platform requires an email in your account.
+   3. The **Scopes** page can be left blank.
+   4. The summary page will load and you can save and exit.
 
 9. Return to the **Credentials** page and select **+ Create Credentials** > **OAuth client ID**.
 
-    ![Location of OAuth client ID settings on Google Cloud Platform credentials page.](/cloudflare-one/static/documentation/identity/google/create-oauth.png)
+   ![Location of OAuth client ID settings on Google Cloud Platform credentials page.](/cloudflare-one/static/documentation/identity/google/create-oauth.png)
 
 10. Choose _Web application_ as the Application type.
 
@@ -61,9 +62,9 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 13. Google will present the OAuth Client ID and Secret values. The secret field functions like a password and should not be shared. Copy both values.
 
 14. On your [Google Admin console](https://admin.google.com), go to **Security** > **Access and data control** > **API controls**.  
-  ![Location of Trust internal apps setting in the Google Admin dashboard](/cloudflare-one/static/documentation/identity/gsuite/trust-internal-apps.png)
-  
-15. Enable the **Trust internal, domain-owned apps** option.  This setting is disabled by default and must be enabled for Cloudflare Access to work correctly.
+    ![Location of Trust internal apps setting in the Google Admin dashboard](/cloudflare-one/static/documentation/identity/gsuite/trust-internal-apps.png)
+
+15. Enable the **Trust internal, domain-owned apps** option. This setting is disabled by default and must be enabled for Cloudflare Access to work correctly.
 
 16. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Authentication**.
 
@@ -85,12 +86,12 @@ To test that your connection is working, go to **Authentication** > **Login meth
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>",
-    "apps_domain": "mycompany.com"
-  },
-  "type": "google-apps",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>",
+		"apps_domain": "mycompany.com"
+	},
+	"type": "google-apps",
+	"name": "my example idp"
 }
 ```

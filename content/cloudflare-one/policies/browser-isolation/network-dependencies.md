@@ -26,7 +26,7 @@ Users connecting through Clientless Web Isolation also require connectivity to C
 
 ### WebRTC channel
 
-Browser Isolation uses WebRTC for low-latency communication between the local browser and the remote browser. 
+Browser Isolation uses WebRTC for low-latency communication between the local browser and the remote browser.
 
 In order to pass WebRTC traffic, the remoting client must be able to connect to the following IP addresses:
 

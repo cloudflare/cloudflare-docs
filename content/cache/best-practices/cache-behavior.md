@@ -2,6 +2,7 @@
 title: Cache behavior
 pcx_content_type: concept
 ---
+
 # Cache behavior
 
 In this page, we document how Cloudflare's cache system behaves in interaction with `HEAD` requests and with `Set-Cookie` response header.
@@ -22,4 +23,4 @@ For non-cacheable requests, `Set-Cookie` is always preserved. For cacheable requ
 
 - `Set-Cookie` is returned from origin, the cache level is set to `Cache Everything` and edge cache TTL is set. In this case, Cloudflare removes the `Set-Cookie` and the asset is cached.
 
->  In this case, Cloudflare preserves the `Set-Cookie` but a cache `MISS` forever is returned, this means that the asset is not cached and `MISS` is returned every time.
+> In this case, Cloudflare preserves the `Set-Cookie` but a cache `MISS` forever is returned, this means that the asset is not cached and `MISS` is returned every time.

@@ -14,14 +14,14 @@ A JSON response for the [Rules Lists API](https://api.cloudflare.com/#rules-list
 
 ```json
 {
-  "id": "2c0fc9fa937b11eaa1b71c4d701ab86e",
-  "name": "my_list_name",
-  "description": "List description.",
-  "kind": "(ip|redirect)",
-  "num_items": 10,
-  "num_referencing_filters": 2,
-  "created_on": "2021-01-01T08:00:00Z",
-  "modified_on": "2021-01-10T14:00:00Z"
+	"id": "2c0fc9fa937b11eaa1b71c4d701ab86e",
+	"name": "my_list_name",
+	"description": "List description.",
+	"kind": "(ip|redirect)",
+	"num_items": 10,
+	"num_referencing_filters": 2,
+	"created_on": "2021-01-01T08:00:00Z",
+	"modified_on": "2021-01-10T14:00:00Z"
 }
 ```
 
@@ -95,11 +95,11 @@ A fully populated JSON object for an IP List item has the following structure:
 
 ```json
 {
-  "id": "7c5dae5552338874e5053f2534d2767a",
-  "ip": "10.0.0.1/32",
-  "comment": "CF DNS server",
-  "created_on": "2021-10-01T05:20:00.12345Z",
-  "modified_on": "2021-10-01T05:20:00.12345Z"
+	"id": "7c5dae5552338874e5053f2534d2767a",
+	"ip": "10.0.0.1/32",
+	"comment": "CF DNS server",
+	"created_on": "2021-10-01T05:20:00.12345Z",
+	"modified_on": "2021-10-01T05:20:00.12345Z"
 }
 ```
 
@@ -107,18 +107,18 @@ A fully populated JSON object for a Bulk Redirect List item has the following st
 
 ```json
 {
-  "id": "7c5dae5552338874e5053f2534d2767a",
-  "redirect": {
-    "source_url": "https://example.com/blog",
-    "target_url": "https://example.com/blog/latest",
-    "status_code": 301,
-    "include_subdomains": false,
-    "subpath_matching": false,
-    "preserve_query_string": false,
-    "preserve_path_suffix": true
-  },
-  "created_on": "2021-10-11T12:39:02Z",
-  "modified_on": "2021-10-11T12:39:02Z"
+	"id": "7c5dae5552338874e5053f2534d2767a",
+	"redirect": {
+		"source_url": "https://example.com/blog",
+		"target_url": "https://example.com/blog/latest",
+		"status_code": 301,
+		"include_subdomains": false,
+		"subpath_matching": false,
+		"preserve_query_string": false,
+		"preserve_path_suffix": true
+	},
+	"created_on": "2021-10-11T12:39:02Z",
+	"modified_on": "2021-10-11T12:39:02Z"
 }
 ```
 

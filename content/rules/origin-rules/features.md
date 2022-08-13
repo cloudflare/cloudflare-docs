@@ -18,8 +18,8 @@ A common use case for this functionality is when your content is hosted on a thi
 
 You must specify a valid hostname in a Host Header Override that is either:
 
-* A hostname on the same Cloudflare account (possibly on a different zone).
-* A hostname for which Cloudflare is not proxying traffic (gray-clouded).
+- A hostname on the same Cloudflare account (possibly on a different zone).
+- A hostname for which Cloudflare is not proxying traffic (gray-clouded).
 
 {{<Aside type="note" header="Host header overrides when using load balancing">}}
 
@@ -35,8 +35,8 @@ A common use case for this functionality is when you are serving an application 
 
 You must specify a valid hostname in a Resolve Override that is either:
 
-* A hostname on the same Cloudflare account (possibly on a different zone).
-* A hostname for which Cloudflare is not proxying traffic (gray-clouded).
+- A hostname on the same Cloudflare account (possibly on a different zone).
+- A hostname for which Cloudflare is not proxying traffic (gray-clouded).
 
 ## Destination Port Override
 

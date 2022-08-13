@@ -67,7 +67,7 @@ $ rclone tree r2demo:my-bucket-name
 ## Upload and retrieve objects
 
 The [rclone copy](https://rclone.org/commands/rclone_copy/) command can be used to upload objects to an R2 bucket and vice versa - this allows you to upload files up to the 5 TB maximum object size that R2 supports.
-  
+
 ```sh
 # Upload dog.txt to the user-uploads bucket
 $ rclone copy dog.txt r2demo:user-uploads/dog.txt

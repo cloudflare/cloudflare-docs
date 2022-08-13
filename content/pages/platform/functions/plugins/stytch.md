@@ -16,17 +16,17 @@ $ npm install @cloudflare/pages-plugin-stytch
 
 ## Usage
 
-```typescript
+```ts
 ---
 filename: functions/_middleware.ts
 ---
-import stytchPlugin from "@cloudflare/pages-plugin-stytch";
-import { envs } from "@cloudflare/pages-plugin-stytch/api";
+import stytchPlugin from '@cloudflare/pages-plugin-stytch';
+import { envs } from '@cloudflare/pages-plugin-stytch/api';
 
 export const onRequest: PagesFunction = stytchPlugin({
-  project_id: "YOUR_STYTCH_PROJECT_ID",
-  secret: "YOUR_STYTCH_PROJECT_SECRET",
-  env: envs.live
+	project_id: 'YOUR_STYTCH_PROJECT_ID',
+	secret: 'YOUR_STYTCH_PROJECT_SECRET',
+	env: envs.live,
 });
 ```
 

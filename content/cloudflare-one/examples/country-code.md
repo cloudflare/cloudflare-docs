@@ -10,8 +10,8 @@ layout: example
 
 ```json
 {
-  "geo": {
-    "country_code": "US"
-  }
+	"geo": {
+		"country_code": "US"
+	}
 }
 ```

@@ -167,8 +167,8 @@ EOF
 
 In this example, the pool will be called `www-servers` with two origins added to it:
 
-* `www-us` (`203.0.113.10`) 
-* `www-asia` (`198.51.100.15`)
+- `www-us` (`203.0.113.10`)
+- `www-asia` (`198.51.100.15`)
 
 For now, skip any sort of [geo routing](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/).
 

@@ -10,8 +10,8 @@ layout: example
 
 ```json
 {
-  "auth_method": {
-    "auth_method": "hwk"
-  }
+	"auth_method": {
+		"auth_method": "hwk"
+	}
 }
 ```

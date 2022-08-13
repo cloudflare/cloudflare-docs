@@ -3,6 +3,7 @@ pcx_content_type: tutorial
 title: Receive Live Webhooks
 weight: 6
 ---
+
 # Receive Live Webhooks
 
 Stream Live supports webhooks that notify your service when an Input connects or disconnects to Stream Live.
@@ -13,15 +14,15 @@ The webhook payload will look similar to this:
 
 ```json
 {
-  "name": "Live Webhook Test",
-  "text": "Notification type: Stream Live Input\nInput ID: eb222fcca08eeb1ae84c981ebe8aeeb6\nEvent type: live_input.disconnected\nUpdated at: 2022-01-13T11:43:41.855717910Z",
-  "data": {
-    "notification_name": "Stream Live Input",
-    "input_id": "eb222fcca08eeb1ae84c981ebe8aeeb6",
-    "event_type": "live_input.disconnected",
-    "updated_at": "2022-01-13T11:43:41.855717910Z"
-  },
-  "ts": 1642074233
+	"name": "Live Webhook Test",
+	"text": "Notification type: Stream Live Input\nInput ID: eb222fcca08eeb1ae84c981ebe8aeeb6\nEvent type: live_input.disconnected\nUpdated at: 2022-01-13T11:43:41.855717910Z",
+	"data": {
+		"notification_name": "Stream Live Input",
+		"input_id": "eb222fcca08eeb1ae84c981ebe8aeeb6",
+		"event_type": "live_input.disconnected",
+		"updated_at": "2022-01-13T11:43:41.855717910Z"
+	},
+	"ts": 1642074233
 }
 ```
 

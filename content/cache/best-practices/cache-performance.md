@@ -34,4 +34,3 @@ Several examples of helpful insights into your site performance via Cache Analyt
 
   - Identify the issue: Click **Add filter** and select **Cache status equals Miss**.
   - Resolution: Enable Argo Tiered Caching or [create a custom cache key](/cache/about/cache-keys/).
-

@@ -64,12 +64,13 @@ Cloudflare Tunnel creates a secure, outbound-only connection between this machin
 
 4.  Run the following command to create a new directory within systemprofile, replacing the `System32` value if needed to match your architecture.
 
-    ```bash
-    mkdir C:\Windows\System32\config\systemprofile\.cloudflared
-    ```
+        ```bash
+        mkdir C:\Windows\System32\config\systemprofile\.cloudflared
+        ```
 
-    {{<Aside>}}
-Ensure that the machine's firewall permits egress on ports `80`, `443`, and `3389`, otherwise cloudflared will return an error.
+        {{<Aside>}}
+
+    Ensure that the machine's firewall permits egress on ports `80`, `443`, and `3389`, otherwise cloudflared will return an error.
     {{</Aside>}}
 
 ## Authenticate `cloudflared`
@@ -154,10 +155,10 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
 2. Select **Add record**. Choose `CNAME` as the record type. For **Name**, choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
 
 3. For **Target**, input the ID of your Tunnel followed by `.cfargotunnel.com`. For example:
-  
-  ```txt
-    6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
-  ```
+
+```txt
+  6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
+```
 
 4. Select **Save**.
 

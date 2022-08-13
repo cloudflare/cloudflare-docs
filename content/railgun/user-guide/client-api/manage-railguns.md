@@ -16,10 +16,10 @@ Create a Railgun. If request is successful, a new Railgun is added to a user acc
 
 ### Form parameters
 
-*   **email** – User account email
-*   **tkn** – User API token
-*   **name** – Name of Railgun
-*   **pubname** – Name of Railgun shown to users
+- **email** – User account email
+- **tkn** – User API token
+- **name** – Name of Railgun
+- **pubname** – Name of Railgun shown to users
 
 <details>
 <summary>Example request</summary>
@@ -46,20 +46,20 @@ name=my-railgun
 <summary>Example response</summary>
 <div>
 
-```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
+```json
 {
-     "msg": null,
-     "response": {
-         "act": "railgun_init",
-         "railgun_id": "1",
-         "railgun_name": "RG_a1b2c3d4e5f6g7h8i9j0k1",
-         "railgun_status": "INI",
-         "rtkn": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp"
-     },
-     "result": "success"
+	"msg": null,
+	"response": {
+		"act": "railgun_init",
+		"railgun_id": "1",
+		"railgun_name": "RG_a1b2c3d4e5f6g7h8i9j0k1",
+		"railgun_status": "INI",
+		"rtkn": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp"
+	},
+	"result": "success"
 }
 ```
 
@@ -74,10 +74,10 @@ Create a Railgun. If request is successful, a new Railgun is added to a user acc
 
 ### Query parameters
 
-*   **email** – User account email
-*   **tkn** – User API token
-*   **name** – Name of Railgun
-*   **pubname** – Name of Railgun shown to users
+- **email** – User account email
+- **tkn** – User API token
+- **name** – Name of Railgun
+- **pubname** – Name of Railgun shown to users
 
 <details>
 <summary>Example request</summary>
@@ -104,20 +104,20 @@ name=my-railgun
 <summary>Example response</summary>
 <div>
 
-```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
+```json
 {
-     "msg": null,
-     "response": {
-         "act": "railgun_init",
-         "railgun_id": "1",
-         "railgun_name": "RG_a1b2c3d4e5f6g7h8i9j0k1",
-         "railgun_status": "INI",
-         "rtkn": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp"
-     },
-     "result": "success"
+	"msg": null,
+	"response": {
+		"act": "railgun_init",
+		"railgun_id": "1",
+		"railgun_name": "RG_a1b2c3d4e5f6g7h8i9j0k1",
+		"railgun_status": "INI",
+		"rtkn": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp"
+	},
+	"result": "success"
 }
 ```
 
@@ -132,9 +132,9 @@ Delete a Railgun. If request is successful, the Railgun with a token matching `r
 
 ### Form parameters
 
-*   **email** – User account email
-*   **tkn** – User API token
-*   **rtkn** – Railgun token
+- **email** – User account email
+- **tkn** – User API token
+- **rtkn** – Railgun token
 
 <details>
 <summary>Example request</summary>
@@ -160,17 +160,17 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 <summary>Example response</summary>
 <div>
 
-```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
+```json
 {
-     "msg": null,
-     "response": {
-         "act": "railgun_delete",
-         "railgun_id": "1",
-     },
-     "result": "success"
+	"msg": null,
+	"response": {
+		"act": "railgun_delete",
+		"railgun_id": "1"
+	},
+	"result": "success"
 }
 ```
 
@@ -185,9 +185,9 @@ Delete a Railgun. If request is successful, the Railgun with a token matching `r
 
 ### Query parameters
 
-*   **email** – User account email
-*   **tkn** – User API token
-*   **rtkn** – Railgun token
+- **email** – User account email
+- **tkn** – User API token
+- **rtkn** – Railgun token
 
 <details>
 <summary>Example request</summary>
@@ -213,17 +213,17 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 <summary>Example response</summary>
 <div>
 
-```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
+```json
 {
-     "msg": null,
-     "response": {
-         "act": "railgun_delete",
-         "railgun_id": "1",
-     },
-     "result": "success"
+	"msg": null,
+	"response": {
+		"act": "railgun_delete",
+		"railgun_id": "1"
+	},
+	"result": "success"
 }
 ```
 

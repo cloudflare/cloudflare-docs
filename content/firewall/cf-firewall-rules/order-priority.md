@@ -55,7 +55,7 @@ To set the priority number for a firewall rule:
 
 2. In the **Edit firewall rule** panel, enter a positive integer value in **Priority**.
 
-    ![Editing a firewall rule in the dashboard to define its Priority value](/firewall/static/firewall-rules-order-and-priority-4.png)
+   ![Editing a firewall rule in the dashboard to define its Priority value](/firewall/static/firewall-rules-order-and-priority-4.png)
 
 3. Click **Save** to commit your changes and return to the rules list.
 
@@ -74,6 +74,6 @@ While your priority numbering scheme can be arbitrary, keep the following in min
 - **Avoid using the number `1` as a priority** so that you can easily maintain and modify rule order.
 - **Consider grouping ranges of priority numbers into categories** that have some meaning for your deployment. Here are some examples:
 
-    - 5000-9999: Trusted IP addresses
-    - 10000-19999: Blocking rules for bad crawlers
-    - 20000-29999: Blocking rules for abusive users/spam
+  - 5000-9999: Trusted IP addresses
+  - 10000-19999: Blocking rules for bad crawlers
+  - 20000-29999: Blocking rules for abusive users/spam

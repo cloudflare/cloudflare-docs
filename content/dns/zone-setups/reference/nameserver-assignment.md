@@ -10,4 +10,3 @@ When you activate a domain on a [full setup](/dns/zone-setups/full-setup/), Clou
 These nameserver assignments cannot be changed unless you set up [custom or vanity nameservers](/dns/additional-options/custom-nameservers/).
 
 For more background on nameserver assignments, refer to [our blog](https://blog.cloudflare.com/whats-the-story-behind-the-names-of-cloudflares-name-servers/).
-

@@ -13,28 +13,28 @@ The SDK provides an API for programmatically controlling the player and listenin
 ```html
 <!-- You can use styles and CSS on this iframe element where the video player will appear -->
 <iframe
-  src="https://iframe.videodelivery.net/$VIDEOID"
-  style="border: none"
-  height="720"
-  width="1280"
-  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-  allowfullscreen="true"
-  id="stream-player"
+	src="https://iframe.videodelivery.net/$VIDEOID"
+	style="border: none"
+	height="720"
+	width="1280"
+	allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+	allowfullscreen="true"
+	id="stream-player"
 ></iframe>
 
 <script src="https://embed.videodelivery.net/embed/sdk.latest.js"></script>
 
 <!-- Your JavaScript code below-->
 <script>
-  const player = Stream(document.getElementById('stream-player'));
-  player.addEventListener('play', () => {
-    console.log('playing!');
-  });
-  player.play().catch(() => {
-    console.log('playback failed, muting to try again');
-    player.muted = true;
-    player.play();
-  });
+	const player = Stream(document.getElementById('stream-player'));
+	player.addEventListener('play', () => {
+		console.log('playing!');
+	});
+	player.play().catch(() => {
+		console.log('playback failed, muting to try again');
+		player.muted = true;
+		player.play();
+	});
 </script>
 ```
 

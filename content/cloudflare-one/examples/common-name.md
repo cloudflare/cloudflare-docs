@@ -11,8 +11,8 @@ layout: example
 
 ```json
 {
-  "common_name": {
-    "common_name": "james@example.com"
-  }
+	"common_name": {
+		"common_name": "james@example.com"
+	}
 }
 ```

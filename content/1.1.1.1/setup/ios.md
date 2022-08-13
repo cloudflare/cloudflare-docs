@@ -3,7 +3,7 @@ weight: 7
 pcx_content_type: how-to
 title: iOS
 meta:
-    title: Set up 1.1.1.1 on iOS
+  title: Set up 1.1.1.1 on iOS
 ---
 
 # Set up 1.1.1.1 - iOS

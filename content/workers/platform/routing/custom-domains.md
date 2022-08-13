@@ -56,7 +56,7 @@ Custom Domains are evaluated before Route rules, but take lower precedence. [Rou
 
 ## Migrate from Routes
 
-If you are currently invoking a Worker using a [Route](/workers/platform/routing/routes) with `/*`, and your DNS points to `100::` or similar, a Custom Domain is a recommended replacement. 
+If you are currently invoking a Worker using a [Route](/workers/platform/routing/routes) with `/*`, and your DNS points to `100::` or similar, a Custom Domain is a recommended replacement.
 
 To migrate the Route `app.example.com/*`, create a Custom Domain on `app.example.com`, replacing the existing record. You can then delete the route `app.example.com/*` in your **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Routes** table.
 

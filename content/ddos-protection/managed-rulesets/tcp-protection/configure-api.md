@@ -28,10 +28,10 @@ The `<ACCOUNT_ID>` argument is the account ID (a hexadecimal string). You can fi
 
 The following table summarizes the available operations.
 
-Operation | Method + Endpoint | Description
-----------|-------------------|------------
-Get Advanced TCP Protection status | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection` | Gets the global feature status (enabled or disabled).
-Update Advanced TCP Protection status | `PATCH accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection` | Enables or disables the Advanced TCP Protection feature.
+| Operation                             | Method + Endpoint                                           | Description                                              |
+| ------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------- |
+| Get Advanced TCP Protection status    | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection`   | Gets the global feature status (enabled or disabled).    |
+| Update Advanced TCP Protection status | `PATCH accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection` | Enables or disables the Advanced TCP Protection feature. |
 
 ## Common API calls
 
@@ -53,12 +53,12 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_
 header: Response
 ---
 {
-  "result": {
-    "enabled": false
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"enabled": false
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -66,7 +66,7 @@ header: Response
 
 This example enables Advanced TCP Protection.
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -84,11 +84,11 @@ curl -X PATCH \
 header: Response
 ---
 {
-  "result": {
-    "enabled": true
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"enabled": true
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```

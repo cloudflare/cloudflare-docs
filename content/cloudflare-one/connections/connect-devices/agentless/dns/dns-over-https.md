@@ -91,10 +91,8 @@ Read more about [enabling DNS over HTTPS](https://www.chromium.org/developers/dn
 </details>
 
 <details>
-<summary>Safari</summary>
-<div>
-As of today, Safari does not support DNS over HTTPS.
-</div>
+	<summary>Safari</summary>
+	<div>As of today, Safari does not support DNS over HTTPS.</div>
 </details>
 
 Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [Location selector](/cloudflare-one/connections/connect-devices/agentless/dns/locations).
@@ -153,7 +151,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/o
      -H "Content-Type: application/json" \
 ```
 
-If you get an `access.api.error.service_token_not_found` error,  check that `<SERVICE_TOKEN_ID>` is the value of `id` and not `client_id`.
+If you get an `access.api.error.service_token_not_found` error, check that `<SERVICE_TOKEN_ID>` is the value of `id` and not `client_id`.
 
 <details>
 <summary>Example response</summary>
@@ -307,4 +305,3 @@ If the site is blocked and you have enabled [**Display block page**](/cloudflare
 </details>
 
 You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/analytics/logs/gateway-logs/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/policies/filtering/identity-selectors/).
-

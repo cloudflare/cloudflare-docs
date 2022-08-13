@@ -70,12 +70,10 @@ Before beginning to work with `postgrest-js` in your application, you must patch
 filename: webpack.config.js
 ---
 module.exports = {
-  target: "webworker",
-  entry: "./index.js",
-  externals: [
-    { 'cross-fetch': 'fetch' }
-  ]
-}
+	target: 'webworker',
+	entry: './index.js',
+	externals: [{ 'cross-fetch': 'fetch' }],
+};
 ```
 
 In `wrangler.toml`, define the `webpack_config` key, and use your new file as the value:
@@ -99,11 +97,12 @@ With the Webpack build configured, `postgrest-js` is ready to be used inside of 
 filename: index.js
 highlight: [1, 2]
 ---
-import { PostgrestClient } from '@supabase/postgrest-js'
-const client = new PostgrestClient(POSTGREST_ENDPOINT)
+import { PostgrestClient } from '@supabase/postgrest-js';
+const client = new PostgrestClient(POSTGREST_ENDPOINT);
 
 addEventListener('fetch', event => {
-// ... Rest of code
+	// ... Rest of code
+});
 ```
 
 With a new client set up, you will make your first request from inside the Workers function to your PostgREST endpoint. To do this, you will select data from a table inside of your database, using the `from` and `select` functions in `postgrest-js`. The below example uses the `users` table, and selects everything inside of it, though if you are bringing your own PostgreSQL setup to this tutorial, adjust the code accordingly. Replace the default code in `handleRequest` with the below code:
@@ -115,17 +114,15 @@ filename: index.js
 // ... Rest of code
 
 async function handleRequest(request) {
-  const { data, error } = await client
-    .from('users')
-    .select()
+	const { data, error } = await client.from('users').select();
 
-  if (error) throw error
+	if (error) throw error;
 
-  return new Response(JSON.stringify(data), {
-    headers: {
-      'Content-type': 'application/json'
-    }
-  })
+	return new Response(JSON.stringify(data), {
+		headers: {
+			'Content-type': 'application/json',
+		},
+	});
 }
 ```
 
@@ -159,7 +156,7 @@ Visit the Workers function in browser (such as `https://postgrest-worker-example
 ---
 header: JSON array returning from PostgREST in a Workers function
 ---
-[{"id":1,"name":"Kristian"}]
+[{ "id": 1, "name": "Kristian" }]
 ```
 
 ### Adding a router
@@ -188,11 +185,11 @@ With `itty-router` installed, import the package into `index.js` and instantiate
 filename: index.js
 highlight: [2, 5]
 ---
-import { PostgrestClient } from '@supabase/postgrest-js'
-import { Router } from 'itty-router'
+import { PostgrestClient } from '@supabase/postgrest-js';
+import { Router } from 'itty-router';
 
-const client = new PostgrestClient(POSTGREST_ENDPOINT)
-const router = Router()
+const client = new PostgrestClient(POSTGREST_ENDPOINT);
+const router = Router();
 ```
 
 As with most routers, `itty-router` works by adding routes to your `router`, based on the HTTP method clients will access them by. In this case, the router will have three routes: `GET /users`, `GET /users/:id`, and `POST /users`. To begin using the `router`, take the current code, which retrieves all the users in your database, and port it into a `GET /users` route. The updated code is below, but with a modified JSON response, which returns an object with a `users` array:
@@ -202,13 +199,13 @@ As with most routers, `itty-router` works by adding routes to your `router`, bas
 filename: index.js
 ---
 router.get('/users', async () => {
-  const { data, error } = await client.from('users').select()
-  if (error) throw error
+	const { data, error } = await client.from('users').select();
+	if (error) throw error;
 
-  return new Response(JSON.stringify({ users: data }), {
-    headers: { 'content-type': 'application/json' },
-  })
-})
+	return new Response(JSON.stringify({ users: data }), {
+		headers: { 'content-type': 'application/json' },
+	});
+});
 ```
 
 With the first route configured, the Workers function needs to pass requests off to the `router`. To do this, remove the `handleRequest` function and call `router.handle` in the `fetch` event listener directly:
@@ -218,19 +215,19 @@ With the first route configured, the Workers function needs to pass requests off
 filename: index.js
 highlight: [4, 11, 12, 13, 14]
 ---
-const router = Router()
+const router = Router();
 
 addEventListener('fetch', event => {
-  event.respondWith(router.handle(event.request))
-})
+	event.respondWith(router.handle(event.request));
+});
 
-router.get("/users", () => {
-  // PostgREST code
-})
+router.get('/users', () => {
+	// PostgREST code
+});
 
 // Delete the below function in your code entirely
 async function handleRequest(request) {
-  // Old PostgREST code
+	// Old PostgREST code
 }
 ```
 
@@ -240,7 +237,7 @@ Deploy the new version of the function with `wrangler publish`. The previous cod
 ---
 header: Updated JSON object returning users in a Workers function
 ---
-{"users":[{"id":1,"name":"Kristian"}]}
+{ "users": [{ "id": 1, "name": "Kristian" }] }
 ```
 
 Notice that the original path at `/` – or the root – now has nothing configured. A client visiting this URL causes the function to throw an exception. To fix this, use `itty-router`'s `all` method, which acts as a catch-all for any routes not explicitly handled by other route handlers. Return a new `404 Not Found` response for any route not recognized:
@@ -251,10 +248,10 @@ filename: index.js
 highlight: [5]
 ---
 router.get('/users', async () => {
-  // Existing code
-})
+	// Existing code
+});
 
-router.all('*', () => new Response("Not Found", { status: 404 }))
+router.all('*', () => new Response('Not Found', { status: 404 }));
 ```
 
 The second planned route is `GET /users/:id`, which returns a single user based on their ID. Configure another route, which will use parameters to capture part of the URL and make it available as part of the route handler as an object `params`:
@@ -263,10 +260,10 @@ The second planned route is `GET /users/:id`, which returns a single user based 
 ---
 filename: index.js
 ---
-router.get('/users/:id', async ({ params } => {
-  const { id } = params
-  console.log(id) // for example, 5, if the requested URL is /users/5
-})
+router.get('/users/:id', async ({ params }) => {
+	const { id } = params;
+	console.log(id); // for example, 5, if the requested URL is /users/5
+});
 ```
 
 With the ID captured as the `id` variable, `postgrest-js` can select from the `users` table again, now with an added filter that requires any returned users have a matching ID. This limits the response to a single user, such as a user with an ID of 1. There are a number of filters available for use in `postgrest-js`: `gt` (greater than), `lt` (less than), and `eq` (equal to). These filters can be added to the query chain:
@@ -277,12 +274,9 @@ filename: index.js
 highlight: [3, 4, 5, 6]
 ---
 router.get('/users/:id', async ({ params }) => {
-  const { id } = params
-  const { data, error } = await client
-    .from('users')
-    .select()
-    .eq('id', id)
-})
+	const { id } = params;
+	const { data, error } = await client.from('users').select().eq('id', id);
+});
 ```
 
 By implementing this, you will get a JSON array of users back, but since it will be filtering based on ID, it can either be an empty array (when no user is found), or an array with a single item (a user was found). Complete the route handler by returning a JSON object with a key `user`, which is either `null`, or the object returned from PostgREST for the found user:
@@ -293,21 +287,18 @@ filename: index.js
 highlight: [8, 9, 10, 11, 12, 13, 14, 15]
 ---
 router.get('/users/:id', async ({ params }) => {
-  const { id } = params
-  const { data, error } = await client
-    .from('users')
-    .select()
-    .eq('id', id)
+	const { id } = params;
+	const { data, error } = await client.from('users').select().eq('id', id);
 
-  if (error) throw error
+	if (error) throw error;
 
-  const user = data.length ? data[0] : null
+	const user = data.length ? data[0] : null;
 
-  return new Response(JSON.stringify({ user }), {
-    headers: { 'content-type': 'application/json' },
-    status: user ? 200 : 404
-  })
-})
+	return new Response(JSON.stringify({ user }), {
+		headers: { 'content-type': 'application/json' },
+		status: user ? 200 : 404,
+	});
+});
 ```
 
 Deploy the function again with `wrangler publish` to allow looking up users based on their ID, such as `/users/1`. If there is a user in the database with that given ID, you will get a JSON response (with a status of `200 OK`) containing the user data, otherwise the JSON response will be a `null` value (with a status of `404 Not Found`):
@@ -316,14 +307,14 @@ Deploy the function again with `wrangler publish` to allow looking up users base
 ---
 header: JSON object for a found user based on ID
 ---
-{"user":{"id":1,"name":"Kristian"}}
+{ "user": { "id": 1, "name": "Kristian" } }
 ```
 
 ```json
 ---
 header: Empty JSON object when no user is found
 ---
-{"user":null}
+{ "user": null }
 ```
 
 ### Creating new users
@@ -337,8 +328,8 @@ In the Workers function, implement this by setting up a new `post` handler, and 
 filename: index.js
 ---
 router.post('/users', async request => {
-  const userData = await request.json()
-})
+	const userData = await request.json();
+});
 ```
 
 With that data available as `userData`, use the `insert` function to create a new user in your database. `postgrest-js` returns the new user back from PostgREST, which can be returned as the JSON response back to the client:
@@ -349,17 +340,15 @@ filename: index.js
 highlight: [3, 4, 5, 6, 7, 8, 9, 10, 11]
 ---
 router.post('/users', async request => {
-  const userData = await request.json()
-  const { data: user, error } = await client
-    .from('users')
-    .insert([userData])
+	const userData = await request.json();
+	const { data: user, error } = await client.from('users').insert([userData]);
 
-  if (error) throw error
+	if (error) throw error;
 
-  return new Response(JSON.stringify({ user }), {
-    headers: { 'content-type': 'application/json' },
-  })
-})
+	return new Response(JSON.stringify({ user }), {
+		headers: { 'content-type': 'application/json' },
+	});
+});
 ```
 
 Deploy the updated function using the command `wrangler publish`. To test this new endpoint, use `cURL`, a command-line tool for making requests. Copy the below command, replacing the base part of the URL with your unique `*.workers.dev` deployment. This command sends JSON data to your new endpoint as a `POST` request, which is parsed by the Workers function and used to create a new user in your database. The response back should be the new user you have created:

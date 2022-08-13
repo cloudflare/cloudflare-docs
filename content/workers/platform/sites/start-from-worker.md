@@ -33,23 +33,23 @@ If you have a pre-existing Worker project, you can use Workers Sites to serve st
 4.  Import the `getAssetFromKV()` function into your Worker script and use it to respond with static assets.
 
     ```js
-    import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
+    import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
 
-    addEventListener("fetch", (event) => {
-      event.respondWith(handleEvent(event));
+    addEventListener('fetch', event => {
+    	event.respondWith(handleEvent(event));
     });
 
     async function handleEvent(event) {
-      try {
-        // Add logic to decide whether to serve an asset or run your original Worker code
-        return await getAssetFromKV(event);
-      } catch (e) {
-        let pathname = new URL(event.request.url).pathname;
-        return new Response(`"${pathname}" not found`, {
-          status: 404,
-          statusText: "not found",
-        });
-      }
+    	try {
+    		// Add logic to decide whether to serve an asset or run your original Worker code
+    		return await getAssetFromKV(event);
+    	} catch (e) {
+    		let pathname = new URL(event.request.url).pathname;
+    		return new Response(`"${pathname}" not found`, {
+    			status: 404,
+    			statusText: 'not found',
+    		});
+    	}
     }
     ```
 

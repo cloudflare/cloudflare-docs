@@ -18,15 +18,15 @@ A field can be another node, in which case the appropriate query would contain n
 
 A typical query against the Cloudflare GraphQL schema is made up of five components:
 
-*   `query` - The root node.
-*   `viewer` - A nested node indicating to GraphQL that you want to view the results. The `viewer` component represents the initial node of the user running the query.
-*   `zones` or `account` - A nested node indicating the domain area or account you want to query against. The `viewer` can access one or more zones or accounts. Each zone or account contains a collection of datasets.
-*   **Leaf node** - This specifies the dataset you want to query against in a zone or account. `firewallEventsAdaptive` is an example of a leaf node that represents a dataset for firewall events in a `zone` node.
-*   **Field** - The fields in a query specify the set of metrics that you want to fetch. The `firewallEventsAdaptive` leaf node includes the `clientIP` field. If your leaf node queries requests, possible fields would include response bytes or the time at which requests were received.
+- `query` - The root node.
+- `viewer` - A nested node indicating to GraphQL that you want to view the results. The `viewer` component represents the initial node of the user running the query.
+- `zones` or `account` - A nested node indicating the domain area or account you want to query against. The `viewer` can access one or more zones or accounts. Each zone or account contains a collection of datasets.
+- **Leaf node** - This specifies the dataset you want to query against in a zone or account. `firewallEventsAdaptive` is an example of a leaf node that represents a dataset for firewall events in a `zone` node.
+- **Field** - The fields in a query specify the set of metrics that you want to fetch. The `firewallEventsAdaptive` leaf node includes the `clientIP` field. If your leaf node queries requests, possible fields would include response bytes or the time at which requests were received.
 
 The following example shows the format for a firewall query:
 
-```code
+```graphql
 
 query{
   viewer {
@@ -43,7 +43,7 @@ query{
 
 The following query searches data from a zone for firewall events that occurred during a time interval. It sorts the results, limits the amount of results returned, and displays a set of fields for each firewall event.
 
-```json
+```graphql
 ---
 header: Query Firewall events for a specific time interval
 ---
@@ -57,7 +57,7 @@ query
           filter: {
             datetime_gt: "2020-08-03T02:07:05Z",
             datetime_lt: "2020-08-03T17:07:05Z",
-            requestSource: "eyeball" 
+            requestSource: "eyeball"
           },
           limit: 2,
           orderBy: [datetime_DESC, rayName_DESC])
@@ -73,12 +73,12 @@ query
 }
 ```
 
-*   `zones(filter: { zoneTag: "11111111"})` confines the query to search to one zone.
-*   `firewallEventsAdaptive` is the large dataset that you want to query against. The set of data returned is defined by the following:
-    *   `filter:{}` limits the scope to firewall events between two times: `datetime_gt` (greater than) and `datetime_lt` (less than). Adding the `requestSource` filter for `eyeball` returns data only about the end users of your website and excludes actions taken by Cloudflare products (for example, cache purge, healthchecks, Workers subrequests).
-    *   `limit: 2` limits the results to 2 (the maximum value is 10,000).
-    *   `orderBy` sorts the results, first by `datetime_DESC`, the datetime field , in descending order, and then by the rayname, also in descending order.
-    *   The list of fields: `action` (Allow, Block, Challenge), `datetime`, `rayName` (the RayID), `clientRequestHTTPHost` (the host the client requested), and `userAgent`.
+- `zones(filter: { zoneTag: "11111111"})` confines the query to search to one zone.
+- `firewallEventsAdaptive` is the large dataset that you want to query against. The set of data returned is defined by the following:
+  - `filter:{}` limits the scope to firewall events between two times: `datetime_gt` (greater than) and `datetime_lt` (less than). Adding the `requestSource` filter for `eyeball` returns data only about the end users of your website and excludes actions taken by Cloudflare products (for example, cache purge, healthchecks, Workers subrequests).
+  - `limit: 2` limits the results to 2 (the maximum value is 10,000).
+  - `orderBy` sorts the results, first by `datetime_DESC`, the datetime field , in descending order, and then by the rayname, also in descending order.
+  - The list of fields: `action` (Allow, Block, Challenge), `datetime`, `rayName` (the RayID), `clientRequestHTTPHost` (the host the client requested), and `userAgent`.
 
 You can send the query with an API call or by clicking **Play** in the GraphiQL client. The format of the response is in JSON:
 
@@ -87,31 +87,31 @@ You can send the query with an API call or by clicking **Play** in the GraphiQL 
 header: Query response from firewallEventsAdaptive
 ---
 {
-  "data": {
-    "viewer": {
-      "zones": [
-        {
-          "firewallEventsAdaptive": [
-            {
-              "action": "log",
-              "clientRequestHTTPHost": "cloudflare.guru",
-              "datetime": "2020-08-03T17:07:03Z",
-              "rayName": "5bd1a1fc584357ed",
-              "userAgent": "Mozilla/5.0 (compatible;Cloudflare-Healthchecks/1.0;+https://www.cloudflare.com/; healthcheck-id: 08c774cde2f3c385)"
-            },
-            {
-              "action": "log",
-              "clientRequestHTTPHost": "cloudflare.guru",
-              "datetime": "2020-08-03T17:07:01Z",
-              "rayName": "5bd1a1ef3bb5d296",
-              "userAgent": "Mozilla/5.0 (compatible;Cloudflare-Healthchecks/1.0;+https://www.cloudflare.com/; healthcheck-id: 764497f790f6a070)"
-            }
-          ]
-        }
-      ]
-    }
-  },
-  "errors": null
+	"data": {
+		"viewer": {
+			"zones": [
+				{
+					"firewallEventsAdaptive": [
+						{
+							"action": "log",
+							"clientRequestHTTPHost": "cloudflare.guru",
+							"datetime": "2020-08-03T17:07:03Z",
+							"rayName": "5bd1a1fc584357ed",
+							"userAgent": "Mozilla/5.0 (compatible;Cloudflare-Healthchecks/1.0;+https://www.cloudflare.com/; healthcheck-id: 08c774cde2f3c385)"
+						},
+						{
+							"action": "log",
+							"clientRequestHTTPHost": "cloudflare.guru",
+							"datetime": "2020-08-03T17:07:01Z",
+							"rayName": "5bd1a1ef3bb5d296",
+							"userAgent": "Mozilla/5.0 (compatible;Cloudflare-Healthchecks/1.0;+https://www.cloudflare.com/; healthcheck-id: 764497f790f6a070)"
+						}
+					]
+				}
+			]
+		}
+	},
+	"errors": null
 }
 ```
 
@@ -119,7 +119,7 @@ header: Query response from firewallEventsAdaptive
 
 This example query employs a broad range of GraphQL functionality. The example queries two datasets for the specified zone simultaneously, applies filters and aggregations, and sets a limit on the number of records returned. Note that you must include the `limit` argument, which can be equal or up to 10,000.
 
-```json
+```graphql
 ---
 header: Query two datasets simultaneously
 ---
@@ -169,12 +169,12 @@ Here are some helpful articles about working with the Cloudflare Analytics API a
 
 ### Cloudflare specific
 
-*   [Understanding the Cloudflare dashboard](https://support.cloudflare.com/hc/en-us/articles/205075117-Understanding-the-Cloudflare-dashboard)
-*   [How to find your zoneTag using the API](https://api.cloudflare.com/#getting-started-resource-ids)
+- [Understanding the Cloudflare dashboard](https://support.cloudflare.com/hc/en-us/articles/205075117-Understanding-the-Cloudflare-dashboard)
+- [How to find your zoneTag using the API](https://api.cloudflare.com/#getting-started-resource-ids)
 
 ### General info on the GraphQL framework
 
-*   [How to use GraphQL (tutorials)](https://www.howtographql.com/)
-*   [Thinking in Graphs](https://graphql.org/learn/thinking-in-graphs/)
-*   [What data can you can query in the GraphQL type system (schemas)](https://graphql.org/learn/schema/)
-*   [How to pass variables in GraphiQL (Medium article with quick tips)](https://medium.com/graphql-mastery/graphql-quick-tip-how-to-pass-variables-into-a-mutation-in-graphiql-23ecff4add57)
+- [How to use GraphQL (tutorials)](https://www.howtographql.com/)
+- [Thinking in Graphs](https://graphql.org/learn/thinking-in-graphs/)
+- [What data can you can query in the GraphQL type system (schemas)](https://graphql.org/learn/schema/)
+- [How to pass variables in GraphiQL (Medium article with quick tips)](https://medium.com/graphql-mastery/graphql-quick-tip-how-to-pass-variables-into-a-mutation-in-graphiql-23ecff4add57)

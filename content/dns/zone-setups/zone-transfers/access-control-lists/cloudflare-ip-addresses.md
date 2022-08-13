@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Cloudflare IP addresses
 weight: 4
 meta:
-    title: Cloudflare IP addresses - Access Control Lists (ACLs)
+  title: Cloudflare IP addresses - Access Control Lists (ACLs)
 ---
 
 # Cloudflare IP addresses
@@ -16,7 +16,7 @@ Depending on the setup ([Cloudflare as Primary](#cloudflare-as-primary) or [Clou
 
 ## Cloudflare as Primary
 
-If you are using Cloudflare for Primary DNS — meaning that you are setting up Cloudflare to send [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/) — you need to update the following settings at your secondary DNS provider. 
+If you are using Cloudflare for Primary DNS — meaning that you are setting up Cloudflare to send [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/) — you need to update the following settings at your secondary DNS provider.
 
 ### Allow range
 
@@ -39,7 +39,7 @@ Cloudflare will listen to AXFR/IXFR zone transfer requests and SOA queries from 
 
 ## Cloudflare as Secondary
 
-If you are using Cloudflare for Secondary DNS — meaning that you are setting up Cloudflare to receive [incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) — you need to update the following settings at your primary DNS provider. 
+If you are using Cloudflare for Secondary DNS — meaning that you are setting up Cloudflare to receive [incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) — you need to update the following settings at your primary DNS provider.
 
 ### Allow range
 

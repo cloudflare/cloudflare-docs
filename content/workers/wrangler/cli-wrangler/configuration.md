@@ -243,7 +243,7 @@ Much like environment variables and secrets, the `binding` names are available t
 ```js
 // Worker script:
 
-let value = await FOO.get("keyname");
+let value = await FOO.get('keyname');
 //=> gets the value for "keyname" from
 //=> the FOO variable, which points to
 //=> the "0f2ac...e279" KV namespace
@@ -419,8 +419,8 @@ A custom build command for your project. There are two configurations based on t
 This section is for customizing Workers with the `service-worker` format. These Workers use `addEventListener` and look like the following:
 
 ```js
-addEventListener("fetch", (event) => {
-  event.respondWith(new Response("I'm a service Worker!"));
+addEventListener('fetch', event => {
+	event.respondWith(new Response("I'm a service Worker!"));
 });
 ```
 
@@ -485,17 +485,17 @@ Refer to the [`FetchEvent` documentation](/workers/runtime-apis/fetch-event) to 
 An uploaded module may `import` other uploaded ES Modules. If using the CommonJS format, you may `require` other uploaded CommonJS modules.
 
 ```js
-import html from "./index.html";
+import html from './index.html';
 
 export default {
-  // * request is the same as `event.request` from the service worker format
-  // * waitUntil() and passThroughOnException() are accessible from `ctx` instead of `event` from the service worker format
-  // * env is where bindings like KV namespaces, Durable Object namespaces, Config variables, and Secrets
-  // are exposed, instead of them being placed in global scope.
-  async fetch(request, env, ctx) {
-    const headers = { "Content-Type": "text/html;charset=UTF-8" };
-    return new Response(html, { headers });
-  },
+	// * request is the same as `event.request` from the service worker format
+	// * waitUntil() and passThroughOnException() are accessible from `ctx` instead of `event` from the service worker format
+	// * env is where bindings like KV namespaces, Durable Object namespaces, Config variables, and Secrets
+	// are exposed, instead of them being placed in global scope.
+	async fetch(request, env, ctx) {
+		const headers = { 'Content-Type': 'text/html;charset=UTF-8' };
+		return new Response(html, { headers });
+	},
 };
 ```
 
@@ -579,46 +579,46 @@ If your project is written using CommonJS modules, you will need to re-export yo
 
     - The module type, see the table below for acceptable options:
       <div class="DocsMarkdown--table-wrap">
-        <div class="DocsMarkdown--table-wrap-inner">
-          <table>
-            <thead>
-              <tr>
-                <th>
-                  <code>type</code>
-                </th>
-                <th>JavaScript type</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>ESModule</td>
-                <td>-</td>
-              </tr>
-              <tr>
-                <td>CommonJS</td>
-                <td>-</td>
-              </tr>
-              <tr>
-                <td>Text</td>
-                <td>
-                  <code>String</code>
-                </td>
-              </tr>
-              <tr>
-                <td>Data</td>
-                <td>
-                  <code>ArrayBuffer</code>
-                </td>
-              </tr>
-              <tr>
-                <td>CompiledWasm</td>
-                <td>
-                  <code>WebAssembly.Module</code>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      	<div class="DocsMarkdown--table-wrap-inner">
+      		<table>
+      			<thead>
+      				<tr>
+      					<th>
+      						<code>type</code>
+      					</th>
+      					<th>JavaScript type</th>
+      				</tr>
+      			</thead>
+      			<tbody>
+      				<tr>
+      					<td>ESModule</td>
+      					<td>-</td>
+      				</tr>
+      				<tr>
+      					<td>CommonJS</td>
+      					<td>-</td>
+      				</tr>
+      				<tr>
+      					<td>Text</td>
+      					<td>
+      						<code>String</code>
+      					</td>
+      				</tr>
+      				<tr>
+      					<td>Data</td>
+      					<td>
+      						<code>ArrayBuffer</code>
+      					</td>
+      				</tr>
+      				<tr>
+      					<td>CompiledWasm</td>
+      					<td>
+      						<code>WebAssembly.Module</code>
+      					</td>
+      				</tr>
+      			</tbody>
+      		</table>
+      	</div>
       </div>
 
   - `globs` {{<prop-meta>}}required{{</prop-meta>}}

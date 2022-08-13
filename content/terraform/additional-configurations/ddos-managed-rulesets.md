@@ -11,8 +11,8 @@ layout: list
 
 This page provides examples of configuring DDoS Managed Rulesets in your zone or account using Terraform. It covers the following configurations:
 
-* [Configure HTTP DDoS Attack Protection](#configure-http-ddos-attack-protection)
-* [Configure Network-layer DDoS Attack Protection](#configure-network-layer-ddos-attack-protection)
+- [Configure HTTP DDoS Attack Protection](#configure-http-ddos-attack-protection)
+- [Configure Network-layer DDoS Attack Protection](#configure-network-layer-ddos-attack-protection)
 
 DDoS Managed Rulesets are always enabled. Depending on your Cloudflare services, you may be able to adjust their behavior.
 
@@ -28,8 +28,8 @@ For more information on DDoS Managed Rulesets, refer to [Managed Rulesets](/ddos
 
 The Terraform configurations provided in this page need the zone ID (or account ID) of the zone/account where you will deploy DDoS Managed Rulesets.
 
-* To retrieve the list of accounts you have access to, including their IDs, use the [List accounts](https://api.cloudflare.com/#accounts-list-accounts) API operation.
-* To retrieve the list of zones you have access to, including their IDs, use the [List zones](https://api.cloudflare.com/#zone-list-zones) API operation.
+- To retrieve the list of accounts you have access to, including their IDs, use the [List accounts](https://api.cloudflare.com/#accounts-list-accounts) API operation.
+- To retrieve the list of zones you have access to, including their IDs, use the [List zones](https://api.cloudflare.com/#zone-list-zones) API operation.
 
 The deployment of DDoS Managed Rulesets via Terraform requires that you use the ruleset IDs. To find the IDs of DDoS Managed Rulesets, use the [List account rulesets](https://api.cloudflare.com/#account-rulesets-list-account-rulesets) API operation. The response will include the description and IDs of the existing DDoS Managed Rulesets.
 
@@ -44,7 +44,7 @@ resource "cloudflare_ruleset" "zone_level_http_ddos_config" {
   description = ""
   kind        = "zone"
   phase       = "ddos_l7"
- 
+
   rules {
     action = "execute"
     action_parameters {
@@ -71,9 +71,10 @@ For more information about HTTP DDoS Attack Protection, refer to [HTTP DDoS Atta
 This example configures Network-layer DDoS Attack Protection for an account using Terraform, changing the sensitivity level of rule with ID `599dab0942ff4898ac1b7797e954e98b` to `low` using an override.
 
 {{<Aside type="warning" header="Important">}}
-* Only Magic Transit and Spectrum customers on an Enterprise plan can configure this Managed Ruleset using overrides.
-* This Managed Ruleset only supports overrides at the account level.
-{{</Aside>}}
+
+- Only Magic Transit and Spectrum customers on an Enterprise plan can configure this Managed Ruleset using overrides.
+- This Managed Ruleset only supports overrides at the account level.
+  {{</Aside>}}
 
 ```tf
 resource "cloudflare_ruleset" "account_level_network_ddos_config" {
@@ -82,7 +83,7 @@ resource "cloudflare_ruleset" "account_level_network_ddos_config" {
   description = ""
   kind        = "root"
   phase       = "ddos_l4"
- 
+
   rules {
     action = "execute"
     action_parameters {

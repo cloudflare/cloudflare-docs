@@ -46,9 +46,9 @@ Once you [add your domain to Cloudflare](#step-1--add-your-domain-to-cloudflare)
 
 A verification record for `example.com` might be:
 
-| Type | Name | Content |
-| --- | --- | --- |
-| TXT | `cloudflare-verify.example.com` | 966215192-518620144
+| Type | Name                            | Content             |
+| ---- | ------------------------------- | ------------------- |
+| TXT  | `cloudflare-verify.example.com` | 966215192-518620144 |
 
 </div>
 </details>
@@ -70,21 +70,23 @@ If your domain is already live with a partial DNS setup — with Cloudflare or a
 1.  In Cloudflare, [add an `A`, `AAAA`, or `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/).
 2.  At your authoritative DNS provider:
 
-    1.  Remove any existing `A`, `AAAA`, or `CNAME` records on the hostname you want to proxy to Cloudflare.
+        1.  Remove any existing `A`, `AAAA`, or `CNAME` records on the hostname you want to proxy to Cloudflare.
 
-    2.  Add a `CNAME` record for `{your-hostname}.cdn.cloudflare.net`.
+        2.  Add a `CNAME` record for `{your-hostname}.cdn.cloudflare.net`.
 
-        <details>
-        <summary>Example CNAME record in Cloudflare</summary>
-        <div>
+            <details>
 
-        The `CNAME` record for `www.example.com` would be:
+    <summary>Example CNAME record in Cloudflare</summary>
+<div>
 
-        ```txt
-        www.example.com CNAME www.example.com.cdn.cloudflare.net
-        ```
+            The `CNAME` record for `www.example.com` would be:
 
-        </div>
-        </details>
+            ```txt
+            www.example.com CNAME www.example.com.cdn.cloudflare.net
+            ```
 
-    3.  Repeat this process for each subdomain proxied to Cloudflare.
+            </div>
+
+    </details>
+
+        3.  Repeat this process for each subdomain proxied to Cloudflare.

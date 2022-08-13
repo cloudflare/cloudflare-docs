@@ -16,8 +16,7 @@ For up-to-date information, refer to the [Cloudflare China Network](https://www.
 
 JD Cloud's infrastructure has the following certifications:
 
-* ISO/IEC 27001 Audit and Certification
-* ISO/IEC 27018 Audit and Certification
-* CSA C-STAR (Security, Trust & Assurance Registry) Certificate
-* Certificate of PCI DSS Compliance
-
+- ISO/IEC 27001 Audit and Certification
+- ISO/IEC 27018 Audit and Certification
+- CSA C-STAR (Security, Trust & Assurance Registry) Certificate
+- Certificate of PCI DSS Compliance

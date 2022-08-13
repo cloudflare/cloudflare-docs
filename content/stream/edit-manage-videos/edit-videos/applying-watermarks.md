@@ -44,33 +44,34 @@ To create, list, delete, or get information about the profile, you will need you
 
 {{<definitions>}}
 
-*   `name` {{<type>}}string{{</type>}} {{<prop-meta>}}default: *empty string*{{</prop-meta>}}
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}default: _empty string_{{</prop-meta>}}
 
-    *   A short description for the profile. For example, "marketing videos."
+  - A short description for the profile. For example, "marketing videos."
 
-*   `opacity` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 1.0{{</prop-meta>}}
+- `opacity` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 1.0{{</prop-meta>}}
 
-    *   Translucency of the watermark. 0.0 means completely transparent, and 1.0 means completely opaque. Note that if the watermark is already semi-transparent, setting this to 1.0 will not make it completely opaque.
+  - Translucency of the watermark. 0.0 means completely transparent, and 1.0 means completely opaque. Note that if the watermark is already semi-transparent, setting this to 1.0 will not make it completely opaque.
 
-*   `padding` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 0.05{{</prop-meta>}}
+- `padding` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 0.05{{</prop-meta>}}
 
-    *   Whitespace between the adjacent edges (determined by position) of the video and the watermark. 0.0 means no padding, and 1.0 means padded full video width or length.
+  - Whitespace between the adjacent edges (determined by position) of the video and the watermark. 0.0 means no padding, and 1.0 means padded full video width or length.
 
-    *   Stream will make sure that the watermark will be at about the same position across videos with different dimensions.
+  - Stream will make sure that the watermark will be at about the same position across videos with different dimensions.
 
-*   `scale` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 0.15 {{</prop-meta>}}
+- `scale` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 0.15 {{</prop-meta>}}
 
-    *   The size of the watermark relative to the overall size of the video. This parameter will adapt to horizontal and vertical videos automatically. 0.0 means no scaling (use the size of the watermark as-is), and 1.0 fills the entire video.
+  - The size of the watermark relative to the overall size of the video. This parameter will adapt to horizontal and vertical videos automatically. 0.0 means no scaling (use the size of the watermark as-is), and 1.0 fills the entire video.
 
-    *   The algorithm will make sure that the watermark will look about the same size across videos with different dimensions.
+  - The algorithm will make sure that the watermark will look about the same size across videos with different dimensions.
 
-*   `position` {{<type>}}string (enum){{</type>}} {{<prop-meta>}}default: "upperRight"{{</prop-meta>}}
+- `position` {{<type>}}string (enum){{</type>}} {{<prop-meta>}}default: "upperRight"{{</prop-meta>}}
 
-    *   Location of the watermark. Valid positions are: `upperRight`, `upperLeft`, `lowerLeft`, `lowerRight`, and `center`.
+      *   Location of the watermark. Valid positions are: `upperRight`, `upperLeft`, `lowerLeft`, `lowerRight`, and `center`.
 
-        {{<Aside>}}
-Note that `center` will ignore the `padding` parameter.
-        {{</Aside>}}
+          {{<Aside>}}
+
+  Note that `center` will ignore the `padding` parameter.
+  {{</Aside>}}
 
 {{</definitions>}}
 
@@ -113,22 +114,22 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
 
 ```json
 {
-  "result": {
-    "uid": "d6373709b7681caa6c48ef2d8c73690d",
-    "size": 11248,
-    "height": 240,
-    "width": 720,
-    "created": "2020-07-29T00:16:55.719265Z",
-    "downloadedFrom": null,
-    "name": "marketing videos",
-    "opacity": 1.0,
-    "padding": 0.05,
-    "scale": 0.15,
-    "position": "upperRight"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"uid": "d6373709b7681caa6c48ef2d8c73690d",
+		"size": 11248,
+		"height": 240,
+		"width": 720,
+		"created": "2020-07-29T00:16:55.719265Z",
+		"downloadedFrom": null,
+		"name": "marketing videos",
+		"opacity": 1.0,
+		"padding": 0.05,
+		"scale": 0.15,
+		"position": "upperRight"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -163,28 +164,28 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/copy
 highlight: [10,11,12,13,14,15,16,17,18,19,20,21,22]
 ---
 {
-  "result": {
-    "uid": "8d3a5b80e7437047a0fb2761e0f7a645",
-    "thumbnail": "https://videodelivery.net/8d3a5b80e7437047a0fb2761e0f7a645/thumbnails/thumbnail.jpg",
+	"result": {
+		"uid": "8d3a5b80e7437047a0fb2761e0f7a645",
+		"thumbnail": "https://videodelivery.net/8d3a5b80e7437047a0fb2761e0f7a645/thumbnails/thumbnail.jpg",
 
-    "playback": {
-      "hls": "https://videodelivery.net/8d3a5b80e7437047a0fb2761e0f7a645/manifest/video.m3u8",
-      "dash": "https://videodelivery.net/8d3a5b80e7437047a0fb2761e0f7a645/manifest/video.mpd"
-    },
-    "watermark": {
-      "uid": "d6373709b7681caa6c48ef2d8c73690d",
-      "size": 11248,
-      "height": 240,
-      "width": 720,
-      "created": "2020-07-29T00:16:55.719265Z",
-      "downloadedFrom": null,
-      "name": "marketing videos",
-      "opacity": 1.0,
-      "padding": 0.05,
-      "scale": 0.15,
-      "position": "upperRight"
-    }
-
+		"playback": {
+			"hls": "https://videodelivery.net/8d3a5b80e7437047a0fb2761e0f7a645/manifest/video.m3u8",
+			"dash": "https://videodelivery.net/8d3a5b80e7437047a0fb2761e0f7a645/manifest/video.mpd"
+		},
+		"watermark": {
+			"uid": "d6373709b7681caa6c48ef2d8c73690d",
+			"size": 11248,
+			"height": 240,
+			"width": 720,
+			"created": "2020-07-29T00:16:55.719265Z",
+			"downloadedFrom": null,
+			"name": "marketing videos",
+			"opacity": 1.0,
+			"padding": 0.05,
+			"scale": 0.15,
+			"position": "upperRight"
+		}
+	}
 }
 ```
 
@@ -217,26 +218,26 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload
 
 ```json
 {
-  "result": {
-    "uploadURL": "https://upload.videodelivery.net/c32d98dd671e4046a33183cd5b93682b",
-    "uid": "c32d98dd671e4046a33183cd5b93682b",
-    "watermark": {
-      "uid": "d6373709b7681caa6c48ef2d8c73690d",
-      "size": 11248,
-      "height": 240,
-      "width": 720,
-      "created": "2020-07-29T00:16:55.719265Z",
-      "downloadedFrom": null,
-      "name": "marketing videos",
-      "opacity": 1.0,
-      "padding": 0.05,
-      "scale": 0.15,
-      "position": "upperRight"
-    }
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"uploadURL": "https://upload.videodelivery.net/c32d98dd671e4046a33183cd5b93682b",
+		"uid": "c32d98dd671e4046a33183cd5b93682b",
+		"watermark": {
+			"uid": "d6373709b7681caa6c48ef2d8c73690d",
+			"size": 11248,
+			"height": 240,
+			"width": 720,
+			"created": "2020-07-29T00:16:55.719265Z",
+			"downloadedFrom": null,
+			"name": "marketing videos",
+			"opacity": 1.0,
+			"padding": 0.05,
+			"scale": 0.15,
+			"position": "upperRight"
+		}
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -255,22 +256,22 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/$WATERM
 
 ```json
 {
-  "result": {
-    "uid": "d6373709b7681caa6c48ef2d8c73690d",
-    "size": 11248,
-    "height": 240,
-    "width": 720,
-    "created": "2020-07-29T00:16:55.719265Z",
-    "downloadedFrom": null,
-    "name": "marketing videos",
-    "opacity": 1.0,
-    "padding": 0.05,
-    "scale": 0.15,
-    "position": "center"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"uid": "d6373709b7681caa6c48ef2d8c73690d",
+		"size": 11248,
+		"height": 240,
+		"width": 720,
+		"created": "2020-07-29T00:16:55.719265Z",
+		"downloadedFrom": null,
+		"name": "marketing videos",
+		"opacity": 1.0,
+		"padding": 0.05,
+		"scale": 0.15,
+		"position": "center"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -287,41 +288,41 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/
 
 ```json
 {
-  "result": [
-    {
-      "uid": "9de16afa676d64faaa7c6c4d5047e637",
-      "size": 207710,
-      "height": 626,
-      "width": 1108,
-      "created": "2020-07-29T00:23:35.918472Z",
-      "downloadedFrom": null,
-      "name": "marketing videos",
-      "opacity": 1.0,
-      "padding": 0.05,
-      "scale": 0.15,
-      "position": "upperLeft"
-    },
-    {
-      "uid": "9c50cff5ab16c4aec0bcb03c44e28119",
-      "size": 207710,
-      "height": 626,
-      "width": 1108,
-      "created": "2020-07-29T00:16:46.735377Z",
-      "downloadedFrom": "https://company.com/logo.png",
-      "name": "internal training videos",
-      "opacity": 1.0,
-      "padding": 0.05,
-      "scale": 0.15,
-      "position": "center"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"uid": "9de16afa676d64faaa7c6c4d5047e637",
+			"size": 207710,
+			"height": 626,
+			"width": 1108,
+			"created": "2020-07-29T00:23:35.918472Z",
+			"downloadedFrom": null,
+			"name": "marketing videos",
+			"opacity": 1.0,
+			"padding": 0.05,
+			"scale": 0.15,
+			"position": "upperLeft"
+		},
+		{
+			"uid": "9c50cff5ab16c4aec0bcb03c44e28119",
+			"size": 207710,
+			"height": 626,
+			"width": 1108,
+			"created": "2020-07-29T00:16:46.735377Z",
+			"downloadedFrom": "https://company.com/logo.png",
+			"name": "internal training videos",
+			"opacity": 1.0,
+			"padding": 0.05,
+			"scale": 0.15,
+			"position": "center"
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
-## Delete a  watermark profile
+## Delete a watermark profile
 
 To delete a watermark profile that you created:
 
@@ -334,16 +335,16 @@ If the operation was successful, it will return a success response:
 
 ```json
 {
-  "result": "",
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": "",
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
 ## Limitations
 
-*   Once the watermark profile is created, you cannot change its parameters. If you need to edit your watermark profile, please delete it and create a new one.
-*   Once the watermark is applied to a video, you cannot change the watermark without re-uploading the video to apply a different profile.
-*   Once the watermark is applied to a video, deleting the watermark profile will not also remove the watermark from the video.
-*   The maximum file size is 2MiB (2097152 bytes), and only PNG files are supported.
+- Once the watermark profile is created, you cannot change its parameters. If you need to edit your watermark profile, please delete it and create a new one.
+- Once the watermark is applied to a video, you cannot change the watermark without re-uploading the video to apply a different profile.
+- Once the watermark is applied to a video, deleting the watermark profile will not also remove the watermark from the video.
+- The maximum file size is 2MiB (2097152 bytes), and only PNG files are supported.

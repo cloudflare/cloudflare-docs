@@ -13,6 +13,6 @@ The request will need to present the headers for any service token created for t
 
 ```json
 {
-  "any_valid_service_token": {}
+	"any_valid_service_token": {}
 }
 ```

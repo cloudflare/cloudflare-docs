@@ -61,21 +61,21 @@ Each API call to [create a Custom Hostname](https://api.cloudflare.com/#custom-h
 
 ```json
 {
-  "result": [
-    {
-      "id": "3537a672-e4d8-4d89-aab9-26cb622918a1",
-      "hostname": "app.example.com",
-      // ...
-      "status": "pending",
-      "verification_errors": ["custom hostname does not CNAME to this zone."],
-      "ownership_verification": {
-        "type": "txt",
-        "name": "_cf-custom-hostname.app.example.com",
-        "value": "0e2d5a7f-1548-4f27-8c05-b577cb14f4ec"
-      },
-      "created_at": "2020-03-04T19:04:02.705068Z"
-    }
-  ]
+	"result": [
+		{
+			"id": "3537a672-e4d8-4d89-aab9-26cb622918a1",
+			"hostname": "app.example.com",
+			// ...
+			"status": "pending",
+			"verification_errors": ["custom hostname does not CNAME to this zone."],
+			"ownership_verification": {
+				"type": "txt",
+				"name": "_cf-custom-hostname.app.example.com",
+				"value": "0e2d5a7f-1548-4f27-8c05-b577cb14f4ec"
+			},
+			"created_at": "2020-03-04T19:04:02.705068Z"
+		}
+	]
 }
 ```
 
@@ -99,18 +99,18 @@ To get and use an HTTP ownership_verification record:
 
 ```json
 {
-  "result": [
-    {
-      "id": "24c8c68e-bec2-49b6-868e-f06373780630",
-      "hostname": "app.example.com",
-      // ...
-      "ownership_verification_http": {
-        "http_url": "http://app.example.com/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630",
-        "http_body": "48b409f6-c886-406b-8cbc-0fbf59983555"
-      },
-      "created_at": "2020-03-04T20:06:04.117122Z"
-    }
-  ]
+	"result": [
+		{
+			"id": "24c8c68e-bec2-49b6-868e-f06373780630",
+			"hostname": "app.example.com",
+			// ...
+			"ownership_verification_http": {
+				"http_url": "http://app.example.com/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630",
+				"http_body": "48b409f6-c886-406b-8cbc-0fbf59983555"
+			},
+			"created_at": "2020-03-04T20:06:04.117122Z"
+		}
+	]
 }
 ```
 

@@ -27,22 +27,22 @@ A basic pass-through usage of streams:
 
 ```js
 addEventListener('fetch', event => {
-  event.respondWith(fetchAndStream(event.request));
+	event.respondWith(fetchAndStream(event.request));
 });
 
 async function fetchAndStream(request) {
-  // Fetch from origin server.
-  let response = await fetch(request);
+	// Fetch from origin server.
+	let response = await fetch(request);
 
-  // Create an identity TransformStream (a.k.a. a pipe).
-  // The readable side will become our new response body.
-  let { readable, writable } = new TransformStream();
+	// Create an identity TransformStream (a.k.a. a pipe).
+	// The readable side will become our new response body.
+	let { readable, writable } = new TransformStream();
 
-  // Start pumping the body. NOTE: No await!
-  response.body.pipeTo(writable);
+	// Start pumping the body. NOTE: No await!
+	response.body.pipeTo(writable);
 
-  // ... and deliver our Response while that’s running.
-  return new Response(readable, response);
+	// ... and deliver our Response while that’s running.
+	return new Response(readable, response);
 }
 ```
 

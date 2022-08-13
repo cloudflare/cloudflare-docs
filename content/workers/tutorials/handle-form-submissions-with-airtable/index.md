@@ -33,48 +33,72 @@ The simplified HTML markup for this form:
 
 ```html
 <form action="https://workers-airtable-form.signalnerve.workers.dev/submit" method="POST">
-  <div>
-    <label for="first_name">First name</label>
-    <input type="text" name="first_name" id="first_name" autocomplete="given-name" placeholder="Ellen" required />
-  </div>
+	<div>
+		<label for="first_name">First name</label>
+		<input
+			type="text"
+			name="first_name"
+			id="first_name"
+			autocomplete="given-name"
+			placeholder="Ellen"
+			required
+		/>
+	</div>
 
-  <div>
-    <label for="last_name">Last name</label>
-    <input type="text" name="last_name" id="last_name" autocomplete="family-name" placeholder="Ripley" required />
-  </div>
+	<div>
+		<label for="last_name">Last name</label>
+		<input
+			type="text"
+			name="last_name"
+			id="last_name"
+			autocomplete="family-name"
+			placeholder="Ripley"
+			required
+		/>
+	</div>
 
-  <div>
-    <label for="email">Email</label>
-      <input id="email" name="email" type="email" autocomplete="email" placeholder="eripley@nostromo.com" required />
-    </div>
-  </div>
+	<div>
+		<label for="email">Email</label>
+		<input
+			id="email"
+			name="email"
+			type="email"
+			autocomplete="email"
+			placeholder="eripley@nostromo.com"
+			required
+		/>
+	</div>
 
-  <div>
-    <label for="phone">
-      Phone
-      <span>Optional</span>
-    </label>
-    <input type="text" name="phone" id="phone" autocomplete="tel" placeholder="+1 (123) 456-7890" />
-  </div>
+	<div>
+		<label for="phone">
+			Phone
+			<span>Optional</span>
+		</label>
+		<input type="text" name="phone" id="phone" autocomplete="tel" placeholder="+1 (123) 456-7890" />
+	</div>
 
-  <div>
-    <label for="subject">Subject</label>
-    <input type="text" name="subject" id="subject" placeholder="Your example subject" required />
-  </div>
+	<div>
+		<label for="subject">Subject</label>
+		<input type="text" name="subject" id="subject" placeholder="Your example subject" required />
+	</div>
 
-  <div>
-    <label for="message">
-      Message
-      <span>Max 500 characters</span>
-    </label>
-    <textarea id="message" name="message" rows="4" placeholder="Tenetur optio quaerat expedita vero et illo. Tenetur nam explicabo dolor voluptatem eveniet. Commodi est beatae id voluptatum porro laudantium. Quam placeat accusamus vel officiis vel. Et perferendis dicta ut perspiciatis quos iste. Tempore autem molestias voluptates in sapiente enim doloremque." required></textarea>
-  </div>
+	<div>
+		<label for="message">
+			Message
+			<span>Max 500 characters</span>
+		</label>
+		<textarea
+			id="message"
+			name="message"
+			rows="4"
+			placeholder="Tenetur optio quaerat expedita vero et illo. Tenetur nam explicabo dolor voluptatem eveniet. Commodi est beatae id voluptatum porro laudantium. Quam placeat accusamus vel officiis vel. Et perferendis dicta ut perspiciatis quos iste. Tempore autem molestias voluptates in sapiente enim doloremque."
+			required
+		></textarea>
+	</div>
 
-  <div>
-    <button type="submit">
-      Submit
-    </button>
-  </div>
+	<div>
+		<button type="submit">Submit</button>
+	</div>
 </form>
 ```
 
@@ -90,24 +114,24 @@ Code is provided as an example below, including the first `<input>`, to show tha
 
 ```html
 <form action="SERVERLESS_FN_URL" method="POST" class="...">
-  <div>
-    <label for="first_name" class="..."> First name </label>
-    <div class="...">
-      <input
-        type="text"
-        name="first_name"
-        id="first_name"
-        autocomplete="given-name"
-        placeholder="Ellen"
-        required
-        class="..."
-      />
-    </div>
-  </div>
+	<div>
+		<label for="first_name" class="..."> First name </label>
+		<div class="...">
+			<input
+				type="text"
+				name="first_name"
+				id="first_name"
+				autocomplete="given-name"
+				placeholder="Ellen"
+				required
+				class="..."
+			/>
+		</div>
+	</div>
 
-  <!-- Rest of form -->
+	<!-- Rest of form -->
 
-  <button type="submit" class="...">Submit</button>
+	<button type="submit" class="...">Submit</button>
 </form>
 ```
 
@@ -215,19 +239,19 @@ In `index.js`, begin by setting up a simple Workers handler that can respond to 
 filename: index.js
 ---
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request))
-})
+	event.respondWith(handleRequest(event.request));
+});
 
-const FORM_URL = "https://airtable-form-example.pages.dev"
+const FORM_URL = 'https://airtable-form-example.pages.dev';
 
 async function handleRequest(request) {
-  const url = new URL(request.url)
+	const url = new URL(request.url);
 
-  if (url.pathname === "/submit") {
-    return submitHandler(request)
-  }
+	if (url.pathname === '/submit') {
+		return submitHandler(request);
+	}
 
-  return Response.redirect(FORM_URL)
+	return Response.redirect(FORM_URL);
 }
 ```
 
@@ -238,40 +262,33 @@ The `submitHandler` has two functions. First, it will parse the form data coming
 filename: index.js
 ---
 const submitHandler = async request => {
-  if (request.method !== "POST") {
-    return new Response("Method Not Allowed", {
-      status: 405
-    })
-  }
+	if (request.method !== 'POST') {
+		return new Response('Method Not Allowed', {
+			status: 405,
+		});
+	}
 
-  const body = await request.formData();
+	const body = await request.formData();
 
-  const {
-    first_name,
-    last_name,
-    email,
-    phone,
-    subject,
-    message
-  } = Object.fromEntries(body)
+	const { first_name, last_name, email, phone, subject, message } = Object.fromEntries(body);
 
-  // The keys in "fields" are case-sensitive, and
-  // should exactly match the field names you set up
-  // in your Airtable table, such as "First Name".
-  const reqBody = {
-    fields: {
-      "First Name": first_name,
-      "Last Name": last_name,
-      "Email": email,
-      "Phone Number": phone,
-      "Subject": subject,
-      "Message": message
-    }
-  }
+	// The keys in "fields" are case-sensitive, and
+	// should exactly match the field names you set up
+	// in your Airtable table, such as "First Name".
+	const reqBody = {
+		fields: {
+			'First Name': first_name,
+			'Last Name': last_name,
+			'Email': email,
+			'Phone Number': phone,
+			'Subject': subject,
+			'Message': message,
+		},
+	};
 
-  await createAirtableRecord(reqBody)
-  return Response.redirect(FORM_URL)
-}
+	await createAirtableRecord(reqBody);
+	return Response.redirect(FORM_URL);
+};
 ```
 
 While the majority of this function is concerned with parsing the request body (the data being sent as part of the request), there are two important things to note. First, if the HTTP method sent to this function is not `POST`, you will return a new response with the status code of [`405 Method Not Allowed`](https://httpstatuses.com/405).
@@ -287,15 +304,18 @@ The `createAirtableRecord` function accepts a `body` parameter, which conforms t
 filename: index.js
 ---
 const createAirtableRecord = body => {
-  return fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`, {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers: {
-      Authorization: `Bearer ${AIRTABLE_API_KEY}`,
-      'Content-type': `application/json`
-    }
-  })
-}
+	return fetch(
+		`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`,
+		{
+			method: 'POST',
+			body: JSON.stringify(body),
+			headers: {
+				'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+				'Content-type': `application/json`,
+			},
+		}
+	);
+};
 ```
 
 To make an authenticated request to Airtable, you need to provide three constants that represent data about your Airtable account, base, and table name. You have already set `AIRTABLE_API_KEY` using `wrangler secret`, since it is a value that should be encrypted. The **Airtable base ID** and **table name** are values that can be publicly shared in places like GitHub. Use Wrangler's [`vars`](/workers/wrangler/cli-wrangler/configuration/#vars) feature to pass public environment variables from your `wrangler.toml` file.
@@ -334,11 +354,11 @@ You will notice that your function is deployed to a unique URL — for example, 
 
 ```html
 <form
-  action="https://workers-airtable-form.cloudflare.workers.dev/submit"
-  method="POST"
-  class="..."
+	action="https://workers-airtable-form.cloudflare.workers.dev/submit"
+	method="POST"
+	class="..."
 >
-  <!-- The rest of your HTML form -->
+	<!-- The rest of your HTML form -->
 </form>
 ```
 

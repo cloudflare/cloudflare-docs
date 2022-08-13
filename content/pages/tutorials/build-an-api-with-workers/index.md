@@ -62,9 +62,9 @@ import Post from './handlers/post';
 const router = Router();
 
 router
-  .get('/api/posts', Posts)
-  .get('/api/posts/:id', Post)
-  .get('*', () => new Response('Not found', { status: 404 }));
+	.get('/api/posts', Posts)
+	.get('/api/posts/:id', Post)
+	.get('*', () => new Response('Not found', { status: 404 }));
 
 export const handleRequest = request => router.handle(request);
 ```
@@ -86,9 +86,9 @@ filename: "src/handlers/posts.ts"
 const posts = [];
 
 const Posts = () => {
-  const body = JSON.stringify(posts);
-  const headers = { 'Content-type': 'application/json' };
-  return new Response(body, { headers });
+	const body = JSON.stringify(posts);
+	const headers = { 'Content-type': 'application/json' };
+	return new Response(body, { headers });
 };
 
 export default Posts;
@@ -105,12 +105,12 @@ filename: "src/handlers/post.ts"
 const post = {};
 
 const Post = request => {
-  // This will be used soon to retrieve a post
-  const postId = request.params.id;
+	// This will be used soon to retrieve a post
+	const postId = request.params.id;
 
-  const body = JSON.stringify(post);
-  const headers = { 'Content-type': 'application/json' };
-  return new Response(body, { headers });
+	const body = JSON.stringify(post);
+	const headers = { 'Content-type': 'application/json' };
+	return new Response(body, { headers });
 };
 
 export default Post;
@@ -125,28 +125,28 @@ Until now, you have used empty stub data to return data in our API routes. To ma
 filename: "src/posts_store.ts"
 ---
 const _posts = [
-  {
-    id: 1,
-    title: 'My first blog post',
-    text: 'Hello world! This is my first blog post on my new Cloudflare Workers + Pages blog.',
-    published_at: new Date('2020-10-23'),
-  },
-  {
-    id: 2,
-    title: 'Updating my blog',
-    text: "It's my second blog post! I'm still writing and publishing using Cloudflare Workers + Pages :)",
-    published_at: new Date('2020-10-26'),
-  },
+	{
+		id: 1,
+		title: 'My first blog post',
+		text: 'Hello world! This is my first blog post on my new Cloudflare Workers + Pages blog.',
+		published_at: new Date('2020-10-23'),
+	},
+	{
+		id: 2,
+		title: 'Updating my blog',
+		text: "It's my second blog post! I'm still writing and publishing using Cloudflare Workers + Pages :)",
+		published_at: new Date('2020-10-26'),
+	},
 ];
 
 export default class PostsStore {
-  async all() {
-    return _posts;
-  }
+	async all() {
+		return _posts;
+	}
 
-  async find(id: number) {
-    return _posts.find(post => post.id.toString() === id.toString());
-  }
+	async find(id: number) {
+		return _posts.find(post => post.id.toString() === id.toString());
+	}
 }
 ```
 
@@ -162,10 +162,10 @@ highlight: [1, 3, 4, 5]
 import Store from '../posts_store';
 
 const Posts = async () => {
-  const posts = new Store();
-  const body = JSON.stringify(await posts.all());
-  const headers = { 'Content-type': 'application/json' };
-  return new Response(body, { headers });
+	const posts = new Store();
+	const body = JSON.stringify(await posts.all());
+	const headers = { 'Content-type': 'application/json' };
+	return new Response(body, { headers });
 };
 
 export default Posts;
@@ -179,12 +179,12 @@ highlight: [1, 3, 4, 7]
 import Store from '../posts_store';
 
 const Post = async request => {
-  const posts = new Store();
-  const postId = request.params.id;
+	const posts = new Store();
+	const postId = request.params.id;
 
-  const body = JSON.stringify(await posts.find(postId));
-  const headers = { 'Content-type': 'application/json' };
-  return new Response(body, { headers });
+	const body = JSON.stringify(await posts.find(postId));
+	const headers = { 'Content-type': 'application/json' };
+	return new Response(body, { headers });
 };
 
 export default Post;
@@ -202,13 +202,13 @@ highlight: [6, 7, 8, 9]
 import Store from '../posts_store';
 
 const Posts = async () => {
-  const posts = new Store();
-  const body = JSON.stringify(await posts.all());
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Content-type': 'application/json',
-  };
-  return new Response(body, { headers });
+	const posts = new Store();
+	const body = JSON.stringify(await posts.all());
+	const headers = {
+		'Access-Control-Allow-Origin': '*',
+		'Content-type': 'application/json',
+	};
+	return new Response(body, { headers });
 };
 
 export default Posts;
@@ -222,15 +222,15 @@ highlight: [8, 9, 10, 11]
 import Store from '../posts_store';
 
 const Post = async request => {
-  const posts = new Store();
-  const postId = request.params.id;
+	const posts = new Store();
+	const postId = request.params.id;
 
-  const body = JSON.stringify(await posts.find(postId));
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Content-type': 'application/json',
-  };
-  return new Response(body, { headers });
+	const body = JSON.stringify(await posts.find(postId));
+	const headers = {
+		'Access-Control-Allow-Origin': '*',
+		'Content-type': 'application/json',
+	};
+	return new Response(body, { headers });
 };
 
 export default Post;
@@ -272,11 +272,11 @@ Start up the app locally, and clear out the contents of `App.js`:
 filename: "src/App.js"
 ---
 function App() {
-  return (
-    <div>
-      <span>Hello world</span>
-    </div>
-  );
+	return (
+		<div>
+			<span>Hello world</span>
+		</div>
+	);
 }
 
 export default App;
@@ -305,12 +305,12 @@ import Posts from './components/posts';
 import Post from './components/post';
 
 function App() {
-  return (
-    <Router>
-      <Posts path="/" />
-      <Post path="/posts/:id" />
-    </Router>
-  );
+	return (
+		<Router>
+			<Posts path="/" />
+			<Post path="/posts/:id" />
+		</Router>
+	);
 }
 
 export default App;
@@ -326,30 +326,30 @@ import React, { useEffect, useState } from 'react';
 import { Link } from '@reach/router';
 
 const Posts = () => {
-  const [posts, setPosts] = useState([]);
+	const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-    const getPosts = async () => {
-      const resp = await fetch('https://serverless-api.signalnerve.workers.dev/api/posts');
-      const postsResp = await resp.json();
-      setPosts(postsResp);
-    };
+	useEffect(() => {
+		const getPosts = async () => {
+			const resp = await fetch('https://serverless-api.signalnerve.workers.dev/api/posts');
+			const postsResp = await resp.json();
+			setPosts(postsResp);
+		};
 
-    getPosts();
-  }, []);
+		getPosts();
+	}, []);
 
-  return (
-    <div>
-      <h1>Posts</h1>
-      {posts.map(post => (
-        <div key={post.id}>
-          <h2>
-            <Link to={`/posts/${post.id}`}>{post.title}</Link>
-          </h2>
-        </div>
-      ))}
-    </div>
-  );
+	return (
+		<div>
+			<h1>Posts</h1>
+			{posts.map(post => (
+				<div key={post.id}>
+					<h2>
+						<Link to={`/posts/${post.id}`}>{post.title}</Link>
+					</h2>
+				</div>
+			))}
+		</div>
+	);
 };
 
 export default Posts;
@@ -365,32 +365,32 @@ import React, { useEffect, useState } from 'react';
 import { Link } from '@reach/router';
 
 const Post = ({ id }) => {
-  const [post, setPost] = useState({});
+	const [post, setPost] = useState({});
 
-  useEffect(() => {
-    const getPost = async () => {
-      const resp = await fetch(`https://serverless-api.signalnerve.workers.dev/api/posts/${id}`);
-      const postResp = await resp.json();
-      setPost(postResp);
-    };
+	useEffect(() => {
+		const getPost = async () => {
+			const resp = await fetch(`https://serverless-api.signalnerve.workers.dev/api/posts/${id}`);
+			const postResp = await resp.json();
+			setPost(postResp);
+		};
 
-    getPost();
-  }, [id]);
+		getPost();
+	}, [id]);
 
-  if (!Object.keys(post).length) return <div />;
+	if (!Object.keys(post).length) return <div />;
 
-  return (
-    <div>
-      <h1>{post.title}</h1>
-      <p>{post.text}</p>
-      <p>
-        <em>Published {new Date(post.published_at).toLocaleString()}</em>
-      </p>
-      <p>
-        <Link to="/">Go back</Link>
-      </p>
-    </div>
-  );
+	return (
+		<div>
+			<h1>{post.title}</h1>
+			<p>{post.text}</p>
+			<p>
+				<em>Published {new Date(post.published_at).toLocaleString()}</em>
+			</p>
+			<p>
+				<Link to="/">Go back</Link>
+			</p>
+		</div>
+	);
 };
 
 export default Post;

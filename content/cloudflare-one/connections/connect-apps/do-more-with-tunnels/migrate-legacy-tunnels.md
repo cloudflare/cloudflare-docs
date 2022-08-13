@@ -31,17 +31,17 @@ To migrate your legacy tunnels to the named tunnels architecture:
 
     - If your legacy tunnel was serving `tunnel.example.com`, run this command to configure your named tunnel to also serve `tunnel.example.com`. For more information, refer to the [DNS Record routing](/cloudflare-one/connections/connect-apps/routing-to-tunnel/dns/) section.
 
-        ```sh
-        $ cloudflared tunnel route dns <TUNNEL-NAME> tunnel.example.com
-        ```
+      ```sh
+      $ cloudflared tunnel route dns <TUNNEL-NAME> tunnel.example.com
+      ```
 
     - If you used to run your legacy tunnel with the `--lb-pool` flag, run this command to set up your named tunnel as a load balancer origin. For more information, refer to the [Load Balancers routing](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) section.
 
-        ```sh
-        $ cloudflared tunnel route lb <TUNNEL-NAME> <LOAD-BALANCER-NAME> <LOAD-BALANCER-POOL>
-        ```
+      ```sh
+      $ cloudflared tunnel route lb <TUNNEL-NAME> <LOAD-BALANCER-NAME> <LOAD-BALANCER-POOL>
+      ```
 
-1. Next, [create a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/) with ingress rules. The ingress rules describe how to dispatch requests to your origins based on hostname and path. For example, if in the past you used to run `cloudflared tunnel --hostname tunnel.example.com --url https://localhost:3000`, you should add an equivalent ingress rule to your configuration file:
+1.  Next, [create a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/) with ingress rules. The ingress rules describe how to dispatch requests to your origins based on hostname and path. For example, if in the past you used to run `cloudflared tunnel --hostname tunnel.example.com --url https://localhost:3000`, you should add an equivalent ingress rule to your configuration file:
 
     ```yml
     ingress:

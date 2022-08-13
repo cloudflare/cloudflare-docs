@@ -18,7 +18,7 @@ To access your current payment methods (primary and backup):
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 
-2. Select **Manage account** > **Billing**. 
+2. Select **Manage account** > **Billing**.
 
 3. Select **Payment Info**.
 
@@ -43,15 +43,17 @@ To add or update your primary payment method,
 4. If there is no payment method on file, the **Payment Method** dialog opens automatically. Otherwise, select **Manage** next to your current payment method and the **Payment Method** dialog opens.
 
 5. Enter the required information based on the payment options below:
-    * If paying by credit card:
-        * Enter all the information required under the **Credit Card Details** form.
-        * To add your business information to your invoice, include your **Company** and **VAT/GST Number**, if applicable.
 
-    * If paying by PayPal (will charge your credit card if you do not have enough funds in your Paypal account):
-        * Select the **Paypal logo** on the upper right.
-        * Follow the online instructions until PayPal returns you to Cloudflare **Payment Method** dialog where you can continue with your set-up.
-        * Verify that your **PayPal username** now appears next to the **PayPal logo**.
-        * Add your account contact information as well as **Company** and **VAT/GST Number**, if applicable.
+   - If paying by credit card:
+
+     - Enter all the information required under the **Credit Card Details** form.
+     - To add your business information to your invoice, include your **Company** and **VAT/GST Number**, if applicable.
+
+   - If paying by PayPal (will charge your credit card if you do not have enough funds in your Paypal account):
+     - Select the **Paypal logo** on the upper right.
+     - Follow the online instructions until PayPal returns you to Cloudflare **Payment Method** dialog where you can continue with your set-up.
+     - Verify that your **PayPal username** now appears next to the **PayPal logo**.
+     - Add your account contact information as well as **Company** and **VAT/GST Number**, if applicable.
 
 {{<Aside type="note">}}
 
@@ -121,7 +123,6 @@ If paying by credit card:
 
 3. Select **Edit** in the **Billing Address** card and input your information.
 
-7. Review the suggested address in the pop-up window. If the information is correct, select **Confirm**. 
+4. Review the suggested address in the pop-up window. If the information is correct, select **Confirm**.
 
 If paying by Paypal, refer to PayPal's [billing address documentation](https://www.paypal.com/ai/smarthelp/article/how-do-i-edit-the-billing-address-linked-to-my-credit-card-faq680).
-

@@ -202,38 +202,38 @@ var size = fs.statSync(path).size;
 var mediaId = '';
 
 var options = {
-  endpoint: 'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT ID}/stream',
-  headers: {
-    Authorization: 'Bearer $TOKEN',
-  },
-  chunkSize: 50 * 1024 * 1024, // Required a minimum chunk size of 5MB, here we use 50MB.
-  resume: true,
-  metadata: {
-    filename: 'test.mp4',
-    filetype: 'video/mp4',
-    defaulttimestamppct: 0.5,
-    watermark: '$WATERMARKUID',
-  },
-  uploadSize: size,
-  onError: function (error) {
-    throw error;
-  },
-  onProgress: function (bytesUploaded, bytesTotal) {
-    var percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2);
-    console.log(bytesUploaded, bytesTotal, percentage + '%');
-  },
-  onSuccess: function () {
-    console.log('Upload finished');
-  },
-  onAfterResponse: function (req, res) {
-    return new Promise(resolve => {
-      var mediaIdHeader = res.getHeader('stream-media-id');
-      if (mediaIdHeader) {
-        mediaId = mediaIdHeader;
-      }
-      resolve();
-    });
-  },
+	endpoint: 'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT ID}/stream',
+	headers: {
+		Authorization: 'Bearer $TOKEN',
+	},
+	chunkSize: 50 * 1024 * 1024, // Required a minimum chunk size of 5MB, here we use 50MB.
+	resume: true,
+	metadata: {
+		filename: 'test.mp4',
+		filetype: 'video/mp4',
+		defaulttimestamppct: 0.5,
+		watermark: '$WATERMARKUID',
+	},
+	uploadSize: size,
+	onError: function (error) {
+		throw error;
+	},
+	onProgress: function (bytesUploaded, bytesTotal) {
+		var percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2);
+		console.log(bytesUploaded, bytesTotal, percentage + '%');
+	},
+	onSuccess: function () {
+		console.log('Upload finished');
+	},
+	onAfterResponse: function (req, res) {
+		return new Promise(resolve => {
+			var mediaIdHeader = res.getHeader('stream-media-id');
+			if (mediaIdHeader) {
+				mediaId = mediaIdHeader;
+			}
+			resolve();
+		});
+	},
 };
 
 var upload = new tus.Upload(file, options);

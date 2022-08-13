@@ -28,11 +28,11 @@ The HTTP DDoS Attack Protection Managed Ruleset is always enabled — you cannot
 
 The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the zone level. The request includes several overrides to adjust the default behavior of the HTTP DDoS Attack Protection Managed Ruleset. These overrides are the following:
 
-* All rules of the Managed Ruleset will use the `managed_challenge` action and have a sensitivity level of `medium`.
-* All rules tagged with `<TAG_NAME>` will have a sensitivity level of `low`.
-* The rule with ID `<MANAGED_RULESET_RULE_ID>` will use the `block` action.
+- All rules of the Managed Ruleset will use the `managed_challenge` action and have a sensitivity level of `medium`.
+- All rules tagged with `<TAG_NAME>` will have a sensitivity level of `low`.
+- The rule with ID `<MANAGED_RULESET_RULE_ID>` will use the `block` action.
 
-```json
+```bash
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/ddos_l7/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
@@ -70,46 +70,46 @@ The response returns the created (or updated) phase entry point ruleset.
 
 ```json
 {
-  "result": {
-    "id": "<PHASE_ENTRY_POINT_RULESET_ID>",
-    "name": "default",
-    "description": "Execute HTTP DDoS Attack Protection Managed Ruleset in the zone-level phase entry point ruleset",
-    "kind": "zone",
-    "version": "1",
-    "rules": [
-      {
-        "id": "<RULE_ID>",
-        "version": "1",
-        "action": "execute",
-        "action_parameters": {
-          "id": "<MANAGED_RULESET_ID>",
-          "version": "latest",
-          "overrides": {
-            "action": "managed_challenge",
-            "categories": [
-              {
-                "category": "<TAG_NAME>",
-                "sensitivity_level": "low"
-              }
-            ],
-            "rules": [
-              {
-                "id": "<MANAGED_RULESET_RULE_ID>",
-                "action": "block"
-              }
-            ],
-            "sensitivity_level": "medium"
-          }
-        },
-        "expression": "true",
-        "last_updated": "2021-06-16T04:14:47.977741Z",
-        "ref": "<RULE_REF>",
-        "enabled": true
-      }
-    ],
-    "last_updated": "2021-06-16T04:14:47.977741Z",
-    "phase": "ddos_l7"
-  }
+	"result": {
+		"id": "<PHASE_ENTRY_POINT_RULESET_ID>",
+		"name": "default",
+		"description": "Execute HTTP DDoS Attack Protection Managed Ruleset in the zone-level phase entry point ruleset",
+		"kind": "zone",
+		"version": "1",
+		"rules": [
+			{
+				"id": "<RULE_ID>",
+				"version": "1",
+				"action": "execute",
+				"action_parameters": {
+					"id": "<MANAGED_RULESET_ID>",
+					"version": "latest",
+					"overrides": {
+						"action": "managed_challenge",
+						"categories": [
+							{
+								"category": "<TAG_NAME>",
+								"sensitivity_level": "low"
+							}
+						],
+						"rules": [
+							{
+								"id": "<MANAGED_RULESET_RULE_ID>",
+								"action": "block"
+							}
+						],
+						"sensitivity_level": "medium"
+					}
+				},
+				"expression": "true",
+				"last_updated": "2021-06-16T04:14:47.977741Z",
+				"ref": "<RULE_REF>",
+				"enabled": true
+			}
+		],
+		"last_updated": "2021-06-16T04:14:47.977741Z",
+		"phase": "ddos_l7"
+	}
 }
 ```
 

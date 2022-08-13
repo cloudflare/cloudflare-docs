@@ -189,7 +189,7 @@ Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://da
 
 Hugo allows you to configure the `baseURL` of your application. This allows you to utilize the `absURL` helper to construct full canonical URLs. In order to do this with Pages, you must provde the `-b` or `--baseURL` flags with the `CF_PAGES_URL` environment variable to your `hugo` build command.
 
-Your final build command may look like this: 
+Your final build command may look like this:
 
 ```sh
 $ hugo -b $CF_PAGES_URL
@@ -210,7 +210,7 @@ Every time you commit new code to your Hugo site, Cloudflare Pages will automati
 
 ## Using a specific Hugo version
 
-You can set the `HUGO_VERSION` environment variable in your Pages project > **Settings**  > **Environment variables**, to use a [specific version of Hugo](https://github.com/gohugoio/hugo/releases).
+You can set the `HUGO_VERSION` environment variable in your Pages project > **Settings** > **Environment variables**, to use a [specific version of Hugo](https://github.com/gohugoio/hugo/releases).
 
 For example, `HUGO_VERSION`: `0.101.0`
 

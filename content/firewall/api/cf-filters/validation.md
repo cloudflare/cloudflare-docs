@@ -10,6 +10,7 @@ layout: list
 The Cloudflare Filters API supports an endpoint for validating expressions.
 
 {{<table-wrap>}}
+
   <table style="width: 100%;">
     <thead>
         <tr>
@@ -58,14 +59,14 @@ curl -X GET \
 header: Response
 ---
 {
-  "result": null,
-  "success": false,
-  "errors": [
-    {
-      "message": "Filter parsing error:\n`ip.src==34`\n          ^^ couldn't parse address in network: invalid IP address syntax\n"
-    }
-  ],
-  "messages": null
+	"result": null,
+	"success": false,
+	"errors": [
+		{
+			"message": "Filter parsing error:\n`ip.src==34`\n          ^^ couldn't parse address in network: invalid IP address syntax\n"
+		}
+	],
+	"messages": null
 }
 ```
 
@@ -79,7 +80,7 @@ Filter parsing error:
 
 ### Validate expression via JSON object
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -90,7 +91,7 @@ curl -X POST \
 -H "Content-Type: application/json" \
 -d '{
   "expression": "ip.src in {2400:cb00::/32 2405:8100::/2000 2c0f:f248::/32 2a06:98c0::/29}"
-}' 
+}'
 ```
 
 ```json
@@ -98,14 +99,14 @@ curl -X POST \
 header: Response
 ---
 {
-  "result": null,
-  "success": false,
-  "errors": [
-    {
-      "message": "Filter parsing error:\n`ip.src in {2400:cb00::/32 2405:8100::/2000 2c0f:f248::/32 2a06:98c0::/29}`\n                                        ^^^^ number too large to fit in target type while parsing with radix 10\n"
-    }
-  ],
-  "messages": null
+	"result": null,
+	"success": false,
+	"errors": [
+		{
+			"message": "Filter parsing error:\n`ip.src in {2400:cb00::/32 2405:8100::/2000 2c0f:f248::/32 2a06:98c0::/29}`\n                                        ^^^^ number too large to fit in target type while parsing with radix 10\n"
+		}
+	],
+	"messages": null
 }
 ```
 

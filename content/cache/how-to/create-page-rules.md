@@ -29,26 +29,26 @@ You can disable a page rule at any time. While a rule is disabled, actions wonâ€
 Page rules trigger certain actions when a request matches a defined URL pattern.
 
 <table>
-  <tbody>
-    <th>Plan</th>
-    <th>Page rules allowed</th>
-    <tr>
-      <td>Free</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <td>Pro</td>
-      <td>20</td>
-    </tr>
-    <tr>
-      <td>Business</td>
-      <td>50</td>
-    </tr>
-    <tr>
-      <td>Enterprise</td>
-      <td>125</td>
-    </tr>
-  </tbody>
+	<tbody>
+		<th>Plan</th>
+		<th>Page rules allowed</th>
+		<tr>
+			<td>Free</td>
+			<td>3</td>
+		</tr>
+		<tr>
+			<td>Pro</td>
+			<td>20</td>
+		</tr>
+		<tr>
+			<td>Business</td>
+			<td>50</td>
+		</tr>
+		<tr>
+			<td>Enterprise</td>
+			<td>125</td>
+		</tr>
+	</tbody>
 </table>
 
 You can also [purchase additional rules](https://www.cloudflare.com/features-page-rules/) up to a maximum of 100 for domains in the Free, Pro, and Business plans.

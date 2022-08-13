@@ -28,8 +28,8 @@ Based on your chosen Certificate Authority, you may not be able to use email ver
 
 Once you locate your certificate, find the following values:
 
-*   API: `emails`
-*   Dashboard: **Certificate validation email recipients**.
+- API: `emails`
+- Dashboard: **Certificate validation email recipients**.
 
 ### Complete DCV
 

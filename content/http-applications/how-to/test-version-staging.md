@@ -14,8 +14,8 @@ To trigger staging rules:
 
 1. When you [create or edit](/http-applications/how-to/manage-routing-rules/) a routing rule for **Staging**, copy the staging IPs listed under **Rule Type**:
 
-    - `162.159.133.39`
-    - `162.159.134.39`
+   - `162.159.133.39`
+   - `162.159.134.39`
 
 2. On your device, [modify your hosts file](https://docs.rackspace.com/support/how-to/modify-your-hosts-file/) to send requests to specific IP addresses.
 3. Go to the hostnames associated with your routing rules and test out your configuration changes.

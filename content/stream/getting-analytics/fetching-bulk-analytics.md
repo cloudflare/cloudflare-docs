@@ -27,7 +27,7 @@ To view analytics data from the Cloudflare dashboard:
 3. From **Stream Analytics**, click **Add filter** to view data related to your filter.
 4. After selecting your filters, click **Apply**.
 
-You can also hover your cursor over interactive portions to view specific data points. 
+You can also hover your cursor over interactive portions to view specific data points.
 
 ## Client side analytics
 
@@ -35,23 +35,23 @@ Stream has a GraphQL analytics API that can be used to get bulk analytics for ev
 
 ### Metrics
 
-*   Number of views (number of times the video playback has been started)
-*   Time viewed in seconds
-*   Number of video buffering events
-*   Number of times quality level has changed
+- Number of views (number of times the video playback has been started)
+- Time viewed in seconds
+- Number of video buffering events
+- Number of times quality level has changed
 
 ### Filters
 
 There is no limit on number of filters per query.
 
-*   Video UID
-*   Date/time
-*   Country
-*   CreatorID
-*   Device type
-*   Device operating system
-*   Device browser
-*   Quality level (only for quality level metric)
+- Video UID
+- Date/time
+- Country
+- CreatorID
+- Device type
+- Device operating system
+- Device browser
+- Quality level (only for quality level metric)
 
 {{<Aside>}}
 
@@ -71,34 +71,28 @@ Here is how you would get the view count and minutes viewed for the videos in yo
 
 1.  Make a query to `https://api.cloudflare.com/client/v4/graphql`
 2.  Include your Cloudflare API token in the headers (see cURL example included on this page)
-3.  It is important that you change the $ACCOUNT\_ID with your account ID and the date range
+3.  It is important that you change the $ACCOUNT_ID with your account ID and the date range
 4.  The body of the query should contain the following GraphQL Query:
 
-```javascript
+```graphql
 query {
-  viewer {
-    accounts(filter:{
-      accountTag:"$ACCOUNT_ID"
-
-    }) {
-      videoPlaybackEventsAdaptiveGroups(
-        filter: {
-          date_geq: "2020-09-01"
-          date_lt: "2020-09-25"
-        }
-        orderBy:[uid_ASC]
-        limit: 1000
-      ) {
-        count
-        sum {
-          timeViewedMinutes
-        }
-        dimensions{
-          uid
-        }
-      }
-    }
-  }
+	viewer {
+		accounts(filter: { accountTag: "$ACCOUNT_ID" }) {
+			videoPlaybackEventsAdaptiveGroups(
+				filter: { date_geq: "2020-09-01", date_lt: "2020-09-25" }
+				orderBy: [uid_ASC]
+				limit: 1000
+			) {
+				count
+				sum {
+					timeViewedMinutes
+				}
+				dimensions {
+					uid
+				}
+			}
+		}
+	}
 }
 ```
 
@@ -116,108 +110,107 @@ curl --request POST \
 
 The response will look something like below. Things to remember:
 
-*   Each object inside videoPlaybackEventsAdaptiveGroups represents one video
-*   uid property represents the video uid
-*   count property shows the view count for one video during the specified date range
-*   timeViewedMinutes property shows the minutes viewed per video during the specified date range
-*   If a video did not have views in the date range specified, it will NOT be included in the response
+- Each object inside videoPlaybackEventsAdaptiveGroups represents one video
+- uid property represents the video uid
+- count property shows the view count for one video during the specified date range
+- timeViewedMinutes property shows the minutes viewed per video during the specified date range
+- If a video did not have views in the date range specified, it will NOT be included in the response
 
-```javascript
+```json
 {
-  "data": {
-    "viewer": {
-      "accounts": [
-        {
-          "videoPlaybackEventsAdaptiveGroups": [
-            {
-              "count": 5,
-              "dimensions": {
-                "uid": "35f58cd097b40b1264124d9easbd62249"
-              },
-              "sum": {
-                "timeViewedMinutes": 0
-              }
-            },
-            {
-              "count": 0,
-              "dimensions": {
-                "uid": "39a24fb20aa2617a483582f5ggb6b0d5e9"
-              },
-              "sum": {
-                "timeViewedMinutes": 0
-              }
-            },
-            {
-              "count": 0,
-              "dimensions": {
-                "uid": "5646153f8dea17f44dss542a42e76cfd04"
-              },
-              "sum": {
-                "timeViewedMinutes": 0
-              }
-            },
-            {
-              "count": 0,
-              "dimensions": {
-                "uid": "6cc90238ffd28e1861ba2aaf1030f6d4db"
-              },
-              "sum": {
-                "timeViewedMinutes": 1
-              }
-            },
-            {
-              "count": 2,
-              "dimensions": {
-                "uid": "764254b444dss68c63702e8545536dfb422"
-              },
-              "sum": {
-                "timeViewedMinutes": 1225
-              }
-            },
-            {
-              "count": 1,
-              "dimensions": {
-                "uid": "a8d47920ds8c6e8d1cgffc425e6c9120ef76"
-              },
-              "sum": {
-                "timeViewedMinutes": 0
-              }
-            },
-            {
-              "count": 2,
-              "dimensions": {
-                "uid": "cc707cacc9bc86cb8fbab0021d749389"
-              },
-              "sum": {
-                "timeViewedMinutes": 1
-              }
-            },
-            {
-              "count": 1,
-              "dimensions": {
-                "uid": "e81376fee97b3115dc1c3f82fb2be79e"
-              },
-              "sum": {
-                "timeViewedMinutes": 0
-              }
-            },
-            {
-              "count": 241,
-              "dimensions": {
-                "uid": "fcfa5c97795ba90251cbbae1880a0e18"
-              },
-              "sum": {
-                "timeViewedMinutes": 101
-              }
-            }
-          ]
-        }
-      ]
-    }
-  },
-  "errors": null
+	"data": {
+		"viewer": {
+			"accounts": [
+				{
+					"videoPlaybackEventsAdaptiveGroups": [
+						{
+							"count": 5,
+							"dimensions": {
+								"uid": "35f58cd097b40b1264124d9easbd62249"
+							},
+							"sum": {
+								"timeViewedMinutes": 0
+							}
+						},
+						{
+							"count": 0,
+							"dimensions": {
+								"uid": "39a24fb20aa2617a483582f5ggb6b0d5e9"
+							},
+							"sum": {
+								"timeViewedMinutes": 0
+							}
+						},
+						{
+							"count": 0,
+							"dimensions": {
+								"uid": "5646153f8dea17f44dss542a42e76cfd04"
+							},
+							"sum": {
+								"timeViewedMinutes": 0
+							}
+						},
+						{
+							"count": 0,
+							"dimensions": {
+								"uid": "6cc90238ffd28e1861ba2aaf1030f6d4db"
+							},
+							"sum": {
+								"timeViewedMinutes": 1
+							}
+						},
+						{
+							"count": 2,
+							"dimensions": {
+								"uid": "764254b444dss68c63702e8545536dfb422"
+							},
+							"sum": {
+								"timeViewedMinutes": 1225
+							}
+						},
+						{
+							"count": 1,
+							"dimensions": {
+								"uid": "a8d47920ds8c6e8d1cgffc425e6c9120ef76"
+							},
+							"sum": {
+								"timeViewedMinutes": 0
+							}
+						},
+						{
+							"count": 2,
+							"dimensions": {
+								"uid": "cc707cacc9bc86cb8fbab0021d749389"
+							},
+							"sum": {
+								"timeViewedMinutes": 1
+							}
+						},
+						{
+							"count": 1,
+							"dimensions": {
+								"uid": "e81376fee97b3115dc1c3f82fb2be79e"
+							},
+							"sum": {
+								"timeViewedMinutes": 0
+							}
+						},
+						{
+							"count": 241,
+							"dimensions": {
+								"uid": "fcfa5c97795ba90251cbbae1880a0e18"
+							},
+							"sum": {
+								"timeViewedMinutes": 101
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"errors": null
 }
-
 ```
 
 ## Server side analytics
@@ -300,42 +293,39 @@ GraphQL API supports seek pagination: using filters, you can specify the last vi
 
 The query below will return data for 2 videos that follow video id `5646153f8dea17f44d542a42e76cfd`:
 
-```javascript
+```graphql
 query {
-  viewer {
-    accounts(filter:{
-      accountTag:"6c04ee5623f70a112c8f488e4c7a2409"
-
-    }) {
-      videoPlaybackEventsAdaptiveGroups(
-        filter: {
-          date_geq: "2020-09-01"
-          date_lt: "2020-09-25"
-          uid_gt:"5646153f8dea17f44d542a42e76cfd"
-        }
-        orderBy:[uid_ASC]
-        limit: 2
-      ) {
-        count
-        sum {
-          timeViewedMinutes
-        }
-        dimensions{
-          uid
-        }
-      }
-    }
-  }
+	viewer {
+		accounts(filter: { accountTag: "6c04ee5623f70a112c8f488e4c7a2409" }) {
+			videoPlaybackEventsAdaptiveGroups(
+				filter: {
+					date_geq: "2020-09-01"
+					date_lt: "2020-09-25"
+					uid_gt: "5646153f8dea17f44d542a42e76cfd"
+				}
+				orderBy: [uid_ASC]
+				limit: 2
+			) {
+				count
+				sum {
+					timeViewedMinutes
+				}
+				dimensions {
+					uid
+				}
+			}
+		}
+	}
 }
 ```
 
 Here are the steps to implementing pagination:
 
-1.  Call the first query without uid\_gt filter to get the first set of videos
+1.  Call the first query without uid_gt filter to get the first set of videos
 2.  Grab the last video ID from the response from the first query
-3.  Call next query by specifying uid\_gt property and set it to the last video ID. This will return the next set of videos
+3.  Call next query by specifying uid_gt property and set it to the last video ID. This will return the next set of videos
 
 ## Limitations
 
-*   Maximum query interval in a single query is 31 days
-*   Maximum data retention period is 90 days
+- Maximum query interval in a single query is 31 days
+- Maximum data retention period is 90 days

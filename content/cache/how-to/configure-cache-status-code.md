@@ -17,13 +17,13 @@ The maximum caching limit for Free, Pro, and Business customers is 512 MB per fi
 
 By default, Cloudflare caches certain HTTP response codes with the following Edge Cache TTL when a `cache-control` directive or `expires` response header are not present.
 
-| HTTP status code   | Default TTL  |
-| ------------------ | ------------ |
-| 200, 206, 301      |  120m        |
-| 302, 303           |  20m         |
-| 404, 410           |  3m          |
-| 403                |  0s          |
-| 500, 502, 503, 504 |  0s          |
+| HTTP status code   | Default TTL |
+| ------------------ | ----------- |
+| 200, 206, 301      | 120m        |
+| 302, 303           | 20m         |
+| 404, 410           | 3m          |
+| 403                | 0s          |
+| 500, 502, 503, 504 | 0s          |
 
 ## Set cache TTL by response status via the Cloudflare dashboard
 
@@ -31,8 +31,8 @@ To set cache TTL by response status, [create a Page Rule](/cache/how-to/create-p
 
 ## Set cache TTL by response status via the Cloudflare API
 
-```json
-curl -X POST "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/pagerules" \     
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/pagerules" \
 -H "X-Auth-Email: user@example.com" \
 -H "X-Auth-Key: ${CF_AUTH_KEY}" \
 -H "Content-Type: application/json" \
@@ -65,9 +65,9 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8
 
 Provide a JSON object containing status codes and their corresponding TTLs. Each key-value pair in the cache TTL by status page rule has the following syntax:
 
-*   `status_code`: A string such as 200 or 500. `status_code` matches the exact status code from the origin web server. Valid status codes are between 100-599.
-*   `status_code_range`: A "from-to" string, such as 200-299 or 400-599. `status_code_range` matches any status code from the origin web server within the specified range.
-*   `TTL`: An integer that defines the duration an asset is valid in seconds or one of the following strings: `no-store`, `no-cache`. Only positive integers, including 0, are accepted.
+- `status_code`: A string such as 200 or 500. `status_code` matches the exact status code from the origin web server. Valid status codes are between 100-599.
+- `status_code_range`: A "from-to" string, such as 200-299 or 400-599. `status_code_range` matches any status code from the origin web server within the specified range.
+- `TTL`: An integer that defines the duration an asset is valid in seconds or one of the following strings: `no-store`, `no-cache`. Only positive integers, including 0, are accepted.
 
 ## Set cache TTL by response status via a Cloudflare Worker
 

@@ -18,13 +18,13 @@ With the script, your page HTML should be similar to the following:
 
 ```html
 <html>
-  <head>
-    ….
-    <script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin"></script>
-  </head>
-  <body>
-    …
-  </body>
+	<head>
+		….
+		<script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin"></script>
+	</head>
+	<body>
+		…
+	</body>
 </html>
 ```
 

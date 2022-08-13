@@ -70,11 +70,11 @@ To test that your connection is working, in the Zero Trust dashboard, navigate t
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>"
-  },
-  "type": "linkedin",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>"
+	},
+	"type": "linkedin",
+	"name": "my example idp"
 }
 ```

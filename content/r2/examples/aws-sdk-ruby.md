@@ -61,3 +61,4 @@ puts @r2.list_objects(bucket:"your-bucket", max_keys:20)
 #=>     …,
 #=>   ]
 #=> }
+```

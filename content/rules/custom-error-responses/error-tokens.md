@@ -12,10 +12,10 @@ A custom response may include the following error tokens, which will be replaced
 
 {{<table-wrap>}}
 
-Token | Description
-------|------------
-`::CLIENT_IP::` | The visitor's IP address.
-`::RAY_ID::` | A unique identifier given to every request that goes through Cloudflare.
-`::GEO::` | The country or region associated with the visitor's IP address.
+| Token           | Description                                                              |
+| --------------- | ------------------------------------------------------------------------ |
+| `::CLIENT_IP::` | The visitor's IP address.                                                |
+| `::RAY_ID::`    | A unique identifier given to every request that goes through Cloudflare. |
+| `::GEO::`       | The country or region associated with the visitor's IP address.          |
 
 {{</table-wrap>}}

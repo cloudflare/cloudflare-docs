@@ -47,65 +47,65 @@ Newest changes are listed first.
 ### Minimal subrequests
 
 <table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Default as of</strong>
-      </td>
-      <td>2022-04-05</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to enable</strong>
-      </td>
-      <td>
-        <code>minimal_subrequests</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to disable</strong>
-      </td>
-      <td>
-        <code>no_minimal_subrequests</code>
-      </td>
-    </tr>
-  </tbody>
+	<tbody>
+		<tr>
+			<td>
+				<strong>Default as of</strong>
+			</td>
+			<td>2022-04-05</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to enable</strong>
+			</td>
+			<td>
+				<code>minimal_subrequests</code>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to disable</strong>
+			</td>
+			<td>
+				<code>no_minimal_subrequests</code>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 With the `minimal_subrequests` flag set, `fetch()` subrequests sent to endpoints on the Worker's own zone (also called same-zone subrequests) have a reduced set of features applied to them. In general, these features should not have been applied to same-zone subrequests in the first place, and very few user-facing behavior changes are anticipated. Specifically, Workers might observe the following behavior changes with the new flag:
 
-* Response bodies will not be opportunistically gzipped before being transmitted to the Workers runtime. If a Worker reads the response body, it will read it in plaintext, as has always been the case, so disabling this prevents unnecessary decompression. Meanwhile, if the Worker passes the response through to the client, Cloudflare's HTTP proxy will opportunistically gzip the response body on that side of the Workers runtime instead. The behavior change observable by a Worker script should be that some `Content-Encoding: gzip` headers will no longer appear.
-* Automatic Platform Optimization may previously have been applied on both the Worker's initiating request and its subrequests in some circumstances. It will now only apply to the initiating request.
-* Link prefetching will now only apply to the Worker's response, not responses to the Worker's subrequests.
+- Response bodies will not be opportunistically gzipped before being transmitted to the Workers runtime. If a Worker reads the response body, it will read it in plaintext, as has always been the case, so disabling this prevents unnecessary decompression. Meanwhile, if the Worker passes the response through to the client, Cloudflare's HTTP proxy will opportunistically gzip the response body on that side of the Workers runtime instead. The behavior change observable by a Worker script should be that some `Content-Encoding: gzip` headers will no longer appear.
+- Automatic Platform Optimization may previously have been applied on both the Worker's initiating request and its subrequests in some circumstances. It will now only apply to the initiating request.
+- Link prefetching will now only apply to the Worker's response, not responses to the Worker's subrequests.
 
 ### Global `navigator`
 
 <table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Default as of</strong>
-      </td>
-      <td>2022-03-21</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to enable</strong>
-      </td>
-      <td>
-        <code>global_navigator</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to disable</strong>
-      </td>
-      <td>
-        <code>no_global_navigator</code>
-      </td>
-    </tr>
-  </tbody>
+	<tbody>
+		<tr>
+			<td>
+				<strong>Default as of</strong>
+			</td>
+			<td>2022-03-21</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to enable</strong>
+			</td>
+			<td>
+				<code>global_navigator</code>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to disable</strong>
+			</td>
+			<td>
+				<code>no_global_navigator</code>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 With the `global_navigator` flag set, a new global `navigator` property is available from within Workers. Currently, it exposes only a single `navigator.userAgent` property whose value is set to `'Cloudflare-Workers'`. This property can be used to reliably determine whether code is running within the Workers environment.
@@ -113,30 +113,30 @@ With the `global_navigator` flag set, a new global `navigator` property is avail
 ### Setters/getters on API object prototypes
 
 <table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Default as of</strong>
-      </td>
-      <td>2022-01-31</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to enable</strong>
-      </td>
-      <td>
-        <code>workers_api_getters_setters_on_prototype</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to disable</strong>
-      </td>
-      <td>
-        <code>workers_api_getters_setters_on_instance</code>
-      </td>
-    </tr>
-  </tbody>
+	<tbody>
+		<tr>
+			<td>
+				<strong>Default as of</strong>
+			</td>
+			<td>2022-01-31</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to enable</strong>
+			</td>
+			<td>
+				<code>workers_api_getters_setters_on_prototype</code>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to disable</strong>
+			</td>
+			<td>
+				<code>workers_api_getters_setters_on_instance</code>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 Originally, properties on Workers API objects were defined as instance properties as opposed to prototype properties. This broke subclassing at the JavaScript layer, preventing a subclass from correctly overriding the superclass getters/setters. This flag controls the breaking change made to set those getters/setters on the prototype template instead.
@@ -166,24 +166,24 @@ This changes applies to:
 ### New URL parser implementation
 
 <table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Flag to enable</strong>
-      </td>
-      <td>
-        <code>url_standard</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to disable</strong>
-      </td>
-      <td>
-        <code>url_original</code>
-      </td>
-    </tr>
-  </tbody>
+	<tbody>
+		<tr>
+			<td>
+				<strong>Flag to enable</strong>
+			</td>
+			<td>
+				<code>url_standard</code>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to disable</strong>
+			</td>
+			<td>
+				<code>url_original</code>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 The original Workers `URL` API implementation is not fully compliant with the [WHATWG URL Standard](https://url.spec.whatwg.org/). Cloudflare has added a new implementation that is fully compliant. However, since the new implementation is not completely backwards compatible, it is disabled by default. Use the `url_standard` flag to enable the new implementation.
@@ -191,30 +191,30 @@ The original Workers `URL` API implementation is not fully compliant with the [W
 ### Streams BYOB reader detaches buffer
 
 <table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Default as of</strong>
-      </td>
-      <td>2021-11-10</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to enable early</strong>
-      </td>
-      <td>
-        <code>streams_byob_reader_detaches_buffer</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to disable</strong>
-      </td>
-      <td>
-        <code>streams_byob_reader_does_not_detach_buffer</code>
-      </td>
-    </tr>
-  </tbody>
+	<tbody>
+		<tr>
+			<td>
+				<strong>Default as of</strong>
+			</td>
+			<td>2021-11-10</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to enable early</strong>
+			</td>
+			<td>
+				<code>streams_byob_reader_detaches_buffer</code>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to disable</strong>
+			</td>
+			<td>
+				<code>streams_byob_reader_does_not_detach_buffer</code>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 Originally, the Workers runtime did not detach the `ArrayBuffer`s from user-provided TypedArrays when using the [BYOB reader's `read()` method](/workers/runtime-apis/streams/readablestreambyobreader/#methods), as required by the Streams spec, meaning it was possible to inadvertently reuse the same buffer for multiple `read()` calls. This change makes Workers conform to the spec.
@@ -226,12 +226,12 @@ User code should never try to reuse an `ArrayBuffer` that has been passed into a
 let reader = readable.getReader({ mode: 'byob' });
 let arrayBufferView = new Uint8Array(4096);
 while (true) {
-  let result = await reader.read(arrayBufferView);
-  if (result.done) break;
-  // Optionally something with `result` here.
-  // Re-use the same memory for the next `read()` by creating
-  // a new Uint8Array backed by the result's ArrayBuffer.
-  arrayBufferView = new Uint8Array(result.value.buffer);
+	let result = await reader.read(arrayBufferView);
+	if (result.done) break;
+	// Optionally something with `result` here.
+	// Re-use the same memory for the next `read()` by creating
+	// a new Uint8Array backed by the result's ArrayBuffer.
+	arrayBufferView = new Uint8Array(result.value.buffer);
 }
 ```
 
@@ -240,30 +240,30 @@ The more recently added extension method `readAtLeast()` will always detach the 
 ### Durable Object `stub.fetch()` requires a full URL
 
 <table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Default as of</strong>
-      </td>
-      <td>2021-11-10</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to enable early</strong>
-      </td>
-      <td>
-        <code>durable_object_fetch_requires_full_url</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to disable</strong>
-      </td>
-      <td>
-        <code>durable_object_fetch_allows_relative_url</code>
-      </td>
-    </tr>
-  </tbody>
+	<tbody>
+		<tr>
+			<td>
+				<strong>Default as of</strong>
+			</td>
+			<td>2021-11-10</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to enable early</strong>
+			</td>
+			<td>
+				<code>durable_object_fetch_requires_full_url</code>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to disable</strong>
+			</td>
+			<td>
+				<code>durable_object_fetch_allows_relative_url</code>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 Originally, when making a request to a Durable Object by calling `stub.fetch(url)`, a relative URL was accepted as an input. The URL would be interpreted relative to the dummy URL `http://fake-host`, and the resulting absolute URL was delivered to the destination object's `fetch()` handler. This was a mistake — full URLs were meant to be required. This flag makes full URLs required.
@@ -271,30 +271,30 @@ Originally, when making a request to a Durable Object by calling `stub.fetch(url
 ### `fetch()` improperly interprets unknown protocols as HTTP
 
 <table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Default as of</strong>
-      </td>
-      <td>2021-11-10</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to enable early</strong>
-      </td>
-      <td>
-        <code>fetch_refuses_unknown_protocols</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to disable</strong>
-      </td>
-      <td>
-        <code>fetch_treats_unknown_protocols_as_http</code>
-      </td>
-    </tr>
-  </tbody>
+	<tbody>
+		<tr>
+			<td>
+				<strong>Default as of</strong>
+			</td>
+			<td>2021-11-10</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to enable early</strong>
+			</td>
+			<td>
+				<code>fetch_refuses_unknown_protocols</code>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to disable</strong>
+			</td>
+			<td>
+				<code>fetch_treats_unknown_protocols_as_http</code>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 Originally, if the `fetch()` function was passed a URL specifying any protocol other than `http:` or `https:`, it would silently treat it as if it were `http:`. For example, `fetch()` would appear to accept `ftp:` URLs, but it was actually making HTTP requests instead.
@@ -306,30 +306,30 @@ The `ws:` and `wss:` URL schemes are intended to be used together with the `new 
 ### `FormData` parsing supports `File`
 
 <table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Default as of</strong>
-      </td>
-      <td>2021-11-03</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to enable early</strong>
-      </td>
-      <td>
-        <code>formdata_parser_supports_files</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to disable</strong>
-      </td>
-      <td>
-        <code>formdata_parser_converts_files_to_strings</code>
-      </td>
-    </tr>
-  </tbody>
+	<tbody>
+		<tr>
+			<td>
+				<strong>Default as of</strong>
+			</td>
+			<td>2021-11-03</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to enable early</strong>
+			</td>
+			<td>
+				<code>formdata_parser_supports_files</code>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to disable</strong>
+			</td>
+			<td>
+				<code>formdata_parser_converts_files_to_strings</code>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 [The `FormData` API](https://developer.mozilla.org/en-US/docs/Web/API/FormData) is used to parse data (especially HTTP request bodies) in `multipart/form-data` format.
@@ -343,28 +343,28 @@ These changes can be enabled via `compatibility_flags`, but are not yet schedule
 ### `HTMLRewriter` handling of `<esi:include>`
 
 <table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Default as of</strong>
-      </td>
-      <td>TBD</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to enable early</strong>
-      </td>
-      <td>
-        <code>html_rewriter_treats_esi_include_as_void_tag</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Flag to disable</strong>
-      </td>
-      <td>TBD</td>
-    </tr>
-  </tbody>
+	<tbody>
+		<tr>
+			<td>
+				<strong>Default as of</strong>
+			</td>
+			<td>TBD</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to enable early</strong>
+			</td>
+			<td>
+				<code>html_rewriter_treats_esi_include_as_void_tag</code>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>Flag to disable</strong>
+			</td>
+			<td>TBD</td>
+		</tr>
+	</tbody>
 </table>
 
 The HTML5 standard defines a fixed set of elements as void elements, meaning they do not use an end tag: `<area>`, `<base>`, `<br>`, `<col>`, `<command>`, `<embed>`, `<hr>`, `<img>`, `<input>`, `<keygen>`, `<link>`, `<meta>`, `<param>`, `<source>`, `<track>`, and `<wbr>`.

@@ -11,7 +11,7 @@ Use WARP as an on-ramp to Magic WAN and route traffic from user devices with WAR
 
 ## Prerequisites
 
-Before you can begin using WARP as an on-ramp to Magic WAN, you must: 
+Before you can begin using WARP as an on-ramp to Magic WAN, you must:
 
 - Set up your [Zero Trust account](/cloudflare-one/setup/#start-from-the-cloudflare-dashboard).
 - Contact your account team to enable the integration between WARP and Magic WAN.

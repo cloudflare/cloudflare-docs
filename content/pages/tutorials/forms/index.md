@@ -29,11 +29,11 @@ Below is an example HTML5 form with a few inputs and their validation rules defi
 
 ```html
 <form method="POST" action="/submit">
-  <input type="text" name="fullname" pattern="[A-Za-z]+" required />
-  <input type="email" name="email" required />
-  <input type="number" name="age" min="18" required />
+	<input type="text" name="fullname" pattern="[A-Za-z]+" required />
+	<input type="email" name="email" required />
+	<input type="number" name="age" min="18" required />
 
-  <button type="submit">Submit</button>
+	<button type="submit">Submit</button>
 </form>
 ```
 
@@ -45,16 +45,16 @@ To enable this, you must create a `<label>` element for each input and assign ea
 
 ```html
 <form method="POST" action="/submit">
-  <label for="i-fullname">Full Name</label>
-  <input id="i-fullname" type="text" name="fullname" pattern="[A-Za-z]+" required />
+	<label for="i-fullname">Full Name</label>
+	<input id="i-fullname" type="text" name="fullname" pattern="[A-Za-z]+" required />
 
-  <label for="i-email">Email Address</label>
-  <input id="i-email" type="email" name="email" required />
+	<label for="i-email">Email Address</label>
+	<input id="i-email" type="email" name="email" required />
 
-  <label for="i-age">Your Age</label>
-  <input id="i-age" type="number" name="age" min="18" required />
+	<label for="i-age">Your Age</label>
+	<input id="i-age" type="number" name="age" min="18" required />
 
-  <button type="submit">Submit</button>
+	<button type="submit">Submit</button>
 </form>
 ```
 
@@ -70,19 +70,19 @@ By default, HTML forms send their contents in the `application/x-www-form-urlenc
 
 ```html
 <form method="POST" action="/submit" enctype="multipart/form-data">
-  <label for="i-fullname">Full Name</label>
-  <input id="i-fullname" type="text" name="fullname" pattern="[A-Za-z]+" required />
+	<label for="i-fullname">Full Name</label>
+	<input id="i-fullname" type="text" name="fullname" pattern="[A-Za-z]+" required />
 
-  <label for="i-email">Email Address</label>
-  <input id="i-email" type="email" name="email" required />
+	<label for="i-email">Email Address</label>
+	<input id="i-email" type="email" name="email" required />
 
-  <label for="i-age">Your Age</label>
-  <input id="i-age" type="number" name="age" min="18" required />
+	<label for="i-age">Your Age</label>
+	<input id="i-age" type="number" name="age" min="18" required />
 
-  <label for="i-avatar">Profile Picture</label>
-  <input id="i-avatar" type="file" name="avatar" required />
+	<label for="i-avatar">Profile Picture</label>
+	<input id="i-avatar" type="file" name="avatar" required />
 
-  <button type="submit">Submit</button>
+	<button type="submit">Submit</button>
 </form>
 ```
 
@@ -129,60 +129,60 @@ Copy and paste the following content into your `public/index.html` file:
 
 ```html
 <html lang="en">
-  <head>
-    <meta charset="utf8" />
-    <title>Form Demo</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-  </head>
-  <body>
-    <form method="POST" action="/api/submit">
-      <div class="input">
-        <label for="name">Full Name</label>
-        <input id="name" name="name" type="text" />
-      </div>
+	<head>
+		<meta charset="utf8" />
+		<title>Form Demo</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+	</head>
+	<body>
+		<form method="POST" action="/api/submit">
+			<div class="input">
+				<label for="name">Full Name</label>
+				<input id="name" name="name" type="text" />
+			</div>
 
-      <div class="input">
-        <label for="email">Email Address</label>
-        <input id="email" name="email" type="email" />
-      </div>
+			<div class="input">
+				<label for="email">Email Address</label>
+				<input id="email" name="email" type="email" />
+			</div>
 
-      <div class="input">
-        <label for="referers">How did you hear about us?</label>
-        <select id="referers" name="referers">
-          <option hidden disabled selected value></option>
-          <option value="Facebook">Facebook</option>
-          <option value="Twitter">Twitter</option>
-          <option value="Google">Google</option>
-          <option value="Bing">Bing</option>
-          <option value="Friends">Friends</option>
-        </select>
-      </div>
+			<div class="input">
+				<label for="referers">How did you hear about us?</label>
+				<select id="referers" name="referers">
+					<option hidden disabled selected value></option>
+					<option value="Facebook">Facebook</option>
+					<option value="Twitter">Twitter</option>
+					<option value="Google">Google</option>
+					<option value="Bing">Bing</option>
+					<option value="Friends">Friends</option>
+				</select>
+			</div>
 
-      <div class="checklist">
-        <label>What are your favorite movies?</label>
-        <ul>
-          <li>
-            <input id="m1" type="checkbox" name="movies" value="Space Jam" />
-            <label for="m1">Space Jam</label>
-          </li>
-          <li>
-            <input id="m2" type="checkbox" name="movies" value="Little Rascals" />
-            <label for="m2">Little Rascals</label>
-          </li>
-          <li>
-            <input id="m3" type="checkbox" name="movies" value="Frozen" />
-            <label for="m3">Frozen</label>
-          </li>
-          <li>
-            <input id="m4" type="checkbox" name="movies" value="Home Alone" />
-            <label for="m4">Home Alone</label>
-          </li>
-        </ul>
-      </div>
+			<div class="checklist">
+				<label>What are your favorite movies?</label>
+				<ul>
+					<li>
+						<input id="m1" type="checkbox" name="movies" value="Space Jam" />
+						<label for="m1">Space Jam</label>
+					</li>
+					<li>
+						<input id="m2" type="checkbox" name="movies" value="Little Rascals" />
+						<label for="m2">Little Rascals</label>
+					</li>
+					<li>
+						<input id="m3" type="checkbox" name="movies" value="Frozen" />
+						<label for="m3">Frozen</label>
+					</li>
+					<li>
+						<input id="m4" type="checkbox" name="movies" value="Home Alone" />
+						<label for="m4">Home Alone</label>
+					</li>
+				</ul>
+			</div>
 
-      <button type="submit">Submit</button>
-    </form>
-  </body>
+			<button type="submit">Submit</button>
+		</form>
+	</body>
 </html>
 ```
 
@@ -195,6 +195,7 @@ Technically, only the `<form>` and its child elements are necessary. The `<head>
 The HTML page is also completely unstyled at this point, relying on the browsers' default UI and color palettes. Styling the page is entirely optional and not necessary for the form to function. If you would like to attach a CSS stylesheet, you may [add a `<link>` element](https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps/Getting_started#adding_css_to_our_document). Refer to the finished tutorial's [source code](https://github.com/cloudflare/submit.pages.dev/blob/8c0594f48681935c268987f2f08bcf3726a74c57/public/index.html#L11) for an example or any inspiration – the only requirement is that your CSS stylesheet also resides within the `public` directory.
 
 {{</Aside>}}
+
 ### Worker
 
 The HTML form is complete and ready for deployment. When the user submits this form, all data will be sent in a `POST` request to the `/api/submit` URL. This is due to the form's `method` and `action` attributes. However, there is currently no request handler at the `/api/submit` address. You will now create it.
@@ -223,7 +224,7 @@ filename: functions/api/submit.js
  * POST /api/submit
  */
 export async function onRequestPost(context) {
-  // TODO: Handle the form submission
+	// TODO: Handle the form submission
 }
 ```
 
@@ -241,17 +242,17 @@ filename: functions/api/submit.js
  * POST /api/submit
  */
 export async function onRequestPost(context) {
-  try {
-    let input = await context.request.formData();
-    let pretty = JSON.stringify([...input], null, 2);
-    return new Response(pretty, {
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-    });
-  } catch (err) {
-    return new Response('Error parsing JSON content', { status: 400 });
-  }
+	try {
+		let input = await context.request.formData();
+		let pretty = JSON.stringify([...input], null, '\t');
+		return new Response(pretty, {
+			headers: {
+				'Content-Type': 'application/json;charset=utf-8',
+			},
+		});
+	} catch (err) {
+		return new Response('Error parsing JSON content', { status: 400 });
+	}
 }
 ```
 
@@ -267,30 +268,30 @@ filename: functions/api/submit.js
  * POST /api/submit
  */
 export async function onRequestPost(context) {
-  try {
-    let input = await context.request.formData();
+	try {
+		let input = await context.request.formData();
 
-    // Convert FormData to JSON
-    // NOTE: Allows multiple values per key
-    let output = {};
-    for (let [key, value] of input) {
-      let tmp = output[key];
-      if (tmp === undefined) {
-        output[key] = value;
-      } else {
-        output[key] = [].concat(tmp, value);
-      }
-    }
+		// Convert FormData to JSON
+		// NOTE: Allows multiple values per key
+		let output = {};
+		for (let [key, value] of input) {
+			let tmp = output[key];
+			if (tmp === undefined) {
+				output[key] = value;
+			} else {
+				output[key] = [].concat(tmp, value);
+			}
+		}
 
-    let pretty = JSON.stringify(output, null, 2);
-    return new Response(pretty, {
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-    });
-  } catch (err) {
-    return new Response('Error parsing JSON content', { status: 400 });
-  }
+		let pretty = JSON.stringify(output, null, '\t');
+		return new Response(pretty, {
+			headers: {
+				'Content-Type': 'application/json;charset=utf-8',
+			},
+		});
+	} catch (err) {
+		return new Response('Error parsing JSON content', { status: 400 });
+	}
 }
 ```
 

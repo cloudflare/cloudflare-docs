@@ -64,11 +64,11 @@ To test that your connection is working, follow the steps on [SSO Integration](/
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>"
-  },
-  "type": "facebook",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>"
+	},
+	"type": "facebook",
+	"name": "my example idp"
 }
 ```

@@ -47,8 +47,9 @@ resource "cloudflare_ruleset" "zone_rl" {
 ## Create an advanced rate limiting rule
 
 This example creates a rate limiting rule in zone with ID `<ZONE_ID>` with:
-* A custom counting expression that includes a response field (`http.response.code`).
-* A custom JSON response for rate limited requests.
+
+- A custom counting expression that includes a response field (`http.response.code`).
+- A custom JSON response for rate limited requests.
 
 ```tf
 resource "cloudflare_ruleset" "zone_rl_custom_response" {

@@ -18,7 +18,7 @@ Before you can use WAF for SaaS, you need to create a custom hostname. Review [G
 
 You can also create a custom hostname through the API:
 
-```json
+```bash
 curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone:id}/custom_hostnames" \
      -H "X-Auth-Email: {email}" \
      -H "X-Auth-Key: {key}" \
@@ -28,7 +28,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone:id}/custom_hostna
 
 ## Step 1 - Associate custom metadata to a custom hostname
 
-To apply WAF to your custom hostname, you need to create an association between your customer’s domain and the firewall ruleset that you’d like to attach to it. Cloudflare’s product, [Custom Metadata](/cloudflare-for-saas/workers-for-platforms/custom-metadata/) allows you to do this via the API. 
+To apply WAF to your custom hostname, you need to create an association between your customer’s domain and the firewall ruleset that you’d like to attach to it. Cloudflare’s product, [Custom Metadata](/cloudflare-for-saas/workers-for-platforms/custom-metadata/) allows you to do this via the API.
 
 1. [Locate your zone ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/), available in the Cloudflare dashboard.
 
@@ -36,7 +36,7 @@ To apply WAF to your custom hostname, you need to create an association between 
 
 3. Locate your custom hostname ID by making a ‘get’ call in the API:
 
-```json
+```bash
 curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
      -H "X-Auth-Email: {email}" \
      -H "X-Auth-Key: {key}" \
@@ -54,7 +54,7 @@ One instance of low, medium, and high rules could be rate limiting. You can spec
 
 5. Make an API call in the format below using your Cloudflare email and the IDs gathered above:
 
-```json
+```bash
 curl -sXPATCH "https://api.cloudflare.com/client/v4/zones/{zone:id}/custom_hostnames/{custom_hostname:id}"\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H "Content-Type: application/json"\
@@ -73,7 +73,7 @@ This assigns custom metadata to your custom hostname so that it has a security t
 
 2. Build your rules either [through the dashboard](/firewall/cf-dashboard/create-edit-delete-rules/) or via the API. An example rate limiting rule, corresponding to “security_level” low, is shown below as an API call.
 
-```json
+```bash
 curl -X PUT "https://api.cloudflare.com/client/v4/zones/{zone:id}/rulesets/phases/http_ratelimit/entrypoint" \
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H "Content-Type: application/json"\

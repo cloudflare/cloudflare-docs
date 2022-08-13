@@ -36,8 +36,8 @@ Access will then log them in.
 
 ```json
 {
-  "config": {},
-  "type": "onetimepin",
-  "name": "my example idp"
+	"config": {},
+	"type": "onetimepin",
+	"name": "my example idp"
 }
 ```

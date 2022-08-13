@@ -26,7 +26,7 @@ getroughtime -ping roughtime.cloudflare.com:2002 -pubkey gD63hSj3ScS+wuOeGrubXlq
 ## Beta notice
 
 Cloudflare Roughtime is currently in beta. As such, our root public key may
-change in the future. We will keep this page up-to-date with the most current public key. 
+change in the future. We will keep this page up-to-date with the most current public key.
 
 You can also obtain it programmatically using DNS. For example:
 

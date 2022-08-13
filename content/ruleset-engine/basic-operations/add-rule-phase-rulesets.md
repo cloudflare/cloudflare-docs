@@ -26,7 +26,7 @@ Instead of relying on the automatic creation of an entry point ruleset, you can 
 
 The following example sets the rules of a phase entry point ruleset at the zone level for the `http_request_firewall_managed` phase using the [Update ruleset](/ruleset-engine/rulesets-api/update/) API operation.
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -53,7 +53,7 @@ curl -X PUT \
 }'
 ```
 
-```json
+```bash
 ---
 header: Response
 ---
@@ -104,7 +104,7 @@ header: Response
 
 The following example adds a single rule to a phase entry point ruleset (with ID `<RULESET_ID>`) at the zone level using the [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) API operation.
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -119,7 +119,7 @@ curl "https://api.cloudflare.com/client/v4/zone/<ZONE_ID>/rulesets/<RULESET_ID>/
 }'
 ```
 
-```json
+```bash
 ---
 header: Response
 ---

@@ -52,13 +52,13 @@ If you are using IPsec inside GRE, set the MSS clamp at the IPsec tunnel interfa
 
 {{</Aside>}}
 
-| Standard Internet Routable MTU                         | 1500 bytes  |
-| ------------------------------------------------------ | ----------- |
-| -	&nbsp;&nbsp;&nbsp; Original IP header                | 20 bytes    |
-| - &nbsp;&nbsp;&nbsp; Original protocol header (TCP)    | 20 bytes    |
-| -	&nbsp;&nbsp;&nbsp; New IP header                     | 20 bytes    |
-| -	&nbsp;&nbsp;&nbsp; New protocol header (GRE)         | 4 bytes     |
-| =	&nbsp;&nbsp;&nbsp; Maximum segment size (MSS)        | 1436 bytes  |
+| Standard Internet Routable MTU                      | 1500 bytes |
+| --------------------------------------------------- | ---------- |
+| - &nbsp;&nbsp;&nbsp; Original IP header             | 20 bytes   |
+| - &nbsp;&nbsp;&nbsp; Original protocol header (TCP) | 20 bytes   |
+| - &nbsp;&nbsp;&nbsp; New IP header                  | 20 bytes   |
+| - &nbsp;&nbsp;&nbsp; New protocol header (GRE)      | 4 bytes    |
+| = &nbsp;&nbsp;&nbsp; Maximum segment size (MSS)     | 1436 bytes |
 
 Unless you apply these MSS settings at the origin, client machines do not know that they must use an MSS of 1436 bytes when sending packets to your origin.
 
@@ -74,8 +74,8 @@ Instructions to adjust MSS by applying MSS clamps vary depending on the vendor o
 
 The following table lists several commonly used router vendors with links to MSS clamping instructions:
 
-| Router device | URL  |
-| ------------- | ---- |
+| Router device | URL                                                                                                                                                                                   |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Cisco         | [TC IP Adjust MSS](https://www.cisco.com/en/US/docs/ios-xml/ios/ipapp/command/ip_tcp_adjust-mss_through_ip_wccp_web-cache_accelerated.html#GUID-68044D35-A53E-42C1-A7AB-9236333DA8C4) |
 | Juniper       | [TCP MSS – Edit System](https://www.juniper.net/documentation/en_US/junos/topics/reference/configuration-statement/tcp-mss-edit-system.html)                                          |
 

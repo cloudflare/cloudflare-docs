@@ -3,7 +3,7 @@ pcx_content_type: tutorial
 title: Setup
 weight: 2
 meta:
-   title: Set up outgoing zone transfers (Cloudflare as Primary)
+  title: Set up outgoing zone transfers (Cloudflare as Primary)
 ---
 
 # Set up outgoing zone transfers (Cloudflare as Primary)
@@ -14,7 +14,7 @@ With [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-pri
 
 ### CNAME at zone apex
 
-If you are using Cloudflare as your [primary DNS provider](/dns/zone-setups/full-setup/), we allow you to set a `CNAME` record on the zone apex because we do [`CNAME` Flattening](/dns/additional-options/cname-flattening/). 
+If you are using Cloudflare as your [primary DNS provider](/dns/zone-setups/full-setup/), we allow you to set a `CNAME` record on the zone apex because we do [`CNAME` Flattening](/dns/additional-options/cname-flattening/).
 
 If you take advantage of this behavior within Cloudflare (using a `CNAME` record on your zone apex), Cloudflare will also transfer out the `CNAME` value during outgoing zone transfers. This setup can lead to issues if your secondary DNS provider does not support `CNAME` flattening or cannot handle `CNAME` records on the zone apex.
 
@@ -62,7 +62,7 @@ If using the API, you may also want to [locate your Zone and Account IDs](/funda
 
 You only need to create a peer DNS server if you want:
 
-- Your secondary nameservers to receive **NOTIFYs**  for changes to your Cloudflare DNS records.
+- Your secondary nameservers to receive **NOTIFYs** for changes to your Cloudflare DNS records.
 - A **TSIG** to sign zone transfer requests and **NOTIFYs**.
 
 ### Using the dashboard
@@ -72,12 +72,12 @@ To create a peer using the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Manage Account** > **Configurations**.
 3. Click **DNS Zone Transfers**.
-4. For **Peer DNS servers**, click **Create**. 
+4. For **Peer DNS servers**, click **Create**.
 5. Enter the following information, paying particular attention to:
-    - **IP**: If configured, specifies where Cloudflare sends NOTIFY requests to.
-    - **Port**: Specifies the IP Port for the NOTIFY IP.
-    - **Enable incremental (IXFR) zone transfers**: Does not apply when you are using Cloudflare as your primary DNS provider (Cloudflare zones always accept IXFR requests).
-    - **Link an existing TSIG**: If desired, link the TSIG you [previously created](#step-1---create-tsig-optional). 
+   - **IP**: If configured, specifies where Cloudflare sends NOTIFY requests to.
+   - **Port**: Specifies the IP Port for the NOTIFY IP.
+   - **Enable incremental (IXFR) zone transfers**: Does not apply when you are using Cloudflare as your primary DNS provider (Cloudflare zones always accept IXFR requests).
+   - **Link an existing TSIG**: If desired, link the TSIG you [previously created](#step-1---create-tsig-optional).
 6. Click **Create**.
 
 ### Using the API

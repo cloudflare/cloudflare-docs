@@ -8,7 +8,7 @@ weight: 1
 
 A **service account** allows admins to create and maintain API credentials separate from a single username and password combination. It also allows you to create and control additional API access for different use cases.
 
-When you connect to the [Area 1 API](/email-security/api/), the **Public Key** is used for the *username* and the **Private Key** for the *password*.
+When you connect to the [Area 1 API](/email-security/api/), the **Public Key** is used for the _username_ and the **Private Key** for the _password_.
 
 ## Create service account
 

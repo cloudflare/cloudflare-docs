@@ -14,7 +14,7 @@ But how does your load balancer _know_ which servers can handle the traffic? We 
 
 ## Components
 
-Dynamic load balancing happens through a combination of [origin pools](/load-balancing/understand-basics/pools/)[^1], [monitors](/load-balancing/understand-basics/monitors/)[^2], and health checks[^3]. 
+Dynamic load balancing happens through a combination of [origin pools](/load-balancing/understand-basics/pools/)[^1], [monitors](/load-balancing/understand-basics/monitors/)[^2], and health checks[^3].
 
 ![Dynamic load balancing involves pools, origins, monitors, and health checks](/load-balancing/static/images/load-balancer-components.png)
 
@@ -82,7 +82,6 @@ If a load balancer reaches **Critical** health and the pool serving as your fall
 
 - If Cloudflare proxies your hostname, you will see a 530 HTTP/1016 Origin DNS failure.
 - If Cloudflare does not proxy your hostname, you will see the SOA record.
-
 
 [^1]: Groups that contain one or more origin servers.
 [^2]: Are attached to individual origin servers and issue health checks at regular intervals.

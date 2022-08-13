@@ -13,8 +13,8 @@ To update your registrant contacts:
 2. Select **Registrar** > **Manage domains**.
 3. Find **Default contact** and select **Edit**.
 4. Update the relevant information.
-3. Find the domain where you want to update your contact information, and select **Manage**.
-4. Select the **Contacts** tab, and edit the contact information.
+5. Find the domain where you want to update your contact information, and select **Manage**.
+6. Select the **Contacts** tab, and edit the contact information.
 
 If you change any of the following fields, Cloudflare Registrar will require a Change of Registrant approval before the changes are finalized:
 

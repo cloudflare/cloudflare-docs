@@ -18,31 +18,31 @@ We no longer support [RC4 cipher suites](https://blog.cloudflare.com/end-of-the-
 
 ## Supported cipher suites by protocol
 
-| OpenSSL Name                        | TLS 1.0 | TLS 1.1 | TLS 1.2 | TLS 1.3 |
-| ----------------------------------- | ------- | ------- | ------- | ------- |
-| ECDHE-ECDSA-AES128-GCM-SHA256       | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-ECDSA-CHACHA20-POLY1305       | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-RSA-AES128-GCM-SHA256         | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-RSA-CHACHA20-POLY1305         | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-ECDSA-AES128-SHA256           | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-ECDSA-AES128-SHA              | ✅      | ✅      | ✅      | ❌      |
-| ECDHE-RSA-AES128-SHA256             | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-RSA-AES128-SHA                | ✅      | ✅      | ✅      | ❌      |
-| AES128-GCM-SHA256                   | ❌      | ❌      | ✅      | ❌      |
-| AES128-SHA256                       | ❌      | ❌      | ✅      | ❌      |
-| AES128-SHA                          | ✅      | ✅      | ✅      | ❌      |
-| ECDHE-ECDSA-AES256-GCM-SHA384       | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-ECDSA-AES256-SHA384           | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-RSA-AES256-GCM-SHA384         | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-RSA-AES256-SHA384             | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-RSA-AES256-SHA                | ✅      | ✅      | ✅      | ❌      |
-| AES256-GCM-SHA384                   | ❌      | ❌      | ✅      | ❌      |
-| AES256-SHA256                       | ❌      | ❌      | ✅      | ❌      |
-| AES256-SHA                          | ✅      | ✅      | ✅      | ❌      |
-| DES-CBC3-SHA                        | ✅      | ❌      | ❌      | ❌      |
-| AEAD-AES128-GCM-SHA256 [^1]         | ❌      | ❌      | ❌      | ✅      |
-| AEAD-AES256-GCM-SHA384 [^1]         | ❌      | ❌      | ❌      | ✅      |
-| AEAD-CHACHA20-POLY1305-SHA256 [^1]  | ❌      | ❌      | ❌      | ✅      |
+| OpenSSL Name                       | TLS 1.0 | TLS 1.1 | TLS 1.2 | TLS 1.3 |
+| ---------------------------------- | ------- | ------- | ------- | ------- |
+| ECDHE-ECDSA-AES128-GCM-SHA256      | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-ECDSA-CHACHA20-POLY1305      | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-RSA-AES128-GCM-SHA256        | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-RSA-CHACHA20-POLY1305        | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-ECDSA-AES128-SHA256          | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-ECDSA-AES128-SHA             | ✅      | ✅      | ✅      | ❌      |
+| ECDHE-RSA-AES128-SHA256            | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-RSA-AES128-SHA               | ✅      | ✅      | ✅      | ❌      |
+| AES128-GCM-SHA256                  | ❌      | ❌      | ✅      | ❌      |
+| AES128-SHA256                      | ❌      | ❌      | ✅      | ❌      |
+| AES128-SHA                         | ✅      | ✅      | ✅      | ❌      |
+| ECDHE-ECDSA-AES256-GCM-SHA384      | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-ECDSA-AES256-SHA384          | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-RSA-AES256-GCM-SHA384        | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-RSA-AES256-SHA384            | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-RSA-AES256-SHA               | ✅      | ✅      | ✅      | ❌      |
+| AES256-GCM-SHA384                  | ❌      | ❌      | ✅      | ❌      |
+| AES256-SHA256                      | ❌      | ❌      | ✅      | ❌      |
+| AES256-SHA                         | ✅      | ✅      | ✅      | ❌      |
+| DES-CBC3-SHA                       | ✅      | ❌      | ❌      | ❌      |
+| AEAD-AES128-GCM-SHA256 [^1]        | ❌      | ❌      | ❌      | ✅      |
+| AEAD-AES256-GCM-SHA384 [^1]        | ❌      | ❌      | ❌      | ✅      |
+| AEAD-CHACHA20-POLY1305-SHA256 [^1] | ❌      | ❌      | ❌      | ✅      |
 
 [^1]: _Although TLS 1.3 uses the same cipher suite space as previous versions of TLS, TLS 1.3 cipher suites are defined differently. They only specifying the symmetric ciphers and cannot be used for TLS 1.2. Similarly, TLS 1.2 and lower cipher suites cannot be used with TLS 1.3 (IETF TLS 1.3 draft 21). BoringSSL also hard-codes cipher preferences in this order for TLS 1.3._
 

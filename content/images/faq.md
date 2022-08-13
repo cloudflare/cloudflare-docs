@@ -117,10 +117,10 @@ Refer to [Troubleshoot Image Resizing problems](https://support.cloudflare.com/h
 
 Cloudflare considers some Image Resizing request errors for billing. Below is a list of `cf-resized` headers that are billed:
 
-* `9401`: Invalid resize options.
-* `9412`: Origin file type invalid.
-* `9413`: Image too big.
-* `9511`: Unsupported image format.
+- `9401`: Invalid resize options.
+- `9412`: Origin file type invalid.
+- `9413`: Image too big.
+- `9511`: Unsupported image format.
 
 Refer to [Troubleshoot Image Resizing problems](https://support.cloudflare.com/hc/articles/4412024022029) for more information about these error codes.
 

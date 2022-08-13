@@ -21,11 +21,11 @@ In the downloaded JSON file for the event, the `ruleId` value indicates the dete
 highlight: [3]
 ---
 {
-  "action": "drop",
-  "ruleId": "sanity-shellshock",
-  "source": "sanitycheck",
-  "userAgent": "() { :;}; printf \\\\\"detection[%s]string\\\\\" \\\\\"TjcLLwVzBtLzvbN\\\\"
-  //...
+	"action": "drop",
+	"ruleId": "sanity-shellshock",
+	"source": "sanitycheck",
+	"userAgent": "() { :;}; printf \\\\\"detection[%s]string\\\\\" \\\\\"TjcLLwVzBtLzvbN\\\\"
+	//...
 }
 ```
 

@@ -60,4 +60,3 @@ macOS has two firewalls: an application-based firewall and a port-based firewall
 ```txt
 Get-NetFirewallProfile -Name Public
 ```
-

@@ -20,14 +20,14 @@ weight: 2
 2. Navigate to **Computer** > **All Settings** (gear icon).
 3. Click **Computer Management** > **Packages** > **New**.
 4. Upload the `Cloudflare_WARP.pkg` file.
-    For the Display name, we recommend entering the version number of the package being uploaded.
+   For the Display name, we recommend entering the version number of the package being uploaded.
 5. Click **Save** to complete the upload.
 
 ### 2. Create the policy
 
 1. Navigate to **Computers** > **Policies** > **+ New**.
 2. Enter a Display name such as `Cloudflare WARP Client`.\
-    For **Triggers**, our recommendation is to select _Startup_, _Login_, _Enrollment Complete_ and _Recurring Check-in_, but you can select the value that works best for your organization.
+   For **Triggers**, our recommendation is to select _Startup_, _Login_, _Enrollment Complete_ and _Recurring Check-in_, but you can select the value that works best for your organization.
 3. Click **Packages** > **Configure**.
 4. Click **Add** next to the `Cloudflare_WARP.pkg` file you previously uploaded.
 5. Click **Save**.

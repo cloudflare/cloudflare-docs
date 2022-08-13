@@ -28,8 +28,8 @@ This is the default webpack configuration that Wrangler uses to build your Worke
 
 ```js
 module.exports = {
-  target: "webworker",
-  entry: "./index.js", // inferred from "main" in package.json
+	target: 'webworker',
+	entry: './index.js', // inferred from "main" in package.json
 };
 ```
 
@@ -48,9 +48,9 @@ You can tell Wrangler to use a custom webpack configuration file by setting `web
 filename: webpack.config.js
 ---
 module.exports = {
-  target: 'webworker',
-  entry: './index.js',
-  mode: 'production',
+	target: 'webworker',
+	entry: './index.js',
+	mode: 'production',
 };
 ```
 
@@ -93,10 +93,10 @@ webpack_config = "webpack.production.js"
 filename: webpack.development.js
 ---
 module.exports = {
-  target: 'webworker',
-  devtool: 'cheap-module-source-map', // avoid "eval": Workers environment doesn’t allow it
-  entry: './index.js',
-  mode: 'development',
+	target: 'webworker',
+	devtool: 'cheap-module-source-map', // avoid "eval": Workers environment doesn’t allow it
+	entry: './index.js',
+	mode: 'development',
 };
 ```
 
@@ -105,9 +105,9 @@ module.exports = {
 filename: webpack.production.js
 ---
 module.exports = {
-  target: 'webworker',
-  entry: './index.js',
-  mode: 'production',
+	target: 'webworker',
+	entry: './index.js',
+	mode: 'production',
 };
 ```
 
@@ -135,10 +135,10 @@ The corresponding `webpack.config.js` file should look like this:
 filename: webpack.config.js
 ---
 module.exports = {
-  context: __dirname,
-  target: 'webworker',
-  entry: './index.js',
-  mode: 'production',
+	context: __dirname,
+	target: 'webworker',
+	entry: './index.js',
+	mode: 'production',
 };
 ```
 
@@ -158,14 +158,14 @@ highlight: [1, 7, 8, 9, 10, 11]
 const webpack = require('webpack');
 
 module.exports = {
-  target: 'webworker',
-  entry: './index.js',
-  mode: 'production',
-  plugins: [
-    new webpack.ProvidePlugin({
-      URL: 'url-polyfill',
-    }),
-  ],
+	target: 'webworker',
+	entry: './index.js',
+	mode: 'production',
+	plugins: [
+		new webpack.ProvidePlugin({
+			URL: 'url-polyfill',
+		}),
+	],
 };
 ```
 

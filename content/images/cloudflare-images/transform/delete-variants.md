@@ -41,9 +41,9 @@ You will receive a response similar to this:
 
 ```json
 {
-  "result": {},
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```

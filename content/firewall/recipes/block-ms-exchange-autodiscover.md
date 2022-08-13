@@ -10,20 +10,20 @@ In some cases, Microsoft Exchange Autodiscover service requests can be “noisy,
 This example uses the `matches` [comparison operator](/ruleset-engine/rules-language/operators/#comparison-operators) and a regular expression to block `autodiscover.xml` and `autodiscover.src` requests:
 
 <table>
-  <thead>
-    <tr>
-      <th>Expression</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>http.request.uri.path matches "/autodiscover.(xml|src)$"</code>
-      </td>
-      <td>
-        <em>Block</em>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Expression</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<code>http.request.uri.path matches "/autodiscover.(xml|src)$"</code>
+			</td>
+			<td>
+				<em>Block</em>
+			</td>
+		</tr>
+	</tbody>
 </table>

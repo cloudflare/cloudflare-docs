@@ -9,7 +9,7 @@ With video clipping, also referred to as "trimming" or changing the length of th
 
 {{<Aside type="note" header="Note:">}}
 
-Video clipping does not work with recordings of live streams. 
+Video clipping does not work with recordings of live streams.
 
 {{</Aside>}}
 
@@ -35,7 +35,7 @@ header: Required parameters
 - **`clippedFromVideoUID`**: The unique identifier for the video used to create the new, clipped video.
 - **`startTimeSeconds`**: The timestamp from the existing video that indicates when the new video begins.
 - **`endTimeSeconds`**: The timestamp from the existing video that indicates when the new video ends.
-</br></br>
+  </br></br>
 
 ```bash
 ---
@@ -140,9 +140,10 @@ highlight: [5]
     }
 }
 ```
+
 ## Example response
 
-The example response below highlights the optional parameters mentioned above. 
+The example response below highlights the optional parameters mentioned above.
 
 ```bash
 ---

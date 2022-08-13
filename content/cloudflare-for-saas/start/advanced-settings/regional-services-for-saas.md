@@ -14,13 +14,13 @@ By default, Cloudflare routes customer traffic through the closest data center. 
 
 Prior to enabling Regional Services for SaaS:
 
-* Ensure you have access to [Cloudflare for SaaS](/cloudflare-for-saas/#availability).
+- Ensure you have access to [Cloudflare for SaaS](/cloudflare-for-saas/#availability).
 
-* If you have 10 or more unique origins, ensure your [fallback origin](/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin-and-cname-target) is set up.
+- If you have 10 or more unique origins, ensure your [fallback origin](/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin-and-cname-target) is set up.
 
-* Ensure that [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) is enabled.
+- Ensure that [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) is enabled.
 
-* You must have [access to a custom origin](/cloudflare-for-saas/start/advanced-settings/custom-origin). Using Cloudflare's default fallback origin for Regional Services will lead to an error.
+- You must have [access to a custom origin](/cloudflare-for-saas/start/advanced-settings/custom-origin). Using Cloudflare's default fallback origin for Regional Services will lead to an error.
 
 ---
 
@@ -32,15 +32,15 @@ Prior to enabling Regional Services for SaaS:
 
 3. If this is your first time using Spectrum, the **Create an Application** modal appears. Otherwise, select **Create an Application**.
 
-4. Select *HTTPS* as the application type. Regional Services only works over HTTPS. 
+4. Select _HTTPS_ as the application type. Regional Services only works over HTTPS.
 
 5. Under **Domain**, enter the domain that will use Spectrum. The domain associated here is where all custom hostnames are going to point.
 
 6. Choose the appropriate type of IP addresses for your subdomain.
 
-7. Under **Edge Port**, enter *443*.
+7. Under **Edge Port**, enter _443_.
 
-8. Under **Origin**, select **Origin IP or DNS record**. Enter your custom origin IP and port. 
+8. Under **Origin**, select **Origin IP or DNS record**. Enter your custom origin IP and port.
 
 {{<Aside type="note">}}
 You cannot enable **Edge TLS Termination** or **IP Access Rules** while using HTTPS.
@@ -62,19 +62,19 @@ You cannot enable **Edge TLS Termination** or **IP Access Rules** while using HT
 
 4. If you are creating a new custom hostname, select **Add Custom Hostname** and follow the instructions to [verify custom hostname](/cloudflare-for-saas/domain-support/hostname-verification/). Otherwise, select **Save**.
 
-6. Navigate to **DNS**.
+5. Navigate to **DNS**.
 
-7. Select **Add Record** and select *CNAME* from the **Type** dropdown.
+6. Select **Add Record** and select _CNAME_ from the **Type** dropdown.
 
-8. Under **Name**, enter the custom hostname.
+7. Under **Name**, enter the custom hostname.
 
-9. Under **Target**, enter your Spectrum app custom origin and select **Save**.
+8. Under **Target**, enter your Spectrum app custom origin and select **Save**.
 
 ### For less than 10 unique origins:
 
 1. Navigate to **DNS**.
 
-2. Select **Add Record** and select *CNAME* from the **Type** dropdown.
+2. Select **Add Record** and select _CNAME_ from the **Type** dropdown.
 
 3. Under **Name**, enter your custom hostname.
 

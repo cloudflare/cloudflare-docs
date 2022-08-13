@@ -21,9 +21,9 @@ Learn more about [using Durable Objects](/workers/learning/using-durable-objects
 
 ```js
 export class DurableObject {
-  constructor(state, env) {}
+	constructor(state, env) {}
 
-  async fetch(request) {}
+	async fetch(request) {}
 }
 ```
 
@@ -72,21 +72,21 @@ filename: worker.mjs
 highlight: [5]
 ---
 export default {
-  fetch(req, env, ctx) {
-    // Send a non-blocking POST request.
-    // ~> Completes before the Worker exits.
-    ctx.waitUntil(
-      fetch('https://.../logs', {
-        method: 'POST',
-        body: JSON.stringify({
-          url: req.url,
-          // ...
-        }),
-      })
-    );
+	fetch(req, env, ctx) {
+		// Send a non-blocking POST request.
+		// ~> Completes before the Worker exits.
+		ctx.waitUntil(
+			fetch('https://.../logs', {
+				method: 'POST',
+				body: JSON.stringify({
+					url: req.url,
+					// ...
+				}),
+			})
+		);
 
-    return new Response('OK');
-  },
+		return new Response('OK');
+	},
 };
 ```
 
@@ -98,20 +98,20 @@ filename: durable.mjs
 highlight: [6]
 ---
 export class Example {
-  fetch(req) {
-    // NOTE: Omits `await` intentionally.
-    // ~> Does not block `Response` output
-    // ~> Will still wait for POST to complete
-    fetch('https://.../logs', {
-      method: 'POST',
-      body: JSON.stringify({
-        url: req.url,
-        // ...
-      }),
-    });
+	fetch(req) {
+		// NOTE: Omits `await` intentionally.
+		// ~> Does not block `Response` output
+		// ~> Will still wait for POST to complete
+		fetch('https://.../logs', {
+			method: 'POST',
+			body: JSON.stringify({
+				url: req.url,
+				// ...
+			}),
+		});
 
-    return new Response('OK');
-  }
+		return new Response('OK');
+	}
 }
 ```
 
@@ -239,9 +239,11 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   - Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts.
 
-      <aside class="DocsMarkdown--aside" role="note" data-type="note">
-        {{<markdown>}}Explicit transactions are no longer necessary. Any series of write operations with no intervening `await` will automatically be submitted atomically, and the system will prevent concurrent events from executing while `await`ing a read operation (unless you use `allowConcurrency: true`). Therefore, a series of reads followed by a series of writes (with no other intervening I/O) are automatically atomic and behave like a transaction.{{</markdown>}}
-      </aside>
+        <aside class="DocsMarkdown--aside" role="note" data-type="note">
+
+    {{<markdown>}}Explicit transactions are no longer necessary. Any series of write operations with no intervening `await` will automatically be submitted atomically, and the system will prevent concurrent events from executing while `await`ing a read operation (unless you use `allowConcurrency: true`). Therefore, a series of reads followed by a series of writes (with no other intervening I/O) are automatically atomic and behave like a transaction.{{</markdown>}}
+
+    </aside>
 
   - {{<code>}}txn{{</code>}}
 
@@ -263,7 +265,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   - Sets the current alarm time, accepting either a JS Date, or integer milliseconds since epoch.
 
-    If `setAlarm()` is called with a time equal to or before `Date.now()`,  the alarm will be scheduled for asynchronous execution in the immediate future. If the alarm handler is currently executing in this case, it will not be canceled. Alarms can be set to millisecond granularity and will usually execute within a few milliseconds after the set time, but can be delayed by up to a minute due to maintenance or failures while failover takes place.
+    If `setAlarm()` is called with a time equal to or before `Date.now()`, the alarm will be scheduled for asynchronous execution in the immediate future. If the alarm handler is currently executing in this case, it will not be canceled. Alarms can be set to millisecond granularity and will usually execute within a few milliseconds after the set time, but can be delayed by up to a minute due to maintenance or failures while failover takes place.
 
     **Supported options:** Like `put()` above, but without `noCache`.
 

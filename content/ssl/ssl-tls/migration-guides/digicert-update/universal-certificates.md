@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Universal certificates
 weight: 1
 meta:
-    title: Universal certificates - DigiCert migration guide
+  title: Universal certificates - DigiCert migration guide
 ---
 
 # Changes to Universal certificates

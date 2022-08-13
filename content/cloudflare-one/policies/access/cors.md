@@ -55,46 +55,46 @@ To configure how Cloudflare responds to preflight requests:
 3. In the **Settings** tab, scroll down to **CORS settings**.
 4. Configure the dashboard [CORS settings](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#the_http_response_headers) to match the response headers sent by your origin.
 
-    For example, if you have configured `api.mysite.com`to return the following headers:
+   For example, if you have configured `api.mysite.com`to return the following headers:
 
-    ```
-    headers: {
-        'Access-Control-Allow-Origin': 'https://example.com',
-        'Access-Control-Allow-Credentials' : true,
-        'Access-Control-Allow-Methods': 'GET, OPTIONS',
-        'Access-Control-Allow-Headers': 'office',
-        'Content-Type': 'application/json',
-    }
-    ```
+   ```
+   headers: {
+       'Access-Control-Allow-Origin': 'https://example.com',
+       'Access-Control-Allow-Credentials' : true,
+       'Access-Control-Allow-Methods': 'GET, OPTIONS',
+       'Access-Control-Allow-Headers': 'office',
+       'Content-Type': 'application/json',
+   }
+   ```
 
-    then go to `api.mysite.com` in Access and configure **Access-Control-Allow-Origin**, **Access-Control-Allow-Credentials**, **Access-Control-Allow-Methods**, and **Access-Control-Allow-Headers**.
-    ![Example CORS settings configuration on the Zero Trust dashboard](/cloudflare-one/static/documentation/policies/CORS-settings.png)
+   then go to `api.mysite.com` in Access and configure **Access-Control-Allow-Origin**, **Access-Control-Allow-Credentials**, **Access-Control-Allow-Methods**, and **Access-Control-Allow-Headers**.
+   ![Example CORS settings configuration on the Zero Trust dashboard](/cloudflare-one/static/documentation/policies/CORS-settings.png)
 
 5. Click **Save application**.
 
 6. (Optional) You can check your configuration by sending an OPTIONS request to the origin with `curl`. For example,
 
-    ```bash
-    curl -I -XOPTIONS https://api.mysite.com \
-        -H 'origin: https://example.com' \
-        -H 'access-control-request-method: GET'
-    ```
+   ```bash
+   curl -I -XOPTIONS https://api.mysite.com \
+       -H 'origin: https://example.com' \
+       -H 'access-control-request-method: GET'
+   ```
 
-    should return a response similar to:
+   should return a response similar to:
 
-    ```bash
-    HTTP/2 200 
-    date: Tue, 24 May 2022 21:51:21 GMT
-    vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
-    access-control-allow-origin: https://example.com
-    access-control-allow-methods: GET
-    access-control-allow-credentials: true
-    expect-ct: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-    report-to: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=A%2FbOOWJio%2B%2FjuJv5NC%2FE3%2Bo1zBl2UdjzJssw8gJLC4lE1lzIUPQKqJoLRTaVtFd21JK1d4g%2BnlEGNpx0mGtsR6jerNfr2H5mlQdO6u2RdOaJ6n%2F%2BS%2BF9%2Fa12UromVLcHsSA5Y%2Fj72tM%3D"}],"group":"cf-nel","max_age":604800}
-    nel: {"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}
-    server: cloudflare
-    cf-ray: 7109408e6b84efe4-EWR
-    ```
+   ```bash
+   HTTP/2 200
+   date: Tue, 24 May 2022 21:51:21 GMT
+   vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+   access-control-allow-origin: https://example.com
+   access-control-allow-methods: GET
+   access-control-allow-credentials: true
+   expect-ct: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+   report-to: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=A%2FbOOWJio%2B%2FjuJv5NC%2FE3%2Bo1zBl2UdjzJssw8gJLC4lE1lzIUPQKqJoLRTaVtFd21JK1d4g%2BnlEGNpx0mGtsR6jerNfr2H5mlQdO6u2RdOaJ6n%2F%2BS%2BF9%2Fa12UromVLcHsSA5Y%2Fj72tM%3D"}],"group":"cf-nel","max_age":604800}
+   nel: {"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}
+   server: cloudflare
+   cf-ray: 7109408e6b84efe4-EWR
+   ```
 
 ## Send authentication token with Cloudflare Worker
 
@@ -121,92 +121,88 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 3. Click the **Policies** tab.
 
 4. Add the following policy:
-| Action        | Rule type | Selector      |
-| ------------- | --------- | ------------- |
-| Service Auth  | Include   | Service Token |
+   | Action | Rule type | Selector |
+   | ------------- | --------- | ------------- |
+   | Service Auth | Include | Service Token |
 
 ### 3. Create a new Worker
 
 1. Open a terminal and create a new Workers project.
 
-    ```sh
-    wrangler generate redirect-worker
-    ```
+   ```sh
+   wrangler generate redirect-worker
+   ```
 
 2. Navigate to the project directory.
 
-    ```sh
-    cd redirect-worker
-    ```
+   ```sh
+   cd redirect-worker
+   ```
 
 3. Open `wrangler.toml` in a text editor and insert your Account ID. To find your Account ID, open your [Cloudflare dashboard](https://dash.cloudflare.com/) and click the **Workers** tab.
 
-    ```txt
-    ---
-    filename: wrangler.toml
-    ---
-    name = "redirect-worker"
-    type = "javascript"
+   ```txt
+   ---
+   filename: wrangler.toml
+   ---
+   name = "redirect-worker"
+   type = "javascript"
 
-    account_id = "123abc456654abc123"
-    workers_dev = true
-    route = ""
-    zone_id = ""
-    compatibility_date = "2022-05-16"
-    ```
+   account_id = "123abc456654abc123"
+   workers_dev = true
+   route = ""
+   zone_id = ""
+   compatibility_date = "2022-05-16"
+   ```
 
 4. Open `index.js` and copy in the following example code.
 
-    ```js
-    ---
-    filename: index.js
-    ---
-    // The hostname where your API lives
-    const originalAPIHostname = 'api.mysite.com'
+   ```js
+   ---
+   filename: index.js
+   ---
+   // The hostname where your API lives
+   const originalAPIHostname = 'api.mysite.com';
 
-    async function handleRequest(request) {
+   async function handleRequest(request) {
+   	/** Change just the host.
+      If the request comes in on example.com/api/name, the new URL is api.mysite.com/api/name
+      **/
+   	const url = new URL(request.url);
+   	url.hostname = originalAPIHostname;
 
-    /** Change just the host. 
-    If the request comes in on example.com/api/name, the new URL is api.mysite.com/api/name
-    **/
-    const url = new URL(request.url)
-    url.hostname = originalAPIHostname
+   	/** If your API is located on api.mysite.com/anyname (without "api/" in the path),
+      remove the "api/" part of example.com/api/name
+      **/
 
-    /** If your API is located on api.mysite.com/anyname (without "api/" in the path),
-    remove the "api/" part of example.com/api/name
-    **/
+   	// url.pathname = url.pathname.substring(4)
 
-    // url.pathname = url.pathname.substring(4)
+   	/** Best practice is to always use the original request to construct the new request
+      to clone all the attributes. Applying the URL also requires a constructor
+      since once a Request has been constructed, its URL is immutable.
+      **/
 
-    /** Best practice is to always use the original request to construct the new request
-    to clone all the attributes. Applying the URL also requires a constructor
-    since once a Request has been constructed, its URL is immutable.
-    **/
+   	const newRequest = new Request(url.toString(), request);
 
-    const newRequest = new Request(
-        url.toString(),
-        request,
-    )
+   	newRequest.headers.set('cf-access-client-id', CF_ACCESS_CLIENT_ID);
+   	newRequest.headers.set('cf-access-client-secret', CF_ACCESS_CLIENT_SECRET);
+   	try {
+   		return await fetch(newRequest);
+   	} catch (e) {
+   		return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+   	}
+   }
 
-    newRequest.headers.set('cf-access-client-id', CF_ACCESS_CLIENT_ID)
-    newRequest.headers.set('cf-access-client-secret', CF_ACCESS_CLIENT_SECRET)
-    try {
-        return await fetch(newRequest)
-    } catch (e) {
-        return new Response(JSON.stringify({ error: e.message }), { status: 500 })
-    }
-    }
-
-    addEventListener('fetch', event => {
-    event.respondWith(handleRequest(event.request))
-    })
-    ```
+   addEventListener('fetch', event => {
+   	event.respondWith(handleRequest(event.request));
+   });
+   ```
 
 5. Publish the Worker to your account.
 
-    ```sh
-    wrangler publish
-    ```
+   ```sh
+   wrangler publish
+   ```
 
 ### 4. Configure the Worker
 
@@ -219,8 +215,8 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 4. In the **Settings** tab, click **Variables**.
 
 5. Under **Environment Variables**, add the following [secret variables](/workers/platform/environment-variables/#environment-variables-via-the-dashboard):
-    - `CF_ACCESS_CLIENT_ID` = `<service token Client ID>`
-    - `CF_ACCESS_CLIENT_SECRET` = `<service token Client Secret>`
+   - `CF_ACCESS_CLIENT_ID` = `<service token Client ID>`
+   - `CF_ACCESS_CLIENT_SECRET` = `<service token Client Secret>`
 
 The Client ID and Client Secret are copied from your [service token](#1-generate-a-service-token).
 

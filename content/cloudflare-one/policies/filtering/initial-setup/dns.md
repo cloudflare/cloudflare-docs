@@ -30,22 +30,22 @@ To filter DNS requests from a location such as an office or data center:
 {{<Aside type="note">}}
 Gateway identifies locations differently depending on the DNS query protocol:
 
-- **IPv4 queries** match to the source IP address.  Under **Gateway** > **Locations**, ensure that the **Source IPv4 Address** parameter is correct for the location you want to apply policies to.
+- **IPv4 queries** match to the source IP address. Under **Gateway** > **Locations**, ensure that the **Source IPv4 Address** parameter is correct for the location you want to apply policies to.
 - **IPv6, DOT, or DOH queries** match to the unique DNS forwarding address assigned to the location. Ensure that your DNS resolver is configured for the location you want to apply policies to.
-{{</Aside>}}
+  {{</Aside>}}
 
 ## 2. Verify device connectivity
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
 2. Under **Gateway logging**, enable activity logging for all DNS logs.
 3. On your WARP-enabled device, open a browser and visit any website.
-4. In the Zero Trust dashboard, navigate to **Logs** > **Gateway** > **DNS**.  Before building DNS policies,  make sure you see DNS queries from the email associated with your device.
+4. In the Zero Trust dashboard, navigate to **Logs** > **Gateway** > **DNS**. Before building DNS policies, make sure you see DNS queries from the email associated with your device.
 
 ## 3. Add recommended policies
 
 To create a new DNS policy, navigate to **Gateway** > **Policies** > **DNS** in the Zero Trust dashboard. We recommend adding the following policy:
 
-  {{<render file="_policies-recommended.md">}}
+{{<render file="_policies-recommended.md">}}
 
 ## 4. Add optional policies
 

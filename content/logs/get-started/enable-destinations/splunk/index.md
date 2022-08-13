@@ -107,20 +107,20 @@ Response:
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "id": 100,
-    "dataset": "http_requests",
-    "enabled": false,
-    "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
-    "destination_conf": "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>",
-    "last_complete": null,
-    "last_error": null,
-    "error_message": null
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"id": 100,
+		"dataset": "http_requests",
+		"enabled": false,
+		"name": "<DOMAIN_NAME>",
+		"logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+		"destination_conf": "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>",
+		"last_complete": null,
+		"last_error": null,
+		"error_message": null
+	},
+	"success": true
 }
 ```
 
@@ -139,20 +139,20 @@ Response:
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "id": 100,
-    "dataset": "http_requests",
-    "enabled": true,
-    "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
-    "destination_conf": "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>",
-    "last_complete": null,
-    "last_error": null,
-    "error_message": null
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"id": 100,
+		"dataset": "http_requests",
+		"enabled": true,
+		"name": "<DOMAIN_NAME>",
+		"logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+		"destination_conf": "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>",
+		"last_complete": null,
+		"last_error": null,
+		"error_message": null
+	},
+	"success": true
 }
 ```
 
@@ -194,4 +194,3 @@ The WAF should now ignore requests made to Splunk HEC by Cloudflare.
 {{<Aside type="note" header="Note">}}
 To analyze and visualize Cloudflare Logs using the Cloudflare App for Splunk, follow the steps in the [Splunk Analytics integration page](/fundamentals/data-products/analytics-integrations/splunk/).
 {{</Aside>}}
-

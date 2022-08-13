@@ -70,7 +70,7 @@ When you delete a gateway, Cloudflare will automatically remove all associated h
 
 ### Via the dashboard
 
-To delete a gateway using the dashboard: 
+To delete a gateway using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select your account and website.

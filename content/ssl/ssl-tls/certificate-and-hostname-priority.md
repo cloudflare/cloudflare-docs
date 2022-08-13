@@ -23,8 +23,8 @@ For any given hostname, Cloudflare uses the following order to determine which c
     | Priority | Certificate Type                                                 |
     | -------- | ---------------------------------------------------------------- |
     | 1        | [Custom Legacy](/ssl/edge-certificates/custom-certificates/)     |
-    | 2        | [Custom Modern](/ssl/edge-certificates/custom-certificates/)   |
-    | 3        | [Custom Hostname (SSL for SaaS)](/cloudflare-for-saas/)             |
+    | 2        | [Custom Modern](/ssl/edge-certificates/custom-certificates/)     |
+    | 3        | [Custom Hostname (SSL for SaaS)](/cloudflare-for-saas/)          |
     | 4        | [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) |
     | 5        | [Universal](/ssl/edge-certificates/universal-ssl/)               |
 

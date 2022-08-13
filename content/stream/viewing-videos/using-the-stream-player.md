@@ -10,12 +10,12 @@ The Stream player can be placed on a web page in an iframe element with the vide
 
 ```html
 <iframe
-  src="https://iframe.videodelivery.net/$VIDEOID"
-  style="border: none"
-  height="720"
-  width="1280"
-  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-  allowfullscreen="true"
+	src="https://iframe.videodelivery.net/$VIDEOID"
+	style="border: none"
+	height="720"
+	width="1280"
+	allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+	allowfullscreen="true"
 ></iframe>
 ```
 
@@ -29,12 +29,12 @@ Changing the `height` and `width` attributes on the `iframe` will change the pix
 
 ```html
 <iframe
-  src="https://iframe.videodelivery.net/$VIDEOID"
-  style="border: none"
-  height="400"
-  width="400"
-  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-  allowfullscreen="true"
+	src="https://iframe.videodelivery.net/$VIDEOID"
+	style="border: none"
+	height="400"
+	width="400"
+	allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+	allowfullscreen="true"
 ></iframe>
 ```
 
@@ -45,12 +45,12 @@ To make an iframe responsive, it needs styles to enforce an aspect ratio by sett
 ```html
 <!-- padding-top calculation is height / width (assuming 16:9 aspect ratio) -->
 <div style="position: relative; padding-top: 56.25%">
-  <iframe
-    src="https://iframe.videodelivery.net/$VIDEOID"
-    style="border: none; position: absolute; top: 0; height: 100%; width: 100%"
-    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-    allowfullscreen="true"
-  ></iframe>
+	<iframe
+		src="https://iframe.videodelivery.net/$VIDEOID"
+		style="border: none; position: absolute; top: 0; height: 100%; width: 100%"
+		allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+		allowfullscreen="true"
+	></iframe>
 </div>
 ```
 
@@ -66,8 +66,9 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
   - If the autoplay flag is included as a querystring parameter, the player will attempt to autoplay the video. If you don't want the video to autoplay, don't include the autoplay flag at all (instead of setting it to `autoplay=false`.) Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users don't have unlimited Internet access before using this attribute.
 
-    {{<Aside>}}
-Some browsers now prevent videos with audio from playing automatically. You may set `muted` to `true` to allow your videos to autoplay. For more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
+        {{<Aside>}}
+
+    Some browsers now prevent videos with audio from playing automatically. You may set `muted` to `true` to allow your videos to autoplay. For more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
     {{</Aside>}}
 
 - `controls` {{<prop-meta>}}default: `true`{{</prop-meta>}}

@@ -28,7 +28,7 @@ the capital letter O) are not included.
 
 A CID will typically look something like `QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco`.
 
-However, the same hash could be encoded with [Base32](https://en.wikipedia.org/wiki/Base32) or other supported hash algorithms including [SHA-3](https://en.wikipedia.org/wiki/SHA-3) and [BLAKE2](https://en.wikipedia.org/wiki/BLAKE_(hash_function)).
+However, the same hash could be encoded with [Base32](https://en.wikipedia.org/wiki/Base32) or other supported hash algorithms including [SHA-3](https://en.wikipedia.org/wiki/SHA-3) and [BLAKE2](<https://en.wikipedia.org/wiki/BLAKE_(hash_function)>).
 
 ## Uploading to IPFS
 
@@ -61,10 +61,10 @@ the file would have the CID `QmXnnyufdzAWL5CqZ2RnSNgPbvCc1ALT73s6epPrRnZ1Xy`.
 
 You could then access the file in two ways:
 
-* Requesting the file directly:<br />
-    `https://cloudflare-ipfs.com/ipfs/QmXnnyufdzAWL5CqZ2RnSNgPbvCc1ALT73s6epPrRnZ1Xy`
-* Requesting the file by name, from the directory:<br />
-    `https://cloudflare-ipfs.com/ipfs/QmdbaSQbGU6Wo9i5LyWWVLuU8g6WrYpWh2K4Li4QuuE8Fr/example\_text.txt`
+- Requesting the file directly:<br />
+  `https://cloudflare-ipfs.com/ipfs/QmXnnyufdzAWL5CqZ2RnSNgPbvCc1ALT73s6epPrRnZ1Xy`
+- Requesting the file by name, from the directory:<br />
+  `https://cloudflare-ipfs.com/ipfs/QmdbaSQbGU6Wo9i5LyWWVLuU8g6WrYpWh2K4Li4QuuE8Fr/example\_text.txt`
 
 While the CID of a file will only change if the file itself changes, the CID of
 a directory changes any time **any** of the files in it change, or if any files

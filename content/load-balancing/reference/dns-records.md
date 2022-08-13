@@ -61,7 +61,7 @@ As a current workaround for a domain or first-level subdomain (`lb.example.com`)
 
 For example, if your load balancer hostname was `lb.example.com`, you could create the following record solely for the purpose of SSL/TLS coverage.
 
-| Type |   LB  | IPv4 address | Proxy status |
+| Type | LB    | IPv4 address | Proxy status |
 | ---- | ----- | ------------ | ------------ |
 | A    | `www` | `192.0.2.1`  | Proxied      |
 

@@ -14,19 +14,19 @@ A JSON response for the [Firewall Rules API](https://api.cloudflare.com/#firewal
 
 ```json
 {
-  "id": "772bf1026a72c400ea576db1ffa16407",
-  "filter": {
-    "id": "6f58318e7fa2477a23112e8118c66f61",
-    "expression": "http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\"",
-    "paused": false,
-    "description": "WordPress login paths",
-    "ref": ""
-  },
-  "action": "challenge",
-  "priority": 1000,
-  "paused": false,
-  "description": "Protect blog login page",
-  "ref": ""
+	"id": "772bf1026a72c400ea576db1ffa16407",
+	"filter": {
+		"id": "6f58318e7fa2477a23112e8118c66f61",
+		"expression": "http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\"",
+		"paused": false,
+		"description": "WordPress login paths",
+		"ref": ""
+	},
+	"action": "challenge",
+	"priority": 1000,
+	"paused": false,
+	"description": "Protect blog login page",
+	"ref": ""
 }
 ```
 

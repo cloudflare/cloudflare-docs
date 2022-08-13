@@ -179,7 +179,7 @@ In Workers, you can get the current time using the JavaScript Date API, for exam
 ```js
 let start = Date.now();
 for (let i = 0; i < 1e6; i++) {
-  doSpectreAttack();
+	doSpectreAttack();
 }
 let end = Date.now();
 ```

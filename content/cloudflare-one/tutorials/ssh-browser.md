@@ -110,10 +110,10 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
 2. Select **+ Add record**. Choose `CNAME` as the record type. For **Name**, choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
 
 3. For **Target**, input the ID of your Tunnel followed by `.cfargotunnel.com`. For example:
-  
-  ```txt
-    6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
-  ```
+
+```txt
+  6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
+```
 
 4. Select **Save**.
 
@@ -136,12 +136,12 @@ To enable this feature, navigate to the **Access > Applications** page in the Ze
 Once enabled, when users authenticate and visit the URL of the application, Cloudflare will render a terminal in their browser.
 
 <iframe
-  src="https://iframe.videodelivery.net/9e62cddf4ac40dc7237f4136f946fa12"
-  style="border: none;"
-  height="200"
-  width="400"
-  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-  allowfullscreen="true"
+	src="https://iframe.videodelivery.net/9e62cddf4ac40dc7237f4136f946fa12"
+	style="border: none;"
+	height="200"
+	width="400"
+	allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+	allowfullscreen="true"
 ></iframe>
 
 ## Recommended: enable short-lived certificates

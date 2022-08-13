@@ -22,9 +22,9 @@ If you are an Enterprise user, you can add the Argo permission to your account b
 
 1. Provide your billing information.
 
-    * If you do not have a billing profile, enter your billing information.
+   - If you do not have a billing profile, enter your billing information.
 
-    * If you have a billing profile, confirm your billing information.
+   - If you have a billing profile, confirm your billing information.
 
 ## Enable Argo Tiered Cache
 

@@ -64,9 +64,9 @@ $ lerna create handlers
 filename: packages/public-api/package.json
 ---
 {
-  "dependencies": {
-    "handlers": "1.0.0"
-  }
+	"dependencies": {
+		"handlers": "1.0.0"
+	}
 }
 ```
 
@@ -87,7 +87,7 @@ filename: packages/public-api/index.js
 
 import { json } from 'handlers';
 const handler = request => {
-  return json({ status: 200 });
+	return json({ status: 200 });
 };
 ```
 
@@ -100,10 +100,10 @@ When you are ready to deploy your codebases, define a script in each package’s
 filename: packages/public-api/package.json
 ---
 {
-  "name": "public-api",
-  "scripts": {
-    "publish": "wrangler publish"
-  }
+	"name": "public-api",
+	"scripts": {
+		"publish": "wrangler publish"
+	}
 }
 ```
 
@@ -112,10 +112,10 @@ filename: packages/public-api/package.json
 filename: packages/private-api/package.json
 ---
 {
-  "name": "private-api",
-  "scripts": {
-    "publish": "wrangler publish"
-  }
+	"name": "private-api",
+	"scripts": {
+		"publish": "wrangler publish"
+	}
 }
 ```
 

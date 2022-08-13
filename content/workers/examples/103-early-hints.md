@@ -9,6 +9,7 @@ title: 103 Early Hints
 weight: 1001
 layout: example
 ---
+
 To ensure Early Hints are enabled:
 
 1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com) and select your account and website.
@@ -38,25 +39,25 @@ const HTML = `
 `;
 
 async function handleRequest(request) {
-  // If request is for test.css, serve the raw CSS
-  if (/test\.css$/.test(request.url)) {
-    return new Response(CSS, {
-      headers: {
-        'content-type': 'text/css',
-      },
-    });
-  } else {
-    // Serve raw HTML using Early Hints for the CSS file
-    return new Response(HTML, {
-      headers: {
-        'content-type': 'text/html',
-        'Link': '</test.css>; rel=preload; as=style',
-      },
-    });
-  }
+	// If request is for test.css, serve the raw CSS
+	if (/test\.css$/.test(request.url)) {
+		return new Response(CSS, {
+			headers: {
+				'content-type': 'text/css',
+			},
+		});
+	} else {
+		// Serve raw HTML using Early Hints for the CSS file
+		return new Response(HTML, {
+			headers: {
+				'content-type': 'text/html',
+				'Link': '</test.css>; rel=preload; as=style',
+			},
+		});
+	}
 }
 
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
+	event.respondWith(handleRequest(event.request));
 });
 ```

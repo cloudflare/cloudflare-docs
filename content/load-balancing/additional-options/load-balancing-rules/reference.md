@@ -17,8 +17,8 @@ If you use the wrong type of fields, you might see unexpected behavior from load
 Regardless of whether your traffic is proxied, you have access to the following fields:
 
 - **IP address** (`ip.src`) {{<type>}}IP&nbsp;address{{</type>}}: Varies based on whether your traffic is proxied:
-  - *Proxied*: Provides the client TCP IP address, which may be adjusted to reflect the actual address of the client by using HTTP headers such as `X-Forwarded-For` or `X-Real-IP`.
-  - *DNS-only*: Provides the ECS source address, if available. If not available, then provides the client resolver IP.
+  - _Proxied_: Provides the client TCP IP address, which may be adjusted to reflect the actual address of the client by using HTTP headers such as `X-Forwarded-For` or `X-Real-IP`.
+  - _DNS-only_: Provides the ECS source address, if available. If not available, then provides the client resolver IP.
 - **Load Balancer Region** (`cf.load_balancer.region`) {{<type>}}bytes{{</type>}}: Provides the [region name](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) of the data center processing the request.
 - **Load Balancer Name** (`cf.load_balancer.name`) {{<type>}}bytes{{</type>}}: Provides the name of the load balancer executing these rules.
 

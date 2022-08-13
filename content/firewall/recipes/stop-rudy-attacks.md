@@ -30,24 +30,24 @@ http.request.method eq "POST"
 The expressions are combined using the `and` operator. When an HTTP POST request to any of the specified URIs does not contain a properly formatted `auth_session` cookie, Cloudflare blocks the request:
 
 <table>
-  <thead>
-    <tr>
-      <th>Expression</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>
-          http.request.method eq "POST" and http.request.uri.path matches
-          "(comment|conversation|event poll)create" and not http.cookie matches
-          "auth_session=[0-9a-zA-Z]{32}-[0-9]{10}-[0-9a-z]{6}"
-        </code>
-      </td>
-      <td>
-        <em>Block</em>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Expression</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<code>
+					http.request.method eq "POST" and http.request.uri.path matches
+					"(comment|conversation|event poll)create" and not http.cookie matches
+					"auth_session=[0-9a-zA-Z]{32}-[0-9]{10}-[0-9a-z]{6}"
+				</code>
+			</td>
+			<td>
+				<em>Block</em>
+			</td>
+		</tr>
+	</tbody>
 </table>

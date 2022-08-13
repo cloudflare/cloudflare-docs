@@ -22,11 +22,11 @@ Contact your sales team for more information on these steps.
 
 3. Prepare the required information for JD Cloud to review the content on your domain. JD Cloud, a Cloudflare partner, is required to review and vet the content of all domains on their network before enabling them. You will need to provide the following information:
 
-    * Customer and company name.
-    * Domain name.
-    * ICP license/filing number.
-    * A general description of the content of each domain.
-    * A signed Self Attestation letter (provided by your sales team).
+   - Customer and company name.
+   - Domain name.
+   - ICP license/filing number.
+   - A general description of the content of each domain.
+   - A signed Self Attestation letter (provided by your sales team).
 
 ## Step 3 — Onboard your domains to the Cloudflare China Network
 

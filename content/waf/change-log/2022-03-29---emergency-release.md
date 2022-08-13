@@ -11,6 +11,7 @@ meta:
 # 2022-03-29 – Emergency Release
 
 {{<table-wrap>}}
+
 <table style="width: 100%">
   <thead>
     <tr>

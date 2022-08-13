@@ -75,14 +75,12 @@ Gateway periodically updates the _Do Not Inspect_ app type to include new applic
 {{<Aside>}}
 
 <b>Google Drive for Desktop</b> allows you to configure the app to trust the <a href="/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/">
-  Cloudflare Root Certificate
+	Cloudflare Root Certificate
 </a> Gateway presents. Doing so will allow you to inspect the traffic to and from Google Drive, instead
 of setting up a <i>Do Not Inspect</i> policy and lose visibility on that traffic. To trust the Cloudflare
 Root Certificate in Google Drive, check out these <a href="https://support.google.com/a/answer/7644837">
-  instructions for TrustedRootCertsFile
+	instructions for TrustedRootCertsFile
 </a>
 .
 
 {{</Aside>}}
-
-

@@ -49,6 +49,7 @@ These steps help you set up Centrify as your identity provider:
 1.  Take note of the Client ID, Client Secret, OpenID Connect Issuer URL, and Application ID from the Settings tab.
 
          {{<Aside>}}
+
     Do not use the forward slash from the **Settings** tab.
     {{</Aside>}}
 
@@ -70,13 +71,13 @@ To test that your connection is working, navigate to **Authentication > Login me
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>",
-    "centrify_account": "https://abc123.my.centrify.com/",
-    "centrify_app_id": "exampleapp"
-  },
-  "type": "centrify",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>",
+		"centrify_account": "https://abc123.my.centrify.com/",
+		"centrify_app_id": "exampleapp"
+	},
+	"type": "centrify",
+	"name": "my example idp"
 }
 ```

@@ -15,7 +15,7 @@ With Crawler Hints, Cloudflare can proactively tell a crawler about the best tim
 
 ## Benefits
 
-For a website owner, Crawler Hints ensures that search engines and other bot-powered experiences have the freshest version of your content, translating into happier users and ultimately influencing search rankings. 
+For a website owner, Crawler Hints ensures that search engines and other bot-powered experiences have the freshest version of your content, translating into happier users and ultimately influencing search rankings.
 
 Crawler Hints also means less traffic hitting your origin, improving resource consumption, site performance, and environmental impact.
 

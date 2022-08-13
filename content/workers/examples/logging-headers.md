@@ -11,17 +11,17 @@ layout: example
 
 ```js
 async function handleRequest(request) {
-  console.log(new Map(request.headers))
+	console.log(new Map(request.headers));
 
-  return new Response("Hello world")
+	return new Response('Hello world');
 }
 
-addEventListener("fetch", event => {
-  return event.respondWith(handleRequest(event.request))
-})
+addEventListener('fetch', event => {
+	return event.respondWith(handleRequest(event.request));
+});
 ```
 
-***
+---
 
 {{<content-column>}}
 
@@ -30,19 +30,19 @@ addEventListener("fetch", event => {
 Use a `Map` if you need to log a `Headers` object to the console:
 
 ```js
-console.log(new Map(request.headers))
+console.log(new Map(request.headers));
 ```
 
 Use the `spread` operator if you need to quickly stringify a `Headers` object:
 
 ```js
-let requestHeaders = JSON.stringify([...request.headers])
+let requestHeaders = JSON.stringify([...request.headers]);
 ```
 
 Or use ES2019 `Object.fromEntries` to convert it to an object:
 
 ```js
-let requestHeaders = Object.fromEntries(request.headers)
+let requestHeaders = Object.fromEntries(request.headers);
 ```
 
 ### The problem
@@ -50,13 +50,13 @@ let requestHeaders = Object.fromEntries(request.headers)
 When debugging Workers, examine the headers on a request or response. A common mistake is to try to log headers to the developer console via code like this:
 
 ```js
-console.log(request.headers)
+console.log(request.headers);
 ```
 
 Or this:
 
 ```js
-console.log(`Request headers: ${JSON.stringify(request.headers)}`)
+console.log(`Request headers: ${JSON.stringify(request.headers)}`);
 ```
 
 Both attempts result in what appears to be an empty object — the string `"{}"` — even though calling `request.headers.has("Your-Header-Name")` might return true. This is the same behavior that browsers implement.
@@ -70,14 +70,14 @@ The reason this happens is because [Headers](https://developer.mozilla.org/en-US
 The first common idiom for making Headers `console.log()`-friendly is to construct a `Map` object from the `Headers` object and log the `Map` object.
 
 ```js
-console.log(new Map(request.headers))
+console.log(new Map(request.headers));
 ```
 
 This works because:
 
-*   `Map` objects can be constructed from iterables, like `Headers`.
+- `Map` objects can be constructed from iterables, like `Headers`.
 
-*   The `Map` object does store its entries in enumerable JavaScript properties, so the developer console can see into it.
+- The `Map` object does store its entries in enumerable JavaScript properties, so the developer console can see into it.
 
 ### Spread headers into an array
 
@@ -88,8 +88,8 @@ Even though a `Map` stores its data in enumerable properties, those properties a
 Instead, you can take advantage of the iterability of the `Headers` object in a new way by applying the [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator) (`...`) to it.
 
 ```js
-let requestHeaders = JSON.stringify([...request.headers], null, 2)
-console.log(`Request headers: ${requestHeaders}`)
+let requestHeaders = JSON.stringify([...request.headers], null, '\t');
+console.log(`Request headers: ${requestHeaders}`);
 ```
 
 ### Convert headers into an object with Object.fromEntries (ES2019)
@@ -97,14 +97,14 @@ console.log(`Request headers: ${requestHeaders}`)
 [ES2019 provides `Object.fromEntries`](https://github.com/tc39/proposal-object-from-entries), so it is a simple call to convert the headers into an object:
 
 ```js
-let headersObject = Object.fromEntries(request.headers)
-let requestHeaders = JSON.stringify(headersObject, null, 2)
-console.log(`Request headers: ${requestHeaders}`)
+let headersObject = Object.fromEntries(request.headers);
+let requestHeaders = JSON.stringify(headersObject, null, '\t');
+console.log(`Request headers: ${requestHeaders}`);
 ```
 
 This results in something like:
 
-```js
+```text
 Request headers: {
   "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
   "accept-encoding": "gzip",

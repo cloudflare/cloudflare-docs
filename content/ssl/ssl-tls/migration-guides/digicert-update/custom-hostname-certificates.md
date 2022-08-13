@@ -4,7 +4,7 @@ title: Custom hostnames
 weight: 3
 layout: list
 meta:
-    title: Custom hostname certificates - DigiCert migration guide
+  title: Custom hostname certificates - DigiCert migration guide
 ---
 
 # Custom hostnames
@@ -58,17 +58,17 @@ To find wildcard custom hostnames specifically that are using DigiCert certifica
 You should update the following values using the [dashboard](/cloudflare-for-saas/security/certificate-management/issue-and-validate/#via-the-dashboard-1) or the [API](/cloudflare-for-saas/security/certificate-management/issue-and-validate/#via-the-api-1):
 
 - **Certificate Authority**: When you update this value, it will immediately reissue the certificate. Cloudflare will continue serving the previous certificate until the new one is validated. If the certificate was previously using DigiCert and you do not update this value, Cloudflare will choose the issuing CA upon renewal.
-    - *Dashboard*: Update the value for **SSL certificate authority** to either be **Let's Encrypt** or **Google Trust Services**.
-    - *API*: Update the value sent in the `"certificate_authority"` field under the SSL object to either be `"lets_encrypt"` or `"google"`.
 
-    {{<Aside type="note">}}
- If you update the certificate authority for a wildcard custom hostname to use Let's Encrypt or Google Trust Services, you will now need to add [two DCV tokens](#wildcard-custom-hostnames) for it to validate.
-    {{</Aside>}}
+  - _Dashboard_: Update the value for **SSL certificate authority** to either be **Let's Encrypt** or **Google Trust Services**.
+  - _API_: Update the value sent in the `"certificate_authority"` field under the SSL object to either be `"lets_encrypt"` or `"google"`.
+
+  {{<Aside type="note">}}
+  If you update the certificate authority for a wildcard custom hostname to use Let's Encrypt or Google Trust Services, you will now need to add [two DCV tokens](#wildcard-custom-hostnames) for it to validate.
+  {{</Aside>}}
 
 - **DCV Method**: You can only update this value when your certificate is up for renewal. If your certificate was previously using **Email** or **CNAME** validation and you do not update this value, Cloudflare will automatically set your DCV method to **TXT** or **HTTP** when the custom hostname comes up for renewal. We will use **HTTP** validation for non-wildcard custom hostname renewals and TXT-based DCV for wildcard custom hostname renewals.
-    - *Dashboard*: Update the value for **Certificate validation method** to either be [**HTTP Validation**](/cloudflare-for-saas/domain-support/hostname-verification/#http) (only available for [non-wildcard custom hostnames](#non-wildcard-custom-hostnames)) or [**TXT Validation**](/cloudflare-for-saas/domain-support/hostname-verification/#txt).
-    - *API*: Update the value sent in the `"method"` field under the SSL object to either be [`"http"`](/cloudflare-for-saas/domain-support/hostname-verification/#http) (only available for [non-wildcard custom hostnames](#non-wildcard-custom-hostnames)) or [`"txt"`](/cloudflare-for-saas/domain-support/hostname-verification/#txt).
-
+  - _Dashboard_: Update the value for **Certificate validation method** to either be [**HTTP Validation**](/cloudflare-for-saas/domain-support/hostname-verification/#http) (only available for [non-wildcard custom hostnames](#non-wildcard-custom-hostnames)) or [**TXT Validation**](/cloudflare-for-saas/domain-support/hostname-verification/#txt).
+  - _API_: Update the value sent in the `"method"` field under the SSL object to either be [`"http"`](/cloudflare-for-saas/domain-support/hostname-verification/#http) (only available for [non-wildcard custom hostnames](#non-wildcard-custom-hostnames)) or [`"txt"`](/cloudflare-for-saas/domain-support/hostname-verification/#txt).
 
 {{<Aside type="note">}}
 
@@ -102,35 +102,35 @@ header: Response
 highlight: [11,12,13,14,15,16,17,18]
 ---
 {
-"result": [
-{
-    "id": "xxxx",
-    "hostname": "example.com",
-    "ssl": {
-    "id": "xxxx",
-    "type": "dv",
-    "method": "txt",
-    "status": "pending_validation",
-    "txt_name": "_acme-challenge.example.com",
-    "txt_value": "09pBM4ygXti9LSvoJsqg5zdZglHs8MjfqLsJSGTkh5w",
-    "validation_records": [
-        {
-            "status": "pending",
-            "txt_name": "_acme-challenge.example.com",
-            "txt_value": "09pBM4ygXti9LSvoJsqg5zdZglHs8MjfqLsJSGTkh5w"
-        }
-    ],
-    "settings": {
-        "min_tls_version": "1.3"
-    },
-    "bundle_method": "ubiquitous",
-    "wildcard": false,
-    "certificate_authority": "lets_encrypt"
-    },
-    "status": "active",
-    "created_at": "2021-09-23T19:42:02.877815Z"
-}
-]
+	"result": [
+		{
+			"id": "xxxx",
+			"hostname": "example.com",
+			"ssl": {
+				"id": "xxxx",
+				"type": "dv",
+				"method": "txt",
+				"status": "pending_validation",
+				"txt_name": "_acme-challenge.example.com",
+				"txt_value": "09pBM4ygXti9LSvoJsqg5zdZglHs8MjfqLsJSGTkh5w",
+				"validation_records": [
+					{
+						"status": "pending",
+						"txt_name": "_acme-challenge.example.com",
+						"txt_value": "09pBM4ygXti9LSvoJsqg5zdZglHs8MjfqLsJSGTkh5w"
+					}
+				],
+				"settings": {
+					"min_tls_version": "1.3"
+				},
+				"bundle_method": "ubiquitous",
+				"wildcard": false,
+				"certificate_authority": "lets_encrypt"
+			},
+			"status": "active",
+			"created_at": "2021-09-23T19:42:02.877815Z"
+		}
+	]
 }
 ```
 

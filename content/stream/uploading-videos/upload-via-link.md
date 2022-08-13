@@ -24,42 +24,42 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/copy
 
 ```json
 {
-  "result": {
-    "uid": "4544715edbe00808d89aec0a3a765c40",
-    "thumbnail": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/thumbnails/thumbnail.jpg",
-    "thumbnailTimestampPct": 0,
-    "readyToStream": false,
-    "status": {
-      "state": "downloading"
-    },
-    "meta": {
-      "downloaded-from": "https://storage.googleapis.com/zaid-test/Watermarks%20Demo/cf-ad-original.mp4",
-      "name": "My First Stream Video"
-    },
-    "created": "2020-10-16T20:20:17.872170843Z",
-    "modified": "2020-10-16T20:20:17.872170843Z",
-    "size": 9032701,
-    "preview": "https://watch.cloudflarestream.com/4544715edbe00808d89aec0a3a765c40",
-    "allowedOrigins": [],
-    "requireSignedURLs": false,
-    "uploaded": "2020-10-16T20:20:17.872170843Z",
-    "uploadExpiry": null,
-    "maxSizeBytes": 0,
-    "maxDurationSeconds": 0,
-    "duration": -1,
-    "input": {
-      "width": -1,
-      "height": -1
-    },
-    "playback": {
-      "hls": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/manifest/video.m3u8",
-      "dash": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/manifest/video.mpd"
-    },
-    "watermark": null
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"uid": "4544715edbe00808d89aec0a3a765c40",
+		"thumbnail": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/thumbnails/thumbnail.jpg",
+		"thumbnailTimestampPct": 0,
+		"readyToStream": false,
+		"status": {
+			"state": "downloading"
+		},
+		"meta": {
+			"downloaded-from": "https://storage.googleapis.com/zaid-test/Watermarks%20Demo/cf-ad-original.mp4",
+			"name": "My First Stream Video"
+		},
+		"created": "2020-10-16T20:20:17.872170843Z",
+		"modified": "2020-10-16T20:20:17.872170843Z",
+		"size": 9032701,
+		"preview": "https://watch.cloudflarestream.com/4544715edbe00808d89aec0a3a765c40",
+		"allowedOrigins": [],
+		"requireSignedURLs": false,
+		"uploaded": "2020-10-16T20:20:17.872170843Z",
+		"uploadExpiry": null,
+		"maxSizeBytes": 0,
+		"maxDurationSeconds": 0,
+		"duration": -1,
+		"input": {
+			"width": -1,
+			"height": -1
+		},
+		"playback": {
+			"hls": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/manifest/video.m3u8",
+			"dash": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/manifest/video.mpd"
+		},
+		"watermark": null
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -79,16 +79,16 @@ https://github.com/cloudflare/cloudflare-docs-engine/issues/281
 -->
 
 <figure data-type="stream">
-  <div className="AspectRatio" style={{ '--aspect-ratio': 'calc(16 / 9)' }}>
-    <iframe
-      className="AspectRatio--content"
-      src="https://iframe.videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81?mute=true"
-      title="Example Stream video"
-      frameBorder="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    />
-  </div>
+	<div className="AspectRatio" style={{ '--aspect-ratio': 'calc(16 / 9)' }}>
+		<iframe
+			className="AspectRatio--content"
+			src="https://iframe.videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81?mute=true"
+			title="Example Stream video"
+			frameBorder="0"
+			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+			allowFullScreen
+		/>
+	</div>
 </figure>
 
 <p>{{<button type="primary" href="https://api.cloudflare.com/#stream-videos-upload-a-video-from-a-url">}}View detailed API reference{{</button>}}</p>

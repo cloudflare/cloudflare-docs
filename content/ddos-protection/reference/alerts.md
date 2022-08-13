@@ -12,11 +12,11 @@ Configure notifications to receive real-time alerts (within ~1 minute) about L3/
 
 Each notification email includes the following information:
 
-* Description
-* Detection and mitigation time of attack
-* Attack type
-* Maximum rate of attack
-* Attack target
+- Description
+- Detection and mitigation time of attack
+- Attack type
+- Maximum rate of attack
+- Attack target
 
 Notifications for HTTP DDoS alerts delivered through webhook or PagerDuty will also include the target hostname.
 
@@ -36,8 +36,8 @@ To set up a notification:
 
 4. Click **Select** next to one of the [available DDoS alerts](#alert-types) (depending on your plan and services):
 
-    * HTTP DDoS Attack Alerter
-    * Layer 4 Attack Alerter
+   - HTTP DDoS Attack Alerter
+   - Layer 4 Attack Alerter
 
 5. Enter a notification name and (optionally) a description.
 
@@ -55,15 +55,15 @@ To edit, delete, or disable a notification, go to your [account notifications](h
 
 Cloudflare can issue notifications for two kinds of DDoS alerts:
 
-* **HTTP DDoS attack**: For HTTP attacks with a duration over two minutes that generate more than 2,000 requests per second.
-* **L3/L4 (network/transport layer) DDoS attack**: For Layer 3/4 attacks with a duration over two minutes that generate more than 20,000 packets per second.
+- **HTTP DDoS attack**: For HTTP attacks with a duration over two minutes that generate more than 2,000 requests per second.
+- **L3/L4 (network/transport layer) DDoS attack**: For Layer 3/4 attacks with a duration over two minutes that generate more than 20,000 packets per second.
 
 The available notifications depend on your Cloudflare plan and services:
 
-Notification type     | WAF/CDN | Spectrum | Spectrum BYOIP | Magic Transit
-----------------------|:-------:|:--------:|:--------------:|:------------:
-HTTP DDoS attack      | Yes     | –        | –              | –
-Layer 3/4 DDoS attack | –       | Yes\*    | Yes            | Yes
+| Notification type     | WAF/CDN | Spectrum | Spectrum BYOIP | Magic Transit |
+| --------------------- | :-----: | :------: | :------------: | :-----------: |
+| HTTP DDoS attack      |   Yes   |    –     |       –        |       –       |
+| Layer 3/4 DDoS attack |    –    |  Yes\*   |      Yes       |      Yes      |
 
 \* _Only available on an Enterprise plan._
 

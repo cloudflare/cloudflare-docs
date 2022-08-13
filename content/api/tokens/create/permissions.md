@@ -65,8 +65,8 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 | Account Settings Write                                       | Grants write access to Account resources, account membership, and account level features.             |
 | Account WAF Read                                             | Grants read access to Account WAF.                                                                    |
 | Account WAF Write                                            | Grants write access to Account WAF.                                                                   |
-| Cloudflare Tunnel Read                                             | Grants access to view Cloudflare Tunnels.                                                                   |
-| Cloudflare Tunnel Write                                            | Grants access to create and delete Cloudflare Tunnels.                                                      |
+| Cloudflare Tunnel Read                                       | Grants access to view Cloudflare Tunnels.                                                             |
+| Cloudflare Tunnel Write                                      | Grants access to create and delete Cloudflare Tunnels.                                                |
 | Billing Read                                                 | Grants read access to billing profile, subscriptions, and access to fetch invoices and entitlements.  |
 | Billing Write                                                | Grants write access to billing profile, subscriptions, and access to fetch invoices and entitlements. |
 | DDoS Protection Read                                         | Grants read access to DDoS protection.                                                                |
@@ -83,8 +83,8 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 | L4 DDoS Managed Ruleset Write                                | Grants write access to L4 DDoS Managed Ruleset.                                                       |
 | Load Balancing: Monitors and Pools Read                      | Grants read access to account level load balancer resources.                                          |
 | Load Balancing: Monitors and Pools Write                     | Grants write access to account level load balancer resources.                                         |
-| Logs Read                                                    | Grants read access to logs using Logpull or Instant Logs.                                                          |
-| Logs Write                                                   | Grants read and write access to Logpull, Logpush and read access to Instant Logs.                                                                  |
+| Logs Read                                                    | Grants read access to logs using Logpull or Instant Logs.                                             |
+| Logs Write                                                   | Grants read and write access to Logpull, Logpush and read access to Instant Logs.                     |
 | Magic Firewall Packet Captures - Read PCAPs API              | Grants read access to Packet Captures.                                                                |
 | Magic Firewall Packet Captures - Write PCAPs API             | Grants write access to Packet Captures.                                                               |
 | Magic Firewall Read                                          | Grants read access to Magic Firewall.                                                                 |

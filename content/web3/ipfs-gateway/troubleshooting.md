@@ -6,7 +6,6 @@ weight: 11
 
 # Troubleshooting
 
-
 ## Cloudflare-specific
 
 ### No link named "ipfs"

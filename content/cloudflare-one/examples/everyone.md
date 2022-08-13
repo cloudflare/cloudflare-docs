@@ -10,6 +10,6 @@ layout: example
 
 ```json
 {
-  "everyone": {}
+	"everyone": {}
 }
 ```

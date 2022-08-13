@@ -24,8 +24,8 @@ This section covers how to create, renew, and revoke a service token.
 
 6. Copy the Client Secret.
 
-    {{<Aside type="warning" header="Important">}}This is the **only time** Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
-    {{</Aside>}}
+   {{<Aside type="warning" header="Important">}}This is the **only time** Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
+   {{</Aside>}}
 
 You can now use the service token in your [Access policies](/cloudflare-one/policies/access/) and [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions). When creating these policies, select the `Service Auth` action to ensure that the identity provider login screen is not required for end users.
 
@@ -49,9 +49,9 @@ To renew the service token:
 2. Locate the token you want to renew.
 3. To extend the token's lifetime by one year, select **Refresh**.
 4. To extend the token's lifetime by more than a year:
-    1. Select **Edit**.
-    2. Choose a new **Service Token Duration**.
-    3. Select **Save**. The expiration date will be extended by the selected amount of time.
+   1. Select **Edit**.
+   2. Choose a new **Service Token Duration**.
+   3. Select **Save**. The expiration date will be extended by the selected amount of time.
 
 ## Revoke service tokens
 

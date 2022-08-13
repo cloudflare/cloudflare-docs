@@ -87,11 +87,11 @@ Valid options for the `options` object include: {{<definitions>}}
   - Creates a clone of a [`Response`](#response) object.
 
 - `json()` {{<type-link href="#response">}}Response{{</type-link>}}
-  
+
   - Creates a new response with a JSON-serialized payload.
-  
+
 - `redirect()` {{<type-link href="#response">}}Response{{</type-link>}}
-  
+
   - Creates a new response with a different URL.
 
 {{</definitions>}}

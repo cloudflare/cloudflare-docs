@@ -42,7 +42,7 @@ If you do not have an ASN or do not want to bring your ASN to Cloudflare, you ca
 ## Add an IP prefix
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. From the **IP Prefixes** tab, click **Add IP Prefix**. 
+2. From the **IP Prefixes** tab, click **Add IP Prefix**.
 3. Fill out the information for your prefix and click **Add IP Prefix**.
 
 After you add the prefix, you can edit its status.
@@ -51,7 +51,7 @@ After you add the prefix, you can edit its status.
 
 1. From the **IP Prefixes** tab, locate the prefix you want to modify and click **Edit**.
 2. On the **Edit IP Prefix** page under **Status**, choose a status.
-3. *(Optional)* Edit the description for your prefix.
+3. _(Optional)_ Edit the description for your prefix.
 4. Click **Edit IP Prefix** to save your changes.
 
 {{<Aside type="note" header="Note:">}}

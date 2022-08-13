@@ -46,8 +46,8 @@ You have successfully created a GitHub repository and pushed your Brunch project
 Deploy your site to Pages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. In **Account Home**, select **Pages** > **Create a project**. 
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select *Brunch* as your **Framework preset**. Your selection will provide the following information.
+2. In **Account Home**, select **Pages** > **Create a project**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Brunch_ as your **Framework preset**. Your selection will provide the following information.
 
 {{<table-wrap>}}
 

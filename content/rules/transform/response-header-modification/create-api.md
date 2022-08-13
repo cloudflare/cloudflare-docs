@@ -14,11 +14,11 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create HTTP Response He
 
 When creating an HTTP Response Header Modification Rule via API, make sure you:
 
-*   Set the rule action to `rewrite`.
-*   Define the [header modification parameters](/rules/transform/request-header-modification/reference/parameters/) in the `action_parameters` field according to the operation to perform (set or remove header).
-*   Deploy the rule to the `http_response_headers_transform` phase at the zone level.
+- Set the rule action to `rewrite`.
+- Define the [header modification parameters](/rules/transform/request-header-modification/reference/parameters/) in the `action_parameters` field according to the operation to perform (set or remove header).
+- Deploy the rule to the `http_response_headers_transform` phase at the zone level.
 
-***
+---
 
 Follow this workflow to create an HTTP Response Header Modification Rule for a given zone via API:
 
@@ -26,8 +26,8 @@ Follow this workflow to create an HTTP Response Header Modification Rule for a g
 
 2.  If the phase ruleset does not exist, create it using the [Create ruleset](/ruleset-engine/rulesets-api/create/) method with the zone-level endpoint. In the new ruleset properties, set the following values:
 
-    * **kind**: `zone`
-    * **phase**: `http_response_headers_transform`
+    - **kind**: `zone`
+    - **phase**: `http_response_headers_transform`
 
 3.  Use the [Update ruleset](/ruleset-engine/rulesets-api/update/) method to add an HTTP Response Header Modification Rule to the list of ruleset rules (check the examples below). Alternatively, include the rule in the [Create ruleset](/ruleset-engine/rulesets-api/create/) request mentioned in the previous step.
 
@@ -35,8 +35,8 @@ Follow this workflow to create an HTTP Response Header Modification Rule for a g
 
 The API token used in API requests to manage HTTP Response Header Modification Rules must have at least the following permissions:
 
-* Transform Rules: Edit
-* Account Rulesets: Read
+- Transform Rules: Edit
+- Account Rulesets: Read
 
 ## Examples
 
@@ -46,7 +46,7 @@ The API token used in API requests to manage HTTP Response Header Modification R
 
 The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP Response Header Modification Rule — adding an HTTP response header with a static value — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -80,37 +80,37 @@ The response contains the complete definition of the ruleset you updated.
 header: Response
 ---
 {
-  "result": {
-    "id": "<RULESET_ID>",
-    "name": "Zone-level Response Headers Transform Ruleset",
-    "description": "Zone-level ruleset that will execute Response Header Modification Rules.",
-    "kind": "zone",
-    "version": "2",
-    "rules": [
-      {
-        "id": "<RULE_ID>",
-        "version": "1",
-        "action": "rewrite",
-        "action_parameters": {
-          "headers": {
-            "X-Source": {
-              "operation": "set",
-              "value": "Cloudflare"
-            }
-          }
-        },
-        "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
-        "description": "My first HTTP Response Header Modification Rule",
-        "last_updated": "2021-04-14T14:42:04.219025Z",
-        "ref": "<RULE_REF>"
-      }
-    ],
-    "last_updated": "2021-04-14T14:42:04.219025Z",
-    "phase": "http_response_headers_transform"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<RULESET_ID>",
+		"name": "Zone-level Response Headers Transform Ruleset",
+		"description": "Zone-level ruleset that will execute Response Header Modification Rules.",
+		"kind": "zone",
+		"version": "2",
+		"rules": [
+			{
+				"id": "<RULE_ID>",
+				"version": "1",
+				"action": "rewrite",
+				"action_parameters": {
+					"headers": {
+						"X-Source": {
+							"operation": "set",
+							"value": "Cloudflare"
+						}
+					}
+				},
+				"expression": "(starts_with(http.request.uri.path, \"/en/\"))",
+				"description": "My first HTTP Response Header Modification Rule",
+				"last_updated": "2021-04-14T14:42:04.219025Z",
+				"ref": "<RULE_REF>"
+			}
+		],
+		"last_updated": "2021-04-14T14:42:04.219025Z",
+		"phase": "http_response_headers_transform"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -123,7 +123,7 @@ header: Response
 
 The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP Response Header Modification Rule — adding an HTTP response header with a dynamic value — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -157,37 +157,37 @@ The response contains the complete definition of the ruleset you updated.
 header: Response
 ---
 {
-  "result": {
-    "id": "<RULESET_ID>",
-    "name": "Zone-level Response Headers Transform Ruleset",
-    "description": "Zone-level ruleset that will execute Response Header Modification Rules.",
-    "kind": "zone",
-    "version": "2",
-    "rules": [
-      {
-        "id": "<RULE_ID>",
-        "version": "1",
-        "action": "rewrite",
-        "action_parameters": {
-          "headers": {
-            "X-Bot-Score": {
-              "operation": "set",
-              "expression": "to_string(cf.bot_management.score)"
-            }
-          }
-        },
-        "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
-        "description": "My first HTTP Response Header Modification Rule",
-        "last_updated": "2021-04-14T14:42:04.219025Z",
-        "ref": "<RULE_REF>"
-      }
-    ],
-    "last_updated": "2021-04-14T14:42:04.219025Z",
-    "phase": "http_response_headers_transform"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<RULESET_ID>",
+		"name": "Zone-level Response Headers Transform Ruleset",
+		"description": "Zone-level ruleset that will execute Response Header Modification Rules.",
+		"kind": "zone",
+		"version": "2",
+		"rules": [
+			{
+				"id": "<RULE_ID>",
+				"version": "1",
+				"action": "rewrite",
+				"action_parameters": {
+					"headers": {
+						"X-Bot-Score": {
+							"operation": "set",
+							"expression": "to_string(cf.bot_management.score)"
+						}
+					}
+				},
+				"expression": "(starts_with(http.request.uri.path, \"/en/\"))",
+				"description": "My first HTTP Response Header Modification Rule",
+				"last_updated": "2021-04-14T14:42:04.219025Z",
+				"ref": "<RULE_REF>"
+			}
+		],
+		"last_updated": "2021-04-14T14:42:04.219025Z",
+		"phase": "http_response_headers_transform"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -200,7 +200,7 @@ header: Response
 
 The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP Response Header Modification Rule — removing an HTTP response header — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -233,36 +233,36 @@ The response contains the complete definition of the ruleset you updated.
 header: Response
 ---
 {
-  "result": {
-    "id": "<RULESET_ID>",
-    "name": "Zone-level Response Headers Transform Ruleset",
-    "description": "Zone-level ruleset that will execute Response Header Modification Rules.",
-    "kind": "zone",
-    "version": "2",
-    "rules": [
-      {
-        "id": "<RULE_ID>",
-        "version": "1",
-        "action": "rewrite",
-        "action_parameters": {
-          "headers": {
-            "cf-connecting-ip": {
-              "operation": "remove"
-            }
-          }
-        },
-        "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
-        "description": "My first HTTP Response Header Modification Rule",
-        "last_updated": "2021-04-14T14:42:04.219025Z",
-        "ref": "<RULE_REF>"
-      }
-    ],
-    "last_updated": "2021-04-14T14:42:04.219025Z",
-    "phase": "http_response_headers_transform"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<RULESET_ID>",
+		"name": "Zone-level Response Headers Transform Ruleset",
+		"description": "Zone-level ruleset that will execute Response Header Modification Rules.",
+		"kind": "zone",
+		"version": "2",
+		"rules": [
+			{
+				"id": "<RULE_ID>",
+				"version": "1",
+				"action": "rewrite",
+				"action_parameters": {
+					"headers": {
+						"cf-connecting-ip": {
+							"operation": "remove"
+						}
+					}
+				},
+				"expression": "(starts_with(http.request.uri.path, \"/en/\"))",
+				"description": "My first HTTP Response Header Modification Rule",
+				"last_updated": "2021-04-14T14:42:04.219025Z",
+				"ref": "<RULE_REF>"
+			}
+		],
+		"last_updated": "2021-04-14T14:42:04.219025Z",
+		"phase": "http_response_headers_transform"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

@@ -13,7 +13,7 @@ Since load balancers only exist on a zone — and not an account — you may nee
 
 {{</Aside>}}
 
-```json
+```bash
 ---
 header: Request
 ---

@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Formats and limitations
 meta:
-    title: Supported formats and limitations
+  title: Supported formats and limitations
 weight: 3
 ---
 

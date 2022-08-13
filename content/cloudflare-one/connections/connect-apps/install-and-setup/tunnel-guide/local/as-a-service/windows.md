@@ -25,9 +25,9 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 2. Create a new directory:
 
-    ```bash
-    C:\Cloudflared\bin
-    ```
+   ```bash
+   C:\Cloudflared\bin
+   ```
 
 3. Copy the `.exe` file you downloaded in step 1 to the new directory and rename it to `cloudflared.exe`.
 
@@ -35,35 +35,35 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 5. Run this command to install `cloudflared`:
 
-    ```bash
-    cloudflared.exe service install
-    ```
+   ```bash
+   cloudflared.exe service install
+   ```
 
 6. Next, run this command to create another directory:
 
-    ```bash
-    mkdir C:\Windows\System32\config\systemprofile\.cloudflared
-    ```
+   ```bash
+   mkdir C:\Windows\System32\config\systemprofile\.cloudflared
+   ```
 
 7. Log in and authenticate `cloudflared`:
 
-    ```bash
-    cloudflared.exe login
-    ```
+   ```bash
+   cloudflared.exe login
+   ```
 
 8. The login command will generate a `cert.pem` file and save it to your user profile by default. Copy the file to the `.cloudflared` folder created in step 5 using this command:
 
-    ```bash
-    copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared\cert.pem
-    ```
+   ```bash
+   copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared\cert.pem
+   ```
 
 9. Next, create a tunnel:
 
-    ```bash
-    cloudflared.exe tunnel create <Tunnel Name>
-    ```
+   ```bash
+   cloudflared.exe tunnel create <Tunnel Name>
+   ```
 
-    This will generate a [credentials file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#credentials-file) in `.json` format.
+   This will generate a [credentials file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#credentials-file) in `.json` format.
 
 10. [Create a configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/#4-create-a-configuration-file) with the following content:
 
@@ -73,7 +73,7 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
     # Uncomment the following two lines if you are using self-signed certificates in your origin server
     # originRequest:
     #   noTLSVerify: true
-    
+
     ingress:
       - hostname: app.mydomain.com
         service: https://internal.mydomain.com

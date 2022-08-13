@@ -41,8 +41,8 @@ To use a CSR:
 4.  Obtain a certificate from the Certificate Authority (CA) of your choice using your CSR.
 5.  When you [upload the custom certificate](/ssl/edge-certificates/custom-certificates/uploading/) to Cloudflare, select an **Encoding mode** of **Certificate Signing Request (CSR)** and enter the associated value.
 
-     {{<Aside type="note">}}You will not see the option to adjust your **Encoding Mode** until after you have created a CSR associated with the specific zone or your account.
-     {{</Aside>}}
+    {{<Aside type="note">}}You will not see the option to adjust your **Encoding Mode** until after you have created a CSR associated with the specific zone or your account.
+    {{</Aside>}}
 
 ## Renew a certificate
 

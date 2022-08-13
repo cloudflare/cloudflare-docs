@@ -91,15 +91,15 @@ To test that your connection is working, navigate to **Authentication > Login me
 
 ```json
 {
-  "config": {
-    "issuer_url": "jumpcloud",
-    "sso_target_url": "https://sso.myexample.jumpcloud.com/saml2/cloudflareaccess",
-    "attributes": ["email", "name", "username"],
-    "email_attribute_name": "",
-    "sign_request": false,
-    "idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
-  },
-  "type": "saml",
-  "name": "jumpcloud saml example"
+	"config": {
+		"issuer_url": "jumpcloud",
+		"sso_target_url": "https://sso.myexample.jumpcloud.com/saml2/cloudflareaccess",
+		"attributes": ["email", "name", "username"],
+		"email_attribute_name": "",
+		"sign_request": false,
+		"idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
+	},
+	"type": "saml",
+	"name": "jumpcloud saml example"
 }
 ```

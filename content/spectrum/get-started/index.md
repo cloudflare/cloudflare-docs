@@ -92,7 +92,7 @@ To create a Spectrum application using a CNAME record, you will need to create a
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2.  Click **Spectrum**.
-3.  Click **Create an Application**. 
+3.  Click **Create an Application**.
 4.  Under **Domain**, enter the domain that will use Spectrum.
 5.  Under **Edge Port**, enter the port Cloudflare should use your application.
 6.  Under **Origin**, enter your CNAME Record name.
@@ -121,19 +121,19 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps
 
 ```json
 {
-  "dns": {
-    "type": "CNAME",
-    "name": "spectrum-cname.example.com"
-  },
-  "ip_firewall": false,
-  "protocol": "tcp/22",
-  "proxy_protocol": "off",
-  "tls": "off",
-  "origin_dns": {
-    "name": "cname-to-origin.example.com",
-    "ttl": 1200
-  },
-  "origin_port": 22
+	"dns": {
+		"type": "CNAME",
+		"name": "spectrum-cname.example.com"
+	},
+	"ip_firewall": false,
+	"protocol": "tcp/22",
+	"proxy_protocol": "off",
+	"tls": "off",
+	"origin_dns": {
+		"name": "cname-to-origin.example.com",
+		"ttl": 1200
+	},
+	"origin_port": 22
 }
 ```
 
@@ -158,7 +158,6 @@ To create a Spectrum application using a Load Balancer, you will need to generat
 </div>
 </details>
 
-
 <details>
 <summary>Add your application via API</summary>
 <div>
@@ -179,19 +178,19 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps
 
 ```json
 {
-  "dns": {
-    "type": "CNAME",
-    "name": "spectrum-cname.example.com"
-  },
-  "ip_firewall": false,
-  "protocol": "tcp/22",
-  "proxy_protocol": false,
-  "tls": "off",
-  "origin_dns": {
-    "name": "cname-to-origin.example.com",
-    "ttl": 1200
-  },
-  "origin_port": 22
+	"dns": {
+		"type": "CNAME",
+		"name": "spectrum-cname.example.com"
+	},
+	"ip_firewall": false,
+	"protocol": "tcp/22",
+	"proxy_protocol": false,
+	"tls": "off",
+	"origin_dns": {
+		"name": "cname-to-origin.example.com",
+		"ttl": 1200
+	},
+	"origin_port": 22
 }
 ```
 

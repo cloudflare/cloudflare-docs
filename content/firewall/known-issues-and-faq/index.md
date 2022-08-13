@@ -62,8 +62,8 @@ There may be situations in which you want to enforce a blocking or challenging a
 
 Cloudflare supports two methods to allow requests through firewall rules expressions:
 
-* Exclude a type of request from being blocked or challenged, for example based on IP address, ASN, or country.
-* Create an independent firewall rule with an _Allow_ action.
+- Exclude a type of request from being blocked or challenged, for example based on IP address, ASN, or country.
+- Create an independent firewall rule with an _Allow_ action.
 
 {{<Aside type="note" header="Note">}}
 

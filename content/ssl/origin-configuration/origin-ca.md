@@ -45,19 +45,18 @@ To add an Origin CA certificate to your origin web server
 1.  Upload the Origin CA certificate (created in [Step 1](#1-create-an-origin-ca-certificate)) to your origin web server.
 2.  Update your web server configuration:
 
-  * [Apache httpd](https://www.digicert.com/kb/csr-ssl-installation/apache-openssl.htm)
-  * [GoDaddy Hosting](https://www.digitalcandy.agency/website-tips/cloudflare-origin-ca-free-ssl-installation-on-godaddy/)
-  * [Microsoft IIS 7](https://www.digicert.com/csr-ssl-installation/iis-7.htm#ssl_certificate_install)
-  * [Microsoft IIS 8 and 8.5](https://www.digicert.com/csr-ssl-installation/iis-8-and-8.5.htm#ssl_certificate_install)
-  * [Microsoft IIS 10](https://www.digicert.com/kb/csr-creation-ssl-installation-iis-10.htm)
-  * [NGINX](https://www.digicert.com/kb/csr-ssl-installation/nginx-openssl.htm)
-  * [Apache Tomcat](https://www.digicert.com/csr-ssl-installation/tomcat-keytool.htm#ssl_certificate_install)
-  * [Amazon Web Services](https://www.digicert.com/ssl-certficate-installation-amazon-web-services.htm)
-  * [Apache cPanel](https://www.digicert.com/kb/ssl-certificate-installation-apache-cpanel.htm)
-  * [Ubuntu Server with Apache2](https://www.digicert.com/kb/csr-ssl-installation/ubuntu-server-with-apache2-openssl.htm#ssl_certificate_install)
+- [Apache httpd](https://www.digicert.com/kb/csr-ssl-installation/apache-openssl.htm)
+- [GoDaddy Hosting](https://www.digitalcandy.agency/website-tips/cloudflare-origin-ca-free-ssl-installation-on-godaddy/)
+- [Microsoft IIS 7](https://www.digicert.com/csr-ssl-installation/iis-7.htm#ssl_certificate_install)
+- [Microsoft IIS 8 and 8.5](https://www.digicert.com/csr-ssl-installation/iis-8-and-8.5.htm#ssl_certificate_install)
+- [Microsoft IIS 10](https://www.digicert.com/kb/csr-creation-ssl-installation-iis-10.htm)
+- [NGINX](https://www.digicert.com/kb/csr-ssl-installation/nginx-openssl.htm)
+- [Apache Tomcat](https://www.digicert.com/csr-ssl-installation/tomcat-keytool.htm#ssl_certificate_install)
+- [Amazon Web Services](https://www.digicert.com/ssl-certficate-installation-amazon-web-services.htm)
+- [Apache cPanel](https://www.digicert.com/kb/ssl-certificate-installation-apache-cpanel.htm)
+- [Ubuntu Server with Apache2](https://www.digicert.com/kb/csr-ssl-installation/ubuntu-server-with-apache2-openssl.htm#ssl_certificate_install)
 
-
-  {{<Aside type="note">}}If you do not see your server in the list above, search the [Digicert documentation](https://www.digicert.com/search-results) or contact your hosting provider, web admin, or server vendor.{{</Aside>}}
+{{<Aside type="note">}}If you do not see your server in the list above, search the [Digicert documentation](https://www.digicert.com/search-results) or contact your hosting provider, web admin, or server vendor.{{</Aside>}}
 
 3.  (required for some) Upload the [Cloudflare CA root certificate](#4-required-for-some-add-cloudflare-origin-ca-root-certificates) to your origin server.
 4.  Enable SSL and port 443 at your origin web server.
@@ -110,12 +109,12 @@ By default, newly generated certificates are valid for 15 years. If you wish to 
 
 To automate processes involving Origin CA certificates, use the following API calls.
 
-| Operation | Method | Endpoint |
-| --- | --- | --- |
-| [List certificates](https://api.cloudflare.com/#origin-ca-list-certificates) | `GET` | `certificates?zone_id=<<ZONE_ID>>` | 
-| [Create certificate](https://api.cloudflare.com/#origin-ca-create-certificate) | `POST` | `certificates` |
-| [Get certificate](https://api.cloudflare.com/#origin-ca-get-certificate) | `GET` | `certificates/<<ID>>` |
-| [Revoke certificate](https://api.cloudflare.com/#origin-ca-revoke-certificate) | `DELETE` | `certificates/<<ID>>` |
+| Operation                                                                      | Method   | Endpoint                           |
+| ------------------------------------------------------------------------------ | -------- | ---------------------------------- |
+| [List certificates](https://api.cloudflare.com/#origin-ca-list-certificates)   | `GET`    | `certificates?zone_id=<<ZONE_ID>>` |
+| [Create certificate](https://api.cloudflare.com/#origin-ca-create-certificate) | `POST`   | `certificates`                     |
+| [Get certificate](https://api.cloudflare.com/#origin-ca-get-certificate)       | `GET`    | `certificates/<<ID>>`              |
+| [Revoke certificate](https://api.cloudflare.com/#origin-ca-revoke-certificate) | `DELETE` | `certificates/<<ID>>`              |
 
 ## Troubleshooting
 

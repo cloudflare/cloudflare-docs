@@ -16,15 +16,15 @@ $ npm install @cloudflare/pages-plugin-honeycomb
 
 ## Usage
 
-```typescript
+```ts
 ---
 filename: functions/_middleware.ts
 ---
-import honeycombPlugin from "@cloudflare/pages-plugin-honeycomb";
+import honeycombPlugin from '@cloudflare/pages-plugin-honeycomb';
 
 export const onRequest = honeycombPlugin({
-  apiKey: "YOUR_HONEYCOMB_API_KEY",
-  dataset: "YOUR_HONEYCOMB_DATASET_NAME",
+	apiKey: 'YOUR_HONEYCOMB_API_KEY',
+	dataset: 'YOUR_HONEYCOMB_DATASET_NAME',
 });
 ```
 
@@ -45,21 +45,18 @@ More information about these methods can be seen on [`@cloudflare/workers-honeyc
 
 For example, if you wanted to use the `addData` method to attach user information:
 
-```typescript
+```ts
 ---
 filename: functions/admin/_middleware.ts
 ---
-import type { PluginData } from "@cloudflare/pages-plugin-honeycomb";
+import type { PluginData } from '@cloudflare/pages-plugin-honeycomb';
 
-export const onRequest: PagesFunction<unknown, any, PluginData> = async ({
-  data,
-  next,
-}) => {
-  // Authenticate the user from the request and extract user's email address
-  const email = await getEmailFromRequest(request);
+export const onRequest: PagesFunction<unknown, any, PluginData> = async ({ data, next }) => {
+	// Authenticate the user from the request and extract user's email address
+	const email = await getEmailFromRequest(request);
 
-  data.honeycomb.tracer.addData({ email });
+	data.honeycomb.tracer.addData({ email });
 
-  return next();
+	return next();
 };
 ```

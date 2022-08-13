@@ -12,12 +12,13 @@ The scanning service and verdict engines used by Area 1 are language agnostic. W
 
 ## Dashboard
 
-The Area 1 email dashboard is localized to English and Japanese. 
+The Area 1 email dashboard is localized to English and Japanese.
 
 To update your language settings:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. At the bottom of the page, click the language icon.
 
-    ![Click the language icon to toggle your dashboard between English and Japanese.](/email-security/static/language-switcher.png)
+   ![Click the language icon to toggle your dashboard between English and Japanese.](/email-security/static/language-switcher.png)
+
 3. Select your preferred language.

@@ -12,7 +12,6 @@ Webhooks notify your service when videos successfully finish processing and are 
 
 To subscribe to receive webhook notifications on your service or modify an existing subscription, you will need a [Cloudflare API token](https://www.cloudflare.com/a/account/my-account).
 
-
 The webhook notification URL must include the protocol. Only `http://` or `https://` is supported.
 
 ```bash
@@ -43,30 +42,29 @@ When a video on your account finishes processing, you will receive a `POST` requ
 
 Note the `status` field indicates whether the video processing finished successfully.
 
-```javascript
+```json
 ---
 header: Example POST request body sent in response to successful encoding
 ---
 {
-    "uid": "dd5d531a12de0c724bd1275a3b2bc9c6",
-    "readyToStream": true,
-    "status": {
-      "state": "ready"
-    },
-    "meta": {},
-    "created": "2019-01-01T01:00:00.474936Z",
-    "modified": "2019-01-01T01:02:21.076571Z",
-    // ...
-  }
+	"uid": "dd5d531a12de0c724bd1275a3b2bc9c6",
+	"readyToStream": true,
+	"status": {
+		"state": "ready"
+	},
+	"meta": {},
+	"created": "2019-01-01T01:00:00.474936Z",
+	"modified": "2019-01-01T01:02:21.076571Z"
+}
 ```
 
 When a video is done processing, the `state` field returns a `ready` state. Videos may sometimes return the `state` field as `ready` and an additional `pctComplete` state that is not 100, which means higher quality renditions are still processing. When `pctComplete` reaches 100, all quality resolutions are available for the video.
 
 ## Error codes
 
-If a video could not process successfully, the `state` field returns `error`, and the `errReasonCode` returns one of the values listed below. 
+If a video could not process successfully, the `state` field returns `error`, and the `errReasonCode` returns one of the values listed below.
 
-- `ERR_NON_VIDEO` – The upload is not a video. 
+- `ERR_NON_VIDEO` – The upload is not a video.
 - `ERR_DURATION_EXCEED_CONSTRAINT` – The video duration exceeds the constraints defined in the direct creator upload.
 - `ERR_FETCH_ORIGIN_ERROR` – The video failed to download from the URL.
 - `ERR_MALFORMED_VIDEO` – The video is a valid file but contains corrupt data that cannot be recovered.
@@ -75,20 +73,20 @@ If a video could not process successfully, the `state` field returns `error`, an
 
 In addition to the `state` field, a video's `readyToStream` field must also be `true` for a video to play.
 
-```bash
+```json
 ---
 header: Example error response
 highlight: [2, 4, 7]
 ---
 {
-  "readyToStream": true,
-  "status": {
-    "state": "error",
-    "step": "encoding",
-    "pctComplete": "39",
-    "errReasonCode": "ERR_MALFORMED_VIDEO",
-    "errReasonText": "The video was deemed to be corrupted or malformed.",
-  }
+	"readyToStream": true,
+	"status": {
+		"state": "error",
+		"step": "encoding",
+		"pctComplete": "39",
+		"errReasonCode": "ERR_MALFORMED_VIDEO",
+		"errReasonText": "The video was deemed to be corrupted or malformed."
+	}
 }
 ```
 
@@ -98,49 +96,50 @@ Example: POST body for successful video encoding
 </summary>
  <div class="special-class" markdown="1">
 
- ```bash
+```json
 {
-  "uid": "d98ecbca0f8803646848c7eda78eb1f9",
-  "creator": null,
-  "thumbnail": "https://customer-ce3d67rtmy3k8d1t.staging.cloudflarestream.com/d98ecbca0f8803646848c7eda78eb1f9/thumbnails/thumbnail.jpg",
-  "thumbnailTimestampPct": 0,
-  "readyToStream": true,
-  "status": {
-    "state": "ready",
-    "pctComplete": "39.000000",
-    "errorReasonCode": "",
-    "errorReasonText": ""
-  },
-  "meta": {
-    "filename": "small.mp4",
-    "filetype": "video/mp4",
-    "name": "small.mp4",
-    "relativePath": "null",
-    "type": "video/mp4"
-  },
-  "created": "2022-06-30T17:53:12.512033Z",
-  "modified": "2022-06-30T17:53:21.774299Z",
-  "size": 383631,
-  "preview": "https://watch-stage.videodelivery.net/d98ecbca0f8803646848c7eda78eb1f9?staging=true",
-  "allowedOrigins": [],
-  "requireSignedURLs": false,
-  "uploaded": "2022-06-30T17:53:12.511981Z",
-  "uploadExpiry": "2022-07-01T17:53:12.511973Z",
-  "maxSizeBytes": null,
-  "maxDurationSeconds": null,
-  "duration": 5.5,
-  "input": {
-    "width": 560,
-    "height": 320
-  },
-  "playback": {
-    "hls": "https://customer-ce3d67rtmy3k8d1t.staging.cloudflarestream.com/d98ecbca0f8803646848c7eda78eb1f9/manifest/video.m3u8",
-    "dash": "https://customer-ce3d67rtmy3k8d1t.staging.cloudflarestream.com/d98ecbca0f8803646848c7eda78eb1f9/manifest/video.mpd"
-  },
-  "watermark": null
+	"uid": "d98ecbca0f8803646848c7eda78eb1f9",
+	"creator": null,
+	"thumbnail": "https://customer-ce3d67rtmy3k8d1t.staging.cloudflarestream.com/d98ecbca0f8803646848c7eda78eb1f9/thumbnails/thumbnail.jpg",
+	"thumbnailTimestampPct": 0,
+	"readyToStream": true,
+	"status": {
+		"state": "ready",
+		"pctComplete": "39.000000",
+		"errorReasonCode": "",
+		"errorReasonText": ""
+	},
+	"meta": {
+		"filename": "small.mp4",
+		"filetype": "video/mp4",
+		"name": "small.mp4",
+		"relativePath": "null",
+		"type": "video/mp4"
+	},
+	"created": "2022-06-30T17:53:12.512033Z",
+	"modified": "2022-06-30T17:53:21.774299Z",
+	"size": 383631,
+	"preview": "https://watch-stage.videodelivery.net/d98ecbca0f8803646848c7eda78eb1f9?staging=true",
+	"allowedOrigins": [],
+	"requireSignedURLs": false,
+	"uploaded": "2022-06-30T17:53:12.511981Z",
+	"uploadExpiry": "2022-07-01T17:53:12.511973Z",
+	"maxSizeBytes": null,
+	"maxDurationSeconds": null,
+	"duration": 5.5,
+	"input": {
+		"width": 560,
+		"height": 320
+	},
+	"playback": {
+		"hls": "https://customer-ce3d67rtmy3k8d1t.staging.cloudflarestream.com/d98ecbca0f8803646848c7eda78eb1f9/manifest/video.m3u8",
+		"dash": "https://customer-ce3d67rtmy3k8d1t.staging.cloudflarestream.com/d98ecbca0f8803646848c7eda78eb1f9/manifest/video.mpd"
+	},
+	"watermark": null
 }
 ```
-</div> 
+
+</div>
 </details>
 
 ## Verify webhook authenticity
@@ -151,9 +150,7 @@ To verify a signature, you need to retrieve your webhook signing secret. This va
 
 To verify the signature, get the value of the `Webhook-Signature` header, which will look similar to the example below.
 
-`
-Webhook-Signature: time=1230811200,sig1=60493ec9388b44585a29543bcf0de62e377d4da393246a8b1c901d0e3e672404
-`
+`Webhook-Signature: time=1230811200,sig1=60493ec9388b44585a29543bcf0de62e377d4da393246a8b1c901d0e3e672404`
 
 ### 1. Parse the signature
 
@@ -169,9 +166,9 @@ At this point, you should discard requests with timestamps that are too old for 
 
 Prepare the signature source string and concatenate the following strings:
 
-*   Value of the `time` field e.g. `1230811200`
-*   Character `.`
-*   Webhook request body (complete with newline characters, if applicable)
+- Value of the `time` field e.g. `1230811200`
+- Character `.`
+- Webhook request body (complete with newline characters, if applicable)
 
 Every byte in the request body must remain unaltered for successful signature verification.
 
@@ -190,8 +187,8 @@ If the signatures match, you can trust that Cloudflare sent the webhook.
 
 ## Limitations
 
-*   Webhooks will only be sent after video processing is complete, and the body will indicate whether the video processing succeeded or failed.
-*   Only one webhook subscription is allowed per-account.
+- Webhooks will only be sent after video processing is complete, and the body will indicate whether the video processing succeeded or failed.
+- Only one webhook subscription is allowed per-account.
 
 ## Examples
 
@@ -224,19 +221,20 @@ func main() {
 ```
 
 **Node.js**
+
 ```js
+var crypto = require('crypto');
 
-    var crypto = require('crypto');
+var key = 'secret from the Cloudflare API';
+var message = 'string from step 2';
 
-    var key = 'secret from the Cloudflare API';
-    var message = 'string from step 2';
+var hash = crypto.createHmac('sha256', key).update(message);
 
-    var hash = crypto.createHmac('sha256', key).update(message);
-
-    hash.digest('hex');
-```    
+hash.digest('hex');
+```
 
 **Ruby**
+
 ```ruby
     require 'openssl'
 

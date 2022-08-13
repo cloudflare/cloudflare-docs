@@ -10,8 +10,8 @@ layout: example
 
 ```json
 {
-  "email": {
-    "email": "james@example.com"
-  }
+	"email": {
+		"email": "james@example.com"
+	}
 }
 ```

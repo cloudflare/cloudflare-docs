@@ -13,7 +13,7 @@ To make your first request to the Images API, you must obtain these pieces of in
 <div>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your
-account and website.
+   account and website.
 2. In **Overview**, scroll down to find your Account ID.
 
 </div>
@@ -59,19 +59,17 @@ After uploading your images, a successful response will look similar to this:
 
 ```json
 {
-  "result": {
-    "id": "<IMAGE_ID>",
-    "filename": "<IMAGE.IMG>",
-    "uploaded": "2021-09-14T05:52:14.767Z",
-    "requireSignedURLs": false,
-    "variants": [
-      "https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME>"
-    ]
-  },
-  "result_info": null,
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<IMAGE_ID>",
+		"filename": "<IMAGE.IMG>",
+		"uploaded": "2021-09-14T05:52:14.767Z",
+		"requireSignedURLs": false,
+		"variants": ["https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME>"]
+	},
+	"result_info": null,
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -81,21 +79,21 @@ After you [set up other variants](/images/cloudflare-images/transform/resize-ima
 
 ```json
 {
-  "result": {
-    "id": "<IMAGE_ID>",
-    "filename": "<IMAGE.IMG>",
-    "uploaded": "2021-09-14T05:52:14.767Z",
-    "requireSignedURLs": false,
-    "variants": [
-      "https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/public",
-      "https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME_1>",
-      "https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME_2>"
-    ]
-  },
-  "result_info": null,
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<IMAGE_ID>",
+		"filename": "<IMAGE.IMG>",
+		"uploaded": "2021-09-14T05:52:14.767Z",
+		"requireSignedURLs": false,
+		"variants": [
+			"https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/public",
+			"https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME_1>",
+			"https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME_2>"
+		]
+	},
+	"result_info": null,
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

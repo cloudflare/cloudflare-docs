@@ -26,12 +26,12 @@ The `<SCRIPT_ID>` argument is the script ID (a hexadecimal string). This value i
 
 The following table summarizes the available operations:
 
-| Operation                        | Method + URL stub                                        | Notes                                                    |
-| -------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| [Get Page Shield status][1]      | `GET zones/<ZONE_ID>/script_monitor`                     | Fetch the current Page Shield status (enabled/disabled). |
-| [Update Page Shield status][2]   | `PUT zones/<ZONE_ID>/script_monitor`                     | Updates the Page Shield status (enabled/disabled).       |
-| [List Page Shield scripts][3]    | `GET zones/<ZONE_ID>/script_monitor/scripts`             | Fetch a list of currently monitored scripts.             |
-| [Get a Page Shield script][4]    | `GET zones/<ZONE_ID>/script_monitor/scripts/<SCRIPT_ID>` | Fetch the details of a currently monitored script.       |
+| Operation                      | Method + URL stub                                        | Notes                                                    |
+| ------------------------------ | -------------------------------------------------------- | -------------------------------------------------------- |
+| [Get Page Shield status][1]    | `GET zones/<ZONE_ID>/script_monitor`                     | Fetch the current Page Shield status (enabled/disabled). |
+| [Update Page Shield status][2] | `PUT zones/<ZONE_ID>/script_monitor`                     | Updates the Page Shield status (enabled/disabled).       |
+| [List Page Shield scripts][3]  | `GET zones/<ZONE_ID>/script_monitor/scripts`             | Fetch a list of currently monitored scripts.             |
+| [Get a Page Shield script][4]  | `GET zones/<ZONE_ID>/script_monitor/scripts/<SCRIPT_ID>` | Fetch the details of a currently monitored script.       |
 
 [1]: https://api.cloudflare.com/#page-shield-get-page-shield-status
 [2]: https://api.cloudflare.com/#page-shield-update-page-shield-status
@@ -40,9 +40,9 @@ The following table summarizes the available operations:
 
 ## API notes
 
-* The malicious script classification (`Malicious` or `Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 50 — scripts with a score value above the threshold are considered malicious.
+- The malicious script classification (`Malicious` or `Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 50 — scripts with a score value above the threshold are considered malicious.
 
-* The API provides two separate properties for malicious script categories: `malicious_domain_categories` and `malicious_url_categories`, related to the `domain_reported_malicious` and `url_reported_malicious` properties, respectively. The Cloudflare dashboard displays all the categories in a single **Malicious category** field. For more information, refer to [Malicious script categories](/page-shield/about/malicious-script-detection/#malicious-script-categories).
+- The API provides two separate properties for malicious script categories: `malicious_domain_categories` and `malicious_url_categories`, related to the `domain_reported_malicious` and `url_reported_malicious` properties, respectively. The Cloudflare dashboard displays all the categories in a single **Malicious category** field. For more information, refer to [Malicious script categories](/page-shield/about/malicious-script-detection/#malicious-script-categories).
 
 ## Common API calls
 
@@ -63,13 +63,13 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/script_monitor" \
 header: Response
 ---
 {
-  "result": {
-    "enabled": true,
-    "updated_at": "2021-11-14T11:47:55.677555Z"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"enabled": true,
+		"updated_at": "2021-11-14T11:47:55.677555Z"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -93,13 +93,13 @@ curl -X PUT \
 header: Response
 ---
 {
-  "result": {
-    "enabled": true,
-    "updated_at": "2021-11-14T11:50:41.756996Z"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"enabled": true,
+		"updated_at": "2021-11-14T11:50:41.756996Z"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -122,37 +122,37 @@ curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/script_monitor/scripts?h
 header: Response
 ---
 {
-  "result": [
-    {
-      "script_id": "8337233faec2357ff84465a919534e4d",
-      "script_url": "https://malicious.example.com/badscript.js",
-      "added_at": "2021-11-18T10:51:10.09615Z",
-      "first_seen_at": "2021-11-18T10:51:08Z",
-      "last_seen_at": "2021-11-22T09:57:54Z",
-      "host": "example.net",
-      "domain_reported_malicious": false,
-      "url_reported_malicious": true,
-      "malicious_url_categories": ["Malware"],
-      "seen_on_first": "http://malicious.example.com/page_one.html",
-      "count": 10,
-      "status": "active",
-      "appears_in_cdn_cgi_path": false,
-      "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "js_integrity_score": 10,
-      "fetched_at": "2021-11-21T16:58:07Z"
-    },
-    // (...)
-  ],
-  "success": true,
-  "errors": [],
-  "messages": [],
-  "result_info": {
-    "page": 1,
-    "per_page": 15,
-    "count": 15,
-    "total_count": 24,
-    "total_pages": 2
-  }
+	"result": [
+		{
+			"script_id": "8337233faec2357ff84465a919534e4d",
+			"script_url": "https://malicious.example.com/badscript.js",
+			"added_at": "2021-11-18T10:51:10.09615Z",
+			"first_seen_at": "2021-11-18T10:51:08Z",
+			"last_seen_at": "2021-11-22T09:57:54Z",
+			"host": "example.net",
+			"domain_reported_malicious": false,
+			"url_reported_malicious": true,
+			"malicious_url_categories": ["Malware"],
+			"seen_on_first": "http://malicious.example.com/page_one.html",
+			"count": 10,
+			"status": "active",
+			"appears_in_cdn_cgi_path": false,
+			"hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+			"js_integrity_score": 10,
+			"fetched_at": "2021-11-21T16:58:07Z"
+		}
+		// (...)
+	],
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result_info": {
+		"page": 1,
+		"per_page": 15,
+		"count": 15,
+		"total_count": 24,
+		"total_pages": 2
+	}
 }
 ```
 
@@ -177,36 +177,36 @@ curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/script_monitor/scripts?s
 header: Response
 ---
 {
-  "result": [
-    {
-      "script_id": "83c8da2267394ce8465b74c299658fea",
-      "script_url": "https://scripts.example.com/anotherbadscript.js",
-      "added_at": "2021-11-17T13:16:03.419619Z",
-      "first_seen_at": "2021-11-17T13:15:23Z",
-      "last_seen_at": "2021-11-18T09:05:20Z",
-      "host": "example.net",
-      "domain_reported_malicious": false,
-      "url_reported_malicious": false,
-      "seen_on_first": "http://malicious.example.com/page_one.html",
-      "count": 2,
-      "status": "infrequent",
-      "appears_in_cdn_cgi_path": false,
-      "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
-      "js_integrity_score": 50,
-      "fetched_at": "2021-11-18T03:58:07Z"
-    },
-    // (...)
-  ],
-  "success": true,
-  "errors": [],
-  "messages": [],
-  "result_info": {
-    "page": 1,
-    "per_page": 15,
-    "count": 15,
-    "total_count": 17,
-    "total_pages": 2
-  }
+	"result": [
+		{
+			"script_id": "83c8da2267394ce8465b74c299658fea",
+			"script_url": "https://scripts.example.com/anotherbadscript.js",
+			"added_at": "2021-11-17T13:16:03.419619Z",
+			"first_seen_at": "2021-11-17T13:15:23Z",
+			"last_seen_at": "2021-11-18T09:05:20Z",
+			"host": "example.net",
+			"domain_reported_malicious": false,
+			"url_reported_malicious": false,
+			"seen_on_first": "http://malicious.example.com/page_one.html",
+			"count": 2,
+			"status": "infrequent",
+			"appears_in_cdn_cgi_path": false,
+			"hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
+			"js_integrity_score": 50,
+			"fetched_at": "2021-11-18T03:58:07Z"
+		}
+		// (...)
+	],
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result_info": {
+		"page": 1,
+		"per_page": 15,
+		"count": 15,
+		"total_count": 17,
+		"total_pages": 2
+	}
 }
 ```
 
@@ -231,39 +231,39 @@ curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/script_monitor/scripts/8
 header: Response
 ---
 {
-  "result": {
-    "script_id": "8337233faec2357ff84465a919534e4d",
-    "script_url": "https://malicious.example.com/badscript.js",
-    "added_at": "2021-11-18T10:51:10.09615Z",
-    "first_seen_at": "2021-11-18T10:51:08Z",
-    "last_seen_at": "2021-11-22T09:57:54Z",
-    "host": "example.net",
-    "domain_reported_malicious": false,
-    "url_reported_malicious": true,
-    "malicious_url_categories": ["Malware"],
-    "seen_on_first": "http://malicious.example.com/page_one.html",
-    "count": 10,
-    "status": "active",
-    "appears_in_cdn_cgi_path": false,
-    "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
-    "js_integrity_score": 50,
-    "fetched_at": "2021-11-21T16:58:07Z",
-    "seen_on": [
-      "http://malicious.example.com/page_two.html",
-      "http://malicious.example.com/page_three.html",
-      "http://malicious.example.com/page_four.html"
-    ],
-    "versions": [
-      {
-        "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
-        "js_integrity_score": 50,
-        "fetched_at": "2021-11-21T16:58:07Z"
-      }
-    ]
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"script_id": "8337233faec2357ff84465a919534e4d",
+		"script_url": "https://malicious.example.com/badscript.js",
+		"added_at": "2021-11-18T10:51:10.09615Z",
+		"first_seen_at": "2021-11-18T10:51:08Z",
+		"last_seen_at": "2021-11-22T09:57:54Z",
+		"host": "example.net",
+		"domain_reported_malicious": false,
+		"url_reported_malicious": true,
+		"malicious_url_categories": ["Malware"],
+		"seen_on_first": "http://malicious.example.com/page_one.html",
+		"count": 10,
+		"status": "active",
+		"appears_in_cdn_cgi_path": false,
+		"hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
+		"js_integrity_score": 50,
+		"fetched_at": "2021-11-21T16:58:07Z",
+		"seen_on": [
+			"http://malicious.example.com/page_two.html",
+			"http://malicious.example.com/page_three.html",
+			"http://malicious.example.com/page_four.html"
+		],
+		"versions": [
+			{
+				"hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
+				"js_integrity_score": 50,
+				"fetched_at": "2021-11-21T16:58:07Z"
+			}
+		]
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

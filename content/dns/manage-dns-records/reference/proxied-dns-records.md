@@ -54,6 +54,6 @@ To solve this issue, we recommend using [Cloudflare Zero Trust](/cloudflare-one/
 
 ## DNS-only records
 
-When an `A`, `AAAA`, or `CNAME` record is **DNS-only** — also known as being gray-clouded — DNS queries for these will resolve to the record's normal IP address. 
+When an `A`, `AAAA`, or `CNAME` record is **DNS-only** — also known as being gray-clouded — DNS queries for these will resolve to the record's normal IP address.
 
 In addition to potentially exposing your origin IP addresses to bad actors and [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), leaving your records as **DNS-only** means that Cloudflare cannot [optimize, cache, and protect](/fundamentals/get-started/concepts/how-cloudflare-works/) requests to your application.

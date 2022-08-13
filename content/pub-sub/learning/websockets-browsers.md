@@ -37,36 +37,37 @@ In this example, we use MQTT.js’s WebSocket support to subscribe to a topic an
 You can view a live demo available at [demo.mqtt.dev](http://demo.mqtt.dev) that allows you to use your own Pub/Sub Broker and a valid token to subscribe to a topic and publish messages to it.
 {{</Aside>}}
 
-In a real-world deployment, our publisher could be another client, a native MQTT client, or a WebSocket client running on a remote server elsewhere. 
+In a real-world deployment, our publisher could be another client, a native MQTT client, or a WebSocket client running on a remote server elsewhere.
 
 ```js
 // Ensure MQTT.js is installed first
 // > npm install mqtt
-import * as mqtt from "mqtt"
+import * as mqtt from 'mqtt';
 
 // Where 'url' is "mqtts://BROKER.NAMESPACE.cloudflarepubsub.com:8884"
 function example(url) {
-  let client = mqtt.connect(url, {
-    protocolVersion: 5,
-    reconnectPeriod: 0,
-    username: 'anything',
-    password: jwt, // pass this from a form field in your app
-    clientId: '',
-  })
-  
-  client.on('connect', function () {
-    client.subscribe(topic, function (err) {
-      if (err) {
-        client.end();
-      } else {
-        console.log(`subscribed to ${topic}`)
-      }
-  })
-  
-  client.on('message', function (topic, message) {
-    let line = (new Date()).toLocaleString('en-US') + ": " + message.toString() + "\n";
-    console.log(line)
-  })
+	let client = mqtt.connect(url, {
+		protocolVersion: 5,
+		reconnectPeriod: 0,
+		username: 'anything',
+		password: jwt, // pass this from a form field in your app
+		clientId: '',
+	});
+
+	client.on('connect', function () {
+		client.subscribe(topic, function (err) {
+			if (err) {
+				client.end();
+			} else {
+				console.log(`subscribed to ${topic}`);
+			}
+		});
+	});
+
+	client.on('message', function (topic, message) {
+		let line = new Date().toLocaleString('en-US') + ': ' + message.toString() + '\n';
+		console.log(line);
+	});
 }
 ```
 

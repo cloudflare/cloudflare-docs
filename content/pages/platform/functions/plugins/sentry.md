@@ -16,14 +16,14 @@ $ npm install @cloudflare/pages-plugin-sentry
 
 ## Usage
 
-```typescript
+```ts
 ---
 filename: functions/_middleware.ts
 ---
-import sentryPlugin from "@cloudflare/pages-plugin-sentry";
+import sentryPlugin from '@cloudflare/pages-plugin-sentry';
 
 export const onRequest: PagesFunction = sentryPlugin({
-  dsn: "https://sentry.io/xyz",
+	dsn: 'https://sentry.io/xyz',
 });
 ```
 
@@ -31,29 +31,29 @@ The Plugin uses [Toucan](https://github.com/robertcepa/toucan-js). Refer to the 
 
 If your [DSN](https://docs.sentry.io/product/sentry-basics/dsn-explainer/) is held as an environment variable or in KV, you can access it like so:
 
-```typescript
+```ts
 ---
 filename: functions/_middleware.ts
 ---
-import sentryPlugin from "@cloudflare/pages-plugin-sentry";
+import sentryPlugin from '@cloudflare/pages-plugin-sentry';
 
 export const onRequest: PagesFunction<{
-  SENTRY_DSN: string;
-}> = (context) => {
-  return sentryPlugin({ dsn: context.env.SENTRY_DSN })(context);
+	SENTRY_DSN: string;
+}> = context => {
+	return sentryPlugin({ dsn: context.env.SENTRY_DSN })(context);
 };
 ```
 
-```typescript
+```ts
 ---
 filename: functions/_middleware.ts
 ---
-import sentryPlugin from "@cloudflare/pages-plugin-sentry";
+import sentryPlugin from '@cloudflare/pages-plugin-sentry';
 
 export const onRequest: PagesFunction<{
-  KV: KVNamespace;
-}> = async (context) => {
-  return sentryPlugin({ dsn: await context.env.KV.get("SENTRY_DSN") })(context);
+	KV: KVNamespace;
+}> = async context => {
+	return sentryPlugin({ dsn: await context.env.KV.get('SENTRY_DSN') })(context);
 };
 ```
 
@@ -63,22 +63,19 @@ If you need to set additional context for Sentry (for example, user information 
 
 For example, you can access `data.sentry` and set user information like so:
 
-```typescript
+```ts
 ---
 filename: functions/admin/_middleware.ts
 ---
-import type { PluginData } from "@cloudflare/pages-plugin-sentry";
+import type { PluginData } from '@cloudflare/pages-plugin-sentry';
 
-export const onRequest: PagesFunction<unknown, any, PluginData> = async ({
-  data,
-  next,
-}) => {
-  // Authenticate the user from the request and extract user's email address
-  const email = await getEmailFromRequest(request);
+export const onRequest: PagesFunction<unknown, any, PluginData> = async ({ data, next }) => {
+	// Authenticate the user from the request and extract user's email address
+	const email = await getEmailFromRequest(request);
 
-  data.sentry.setUser({ email });
+	data.sentry.setUser({ email });
 
-  return next();
+	return next();
 };
 ```
 

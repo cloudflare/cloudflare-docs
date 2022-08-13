@@ -15,7 +15,7 @@ Before you can start creating custom hostnames, you need to have access to [Clou
 If you have not used the Cloudflare API previously, review our [API Quickstart](/api/).
 
 If there are multiple proxied DNS records for one zone, Cloudflare must prioritize which record controls the zone settings and associated origin server. Adding a new custom hostname may take priority over your current settings or cause your settings to no longer apply. To prevent overriding or voiding your settings, review [Hostname priority (Cloudflare for SaaS)](/ssl/ssl-tls/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas)
- 
+
 ---
 
 ## Step 1 — Create fallback origin and CNAME target
@@ -34,15 +34,15 @@ We suggest using a domain other than your main company domain (example.cloud ins
 
 1.  Create a [new application](/fundamentals/get-started/setup/add-site/) and select the **Free** plan.
 
-2. [Create two DNS records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records).
+2.  [Create two DNS records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records).
 
-  *   A proxied *A* or *AAAA* record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
-  *   A *CNAME* record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
+- A proxied _A_ or _AAAA_ record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
+- A _CNAME_ record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
 
-  | Record          | Type  | Name                              | Content                           |
-  | --------------- | ----- | --------------------------------- | --------------------------------- |
-  | Fallback origin | A     | `proxy-fallback.saasprovider.com` | 192.0.2.1                         |
-  | CNAME target    | CNAME | `*.customers.saasprovider.com`    | `proxy-fallback.saasprovider.com` |
+| Record          | Type  | Name                              | Content                           |
+| --------------- | ----- | --------------------------------- | --------------------------------- |
+| Fallback origin | A     | `proxy-fallback.saasprovider.com` | 192.0.2.1                         |
+| CNAME target    | CNAME | `*.customers.saasprovider.com`    | `proxy-fallback.saasprovider.com` |
 
 4.  Enable **Custom Hostnames** for your zone:
 

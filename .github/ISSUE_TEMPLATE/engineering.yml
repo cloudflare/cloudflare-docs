@@ -1,6 +1,6 @@
 name: Website and/or content display error(s)
 description: Report an issue with the live website; for example, issues with content display, buggy browser behavior, etc.
-labels: ["engineering"]
+labels: ['engineering']
 assignees:
   - codewithkristian
 body:

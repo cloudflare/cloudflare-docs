@@ -16,9 +16,9 @@ To define overrides in the Cloudflare dashboard, [edit the configuration of a Ma
 
 You can override a ruleset at three levels:
 
-* **Ruleset overrides** apply to all rules in the executed ruleset.
-* **Tag overrides** apply to all rules with a specific tag. For example, use a tag override to customize the Cloudflare Managed Ruleset so all rules with the `wordpress` tag are set to *Block*. If multiple tags have overrides and if a given rule has more than one of these tags, the tag overrides order determines the behavior. For rules tagged with multiple overridden tags, the last tag's overrides apply.
-* **Rule overrides** apply to specific rules in a Managed Ruleset, referenced by their Rule ID.
+- **Ruleset overrides** apply to all rules in the executed ruleset.
+- **Tag overrides** apply to all rules with a specific tag. For example, use a tag override to customize the Cloudflare Managed Ruleset so all rules with the `wordpress` tag are set to _Block_. If multiple tags have overrides and if a given rule has more than one of these tags, the tag overrides order determines the behavior. For rules tagged with multiple overridden tags, the last tag's overrides apply.
+- **Rule overrides** apply to specific rules in a Managed Ruleset, referenced by their Rule ID.
 
 Specific overrides take precedence over more general ones, and rule overrides take precedence over tag overrides, which take precedence over ruleset overrides.
 
@@ -30,40 +30,42 @@ Ruleset overrides and tag overrides apply to both existing and **future** rules 
 
 To apply an override for a Managed Ruleset:
 
-* Call the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation on your account-level phase entry point.
-* Specify the `overrides` in the `action_parameters` of the rule that executes your Managed Ruleset.
+- Call the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation on your account-level phase entry point.
+- Specify the `overrides` in the `action_parameters` of the rule that executes your Managed Ruleset.
 
 ```json
-"action_parameters": {
-  "id": "<RULESET_ID>",
-  "overrides": {
-    // ruleset overrides
-    "property-to-modify": "value",
-    "property-to-modify": "value",
-    // tag overrides
-    "categories": [
-      {
-        "category": "<TAG_NAME>",
-        "property-to-modify": "value",
-        "property-to-modify": "value"
-      }
-    ],
-    // rule overrides
-    "rules": [
-      {
-        "id": "<RULE_ID>",
-        "property-to-modify": "value",
-        "property-to-modify": "value"
-      }
-    ]
-  }
+{
+	"action_parameters": {
+		"id": "<RULESET_ID>",
+		"overrides": {
+			// ruleset overrides
+			"property-to-modify": "value",
+			"property-to-modify": "value",
+			// tag overrides
+			"categories": [
+				{
+					"category": "<TAG_NAME>",
+					"property-to-modify": "value",
+					"property-to-modify": "value"
+				}
+			],
+			// rule overrides
+			"rules": [
+				{
+					"id": "<RULE_ID>",
+					"property-to-modify": "value",
+					"property-to-modify": "value"
+				}
+			]
+		}
+	}
 }
 ```
 
 You can override the following rule properties:
 
-* `"action"`
-* `"enabled"`
+- `"action"`
+- `"enabled"`
 
 Some Managed Rulesets may have additional override requirements, or they may allow you to override other rule properties. Check each Cloudflare product’s documentation for details.
 
@@ -81,7 +83,7 @@ The following request adds a rule that executes a Managed Ruleset in the `http_r
 <summary>Example: Execute a Managed Ruleset with overrides in a phase at the zone level</summary>
 <div>
 
-```json
+```bash
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
@@ -117,7 +119,7 @@ The following request adds a rule that executes a Managed Ruleset in the `http_r
 <summary>Example: Execute a Managed Ruleset with overrides in a phase at the account level</summary>
 <div>
 
-```json
+```bash
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \

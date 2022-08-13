@@ -14,8 +14,8 @@ To set up Citrix ADC (SAML) as your identity provider:
 
 1.  First, you'll need to configure 2 SAML certificates:
 
-    *   A certificate to **terminate TLS at the vServer**. Ensure that the certificate is issued by a publicly trusted CA.
-    *   A certificate for **signing SAML assertions**.
+    - A certificate to **terminate TLS at the vServer**. Ensure that the certificate is issued by a publicly trusted CA.
+    - A certificate for **signing SAML assertions**.
 
     If you do not already have a certificate for signing SAML assertions, you can use a self-signed certificate generated on Citrix ADC by following these steps:
 
@@ -36,17 +36,17 @@ To set up Citrix ADC (SAML) as your identity provider:
 
     Include the following required configuration details:
 
-    | Field | Description |
-    | ----- | ----------- |
-    | **Name** | The certificate name you defined while [configuring SAML](#configure-saml) |
-    | **Assertion Consumer Service URL** | `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback` |
-    | **IdP Certificate Name** | The IdP certificate name you defined while [configuring SAML](#configure-saml) |
-    | **Issuer Name** | `https://idp.<yourdomain>.com/saml/login` |
-    | **Service Provider ID** | `https://idp.<yourdomain>.com/saml/login` |
-    | **Name ID Format** | EmailAddress |
-    | **Attribute 1** | `email = AAA.USER.ATTRIBUTE("email")` |
+    | Field                              | Description                                                                    |
+    | ---------------------------------- | ------------------------------------------------------------------------------ |
+    | **Name**                           | The certificate name you defined while [configuring SAML](#configure-saml)     |
+    | **Assertion Consumer Service URL** | `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`        |
+    | **IdP Certificate Name**           | The IdP certificate name you defined while [configuring SAML](#configure-saml) |
+    | **Issuer Name**                    | `https://idp.<yourdomain>.com/saml/login`                                      |
+    | **Service Provider ID**            | `https://idp.<yourdomain>.com/saml/login`                                      |
+    | **Name ID Format**                 | EmailAddress                                                                   |
+    | **Attribute 1**                    | `email = AAA.USER.ATTRIBUTE("email")`                                          |
 
-    Cloudflare Access currently sends the IdP address in place of the *Service Provider ID* for the AuthN request.
+    Cloudflare Access currently sends the IdP address in place of the _Service Provider ID_ for the AuthN request.
 
 1.  Create an Authentication Policy that refers to the Profile just created, and bind it to the authentication vServer mentioned above.
 
@@ -54,7 +54,7 @@ To set up Citrix ADC (SAML) as your identity provider:
 
     To configure all of the above using just the CLI, run the following:
 
-    ```json
+    ```bash
     add authentication samlIdPProfile samlProf_CloudflareAccess \
         -samlIdPCertName SAML_Signing \
         -assertionConsumerServiceURL "https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback" \
@@ -76,13 +76,13 @@ To set up Citrix ADC (SAML) as your identity provider:
 
 1.  Configure the fields as follows:
 
-    | Field | Description |
-    | ----- | ----------- |
-    | **Name** | Your chosen name |
-    | **Single Sign On URL** | The FQDN of the IdP, with the path `/saml/login` |
-    | **IdP Entity ID/Issuer URL** | As above |
-    | **Signing Certificate** | The public certificate from the NetScaler |
-    | **Email attribute name** | This is listed under **Optional configurations** |
+    | Field                        | Description                                      |
+    | ---------------------------- | ------------------------------------------------ |
+    | **Name**                     | Your chosen name                                 |
+    | **Single Sign On URL**       | The FQDN of the IdP, with the path `/saml/login` |
+    | **IdP Entity ID/Issuer URL** | As above                                         |
+    | **Signing Certificate**      | The public certificate from the NetScaler        |
+    | **Email attribute name**     | This is listed under **Optional configurations** |
 
 1.  Click **Save**.
 

@@ -24,12 +24,12 @@ Under **Network Analytics** you can apply filters to the data displayed in the d
 
 You can filter by the following parameters:
 
-* Mitigation action taken by Cloudflare
-* Mitigation system that performed the action
-* Source IP, port, ASN
-* Destination IP, destination IP range (using `/24` prefixes), and destination port
-* The Cloudflare data center city and country of where the traffic was observed
-* TCP flag
+- Mitigation action taken by Cloudflare
+- Mitigation system that performed the action
+- Source IP, port, ASN
+- Destination IP, destination IP range (using `/24` prefixes), and destination port
+- The Cloudflare data center city and country of where the traffic was observed
+- TCP flag
 
 ## Packets summary or Bits summary
 
@@ -39,17 +39,17 @@ Displays a plot of the traffic (in terms of bits or packets) in the selected tim
 
 You can choose one of the following dimensions:
 
-* Action
-* Destination IP
-* Destination IP range
-* Destination port
-* Mitigation system
-* Source ASN
-* Source country
-* Source data center
-* Source IP
-* Source port
-* TCP flag
+- Action
+- Destination IP
+- Destination IP range
+- Destination port
+- Mitigation system
+- Source ASN
+- Source country
+- Source data center
+- Source IP
+- Source port
+- TCP flag
 
 ## Mitigation system distribution
 

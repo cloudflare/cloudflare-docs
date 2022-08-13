@@ -11,7 +11,7 @@ Cache Reserve is a large, persistent data store [implemented on top of R2](https
 
 How long content in Cache Reserve will be considered “fresh” is determined by edge cache TTL setting or Cache-Control headers at your origin, if [edge cache TTL](/cache/about/edge-browser-cache-ttl/) is not set. After the retention period expires, Cloudflare will revalidate the asset when a subsequent request arrives in Cache Reserve for the asset. This is the same behavior as in Cloudflare's regular CDN.
 
-The retention period of an asset is how long we will keep the asset in Cache Reserve before marking it for eviction. If an asset is not requested within the retention period, it will be evicted from Cache Reserve. Every access will extend the retention period of the asset by exactly one period.  
+The retention period of an asset is how long we will keep the asset in Cache Reserve before marking it for eviction. If an asset is not requested within the retention period, it will be evicted from Cache Reserve. Every access will extend the retention period of the asset by exactly one period.
 
 Cache Reserve is a usage-based product and pricing is detailed below.
 
@@ -49,22 +49,22 @@ Cache Reserve charges based on the total volume of data stored, along with two c
 ### Cache Reserve pricing
 
 <table>
-  <tbody>
-    <th></th>
-    <th>Rates</th>
-    <tr>
-      <td>Storage</td>
-      <td>$0.015 / GB-month</td>
-    </tr>
-    <tr>
-      <td>Class A Operations (writes)</td>
-      <td>$4.50 / million requests</td>
-    </tr>
-    <tr>
-      <td>Class B Operations (reads)</td>
-      <td>$0.36 / million requests</td>
-    </tr>
-  </tbody>
+	<tbody>
+		<th></th>
+		<th>Rates</th>
+		<tr>
+			<td>Storage</td>
+			<td>$0.015 / GB-month</td>
+		</tr>
+		<tr>
+			<td>Class A Operations (writes)</td>
+			<td>$4.50 / million requests</td>
+		</tr>
+		<tr>
+			<td>Class B Operations (reads)</td>
+			<td>$0.36 / million requests</td>
+		</tr>
+	</tbody>
 </table>
 
 ### Storage usage
@@ -72,6 +72,7 @@ Cache Reserve charges based on the total volume of data stored, along with two c
 Storage is billed using gigabyte-month (GB-month) as the billing metric. A GB-month is calculated by recording total bytes stored for the duration of the month.
 
 For example:
+
 - Storing 1 GB for 30 days will be charged as 1 GB-month.
 - Storing 2 GB for 15 days will be charged as 1 GB-month.
 
@@ -81,11 +82,11 @@ Operations are performed by Cache Reserve on behalf of the user to write data fr
 
 #### Class A operations (writes)
 
-Class A operations are performed based on cache misses from Cloudflare’s CDN. When a request cannot be served from cache, it will be fetched from the origin and written to cache reserve as well as our edge caches on the way back to the visitor. 
+Class A operations are performed based on cache misses from Cloudflare’s CDN. When a request cannot be served from cache, it will be fetched from the origin and written to cache reserve as well as our edge caches on the way back to the visitor.
 
 #### Class B operations (reads)
 
-Class B operations are performed when data needs to be fetched from Cache Reserve to respond to a miss in the edge cache. 
+Class B operations are performed when data needs to be fetched from Cache Reserve to respond to a miss in the edge cache.
 
 #### Operations billing examples
 
@@ -101,7 +102,7 @@ Cache Reserve will respect Cache-Control and CDN-Cache-Control headers.
 
 Cache Reserve will also be purged along with edge cache when you send a purge by URL request. Other purge methods such as purge by tag or prefix will invalidate the asset in Cache Reserve, but assets purged this way will still incur storage costs until they expire.
 
-While Cache Reserve does require a paid plan, users can continue to use Cloudflare’s CDN (without Cache Reserve) for free. 
+While Cache Reserve does require a paid plan, users can continue to use Cloudflare’s CDN (without Cache Reserve) for free.
 
 ## Tips and best practices
 

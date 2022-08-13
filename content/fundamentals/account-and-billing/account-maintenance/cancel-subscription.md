@@ -30,7 +30,7 @@ To disable a subscription:
 
 4. Find the subscription you want to disable and select **Cancel**.
 
-5. You will be asked to share feedback with us. Choose all that apply. 
+5. You will be asked to share feedback with us. Choose all that apply.
 
 6. Select **Confirm** to finish.
 

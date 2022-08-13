@@ -20,22 +20,22 @@ To use an IP, it must be assigned to a Spectrum app to create the appropriate A 
 
 ```json
 {
-  "id": "4590376cf2994d72cee36828ec4eff19",
-  "protocol": "tcp/22",
-  "dns": {
-    "type": "ADDRESS",
-    "name": "ssh.example.com"
-  },
-  "origin_direct": ["tcp://192.0.2.1:22"],
-  "ip_firewall": true,
-  "proxy_protocol": false,
-  "spp": false,
-  "tls": "off",
-  "traffic_type": "direct",
-  "edge_ips": {
-    "type": "static",
-    "ips": ["198.51.100.10", "2001:DB8::1"]
-  }
+	"id": "4590376cf2994d72cee36828ec4eff19",
+	"protocol": "tcp/22",
+	"dns": {
+		"type": "ADDRESS",
+		"name": "ssh.example.com"
+	},
+	"origin_direct": ["tcp://192.0.2.1:22"],
+	"ip_firewall": true,
+	"proxy_protocol": false,
+	"spp": false,
+	"tls": "off",
+	"traffic_type": "direct",
+	"edge_ips": {
+		"type": "static",
+		"ips": ["198.51.100.10", "2001:DB8::1"]
+	}
 }
 ```
 

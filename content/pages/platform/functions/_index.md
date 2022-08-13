@@ -159,7 +159,7 @@ filename:function/character/[id].js
 export async function onRequestGet({ params }) {
   const res = await fetch(`https://rickandmortyapi.com/api/character/${params.id}`);
   const data = await res.json();
-  const info = JSON.stringify(data, null, 2);
+  const info = JSON.stringify(data, null, '\t');
   return new Response(info);
 }
 ```
@@ -369,19 +369,19 @@ Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **F
 
 ### Durable Objects locally
 
-Currently, Durable Objects are not supported in local development mode. To use Durable Objects in your Pages application, deploy a Worker containing a Durable Object. Then add it as a binding to your Pages project as shown in the section above. 
+Currently, Durable Objects are not supported in local development mode. To use Durable Objects in your Pages application, deploy a Worker containing a Durable Object. Then add it as a binding to your Pages project as shown in the section above.
 
 Support for using Durable Objects in local development is actively being worked on and will be available soon.
 
 ### R2 bucket
 
-Cloudflare R2 is Cloudflare's blob storage solution that allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services. Within Pages, you can choose from a list of R2 buckets that you created from the dashboard by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **R2 buckets**. Select an _R2 bucket_ from the list of your existing R2 buckets. You will need to repeat this step for both the **Production** and **Preview** environments. 
+Cloudflare R2 is Cloudflare's blob storage solution that allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services. Within Pages, you can choose from a list of R2 buckets that you created from the dashboard by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **R2 buckets**. Select an _R2 bucket_ from the list of your existing R2 buckets. You will need to repeat this step for both the **Production** and **Preview** environments.
 
 ![Editing an R2 bucket Binding and adding a Variable name](/pages/platform/media/r2-test-bucket.png)
 
 ### Using R2 buckets locally
 
-While developing locally, you can interact with an R2 bucket by adding `--r2=<BINDING>` to your run command. For example, if your bucket is bound to `BUCKET`, you can access this bucket in local dev by running `npx wrangler pages dev dist --r2=BUCKET`. The can interact with this binding by using `context.env` (e.g. `context.env.BUCKET`). 
+While developing locally, you can interact with an R2 bucket by adding `--r2=<BINDING>` to your run command. For example, if your bucket is bound to `BUCKET`, you can access this bucket in local dev by running `npx wrangler pages dev dist --r2=BUCKET`. The can interact with this binding by using `context.env` (e.g. `context.env.BUCKET`).
 
 ```js
 export async function onRequestGet({ env }) {
@@ -401,11 +401,11 @@ D1 is currently in private beta, you will need access to use it in your account.
 
 {{</Aside>}}
 
-Cloudflare D1 is Cloudflare's first SQL database built on SQLite. If you have access to D1, within Pages, you can choose from a list of D1 databases that you created from the dashboard by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **D1 Databases**. Select a _D1 database_ from the list of your existing D1 databases. You must repeat this step for both the **Production** and **Preview** environments. 
+Cloudflare D1 is Cloudflare's first SQL database built on SQLite. If you have access to D1, within Pages, you can choose from a list of D1 databases that you created from the dashboard by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **D1 Databases**. Select a _D1 database_ from the list of your existing D1 databases. You must repeat this step for both the **Production** and **Preview** environments.
 
 ![Editing a D1 database Binding and adding a Variable name](/pages/platform/media/d1-test-database.png)
 
-### Using D1 database locally 
+### Using D1 database locally
 
 While developing locally, you can interact with a D1 database by adding `--d1=<BINDING>` to your run command. For example, if your database is bound to `NORTHWIND_DB`, you can access this database in local dev by running `npx wrangler pages dev dist --d1=NORTHWIND_DB`. You can interact with this binding by using `context.env` (e.g. `context.env.NORTHWIND_DB`).
 

@@ -160,58 +160,58 @@ To create a report for your log data based on the Cloudflare template:
 8.  Next, update the **Type** for each of the following fields as indicated below:
 
 <table style="border: solid 2px darkgrey; width: 100%;">
-  <thead style="background: #ffeadf;">
-    <tr>
-      <th>Cloudflare Log Field</th>
-      <th>Type</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>ZoneID</td>
-      <td>Text</td>
-    </tr>
-    <tr>
-      <td>EdgeColoID</td>
-      <td>Text</td>
-    </tr>
-    <tr>
-      <td>ClientSrcPort</td>
-      <td>Text</td>
-    </tr>
-    <tr>
-      <td>EdgeResponseStatus</td>
-      <td>Number</td>
-    </tr>
-    <tr>
-      <td>EdgeRateLimitID</td>
-      <td>Text&nbsp;</td>
-    </tr>
-    <tr>
-      <td>
-        <div>
-          <div>Copy of EdgeStartTimestamp</div>
-        </div>
-      </td>
-      <td>Date &amp; Time &gt; Date Hour (YYYYMMDDHH)</td>
-    </tr>
-    <tr>
-      <td>OriginResponseStatus</td>
-      <td>Number</td>
-    </tr>
-    <tr>
-      <td>ClientASN</td>
-      <td>Text</td>
-    </tr>
-    <tr>
-      <td>ClientCountry</td>
-      <td>Geo &gt; Country</td>
-    </tr>
-    <tr>
-      <td>CacheResponseStatus</td>
-      <td>Text</td>
-    </tr>
-  </tbody>
+	<thead style="background: #ffeadf;">
+		<tr>
+			<th>Cloudflare Log Field</th>
+			<th>Type</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>ZoneID</td>
+			<td>Text</td>
+		</tr>
+		<tr>
+			<td>EdgeColoID</td>
+			<td>Text</td>
+		</tr>
+		<tr>
+			<td>ClientSrcPort</td>
+			<td>Text</td>
+		</tr>
+		<tr>
+			<td>EdgeResponseStatus</td>
+			<td>Number</td>
+		</tr>
+		<tr>
+			<td>EdgeRateLimitID</td>
+			<td>Text&nbsp;</td>
+		</tr>
+		<tr>
+			<td>
+				<div>
+					<div>Copy of EdgeStartTimestamp</div>
+				</div>
+			</td>
+			<td>Date &amp; Time &gt; Date Hour (YYYYMMDDHH)</td>
+		</tr>
+		<tr>
+			<td>OriginResponseStatus</td>
+			<td>Number</td>
+		</tr>
+		<tr>
+			<td>ClientASN</td>
+			<td>Text</td>
+		</tr>
+		<tr>
+			<td>ClientCountry</td>
+			<td>Geo &gt; Country</td>
+		</tr>
+		<tr>
+			<td>CacheResponseStatus</td>
+			<td>Text</td>
+		</tr>
+	</tbody>
 </table>
 
 9.  Next, add a new field to identify and calculate threat. In the top right corner, click **+ ADD A FIELD**, then in the add field UI:
@@ -293,56 +293,56 @@ You can also create custom fields directly in Data Studio.
 The following table summarizes which specific components require to be fixed:
 
 <table style="border: solid 2px darkgrey; width: 100%;">
-  <thead style="background: #ffeadf;">
-    <tr>
-      <th>Report page</th>
-      <th>Components</th>
-      <th>Field to add</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan="3">2 Security Cloudflare&nbsp;</td>
-      <td>
-        <p>
-          <em>Threats </em>(scorecard)
-        </p>
-      </td>
-      <td>&nbsp;Threats (Metric)</td>
-    </tr>
-    <tr>
-      <td>
-        <p>
-          <em>Threats - Record Count (table)</em>
-        </p>
-      </td>
-      <td>&nbsp;Threats (Dimension)</td>
-    </tr>
-    <tr>
-      <td>
-        &nbsp;<em>Threats Over Time&nbsp;</em>(area chart)
-      </td>
-      <td>&nbsp;Threats (Breadown Dimension)</td>
-    </tr>
-    <tr>
-      <td>3 Reliability Cloudflare</td>
-      <td>
-        <em>Status Codes Last 24 hours&nbsp;</em>(bar chart)
-      </td>
-      <td>
-        <em>Copy of EdgeStartTimeStamp&nbsp;</em>(Dimension)
-      </td>
-    </tr>
-    <tr>
-      <td>5&nbsp;Last 100s Requests Cloudflare</td>
-      <td>
-        <em>Last 100 Requests</em> (table)
-      </td>
-      <td>
-        &nbsp;<em>Copy of EdgeStartTimeStamp</em>
-      </td>
-    </tr>
-  </tbody>
+	<thead style="background: #ffeadf;">
+		<tr>
+			<th>Report page</th>
+			<th>Components</th>
+			<th>Field to add</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td rowspan="3">2 Security Cloudflare&nbsp;</td>
+			<td>
+				<p>
+					<em>Threats </em>(scorecard)
+				</p>
+			</td>
+			<td>&nbsp;Threats (Metric)</td>
+		</tr>
+		<tr>
+			<td>
+				<p>
+					<em>Threats - Record Count (table)</em>
+				</p>
+			</td>
+			<td>&nbsp;Threats (Dimension)</td>
+		</tr>
+		<tr>
+			<td>
+				&nbsp;<em>Threats Over Time&nbsp;</em>(area chart)
+			</td>
+			<td>&nbsp;Threats (Breadown Dimension)</td>
+		</tr>
+		<tr>
+			<td>3 Reliability Cloudflare</td>
+			<td>
+				<em>Status Codes Last 24 hours&nbsp;</em>(bar chart)
+			</td>
+			<td>
+				<em>Copy of EdgeStartTimeStamp&nbsp;</em>(Dimension)
+			</td>
+		</tr>
+		<tr>
+			<td>5&nbsp;Last 100s Requests Cloudflare</td>
+			<td>
+				<em>Last 100 Requests</em> (table)
+			</td>
+			<td>
+				&nbsp;<em>Copy of EdgeStartTimeStamp</em>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 For each of the report components listed above:

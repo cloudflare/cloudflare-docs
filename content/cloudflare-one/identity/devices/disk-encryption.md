@@ -41,7 +41,7 @@ Operating systems determine disk encryption in various ways. The following infor
 
 1. Open a terminal window.
 1. Run the `/usr/sbin/system_profiler SPStorageDataType` command to return a list of drivers on the system and note the value of **Mount Point**.
-1. Run the `diskutil info` command for a specific **Mount Point** and look for the value returned for **FileVault**. It must show *Yes* for the disk to be considered encrypted.
+1. Run the `diskutil info` command for a specific **Mount Point** and look for the value returned for **FileVault**. It must show _Yes_ for the disk to be considered encrypted.
 
 ```txt
 % diskutil info /System/Volumes/Data | grep FileVault
@@ -54,9 +54,10 @@ All disks on the system must be encrypted for the posture check to pass.
 
 1.  Open a Powershell window.
 1.  Run the `Get-BitLockerVolume` command to list all volumes detected on the system.
-1.  **Protection Status** must be set to *On*.
+1.  **Protection Status** must be set to _On_.
 
 ```txt
 Get-BitLockerVolume
 ```
+
 All disks on the system must be encrypted for the posture check to pass.

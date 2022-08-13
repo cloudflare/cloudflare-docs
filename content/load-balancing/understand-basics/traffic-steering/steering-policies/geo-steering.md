@@ -34,7 +34,7 @@ When [creating or editing a load balancer](/load-balancing/how-to/create-load-ba
 
 #### Via the API
 
-Use the `regions_pool` property of the [Update Load Balancers](https://api.cloudflare.com/#load-balancers-update-load-balancer) command to specify an array of regions. Specify each region using the [appropriate region code](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) followed by a list of origin servers to use for that region. 
+Use the `regions_pool` property of the [Update Load Balancers](https://api.cloudflare.com/#load-balancers-update-load-balancer) command to specify an array of regions. Specify each region using the [appropriate region code](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) followed by a list of origin servers to use for that region.
 
 In the example below, `WNAM` and `ENAM` represent the West and East Coasts of North America, respectively.
 
@@ -44,23 +44,23 @@ header: Request
 ---
 // PUT /zones/:zone_id/load_balancers
 {
-  "description": "Load Balancer for www.example.com",
-  "name": "www.example.com",
-  "ttl": 30,
-  "proxied": true,
-  "fallback_pool": "ff02c959d17f7bb2b1184a202e3c0af7",
-  "default_pools": ["17b5962d775c646f3f9725cbc7a53df4", "ff02c959d17f7bb2b1184a202e3c0af7"],
-  "region_pools": {
-    "WNAM": ["17b5962d775c646f3f9725cbc7a53df4", "ff02c959d17f7bb2b1184a202e3c0af7"],
-    "ENAM": ["17b5962d775c646f3f9725cbc7a53df4", "ff02c959d17f7bb2b1184a202e3c0af7"],
-    "EEU": ["ff02c959d17f7bb2b1184a202e3c0af7", "17b5962d775c646f3f9725cbc7a53df4"]
-  }
+	"description": "Load Balancer for www.example.com",
+	"name": "www.example.com",
+	"ttl": 30,
+	"proxied": true,
+	"fallback_pool": "ff02c959d17f7bb2b1184a202e3c0af7",
+	"default_pools": ["17b5962d775c646f3f9725cbc7a53df4", "ff02c959d17f7bb2b1184a202e3c0af7"],
+	"region_pools": {
+		"WNAM": ["17b5962d775c646f3f9725cbc7a53df4", "ff02c959d17f7bb2b1184a202e3c0af7"],
+		"ENAM": ["17b5962d775c646f3f9725cbc7a53df4", "ff02c959d17f7bb2b1184a202e3c0af7"],
+		"EEU": ["ff02c959d17f7bb2b1184a202e3c0af7", "17b5962d775c646f3f9725cbc7a53df4"]
+	}
 }
 ```
 
 If you only define `WNAM`, then traffic from the East Coast will be routed to the `default_pools`. You can test this using a client in each of those locations.
 
-### Country steering 
+### Country steering
 
 {{<Aside type="note">}}
 Currently, China is not supported for Geo steering.{{</Aside>}}
@@ -84,7 +84,6 @@ When creating a load balancer [via the API](https://api.cloudflare.com/#load-bal
 To get a list of country codes, use the [Region API](/load-balancing/reference/region-mapping-api/).
 
 Any country not explicitly defined will fall back to using the corresponding `region_pool` mapping (if it exists), then to the associated default pools.
-
 
 ### PoP steering
 

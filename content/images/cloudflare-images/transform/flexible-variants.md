@@ -4,7 +4,6 @@ title: Flexible variants
 weight: 2
 ---
 
-
 # Flexible variants
 
 If you need more flexibility when creating variants than the Cloudflare Images dashboard allows, you can use the API to create flexible variants. Flexible variants allow you to create variants with dynamic resizing. This option is not enabled by default. Refer to the following example to activate flexible variants on your account:

@@ -42,7 +42,7 @@ If you are using [Cloudflare Registrar](/registrar/) for the zone that provides 
 #### Add account nameservers
 
 1.  Create between two and five account-level nameservers with a [POST command](https://api.cloudflare.com/#account-level-custom-nameservers-add-account-custom-nameserver).
-2. Open a ticket with [customer support](https://support.cloudflare.com/hc/articles/200172476) to add glue records to your account nameservers and have your nameservers updated.
+2.  Open a ticket with [customer support](https://support.cloudflare.com/hc/articles/200172476) to add glue records to your account nameservers and have your nameservers updated.
 3.  To enable the custom nameservers on existing zones, use a [PUT command](https://api.cloudflare.com/#account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) on each zone. Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated `A` or `AAAA` records.
 
 To make this custom nameserver the default for all new zones, use a [PUT command](https://api.cloudflare.com/#accounts-update-account) on an account and set the value of `use_account_custom_ns_by_default` to `true`.

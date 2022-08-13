@@ -28,7 +28,7 @@ To create a DNS record in the dashboard:
 4.  Choose a record [**Type**](/dns/manage-dns-records/reference/dns-record-types/).
 5.  Complete the required fields, which vary per record. Particularly important fields (for some records) include:
     - **Proxy status**: For `A`, `AAAA`, and `CNAME` records, decide whether hostname traffic is [proxied through Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/).
-    - **TTL**: Short for [*Time to Live*](/dns/manage-dns-records/reference/ttl/), this field controls how long each record is valid and — as a result — how long it takes for record updates to reach your end users.
+    - **TTL**: Short for [_Time to Live_](/dns/manage-dns-records/reference/ttl/), this field controls how long each record is valid and — as a result — how long it takes for record updates to reach your end users.
 6.  Click **Save**.
 
 ### Using the API

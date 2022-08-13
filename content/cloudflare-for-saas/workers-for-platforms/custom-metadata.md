@@ -10,8 +10,8 @@ You may wish to configure per-hostname (customer) settings beyond the scale of P
 
 To do this, you will first need to reach out to your account team to enable access to Custom Metadata. After configuring custom metadata, you can use it in the following ways:
 
-* Read the metadata JSON from [Cloudflare Workers](/workers/) (requires access to Workers) to define per-hostname behavior.
-* Use custom metadata values in [rule expressions](/ruleset-engine/rules-language/expressions/) of different Cloudflare security products to define the rule scope.
+- Read the metadata JSON from [Cloudflare Workers](/workers/) (requires access to Workers) to define per-hostname behavior.
+- Use custom metadata values in [rule expressions](/ruleset-engine/rules-language/expressions/) of different Cloudflare security products to define the rule scope.
 
 {{<render file="_ssl-for-saas-plan-limitation.md">}}
 
@@ -60,21 +60,21 @@ In the example below we will user_id in the Worker that was submitted using the 
 
 ```js
 addEventListener('fetch', event => {
-  event.respondWith(fetchAndAddHeader(event.request));
+	event.respondWith(fetchAndAddHeader(event.request));
 });
 /**
  * Fetch and add a X-Customer-Id header to the origin based on hostname
  * @param {Request} request
  */ async function fetchAndAddHeader(request) {
-  let customer_id = request.cf.hostMetadata.customer_id;
-  let newHeaders = new Headers(request.headers);
-  newHeaders.append('X-Customer-Id', customer_id);
-  let init = {
-    headers: newHeaders,
-    method: request.method,
-  };
-  let response = await fetch(request.url, init);
-  return response;
+	let customer_id = request.cf.hostMetadata.customer_id;
+	let newHeaders = new Headers(request.headers);
+	newHeaders.append('X-Customer-Id', customer_id);
+	let init = {
+		headers: newHeaders,
+		method: request.method,
+	};
+	let response = await fetch(request.url, init);
+	return response;
 }
 ```
 

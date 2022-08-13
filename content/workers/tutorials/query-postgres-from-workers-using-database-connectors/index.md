@@ -101,11 +101,11 @@ filename: src/index.ts
 highlight: [4]
 ---
 const client = new Client({
-  user: 'postgres',
-  database: 'postgres',
-  hostname: 'https://REPLACE_WITH_TUNNEL_HOSTNAME',
-  password: '',
-  port: 5432,
+	user: 'postgres',
+	database: 'postgres',
+	hostname: 'https://REPLACE_WITH_TUNNEL_HOSTNAME',
+	password: '',
+	port: 5432,
 });
 ```
 
@@ -125,34 +125,34 @@ const pagilaTable = url.searchParams.get('pagila-table');
 let result;
 // if pagilaTable is defined, run a query on the Pagila dataset
 if (
-  [
-    'actor',
-    'address',
-    'category',
-    'city',
-    'country',
-    'customer',
-    'film',
-    'film_actor',
-    'film_category',
-    'inventory',
-    'language',
-    'payment',
-    'payment_p2020_01',
-    'payment_p2020_02',
-    'payment_p2020_03',
-    'payment_p2020_04',
-    'payment_p2020_05',
-    'payment_p2020_06',
-    'rental',
-    'staff',
-    'store',
-  ].includes(pagilaTable)
+	[
+		'actor',
+		'address',
+		'category',
+		'city',
+		'country',
+		'customer',
+		'film',
+		'film_actor',
+		'film_category',
+		'inventory',
+		'language',
+		'payment',
+		'payment_p2020_01',
+		'payment_p2020_02',
+		'payment_p2020_03',
+		'payment_p2020_04',
+		'payment_p2020_05',
+		'payment_p2020_06',
+		'rental',
+		'staff',
+		'store',
+	].includes(pagilaTable)
 ) {
-  result = await client.queryObject(`SELECT * FROM ${pagilaTable};`);
+	result = await client.queryObject(`SELECT * FROM ${pagilaTable};`);
 } else {
-  const param = 42;
-  result = await client.queryObject(`SELECT ${param} as answer;`);
+	const param = 42;
+	result = await client.queryObject(`SELECT ${param} as answer;`);
 }
 
 // Return result from database.
@@ -223,5 +223,6 @@ $ docker compose down
 If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below.
 
 <!-- - [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/) -->
+
 - [Build a Slackbot](/workers/tutorials/build-a-slackbot/)
 - [GitHub SMS notifications using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)

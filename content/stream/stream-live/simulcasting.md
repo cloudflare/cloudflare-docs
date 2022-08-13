@@ -23,14 +23,14 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/$INPUT
 
 ```json
 {
-  "result": {
-    "uid": "6f8339ed45fe87daa8e7f0fe4e4ef776",
-    "url": "rtmp://a.rtmp.youtube.com/live2",
-    "streamKey": "<redacted>"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"uid": "6f8339ed45fe87daa8e7f0fe4e4ef776",
+		"url": "rtmp://a.rtmp.youtube.com/live2",
+		"streamKey": "<redacted>"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

@@ -22,9 +22,9 @@ Links to applications not protected by Access can be added as bookmarks. To add 
 
 6. (Optional) To add a custom logo for your application, select **Custom** and enter the image URL.
 
-    {{<Aside type="note">}}
-    If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
-    {{</Aside>}}
+   {{<Aside type="note">}}
+   If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
+   {{</Aside>}}
 
 7. Select **Add application** to save and exit.
 

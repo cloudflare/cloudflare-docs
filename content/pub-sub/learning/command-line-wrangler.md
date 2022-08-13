@@ -30,7 +30,7 @@ To create an API Token that Wrangler can use:
 1. From the [Cloudflare dashboard](https://dash.cloudflare.com), click on the profile icon and select **My Profile**.
 2. Under **My Profile**, click **API Tokens**.
 3. On the [**API Tokens**](https://dash.cloudflare.com/profile/api-tokens) page, click **Create Token**
-4. Choose **Get Started** next to **Create Custom Token** 
+4. Choose **Get Started** next to **Create Custom Token**
 5. Name the token - e.g. "Pub/Sub Write Access"
 6. Under the **Permissions** heading, choose **Account**, select **Pub/Sub** from the first drop-down, and **Edit** as the permission.
 7. Click **Continue to Summary** at the bottom of the page, where you should see _All accounts - Pub/Sub:Edit_ as the permission
@@ -109,17 +109,17 @@ wrangler pubsub broker create BROKER_NAME --namespace=NAMESPACE_NAME
 
 You can issue client credentials for a Pub/Sub Broker directly via Wrangler. Note that:
 
-* Tokens are scoped per Broker
-* You can issue multiple tokens at once
-* Tokens currently allow a client to publish and/or subscribe to _any_ topic on the Broker.
+- Tokens are scoped per Broker
+- You can issue multiple tokens at once
+- Tokens currently allow a client to publish and/or subscribe to _any_ topic on the Broker.
 
 To issue a single token:
 
 ```sh
-wrangler pubsub broker issue BROKER_NAME --namespace=NAMESPACE_NAME 
+wrangler pubsub broker issue BROKER_NAME --namespace=NAMESPACE_NAME
 ```
 
-You can use `--number=<NUM>` to issue multiple tokens at once, and `--expiration=<DURATION>` to set an expiry (e.g. `4h` or `30d`) on the issued tokens. 
+You can use `--number=<NUM>` to issue multiple tokens at once, and `--expiration=<DURATION>` to set an expiry (e.g. `4h` or `30d`) on the issued tokens.
 
 ### Revoke a Token
 

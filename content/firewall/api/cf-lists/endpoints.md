@@ -32,80 +32,82 @@ The Cloudflare Rules Lists API supports the operations outlined below. Visit the
 ## Manage lists
 
 <table style="table-layout:fixed; width:100%;">
-  <thead>
-    <tr>
-      <th style="width: 20%">Operation</th>
-      <th>Method & Endpoint</th>
-      <th style="width: 30%">Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#rules-lists-create-list">Create a List</a>
-      </td>
-      <td>
-        <code class="InlineCode">POST accounts/&lt;ACCOUNT_ID&gt;/rules/lists</code>
-      </td>
-      <td style="width:25%; word-wrap:break-word; white-space:normal">Creates an empty list.</td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#rules-lists-list-lists">List Lists</a>
-      </td>
-      <td>
-        <code class="InlineCode">GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists</code>
-      </td>
-      <td style="width:25%; word-wrap:break-word; white-space:normal">
-        Fetch all lists for the account. (This request does not fetch the items in the lists.)
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#rules-lists-get-list">Get a List</a>
-      </td>
-      <td>
-        <code class="InlineCode">
-          GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;
-        </code>
-      </td>
-      <td style="width:25%; word-wrap:break-word; white-space:normal">
-        Fetches a list by its <code class="InlineCode">id</code>. (This request does not display the
-        items in the list.)
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#rules-lists-update-list">Update a List</a>
-      </td>
-      <td>
-        <code class="InlineCode">
-          PUT accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;
-        </code>
-      </td>
-      <td style="width:25%; word-wrap:break-word; white-space:normal">
-        <p>
-          Updates the <code class="InlineCode">description</code> of a list. You cannot edit the <code class="InlineCode">name</code> or <code class="InlineCode">kind</code>, and you cannot update items in a list.
-        </p>
-        <p>
-          To update an item in a list, use the <a href="https://api.cloudflare.com/#rules-lists-replace-list-items">Replace List Items</a> operation.
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#rules-lists-delete-list">Delete a List</a>
-      </td>
-      <td>
-        <code class="InlineCode">
-          DELETE accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;
-        </code>
-      </td>
-      <td style="width:25%; word-wrap:break-word; white-space:normal">
-        Deletes the list, but only when no filters reference it.
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th style="width: 20%">Operation</th>
+			<th>Method & Endpoint</th>
+			<th style="width: 30%">Notes</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<a href="https://api.cloudflare.com/#rules-lists-create-list">Create a List</a>
+			</td>
+			<td>
+				<code class="InlineCode">POST accounts/&lt;ACCOUNT_ID&gt;/rules/lists</code>
+			</td>
+			<td style="width:25%; word-wrap:break-word; white-space:normal">Creates an empty list.</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://api.cloudflare.com/#rules-lists-list-lists">List Lists</a>
+			</td>
+			<td>
+				<code class="InlineCode">GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists</code>
+			</td>
+			<td style="width:25%; word-wrap:break-word; white-space:normal">
+				Fetch all lists for the account. (This request does not fetch the items in the lists.)
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://api.cloudflare.com/#rules-lists-get-list">Get a List</a>
+			</td>
+			<td>
+				<code class="InlineCode">GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;</code>
+			</td>
+			<td style="width:25%; word-wrap:break-word; white-space:normal">
+				Fetches a list by its <code class="InlineCode">id</code>. (This request does not display the
+				items in the list.)
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://api.cloudflare.com/#rules-lists-update-list">Update a List</a>
+			</td>
+			<td>
+				<code class="InlineCode">PUT accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;</code>
+			</td>
+			<td style="width:25%; word-wrap:break-word; white-space:normal">
+				<p>
+					Updates the <code class="InlineCode">description</code> of a list. You cannot edit the{' '}
+					<code class="InlineCode">name</code> or <code class="InlineCode">kind</code>, and you
+					cannot update items in a list.
+				</p>
+				<p>
+					To update an item in a list, use the{' '}
+					<a href="https://api.cloudflare.com/#rules-lists-replace-list-items">
+						Replace List Items
+					</a>{' '}
+					operation.
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://api.cloudflare.com/#rules-lists-delete-list">Delete a List</a>
+			</td>
+			<td>
+				<code class="InlineCode">
+					DELETE accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;
+				</code>
+			</td>
+			<td style="width:25%; word-wrap:break-word; white-space:normal">
+				Deletes the list, but only when no filters reference it.
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 ## Manage items in a list
@@ -121,99 +123,100 @@ When you make requests to a list while a bulk operation on that list is in progr
 {{</content-column>}}
 
 <table style="table-layout:fixed; width:100%;">
-  <thead>
-    <tr>
-      <th style="width: 20%">Operation</th>
-      <th>Method & Endpoint</th>
-      <th style="width: 30%">Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#rules-lists-list-list-items">List Items</a>
-      </td>
-      <td>
-        <code class="InlineCode">
-          GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
-        </code>
-      </td>
-      <td>
-        <p>Fetches all items in a list.</p>
-        <p>Items are sorted in ascending order by IP address.</p>
-        <p>CIDRs are sorted by IP address, then by the subnet mask.</p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#rules-lists-get-list-item">Get a List Item</a>
-      </td>
-      <td>
-        <code class="InlineCode">
-          GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items/&lt;ITEM_ID&gt;
-        </code>
-      </td>
-      <td>
-        <p>Fetches an item from a list by ID.</p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#rules-lists-create-list-items">Create List Items</a>
-      </td>
-      <td>
-        <code class="InlineCode">
-          POST accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
-        </code>
-      </td>
-      <td>
-        <p>Appends a new item or items to a list.</p>
-        <p>Replaces entries that already exist in the list, does not delete any items.</p>
-        <p>
-          Overwrites the <code class="InlineCode">comment</code> of the original item.
-        </p>
-        <p>
-          The response includes an <code class="InlineCode">operation_id</code>.
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#rules-lists-replace-list-items">Replace List Items</a>
-      </td>
-      <td>
-        <code class="InlineCode">
-          PUT accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
-        </code>
-      </td>
-      <td>
-        <p>
-          Deletes all current items in the list and replaces them with <code class="InlineCode">items</code>.
-        </p>
-        <p>
-          When <code class="InlineCode">items</code> is empty, deletes <strong>all</strong> items in
-          the list.
-        </p>
-        <p>
-          The response includes an <code class="InlineCode">operation_id</code>.
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#rules-lists-delete-list-items">Delete List Items</a>
-      </td>
-      <td>
-        <code class="InlineCode">
-          DELETE accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
-        </code>
-      </td>
-      <td>
-        <p>Deletes specified list items.</p>
-        <p>
-          The response includes an <code class="InlineCode">operation_id</code>.
-        </p>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th style="width: 20%">Operation</th>
+			<th>Method & Endpoint</th>
+			<th style="width: 30%">Notes</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<a href="https://api.cloudflare.com/#rules-lists-list-list-items">List Items</a>
+			</td>
+			<td>
+				<code class="InlineCode">
+					GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
+				</code>
+			</td>
+			<td>
+				<p>Fetches all items in a list.</p>
+				<p>Items are sorted in ascending order by IP address.</p>
+				<p>CIDRs are sorted by IP address, then by the subnet mask.</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://api.cloudflare.com/#rules-lists-get-list-item">Get a List Item</a>
+			</td>
+			<td>
+				<code class="InlineCode">
+					GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items/&lt;ITEM_ID&gt;
+				</code>
+			</td>
+			<td>
+				<p>Fetches an item from a list by ID.</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://api.cloudflare.com/#rules-lists-create-list-items">Create List Items</a>
+			</td>
+			<td>
+				<code class="InlineCode">
+					POST accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
+				</code>
+			</td>
+			<td>
+				<p>Appends a new item or items to a list.</p>
+				<p>Replaces entries that already exist in the list, does not delete any items.</p>
+				<p>
+					Overwrites the <code class="InlineCode">comment</code> of the original item.
+				</p>
+				<p>
+					The response includes an <code class="InlineCode">operation_id</code>.
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://api.cloudflare.com/#rules-lists-replace-list-items">Replace List Items</a>
+			</td>
+			<td>
+				<code class="InlineCode">
+					PUT accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
+				</code>
+			</td>
+			<td>
+				<p>
+					Deletes all current items in the list and replaces them with{' '}
+					<code class="InlineCode">items</code>.
+				</p>
+				<p>
+					When <code class="InlineCode">items</code> is empty, deletes <strong>all</strong> items in
+					the list.
+				</p>
+				<p>
+					The response includes an <code class="InlineCode">operation_id</code>.
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://api.cloudflare.com/#rules-lists-delete-list-items">Delete List Items</a>
+			</td>
+			<td>
+				<code class="InlineCode">
+					DELETE accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
+				</code>
+			</td>
+			<td>
+				<p>Deletes specified list items.</p>
+				<p>
+					The response includes an <code class="InlineCode">operation_id</code>.
+				</p>
+			</td>
+		</tr>
+	</tbody>
 </table>

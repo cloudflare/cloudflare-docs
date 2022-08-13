@@ -27,14 +27,14 @@ To set up automatic retraction:
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Retract Settings** > **Auto-Retract**.
-4. Click **Edit**. 
+4. Click **Edit**.
 5. For each disposition, choose which folder the message should be sent to:
 
-    - **No Action**: Do not move the message.
-    - **Junk Email**: Send the message to the junk or spam email folder.
-    - **Trash**: Send the message to the trash or deleted items email folder.
-    - **Soft Delete (User Recoverable)** (Microsoft only): Located within the user's **Deleted Items** folder and can be recovered by the user.
-    - **Hard Delete (Admin Recoverable)** (Microsoft only): Completely removed from a user's inbox and cannot be recovered without using the [admin eDiscovery feature](https://docs.microsoft.com/en-us/microsoft-365/compliance/ediscovery?view=o365-worldwide&viewFallbackFrom=o365-worl).
+   - **No Action**: Do not move the message.
+   - **Junk Email**: Send the message to the junk or spam email folder.
+   - **Trash**: Send the message to the trash or deleted items email folder.
+   - **Soft Delete (User Recoverable)** (Microsoft only): Located within the user's **Deleted Items** folder and can be recovered by the user.
+   - **Hard Delete (Admin Recoverable)** (Microsoft only): Completely removed from a user's inbox and cannot be recovered without using the [admin eDiscovery feature](https://docs.microsoft.com/en-us/microsoft-365/compliance/ediscovery?view=o365-worldwide&viewFallbackFrom=o365-worl).
 
 6. Click **Update Auto-retract Settings**.
 

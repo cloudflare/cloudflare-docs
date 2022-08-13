@@ -86,20 +86,20 @@ In the response, you get a newly-created job ID. For example:
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "id": 146,
-    "dataset": "http_requests",
-    "enabled": false,
-    "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
-    "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
-    "last_complete": null,
-    "last_error": null,
-    "error_message": null
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"id": 146,
+		"dataset": "http_requests",
+		"enabled": false,
+		"name": "<DOMAIN_NAME>",
+		"logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+		"destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
+		"last_complete": null,
+		"last_error": null,
+		"error_message": null
+	},
+	"success": true
 }
 ```
 
@@ -113,13 +113,13 @@ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/val
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "message": "",
-    "valid": true
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"message": "",
+		"valid": true
+	},
+	"success": true
 }
 ```
 
@@ -136,20 +136,20 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "id": 146,
-    "dataset": "http_requests",
-    "enabled": false,
-    "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
-    "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
-    "last_complete": null,
-    "last_error": null,
-    "error_message": null
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"id": 146,
+		"dataset": "http_requests",
+		"enabled": false,
+		"name": "<DOMAIN_NAME>",
+		"logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+		"destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
+		"last_complete": null,
+		"last_error": null,
+		"error_message": null
+	},
+	"success": true
 }
 ```
 
@@ -173,20 +173,20 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 -d'{"enabl
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "id": 146,
-    "dataset": "http_requests",
-    "enabled": true,
-    "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
-    "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
-    "last_complete": null,
-    "last_error": null,
-    "error_message": null
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"id": 146,
+		"dataset": "http_requests",
+		"enabled": true,
+		"name": "<DOMAIN_NAME>",
+		"logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+		"destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
+		"last_complete": null,
+		"last_error": null,
+		"error_message": null
+	},
+	"success": true
 }
 ```
 
@@ -207,20 +207,20 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "id": 146,
-    "dataset": "http_requests",
-    "enabled": true,
-    "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
-    "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
-    "last_complete": "2018-08-09T21:26:00Z",
-    "last_error": null,
-    "error_message": null
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"id": 146,
+		"dataset": "http_requests",
+		"enabled": true,
+		"name": "<DOMAIN_NAME>",
+		"logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+		"destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
+		"last_complete": "2018-08-09T21:26:00Z",
+		"last_error": null,
+		"error_message": null
+	},
+	"success": true
 }
 ```
 
@@ -237,10 +237,10 @@ Be careful when deleting a job because this action cannot be reversed.
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {},
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {},
+	"success": true
 }
 ```
 
@@ -256,22 +256,22 @@ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": [
-    {
-      "id": 146,
-      "dataset": "http_requests",
-      "enabled": true,
-      "name": "<DOMAIN_NAME>",
-      "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
-      "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
-      "last_complete": null,
-      "last_error": null,
-      "error_message": null
-    }
-  ],
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": [
+		{
+			"id": 146,
+			"dataset": "http_requests",
+			"enabled": true,
+			"name": "<DOMAIN_NAME>",
+			"logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+			"destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
+			"last_complete": null,
+			"last_error": null,
+			"error_message": null
+		}
+	],
+	"success": true
 }
 ```
 
@@ -285,32 +285,32 @@ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": [
-    {
-      "id": 8029,
-      "dataset": "spectrum_events",
-      "enabled": true,
-      "name": "<DOMAIN_NAME>",
-      "logpull_options": "fields=Application,ClientAsn,ClientIP,ColoCode,Event,OriginIP,Status",
-      "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
-      "last_complete": "2019-10-01T00:25:00Z",
-      "last_error": null,
-      "error_message": null
-    },
-    {
-      "id": 146,
-      "dataset": "http_requests",
-      "enabled": false,
-      "name": "<DOMAIN_NAME>",
-      "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
-      "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
-      "last_complete": "2019-09-24T21:15:00Z",
-      "last_error": null,
-      "error_message": null
-    }
-  ]
+	"errors": [],
+	"messages": [],
+	"result": [
+		{
+			"id": 8029,
+			"dataset": "spectrum_events",
+			"enabled": true,
+			"name": "<DOMAIN_NAME>",
+			"logpull_options": "fields=Application,ClientAsn,ClientIP,ColoCode,Event,OriginIP,Status",
+			"destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
+			"last_complete": "2019-10-01T00:25:00Z",
+			"last_error": null,
+			"error_message": null
+		},
+		{
+			"id": 146,
+			"dataset": "http_requests",
+			"enabled": false,
+			"name": "<DOMAIN_NAME>",
+			"logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+			"destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
+			"last_complete": "2019-09-24T21:15:00Z",
+			"last_error": null,
+			"error_message": null
+		}
+	]
 }
 ```
 
@@ -328,23 +328,23 @@ curl -s -X GET 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "id": 146,
-    "dataset": "http_requests",
-    "logstream": true,
-    "frequency": "high",
-    "kind": "",
-    "enabled": true,
-    "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
-    "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
-    "last_complete": "2021-12-14T19:56:49Z",
-    "last_error": null,
-    "error_message": null
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"id": 146,
+		"dataset": "http_requests",
+		"logstream": true,
+		"frequency": "high",
+		"kind": "",
+		"enabled": true,
+		"name": "<DOMAIN_NAME>",
+		"logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+		"destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
+		"last_complete": "2021-12-14T19:56:49Z",
+		"last_error": null,
+		"error_message": null
+	},
+	"success": true
 }
 ```
 
@@ -365,22 +365,22 @@ Note that at this time, the **CVE-2021-44228** option is not available through t
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "id": 146,
-    "dataset": "http_requests",
-    "logstream": true,
-    "frequency": "high",
-    "kind": "",
-    "enabled": true,
-    "name": null,
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339&CVE-2021-44228=true",
-    "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
-    "last_complete": "2021-12-14T20:02:19Z",
-    "last_error": null,
-    "error_message": null
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"id": 146,
+		"dataset": "http_requests",
+		"logstream": true,
+		"frequency": "high",
+		"kind": "",
+		"enabled": true,
+		"name": null,
+		"logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339&CVE-2021-44228=true",
+		"destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
+		"last_complete": "2021-12-14T20:02:19Z",
+		"last_error": null,
+		"error_message": null
+	},
+	"success": true
 }
 ```

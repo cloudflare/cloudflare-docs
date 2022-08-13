@@ -6,7 +6,7 @@ weight: 5
 
 # Cloudflare IPs
 
-If you are unable to bring your own IP to Cloudflare, you can use an IP address issued by Cloudflare. 
+If you are unable to bring your own IP to Cloudflare, you can use an IP address issued by Cloudflare.
 
 Using a Cloudflare IP may be a good option if you:
 
@@ -17,7 +17,7 @@ Using a Cloudflare IP may be a good option if you:
 - Maintain a large number of locations with a combination of connectivity methods.
 - Own an IP space with a /24 prefix length but do not advertise prefixes from every location.
 
-To protect your network using a Cloudflare IP address, contact your account manager. 
+To protect your network using a Cloudflare IP address, contact your account manager.
 
 {{<Aside type="note">}}
 

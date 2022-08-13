@@ -14,23 +14,23 @@ Access users can create policies, including individual rule blocks inside of gro
 
 ```json
 {
-  "name": "allow cloudflare employees",
-  "decision": "allow",
-  "include": [
-    {
-      "email_domain": {
-        "domain": "cloudflare.com"
-      }
-    }
-  ],
-  "exclude": [
-    {
-      "email": {
-        "email": "notthisperson@cloudflare.com"
-      }
-    }
-  ],
-  "require": []
+	"name": "allow cloudflare employees",
+	"decision": "allow",
+	"include": [
+		{
+			"email_domain": {
+				"domain": "cloudflare.com"
+			}
+		}
+	],
+	"exclude": [
+		{
+			"email": {
+				"email": "notthisperson@cloudflare.com"
+			}
+		}
+	],
+	"require": []
 }
 ```
 

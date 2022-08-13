@@ -57,26 +57,24 @@ Hello World with Netlify functions:
 
 ```js
 exports.handler = async function (event, context) {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ message: "Hello World" }),
-  };
-}
-
+	return {
+		statusCode: 200,
+		body: JSON.stringify({ message: 'Hello World' }),
+	};
+};
 ```
 
 Hello World with Pages Functions:
 
 ```js
 export async function onRequestPost(request) {
-  return new Response(`Hello world`);
+	return new Response(`Hello world`);
 }
 ```
 
 ## Other Netlify configurations
 
 Your `netlify.toml` file might have other configurations that are supported by Pages, such as, preview deployment, specifying publish directory, and plugins. You can delete the file after migrating your configurations.
-
 
 ## Access management
 

@@ -22,8 +22,8 @@ meta:
 
 Once you locate your certificate, find the following values:
 
-*   **API**: `txt_name` and `txt_value`
-*   **Dashboard**: **Certificate validation TXT name** and **Certificate validation TXT value**
+- **API**: `txt_name` and `txt_value`
+- **Dashboard**: **Certificate validation TXT name** and **Certificate validation TXT value**
 
 ### Update DNS records
 

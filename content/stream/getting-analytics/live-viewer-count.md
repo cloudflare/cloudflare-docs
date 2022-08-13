@@ -14,5 +14,5 @@ https://videodelivery.net/55b9b5ce48c3968c6b514c458959d6a/views
 Below is a response for a live video with several active viewers:
 
 ```json
-{"liveViewers": 113}
+{ "liveViewers": 113 }
 ```

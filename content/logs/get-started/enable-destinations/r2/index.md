@@ -1,15 +1,15 @@
 ---
 pcx_content_type: how-to
-title: Enable Cloudflare R2 
+title: Enable Cloudflare R2
 weight: 40
 layout: single
 ---
 
 # Enable Logpush to Cloudflare R2
 
-Cloudflare Logpush supports pushing logs directly to R2 via the Cloudflare dashboard or via API. 
+Cloudflare Logpush supports pushing logs directly to R2 via the Cloudflare dashboard or via API.
 
-We are offering Enterprise customers interested in storing their logs on Cloudflare access to R2 for evaluation and testing. Note that at this time we are not offering an SLA for R2. It should not be used for production use cases where logs are mission-critical. 
+We are offering Enterprise customers interested in storing their logs on Cloudflare access to R2 for evaluation and testing. Note that at this time we are not offering an SLA for R2. It should not be used for production use cases where logs are mission-critical.
 
 During this phase, we will not be charging for R2 usage. We will be providing 30 days notice ahead of any charges. At that time, your account team will reach out to discuss interest in signing a contract for R2 usage. We expect to start charging for R2 in Q4 2022.
 
@@ -17,25 +17,25 @@ Before getting started:
 
 - Create an R2 bucket and set up R2 API tokens.
 
-    1. Navigate to the R2 UI > **Create bucket**.
+  1. Navigate to the R2 UI > **Create bucket**.
 
-    2. Click **Manage R2 API Tokens**.
-    
-    3. Select **Create API token**.
+  2. Click **Manage R2 API Tokens**.
 
-    4. Under **Permission**, select **Edit** permissions for your token.
+  3. Select **Create API token**.
 
-    5. Copy the Secret Access Key and Access Key ID. You will need these when setting up your Logpush job.
+  4. Under **Permission**, select **Edit** permissions for your token.
+
+  5. Copy the Secret Access Key and Access Key ID. You will need these when setting up your Logpush job.
 
 - Ensure that you have the following permissions:
 
-    - R2 write, Logshare Edit.
+  - R2 write, Logshare Edit.
 
 - Alternatively, create a Cloudflare API token with the following permissions:
 
-    - Zone scope, logs edit permissions.
+  - Zone scope, logs edit permissions.
 
-    - Account scope, R2 write permissions.
+  - Account scope, R2 write permissions.
 
 ## Manage via the Cloudflare dashboard
 
@@ -56,13 +56,14 @@ Enable Logpush to R2 via the dashboard.
 7.  Select R2.
 
 8.  Enter the following destination information:
+
     - Bucket path
     - R2 access key id
     - R2 secret access key
 
 9.  Click **Validate access**.
 
-10.  Click **Save and Start Pushing** to finish enabling the Logpush job.
+10. Click **Save and Start Pushing** to finish enabling the Logpush job.
 
 ## Manage via API
 

@@ -18,11 +18,10 @@ To filter HTTP requests from a device:
 2. [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your device.
 3. In the WARP client Settings, log in to your organization’s [Zero Trust instance](/cloudflare-one/glossary/#team-name).
 4. Enable the Gateway proxy:
-    1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
-    2. Enable **Proxy** for TCP.
-    3. (Optional) Enable **Proxy** for UDP. All port 443 UDP traffic will be inspected by Gateway except when using QUIC. QUIC traffic will only be proxied.
-    4. Enable **TLS decryption**.
-
+   1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
+   2. Enable **Proxy** for TCP.
+   3. (Optional) Enable **Proxy** for UDP. All port 443 UDP traffic will be inspected by Gateway except when using QUIC. QUIC traffic will only be proxied.
+   4. Enable **TLS decryption**.
 
 ## 2. Verify device connectivity
 
@@ -33,7 +32,7 @@ To filter HTTP requests from a device:
 
 ## 3. Add recommended policies
 
-To create a new HTTP policy, navigate to **Gateway** > **Policies** > **HTTP** in the Zero Trust dashboard. 
+To create a new HTTP policy, navigate to **Gateway** > **Policies** > **HTTP** in the Zero Trust dashboard.
 We recommend adding the following policies:
 
 ### Bypass inspection for incompatible applications
@@ -41,11 +40,11 @@ We recommend adding the following policies:
 Bypass HTTP inspection for applications which use embedded certificates.
 This will help avoid any certificate pinning errors that may arise from an initial rollout.
 
-| Selector      | Operator | Value           | Action         |
-| --------------| ---------| ----------------| -------------- |
-| Application   | in       | Do Not Inspect | Do Not Inspect |
+| Selector    | Operator | Value          | Action         |
+| ----------- | -------- | -------------- | -------------- |
+| Application | in       | Do Not Inspect | Do Not Inspect |
 
-  {{<render file="_policies-recommended.md">}}
+{{<render file="_policies-recommended.md">}}
 
 ## 4. Add optional policies
 

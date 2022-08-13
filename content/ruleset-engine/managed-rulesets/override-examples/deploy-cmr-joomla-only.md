@@ -26,7 +26,7 @@ This example uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) ope
 <summary>Example: Enable only Joomla rules using category overrides at the zone level</summary>
 <div>
 
-```json
+```bash
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
@@ -53,9 +53,9 @@ curl -X PUT \
 }'
 ```
 
-*   `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`<ZONE_ID>`).
-*   `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
-*   `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
+- `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`<ZONE_ID>`).
+- `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
+- `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
 </div>
 </details>
@@ -64,7 +64,7 @@ curl -X PUT \
 <summary>Example: Enable only Joomla rules using category overrides at the account level</summary>
 <div>
 
-```json
+```bash
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
@@ -91,9 +91,9 @@ curl -X PUT \
 }'
 ```
 
-*   `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for `example.com`.
-*   `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
-*   `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
+- `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for `example.com`.
+- `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
+- `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
 </div>
 </details>
@@ -108,7 +108,7 @@ This example uses a `PUT` request to add two overrides to the rule that executes
 <summary>Example: Add more than one category override at the zone level</summary>
 <div>
 
-```json
+```bash
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
@@ -146,7 +146,7 @@ curl -X PUT \
 <summary>Example: Add more than one category override at the account level</summary>
 <div>
 
-```json
+```bash
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/account/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
@@ -158,7 +158,7 @@ curl -X PUT \
       "action_parameters": {
         "id": "<MANAGED_RULESET_ID>",
         "overrides": {
-          "enabled": false,          
+          "enabled": false,
           "categories": [
             {
               "category": "joomla",
@@ -185,38 +185,38 @@ The order of the overrides in the root ruleset affects whether rules in the depl
 The following table shows the status of the rules after the overrides.
 
 <table>
-  <thead>
-    <tr>
-      <th>Rule in Managed Ruleset</th>
-      <th>Tags</th>
-      <th>Rule status after overrides</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>ManagedRule1</td>
-      <td>drupal, dos</td>
-      <td>disabled</td>
-    </tr>
-    <tr>
-      <td>ManagedRule2</td>
-      <td>drupal, dos, joomla</td>
-       <td>enabled</td>
-    </tr>
-    <tr>
-      <td>ManagedRule3</td>
-      <td>dos, joomla, wordpress</td>
-      <td>disabled</td>
-    </tr>
-    <tr>
-      <td>ManagedRule4</td>
-      <td>drupal, wordpress</td>
-      <td>disabled</td>
-    </tr>
-    <tr>
-      <td>ManagedRule5</td>
-      <td>(no tags)</td>
-      <td>disabled</td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Rule in Managed Ruleset</th>
+			<th>Tags</th>
+			<th>Rule status after overrides</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>ManagedRule1</td>
+			<td>drupal, dos</td>
+			<td>disabled</td>
+		</tr>
+		<tr>
+			<td>ManagedRule2</td>
+			<td>drupal, dos, joomla</td>
+			<td>enabled</td>
+		</tr>
+		<tr>
+			<td>ManagedRule3</td>
+			<td>dos, joomla, wordpress</td>
+			<td>disabled</td>
+		</tr>
+		<tr>
+			<td>ManagedRule4</td>
+			<td>drupal, wordpress</td>
+			<td>disabled</td>
+		</tr>
+		<tr>
+			<td>ManagedRule5</td>
+			<td>(no tags)</td>
+			<td>disabled</td>
+		</tr>
+	</tbody>
 </table>

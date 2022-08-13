@@ -19,7 +19,7 @@ Accept: image/jpg
 As we can see from the example, the default cache key includes:
 
 1.  Full URL:
-    - scheme - not shown above, but could be HTTP or HTTPS.  
+    - scheme - not shown above, but could be HTTP or HTTPS.
     - host - which in this example is `www.cloudflare.com`
     - URI with query string - in this example is `/logo.jpg`
 2.  Origin header sent by client (for CORS support).

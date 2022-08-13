@@ -22,7 +22,7 @@ weight: 2
 6. In the **Name** field, we recommend entering the version number of the package being uploaded.
 7. In the **Publisher** field, we recommend entering `Cloudflare, Inc`.
 8. In the **Command-line arguments** field, enter a [valid installation command](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#install-warp-on-windows). \
-You do not need to fill other optional fields. Once you have entered all the necessary values, click **Next**.
+   You do not need to fill other optional fields. Once you have entered all the necessary values, click **Next**.
 9. Add the users or groups who require Cloudflare WARP and click **Next**.
 10. Review your configuration and click **Create**.
 

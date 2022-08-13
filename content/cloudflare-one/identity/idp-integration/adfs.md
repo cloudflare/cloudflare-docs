@@ -213,15 +213,15 @@ To get your Cloudflare metadata file:
 
 ```json
 {
-  "config": {
-    "issuer_url": "https://<your-team-name>.cloudflareaccess.com/",
-    "sso_target_url": "https://adfs.example.com/adfs/ls/",
-    "attributes": ["email"],
-    "email_attribute_name": "",
-    "sign_request": false,
-    "idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
-  },
-  "type": "saml",
-  "name": "adfs saml example"
+	"config": {
+		"issuer_url": "https://<your-team-name>.cloudflareaccess.com/",
+		"sso_target_url": "https://adfs.example.com/adfs/ls/",
+		"attributes": ["email"],
+		"email_attribute_name": "",
+		"sign_request": false,
+		"idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
+	},
+	"type": "saml",
+	"name": "adfs saml example"
 }
 ```

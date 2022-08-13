@@ -7,7 +7,7 @@ title: Known issues
 
 Here are some known bugs and issues with Cloudflare Pages:
 
-## Builds and deployment 
+## Builds and deployment
 
 - GitHub and GitLab are currently the only supported platforms for automatic CI/CD builds. [Direct uploads](/pages/platform/direct-upload/) allow you to integrate your own build platform or upload from your local computer.
 
@@ -17,7 +17,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - A Direct Upload of a `/functions` directory does not work (refer to [Using Functions in Direct Upload](/pages/platform/direct-upload/#using-functions)).
 
-## Git configuration 
+## Git configuration
 
 - After you have selected a GitHub/GitLab repository for your Pages application, it cannot be changed. Remove/delete your Pages project and create a new one pointing at a different repository if you need to update it.
 
@@ -33,6 +33,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 - For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. An [equivalent](/pages/platform/functions/) to Netlify's Serverless Functions is currently in beta.
 
 ## Custom Domains
+
 - It is currently not possible to add a custom domain with a wildcard, for example, `*.domain.com`.
 
 - It is currently not possible to add a custom domain with a Worker already routed on that domain.
@@ -43,12 +44,11 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - When adding a custom domain, the domain may get stuck verifying due to being unable to validate a request for an SSL on that hostname. In order for the SSL to validate, ensure Cloudflare Access or a Cloudflare Worker is allowing requests to the validation path: `http://{domain_name}/.well-known/pki-validation/*`.
 
-
 ## Pages Functions
 
 - [Functions (beta)](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, Webpack) may not run.
 
-- Currently, Durable Objects are not supported in local development mode. To use Durable Objects in your Pages application, deploy a Worker containing a Durable Object. Then add it as a binding to your Pages project as shown in the section above.  Support for using Durable Objects in local development is actively being worked on and will be available soon.
+- Currently, Durable Objects are not supported in local development mode. To use Durable Objects in your Pages application, deploy a Worker containing a Durable Object. Then add it as a binding to your Pages project as shown in the section above. Support for using Durable Objects in local development is actively being worked on and will be available soon.
 
 ## Enabling Access on your `*.pages.dev` domain
 
@@ -70,7 +70,7 @@ At this step, your `*.pages.dev` domain has been secured behind Access. To resec
 If you have a custom domain and protected your `*.pages.dev` domain behind Access, you must:
 
 10. Select **Add an application** > **Self hosted** in the Cloudflare Zero Trust dashboard.
-11. Input an **Application name** and select your custom domain from the *Domain* dropdown menu.
+11. Input an **Application name** and select your custom domain from the _Domain_ dropdown menu.
 12. Select **Next** and configure your access rules to define who can reach the Access authentication page.
 13. Select **Add application**.
 

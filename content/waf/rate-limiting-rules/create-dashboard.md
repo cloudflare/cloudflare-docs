@@ -27,7 +27,7 @@ To create a new rate limiting rule:
 
 4. In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
-    ![The Create rate limiting rule page in the Cloudflare dashboard](/waf/static/custom-rules/rate-limiting-create.png)
+   ![The Create rate limiting rule page in the Cloudflare dashboard](/waf/static/custom-rules/rate-limiting-create.png)
 
 5. Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
@@ -52,14 +52,15 @@ To create a new rate limiting rule:
 When you select the _Block_ action in a rate limiting rule you can optionally define a custom response for requests exceeding the configured rate limit.
 
 The custom response has three settings:
-* **Response type**: Choose a content type or the default rate limiting response from the list. The available custom response types are the following:
 
-    | Dashboard value | API value |
-    |---|---|
-    | Custom HTML | `"text/html"` |
-    | Custom Text | `"text/plain"` |
-    | Custom JSON | `"application/json"` |
-    | Custom XML | `"text/xml"` |
+- **Response type**: Choose a content type or the default rate limiting response from the list. The available custom response types are the following:
 
-* **Response code**: Choose an HTTP status code for the response, in the range 400-499. The default response code is 429.
-* **Response body**: The body of the response. Configure a valid body according to the response type you selected.
+  | Dashboard value | API value            |
+  | --------------- | -------------------- |
+  | Custom HTML     | `"text/html"`        |
+  | Custom Text     | `"text/plain"`       |
+  | Custom JSON     | `"application/json"` |
+  | Custom XML      | `"text/xml"`         |
+
+- **Response code**: Choose an HTTP status code for the response, in the range 400-499. The default response code is 429.
+- **Response body**: The body of the response. Configure a valid body according to the response type you selected.

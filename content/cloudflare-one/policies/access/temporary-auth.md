@@ -22,7 +22,7 @@ Temporary authentication is now enabled for users who match this policy. You can
 
 ## Temporary authentication requests
 
-When a user accesses the application, they will be prompted to enter a purpose justification and submit an access request.  The request is automatically emailed to approvers. Alternatively, the user can manually present the approval link to approvers.
+When a user accesses the application, they will be prompted to enter a purpose justification and submit an access request. The request is automatically emailed to approvers. Alternatively, the user can manually present the approval link to approvers.
 ![Temporary authentication request page shown to users](/cloudflare-one/static/documentation/policies/temp-auth-request.png)
 
 Approvers will receive a request similar to the example below. The approver can then grant access for a set amount of time, up to a maximum of 24 hours.

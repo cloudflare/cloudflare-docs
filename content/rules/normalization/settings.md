@@ -49,19 +49,19 @@ The following table shows how URL normalization settings affect incoming URLs be
 
 {{<table-wrap>}}
 
-| Incoming URL | Normalization type | Normalize incoming URLs | Normalize URLs to origin | URL passed to Cloudflare edge | URL passed to origin |
-| ---|---|---|---|---|--- |
-| `www.example.com/hello` | (any)  | _Off_ | _Off_ | `www.example.com/hello`   | `www.example.com/hello` |
-| `www.example.com/hello` | (any)  | _On_  | _Off_ | `www.example.com/hello`   | `www.example.com/hello` |
-| `www.example.com/hello` | (any)  | _On_  | _On_  | `www.example.com/hello`   | `www.example.com/hello` |
-| `example.com/%68ello` | (any) | _Off_ | _Off_ | `example.com/%68ello` | `example.com/%68ello` |
-| `example.com/%68ello` | (any) | _On_  | _Off_ | `example.com/hello`   | `example.com/%68ello` |
-| `example.com/%68ello` | (any) | _On_  | _On_  | `example.com/hello`   | `example.com/hello` |
-| `example.com/%68ello//pa\th` | _RFC-3986_ | _Off_ | _Off_ | `example.com/%68ello//pa\th` | `example.com/%68ello//pa\th` |
-| `example.com/%68ello//pa\th` | _RFC-3986_ | _On_  | _Off_ | `example.com/hello//pa\th`   | `example.com/%68ello//pa\th` |
-| `example.com/%68ello//pa\th` | _RFC-3986_ | _On_  | _On_  | `example.com/hello//pa\th`   | `example.com/hello//pa\th` |
-| `example.com/%68ello//pa\th` | _Cloudflare_ | _Off_ | _Off_ | `example.com/%68ello//pa\th` | `example.com/%68ello//pa\th` |
-| `example.com/%68ello//pa\th` | _Cloudflare_ | _On_ | _Off_ | `example.com/hello/pa/th` | `example.com/%68ello//pa\th` |
-| `example.com/%68ello//pa\th` | _Cloudflare_ | _On_ | _On_  | `example.com/hello/pa/th` | `example.com/hello/pa/th` |
+| Incoming URL                 | Normalization type | Normalize incoming URLs | Normalize URLs to origin | URL passed to Cloudflare edge | URL passed to origin         |
+| ---------------------------- | ------------------ | ----------------------- | ------------------------ | ----------------------------- | ---------------------------- |
+| `www.example.com/hello`      | (any)              | _Off_                   | _Off_                    | `www.example.com/hello`       | `www.example.com/hello`      |
+| `www.example.com/hello`      | (any)              | _On_                    | _Off_                    | `www.example.com/hello`       | `www.example.com/hello`      |
+| `www.example.com/hello`      | (any)              | _On_                    | _On_                     | `www.example.com/hello`       | `www.example.com/hello`      |
+| `example.com/%68ello`        | (any)              | _Off_                   | _Off_                    | `example.com/%68ello`         | `example.com/%68ello`        |
+| `example.com/%68ello`        | (any)              | _On_                    | _Off_                    | `example.com/hello`           | `example.com/%68ello`        |
+| `example.com/%68ello`        | (any)              | _On_                    | _On_                     | `example.com/hello`           | `example.com/hello`          |
+| `example.com/%68ello//pa\th` | _RFC-3986_         | _Off_                   | _Off_                    | `example.com/%68ello//pa\th`  | `example.com/%68ello//pa\th` |
+| `example.com/%68ello//pa\th` | _RFC-3986_         | _On_                    | _Off_                    | `example.com/hello//pa\th`    | `example.com/%68ello//pa\th` |
+| `example.com/%68ello//pa\th` | _RFC-3986_         | _On_                    | _On_                     | `example.com/hello//pa\th`    | `example.com/hello//pa\th`   |
+| `example.com/%68ello//pa\th` | _Cloudflare_       | _Off_                   | _Off_                    | `example.com/%68ello//pa\th`  | `example.com/%68ello//pa\th` |
+| `example.com/%68ello//pa\th` | _Cloudflare_       | _On_                    | _Off_                    | `example.com/hello/pa/th`     | `example.com/%68ello//pa\th` |
+| `example.com/%68ello//pa\th` | _Cloudflare_       | _On_                    | _On_                     | `example.com/hello/pa/th`     | `example.com/hello/pa/th`    |
 
 {{</table-wrap>}}

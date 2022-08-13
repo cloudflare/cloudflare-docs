@@ -21,9 +21,9 @@ The counting model of this rate limiting rule is based on the number of incoming
 
 {{<Aside type="warning" header="Important">}}
 
-* The Cloudflare **data center ID** is a mandatory characteristic of every rate limiting rule. This characteristic does not appear in the rule configuration in the dashboard, but you must include it when [creating rate limiting rules via API](/waf/rate-limiting-rules/create-api/).
+- The Cloudflare **data center ID** is a mandatory characteristic of every rate limiting rule. This characteristic does not appear in the rule configuration in the dashboard, but you must include it when [creating rate limiting rules via API](/waf/rate-limiting-rules/create-api/).
 
-* The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
+- The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
 
 {{</Aside>}}
 
@@ -65,7 +65,6 @@ Request 2 matches the rule expression and therefore Cloudflare evaluates the rat
 Request 3 matches the rule expression and the same values for rule characteristics. Therefore, Cloudflare increases the value of the existing counter, setting it to `2`. The counter value is now above the limit defined in **Requests**, and so request 2 gets blocked.
 
 Request 4 does not match the rule expression, since the value for the `Content-Type` header does not match the value in the expression. Therefore, Cloudflare does not create a new rule counter for this request. Request 4 is not evaluated in the context of this rate limiting rule and is passed on to subsequent rules in the request evaluation workflow.
-
 
 ## Example B
 
@@ -119,12 +118,12 @@ A complexity-based rate limiting rule performs rate limiting based on the comple
 
 A common use case is to score each request with an estimate of the cost (or complexity) required to serve that request. The rate limiting rule can then enforce a maximum limit on the total complexity that each client can put on the application over a given period, regardless of the total number of requests sent by that client.
 
-When you configure a complexity-based rate limiting rule, the origin server must include an HTTP header in the response with its complexity score. 
+When you configure a complexity-based rate limiting rule, the origin server must include an HTTP header in the response with its complexity score.
 
 Complexity-based rate limiting rules must contain the following properties:
 
-* **Score** (API field: `score_per_period`): Maximum score per period. When this value is exceeded, the rule action will execute.
-* **Score response header name** (API field: `score_response_header_name`): Name of HTTP header in the response, set by the origin server, with the score for the current request. The score corresponds to the complexity (or cost) of serving the current request. The score value must be between 1 and 500.
+- **Score** (API field: `score_per_period`): Maximum score per period. When this value is exceeded, the rule action will execute.
+- **Score response header name** (API field: `score_response_header_name`): Name of HTTP header in the response, set by the origin server, with the score for the current request. The score corresponds to the complexity (or cost) of serving the current request. The score value must be between 1 and 500.
 
 Cloudflare keeps counters with the total score of all requests with the same values for the rule characteristics that match the rule expression. The score increases by the value provided by the origin in the response when there is a match for the counting expression (by default, it is the same as the rule expression). When the total score is larger than the configured maximum score per period, the rule action is applied.
 

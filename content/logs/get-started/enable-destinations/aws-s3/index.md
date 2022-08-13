@@ -69,19 +69,19 @@ To enable Logpush to Amazon S3:
 
 ```json
 {
-  "Id": "Policy1506627184792",
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "Stmt1506627150918",
-      "Action": ["s3:PutObject"],
-      "Effect": "Allow",
-      "Resource": "arn:aws:s3:::burritobot/logs/*",
-      "Principal": {
-        "AWS": ["arn:aws:iam::391854517948:user/cloudflare-logpush"]
-      }
-    }
-  ]
+	"Id": "Policy1506627184792",
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "Stmt1506627150918",
+			"Action": ["s3:PutObject"],
+			"Effect": "Allow",
+			"Resource": "arn:aws:s3:::burritobot/logs/*",
+			"Principal": {
+				"AWS": ["arn:aws:iam::391854517948:user/cloudflare-logpush"]
+			}
+		}
+	]
 }
 ```
 

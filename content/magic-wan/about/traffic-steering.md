@@ -31,7 +31,6 @@ Using ECMP has a number of consequences:
 
 {{<render file="../../magic-transit/_partials/_ecmp-flow-hashing.md">}}
 
-
 ### Examples
 
 This diagram illustrates how ECMP distributes traffic equally across 2 paths with the same priority.

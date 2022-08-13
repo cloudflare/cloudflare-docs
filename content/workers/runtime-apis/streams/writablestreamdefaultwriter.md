@@ -15,15 +15,15 @@ A writer is used when you want to write directly to a [`WritableStream`](/worker
 
 ```js
 function writeArrayToStream(array, writableStream) {
-  const writer = writableStream.getWriter();
-  array.forEach(chunk => writer.write(chunk).catch(() => {}));
+	const writer = writableStream.getWriter();
+	array.forEach(chunk => writer.write(chunk).catch(() => {}));
 
-  return writer.close();
+	return writer.close();
 }
 
 writeArrayToStream([1, 2, 3, 4, 5], writableStream)
-  .then(() => console.log('All done!'))
-  .catch(e => console.error('Error with the stream: ' + e));
+	.then(() => console.log('All done!'))
+	.catch(e => console.error('Error with the stream: ' + e));
 ```
 
 ## Properties
@@ -49,7 +49,7 @@ writeArrayToStream([1, 2, 3, 4, 5], writableStream)
   - Aborts the stream. This method returns a promise that fulfills with a response `undefined`. `reason` is an optional human-readable string indicating the reason for cancellation. `reason` will be passed to the underlying sink’s abort algorithm. If this writable stream is one side of a [TransformStream](/workers/runtime-apis/streams/transformstream/), then its abort algorithm causes the transform’s readable side to become errored with `reason`.
 
   {{<Aside type="warning" header="Warning">}}
-Any data not yet written is lost upon abort.
+  Any data not yet written is lost upon abort.
   {{</Aside>}}
 
 - `close()` {{<type>}}Promise\<void>{{</type>}}

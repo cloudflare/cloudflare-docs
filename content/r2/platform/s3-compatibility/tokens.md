@@ -5,11 +5,11 @@ pcx_content_type: how-to
 
 # Generate an S3 Auth token
 
-In this guide, you will learn how to generate an API token to serve as the Access Key for usage with existing S3-compatible SDKs and/or XML APIs. 
+In this guide, you will learn how to generate an API token to serve as the Access Key for usage with existing S3-compatible SDKs and/or XML APIs.
 
 You must [purchase R2](/r2/get-started/#purchase-r2) before you can generate an API token.
 
-To create an API token: 
+To create an API token:
 
 1. In **Account Home**, select **R2**.
 2. Select **Manage R2 API Tokens** on the right side of the dashboard.

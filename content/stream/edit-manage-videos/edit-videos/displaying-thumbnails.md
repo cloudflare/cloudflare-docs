@@ -8,7 +8,7 @@ weight: 5
 
 {{<Aside>}}
 
-Stream thumbnails are not supported for videos with non-square pixels. 
+Stream thumbnails are not supported for videos with non-square pixels.
 
 {{</Aside>}}
 
@@ -16,22 +16,23 @@ Stream thumbnails are not supported for videos with non-square pixels.
 
 A thumbnail from your video can be generated using a special link where you specify the time from the video you'd like to get the thumbnail from.
 
-`
-https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270
-`
+`https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270`
 
-<img src="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270" alt="Example of thumbnail image generated from video of car driving down highway" />
+<img
+	src="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270"
+	alt="Example of thumbnail image generated from video of car driving down highway"
+/>
 
 Using the `poster` query parameter in the embed URL, you can set a thumbnail to any time in your video. If [signed URLs](/stream/viewing-videos/securing-your-stream/) are required, you must use a signed URL instead of video IDs.
 
 ```html
 <iframe
-  src="https://iframe.videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81?poster=https%3A%2F%2Fvideodelivery.net%2F5d5bc37ffcf54c9b82e996823bffbb81%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D68s%26height%3D270"
-  style="border: none"
-  height="720"
-  width="1280"
-  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-  allowfullscreen="true"
+	src="https://iframe.videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81?poster=https%3A%2F%2Fvideodelivery.net%2F5d5bc37ffcf54c9b82e996823bffbb81%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D68s%26height%3D270"
+	style="border: none"
+	height="720"
+	width="1280"
+	allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+	allowfullscreen="true"
 ></iframe>
 ```
 
@@ -76,11 +77,12 @@ Stream supports animated GIFs as thumbnails. Views using animated thumbnails do 
 
 ### Animated GIF thumbnails
 
-`
- https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s
- `
+`https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s`
 
-<img src="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s" alt="Animated gif example of car driving down highway" />
+<img
+	src="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s"
+	alt="Animated gif example of car driving down highway"
+/>
 
 Supported URL attributes for animated thumbnails are:
 

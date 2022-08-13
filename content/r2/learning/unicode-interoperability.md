@@ -13,8 +13,8 @@ R2 preserves the encoding for display though. When you list the objects, you wil
 
 There are still some platform-specific differences to consider:
 
-* Windows filenames are case-insensitive while R2, Linux, and macOS are not.
-* Windows console support for Unicode can be error-prone. Make sure to run `chcp 65001` before using command-line tools or use Cygwin if your object names appear to be incorrect.
-* Linux allows distinct files that are unicode-equivalent because filenames are byte streams. Unicode-equivalent filenames on Linux will point to the same R2 object.
+- Windows filenames are case-insensitive while R2, Linux, and macOS are not.
+- Windows console support for Unicode can be error-prone. Make sure to run `chcp 65001` before using command-line tools or use Cygwin if your object names appear to be incorrect.
+- Linux allows distinct files that are unicode-equivalent because filenames are byte streams. Unicode-equivalent filenames on Linux will point to the same R2 object.
 
 If it is important for you to be able to bypass the unicode equivalence and use byte-oriented key names, contact your Cloudflare account team.

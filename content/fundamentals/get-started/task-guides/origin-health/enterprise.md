@@ -13,6 +13,7 @@ meta:
 ## Secure origin connections
 
 {{<render file="_origin-secure-dns.md">}}
+
 - **SSL**:
   - To encrypt all traffic between Cloudflare and your server, [choose Strict (SSL-Only Origin Pull)](/ssl/origin-configuration/ssl-modes/#strict-ssl-only-origin-pull) SSL/TLS mode (requires server configuration)
   - To validate requests are coming from the Cloudflare network, [set up authenticated origin pulls](/ssl/origin-configuration/authenticated-origin-pull/).

@@ -33,21 +33,21 @@ Users created at child level will only have access to the assigned child account
 - **Read-write**: Can view email and detection statistics, as well as message preview, retraction, detection search, and mail trace. No access to **Settings** (the gear icon).
 - **Admin**: Can make any configuration changes for the account. Can access **Settings** (the gear icon).
 
-| Account area | Read-only | Read-write | Admin |
-| --- | --- | --- | --- |
-| All Settings | ❌ | ❌ | ✅ |
-| User Profile | ✅ | ✅ | ✅ |
-| Global Search | ✅ | ✅ | ✅ |
-| Detection Search | ❌ | ✅ | ✅ |
-| Mail Trace | ❌ | ✅ | ✅ |
-| Home | ✅ | ✅ | ✅ |
-| Email | ✅ | ✅ | ✅ |
-| Web | ✅ | ✅ | ✅ |
-| Accountability | ✅ | ✅ | ✅ |
-| Announcements and Support | ✅ | ✅ | ✅ |
-| Landscape | ✅ | ✅ | ✅ |
-| Message Preview | ❌ | ✅ | ✅ |
-| Message Retraction | ❌ | ✅ | ✅ |
+| Account area              | Read-only | Read-write | Admin |
+| ------------------------- | --------- | ---------- | ----- |
+| All Settings              | ❌        | ❌         | ✅    |
+| User Profile              | ✅        | ✅         | ✅    |
+| Global Search             | ✅        | ✅         | ✅    |
+| Detection Search          | ❌        | ✅         | ✅    |
+| Mail Trace                | ❌        | ✅         | ✅    |
+| Home                      | ✅        | ✅         | ✅    |
+| Email                     | ✅        | ✅         | ✅    |
+| Web                       | ✅        | ✅         | ✅    |
+| Accountability            | ✅        | ✅         | ✅    |
+| Announcements and Support | ✅        | ✅         | ✅    |
+| Landscape                 | ✅        | ✅         | ✅    |
+| Message Preview           | ❌        | ✅         | ✅    |
+| Message Retraction        | ❌        | ✅         | ✅    |
 
 ### Parent users
 

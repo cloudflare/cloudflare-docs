@@ -42,19 +42,19 @@ To deploy multiple instances of `cloudflared`, you can create and configure one 
 
 2. Next, run your newly created tunnel.
 
-    ```bash
-    $ cloudflared tunnel run <NAME>
-    ```
+   ```bash
+   $ cloudflared tunnel run <NAME>
+   ```
 
-    This will start a `cloudflared` instance and generate a unique `connector_id`.
+   This will start a `cloudflared` instance and generate a unique `connector_id`.
 
 3. In a separate window, run the same command again:
 
-    ```bash
-    $ cloudflared tunnel run <NAME>
-    ```
+   ```bash
+   $ cloudflared tunnel run <NAME>
+   ```
 
-    This will initialize another `cloudflared` instance and generate another `connector_id`.
+   This will initialize another `cloudflared` instance and generate another `connector_id`.
 
 4. Next, run `tunnel info` to show each `cloudflared` instance running your tunnel:
 
@@ -62,14 +62,14 @@ To deploy multiple instances of `cloudflared`, you can create and configure one 
     $ cloudflared tunnel info <NAME>
    ```
 
-  This will output your tunnel UUID as well as two Connector IDs, one for each `cloudflared` process running your tunnel. With this command, you can also see that your tunnel is now being served by eight connections.
+This will output your tunnel UUID as well as two Connector IDs, one for each `cloudflared` process running your tunnel. With this command, you can also see that your tunnel is now being served by eight connections.
 
 You can run the same tunnel across various `cloudflared` processes for up to 100 connections (25 replicas) per tunnel. Cloudflare Load Balancers and DNS records can still point to the tunnel and its UUID. Traffic will be sent to all `cloudflared` processes associated with the tunnel.
 
 {{<Aside type="note" header="Deploy replicas with Kubernetes">}}
-  
+
 For information about running `cloudflared` instances in a Kubernetes deployment, refer to our [examples](https://github.com/cloudflare/argo-tunnel-examples/tree/master/named-tunnel-k8s) on GitHub.
-  
+
 {{</Aside>}}
 
 ## Deploy a Load Balancer
@@ -85,5 +85,5 @@ This command creates an LB DNS record that points the specified hostname to the 
 {{<Aside type="note">}}
 In order to create DNS records using `cloudflared`, the [`cert.pem`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#certpem) file must be installed on your system.
 {{</Aside>}}
-  
+
 For more information, refer to our [Cloudflare Load Balancing](/load-balancing/) documentation.

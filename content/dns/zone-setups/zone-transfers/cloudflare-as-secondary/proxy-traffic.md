@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Proxy traffic
 weight: 2
 meta:
-   title: Proxy traffic with Secondary DNS override
+  title: Proxy traffic with Secondary DNS override
 ---
 
 # Proxy traffic with Secondary DNS override

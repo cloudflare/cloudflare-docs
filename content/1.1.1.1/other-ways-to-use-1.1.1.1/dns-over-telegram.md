@@ -30,19 +30,19 @@ You can also send a record type followed by a domain name.
 <summary>Supported DNS record types</summary>
 <div>
 
-* `A`
-* `AAAA`
-* `CAA`
-* `CNAME`
-* `DNSKEY`
-* `DS`
-* `MX`
-* `NS`
-* `NSEC`
-* `NSEC3`
-* `RRSIG`
-* `SOA`
-* `TXT`
+- `A`
+- `AAAA`
+- `CAA`
+- `CNAME`
+- `DNSKEY`
+- `DS`
+- `MX`
+- `NS`
+- `NSEC`
+- `NSEC3`
+- `RRSIG`
+- `SOA`
+- `TXT`
 
 </div>
 </details>

@@ -82,7 +82,7 @@ var_dump($buckets['Buckets']);
 
 ?>
 ```
-  
+
 You can also generate presigned links that can be used to share public read or write access to a bucket temporarily.
 
 ```php

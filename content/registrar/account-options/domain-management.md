@@ -7,7 +7,7 @@ title: Domain management
 
 ## Domain status
 
-When your domain is registered with Cloudflare, you can review your domain status in the **Overview** pane. 
+When your domain is registered with Cloudflare, you can review your domain status in the **Overview** pane.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2. From **Overview**, scroll down to **Domain Registration** to review the current expiration date. Select **Manage domain** to review the Auto-Renew status for your domain.

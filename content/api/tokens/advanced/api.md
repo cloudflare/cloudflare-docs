@@ -40,36 +40,36 @@ Let's look at an example Token's policy. Each token can contain multiple policie
 
 ```json
 [
-  {
-    "id": "f267e341f3dd4697bd3b9f71dd96247f",
-    "effect": "allow",
-    "resources": {
-      "com.cloudflare.api.account.zone.eb78d65290b24279ba6f44721b3ea3c4": "*",
-      "com.cloudflare.api.account.zone.22b1de5f1c0e4b3ea97bb1e963b06a43": "*"
-    },
-    "permission_groups": [
-      {
-        "id": "c8fed203ed3043cba015a93ad1616f1f",
-        "name": "Zone Read"
-      },
-      {
-        "id": "82e64a83756745bbbb1c9c2701bf816b",
-        "name": "DNS Read"
-      }
-    ]
-  }
+	{
+		"id": "f267e341f3dd4697bd3b9f71dd96247f",
+		"effect": "allow",
+		"resources": {
+			"com.cloudflare.api.account.zone.eb78d65290b24279ba6f44721b3ea3c4": "*",
+			"com.cloudflare.api.account.zone.22b1de5f1c0e4b3ea97bb1e963b06a43": "*"
+		},
+		"permission_groups": [
+			{
+				"id": "c8fed203ed3043cba015a93ad1616f1f",
+				"name": "Zone Read"
+			},
+			{
+				"id": "82e64a83756745bbbb1c9c2701bf816b",
+				"name": "DNS Read"
+			}
+		]
+	}
 ]
 ```
 
 Now to define each field of the policy:
 
-*   `id` - This is a unique identifier for the policy generated after creation and is read-only
-*   `effect` - Whether this policy is allowing or denying access. If only creating 1 policy then `allow` should be used. The evaluation order for policies is as follows:
-    1.  Explicit `DENY` Policies
-    2.  Explicit `ALLOW` Policies
-    3.  Implicit `DENY ALL`
-*   `resources` - This is where you define what resources are allowed to be configured. More detail below.
-*   `permission_groups` - This defines what permissions will the policy grant to the included resources. More detail below.
+- `id` - This is a unique identifier for the policy generated after creation and is read-only
+- `effect` - Whether this policy is allowing or denying access. If only creating 1 policy then `allow` should be used. The evaluation order for policies is as follows:
+  1.  Explicit `DENY` Policies
+  2.  Explicit `ALLOW` Policies
+  3.  Implicit `DENY ALL`
+- `resources` - This is where you define what resources are allowed to be configured. More detail below.
+- `permission_groups` - This defines what permissions will the policy grant to the included resources. More detail below.
 
 #### Resources
 
@@ -81,16 +81,16 @@ Note: Each respective object's `tag` can be fetched by calling the appropriate `
 
 A **single account** or **all accounts** can be included in a token policy.
 
-*   A **single account** is denoted as:`"com.cloudflare.api.account.<account_tag>": "*"`.
-*   **All accounts** is denoted as:`"com.cloudflare.api.account.*": "*"`
+- A **single account** is denoted as:`"com.cloudflare.api.account.<account_tag>": "*"`.
+- **All accounts** is denoted as:`"com.cloudflare.api.account.*": "*"`
 
 ##### Zone
 
 A **single zone**, **all zones in an account**, or **all zones in all accounts** can be included in a token policy:
 
-*   A **single zone** is denoted as:`"com.cloudflare.api.account.zone.<zone_tag>": "*"`
-*   **All Zones in an account** are denoted as:`"com.cloudflare.api.account.<account_tag>": {"com.cloudflare.api.account.zone.*": "*"}`
-*   **All zones in all accounts** is denoted as:`"com.cloudflare.api.account.zone.*": "*"`
+- A **single zone** is denoted as:`"com.cloudflare.api.account.zone.<zone_tag>": "*"`
+- **All Zones in an account** are denoted as:`"com.cloudflare.api.account.<account_tag>": {"com.cloudflare.api.account.zone.*": "*"}`
+- **All zones in all accounts** is denoted as:`"com.cloudflare.api.account.zone.*": "*"`
 
 ##### User
 
@@ -110,16 +110,10 @@ Limiting usage of a token by IP filters is defined with the following object:
 
 ```json
 {
-  "request.ip": {
-    "in": [
-      "199.27.128.0/21",
-      "2400:cb00::/32"
-    ],
-    "not_in": [
-      "199.27.128.0/21",
-      "2400:cb00::/32"
-    ]
-  }
+	"request.ip": {
+		"in": ["199.27.128.0/21", "2400:cb00::/32"],
+		"not_in": ["199.27.128.0/21", "2400:cb00::/32"]
+	}
 }
 ```
 
@@ -129,7 +123,7 @@ Each parameter in the `in` and `not_in` objects must be in CIDR notation. For ex
 
 Putting this all together we can now create a token like so:
 
-```json
+```bash
 curl -X POST "https://api.cloudflare.com/client/v4/user/tokens" \
      -H "Authorization: Bearer <api token secret>" \
      -H "Content-Type: application/json" \

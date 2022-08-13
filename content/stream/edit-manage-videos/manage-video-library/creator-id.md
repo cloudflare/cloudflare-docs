@@ -91,7 +91,7 @@ To update the creator property in existing videos, make a POST request to the vi
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/stream/$VIDEO_ID" \
   -H "Authorization: Bearer $TOKEN" \
-  -d '{"creator":"test123"}'  
+  -d '{"creator":"test123"}'
 ```
 
 ## Direct creator upload

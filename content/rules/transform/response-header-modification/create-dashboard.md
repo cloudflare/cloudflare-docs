@@ -24,8 +24,9 @@ Create HTTP Response Header Modification Rules in the **Transform Rules** tab un
 
 5.  Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/create-edit-delete-rules/#expression-builder-and-editor).
 
-    {{<Aside type="note">}}
-Check the [available fields and functions](/rules/transform/response-header-modification/reference/fields-functions/).
+        {{<Aside type="note">}}
+
+    Check the [available fields and functions](/rules/transform/response-header-modification/reference/fields-functions/).
     {{</Aside>}}
 
 6.  For **Modify response header**, select one of the following options:
@@ -38,12 +39,13 @@ Check the [available fields and functions](/rules/transform/response-header-modi
 
 8.  To modify another HTTP response header in the same rule, click **+ Set new header**.
 
-    The following example includes the modification of three response headers using the available actions:
+        The following example includes the modification of three response headers using the available actions:
 
-    ![Example configuration performing three response header modifications: set a dynamic header value, set a static header value, and remove an existing header.](/rules/static/transform/response-header-modification-example.png)
+        ![Example configuration performing three response header modifications: set a dynamic header value, set a static header value, and remove an existing header.](/rules/static/transform/response-header-modification-example.png)
 
-    {{<Aside type="note">}}
-You can modify up to 30 HTTP response headers in a single rule.
+        {{<Aside type="note">}}
+
+    You can modify up to 30 HTTP response headers in a single rule.
     {{</Aside>}}
 
 9.  To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.

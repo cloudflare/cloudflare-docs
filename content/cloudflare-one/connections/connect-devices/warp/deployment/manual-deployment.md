@@ -10,8 +10,8 @@ If you plan to direct your users to manually download and configure the WARP cli
 
 ## Prerequisites
 
-* [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on user devices.
-* [Install the WARP client](/warp-client/get-started/) on user devices.
+- [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on user devices.
+- [Install the WARP client](/warp-client/get-started/) on user devices.
 
 ## Log in from Windows and macOS
 

@@ -12,7 +12,14 @@ Wrangler 2 ships with new features and improvements that may require some change
 
 The CLI itself will guide you through the upgrade process.
 
-<div style="position: relative; padding-top: 56.25%;"><iframe src="https://iframe.videodelivery.net/2a60561afea1159f7dd270fd9dce999f?poster=https%3A%2F%2Fcloudflarestream.com%2F2a60561afea1159f7dd270fd9dce999f%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe></div>
+<div style="position: relative; padding-top: 56.25%;">
+	<iframe
+		src="https://iframe.videodelivery.net/2a60561afea1159f7dd270fd9dce999f?poster=https%3A%2F%2Fcloudflarestream.com%2F2a60561afea1159f7dd270fd9dce999f%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+		style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+		allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+		allowfullscreen="true"
+	></iframe>
+</div>
 
 {{<Aside type="note">}}
 To learn more about the improvements to Wrangler, refer to the [Comparing Wrangler 1 & 2 page](/workers/wrangler/compare-v1-v2/).

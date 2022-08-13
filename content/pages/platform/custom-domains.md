@@ -5,7 +5,7 @@ title: Custom domains
 
 # Custom domains
 
-When deploying your Pages project, you may wish to point custom domains (or subdomains) to your site. 
+When deploying your Pages project, you may wish to point custom domains (or subdomains) to your site.
 
 ## Add a custom domain
 
@@ -19,7 +19,7 @@ To add a custom domain:
 
 ![Adding a custom domain for your Pages project through the Cloudflare dashboard](/pages/platform/media/domains.png)
 
-If you are deploying to an apex domain (for example, `example.com`), then you will need to add your site as a Cloudflare zone and [configure your nameservers](#configure-nameservers). 
+If you are deploying to an apex domain (for example, `example.com`), then you will need to add your site as a Cloudflare zone and [configure your nameservers](#configure-nameservers).
 
 If you are deploying to a subdomain, it is not necessary for your site to be a Cloudflare zone. You will need to [add a custom CNAME record](#add-a-custom-cname-record) to point the domain to your Cloudflare Pages site.
 
@@ -27,7 +27,7 @@ If you are deploying to a subdomain, it is not necessary for your site to be a C
 
 To use a custom apex domain (for example, `example.com`) with your Pages project, [configure your nameservers to point to Cloudflare's nameservers](/dns/zone-setups/full-setup/setup/). If your nameservers are successfully pointed to Cloudflare, Cloudflare will proceed by creating a CNAME record for you.
 
-### Add a custom CNAME record 
+### Add a custom CNAME record
 
 If you do not want to point your nameservers to Cloudflare, you must create a custom CNAME record to use a subdomain with Cloudflare Pages. After logging in to your DNS provider, add a CNAME record for your desired subdomain, for example, `shop.example.com`. This record should point to your custom Pages subdomain, for example, `<YOUR_SITE>.pages.dev`.
 

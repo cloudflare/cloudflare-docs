@@ -20,7 +20,7 @@ You will use these to tell Cloudflare Pages how to deploy your project. If you h
 header: firebase.json
 ---
 {
-  "public": "public"
+	"public": "public"
 }
 ```
 

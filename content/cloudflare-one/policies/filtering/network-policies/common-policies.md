@@ -14,9 +14,9 @@ The following policies are commonly used to secure network traffic.
 
 Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to the [device posture section](/cloudflare-one/identity/devices/).
 
-| Selector                     | Operator  | Value                | Action |
-| ---------------------------- | ----------| ---------------------| ------ |
-| Passed Device Posture Checks | in        | `Minimum OS version` | Allow |
+| Selector                     | Operator | Value                | Action |
+| ---------------------------- | -------- | -------------------- | ------ |
+| Passed Device Posture Checks | in       | `Minimum OS version` | Allow  |
 
 ## Enforce session duration
 
@@ -30,15 +30,15 @@ The following example consists of two policies: the first allows specific users 
 
 ### 1. Allow company employees
 
-| Selector       | Operator      | Value                | Action |
-| ---------------| --------------| ---------------------| ------ |
-| Destination IP | in            | `10.0.0.0/8`         | Allow  |
-| User Email     | Matches regex | `*@example.com`      |        |
+| Selector       | Operator      | Value           | Action |
+| -------------- | ------------- | --------------- | ------ |
+| Destination IP | in            | `10.0.0.0/8`    | Allow  |
+| User Email     | Matches regex | `*@example.com` |        |
 
 ### 2. Block everyone else
 
-| Selector       | Operator      | Value                | Action |
-| ---------------| --------------| ---------------------| ------ |
-| Destination IP | in            | `10.0.0.0/8`         | Block  |
+| Selector       | Operator | Value        | Action |
+| -------------- | -------- | ------------ | ------ |
+| Destination IP | in       | `10.0.0.0/8` | Block  |
 
 Refer to the [network policies page](/cloudflare-one/policies/filtering/network-policies/) for a comprehensive list of other selectors, operators, and actions.

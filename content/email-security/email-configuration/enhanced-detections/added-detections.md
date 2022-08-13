@@ -12,13 +12,13 @@ These settings apply particularly to trusted business partners that your organiz
 
 ## Available configurations
 
-| Feature | Description |
-| --- | --- |
-| Malicious Domain Age | Controls the threshold for a **Malicious** [disposition](/email-security/reference/dispositions-and-attributes/#dispositions) based on domain age. Maximum of 120 days. |
-| Suspicious Domain Age | Controls the threshold for a **Suspicious** [disposition](/email-security/reference/dispositions-and-attributes/#dispositions) based on domain age. Maximum of 120 days. |
-| Encrypted Attachment Scanning | Auto-scan encrypted attachments to detect sophisticated malware campaigns. |
-| Anti-Spam Engine | Detect bulk emails or unsolicited commercial emails and marks them with a **Bulk** [disposition](/email-security/reference/dispositions-and-attributes/#dispositions). |
-| Active Fraud Prevention | Inspect and assess new domain traffic that could be launched from third-party partners or similar organizations. |
+| Feature                       | Description                                                                                                                                                              |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Malicious Domain Age          | Controls the threshold for a **Malicious** [disposition](/email-security/reference/dispositions-and-attributes/#dispositions) based on domain age. Maximum of 120 days.  |
+| Suspicious Domain Age         | Controls the threshold for a **Suspicious** [disposition](/email-security/reference/dispositions-and-attributes/#dispositions) based on domain age. Maximum of 120 days. |
+| Encrypted Attachment Scanning | Auto-scan encrypted attachments to detect sophisticated malware campaigns.                                                                                               |
+| Anti-Spam Engine              | Detect bulk emails or unsolicited commercial emails and marks them with a **Bulk** [disposition](/email-security/reference/dispositions-and-attributes/#dispositions).   |
+| Active Fraud Prevention       | Inspect and assess new domain traffic that could be launched from third-party partners or similar organizations.                                                         |
 
 ## Access Added Detections
 

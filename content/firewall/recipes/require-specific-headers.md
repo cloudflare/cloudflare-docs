@@ -12,23 +12,23 @@ This example uses the `http.headers.names` field to look for the presence of an 
 When the `X-CSRF-Token` header is missing, Cloudflare blocks the request:
 
 <table>
-  <thead>
-    <tr>
-      <th>Expression</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>
-          not any(lower(http.request.headers.names[*])[*] contains "x-csrf-token") and
-          (http.request.full_uri eq "https://www.example.com/somepath")
-        </code>
-      </td>
-      <td>
-        <em>Block</em>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Expression</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<code>
+					not any(lower(http.request.headers.names[*])[*] contains "x-csrf-token") and
+					(http.request.full_uri eq "https://www.example.com/somepath")
+				</code>
+			</td>
+			<td>
+				<em>Block</em>
+			</td>
+		</tr>
+	</tbody>
 </table>

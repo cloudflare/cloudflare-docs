@@ -8,7 +8,7 @@ weight: 4
 
 When you set up a gateway with a DNSLink, that gateway is restricted to a particular piece of content (either a specific Content Identifier (CID) or an Interplanetary Name Service (IPNS) hostname).
 
-A gateway with a DNSLink - otherwise known as a *restricted gateway* - differs from a [universal gateway](/web3/ipfs-gateway/concepts/universal-gateway/), which allows users to access any content hosted on the IPFS network.
+A gateway with a DNSLink - otherwise known as a _restricted gateway_ - differs from a [universal gateway](/web3/ipfs-gateway/concepts/universal-gateway/), which allows users to access any content hosted on the IPFS network.
 
 ## What is it?
 
@@ -32,8 +32,8 @@ By default, your DNSLink path is `/ipns/onboarding.ipfs.cloudflare.com`. If you 
 
 For example, the default DNSLink record for `www.example.com` would look like this:
 
-| Record type | Name | Content |
-| --- | --- | --- |
-| TXT | `_dnslink.www.example.com` | `dnslink=/ipns/onboarding.ipfs.cloudflare.com` |
+| Record type | Name                       | Content                                        |
+| ----------- | -------------------------- | ---------------------------------------------- |
+| TXT         | `_dnslink.www.example.com` | `dnslink=/ipns/onboarding.ipfs.cloudflare.com` |
 
 For more details about the DNS records created by the IPFS gateway, refer to [Gateway DNS records](/web3/reference/gateway-dns-records/).

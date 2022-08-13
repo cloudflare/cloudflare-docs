@@ -32,7 +32,7 @@ You control the edge router advertisement, which dictates whether Cloudflare’s
 
 If you are using a Cloudflare IP, you do not need to advertise your prefixes.
 
-*Duration:* ~5 business days
+_Duration:_ ~5 business days
 
 {{<Aside type="warning" header="Important">}}
 

@@ -12,10 +12,10 @@ Applies one or more changes to an existing rule in a ruleset at the account or z
 
 Use one of the following API endpoints:
 
-| Operation | Method + Endpoint |
-|-----------|-------------------|
+| Operation                                        | Method + Endpoint                                                    |
+| ------------------------------------------------ | -------------------------------------------------------------------- |
 | [Patch an individual rule][ur-account] (account) | `PATCH /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` |
-| Patch an individual rule (zone) | `PATCH /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` |
+| Patch an individual rule (zone)                  | `PATCH /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>`       |
 
 [ur-account]: https://api.cloudflare.com/#account-rulesets-patch-an-individual-rule
 
@@ -29,7 +29,7 @@ To update the definition of a rule, include the new rule definition in the reque
 <summary>Request</summary>
 <div>
 
-```json
+```bash
 curl -X PATCH \
 "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID_1>" \
 -H "Authorization: Bearer <API_TOKEN>" \
@@ -51,39 +51,39 @@ The response includes the complete ruleset after updating the rule.
 
 ```json
 {
-  "result": {
-    "id": "<RULESET_ID>",
-    "name": "Custom Ruleset 1",
-    "description": "My first custom ruleset",
-    "kind": "custom",
-    "version": "11",
-    "rules": [
-      {
-        "id": "<RULE_ID_1>",
-        "version": "2",
-        "action": "js_challenge",
-        "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
-        "description": "challenge GB and FR or based on IP Reputation",
-        "last_updated": "2021-03-22T12:54:58.144683Z",
-        "ref": "<RULE_REF_1>",
-        "enabled": true
-      },
-      {
-        "id": "<RULE_ID_2>",
-        "version": "1",
-        "action": "challenge",
-        "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-        "last_updated": "2020-11-23T11:36:24.192361Z",
-        "ref": "<RULE_REF_2>",
-        "enabled": true
-      }
-    ],
-    "last_updated": "2021-03-22T12:54:58.144683Z",
-    "phase": "http_request_firewall_custom"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<RULESET_ID>",
+		"name": "Custom Ruleset 1",
+		"description": "My first custom ruleset",
+		"kind": "custom",
+		"version": "11",
+		"rules": [
+			{
+				"id": "<RULE_ID_1>",
+				"version": "2",
+				"action": "js_challenge",
+				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+				"description": "challenge GB and FR or based on IP Reputation",
+				"last_updated": "2021-03-22T12:54:58.144683Z",
+				"ref": "<RULE_REF_1>",
+				"enabled": true
+			},
+			{
+				"id": "<RULE_ID_2>",
+				"version": "1",
+				"action": "challenge",
+				"expression": "not http.request.uri.path matches \"^/api/.*$\"",
+				"last_updated": "2020-11-23T11:36:24.192361Z",
+				"ref": "<RULE_REF_2>",
+				"enabled": true
+			}
+		],
+		"last_updated": "2021-03-22T12:54:58.144683Z",
+		"phase": "http_request_firewall_custom"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -94,11 +94,11 @@ The response includes the complete ruleset after updating the rule.
 
 To reorder a rule in a list of ruleset rules, include a `position` field in the request, containing one of the following arguments:
 
-*   `"before": "<RULE_ID>"` — Places the rule before rule `<RULE_ID>`. Use this argument with an empty rule ID value (`""`) to set the rule as the first rule in the ruleset.
+- `"before": "<RULE_ID>"` — Places the rule before rule `<RULE_ID>`. Use this argument with an empty rule ID value (`""`) to set the rule as the first rule in the ruleset.
 
-*   `"after": "<RULE_ID>"` — Places the rule after rule `<RULE_ID>`. Use this argument with an empty rule ID value (`""`) to set the rule as the last rule in the ruleset.
+- `"after": "<RULE_ID>"` — Places the rule after rule `<RULE_ID>`. Use this argument with an empty rule ID value (`""`) to set the rule as the last rule in the ruleset.
 
-*   `"index": <POSITION_NUMBER>` — Places the rule in the exact position specified by the integer number `<POSITION_NUMBER>`. Position numbers start with `1`. Existing rules in the ruleset from the specified position number onward are shifted one position (no rule is overwritten). For example, when you place a rule in position <var>n</var> using `index`, existing rules with index <var>n</var>, <var>n</var>+1, <var>n</var>+2, and so on, are shifted one position — their new position will be <var>n</var>+1, <var>n</var>+2, <var>n</var>+3, and so forth. If the index is out of range, the method returns 400 HTTP Status Code.
+- `"index": <POSITION_NUMBER>` — Places the rule in the exact position specified by the integer number `<POSITION_NUMBER>`. Position numbers start with `1`. Existing rules in the ruleset from the specified position number onward are shifted one position (no rule is overwritten). For example, when you place a rule in position <var>n</var> using `index`, existing rules with index <var>n</var>, <var>n</var>+1, <var>n</var>+2, and so on, are shifted one position — their new position will be <var>n</var>+1, <var>n</var>+2, <var>n</var>+3, and so forth. If the index is out of range, the method returns 400 HTTP Status Code.
 
 {{<Aside type="warning" header="Important">}}
 
@@ -112,12 +112,12 @@ The following examples build upon the following (abbreviated) ruleset:
 
 ```json
 {
-  "rules": [
-    { "id": "<RULE_ID_1>" },
-    { "id": "<RULE_ID_2>" },
-    { "id": "<RULE_ID_3>" },
-    { "id": "<RULE_ID_4>" }
-  ]
+	"rules": [
+		{ "id": "<RULE_ID_1>" },
+		{ "id": "<RULE_ID_2>" },
+		{ "id": "<RULE_ID_3>" },
+		{ "id": "<RULE_ID_4>" }
+	]
 }
 ```
 
@@ -125,7 +125,7 @@ The following examples build upon the following (abbreviated) ruleset:
 
 The following request with the `position` field places rule `<RULE_ID_2>` as the first rule:
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -147,7 +147,7 @@ In this case, the new rule order would be:
 
 The following request with the `position` field places rule `<RULE_ID_2>` after rule 3:
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -169,7 +169,7 @@ In this case, the new rule order would be:
 
 The following request with the `position` field places rule `<RULE_ID_1>` in position 3, becoming the third rule in the ruleset:
 
-```json
+```bash
 ---
 header: Request
 ---

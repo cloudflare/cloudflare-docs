@@ -16,9 +16,9 @@ curl -H "Authorization: Bearer $API_TOKEN" "https://api.cloudflare.com/client/v4
 
 This query says:
 
-*   Given an `API_TOKEN` which has Analytics Read access to `ZONE_ID`.
-*   Fetch colos analytics for `ZONE_ID` with a time range that starts on
-    `2020-12-10T00:00:00Z` (`since` parameter) to now.
+- Given an `API_TOKEN` which has Analytics Read access to `ZONE_ID`.
+- Fetch colos analytics for `ZONE_ID` with a time range that starts on
+  `2020-12-10T00:00:00Z` (`since` parameter) to now.
 
 The question that we want to answer is: "What is the number of requests for ZHR per hour?" Using the colos endpoint response data and some wrangling by jq we can answer that question with this command:
 
@@ -59,7 +59,7 @@ The final data we get looks like the following response:
 <summary>Response</summary>
 <div>
 
-```json
+```text
 {"colo_id":"ZRH","timeslot":"2020-12-10T00:00:00Z","requests":601,"bandwidth":683581}
 {"colo_id":"ZRH","timeslot":"2020-12-10T01:00:00Z","requests":484,"bandwidth":550936}
 {"colo_id":"ZRH","timeslot":"2020-12-10T02:00:00Z","requests":326,"bandwidth":370627}
@@ -85,26 +85,30 @@ The data we want is about HTTP requests. Hence, we use the canonical source for 
 
 The following is a GraphQL API query to retrieve the data we need to answer the question: "What is the number of requests for ZHR per hour?"
 
-```text
+```graphql
 {
-  viewer {
-    zones(filter: {zoneTag:"$ZONE_TAG"}) {
-      httpRequestsAdaptiveGroups(filter: {datetime_gt: "2020-12-10T00:00:00Z", coloCode:"ZRH"}, limit:10000, orderBy: [datetimeHour_ASC]) {
-        count
-        sum {
-          edgeResponseBytes
-        }
-        avg {
-          sampleInterval
-        }
-        count
-        dimensions {
-          datetimeHour
-          coloCode
-        }
-      }
-    }
-  }
+	viewer {
+		zones(filter: { zoneTag: "$ZONE_TAG" }) {
+			httpRequestsAdaptiveGroups(
+				filter: { datetime_gt: "2020-12-10T00:00:00Z", coloCode: "ZRH" }
+				limit: 10000
+				orderBy: [datetimeHour_ASC]
+			) {
+				count
+				sum {
+					edgeResponseBytes
+				}
+				avg {
+					sampleInterval
+				}
+				count
+				dimensions {
+					datetimeHour
+					coloCode
+				}
+			}
+		}
+	}
 }
 ```
 

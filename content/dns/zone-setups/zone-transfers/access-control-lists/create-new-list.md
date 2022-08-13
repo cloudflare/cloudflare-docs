@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Create ACL
 weight: 4
 meta:
-    title: Create a new Access Control List
+  title: Create a new Access Control List
 ---
 
 # Create a new Access Control List
@@ -24,8 +24,8 @@ To create a new ACL using the dashboard:
 3. Go to **DNS Zone Transfers**.
 4. For **ACL**, click **Create**.
 5. Enter the following information:
-    - **ACL name**: Provide a descriptive name.
-    - **IP range**: Enter a range of IPv4 or IPv6 addresses (limited to a maximum of /24 for IPv4 and /64 for IPv6).
+   - **ACL name**: Provide a descriptive name.
+   - **IP range**: Enter a range of IPv4 or IPv6 addresses (limited to a maximum of /24 for IPv4 and /64 for IPv6).
 6. Click **Create**.
 
 ## Using the API

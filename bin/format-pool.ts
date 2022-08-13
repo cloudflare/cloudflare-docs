@@ -20,72 +20,72 @@ let warns = 0;
 let errors = 0;
 
 const task = new Pool({
-  script: join(ROOT, 'bin/worker.ts'),
-  spawn: {
-    execArgv: ['--loader', 'tsm'],
-    env: { NODE_NO_WARNINGS: '1' },
-    workerData: { isCHECK, ROOTLEN, options },
-  },
+	script: join(ROOT, 'bin/worker.ts'),
+	spawn: {
+		execArgv: ['--loader', 'tsm'],
+		env: { NODE_NO_WARNINGS: '1' },
+		workerData: { isCHECK, ROOTLEN, options },
+	},
 });
 
 const handler: Callback<Result> = (err, result) => {
-  if (err) return console.error(err);
+	if (err) return console.error(err);
 
-  errors += result.error;
-  warns += result.warn;
+	errors += result.error;
+	warns += result.warn;
 
-  if (result.warn && isCHECK) process.exitCode = 1;
-  else if (result.error) process.exitCode = 1;
+	if (result.warn && isCHECK) process.exitCode = 1;
+	else if (result.error) process.exitCode = 1;
 
-  result.missing.forEach(x => {
-    Missing.add(x);
-  });
+	result.missing.forEach(x => {
+		Missing.add(x);
+	});
 };
 
 async function walk(dir: string): Promise<void> {
-  let files = await fs.readdir(dir);
+	let files = await fs.readdir(dir);
 
-  await Promise.all(
-    files.map(fname => {
-      let absolute = join(dir, fname);
+	await Promise.all(
+		files.map(fname => {
+			let absolute = join(dir, fname);
 
-      if (fname === '.github') return walk(absolute);
-      if (fname === 'node_modules' || fname === 'public') return;
-      if (/^[._]/.test(fname) || /\.hbs$/.test(fname)) return;
-      // TODO: temporarily disable `*.hbs` formatting
+			if (fname === '.github') return walk(absolute);
+			if (fname === 'node_modules' || fname === 'public') return;
+			if (/^[._]/.test(fname) || /\.hbs$/.test(fname)) return;
+			// TODO: temporarily disable `*.hbs` formatting
 
-      if (isFILE.test(fname)) {
-        return task.run(absolute, handler);
-      }
+			if (isFILE.test(fname)) {
+				return task.run(absolute, handler);
+			}
 
-      return fs.stat(absolute).then(stats => {
-        if (stats.isDirectory()) return walk(absolute);
-      });
-    })
-  );
+			return fs.stat(absolute).then(stats => {
+				if (stats.isDirectory()) return walk(absolute);
+			});
+		})
+	);
 }
 
 try {
-  await walk(ROOT);
+	await walk(ROOT);
 
-  if (Missing.size > 0) {
-    let langs = [...Missing].sort();
-    console.warn('\n\nMissing parser for language(s):\n');
-    console.warn(langs.map(x => '  - ' + x).join('\n'));
-  }
+	if (Missing.size > 0) {
+		let langs = [...Missing].sort();
+		console.warn('\n\nMissing parser for language(s):\n');
+		console.warn(langs.map(x => '  - ' + x).join('\n'));
+	}
 
-  if (errors || warns) {
-    console.error('\n');
-    if (errors) {
-      console.error('Finished with %d error(s)', errors);
-    }
-    if (isCHECK && warns) {
-      console.error('Finished with %d warning(s)', warns);
-    }
-    console.error('\n');
-    isSILENT || process.exit(1);
-  }
+	if (errors || warns) {
+		console.error('\n');
+		if (errors) {
+			console.error('Finished with %d error(s)', errors);
+		}
+		if (isCHECK && warns) {
+			console.error('Finished with %d warning(s)', warns);
+		}
+		console.error('\n');
+		isSILENT || process.exit(1);
+	}
 } catch (err) {
-  console.error(err.stack || err);
-  process.exit(1);
+	console.error(err.stack || err);
+	process.exit(1);
 }

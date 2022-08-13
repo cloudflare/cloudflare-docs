@@ -31,23 +31,23 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
 2. Navigate to the analytics dashboard and apply filters to the displayed data.
 
-    <details><summary>For WAF/CDN customers</summary><div>
+   <details><summary>For WAF/CDN customers</summary><div>
 
-    1\. Select the zone that is experiencing an incomplete mitigation of a DDoS attack.
+   1\. Select the zone that is experiencing an incomplete mitigation of a DDoS attack.
 
-    2\. Navigate to **Security** > **Overview**.
+   2\. Navigate to **Security** > **Overview**.
 
-    3\. Click **Add filter** and filter by `Service equals HTTP DDoS`.
+   3\. Click **Add filter** and filter by `Service equals HTTP DDoS`.
 
-    </div></details>
+   </div></details>
 
-    <details><summary>For Magic Transit and Spectrum customers</summary><div>
+   <details><summary>For Magic Transit and Spectrum customers</summary><div>
 
-    1\. In the account home page, open **Network Analytics**.
+   1\. In the account home page, open **Network Analytics**.
 
-    2\. Identify the DDoS attack that is having incomplete mitigations. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
+   2\. Identify the DDoS attack that is having incomplete mitigations. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
 
-    </div></details>
+   </div></details>
 
 3. Scroll down to the **Activity log**.
 

@@ -1,6 +1,6 @@
 name: Request content addition
 description: Request NEW documentation content.
-labels: ["documentation", "content:new"]
+labels: ['documentation', 'content:new']
 body:
   - type: dropdown
     id: products
@@ -10,7 +10,7 @@ body:
       label: Which Cloudflare product(s) does this pertain to?
       multiple: true
       options:
-        - "1.1.1.1"
+        - '1.1.1.1'
         - Analytics
         - API
         - API Shield

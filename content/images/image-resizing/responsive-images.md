@@ -12,8 +12,8 @@ The `srcset` [feature of HTML](https://developer.mozilla.org/en-US/docs/Learn/HT
 
 There are two different scenarios where it is useful to use `srcset`:
 
-* Images with a fixed size in terms of CSS pixels, but adapting to high-DPI screens (also known as Retina displays). These images take the same amount of space on the page regardless of screen size, but are sharper on high-resolution displays. This is appropriate for icons, thumbnails, and most images on pages with fixed-width layouts.
-* Responsive images that stretch to fill a certain percentage of the screen (usually full width). This is best for hero images and pages with fluid layouts, including pages using media queries to adapt to various screen sizes.
+- Images with a fixed size in terms of CSS pixels, but adapting to high-DPI screens (also known as Retina displays). These images take the same amount of space on the page regardless of screen size, but are sharper on high-resolution displays. This is appropriate for icons, thumbnails, and most images on pages with fixed-width layouts.
+- Responsive images that stretch to fill a certain percentage of the screen (usually full width). This is best for hero images and pages with fluid layouts, including pages using media queries to adapt to various screen sizes.
 
 ## `srcset` for high-DPI displays
 
@@ -23,8 +23,8 @@ Assuming you have an image `product.jpg` in the `assets` folder and you want to 
 
 ```html
 <img
-  src="/cdn-cgi/image/fit=contain,width=960/assets/product.jpg"
-  srcset="/cdn-cgi/image/fit=contain,width=1920/assets/product.jpg 2x"
+	src="/cdn-cgi/image/fit=contain,width=960/assets/product.jpg"
+	srcset="/cdn-cgi/image/fit=contain,width=1920/assets/product.jpg 2x"
 />
 ```
 
@@ -42,15 +42,15 @@ By default, the browser assumes the image will be stretched to the full width of
 
 ```html
 <img
-  width="100%"
-  srcset="
-    /cdn-cgi/image/fit=contain,width=320/assets/hero.jpg   320w,
-    /cdn-cgi/image/fit=contain,width=640/assets/hero.jpg   640w,
-    /cdn-cgi/image/fit=contain,width=960/assets/hero.jpg   960w,
-    /cdn-cgi/image/fit=contain,width=1280/assets/hero.jpg 1280w,
-    /cdn-cgi/image/fit=contain,width=2560/assets/hero.jpg 2560w
-  "
-  src="/cdn-cgi/image/width=960/assets/hero.jpg"
+	width="100%"
+	srcset="
+		/cdn-cgi/image/fit=contain,width=320/assets/hero.jpg   320w,
+		/cdn-cgi/image/fit=contain,width=640/assets/hero.jpg   640w,
+		/cdn-cgi/image/fit=contain,width=960/assets/hero.jpg   960w,
+		/cdn-cgi/image/fit=contain,width=1280/assets/hero.jpg 1280w,
+		/cdn-cgi/image/fit=contain,width=2560/assets/hero.jpg 2560w
+	"
+	src="/cdn-cgi/image/width=960/assets/hero.jpg"
 />
 ```
 
@@ -58,8 +58,8 @@ In the previous case, the number followed by `x` described _screen_ density. In 
 
 If the image is not displayed at full width of the screen (or browser window), you have two options:
 
-* If the image is displayed at full width of a fixed-width column, use the first technique that uses one specific image size.
-* If it takes a specific percentage of the screen, or stretches to full width only sometimes (using CSS media queries), then add the `sizes` attribute as described below.
+- If the image is displayed at full width of a fixed-width column, use the first technique that uses one specific image size.
+- If it takes a specific percentage of the screen, or stretches to full width only sometimes (using CSS media queries), then add the `sizes` attribute as described below.
 
 ### The `sizes` attribute
 
@@ -73,14 +73,14 @@ The `vw` unit is a percentage of the viewport (screen or window) width. If the i
 
 ```html
 <img
-  style="max-width: 640px"
-  srcset="
-    /cdn-cgi/image/fit=contain,width=320/assets/hero.jpg   320w,
-    /cdn-cgi/image/fit=contain,width=480/assets/hero.jpg   480w,
-    /cdn-cgi/image/fit=contain,width=640/assets/hero.jpg   640w,
-    /cdn-cgi/image/fit=contain,width=1280/assets/hero.jpg 1280w
-  "
-  sizes="(max-width: 640px) 100vw, 640px"
+	style="max-width: 640px"
+	srcset="
+		/cdn-cgi/image/fit=contain,width=320/assets/hero.jpg   320w,
+		/cdn-cgi/image/fit=contain,width=480/assets/hero.jpg   480w,
+		/cdn-cgi/image/fit=contain,width=640/assets/hero.jpg   640w,
+		/cdn-cgi/image/fit=contain,width=1280/assets/hero.jpg 1280w
+	"
+	sizes="(max-width: 640px) 100vw, 640px"
 />
 ```
 
@@ -94,5 +94,5 @@ HTML also [supports the `<picture>` element](https://developer.mozilla.org/en-US
 
 If you want to use WebP images, but do not need resizing, you have two options:
 
-* You can enable the automatic [WebP conversion in Polish](/images/polish/activate-polish/). This will convert all images on the site.
-* Alternatively, you can change specific image paths on the site to start with `/cdn-cgi/image/format=auto/`. For example, change `https://example.com/assets/hero.jpg` to `https://example.com/cdn-cgi/image/format=auto/assets/hero.jpg`.
+- You can enable the automatic [WebP conversion in Polish](/images/polish/activate-polish/). This will convert all images on the site.
+- Alternatively, you can change specific image paths on the site to start with `/cdn-cgi/image/format=auto/`. For example, change `https://example.com/assets/hero.jpg` to `https://example.com/cdn-cgi/image/format=auto/assets/hero.jpg`.

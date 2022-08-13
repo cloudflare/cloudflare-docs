@@ -34,12 +34,12 @@ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" GET "https://api.c
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "flag": false
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"flag": false
+	},
+	"success": true
 }
 ```
 

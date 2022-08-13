@@ -22,9 +22,9 @@ The process of converting a human-readable URL (`www.example.com`) into a machin
 
 Without Cloudflare, DNS lookups for your application's URL return the IP address of your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/).
 
-| URL | Returned IP address |
-| --- | --- |
-| `example.com` | `192.0.2.1` |
+| URL           | Returned IP address |
+| ------------- | ------------------- |
+| `example.com` | `192.0.2.1`         |
 
 When using Cloudflare with [unproxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/), DNS lookups for unproxied domains or subdomains also return your origin's IP address.
 
@@ -38,9 +38,9 @@ Visitor <--[Connection]--> Origin Server
 
 With Cloudflare — meaning your domain or subdomain is using [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) — DNS lookups for your application's URL will resolve to [Cloudflare Anycast IPs](https://www.cloudflare.com/ips/) instead of their original DNS target.
 
-| URL | Returned IP address |
-| --- | --- |
-| `example.com` | `104.16.77.250` |
+| URL           | Returned IP address |
+| ------------- | ------------------- |
+| `example.com` | `104.16.77.250`     |
 
 This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server.
 

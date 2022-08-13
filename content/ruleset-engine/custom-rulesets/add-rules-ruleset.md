@@ -14,14 +14,14 @@ When you add rules to a ruleset using the [Update ruleset](/ruleset-engine/rules
 
 You can use other API operations depending on the type of operation:
 
-* Add a single rule to an existing custom ruleset — use the [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) operation.
-* Update a single rule in a custom ruleset — use the [Update rule](/ruleset-engine/rulesets-api/update-rule/) operation.
+- Add a single rule to an existing custom ruleset — use the [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) operation.
+- Update a single rule in a custom ruleset — use the [Update rule](/ruleset-engine/rulesets-api/update-rule/) operation.
 
 {{</Aside>}}
 
 The following request adds two rules to a custom ruleset. These will be the only two rules in the ruleset.
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -51,39 +51,39 @@ The response includes the rule ID of the new rules in the `id` field:
 header: Response
 ---
 {
-  "result": {
-    "id": "<CUSTOM_RULESET_ID>",
-    "name": "Custom Ruleset 1",
-    "kind": "custom",
-    "version": "2",
-    "rules": [
-      {
-        "id": "<CUSTOM_RULE_ID_1>",
-        "version": "1",
-        "action": "challenge",
-        "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score \u003e 0",
-        "description": "challenge GB and FR or based on IP Reputation",
-        "last_updated": "2021-03-18T18:25:08.122758Z",
-        "ref": "<CUSTOM_RULE_REF_1>",
-        "enabled": true
-      },
-      {
-        "id": "<CUSTOM_RULE_ID_2>",
-        "version": "1",
-        "action": "challenge",
-        "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-        "description": "challenge not /api",
-        "last_updated": "2021-03-18T18:25:08.122758Z",
-        "ref": "<CUSTOM_RULE_REF_2>",
-        "enabled": true
-      }
-    ],
-    "last_updated": "2021-03-18T18:25:08.122758Z",
-    "phase": "http_request_firewall_custom"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<CUSTOM_RULESET_ID>",
+		"name": "Custom Ruleset 1",
+		"kind": "custom",
+		"version": "2",
+		"rules": [
+			{
+				"id": "<CUSTOM_RULE_ID_1>",
+				"version": "1",
+				"action": "challenge",
+				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score \u003e 0",
+				"description": "challenge GB and FR or based on IP Reputation",
+				"last_updated": "2021-03-18T18:25:08.122758Z",
+				"ref": "<CUSTOM_RULE_REF_1>",
+				"enabled": true
+			},
+			{
+				"id": "<CUSTOM_RULE_ID_2>",
+				"version": "1",
+				"action": "challenge",
+				"expression": "not http.request.uri.path matches \"^/api/.*$\"",
+				"description": "challenge not /api",
+				"last_updated": "2021-03-18T18:25:08.122758Z",
+				"ref": "<CUSTOM_RULE_REF_2>",
+				"enabled": true
+			}
+		],
+		"last_updated": "2021-03-18T18:25:08.122758Z",
+		"phase": "http_request_firewall_custom"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -93,7 +93,7 @@ To update one or more rules in a custom ruleset, use the [Update ruleset](/rules
 
 The following request edits one rule in a custom ruleset and updates the execution order of the rules.
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -122,39 +122,39 @@ The response returns the modified custom ruleset. Note that the updated rule and
 header: Response
 ---
 {
-  "result": {
-    "id": "<CUSTOM_RULESET_ID>",
-    "name": "Custom Ruleset 1",
-    "kind": "custom",
-    "version": "3",
-    "rules": [
-      {
-        "id": "<CUSTOM_RULE_ID_2>",
-        "version": "2",
-        "action": "js_challenge",
-        "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-        "description": "js_challenge when not /api",
-        "last_updated": "2021-03-18T18:30:08.122758Z",
-        "ref": "<CUSTOM_RULE_ID_2>",
-        "enabled": true
-      },
-      {
-        "id": "<CUSTOM_RULE_ID_1>",
-        "version": "1",
-        "action": "challenge",
-        "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score \u003e 0",
-        "description": "challenge GB and FR or based on IP Reputation",
-        "last_updated": "2021-03-18T18:25:08.122758Z",
-        "ref": "<CUSTOM_RULE_ID_1>",
-        "enabled": true
-      }
-    ],
-    "last_updated": "2021-03-18T18:30:08.122758Z",
-    "phase": "http_request_firewall_custom"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<CUSTOM_RULESET_ID>",
+		"name": "Custom Ruleset 1",
+		"kind": "custom",
+		"version": "3",
+		"rules": [
+			{
+				"id": "<CUSTOM_RULE_ID_2>",
+				"version": "2",
+				"action": "js_challenge",
+				"expression": "not http.request.uri.path matches \"^/api/.*$\"",
+				"description": "js_challenge when not /api",
+				"last_updated": "2021-03-18T18:30:08.122758Z",
+				"ref": "<CUSTOM_RULE_ID_2>",
+				"enabled": true
+			},
+			{
+				"id": "<CUSTOM_RULE_ID_1>",
+				"version": "1",
+				"action": "challenge",
+				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score \u003e 0",
+				"description": "challenge GB and FR or based on IP Reputation",
+				"last_updated": "2021-03-18T18:25:08.122758Z",
+				"ref": "<CUSTOM_RULE_ID_1>",
+				"enabled": true
+			}
+		],
+		"last_updated": "2021-03-18T18:30:08.122758Z",
+		"phase": "http_request_firewall_custom"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

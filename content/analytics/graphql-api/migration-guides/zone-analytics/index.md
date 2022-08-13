@@ -20,236 +20,236 @@ curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" -X GET "https:
 
 ```json
 {
-  "success": true,
-  "query": {
-    "since": "2019-09-08T20:00:00Z",
-    "until": "2019-09-08T20:02:00Z",
-    "time_delta": 1
-  },
-  "errors": [],
-  "messages": [],
-  "result": {
-    "timeseries": [
-      {
-        "since": "2019-09-08T20:00:00Z",
-        "until": "2019-09-08T20:01:00Z",
-        "requests": {
-          "all": 15,
-          "cached": 12,
-          "uncached": 3,
-          "ssl": {
-            "encrypted": 13,
-            "unencrypted": 2
-          },
-          "http_status": {
-            "200": 4,
-            "403": 11
-          },
-          "content_type": {
-            "html": 12,
-            "png": 3
-          },
-          "country": {
-            "CN": 6,
-            "IE": 1,
-            "US": 3,
-            "VN": 5
-          },
-          "ip_class": {
-            "monitoringService": 4,
-            "noRecord": 11
-          },
-          "ssl_protocol": {
-            "TLSv1.2": 13,
-            "none": 2
-          }
-        },
-        "bandwidth": {
-          "all": 312740,
-          "cached": 309930,
-          "uncached": 2810,
-          "ssl": {
-            "encrypted": 309276,
-            "unencrypted": 3464
-          },
-          "ssl_protocol": {
-            "TLSv1.2": 13,
-            "none": 2
-          },
-          "content_type": {
-            "html": 32150,
-            "png": 280590
-          },
-          "country": {
-            "CN": 10797,
-            "IE": 98224,
-            "US": 185176,
-            "VN": 18543
-          }
-        },
-        "threats": {
-          "all": 6,
-          "type": {
-            "user.ban.ctry": 6
-          },
-          "country": {
-            "CN": 6
-          }
-        },
-        "pageviews": {
-          "all": 1,
-          "search_engine": {
-            "pingdom": 1
-          }
-        },
-        "uniques": {
-          "all": 11
-        }
-      },
-      {
-        "since": "2019-09-08T20:01:00Z",
-        "until": "2019-09-08T20:02:00Z",
-        "requests": {
-          "all": 4,
-          "cached": 1,
-          "uncached": 3,
-          "ssl": {
-            "encrypted": 4,
-            "unencrypted": 0
-          },
-          "http_status": {
-            "200": 4
-          },
-          "content_type": {
-            "html": 1,
-            "png": 3
-          },
-          "country": {
-            "CA": 2,
-            "US": 2
-          },
-          "ip_class": {
-            "monitoringService": 4
-          },
-          "ssl_protocol": {
-            "TLSv1.2": 4
-          }
-        },
-        "bandwidth": {
-          "all": 283399,
-          "cached": 280590,
-          "uncached": 2809,
-          "ssl": {
-            "encrypted": 283399,
-            "unencrypted": 0
-          },
-          "ssl_protocol": {
-            "TLSv1.2": 4
-          },
-          "content_type": {
-            "html": 2809,
-            "png": 280590
-          },
-          "country": {
-            "CA": 101033,
-            "US": 182366
-          }
-        },
-        "threats": {
-          "all": 0,
-          "type": {},
-          "country": {}
-        },
-        "pageviews": {
-          "all": 1,
-          "search_engine": {
-            "pingdom": 1
-          }
-        },
-        "uniques": {
-          "all": 4
-        }
-      }
-    ],
-    "totals": {
-      "since": "2019-09-08T20:00:00Z",
-      "until": "2019-09-08T20:02:00Z",
-      "requests": {
-        "all": 19,
-        "cached": 13,
-        "uncached": 6,
-        "ssl": {
-          "encrypted": 17,
-          "unencrypted": 2
-        },
-        "http_status": {
-          "200": 8,
-          "403": 11
-        },
-        "content_type": {
-          "html": 13,
-          "png": 6
-        },
-        "country": {
-          "CA": 2,
-          "CN": 6,
-          "IE": 1,
-          "US": 5,
-          "VN": 5
-        },
-        "ip_class": {
-          "monitoringService": 8,
-          "noRecord": 11
-        },
-        "ssl_protocol": {
-          "TLSv1.2": 17,
-          "none": 2
-        }
-      },
-      "bandwidth": {
-        "all": 596139,
-        "cached": 590520,
-        "uncached": 5619,
-        "ssl": {
-          "encrypted": 592675,
-          "unencrypted": 3464
-        },
-        "ssl_protocol": {
-          "TLSv1.2": 17,
-          "none": 2
-        },
-        "content_type": {
-          "html": 34959,
-          "png": 561180
-        },
-        "country": {
-          "CA": 101033,
-          "CN": 10797,
-          "IE": 98224,
-          "US": 367542,
-          "VN": 18543
-        }
-      },
-      "threats": {
-        "all": 6,
-        "type": {
-          "user.ban.ctry": 6
-        },
-        "country": {
-          "CN": 6
-        }
-      },
-      "pageviews": {
-        "all": 2,
-        "search_engine": {
-          "pingdom": 2
-        }
-      },
-      "uniques": {
-        "all": 15
-      }
-    }
-  }
+	"success": true,
+	"query": {
+		"since": "2019-09-08T20:00:00Z",
+		"until": "2019-09-08T20:02:00Z",
+		"time_delta": 1
+	},
+	"errors": [],
+	"messages": [],
+	"result": {
+		"timeseries": [
+			{
+				"since": "2019-09-08T20:00:00Z",
+				"until": "2019-09-08T20:01:00Z",
+				"requests": {
+					"all": 15,
+					"cached": 12,
+					"uncached": 3,
+					"ssl": {
+						"encrypted": 13,
+						"unencrypted": 2
+					},
+					"http_status": {
+						"200": 4,
+						"403": 11
+					},
+					"content_type": {
+						"html": 12,
+						"png": 3
+					},
+					"country": {
+						"CN": 6,
+						"IE": 1,
+						"US": 3,
+						"VN": 5
+					},
+					"ip_class": {
+						"monitoringService": 4,
+						"noRecord": 11
+					},
+					"ssl_protocol": {
+						"TLSv1.2": 13,
+						"none": 2
+					}
+				},
+				"bandwidth": {
+					"all": 312740,
+					"cached": 309930,
+					"uncached": 2810,
+					"ssl": {
+						"encrypted": 309276,
+						"unencrypted": 3464
+					},
+					"ssl_protocol": {
+						"TLSv1.2": 13,
+						"none": 2
+					},
+					"content_type": {
+						"html": 32150,
+						"png": 280590
+					},
+					"country": {
+						"CN": 10797,
+						"IE": 98224,
+						"US": 185176,
+						"VN": 18543
+					}
+				},
+				"threats": {
+					"all": 6,
+					"type": {
+						"user.ban.ctry": 6
+					},
+					"country": {
+						"CN": 6
+					}
+				},
+				"pageviews": {
+					"all": 1,
+					"search_engine": {
+						"pingdom": 1
+					}
+				},
+				"uniques": {
+					"all": 11
+				}
+			},
+			{
+				"since": "2019-09-08T20:01:00Z",
+				"until": "2019-09-08T20:02:00Z",
+				"requests": {
+					"all": 4,
+					"cached": 1,
+					"uncached": 3,
+					"ssl": {
+						"encrypted": 4,
+						"unencrypted": 0
+					},
+					"http_status": {
+						"200": 4
+					},
+					"content_type": {
+						"html": 1,
+						"png": 3
+					},
+					"country": {
+						"CA": 2,
+						"US": 2
+					},
+					"ip_class": {
+						"monitoringService": 4
+					},
+					"ssl_protocol": {
+						"TLSv1.2": 4
+					}
+				},
+				"bandwidth": {
+					"all": 283399,
+					"cached": 280590,
+					"uncached": 2809,
+					"ssl": {
+						"encrypted": 283399,
+						"unencrypted": 0
+					},
+					"ssl_protocol": {
+						"TLSv1.2": 4
+					},
+					"content_type": {
+						"html": 2809,
+						"png": 280590
+					},
+					"country": {
+						"CA": 101033,
+						"US": 182366
+					}
+				},
+				"threats": {
+					"all": 0,
+					"type": {},
+					"country": {}
+				},
+				"pageviews": {
+					"all": 1,
+					"search_engine": {
+						"pingdom": 1
+					}
+				},
+				"uniques": {
+					"all": 4
+				}
+			}
+		],
+		"totals": {
+			"since": "2019-09-08T20:00:00Z",
+			"until": "2019-09-08T20:02:00Z",
+			"requests": {
+				"all": 19,
+				"cached": 13,
+				"uncached": 6,
+				"ssl": {
+					"encrypted": 17,
+					"unencrypted": 2
+				},
+				"http_status": {
+					"200": 8,
+					"403": 11
+				},
+				"content_type": {
+					"html": 13,
+					"png": 6
+				},
+				"country": {
+					"CA": 2,
+					"CN": 6,
+					"IE": 1,
+					"US": 5,
+					"VN": 5
+				},
+				"ip_class": {
+					"monitoringService": 8,
+					"noRecord": 11
+				},
+				"ssl_protocol": {
+					"TLSv1.2": 17,
+					"none": 2
+				}
+			},
+			"bandwidth": {
+				"all": 596139,
+				"cached": 590520,
+				"uncached": 5619,
+				"ssl": {
+					"encrypted": 592675,
+					"unencrypted": 3464
+				},
+				"ssl_protocol": {
+					"TLSv1.2": 17,
+					"none": 2
+				},
+				"content_type": {
+					"html": 34959,
+					"png": 561180
+				},
+				"country": {
+					"CA": 101033,
+					"CN": 10797,
+					"IE": 98224,
+					"US": 367542,
+					"VN": 18543
+				}
+			},
+			"threats": {
+				"all": 6,
+				"type": {
+					"user.ban.ctry": 6
+				},
+				"country": {
+					"CN": 6
+				}
+			},
+			"pageviews": {
+				"all": 2,
+				"search_engine": {
+					"pingdom": 2
+				}
+			},
+			"uniques": {
+				"all": 15
+			}
+		}
+	}
 }
 ```
 
@@ -322,184 +322,184 @@ As you can see from the response, Zone Analytics returns metrics along many dime
 
 ```json
 {
-  "data": {
-    "viewer": {
-      "zones": [
-        {
-          "httpRequests1mGroups": [
-            {
-              "dimensions": {
-                "datetimeMinute": "2019-09-08T20:00:00Z"
-              },
-              "sum": {
-                "browserMap": [
-                  {
-                    "pageViews": 1,
-                    "uaBrowserFamily": "PingdomBot"
-                  }
-                ],
-                "bytes": 312740,
-                "cachedBytes": 309930,
-                "cachedRequests": 12,
-                "clientSSLMap": [
-                  {
-                    "clientSSLProtocol": "none",
-                    "requests": 2
-                  },
-                  {
-                    "clientSSLProtocol": "TLSv1.2",
-                    "requests": 13
-                  }
-                ],
-                "contentTypeMap": [
-                  {
-                    "bytes": 280590,
-                    "edgeResponseContentTypeName": "png",
-                    "requests": 3
-                  },
-                  {
-                    "bytes": 32150,
-                    "edgeResponseContentTypeName": "html",
-                    "requests": 12
-                  }
-                ],
-                "countryMap": [
-                  {
-                    "bytes": 10797,
-                    "clientCountryName": "CN",
-                    "requests": 6,
-                    "threats": 6
-                  },
-                  {
-                    "bytes": 98224,
-                    "clientCountryName": "IE",
-                    "requests": 1,
-                    "threats": 0
-                  },
-                  {
-                    "bytes": 185176,
-                    "clientCountryName": "US",
-                    "requests": 3,
-                    "threats": 0
-                  },
-                  {
-                    "bytes": 18543,
-                    "clientCountryName": "VN",
-                    "requests": 5,
-                    "threats": 0
-                  }
-                ],
-                "encryptedBytes": 309276,
-                "encryptedRequests": 13,
-                "ipClassMap": [
-                  {
-                    "ipType": "monitoringService",
-                    "requests": 4
-                  },
-                  {
-                    "ipType": "noRecord",
-                    "requests": 11
-                  }
-                ],
-                "pageViews": 1,
-                "requests": 15,
-                "responseStatusMap": [
-                  {
-                    "edgeResponseStatus": 200,
-                    "requests": 4
-                  },
-                  {
-                    "edgeResponseStatus": 403,
-                    "requests": 11
-                  }
-                ],
-                "threatPathingMap": [
-                  {
-                    "requests": 6,
-                    "threatPathingName": "user.ban.ctry"
-                  }
-                ],
-                "threats": 6
-              },
-              "uniq": {
-                "uniques": 11
-              }
-            },
-            {
-              "dimensions": {
-                "datetimeMinute": "2019-09-08T20:01:00Z"
-              },
-              "sum": {
-                "browserMap": [
-                  {
-                    "pageViews": 1,
-                    "uaBrowserFamily": "PingdomBot"
-                  }
-                ],
-                "bytes": 283399,
-                "cachedBytes": 280590,
-                "cachedRequests": 1,
-                "clientSSLMap": [
-                  {
-                    "clientSSLProtocol": "TLSv1.2",
-                    "requests": 4
-                  }
-                ],
-                "contentTypeMap": [
-                  {
-                    "bytes": 280590,
-                    "edgeResponseContentTypeName": "png",
-                    "requests": 3
-                  },
-                  {
-                    "bytes": 2809,
-                    "edgeResponseContentTypeName": "html",
-                    "requests": 1
-                  }
-                ],
-                "countryMap": [
-                  {
-                    "bytes": 101033,
-                    "clientCountryName": "CA",
-                    "requests": 2,
-                    "threats": 0
-                  },
-                  {
-                    "bytes": 182366,
-                    "clientCountryName": "US",
-                    "requests": 2,
-                    "threats": 0
-                  }
-                ],
-                "encryptedBytes": 283399,
-                "encryptedRequests": 4,
-                "ipClassMap": [
-                  {
-                    "ipType": "monitoringService",
-                    "requests": 4
-                  }
-                ],
-                "pageViews": 1,
-                "requests": 4,
-                "responseStatusMap": [
-                  {
-                    "edgeResponseStatus": 200,
-                    "requests": 4
-                  }
-                ],
-                "threatPathingMap": [],
-                "threats": 0
-              },
-              "uniq": {
-                "uniques": 4
-              }
-            }
-          ]
-        }
-      ]
-    }
-  },
-  "errors": null
+	"data": {
+		"viewer": {
+			"zones": [
+				{
+					"httpRequests1mGroups": [
+						{
+							"dimensions": {
+								"datetimeMinute": "2019-09-08T20:00:00Z"
+							},
+							"sum": {
+								"browserMap": [
+									{
+										"pageViews": 1,
+										"uaBrowserFamily": "PingdomBot"
+									}
+								],
+								"bytes": 312740,
+								"cachedBytes": 309930,
+								"cachedRequests": 12,
+								"clientSSLMap": [
+									{
+										"clientSSLProtocol": "none",
+										"requests": 2
+									},
+									{
+										"clientSSLProtocol": "TLSv1.2",
+										"requests": 13
+									}
+								],
+								"contentTypeMap": [
+									{
+										"bytes": 280590,
+										"edgeResponseContentTypeName": "png",
+										"requests": 3
+									},
+									{
+										"bytes": 32150,
+										"edgeResponseContentTypeName": "html",
+										"requests": 12
+									}
+								],
+								"countryMap": [
+									{
+										"bytes": 10797,
+										"clientCountryName": "CN",
+										"requests": 6,
+										"threats": 6
+									},
+									{
+										"bytes": 98224,
+										"clientCountryName": "IE",
+										"requests": 1,
+										"threats": 0
+									},
+									{
+										"bytes": 185176,
+										"clientCountryName": "US",
+										"requests": 3,
+										"threats": 0
+									},
+									{
+										"bytes": 18543,
+										"clientCountryName": "VN",
+										"requests": 5,
+										"threats": 0
+									}
+								],
+								"encryptedBytes": 309276,
+								"encryptedRequests": 13,
+								"ipClassMap": [
+									{
+										"ipType": "monitoringService",
+										"requests": 4
+									},
+									{
+										"ipType": "noRecord",
+										"requests": 11
+									}
+								],
+								"pageViews": 1,
+								"requests": 15,
+								"responseStatusMap": [
+									{
+										"edgeResponseStatus": 200,
+										"requests": 4
+									},
+									{
+										"edgeResponseStatus": 403,
+										"requests": 11
+									}
+								],
+								"threatPathingMap": [
+									{
+										"requests": 6,
+										"threatPathingName": "user.ban.ctry"
+									}
+								],
+								"threats": 6
+							},
+							"uniq": {
+								"uniques": 11
+							}
+						},
+						{
+							"dimensions": {
+								"datetimeMinute": "2019-09-08T20:01:00Z"
+							},
+							"sum": {
+								"browserMap": [
+									{
+										"pageViews": 1,
+										"uaBrowserFamily": "PingdomBot"
+									}
+								],
+								"bytes": 283399,
+								"cachedBytes": 280590,
+								"cachedRequests": 1,
+								"clientSSLMap": [
+									{
+										"clientSSLProtocol": "TLSv1.2",
+										"requests": 4
+									}
+								],
+								"contentTypeMap": [
+									{
+										"bytes": 280590,
+										"edgeResponseContentTypeName": "png",
+										"requests": 3
+									},
+									{
+										"bytes": 2809,
+										"edgeResponseContentTypeName": "html",
+										"requests": 1
+									}
+								],
+								"countryMap": [
+									{
+										"bytes": 101033,
+										"clientCountryName": "CA",
+										"requests": 2,
+										"threats": 0
+									},
+									{
+										"bytes": 182366,
+										"clientCountryName": "US",
+										"requests": 2,
+										"threats": 0
+									}
+								],
+								"encryptedBytes": 283399,
+								"encryptedRequests": 4,
+								"ipClassMap": [
+									{
+										"ipType": "monitoringService",
+										"requests": 4
+									}
+								],
+								"pageViews": 1,
+								"requests": 4,
+								"responseStatusMap": [
+									{
+										"edgeResponseStatus": 200,
+										"requests": 4
+									}
+								],
+								"threatPathingMap": [],
+								"threats": 0
+							},
+							"uniq": {
+								"uniques": 4
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"errors": null
 }
 ```
 

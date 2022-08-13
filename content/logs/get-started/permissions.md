@@ -10,9 +10,9 @@ Below is a description of the available permissions for tokens and roles as they
 
 ## Tokens
 
-*   **Logs: Read** - Grants read access to logs using Logpull or Instant Logs.
+- **Logs: Read** - Grants read access to logs using Logpull or Instant Logs.
 
-*   **Logs: Write** - Grants read and write access to Logpull and Logpush, and read access to Instant Logs.
+- **Logs: Write** - Grants read and write access to Logpull and Logpush, and read access to Instant Logs.
 
 {{<Aside type="note" header="Note">}}
 For zone scoped datasets, tokens must be zone scoped. For account scoped datasets, tokens must be account scoped.
@@ -24,7 +24,7 @@ For zone scoped datasets, tokens must be zone scoped. For account scoped dataset
 
 The **Administrator Read only** and **Log Share Reader** roles only have access to Instant Logs and Logpull. This role does not have permissions to view the configuration of Logpush jobs.
 
-### Assigning or removing a role 
+### Assigning or removing a role
 
 To check the list of members in your account, or to manage roles and permissions:
 

@@ -50,13 +50,14 @@ Alternatively, you may also use operating system (OS)-level firewall rules to di
 
 1.  Drop all other ingress traffic.
 
-    {{<Aside type="warning" header="Warning">}}
-Be very careful with the following command because if you did not preserve the current SSH connection or allow new SSH connections, you would be logged out and unable to SSH back into the system again.
+        {{<Aside type="warning" header="Warning">}}
+
+    Be very careful with the following command because if you did not preserve the current SSH connection or allow new SSH connections, you would be logged out and unable to SSH back into the system again.
     {{</Aside>}}
 
-    ```sh
-    $ sudo iptables -A INPUT -j DROP
-    ```
+        ```sh
+        $ sudo iptables -A INPUT -j DROP
+        ```
 
 1.  After setting the firewall rules, use this command to check the current `iptables` settings:
 

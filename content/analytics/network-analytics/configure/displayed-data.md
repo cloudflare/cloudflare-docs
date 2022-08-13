@@ -33,10 +33,11 @@ Click **Add filter** to open the **New filter** popover. Specify a field, an ope
 
 {{<Aside type="note" header="Notes about filtering">}}
 When applying filters, observe these guidelines:
-* Wildcards are not supported.
-* You do not need to wrap values in quotes.
-* When specifying an ASN number, leave out the `AS` prefix. For example, enter `1423` instead of `AS1423`.
-{{</Aside>}}
+
+- Wildcards are not supported.
+- You do not need to wrap values in quotes.
+- When specifying an ASN number, leave out the `AS` prefix. For example, enter `1423` instead of `AS1423`.
+  {{</Aside>}}
 
 ## Use a stat filter
 

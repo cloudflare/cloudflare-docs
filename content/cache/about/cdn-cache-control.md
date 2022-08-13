@@ -54,54 +54,54 @@ Headers:
 Cache behavior:
 
 <table>
-  <tbody>
-    <th colspan="5" rowspan="1">
-      Caches
-    </th>
-    <th colspan="5" rowspan="1">
-      Cache TTL (seconds)
-    </th>
-    <tr>
-      <td colspan="5" rowspan="1">
-        Origin Server Cache
-      </td>
-      <td colspan="5" rowspan="1">
-        14400
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        Network Shared Cache
-      </td>
-      <td colspan="5" rowspan="1">
-        84000
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        Cloudflare Edge
-      </td>
-      <td colspan="5" rowspan="1">
-        24400
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        Other CDNs
-      </td>
-      <td colspan="5" rowspan="1">
-        18000
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        Browser Cache
-      </td>
-      <td colspan="5" rowspan="1">
-        14400
-      </td>
-    </tr>
-  </tbody>
+	<tbody>
+		<th colspan="5" rowspan="1">
+			Caches
+		</th>
+		<th colspan="5" rowspan="1">
+			Cache TTL (seconds)
+		</th>
+		<tr>
+			<td colspan="5" rowspan="1">
+				Origin Server Cache
+			</td>
+			<td colspan="5" rowspan="1">
+				14400
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				Network Shared Cache
+			</td>
+			<td colspan="5" rowspan="1">
+				84000
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				Cloudflare Edge
+			</td>
+			<td colspan="5" rowspan="1">
+				24400
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				Other CDNs
+			</td>
+			<td colspan="5" rowspan="1">
+				18000
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				Browser Cache
+			</td>
+			<td colspan="5" rowspan="1">
+				14400
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 ### Specify when to serve stale content
@@ -117,36 +117,36 @@ Headers:
 Behavior in response to 5XX error:
 
 <table>
-  <tbody>
-    <th colspan="5" rowspan="1">
-      Caches
-    </th>
-    <th colspan="5" rowspan="1">
-      Stale served (seconds) in response to error
-    </th>
-    <tr>
-      <td colspan="5" rowspan="1">
-        Origin Cache Layer/Network Cache/Browser Cache
-      </td>
-      <td colspan="5" rowspan="1">
-        400 (if it assumes the directive applies)
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        Cloudflare Edge
-      </td>
-      <td colspan="5" rowspan="1">
-        60
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        Other CDN
-      </td>
-      <td colspan="5" rowspan="1">
-        200
-      </td>
-    </tr>
-  </tbody>
+	<tbody>
+		<th colspan="5" rowspan="1">
+			Caches
+		</th>
+		<th colspan="5" rowspan="1">
+			Stale served (seconds) in response to error
+		</th>
+		<tr>
+			<td colspan="5" rowspan="1">
+				Origin Cache Layer/Network Cache/Browser Cache
+			</td>
+			<td colspan="5" rowspan="1">
+				400 (if it assumes the directive applies)
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				Cloudflare Edge
+			</td>
+			<td colspan="5" rowspan="1">
+				60
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				Other CDN
+			</td>
+			<td colspan="5" rowspan="1">
+				200
+			</td>
+		</tr>
+	</tbody>
 </table>

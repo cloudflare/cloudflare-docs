@@ -73,6 +73,7 @@ $ sudo ss -lntup
 The result should be only the services currently active on the machine:
 
 <!-- ![Just Services](/cloudflare-one/static/zero-trust-security/gitlab/just-services.png) -->
+
 ```bash
 $ sudo ss -lntup
 Netid   State    Recv-Q   Send-Q     Local Address:Port     Peer Address:Port   Process

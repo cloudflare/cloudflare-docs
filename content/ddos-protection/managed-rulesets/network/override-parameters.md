@@ -24,16 +24,18 @@ The action performed for packets that match specific rules of Cloudflare's DDoS 
 {{<definitions>}}
 
 - **Log**
-    - API value: `"log"`.
-    - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting network layer DDoS attacks. Recommended for validating a rule before committing to a more severe action.
+
+  - API value: `"log"`.
+  - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting network layer DDoS attacks. Recommended for validating a rule before committing to a more severe action.
 
 - **Block**
-    - API value: `"block"`.
-    - Blocks IP packets that match the rule expression given the sensitivity levels.
+
+  - API value: `"block"`.
+  - Blocks IP packets that match the rule expression given the sensitivity levels.
 
 - **DDoS Dynamic**
-    - API value: _N/A_ (internal rule action that you cannot use in overrides).
-    - Performs a specific action according to a set of internal guidelines defined by Cloudflare. The executed action can be _Block_ or an undisclosed mitigation action.
+  - API value: _N/A_ (internal rule action that you cannot use in overrides).
+  - Performs a specific action according to a set of internal guidelines defined by Cloudflare. The executed action can be _Block_ or an undisclosed mitigation action.
 
 {{</definitions>}}
 

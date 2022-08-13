@@ -18,13 +18,13 @@ You can use disposition values when [creating your quarantine policy](/email-sec
 
 ### Available values
 
-| Disposition | Description | Recommendation |
-| --- | --- | --- | --- |
-| `MALICIOUS` | Traffic invoked multiple phishing verdict triggers, met thresholds for bad behavior, and is associated with active campaigns. | Block |
-| `SUSPICIOUS` | Traffic associated with phishing campaigns (and is under further analysis by our automated systems). | Research these messages internally to evaluate legitimacy. |
-| `SPOOF` | Traffic associated with phishing campaigns that is either non-compliant with your email authentication policies (SPF, DKIM, DMARC) or has mismatching `Envelope From` and `Header From` values. | Block after investigating (can be triggered by third-party mail services). | 
-| `SPAM` | Traffic associated with non-malicious, commercial campaigns. | Route to existing Spam quarantine folder. |
-| `BULK` (dashboard only) | Traffic associated with [Graymail](https://en.wikipedia.org/wiki/Graymail_(email)), that fall in between the definitions of `SPAM` and `SUSPICIOUS`. For example, a marketing email that intentionally obscures its unsubscribe link. | Monitor or tag |
+| Disposition             | Description                                                                                                                                                                                                                             | Recommendation                                                             |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `MALICIOUS`             | Traffic invoked multiple phishing verdict triggers, met thresholds for bad behavior, and is associated with active campaigns.                                                                                                           | Block                                                                      |
+| `SUSPICIOUS`            | Traffic associated with phishing campaigns (and is under further analysis by our automated systems).                                                                                                                                    | Research these messages internally to evaluate legitimacy.                 |
+| `SPOOF`                 | Traffic associated with phishing campaigns that is either non-compliant with your email authentication policies (SPF, DKIM, DMARC) or has mismatching `Envelope From` and `Header From` values.                                         | Block after investigating (can be triggered by third-party mail services). |
+| `SPAM`                  | Traffic associated with non-malicious, commercial campaigns.                                                                                                                                                                            | Route to existing Spam quarantine folder.                                  |
+| `BULK` (dashboard only) | Traffic associated with [Graymail](<https://en.wikipedia.org/wiki/Graymail_(email)>), that fall in between the definitions of `SPAM` and `SUSPICIOUS`. For example, a marketing email that intentionally obscures its unsubscribe link. | Monitor or tag                                                             |
 
 ### Header structure
 
@@ -40,14 +40,14 @@ Traffic that flows through Area 1 can also receive one or more **Attributes**, w
 
 ### Available values
 
-| Attribute | Notes |
-| --- | --- |
-| `CUSTOM_BLOCK_LIST` | This message matches a value you have defined in your custom block list. |
-| `NEW_DOMAIN_SENDER=<REGISTRATION_DATE>` | Alerts to mail from a newly registered domain. Formatted as yyyy-MM-dd HH:mm:ss ZZZ. |
-| `NEW_DOMAIN_LINK=<REGISTRATION_DATE>` | Alerts to mail with links pointing out to a newly registered domain. Formatted as yyyy-MM-dd HH:mm:ss ZZZ. |
-| `ENCRYPTED` | Email message is encrypted. |
-| `EXECUTABLE` | Email message contains an executable file. |
-| `BEC` | Indicates that email address was contained in your [business email compromise (BEC)](/email-security/email-configuration/enhanced-detections/business-email-compromise/) list. Associated with `MALICIOUS` or `SPOOF` dispositions. |
+| Attribute                               | Notes                                                                                                                                                                                                                               |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CUSTOM_BLOCK_LIST`                     | This message matches a value you have defined in your custom block list.                                                                                                                                                            |
+| `NEW_DOMAIN_SENDER=<REGISTRATION_DATE>` | Alerts to mail from a newly registered domain. Formatted as yyyy-MM-dd HH:mm:ss ZZZ.                                                                                                                                                |
+| `NEW_DOMAIN_LINK=<REGISTRATION_DATE>`   | Alerts to mail with links pointing out to a newly registered domain. Formatted as yyyy-MM-dd HH:mm:ss ZZZ.                                                                                                                          |
+| `ENCRYPTED`                             | Email message is encrypted.                                                                                                                                                                                                         |
+| `EXECUTABLE`                            | Email message contains an executable file.                                                                                                                                                                                          |
+| `BEC`                                   | Indicates that email address was contained in your [business email compromise (BEC)](/email-security/email-configuration/enhanced-detections/business-email-compromise/) list. Associated with `MALICIOUS` or `SPOOF` dispositions. |
 
 ### Header structure
 

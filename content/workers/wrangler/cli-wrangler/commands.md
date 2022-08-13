@@ -525,7 +525,7 @@ kv_namespaces = [
 Successful operations will print a new configuration block that should be copied into your `wrangler.toml` file. Add the output to the existing `kv_namespaces` configuration if already present. You can now access the binding from within a Worker:
 
 ```js
-let value = await MY_KV.get("my-key");
+let value = await MY_KV.get('my-key');
 ```
 
 To write a value to your KV namespace using Wrangler, run the `wrangler kv:key put` subcommand.
@@ -964,11 +964,11 @@ This command takes a JSON file as an argument with a list of key-value pairs to 
 
 ```json
 [
-  {
-    "key": "test_key",
-    "value": "test_value",
-    "expiration_ttl": 3600
-  }
+	{
+		"key": "test_key",
+		"value": "test_value",
+		"expiration_ttl": 3600
+	}
 ]
 ```
 
@@ -976,11 +976,11 @@ In order to save JSON data, cast `value` to a string:
 
 ```json
 [
-  {
-    "key": "test_key",
-    "value": "{\"name\": \"test_value\"}",
-    "expiration_ttl": 3600
-  }
+	{
+		"key": "test_key",
+		"value": "{\"name\": \"test_value\"}",
+		"expiration_ttl": 3600
+	}
 ]
 ```
 
@@ -1054,10 +1054,10 @@ This command takes a JSON file as an argument with a list of key-value pairs to 
 
 ```json
 [
-  {
-    "key": "test_key",
-    "value": ""
-  }
+	{
+		"key": "test_key",
+		"value": ""
+	}
 ]
 ```
 
