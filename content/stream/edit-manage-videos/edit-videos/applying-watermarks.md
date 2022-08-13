@@ -165,11 +165,11 @@ highlight: [10,11,12,13,14,15,16,17,18,19,20,21,22]
 {
   "result": {
     "uid": "8d3a5b80e7437047a0fb2761e0f7a645",
-    "thumbnail": "https://videodelivery.net/8d3a5b80e7437047a0fb2761e0f7a645/thumbnails/thumbnail.jpg",
+    "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
 
     "playback": {
-      "hls": "https://videodelivery.net/8d3a5b80e7437047a0fb2761e0f7a645/manifest/video.m3u8",
-      "dash": "https://videodelivery.net/8d3a5b80e7437047a0fb2761e0f7a645/manifest/video.mpd"
+      "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8",
+      "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.mpd"
     },
     "watermark": {
       "uid": "d6373709b7681caa6c48ef2d8c73690d",
@@ -215,6 +215,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload
 
 #### Example response to direct user uploads
 
+<!-- videodelivery.net is correct domain. See STREAM-4364 -->
 ```json
 {
   "result": {
