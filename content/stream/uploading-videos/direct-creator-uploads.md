@@ -90,6 +90,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/direct_upload 
 
 A successful response looks like:
 
+<!-- videodelivery.net is correct domain. See STREAM-4364 -->
 ```bash
 {
   "result": {
@@ -132,6 +133,7 @@ The `uid` references the reserved media object's unique identifier and can be ke
 Using the `uploadURL` provided in the previous request, users can upload video
 files. Uploads are limited to 200 MB in size.
 
+<!-- videodelivery.net is correct domain. See STREAM-4364 -->
 ```bash
 curl -X POST \
   -F file=@/Users/mickie/Downloads/example_video.mp4 \

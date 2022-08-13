@@ -25,8 +25,8 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy
 ```json
 {
   "result": {
-    "uid": "4544715edbe00808d89aec0a3a765c40",
-    "thumbnail": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/thumbnails/thumbnail.jpg",
+    "uid": "b236bde30eb07b9d01318940e5fc3eda",
+    "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
     "thumbnailTimestampPct": 0,
     "readyToStream": false,
     "status": {
@@ -39,7 +39,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy
     "created": "2020-10-16T20:20:17.872170843Z",
     "modified": "2020-10-16T20:20:17.872170843Z",
     "size": 9032701,
-    "preview": "https://customer-<CODE>.cloudflarestream.com/4544715edbe00808d89aec0a3a765c40/watch",
+    "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/watch",
     "allowedOrigins": [],
     "requireSignedURLs": false,
     "uploaded": "2020-10-16T20:20:17.872170843Z",
@@ -52,8 +52,8 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy
       "height": -1
     },
     "playback": {
-      "hls": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/manifest/video.m3u8",
-      "dash": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/manifest/video.mpd"
+      "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8",
+      "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.mpd"
     },
     "watermark": null
   },

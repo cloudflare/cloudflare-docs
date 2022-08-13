@@ -67,7 +67,7 @@ header: Response
   "result": {
     "default": {
       "status": "ready",
-      "url": "https://videodelivery.net/<VIDEO_UID>/downloads/default.mp4",
+      "url": "https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4",
       "percentComplete": 100.0
     }
   },
@@ -84,7 +84,7 @@ You can customize the name of downloadable files by adding the `filename` query 
 In the example below, adding `?filename=MY_VIDEO.mp4` to the URL will change the file name to `MY_VIDEO.mp4`.
 
 `
-https://videodelivery.net/<VIDEO_UID>/downloads/default.mp4?filename=MY_VIDEO.mp4
+https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4?filename=MY_VIDEO.mp4
 `
 
 ## Retrieve downloads
@@ -92,7 +92,7 @@ https://videodelivery.net/<VIDEO_UID>/downloads/default.mp4?filename=MY_VIDEO.mp
 The generated MP4 download files can be retrieved via the link in the download API response.
 
 ```bash
-curl -L https://videodelivery.net/<VIDEO_UID>/downloads/default.mp4 > download.mp4
+curl -L https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4 > download.mp4
 ```
 
 ## Secure video downloads
