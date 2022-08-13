@@ -22,6 +22,18 @@ function parseRange(encoded: string | null): undefined | { offset: number, lengt
   if (parts.length !== 2) {
     throw new Error('Not supported to skip specifying the beginning/ending byte at this time')
   }
+  
+  if (parts[0].length == 0) {
+		return {
+			suffix: Number(parts[1]),
+		}
+  }
+
+	if (parts[1].length == 0) {
+		return {
+			offset: Number(parts[0]),
+		}
+  }
 
   return {
     offset: Number(parts[0]),
@@ -80,9 +92,13 @@ export default {
         const headers = new Headers()
         object.writeHttpMetadata(headers)
         headers.set('etag', object.httpEtag)
+        headers.set('accept-ranges', 'bytes')
         if (range) {
-          headers.set("content-range", `bytes ${range.offset}-${range.end}/${object.size}`)
-        }
+			    if(range.suffix !== undefined)
+				    headers.set("content-range", `bytes ${object.size - range.suffix}-${object.size}/${object.size}`)
+			    else
+				    headers.set("content-range", `bytes ${range.offset}-${range?.end ?? object.size}/${object.size}`)
+		    }
         const status = object.body ? (range ? 206 : 200) : 304
         return new Response(object.body, {
           headers,
