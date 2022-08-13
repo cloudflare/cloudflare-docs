@@ -6,6 +6,17 @@ weight: 8
 
 # Changelog
 
+## 2022-08-15
+
+### Unique subdomain for your Stream Account
+
+URLs in the Stream Dashboard and Stream API now use a subdomain specific to your Cloudflare Account: `customer-{CODE}.cloudflarestream.com`. This change allows you to:
+
+1. Use [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (CSP) directives specific to your Stream subdomain, to ensure that only videos from your Cloudflare account can be played on your website. 
+2. Allowlist only your Stream account subdomain at the network-level to ensure that only videos from a specific Cloudflare account can be accessed on your network.
+
+No action is required from you, unless you use Content Security Policy (CSP) on your website. For more on CSP, read the docs [here](/stream/faq/#i-use-content-security-policy-csp-on-my-website-what-domains-do-i-need-to-add-to-which-directives).
+
 ## 2022-08-02
 
 ### Clip videos using the Stream API
