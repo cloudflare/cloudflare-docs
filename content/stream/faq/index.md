@@ -131,17 +131,19 @@ If you use the provided [Stream Player](/stream/viewing-videos/using-the-stream-
 Content-Security-Policy: frame-src 'self' videodelivery.net *.cloudflarestream.com
 ```
 
-If you use your **own** Player, add `*videodelivery.net` and `*.cloudflarestream.com` to the `media-src`, `img-src` and `connect-src` CSP directives to allow video files and thumbnail images to load.
+If you use your **own** Player, add `*.videodelivery.net` and `*.cloudflarestream.com` to the `media-src`, `img-src` and `connect-src` CSP directives to allow video files and thumbnail images to load.
 
 ```http
 Content-Security-Policy: media-src 'self' videodelivery.net *.cloudflarestream.com; img-src 'self' *.videodelivery.net *.cloudflarestream.com; connect-src 'self' *.videodelivery.net *.cloudflarestream.com
 ```
 
-If you allow users to upload their own videos directly to Cloudflare Stream, add `*videodelivery.net` and `*.cloudflarestream.com` to the `connect-src` CSP directive.
+If you allow users to upload their own videos directly to Cloudflare Stream, add `*.videodelivery.net` and `*.cloudflarestream.com` to the `connect-src` CSP directive.
 
 ```http
 Content-Security-Policy: connect-src 'self' *.videodelivery.net *.cloudflarestream.com
 ```
+
+To ensure **only** videos from **your** Cloudflare Stream account can be played on your website, replace `*` in `*.cloudflarestream.com` and `*.videodelivery.net` in the examples above with `customer-<CODE>`, replacing `<CODE>` with your unique customer code, which can be found in the Stream Dashboard [here](https://dash.cloudflare.com/?to=/:account/stream). This code is unique to your Cloudflare Account.
 
 ## Stream Live
 
