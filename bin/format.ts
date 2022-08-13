@@ -217,7 +217,10 @@ try {
 			console.error('Finished with %d warning(s)', warns);
 		}
 		console.error('\n');
-		isSILENT || process.exit(1);
+		if (errors && !isSILENT) {
+			process.exit(1);
+		}
+		process.exit(0)
 	}
 } catch (err) {
 	console.error(err.stack || err);
