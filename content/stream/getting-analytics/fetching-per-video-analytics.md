@@ -71,8 +71,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/vie
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/views?metrics=totalImpressions,totalTimeViewedMs&dimensions=videoId&filters=videoId==$VIDEOID&since=2018-01-01T16:57:00Z" \
-    -H "X-Auth-Email: $EMAIL" \
-    -H "X-Auth-Key: $APIKEY" \
+    -H "Authorization: Bearer $TOKEN" \
     -H "Content-Type: application/json"
 ```
 

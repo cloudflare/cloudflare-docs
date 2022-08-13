@@ -110,8 +110,7 @@ async function handleRequest(request) {
     const init = {
     method: 'POST',
     headers: {
-              "X-Auth-Email": "{ACCOUNT_EMAIL}",
-              "X-Auth-Key": "{ACCOUNT_KEY}",
+              "Authorization": "Bearer <API_TOKEN>",
               "content-type": "application/json;charset=UTF-8"
     },
     body: JSON.stringify(signed_url_restrictions)
@@ -148,8 +147,7 @@ async function handleRequest(request) {
     const init = {
     method: 'POST',
     headers: {
-              "X-Auth-Email": "{ACCOUNT_EMAIL}",
-              "X-Auth-Key": "{ACCOUNT_KEY}",
+              "Authorization": "Bearer <API_TOKEN>",
               "content-type": "application/json;charset=UTF-8"
     },
     body: JSON.stringify(signed_url_restrictions)
