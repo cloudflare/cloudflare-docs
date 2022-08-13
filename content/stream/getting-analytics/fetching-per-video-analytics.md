@@ -49,7 +49,7 @@ The AND operator is defined using a semicolon (;) or AND keyword surrounded by w
 ## Analytics request structure
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/views?metrics={metrics}&dimensions={dimensions}&filters=videoId==$VIDEOID&since=2018-01-01T16:57:00Z&sort={sort}&until={to-timestamp}&limit={limit}
+curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/analytics/views?metrics={metrics}&dimensions={dimensions}&filters=videoId==<VIDEO_UID>&since=2018-01-01T16:57:00Z&sort={sort}&until={to-timestamp}&limit={limit}
 ```
 
 - `metrics` is one or more metrics (such as count) to compute
@@ -70,8 +70,8 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/vie
 ## Example analytics query
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/views?metrics=totalImpressions,totalTimeViewedMs&dimensions=videoId&filters=videoId==$VIDEOID&since=2018-01-01T16:57:00Z" \
-    -H "Authorization: Bearer $TOKEN" \
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/analytics/views?metrics=totalImpressions,totalTimeViewedMs&dimensions=videoId&filters=videoId==<VIDEO_UID>&since=2018-01-01T16:57:00Z" \
+    -H "Authorization: Bearer <API_TOKEN>" \
     -H "Content-Type: application/json"
 ```
 
@@ -110,7 +110,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/vi
         "totalImpressions",
         "totalTimeViewedMs"
       ],
-      "filters": "videoId==$VIDEOID",
+      "filters": "videoId==<VIDEO_UID>",
       "since": "2018-10-10T13:02:00Z",
       "until": "2018-11-27T20:10:00Z",
       "limit": 10000

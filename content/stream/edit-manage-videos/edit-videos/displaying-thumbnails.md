@@ -54,9 +54,9 @@ You can change this default value by setting the "thumbnailTimestampPct" value u
 
 ```bash
 curl -X POST \
--H "Authorization: Bearer $TOKEN" \
--d '{"uid": "$VIDEOID", "thumbnailTimestampPct": <pct>}' \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
+-H "Authorization: Bearer <API_TOKEN>" \
+-d '{"uid": "<VIDEO_UID>", "thumbnailTimestampPct": <pct>}' \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>
 ```
 
 `thumbnailTimestampPct` is a value between 0.0 (the first frame of the video) and 1.0 (the last frame of the video). This is particularly useful if you have videos of varying lengths. For example, you wanted the thumbnail to be the frame at the half way point of your videos, you can simply set the `thumbnailTimestampPct` value to 0.5.
@@ -65,9 +65,9 @@ The example will yield a request:
 
 ```bash
 curl -X POST \
--H "Authorization: Bearer $TOKEN" \
--d '{"uid": "$VIDEOID", "thumbnailTimestampPct": 0.5}' \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
+-H "Authorization: Bearer <API_TOKEN>" \
+-d '{"uid": "<VIDEO_UID>", "thumbnailTimestampPct": 0.5}' \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>
 ```
 
 ## Use Case 3: Generating animated thumbnails

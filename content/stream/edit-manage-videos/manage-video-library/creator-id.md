@@ -88,7 +88,7 @@ highlight: [35]
 To update the creator property in existing videos, make a POST request to the video object endpoint with a JSON payload specifying the creator property as show in the example below.
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_ID>" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>" \
   -H "Authorization: Bearer <AUTH_TOKEN>" \
   -d '{"creator":"test123"}'  
 ```

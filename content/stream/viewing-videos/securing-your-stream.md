@@ -18,12 +18,12 @@ Here are some common use cases for using signed URLs:
 
 ### Making a video require signed URLs
 
-Since video ids are effectively public within signed URLs, you will need to turn on `requireSignedURLs` on for your videos. This option will prevent any public links, such as `watch.cloudflarestream.com/$VIDEOID`, from working.
+Since video ids are effectively public within signed URLs, you will need to turn on `requireSignedURLs` on for your videos. This option will prevent any public links, such as `watch.cloudflarestream.com/<VIDEO_UID>`, from working.
 
 Restricting viewing can be done by updating the video's metadata.
 
 ```bash
-curl -X POST -H "Authorization: Bearer $TOKEN" "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID" -H "Content-Type: application/json" -d "{\"uid\": \"$VIDEOID\", \"requireSignedURLs\": true }"
+curl -X POST -H "Authorization: Bearer <API_TOKEN>" "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>" -H "Content-Type: application/json" -d "{\"uid\": \"<VIDEO_UID>\", \"requireSignedURLs\": true }"
 ```
 
 Response:
@@ -36,7 +36,7 @@ highlight: [8]
 
 {
   "result": {
-    "uid": "$VIDEOID",
+    "uid": "<VIDEO_UID>",
     ...
     "requireSignedURLS": true
   },
@@ -62,8 +62,8 @@ You can call the `/token` endpoint for any video that is marked private to get a
 ```bash
 curl \
 -X POST \
--H "Authorization: Bearer $TOKEN" \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/token
+-H "Authorization: Bearer <API_TOKEN>" \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/token
 ```
 
 You will see a response similar to this if the request succeeds:
@@ -115,7 +115,7 @@ async function handleRequest(request) {
     },
     body: JSON.stringify(signed_url_restrictions)
   }
-  const signedurl_service_response = await fetch("https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/stream/{VIDEO_ID}/token", init)
+  const signedurl_service_response = await fetch("https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/token", init)
   return new Response(JSON.stringify(await signedurl_service_response.json()), {status: 200})
 }
 ```
@@ -152,7 +152,7 @@ async function handleRequest(request) {
     },
     body: JSON.stringify(signed_url_restrictions)
   }
-  const signedurl_service_response = await fetch("https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/stream/{VIDEO_ID}/token", init)
+  const signedurl_service_response = await fetch("https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/token", init)
   return new Response(JSON.stringify(await signedurl_service_response.json()), {status: 200})
 }
 ```
@@ -164,7 +164,7 @@ If you are generating a high-volume of tokens, it is best to generate new tokens
 ### Step 1: Call the `/stream/key` endpoint *once* to obtain a key
 
 ```bash
-curl -X POST -H "Authorization: Bearer $TOKEN"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/keys"
+curl -X POST -H "Authorization: Bearer <API_TOKEN>"  "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/keys"
 ```
 
 The response will return `pem` and `jwk` values.
@@ -194,8 +194,8 @@ Here's an example Cloudflare Worker script which generates tokens that expire in
 ```JavaScript
 // Global variables
 const jwkKey = '{PRIVATE-KEY-IN-JWK-FORMAT}'
-const keyID = '$KEYID'
-const videoID = '$VIDEOID'
+const keyID = '<KEY_ID>'
+const videoUID = '<VIDEO_UID>'
 // expiresTimeInS is the expired time in second of the video
 const expiresTimeInS = 3600
 
@@ -208,7 +208,7 @@ async function streamSignedUrl () {
     "kid": keyID
   }
   const data = {
-    "sub": videoID,
+    "sub": videoUID,
     "kid": keyID,
     "exp": expiresIn,
     "accessRules": [
@@ -284,7 +284,7 @@ You can create up to 1,000 keys and rotate them at your convenience.
 Once revoked all tokens created with that key will be invalidated.
 
 ```javascript
-// curl -X DELETE -H "Authorization: Bearer $TOKEN"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/keys/$KEYID"
+// curl -X DELETE -H "Authorization: Bearer <API_TOKEN>"  "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/keys/<KEY_ID>"
 
 {
   "result": "Revoked",
@@ -374,9 +374,9 @@ You can also control embed limitation programmatically using the Stream API. `ui
 
 ```sh
 curl -X POST \
--H "Authorization: Bearer $TOKEN" \
--d "{\"uid\": \"$VIDEOID\", \"allowedOrigins\": [\"example.com\"]}" \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
+-H "Authorization: Bearer <API_TOKEN>" \
+-d "{\"uid\": \"<VIDEO_UID>\", \"allowedOrigins\": [\"example.com\"]}" \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>
 
 ```
 

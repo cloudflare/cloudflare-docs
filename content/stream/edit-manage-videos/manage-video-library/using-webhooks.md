@@ -16,9 +16,9 @@ To subscribe to receive webhook notifications on your service or modify an exist
 The webhook notification URL must include the protocol. Only `http://` or `https://` is supported.
 
 ```bash
-curl -X PUT --header 'Authorization: Bearer $TOKEN' \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/webhook \
---data '{"notificationUrl":"$WEBHOOK_NOTIFICATION_URL"}'
+curl -X PUT --header 'Authorization: Bearer <API_TOKEN>' \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/webhook \
+--data '{"notificationUrl":"<WEBHOOK_NOTIFICATION_URL>"}'
 ```
 
 ```bash

@@ -6,11 +6,14 @@ weight: 1
 
 # Use the Stream player
 
-The Stream player can be placed on a web page in an iframe element with the video UID (or [signed token](/stream/viewing-videos/securing-your-stream/)) replacing `$VIDEOID` in the example below.
+To add the Stream Player to a web page, you can either:
+
+1. Generate an embed code in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream) for a specific video or live input.
+2. Use the code example below, replacing `<VIDEO_UID>` with the video UID (or [signed token](/stream/viewing-videos/securing-your-stream/)) and `<CODE>` with the your unique customer code, which can be found in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
 
 ```html
 <iframe
-  src="https://iframe.videodelivery.net/$VIDEOID"
+  src="https://customer-<CODE>.iframe.cloudflarestream.com/<VIDEO_UID>"
   style="border: none"
   height="720"
   width="1280"
@@ -19,7 +22,7 @@ The Stream player can be placed on a web page in an iframe element with the vide
 ></iframe>
 ```
 
-Stream player is also available as a [React](https://www.npmjs.com/package/@cloudflare/stream-react) or [Angular](https://www.npmjs.com/package/@cloudflare/stream-angular) components
+Stream player is also available as a [React](https://www.npmjs.com/package/@cloudflare/stream-react) or [Angular](https://www.npmjs.com/package/@cloudflare/stream-angular) component.
 
 ## Player Size
 
@@ -29,7 +32,7 @@ Changing the `height` and `width` attributes on the `iframe` will change the pix
 
 ```html
 <iframe
-  src="https://iframe.videodelivery.net/$VIDEOID"
+  src="https://customer-<CODE>.iframe.cloudflarestream.com/<VIDEO_UID>"
   style="border: none"
   height="400"
   width="400"
@@ -46,7 +49,7 @@ To make an iframe responsive, it needs styles to enforce an aspect ratio by sett
 <!-- padding-top calculation is height / width (assuming 16:9 aspect ratio) -->
 <div style="position: relative; padding-top: 56.25%">
   <iframe
-    src="https://iframe.videodelivery.net/$VIDEOID"
+    src="https://customer-<CODE>.iframe.cloudflarestream.com/<VIDEO_UID>"
     style="border: none; position: absolute; top: 0; height: 100%; width: 100%"
     allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
     allowfullscreen="true"
@@ -58,7 +61,7 @@ To make an iframe responsive, it needs styles to enforce an aspect ratio by sett
 
 Player options are configured with querystring parameters in the iframe's `src` attribute. For example:
 
-`https://iframe.videodelivery.net/$VIDEOID?autoplay=true&muted=true`
+`https://customer-<CODE>.iframe.cloudflarestream.com/<VIDEO_UID>?autoplay=true&muted=true`
 
 {{<definitions>}}
 
@@ -118,7 +121,9 @@ The `<video>` element does not force the browser to follow the value of this opt
 
     {{<Aside type="note">}}
 
-**Note:** Like all query string parameters, this value _must_ be URI encoded. For example, the thumbnail at `https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270` can be encoded using JavaScript's `encodeURIComponent()` function to `https%3A%2F%2Fvideodelivery.net%2F5d5bc37ffcf54c9b82e996823bffbb81%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D68s%26height%3D270`.
+https://customer-<CODE>.iframe.cloudflarestream.com/<VIDEO_UID>
+
+**Note:** Like all query string parameters, this value _must_ be URI encoded. For example, the thumbnail at `https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg?time=1s&height=270` can be encoded using JavaScript's `encodeURIComponent()` function to `https%3A%2F%2Fcustomer-m033z5x00ks6nunl.cloudflarestream.com%2Fb236bde30eb07b9d01318940e5fc3eda%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D1s%26height%3D600`.
 
         {{</Aside>}}
 
