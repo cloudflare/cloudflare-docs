@@ -132,7 +132,7 @@ https://github.com/cloudflare/cloudflare-docs-engine/issues/281
   <div className="AspectRatio" style={{"--aspect-ratio": "calc(16 / 9)"}}>
     <iframe
       className="AspectRatio--content"
-      src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/iframe?muted=true"
+      src="https://iframe.videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81?muted=true"
       title="Example Stream video"
       frameBorder="0"
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
