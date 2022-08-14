@@ -331,3 +331,4 @@ If you would like to review the full source code for this application, you can f
 
 - [Build an API for your front end using Cloudflare Workers](/pages/tutorials/build-an-api-with-workers/)
 - [Handle form submissions with Airtable](/workers/tutorials/handle-form-submissions-with-airtable/)
+- [static website forms](https://fabform.io/a/create-a-static-website-with-contact-form-on-github-pages)
