@@ -5,105 +5,55 @@ weight: 1
 
 # Use your own player
 
-There could be cases where you might need more control over the Stream player for your use case. Stream is compatible with third-party players that support HLS and DASH manifests with no additional charge.
+Cloudflare Stream is compatible with all video players that support HLS and DASH, which are standard formats for streaming media with broad support across all web browsers, mobile operating systems and media streaming devices.
 
-Some use cases that might benefit from a third-party player include:
+Refer to the guides below for more information.
 
-*   Native mobile playback
-*   Features the Stream player does not support
-*   Specific UI needs such as branding
+* [Web](/stream/viewing-videos/using-own-player/web)
+* [iOS (AVPlayer)](/stream/viewing-videos/using-own-player/ios)
+* [Android (ExoPlayer)](/stream/viewing-videos/using-own-player/android)
 
-## Manifest files
+## How to fetch HLS and Dash manifests
 
-Every video uploaded on Stream has HLS and DASH manifests available to use. These are standard formats for streaming media that have broad support.
+Each video and live stream has its own unique HLS and DASH manifest. You can access the manifest by replacing `<UID>` with the UID of your video or live input, and replacing `<CODE>` with your unique customer code, in the URLs below:
 
-The locations of these files can be found in the [Stream API for each video](https://api.cloudflare.com/#stream-videos-video-details).
-
-The `playback` object contains entries for all available playback methods
-
-```json
-//...
-"playback": {
-    "hls": "https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.m3u8",
-    "dash": "https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.mpd"
-}
-//...
+```text
+---
+header: HLS
+---
+https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.m3u8
 ```
 
-### Recommendations
+```text
+---
+header: DASH
+---
+https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
+```
 
-Use the manifest format which is compatible with your player.
+You can also find HLS and DASH manifest URLS in the [Stream Dashboard]() by viewing any video or live input, or by using the [Stream API](https://api.cloudflare.com/#stream-videos-video-details).
 
-If both manifest formats are compatible, prefer DASH as it has smaller manifests for longer videos.
+### Customize manifests by specifying available client bandwidth
 
-Playback in the Apple ecosystem, especially iOS, likely requires using HLS.
+Each HLS and DASH manifest provides multiple resolutions of your video or live stream. Your player contains adaptive bitrate logic to estimate the viewer's available bandwidth, and select the optimal resolution to play. Each player has different logic that makes this decision, and most have configuration options to allow you to customize or override either bandwidth or resolution.
 
-### Customization with hints
-
-Manifests may be customized using hints. These are query parameters included on the manifest request that indicate a preference. When possible, these will be respected.
-
-If a hint or combination of hints would cause an invalid manifest to be served, all hints are ignored.
-
-Currently, the following hints are available:
+If your player lacks such configuration options or you need to override them, you can add the `clientBandwidthHint` query param to the request to fetch the manifest file. This should be used only as a last resort — we recommend first using customization options provided by your player. Remember that while you may be developing your website or app on a fast internet connection, and be tempted to use this setting to force high quality playback, many of your viewers are likely connecting over slower mobile networks.
 
 {{<definitions>}}
 
 *   `clientBandwidthHint` {{<type>}}float{{</type>}}
-    *   Require all video representations in the manifest have a bitrate at least the provided Mbps. This can be used to enforce a minimum level of quality at the expense of users on slower connections.
+    *   Return only the video representation closest to the provided bandwidth value (in Mbps). This can be used to enforce a specific quality level. If you specify a value that would cause an invalid or empty manifest to be served, the hint is ignored.
 
 {{</definitions>}}
 
 #### Examples
 
-##### Only display video representations with at least 1.8 Mbps of bandwidth
+##### Display only the video representation with a bitrate closest to 1.8 Mbps
 
 ```txt
 https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.mpd?clientBandwidthHint=1.8
 ```
 
-This removes all video representations with a bitrate less than 1.8Mbps from the manifest.
-
-In this case, a customer is expressing their preference to have their content display at a higher minimum quality.
-
-### Using Stream videos as a cover background
-
-If you need complete control over the video element's CSS you can use a third party player like **hls.js** and the manifest with a video element.
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
-    <style>
-      body,
-      html {
-        height: 100%;
-        margin: 0;
-      }
-
-      #cover-video {
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <script src="https://unpkg.com/hls.js/dist/hls.min.js"></script>
-    <video playsinline autoplay muted loop id="cover-video"></video>
-    <script>
-      var hls = new Hls();
-      hls.loadSource("https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.m3u8");
-      hls.attachMedia(document.getElementById("cover-video"));
-    </script>
-  </body>
-</html>
-```
-
 ## Limitations
 
-*   [Analytics](/stream/getting-analytics/) are not collected by third-party players, information such as minutes viewed and number of views will not be available on the Stream dashboard.
-*   Automatic error reporting is not available to third-party players. Please reach out to Cloudflare Support if you experience playback issues with Stream manifest files.
+* [Client-size Analytics](/stream/getting-analytics/#client-side-analytics) are not available if you use your own player.
