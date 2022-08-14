@@ -67,13 +67,16 @@ If you are newer to GraphQL, refer to [Cloudflare GraphQL analytics for HTTP req
 
 ### Examples
 
-Here is how you would get the view count and minutes viewed for the videos in your Stream account:
-
->>>>>>> 4cb504424 (Added headers & moved example up)
-
 ```javascript
+=======
+**Prerequisite:** 
+[Generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with the **Account Analytics** permission.
+
+#### Get the view count and minutes viewed for all videos in your Stream account
+
+```graphql
 ---
-header: GraphQL Query
+header: GraphQL Request
 ---
 query {
   viewer {
@@ -102,17 +105,7 @@ query {
 }
 ```
 
-### Response
-
-The response will look something like below. Things to remember:
-
-*   Each object inside videoPlaybackEventsAdaptiveGroups represents one video
-*   uid property represents the video uid
-*   count property shows the view count for one video during the specified date range
-*   timeViewedMinutes property shows the minutes viewed per video during the specified date range
-*   If a video did not have views in the date range specified, it will NOT be included in the response
-
-```javascript
+```json
 ---
 header: GraphQL response
 ---
@@ -134,28 +127,10 @@ header: GraphQL response
             {
               "count": 0,
               "dimensions": {
-                "uid": "39a24fb20aa2617a483582f5ggb6b0d5e9"
-              },
-              "sum": {
-                "timeViewedMinutes": 0
-              }
-            },
-            {
-              "count": 0,
-              "dimensions": {
                 "uid": "5646153f8dea17f44dss542a42e76cfd04"
               },
               "sum": {
                 "timeViewedMinutes": 0
-              }
-            },
-            {
-              "count": 0,
-              "dimensions": {
-                "uid": "6cc90238ffd28e1861ba2aaf1030f6d4db"
-              },
-              "sum": {
-                "timeViewedMinutes": 1
               }
             },
             {
@@ -166,42 +141,6 @@ header: GraphQL response
               "sum": {
                 "timeViewedMinutes": 1225
               }
-            },
-            {
-              "count": 1,
-              "dimensions": {
-                "uid": "a8d47920ds8c6e8d1cgffc425e6c9120ef76"
-              },
-              "sum": {
-                "timeViewedMinutes": 0
-              }
-            },
-            {
-              "count": 2,
-              "dimensions": {
-                "uid": "cc707cacc9bc86cb8fbab0021d749389"
-              },
-              "sum": {
-                "timeViewedMinutes": 1
-              }
-            },
-            {
-              "count": 1,
-              "dimensions": {
-                "uid": "e81376fee97b3115dc1c3f82fb2be79e"
-              },
-              "sum": {
-                "timeViewedMinutes": 0
-              }
-            },
-            {
-              "count": 241,
-              "dimensions": {
-                "uid": "fcfa5c97795ba90251cbbae1880a0e18"
-              },
-              "sum": {
-                "timeViewedMinutes": 101
-              }
             }
           ]
         }
@@ -210,8 +149,15 @@ header: GraphQL response
   },
   "errors": null
 }
-
 ```
+
+About the response above:
+
+*   Each object inside videoPlaybackEventsAdaptiveGroups represents one video
+*   uid property represents the video uid
+*   count property shows the view count for one video during the specified date range
+*   timeViewedMinutes property shows the minutes viewed per video during the specified date range
+*   If a video did not have views in the date range specified, it will NOT be included in the response
 
 ## Server side analytics
 
@@ -232,22 +178,39 @@ header: GraphQL response
 
 ### Example
 
-Here is the exact cURL request:
-
-```bash
----
-header: cURL request
----
-curl --request POST \
---url https://api.cloudflare.com/client/v4/graphql \
---header 'content-type: application/json' \
---header 'Authorization: Bearer <API_TOKEN>' \
---data '{"query":"query {\n  viewer {\n    accounts(filter:{\n      accountTag:\"<ACCOUNT_ID>\"\n\n    }) {\n      streamMinutesViewedAdaptiveGroups(\n        filter: {\n          date_lt: \"2022-03-01\"\n          date_gt: \"2022-02-01\"\n        }\n        orderBy:[sum_minutesViewed_DESC]\n        limit: 10\n      ) {\n             sum {\n          minutesViewed\n        }\n        dimensions{\n          uid\n          clientCountryName\n        }\n      }\n    }\n  }\n}\n\n"}'
-```
-
-### Response
+#### Get minutes viewed by country
 
 ```graphql
+---
+header: GraphQL request
+---
+query {
+  viewer {
+    accounts(filter:{
+      accountTag:"<ACCOUNT_ID>"
+    }) {
+      streamMinutesViewedAdaptiveGroups(
+        filter: {
+          date_geq: "2022-03-01"
+          date_lt: "2022-02-01"
+        }
+        orderBy:[sum_minutesViewed_DESC]
+        limit: 100
+      ) {
+        sum {
+          minutesViewed
+        }
+        dimensions{
+          uid
+          clientCountryName
+        }
+      }
+    }
+  }
+}
+```
+
+```json
 ---
 header: GraphQL response
 ---
@@ -299,7 +262,7 @@ GraphQL API supports seek pagination: using filters, you can specify the last vi
 
 The query below will return data for 2 videos that follow video UID `5646153f8dea17f44d542a42e76cfd`:
 
-```javascript
+```graphql
 ---
 header: GraphQL query
 ---
