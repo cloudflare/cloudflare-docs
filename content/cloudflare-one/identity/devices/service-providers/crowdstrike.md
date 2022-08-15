@@ -50,12 +50,12 @@ To ensure the values have been entered correctly, select **Test**.
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client** > **Service provider checks**.
 2. Select **Add new**.
 3. Select the CrowdStrike provider.
-4. Configure a [Crowdstrike ZTA attribute](#crowdstrike-zta-data) and enter any name.
+4. Configure a [device posture attribute](#crowdstrike-device-posture-attributes) and enter any name.
 5. Select **Save**.
 
-## Crowdstrike ZTA data
+## Crowdstrike device posture attributes
 
-This information is gathered from the [CrowdStrike Zero Trust Assessment APIs](https://falcon.us-2.crowdstrike.com/documentation/156/zero-trust-assessment-apis).
+Device posture data is gathered from the [CrowdStrike Zero Trust Assessment APIs](https://falcon.us-2.crowdstrike.com/documentation/156/zero-trust-assessment-apis).
 
 | Selector      | Description          | Value    |
 | ------------- | ---------------------|----------|
