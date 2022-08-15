@@ -72,7 +72,7 @@ layout: list
       <td>2022-08-22</td>
       <td>Block</td>
       <td>N/A</td>
-      <td>...N/A</td>
+      <td>...fd9eb416</td>
       <td>Code Injection - WordPress Weblizar Backdoor - CVE:CVE-2022-1609</td>
       <td>100541</td>
     </tr>
