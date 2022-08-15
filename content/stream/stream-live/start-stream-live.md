@@ -1,16 +1,16 @@
 ---
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Start a live stream
-weight: 7
+weight: 1
 ---
 
 # Start a live stream
 
-You can start a live stream using the Stream Dashboard or the API. After you subscribe to Stream, you can create Live Inputs and begin sending your live video to Cloudflare Stream using RTMPS or SRT. SRT supports newer video codecs and makes using accessibility features, such as captions and multiple audio tracks, easier.
+You can start a live stream using the Stream dashboard or the API. After you subscribe to Stream, you can create Live Inputs and begin sending your live video to Cloudflare Stream using RTMPS or SRT. SRT supports newer video codecs and makes using accessibility features, such as captions and multiple audio tracks, easier.
 
-## Using the Dashboard
+## Using the dashboard
 
-1. To start a live stream using the Stream Dashboard, click the **Live Inputs** tab.
+1. To start a live stream using the Stream dashboard, click the **Live Inputs** tab.
 2. Click **Create Live Input**.
 3. Enter a name for your Live Input and click **Create Live Input**.
 4. Under **Connection Information** > **Protocol**, choose **RTMPS** or **SRT**.
@@ -80,6 +80,4 @@ curl -X DELETE \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/c
 ### Known limitations:
 
 - Watermarks cannot yet be used with live videos.
-- The live videos feature does not yet work on older iOS versions: iOS 10, launched in 2016, and below.
-- Hardware video encoding on Apple devices is not yet supported. When using encoder software such as OBS, x264 software encoding is required.
 - If a live video exceeds seven days in length, the recording will be truncated to seven days and not be viewable.

@@ -1,9 +1,7 @@
 ---
 title: HTTP Requests by Colo Groups to HTTP Requests by Adaptive Groups
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 11
-meta:
-  title: to
 ---
 
 # HTTP Requests by Colo Groups to HTTP Requests by Adaptive Groups

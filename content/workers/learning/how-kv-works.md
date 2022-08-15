@@ -1,7 +1,7 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: How KV works
-weight: 0
+weight: 7
 ---
 
 # How KV works
@@ -11,6 +11,8 @@ Workers KV is a global, low-latency, key-value data store. It stores data in a s
 Because Workers KV stores data centrally and uses pull-based replication to store data in cache, it is generally good for use cases where you need to write relatively infrequently, but read quickly and frequently. It is optimized for these high-read applications, only reaching its full performance when data is being frequently read. Infrequently read values are stored centrally, while more popular values are maintained in all Cloudflare data centers globally.
 
 KV achieves this performance by being eventually-consistent. Changes are immediately visible in the Cloudflare network edge location at which they are made but may take up to 60 seconds to propagate to all other network edge locations as their cached versions of the data time out and they check in with the central datastores. In particular, propagation of changes takes longer to locations which have recently read a previous version of a given key (including reads that indicated the key did not exist, which are also cached locally). Workers KV is not ideal for situations where you need support for atomic operations or where values must be read and written in a single transaction.
+
+If you need stronger consistency guarantees, consider using [Durable Objects](/workers/learning/using-durable-objects/). One pattern is to send all of your writes for a given KV key through a corresponding instance of a Durable Object, and then read that value from KV in other Workers. This is useful if you need more control over writes, but are satisfied with KV's read characteristics described above.
 
 KV does not perform like an in-memory datastore, such as [Redis](https://redis.io). Accessing KV values, even when locally cached, has significantly more latency than reading a value from memory within a Worker script.
 

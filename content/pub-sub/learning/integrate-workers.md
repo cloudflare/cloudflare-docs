@@ -1,6 +1,6 @@
 ---
 title: Integrate with Workers
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 2
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Using R2 in a Worker
 summary: A demo of how to use R2 in a Worker.
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 1001
 layout: example
 ---
@@ -25,6 +25,7 @@ function parseRange(encoded: string | null): undefined | { offset: number, lengt
 
   return {
     offset: Number(parts[0]),
+    end:    Number(parts[1]),
     length: Number(parts[1]) + 1 - Number(parts[0]),
   }
 }
@@ -79,6 +80,9 @@ export default {
         const headers = new Headers()
         object.writeHttpMetadata(headers)
         headers.set('etag', object.httpEtag)
+        if (range) {
+          headers.set("content-range", `bytes ${range.offset}-${range.end}/${object.size}`)
+        }
         const status = object.body ? (range ? 206 : 200) : 304
         return new Response(object.body, {
           headers,
@@ -86,9 +90,7 @@ export default {
         })
       }
 
-      const object = await env.MY_BUCKET.head(objectName, {
-        onlyIf: request.headers,
-      })
+      const object = await env.MY_BUCKET.head(objectName)
 
       if (object === null) {
         return objectNotFound(objectName)

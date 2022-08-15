@@ -1,5 +1,5 @@
 ---
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Network policies
 weight: 3
 layout: single
@@ -181,7 +181,7 @@ The IP address of the user making the request.
 
 ### Source Port
 
-The IP address of the user making the request.
+The source port of the user making the request.
 
 | UI name     | API example              |
 | ----------- | ------------------------ |

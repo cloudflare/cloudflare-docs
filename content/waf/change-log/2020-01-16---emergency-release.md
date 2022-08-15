@@ -1,7 +1,7 @@
 ---
 title: 2020-01-16 – Emergency
 type: table
-pcx-content-type: changelog
+pcx_content_type: changelog
 weight: 987
 layout: list
 meta:

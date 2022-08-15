@@ -113,8 +113,8 @@ const ESCAPE = /[&"<>]/g;
 const CHARS = {
   '"': '&quot;',
   '&': '&amp;',
-  '<': '&lt',
-  '>': '&gt',
+  '<': '&lt;',
+  '>': '&gt;',
 };
 
 // @see lukeed/tempura

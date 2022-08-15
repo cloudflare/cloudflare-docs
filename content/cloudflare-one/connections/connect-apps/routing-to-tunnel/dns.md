@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: DNS record
 weight: 51
 ---
@@ -8,8 +8,8 @@ weight: 51
 
 | Before you start                                                                   |
 | ---------------------------------------------------------------------------------- |
-| 1. [Create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/)      |
-| 1. [Configure the Tunnel](/cloudflare-one/connections/connect-apps/configuration/) |
+| 1. [Create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/)      |
+| 1. [Configure the Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#configure-tunnels/) |
 
 ## Route traffic from the Cloudflare dashboard
 

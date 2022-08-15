@@ -1,5 +1,5 @@
 ---
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Querying Firewall Events with GraphQL
 ---
 
@@ -12,8 +12,8 @@ The following API call will request Firewall Events over a one hour period, and 
 ## API Call
 
 ```bash
-PAYLOAD='{
-  "query": "query ListFirewallEvents($zoneTag: string, $filter: FirewallEventsAdaptiveFilter_InputObject) {
+echo '{ "query":
+  "query ListFirewallEvents($zoneTag: string, $filter: FirewallEventsAdaptiveFilter_InputObject) {
     viewer {
       zones(filter: { zoneTag: $zoneTag }) {
         firewallEventsAdaptive(
@@ -37,30 +37,30 @@ PAYLOAD='{
   "variables": {
     "zoneTag": "CLOUDFLARE_ZONE_ID",
     "filter": {
-      "datetime_geq": "2020-04-24T11:00:00Z",
-      "datetime_leq": "2020-04-24T12:00:00Z"
+      "datetime_geq": "2022-07-24T11:00:00Z",
+      "datetime_leq": "2022-07-24T12:00:00Z"
     }
   }
-}'
-
-curl \
+}' | tr -d '\n' | curl \
   -X POST \
   -H "Content-Type: application/json" \
   -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
   -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  --data "$(echo $PAYLOAD)" \
+  -s \
+  -d @- \
   https://api.cloudflare.com/client/v4/graphql/
 ```
 
 The results returned will be in JSON (as requested), so piping the output to `jq` will make them easier to read, e.g.,:
 
 ```bash
-curl \
+... | curl \
   -X POST \
   -H "Content-Type: application/json" \
   -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
   -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  --data "$(echo $PAYLOAD)" \
+  -s \
+  -d @- \
   https://api.cloudflare.com/client/v4/graphql/ | jq .
 #=> {
 #=>   "data": {

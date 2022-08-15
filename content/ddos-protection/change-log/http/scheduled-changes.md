@@ -1,5 +1,5 @@
 ---
-pcx-content-type: changelog
+pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
 layout: list
@@ -22,13 +22,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-07-08</td>
-      <td>2022-07-18</td>
-      <td>...1712a123</td>
-      <td>HTTP requests with unusual HTTP headers or URI path (signature #16).</td>
+      <td>2022-08-11</td>
+      <td>2022-08-16</td>
+      <td>...b757316c</td>
+      <td>BETA - HTTP requests with unusual HTTP headers or URI path (signature #16).</td>
       <td>N/A</td>
       <td>log</td>
-      <td>New rule blocking requests with unusual attributes.</td>
+      <td>Improve the accuracy of the rule to detect more attacks.</td>
     </tr>
   </tbody>
 </table>

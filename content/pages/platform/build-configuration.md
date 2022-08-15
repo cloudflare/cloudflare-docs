@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Build configuration
 ---
 
@@ -12,6 +12,19 @@ You may tell Cloudflare Pages how your site needs to be built as well as where i
 You should provide a build command to tell Cloudflare Pages how to build your application. For projects not listed here, consider reading the tool's documentation or framework, and submit a pull request to add it here.
 
 Build directories indicates where your project's build command outputs the built version of your Cloudflare Pages site. Often, this defaults to the industry-standard `public`, but you may find that you need to customize it.
+
+<details>
+<summary>Understanding your build configuration</summary>
+<div>
+
+The build command is provided by your framework. For example, the Gatsby framework uses `gatsby build` as its build command. When you are working without a framework, leave the **Build command** field blank.
+
+The build directory is generated from the build command. Each framework has its own naming convention, for example, the build output directory is named `/public` for many frameworks.
+
+The root directory is where your site’s content lives. If not specified, Cloudflare assumes that your linked git repository is the root directory. The root directory needs to be specified in cases like monorepos, where there may be multiple projects in one repository.
+
+</div>
+</details>
 
 ## Framework presets
 
@@ -39,7 +52,7 @@ If you are not using a framework, leave the **Build command** field blank.
 | Mkdocs                       | `mkdocs build`                       | `site`                      |
 | Next.js (Static HTML Export) | `next build && next export`          | `out`                       |
 | Nuxt.js                      | `nuxt generate`                      | `dist`                      |
-| Pelican                      | `pelican $content [-s settings.py]`  | `output`                    |
+| Pelican                      | `pelican content [-s settings.py]`   | `output`                    |
 | Quasar                       | `quasar build`                       | `dist/spa`                  |
 | React (create-react-app)     | `npm run build`                      | `build`                     |
 | React Static                 | `react-static build`                 | `dist`                      |

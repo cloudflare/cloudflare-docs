@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Configuration
 weight: 3
 ---
@@ -72,9 +72,15 @@ KEY = "value"
 # @param {string} id The ID of the KV namespace at the edge
 # @param {string} preview_id The ID of the KV namespace used during `wrangler dev`
 # not inherited
-kv_namespaces = [
-  { binding = "TEST_NAMESPACE", id = "", preview_id = "" }
-]
+[[kv_namespaces]]
+  binding = "<YOUR_NAMESPACE_0>"
+  id = "<YOUR_ID>"
+  preview_id = "<YOUR_PREVIEW_ID>"
+
+[[kv_namespaces]]
+  binding = "<YOUR_NAMESPACE_1>"
+  id = "<YOUR_ID>"
+  preview_id = "<YOUR_PREVIEW_ID>"
 
 # A list of Durable Objects that your Worker should be bound to.
 # To learn more about Durable Objects, refer to:
@@ -238,3 +244,20 @@ HTTP_PROXY=http://localhost:8080 wrangler dev
 If your IT team has configured your computer's proxy settings, be aware that the first non-empty environment variable in this list will be used when Wrangler makes outgoing requests.
 
 For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only use `https_proxy` for outgoing requests.
+
+## Local environments
+
+Wrangler allows you to set variable or secret keys locally without the need to set the `[vars]` bindings in your `wrangler.toml` file. The variables and secrets keys you set only get used when you run `wrangler dev`.
+
+You need to create a file called `.dev.vars` next to the `wrangler.toml` file (or in the current working directory if there is no `wrangler.toml`. 
+
+Any values in this file, formatted like a `dotenv` file, will add to or override the `[vars]` bindings provided in the `wrangler.toml`.
+
+Below is an example of `.dev.vars` file:
+
+```bash
+---
+header: .dev.vars
+---
+SECRET_KEY = "value"
+```

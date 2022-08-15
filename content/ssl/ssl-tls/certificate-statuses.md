@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Certificate statuses
 weight: 8
 ---
@@ -53,4 +53,4 @@ For more details on certificate validation, refer to [Changing DCV method](/ssl/
 
 Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by [using the API](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details).
 
-For more details on certificate validation, refer to [Changing DCV method](/ssl/ssl-for-saas/common-tasks/certificate-validation-methods/).
+For more details on certificate validation, refer to [Changing DCV method](/cloudflare-for-saas/security/certificate-management/issue-and-validate/).

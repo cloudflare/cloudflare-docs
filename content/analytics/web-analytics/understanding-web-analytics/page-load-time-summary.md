@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Page load time summary
 weight: 10
 ---
@@ -9,7 +9,7 @@ weight: 10
 Page load time summary gives you an overview of how long your web page takes to load, broken down by area. To access Page load time:
 
 1. Go to [Web Analytics](https://dash.cloudflare.com/?to=/:account/web-analytics) from your account home page, and choose a website.
-2. Click **Page load time**.
+2. Select **Page load time**.
 
 Below is a list of all the components you can inspect:
 

@@ -1,9 +1,9 @@
 ---
 type: overview
-pcx-content-type: reference
+pcx_content_type: reference
 title: Network Analytics v1 to Network Analytics v2
 weight: 14
-layout: list
+layout: single
 ---
 
 # Network Analytics v1 to Network Analytics v2

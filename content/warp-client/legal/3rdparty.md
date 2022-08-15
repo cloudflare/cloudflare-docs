@@ -1,7 +1,7 @@
 ---
 title: Third party licenses
 hidden: true
-pcx-content-type: reference
+pcx_content_type: reference
 ---
 
 # Third party licenses

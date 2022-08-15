@@ -1,5 +1,5 @@
 ---
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Configure your mobile app or IoT device
 weight: 4
 ---

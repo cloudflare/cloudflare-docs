@@ -1,6 +1,6 @@
 ---
 title: Cloudflare Network Analytics
-pcx-content-type: overview
+pcx_content_type: overview
 weight: 3
 meta:
   title: Cloudflare Network Analytics v2

@@ -1,9 +1,9 @@
 ---
-pcx-content-type: reference
-title: Fetching bulk analytics
+pcx_content_type: reference
+title: Fetch bulk analytics
 ---
 
-# Fetching bulk analytics
+# Fetch bulk analytics
 
 Cloudflare Stream lets you fetch usage data in bulk using the GraphQL API. Stream's GraphQL API exposes two data sets:
 
@@ -337,6 +337,5 @@ Here are the steps to implementing pagination:
 
 ## Limitations
 
-*   Only Cloudflare API keys, not API tokens can be used with the Stream GraphQL API for now
 *   Maximum query interval in a single query is 31 days
 *   Maximum data retention period is 90 days

@@ -1,7 +1,7 @@
 ---
 title: 2022-05-10 – Emergency
 type: table
-pcx-content-type: changelog
+pcx_content_type: changelog
 weight: 909
 layout: list
 meta:

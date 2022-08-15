@@ -1,6 +1,6 @@
 ---
 title: Overview
-pcx-content-type: overview
+pcx_content_type: overview
 weight: 1
 meta:
   title: Cloudflare Waiting Room docs
@@ -8,7 +8,7 @@ meta:
 
 # Cloudflare Waiting Room
 
-Cloudflare Waiting Room protects websites by queuing site visitors when a website experiences unmanageable surges in legitimate traffic that may otherwise bring an application down.
+Cloudflare Waiting Room protects websites by queueing site visitors when a website experiences unmanageable surges in legitimate traffic that may otherwise bring an application down.
 
 ## Benefits
 

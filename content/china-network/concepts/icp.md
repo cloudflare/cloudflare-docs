@@ -1,6 +1,6 @@
 ---
 title: Internet Content Provider (ICP)
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 3
 layout: list
 ---

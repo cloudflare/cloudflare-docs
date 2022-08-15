@@ -1,7 +1,8 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Datasets (tables)
 weight: 3
+layout: single
 ---
 
 # Datasets (tables)

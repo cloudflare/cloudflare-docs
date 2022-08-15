@@ -1,6 +1,6 @@
 ---
 title: Format of header names and values
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 2
 meta:
   title: Format of HTTP response header names and values

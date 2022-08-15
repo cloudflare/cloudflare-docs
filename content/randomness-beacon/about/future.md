@@ -1,6 +1,6 @@
 ---
 title: Future of drand
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 3
 meta:
   title: Future of drand

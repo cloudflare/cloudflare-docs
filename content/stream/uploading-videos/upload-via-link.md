@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Upload via link
 weight: 2
 ---
@@ -8,7 +8,7 @@ weight: 2
 
 If you have videos stored in a cloud storage bucket, you can simply pass a HTTP link for the file. Stream will fetch the file and make it available for streaming.
 
-By using [webhooks](/stream/uploading-videos/using-webhooks/) you can receive a notification when the video is ready to be played or if it errors.
+By using [webhooks](/stream/edit-manage-videos/manage-video-library/using-webhooks/) you can receive a notification when the video is ready to be played or if it errors.
 
 ## Step 1: Make an API call with the link
 
@@ -65,7 +65,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/copy
 
 ## Step 2: Poll the API or wait for a webhook
 
-Because Stream must download and encode the video, the video might not be available for a few seconds to a few minutes depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/stream/uploading-videos/using-webhooks/) to be notified when a video is ready for streaming.
+Because Stream must download and encode the video, the video might not be available for a few seconds to a few minutes depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/stream/edit-manage-videos/manage-video-library/using-webhooks/) to be notified when a video is ready for streaming.
 
 ## Step 3: View the video
 
