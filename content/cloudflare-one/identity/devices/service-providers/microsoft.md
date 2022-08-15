@@ -57,6 +57,8 @@ To ensure the values have been entered correctly, select **Test**.
 1. Configure the [device posture attribute](#microsoft-intune-device-attributes) you want to check.
 1. Select **Save**.
 
+Next, [verify the service provider posture check](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) for your devices.
+
 ## Microsoft Intune device attributes
 
 The Microsoft Endpoint Manager device posture check relies on information from the Microsoft Graph API. Refer to Microsoft's [ComplianceState](https://docs.microsoft.com/en-us/graph/api/resources/intune-devices-compliancestate?view=graph-rest-1.0) and [List managedDevices](https://docs.microsoft.com/en-us/graph/api/intune-devices-manageddevice-list?view=graph-rest-1.0) documentation for a list of properties returned by the API.

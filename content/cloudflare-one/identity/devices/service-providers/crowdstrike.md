@@ -50,8 +50,10 @@ To ensure the values have been entered correctly, select **Test**.
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client** > **Service provider checks**.
 2. Select **Add new**.
 3. Select the CrowdStrike provider.
-4. Configure a [device posture attribute](#crowdstrike-device-posture-attributes) and enter any name.
+4. Configure a [device posture check](#crowdstrike-device-posture-attributes) and enter any name.
 5. Select **Save**.
+
+Next, [verify the service provider posture check](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) for your devices.
 
 ## Crowdstrike device posture attributes
 
