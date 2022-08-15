@@ -32,6 +32,15 @@ Currently, API Shield cannot validate some features of API schemas, including th
 
 Regular expression support is a paid add-on in the Enterprise plan.
 
+## Body Inspection
+API Shield has the ability to identify body specifications in uploaded schemas and validate the data of incoming API requests.
+
+{{<Aside type="note" header="Note:">}}
+
+Customers who already use Schema Validation but uploaded their schemas prior to the implementation of this feature must re-upload their schemas to receive Body Inspection benefits.
+
+{{</Aside>}}
+
 ## Availability
 
-Schema Validation is only available for Enterprise customers. If you are interested in using this product, contact your account team.
+Schema Validation is only available for Enterprise customers. If you are interested in using this feature, contact your account team.
