@@ -113,7 +113,7 @@ The `uid` of the video can be used refer to the video after uploading and can be
 
 ```html
 <iframe
-  src="https://customer-m033z5x00ks6nunl.iframe.cloudflarestream.com/<VIDEO_UID>"
+  src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/<VIDEO_UID>/iframe"
   title="Example Stream video"
   frameBorder="0"
   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"

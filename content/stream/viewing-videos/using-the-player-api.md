@@ -13,7 +13,7 @@ The SDK provides an API for programmatically controlling the player and listenin
 ```html
 <!-- You can use styles and CSS on this iframe element where the video player will appear -->
 <iframe
-  src="https://customer-<CODE>.iframe.cloudflarestream.com/<VIDEO_UID>"
+  src="https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/iframe"
   style="border: none"
   height="720"
   width="1280"
