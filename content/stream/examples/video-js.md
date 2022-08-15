@@ -1,14 +1,13 @@
-
 ---
+type: example
+summary: Example of Video.js playback with Cloudflare Stream
+tags:
+  - Playback
+pcx_content_type: configuration
 title: Video playback with Video.js
-weight: 1
-meta:
-  title: Example of Video.js playback with Cloudflare Stream
+weight: 1001
+layout: example
 ---
-
-# Video.js
-
-Example of Video.js playback with Cloudflare Stream
 
 [Video.js API docs](https://docs.videojs.com/)
 
