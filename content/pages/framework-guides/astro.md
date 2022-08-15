@@ -57,9 +57,7 @@ To get started, create a `functions` directory at the root of your project. Writ
 
 You can also deploy an Astro Server-side Rendered (SSR) site to Cloudflare Pages using the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme). SSR sites render on Pages Functions and allow for dynamic functionality and customizations.
 
-To enable an SSR site and deploy to Cloudflare Pages, you will need to:
-
-1. Add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) to your project's `package.json` by running:
+To enable an SSR site and deploy to Cloudflare Pages, you will need to add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) to your project's `package.json` by running:
 
 ```sh
 $ npm run astro add cloudflare
