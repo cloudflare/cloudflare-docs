@@ -99,9 +99,11 @@ function $clicktoClipboard(ev: MouseEvent) {
       try {
         //copy to clipboard
         navigator.clipboard.writeText(text);
-        //show tooltip
-        button.setAttribute("data-tooltip", "Copied");
-        setTimeout(() => { button.setAttribute("data-tooltip", "Copy"); }, 1000);
+        //change SVG
+        button.innerHTML = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"  style= "width:1rem; pointer-events: none;"  aria-label="Copied to clipboard button" focusable="true"><title>Copied Button</title><path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path></svg>`;
+        setTimeout(() => {
+          button.innerHTML = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" style= "width:1rem; pointer-events: none;" aria-label="Copy to clipboard button" focusable="true"><title>Copy Button</title><path fill="none" d="M0 0h24v24H0z"></path><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg>`;
+        }, 1500);
       } catch (err) {
         /* no support */
       }
