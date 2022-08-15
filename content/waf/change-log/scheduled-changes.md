@@ -59,41 +59,32 @@ layout: list
       <td>N/A</td>
     </tr>
     <tr>
-      <td>2022-08-08</td>
       <td>2022-08-15</td>
-      <td>Disable</td>
+      <td>2022-08-22</td>
+      <td>Block</td>
       <td>N/A</td>
-      <td>...8e2e15a5</td>
-      <td>SQLi - Strict</td>
-      <td>N/A</td>
+      <td>...N/A</td>
+      <td>Broken Authentication - VMware - CVE:CVE-2022-31656</td>
+      <td>100542</td>
     </tr>
     <tr>
-      <td>2022-08-08</td>
       <td>2022-08-15</td>
-      <td>Disable</td>
+      <td>2022-08-22</td>
+      <td>Block</td>
       <td>N/A</td>
-      <td>...25ba9d7c</td>
-      <td>SSRF - Cloud</td>
-      <td>N/A</td>
+      <td>...N/A</td>
+      <td>Code Injection - WordPress Weblizar Backdoor - CVE:CVE-2022-1609</td>
+      <td>100541</td>
     </tr>
     <tr>
-      <td>2022-08-08</td>
       <td>2022-08-15</td>
-      <td>Disable</td>
+      <td>2022-08-22</td>
+      <td>Block</td>
       <td>N/A</td>
-      <td>...8242627b</td>
-      <td>SSRF - Local</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2022-08-08</td>
-      <td>2022-08-15</td>
-      <td>Disable</td>
-      <td>N/A</td>
-      <td>...74a51804</td>
-      <td>SSRF - Host</td>
-      <td>N/A</td>
-    </tr>
+      <td>...N/A</td>
+      <td>Zimbra - Command Injection - CVE:CVE-2022-27925, CVE:CVE-2022-30333</td>
+      <td>100544</td>
+    </tr>    
 </tbody>
 </table>
 {{</table-wrap>}}
