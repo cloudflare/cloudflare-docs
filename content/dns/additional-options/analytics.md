@@ -1,0 +1,27 @@
+---
+pcx_content_type: reference
+title: Analytics and logs
+weight: 4
+---
+
+# Analytics and logs
+
+When you use Cloudflare DNS, you can access data about DNS queries through a variety of sources.
+
+## Analytics
+
+DNS analytics allow you to evaluate aggregate data about DNS requests to your zone.
+
+For a quick summary, view your DNS analytics in the dashboard:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select your zone.
+3. Go to **Analytics** > **DNS**.
+
+For more detailed metrics, you can use the [Cloudflare API](https://api.cloudflare.com/#dns-analytics-properties).
+
+## Logs
+
+Logs let Enterprise customers view [detailed information](/logs/reference/log-fields/zone/dns_logs/) about individual DNS queries.
+
+For help setting up Logpush, refer to [Get started with Logs](/logs/get-started/).
