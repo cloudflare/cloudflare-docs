@@ -12,7 +12,7 @@ The following policies are commonly used to secure network traffic.
 
 ## Enforce device posture
 
-Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to the [device posture section](/cloudflare-one/identity/devices/).
+Require devices to have certain software installed or other configuration attributes. For instructions on enabling a device posture check, refer to the [device posture section](/cloudflare-one/identity/devices/).
 
 In the following example, users can only access an application if they connect from a company device.
 
