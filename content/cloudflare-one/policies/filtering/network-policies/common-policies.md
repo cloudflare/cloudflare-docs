@@ -14,9 +14,12 @@ The following policies are commonly used to secure network traffic.
 
 Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to the [device posture section](/cloudflare-one/identity/devices/).
 
+In the following example, users can only access an application if they connect from a company device.
+
 | Selector                     | Operator  | Value                | Action |
 | ---------------------------- | ----------| ---------------------| ------ |
-| Passed Device Posture Checks | in        | `Minimum OS version` | Allow |
+| Passed Device Posture Checks | not in        | `Device serial numbers` | Block |
+| SNI Domain                   | is            | `internalapp.com` |
 
 ## Enforce session duration
 
