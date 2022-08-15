@@ -31,7 +31,7 @@ To retrieve those values:
 1. To obtain your REST API URL, gp tp **Groups & Settings** > **All Settings** > **System** > **Advance** > **Site URLs** > **REST API URL**.
 1. To retrieve the correct Region-Specific Token URL, refer to the [VMware documentation](https://docs.vmware.com/en/VMware-Workspace-ONE-UEM/services/UEM_ConsoleBasics/GUID-BF20C949-5065-4DCF-889D-1E0151016B5A.html). Copy the Region-specific token URL to a safe place.
 
-## Configure the provider on the Zero Trust Dashboard
+## 2. Add Workspace ONE as a service provider
 
 1. Go to **Settings** > **Devices** > **Device posture providers** and click **Add new**.
 1. Select **Workspace ONE**.
