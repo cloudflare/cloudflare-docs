@@ -83,7 +83,7 @@
 /access/getting-started/access-setup/ /cloudflare-one/identity/ 301
 /access/rdp/ /cloudflare-one/tutorials/rdp/ 301
 /access/rdp/connect-rdp/ /cloudflare-one/tutorials/rdp/ 301
-/access/service-auth/mtls/ /cloudflare-one/identity/devices/mutual-tls-authentication/ 301
+/access/service-auth/mtls/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
 /access/service-auth/service-token/ /cloudflare-one/identity/service-tokens/ 301
 /access/setting-up-access/ /cloudflare-one/identity/ 301
 /access/setting-up-access/access-groups/ /cloudflare-one/identity/users/groups/ 301
@@ -988,7 +988,7 @@
 /cloudflare-one/faq/tunnels/ /cloudflare-one/faq/ 301
 
 /cloudflare-one/identity/devices/azure-ad/ /cloudflare-one/identity/devices/access-integrations/azure-ad/ 301
-/cloudflare-one/identity/devices//mutual-tls-authentication/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
+/cloudflare-one/identity/devices/mutual-tls-authentication/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
 /cloudflare-one/identity/devices/tanium/ /cloudflare-one/identity/devices/access-integrations/tanium/ 301
 /cloudflare-one/identity/devices/crowdstrike/ /cloudflare-one/identity/devices/service-providers/crowdstrike/ 301
 /cloudflare-one/identity/devices/microsoft/ /cloudflare-one/identity/devices/service-providers/microsoft/ 301
