@@ -76,7 +76,7 @@ If no mode is set, the default is `"advanced"`
 
 {{</Aside>}}
 
-2. **Directory** mode: This mode is used when you want to run your function in `directory` mode, which means the adapter will compile the client side part of you app the same way, but it will move the worker script into a `functions` folder in the project root. The adapter will only ever place a `[[path]].js` in that folder, allowing you to add [Pages Plugins](/pages/platform/functions/plugins/) and [Middleware](/pages/platform/functions/#adding-middleware) which can be checked into version control.
+2. **Directory** mode: This mode is used when you want to run your function in `directory` mode, which means the adapter will compile the client side part of your app the same way, but it will move the worker script into a `functions` folder in the project root. The adapter will allow you to access your Pages functions from a `functions` directory, allowing you to add [Pages Plugins](/pages/platform/functions/plugins/) and [Middleware](/pages/platform/functions/#adding-middleware) which can be checked into version control.
 
 To use Directory mode, modify your `astro.config.mjs` file to add `mode: "directory"` to the adapter configuration:
 ```js
