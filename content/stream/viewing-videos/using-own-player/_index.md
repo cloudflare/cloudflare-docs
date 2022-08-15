@@ -9,13 +9,13 @@ Cloudflare Stream is compatible with all video players that support HLS and DASH
 
 Refer to the guides below for more information.
 
-* [Web](/stream/viewing-videos/using-own-player/web)
-* [iOS (AVPlayer)](/stream/viewing-videos/using-own-player/ios)
-* [Android (ExoPlayer)](/stream/viewing-videos/using-own-player/android)
+* [Web](/stream/viewing-videos/using-own-player/web/)
+* [iOS (AVPlayer)](/stream/viewing-videos/using-own-player/ios/)
+* [Android (ExoPlayer)](/stream/viewing-videos/using-own-player/android/)
 
 ## How to fetch HLS and Dash manifests
 
-Each video and live stream has its own unique HLS and DASH manifest. You can access the manifest by replacing `<UID>` with the UID of your video or live input, and replacing `<CODE>` with your unique customer code, in the URLs below:
+Each video and live stream has its own unique HLS and DASH manifest. You can access the manifest by replacing `<UID>` with the UID of your video or live input and replacing `<CODE>` with your unique customer code in the URLs below:
 
 ```text
 ---
@@ -31,7 +31,7 @@ header: DASH
 https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
 ```
 
-You can also find HLS and DASH manifest URLS in the [Stream Dashboard]() by viewing any video or live input, or by using the [Stream API](https://api.cloudflare.com/#stream-videos-video-details).
+You can also find HLS and DASH manifest URLS in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream) by viewing any video or live input or by using the [Stream API](https://api.cloudflare.com/#stream-videos-video-details).
 
 ### Customize manifests by specifying available client bandwidth
 
@@ -46,14 +46,16 @@ If your player lacks such configuration options or you need to override them, yo
 
 {{</definitions>}}
 
-#### Examples
 
-##### Display only the video representation with a bitrate closest to 1.8 Mbps
+Refer to the example below to display only the video representation with a bitrate closest to 1.8 Mbps.
 
 ```txt
+---
+header: Example
+---
 https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.mpd?clientBandwidthHint=1.8
 ```
 
 ## Limitations
 
-* [Client-size Analytics](/stream/getting-analytics/#client-side-analytics) are not available if you use your own player.
+[Client-size Analytics](/stream/getting-analytics/#client-side-analytics) are not available if you use your own player.
