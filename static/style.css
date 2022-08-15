@@ -5006,14 +5006,183 @@ pre {
   }
 }
 
+/* Beta pill */
+.DocsMarkdown-beta {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1em;
+}
+
+.DocsMarkdown--beta-pill {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px 8px;
+
+  position: relative;
+  top: 16px;
+
+  width: 42px;
+  height: 18px;
+
+  background: var(--orange-8);
+  border-radius: 20px;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  /* identical to box height, or 18px */
+
+  color: var(--orange-1);
+}
+
+/* Product tagline */
+.DocsMarkdown--description {
+  font-size: 20px;
+  line-height: 24px;
+
+  margin-bottom: 1em;
+}
+
+/* Product availability */
+.DocsMarkdown--plan {
+  /*width: 110px;*/
+  height: 25px;
+
+  /*font-family: 'SF Pro Display';*/
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 155.34%;
+  /* identical to box height, or 25px */
+
+  color: var(--blue-4);
+
+  /* Inside auto layout */
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+
+  margin-bottom: 1em;
+}
+
+[theme="dark"] .DocsMarkdown--plan {
+  color: var(--indigo-5);
+}
+
+/* 'Features' section */
+.DocsMarkdown--feature-group {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) 1fr;
+  gap: 1em;
+  align-items: center;
+}
+
+.DocsMarkdown--feature-button {
+  display: flex;
+  justify-content: flex-end;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .DocsMarkdown--feature-group {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-bottom: 1em;
+  }
+
+  .DocsMarkdown--feature-button {
+    justify-content: flex-start;
+  }
+}
+
+/* 'Related products' section */
+.DocsMarkdown--related-product {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  column-gap: 0.75em;
+  align-items: start;
+}
+
+.DocsMarkdown--related-product-logo {
+  fill: var(--orange);
+}
+
+/* 'More resources' section */
+.DocsMarkdown--resource-group {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-gap: 20px;
+  grid-auto-rows: 1fr;
+}
+
+@media (max-width: 768px) {
+  .DocsMarkdown--resource-group {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.DocsMarkdown--resource {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+
+  padding: 20px;
+  line-height: 25px;
+
+  flex: 1 1 0px;
+
+  width: 100%;
+
+  background-color: var(--gray-9);
+  border-radius: 4px;
+}
+
+.DocsMarkdown--resource:hover {
+  background-color: var(--gray-8);
+}
+
+.DocsMarkdown--resource-icon {
+  height: 32px;
+  width: 32px;
+  flex-shrink: 0;
+}
+
+.DocsMarkdown--resource-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.DocsMarkdown--resource-header {
+  font-size: 20px;
+  color: var(--color);
+  text-decoration: underline solid var(--orange);
+  margin-bottom: 10px;
+}
+
+[theme="dark"] .DocsMarkdown--resource {
+  background-color: #242628;
+}
+
+[theme="dark"] .DocsMarkdown--resource:hover {
+  background-color: #2f3133;
+}
+
 .littlefoot-footnote__button {
   max-width: 3em;
 }
 
-[theme=dark] .littlefoot-footnote__content {
-  background: #242628
+[theme="dark"] .littlefoot-footnote__content {
+  background: #242628;
 }
 
-[theme=dark] .littlefoot-footnote__button {
-  background: rgba(110,110,110,0.5)
+[theme="dark"] .littlefoot-footnote__button {
+  background: rgba(110, 110, 110, 0.5);
 }
+
