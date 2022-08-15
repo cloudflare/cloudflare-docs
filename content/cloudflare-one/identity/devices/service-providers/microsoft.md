@@ -41,7 +41,7 @@ To retrieve those values:
 
 1. Go to **Settings** > **WARP Client**.
 1. Scroll down to **Device posture providers** and select **Add new**.
-1. Select **Intune**.
+1. Select **Microsoft Endpoint Manager**.
 1. Give your provider a name. This name will be used throughout the dashboard to reference this connection.
 1. Enter the **Client ID**, **Client secret** and **Customer ID** as you noted down above.
 1. Select a polling frequency for how often Cloudflare Zero Trust should query Microsoft Graph API for information.
