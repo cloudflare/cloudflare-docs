@@ -62,28 +62,28 @@ layout: list
       <td>2022-08-15</td>
       <td>2022-08-22</td>
       <td>Block</td>
-      <td>N/A</td>
+      <td>100542</td>
       <td>...e09c1a1e</td>
       <td>Broken Authentication - VMware - CVE:CVE-2022-31656</td>
-      <td>100542</td>
+      <td>N/A</td>
     </tr>
     <tr>
       <td>2022-08-15</td>
       <td>2022-08-22</td>
       <td>Block</td>
-      <td>N/A</td>
+      <td>100541</td>
       <td>...fd9eb416</td>
       <td>Code Injection - WordPress Weblizar Backdoor - CVE:CVE-2022-1609</td>
-      <td>100541</td>
+      <td>N/A</td>
     </tr>
     <tr>
       <td>2022-08-15</td>
       <td>2022-08-22</td>
       <td>Block</td>
-      <td>N/A</td>
+      <td>100544</td>
       <td>...9ff2129f</td>
       <td>Zimbra - Command Injection - CVE:CVE-2022-27925, CVE:CVE-2022-30333</td>
-      <td>100544</td>
+      <td>N/A</td>
     </tr>    
 </tbody>
 </table>
