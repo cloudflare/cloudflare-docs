@@ -81,7 +81,7 @@ layout: list
       <td>2022-08-22</td>
       <td>Block</td>
       <td>N/A</td>
-      <td>...N/A</td>
+      <td>...9ff2129f</td>
       <td>Zimbra - Command Injection - CVE:CVE-2022-27925, CVE:CVE-2022-30333</td>
       <td>100544</td>
     </tr>    
