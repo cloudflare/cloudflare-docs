@@ -922,6 +922,7 @@
 /workers/writing-workers/resource-limits/ /workers/about/limits/ 301
 /workers/runtime-apis/r2/ /r2/runtime-apis/ 301
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-application/ 301
+/workers/examples/http2-server-push/ /workers/examples/103-early-hints/ 301
 
 # zaraz
 
@@ -1032,6 +1033,9 @@
 /cloudflare-one/policies/filtering/http-policies/application-app-types/ /cloudflare-one/policies/filtering/application-app-types/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/ /cloudflare-one/policies/filtering/dns-policies/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/categories/ /cloudflare-one/policies/filtering/dns-policies/dns-categories/ 301
+
+/cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
+
 /cloudflare-one/tutorials/corp-device-tag/ /cloudflare-one/identity/devices/ 301
 
 # new_doc_redirects

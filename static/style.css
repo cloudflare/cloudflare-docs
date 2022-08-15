@@ -713,7 +713,7 @@ html {
 
 .copyCode-button{
   position: absolute;
-  top: 1px;
+  top: 5px;
   right:5px;
   font-size: .9rem;
   padding: .15rem;
@@ -736,7 +736,7 @@ html {
 
 [theme="dark"] .copyCode-button {
   position: absolute;
-  top: 1px;
+  top: 5px;
   right: 5px;
   font-size: .9rem;
   padding: .15rem;
@@ -757,39 +757,19 @@ html {
   display: none;
 }
 
-.copyCode-button:hover,
+[theme="light"] .copyCode-button:hover,
 .copyCode-button:focus {
   cursor: pointer;
-  background-color:  #828282;
+  background-color: #828282 !important;
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
 }
 
 [theme="dark"] .copyCode-button:hover, .copyCode-button:focus {
   cursor: pointer;
-  background-color: var(--code-block-background-color);
+  background-color: #4b4b4b;
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
 }
 
-.copyCode-button:hover::after, .copyCode-button:focus::after{
-  position: absolute;
-  width:auto;
-  min-width: 80px;
-  content: attr(data-tooltip);
-  background-color: #828282;
-  border-radius: 2px;
-  color: #fff;
-  padding: .3rem 0.2rem;
-  font-size: .8em;
-  right: 10px;
-  opacity: 0.8;
-  box-shadow: none;
-  border: none;
-  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
-    -ms-overflow-style: none;
-      /* IE and Edge */
-      scrollbar-width: none;
-      /* Firefox */
-}
 
 .copyCode-button::after::-webkit-scrollbar {
   display: none;

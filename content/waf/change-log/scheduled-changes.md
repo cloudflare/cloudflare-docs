@@ -24,26 +24,26 @@ layout: list
   <tbody>
     <tr>
       <td>2022-08-08</td>
-      <td>2022-08-15</td>
-      <td>Log</td>
+      <td>2022-08-22</td>
+      <td>Block</td>
       <td>100135DBETA</td>
       <td>...99de0930</td>
       <td>XSS - JS On Events</td>
-      <td>N/A</td>
+      <td>This detection will replace ...aa290ad9 on new WAF and 100135D on legacy</td>
     </tr>
     <tr>
       <td>2022-08-08</td>
-      <td>2022-08-15</td>
-      <td>Log</td>
+      <td>2022-08-22</td>
+      <td>Block</td>
       <td>100005BETA</td>
       <td>...c4ab1381</td>
       <td>DotNetNuke - File Inclusion - CVE:CVE-2018-9126, CVE:CVE-2011-1892</td>
-      <td>N/A</td>
+      <td>This detection will replace ...1bc977d1 on new WAF and 100005 on legacy</td>
     </tr>
     <tr>
       <td>2022-08-08</td>
-      <td>2022-08-15</td>
-      <td>Log</td>
+      <td>2022-08-22</td>
+      <td>Block</td>
       <td>N/A</td>
       <td>...9b16ea5e</td>
       <td>CVE-2020-13443</td>
@@ -51,8 +51,8 @@ layout: list
     </tr>
     <tr>
       <td>2022-08-08</td>
-      <td>2022-08-15</td>
-      <td>Log</td>
+      <td>2022-08-22</td>
+      <td>Block</td>
       <td>N/A</td>
       <td>...94700cae</td>
       <td>Drupal, Magento, PHP - Deserialization - CVE:CVE-2019-6340, CVE:CVE-2016-4010 - 2</td>
