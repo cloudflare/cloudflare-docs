@@ -6,7 +6,11 @@ weight: 1
 
 # Tenant structure
 
-As a Tenant account, your account becomes the default **Super administrator** for all accounts and zones contained within the Tenant.
+Cloudflare helps partners manage their and their customers' accounts through a Tenant structure.
+
+Once you sign a partner agreement with Cloudflare, we create a special Tenant account and then add your user to that account as a **Tenant admin**. Cloudflare can add multiple users as Tenant admins upon request.
+
+Tenant admins then become the default **Super administrator(s)** for all accounts and zones contained within the Tenant. This means that each admin's user API key can be used to provision accounts based on the catalog specified in your partner agreement.
 
 ![Partner accounts contain a tenant, which is a container for customer accounts and zones. For more details, keep reading.](/tenant/static/tenant-diagram.png)
 
