@@ -9,6 +9,7 @@ weight: 2
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
+- [`generate`](#generate) - Create a Wrangler project using existing Worker's template.
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
 - [`kv:namespace`](#kvnamespace) - Manage Workers KV namespaces.
@@ -56,6 +57,25 @@ $ wrangler init [NAME] [-y / --yes]
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
 - `--yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Answer yes to any prompts for new projects.
+
+{{</definitions>}}
+
+---
+
+## generate
+
+Create a Wrangler project using existing Worker's template.
+
+```sh
+$ wrangler generate [name] [template]
+```
+
+{{<definitions>}}
+
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
+  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
+- `template` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} 
+  - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template"). Browse a list of available templates on [cloudflare/templates](https://github.com/cloudflare/templates) repository.
 
 {{</definitions>}}
 
