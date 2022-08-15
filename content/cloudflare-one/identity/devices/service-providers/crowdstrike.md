@@ -31,25 +31,27 @@ To retrieve those values:
 7. Go to **Host setup and management** > **Sensor downloads** and copy your Customer ID.
 8. Get an [auth token](https://falcon.us-2.crowdstrike.com/documentation/93/oauth2-auth-token-apis) from your CrowdStrike API endpoint. For example, if your base URL is `https://api.us-2.crowdstrike.com`, then make a `POST` request to `https://api.us-2.crowdstrike.com/oauth2/token` with your Client ID and Client Secret.
 
-## Configure the provider on the Zero Trust dashboard
+### 2. Add CrowdStrike as a service provider
 
-1. Go to **Settings** > **Devices** > **Device posture providers** and click **Add new**.
-1. Select **CrowdStrike**.
-1. Give your provider a name. This name will be used throughout the dashboard to reference this connection.
-1. Enter the Client ID and Client Secret you noted down above.
-1. Enter your Rest API URL.
-1. Enter your Customer ID.
-1. Select a **polling frequency** for how often Cloudflare Zero Trust should query CrowdStrike for information.
-1. Click **Save**.
-1. Click **Test Provider** to ensure the values have been entered correctly.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
+2. Scroll down to **Device posture providers** and select **Add new**.
+3. Select **CrowdStrike**.
+4. Enter any name for the provider. This name will be used throughout the dashboard to reference this connection.
+5. Enter the **Client ID** and **Client secret** you noted down above.
+6. Enter your **Rest API URL**.
+7. Enter your **Customer ID**.
+8. Choose a **polling frequency** for how often Cloudflare Zero Trust should query CrowdStrike for information.
+9. Select **Save**.
 
-## Configure the posture check
+To ensure the values have been entered correctly, select **Test**.
 
-1. On the Zero Trust Dashboard, navigate to **Settings** > **WARP Client** > **Service provider checks**.
-1. Click **Add new**.
-1. Select the provider you created in the section above.
-1. Enter the required fields
-1. Click **Save**.
+### 3. Configure the posture check
+
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client** > **Service provider checks**.
+2. Select **Add new**.
+3. Select **CrowdStrike**.
+4. Configure a [Crowdstrike ZTA attribute](#crowdstrike-zta-data) and enter any name.
+5. Select **Save**.
 
 ## Crowdstrike ZTA data
 
