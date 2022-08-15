@@ -23,13 +23,13 @@ Adding mTLS to your application using your own certificate authority (CA) is onl
 
 {{</Aside>}}
 
-Mutual TLS (mTLS) authentication ensures that traffic is both secure and trusted in both directions between a client and server. It allows requests that do not log in with an identity provider (like IoT devices) to demonstrate that they can reach a given resource. Client certificate authentication is also a second layer of security for team members who both log in with an identity provider (IdP) and present a valid client certificate.
+[Mutual TLS (mTLS) authentication](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) ensures that traffic is both secure and trusted in both directions between a client and server. It allows requests that do not log in with an identity provider (like IoT devices) to demonstrate that they can reach a given resource. Client certificate authentication is also a second layer of security for team members who both log in with an identity provider (IdP) and present a valid client certificate.
 
 With a root certificate authority (CA) in place, Access only allows requests from devices with a corresponding client certificate. When a request reaches the application, Access responds with a request for the client to present a certificate. If the device fails to present the certificate, the request is not allowed to proceed. If the client does have a certificate, Access completes a key exchange to verify.
 
 Currently, mTLS does not work with HTTP3 traffic.
 
-![mTLS Diagram](/cloudflare-one/static/documentation/identity/devices/mtls.png)
+![mTLS handshake diagram](/cloudflare-one/static/documentation/identity/devices/mtls.png)
 
 ## Add mTLS authentication to your Access configuration
 
@@ -43,63 +43,67 @@ mTLS is checked on a per host basis. Access sets a flag for when a client certif
 
 To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.teams.cloudflare.com):
 
-1.  Navigate to **Access > Service Auth > Mutual TLS**.
-2.  Click **Add mTLS Certificate**.
-3.  Paste the content of the `ca.pem` file in the Certificate content field.
-4.  Assign the Root CA a name and add the fully-qualified domain names (FQDN) that will use this certificate.
+1. Go to **Access** > **Service Auth** > **Mutual TLS**.
+2. Select **Add mTLS Certificate**.
+3. Give the Root CA any name.
+4. Paste the content of the `ca.pem` file into the **Certificate content** field.
+5. In **Associated hostnames**, enter the fully-qualified domain names (FQDN) that will use this certificate.
 
     These FQDNs will be the hostnames used for the resources being protected in the [Access policy](/cloudflare-one/policies/access/). You must associate the Root CA with the FQDN that the application being protected uses.
 
-5.  Click **Save**.
+6. Select **Save**.
 
     If your zone is using an intermediate certificate in addition to the root certificate, upload the entire chain.
 
-6.  Once saved, navigate to the application you would like to enforce mTLS on.
-7.  Create a new (or amend an existing) policy that will enforce mTLS authentication.
+7. Next, go to **Access** > **Applications**.
 
-    The policy must be built with a hostname that was associated in the certificate upload modal. If this is for a client who does not need to log in through an IdP, select **Service Auth** from the drop-down for _Rule Action_. In the Include rule, you can pick from two options for mTLS authentication or both.
+8. Find the application you would like to enforce mTLS on and select **Edit**. The application must be included in the  **Associated hostnames** list from Step 5.
 
-    ![mTLS Policy](/cloudflare-one/static/documentation/identity/devices/create-mtls-rule.png)
+9. Create a new (or amend an existing) [Access policy](/cloudflare-one/policies/access/).
 
-    | Option                | Result                                                                                    |
+    If this is for a client who does not need to log in through an IdP, set the policy **Action** to _Service Auth_.
+
+10. Add an mTLS authentication rule using the following selectors:
+
+    | Selector               |Description                                                                                   |
     | --------------------- | ----------------------------------------------------------------------------------------- |
     | **Common Name**       | Only client certificates with a specific common name will be allowed to proceed.          |
     | **Valid Certificate** | Any client certificate that can authenticate with the Root CA will be allowed to proceed. |
 
-8.  Save the rule.
-9.  On the **Edit Application** page, navigate to **Application > Overview**.
-10. Set the application session duration to `no duration, expires immediately`. This ensures the certificate is checked on every request.
-
-![mTLS session duration](/cloudflare-one/static/documentation/identity/devices/mutual-tls-session-duration.png)
+11. Save the policy.
+12. In the application **Overview** tab, set the application session duration to `no duration, expires immediately`. This ensures the certificate is checked on every request.
 
 {{<Aside type="warning">}}
 
 Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the WARP client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) for the domain.
 {{</Aside>}}
 
-## Test using cURL
+## Test mTLS using cURL
 
-Test for the site using mTLS by attempting to curl the site without a client certificate.
-This curl command example is for the site `example.com` that has an [Access policy](/cloudflare-one/policies/access/) set for `https://auth.example.com`:
+To test the application protected by an mTLS policy:
 
-```sh
-$ curl -sv https://auth.example.com
-```
+1. First, attempt to curl the site without a client certificate. 
+    This curl command example is for the site `example.com` that has an [Access policy](/cloudflare-one/policies/access/) set for `https://auth.example.com`:
 
-Without a client certificate in the request, a `403 forbidden` response displays and the site cannot be accessed.
-Add your client certificate information to the request:
+    ```sh
+    curl -sv https://auth.example.com
+    ```
 
-```sh
-$ curl -sv https://auth.example.com --cert example.pem --key key.pem
-```
+    Without a client certificate in the request, a `403 forbidden` response displays and the site cannot be accessed.
+
+2. Now, add your client certificate information to the request:
+
+    ```sh
+    curl -sv https://auth.example.com --cert example.pem --key key.pem
+    ```
 
 When the authentication process completes successfully, a `CF_Authorization Set-Cookie` header returns in the response.
 
-## Testing mTLS
+## Test mTLS using Cloudflare PKI
 
 You can use Cloudflare's open source tools for private key infrastructure (PKI) to test the mTLS feature in Cloudflare Access. This guide details the process to generate a Root Client Authority (CA), add it to the Cloudflare dashboard, and issue client certificates that can authenticate against the root CA and reach a protected resource.
 
-### Installing dependencies
+### 1. Install dependencies
 
 The process requires two packages from Cloudflare's PKI toolkit:
 
@@ -109,11 +113,11 @@ The process requires two packages from Cloudflare's PKI toolkit:
 You can install these packages from the [Cloudflare SSL GitHub repository](https://github.com/cloudflare/cfssl). You will need a working installation of Go, version 1.12 or later. Alternatively, you can [download the packages](https://github.com/cloudflare/cfssl) directly.
 Use the instructions under Installation to install the toolkit, and ensure that you install all of the utility programs in the toolkit.
 
-### Generating the Root CA
+### 2. Generate the Root CA
 
-1.  Create a new directory to store the Root CA.
+1. Create a new directory to store the Root CA.
 
-2.  Within that directory, create two new files:
+2. Within that directory, create two new files:
 
     - **CSR**. Create a file named `ca-csr.json` and add the following JSON blob, then save the file.
 
@@ -158,13 +162,13 @@ Use the instructions under Installation to install the toolkit, and ensure that 
       }
       ```
 
-3.  Now, run the following command to generate the Root CA with those files.
+3. Now, run the following command to generate the Root CA with those files.
 
     ```sh
     $ cfssl gencert -initca ca-csr.json | cfssljson -bare ca
     ```
 
-4.  Within the directory, check its content to confirm the output was successful.
+4. Within the directory, check its content to confirm the output was successful.
 
     ```sh
     $ ls
@@ -172,15 +176,15 @@ Use the instructions under Installation to install the toolkit, and ensure that 
 
     The output should now return the following content:
 
-    ```bash
-    ca-config.json	ca-csr.json	ca-key.pem	ca.csr		ca.pem
+    ```sh
+    $ ca-config.json ca-csr.json ca-key.pem ca.csr  ca.pem
     ```
 
-## Generating a client certificate
+### 3. Generate a client certificate
 
 Returning to the terminal, generate a client certificate that will authenticate against the Root CA uploaded.
 
-1.  Create a file named `client-csr.json` and add the following JSON blob:
+1. Create a file named `client-csr.json` and add the following JSON blob:
 
     ```json
     {
@@ -202,26 +206,26 @@ Returning to the terminal, generate a client certificate that will authenticate 
     }
     ```
 
-2.  Now, use the following command to generate a client certificate with the Cloudflare PKI toolkit:
+2. Now, use the following command to generate a client certificate with the Cloudflare PKI toolkit:
 
     ```sh
     $ cfssl gencert -ca=ca.pem -ca-key=ca-key.pem  -config=ca-config.json -profile=client client-csr.json | cfssljson -bare client
     ```
 
-3.  You can now test the client certificate with the following `cURL` command.
+3. You can now test the client certificate with the following `cURL` command.
 
     ```sh
     $ curl -v --cert client.pem --key client-key.pem https://iot.widgetcorp.tech
     ```
 
-### Testing in the browser
+### Test in the browser
 
 The instructions here cover usage with a computer running macOS.
 
-1.  In the same working directory, run the following command to add the client certificate into the macOS Keychain.
+1. In the same working directory, run the following command to add the client certificate into the macOS Keychain.
 
     {{<Aside type="warning" header="Important">}}
-The command adds the client certificate to the trusted store on your device. **Only** proceed if you are comfortable doing so and intend to keep these testing certificates safeguarded.
+The command adds the client certificate to the trusted store on your device. Only proceed if you are comfortable doing so and intend to keep these testing certificates safeguarded.
     {{</Aside>}}
 
     ```sh
@@ -229,18 +233,18 @@ The command adds the client certificate to the trusted store on your device. **O
     $ security import client-key.pem -k ~/Library/Keychains/login.keychain-db
     ```
 
-2.  Click on the certificate in the Keychain list to set the certificate to trusted. Confirm that the certificate is listed in _My Certificates_.
+2. Select the certificate in the Keychain list to set the certificate to trusted. Confirm that the certificate is listed in **My Certificates**.
 
-### Creating a CRL
+### Create a CRL
 
 You can use the Cloudflare PKI toolkit to generate a certificate revocation list (CRL), as well. This list will contain client certificates that are revoked.
 
-1.  Get the serial number from the client certificate generated earlier. Add that serial number, or any others you intend to revoke, in hex format in a text file. This example uses a file named `serials.txt`.
+1. Get the serial number from the client certificate generated earlier. Add that serial number, or any others you intend to revoke, in hex format in a text file. This example uses a file named `serials.txt`.
 
-2.  Create the CRL with the following command.
+2. Create the CRL with the following command.
 
     ```sh
     $ cfssl gencrl serials.txt ../mtls-test/ca.pem ../mtls-test/ca-key.pem | base64 -D > ca.crl
     ```
 
-    You will need to add this to your server or enforce the revocation in a Cloudflare Worker. An example Worker Script can be [found on the Cloudflare GitHub repository](https://github.com/cloudflare/access-crl-worker-template)
+You will need to add the CRL to your server or enforce the revocation in a Cloudflare Worker. An example Worker Script can be [found on the Cloudflare GitHub repository](https://github.com/cloudflare/access-crl-worker-template)
