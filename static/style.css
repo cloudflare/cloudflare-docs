@@ -775,28 +775,6 @@ html {
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
 }
 
-.copyCode-button:hover::after,
-.copyCode-button:focus::after {
-  position: absolute;
-  width: auto;
-  min-width: 80px;
-  content: attr(data-tooltip);
-  background-color: #828282;
-  border-radius: 2px;
-  color: #fff;
-  padding: 0.3rem 0.2rem;
-  font-size: 0.8em;
-  right: 10px;
-  opacity: 0.8;
-  box-shadow: none;
-  border: none;
-  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
-}
-
 .copyCode-button::after::-webkit-scrollbar {
   display: none;
 }
