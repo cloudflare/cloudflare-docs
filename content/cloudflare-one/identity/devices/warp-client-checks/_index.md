@@ -6,6 +6,6 @@ weight: 1
 
 # WARP client checks
 
-These checks will be performed on your devices by the WARP client.
+These device posture checks are performed by the WARP client.
 
 {{<directory-listing>}}

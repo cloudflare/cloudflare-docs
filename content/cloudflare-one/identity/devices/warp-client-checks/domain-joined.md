@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Domain Joined
-weight: 15
+weight: 6
 meta:
   title: Domain Joined
 ---

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Disk Encryption
-weight: 16
+weight: 4
 meta:
   title: Disk Encryption
 ---

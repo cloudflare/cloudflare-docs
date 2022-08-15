@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Carbon Black
-weight: 4
+weight: 2
 ---
 
 # Carbon Black

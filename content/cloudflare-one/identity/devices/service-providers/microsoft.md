@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Microsoft Endpoint Manager
 weight: 4
-hidden: true
 ---
 
 # Microsoft Endpoint Manager

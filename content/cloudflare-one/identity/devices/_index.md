@@ -15,7 +15,7 @@ Setup instructions vary depending on the device posture attribute. Refer to the 
 
 * [WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/) are performed by the WARP client.
 * [Service-to-service checks](/cloudflare-one/identity/devices/service-providers/) are performed by third-party device posture providers.
-* [Access integration checks](/cloudflare-one/identity/devices/access-integrations/) are performed by specific Access applications. These attributes cannot be used in Gateway policies.
+* [Access integration checks](/cloudflare-one/identity/devices/access-integrations/) are only enforced for Access applications. These attributes cannot be used in Gateway policies.
 
 ## 2. Verify device posture checks
 

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Firewall
-weight: 17
+weight: 8
 meta:
   title: Firewall
 ---

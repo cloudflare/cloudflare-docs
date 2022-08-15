@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: File Check
-weight: 13
+weight: 7
 ---
 
 # File Check

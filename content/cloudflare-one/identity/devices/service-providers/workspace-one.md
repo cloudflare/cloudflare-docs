@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Workspace ONE
 weight: 4
-hidden: true
 ---
 
 # Workspace ONE

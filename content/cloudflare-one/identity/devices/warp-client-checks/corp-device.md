@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Device serial numbers
-weight: 6
+weight: 3
 ---
 
 # Device serial numbers

@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Tanium
 weight: 4
-hidden: true
 ---
 
 # Tanium

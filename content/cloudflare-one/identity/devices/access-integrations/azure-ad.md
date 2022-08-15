@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Azure AD
-weight: 4
+weight: 1
 ---
 
 # Azure AD
