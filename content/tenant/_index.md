@@ -8,7 +8,9 @@ meta:
 
 # Cloudflare Tenant
 
-Use Cloudflare's provisioning APIs to set up and manage Cloudflare accounts and services for your team or your customers. These APIs are built into our Client v4 API library to provide a streamlined onboarding and setup experience.
+The Cloudflare Tenant API is a provisioning mechanism to help partners set up and manage Cloudflare accounts and services for their customers. 
+
+These APIs are built into our Client v4 API library to provide a streamlined onboarding and setup experience.
 
 ## Available resources
 

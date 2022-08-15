@@ -11,7 +11,7 @@ To create a zone subscription, send a [POST](https://api.cloudflare.com/#zone-su
 
 - `rate_plan` {{<type>}}object{{</type>}}
     
-    - Contains the zone plan corresponding to what customers would order in the dashboard. For a list of available values, refer to [Zone subscriptions](/tenant/reference/subscriptions/zone-plans/)
+    - Contains the zone plan corresponding to what customers would order in the dashboard. For a list of available values, refer to [Zone subscriptions](/tenant/reference/subscriptions/#zone-plans/).
 
 - `component_values` {{<type>}}array{{</type>}}
 

@@ -10,11 +10,11 @@ Having access to Cloudflare’s provisioning capabilities allows you to more eas
 
 ## Before you begin
 
-### Account setup
+### Partner account setup
 
-Before using the Tenant API, you need to [create an account](/fundamentals/account-and-billing/account-setup/create-account/) and [verify your email address](/fundamentals/account-and-billing/account-setup/verify-email-address/).
+Before using the Tenant API, you need to [create an account](/fundamentals/account-and-billing/account-setup/create-account/), [verify your email address](/fundamentals/account-and-billing/account-setup/verify-email-address/), and [add your billing information](https://support.cloudflare.com/hc/articles/4402711553165).
 
-Then, Cloudflare needs to add certain entitlements to your account. If your account has not yet been enabled, reach out to `partners@cloudflare.com`.
+After you sign your partner agreement with Cloudflare, Cloudflare will add [certain entitlements](/tenant/concepts/tenant-structure/) to your account that allow you to provision and manage custom accounts. If you have signed your partner agreement and your account has not yet been enabled, contact `partners@cloudflare.com`.
 
 ### API access
 
@@ -140,13 +140,13 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones' \
 }'
 ```
 
-## Step 4 - Create a zone subscription
+## Step 4 - Create a zone plan subscription
 
 Now that you have a zone provisioned for the customer, you can add the appropriate zone plan based on your reseller agreement.
 
 {{<render file="_create-zone-subscription.md">}}
 
-## Step 5 - Create account subscription (optional)
+## Step 5 - Create other subscriptions
 
 Depending on your agreement, you may be allowed to resell other add-on services. These are provisioned as account-level subscriptions.
 
