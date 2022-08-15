@@ -65,19 +65,6 @@ To enable an SSR site and deploy to Cloudflare Pages, you will need to:
 $ npm run astro add cloudflare
 ```
 
-2. Add `output: 'server'` to your `astro.config.mjs` file, similar to the following (yours may be slightly different):
-
-```js
---- 
-filename: astro.config.mjs
----
-import { defineConfig } from 'astro/config';
-import cloudflare from '@astrojs/cloudflare';
-export default defineConfig({
-  output: 'server',
-  adapter: cloudflare()
-});
-```
 
 ### Modes
 
@@ -87,7 +74,7 @@ There are currently two modes supported when using Pages Functions with the [`@a
 
 {{<Aside type="note">}}
 
-If no mode is set, the default  is `"advanced"`
+If no mode is set, the default is `"advanced"`
 
 {{</Aside>}}
 
