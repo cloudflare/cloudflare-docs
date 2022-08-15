@@ -1,12 +1,12 @@
 
 ---
-title: Video.js
+title: Video playback with Video.js
 weight: 1
 meta:
   title: Example of Video.js playback with Cloudflare Stream
 ---
 
-### Video.js
+# Video.js
 
 Example of Video.js playback with Cloudflare Stream
 
@@ -27,7 +27,7 @@ Example of Video.js playback with Cloudflare Stream
   </head>
   <body>
     <video-js id="vid1" controls preload="auto">
-      <!-- Replace the src URL with the HLS manifest URL for a given video
+      <!-- Replace the src URL with the HLS or DASH manifest URL for a given video
     You can access this from the Cloudflare Stream dashboard or via the Stream API -->
       <source
         src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8"
