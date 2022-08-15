@@ -49,7 +49,7 @@ To ensure the values have been entered correctly, select **Test**.
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client** > **Service provider checks**.
 2. Select **Add new**.
-3. Select **CrowdStrike**.
+3. Select the CrowdStrike provider.
 4. Configure a [Crowdstrike ZTA attribute](#crowdstrike-zta-data) and enter any name.
 5. Select **Save**.
 
