@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: OS version
-weight: 10
+weight: 8
 ---
 
 # OS version

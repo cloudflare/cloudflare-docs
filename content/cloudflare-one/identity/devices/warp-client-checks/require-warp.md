@@ -1,7 +1,7 @@
 ---
-title: WARP
+title: Require WARP
 pcx_content_type: how-to
-weight: 12
+weight: 10
 meta:
   title: Require WARP
 ---
@@ -27,33 +27,25 @@ This device posture attribute will check for all versions of WARP, including the
 
 Cloudflare Zero Trust enables you to restrict access to your applications to devices running the Cloudflare WARP client. This allows you to flexibly ensure that a user's traffic is secure and encrypted before allowing access to a resource protected behind Cloudflare Zero Trust.
 
-The process involves two steps:
+## 1. Enable the WARP check
 
-1.  Setting up **Require WARP** as a device posture check.
-1.  Adding the check to new or existing [Access policies](/cloudflare-one/policies/access/) to enforce the check for one or more of your applications.
-
-## Set up a device posture check
-
-1.  On your [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **My Team > Devices > Device Posture**.
-
-    ![Device Posture](/cloudflare-one/static/documentation/identity/devices/device-posture.png)
-
-1.  Select **WARP**.
-
-1.  Click **Save**.
+1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
+2. Scroll down to **WARP client checks** and select **Add new**.
+3. Select **WARP**.
+4. Select **Save**.
 
 You are now ready to start requiring WARP for your Access applications.
 
-## Add the check to a Zero Trust policy
+## 2. Add the check to an Access policy
 
-1.  On the Zero Trust dashboard, navigate to **Access > Applications**.
+1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Access > Applications**.
 
-1.  Locate the application for which you want to require WARP.
+2. Locate the application for which you want to require WARP.
 
-1.  Click **Edit**.
+3. Select **Edit**.
 
-1.  To have an existing policy require WARP, click **Edit** for that specific policy. Then, add an **Include** or **Require** rule with the option _WARP_ selected.
+4. To have an existing policy require WARP, select **Edit** for that specific policy. Then, add an **Include** or **Require** rule which uses the _WARP_ selector.
 
-1.  Click **Save rule**.
+5. Select **Save rule**.
 
-Before granting access to the application, your policy will now check that the user is running the WARP client on their machine.
+Before granting access to the application, your policy will now check that the device is running the WARP client.
