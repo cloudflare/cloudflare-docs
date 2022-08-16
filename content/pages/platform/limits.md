@@ -7,7 +7,7 @@ title: Limits
 
 Below are limits observed by the Cloudflare Free plan. For more details on removing these limits, refer to the [Cloudflare plans](https://www.cloudflare.com/plans) page.
 
-To increase any limits needed for your project, complete out the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+To increase any limits needed for your project, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
 ## Builds
 
