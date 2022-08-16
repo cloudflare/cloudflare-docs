@@ -6,7 +6,7 @@ weight: 5
 
 # Certificate authorities
 
-Cloudflare may issue certificates for SSL products from any of the following Certificate Authorities (CAs):
+Cloudflare may issue [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/), or [SSL for SaaS](/cloudflare-for-saas/security/certificate-management/) certificates from any of the following Certificate Authorities (CAs):
 
 - DigiCert
 - GlobalSign
