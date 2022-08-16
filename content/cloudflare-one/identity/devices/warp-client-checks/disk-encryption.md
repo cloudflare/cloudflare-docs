@@ -33,7 +33,7 @@ The Disk Encryption device posture attribute ensures that disks are encrypted on
 
 Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the disk encryption check is returning the expected results.
 
-## How the WARP client determines encryption
+## How WARP checks for encryption
 
 Operating systems determine disk encryption in various ways. The following information will allow you to understand how the client determines disk encryption status on various systems.
 
@@ -53,7 +53,7 @@ Operating systems determine disk encryption in various ways. The following infor
           Mount Point: /System/Volumes/Data
     ```
 
-1. Run the `diskutil info` command for a specific **Mount Point** and look for the value returned for **FileVault**. It must show `Yes` for the disk to be considered encrypted.
+1. Run the `diskutil info` command for a specific **Mount Point** and look for the value returned for **FileVault**. It must show **Yes** for the disk to be considered encrypted.
 
     ```sh
     % diskutil info /System/Volumes/Data | grep FileVault
@@ -66,11 +66,6 @@ All disks on the system must be encrypted for the posture check to pass.
 
 1. Open a Powershell window.
 1. Run the `Get-BitLockerVolume` command to list all volumes detected on the system.
-
-    ```txt
-    Get-BitLockerVolume
-    ```
-    
-1. **Protection Status** must be set to `On`.
+1. **Protection Status** must be set to **On**.
 
 All disks on the system must be encrypted for the posture check to pass.

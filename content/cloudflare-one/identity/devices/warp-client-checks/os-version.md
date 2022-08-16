@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: OS Version
+title: OS version
 weight: 10
 ---
 
-# OS Version
+# OS version
 
 <details>
 <summary>Feature availability</summary>
@@ -17,53 +17,57 @@ weight: 10
 </div>
 </details>
 
-The OS Version device posture attribute checks whether the version of a device’s operating system matches, is greater than or lesser than a given **Semver** version. The version formation must be specified as a valid Semver (for example, `x.x.x` or `1.2.0`).
+The OS Version device posture attribute checks whether the version of a device’s operating system matches, is greater than or lesser than the configured value. The version must be specified as a valid Semver (for example, `1.2.0`).
 
-To enable the OS version check:
+## Enable the OS version check
 
-1.  On the Zero Trust Dashboard, navigate to **Settings** > **WARP Client** > **Device posture**.
-1.  Click **Add new**.
-1.  Select **OS version**.
-1.  Enter a descriptive name for the check.
-1.  Combine the **Operating system**, **Operator**, and **Value** fields to specify the OS version you want devices to match.
-1.  Click **Save**.
-
-## Determine the OS Version
-
-Operating systems display version numbers in different ways. This section covers how to retrieve the version number in each OS, in a format matching what the OS Version posture check expects.
+1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
+2. Scroll down to **WARP client checks** and select **Add new**.
+3. Select **OS version**.
+4. Configure the **Operating system**, **Operator**, and **Value** fields to specify the OS version you want devices to match.
 
 {{<Aside type="note">}}
 
-You must ensure the version is entered is a valid `x.x.x` Semver. If the command below only returns a value of `x.x`, you must append a `.0` so the complete version follows the `x.x.0` format.
+Ensure the version is entered as a valid `x.x.x` Semver. If your device is running OS version `x.x`, you must enter `x.x.0`.
 
 {{</Aside>}}
 
+5. Select **Save**.
+
+Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the OS version check is returning the expected results.
+
+## Determine the OS version
+
+Operating systems display version numbers in different ways. This section covers how to retrieve the version number in each OS, in a format matching what the OS version posture check expects.
+
 ### On macOS
 
-1.  Open a terminal window.
-1.  Use the `defaults` command to check for the value of `SystemVersionStampAsString`.
+1. Open a terminal window.
+1. Use the `defaults` command to check for the value of `SystemVersionStampAsString`.
 
-```txt
-defaults read loginwindow SystemVersionStampAsString
-```
+    ```txt
+    defaults read loginwindow SystemVersionStampAsString
+    ```
 
 ### On Windows
 
-1.  Open a Powershell window.
-1.  Use the `Get-CimInstance` command to get the version property of the `Win32_OperatingSystem` class.
+1. Open a Powershell window.
+1. Use the `Get-CimInstance` command to get the version property of the `Win32_OperatingSystem` class.
 
-```txt
-(Get-CimInstance Win32_OperatingSystem).version
-```
+    ```txt
+    (Get-CimInstance Win32_OperatingSystem).version
+    ```
 
 ### On Linux
 
-Linux currently relies on the system Kernel version instead of a specific distro version. For the OS Version check to work, the kernel version must be converted to a valid SemVer.
+Linux currently relies on the system Kernel version instead of a specific distro version. For the OS version check to work, the kernel version must be converted to a valid SemVer.
 
-1.  Open a Terminal window.
-1.  Run the `uname -r` command to get the complete version.
-1.  The valid SemVer would be the first 3 whole numbers of the output you obtain in the previous step. For instance, if the command above returned `5.14.0-25.el9.x86_64`, the valid SemVer would be `5.14.0`.
- 
-```txt
-uname -r
-```
+1. Open a Terminal window.
+1. Run the `uname -r` command to get the complete version.
+
+    ```bash
+    uname -r
+    ```
+
+1. The valid SemVer would be the first 3 whole numbers of the output you obtain in the previous step. For instance, if the command above returned `5.14.0-25.el9.x86_64`, the valid SemVer would be `5.14.0`.
+

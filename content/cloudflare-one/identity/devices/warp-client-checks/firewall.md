@@ -21,30 +21,30 @@ meta:
 
 The Firewall device posture attribute ensures that a firewall is running on a device.
 
-To enable the Firewall check:
+## Enable the firewall check
 
-1.  On the Zero Trust Dashboard, navigate to **Settings** > **WARP Client** > **Device posture**.
-1.  Click **Add new**.
-1.  Select **Firewall**.
-1.  Enter a descriptive name for the check.
-1.  Select your operating system.
-1.  Toggle on the **Enable firewall check** switch.
-1.  Click **Save**.
+1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
+1. Scroll down to **WARP client checks** and select **Add new**.
+1. Select **Firewall**.
+1. Enter a descriptive name for the check.
+1. Select your operating system.
+1. Turn on  **Enable firewall check**.
+1. Select **Save**.
 
-Your device posture attribute is now visible on the **Device posture** page.
+Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the firewall check is returning the expected results.
 
-## How the Zero Trust client determines that Firewall is running
+## How WARP checks the firewall status
 
-Operating systems determine Firewall configuration in various ways. Follow the steps below to understand how the client determines if the firewall is enabled.
+Operating systems determine Firewall configuration in various ways. Follow the steps below to understand how the WARP client determines if the firewall is enabled.
 
 ### On macOS
 
-macOS has two firewalls: an application-based firewall and a port-based firewall. The Zero Trust client will report a firewall is enabled if either firewall is running.
+macOS has two firewalls: an application-based firewall and a port-based firewall. The WARP client will report a firewall is enabled if either firewall is running.
 
 #### Application-based firewall
 
-1.  Open **System Preferences** and navigate to **Security & Privacy**.
-1.  Verify that **Firewall** is **On**.
+1. Open **System Preferences** and go to **Security & Privacy**.
+1. Verify that **Firewall** is set to **On**.
 
 #### Port-based firewall
 
@@ -53,11 +53,6 @@ macOS has two firewalls: an application-based firewall and a port-based firewall
 
 ### On Windows
 
-1.  Open a Powershell window.
-1.  Run the `Get-NetFirewallProfile -Name Public` command to check the Firewall status of your public interface.
-1.  Look for the value of **Enabled** which must be set to **True**.
-
-```txt
-Get-NetFirewallProfile -Name Public
-```
-
+1. Open a Powershell window.
+1. Run the `Get-NetFirewallProfile -Name Public` command to check the Firewall status of your public interface.
+1. Look for the value of **Enabled** which must be set to **True**.
