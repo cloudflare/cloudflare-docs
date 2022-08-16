@@ -19,24 +19,22 @@ weight: 2
 
 Cloudflare Zero Trust can check if [Carbon Black](https://www.carbonblack.com/) is running on a device to determine if a request should be allowed to reach a protected resource.
 
-## Configuring the Cloudflare integration
+## Configure the Carbon Black check
 
 Before you start, make sure Carbon Black installed on your machine.
 
-1.  On the Zero Trust Dashboard, navigate to **Settings** > **WARP Client** > **Device posture**.
+1. On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
 
-1.  Click **Add new**.
+1. Scroll down to **WARP client checks** and select **Add new**.
 
-    ![Device posture attributes](/cloudflare-one/static/documentation/identity/devices/device-posture-partners.png)
+1. Select **Carbon Black**.
 
-1.  Select **Carbon Black**.
+1. You will be prompted for the following information:
 
-1.  You will be prompted for the following information:
+    1. **Name**: Enter a unique name for this device posture check.
+    1. **Operating system**: Select your operating system. You will need to configure one posture check per operating system (macOS and Windows currently supported).
+    1. **Application Path**: Enter the full path to the Carbon Black process to be checked (for example, `c:\program files\CarbonBlack\CarbonBlack.exe`).
+    1. **Signing certificate thumbprint (recommended)**: Enter the thumbprint of the publishing certificate used to sign the binary. This proves the binary came from Carbon Black and is the recommended way to validate the process.
+    1. **SHA-256 (optional)**: Enter a SHA-256 value. This is used to validate the SHA256 signature of the binary and ensures the integrity of the binary file on the device. Note: do not fill out this field unless you strictly control updates to Carbon Black, as this will change between versions.
 
-    - **Name:** A unique identifier for this Carbon Black device posture check
-    - **Operating system:** You’ll need to configure one posture check per operating system (macOS and Windows currently supported)
-    - **Application Path:** Enter the full path to the Carbon Black process to be checked (for example, `c:\program files\CarbonBlack\CarbonBlack.exe`)
-    - **Certificate thumbprint (optional):** The thumbprint of the publishing certificate used to sign the binary. This proves the binary came from Carbon Black and is the recommended way to validate the process
-    - **SHA256 checksum (optional):** Used to validate the SHA256 signature of the binary. This verifies the binary exactly matches the one you expect to be there. Note: do not fill out this field unless you strictly control updates to Carbon Black, as this will change between versions
-
-1.  Once you have configured your Carbon Black instance, you can then add Carbon Black device posture checks to any application protected by Access.
+Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the Carbon Black check is returning the expected results.

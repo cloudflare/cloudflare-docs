@@ -57,7 +57,7 @@ To ensure the values have been entered correctly, select **Test**.
 1. Configure the [device posture attribute](#microsoft-intune-device-attributes) you want to check.
 1. Select **Save**.
 
-Next, [verify the service provider posture check](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) for your devices.
+Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the service provider posture check is returning the expected results.
 
 ## Microsoft Intune device attributes
 

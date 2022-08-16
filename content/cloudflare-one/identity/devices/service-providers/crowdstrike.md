@@ -53,7 +53,7 @@ To ensure the values have been entered correctly, select **Test**.
 4. Configure a [device posture check](#crowdstrike-device-posture-attributes) and enter any name.
 5. Select **Save**.
 
-Next, [verify the service provider posture check](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) for your devices.
+Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the service provider posture check is returning the expected results.
 
 ## Crowdstrike device posture attributes
 

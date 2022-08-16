@@ -27,23 +27,17 @@ The Application Check device posture attribute checks that a specific applicatio
 
 1. Select **Application Check**.
 
-1. Enter any name for the check.
+1. You will be prompted for the following information:
 
-1. Select your operating system.
-
-1. Enter a file path (for example, `c:\my folder\myfile.exe`).
-
-1. (Recommended) Enter a [**Signing certificate thumbprint**](#determine-the-signing-thumbprint).
-
-    Adding this information will enable the check to ensure that the application was signed by the expected software developer.
-
-1. (Optional) You can also opt to enter a [**SHA-256** value](#determine-the-sha-256-value).
-
-    This enables the check to ensure the integrity of the binary file on the device.
+    1. **Name**: Enter a unique name for this device posture check.
+    1. **Operating system**: Select your operating system.
+    1. **Application Path**: Enter a file path (for example, `c:\my folder\myfile.exe`).
+    1. **Signing certificate thumbprint (recommended)**: Enter the [thumbprint](#determine-the-signing-thumbprint) of the publishing certificate used to sign the binary. Adding this information will enable the check to ensure that the application was signed by the expected software developer.
+    1. **SHA-256 (optional)**: Enter a [SHA-256 value](#determine-the-sha-256-value). This is used to validate the SHA256 signature of the binary and ensures the integrity of the binary file on the device.
 
 1. Select **Save**.
 
-Your device posture attribute is now visible on the **Settings** > **WARP Client** page. Next, [verify the device posture check](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) on your devices.
+Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the application check is returning the expected results.
 
 ## Determine the signing thumbprint
 
