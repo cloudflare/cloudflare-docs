@@ -11,7 +11,7 @@ In **Wordpress 6.0.1** with no additional plugins or themes, the page generated 
 
 | Error | Method | URI | User-Agent |
 | ---- | ---- | ---- | ---- |
-| The REST API encountered an unexpected result | `GET` | /wp-json/wp/v2/types/post | WordPress/6.0.1 < site-hostname > |
+| The REST API encountered an unexpected result | `GET` | `/wp-json/wp/v2/types/post` | WordPress/6.0.1 < site-hostname > |
 | Your site could not complete a loopback request | `GET` | `/` | WordPress/6.0.1 < site-hostname > |
 | Your site could not complete a loopback request | `POST` | `/wp-cron.php` | WordPress/6.0.1 < site-hostname > |
 
