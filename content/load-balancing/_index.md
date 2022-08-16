@@ -23,7 +23,7 @@ Free, Pro, and Business users can enable Load Balancing in their [Cloudflare das
 
 ## Features
 
-{{<feature header="Failover" href="/load-balancing/understand-basics/health-details/">}}
+{{<feature header="Load balancing and failover" href="/load-balancing/understand-basics/load-balancers/">}}
 
 Distribute traffic evenly across your healthy servers, automatically failing over when a server is unhealthy or unresponsive.
 
