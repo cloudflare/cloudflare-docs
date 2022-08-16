@@ -32,7 +32,7 @@ You may be prompted to provide your credentials while removing the application.
 
 {{<Aside type="note">}}
 
-You can bypass the "Are you sure" prompt by passing `-f` as a paramter to the macOS uninstall command above.
+You can bypass the **Are you sure** prompt by passing `-f` as a parameter to the macOS uninstall command above.
 
 {{</Aside>}}
 

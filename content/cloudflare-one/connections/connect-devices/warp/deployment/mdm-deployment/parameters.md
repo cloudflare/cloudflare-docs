@@ -85,7 +85,7 @@ This parameter replaces the old `enabled` property, which can no longer be used 
 
 ### `auto_connect`
 
-If switch has been turned off by user, the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value &mdash; usually just enough time for a user to log in to hotel or airport WiFi. If any value is specified for `auto_connect` the default state the app will always be Connected (ex. after reboot, after initial install, etc.)
+If switch has been turned off by user, the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value &mdash; usually just enough time for a user to log in to hotel or airport WiFi. If any value is specified for `auto_connect` the default state of the WARP client will always be Connected (for example, after the initial install or a reboot).
 
 
 
