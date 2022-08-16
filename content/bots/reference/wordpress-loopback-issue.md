@@ -5,7 +5,9 @@ weight: 0
 ---
 # Wordpress Loopback error
 
-Cloudflare has observed that when users attempt to run diagnostics in the Site Status page for Wordpress installations, loopback issues arise when our bot detection services block them. In Wordpress 6.0.1 with no additional plugins or themes, the page generated the following 3 requests:
+Cloudflare has observed that when users attempt to run diagnostics in the Site Status page for Wordpress installations, loopback issues arise when our bot detection services block them. 
+
+In **Wordpress 6.0.1** with no additional plugins or themes, the page generated the following 3 requests:
 
 | Error | Method | URI | User-Agent |
 | ---- | ---- | ---- | ---- |
