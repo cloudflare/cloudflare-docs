@@ -3,12 +3,12 @@ title: Add records
 pcx_content_type: navigation
 weight: 11
 meta:
-  title: Troubleshooting — Add DNS records
+  title: Troubleshooting — Cannot add DNS records with the same name
 ---
 
-# Troubleshooting — Add DNS records
+# Cannot add DNS records with the same name
 
-Occasionally, Cloudflare will not allow you to [create new DNS records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records).
+Occasionally, Cloudflare will not allow you to [create new DNS records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) with the same value in the **Name** field.
 
 This error can occur due to the requirements of `CNAME` records[^1].
 
