@@ -70,8 +70,8 @@ Many [Access policies](/cloudflare-one/policies/access/) depend on a user’s em
 
 Example in Okta:
 
-![SAML dialog](/cloudflare-one/static/documentation/identity/saml-assertion.png)
-![SAML dialog](/cloudflare-one/static/documentation/identity/saml-attributes.png)
+![Example SAML dialog in Okta interface](/cloudflare-one/static/documentation/identity/saml-assertion.png)
+![Example Okta SAML dialog in text editor](/cloudflare-one/static/documentation/identity/saml-attributes.png)
 
 ### SAML attributes
 
@@ -79,11 +79,11 @@ SAML attributes can be added to the Access JWT. These can then be consumed by se
 
 Example in Okta:
 
-![SAML dialog](/cloudflare-one/static/documentation/identity/attribute-statements.png)
+![Example SAML dialog in Okta for attribute statements](/cloudflare-one/static/documentation/identity/attribute-statements.png)
 
 How to receive these Attributes in Cloudflare:
 
-![SAML dialog](/cloudflare-one/static/documentation/identity/attributes-cloudflare.png)
+![Example SAML dialog in Cloudflare for attributes](/cloudflare-one/static/documentation/identity/attributes-cloudflare.png)
 
 ### SAML header attributes
 

@@ -12,7 +12,7 @@ Adding captions and subtitles to your video library.
 
 To create or modify a caption on a video a [Cloudflare API Token](https://www.cloudflare.com/a/account/my-account) is required.
 
-The `$LANGUAGE` must adhere to the [BCP 47 format](http://www.unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers). For convenience, the most common
+The `<LANGUAGE_TAG>` must adhere to the [BCP 47 format](http://www.unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers). For convenience, the most common
 language codes are provided [at the bottom of this document](#most-common-language-codes).
 If the language you are adding isn't included in the table, you can find the value
 through the [The IANA registry](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry), which maintains a list of language codes. To find the
@@ -38,9 +38,9 @@ be created; if sent `de`, the label `Deutsch` will be created.
 
 ```bash
 curl -X PUT \
- -H 'Authorization: Bearer $TOKEN' \
+ -H 'Authorization: Bearer <API_TOKEN>' \
  -F file=@/Users/mickie/Desktop/example_caption.vtt \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/captions/$LANGUAGE
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/captions/<LANGUAGE_TAG>
 ```
 
 ### Example Response to Add or Modify a Caption
@@ -62,8 +62,8 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/captions/
 To view captions associated with a video:
 
 ```bash
-curl -H 'Authorization: Bearer $TOKEN' \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions
+curl -H 'Authorization: Bearer <API_TOKEN>' \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/captions
 ```
 
 ### Example response to get the captions associated with a video
@@ -88,9 +88,9 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions
 
 ## Directly access captions
 
-To directly access the captions for your video, use the following URI and add in your video's `videoID` and `languageTag`.
+To directly access the captions for your video, use the following URI and add in your video's UID and language tag:
 
-`videodelivery.net/<videoID>/caption/<languageTag>`
+`https://customer-{CODE}.cloudflarestream.com/<VIDEO_UID>/caption/<LANGUAGE_TAG>`
 
 ## Delete the captions
 
@@ -98,8 +98,8 @@ To remove a caption associated with your video:
 
 ```bash
 curl -X DELETE \
- -H 'Authorization: Bearer $TOKEN' \
- https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions/$LANGUAGE
+ -H 'Authorization: Bearer <API_TOKEN>' \
+ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/captions/<LANGUAGE_TAG>
 ```
 
 If there is an entry in `errors` response field, the caption has not been

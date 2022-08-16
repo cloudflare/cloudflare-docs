@@ -5,6 +5,14 @@ title: Limits
 
 # Limits
 
+{{<Aside type="note">}}
+
+We want to encourage you to build any application you can dream up, and realize that doesn't always fit within our limits. 
+
+To increase any of our limits, [please fill out our form!](https://forms.gle/ukpeZVLWLnKeixDu7)
+
+{{</Aside>}}
+
 ## Account plan limits
 
 {{<table-wrap>}}
@@ -240,7 +248,7 @@ Each environment variable has a size limitation of 5 KB.
 
 ### Worker size
 
-A Worker can be up to 1 MB in size after compression. If needed, you can [request a larger Worker size](https://www.cloudflare.com/larger-scripts-on-workers-early-access/).
+A Worker can be up to 1 MB in size after compression. If needed, you can [request a larger Worker size](https://forms.gle/ukpeZVLWLnKeixDu7).
 
 ### Number of Workers
 
@@ -258,7 +266,7 @@ App Workers do not count towards this limit.
 
 Workers KV supports:
 
-- Up to 100 Namespaces per account
+- Up to 100 namespaces per account
 - Unlimited keys per namespace
 - Unlimited storage per namespace (except on the free tier, which is limited to 1 GB total across all namespaces in an account)
 - Keys of up to 512 bytes

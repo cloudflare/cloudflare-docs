@@ -1,5 +1,8 @@
 ---
+updated: 2022-08-03
 pcx_content_type: tutorial
+content_type: 📝 Tutorial
+difficulty: Intermediate
 title: Build an API for your front end using Cloudflare Workers
 layout: single
 ---

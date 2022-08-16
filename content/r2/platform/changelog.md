@@ -5,6 +5,15 @@ title: Changelog
 
 # Changelog
 
+## 2022-08-06
+
+- Uploads will automatically infer the `Content-Type` based on file body if one is not explicitly set in the `PutObject` request. This functionality will come to multipart operations in the future.
+
+## 2022-07-30
+
+- Fixed S3 conditionals to work properly when provided the `LastModified` date of the last upload, bindings fixes will come in the next release.
+- `If-Match` / `If-None-Match` headers now support arrays of ETags, Weak ETags and wildcard (`*`) as per the HTTP standard and undocumented AWS S3 behavior.
+
 ## 2022-07-21
 
 - Added dummy implementation of the following operation that mimics the response that a basic AWS S3 bucket will return when first created:
