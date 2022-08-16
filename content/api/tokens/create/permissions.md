@@ -120,47 +120,55 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 
 | Name                             | Description                                                              |
 | -------------------------------- | ------------------------------------------------------------------------ |
+| API Gateway Read                 | Grants read access to API Gateway zone resources.                        |
+| API Gateway Edit                 | Grants write access to API Gateway zone resources.                       |
 | Access: Apps and Policies Read   | Grants read access to Cloudflare Access zone resources.                  |
 | Access: Apps and Policies Revoke | Grants ability to revoke all tokens to Cloudflare Access zone resources. |
-| Access: Apps and Policies Write  | Grants write access to Cloudflare Access zone resources.                 |
+| Access: Apps and Policies Edit   | Grants write access to Cloudflare Access zone resources.                 |
 | Analytics Read                   | Grants read access to analytics.                                         |
-| Apps Write                       | Grants full access to Cloudflare Apps.                                   |
+| Apps Edit                        | Grants full access to Cloudflare Apps.                                   |
 | Bot Management Read              | Grants read access to Bot Management.                                    |
-| Bot Management Write             | Grants write access to Bot Management.                                   |
+| Bot Management Edit              | Grants write access to Bot Management.                                   |
 | Cache Purge                      | Grants access to purge cache.                                            |
 | DNS Read                         | Grants read access to DNS.                                               |
-| DNS Write                        | Grants write access to DNS.                                              |
+| DNS Edit                         | Grants write access to DNS.                                              |
+| Dynamic Redirect Read            | Grants read access to zone level Dynamic Redirect.                       |
+| Dynamic Redirect Edit            | Grants write access to zone level Dynamic Redirect.                      |
+| Email Routing Rules Read         | Grants read access to Email Routing Rules.                               |
+| Email Routing Rules Edit         | Grants write access to Email Routing Rules.                              |
 | Firewall Services Read           | Grants read access to Firewall resources.                                |
-| Firewall Services Write          | Grants write access to Firewall resources.                               |
+| Firewall Services Edit           | Grants write access to Firewall resources.                               |
 | HTTP DDoS Managed Ruleset Read   | Grants read access to HTTP DDoS Managed Ruleset.                         |
-| HTTP DDoS Managed Ruleset Write  | Grants write access to HTTP DDoS Managed Ruleset.                        |
+| HTTP DDoS Managed Ruleset Edit   | Grants write access to HTTP DDoS Managed Ruleset.                        |
 | Health Checks Read               | Grants read access to Health Checks.                                     |
-| Health Checks Write              | Grants write access to Health Checks.                                    |
+| Health Checks Edit               | Grants write access to Health Checks.                                    |
 | Load Balancers Read              | Grants read access to load balancers and associated resources.           |
-| Load Balancers Write             | Grants write access to load balancers and associated resources.          |
+| Load Balancers Edit              | Grants write access to load balancers and associated resources.          |
 | Logs Read                        | Grants read access to logs and Logpush jobs.                             |
-| Logs Write                       | Grants write access to Logpush jobs.                                     |
+| Logs Edit                        | Grants write access to Logpush jobs.                                     |
 | Origin Read                      | Grants read access to Origin Rules.                                      |
-| Origin Write                     | Grants write access to Origin Rules.                                     |
+| Origin Edit                      | Grants write access to Origin Rules.                                     |
 | Page Rules Read                  | Grants read access to Page Rules.                                        |
-| Page Rules Write                 | Grants write access to Page Rules.                                       |
+| Page Rules Edit                  | Grants write access to Page Rules.                                       |
 | SSL and Certificates Read        | Grants read access to SSL configuration and certificate management.      |
-| SSL and Certificates Write       | Grants write access to SSL configuration and certificate management.     |
+| SSL and Certificates Edit        | Grants write access to SSL configuration and certificate management.     |
 | Sanitize Read                    | Grants read access to sanitization.                                      |
-| Sanitize Write                   | Grants write access to sanitization.                                     |
+| Sanitize Edit                    | Grants write access to sanitization.                                     |
 | Waiting Rooms Read               | Grants read access to Waiting Rooms.                                     |
-| Waiting Rooms Write              | Grants write access to Waiting Rooms.                                    |
+| Waiting Rooms Edit               | Grants write access to Waiting Rooms.                                    |
 | Web3 Hostnames Read              | Grants read access to Web3 Hostnames.                                    |
-| Web3 Hostnames Write             | Grants write access to Web3 Hostnames.                                   |
+| Web3 Hostnames Edit              | Grants write access to Web3 Hostnames.                                   |
 | Workers Routes Read              | Grants read access to Cloudflare Workers and Workers KV Storage.         |
-| Workers Routes Write             | Grants write access to Cloudflare Workers and Workers KV Storage.        |
+| Workers Routes Edit              | Grants write access to Cloudflare Workers and Workers KV Storage.        |
+| Zaraz Settings Read              | Grants read access to Zaraz zone level settings.                         |
+| Zaraz Settings Edit              | Grants write access to Zaraz zone level settings.                        |
 | Zone Read                        | Grants read access to zone management.                                   |
+| Zone Edit                        | Grants write access to zone management.                                  |
 | Zone Settings Read               | Grants read access to zone settings.                                     |
-| Zone Settings Write              | Grants write access to zone settings.                                    |
-| Zone Transform Rules Read        | Grants read access to Transform Rules at zone level.                     |
-| Zone Transform Rules Write       | Grants write access to Transform Rules at zone level.                    |
+| Zone Settings Edit               | Grants write access to zone settings.                                    |
+| Transform Rules Read             | Grants read access to Transform Rules at zone level.                     |
+| Transform Rules Edit             | Grants write access to Transform Rules at zone level.                    |
 | Zone WAF Read                    | Grants read access to Zone WAF.                                          |
-| Zone WAF Write                   | Grants write access to Zone WAF.                                         |
-| Zone Write                       | Grants write access to zone management.                                  |
+| Zone WAF Edit                    | Grants write access to Zone WAF.                                         |
 
 {{</table-wrap>}}
