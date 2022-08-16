@@ -23,7 +23,7 @@ Cloudflare Zero Trust allows you to build Zero Trust rules based on device seria
 
 To create rules based on device serial numbers, you first need to create a [Gateway List](/cloudflare-one/policies/filtering/lists/) of numbers.
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **My Team** > **Lists**.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **My Team** > **Lists**.
 
 1. Select **Create manual list** or **Upload CSV**. For larger teams, it is recommended to upload a CSV or use Cloudflare's [API endpoint](https://api.cloudflare.com/#zero-trust-lists-properties).
 

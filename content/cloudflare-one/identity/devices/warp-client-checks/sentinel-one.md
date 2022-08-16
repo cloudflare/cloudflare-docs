@@ -25,7 +25,7 @@ Before you start, make sure SentinelOne is installed on your machine.
 
 ## Configure the SentinelOne check
 
-1. On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
 
 1. Scroll down to **WARP client checks** and select **Add new**.
 
