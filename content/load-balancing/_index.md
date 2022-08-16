@@ -7,7 +7,7 @@ meta:
   title: Cloudflare Load Balancing
 ---
 
-# Overview
+# Cloudflare Load Balancing
 
 {{<description>}}
 Maximize application performance and availability
