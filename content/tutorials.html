@@ -23,7 +23,7 @@ layout: home
       <div class="CoveoErrorReport" data-pop-up="false"></div>
       <div class="CoveoResultList" data-layout="card" data-wait-animation="fade" data-auto-select-fields-to-include="false">
           <script id="Default" class="result-template" type="text/html">
-            <div class="coveo-result-frame">
+            <div class="coveo-result-frame" style="display:flex; justify-content: space-between; border: 1px solid magenta">
             <div class="tutorialHeading">
               //   TUTORIAL   //
               </div>
@@ -32,7 +32,11 @@ layout: home
                   <a class="CoveoResultLink" data-title-template='${raw.h1_title}  |  ${raw.product}' data-always-open-in-new-window='true'></a>
                 </div>
                 </div>
+                <div class="coveo-result-row">
+                  <div class="coveo-result-cell" aria-level="3">
+                    <span class="CoveoFieldValue" data-field="@date" data-helper="date" useLongDateFormat=true></span>
             </div>
+          </div>
         </script>
       </div>
       <div class="CoveoPager"></div>
