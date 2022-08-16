@@ -19,7 +19,7 @@ These requests all come from the origin IP and not a Cloud service.  As a result
 
 When these requests are blocked, Wordpress’s block editor screen, Cron events, and automated tests that third-party themes and plugins use cannot function.
 
-Many different Wordpress components perform different loopback tests beyond the original one, making it a complex problem to create exceptions for. 
+Many different WordPress components perform different loopback tests beyond the original one, making it a complex problem to create exceptions for. 
 
 ### Resolution
 
