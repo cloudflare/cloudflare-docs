@@ -47,7 +47,7 @@ Customize the behavior of your load balancer based on the characteristics of ind
 
 {{</feature>}}
 
-{{<feature header="Analytics" href="/load-balancing/reference/analytics/">}}
+{{<feature header="Analytics" href="/load-balancing/reference/load-balancing-analytics/">}}
 
 Review comprehensive analytics to evaluate traffic flow, assess origin health status, and review changes in pools and pool health over time.
 
