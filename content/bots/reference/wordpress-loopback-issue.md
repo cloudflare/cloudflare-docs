@@ -7,7 +7,7 @@ weight: 0
 
 Cloudflare has observed that when users attempt to run diagnostics in the Site Status page for WordPress installations, loopback issues arise when our bot detection services block them. 
 
-In **Wordpress 6.0.1** with no additional plugins or themes, the page generated the following 3 requests:
+In **WordPress 6.0.1** with no additional plugins or themes, the page generated the following 3 requests:
 
 | Error | Method | URI | User-Agent |
 | ---- | ---- | ---- | ---- |
