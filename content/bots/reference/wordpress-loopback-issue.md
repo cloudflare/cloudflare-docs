@@ -17,7 +17,7 @@ In **WordPress 6.0.1** with no additional plugins or themes, the page generated 
 
 These requests all come from the origin IP and not a Cloud service.  As a result, Cloudflare does not have an easy way to add these types of requests to verified bots. 
 
-When these requests are blocked, Wordpress’s block editor screen, Cron events, and automated tests that third-party themes and plugins use cannot function.
+When these requests are blocked, WordPress’s block editor screen, Cron events, and automated tests that third-party themes and plugins use cannot function.
 
 Many different WordPress components perform different loopback tests beyond the original one, making it a complex problem to create exceptions for. 
 
