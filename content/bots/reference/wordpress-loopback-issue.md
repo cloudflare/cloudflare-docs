@@ -24,3 +24,9 @@ Many different Wordpress components perform different loopback tests beyond the 
 Enterprise customers can write an allow rule for their origin IP to fix the issue. 
 
 Self-serve customers can turn off Super Bot Fight Mode or edit `/etc/hosts` file to have loopback requests resolve locally. Refer to this guide on [how to fix Wordpress Loopback errors](https://codeopolis.com/posts/wordpress-loopback-error/). 
+
+{{<Aside type="note" header="Note:">}}
+
+Cloudflare Support cannot assist with the host's file configuration changes or other specific server configurations.
+
+{{</Aside>}}
