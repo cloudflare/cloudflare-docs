@@ -23,31 +23,31 @@ Free, Pro, and Business users can enable Load Balancing in their [Cloudflare das
 
 ## Features
 
-{{<feature header="Failover" href="/understand-basics/health-details/">}}
+{{<feature header="Failover" href="/load-balancing/understand-basics/health-details/">}}
 
 Distribute traffic evenly across your healthy servers, automatically failing over when a server is unhealthy or unresponsive.
 
 {{</feature>}}
 
-{{<feature header="Active monitoring" href="/understand-basics/monitors/">}}
+{{<feature header="Active monitoring" href="/load-balancing/understand-basics/monitors/">}}
 
 Monitor your servers at configurable intervals and across multiple data centers to look for specific status codes, response text, and timeouts.
 
 {{</feature>}}
 
-{{<feature header="Intelligent routing" href="/understand-basics/traffic-steering/">}}
+{{<feature header="Intelligent routing" href="/load-balancing/understand-basics/traffic-steering/">}}
 
 Choose whether to distribute requests based on server latency, a visitor's geographic region, or even a visitor's GPS coordinates.
 
 {{</feature>}}
 
-{{<feature header="Custom rules" href="/additional-options/load-balancing-rules/">}}
+{{<feature header="Custom rules" href="/load-balancing/additional-options/load-balancing-rules/">}}
 
 customize the behavior of your load balancer based on the characteristics of individual requests.
 
 {{</feature>}}
 
-{{<feature header="Analytics" href="/analytics/">}}
+{{<feature header="Analytics" href="/load-balancing/analytics/">}}
 
 Load Balancing includes comprehensive analytics to evaluate traffic flow, assess origin health status, and review changes in pools and pool health over time.
 
