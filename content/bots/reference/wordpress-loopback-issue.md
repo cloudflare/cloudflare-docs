@@ -1,6 +1,6 @@
 ---
 pcx_content_type: reference
-title: Wordpress Loopback error
+title: WordPress Loopback error
 weight: 0
 ---
 # WordPress Loopback error
