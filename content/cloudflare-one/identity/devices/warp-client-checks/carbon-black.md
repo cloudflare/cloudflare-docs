@@ -19,9 +19,11 @@ weight: 2
 
 Cloudflare Zero Trust can check if [Carbon Black](https://www.carbonblack.com/) is running on a device to determine if a request should be allowed to reach a protected resource.
 
-## Configure the Carbon Black check
+## Prerequisites
 
 Before you start, make sure Carbon Black installed on your machine.
+
+## Configure the Carbon Black check
 
 1. On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
 
