@@ -42,7 +42,7 @@ You can now create an [Access policy](/cloudflare-one/policies/access/) or a Gat
 ### On macOS
 
 1. Open a terminal window.
-1. Use the `system_profiler` command to check for the value of `SPHardwareDataTypeng` and retrieve the serial number.
+1. Use the `system_profiler` command to check for the value of `SPHardwareDataType` and retrieve the serial number.
 
     ```txt
     system_profiler SPHardwareDataType | grep 'Serial Number'
