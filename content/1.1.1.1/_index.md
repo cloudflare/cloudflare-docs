@@ -57,6 +57,8 @@ Secure and accelerate your TCP or UDP based applications.
 
 {{<resource header="1.1.1.1" href="https://1.1.1.1/" icon="1.1.1.1">}}1.1.1.1's website for consumers{{</resource>}}
 
-{{<resource header="Plans" href="https://www.cloudflare.com/plans/#overview" icon="documentation-clipboard">}}Compare available Cloudflare plans{{</resource>}}
+{{<resource header="Help Center" href="https://support.cloudflare.com/" icon="help-giving">}}Get answers to common questions and issues.{{</resource>}}
+
+{{<resource header="Learning Center" href="https://www.cloudflare.com/learning/" icon="learning-center-book">}}Resources on cyber security and how the Internet works from Cloudflare.{{</resource>}}
 
 {{</resource-group>}}
