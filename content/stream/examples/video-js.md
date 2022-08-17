@@ -9,9 +9,7 @@ weight: 1001
 layout: example
 ---
 
-[Video.js API docs](https://docs.videojs.com/)
-
-[**Run and edit this code in your browser on Stackblitz**](https://stackblitz.com/edit/cloudflare-stream-examples?file=examples%2Fvideo-js.html&initialPath=video-js&terminal=start-stackblitz)
+[Run and edit this code in your browser on Stackblitz.](https://stackblitz.com/edit/cloudflare-stream-examples?file=examples%2Fvideo-js.html&initialPath=video-js&terminal=start-stackblitz) Refer to the [Video.js API documentation](https://docs.videojs.com/) for more information.
 
 ```html
 <html>

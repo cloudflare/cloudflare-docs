@@ -1,6 +1,7 @@
 ---
 title: Use your own player
 weight: 1
+layout: single
 ---
 
 # Use your own player
@@ -9,11 +10,13 @@ Cloudflare Stream is compatible with all video players that support HLS and DASH
 
 Refer to the guides below for more information.
 
-* [Web](/stream/viewing-videos/using-own-player/web)
-* [iOS (AVPlayer)](/stream/viewing-videos/using-own-player/ios)
-* [Android (ExoPlayer)](/stream/viewing-videos/using-own-player/android)
+* [Web](/stream/viewing-videos/using-own-player/web/)
+* [iOS (AVPlayer)](/stream/viewing-videos/using-own-player/ios/)
+* [Android (ExoPlayer)](/stream/viewing-videos/using-own-player/android/)
 
 ## Fetch HLS and Dash manifests
+
+### URL 
 
 Each video and live stream has its own unique HLS and DASH manifest. You can access the manifest by replacing `<UID>` with the UID of your video or live input, and replacing `<CODE>` with your unique customer code, in the URLs below:
 
@@ -31,9 +34,18 @@ header: DASH
 https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
 ```
 
-You can also find HLS and DASH manifest URLS in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream) by viewing any video or live input or by using the [Stream API](https://api.cloudflare.com/#stream-videos-video-details).
+### Dashboard
 
-### Customize manifests by specifying available client bandwidth
+1. Log into [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
+2. From the list of videos, locate your video and select it.
+3. From the **Settings** tab, locate the **HLS Manifest URL** and **Dash Manifest URL**.
+4. Select **Click to copy** under the option you want to use.
+
+### API
+
+Refer to the [Stream video details API documentation](https://api.cloudflare.com/#stream-videos-video-details) to learn how to fetch the manfest URLs using the Cloudflare API.
+
+## Customize manifests by specifying available client bandwidth
 
 Each HLS and DASH manifest provides multiple resolutions of your video or live stream. Your player contains adaptive bitrate logic to estimate the viewer's available bandwidth, and select the optimal resolution to play. Each player has different logic that makes this decision, and most have configuration options to allow you to customize or override either bandwidth or resolution.
 
