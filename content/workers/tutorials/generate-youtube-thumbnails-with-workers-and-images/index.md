@@ -1,5 +1,5 @@
 ---
-updated: 2022-08-16
+updated: 2022-08-17
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
@@ -91,10 +91,10 @@ Now that we've uploaded the image we'll be using it as a background for our thum
 
 ## Create a Worker to Transform text-to-image
 
-The next phase of this tutorial is to create a worker that will enable you to transform text to image so this can be used as an overlay on the background image we uploaded. We will use the [rustwasm-worker-template](https://github.com/cloudflare/rustwasm-worker-template). Go ahead and clone the repository and run it locally.
+The next phase of this tutorial is to create a worker that will enable you to transform text to image so this can be used as an overlay on the background image we uploaded. We will use the [rustwasm-worker-template](https://github.com/cloudflare/templates/tree/main/worker-rust). Go ahead and clone the repository and run it locally.
 
 ```sh
-$ git clone git@github.com:cloudflare/rustwasm-worker-template.git
+$ npm init cloudflare worker-to-text worker-rust
 ```
 
 In the `lib.rs` file, add the following code block:
@@ -290,7 +290,7 @@ async fn handle_slash(text: String) -> Result<Response> {
 }
 ```
 
-The final lib.rs file should look as follows (you can also find the full code as an example repository at [github.com/lauragift21/worker-to-text](https://github.com/lauragift21/worker-to-text)).
+The final lib.rs file should look as follows (you can also find the full code as an example repository at [github.com/cloudflare/templates/worker-to-text](https://github.com/cloudflare/templates/tree/main/examples/worker-to-text)).
 
 ```rs
 ---
