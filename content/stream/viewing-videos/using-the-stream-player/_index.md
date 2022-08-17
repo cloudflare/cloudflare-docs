@@ -1,12 +1,17 @@
 ---
 pcx_content_type: reference
-title: Use the Stream player
+title: Use the Stream Player
 weight: 1
 ---
 
-# Use the Stream player
+# Use the Stream Player
 
-The Stream player can be placed on a web page in an iframe element with the video UID (or [signed token](/stream/viewing-videos/securing-your-stream/)) replacing `$VIDEOID` in the example below.
+Cloudflare provides a customizable web player that can play both on-demand and live video, and requires zero additional engineering work.
+
+To add the Stream Player to a web page, you can either:
+
+1. Generate an embed code in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream) for a specific video or live input.
+2. Use the code example below, replacing `<VIDEO_UID>` with the video UID (or [signed token](/stream/viewing-videos/securing-your-stream/) and `<CODE>` with the your unique customer code, which can be found in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
 
 ```html
 <iframe

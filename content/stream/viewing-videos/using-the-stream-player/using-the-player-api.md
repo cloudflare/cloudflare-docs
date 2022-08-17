@@ -1,14 +1,14 @@
 ---
 pcx_content_type: reference
-title: Use the player API
+title: Stream Player API
 weight: 2
 ---
 
-# Use the player API
+# Stream Player API
 
-The SDK provides an API for programmatically controlling the player and listening for player events.
+For further control and customization, we provide an additional Javascript SDK that you can use to control video playback and listen for media events.
 
-## Example
+To use this SDK, add an additional `<script>` tag to your website:
 
 ```html
 <!-- You can use styles and CSS on this iframe element where the video player will appear -->
