@@ -2,11 +2,9 @@
 weight: 12
 pcx_content_type: reference
 title: Check connection to 1.1.1.1
-meta:
-    title: Check if you are connected to 1.1.1.1
 ---
 
-# Check if you are connected to 1.1.1.1
+# Check connection to 1.1.1.1
 
 After setting up 1.1.1.1, you can check if you are correctly connected to Cloudflare's resolver.
 
