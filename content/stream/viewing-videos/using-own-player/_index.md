@@ -13,7 +13,7 @@ Refer to the guides below for more information.
 * [iOS (AVPlayer)](/stream/viewing-videos/using-own-player/ios)
 * [Android (ExoPlayer)](/stream/viewing-videos/using-own-player/android)
 
-## How to fetch HLS and Dash manifests
+## Fetch HLS and Dash manifests
 
 Each video and live stream has its own unique HLS and DASH manifest. You can access the manifest by replacing `<UID>` with the UID of your video or live input, and replacing `<CODE>` with your unique customer code, in the URLs below:
 
@@ -48,10 +48,11 @@ If your player lacks such configuration options or you need to override them, yo
 
 #### Examples
 
-##### Display only the video representation with a bitrate closest to 1.8 Mbps
-
-```txt
-https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.mpd?clientBandwidthHint=1.8
+```text
+---
+header: Display only the video representation with a bitrate closest to 1.8 Mbps
+---
+https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
 ```
 
 ## Limitations
