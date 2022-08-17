@@ -20,4 +20,4 @@ Cloudflare Stream can be used with Apple’s built-in AVPlayer, which is integra
 
 ## Examples 
 
-Refer to [Video playback in a native iOS app](/stream/examples/playback-ios-app/) and [Live video playback in a native iOS app](/stream/examples/live-playback-ios-app/) to view working samples for each option.
+Refer to Video playback in a native iOS app and Live video playback in a native iOS app to view working samples for each option.
