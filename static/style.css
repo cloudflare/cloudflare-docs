@@ -3184,6 +3184,10 @@ html[is-docs-page] body {
   margin: -0.2em 0;
 }
 
+.DocsTableOfContents-link-active {
+  color: var(--orange-6);
+}
+
 .DocsTableOfContents-link:hover {
   color: var(--orange);
 }

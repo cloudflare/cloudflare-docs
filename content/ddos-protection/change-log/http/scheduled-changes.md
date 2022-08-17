@@ -22,13 +22,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-08-11</td>
-      <td>2022-08-16</td>
-      <td>...b757316c</td>
-      <td>BETA - HTTP requests with unusual HTTP headers or URI path (signature #16).</td>
       <td>N/A</td>
-      <td>log</td>
-      <td>Improve the accuracy of the rule to detect more attacks.</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
     </tr>
   </tbody>
 </table>
