@@ -26,7 +26,7 @@ Cloudflare Gateway will take the identity from a token and, using short-lived ce
 Instead of traditional SSH keys, Gateway uses short-lived certificates to authenticate traffic between Cloudflare and your origin.
 
 {{<Aside type="note">}}
-Other short-lived CAs, such as those used to [secure an SSH server behind Cloudflare Access](/cloudflare-one/identity/users/short-lived-certificates/), are incompatible with the Gateway SSH proxy. For SSH logging to work, you must create a new CA using the `gateway_ca` API endpoint.
+Other short-lived CAs, such as those used to [secure SSH servers behind Cloudflare Access](/cloudflare-one/identity/users/short-lived-certificates/), are incompatible with the Gateway SSH proxy. For SSH logging to work, you must create a new CA using the `gateway_ca` API endpoint.
 {{</Aside>}}
 
 To generate a Gateway SSH proxy CA and get its public key:
