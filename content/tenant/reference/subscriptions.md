@@ -19,7 +19,7 @@ When creating or updating a [zone plan](https://api.cloudflare.com/#zone-subscri
 | Partner program | Available subscriptions |
 | --- | --- |
 | Enterprise and self-serve resellers | `PARTNERS_FREE`, `PARTNERS_PRO`, `PARTNERS_BIZ`, `PARTNERS_ENT` |
-| PAYGO partners | `CF_FREE`, `CF_PRO_20_20`, `CF_BIZ`, `CF_ENT` |
+| PAYGO partners | `CF_FREE`, `CF_PRO_20_20`, `CF_BIZ` |
 | MSP partners | `msp_biz` |
 
 ## Other subscriptions
