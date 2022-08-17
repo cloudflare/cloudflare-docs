@@ -67,8 +67,6 @@ If you are newer to GraphQL, refer to [Cloudflare GraphQL analytics for HTTP req
 
 ### Examples
 
-```javascript
-=======
 **Prerequisite:** 
 [Generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with the **Account Analytics** permission.
 
