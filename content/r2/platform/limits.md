@@ -7,7 +7,7 @@ pcx_content_type: concept
 
 ## Account plan limits
 
-To increase any limits needed for your project, fill out the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+To increase any limits needed for your project, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
 {{<table-wrap>}}
 

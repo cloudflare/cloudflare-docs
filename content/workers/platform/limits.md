@@ -242,7 +242,7 @@ Each environment variable has a size limitation of 5 KB.
 
 ### Worker size
 
-A Worker can be up to 1 MB in size after compression. To increase any limits needed for your project, fill out the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+A Worker can be up to 1 MB in size after compression. To increase any limits needed for your project, complete [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
 ### Number of Workers
 
