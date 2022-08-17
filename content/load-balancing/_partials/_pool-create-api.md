@@ -123,7 +123,7 @@ header: Response
 After creating the pool, you would also want to [create a new notification](https://api.cloudflare.com/#notification-policies-create-a-notification-policy) with the following parameters specified:
 
 ```json
-"alert_type": "g6_health_alert",
+"alert_type": "load_balancing_health_alert",
 "filters": {
     "pool_id": <<ARRAY_OF_INCLUDED_POOL_IDS>>,
     "new_health": <<ARRAY_OF_STATUS_TRIGGERS>> ["Unhealthy", "Healthy"],
