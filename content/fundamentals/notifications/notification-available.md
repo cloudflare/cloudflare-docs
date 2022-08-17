@@ -461,7 +461,7 @@ None.
 
 **Included with**
 
-[Access](/cloudflare-one/identity/devices/mutual-tls-authentication/) and [Cloudflare for SaaS](/cloudflare-for-saas/security/certificate-management/enforce-mtls/).
+[Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) and [Cloudflare for SaaS](/cloudflare-for-saas/security/certificate-management/enforce-mtls/).
 
 **What should you do if you receive one?**
 
