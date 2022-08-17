@@ -144,8 +144,8 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | Health Checks Edit               | Grants write access to Health Checks.                                    |
 | Load Balancers Read              | Grants read access to load balancers and associated resources.           |
 | Load Balancers Edit              | Grants write access to load balancers and associated resources.          |
-| Logs Read                        | Grants read access to logs using Logpull or Instant Logs.                |
-| Logs Edit                        | Grants read and write access to Logpull, Logpush and Instant Logs.       |
+| Logs Read                        | Grants read access to logs using Logpull.                                |
+| Logs Edit                        | Grants read and write access to Logpull and Logpush.                     |
 | Origin Read                      | Grants read access to Origin Rules.                                      |
 | Origin Edit                      | Grants write access to Origin Rules.                                     |
 | Page Rules Read                  | Grants read access to Page Rules.                                        |
