@@ -1,12 +1,12 @@
 ---
 pcx_content_type: how-to
-title: Domain Joined
-weight: 15
+title: Domain joined
+weight: 6
 meta:
-  title: Domain Joined
+  title: Domain joined
 ---
 
-# Domain Joined
+# Domain joined
 
 <details>
 <summary>Feature availability</summary>
@@ -21,22 +21,23 @@ meta:
 
 The Domain Joined device posture attribute ensures that a user is a member of a specific Windows Active Directory domain.
 
-To enable the Domain Joined check:
+## Enable the Domain Joined check
 
-1.  On the Zero Trust Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
-1.  Click **+Add**.
-1.  Select **Domain Joined**.
-1.  Enter a descriptive name for the check.
-1.  Enter the domain you want Domain Joined to check for.
-1.  Click **Save**.
+1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
+1. Scroll down to **WARP client checks** and select **Add new**.
+1. Select **Domain Joined**.
+1. Enter a descriptive name for the check.
+1. Select your operating system.
+1. Enter the domain you want to check for, such as `example.com`.
+1. Select **Save**.
 
-Your device posture attribute is now visible on the **Device posture** page.
+Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the Domain Joined check is returning the expected results.
 
 ### Validate the domain value on your Windows device
 
-1.  Open a Powershell window.
-1.  Run the `(Get-WmiObject Win32_ComputerSystem).Domain` command to determine the value of your domain.
+1. Open a Powershell window.
+1. Run the `(Get-WmiObject Win32_ComputerSystem).Domain` command to determine the value of your domain.
 
-```txt
-(Get-WmiObject Win32_ComputerSystem).Domain
-```
+    ```txt
+    (Get-WmiObject Win32_ComputerSystem).Domain
+    ```

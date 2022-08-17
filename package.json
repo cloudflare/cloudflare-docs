@@ -22,6 +22,6 @@
     "node-html-parser": "5.2.0",
     "prettier": "2.5.1",
     "prismjs": "1.26.0",
-    "tsm": "2.2.1"
+    "tsm": "2.2.2"
   }
 }

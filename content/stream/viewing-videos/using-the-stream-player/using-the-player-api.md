@@ -13,7 +13,7 @@ To use this SDK, add an additional `<script>` tag to your website:
 ```html
 <!-- You can use styles and CSS on this iframe element where the video player will appear -->
 <iframe
-  src="https://iframe.videodelivery.net/$VIDEOID"
+  src="https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/iframe"
   style="border: none"
   height="720"
   width="1280"
@@ -22,7 +22,7 @@ To use this SDK, add an additional `<script>` tag to your website:
   id="stream-player"
 ></iframe>
 
-<script src="https://embed.videodelivery.net/embed/sdk.latest.js"></script>
+<script src="https://embed.cloudflarestream.com/embed/sdk.latest.js"></script>
 
 <!-- Your JavaScript code below-->
 <script>
