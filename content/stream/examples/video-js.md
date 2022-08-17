@@ -11,9 +11,7 @@ layout: example
 
 [Video.js API docs](https://docs.videojs.com/)
 
-{{<Aside>}}
 [**Run and edit this code in your browser on Stackblitz**](https://stackblitz.com/edit/cloudflare-stream-examples?file=examples%2Fvideo-js.html&initialPath=video-js&terminal=start-stackblitz)
-{{</Aside>}}
 
 ```html
 <html>
