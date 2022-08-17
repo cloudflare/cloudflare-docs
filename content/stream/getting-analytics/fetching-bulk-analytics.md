@@ -14,7 +14,8 @@ For additional information on using GraphQL, refer to [Get started with GraphQL 
 
 {{<Aside type="note">}}
 
-You must have the **Account Analytics** permission added to your account to view Stream analytics.
+**Prerequisite:** 
+[Generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with the **Account Analytics** permission.
 
 {{</Aside>}}
 
@@ -66,9 +67,6 @@ If you are newer to GraphQL, refer to [Cloudflare GraphQL analytics for HTTP req
 {{</Aside>}}
 
 ### Examples
-
-**Prerequisite:** 
-[Generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with the **Account Analytics** permission.
 
 #### Get the view count and minutes viewed for all videos in your Stream account
 
