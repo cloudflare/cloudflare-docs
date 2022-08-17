@@ -56,4 +56,4 @@ https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.mpd?cl
 
 ## Limitations
 
-* [Client-size Analytics](/stream/getting-analytics/#client-side-analytics) are not available if you use your own player.
+* [Client-side Analytics](/stream/getting-analytics/#client-side-analytics) are not available if you use your own player.
