@@ -17,18 +17,18 @@ Watermark profile has many customizable options. However, the default parameters
 ### Step 1: Create a profile
 
 ```bash
-curl -X POST -H 'Authorization: Bearer $TOKEN' \
+curl -X POST -H 'Authorization: Bearer <API_TOKEN>' \
 -F file=@/Users/rchen/cloudflare.png \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/watermarks
 ```
 
 ### Step 2: Specify the profile UID at upload
 
 ```bash
 tus-upload --chunk-size 5242880 \
---header Authentication 'Bearer $TOKEN' \
---metadata watermark $WATERMARKUID \
-/Users/rchen/cat.mp4 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
+--header Authentication 'Bearer <API_TOKEN>' \
+--metadata watermark <WATERMARK_UID> \
+/Users/rchen/cat.mp4 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream
 ```
 
 ### Step 3: Done
@@ -81,14 +81,14 @@ Note that `center` will ignore the `padding` parameter.
 To upload the image directly, please send a POST request using `multipart/form-data` as the content-type and specify the file under the `file` key. All other fields are optional.
 
 ```bash
-curl -X POST -H "Authorization: Bearer $TOKEN" \
+curl -X POST -H "Authorization: Bearer <API_TOKEN>" \
 -F file=@{path-to-image-locally} \
 -F name='marketing videos' \
 -F opacity=1.0 \
 -F padding=0.05 \
 -F scale=0.15 \
 -F position=upperRight \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/watermarks
 ```
 
 ### Use Case 2: Pass a URL to an image
@@ -96,7 +96,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
 To specify a URL for upload, please send a POST request using `application/json` as the content-type and specify the file location using the `url` key. All other fields are optional.
 
 ```bash
-curl -X POST -H "Authorization: Bearer $TOKEN" \
+curl -X POST -H "Authorization: Bearer <API_TOKEN>" \
 -H 'Content-Type: application/json' \
 -d '{
   "url": "{url-to-image}",
@@ -106,7 +106,7 @@ curl -X POST -H "Authorization: Bearer $TOKEN" \
   "scale": 0.15,
   "position": "upperRight"
 }' \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/watermarks
 ```
 
 #### Example response to creating a watermark profile
@@ -145,15 +145,15 @@ Unfortunately, Stream does not currently support specifying watermark profile at
 ### Upload video with a link
 
 ```bash
-curl -X POST -H "Authorization: Bearer $TOKEN" \
+curl -X POST -H "Authorization: Bearer <API_TOKEN>" \
 -H 'Content-Type: application/json' \
 -d '{
   "url": "{url-to-video}",
   "watermark": {
-    "uid": "$WATERMARKUID"
+    "uid": "<WATERMARK_UID>"
   }
 }' \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/copy
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy
 ```
 
 #### Example response to upload video with a link
@@ -165,11 +165,11 @@ highlight: [10,11,12,13,14,15,16,17,18,19,20,21,22]
 {
   "result": {
     "uid": "8d3a5b80e7437047a0fb2761e0f7a645",
-    "thumbnail": "https://videodelivery.net/8d3a5b80e7437047a0fb2761e0f7a645/thumbnails/thumbnail.jpg",
+    "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
 
     "playback": {
-      "hls": "https://videodelivery.net/8d3a5b80e7437047a0fb2761e0f7a645/manifest/video.m3u8",
-      "dash": "https://videodelivery.net/8d3a5b80e7437047a0fb2761e0f7a645/manifest/video.mpd"
+      "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8",
+      "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.mpd"
     },
     "watermark": {
       "uid": "d6373709b7681caa6c48ef2d8c73690d",
@@ -192,9 +192,9 @@ highlight: [10,11,12,13,14,15,16,17,18,19,20,21,22]
 
 ```bash
 tus-upload --chunk-size 5242880 \
---header Authentication 'Bearer $TOKEN' \
---metadata watermark $WATERMARKUID \
-$PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
+--header Authentication 'Bearer <API_TOKEN>' \
+--metadata watermark <WATERMARK_UID> \
+<PATH_TO_VIDEO> https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream
 ```
 
 ### Direct creator uploads
@@ -202,19 +202,20 @@ $PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 The video uploaded with the generated unique one-time URL will be watermarked with the profile specified.
 
 ```bash
-curl -X POST -H "Authorization: Bearer $TOKEN" \
+curl -X POST -H "Authorization: Bearer <API_TOKEN>" \
 -H 'Content-Type: application/json' \
 -d '{
   "maxDurationSeconds": 3600,
   "watermark": {
-    "uid": "$WATERMARKUID"
+    "uid": "<WATERMARK_UID>"
   }
 }' \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/direct_upload
 ```
 
 #### Example response to direct user uploads
 
+<!-- videodelivery.net is correct domain. See STREAM-4364 -->
 ```json
 {
   "result": {
@@ -247,8 +248,8 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload
 To view a watermark profile that you created:
 
 ```bash
-curl -H "Authorization: Bearer $TOKEN" \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/$WATERMARKUID
+curl -H "Authorization: Bearer <API_TOKEN>" \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/watermarks/<WATERMARK_UID>
 ```
 
 ### Example response to get a watermark profile
@@ -279,8 +280,8 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/$WATERM
 To list watermark profiles that you created:
 
 ```bash
-curl -H "Authorization: Bearer $TOKEN" \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/
+curl -H "Authorization: Bearer <API_TOKEN>" \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/watermarks/
 ```
 
 ### Example response to list watermark profiles
@@ -326,8 +327,8 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/
 To delete a watermark profile that you created:
 
 ```bash
-curl -X DELETE -H 'Authorization: Bearer $TOKEN' \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/$WATERMARKUID
+curl -X DELETE -H 'Authorization: Bearer <API_TOKEN>' \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/watermarks/<WATERMARK_UID>
 ```
 
 If the operation was successful, it will return a success response:

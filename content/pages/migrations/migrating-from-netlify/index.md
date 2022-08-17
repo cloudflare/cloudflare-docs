@@ -15,17 +15,17 @@ To move your application to Cloudflare Pages, find your build command and build 
 
 In your Netlify Dashboard, find the project that you want to deploy. It should be configured to deploy from a GitHub repository.
 
-![Selecting a site in the Netlify Dashboard](./netlify-deploy-1.png)
+![Selecting a site in the Netlify Dashboard](/pages/migrations/migrating-from-netlify/netlify-deploy-1.png)
 
 Inside of your site dashboard, select **Site Settings**, and then **Build & Deploy**.
 
-![Selecting Site Settings in site dashboard](./netlify-deploy-2.png)
+![Selecting Site Settings in site dashboard](/pages/migrations/migrating-from-netlify/netlify-deploy-2.png)
 
-![Selecting Build and Deploy in sidebar](./netlify-deploy-3.png)
+![Selecting Build and Deploy in sidebar](/pages/migrations/migrating-from-netlify/netlify-deploy-3.png)
 
 In the **Build & Deploy** tab, find the **Build settings** panel, which will have the **Build command** and **Publish directory** fields. Save these for deploying to Cloudflare Pages. In the below image, **Build command** is `yarn build`, and **Publish directory** is `build/`.
 
-![Finding the Build command and Publish directory fields](./netlify-deploy-4.png)
+![Finding the Build command and Publish directory fields](/pages/migrations/migrating-from-netlify/netlify-deploy-4.png)
 
 ## Migrating redirects and headers
 

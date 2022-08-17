@@ -5,6 +5,14 @@ pcx_content_type: concept
 
 # Limits
 
+{{<Aside type="note">}}
+
+We want to encourage you to build any application you can dream up, and realize that doesn't always fit within our limits. 
+
+To increase any of our limits, [please fill out our form!](https://forms.gle/ukpeZVLWLnKeixDu7)
+
+{{</Aside>}}
+
 ## Account plan limits
 
 {{<table-wrap>}}
