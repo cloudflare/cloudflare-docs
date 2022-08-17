@@ -6,9 +6,7 @@ weight: 8
 
 # Glossary
 
-The following terms are used throughout the Tenant API docs.
-
-For more details on how these concepts interact with each other, refer to [Tenant structure](/tenant/structure/).
+The following terms are used throughout the Tenant API docs. For more details on how these concepts interact with each other, refer to [Tenant structure](/tenant/structure/).
 
 ## Tenant
 

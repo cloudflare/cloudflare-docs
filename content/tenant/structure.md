@@ -16,16 +16,22 @@ Cloudflare helps partners manage their and their customers' accounts through a T
 \
 {{<render file="_tenant-admin-definition.md">}}
 
-This setup gives your account streamlined administrative access to all customer accounts, zones, and configurations while still keeping your customers' data and settings separate from each other.
+## Accounts, users, and resources
 
-## Users, accounts, and resources
+This Tenant structure gives your account streamlined administrative access to customer:
 
+- Accounts[^1]
+- Users[^2]
+- Resources[^3]
 
+At the same time, this structure keeps your customers' data and settings separate from each other.
 
-{{<Aside type="note">}}
+## Limitations
 
 Since non-Enterprise accounts can only have one Super administrator, your account will be the only Super administrator allowed on their account.
 
 For more details, refer to [Super administrators](/fundamentals/account-and-billing/account-setup/manage-account-members/#change-super-administrator).
 
-{{</Aside>}}
+[^1]: {{<render file="_account-definition.md">}}
+[^2]: {{<render file="_user-definition.md">}}
+[^3]: {{<render file="_resource-definition.md">}}
