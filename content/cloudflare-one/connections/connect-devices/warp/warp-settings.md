@@ -6,13 +6,11 @@ weight: 7
 
 # WARP settings
 
-{{<Aside type="note">}}
+This page describes the WARP configuration options available on the Zero Trust dashboard. To configure these settings, open the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and go to **Settings** > **WARP Client**.
 
-If you are deploying [WARP with device management software](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/), we recommend only supplying `organization` from [list of parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) and manage everything else via the Dash as described below where available. Any settings you configure on the Zero Trust Dashboard will be overridden by the local policy deployed by your management software. To ensure Dashboard settings are applied as intended, remove the corresponding parameters from management configuration.
-
+{{<Aside type="note" header="Managed deployments">}}
+If you are deploying [WARP with device management software](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/), we recommend only supplying `organization` in your [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) and managing all other settings via the dashboard. Any settings you configure on the dashboard will be overridden by the local policy deployed by your management software. To ensure dashboard settings are applied as intended, remove the corresponding parameters from your managed deployment configuration.
 {{</Aside>}}
-
-To manage WARP settings and device connectivity preferences, navigate to **Settings** > **WARP Client** on the Zero Trust dashboard.
 
 ## Admin override
 
