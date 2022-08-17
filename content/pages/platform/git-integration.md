@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Git integration
 ---
 
@@ -9,11 +9,12 @@ Cloudflare supports connecting Cloudflare Pages to your GitHub and GitLab reposi
 
 ## Custom branches
 
-If you have a custom Git workflow that makes use of specific branches for representing your production build of your project, you can specify a custom branch when creating (or managing an existing) Cloudflare Pages project.
+Suppose you have a custom Git workflow that uses specific branches to represent your project's production build. In that case, you can specify a custom branch when creating (or managing an existing) project in the Pages dashboard by going to  **Settings** > **Builds & deployments** and clicking the **Configure Production deployments** button. You can change the production branch to any other branch in the dropdown menu under **production branch**.
+ 
+You can also use [preview deployments](/pages/platform/preview-deployments/) to preview how the new version of your project looks before merging into `production`. In addition, Pages allows you to configure which of your preview branches are built and deployed by using [branch build controls](/pages/platform/branch-build-controls/).
 
-For example, imagine that you merge new code into the `main` branch. When it is time to deploy your project, you merge a set of commits into the `production` branch. In the Cloudflare Pages dashboard, you can set the default branch to `production`.
+To configure this in your Pages project go to **Settings** > **Builds & deployments** > **Configure preview deployment** and select **Custom branches**. Here you can specify branches you wish to include and exclude from automatic deployments in the provided configuration fields. To learn more refer to the [branch build controls](/pages/platform/branch-build-controls/) documentation.
 
-You can also use [preview deployments](/pages/platform/preview-deployments/) to preview how the new version of your project looks before merging to `production`. To do this, make sure that preview deployments are enabled. You can check this by going to the Pages project's **Settings** > **Builds & deployments** > and verifying that automatic deployments are enabled and **Pause deployments** is unselected. With preview deployments, you will be able to access a deployed version of your `main` branch, or other branches that exist, whether created manually or through pull requests.
 
 ## Organizational access
 

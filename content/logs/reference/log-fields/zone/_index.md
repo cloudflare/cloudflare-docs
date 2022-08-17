@@ -1,6 +1,6 @@
 ---
 title: Zone-scoped datasets
-pcx-content-type: navigation
+pcx_content_type: navigation
 weight: 11
 ---
 

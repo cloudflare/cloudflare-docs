@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Register a new domain
 weight: 4
 ---
@@ -22,11 +22,11 @@ Cloudflare Registrar is only available for customers that use Cloudflare as thei
 
 2. Go to **Registrar** > **Register Domains**.
 
-3. In the search box, enter the domain name you wish to register, and click **Search**. You may also enter one or more keywords. Cloudflare currently does not support internationalized domain names (IDNs), also known as unicode. For that reason, you cannot search for words with special characters, such as `à`, `ü`, `ç`, among others.
+3. In the search box, enter the domain name you wish to register, and select **Search**. You may also enter one or more keywords. Cloudflare currently does not support internationalized domain names (IDNs), also known as unicode. For that reason, you cannot search for words with special characters, such as `à`, `ü`, `ç`, among others.
 
     The search results will contain a list of suggested domains. If the domain you entered does not appear in the list, this means it is not available for registration. 
 
-4. Click **Purchase** on the domain you wish to register. In rare instances, a domain that is not available for registration may appear in the search results. After clicking **Purchase**, a definitive availability check will be performed to confirm that the domain is actually available for registration.
+4. Select **Purchase** on the domain you wish to register. In rare instances, a domain that is not available for registration may appear in the search results. After selecting **Purchase**, a definitive availability check will be performed to confirm that the domain is actually available for registration.
 
 {{<Aside type="note">}}
 
@@ -52,7 +52,7 @@ It is important that you provide complete and accurate contact information. If y
 
 8. Review the terms and conditions, including the Domain Registration Agreement, Self-serve Subscription Agreement, and the Privacy Policy. 
 
-9. Click **Complete purchase** to continue. By clicking **Complete purchase**, you acknowledge that you are accepting the terms of the agreements.
+9. Select **Complete purchase** to continue. By selecting **Complete purchase**, you acknowledge that you are accepting the terms of the agreements.
 
 The registration process may take up to 30 seconds to complete. Once the registration is complete, the browser will navigate to the domain management page where you may update the contacts, change the auto-renew settings, and add additional years to the term. You will also receive a confirmation email regarding your new domain registration.
 

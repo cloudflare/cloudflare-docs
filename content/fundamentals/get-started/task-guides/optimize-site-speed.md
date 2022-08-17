@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Optimize site speed
 weight: 1
 ---
@@ -23,7 +23,7 @@ Once your domain is onboarded and your DNS records are [proxied through Cloudfla
 - [Rocket Loader](https://support.cloudflare.com/hc/articles/200168056): Defers JavaScript loading until after page content.
 - [HTTP 2/3](https://support.cloudflare.com/hc/articles/200168076): Accelerates page load times by using a faster protocol for HTTP.
 - [Polish](/images/polish/) and [Mirage](https://support.cloudflare.com/hc/articles/219178057): Resizes images hosted on your server (Polish) and lazy loads all images in a browser (Mirage).
-- [Argo Smart Routing](https://support.cloudflare.com/hc/articles/115000224552) (paid add-on): Routes requests across the fastest network path available.
+- [Argo Smart Routing](/argo-smart-routing/) (paid add-on): Routes requests across the fastest network path available.
 
 ### Optimization with minimal setup
 
@@ -33,7 +33,7 @@ With a few clicks, you can also adjust your [cache settings](/cache/get-started/
 
 ### Dedicated products
 
-Cloudflare offers a several products dedicated to improving site speed and availability:
+Cloudflare offers a several products dedicated to improving [site speed](https://www.cloudflare.com/learning/performance/how-website-speed-boosts-seo/) and availability:
 
 - [Image Optimization](/images/): Optimizes image storage and delivery.
 - [Load Balancing](/load-balancing/): Distributes traffic across your origin servers.

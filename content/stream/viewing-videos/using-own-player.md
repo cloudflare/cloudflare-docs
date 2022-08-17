@@ -1,10 +1,10 @@
 ---
-pcx-content-type: reference
-title: Using own player
+pcx_content_type: reference
+title: Use your own player
 weight: 3
 ---
 
-# Using own player
+# Use your own player
 
 There could be cases where you might need more control over the Stream player for your use case. Stream is compatible with third-party players that support HLS and DASH manifests with no additional charge.
 
@@ -25,8 +25,8 @@ The `playback` object contains entries for all available playback methods
 ```json
 //...
 "playback": {
-    "hls": "https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.m3u8",
-    "dash": "https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.mpd"
+    "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8",
+    "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.mpd"
 }
 //...
 ```
@@ -59,7 +59,7 @@ Currently, the following hints are available:
 ##### Only display video representations with at least 1.8 Mbps of bandwidth
 
 ```txt
-https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.mpd?clientBandwidthHint=1.8
+https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.mpd?clientBandwidthHint=1.8
 ```
 
 This removes all video representations with a bitrate less than 1.8Mbps from the manifest.
@@ -97,7 +97,7 @@ If you need complete control over the video element's CSS you can use a third pa
     <video playsinline autoplay muted loop id="cover-video"></video>
     <script>
       var hls = new Hls();
-      hls.loadSource("https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.m3u8");
+      hls.loadSource("https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8");
       hls.attachMedia(document.getElementById("cover-video"));
     </script>
   </body>

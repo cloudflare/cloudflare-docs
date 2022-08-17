@@ -1,6 +1,6 @@
 ---
 title: Quickstart
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 layout: single
 weight: 1
 meta:

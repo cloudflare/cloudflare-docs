@@ -1,7 +1,8 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Datadog
 weight: 98
+layout: single
 ---
 
 # Datadog

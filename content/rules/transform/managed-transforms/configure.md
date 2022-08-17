@@ -1,6 +1,6 @@
 ---
 title: Configure Managed Transforms
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 1
 ---
 

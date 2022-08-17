@@ -1,6 +1,6 @@
 ---
 title: Endpoints
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 2
 layout: list
 ---

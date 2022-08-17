@@ -1,6 +1,6 @@
 ---
 title: CSV file format
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 6
 meta:
   title: CSV file format to create Bulk Redirects

@@ -1,7 +1,8 @@
 ---
 title: Concepts
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 2
+layout: single
 meta:
   title: Concepts
 ---

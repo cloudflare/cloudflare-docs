@@ -1,7 +1,7 @@
 ---
 title: Configure `aws` CLI for R2
 summary: Example of how to configure `aws` CLI to use R2.
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 1001
 layout: example
 ---
@@ -47,4 +47,12 @@ $ aws s3api list-objects-v2 --endpoint-url https://<accountid>.r2.cloudflarestor
 #         }
 #     ]
 # }
+```
+
+You can also generate presigned links which allow you to share public access to a file temporarily.
+
+```sh
+# You can pass the --expires-in flag to determine how long the presigned link is valid.
+$ aws s3 presign --endpoint-url https://<accountid>.r2.cloudflarestorage.com  s3://sdk-example/ferriswasm.png --expires-in 3600
+# https://<accountid>.r2.cloudflarestorage.com/sdk-example/ferriswasm.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>   
 ```

@@ -1,6 +1,6 @@
 ---
 title: Prefix delegations
-pcx-content-type: concept
+pcx_content_type: concept
 ---
 
 # Prefix delegations
@@ -11,7 +11,7 @@ The effect of a delegation depends on the service used with the prefix. Currentl
 
 ## CDN
 
-CDN delegations only have an effect if you are using [SSL for SaaS](/ssl/ssl-for-saas/) in addition to BYOIP + CDN. In this example, Account A is using BYOIP + CDN and SSL for SaaS. Account A can validate and serve traffic for a custom hostname on any of the IPs in its prefix. If Account A delegates some or all of the prefix to Account B, Account B may also validate and serve traffic for custom hostnames on those IPs as well. This is very useful if you use SSL for SaaS but manage different configurations in different accounts. All the accounts can use the IPs through a delegation.
+CDN delegations only have an effect if you are using [SSL for SaaS](/cloudflare-for-saas/security/certificate-management/) in addition to BYOIP + CDN. In this example, Account A is using BYOIP + CDN and SSL for SaaS. Account A can validate and serve traffic for a custom hostname on any of the IPs in its prefix. If Account A delegates some or all of the prefix to Account B, Account B may also validate and serve traffic for custom hostnames on those IPs as well. This is very useful if you use SSL for SaaS but manage different configurations in different accounts. All the accounts can use the IPs through a delegation.
 
 ## API calls for prefix delegations
 

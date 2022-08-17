@@ -1,22 +1,25 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Common policies
 weight: 1
 ---
 
-# Common Network policies
+# Common network policies
 
-The following policies are commonly used to secure Network traffic.
+The following policies are commonly used to secure network traffic.
 
 {{<render file="_policies-optional.md">}}
 
 ## Enforce device posture
 
-Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to the [device posture section](/cloudflare-one/identity/devices/).
+Require devices to have certain software installed or other configuration attributes. For instructions on enabling a device posture check, refer to the [device posture section](/cloudflare-one/identity/devices/).
+
+In the following example, users can only access an application if they connect from a company device.
 
 | Selector                     | Operator  | Value                | Action |
 | ---------------------------- | ----------| ---------------------| ------ |
-| Passed Device Posture Checks | in        | `Minimum OS version` | Allow |
+| Passed Device Posture Checks | not in        | `Device serial numbers` | Block |
+| SNI Domain                   | is            | `internalapp.com` |
 
 ## Enforce session duration
 
@@ -41,4 +44,4 @@ The following example consists of two policies: the first allows specific users 
 | ---------------| --------------| ---------------------| ------ |
 | Destination IP | in            | `10.0.0.0/8`         | Block  |
 
-Refer to the [Network policies page](/cloudflare-one/policies/filtering/network-policies/) for a comprehensive list of other selectors, operators, and actions.
+Refer to the [network policies page](/cloudflare-one/policies/filtering/network-policies/) for a comprehensive list of other selectors, operators, and actions.

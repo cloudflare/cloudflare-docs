@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Free
 weight: 1
 meta:
@@ -12,6 +12,7 @@ meta:
 
 ## Secure origin connections
 
+{{<render file="_origin-secure-dns.md">}}
 {{<render file="_origin-secure-connections.md">}}
 
 ## Monitor origin health

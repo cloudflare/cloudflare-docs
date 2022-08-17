@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: About Cloudflare Analytics
 weight: 1
 meta:

@@ -1,7 +1,7 @@
 ---
-updated: 2021-04-15
+updated: 2022-07-12
 category: 🔐 Zero Trust
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Render an SSH client in a browser
 ---
 
@@ -28,13 +28,7 @@ Administrators can deploy Cloudflare Tunnel to connect one or more machines avai
 
 ## Create a Zero Trust policy
 
-First, navigate to the Zero Trust dashboard to create a new application. Select the `Applications` page from the sidebar. Click **Add application**.
-
-![App List](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
-
-Choose **Self-hosted** on the next page.
-
-![Add App](/cloudflare-one/static/zero-trust-security/ssh/add-app.png)
+First, navigate to the Zero Trust dashboard to create a new application. Select the **Applications** page from the sidebar. Click **Add application**. Then choose **Self-hosted** on the next page.
 
 Input a subdomain where your application will be available to users.
 
@@ -42,11 +36,7 @@ Input a subdomain where your application will be available to users.
 
 Next, create rules that control who can reach the application.
 
-![Add Rules](/cloudflare-one/static/zero-trust-security/ssh/app-rules.png)
-
 Finally, click **Save** to save the policy. You can return to edit the policy to make changes to who should be allowed or to choose what authentication providers can be used.
-
-![Save](/cloudflare-one/static/zero-trust-security/ssh/save-app.png)
 
 ## Install `cloudflared`
 
@@ -73,7 +63,7 @@ Choose any hostname presented in the list. Cloudflare will issue a certificate s
 
 ## Create a Tunnel
 
-Next, [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) with the command below.
+Next, [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/) with the command below.
 
 ```sh
 $ cloudflared tunnel create <NAME>
@@ -89,7 +79,7 @@ $ cloudflared tunnel list
 
 ## Configure the Tunnel
 
-You can now [configure the Tunnel](/cloudflare-one/connections/connect-apps/configuration/) to serve traffic.
+You can now [configure the Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/) to serve traffic.
 
 Create a `YAML` file that `cloudflared` can reach. By default, `cloudflared` will look for the file in the same folder where `cloudflared` has been installed.
 
@@ -113,19 +103,19 @@ ingress:
 
 ## Route to the Tunnel
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/).
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/).
 
-Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
+1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com/) and select your account. Select your domain and go to **DNS**.
 
-![DNS List](/cloudflare-one/static/zero-trust-security/ssh/dns-list.png)
+2. Select **+ Add record**. Choose `CNAME` as the record type. For **Name**, choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
 
-Select `CNAME` as the record type. For the target, input the ID of your Tunnel followed by `cfargotunnel.com`. In this example, the target would be:
+3. For **Target**, input the ID of your Tunnel followed by `.cfargotunnel.com`. For example:
+  
+  ```txt
+    6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
+  ```
 
-`6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com`
-
-Click **Save**.
-
-![Add DNS](/cloudflare-one/static/zero-trust-security/ssh/add-dns.png)
+4. Select **Save**.
 
 ## Run the Tunnel
 
@@ -135,15 +125,13 @@ You can now run the Tunnel to connect the target service to Cloudflare. Use the 
 cloudflared tunnel run <NAME>
 ```
 
-We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/) that is configured to launch on start.
+We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/) that is configured to launch on start.
 
 ## Connect from a browser-rendered terminal
 
 Cloudflare can render an SSH client in your browser without the need for client software or end user configuration changes.
 
 To enable this feature, navigate to the **Access > Applications** page in the Zero Trust Dashboard. Click **Edit** and select the **Settings** tab. In the **`cloudflared` settings** card, select _SSH_ from the **Browser Rendering** drop-down menu.
-
-![Auto Auth](/cloudflare-one/static/documentation/applications/ssh-browser-rendering.png)
 
 Once enabled, when users authenticate and visit the URL of the application, Cloudflare will render a terminal in their browser.
 

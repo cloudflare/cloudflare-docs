@@ -1,6 +1,6 @@
 ---
 title: Available features
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 2
 meta:
   title: Available Origin Rules features

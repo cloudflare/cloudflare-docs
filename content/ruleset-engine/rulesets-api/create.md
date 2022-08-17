@@ -1,6 +1,6 @@
 ---
 title: Create ruleset
-pcx-content-type: reference
+pcx_content_type: reference
 type: overview
 weight: 5
 layout: list

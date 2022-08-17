@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Environments
 ---
 
@@ -7,7 +7,7 @@ title: Environments
 
 {{<Aside type="note">}}
 
-You can only use environments with [Wrangler](/workers/wrangler/).
+We have temporarily disabled the creation of [Service Environments](/workers/learning/using-services/#service-environments) while we are improving this feature. Environments made using Wrangler, as described below, are still supported.
 
 {{</Aside>}}
 

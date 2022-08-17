@@ -1,7 +1,8 @@
 ---
 title: Enable Splunk
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 64
+layout: single
 meta:
   title: Enable Logpush to Splunk
 ---
@@ -89,7 +90,7 @@ Cloudflare highly recommends setting this value to <code class="InlineCode">fals
 
 - **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
 
-- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/reference/logpush-api-configuration/#options). For timestamp, Cloudflare recommends using `timestamps=rfc3339`.
+- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [API configuration options](/logs/get-started/api-configuration/#options). For timestamp, Cloudflare recommends using `timestamps=rfc3339`.
 
 Example request using cURL:
 
@@ -189,3 +190,8 @@ If you have the Cloudflare Web Application Firewall (WAF) turned on, you may see
 3.  Click **Deploy**.
 
 The WAF should now ignore requests made to Splunk HEC by Cloudflare.
+
+{{<Aside type="note" header="Note">}}
+To analyze and visualize Cloudflare Logs using the Cloudflare App for Splunk, follow the steps in the [Splunk Analytics integration page](/fundamentals/data-products/analytics-integrations/splunk/).
+{{</Aside>}}
+

@@ -1,6 +1,6 @@
 ---
 title: JSON object
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 1
 meta:
   title: List JSON object

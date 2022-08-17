@@ -1,6 +1,7 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Pages Plugins
+layout: single
 ---
 
 # Pages Plugins

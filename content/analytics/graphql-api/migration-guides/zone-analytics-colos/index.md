@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Zone Analytics Colos Endpoint to GraphQL Analytics
 weight: 13
 ---

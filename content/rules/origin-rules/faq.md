@@ -1,6 +1,6 @@
 ---
 title: FAQ
-pcx-content-type: faq
+pcx_content_type: faq
 weight: 10
 meta:
   title: FAQ — Origin Rules

@@ -1,6 +1,6 @@
 ---
 title: Phases list
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 1
 ---
 
@@ -55,9 +55,10 @@ The phases execute in the order they appear in the table.
 
 | Phase name | Used in product/feature |
 |---|---|
+| http_custom_errors | [Custom error responses](/rules/custom-error-responses/) |
 | _N/A_ (internal phase) | [Managed Transforms](/rules/transform/managed-transforms/) |
 | `http_response_headers_transform` | [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/create-api/) |
 | `http_response_firewall_managed` | [Cloudflare Sensitive Data Detection](/waf/managed-rulesets/) (Data Loss Prevention) |
-| `http_log_custom_fields` | [Logpush custom fields](/logs/reference/logpush-api-configuration/custom-fields/) |
+| `http_log_custom_fields` | [Logpush custom fields](/logs/reference/custom-fields/) |
 
 {{</table-wrap>}}

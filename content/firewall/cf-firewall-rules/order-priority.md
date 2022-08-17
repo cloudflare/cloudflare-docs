@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Order and priority
 weight: 3
 ---
@@ -14,7 +14,7 @@ Cloudflare Firewall Rules is part of a larger evaluation chain for HTTP requests
 
 {{<Aside type="warning" header="Important">}}
 
-- You can use [IP Access rules](/waf/tools/ip-access-rules/) to allowlist requests under certain conditions, effectively excluding these requests from all security checks. However, allowing a given country code will not bypass the [Cloudflare Web Application Firewall (WAF)](/waf/).
+- You can use [IP Access rules](/waf/tools/ip-access-rules/) to allowlist requests under certain conditions, effectively excluding these requests from all security checks. However, allowing a given country code will not bypass [WAF Managed Rulesets](/waf/managed-rulesets/) or [WAF managed rules (previous version)](https://support.cloudflare.com/hc/articles/200172016).
 
 - The execution order diagram does not include products powered by the [Ruleset Engine](/ruleset-engine/) like the [WAF](/waf/) or [Transform Rules](/rules/transform/).
 

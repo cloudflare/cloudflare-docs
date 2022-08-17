@@ -1,6 +1,6 @@
 ---
 title: Platform
-pcx-content-type: navigation
+pcx_content_type: navigation
 weight: 2
 ---
 

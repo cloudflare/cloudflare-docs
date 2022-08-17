@@ -1,6 +1,6 @@
 ---
 title: Available Notifications
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 7
 layout: single
 ---
@@ -15,7 +15,7 @@ Depending on your plan, you will also be able to configure webhooks (which allow
 
 Each Notification carries different types of information about the status of your Cloudflare account, or the type of action you can take.
 
-Click below to understand what each Notification does and what to do when receiving one.
+Refer to information below to understand what each Notification does and what to do when receiving one.
 
 ## Access
 
@@ -465,7 +465,7 @@ Access and Cloudflare for SaaS.
 
 **What should you do if you receive one?**
 
-Upload a [renewed certificate](/cloudflare-one/identity/devices/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).
+Upload a [renewed certificate](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).
 
 </div>
 </details>

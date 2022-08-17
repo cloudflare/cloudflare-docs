@@ -1,7 +1,7 @@
 ---
 title: 2022-03-31 – Emergency
 type: table
-pcx-content-type: changelog
+pcx_content_type: changelog
 weight: 915
 layout: list
 meta:

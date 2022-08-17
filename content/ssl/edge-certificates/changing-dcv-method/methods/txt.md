@@ -1,6 +1,6 @@
 ---
 title: TXT
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 1
 meta:
   title: TXT method — Domain Control Validation — SSL/TLS
@@ -9,10 +9,6 @@ meta:
 # TXT DCV method
 
 {{<render file="_txt-validation-definition.md">}}
-
-## Limitations
-
-If your domain is already active with a partial DNS setup — with Cloudflare or another DNS provider — you cannot use a TXT record for DCV. That domain's TXT record needs to be reserved for forwarding traffic to Cloudflare.
 
 ## Setup
 

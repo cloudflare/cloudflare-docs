@@ -1,6 +1,6 @@
 ---
 title: Analytics
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 46
 meta:
   title: Load balancing analytics
@@ -136,7 +136,7 @@ header: Query
 {
   viewer {
     zones(filter: {zoneTag: "your Zone ID"}) {
-         loadBalancingRequestsAdapative( 
+         loadBalancingRequestsAdaptive( 
             limit: 100, 
             filter: { 
                 datetime_geq: "2021-06-26T00:00:00Z", 

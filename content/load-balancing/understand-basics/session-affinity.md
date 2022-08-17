@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Session affinity
 weight: 17
 ---
@@ -54,6 +54,16 @@ Drain or remove all traffic from an origin without affecting any active customer
 Origin drain is not supported for load balancers in [DNS-only mode (gray cloud)](/load-balancing/understand-basics/proxy-modes/).
 
 {{</Aside>}}
+
+### Zero Downtime Failover
+
+Zero Downtime Failover automatically sends traffic to origin servers within a pool during transient network issues. This helps reduce errors shown to your users when issues occur in between active health monitors. 
+
+You can enable one of three options:
+
+- **None**: No failover will take place and errors may show to your users.
+- **Temporary**: Traffic will be sent to other origin(s) until the originally pinned origin is available.
+- **Sticky**: The session affinity cookie is updated and subsequent requests are sent to the new origin moving forward as needed.
 
 ---
 

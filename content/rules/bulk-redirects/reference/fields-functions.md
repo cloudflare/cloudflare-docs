@@ -1,6 +1,6 @@
 ---
 title: Available fields and functions
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 5
 meta:
   title: Available fields and functions in Bulk Redirect Rules

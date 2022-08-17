@@ -1,6 +1,6 @@
 ---
 type: overview
-pcx-content-type: navigation
+pcx_content_type: navigation
 hideChildren: true
 title: FAQ
 Weight: 130
@@ -28,6 +28,12 @@ For general questions about Logs.
 For questions about Logpush.
 
 {{<button type="primary"  href="/logs/faq/logpush/">}}Logpush  ❯{{</button>}}
+
+## Instant Logs
+
+For questions about Instant Logs.
+
+{{<button type="primary"  href="/logs/faq/instant-logs/">}}Instant Logs ❯{{</button>}}
 
 ## Logpull API
 

@@ -1,6 +1,6 @@
 ---
 title: Plans
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 2
 ---
 
@@ -25,6 +25,7 @@ All standard features are included with the purchase of the advanced features be
 - Customizable IP lists
 - Managed threat intelligence IP lists (Malware, Botnet, Anonymizer)
 - Geoblocking based on user location by country
+- Block or allow packets based on Autonomous System Number (ASN)
 - Packet captures on demand for network troubleshooting
 - Protocol validation rules to inspect traffic validity and enforce a positive security model
 - Optional upgrade to full stateful Secure Web Gateway using [Cloudflare Zero Trust](/cloudflare-one/) for outbound Internet traffic. The Secure Web Gateway upgrade supports all TCP and UDP ports, traffic sourced from RFC, and BYOIP.

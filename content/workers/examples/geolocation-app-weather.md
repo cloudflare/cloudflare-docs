@@ -4,7 +4,7 @@ summary: Fetch weather data from an API using the user's geolocation data.
 tags:
   - Originless
   - Geolocation
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: 'Geolocation: Weather application'
 weight: 1001
 layout: example
@@ -38,9 +38,9 @@ async function handleRequest(request) {
   html_content += `You are located at: ${latitude},${longitude}.</p>`;
   html_content += `<p>Based off sensor data from <a href="${content.data.city.url}">${content.data.city.name}</a>:</p>`;
   html_content += `<p>The AQI level is: ${content.data.aqi}.</p>`;
-  html_content += `<p>The N02 level is: ${content.data.iaqi.no2.v}.</p>`;
-  html_content += `<p>The O3 level is: ${content.data.iaqi.o3.v}.</p>`;
-  html_content += `<p>The temperature is: ${content.data.iaqi.t.v}°C.</p>`;
+  html_content += `<p>The N02 level is: ${content.data.iaqi.no2?.v}.</p>`;
+  html_content += `<p>The O3 level is: ${content.data.iaqi.o3?.v}.</p>`;
+  html_content += `<p>The temperature is: ${content.data.iaqi.t?.v}°C.</p>`;
 
   let html = `
 <!DOCTYPE html>

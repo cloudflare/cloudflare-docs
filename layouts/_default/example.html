@@ -2,6 +2,7 @@
   {{- $type := default "overview" .Params.type -}}
 
   <div class="DocsPage">
+    {{- partial "skipcontent" . -}}
     {{- partial "topbar.mobile" . -}}
     {{- partial "sidebar.nav" . -}}
 
@@ -13,7 +14,7 @@
     <main class="DocsBody">
       <div id="docs-content" data-reach-skip-nav-content></div>
 
-      <div class="DocsContent" page-type="{{ $type }}">
+      <div class="DocsContent" id="main" page-type="{{ $type }}">
         <article class="DocsMarkdown">
           <h1>{{ .Title }}</h1>
 
