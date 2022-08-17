@@ -29,12 +29,24 @@ Unlike most DNS resolvers, 1.1.1.1 does not sell user data to advertisers. 1.1.1
 1.1.1.1 offers an encrypted service through DNS over HTTPS (DoH) or DNS over TLS (DoT) for increased security and privacy. You can also access 1.1.1.1 [as a Tor hidden service](/1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-tor/).
 {{</feature>}}
 
+{{<feature header="Infrastructure" href="/1.1.1.1/infrastructure/">}}
+1.1.1.1 offers a variety of features specific for network operators, and those who manage IPv6 networks.
+{{</feature>}}
+
 ---
 
 ## Related products
 
 {{<related header="WARP Client" href="/warp-client/" product="warp-client">}}
 Access the Internet in a more secure and private way.
+{{</related>}}
+
+{{<related header="DNS" href="/dns/" product="dns">}}
+Cloudflare's global DNS platform provides speed and resilience. DNS customers also benefit from free DNSSEC, and protection against route leaks and hijicking.
+{{</related>}}
+
+{{<related header="Cloudflare Spectrum" href="/spectrum/" product="spectrum">}}
+Secure and accelerate your TCP or UDP based applications.
 {{</related>}}
 
 ---
