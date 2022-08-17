@@ -55,7 +55,7 @@ Ask your customer to create a TXT record named the **name** and containing the *
 
 {{<Aside type="note">}}
 
-With the [upcoming change](/ssl/ssl-tls/migration-guides/digicert-update/custom-hostname-certificates/) to certificates issued by DigiCert, email DCV will soon be unsupported..
+With the [upcoming change](/ssl/ssl-tls/migration-guides/digicert-update/custom-hostname-certificates/) to certificates issued by DigiCert, email DCV will soon be unsupported.
 
 {{</Aside>}}
  
