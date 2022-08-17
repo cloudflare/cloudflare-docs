@@ -9,13 +9,13 @@ Cloudflare Stream is compatible with all video players that support HLS and DASH
 
 Refer to the guides below for more information.
 
-* [Web](/stream/viewing-videos/using-own-player/web/)
-* [iOS (AVPlayer)](/stream/viewing-videos/using-own-player/ios/)
-* [Android (ExoPlayer)](/stream/viewing-videos/using-own-player/android/)
+* [Web](/stream/viewing-videos/using-own-player/web)
+* [iOS (AVPlayer)](/stream/viewing-videos/using-own-player/ios)
+* [Android (ExoPlayer)](/stream/viewing-videos/using-own-player/android)
 
-## How to fetch HLS and Dash manifests
+## Fetch HLS and Dash manifests
 
-Each video and live stream has its own unique HLS and DASH manifest. You can access the manifest by replacing `<UID>` with the UID of your video or live input and replacing `<CODE>` with your unique customer code in the URLs below:
+Each video and live stream has its own unique HLS and DASH manifest. You can access the manifest by replacing `<UID>` with the UID of your video or live input, and replacing `<CODE>` with your unique customer code, in the URLs below:
 
 ```text
 ---

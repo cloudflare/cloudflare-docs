@@ -11,7 +11,7 @@ Cloudflare provides a customizable web player that can play both on-demand and l
 To add the Stream Player to a web page, you can either:
 
 1. Generate an embed code in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream) for a specific video or live input.
-2. Use the code example below, replacing `<VIDEO_UID>` with the video UID (or [signed token](/stream/viewing-videos/securing-your-stream/)) and `<CODE>` with the your unique customer code, which can be found in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
+2. Use the code example below, replacing `<VIDEO_UID>` with the video UID (or [signed token](/stream/viewing-videos/securing-your-stream/) and `<CODE>` with the your unique customer code, which can be found in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
 
 ```html
 <iframe
