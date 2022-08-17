@@ -31,13 +31,26 @@ The Application Check device posture attribute checks that a specific applicatio
 
     1. **Name**: Enter a unique name for this device posture check.
     1. **Operating system**: Select your operating system.
-    1. **Application Path**: Enter a file path (for example, `c:\my folder\myfile.exe`).
+    1. **Application Path**: Enter a file path (for example, `c:\my folder\myfile.exe`) for the executable that will be running.
     1. **Signing certificate thumbprint (recommended)**: Enter the [thumbprint of the publishing certificate](#determine-the-signing-thumbprint) used to sign the binary. Adding this information will enable the check to ensure that the application was signed by the expected software developer.
     1. **SHA-256 (optional)**: Enter the [SHA-256 value](#determine-the-sha-256-value) of the binary. This is used to ensure the integrity of the binary file on the device.
 
 1. Select **Save**.
 
 Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the application check is returning the expected results.
+
+{{<Aside type="note">}}
+
+The Zero Trust Desktop client checks for the path of the actual binary that is
+running. Not the path of the launched binary. Please ensure your path points to
+the file on the machine that is running.
+
+A common mistake is to attempt to check if an application on macOS is running by
+checking for /Applications/ApplicationName.app. This will not work as
+"Application.app" is a folder. The executable files that will be running are
+located in that folder.
+
+{{</Aside>}}
 
 ## Determine the signing thumbprint
 
