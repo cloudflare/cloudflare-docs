@@ -98,7 +98,7 @@ By completing this tutorial, you have deployed a real-time chat application with
 
 ## Related resources
 
-Continue building with other Cloudflare Workers tutorials below.
+Continue building with other Cloudflare Workers tutorials.
 
 - [Build a Slackbot](/workers/tutorials/build-a-slackbot/)
 - [Create SMS notifications for your GitHub repository using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)
