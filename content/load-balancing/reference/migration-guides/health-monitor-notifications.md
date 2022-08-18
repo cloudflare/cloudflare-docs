@@ -42,29 +42,17 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/:account_id/load_bala
 ---
 header: Response
 ---
-{
-  "success": true,
-  "errors": [],
-  "messages": [],
-  "result": [
-    {
-        "name": "pool-one",
-        "notification_email": "user@example.com"
-    }
-    {
-        "name": "pool-two",
-        "notification_email": "user@example.com"
-    }
-    {
-        "name": "pool-three",
-        "notification_email": "user@example.com"
-    }
-    {
-        "name": "pool-four",
-        "notification_email": "user@example.com"
-    }
-  ]
-}
+[ 
+    { 
+        "name": "<name", 
+        "notification_email": "<email>" 
+    }, 
+    { 
+        "name": "<name", 
+        "notification_email": "<email>" 
+    } 
+    <more objects...>
+]
 ```
 
 </div>
