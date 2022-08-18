@@ -22,11 +22,13 @@ To do this:
 5. In the content type, select **Redirect**. 
 6. Add your redirect Source URL and Target URL. Your target URL must include `https://` before the apex domain. 
 7. Select **Edit parameters** > select **Preserve query string**, **Subpath matching** and **Preserve path suffix**.
+
+![Follow the steps above to correctly configure your list](/pages/how-to/media/redirect-parameters.png)
+
 8. Select **Add to list**.
+9. Go to **Bulk Redirects** > **Create Bulk Redirects** > select your list > **Save and Deploy**.
 
 ![Create a new Bulk redirects](/pages/how-to/media/create_new_bulk_redirect.png)
-
-9. Go to **Bulk Redirects** > **Create Bulk Redirects** > select your list > **Save and Deploy**.
 
 To test that your redirect worked, go to the Target URL and double-click the URL as if to copy it. If the URL does not display `www`, your change has successfully propogated.
 
