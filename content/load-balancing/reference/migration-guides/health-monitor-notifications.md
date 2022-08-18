@@ -31,7 +31,7 @@ To find pools with existing notifications in the dashboard:
 2. Go to **Traffic** > **Load Balancing**.
 3. Click **Manage Pools**.
 4. On a pool, click **Edit**.
-5. For **Health Check Notifications**, check the value is toggled to **On**.
+5. For **Health Check Notifications**, check the value is toggled to **On** and an email address is present in the **Notification email address** field.
 
 </div>
 </details>
@@ -42,12 +42,15 @@ To find pools with existing notifications in the dashboard:
 <div>
 
 If using the [Cloudflare API](https://api.cloudflare.com/#account-load-balancer-pools-list-pools), check the `notification_filter` object. Health checks with enabled legacy notifications will have something like:
+
     ```json
     "pool": {
         "healthy": true,
         "disable": true
     }
     ```
+
+You should also pay attention to the `notification_emails` parameter. Even if the `notification_filter` indicates that a health checks should send notifications, those will only be sent if there are email addresses listed in `notification_emails`.
 
 </div>
 </details>
@@ -100,17 +103,22 @@ Once you created your new notification in [Step 2](#step-2---create-new-notifica
 
 <div>
 
-If using the Cloudflare API, send a [`PATCH`](https://api.cloudflare.com/#account-load-balancer-pools-patch-pool) request that includes the following objects.
+If using the Cloudflare API, we recently added a [`PATCH`](https://api.cloudflare.com/#load-balancer-pools-patch-pools) endpoint so you can easily remove email notifications from multiple pools at the same time.
 
 ```json
-"notification_email": "",
-"notification_filter": {
-    "pool": {
-        "healthy": null,
-        "disable": true
-    }
-}
+---
+header: Request
+---
+curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/:account_identifier/load_balancers/pools" \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
+-H "Content-Type: application/json" \
+--data '{
+    "notification_email":""
+}'
 ```
+
+This API call supports the standard pagination query parameters, either `limit/offset` or `per_page/page`, so by default it only updates the first 25 pools listed. To make sure you update all your pools, you may want to adjust your API call so it loops through various pages or includes a larger number of pools with each request.
 
 </div>
 </details>
