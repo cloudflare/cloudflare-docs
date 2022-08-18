@@ -7,7 +7,7 @@ layout: single
 
 # Cloudflare authorization cookie
 
-When you protect a site with Cloudflare Access, Cloudflare checks every HTTP request bound for that site to ensure that the request has a valid `CF-Authorization` cookie. The cookie contains the user's identity in [JSON format](#access-jwts). If a request does not include the cookie, or if the identity data in the cookie does not match an Allow policy, the request will be blocked.
+When you protect a site with Cloudflare Access, Cloudflare checks every HTTP request bound for that site to ensure that the request has a valid `CF-Authorization` cookie. The cookie contains the user's identity in [JSON format](#access-jwts). If a request does not include the cookie, the request will be blocked.
 
 ## Access JWTs
 
