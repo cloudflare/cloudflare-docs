@@ -103,7 +103,7 @@ Once you created your new notification in [Step 2](#step-2---create-new-notifica
 
 <div>
 
-If using the Cloudflare API, we recently added a [`PATCH`](https://api.cloudflare.com/#load-balancer-pools-patch-pools) endpoint so you can easily remove email notifications from multiple pools at the same time.
+If using the Cloudflare API, we recently added a [`PATCH`](https://api.cloudflare.com/#account-load-balancer-pools-patch-pool) endpoint so you can easily remove email notifications from multiple pools at the same time.
 
 ```json
 ---
