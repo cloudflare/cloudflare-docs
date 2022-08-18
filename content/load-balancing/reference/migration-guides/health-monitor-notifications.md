@@ -95,7 +95,7 @@ In this step, you should create new notifications to replace all of your existin
 
 <div>
 
-If using the Cloudflare API, [create a new notification](https://api.cloudflare.com/#notification-policies-create-a-notification-policy) with the following parameters specified:
+If using the Cloudflare API, [re-create all your existing notifications](https://api.cloudflare.com/#notification-policies-create-a-notification-policy) with the following parameters specified:
 
 ```json
 "alert_type": "load_balancing_health_alert",
