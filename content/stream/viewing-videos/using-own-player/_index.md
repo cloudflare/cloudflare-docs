@@ -36,14 +36,14 @@ https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
 
 ### Dashboard
 
-1. Log into [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
+1. Log into the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
 2. From the list of videos, locate your video and select it.
 3. From the **Settings** tab, locate the **HLS Manifest URL** and **Dash Manifest URL**.
 4. Select **Click to copy** under the option you want to use.
 
 ### API
 
-Refer to the [Stream video details API documentation](https://api.cloudflare.com/#stream-videos-video-details) to learn how to fetch the manfest URLs using the Cloudflare API.
+Refer to the [Stream video details API documentation](https://api.cloudflare.com/#stream-videos-video-details) to learn how to fetch the manifest URLs using the Cloudflare API.
 
 ## Customize manifests by specifying available client bandwidth
 
