@@ -150,4 +150,4 @@ Once you created your new notification in [Step 2](#step-2---create-new-notifica
 </div>
 </details>
 
-If you do not complete this step (removing all notification emails from all pools), your migration will not be considered complete and you will continue to receive for additional emails about this deprecation.
+If you do not complete this step (removing all notification emails from all pools), your migration will not be considered complete and you will continue to receive additional emails about this deprecation.
