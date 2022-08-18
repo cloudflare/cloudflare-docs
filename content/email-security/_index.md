@@ -12,7 +12,7 @@ With globally distributed sensors & comprehensive attack analytics, Area 1 proac
 
 ## Availability
 
-Cloudflare Area 1 Email Security is available as a standalone product purchase.
+Cloudflare Area 1 Email Security is available as a [standalone product purchase](https://www.cloudflare.com/products/zero-trust/email-security/).
 
 ## Related products
 
