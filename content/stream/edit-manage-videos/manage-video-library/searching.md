@@ -16,7 +16,7 @@ To make API requests you will need a [Cloudflare API token](https://www.cloudfla
 This example lists media where the name matches `puppy.mp4`.
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?search=puppy" \
-     -H "Authorization: Bearer $TOKEN" \
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream?search=puppy" \
+     -H "Authorization: Bearer <API_TOKEN>" \
      -H "Content-Type: application/json"
 ```

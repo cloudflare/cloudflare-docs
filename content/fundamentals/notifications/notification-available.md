@@ -465,7 +465,7 @@ Access and Cloudflare for SaaS.
 
 **What should you do if you receive one?**
 
-Upload a [renewed certificate](/cloudflare-one/identity/devices/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).
+Upload a [renewed certificate](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).
 
 </div>
 </details>

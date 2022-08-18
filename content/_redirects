@@ -83,7 +83,7 @@
 /access/getting-started/access-setup/ /cloudflare-one/identity/ 301
 /access/rdp/ /cloudflare-one/tutorials/rdp/ 301
 /access/rdp/connect-rdp/ /cloudflare-one/tutorials/rdp/ 301
-/access/service-auth/mtls/ /cloudflare-one/identity/devices/mutual-tls-authentication/ 301
+/access/service-auth/mtls/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
 /access/service-auth/service-token/ /cloudflare-one/identity/service-tokens/ 301
 /access/setting-up-access/ /cloudflare-one/identity/ 301
 /access/setting-up-access/access-groups/ /cloudflare-one/identity/users/groups/ 301
@@ -288,6 +288,7 @@
 /load-balancing/understand-basics/load-balancing-rules/ /load-balancing/additional-options/load-balancing-rules/ 301
 /load-balancing/understand-basics/load-shedding/ /load-balancing/additional-options/load-shedding/ 301
 /load-balancing/understand-basics/region-mapping-api/ /load-balancing/reference/region-mapping-api/ 301
+/load-balancing/reference/release-notes/ /load-balancing/reference/migration-guides/load-balancing-graphql-nodes/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/reference/common-configurations/ 301
 
@@ -562,6 +563,11 @@
 
 # tenant_redirects
 /tenant/tutorial/ /tenant/get-started/ 301
+/tenant/get-started/prerequisites/ /tenant/get-started/ 301
+/tenant/get-started/provisioning-resources/ /tenant/how-to/manage-accounts/ 301
+/tenant/get-started/user-access/ /tenant/get-started/ 301
+/tenant/get-started/enabling-services/ /tenant/how-to/manage-subscriptions/ 301
+/tenant/get-started/service-configuration/ /tenant/get-started/ 301
 
 # terraform
 /terraform/advanced-topics/importing-cloudflare-resources/ /terraform/advanced-topics/import-cloudflare-resources/ 301
@@ -922,6 +928,7 @@
 /workers/writing-workers/resource-limits/ /workers/about/limits/ 301
 /workers/runtime-apis/r2/ /r2/runtime-apis/ 301
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-application/ 301
+/workers/examples/http2-server-push/ /workers/examples/103-early-hints/ 301
 
 # zaraz
 
@@ -1008,6 +1015,25 @@
 /cloudflare-one/faq/tunnel/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
 /cloudflare-one/faq/tunnels/ /cloudflare-one/faq/ 301
 
+/cloudflare-one/identity/devices/azure-ad/ /cloudflare-one/identity/devices/access-integrations/azure-ad/ 301
+/cloudflare-one/identity/devices/mutual-tls-authentication/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
+/cloudflare-one/identity/devices/tanium/ /cloudflare-one/identity/devices/access-integrations/tanium/ 301
+/cloudflare-one/identity/devices/crowdstrike/ /cloudflare-one/identity/devices/service-providers/crowdstrike/ 301
+/cloudflare-one/identity/devices/microsoft/ /cloudflare-one/identity/devices/service-providers/microsoft/ 301
+/cloudflare-one/identity/devices/uptycs/ /cloudflare-one/identity/devices/service-providers/uptycs/ 301
+/cloudflare-one/identity/devices/workspace-one/ /cloudflare-one/identity/devices/service-providers/workspace-one/ 301
+/cloudflare-one/identity/devices/application-check/ /cloudflare-one/identity/devices/warp-client-checks/application-check/ 301
+/cloudflare-one/identity/devices/carbon-black/ /cloudflare-one/identity/devices/warp-client-checks/carbon-black/ 301
+/cloudflare-one/identity/devices/corp-device/ /cloudflare-one/identity/devices/warp-client-checks/corp-device/ 301
+/cloudflare-one/identity/devices/disk-encryption/ /cloudflare-one/identity/devices/warp-client-checks/disk-encryption/ 301
+/cloudflare-one/identity/devices/domain-joined/ /cloudflare-one/identity/devices/warp-client-checks/domain-joined/ 301
+/cloudflare-one/identity/devices/file-check/ /cloudflare-one/identity/devices/warp-client-checks/file-check/ 301
+/cloudflare-one/identity/devices/firewall/ /cloudflare-one/identity/devices/warp-client-checks/firewall/ 301
+/cloudflare-one/identity/devices/os-version/ /cloudflare-one/identity/devices/warp-client-checks/os-version/ 301
+/cloudflare-one/identity/devices/require-gateway/ /cloudflare-one/identity/devices/warp-client-checks/require-gateway/ 301
+/cloudflare-one/identity/devices/require-warp/ /cloudflare-one/identity/devices/warp-client-checks/require-warp/ 301
+/cloudflare-one/identity/devices/sentinel-one/ /cloudflare-one/identity/devices/warp-client-checks/sentinel-one/ 301
+
 /cloudflare-one/identity/idp-integration/one-time-pin/ /cloudflare-one/identity/one-time-pin/ 301
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
@@ -1032,6 +1058,9 @@
 /cloudflare-one/policies/filtering/http-policies/application-app-types/ /cloudflare-one/policies/filtering/application-app-types/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/ /cloudflare-one/policies/filtering/dns-policies/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/categories/ /cloudflare-one/policies/filtering/dns-policies/dns-categories/ 301
+
+/cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
+
 /cloudflare-one/tutorials/corp-device-tag/ /cloudflare-one/identity/devices/ 301
 
 # new_doc_redirects
@@ -1052,7 +1081,7 @@
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
 /load-balancing/understand-basics/load-balancing-rules/* /load-balancing/additional-options/load-balancing-rules/:splat 301
 /fundamentals/get-started/origin-health/* /fundamentals/get-started/task-guides/origin-health/:splat 301
-/tenant/tutorial/* /tenant/get-started/:splat 301
+/tenant/tutorial/* /tenant/get-started/ 301
 /argo-tunnel/run-tunnel/run-as-service/* /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/:splat 301
 /docs-engine/* https://github.com/cloudflare/cloudflare-docs/blob/production/README.md 301
 

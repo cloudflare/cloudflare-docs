@@ -142,4 +142,7 @@ The Binding Cookie is an additional cookie created when a user successfully auth
 
 #### When not to use the Binding Cookie
 
-Do not use the Binding Cookie for non-browser based Access applications that rely on protocols like SSH, RDP, etc.
+Do not use the Binding Cookie for:
+
+- Non-browser based Access applications that rely on protocols such as SSH and RDP
+- Routes that use Cloudflare Workers

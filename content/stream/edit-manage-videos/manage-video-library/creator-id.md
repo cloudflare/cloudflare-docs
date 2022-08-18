@@ -12,9 +12,8 @@ For basic uploads, you will need to add the Creator ID after you upload the vide
 ## Upload from URL
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/023e105f4ecef8ad9ca31a8372d0c353/stream/copy" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy" \
+     -H "Authorization: Bearer <API_TOKEN>" \
      -H "Content-Type: application/json" \
      --data '{"url":"https://example.com/myvideo.mp4","creator": "<CREATOR_ID>","thumbnailTimestampPct":0.529241,"allowedOrigins":["example.com"],"requireSignedURLs":true,"watermark":{"uid":"ea95132c15732412d22c1476fa83f27a"}}'
 ```
@@ -44,10 +43,10 @@ highlight: [35]
     "modified": "2014-01-02T02:20:00Z",
     "uploadExpiry": "2014-01-02T02:20:00Z",
     "playback": {
-      "hls": "https://videodelivery.net/ea95132c15732412d22c1476fa83f27a/manifest/video.m3u8",
-      "dash": "https://videodelivery.net/ea95132c15732412d22c1476fa83f27a/manifest/video.mpd"
+      "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/manifest/video.m3u8",
+      "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/manifest/video.mpd"
     },
-    "preview": "https://watch.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a",
+    "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/watch",
     "readyToStream": true,
     "requireSignedURLs": true,
     "size": 4190963,
@@ -57,7 +56,7 @@ highlight: [35]
       "errorReasonCode": "",
       "errorReasonText": ""
     },
-    "thumbnail": "https://videodelivery.net/ea95132c15732412d22c1476fa83f27a/thumbnails/thumbnail.jpg",
+    "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/thumbnails/thumbnail.jpg",
     "thumbnailTimestampPct": 0.529241,
     "creator": "<CREATOR_ID>",
     "uid": "ea95132c15732412d22c1476fa83f27a",
@@ -89,17 +88,16 @@ highlight: [35]
 To update the creator property in existing videos, make a POST request to the video object endpoint with a JSON payload specifying the creator property as show in the example below.
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/stream/$VIDEO_ID" \
-  -H "Authorization: Bearer $TOKEN" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>" \
+  -H "Authorization: Bearer <AUTH_TOKEN>" \
   -d '{"creator":"test123"}'  
 ```
 
 ## Direct creator upload
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/023e105f4ecef8ad9ca31a8372d0c353/stream/direct_upload" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/direct_upload" \
+     -H "Authorization: Bearer <AUTH_TOKEN>" \
      -H "Content-Type: application/json" \
      --data '{"maxDurationSeconds":300,"expiry":"2021-01-02T02:20:00Z","creator": "<CREATOR_ID>", "thumbnailTimestampPct":0.529241,"allowedOrigins":["example.com"],"requireSignedURLs":true,"watermark":{"uid":"ea95132c15732412d22c1476fa83f27a"}}'
 ```
@@ -138,9 +136,8 @@ highlight: [8]
 ## Get videos by Creator ID
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/023e105f4ecef8ad9ca31a8372d0c353/stream?after=2014-01-02T02:20:00Z&before=2014-01-02T02:20:00Z&include_counts=false&creator=<CREATOR_ID>&limit=undefined&asc=false&status=downloading,queued,inprogress,ready,error" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream?after=2014-01-02T02:20:00Z&before=2014-01-02T02:20:00Z&include_counts=false&creator=<CREATOR_ID>&limit=undefined&asc=false&status=downloading,queued,inprogress,ready,error" \
+     -H "Authorization: Bearer <API_TOKEN>" \
      -H "Content-Type: application/json"
 ```
 
@@ -170,10 +167,10 @@ highlight: [36]
       "modified": "2014-01-02T02:20:00Z",
       "uploadExpiry": "2014-01-02T02:20:00Z",
       "playback": {
-        "hls": "https://videodelivery.net/ea95132c15732412d22c1476fa83f27a/manifest/video.m3u8",
-        "dash": "https://videodelivery.net/ea95132c15732412d22c1476fa83f27a/manifest/video.mpd"
+        "hls": "https://customer-<CODE>.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/manifest/video.m3u8",
+        "dash": "https://customer-<CODE>.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/manifest/video.mpd"
       },
-      "preview": "https://watch.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a",
+      "preview": "https://customer-<CODE>.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/watch",
       "readyToStream": true,
       "requireSignedURLs": true,
       "size": 4190963,
@@ -183,7 +180,7 @@ highlight: [36]
         "errorReasonCode": "",
         "errorReasonText": ""
       },
-      "thumbnail": "https://videodelivery.net/ea95132c15732412d22c1476fa83f27a/thumbnails/thumbnail.jpg",
+      "thumbnail": "https://customer-<CODE>.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/thumbnails/thumbnail.jpg",
       "thumbnailTimestampPct": 0.529241,
       "creator": "some-creator-id",
       "uid": "ea95132c15732412d22c1476fa83f27a",

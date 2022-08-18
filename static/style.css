@@ -775,28 +775,6 @@ html {
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
 }
 
-.copyCode-button:hover::after,
-.copyCode-button:focus::after {
-  position: absolute;
-  width: auto;
-  min-width: 80px;
-  content: attr(data-tooltip);
-  background-color: #828282;
-  border-radius: 2px;
-  color: #fff;
-  padding: 0.3rem 0.2rem;
-  font-size: 0.8em;
-  right: 10px;
-  opacity: 0.8;
-  box-shadow: none;
-  border: none;
-  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
-}
-
 .copyCode-button::after::-webkit-scrollbar {
   display: none;
 }
@@ -3206,6 +3184,10 @@ html[is-docs-page] body {
   margin: -0.2em 0;
 }
 
+.DocsTableOfContents-link-active {
+  color: var(--orange-6);
+}
+
 .DocsTableOfContents-link:hover {
   color: var(--orange);
 }
@@ -5345,6 +5327,7 @@ pre {
     gap: 0;
     padding-bottom: 1em;
   }
+
   .DocsMarkdown--feature-button {
     justify-content: flex-start;
   }
@@ -5369,6 +5352,7 @@ pre {
   grid-gap: 20px;
   grid-auto-rows: 1fr;
 }
+
 @media (max-width: 768px) {
   .DocsMarkdown--resource-group {
     grid-template-columns: minmax(0, 1fr);
@@ -5433,3 +5417,4 @@ pre {
 [theme="dark"] .littlefoot-footnote__button {
   background: rgba(110, 110, 110, 0.5);
 }
+
