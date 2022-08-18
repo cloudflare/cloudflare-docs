@@ -89,7 +89,7 @@ To force log out of an Access application, go to:
 
 `<your-application-domain>/cdn-cgi/access/logout`
 
-This immediately clears the authorization cookie from the user's browser. All previously issued application tokens will stop being accepted in 20-30 seconds.
+This immediately clears the authorization cookie from the user's browser. All tokens that were previously issued for the application will stop being accepted in 20-30 seconds.
 
 ### Log out of all applications
 
