@@ -23,7 +23,7 @@ Opening port 443 for connections to `update.argotunnel.com` is optional. Failure
 
 ## Test connectivity with dig
 
-To test your connectivity to Cloudflare, you can use the `dig` command to query the hostnames listed above.
+To test your connectivity to Cloudflare, you can use the `dig` command to query the hostnames listed above. Note that `cloudflared` defaults to connecting with IPv4.
 
 ```bash
 $ dig A region1.v2.argotunnel.com

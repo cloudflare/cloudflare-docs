@@ -288,6 +288,7 @@
 /load-balancing/understand-basics/load-balancing-rules/ /load-balancing/additional-options/load-balancing-rules/ 301
 /load-balancing/understand-basics/load-shedding/ /load-balancing/additional-options/load-shedding/ 301
 /load-balancing/understand-basics/region-mapping-api/ /load-balancing/reference/region-mapping-api/ 301
+/load-balancing/reference/release-notes/ /load-balancing/reference/migration-guides/load-balancing-graphql-nodes/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/reference/common-configurations/ 301
 
@@ -562,6 +563,11 @@
 
 # tenant_redirects
 /tenant/tutorial/ /tenant/get-started/ 301
+/tenant/get-started/prerequisites/ /tenant/get-started/ 301
+/tenant/get-started/provisioning-resources/ /tenant/how-to/manage-accounts/ 301
+/tenant/get-started/user-access/ /tenant/get-started/ 301
+/tenant/get-started/enabling-services/ /tenant/how-to/manage-subscriptions/ 301
+/tenant/get-started/service-configuration/ /tenant/get-started/ 301
 
 # terraform
 /terraform/advanced-topics/importing-cloudflare-resources/ /terraform/advanced-topics/import-cloudflare-resources/ 301
@@ -1076,7 +1082,7 @@
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
 /load-balancing/understand-basics/load-balancing-rules/* /load-balancing/additional-options/load-balancing-rules/:splat 301
 /fundamentals/get-started/origin-health/* /fundamentals/get-started/task-guides/origin-health/:splat 301
-/tenant/tutorial/* /tenant/get-started/:splat 301
+/tenant/tutorial/* /tenant/get-started/ 301
 /argo-tunnel/run-tunnel/run-as-service/* /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/:splat 301
 /docs-engine/* https://github.com/cloudflare/cloudflare-docs/blob/production/README.md 301
 
