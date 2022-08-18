@@ -15,9 +15,9 @@ When you connect to the [Area 1 API](/email-security/api/), the **Public Key** i
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Service Accounts**.
-4. Click **Add Service Account**.
+4. Select **Add Service Account**.
 5. Add a **Name**.
-6. Click **Create Service Account**.
+6. Select **Create Service Account**.
 7. You will see your account's **Private Key** in a pop-up message (which will never be displayed again) and **Public Key** in the list of service accounts. Make sure to copy both values and store in a secure location.
 
 ---
@@ -29,4 +29,4 @@ If you lose your private key or need to rotate it for security reasons, you can 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Service Accounts**.
-4. On a specific account, click **...** > **Refresh key**.
+4. On a specific account, select **...** > **Refresh key**.
