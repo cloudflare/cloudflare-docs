@@ -49,19 +49,19 @@ header: Response
   "result": [
     {
         "name": "pool-one",
-        "notification_email": "example@cloudflare.com"
+        "notification_email": "user@example.com"
     }
     {
         "name": "pool-two",
-        "notification_email": "example@cloudflare.com"
+        "notification_email": "user@example.com"
     }
     {
         "name": "pool-three",
-        "notification_email": "example@cloudflare.com"
+        "notification_email": "user@example.com"
     }
     {
         "name": "pool-four",
-        "notification_email": "example@cloudflare.com"
+        "notification_email": "user@example.com"
     }
   ]
 }
@@ -137,7 +137,7 @@ If using the Cloudflare API, we recently added a [`PATCH`](https://api.cloudflar
 header: Request
 ---
 curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/:account_identifier/load_balancers/pools" \
--H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Email: user@example.com" \
 -H "X-Auth-Key: REDACTED" \
 -H "Content-Type: application/json" \
 --data '{
