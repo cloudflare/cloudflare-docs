@@ -10,7 +10,7 @@ When you use Cloudflare DNS, you can access data about DNS queries through a var
 
 ## Analytics
 
-DNS analytics allow you to evaluate aggregate data about DNS requests to your zone.
+DNS analytics allow you to evaluate aggregate data about DNS queries to your zone.
 
 For a quick summary, view your DNS analytics in the dashboard:
 

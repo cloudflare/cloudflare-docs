@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-[A and AAAA records](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record/) direct browser requests to an origin web server (`A` for IPv4 addresses and `AAAA` for IPv6 addresses).
+[A and AAAA records](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record/) map a domain name to one or multiple IPv4 or IPv6 address(es).
