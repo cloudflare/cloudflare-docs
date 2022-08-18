@@ -60,7 +60,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<CUSTOMER_ACCOUNT_ID
     }'
 ```
 
-In most cases, the user role to use is that of `Administrator` which has the id `05784afa30c1afe1440e79d9351c7430`. 
+In most cases, you will want to create new users with a role of `Administrator` which always has the id `05784afa30c1afe1440e79d9351c7430`.
 
 If your customer is on an Enterprise plan, they have access to a broader set of user roles. To get a full list of available roles, send a [`GET`](https://api.cloudflare.com/#account-roles-list-roles) request to the API.
 
