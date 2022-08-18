@@ -16,9 +16,92 @@ We strongly encourage all customers to migrate existing Health Monitor notificat
 
 ## Migration guide
 
+You should use this guide to migrate over **all** your existing health monitor notifications.
+
 ### Step 1 - Find existing notifications
 
-First you should determine which pools are using notifications.
+First you should determine which pools are using notifications. It's often easier if you use the Cloudflare API to list all your pools and look for the `notification_email` parameter.
+
+<details>
+<summary>With code</summary>
+
+Use the [Cloudflare API](https://api.cloudflare.com/#account-load-balancer-pools-list-pools) to list all your pools and then look for whether each pool has a value for the `notification_email` parameter.
+
+<div>
+
+```json
+---
+header: Request
+---
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/:account_id/load_balancers/pools" \
+    -H "X-Auth-Email: user@cloudflare.com" \
+    -H "X-Auth-Key: REDACTED" \
+    -H "Content-Type: application/json"
+```
+
+```json
+---
+header: Response
+highlight: 42
+---
+{
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": [
+    {
+      "id": "17b5962d775c646f3f9725cbc7a53df4",
+      "created_on": "2022-01-01T05:20:00.12345Z",
+      "modified_on": "2022-01-01T05:20:00.12345Z",
+      "description": "Primary data center - Provider XYZ",
+      "name": "primary-dc-1",
+      "enabled": false,
+      "load_shedding": {
+        "default_percent": 0,
+        "default_policy": "random",
+        "session_percent": 0,
+        "session_policy": "hash"
+      },
+      "minimum_origins": 2,
+      "monitor": "f1aba936b94213e5b8dca0c0dbf1f9cc",
+      "check_regions": [
+        "WEU",
+        "ENAM"
+      ],
+      "origins": [
+        {
+          "name": "app-server-1",
+          "address": "0.0.0.0",
+          "enabled": true,
+          "weight": 0.56,
+          "header": {
+            "Host": [
+              "example.com"
+            ]
+          }
+        }
+      ],
+      "origin_steering": {
+        "policy": "random"
+      },
+      "notification_email": "someone@example.com,sometwo@example.com",
+      "notification_filter": {
+        "origin": {
+          "disable": false,
+          "healthy": null
+        },
+        "pool": {
+          "disable": false,
+          "healthy": null
+        }
+      }
+    }
+  ]
+}
+```
+
+</div>
+</details>
 
 <details>
 <summary>No code</summary>
@@ -36,36 +119,9 @@ To find pools with existing notifications in the dashboard:
 </div>
 </details>
 
-<details>
-<summary>With code</summary>
-
-<div>
-
-If using the [Cloudflare API](https://api.cloudflare.com/#account-load-balancer-pools-list-pools), check the `notification_filter` object. Health checks with enabled legacy notifications will have something like:
-
-    ```json
-    "pool": {
-        "healthy": true,
-        "disable": true
-    }
-    ```
-
-You should also pay attention to the `notification_email` parameter. Even if the `notification_filter` indicates that health checks should send notifications, those will only be sent if an email address is present in `notification_email`.
-
-</div>
-</details>
-
 ### Step 2 - Create new notifications
 
-<details>
-<summary>No code</summary>
-
-<div>
-
-On the pool you located in [Step 1](#step-1---find-existing-notifications), look for **Pool Notifications**. Click **Create a Health Alert** to start [creating a notification](/fundamentals/notifications/create-notifications/).
-
-</div>
-</details>
+In this step, you should create new notifications to replace all of your existing legacy notifications.
 
 <details>
 <summary>With code</summary>
@@ -86,17 +142,21 @@ If using the Cloudflare API, [create a new notification](https://api.cloudflare.
 </div>
 </details>
 
-### Step 3 - Remove deprecated notifications
-
 <details>
 <summary>No code</summary>
 
 <div>
 
-Once you created your new notification in [Step 2](#step-2---create-new-notifications), you will return to the pool you were editing previously. To disable the deprecated notifications, toggle the **Health Check Notifications** on your pool to **Off**.
+On the pool you located in [Step 1](#step-1---find-existing-notifications), look for **Pool Notifications**. Click **Create a Health Alert** to start [creating a notification](/fundamentals/notifications/create-notifications/).
 
 </div>
 </details>
+
+### Step 3 - Remove deprecated notifications
+
+As the final step in the migration process, you need to remove all emails from your legacy notifications to ensure that you no longer receive deprecation emails moving forward.
+
+Though you can perform these steps in the dashboard, Cloudflare recommends you use our new API endpoint for added convenience.
 
 <details>
 <summary>With code</summary>
@@ -119,6 +179,18 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/:account_identifier
 ```
 
 This API call supports the standard pagination query parameters, either `limit/offset` or `per_page/page`, so by default it only updates the first 25 pools listed. To make sure you update all your pools, you may want to adjust your API call so it loops through various pages or includes a larger number of pools with each request.
+
+</div>
+</details>
+
+If needed, you can remove legacy notifications by using the dashboard.
+
+<details>
+<summary>No code</summary>
+
+<div>
+
+Once you created your new notification in [Step 2](#step-2---create-new-notifications), you will return to the pool you were editing previously. To disable the deprecated notifications, toggle the **Health Check Notifications** on your pool to **Off**.
 
 </div>
 </details>
