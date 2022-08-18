@@ -45,14 +45,21 @@ header: Response
 ---
 [ 
     { 
-        "name": "<name", 
+        "name": "pool-1", 
         "notification_email": "<email>" 
     }, 
     { 
-        "name": "<name", 
+        "name": "pool-2", 
+        "notification_email": "<email>" 
+    }, 
+    { 
+        "name": "pool-3", 
+        "notification_email": "<email>" 
+    }, 
+    { 
+        "name": "pool-4", 
         "notification_email": "<email>" 
     } 
-    <more objects...>
 ]
 ```
 
