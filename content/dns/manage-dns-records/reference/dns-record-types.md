@@ -16,7 +16,7 @@ At least one **IP address resolution** record is required for each domain on Clo
 
 ### A and AAAA
 
-[A and AAAA records](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record/) direct browser requests to an origin web server (`A` for IPv4 addresses and `AAAA` for IPv6 addresses).
+{{<render file="_a-aaaa-definition.md">}}
 
 These records include the following fields:
 
@@ -32,7 +32,7 @@ These records include the following fields:
 
 ### CNAME
 
-[CNAME records](https://www.cloudflare.com/learning/dns/dns-records/dns-cname-record/) direct browser requests to an origin web server, but — unlike an `A` or `AAAA` record — do so via a hostname like `example.com` instead of an IP address.
+{{<render file="_cname-definition.md">}}
 
 These records include the following fields:
 
