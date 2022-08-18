@@ -20,12 +20,12 @@ You can add your preferred identity providers to Cloudflare Access even if you d
 
 Access provides a URL that will end a user's current session.
 
-To force log out of an Access application, use the following URL:
+To force log out of an Access application, go to:
 
-    `<your-application-domain>/cdn-cgi/access/logout`
+`<your-application-domain>/cdn-cgi/access/logout`
 
-To log out of an App Launcher session, use the following URL:
+To log out of an App Launcher session, go to: 
 
-    `<your-team-name>.cloudflareaccess.com/cdn-cgi/access/logout`
+`<your-team-name>.cloudflareaccess.com/cdn-cgi/access/logout`
 
 For more information, refer to our [session management page](/cloudflare-one/identity/users/session-management/#log-out-as-a-user).
