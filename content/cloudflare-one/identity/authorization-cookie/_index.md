@@ -17,7 +17,7 @@ Two tokens are generated:
 
 - **Global session token**: a token generated when a user logs in to Access. This token is stored as a cookie at your [team domain](/cloudflare-one/glossary/#team-domain) (for example, `https://<your-team-name>.cloudflareaccess.com`) and prevents a user from needing to log in to each application.
 
-- [**Application token**](/cloudflare-one/identity/authorization-cookie/application-token/): a token generated for each application that a user reaches. This token is stored as a cookie on the application (for example, `https://jira.site.com`) and may be used to [validate requests](/cloudflare-one/identity/users/access-jwt/validating-json) on your origin.
+- [**Application token**](/cloudflare-one/identity/authorization-cookie/application-token/): a token generated for each application that a user reaches. This token is stored as a cookie on the application (for example, `https://jira.site.com`) and may be used to [validate requests](/cloudflare-one/identity/authorization-cookie/validating-json) on your origin.
 
 ## Allow cross-site cookies in Firefox
 

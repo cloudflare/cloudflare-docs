@@ -1039,7 +1039,7 @@
 /cloudflare-one/policies/zero-trust/app-paths/ /cloudflare-one/policies/access/app-paths/ 301
 /cloudflare-one/policies/zero-trust/common-configs/ /cloudflare-one/policies/access/ 301
 /cloudflare-one/policies/zero-trust/cors/ /cloudflare-one/identity/authorization-cookie/cors/  301
-/cloudflare-one/policies/access/cors/ /cloudflare-one/identity/authorization-cookie/cors/ 301
+/cloudflare-one/identity/authorization-cookie/cors/ /cloudflare-one/identity/authorization-cookie/cors/ 301
 /cloudflare-one/policies/zero-trust/mfa-requirements/ /cloudflare-one/policies/access/mfa-requirements/ 301
 /cloudflare-one/policies/zero-trust/policy-management/ /cloudflare-one/policies/access/policy-management/ 301
 /cloudflare-one/policies/zero-trust/require-purpose-justification/ /cloudflare-one/policies/access/require-purpose-justification/ 301
