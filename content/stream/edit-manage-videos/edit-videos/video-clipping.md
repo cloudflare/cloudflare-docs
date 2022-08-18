@@ -7,6 +7,8 @@ title: Clip videos
 
 With video clipping, also referred to as "trimming" or changing the length of the video, you can change the start and end points of a video so viewers only see a specific "clip" of the video. For example, if you have a 20 minute video but only want to share a five minute clip from the middle of the video, you can clip the video to remove the content before and after the five minute clip.
 
+Refer to the [Video clipping API documentation](https://api.cloudflare.com/#stream-video-clipping-properties) for more information.
+
 {{<Aside type="note" header="Note:">}}
 
 Video clipping does not work with recordings of live streams. 
@@ -138,56 +140,5 @@ highlight: [5]
     "meta": {
       "name": "thumbnail_percentage.mp4"
     }
-}
-```
-## Example response
-
-The example response below highlights the optional parameters mentioned above. 
-
-```bash
----
-header: Example cURL response
-highlight: [6,14,21,35,36]
----
-{
-    "result": {
-        "uid": "85b15292b6751af4a7cca9389701485f",
-        "creator": null,
-        "thumbnail": "https://customer-<CODE>.cloudflarestream.com/85b15292b6751af4a7cca9389701485f/thumbnails/thumbnail.jpg",
-        "thumbnailTimestampPct": 0.5,
-        "readyToStream": false,
-        "status": {
-            "state": "queued",
-            "errorReasonCode": "",
-            "errorReasonText": ""
-        },
-        "meta": {
-            "name": "overriding-filename-clip.mp4",
-        },
-        "created": "2022-07-18T17:16:44.528685Z",
-        "modified": "2022-07-18T17:16:44.528685Z",
-        "size": 0,
-        "preview": "https://customer-<CODE>.cloudflarestream.com/85b15292b6751af4a7cca9389701485f/watch",
-        "allowedOrigins": [],
-        "requireSignedURLs": false,
-        "uploaded": null,
-        "uploadExpiry": null,
-        "maxSizeBytes": null,
-        "maxDurationSeconds": null,
-        "duration": -1,
-        "input": {
-            "width": -1,
-            "height": -1
-        },
-        "playback": {
-            "hls": "https://customer-<CODE>.cloudflarestream.com/85b15292b6751af4a7cca9389701485f/manifest/video.m3u8",
-            "dash": "https://customer-<CODE>.cloudflarestream.com/85b15292b6751af4a7cca9389701485f/manifest/video.mpd"
-        },
-        "watermark": null,
-        "clippedFrom": "0ea62994907491cf9ebefb0a34c1e2c6"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
 }
 ```
