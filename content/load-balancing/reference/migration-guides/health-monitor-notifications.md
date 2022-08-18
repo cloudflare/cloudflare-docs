@@ -10,7 +10,7 @@ Cloudflare is migrating the notifications used by load balancing [health monitor
 
 ## What is changing and why?
 
-Cloudflare’s account-level [Notifications Service](/fundamentals/notifications/) is now the centralized location for most Cloudflare services. This change promotes consistency and streamlined administration, as well as giving you more options for notification delivery (Webhooks, multiple pools tied to the same notification). These new notifications will also be managed at the account level instead of at the zone level.
+Cloudflare’s account-level [Notifications Service](/fundamentals/notifications/) is now the centralized location for most Cloudflare services. This change promotes consistency and streamlined administration, as well as gives you more options for notification delivery such as configuring webhooks or associating multiple pools with the same notification. These new notifications will also be managed at the account level instead of the zone level.
 
 We strongly encourage all customers to migrate existing Health Monitor notifications to Cloudflare’s centralized Notifications Service to avoid lapses in alerts.
 
