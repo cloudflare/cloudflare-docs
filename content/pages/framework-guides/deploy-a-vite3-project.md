@@ -5,11 +5,11 @@ title: Deploy a Vite 3 project
 
 # Deploying a Vite 3 project
 
-[Vite](https://vitejs.dev) is a next-generation build tool for frontend developers. With [the recent release of Vite 3](https://vitejs.dev/blog/announcing-vite3.html), developers can make use of new CLI improvements, starter templates, and [more](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md#300-2022-07-13) to help build their frontend applications.
+[Vite](https://vitejs.dev) is a next-generation build tool for front-end developers. With [the release of Vite 3](https://vitejs.dev/blog/announcing-vite3.html), developers can make use of new command line (CLI) improvements, starter templates, and [more](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md#300-2022-07-13) to help build their front-end applications.
 
-Cloudflare Pages has native support for Vite 3 projects in our build environment. And with the recent improvements to our [build process](https://blog.cloudflare.com/cloudflare-pages-build-improvements/), including sub-second build initialization, it's a great time to start using Vite 3 and Cloudflare Pages to optimize your application's build tooling.
+Cloudflare Pages has native support for Vite 3 projects. Refer to the blog post on [improvements to the Pages build process](https://blog.cloudflare.com/cloudflare-pages-build-improvements/), including sub-second build initialization, for more information on using Vite 3 and Cloudflare Pages to optimize your application's build tooling.
 
-If you want to start a new project, and deploy it to Cloudflare Pages, Vite 3's new templating system makes it a breeze to select and create a new project with the defaults you need to hit the ground running. Vite plays great with Cloudflare Pages – in this blog post, I’ll show you how to deploy a Vue application, powered by Vite, in just a few minutes.
+In this guide, you will learn how to start a new project using Vite 3, and deploy it to Cloudflare Pages.
 
 ```sh
 $ npm create vite@latest
@@ -26,13 +26,7 @@ Done. Now run:
   npm run dev
 ```
 
-Get started deploying a Vite 3-powered Vue application to Cloudflare Pages with a single command:
-
-```sh
-$ git clone https://github.com/codewithkristian/vite-vue3-on-pages
-```
-
-With a generated project, deploying to Cloudflare Pages just takes a few minutes. You can create a new GitHub repository, and push your code, using [GitHub's `gh` CLI](https://cli.github.com):
+You will now create a new GitHub repository, and push your code using [GitHub's `gh` command line (CLI)](https://cli.github.com):
 
 ```sh
 $ git init
@@ -47,22 +41,22 @@ $ gh repo create
 $ git push
 ```
 
-Visit the Cloudflare Pages dashboard, and select the option to create a new project [based on a GitHub repository](https://dash.cloudflare.com/?to=/:account/pages/new/provider/github).
+To deploy your project with Pages:
 
-Select your new GitHub project (mine's called `vite-on-pages`), and in the project configuration, set `npm run dev` as the "Build command", and `dist` as the "Build output directory".
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Pages** > **Create a project ** > *Connect to git*.
+3. Select your new GitHub repository.
+4. In the **Set up builds and deployments**, set `npm run dev` as the **Build command**, and `dist` as the **Build output directory**.
+5. Select **Environment variables (advanced)** > **+ Add variable** > configure a `NODE_VERSION` variable with a value of any version of Node greater than `14.18` -- this example uses `16`:
 
-Finally, using the "Environment variables" section, configure `NODE_VERSION` to any version of Node greater than v14.18 -- in our example, we'll use `16`:
+After completing configuration, select Save and Deploy.
 
-![Build settings](/pages/framework-guides/media/vite3-guide-build-settings.png)
+You will see your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. After you have deployed your project, it will be available at the `<YOUR_PROJECT_NAME>.pages.dev` subdomain. Find your project's subdomain in **Pages** > select your project > **Deployments**.
 
-![Environment variables](/pages/framework-guides/media/vite3-guide-environment-variables.png)
+Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
-In just a few seconds, your project will be deployed to Pages. Check out an example of it at [vite-on-pages.pages.dev](https://vite-on-pages.pages.dev)!
+Additionally, you will have access to [preview deployments](https://developers.cloudflare.com/pages/platform/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
-![Vite3 Site Preview](/pages/framework-guides/media/vite3-site-preview.png)
+## Learn more
 
-Vite is seeing an incredible rise in popularity as it becomes the JavaScript build tool of choice for projects like Nuxt 3, SvelteKit, and Astro. With first-class support for Vite 3 in Cloudflare Pages, and with tools like [Pages Functions](https://developers.cloudflare.com/pages/platform/functions/), building modern, dynamic applications using Cloudflare's global compute platform can be done in just a few lines of code.
-
-It’s easy to get started with Cloudflare Pages – sign up at [pages.cloudflare.com](https://pages.cloudflare.com), connect a GitHub or GitLab account, and deploy your first project in just minutes. If you want to explore more of what you can do with Cloudflare Pages, including deploying various frontend frameworks or building full-stack applications with Pages Functions, check out [our docs](/pages)!
-
-
+By completing this guide, you have successfully deployed your Vite3 site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](https://developers.cloudflare.com/pages/framework-guides/).
