@@ -3,17 +3,12 @@
 
 {{- range where $data "path" $filename -}}
 
-{{ with .resources.ByType "json" }}
-	{{ range . }}
-		<p>{{ .RelPermalink }}</p>
-	{{ end }}
-{{ end }}
-
+<p class="viewOtherPaths"><a href="/learning-paths/">View other learning paths</a></p>
 
 <div class="header">
 <h1>{{- .title -}}</h1>
 <p><em>Learning path</em></p>
-<p>{{- .description -}}</p>
+<p>{{- .description | markdownify -}}</p>
 </div>
 
 <div class="background">
@@ -22,7 +17,7 @@
 <div class="learningPathModule">
 <div class="moduleHeader">
 <h2>{{.title}}</h2>
-<p>{{.description}}</p>
+<p>{{.description | markdownify }}</p>
 </div>
 {{- if eq $index 0 -}}
 <details open>
@@ -33,16 +28,22 @@
 <div>
     <ul>
     {{- range .pages -}}
-    {{ if isset . "external_link" }}
-        <li><a href="{{.url_path}}" target="_blank">{{.link_title}}  {{- partialCached "external.icon" . -}}</a></li>
-    {{ else if isset . "link_title"}}
-        <li><a href="{{.url_path}}" target="_blank">{{.link_title}}</a></li>
-    {{ else }}
-    {{ with $.Site.GetPage (replaceRE "/$" "" .url_path) }}
+    {{- if isset . "external_link" -}}
+        <li><a href="{{.url_path}}" target="_blank">{{.link_title}}  {{- partialCached "external.icon" . -}}</a>
+    {{- else if isset . "link_title" -}}
+        <li><a href="{{.url_path}}" target="_blank">{{.link_title}}</a>
+    {{- else -}}
+    {{- with $.Site.GetPage (replaceRE "/$" "" .url_path) -}}
     
-    <li><a href="{{ .RelPermalink }}" target="_blank">{{ .Title }}</a></li>
+    <li><a href="{{ .RelPermalink }}" target="_blank">{{ .Title }}</a>
     {{- end -}}
     {{- end -}}
+
+    {{with .additional_description}}
+    <p class="learningPathNote"> <strong>Note</strong>: {{ . | markdownify}}</p>
+    {{- end -}}
+    
+    </li>
     {{- end -}}
     </ul>
 

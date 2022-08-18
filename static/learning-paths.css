@@ -113,13 +113,15 @@
     justify-content: flex-start;
 }
 
-.background a {
+.background a,
+.viewOtherPaths a {
     color: #0055DC;
     font-size: 1.1em;
     font-weight: 400;
 }
 
-[theme=dark] .background a {
+[theme=dark] .background a,
+[theme=dark] .viewOtherPaths a {
     color: #ff9e40;
 }
 
@@ -151,4 +153,10 @@ details div ul li {
     width: 30%;
     margin-left: auto;
     margin-right: auto;
+}
+
+.learningPathNote {
+    line-height: 1.5;
+    font-size: 85%;
+    padding-bottom: 1em;
 }

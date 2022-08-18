@@ -36,7 +36,7 @@
             },
             {
                 "title": "Setup",
-                "description": "To get the security, performance, and reliability benefits of Cloudflare, you need to set up Cloudflare on your domain.",
+                "description": "To get the [security, performance, and reliability benefits](/fundamentals/get-started/concepts/how-cloudflare-works/) of Cloudflare, you need to set up Cloudflare on your domain.",
                 "pages": [
                     {
                     "url_path": "/fundamentals/account-and-billing/account-setup/"
@@ -48,7 +48,8 @@
                     "url_path": "/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/"
                     },
                     {
-                    "url_path": "/fundamentals/get-started/setup/add-site/"
+                    "url_path": "/fundamentals/get-started/setup/add-site/",
+                    "additional_description": "If you need a domain name, start with [Cloudflare Registrar](/registrar/get-started/register-domain/) instead."
                     }
                 ]
             }
