@@ -61,7 +61,7 @@ Unless there are changes to rules in the policy, users can generate a new token 
 
 ### Per-User
 
-Access can immediately revoke a single user session across all applications in your account.However, if the user’s identity profile is still active, they can generate a new session.
+Access can immediately revoke a single user session across all applications in your account. However, if the user’s identity profile is still active, they can generate a new session.
 
 If you want to permanently revoke a user's access:
 
@@ -78,6 +78,26 @@ The user will no longer be able to log in to any application protected by Access
 ### Subsequent Logins
 
 When administrators revoke a user's Cloudflare Access token, that user will not be able to log in again for up to 1 minute. If they attempt to do so, Cloudflare Access will display an error.
+
+## Log out as a user
+
+Access provides URLs that will end a user's current session. You can use these URLs to create custom logout buttons or links directly within applications.
+
+### Log out of a single application
+
+To force log out of an Access application, go to:
+
+`<your-application-domain>/cdn-cgi/access/logout`
+
+This immediately clears the authorization cookie from the user's browser. All previously issued application tokens will stop being accepted in 20-30 seconds.
+
+### Log out of all applications
+
+To log out of all Access applications, go to:
+
+`<your-team-name>.cloudflareaccess.com/cdn-cgi/access/logout`
+
+This immediately clears the authorization cookie from the user's browser. All previously issued global session tokens will stop being accepted in 20-30 seconds.
 
 ## AJAX
 
