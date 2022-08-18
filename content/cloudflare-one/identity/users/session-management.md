@@ -81,23 +81,14 @@ When administrators revoke a user's Cloudflare Access token, that user will not 
 
 ## Log out as a user
 
-Access provides URLs that will end a user's current session. You can use these URLs to create custom logout buttons or links directly within applications.
+To log out of Access, the end user can visit either of the following URLs:
 
-### Log out of a single application
+- `<your-application-domain>/cdn-cgi/access/logout`
+- `<your-team-name>.cloudflareaccess.com/cdn-cgi/access/logout`
 
-To force log out of an Access application, go to:
+This action [revokes the user's session](#per-user) across all applications. Access will immediately clear the authorization cookie from the user's browser, and all previously issued tokens will stop being accepted in 20-30 seconds. The only difference between these two URLs is which domain the authorization cookie is deleted from. For example, going to `<your-application-domain>/cdn-cgi/access/logout` will remove the application cookie and make the logout action feel more instantaneous.
 
-`<your-application-domain>/cdn-cgi/access/logout`
-
-This immediately clears the authorization cookie from the user's browser. All tokens that were previously issued for the application will stop being accepted in 20-30 seconds.
-
-### Log out of all applications
-
-To log out of all Access applications, go to:
-
-`<your-team-name>.cloudflareaccess.com/cdn-cgi/access/logout`
-
-This immediately clears the authorization cookie from the user's browser. All previously issued global session tokens will stop being accepted in 20-30 seconds.
+At this time, end users cannot log themselves out on a per-application basis.
 
 ## AJAX
 
