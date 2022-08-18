@@ -8,7 +8,7 @@ weight: 2
 
 ## Verify that AMP Real URL is working
 
-After the feature is enabled, it takes the Google AMP Cache about a week to detect and serve the new URL. After this period of time, visit your AMP pages from Google search results on Android Chrome or Chrome for desktop and you should be able to see your actual URL. You can also go to `https://<YOUR_DOMAIN>/cdn-fpw/sxg/cert.pem.msg` to verify that the feature is working. If the page does not return a `404` error and instead prompts you to download a certificate, AMP Real URL is working.
+After the feature is enabled, it takes the Google AMP Cache about a week to detect and serve the new URL. After this period of time, visit your AMP pages from Google search results on Chrome for Android or desktop, and you should be able to see your actual URL. You can also go to `https://<YOUR_DOMAIN>/cdn-fpw/sxg/cert.pem.msg` to verify that the feature is working. If the page does not return a `404` error and instead prompts you to download a certificate, AMP Real URL is working.
 
 ## Search Console errors
 
