@@ -33,9 +33,10 @@ Use the [Cloudflare API](https://api.cloudflare.com/#account-load-balancer-pools
 header: Request
 ---
 curl -X GET "https://api.cloudflare.com/client/v4/accounts/:account_id/load_balancers/pools" \
-    -H "X-Auth-Email: user@cloudflare.com" \
+    -H "X-Auth-Email: user@example.com" \
     -H "X-Auth-Key: REDACTED" \
-    -H "Content-Type: application/json" | jq '.result[] | select(.notification_email != "") | {name, notification_email}'
+    -H "Content-Type: application/json" \
+| jq '[.result[] | select(.notification_email != "") | {name, notification_email}]'
 ```
 
 ```json
