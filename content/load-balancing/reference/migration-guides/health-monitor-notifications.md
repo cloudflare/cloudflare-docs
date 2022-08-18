@@ -50,7 +50,7 @@ If using the [Cloudflare API](https://api.cloudflare.com/#account-load-balancer-
     }
     ```
 
-You should also pay attention to the `notification_emails` parameter. Even if the `notification_filter` indicates that a health checks should send notifications, those will only be sent if there are email addresses listed in `notification_emails`.
+You should also pay attention to the `notification_email` parameter. Even if the `notification_filter` indicates that health checks should send notifications, those will only be sent if an email address is present in `notification_email`.
 
 </div>
 </details>
@@ -103,7 +103,7 @@ Once you created your new notification in [Step 2](#step-2---create-new-notifica
 
 <div>
 
-If using the Cloudflare API, we recently added a [`PATCH`](https://api.cloudflare.com/#account-load-balancer-pools-patch-pool) endpoint so you can easily remove email notifications from multiple pools at the same time.
+If using the Cloudflare API, we recently added a [`PATCH`](https://api.cloudflare.com/#account-load-balancer-pools-patch-pools) endpoint so you can easily remove email notifications from multiple pools at the same time.
 
 ```json
 ---
