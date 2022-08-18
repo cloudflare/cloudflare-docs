@@ -46,19 +46,19 @@ header: Response
 [ 
     { 
         "name": "pool-1", 
-        "notification_email": "<email>" 
+        "notification_email": "user@example.com" 
     }, 
     { 
         "name": "pool-2", 
-        "notification_email": "<email>" 
+        "notification_email": "user@example.com" 
     }, 
     { 
         "name": "pool-3", 
-        "notification_email": "<email>" 
+        "notification_email": "user@example.com" 
     }, 
     { 
         "name": "pool-4", 
-        "notification_email": "<email>" 
+        "notification_email": "user@example.com" 
     } 
 ]
 ```
