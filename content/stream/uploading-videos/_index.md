@@ -1,7 +1,7 @@
 ---
 title: Upload videos
 pcx_content_type: navigation
-weight: 3
+weight: 2
 ---
 
 # Ways to upload
