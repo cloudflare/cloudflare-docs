@@ -1,14 +1,12 @@
 ---
-pcx_content_type: reference
-title: Release notes
-weight: 0
+pcx_content_type: configuration
+title: Migrate to new GraphQL nodes
+weight: 1
 ---
 
-# Release notes
+# Migrate to new GraphQL nodes
 
-## 30 September 2021 — Deprecation of Load Balancing nodes
-
-After 30 September 2021, we will make the following changes to the Load Balancing GraphQL schema:
+After 30 September 2021, Cloudflare will make the following changes to the Load Balancing GraphQL schema:
 
 *   Deprecate nodes:
     *   `loadBalancingRequestsGroups` will be deprecated for `loadBalancingRequestsAdaptiveGroups`
@@ -16,9 +14,7 @@ After 30 September 2021, we will make the following changes to the Load Balancin
 *   Deprecate the `date` field (replace it with the existing `datetime` field)
 *   Add the `sampleInterval` field
 
-<details>
-<summary>Example query using new fields</summary>
-<div>
+## Example query
 
 The following example:
 
@@ -49,7 +45,3 @@ query {
   }
 }
 ```
-
-</div>
-
-</details>

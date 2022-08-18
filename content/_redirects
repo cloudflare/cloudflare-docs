@@ -288,6 +288,7 @@
 /load-balancing/understand-basics/load-balancing-rules/ /load-balancing/additional-options/load-balancing-rules/ 301
 /load-balancing/understand-basics/load-shedding/ /load-balancing/additional-options/load-shedding/ 301
 /load-balancing/understand-basics/region-mapping-api/ /load-balancing/reference/region-mapping-api/ 301
+/load-balancing/reference/release-notes/ /load-balancing/reference/migration-guides/load-balancing-graphql-nodes/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/reference/common-configurations/ 301
 
