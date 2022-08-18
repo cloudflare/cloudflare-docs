@@ -30,7 +30,7 @@ If the global session duration is longer than an application’s session length,
 You can set a global session duration between 15 minutes and 1 month.
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Authentication**.
-2. Under **Global session timeout**, click **Edit**,
+2. Under **Global session timeout**, select **Edit**,
 3. Select the desired timeout duration from the dropdown menu.
 
 ### Set application session duration
@@ -38,7 +38,7 @@ You can set a global session duration between 15 minutes and 1 month.
 You can set an application session duration ranging from immediate timeout to 1 month.
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access** > **Applications**.
-2. Locate the application you want to configure and click **Edit**.
+2. Locate the application you want to configure and select **Edit**.
 3. In the **Overview** tab, select a **Session Duration** from the dropdown menu.
 
 ## Revoke user sessions
@@ -53,9 +53,9 @@ To immediately terminate all active sessions for a specific application:
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access** > **Applications**.
 
-2. Locate the application for which you would like to revoke active sessions and click **Edit**.
+2. Locate the application for which you would like to revoke active sessions and select **Edit**.
 
-3. In the **Overview** tab, click **Revoke existing tokens**.
+3. In the **Overview** tab, select **Revoke existing tokens**.
 
 Unless there are changes to rules in the policy, users can generate a new token during authentication if their profile in your identity provider is still active.
 
@@ -71,7 +71,7 @@ If you want to permanently revoke a user's access:
 
 3. Search for and select the user you want to revoke.
 
-4. Click **Update Status** > **Revoke access**.
+4. Select **Update Status** > **Revoke access**.
 
 The user will no longer be able to log in to any application protected by Access. The user will still count towards your seat subscription until you [remove the user](/cloudflare-one/identity/users/seat-management) from your account.
 
@@ -116,13 +116,13 @@ To enable these settings:
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access** > **Applications**.
 
-2. Locate the application you would like to configure and click **Edit**.
+2. Locate the application you would like to configure and select **Edit**.
 
-3. Click **Settings** and scroll down to **Cookie settings**.
+3. Select **Settings** and scroll down to **Cookie settings**.
 
 4. Configure the desired cookie settings.
 
-5. Click **Save application**.
+5. Select **Save application**.
 
 ### SameSite Attribute
 
