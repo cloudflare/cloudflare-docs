@@ -15,7 +15,7 @@ When you upload a video to Stream, it can be streamed using HLS/DASH. However, f
 
 You can enable downloads for an uploaded video once it is ready to view by making an HTTP request to the `/downloads` endpoint.
 
-To get notified when a video is ready to view, refer to [Using webhooks](/stream/edit-manage-videos/manage-video-library/using-webhooks/#notifications).
+To get notified when a video is ready to view, refer to [Using webhooks](/stream/manage-video-library/using-webhooks/#notifications).
 
 The downloads API response will include all available download types for the video, the download URL for each type, and the processing status of the download file.
 

@@ -80,7 +80,7 @@ Some browsers prevent videos with audio from playing automatically. You may add 
 
 - `defaultTextTrack`
 
-  - Will initialize the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [upload the text track](/stream/edit-manage-videos/edit-videos/adding-captions/). If the specified language code has no captions available, the player will behave as though no language code had been provided.
+  - Will initialize the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [upload the text track](/stream/edit-videos/adding-captions/). If the specified language code has no captions available, the player will behave as though no language code had been provided.
 
     {{<Aside>}}
 

@@ -21,7 +21,7 @@ No action is required from you, unless you use Content Security Policy (CSP) on 
 
 ### Clip videos using the Stream API
 
-You can now change the start and end times of a video uploaded to Cloudflare Stream. For more information, refer to [Clip videos](/stream/edit-manage-videos/edit-videos/video-clipping/).
+You can now change the start and end times of a video uploaded to Cloudflare Stream. For more information, refer to [Clip videos](/stream/edit-videos/video-clipping/).
 
 ## 2022-07-26
 
