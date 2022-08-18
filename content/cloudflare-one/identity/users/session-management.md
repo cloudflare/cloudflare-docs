@@ -88,7 +88,11 @@ To log out of Access, the end user can visit either of the following URLs:
 
 This action [revokes the user's session](#per-user) across all applications. Access will immediately clear the authorization cookie from the user's browser, and all previously issued tokens will stop being accepted in 20-30 seconds. The only difference between these two URLs is which domain the authorization cookie is deleted from. For example, going to `<your-application-domain>/cdn-cgi/access/logout` will remove the application cookie and make the logout action feel more instantaneous.
 
+You can use these URLs to create custom logout buttons or links directly within your application.
+
+{{<Aside type="note">}}
 At this time, end users cannot log themselves out on a per-application basis.
+{{</Aside>}}
 
 ## AJAX
 
