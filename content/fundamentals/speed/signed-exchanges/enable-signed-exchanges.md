@@ -17,14 +17,14 @@ Before enabling SXGs, refer to the following requirements:
 * Zone certificates need to be managed by Cloudflare.
 
 {{<Aside type="note">}}
-In order for SXGs to be enalbed you are required to whitelist the Certificate Authority (CA) permitted to issue Certificates for signing the Signed Exchange with a Certification Authority Authorization (CAA) record. Cloudflare will automatically add the corresponding CAA records in DNS on behalf of users after they enable SXGs. This is to ensure that SSL certificate issuance is not blocked. If you would like to obtain SSL certificates that are issued by other CAs, make sure that you manually add the required CAA records after enabling SXGs.
+In order for SXGs to be enabled, a CAA record (Certification Authority Authorization) is required to whitelist the CA (Certificate Authority) permitted to issue Certificates for signing the Signed Exchange. Cloudflare will automatically add the corresponding CAA records in DNS on behalf of users after they enable SXGs. This is to ensure that SSL certificate issuance is not blocked. If you would like to obtain SSL certificates that are issued by other CAs, make sure that you manually add the required CAA records after enabling SXGs.
 {{</Aside>}}
 
 * Content needs to be cached for 120 seconds or longer, as Google checks this setting to generate an SXG. To ensure that content is cached for 120 seconds or more, go to the [Cloudflare dashboard](https://dash.cloudflare.com/) > select your account and domain > **Caching** > **Configuration** > **Browser Cache TTL** and check the length of time Cloudflare instructs a browser to cache files.
 
 ## Enable SXGs
 
-If your account satisfies all the requirements, follow the steps below to enable SXGs. Be aware that, currently, Signed Exchanges are only utilized on Chromium browsers on Android and desktop.
+If your account satisfies all the requirements, follow the steps below to enable SXGs. Be aware that, currently, Signed Exchanges are only used on Chromium browsers on Android and desktop.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Speed** > **Optimization**.

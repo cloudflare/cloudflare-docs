@@ -23,4 +23,4 @@ If your account satisfies the requirements to enable AMP Real URL:
 
 ## Limitations
 
-Since AMP Real URL responses are packaged in a signed exchange (SXG), the [limitations for SXGs apply](/fundamentals/signed-exchanges/how-signed-exchanges-work).
+Since AMP Real URL responses are packaged in a signed exchange (SXG), the [limitations for SXGs apply](/fundamentals/speed/signed-exchanges/how-signed-exchanges-work/).
