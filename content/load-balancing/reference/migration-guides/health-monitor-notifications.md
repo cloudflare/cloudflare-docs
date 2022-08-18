@@ -24,10 +24,9 @@ First you should determine which pools are using notifications. It's often easie
 
 <details>
 <summary>With code</summary>
+<div>
 
 Use the [Cloudflare API](https://api.cloudflare.com/#account-load-balancer-pools-list-pools) to list all your pools and then look for whether each pool has a value for the `notification_email` parameter.
-
-<div>
 
 ```json
 ---
@@ -49,21 +48,21 @@ header: Response
   "messages": [],
   "result": [
     {
-  "name": "pool-one",
-  "notification_email": "example@cloudflare.com"
-}
-{
-  "name": "pool-two",
-  "notification_email": "example@cloudflare.com"
-}
-{
-  "name": "pool-three",
-  "notification_email": "example@cloudflare.com"
-}
-{
-  "name": "pool-four",
-  "notification_email": "example@cloudflare.com"
-}
+        "name": "pool-one",
+        "notification_email": "example@cloudflare.com"
+    }
+    {
+        "name": "pool-two",
+        "notification_email": "example@cloudflare.com"
+    }
+    {
+        "name": "pool-three",
+        "notification_email": "example@cloudflare.com"
+    }
+    {
+        "name": "pool-four",
+        "notification_email": "example@cloudflare.com"
+    }
   ]
 }
 ```
