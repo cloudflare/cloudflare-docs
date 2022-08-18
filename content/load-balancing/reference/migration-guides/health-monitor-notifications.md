@@ -36,13 +36,12 @@ header: Request
 curl -X GET "https://api.cloudflare.com/client/v4/accounts/:account_id/load_balancers/pools" \
     -H "X-Auth-Email: user@cloudflare.com" \
     -H "X-Auth-Key: REDACTED" \
-    -H "Content-Type: application/json"
+    -H "Content-Type: application/json" | jq '.result[] | select(.notification_email != "") | {name, notification_email}'
 ```
 
 ```json
 ---
 header: Response
-highlight: 42
 ---
 {
   "success": true,
@@ -50,52 +49,21 @@ highlight: 42
   "messages": [],
   "result": [
     {
-      "id": "17b5962d775c646f3f9725cbc7a53df4",
-      "created_on": "2022-01-01T05:20:00.12345Z",
-      "modified_on": "2022-01-01T05:20:00.12345Z",
-      "description": "Primary data center - Provider XYZ",
-      "name": "primary-dc-1",
-      "enabled": false,
-      "load_shedding": {
-        "default_percent": 0,
-        "default_policy": "random",
-        "session_percent": 0,
-        "session_policy": "hash"
-      },
-      "minimum_origins": 2,
-      "monitor": "f1aba936b94213e5b8dca0c0dbf1f9cc",
-      "check_regions": [
-        "WEU",
-        "ENAM"
-      ],
-      "origins": [
-        {
-          "name": "app-server-1",
-          "address": "0.0.0.0",
-          "enabled": true,
-          "weight": 0.56,
-          "header": {
-            "Host": [
-              "example.com"
-            ]
-          }
-        }
-      ],
-      "origin_steering": {
-        "policy": "random"
-      },
-      "notification_email": "someone@example.com,sometwo@example.com",
-      "notification_filter": {
-        "origin": {
-          "disable": false,
-          "healthy": null
-        },
-        "pool": {
-          "disable": false,
-          "healthy": null
-        }
-      }
-    }
+  "name": "pool-one",
+  "notification_email": "example@cloudflare.com"
+}
+{
+  "name": "pool-two",
+  "notification_email": "example@cloudflare.com"
+}
+{
+  "name": "pool-three",
+  "notification_email": "example@cloudflare.com"
+}
+{
+  "name": "pool-four",
+  "notification_email": "example@cloudflare.com"
+}
   ]
 }
 ```
