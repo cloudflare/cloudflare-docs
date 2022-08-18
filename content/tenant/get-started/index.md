@@ -6,7 +6,7 @@ weight: 2
 
 # Get started
 
-Having access to Cloudflare’s provisioning capabilities allows you to more easily create and manage Cloudflare accounts. The following steps will get you started making API calls to provision accounts, users, and services.
+Having access to Cloudflare’s provisioning capabilities allows you to more easily create and manage Cloudflare accounts. The following steps will get you started on making API calls to provision accounts, users, and services.
 
 ## Before you begin
 
@@ -36,7 +36,7 @@ The first method gives customers control over all aspects of Cloudflare, while t
 
 ### Option 1 - Direct access to Cloudflare
 
-When you grant user access to an account, Cloudflare will send an invitation to the user so they can get access to the account. If they do not already have a Cloudflare user, we will take them through the process of creating one. Once created, they will be given access to the account and any zones already created.
+When you grant user access to an account, Cloudflare will send an invitation to the user so they can get access to the account. If they do not already have a Cloudflare user, Cloudflare will take them through the process of creating one. Once created, they will be given access to the account and any zones already created.
 
 #### Using the dashboard
 
@@ -62,13 +62,13 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<CUSTOMER_ACCOUNT_ID
 
 In most cases, the user role to use is that of `Administrator` which has the id `05784afa30c1afe1440e79d9351c7430`. 
 
-If your customer is on an Enterprise plan, they have access to a broader set of user roles. To get a full list of available roles, send a [GET](https://api.cloudflare.com/#account-roles-list-roles) request to the API.
+If your customer is on an Enterprise plan, they have access to a broader set of user roles. To get a full list of available roles, send a [`GET`](https://api.cloudflare.com/#account-roles-list-roles) request to the API.
 
 ### Option 2 - Access via an interface
 
 If you want greater control over how customers use Cloudflare or if you want your customers to use an existing dashboard of yours that they already know, use the Cloudflare API to build this experience.
 
-This means that you will be making API calls to Cloudflare on behalf of your customers. To avoid getting [rate limited](/api/limits/) by our API, we recommend that you create accounts and users for each of your customers. Changes made by customer `A` should go through user `A` and changes made by customer `B` should go through user `B`.
+This means that you will be making API calls to Cloudflare on behalf of your customers. To avoid getting [rate limited](/api/limits/) by our API, Cloudflare recommend that you create accounts and users for each of your customers. Changes made by customer `A` should go through user `A` and changes made by customer `B` should go through user `B`.
 
 {{<Aside type="note">}}
 
@@ -76,7 +76,7 @@ This capability is not enabled by default. If you need this functionality, conta
 
 {{</Aside>}}
 
-To grant access via an interface, you need to create a service user, as no one will log in to the dashboard with them. If you are planning to use this method, we will enable you to see the API key in order to make API calls as this user.
+To grant access via an interface, you need to create a service user, as no one will log in to the dashboard with them. If you are planning to use this method, Cloudflare will enable you to see the API key in order to make API calls as this user.
 
 ```sh
 ---
@@ -122,7 +122,7 @@ header: Response
 
 Now that you have a customer account and customer users (or service users), you need to create a zone.
 
-To do this, send a [POST](https://api.cloudflare.com/#zone-create-zone) request to the `/zones` endpoint (including the customer account ID you received in [Step 1](#step-1---create-an-account)).
+To do this, send a [`POST`](https://api.cloudflare.com/#zone-create-zone) request to the `/zones` endpoint (including the customer account ID you received in [Step 1](#step-1---create-an-account)).
 
 ```sh
 ---

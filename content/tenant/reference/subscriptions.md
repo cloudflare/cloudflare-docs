@@ -28,7 +28,7 @@ When you [create an account subscription](/tenant/how-to/manage-subscriptions/#a
 
 ### Zero Trust subscriptions
 
-The following tables list sample values for various Zero Trust subscriptions.
+The following table lists sample values for various Zero Trust subscriptions.
 
 | Feature | Subscription IDs |
 | --- | --- |
@@ -38,18 +38,18 @@ The following tables list sample values for various Zero Trust subscriptions.
 
 ### Developer subscriptions
 
-The following tables list sample values for various Developer platform subscriptions.
+The following table lists sample values for various Developer platform subscriptions.
 
 | Feature | Subscription IDs |
 | --- | --- |
-| [Images](/images/) | `IMAGES_ENT`,`IMAGES_BASIC`|
+| [Images](/images/cloudflare-images/) | `IMAGES_ENT`,`IMAGES_BASIC`|
 | [Image resizing](/images/image-resizing/) | `IMAGE_RESIZING_ENT`, `IMAGE_RESIZING_BASIC` |
 | [Stream](/stream/) | `PARTNERS_STREAM_ENT`, `PARTNERS_STREAM_BASIC`, `STREAM_BASIC` |
 | [Workers](/workers) | `PARTNERS_WORKERS_ENT`, `WORKERS_PAID`, `PARTNERS_WORKERS_SS`, `PARTNERS_WORKERS_BASIC` |
 
 ### Application performance and security
 
-The following tables list sample values for various application performance and security subscriptions.
+The following table lists sample values for various application performance and security subscriptions.
 
 | Feature | Subscription IDs |
 | --- | --- |
@@ -64,7 +64,7 @@ The following tables list sample values for various application performance and 
 
 ## Getting new subscriptions
 
-If your reseller plan does not have access to a specific subscription, you will receive the following error when making an API call.
+If your reseller plan does not have access to a specific subscription, you will receive the following error when making an API call:
 
 ```json
 "errors": [

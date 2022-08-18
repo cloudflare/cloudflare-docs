@@ -16,7 +16,7 @@ weight: 1
 
 When you create an account with the Tenant API, your Cloudflare user owns that account from creation, ongoing management, and finally deletion.
 
-To view any accounts owned by your Cloudflare user, send a [GET](https://api.cloudflare.com/#accounts-list-accounts) request to the `/accounts` endpoint.
+To view any accounts owned by your Cloudflare user, send a [`GET`](https://api.cloudflare.com/#accounts-list-accounts) request to the `/accounts` endpoint.
 
 You will get back a list of all the accounts you have created plus any accounts your user already had access to.
 

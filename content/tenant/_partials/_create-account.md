@@ -33,7 +33,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts' \
     }'
 ```
 
-A successful request will return an HTTP status of 200 and the following response body:
+A successful request will return an HTTP status of `200` and the following response body:
 
 ```json
 ---
