@@ -65,6 +65,10 @@ Cloudflare provides the following Managed IP Lists:
   </tbody>
 </table>
 
+Please note that at this time only Cloudflare Open Proxies list is part of standard Cloudflare plans. 
+
+The other lists are available as part of our Enterprise Security Bundles. For more information please contact our Sales team / your Account team.
+
 ## Availability
 
 The number of IP Lists you can create depends on the Cloudflare plans associated with the zones in your account. You can store up to a total of 10,000 items across all your lists, regardless of your plan.
