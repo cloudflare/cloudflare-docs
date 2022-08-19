@@ -1,12 +1,12 @@
 ---
 pcx_content_type: reference
-title: How SXGs work
+title: SXGs caveats
 weight: 1
 meta:
-    title: How Signed Exchanges work
+    title: Signed Exchanges caveats
 ---
 
-# How Signed Exchanges work
+# Signed Exchanges caveats
 
 Signed Exchanges strip out cookies and headers from HTTP requests, and can create problems with dynamic or personalized content. This is intentional since Signed Exchanges can be distributed to multiple browsers. Therefore, packaging any personalized or dynamic content into a Signed Exchange could be a security risk. The only request headers that are not stripped out are as follows:
 
