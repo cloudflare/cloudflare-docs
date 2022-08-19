@@ -49,4 +49,4 @@ To enable automatic removal of inactive users:
 
 If a user is removed, and then authenticates once more, they will count as a seat again.
 
-Refer to the FAQ to [learn more](/cloudflare-one/faq/teams-getting-started-faq/#removing-users) about the consequences for Access and Gateway of removing a user.
+Refer to the FAQ to [learn more](/cloudflare-one/faq/teams-getting-started-faq/#removing-users) about the consequences of removing a user for Access and Gateway.
