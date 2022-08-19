@@ -8,7 +8,7 @@ weight: 4
 
 Cloudflare Zero Trust subscriptions consist of seats that active users in your account consume. Active users are added to the Zero Trust dashboard through any authentication event. 
 
-The amount of user seats available in your Zero Trust account depends on the amount of users you purchase. If you want to increase the number of seats available, you will have to purchase more users. Learn more about adding and removing users from your account in the [Zero Trust FAQ](/cloudflare-one/faq/teams-getting-started-faq/#how-do-i-change-my-subscription-plan) 
+The amount of user seats available in your Zero Trust account depends on the amount of users you purchase. If you want to increase the number of seats available, you will have to purchase more users. Learn more about adding and removing users from your account in the [Zero Trust FAQ](/cloudflare-one/faq/teams-getting-started-faq/#how-do-i-change-my-subscription-plan).
 
 ## What constitutes an authentication event
 
