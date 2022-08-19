@@ -17,8 +17,13 @@
 <div class="learningPathModule">
 <div class="moduleHeader">
 <h2>{{.title}}</h2>
-<p>{{.description | markdownify }}</p>
+{{ with .estimated_time }}
+<p class="durationEstimate">{{ . }}</p>
+{{- end -}}
 </div>
+{{ with .description }}
+<p>{{. | markdownify }}</p>
+{{ end }}
 {{- if eq $index 0 -}}
 <details open>
 {{ else }}

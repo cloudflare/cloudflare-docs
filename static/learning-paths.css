@@ -110,8 +110,15 @@
 
 .moduleHeader {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.durationEstimate {
+    opacity: 70%;
+    margin-right: 5em;
+    padding-top: 2.8em;
+    align-self: center;
 }
 
 .background a,
