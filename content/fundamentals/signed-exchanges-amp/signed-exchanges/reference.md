@@ -18,7 +18,7 @@ curl -svo /dev/null https://example.com -H "Accept: application/signed-exchange;
 
 2. Verify that the `Content-Type` in the response headers is `application/signed-exchange;v=b3` rather than `text/html`.
 
-## Certificate Authority used SXGs
+## Certificate Authority used with SXGs
 
 Cloudflare uses Google for SXGs' certificate issuance. Once SXGs is enabled, Cloudflare automatically adds the CAA records on behalf of the zones. Refer to the following example below:
 

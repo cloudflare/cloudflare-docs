@@ -12,7 +12,7 @@ Cloudflare AMP Real URL leverages Signed HTTP Exchanges to authenticate a publis
 
 Without AMP Real URL, clicking on a search result for an AMP page takes visitors to a cached page served from `google.com/amp/`. AMP Real URL allows mobile browsers to show the actual URL of your website while still serving the content from Google’s AMP cache. This is accomplished through cryptographic signed exchanges. AMP Real URL only works on pages that are compatible with the AMP specification, and only applies to visitors coming from Chrome on Android at this time. 
 
-Showing the actual URL to visitor to your website offers several advantages:
+Showing the actual URL to your website's visitors offers several advantages:
 
 * **Brand fidelity**: Visitors to your site see your brand, not Google’s, at the top of all your pages.
 * **More accurate analytics**: Keeping AMP and non-AMP content in the same domain facilitates more accurate analytics attribution.
