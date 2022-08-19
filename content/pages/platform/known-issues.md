@@ -21,8 +21,6 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - After you have selected a GitHub/GitLab repository for your Pages application, it cannot be changed. Remove/delete your Pages project and create a new one pointing at a different repository if you need to update it.
 
-- A GitHub or GitLab account cannot be attached to more than one Cloudflare account.
-
 ## Build configuration
 
 - `*.pages.dev` subdomains currently cannot be changed. If you need to change your `*.pages.dev` subdomain, delete your project and create a new one.
