@@ -8,6 +8,8 @@ meta:
 
 # Signed Exchanges caveats
 
+## Allowed request headers
+
 Signed Exchanges strip out cookies and headers from HTTP requests, and can create problems with dynamic or personalized content. This is intentional since Signed Exchanges can be distributed to multiple browsers. Therefore, packaging any personalized or dynamic content into a Signed Exchange could be a security risk. The only request headers that are not stripped out are as follows:
 
 * `User-Agent`
@@ -27,6 +29,8 @@ Signed Exchanges strip out cookies and headers from HTTP requests, and can creat
 * `X-Threat-Score`
 * `X-Tlsclientauth`
 * `X-Verified-Bot`
+
+## Response headers
 
 Since Cloudflare cannot be sure whether a signed exchange includes private information or not, a signed exchange will not be generated in the presence of the following [response headers](https://wicg.github.io/webpackage/draft-yasskin-httpbis-origin-signed-exchanges-impl.html#name-stateful-header-fields):
 
