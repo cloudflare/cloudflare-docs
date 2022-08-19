@@ -39,7 +39,7 @@ DLP Profiles may be used alongside other Zero Trust rules in a [Gateway HTTP pol
     | Only allow SSN uploads to Workday |
 
     | Selector | Operator | Value |
-    | - | - | - | - |
+    | - | - | - |
     | DLP Profiles | in | `U.S. Social Security Numbers` |
     | Application  | not in | `Workday` |
 
@@ -49,7 +49,7 @@ DLP Profiles may be used alongside other Zero Trust rules in a [Gateway HTTP pol
 
 4. Select **Create policy**.
 
-DLP scanning is now enabled.
+DLP scanning is now enabled. To fine-tune your DLP policy, refer to our [configuration tips](/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/configuration-guides).
 
 ## 3. View DLP logs
 
@@ -64,27 +64,3 @@ By default, Gateway logs all HTTP requests in the [Gateway Activity log](/cloudf
     * **Policy** - shows the requests which matched a specific DLP policy.
 
 You can expand an individual row to view details about the request.
-
-## Policy configuration tips
-
-If you configured a DLP policy with a **Block** action, false positives may cause some pages to not load properly. Adding additional conditions to your policy will limit the scope of the DLP scan and can help reduce false positives.
-
-For example, `play.google.com` is a common source of noise in the DLP logs. These detections clutter your logs with junk data and could cause issues for the end user if they are blocked. To exempt these sites from DLP scanning, you can manually create a [list](/cloudflare-one/policies/filtering/lists/) of hostnames or URLs. Then, exclude the list from your DLP policy as shown in the example below:
-
-| Policy name |
-| ---- |
-| Block SSN uploads to file sharing apps |
-
-| Selector | Operator | Value |
-| - | - | - | - |
-| DLP Profiles | in | `U.S. Social Security Numbers` |
-| Application  | in | `File Sharing` |
-| Domain | not in list | `Do not DLP - SSN` |
-
-|Action|
-|------|
-|Block |
-
-{{<Aside type="note">}}
-The **Allow** action functions as an implicit logger, giving you visibility into where your sensitive data is going without impacting the end user experience.
-{{</Aside>}}
