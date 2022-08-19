@@ -132,6 +132,26 @@
                 ]
             },
             {
+                "title": "Other optimizations",
+                "description": "Go beyond the basics and optimize other aspects of your domain.",
+                "pages": [
+                    {
+                    "url_path": "/cache/get-started/",
+                    "link_title": "Customize cache behavior"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/task-guides/optimize-site-speed/"
+                    },
+                    {
+                    "url_path": "/fundamentals/get-started/task-guides/origin-health/"
+                    },
+                    {
+                    "url_path": "/products/",
+                    "link_title": "Explore specialized products"
+                    }
+                ]
+            },
+            {
                 "title": "(Optional) Helpful resources",
                 "estimated_time": "~30 mins",
                 "pages": [
@@ -149,26 +169,6 @@
                     {
                     "url_path": "/fundamentals/get-started/basic-tasks/access-cloudflare-resources/",
                     "link_title": "What resources does Cloudflare offer?"
-                    }
-                ]
-            },
-            {
-                "title": "Other optimizations",
-                "description": "Go beyond the basics and optimize other aspects of your domain.",
-                "pages": [
-                    {
-                    "url_path": "/cache/get-started/",
-                    "link_title": "Customize cache behavior"
-                    },
-                    {
-                    "url_path": "/fundamentals/get-started/task-guides/optimize-site-speed/"
-                    },
-                    {
-                    "url_path": "/fundamentals/get-started/task-guides/origin-health/"
-                    },
-                    {
-                    "url_path": "/products/",
-                    "link_title": "Explore specialized products"
                     }
                 ]
             }
