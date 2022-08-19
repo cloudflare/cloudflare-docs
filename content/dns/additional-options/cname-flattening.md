@@ -6,7 +6,13 @@ weight: 4
 
 # CNAME flattening
 
-`CNAME` flattening speeds up `CNAME` resolution and allows you to use a `CNAME` record at your root/apex domain (`example.com`). This functionality is also what allows you to use a [custom domain](/pages/platform/custom-domains/) to access a Cloudflare Pages site.
+`CNAME` flattening speeds up `CNAME` resolution and allows you to use a `CNAME` record at your root/apex domain (`example.com`). 
+
+{{<Aside type="note">}}
+
+This functionality is also what allows you to use a [root custom domain](/pages/platform/custom-domains/) to a Cloudflare Pages site.
+
+{{</Aside>}}
 
 ## How it works
 
