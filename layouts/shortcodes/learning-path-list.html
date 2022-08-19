@@ -53,4 +53,11 @@
 </div>
 
 <div class="pathGrid" id="pathGrid">
+    {{- range $data }}
+    <div class="individualPath">
+        <p class="pathHeading">Learning path</p>
+        <a href="{{ .path }}"><h2>{{ .title }}</h2></a>
+        <p>{{ .description }}</p>        
+    </div>
+    {{- end -}}
 </div>

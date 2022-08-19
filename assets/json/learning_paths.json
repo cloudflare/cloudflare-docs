@@ -49,7 +49,7 @@
                     },
                     {
                     "url_path": "/fundamentals/get-started/setup/add-site/",
-                    "additional_description": "If you need a domain name, start with [Cloudflare Registrar](/registrar/get-started/register-domain/) instead."
+                    "additional_description": "**Note**: If you need a domain name, start with [Cloudflare Registrar](/registrar/get-started/register-domain/) instead."
                     }
                 ]
             }
@@ -164,5 +164,189 @@
                 ]
             }
         ]
+    },
+    {
+        "path": "/learning-paths/24/",
+        "title": "24",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/23/",
+        "title": "23",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/22/",
+        "title": "22",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/21/",
+        "title": "21",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/20/",
+        "title": "20",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/19/",
+        "title": "19",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin"]
+    },
+    {
+        "path": "/learning-paths/18/",
+        "title": "18",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/17/",
+        "title": "17",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/16/",
+        "title": "16",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/15/",
+        "title": "14",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/13/",
+        "title": "13",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/11/",
+        "title": "12",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/octagon/11/",
+        "title": "Kody11",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/octagon/90/",
+        "title": "Kody90",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/octagon/90",
+        "title": "Kody90",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/octagon/9",
+        "title": "Kody9",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/octagon8/",
+        "title": "Kody8",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/octagon7/",
+        "title": "Kody7",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/octagon6/",
+        "title": "Kody6",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/test4/",
+        "title": "Kody2",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/test3/",
+        "title": "Kody3",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/test/",
+        "title": "Kody4",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
+    },
+    {
+        "path": "/learning-paths/test2/",
+        "title": "Kody5",
+        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
+        "products": ["DNS", "Rules"],
+        "difficulty": "Easy",
+        "roles": ["Network admin", "Web admin", "elijah"]
     }
 ]

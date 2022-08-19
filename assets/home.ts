@@ -7,5 +7,4 @@ import * as filterResults from './learning-paths';
   events.focus();
   events.mobile();
   filterResults.filterResults();
-  filterResults.loadResults();
 })();

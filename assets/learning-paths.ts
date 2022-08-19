@@ -31,17 +31,6 @@ function getSelectValues() {
     return selected_values;
 }
 
-export function loadResults() {
-    if (window.location.pathname === "/learning-paths/" || window.location.pathname === "/learning-paths") {
-        const pathGrid = document.getElementById("pathGrid"); 
-      
-        window.onload = (event) => {
-            buildHtml(pathGrid, paths)
-        }
-  }
-
-};
-
 export function filterResults() {
     
     const pathGrid = document.getElementById("pathGrid");
