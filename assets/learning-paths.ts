@@ -42,7 +42,6 @@ export function filterResults() {
     const selectorDropdowns =  document.getElementsByClassName("selectorFilter");
     let passed = []
     let array_length = 0
-    console.log(`passed`)
     for (const dropdown of selectorDropdowns) {
         dropdown.addEventListener("change", () => {
             filteredPaths = JSON.parse(JSON.stringify(paths))
