@@ -4,9 +4,12 @@ let paths = learningPath["default"];
 var filteredPaths = JSON.parse(JSON.stringify(paths))
 
 function buildHtml(destination, array) {
+    const numTrails = document.getElementById("numTrails");
     destination.innerHTML = '';
     if (array.length === 0) {
+        numTrails.innerText = '0 results'
         destination.insertAdjacentHTML("beforeend", "<p>Your search returned no results. Try using a different combination of filters.</p>")
+        
     } else {
     for (let key in array) {
         destination.insertAdjacentHTML("beforeend", 
@@ -17,6 +20,7 @@ function buildHtml(destination, array) {
          </div>`
          )
     }
+    numTrails.innerText = `${array.length} results`
 }
 }
 
@@ -37,6 +41,8 @@ export function filterResults() {
     if (pathGrid) {
     const selectorDropdowns =  document.getElementsByClassName("selectorFilter");
     let passed = []
+    let array_length = 0
+    console.log(`passed`)
     for (const dropdown of selectorDropdowns) {
         dropdown.addEventListener("change", () => {
             filteredPaths = JSON.parse(JSON.stringify(paths))
@@ -54,13 +60,13 @@ export function filterResults() {
                         }
                     }
                     if (!failed) {
+                        array_length += 1;
                         return element;
                     }
                 })
-            }
-                    
+                }        
             buildHtml(pathGrid, passed)
-        }
-    )}
-}
+            }
+        )}
+    }
 }
