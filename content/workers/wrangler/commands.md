@@ -1031,7 +1031,7 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by 
 
 ## whoami
 
-
+Retrieve your user info and test your auth config.
 
 ```sh
 $ wrangler whoami
