@@ -1,0 +1,23 @@
+{{- $id := .Get "id" -}}
+
+<!-- Pages -->
+{{ if (eq $id "cf-pages-limits-redirects-long") }}
+2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects
+{{ else if (eq $id "cf-pages-limits-redirects-andor") }}
+2,000 static redirects and/or 100 dynamic redirects
+{{ else if (eq $id "cf-pages-limits-redirects") }}
+2,100
+{{ else if (eq $id "cf-pages-limits-headers") }}
+100
+{{ else if (eq $id "cf-pages-limits-headers-char-limit") }}
+1,000
+{{ else if (eq $id "cf-pages-limits-file-size") }}
+25 MiB
+{{ else if (eq $id "cf-pages-limits-file-count") }}
+20,000
+{{ else if (eq $id "cf-pages-limits-drag-and-drop-file-count") }}
+1,000
+{{ else if (eq $id "cf-pages-limits-projects") }}
+100
+
+{{ end }}

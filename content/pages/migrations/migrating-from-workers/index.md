@@ -12,9 +12,9 @@ In this tutorial, you will learn how to migrate an existing [Cloudflare Workers 
 
 As a prerequisite, you should have a Cloudflare Workers Sites project, created with [Wrangler](https://github.com/cloudflare/wrangler).
 
-Cloudflare Pages provides built-in defaults for every aspect of serving your site. You can port custom behavior in your Worker — such as custom caching logic — to your Cloudflare Pages project using [Functions](/pages/platform/functions/). This enables an easy-to-use, file-based routing system. You can also migrate your custom headers and redirects to Pages. 
+Cloudflare Pages provides built-in defaults for every aspect of serving your site. You can port custom behavior in your Worker — such as custom caching logic — to your Cloudflare Pages project using [Functions](/pages/platform/functions/). This enables an easy-to-use, file-based routing system. You can also migrate your custom headers and redirects to Pages.
 
-You may already have a reasonably complex Worker and/or it would be tedious to splice it up into Pages' file-based routing system. For these cases, Pages offers developers the ability to define a `_worker.js` file in the output directory of your Pages project. 
+You may already have a reasonably complex Worker and/or it would be tedious to splice it up into Pages' file-based routing system. For these cases, Pages offers developers the ability to define a `_worker.js` file in the output directory of your Pages project.
 
 {{<Aside type="note">}}
 
@@ -36,17 +36,17 @@ When moving to Cloudflare Pages, remove the Workers application and any associat
 
 ## Migrate headers and redirects
 
-You can migrate your redirects to Pages, by creating a `_redirects` file in your output directory. Pages currently offers limited support for advanced redirects. More support will be added in the future. For a list of support types, refer to the [Redirects documentaion](/pages/platform/redirects/). 
+You can migrate your redirects to Pages, by creating a `_redirects` file in your output directory. Pages currently offers limited support for advanced redirects. More support will be added in the future. For a list of support types, refer to the [Redirects documentaion](/pages/platform/redirects/).
 
 {{<Aside type="note">}}
 
-A project is limited to 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Each redirect declaration has a 1,000-character limit. Malformed definitions are ignored. If there are multiple redirects for the same source path, the topmost redirect is applied. 
+A project is limited to {{<snippet id="cf-pages-limits-redirects-long">}}. Each redirect declaration has a 1,000-character limit. Malformed definitions are ignored. If there are multiple redirects for the same source path, the topmost redirect is applied.
 
 Make sure that static redirects are before dynamic redirects in your `_redirects` file.
 
 {{</Aside>}}
 
-In addition to an `_redirects` file, Cloudflare also offers [Bulk Redirects (beta)](/pages/how-to/use-bulk-redirects/), which handles redirects that surpasses the 2,100 redirect rules limit set by Pages.
+In addition to an `_redirects` file, Cloudflare also offers [Bulk Redirects (beta)](/pages/how-to/use-bulk-redirects/), which handles redirects that surpasses the {{<snippet id="cf-pages-limits-redirects">}} redirect rules limit set by Pages.
 
 Your custom headers can also be moved into a `_headers` file in your output directory. It is important to note that custom headers defined in the `_headers` file are not currently applied to responses from Functions, even if the Function route matches the URL pattern. To learn more about handling headers, refer to [Headers](/pages/platform/headers/).
 
@@ -57,7 +57,7 @@ Your custom headers can also be moved into a `_headers` file in your output dire
 
 After you have recorded your **build command** and **build directory** in a separate location, remove everything else from your application, and push the new version of your project up to your git provider. Follow the [Get started guide](/pages/get-started/) to add your project to Cloudflare Pages, using the **build command** and **build directory** that you saved earlier.
 
-If you choose to use a custom domain for your Pages project, you can set it to the same custom domain as your currently deployed Workers application. Follow the steps for [adding a custom domain](/pages/get-started/#adding-a-custom-domain) to your Pages project. 
+If you choose to use a custom domain for your Pages project, you can set it to the same custom domain as your currently deployed Workers application. Follow the steps for [adding a custom domain](/pages/get-started/#adding-a-custom-domain) to your Pages project.
 
 {{<Aside type="note">}}
 
@@ -67,9 +67,9 @@ Before you deploy, you will need to delete your old Workers routes to start send
 
 ### Using Direct Upload
 
-If your Workers site has its custom build settings, you can bring your prebuilt assets to Pages with [Direct Uploads](/pages/platform/direct-upload/). In addition, you can serve your website's assets right to the Cloudflare edge network by either using the [Wrangler CLI](/workers/wrangler/get-started/) or the drag and drop option. 
+If your Workers site has its custom build settings, you can bring your prebuilt assets to Pages with [Direct Uploads](/pages/platform/direct-upload/). In addition, you can serve your website's assets right to the Cloudflare edge network by either using the [Wrangler CLI](/workers/wrangler/get-started/) or the drag and drop option.
 
-These options allow you to create and name a new project from the CLI or dashboard. After your project deployment is complete, you can set the custom domain by following the [adding a custom domain](/pages/get-started/#adding-a-custom-domain) steps to your Pages project. 
+These options allow you to create and name a new project from the CLI or dashboard. After your project deployment is complete, you can set the custom domain by following the [adding a custom domain](/pages/get-started/#adding-a-custom-domain) steps to your Pages project.
 
 ## Cleaning up your old application and assigning the domain
 

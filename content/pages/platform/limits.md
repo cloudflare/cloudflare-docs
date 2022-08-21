@@ -9,7 +9,7 @@ Below are limits observed by the Cloudflare Free plan. For more details on remov
 
 {{<Aside type="note">}}
 
-We want to encourage you to build any application you can dream up, and realize that doesn't always fit within our limits. 
+We want to encourage you to build any application you can dream up, and realize that doesn't always fit within our limits.
 
 To increase any of our limits, [please fill out our form!](https://forms.gle/ukpeZVLWLnKeixDu7)
 
@@ -27,15 +27,15 @@ A Cloudflare Pages project can be attached to a maximum of ten (10) custom domai
 
 ## Files
 
-Pages uploads each file on your site to Cloudflare's globally distributed network to deliver a low latency experience to every user that visits your site. Cloudflare Pages sites can contain up to 20,000 files.
+Pages uploads each file on your site to Cloudflare's globally distributed network to deliver a low latency experience to every user that visits your site. Cloudflare Pages sites can contain up to {{<snippet id="cf-pages-limits-file-count">}} files.
 
 ## File size
 
-The maximum file size for a single Cloudflare Pages site asset is 25 MiB.
+The maximum file size for a single Cloudflare Pages site asset is {{<snippet id="cf-pages-limits-file-size">}}.
 
 ## Headers
 
-A `_headers` file can have a maximum of 100 header rules.
+A `_headers` file can have a maximum of {{<snippet id="cf-pages-limits-headers">}} header rules.
 
 ## Preview deployments
 
@@ -43,7 +43,7 @@ You can have an unlimited number of [preview deployments](/pages/platform/previe
 
 ## Redirects
 
-A `_redirects` file can have a maximum of 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. It is recommended to use [Bulk Redirects](/pages/how-to/use-bulk-redirects/) when you have a need for more than the `_redirects` file supports.
+A `_redirects` file can have a maximum of {{<snippet id="cf-pages-limits-redirects-long">}}. It is recommended to use [Bulk Redirects](/pages/how-to/use-bulk-redirects/) when you have a need for more than the `_redirects` file supports.
 
 ## Users
 
@@ -51,6 +51,6 @@ Your Pages site can be managed by an unlimited number of users via the Cloudflar
 
 ## Sites
 
-Cloudflare Pages supports deploying 100 sites to your account. If you need to raise this limit, contact your Cloudflare account team.
+Cloudflare Pages supports deploying {{<snippet id="cf-pages-limits-projects">}} sites to your account. If you need to raise this limit, contact your Cloudflare account team.
 
 In order to protect against abuse of the service, Cloudflare may temporarily disable your ability to create new Pages projects, if you are deploying a large number of applications in a short amount of time. Email workers-support@cloudflare.com if you need this restriction removed.
