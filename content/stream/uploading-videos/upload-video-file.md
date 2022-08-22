@@ -77,7 +77,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 - `thumbnailtimestamppct`
 
-  - Specify the default thumbnail [timestamp percentage](/stream/edit-manage-videos/edit-videos/displaying-thumbnails/). Note that percentage is a floating point value between 0.0 and 1.0.
+  - Specify the default thumbnail [timestamp percentage](/stream/viewing-videos/displaying-thumbnails/). Note that percentage is a floating point value between 0.0 and 1.0.
 
 - `watermark`
 
@@ -87,7 +87,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 ### Additional supported headers
 
-Setting a creator value in the `Upload-Creator` header can be used to [identify the creator](/stream/edit-manage-videos/manage-video-library/creator-id/) of the video content, linking the way you identify your users or creators to videos in your Stream account.
+Setting a creator value in the `Upload-Creator` header can be used to [identify the creator](/stream/manage-video-library/creator-id/) of the video content, linking the way you identify your users or creators to videos in your Stream account.
 
 ### Getting the video ID when using TUS
 
