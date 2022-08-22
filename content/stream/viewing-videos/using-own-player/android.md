@@ -23,7 +23,7 @@ Refer to the [Android example](/stream/examples/android/) to view a working exam
 Refer to the code example below for a basic implementation of ExoPlayer using Cloudflare Stream's Manifest URL.
 
 
-```
+```kotlin
 implementation 'com.google.android.exoplayer:exoplayer-hls:2.X.X'
 
 SimpleExoPlayer player = new SimpleExoPlayer.Builder(context).build();

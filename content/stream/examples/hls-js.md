@@ -1,33 +1,39 @@
 ---
 type: example
-summary: Example of hls.js playback with Cloudflare Stream
+summary: Example of video playback with Cloudflare Stream and the HLS reference player (hls.js)
 tags:
   - Playback
 pcx_content_type: configuration
-title: Video playback with hls.js
+title: hls.js
+weight: 2
 layout: example
 ---
 
-[Run and edit this code in your browser on Stackblitz.](https://stackblitz.com/edit/js-819kwb?file=index.js,package.json,index.html) 
-
-Refer to the [hls.js documentation](https://github.com/video-dev/hls.js/blob/master/docs/API.md) for more information.
+[Run and edit this code in your browser on Stackblitz.](https://workers.new/stream/hls-js) 
 
 ```html
-<script src="//cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<html>
+	<head>
+		<script src="//cdn.jsdelivr.net/npm/hls.js@latest"></script>
+	</head>
+	<body>
+		<video id="video"></video>
+		<script>
+			if (Hls.isSupported()) {
+				const video = document.getElementById('video');
+				const hls = new Hls();
+				hls.attachMedia(video);
+				hls.on(Hls.Events.MEDIA_ATTACHED, () => {
+					hls.loadSource(
+						'https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8'
+					);
+				});
+			}
 
-<video id="video"></video>
-<script>
-  if (Hls.isSupported()) {
-    const video = document.getElementById('video');
-    const hls = new Hls();
-    hls.attachMedia(video);
-    hls.on(Hls.Events.MEDIA_ATTACHED, () => {
-      hls.loadSource(
-        'https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8'
-      );
-    });
-  }
-
-  video.play();
-</script>
+			video.play();
+		</script>
+	</body>
+</html>
 ```
+
+Refer to the [hls.js documentation](https://github.com/video-dev/hls.js/blob/master/docs/API.md) for more information.
