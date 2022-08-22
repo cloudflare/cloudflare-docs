@@ -5,7 +5,6 @@
     <ul class="tab-active" block-id="{{$unique_id}}">
       {{ range $idx, $txt := $labels }} {{- $link := replace $txt "/" "-"}}
       <li class="tab-label-wrapper">
-
         {{ if or (eq $link "js") }}
         <a class="tab-label active" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
           <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
@@ -73,7 +72,7 @@
           </svg>ES Modules</a
         >
         {{ else }}
-        <a class="tab-label" href="#" data-link="tab-{{lower $link}}" data-id="{{lower $unique_id}}">
+        <a class="tab-label {{ if eq $idx 0 }} active {{ end }}" href="#" data-link="tab-{{lower $link}}" data-id="{{lower $unique_id}}">
           {{$link}}</a>
         {{ end }}
       </li>
