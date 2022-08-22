@@ -1,6 +1,6 @@
 ---
 title: Magic Firewall fields
-pcx-content-type: reference
+pcx_content_type: reference
 ---
 
 # Magic Firewall fields
@@ -90,6 +90,20 @@ pcx-content-type: reference
          <p>For more information on the ISO 3166-1 Alpha 2 format, see <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
          This field matches on both source and destination IP addresses.
         </td>
+    </tr>
+    <tr>
+      <td valign="top"><code>ip.src.asn</code><br />{{<type>}}Number{{</type>}}</td>
+      <td>
+         <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with source IP address.
+         </p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top"><code>ip.dst.asn</code><br />{{<type>}}Number{{</type>}}</td>
+      <td>
+         <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with destination IP address.
+         </p>
+      </td>
     </tr>
     <tr>
         <td><p><code>ip.hdr_len</code><br />{{<type>}}Number{{</type>}}</p>

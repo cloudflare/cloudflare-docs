@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: DNSLink
 weight: 4
 ---
@@ -21,7 +21,7 @@ The problem is solved the same way, via a DNS record. To make a website hosted o
 DNSLink records also help with content maintenance. When a new version of your website is ready to be published, you can update your DNSLink DNS record to point to the new CID and the gateway will start serving the new version automatically.
 
 {{<Aside type="note">}}
-For additional details, refer to the official [IPFS documentation](https://docs.ipfs.io/concepts/dnslink/).
+For additional details, refer to the official [IPFS documentation](https://docs.ipfs.tech/concepts/dnslink/).
 {{</Aside>}}
 
 ## How is it used with Cloudflare?

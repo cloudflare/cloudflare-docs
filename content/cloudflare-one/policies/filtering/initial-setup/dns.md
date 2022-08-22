@@ -1,6 +1,6 @@
 ---
 title: DNS filtering
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 1
 meta:
   title: Set up DNS filtering
@@ -24,7 +24,7 @@ To filter DNS requests from an individual device such as a laptop or phone:
 
 To filter DNS requests from a location such as an office or data center:
 
-1. [Add the location](/cloudflare-one/policies/filtering/dns-policies/locations/) to your Zero Trust dashboard.
+1. [Add the location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) to your Zero Trust dashboard.
 2. On your router, browser, or OS, [forward DNS queries](/cloudflare-one/connections/connect-devices/agentless/) to the address shown in the location setup flow.
 
 {{<Aside type="note">}}

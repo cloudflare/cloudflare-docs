@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Proxy status
 weight: 6
 ---
@@ -8,8 +8,8 @@ weight: 6
 
 You can load balance your traffic at different levels of the networking stack, including:
 
-- [Layer 7 or HTTP/HTTPS traffic](#layer-7-load-balancing-orange-clouded) (most common)
-- [DNS-only](#dns-only-load-balancing-gray-clouded)
+- [Layer 7 or HTTP/HTTPS traffic](#orange-clouded-layer-7-load-balancing) (most common)
+- [DNS-only](#gray-clouded-dns-only-load-balancing)
 - [Layer 4 or TCP traffic](#layer-4-load-balancing)
 
 ---

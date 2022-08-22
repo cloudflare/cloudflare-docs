@@ -1,6 +1,10 @@
 ---
-pcx-content-type: tutorial
+updated: 2022-08-03
+pcx_content_type: tutorial
+content_type: 📝 Tutorial
+difficulty: Intermediate
 title: Build a blog using Nuxt.js and Sanity.io on Cloudflare Pages
+layout: single
 ---
 
 # Build a blog using Nuxt.js and Sanity.io on Cloudflare Pages
@@ -119,7 +123,7 @@ Finally, add `@nuxtjs/sanity` as a **build module** in your Nuxt configuration:
 filename: nuxt.config.js
 ---
 {
-  buildModules: ['@nuxtjs/sanity/module'];
+  buildModules: ['@nuxtjs/sanity'];
 }
 ```
 

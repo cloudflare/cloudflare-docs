@@ -1,5 +1,5 @@
 ---
-pcx-content-type: faq
+pcx_content_type: faq
 title: Getting started with Cloudflare Zero Trust
 weight: 2
 ---
@@ -19,6 +19,12 @@ Your team domain is a unique subdomain assigned to your Cloudflare account; for 
 | team name        | team domain                             |
 | ---------------- | --------------------------------------- |
 | `your-team-name` | `<your-team-name>.cloudflareaccess.com` |
+
+You can change your team name at any time, unless you have the Cloudflare dashboard SSO feature enabled on your account. Cloudflare dashboard SSO does not currently support team name changes. 
+
+{{<Aside type="warning" header="Warning">}}
+If you change your team name, you need to update your organization’s identity providers (IdPs) and the WARP client to reflect the new team name in order to avoid any mismatch errors.
+{{</Aside>}}
 
 ## How do I change my subscription plan?
 

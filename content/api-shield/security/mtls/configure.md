@@ -1,6 +1,6 @@
 ---
 title: Configure
-pcx-content-type: how-to
+pcx_content_type: how-to
 meta:
   title: Configure mTLS
 ---
@@ -21,7 +21,7 @@ Before you can protect your API or web application with mTLS rules, you need to:
 
 You can only use mTLS with a certificate authority (CA) that is fully managed by Cloudflare. Cloudflare generates a unique CA for each zone.
 
-If you need to use certificates issued by another CA, use [Cloudflare Access](/cloudflare-one/identity/devices/mutual-tls-authentication/) to upload your own CA.
+If you need to use certificates issued by another CA, use [Cloudflare Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) to upload your own CA.
 
 {{</Aside>}}
 

@@ -1,6 +1,6 @@
 ---
 weight: 2
-pcx-content-type: reference
+pcx_content_type: reference
 title: Set up
 layout: single
 meta:

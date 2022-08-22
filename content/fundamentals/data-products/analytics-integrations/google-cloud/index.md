@@ -1,7 +1,8 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Google Cloud
 weight: 101
+layout: single
 ---
 
 # Google Cloud

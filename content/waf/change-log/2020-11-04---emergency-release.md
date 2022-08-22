@@ -1,7 +1,7 @@
 ---
 title: 2020-11-04 – Emergency
 type: table
-pcx-content-type: changelog
+pcx_content_type: changelog
 weight: 953
 layout: list
 meta:

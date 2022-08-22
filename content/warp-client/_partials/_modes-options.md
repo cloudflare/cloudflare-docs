@@ -13,15 +13,15 @@ In WARP mode, all traffic leaving your computer is encrypted and sent over WARP,
 
 WARP mode is the default and the recommended mode of operation. However, if you only want to use the 1.1.1.1 resolver mode:
 
-1. Click the WARP app icon.
-2. Click the cog icon, and choose your preferred mode of operation for WARP.
+1. Select the WARP app icon.
+2. Select the cog icon, and choose your preferred mode of operation for WARP.
 
 ## WARP options
 
 Beyond the two modes of operation, the WARP app lets you configure additional options to better suit your needs. You can change the protocol used to connect to Cloudflare or enable [1.1.1.1 for Families](/1.1.1.1/setup/#1.1.1.1_for_families), for example. To access these options:
 
-1. Click the WARP app icon.
-2. Click the **cog icon** > **Preferences**.
+1. Select the WARP app icon.
+2. Select the **cog icon** > **Preferences**.
 
 The following is a list of options you can configure in the **Connection** tab:
 

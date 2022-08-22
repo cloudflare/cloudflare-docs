@@ -1,6 +1,6 @@
 ---
 title: User Guide
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 1
 meta:
   title: Using Cloudflare's Time Service

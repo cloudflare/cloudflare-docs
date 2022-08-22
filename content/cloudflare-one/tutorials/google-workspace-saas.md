@@ -1,7 +1,7 @@
 ---
 updated: 2022-06-24
 category: 🔐 Zero Trust
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Connect to Google Workspace through Access
 ---
 

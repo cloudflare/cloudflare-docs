@@ -1,6 +1,6 @@
 ---
 title: API parameter reference
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 6
 meta:
   title: Origin Rules API parameter reference

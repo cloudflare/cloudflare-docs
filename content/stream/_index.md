@@ -1,6 +1,6 @@
 ---
 title: Getting started
-pcx-content-type: overview
+pcx_content_type: overview
 weight: 1
 meta:
   title: Cloudflare Stream
@@ -38,8 +38,8 @@ To make your first request, simply take the cURL command below and replace the A
 curl \
 -X POST \
 -d '{"url":"https://storage.googleapis.com/stream-example-bucket/video.mp4","meta":{"name":"My First Stream Video"}}' \
--H "Authorization: Bearer $TOKEN" \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/stream/copy
+-H "Authorization: Bearer <API_TOKEN>" \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy
 ```
 
 This cURL command tells the Stream API to download the MP4 file and make it available for streaming. When executed, you will see a response similar to this:
@@ -47,9 +47,9 @@ This cURL command tells the Stream API to download the MP4 file and make it avai
 ```json
 {
   "result": {
-    "uid": "8d717d9d1b0920ea247a4eebd747b1fd",
-    "preview": "https://watch.cloudflarestream.com/8d717d9d1b0920ea247a4eebd747b1fd",
-    "thumbnail": "https://videodelivery.net/8d717d9d1b0920ea247a4eebd747b1fd/thumbnails/thumbnail.jpg",
+    "uid": "b236bde30eb07b9d01318940e5fc3eda",
+    "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/watch",
+    "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
     "readyToStream": false,
     "status": {
       "state": "downloading"
@@ -70,14 +70,14 @@ This cURL command tells the Stream API to download the MP4 file and make it avai
 
 ### Step 2: Wait until the video is ready to stream
 
-Because Stream must download and process the video, the video might not be available for a few seconds depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/stream/uploading-videos/using-webhooks/) to be notified when a video is ready for streaming.
+Because Stream must download and process the video, the video might not be available for a few seconds depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/stream/edit-manage-videos/manage-video-library/using-webhooks/) to be notified when a video is ready for streaming.
 
 Use the video UID from the first step to poll the video:
 
 ```bash
 curl \
--H "Authorization: Bearer $TOKEN" \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/stream/$VIDEO_UID
+-H "Authorization: Bearer <API_TOKEN>" \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>
 ```
 
 ```json
@@ -86,9 +86,9 @@ highlight: [6]
 ---
 {
   "result": {
-    "uid": "8d717d9d1b0920ea247a4eebd747b1fd",
-    "preview": "https://watch.cloudflarestream.com/8d717d9d1b0920ea247a4eebd747b1fd",
-    "thumbnail": "https://videodelivery.net/8d717d9d1b0920ea247a4eebd747b1fd/thumbnails/thumbnail.jpg",
+    "uid": "b236bde30eb07b9d01318940e5fc3eda",
+    "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/watch",
+    "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
     "readyToStream": true,
     "status": {
       "state": "ready"
@@ -113,7 +113,7 @@ The `uid` of the video can be used refer to the video after uploading and can be
 
 ```html
 <iframe
-  src="https://iframe.videodelivery.net/$VIDEO_UID"
+  src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/<VIDEO_UID>/iframe"
   title="Example Stream video"
   frameBorder="0"
   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"

@@ -1,10 +1,10 @@
 ---
-pcx-content-type: reference
-title: Using the player API
+pcx_content_type: reference
+title: Use the player API
 weight: 2
 ---
 
-# Using the player API
+# Use the player API
 
 The SDK provides an API for programmatically controlling the player and listening for player events.
 
@@ -13,7 +13,7 @@ The SDK provides an API for programmatically controlling the player and listenin
 ```html
 <!-- You can use styles and CSS on this iframe element where the video player will appear -->
 <iframe
-  src="https://iframe.videodelivery.net/$VIDEOID"
+  src="https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/iframe"
   style="border: none"
   height="720"
   width="1280"
@@ -22,7 +22,7 @@ The SDK provides an API for programmatically controlling the player and listenin
   id="stream-player"
 ></iframe>
 
-<script src="https://embed.videodelivery.net/embed/sdk.latest.js"></script>
+<script src="https://embed.cloudflarestream.com/embed/sdk.latest.js"></script>
 
 <!-- Your JavaScript code below-->
 <script>
@@ -80,7 +80,7 @@ Some browsers prevent videos with audio from playing automatically. You may add 
 
 - `defaultTextTrack`
 
-  - Will initialize the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [upload the text track](/stream/uploading-videos/adding-captions/). If the specified language code has no captions available, the player will behave as though no language code had been provided.
+  - Will initialize the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [upload the text track](/stream/edit-manage-videos/edit-videos/adding-captions/). If the specified language code has no captions available, the player will behave as though no language code had been provided.
 
     {{<Aside>}}
 

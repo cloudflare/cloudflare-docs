@@ -1,7 +1,7 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Metrics and analytics
-weight: 0
+weight: 5
 ---
 
 # Metrics and analytics

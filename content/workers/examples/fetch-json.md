@@ -4,7 +4,7 @@ summary: Send a GET request and read in JSON from the response. Use to fetch
   external data.
 tags:
   - Originless
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Fetch JSON
 weight: 4
 layout: example

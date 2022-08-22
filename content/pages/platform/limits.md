@@ -1,15 +1,23 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Limits
 ---
 
 # Limits
 
-Below are limits observed by the Cloudflare Pages free plan. For more details on removing these limits, refer to the [Cloudflare plans](https://www.cloudflare.com/plans) page.
+Below are limits observed by the Cloudflare Free plan. For more details on removing these limits, refer to the [Cloudflare plans](https://www.cloudflare.com/plans) page.
+
+{{<Aside type="note">}}
+
+We want to encourage you to build any application you can dream up, and realize that doesn't always fit within our limits. 
+
+To increase any of our limits, [please fill out our form!](https://forms.gle/ukpeZVLWLnKeixDu7)
+
+{{</Aside>}}
 
 ## Builds
 
-Each time you push new code to your git repository, Pages will build and deploy your site. You can deploy up to 500 times per month on the free plan. Refer to the Pro and Business plans on the Pages [pricing page](https://pages.cloudflare.com/#pricing) if you need to deploy more frequently.
+Each time you push new code to your Git repository, Pages will build and deploy your site. You can deploy up to 500 times per month on the Free plan. Refer to the Pro and Business plans in [Pricing](https://pages.cloudflare.com/#pricing) if you need to deploy more frequently.
 
 Builds will timeout after 20 minutes.
 
@@ -39,8 +47,10 @@ A `_redirects` file can have a maximum of 2,000 static redirects and 100 dynamic
 
 ## Users
 
-Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your git project--you can manage both public and private repositories, open issues, and accept pull requests via GitHub and GitLab without impacting your Pages site.
+Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your Git project – you can manage both public and private repositories, open issues, and accept pull requests via  without impacting your Pages site.
 
 ## Sites
 
-Cloudflare Pages supports deploying unlimited sites to your account. In order to protect against abuse of the service, Cloudflare may temporarily disable your ability to create new Pages projects, if you are deploying a large number of applications in a short amount of time. Email workers-support@cloudflare.com if you need this restriction removed.
+Cloudflare Pages supports deploying 100 sites to your account. If you need to raise this limit, contact your Cloudflare account team.
+
+In order to protect against abuse of the service, Cloudflare may temporarily disable your ability to create new Pages projects, if you are deploying a large number of applications in a short amount of time. Email workers-support@cloudflare.com if you need this restriction removed.

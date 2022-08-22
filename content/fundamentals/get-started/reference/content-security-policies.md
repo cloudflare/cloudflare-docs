@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Content Security Policies (CSPs)
 meta:
   title: Content Security Policies (CSPs) and Cloudflare

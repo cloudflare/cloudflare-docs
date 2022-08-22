@@ -1,6 +1,6 @@
 ---
 title: Generate an S3 Auth token
-pcx-content-type: how-to
+pcx_content_type: how-to
 ---
 
 # Generate an S3 Auth token

@@ -1,6 +1,6 @@
 ---
 title: Probe construction
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 0
 ---
 

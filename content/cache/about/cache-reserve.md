@@ -1,6 +1,6 @@
 ---
 title: Cache Reserve (beta)
-pcx-content-type: concept
+pcx_content_type: concept
 ---
 
 # Cache Reserve (beta)
@@ -89,8 +89,8 @@ Class B operations are performed when data needs to be fetched from Cache Reserv
 
 #### Operations billing examples
 
-- 10,000 writes in a month will be charged $4.50.
-- One read in a month will be charged $0.36.
+- 1,000,000 writes in a month will be charged $4.50.
+- 1,000,000 reads in a month will be charged $0.36.
 - 2,999,000 writes will be charged $9.00.
 
 #### Free operations

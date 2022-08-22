@@ -1,5 +1,5 @@
 ---
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: DNS policies
 layout: single
 weight: 2
@@ -182,7 +182,7 @@ Use this selector to match against only the hostname specified—for example, if
 
 ### Location
 
-Use this selector to apply DNS policies to a specific [Gateway location](/cloudflare-one/policies/filtering/dns-policies/locations/) or set of locations.
+Use this selector to apply DNS policies to a specific [Gateway location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) or set of locations.
 
 | UI name | API example |
 | -- | -- |

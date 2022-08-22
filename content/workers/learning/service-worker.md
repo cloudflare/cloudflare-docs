@@ -1,10 +1,10 @@
 ---
-pcx-content-type: concept
-title: Service Worker syntax
-weight: 0
+pcx_content_type: concept
+title: Using Service Worker syntax
+weight: 9
 ---
 
-# Service Worker syntax
+# Using Service Worker syntax
 
 A Worker written in Service Worker syntax consists of two parts:
 

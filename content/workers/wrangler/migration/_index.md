@@ -1,6 +1,6 @@
 ---
 title: Migration
-pcx-content-type: navigation
+pcx_content_type: navigation
 weight: 30
 meta:
   title: Migration

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Durable Objects
 ---
 
@@ -240,7 +240,6 @@ The `put()` method returns a `Promise`, but most applications can discard this p
   - Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts.
 
       <aside class="DocsMarkdown--aside" role="note" data-type="note">
-        <div class="DocsMarkdown--aside-header">Deprecated</div>
         {{<markdown>}}Explicit transactions are no longer necessary. Any series of write operations with no intervening `await` will automatically be submitted atomically, and the system will prevent concurrent events from executing while `await`ing a read operation (unless you use `allowConcurrency: true`). Therefore, a series of reads followed by a series of writes (with no other intervening I/O) are automatically atomic and behave like a transaction.{{</markdown>}}
       </aside>
 

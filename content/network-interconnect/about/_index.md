@@ -1,6 +1,6 @@
 ---
 title: About
-pcx-content-type: navigation
+pcx_content_type: navigation
 weight: 2
 meta:
   title: About Cloudflare Network Interconnect

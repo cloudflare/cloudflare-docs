@@ -1,6 +1,6 @@
 ---
 title: Functions
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 7
 meta:
   title: Functions reference
@@ -211,7 +211,7 @@ You can only use the `to_string()` function in [rewrite expressions of Transform
 
 - <code id="function-uuidv4">uuidv4({{<type>}}Bytes{{</type>}})</code> {{<type>}}String{{</type>}}
 
-  - Generates a random UUIDv4 (Universally Unique Identifier, version 4) based on the given argument (a source of randomness). To obtain an array of random bytes, use the <a href="/ruleset-engine/rules-language/fields/#field-cf-random_seed" class= "InlineCodeLink"><code class="InlineCode">cf.random_seed</code></a> field.
+  - Generates a random UUIDv4 (Universally Unique Identifier, version 4) based on the given argument (a source of randomness). To obtain an array of random bytes, use the [`cf.random_seed`](/ruleset-engine/rules-language/fields/#field-cf-random_seed) field.
 
   - <em>Example:</em>
     <br />

@@ -1,6 +1,6 @@
 ---
 title: Alerts
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 4
 meta:
   title: DDoS alerts
@@ -19,6 +19,8 @@ Each notification email includes the following information:
 * Attack target
 
 Notifications for HTTP DDoS alerts delivered through webhook or PagerDuty will also include the target hostname.
+
+You will not receive duplicate DDoS alerts within the same one-hour time frame.
 
 Cloudflare automatically sends weekly summaries of detected and mitigated DDoS attacks to Magic Transit and Spectrum BYOIP customers. For more information, refer to [DDoS reports](/ddos-protection/reference/reports/).
 
@@ -63,7 +65,7 @@ Notification type     | WAF/CDN | Spectrum | Spectrum BYOIP | Magic Transit
 HTTP DDoS attack      | Yes     | –        | –              | –
 Layer 3/4 DDoS attack | –       | Yes\*    | Yes            | Yes
 
-\* Only available on an Enterprise plan.
+\* _Only available on an Enterprise plan._
 
 ## Example notification
 

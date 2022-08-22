@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Resize with Cloudflare Workers
 weight: 6
 ---
@@ -40,7 +40,7 @@ These typings are also available in [our Workers TypeScript definitions library]
 
 ## Configure a Worker
 
-Create a new script in the Workers section of the Cloudflare Dashboard. Scope your Worker script to a path dedicated to serving assets, such as `/images/*` or `/assets/*`. Only supported image formats can be resized. Attempting to resize any other type of resource (CSS, HTML) will result in an error.
+Create a new script in the Workers section of the Cloudflare dashboard. Scope your Worker script to a path dedicated to serving assets, such as `/images/*` or `/assets/*`. Only supported image formats can be resized. Attempting to resize any other type of resource (CSS, HTML) will result in an error.
 
 {{<Aside type="warning" header="Warning">}}
 
@@ -68,7 +68,7 @@ addEventListener("fetch", event => {
 }
 ```
 
-## Lack of preview in the Dashboard
+## Lack of preview in the dashboard
 
 {{<Aside type="note" header="Note">}}
 

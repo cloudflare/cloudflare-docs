@@ -1,6 +1,6 @@
 ---
 title: Configure WAF custom rules
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 5
 meta:
   title: Configure WAF custom rules with Terraform

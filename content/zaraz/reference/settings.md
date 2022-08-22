@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Settings
 meta:
   title: Zaraz settings
@@ -7,7 +7,7 @@ meta:
 
 # Zaraz settings
 
-To configure Zaraz's general settings, click [**Zaraz**](https://dash.cloudflare.com/?to=/:account/:zone/zaraz) > **Settings**.
+To configure Zaraz's general settings, select [**Zaraz**](https://dash.cloudflare.com/?to=/:account/:zone/zaraz) > **Settings**.
 
 ## Web API
 

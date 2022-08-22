@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Known issues
 ---
 
@@ -7,22 +7,48 @@ title: Known issues
 
 Here are some known bugs and issues with Cloudflare Pages:
 
+## Builds and deployment 
+
 - GitHub and GitLab are currently the only supported platforms for automatic CI/CD builds. [Direct uploads](/pages/platform/direct-upload/) allow you to integrate your own build platform or upload from your local computer.
+
 - Monorepos or repositories with multiple codebases/applications currently cannot use the automatic GitHub/GitLab integration to build multiple sites from the same repository. However, [Direct Uploads](/pages/platform/direct-upload/) can be used to upload a monorepo as separate Pages projects from your own computer.
-- After you have selected a GitHub/GitLab repository for your Pages application, it cannot be changed. Remove/delete your Pages project and create a new one pointing at a different repository if you need to update it.
-- `*.pages.dev` subdomains currently cannot be changed. If you need to change your `*.pages.dev` subdomain, delete your project and create a new one.
-- Hugo builds automatically run an old version. To run the latest version of Hugo (for example, `0.80.0`), you will need to set an environment variable. Set `HUGO_VERSION` to `0.80.0` or the Hugo version of your choice.
-- By default, Cloudflare uses Node `12.18.0` in the Pages build environment. If you need to use a newer Node version, refer to the [Build configuration page](/pages/platform/build-configuration/) for configuration options.
-- For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. An [equivalent](/pages/platform/functions/) to Netlify's Serverless Functions is currently in beta.
-- It is currently not possible to add a custom domain with a wildcard, for example, `*.domain.com`.
-- It is currently not possible to add a custom domain with a Worker already routed on that domain.
-- It is currently not possible to add a custom domain with a Cloudflare Access policy already enabled on that domain.
-- Cloudflare's Load Balancer does not work with `*.pages.dev` projects; an `Error 1000: DNS points to prohibited IP` will appear.
-- A GitHub or GitLab account cannot be attached to more than one Cloudflare account.
-- [Functions (beta)](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, Webpack) may not run.
-- When adding a custom domain, the domain may get stuck verifying due to being unable to validate a request for an SSL on that hostname. In order for the SSL to validate, ensure Cloudflare Access or a Cloudflare Worker is allowing requests to the validation path: `http://{domain_name}/.well-known/pki-validation/*`.
+
 - Incremental builds are currently not supported in Cloudflare Pages.
+
 - A Direct Upload of a `/functions` directory does not work (refer to [Using Functions in Direct Upload](/pages/platform/direct-upload/#using-functions)).
+
+## Git configuration 
+
+- After you have selected a GitHub/GitLab repository for your Pages application, it cannot be changed. Remove/delete your Pages project and create a new one pointing at a different repository if you need to update it.
+
+- A GitHub or GitLab account cannot be attached to more than one Cloudflare account.
+
+## Build configuration
+
+- `*.pages.dev` subdomains currently cannot be changed. If you need to change your `*.pages.dev` subdomain, delete your project and create a new one.
+- Hugo builds automatically run an old version. To run the latest version of Hugo (for example, `0.101.0`), you will need to set an environment variable. Set `HUGO_VERSION` to `0.101.0` or the Hugo version of your choice.
+
+- By default, Cloudflare uses Node `12.18.0` in the Pages build environment. If you need to use a newer Node version, refer to the [Build configuration page](/pages/platform/build-configuration/) for configuration options.
+
+- For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. An [equivalent](/pages/platform/functions/) to Netlify's Serverless Functions is currently in beta.
+
+## Custom Domains
+- It is currently not possible to add a custom domain with a wildcard, for example, `*.domain.com`.
+
+- It is currently not possible to add a custom domain with a Worker already routed on that domain.
+
+- It is currently not possible to add a custom domain with a Cloudflare Access policy already enabled on that domain.
+
+- Cloudflare's Load Balancer does not work with `*.pages.dev` projects; an `Error 1000: DNS points to prohibited IP` will appear.
+
+- When adding a custom domain, the domain may get stuck verifying due to being unable to validate a request for an SSL on that hostname. In order for the SSL to validate, ensure Cloudflare Access or a Cloudflare Worker is allowing requests to the validation path: `http://{domain_name}/.well-known/pki-validation/*`.
+
+
+## Pages Functions
+
+- [Functions (beta)](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, Webpack) may not run.
+
+- Currently, Durable Objects are not supported in local development mode. To use Durable Objects in your Pages application, deploy a Worker containing a Durable Object. Then add it as a binding to your Pages project as shown in the section above.  Support for using Durable Objects in local development is actively being worked on and will be available soon.
 
 ## Enabling Access on your `*.pages.dev` domain
 

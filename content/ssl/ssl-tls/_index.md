@@ -1,12 +1,10 @@
 ---
 title: Reference
-pcx-content-type: navigation
+pcx_content_type: navigation
 weight: 10
-meta:
-  title: Reference — SSL/TLS
 ---
 
-# Reference — SSL/TLS
+# Reference
 
 For more on Cloudflare SSL/TLS, see these articles:
 

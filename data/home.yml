@@ -1,7 +1,6 @@
 meta:
-  title: Cloudflare Developers
-  description: Browse the latest developer documentation including API reference,
-    articles, and sample code.
+  title: Cloudflare Docs
+  description: Browse the latest product docs including how-to guides, tutorials, API reference, and sample code.
   author: '@cloudflare'
   image: /cf-twitter-card.png
 

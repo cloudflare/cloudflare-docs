@@ -1,7 +1,7 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Downloads
-weight: 2
+weight: 5
 ---
 
 # Downloads
@@ -29,6 +29,15 @@ Alternatively, download the latest release directly.
 | .rpm   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-aarch64.rpm) |
 
 {{</table-wrap>}}
+
+{{<Aside type="note">}}
+If you see the following error when running `apt-get update`:
+
+`E: The repository 'https://pkg.cloudflare.com buster Release' does not have a Release file.`
+
+This is due to a recent update which now points the `cloudflared` repository to `pkg.cloudflare.com/cloudflared` instead of `pkg.cloudflare.com`. To resolve, refer to the instructions in the [package repository](https://pkg.cloudflare.com/).
+
+{{</Aside>}}
 
 ## macOS
 
@@ -70,7 +79,7 @@ The update will cause `cloudflared` to restart which would impact traffic curren
 
 You can update `cloudflared` without downtime by using Cloudflare's Load Balancer product with your Cloudflare Tunnel deployment.
 
-1.  Install a new instance of `cloudflared` and [create](/cloudflare-one/connections/connect-apps/create-tunnel/) a new Tunnel.
+1.  Install a new instance of `cloudflared` and [create](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/) a new Tunnel.
 2.  Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
 3.  [Add the address](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) of the new instance of `cloudflared` into your Load Balancer pool as priority 2.
 4.  Swap the priority such that the new instance is now priority 1 and monitor to confirm traffic is being served.
@@ -80,7 +89,7 @@ You can update `cloudflared` without downtime by using Cloudflare's Load Balance
 
 If you are not using Cloudflare's Load Balancer, you can use multiple instances of `cloudflared` to update without the risk of downtime.
 
-1.  Install a new instance of `cloudflared` and [create](/cloudflare-one/connections/connect-apps/create-tunnel/) a new Tunnel.
+1.  Install a new instance of `cloudflared` and [create](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/) a new Tunnel.
 2.  Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
 3.  In the Cloudflare DNS dashboard, [replace](/cloudflare-one/connections/connect-apps/routing-to-tunnel/dns/) the address of the current instance of `cloudflared` with the address of the new instance. Save the record.
 4.  Remove the now-inactive instance of `cloudflared`.

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Manage advanced certificates
 weight: 1
 ---
@@ -80,6 +80,6 @@ For more information about DCV, refer to [DCV methods](/ssl/edge-certificates/ch
 
 {{<Aside type="warning">}}
 
-Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates or certificates with multiple Subject Alternative Names (SANs). For more details and next steps, refer to [Changes to HTTP DCV](/ssl/ssl-tls/dcv-update/).
+Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates or certificates with multiple Subject Alternative Names (SANs). For more details and next steps, refer to [Changes to HTTP DCV](/ssl/ssl-tls/migration-guides/dcv-update/).
 
 {{</Aside>}}

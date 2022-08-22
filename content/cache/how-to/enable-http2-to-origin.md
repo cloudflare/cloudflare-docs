@@ -1,6 +1,6 @@
 ---
 title: Enable HTTP/2 to Origin
-pcx-content-type: how-to
+pcx_content_type: how-to
 ---
 
 # Enable HTTP/2 to Origin
@@ -18,3 +18,8 @@ At Cloudflare, HTTP/2 connection is enabled by default for Free, Pro and Busines
 
 If the toggle is disabled, or the origin does not support HTTP/2, Cloudflare will initiate an HTTP/1.1 connection.
 
+{{<Aside type="note" header="Note">}}
+
+At the moment, connection multiplexing is not supported by our implementation but will soon be available.
+
+{{</Aside>}}
