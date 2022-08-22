@@ -3,7 +3,7 @@
         "path": "/learning-paths/get-started/",
         "title": "Get started with Cloudflare",
         "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability.",
-        "products": ["Cloudflare Essentials", "DNS", "SSL", "Cache", "Rules"],
+        "products": ["Cloudflare Essentials", "DNS", "SSL", "WAF"],
         "difficulty": "Easy",
         "roles": ["Network admin", "Web admin"],
         "modules": [
@@ -175,55 +175,37 @@
         ]
     },
     {
-        "path": "/learning-paths/other/",
-        "title": "Test other one",
-        "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability",
-        "products": ["Workers", "Pages", "Rules"],
-        "difficulty": "Moderate",
-        "roles": ["Test", "Network admin"],
+        "path": "/learning-paths/zero-trust/get-started/",
+        "title": "Cloudflare Zero Trust - Get Started",
+        "description": "Set up your Zero Trust environment",
+        "products": ["Cloudflare Essentials", "Zero Trust"],
+        "difficulty": "Easy",
+        "roles": ["IT admin"],
         "modules": [
             {
-                "title": "Concepts",
-                "description": "Concepts explain the basic ideas behind how Cloudflare works and how you can work with Cloudflare.",
+                "title": "Account setup",
+                "description": "Create and customize your Cloudflare account.",
+                "estimated_time": "~10 mins",
                 "pages": [
                     {
-                        "external_link": true,
-                        "url_path": "https://www.cloudflare.com/learning/cdn/what-is-a-cdn/",
-                        "link_title": "What is a Content Delivery Network (CDN)"
-                        },
-                        {
-                        "url_path": "/fundamentals/get-started/concepts/what-is-cloudflare/"
-                        },
-                        {
-                        "url_path": "/fundamentals/get-started/concepts/how-cloudflare-works/"
-                        },
-                        {
-                        "url_path": "/fundamentals/get-started/concepts/cloudflare-ip-addresses/"
-                        },
-                        {
-                        "url_path": "/fundamentals/get-started/concepts/cloudflare-challenges/"
-                        },
-                        {
-                        "url_path": "/fundamentals/get-started/concepts/network-layers/",
-                        "link_title": "How Cloudflare protects different layers of your network"
-                        }
-                ]
-            },
-            {
-                "title": "Setup",
-                "description": "To get the security, performance, and reliability benefits of Cloudflare, you need to set up Cloudflare on your domain.",
-                "pages": [
-                    {
-                    "url_path": "/fundamentals/account-and-billing/account-setup/"
+                    "url_path": "/fundamentals/account-and-billing/account-setup/create-account/"
                     },
                     {
-                    "url_path": "/fundamentals/get-started/setup/minimize-downtime/"
+                    "external_link": true,
+                    "url_path": "https://support.cloudflare.com/hc/articles/200167906",
+                    "link_title": "Set up two-factor authentication (2FA)"
                     },
                     {
-                    "url_path": "/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/"
+                    "external_link": true,
+                    "url_path": "https://support.cloudflare.com/hc/articles/4402711553165",
+                    "link_title": "Add billing information"
                     },
                     {
-                    "url_path": "/fundamentals/get-started/setup/add-site/"
+                    "url_path": "/fundamentals/account-and-billing/account-setup/customize-account/"
+                    },
+                    {
+                    "url_path": "/fundamentals/account-and-billing/account-setup/manage-account-members/",
+                    "link_title": "Add other account members"
                     }
                 ]
             }
