@@ -5107,7 +5107,7 @@ pre {
 }
 
 [theme="dark"] .tabs > ul {
-  background-color: rgb(var(--accent-color-rgb));
+  background-color: rgba(var(--color-rgb),.1)
 }
 
 .tabs > ul > li {
@@ -5214,11 +5214,12 @@ pre {
   padding: 1em .75em .75em .5em;
   background: linear-gradient(var(--background-color),
     rgba(var(--background-color-rgb)));
-  border: 1px solid #242628;
+  border: 1px solid rgb(216 216 218);
 }
 
 [theme="dark"] .noCodeTab {
-  border: 1px solid #f3f3f4;
+  border: 1px solid #404242;
+  border-top: none;
   background-color: rgb(var(--background-color-rgb));
 }
 

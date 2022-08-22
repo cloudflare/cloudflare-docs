@@ -194,7 +194,7 @@ export function activeTab() {
       for (var i = 0; i < tabs.length; i++) {
         (tabs[i] as HTMLElement).addEventListener("click", function name() {
           let current = block.querySelector(`.active`);
-
+          console.log(current)
           current.classList.remove("active");
           this.classList.add("active");
         });
