@@ -103,7 +103,7 @@ To improve the performance of the web page, you can limit a click listener to a 
 
 {{</table-wrap>}}
 
-If you need to track a link of an element on a page using CSS selectors - for example, on a clickable button - you have to create a listener for the `<a> href` attribute:
+If you need to track a link of an element using CSS selectors - for example, on a clickable button - you have to create a listener for the `<a> href` attribute:
 
 {{<table-wrap>}}
 
