@@ -6,9 +6,10 @@ weight: 4
 
 # Register a new domain
 
-## Prerequisites
+## Prerequisites and restrictions
 
-Cloudflare Registrar is only available for customers that use Cloudflare as their authoritative DNS provider (also known as a [full setup](/dns/zone-setups/)).
+* Cloudflare Registrar is only available for customers that use Cloudflare as their authoritative DNS provider (also known as a [full setup](/dns/zone-setups/)).
+* Cloudflare does not currently support internationalized domain names (IDNs), also known as unicode.
 
 {{<render file="_email-verification.md">}}
 
