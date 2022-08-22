@@ -8,7 +8,7 @@ meta:
 
 # Automatic Signed Exchanges (SXGs)
 
-Automatic Signed Exchange (SXG) is an open standard that makes it possible to cryptographically authenticate the origin of a resource independently of how it is delivered. This authentication allows for a variety of use cases. For example, with SXGs, a search engine can download signed exchanges while users are navigating their search pages. Thus, when a user selects a link to a website, the search engine can serve a cached version of that web page, improving performance.
+Automatic Signed Exchange (SXG) is an open standard that makes it possible to cryptographically authenticate the origin of a resource independently of how it is delivered. This authentication allows for a variety of use cases. For example, with SXGs, a search engine can download signed exchanges while users are navigating their search pages. Thus, when a user selects a link to a website, the search engine can serve a cached version of that web page instead of fetching content from the origin server, improving performance.
 
 This performance improvement also has consequences for SEO. SXGs improve Core Web Vitals, such as the Largest Contentful Paint (LCP). Cloudflare found that SXGs improve LCP for 85% of the sites tested and time to first byte (TTFB) for 98% of websites.
 
