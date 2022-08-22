@@ -65,7 +65,7 @@ Refer to the example below to display only the video representation with a bitra
 ---
 header: Example
 ---
-https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.mpd?clientBandwidthHint=1.8
+https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8?clientBandwidthHint=1.8
 ```
 
 ## Limitations
