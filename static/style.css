@@ -5088,7 +5088,7 @@ pre {
 
 .tabs {
   position: relative;
-  margin-top: 3rem;
+  margin-top: 1rem;
   box-shadow: 0 1px rgba(var(--shadow-color-rgb), 0.12);
   height: 2.4rem;
 }
