@@ -103,6 +103,16 @@ To improve the performance of the web page, you can limit a click listener to a 
 
 {{</table-wrap>}}
 
+If you need to track a link of an element on a page - for example, on a clickable button - you have to create a listener for the `<a> href` attribute:
+
+{{<table-wrap>}}
+
+| Rule type    | Variable name               | Match operation | Match string |
+| ---------------- | ----- | ------------ | --------------- |
+| _Match rule_ | `{{ system.page.url.pathname }}` | _Equals_      | `a[href$='/#my-css-selector']`   |
+
+{{</table-wrap>}}
+
 Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how to add more than one rule to a trigger.
 
 ---
