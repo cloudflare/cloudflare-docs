@@ -4,7 +4,7 @@ title: Router setup
 weight: 5
 ---
 
-# Router setup
+# Windows setup
 
 ## IPv4
 
