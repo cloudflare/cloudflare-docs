@@ -23,17 +23,17 @@ weight: 4
 
 2. Go to **Registrar** > **Register Domains**.
 
-3. In the search box, enter the domain name you wish to register, and select **Search**. You may also enter one or more keywords. Cloudflare currently does not support internationalized domain names (IDNs), also known as unicode. For that reason, you cannot search for words with special characters, such as `à`, `ü`, `ç`, among others.
-
-    The search results will contain a list of suggested domains. If the domain you entered does not appear in the list, this means it is not available for registration. 
-
-4. Select **Purchase** on the domain you wish to register. In rare instances, a domain that is not available for registration may appear in the search results. After selecting **Purchase**, a definitive availability check will be performed to confirm that the domain is actually available for registration.
+3. In the search box, enter the domain name you wish to register, and select **Search**. You may also enter one or more keywords. The search results will contain a list of suggested domains. If the domain you entered does not appear in the list, this means it is not available for registration.
 
 {{<Aside type="note">}}
 
-Currently, Cloudflare cannot register premium domains (domains that have non-standard pricing) and Internationalized Domain Names (IDNs).
+Cloudflare Registrar currently does not support internationalized domain names (IDNs), also known as unicode. For that reason, you cannot search for words with special characters, such as `à`, `ü`, `ç`, among others.
+
+Cloudflare Registrar also cannot register premium domains (domains that have non-standard pricing) and Internationalized Domain Names (IDNs).
 
 {{</Aside>}}
+
+4. Select **Purchase** on the domain you wish to register. In rare instances, a domain that is not available for registration may appear in the search results. After selecting **Purchase**, a definitive availability check will be performed to confirm that the domain is actually available for registration.
 
 5. Select the term (number of years) you wish to register the domain from the **Payment option** drop-down menu. Most top-level domains (TLDs) can be registered for a maximum of ten years. Some TLDs may have different term limits and these will be reflected in the drop-down options.
    
