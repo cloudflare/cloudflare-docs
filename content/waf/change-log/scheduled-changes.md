@@ -26,7 +26,7 @@ layout: list
       <td>2022-08-22</td>
       <td>2022-08-29</td>
       <td>Block</td>
-      <td>100303</td>
+      <td>100303_BETA</td>
       <td>...d5488862</td>
       <td>Command Injection - Nslookup BETA</td>
       <td>This detection will replace ...b090ba9a on new WAF</td>
