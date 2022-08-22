@@ -119,7 +119,7 @@ export default function Product() {
 
 Currently, the only way to use Durable Objects when using Cloudflare Pages is by having a separate Worker, creating a binding, and accessing it in `context`. 
 
-You have to do this because there is currently no way to export the Durable Object class from a Pages Function. 
+You have to do this because there is no way to export the Durable Object class from a Pages Function. 
 
 Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/workers/learning/using-durable-objects/).
 
