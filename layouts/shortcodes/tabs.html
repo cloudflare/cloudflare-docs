@@ -72,7 +72,9 @@
             </path>
           </svg>ES Modules</a
         >
-
+        {{ else }}
+        <a class="tab-label" href="#" data-link="tab-{{lower $link}}" data-id="{{lower $unique_id}}">
+          {{$link}}</a>
         {{ end }}
       </li>
       {{ end }}

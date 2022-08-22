@@ -5209,6 +5209,19 @@ pre {
 .tab-content > .CodeBlock {
   border-radius: 0;
 }
+
+.noCodeTab {
+  padding: 1em .75em .75em .5em;
+  background: linear-gradient(var(--background-color),
+    rgba(var(--background-color-rgb)));
+  border: 1px solid #242628;
+}
+
+[theme="dark"] .noCodeTab {
+  border: 1px solid #f3f3f4;
+  background-color: rgb(var(--background-color-rgb));
+}
+
 .skip-link {
   background: #f3f3f4;
   z-index: 1;
