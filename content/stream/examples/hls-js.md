@@ -5,7 +5,7 @@ tags:
   - Playback
 pcx_content_type: configuration
 title: hls.js
-weight: 2
+weight: 5
 layout: example
 ---
 

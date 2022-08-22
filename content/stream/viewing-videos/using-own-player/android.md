@@ -5,32 +5,16 @@ weight: 3
 
 # Android
 
-Cloudflare Stream can be used with [ExoPlayer](https://exoplayer.dev/), a media player compatible with Android devices that offers different benefits such as:
-
-- A customizable player
-- Support for playlists
-- Support for DASH and SmoothStreaming
-- Support for HLS
+You can stream both on-demand and live video to native Android apps using [ExoPlayer](https://exoplayer.dev/).
 
 {{<render file="_prereqs.md">}}
 
-## Examples
+## Example Apps
 
-Refer to the [Android example](/stream/examples/android/) to view a working example of Cloudflare Stream and ExoPlayer.
+- [Android](/stream/examples/android/)
 
-## Use ExoPlayer and HLS
+## Using ExoPlayer
 
-Refer to the code example below for a basic implementation of ExoPlayer using Cloudflare Stream's Manifest URL.
+Play a video from Cloudflare Stream using ExoPlayer:
 
-
-```kotlin
-implementation 'com.google.android.exoplayer:exoplayer-hls:2.X.X'
-
-SimpleExoPlayer player = new SimpleExoPlayer.Builder(context).build();
-
-// Set the media item to the Cloudflare Stream HLS Manifest URL:
-player.setMediaItem(MediaItem.fromUri("https://customer-9cbb9x7nxdw5hb57.cloudflarestream.com/8f92fe7d2c1c0983767649e065e691fc/manifest/video.m3u8"));
-
-player.prepare();
-```
-
+{{<render file="_android_playback_code_snippet.md">}}

@@ -1,6 +1,6 @@
 ---
 type: example
-summary: Example of video playback on Android using ExoPlayer
+summary: Example of video playback on iOS using AVPlayer
 tags:
   - Playback
 pcx_content_type: configuration
@@ -9,26 +9,19 @@ weight: 2
 layout: example
 ---
 
-[Run and edit this code in your browser on Stackblitz.](https://workers.new/stream/dash-js) 
+{{<render file="_prereqs.md">}}
 
-```html
-<html>
-	<head>
-		<script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
-	</head>
-	<body>
-		<div>
-			<div class="code">
-				<video
-					data-dashjs-player=""
-					autoplay=""
-					src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.mpd"
-					controls="true"
-				></video>
-			</div>
-		</div>
-	</body>
-</html>
-```
+{{<render file="_ios_playback_code_snippet.md">}}
 
-Refer to the [dash.js documentation](https://github.com/Dash-Industry-Forum/dash.js/) for more information.
+### Download and run an example app
+
+1. Download [this example app](https://developer.apple.com/documentation/avfoundation/offline_playback_and_storage/using_avfoundation_to_play_and_persist_http_live_streams) from Apple's developer docs
+2. Open and run the app using [Xcode](https://developer.apple.com/xcode/).
+3. Search in Xcode for `m3u8`, and open the `Streams` file
+4. Replace the value of `playlist_url` with the HLS manifest URL for your video.
+
+![Screenshot of a video with Cloudflare watermark at top right](/stream/static/ios-example-screenshot-edit-hls-url.png)
+
+5. Click the Play button in Xcode to run the app, and play your video.
+
+For more, see [read the docs](/stream/viewing-videos/using-own-player/ios/).

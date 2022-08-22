@@ -5,7 +5,7 @@ tags:
   - Playback
 pcx_content_type: configuration
 title: dash.js
-weight: 2
+weight: 4
 layout: example
 ---
 

@@ -5,7 +5,7 @@ tags:
   - Playback
 pcx_content_type: configuration
 title: Video.js
-weight: 3
+weight: 6
 layout: example
 ---
 

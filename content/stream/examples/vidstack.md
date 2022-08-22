@@ -5,7 +5,7 @@ tags:
   - Playback
 pcx_content_type: configuration
 title: Vidstack
-weight: 4
+weight: 7
 layout: example
 ---
 
