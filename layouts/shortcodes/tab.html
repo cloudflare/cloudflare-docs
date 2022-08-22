@@ -1,9 +1,10 @@
 {{- $label := replace (.Get "label") "/" "-"}} 
 {{- $default := .Get "default" -}}
+{{- $noCode := .Get "no-code" -}}
 
 {{ if eq $default "true"}}
 <div class="tab tab-default" id="tab-{{$label}}-UNIQUE_ID">{{ $.Inner | markdownify }}</div>
-{{ else if or (eq $label "api") (eq $label "dashboard")}}
+{{ else if eq $noCode "true" }}
 <div class="tab noCodeTab" id="tab-{{$label}}-UNIQUE_ID">{{ $.Inner | .Page.RenderString }}</div>
 {{ else }}
 <div class="tab" id="tab-{{$label}}-UNIQUE_ID">{{ $.Inner | markdownify }}</div>

@@ -24,7 +24,7 @@ This guide is meant for organizations setting up their first load balancer. If y
 {{<render file="_monitor-definition.md">}}
 
 {{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard">}}
+{{<tab label="dashboard" no-code="true">}}
 
 <strong>Set up the monitor</strong>
 
@@ -34,7 +34,7 @@ This guide is meant for organizations setting up their first load balancer. If y
 
 {{<render file="_monitor-prepare-server.md">}}
 {{</tab>}}
-{{<tab label="api">}}
+{{<tab label="api" no-code="true">}}
 
 <strong>Set up the monitor</strong>
 
@@ -54,13 +54,13 @@ This guide is meant for organizations setting up their first load balancer. If y
 {{<render file="_pool-definition.md">}}
 
 {{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard">}}
+{{<tab label="dashboard" no-code="true">}}
 
 {{<render file="_pool-create.md">}}
 
 {{</tab>}}
 
-{{<tab label="api">}}
+{{<tab label="api" no-code="true">}}
 
 {{<render file="_pool-create-api.md">}}
 
@@ -72,7 +72,7 @@ This guide is meant for organizations setting up their first load balancer. If y
 Before directing any traffic to your pools, make sure that your pools and monitors are set up correctly. The status of your health check will be _unknown_ until the results of the first check are available.
 
 {{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard">}}
+{{<tab label="dashboard" no-code="true">}}
 
 To confirm pool health using the dashboard:
 
@@ -83,7 +83,7 @@ To confirm pool health using the dashboard:
 For more information on pool and origin health statuses, refer to [How a pool becomes unhealthy](/load-balancing/understand-basics/health-details/#how-a-pool-becomes-unhealthy).
 
 {{</tab>}}
-{{<tab label="api">}}
+{{<tab label="api" no-code="true">}}
 
 To fetch the latest health status of all pools, use the [List Pools](https://api.cloudflare.com/#account-load-balancer-pools-list-pools) command, paying attention to the `healthy` value for pools and origins.
 
@@ -104,12 +104,12 @@ If you notice that healthy pools are being marked unhealthy:
 {{<render file="_load-balancer-definition.md">}}
 
 {{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard">}}
+{{<tab label="dashboard" no-code="true">}}
 
 {{<render file="_load-balancer-create.md">}}
 
 {{</tab>}}
-{{<tab label="api">}}
+{{<tab label="api" no-code="true">}}
 
 {{<render file="_load-balancer-create-api.md">}}
 

@@ -19,7 +19,7 @@ If your domain is added to Cloudflare by a hosting partner, manage your DNS reco
 ## Create DNS records
 
 {{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard">}}
+{{<tab label="dashboard" no-code="true">}}
 
 To create a DNS record in the dashboard:
 
@@ -34,7 +34,7 @@ To create a DNS record in the dashboard:
 
 {{</tab>}}
 
-{{<tab label="api">}}
+{{<tab label="api" no-code="true">}}
 
 To create records with the API, use a [POST request](https://api.cloudflare.com/#dns-records-for-a-zone-create-dns-record).
 
@@ -46,7 +46,7 @@ To create records with the API, use a [POST request](https://api.cloudflare.com/
 ## Edit DNS records
 
 {{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard">}}
+{{<tab label="dashboard" no-code="true">}}
 
 To edit DNS records in the dashboard:
 
@@ -58,7 +58,7 @@ To edit DNS records in the dashboard:
 
 {{</tab>}}
 
-{{<tab label="api">}}
+{{<tab label="api" no-code="true">}}
 
 To update part of a record with the API, use a [PATCH request](https://api.cloudflare.com/#dns-records-for-a-zone-patch-dns-record). If you want to overwrite the entire existing record, use a [PUT request](https://api.cloudflare.com/#dns-records-for-a-zone-update-dns-record).
 
@@ -70,7 +70,7 @@ To update part of a record with the API, use a [PATCH request](https://api.cloud
 ## Delete DNS records
 
 {{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard">}}
+{{<tab label="dashboard" no-code="true">}}
 
 To delete DNS records in the dashboard:
 
@@ -82,7 +82,7 @@ To delete DNS records in the dashboard:
 
 {{</tab>}}
 
-{{<tab label="api">}}
+{{<tab label="api" no-code="true">}}
 
 To delete records with the API, use a [DELETE request](https://api.cloudflare.com/#dns-records-for-a-zone-delete-dns-record).
 
