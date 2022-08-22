@@ -8,7 +8,7 @@ layout: single
 
 Cloudflare Stream is compatible with all video players that support HLS and DASH, which are standard formats for streaming media with broad support across all web browsers, mobile operating systems and media streaming devices.
 
-Refer to the guides below for more information.
+Platform-specific guides:
 
 * [Web](/stream/viewing-videos/using-own-player/web/)
 * [iOS (AVPlayer)](/stream/viewing-videos/using-own-player/ios/)

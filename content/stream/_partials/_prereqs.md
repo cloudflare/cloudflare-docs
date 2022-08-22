@@ -5,10 +5,8 @@ _build:
   list: never
 ---
 
-## Prerequisites
+{{<Aside type="note">}}
 
-Before you can use a playback option, you must first:
+Before you can play videos, you must first [upload a video to Cloudflare Stream](/stream/uploading-videos/) or be [actively streaming to a live input](/stream/stream-live)
 
-- [Upload a video to Cloudflare Stream](/stream/uploading-videos/) or
-- Have a running [live stream](/stream/stream-live)
-
+{{</Aside>}}
