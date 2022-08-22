@@ -12,7 +12,7 @@ meta:
 
 Before enabling SXGs, refer to the following requirements:
 
-* Read the [SXGs caveats](/fundamentals/signed-exchanges-amp/signed-exchanges/signed-exchanges-caveats/) to check requirements regarding request and response headers.
+* Read the [SXGs caveats](/fundamentals/signed-exchanges/signed-exchanges/signed-exchanges-caveats/) to check requirements regarding request and response headers.
 * SXGs are available for zones with a Pro or higher plan. SXGs are also available for zones on a Free plan with an APO subscription.
 * SXGs only work with zones that have their nameservers managed by Cloudflare. Refer to [Change your authoritative nameservers](/dns/zone-setups/full-setup/setup) to learn how to change your domain nameservers to Cloudflare. You will also have to confirm that Cloudflare is [proxying your traffic](/dns/manage-dns-records/reference/proxied-dns-records/).
 * Zone certificates need to be managed by Cloudflare.
