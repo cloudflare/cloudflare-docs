@@ -50,6 +50,7 @@ Once your monitor is created, you need to attach it to an origin pool:
 
 {{<render file="_monitor-create-api.md">}}
 
+
 **Prepare your servers**
 
 {{<render file="_monitor-prepare-server.md">}}
