@@ -30,7 +30,7 @@ To enable SSL/TLS recommendations in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To adjust your **SSL/TLS Recommender** enrollment with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-ssl/tls-recommender-enrollment) request with the `enabled` parameter set to your desired setting (`true` or `false`).
+To adjust your SSL/TLS Recommender enrollment with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-ssl/tls-recommender-enrollment) request with the `enabled` parameter set to your desired setting (`true` or `false`).
  
 {{</tab>}}
 {{</tabs>}}
