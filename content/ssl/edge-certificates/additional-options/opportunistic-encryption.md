@@ -23,7 +23,7 @@ To enable Opportunistic Encryption in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To adjust your **Opportunistic Encryption** settings with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-opportunistic-encryption-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To adjust your Opportunistic Encryption settings with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-opportunistic-encryption-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
  
 {{</tab>}}
 {{</tabs>}}
