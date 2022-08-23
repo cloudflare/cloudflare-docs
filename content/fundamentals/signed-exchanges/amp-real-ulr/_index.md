@@ -6,7 +6,7 @@ weight: 2
 
 # AMP Real URL
 
-Cloudflare AMP Real URL leverages Signed HTTP Exchanges to authenticate a publishers’ content when served from Google’s AMP cache. When a supported crawler is detected, AMP Real URL will create a signed exchange for content that is requested from your domain. When using a supported Chromium browser, the page is validated using a signed exchange and is displayed on the user’s device with the original URL of your site.
+Cloudflare AMP Real URL leverages signed exchanges to authenticate a publishers’ content when served from Google’s AMP cache. When a supported crawler is detected, AMP Real URL will create a signed exchange for content that is requested from your domain. When using a supported Chromium browser, the page is validated using a signed exchange and is displayed on the user’s device with the original URL of your site.
  
 ## Difference between AMP Real URL and AMP
 

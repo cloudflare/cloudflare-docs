@@ -3,10 +3,10 @@ pcx_content_type: reference
 title: Enable SXGs
 weight: 2
 meta:
-    title: Enable Automatic Signed Exchanges (SXG)
+    title: Enable signed exchanges (SXG)
 ---
 
-# Enable Automatic Signed Exchanges (SXG)
+# Enable signed exchanges (SXG)
 
 ## Requirements
 

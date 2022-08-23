@@ -6,7 +6,7 @@ weight: 3
 
 # Reference
 
-## Verify that Automatic Signed Exchanges are working
+## Verify that signed exchanges are working
 
 Make a request with the the signed exchange request header:
 

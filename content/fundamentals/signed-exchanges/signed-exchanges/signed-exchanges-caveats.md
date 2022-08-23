@@ -3,14 +3,14 @@ pcx_content_type: reference
 title: SXGs caveats
 weight: 1
 meta:
-    title: Signed Exchanges caveats
+    title: Signed exchanges caveats
 ---
 
-# Signed Exchanges caveats
+# Signed exchanges caveats
 
 ## Allowed request headers
 
-Signed Exchanges strip out cookies and headers from HTTP requests, and can create problems with dynamic or personalized content. This is intentional since Signed Exchanges can be distributed to multiple browsers. Therefore, packaging any personalized or dynamic content into a Signed Exchange could be a security risk. The only request headers that are not stripped out are as follows:
+Signed exchanges strip out cookies and headers from HTTP requests, and can create problems with dynamic or personalized content. This is intentional since signed exchanges can be distributed to multiple browsers. Therefore, packaging any personalized or dynamic content into a signed exchange could be a security risk. The only request headers that are not stripped out are as follows:
 
 * `User-Agent`
 * `Accept`
@@ -48,7 +48,7 @@ Since Cloudflare cannot be sure whether a signed exchange includes private infor
 * `Strict-Transport-Security`
 * `WWW-Authenticate`
 
-Signed Exchanges will not be created if the response headers contain a `cache-control` header whose value is either:
+Signed exchanges will not be created if the response headers contain a `cache-control` header whose value is either:
 
 * `private`
 * `no-store`
