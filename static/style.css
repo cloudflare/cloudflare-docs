@@ -5223,6 +5223,10 @@ pre {
   background-color: rgb(var(--background-color-rgb));
 }
 
+.noCodeLabel {
+  font-family: var(--sans-serif-font-family);
+}
+
 .skip-link {
   background: #f3f3f4;
   z-index: 1;
