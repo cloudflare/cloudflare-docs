@@ -18,11 +18,17 @@ Findings are security issues detected within SaaS applications that involve user
 
 ## View findings
 
-1. Open the [Zero Trust dashboard](https://dash.teams.cloudflare.com/) and go to **CASB** > **Findings**. You will see the findings detected across all integrations.
+1. Open the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and go to **CASB** > **Findings**. 
 
-2. To view details for an individual finding, select **View**. The individual findings page shows all detected instances of the finding for that particular integration.
+    You will see the findings detected across all integrations.
 
-Next, take steps to either [fix the issue](#resolve-findings), update its [severity level](#severity-levels), or [hide irrelevant findings](#hide-findings).
+2. To view details for an individual finding, select **View**. 
+
+    The individual findings page shows all detected instances of the finding within a specific integration. You can expand an individual row to view details for a particular instance.
+
+3. To resolve the finding, expand the **Remediation Guide** and follow the step-by-step instructions in the UI.
+
+Other actions you can take include [creating an HTTP block policy](#resolve-finding-with-a-gateway-policy), updating the finding's [severity level](#severity-levels), or [hiding irrelevant findings](#hide-findings) from view.
 
 ## Severity levels
 
@@ -33,54 +39,55 @@ Cloudflare CASB labels each finding with one of the following severity levels:
 * **Medium** suggests the finding should be reviewed sometime this month.
 * **Low** suggests the finding is informational or part of a scheduled review process.
 
-### Change a severity level
+### Change the severity level
 
 You can change the severity level for a finding at any time, in case the default assignment does not suit your environment.
 
-1. Customer navigates into a Security Finding
-2. Customer selects/clicks the Finding Severity
-3. Customer is presented with the Severity options to which it can be changed (Low, Medium, High, Critical)
-4. Customer selects the new desired Severity
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **CASB** > **Findings**.
+2. Locate the finding you want to modify and select **View**.
+3. In the severity level drop-down menu, choose your desired setting (_Critical_, _High_, _Medium_, or _Low_).
 
-The Finding Severity is now what the customer has selected and updates to reflect as such now and going forward. The new severity applies to all instances of a finding within the integration.
+The new severity level will only apply to the finding within this specific integration. If you added multiple integrations of the same SaaS application, the other integrations will not be impacted by this change.
 
-A Severity is mapped to a Finding per Integration so changing it only applies to that specific Integration's Finding. If a user goes to Integration A (Github) → Finding 1 → and changes the Severity from High to Low, Integration B (Github) → Finding 1 → Severity is not impacted in any way.
+## Resolve finding with a Gateway policy
 
-## Resolve findings
+Using the security findings from CASB allows for fine-grained Gateway policies which prevent future unwanted behavior while still allowing usage that aligns to your company's security policy. This means going from viewing a CASB finding, like the use of an unapproved SaaS application, to preventing or controlling access in minutes.
 
-Whether it be detecting an unknown application being used for Shadow IT or wanting to limit functionality, access, or behaviors to an unapproved application, remediation is front of mind.
+{{<Aside type="note" header="Before you begin">}}
+Ensure that you have [enabled HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/) for your organization.
+{{</Aside>}}
 
-### Create a Gateway Block policy
+To create a Gateway policy directly from a CASB finding:
 
-Using the security findings from CASB allows for fine grained Gateway policies which prevent future unwanted behavior while still allowing usage that aligns to company security policy. This means going from viewing a CASB security issue, like the use of an unapproved SaaS application, to preventing or controlling access in minutes.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **CASB** > **Findings**.
+2. Locate the finding you want to modify and select **View**.
+3. Find the instance you want to block and select its three-dot menu.
+4. Select **Block with Gateway HTTP policy**. A new browser tab will open with a pre-filled HTTP policy.
+{{<Aside type="note">}}
+Not all CASB findings will have the **Block with Gateway HTTP policy** option. Unsupported findings can only be resolved from your SaaS application dashboard or through your domain provider.
+{{</Aside>}}
+5. (Optional) [Customize the HTTP policy](/cloudflare-one/policies/filtering/http-policies/). For example, if the policy blocks an unsanctioned third-party app, you can apply the policy to some or all users, or only block uploads or downloads.
+6. Select **Save**.
 
-For example, take the CASB Google Workspace security finding around third-party apps which detects sign-ins or other permission sharing from a user's account. In just a few clicks, you can create a Gateway policy to block some or all of the activity, like uploads or downloads, to the detected SaaS application. This policy can be applied to some or all users, based on what access has been granted to the user’s account. 
-
-By surfacing the exact behavior with CASB, you can take swift and targeted action to better protect your organization with Gateway.
-
-Not all CASB Findings will allow a customer to create a Gateway policy from the ZT dash.
-
-It doesn't make sense for all Security Findings to have the option to block with Gateway due to the nature of the Finding, so the scope will be limited to those where blocking on the wire makes the most sense for users. This tends to land in the Shadow IT and Data security camps, which include File Sharing and Third-party apps. For example, the Google Workspace Findings around user behavior (inactive, suspended, 2FA disabled, etc) are not things solved by blocking packets.
+Your HTTP policy will now prevent future instances of the security finding.
 
 ## Hide findings
 
-Another example is security Findings that are not applicable to a business and should be removed/hidden/reduced altogether.
-
-For example, in the Google Workspace Installed 3rd Party App with X Access we may alert the user to an application or service that is sanctioned, say Slack for example. Rather than list out the dozens or thousands of users using Slack, the admin would want to archive this Finding as that behavior is expected. This is similar to how we do the Shadow IT report where we can denote sanctioned app usage detected.
-
-An important note: technically and visually, Ignoring should function the exact same as the Archiving. The only difference is at what level this is applied, that is you Ignore a Finding and Archive an Instance of a Finding. You cannot Archive an Instance of an Ignored Finding. It must be made Active again in order to then Archive it's instances.
+After reviewing your findings, you may decide that certain findings are not applicable to your organization. Cloudflare CASB allows you to remove findings or individual instances of findings from your list of active issues. CASB will continue to scan for these issues, but any detections will appear in a separate tab.
 
 ### Hide a finding
 
-1. Customer navigates into a Security Finding
-2. Select the checkboxes for the findings you want to ignore and then select **Ignore**.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **CASB** > **Findings**.
+2. In the **Active** tab, select the checkboxes for the findings you want to hide.
+3. Select **Ignore**.
 
-The finding will be moved from the Active tab to the Ignored tab. Findings that are Ignored still continue to crawl assets and report any instances of the Findings in the hidden tab. You can move it back to the Active tab at any time.
+The findings will be moved from **Active** to **Ignored**. CASB will continue to scan for these findings and report detections in the **Ignored** tab. You can move ignored findings back to the **Active** tab at any time.
 
 ### Hide an instance of a finding
 
-1. Customer navigates into a Security Finding
-2. Customer expands an instance of a Security Finding
-3. Customer selects to archive an instance of the Finding
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **CASB** > **Findings**.
+2. In the **Active** tab, locate the finding you want to modify and select **View**.
+3. Under **Instances**, select the **Active** tab and locate the instance you want to hide.
+4. Select the three-dot menu, then select **Hide**.
 
-The Finding instance is hidden from display and moved into the Archived tab. All future instances for that user will also be hidden. You can move it back to the Active tab at any time.
+The instance will be moved from **Active** to **Hidden**. If the finding occurs again for the same user, CASB will report the new instance in the **Hidden** tab. You can move hidden instances back to the **Active** tab at any time.
