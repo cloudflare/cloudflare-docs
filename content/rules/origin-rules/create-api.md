@@ -47,9 +47,9 @@ The following example sets the rules of an existing phase ruleset (`<RULESET_ID>
 
 ```json
 ---
-header: Request
+header: cURL example request
 ---
-curl -X PUT \
+$ curl -X PUT \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -H "Content-Type: application/json" \
@@ -114,9 +114,9 @@ The following example sets the rules of an existing phase ruleset (`<RULESET_ID>
 
 ```json
 ---
-header: Request
+header: cURL example request
 ---
-curl -X PUT \
+$ curl -X PUT \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -H "Content-Type: application/json" \
@@ -187,9 +187,9 @@ The following example sets the rules of an existing phase ruleset (`<RULESET_ID>
 
 ```json
 ---
-header: Request
+header: cURL example request
 ---
-curl -X PUT \
+$ curl -X PUT \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -H "Content-Type: application/json" \
