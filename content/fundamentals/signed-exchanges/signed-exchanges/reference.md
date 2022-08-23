@@ -20,7 +20,7 @@ curl -svo /dev/null https://example.com -H "Accept: application/signed-exchange;
 
 ## Certificate Authority used with SXGs
 
-Cloudflare uses Google for SXGs' certificate issuance. Once SXGs is enabled, Cloudflare automatically adds the CAA records on behalf of the zones. Refer to the following example below:
+Cloudflare uses [Google for SXGs' certificate issuance](https://web.dev/signed-exchanges/#certificates). Once SXGs is enabled, Cloudflare automatically adds the Certification Authority Authorization records on behalf of the zones. Refer to the following example below:
 
 ```bash
 % dig example.com caa
