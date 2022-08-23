@@ -3,7 +3,7 @@
 
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import { OWNERS } from '../owners';
+import { OWNERS, REVIEWERS } from '../owners';
 
 type Octokit = ReturnType<typeof github.getOctokit>;
 
@@ -76,7 +76,7 @@ function parse(filename: string): string | void {
       OWNERS[p].forEach(x => PCX.add(x));
     }
 
-    const owners = new Set<string>();
+    const reviewers = new Set<string>();
     const prnumber = pull_request.number;
     const author = pull_request.user.login;
 
@@ -114,14 +114,20 @@ function parse(filename: string): string | void {
     });
 
     for (const slug of products) {
-      let list = OWNERS[slug];
+      let owners_list = OWNERS[slug];
 
-      if (!list) {
+      if (!owners_list) {
         throw new Error(`Unknown "${slug}" product!`);
       }
 
-      if (list.length > 0) {
-        list.forEach(x => owners.add(x));
+      if (owners_list.length > 0) {
+        owners_list.forEach(x => reviewers.add(x));
+      }
+
+      let reviewers_list = REVIEWERS[slug];
+
+      if (reviewers_list && reviewers_list.length > 0) {
+        reviewers_list.forEach(x => reviewers.add(x));
       }
     }
 
@@ -130,15 +136,15 @@ function parse(filename: string): string | void {
     // will throw if already assigned
     for (const u of pull_request.requested_reviewers) {
       requested.add(u.login);
-      owners.delete(u.login);
+      reviewers.delete(u.login);
     }
 
     // cannot self-review
-    owners.delete(author);
+    reviewers.delete(author);
 
-    console.log({ products, owners, requested });
+    console.log({ products, reviewers, requested });
 
-    if (owners.size === 0) {
+    if (reviewers.size === 0) {
       if (requested.size > 0) {
         console.log('~> had reviewers at creation');
       } else if (products.size > 0) {
@@ -158,7 +164,7 @@ function parse(filename: string): string | void {
         repo: repository.name,
         owner: repository.owner.login,
         pull_number: prnumber,
-        reviewers: [...owners],
+        reviewers: [...reviewers],
       });
     }
 
