@@ -1,9 +1,9 @@
 ---
 pcx_content_type: navigation
-title: Signed Exchanges / AMP Real URL
+title: Signed exchanges / AMP Real URL
 weight: 8
 ---
 
-# Signed Exchanges / AMP Real URL
+# Signed exchanges / AMP Real URL
 
 {{<directory-listing>}}
