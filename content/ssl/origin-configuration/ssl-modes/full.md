@@ -10,6 +10,8 @@ meta:
 
 When you set your encryption mode to **Full**, Cloudflare allows HTTPS connections between your visitor and Cloudflare and makes connections to the origin using the scheme requested by the visitor. If your visitor uses `http`, then Cloudflare connects to the origin using plaintext HTTP and vice versa.
 
+![With an encryption mode of Full, your application encrypts traffic going to and coming from Cloudflare but does not validate your origin certificate.](/ssl/static/ssl-encryption-mode-full.png)
+
 ## Use when
 
 Choose **Full** mode when your origin can support an SSL certification, but — for various reasons — it cannot support a valid, publicly trusted certificate.
@@ -25,5 +27,3 @@ Before enabling **Full** mode, make sure your origin allows HTTPS connections on
 The certificate presented by the origin will **not be validated in any way**. It can be expired, self-signed, or not even have a matching CN/SAN entry for the hostname requested.
 
 Without using [**Full (strict)**](/ssl/origin-configuration/ssl-modes/full-strict/), a malicious party could technically hijack the connection and present their own certificate.
-
-![With an encryption mode of Full, your application encrypts traffic going to and coming from Cloudflare but does not validate your origin certificate.](/ssl/static/ssl-encryption-mode-full.png)

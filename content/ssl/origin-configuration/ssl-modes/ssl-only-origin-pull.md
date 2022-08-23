@@ -14,6 +14,8 @@ Connections to the origin will always be made using SSL/TLS, regardless of the s
 
 The certificate presented by the origin will be validated the same as with [Full (strict) mode](/ssl/origin-configuration/ssl-modes/full-strict/).
 
+![With an encryption mode of Strict (SSL-Only Origin Pull), all connections to the origin will always be made using SSL/TLS](/ssl/static/ssl-encryption-mode-full-strict.png)
+
 ## Use when
 
 You want the most secure configuration available for your origin, you are an Enterprise customer, and you meet the requirements for [**Full (strict)** mode](/ssl/origin-configuration/ssl-modes/full-strict/).

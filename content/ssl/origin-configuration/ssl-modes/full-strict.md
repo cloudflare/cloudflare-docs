@@ -10,6 +10,8 @@ meta:
 
 When you set your encryption mode to **Full (strict)**, Cloudflare does everything in [Full mode](/ssl/origin-configuration/ssl-modes/full/) but also enforces more stringent requirements for origin certificates.
 
+![With an encryption mode of Full (strict), your application encrypts traffic going to and coming from Cloudflare.](/ssl/static/ssl-encryption-mode-full-strict.png)
+
 ## Use when
 
 For the best security, choose **Full (strict)** mode whenever possible (unless you are an [Enterprise customer](/ssl/origin-configuration/ssl-modes/ssl-only-origin-pull/)).
@@ -27,5 +29,3 @@ Before enabling **Full (strict)** mode, make sure your origin allows HTTPS conne
 ## Limitations
 
 {{<render file="_ssl-mode-errors.md">}}
-
-![With an encryption mode of Full (strict), your application encrypts traffic going to and coming from Cloudflare.](/ssl/static/ssl-encryption-mode-full-strict.png)
