@@ -36,7 +36,11 @@ filename: _redirects
 ```
 {{<Aside type= "note">}}
 
-Since the _redirects file needs to be present in the served root directory, some frameworks may not work right now as Cloudflare only deploys the build directory like the _site folder in case of Jekyll.
+In the case of some frameworks, such as Jekyll, you may need to manually copy and paste your `_redirects` file to the build output directory. To do this:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Go to **Pages** > your Pages project > **Settings** > **Builds & deployments**.
+3. Go to **Build configurations** > **Edit configurations** > change the build command to `jekyll build && cp _redirects _site/_redirects` and select **Save**.
 
 {{</Aside>}}
 
