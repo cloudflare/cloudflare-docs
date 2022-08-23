@@ -18,11 +18,22 @@ For more background, refer to the [introductory blog post](https://blog.cloudfla
 
 ### Enable SSL/TLS recommendations
 
-To enable SSL/TLS recommendations:
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+To enable SSL/TLS recommendations in the dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
 2.  Navigate to **SSL/TLS**.
 3.  For **SSL/TLS Recommender**, switch the toggle to **On**.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+To adjust your **SSL/TLS Recommender** enrollment with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-ssl/tls-recommender-enrollment) request with the `enabled` parameter set to your desired setting (`true` or `false`).
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ### Manually trigger a new scan
 

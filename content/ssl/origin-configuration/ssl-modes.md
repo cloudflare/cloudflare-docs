@@ -22,11 +22,30 @@ If you are not sure which encryption mode to use, enable the [SSL/TLS Recommende
 
 ## Update your encryption mode
 
-To change your encryption mode:
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+To change your encryption mode in the dashboard:
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
-2.  Navigate to **SSL/TLS**.
-3.  Choose a new encryption mode.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+2.  Go to **SSL/TLS**.
+3.  Choose an encryption mode.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+To adjust your encryption mode with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-ssl-setting) request with the `value` parameter set to your desired setting (`off`, `flexible`, `full`, `strict`).
+
+{{<Aside type="note">}}
+
+Your available values depend on your zone's plan level.
+
+{{</Aside>}}
+ 
+{{</tab>}}
+{{</tabs>}}
+
+
 
 ---
 

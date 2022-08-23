@@ -22,11 +22,22 @@ For security reasons, this feature will run on URLs pointing to `localhost` if t
 
 ## Enable Automatic HTTPS Rewrites
 
-To enable **Automatic HTTPS Rewrites**:
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+To enable **Automatic HTTPS Rewrites** in the dashboard:
 
 1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
 2.  Navigate to **SSL/TLS** > **Edge Certificates**.
 3.  For **Automatic HTTPS Rewrites**, switch the toggle to **On**.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+To enable or disable **Automatic HTTPS Rewrites** with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-automatic-https-rewrites-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Limitations
 
