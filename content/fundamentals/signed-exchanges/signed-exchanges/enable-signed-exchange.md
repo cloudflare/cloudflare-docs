@@ -3,14 +3,14 @@ pcx_content_type: reference
 title: Enable SXGs
 weight: 2
 meta:
-    title: Enable signed exchanges (SXG)
+    title: Enable Automatic Signed Exchange
 ---
 
-# Enable signed exchanges (SXG)
+# Enable Automatic Signed Exchange
 
 ## Requirements
 
-Before enabling SXGs, refer to the following requirements:
+Before enabling Cloudflare Automatic Signed Exchange, refer to the following requirements:
 
 * Read the [SXGs caveats](/fundamentals/signed-exchanges/signed-exchanges/signed-exchanges-caveats/) to check requirements regarding request and response headers.
 * SXGs are available for zones with a Pro or higher plan. SXGs are also available for zones on a Free plan with an APO subscription.
@@ -29,4 +29,4 @@ If your account satisfies all the requirements, follow the steps below to enable
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Speed** > **Optimization**.
-3. Scroll to **Automatic Signed Exchanges (SXGs)** and toggle the button to enable it.
+3. Scroll to **Automatic Signed Exchanges (SXGs)** and enable it.
