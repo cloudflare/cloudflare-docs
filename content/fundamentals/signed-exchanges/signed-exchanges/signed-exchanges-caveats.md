@@ -58,7 +58,7 @@ Signed exchanges will not be created if the response headers contain a `cache-co
 For example, `cache-control=private` would mean that a signed exchange is not created.
 
 {{<Aside type="note">}}
-The `cache-control` header can have one of the following values: 
+The `cache-control` response header can have one of the following names:
 
 * `cache-control`
 * `cdn-cache-control`
