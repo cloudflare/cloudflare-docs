@@ -64,7 +64,7 @@ To add a CAA record in the dashboard,
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To create these records via the API, use this [POST endpoint](https://api.cloudflare.com/#dns-records-for-a-zone-create-dns-record).
+To create a CAA record via the API, use this [POST endpoint](https://api.cloudflare.com/#dns-records-for-a-zone-create-dns-record).
  
 {{</tab>}}
 {{</tabs>}}
