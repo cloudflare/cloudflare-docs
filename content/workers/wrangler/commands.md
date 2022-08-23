@@ -137,7 +137,7 @@ None of the options for this command are required. Many of these options can be 
 
     {{<Aside type="warning">}}
 
-This runs an ephemeral local version of your worker, and will not be able to access data stored on Cloudflare's edge (for instance, this includes your KV stores). If you'd like to persist data locally, the experimental option `--experimental-enable-local-persistence` will store data in the `wrangler-local-state` subdirectory.
+This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's Edge (for instance, this includes your data stored on KV). If you'd like to persist data locally, the experimental option `--experimental-enable-local-persistence` will store data in the `wrangler-local-state` subdirectory.
 
 {{</Aside>}}
 
