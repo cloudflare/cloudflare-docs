@@ -18,7 +18,7 @@ Cloudflare does not recommend setting your encryption mode to **Off**.
 
 ## Required setup
 
-There is no required set up for this option.
+There is no required setup for this option.
 
 ## Limitations
 
