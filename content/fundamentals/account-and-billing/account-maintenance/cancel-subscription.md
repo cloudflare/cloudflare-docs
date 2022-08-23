@@ -8,6 +8,12 @@ weight: 2
 
 Cancellations are not processed until the end of the billing period, so you can continue using the add-on or subscription until the new billing period begins. To avoid unwanted charges, start the cancellation process before the end of your billing period.
 
+{{<Aside type="note">}}
+
+All Billing period dates on invoices and the dashboard are in UTC/GMT timezone not your local timezone. We recommend any downgrades or changes to subscriptions be made at least 24 hours before stated billing date to avoid any timezone confusion.
+
+{{</Aside>}}
+
 ---
 
 ## Step 1: Disable the Cloudflare subscription
