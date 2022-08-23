@@ -14,7 +14,7 @@ Setting your encryption mode to **Off (not recommended)** redirects any HTTPS re
 
 ## Use when
 
-Cloudflare does **not recommend** setting your encryption mode to **Off**.
+Cloudflare does not recommend setting your encryption mode to **Off**.
 
 ## Required setup
 
