@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: SXGs caveats
-weight: 1
+weight: 3
 meta:
     title: Signed exchanges caveats
 ---
