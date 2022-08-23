@@ -38,11 +38,7 @@ To change your encryption mode in the dashboard:
  
 To adjust your encryption mode with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-ssl-setting) request with the `value` parameter set to your desired setting (`off`, `flexible`, `full`, `strict`).
 
-{{<Aside type="note">}}
-
 Your available values depend on your zone's plan level.
-
-{{</Aside>}}
  
 {{</tab>}}
 {{</tabs>}}
