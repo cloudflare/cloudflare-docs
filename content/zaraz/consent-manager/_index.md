@@ -9,7 +9,7 @@ layout: single
 
 # Zaraz Consent Management Platform
 
-Zaraz provides a Consent Management Platform (CMP) to help you address and manage required consents under the European [General Data Protection Regulation (GDPR)](https://gdpr-info.eu/) and the [Directive on privacy and electronic communications](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02002L0058-20091219&from=EN#tocId7). This consent platform lets you easily create a consent modal for your website based on the tools you have configured. With Zaraz CMP, you can make sure you Zaraz only load tools under the umbrella of the specific purposes your users have agreed to. 
+Zaraz provides a Consent Management Platform (CMP) to help you address and manage required consents under the European [General Data Protection Regulation (GDPR)](https://gdpr-info.eu/) and the [Directive on privacy and electronic communications](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02002L0058-20091219&from=EN#tocId7). This consent platform lets you easily create a consent modal for your website based on the tools you have configured. With Zaraz CMP, you can make sure Zaraz only load tools under the umbrella of the specific purposes your users have agreed to. 
 
 The consent modal added to your website is concise and gives your users an easy way to opt-in to any purposes of data processing your tools need.
 
@@ -24,9 +24,9 @@ The Zaraz Consent Management Platform(CMP) has a **Purposes** section. This is w
 All tools use consent as a legal basis. This is due to the fact that they all use cookies and are not strictly necessary for the website’s correct operation. Due to this, all purposes are opt-in.
 {{</Aside>}}
 
-## About the Consent Management Platform (CMP)
+## Purposes and tools
 
-When you add a new tool to your website, Zaraz does not assign any purpose to it. This means that this tool will skip consent by default. Remember to check the Consent Management settings every time you set up a new tool. This helps ensure you avoid a situation where your tool is triggered before the user gives consent.
+When you add a new tool to your website, Zaraz does not assign any purpose to it. This means that this tool will skip consent by default. Remember to check the [Consent Management settings](/zaraz/consent-manager/enable-consent-manager/) every time you set up a new tool. This helps ensure you avoid a situation where your tool is triggered before the user gives consent.
 
 The user’s consent preferences are stored within a first-party cookie. This cookie is a JSON file that maps the purposes’ ID to a `true`/`false`/missing value:
 
