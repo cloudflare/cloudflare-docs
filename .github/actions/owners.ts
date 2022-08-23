@@ -9,7 +9,7 @@
  */
 export const OWNERS: Record<string, string[]> = {
   "1.1.1.1": ["marciocloudflare"],
-  analytics: ["angelampcosta"],
+  analytics: ["angelampcosta", "soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
   api: ["ranbel"],
   "api-shield": ["patriciasantaana"],
   "argo-smart-routing": ["maxvp"],
@@ -29,7 +29,7 @@ export const OWNERS: Record<string, string[]> = {
   fundamentals: ["kodster28"],
   images: ["marciocloudflare"],
   "load-balancing": ["patriciasantaana"],
-  logs: ["angelampcosta"],
+  logs: ["angelampcosta", "soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
   "magic-firewall": ["dcpena"],
   "magic-transit": ["dcpena"],
   "magic-wan": ["dcpena"],
