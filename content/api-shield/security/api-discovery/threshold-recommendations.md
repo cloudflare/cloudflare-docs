@@ -15,7 +15,7 @@ API Discovery only looks at requests that satisfy all of the following criteria:
 1. Requests must send the session identifiers (**HTTP header** or **Cookie**) that is configured for the zone.
 2. Requests must return 2XX response codes from the edge.
 3. Requests must come from eyeballs (i.e. Worker requests are ignored at this point).
-4. At least 500 requests are made to the discovered endpoint within a 10 day period* (*This number could be subject to change*) 
+4. At least 500 requests are made to the discovered endpoint within a 10 day period* (*This number could be subject to change*).
 
 ### Why do I not get threshold recommendations for my discovered API endpoints?
 
@@ -27,7 +27,7 @@ Thresholds are only guaranteed to be recommended for endpoints that receive suff
 
 * Only requests with the same criteria as API Discovery are considered. 
 * If traffic has been erratic or intermittent to this endpoint, the threshold might not show up. Cloudflare needs endpoints to receive sufficient valid traffic in any 24-hour period in the last 7 days or since the initial discovery of the endpoint to make statistically safe threshold suggestions.
-* Cloudflare also requires at least 50 distinct sessions to have accessed the endpoint in any 24-hour period in the last 7 days or since the initial discovery of the endpoint
+* Cloudflare also requires at least 50 distinct sessions to have accessed the endpoint in any 24-hour period in the last 7 days or since the initial discovery of the endpoint.
 
 ### Why do I get the error "API Threshold Recommendations Expired (Code: 551)"?
 
