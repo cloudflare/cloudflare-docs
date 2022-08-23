@@ -560,7 +560,6 @@
 /stream/uploading-videos/creator-id/ /stream/edit-manage-videos/manage-video-library/creator-id/ 301
 /stream/uploading-videos/searching/ /stream/edit-manage-videos/manage-video-library/searching/ 301
 /stream/edit-manage-videos/edit-videos/adding-captions/ /stream/edit-videos/adding-captions/ 301
-/stream/edit-manage-videos/edit-videos/displaying-thumbnails/ /stream/viewing-videos/displaying-thumbnails/ 301
 /stream/edit-manage-videos/edit-videos/applying-watermarks/ /stream/edit-videos/applying-watermarks/ 301
 /stream/edit-manage-videos/edit-videos/video-clipping/ /stream/edit-videos/video-clipping/ 301
 /stream/edit-manage-videos/manage-video-library/using-webhooks/ /stream/manage-video-library/using-webhooks/ 301
