@@ -8,7 +8,9 @@ meta:
 
 # Strict (SSL-Only Origin Pull) - SSL/TLS encryption modes
 
-_This method is only available for Enterprise zones._
+{{<Aside type="note">}}
+This method is only available for Enterprise zones.
+{{</Aside>}}
 
 Connections to the origin will always be made using SSL/TLS, regardless of the scheme requested by the visitor.
 
