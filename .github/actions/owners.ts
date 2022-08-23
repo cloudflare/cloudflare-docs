@@ -59,3 +59,8 @@ export const OWNERS: Record<string, string[]> = {
   workers: ["deadlypants1973"],
   zaraz: ["marciocloudflare"],
 };
+
+export const REVIEWERS: Record<string, string[]> = {
+  analytics: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
+  logs: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
+};
