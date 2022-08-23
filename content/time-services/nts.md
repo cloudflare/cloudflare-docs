@@ -23,6 +23,6 @@ If you would like to hear about the development of additional clients or updates
 
 {{<Aside type="note">}}
 
-If you are not using a Gmail account, first send an email to `time-services+subscribe@cloudflare.com `. Then, email `time-services@cloudflare.com` to be added to the distribution list.
+If you are not using a Gmail account, first send an email to `time-services+subscribe@cloudflare.com`. Then, email `time-services@cloudflare.com` to be added to the distribution list.
 
 {{</Aside>}}
