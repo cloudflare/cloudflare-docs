@@ -289,6 +289,7 @@
 /load-balancing/understand-basics/load-shedding/ /load-balancing/additional-options/load-shedding/ 301
 /load-balancing/understand-basics/region-mapping-api/ /load-balancing/reference/region-mapping-api/ 301
 /load-balancing/reference/release-notes/ /load-balancing/reference/migration-guides/load-balancing-graphql-nodes/ 301
+/load-balancing/troubleshooting/faq/ /load-balancing/troubleshooting/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/reference/common-configurations/ 301
 
@@ -625,6 +626,7 @@
 /waiting-room/how-to/mobile-traffic/ /waiting-room/additional-options/mobile-traffic/ 301
 /waiting-room/how-to/test-waiting-room/ /waiting-room/additional-options/test-waiting-room/ 301
 /waiting-room/how-to/use-waiting-room-api/ /waiting-room/reference/waiting-room-api/ 301
+/waiting-room/troubleshooting/ /waiting-room/ 301
 
 # warp-client
 /warp-client/for-teams/ /cloudflare-one/connections/connect-devices/warp/ 301
