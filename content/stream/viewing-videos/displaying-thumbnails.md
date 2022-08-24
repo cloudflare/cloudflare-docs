@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Display thumbnails
-weight: 5
+weight: 4
 ---
 
 # Display thumbnails

@@ -104,6 +104,6 @@ Access will return a JSON structure containing the following data:
 
 ## Signature
 
-Cloudflare generates the signature by signing the encoded header and payload using the SHA-256 algorithm (RS256). In RS256, a private key signs the JWTs and a separate [public key](/cloudflare-one/identity/users/access-jwt/validating-json/#access-signing-key) verifies the signature.
+Cloudflare generates the signature by signing the encoded header and payload using the SHA-256 algorithm (RS256). In RS256, a private key signs the JWTs and a separate [public key](/cloudflare-one/identity/authorization-cookie/validating-json/#access-signing-key) verifies the signature.
 
 For more information on JWTs, refer to [jwt.io](https://jwt.io/).

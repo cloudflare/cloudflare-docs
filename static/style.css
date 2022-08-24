@@ -5079,7 +5079,6 @@ pre {
 
 .tabs-wrapper {
   width: 100%;
-  max-width: 700px;
   margin: 0 auto;
   position: relative;
   padding-bottom: 1rem;
@@ -5089,7 +5088,7 @@ pre {
 
 .tabs {
   position: relative;
-  margin-top: 3rem;
+  margin-top: 1rem;
   box-shadow: 0 1px rgba(var(--shadow-color-rgb), 0.12);
   height: 2.4rem;
 }
@@ -5108,7 +5107,7 @@ pre {
 }
 
 [theme="dark"] .tabs > ul {
-  background-color: rgb(var(--accent-color-rgb));
+  background-color: rgba(var(--color-rgb),.1)
 }
 
 .tabs > ul > li {
@@ -5210,6 +5209,24 @@ pre {
 .tab-content > .CodeBlock {
   border-radius: 0;
 }
+
+.noCodeTab {
+  padding: 1em .75em .75em .5em;
+  background: linear-gradient(var(--background-color),
+    rgba(var(--background-color-rgb)));
+  border: 1px solid rgb(216 216 218);
+}
+
+[theme="dark"] .noCodeTab {
+  border: 1px solid #404242;
+  border-top: none;
+  background-color: rgb(var(--background-color-rgb));
+}
+
+.noCodeLabel {
+  font-family: var(--sans-serif-font-family);
+}
+
 .skip-link {
   background: #f3f3f4;
   z-index: 1;

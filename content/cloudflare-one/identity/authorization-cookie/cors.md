@@ -8,11 +8,11 @@ weight: 4
 
 Cross-Origin Resource Sharing ([CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)) is a mechanism that uses HTTP headers to grant a web application running on one origin permission to reach selected resources in a different origin. The web application executes a cross-origin HTTP request when it requests a resource that has a different origin from its own, including domain, protocol, or port.
 
-When you protect a site with Cloudflare Access, Cloudflare checks every HTTP request bound for that site to ensure that the request has a valid `CF-Authorization` authentication cookie. If a request does not include the cookie, it will be blocked. For a CORS request to reach your site, additional configuration may be required depending on the type of request:
+For a CORS request to reach a site protected by Access, the request must include a valid `CF-Authorization` cookie. This may require additional configuration depending on the type of request:
 
-- [Simple requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests) are sent directly to the origin, without triggering a preflight request.
+- [Simple requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests) are sent directly to the origin, without triggering a preflight request. For configuration instructions, refer to [Allow simple requests](#allow-simple-requests).
 
-- [Preflighted requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#preflighted_requests) cause the browser to send an OPTIONS request before sending the actual request. The OPTIONS request checks which methods and headers are allowed by the origin.
+- [Preflighted requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#preflighted_requests) cause the browser to send an OPTIONS request before sending the actual request. The OPTIONS request checks which methods and headers are allowed by the origin. For configuration instructions, refer to [Allow preflighted requests](#allow-preflighted-requests). 
 
 {{<Aside type="warning" header="Important">}}
 
@@ -35,7 +35,7 @@ If you make a simple CORS request to an Access-protected domain and have not yet
 2. Log in to the target domain. This generates a `CF-Authorization` cookie.
 3. Refresh the page that made the CORS request. The refresh resends the request with the newly generated cookie.
 
-## Allow Preflighted Requests
+## Allow preflighted requests
 
 If you make a preflighted cross-origin request to an Access-protected domain, the OPTIONS request will return a `403` error. This error occurs regardless of whether you have logged in to the domain. This is because the browser never includes cookies with OPTIONS requests, by design. Cloudflare will therefore block the preflight request, causing the CORS exchange to fail.
 

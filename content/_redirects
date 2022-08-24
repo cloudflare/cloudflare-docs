@@ -89,7 +89,7 @@
 /access/setting-up-access/access-groups/ /cloudflare-one/identity/users/groups/ 301
 /access/setting-up-access/audit-logs/ /cloudflare-one/analytics/logs/audit-logs/ 301
 /access/setting-up-access/configuring-access-policies/ /cloudflare-one/policies/zero-trust/policy-management/ 301
-/access/setting-up-access/validate-jwt-tokens/ /cloudflare-one/identity/service-tokens/ 301
+/access/setting-up-access/validate-jwt-tokens/ /cloudflare-one/identity/authorization-cookie/validating-json/ 301
 /access/ssh/ /cloudflare-one/tutorials/ssh/ 301
 /access/ssh/short-live-cert-server/ /cloudflare-one/tutorials/ssh-cert-bastion/ 301
 /access/ssh/ssh-guide/ /cloudflare-one/tutorials/ssh/ 301
@@ -559,7 +559,12 @@
 /stream/uploading-videos/using-webhooks/ /stream/edit-manage-videos/manage-video-library/using-webhooks/ 301
 /stream/uploading-videos/creator-id/ /stream/edit-manage-videos/manage-video-library/creator-id/ 301
 /stream/uploading-videos/searching/ /stream/edit-manage-videos/manage-video-library/searching/ 301
-/stream/viewing-videos/displaying-thumbnails/ /stream/edit-manage-videos/edit-videos/displaying-thumbnails/ 301
+/stream/edit-manage-videos/edit-videos/adding-captions/ /stream/edit-videos/adding-captions/ 301
+/stream/edit-manage-videos/edit-videos/applying-watermarks/ /stream/edit-videos/applying-watermarks/ 301
+/stream/edit-manage-videos/edit-videos/video-clipping/ /stream/edit-videos/video-clipping/ 301
+/stream/edit-manage-videos/manage-video-library/using-webhooks/ /stream/manage-video-library/using-webhooks/ 301
+/stream/edit-manage-videos/manage-video-library/creator-id/ /stream/manage-video-library/creator-id/ 301
+/stream/edit-manage-videos/manage-video-library/searching/ /stream/manage-video-library/searching/ 301
 
 # tenant_redirects
 /tenant/tutorial/ /tenant/get-started/ 301
@@ -1038,13 +1043,14 @@
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
 /cloudflare-one/identity/service-auth/service-tokens/ /cloudflare-one/identity/service-tokens/ 301
-/cloudflare-one/identity/users/validating-json/ /cloudflare-one/identity/users/access-jwt/ 301
+/cloudflare-one/identity/users/validating-json/ /cloudflare-one/identity/authorization-cookie/validating-json/ 301
 
 /cloudflare-one/policies/lists/ /cloudflare-one/policies/filtering/lists 301
 /cloudflare-one/policies/zero-trust/ /cloudflare-one/policies/access/ 301
 /cloudflare-one/policies/zero-trust/app-paths/ /cloudflare-one/policies/access/app-paths/ 301
 /cloudflare-one/policies/zero-trust/common-configs/ /cloudflare-one/policies/access/ 301
-/cloudflare-one/policies/zero-trust/cors/ /cloudflare-one/policies/access/cors/ 301
+/cloudflare-one/policies/zero-trust/cors/ /cloudflare-one/identity/authorization-cookie/cors/  301
+/cloudflare-one/identity/authorization-cookie/cors/ /cloudflare-one/identity/authorization-cookie/cors/ 301
 /cloudflare-one/policies/zero-trust/mfa-requirements/ /cloudflare-one/policies/access/mfa-requirements/ 301
 /cloudflare-one/policies/zero-trust/policy-management/ /cloudflare-one/policies/access/policy-management/ 301
 /cloudflare-one/policies/zero-trust/require-purpose-justification/ /cloudflare-one/policies/access/require-purpose-justification/ 301

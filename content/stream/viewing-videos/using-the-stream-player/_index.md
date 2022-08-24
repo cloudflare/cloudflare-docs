@@ -1,15 +1,18 @@
 ---
 pcx_content_type: reference
-title: Use the Stream player
+title: Use the Stream Player
 weight: 1
+layout: single
 ---
 
-# Use the Stream player
+# Use the Stream Player
+
+Cloudflare provides a customizable web player that can play both on-demand and live video, and requires zero additional engineering work.
 
 To add the Stream Player to a web page, you can either:
 
-1. Generate an embed code in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream) for a specific video or live input.
-2. Use the code example below, replacing `<VIDEO_UID>` with the video UID (or [signed token](/stream/viewing-videos/securing-your-stream/)) and `<CODE>` with the your unique customer code, which can be found in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
+- Generate an embed code in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream) for a specific video or live input.
+- Use the code example below, replacing `<VIDEO_UID>` with the video UID (or [signed token](/stream/viewing-videos/securing-your-stream/) and `<CODE>` with the your unique customer code, which can be found in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
 
 ```html
 <iframe
@@ -21,6 +24,8 @@ To add the Stream Player to a web page, you can either:
   allowfullscreen="true"
 ></iframe>
 ```
+
+[Run and edit this code in your browser on Stackblitz.](https://workers.new/stream/stream-player) 
 
 Stream player is also available as a [React](https://www.npmjs.com/package/@cloudflare/stream-react) or [Angular](https://www.npmjs.com/package/@cloudflare/stream-angular) component.
 
@@ -79,7 +84,7 @@ Some browsers now prevent videos with audio from playing automatically. You may 
 
 - `defaultTextTrack`
 
-  - Will initialize the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [upload the text track](/stream/edit-manage-videos/edit-videos/adding-captions/). If the specified language code has no captions available, the player will behave as though no language code had been provided.
+  - Will initialize the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [upload the text track](/stream/edit-videos/adding-captions/). If the specified language code has no captions available, the player will behave as though no language code had been provided.
 
     {{<Aside>}}
 

@@ -6,7 +6,7 @@ weight: 1
 
 # Validate JWTs
 
-When Cloudflare sends a request to your origin, the request will include an [application token](/cloudflare-one/identity/users/access-jwt/application-token/) as a `Cf-Access-Jwt-Assertion` request header and as a `CF_Authorization` cookie.
+When Cloudflare sends a request to your origin, the request will include an [application token](/cloudflare-one/identity/authorization-cookie/application-token/) as a `Cf-Access-Jwt-Assertion` request header and as a `CF_Authorization` cookie.
 
 Cloudflare signs the token with a key pair unique to your account. You should validate the token with your public key to ensure that that the request came from Access and not a malicious third party.
 

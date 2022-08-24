@@ -21,4 +21,4 @@ To start using actions, first create a trigger to determine when this action wil
 7. Depending on the tool you are adding an action for, you might also have the option to choose an **Action type**. You might also need to fill in more fields in order to complete setting up the action.
 8. Select **Save**.
 
-The new action will appear under **Tool actions**. To edit an action, refer to [Edit tools and actions](/zaraz/get-started/edit-tools-and-actions/).
+The new action will appear under **Tool actions**. To edit or disable/enable an action, refer to [Edit tools and actions](/zaraz/get-started/edit-tools-and-actions/).

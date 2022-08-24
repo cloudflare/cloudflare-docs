@@ -56,7 +56,7 @@ curl --location --request POST 'https://api.cloudflare.com/client/v4/accounts/<Y
 
 You can check whether your video is ready to play after selecting your account from the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream). While the clipped video processes, the video status response displays **Queued**. When the clipping process is complete, the video status changes to **Ready** and displays the new name of the clipped video and the new duration.
 
-To receive a notification when your video is done processing and ready to play, you can [subscribe to webhook notifications](/stream/edit-manage-videos/manage-video-library/using-webhooks/).
+To receive a notification when your video is done processing and ready to play, you can [subscribe to webhook notifications](/stream/manage-video-library/using-webhooks/).
 
 ## Set video name
 
@@ -81,7 +81,7 @@ When the video has been clipped and processed, your newly named video displays i
 
 ## Add a watermark
 
-You can also add a custom watermark to your video. For more information on watermarks and uploading a watermark profile, refer to [Apply watermarks](/stream/edit-manage-videos/edit-videos).
+You can also add a custom watermark to your video. For more information on watermarks and uploading a watermark profile, refer to [Apply watermarks](/stream/edit-videos/applying-watermarks).
 
 ```bash
 ---
@@ -125,7 +125,7 @@ After the video clipping is complete, you can open the Cloudflare dashboard and 
 
 ## Specify a thumbnail image
 
-You can also specify a thumbnail image for your video using a percentage value. To convert the thumbnail's timestamp from seconds to a percentage, divide the timestamp you want to use by the total duration of the video. For more information about thumbnails, refer to [Display thumbnails](/stream/edit-manage-videos/edit-videos/displaying-thumbnails).
+You can also specify a thumbnail image for your video using a percentage value. To convert the thumbnail's timestamp from seconds to a percentage, divide the timestamp you want to use by the total duration of the video. For more information about thumbnails, refer to [Display thumbnails](/stream/viewing-videos/displaying-thumbnails).
 
 ```bash
 ---

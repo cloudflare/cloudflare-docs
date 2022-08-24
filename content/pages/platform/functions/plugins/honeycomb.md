@@ -54,6 +54,7 @@ import type { PluginData } from "@cloudflare/pages-plugin-honeycomb";
 export const onRequest: PagesFunction<unknown, any, PluginData> = async ({
   data,
   next,
+  request
 }) => {
   // Authenticate the user from the request and extract user's email address
   const email = await getEmailFromRequest(request);

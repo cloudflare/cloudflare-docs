@@ -28,7 +28,6 @@ terraform {
 }
 
 provider "cloudflare" {
-  email = "you@example.com"
   api_token = "your-api-token"
 }
 

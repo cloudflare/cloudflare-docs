@@ -178,7 +178,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
     <tr>
       <td>Expression</td>
       <td>
-        <code class="InlineCode">(ip.geoip.asnum in {7224 15169}) and not cf.client.bot)</code>
+        <code class="InlineCode">(ip.geoip.asnum in {7224 15169} and not cf.client.bot)</code>
       </td>
     </tr>
     <tr>
