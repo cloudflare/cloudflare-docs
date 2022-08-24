@@ -491,7 +491,28 @@ html[is-site-page] .DocsContent {
     }
 }
 
-
+@media (min-width:768px) {
+    .ZTHeroImage {
+        background-image: url("/zt-light-background-image.svg");
+        background-repeat: no-repeat;
+        margin: 0 auto;
+        position: relative;
+        box-shadow: 0 0 0px .5px white inset;
+    }
+    }
+    
+    @media (min-width:768px) {
+    [theme=dark] .ZTHeroImage {
+        background-image: url("/zt-dark-background-image.svg");
+        box-shadow: 0 0 0px .5px #1d1f20 inset;
+    }
+    }
+    
+    @media (max-width:768px) {
+        .ZTHeroImage {
+            background-image: none;
+        }
+    }
 
 .HeroBlockGrid {
     padding-left: .75em;
