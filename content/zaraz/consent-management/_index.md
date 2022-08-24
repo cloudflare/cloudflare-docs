@@ -26,7 +26,7 @@ All tools use consent as a legal basis. This is due to the fact that they all us
 
 ## Purposes and tools
 
-When you add a new tool to your website, Zaraz does not assign any purpose to it. This means that this tool will skip consent by default. Remember to check the [Consent Management settings](/zaraz/consent-manager/enable-consent-manager/) every time you set up a new tool. This helps ensure you avoid a situation where your tool is triggered before the user gives consent.
+When you add a new tool to your website, Zaraz does not assign any purpose to it. This means that this tool will skip consent by default. Remember to check the [Consent Management settings](/zaraz/consent-management/enable-consent-management/) every time you set up a new tool. This helps ensure you avoid a situation where your tool is triggered before the user gives consent.
 
 The user’s consent preferences are stored within a first-party cookie. This cookie is a JSON file that maps the purposes’ ID to a `true`/`false`/missing value:
 
