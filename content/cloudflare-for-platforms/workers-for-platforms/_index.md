@@ -1,7 +1,7 @@
 ---
 pcx-content-type: overview
 title: Workers for Platforms
-weight: 6
+weight: 9
 ---
  
 # Workers for Platforms
