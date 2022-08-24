@@ -77,5 +77,5 @@ To update your billing email address:
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **Manage Account** > **Billing**.
 3. Go to **Invoices & Documents**.
-4. For **Billing email preference**, click **Change email address**. 
-5. Enter and confirm your new email and click **Save**.
+4. For **Billing email preference**, select **Change email address**. 
+5. Enter and confirm your new email and select **Save**.

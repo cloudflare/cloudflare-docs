@@ -33,12 +33,12 @@ To change the Cloudflare plan for a domain in the dashboard:
  
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Go to **Overview**.
-3. For Plan Extensions, click **Change**.
+3. For Plan Extensions, select **Change**.
 
     ![Screenshot of the Overview page with the Plan extension section highlighted](/fundamentals/static/images/get-started/change-plan.png)
 
-4. Choose the appropriate plan type, then click **Continue**.
-5. Click **Confirm**.
+4. Choose the appropriate plan type, then select **Continue**.
+5. Select **Confirm**.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}

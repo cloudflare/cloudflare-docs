@@ -18,11 +18,11 @@ A backup payment method is used if the primary payment method fails. To add a ba
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Go to **Manage account** > **Billing**.
-3. Click **Payment Info**.
-4. In the **Payment Method** card, click **Manage**.
-5. In the **Backup** card, click **Add** to enter a backup payment method.
-6. Enter the required information based on your preferred payment method (credit card or PayPal) and click **Confirm**.
-7. If you would like to make the backup payment method the primary method, click **Make primary payment method** in the **Backup** card.
+3. Select **Payment Info**.
+4. In the **Payment Method** card, select **Manage**.
+5. In the **Backup** card, select **Add** to enter a backup payment method.
+6. Enter the required information based on your preferred payment method (credit card or PayPal) and select **Confirm**.
+7. If you would like to make the backup payment method the primary method, select **Make primary payment method** in the **Backup** card.
 
 ## Step 3 - Set up billing notifications
 
@@ -34,13 +34,13 @@ To set up billable usage notifications:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **Notifications**.
-3. Click **Add**.
+3. Select **Add**.
 4. On the **Billing** notification, click **Select**.
 5. Enter a name and description.
 6. Select a **Product**. This value affects the usage threshold specified in the next step.
 7. Enter a usage threshold.
 8. Add a **Notification email**.
-9. Click **Create**.
+9. Select **Create**.
 
 To disable, edit, or delete this notification, return to **Notifications** and find your notification.
 

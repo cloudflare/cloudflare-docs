@@ -10,7 +10,7 @@ Cancellations are not processed until the end of the billing period, so you can 
 
 {{<Aside type="note">}}
 
-All Billing period dates on invoices and the dashboard are in UTC/GMT timezone not your local timezone. We recommend any downgrades or changes to subscriptions be made at least 24 hours before stated billing date to avoid any timezone confusion.
+All billing period dates on invoices and the dashboard are in UTC/GMT timezone, not your local timezone. We recommend any downgrades or changes to subscriptions be made at least 24 hours before stated billing date to avoid any timezone confusion.
 
 {{</Aside>}}
 
