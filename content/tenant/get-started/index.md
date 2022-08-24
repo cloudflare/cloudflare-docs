@@ -12,7 +12,7 @@ Having access to Cloudflare’s provisioning capabilities allows you to more eas
 
 ### Partner account setup
 
-Before using the Tenant API, you need to [create an account](/fundamentals/account-and-billing/account-setup/create-account/), [verify your email address](/fundamentals/account-and-billing/account-setup/verify-email-address/), and [add your billing information](https://support.cloudflare.com/hc/articles/4402711553165).
+Before using the Tenant API, you need to [create an account](/fundamentals/account-and-billing/account-setup/create-account/), [verify your email address](/fundamentals/account-and-billing/account-setup/verify-email-address/), and [add your billing information](/fundamentals/account-and-billing/account-setup/create-billing-profile/).
 
 After you sign your partner agreement with Cloudflare, Cloudflare will add [certain entitlements](/tenant/structure/) to your account that allow you to provision and manage custom accounts. If you have signed your partner agreement and your account has not yet been enabled, contact `partners@cloudflare.com`.
 
