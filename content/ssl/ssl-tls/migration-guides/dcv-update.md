@@ -22,9 +22,9 @@ If your application uses a partial (CNAME) setup, wildcard certificates, and HTT
 
 ### SSL for SaaS
 
-This change also affects [SSL for SaaS customers](/cloudflare-for-saas/) who use HTTP DCV validation for wildcard certificates.
+This change also affects [SSL for SaaS customers](/cloudflare-for-platforms/cloudflare-for-saas/) who use HTTP DCV validation for wildcard certificates.
 
-Update your DCV method to [TXT](/cloudflare-for-saas/security/certificate-management/issue-and-validate/#txt-record) and provide the TXT validation tokens to your customers so they can add it to their DNS.
+Update your DCV method to [TXT](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#txt-record) and provide the TXT validation tokens to your customers so they can add it to their DNS.
 
 If you do not make a change, Cloudflare will automatically change your DCV method to TXT and send your customer tokens to you 30 days before the certificates expire.
 

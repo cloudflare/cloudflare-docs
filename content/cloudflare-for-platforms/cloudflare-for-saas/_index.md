@@ -37,19 +37,19 @@ As the SaaS provider, you can extend Cloudflare's products to customer-owned cus
 
 Custom hostnames are routed to a default origin server called fallback origin. This configuration is available on all plans.
 
-![Standard case](/cloudflare-for-platforms/cloudflare-for-saas/static/use-cases/Standard.png)
+![Standard case](/cloudflare-for-platforms/static/use-cases/Standard.png)
 
 ### Cloudflare for SaaS with Apex Proxying:
 
 This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. This is avaiable as an add-on for Enterprise plans. For more details, refer to [Apex Proxying](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#apex-verification).
 
-![Advanced case](/cloudflare-for-platforms/cloudflare-for-saas/static/use-cases/Advanced.png)
+![Advanced case](/cloudflare-for-platforms/static/use-cases/Advanced.png)
 
 ### Cloudflare for SaaS with BYOIP:
 
 This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. Also, you can point to your own IPs if you want to bring an IP range to Cloudflare (instead of Cloudflare provided IPs). This is available as an add-on for Enterprise plans.
 
-![Pro Case](/cloudflare-for-platforms/cloudflare-for-saas/static/use-cases/Pro.png)
+![Pro Case](/cloudflare-for-platforms/static/use-cases/Pro.png)
 
 ## Availability
 

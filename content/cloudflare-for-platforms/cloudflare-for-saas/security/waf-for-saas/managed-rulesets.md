@@ -20,7 +20,7 @@ If you would like to deploy a managed ruleset at the account level, refer to the
  
 Ensure you have reviewed [Get Started with Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) and familiarize yourself with [WAF for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas/). 
  
-Customers can automate the [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/workers-for-platforms/custom-metadata/) tagging by adding it to the custom hostnames at creation. For more information on tagging a custom hostname with custom metadata, refer to the [API documentation](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname).
+Customers can automate the [custom metadata](/cloudflare-for-platforms/workers-for-platforms/) tagging by adding it to the custom hostnames at creation. For more information on tagging a custom hostname with custom metadata, refer to the [API documentation](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname).
  
 ---
  
@@ -54,7 +54,7 @@ After the association is complete, the JSON blob is added to the defined custom 
  
 4. Under **Field**, Select *Hostname*. Set the operator as *equals*. The complete expression should look like this, plus any logic you would like to add:
  
-![Rule expression](/cloudflare-for-platforms/cloudflare-for-saas/static/rule-expression.png)
+![Rule expression](/cloudflare-for-platforms/static/rule-expression.png)
  
 5. Beneath **Value**, add the custom hostname.
  

@@ -113,7 +113,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/cloudflare-for-platforms/cloudflare-for-saas/workers-for-platforms/custom-metadata/">Custom metadata</a>
+          <a href="/cloudflare-for-platforms/workers-for-platforms/">Custom metadata</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>
