@@ -8,12 +8,12 @@ weight: 2
 
 When an input begins receiving the live stream, a new video with HLS and DASH URLs is automatically created as long as the mode property for the input is set to `automatic`.
 
-## View by video id
+## View by video UID
 
-One live input can have multiple video ids associated with it. In order to get the video id representing the current live stream for a given input, make a `GET` request to the `/stream` endpoint:
+One live input can have multiple video UIDs associated with it. In order to get the video UID representing the current live stream for a given input, make a `GET` request to the `/stream` endpoint:
 
 ```bash
-GET https://api.cloudflare.com/client/v4/accounts/{account}/stream/live_inputs/{live-input-uid}/videos
+GET https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<LIVE_INPUT_UID>/videos
 ```
 
 The response will contain the HLS/DASH URL that can be used to play the current live video as well as any previously recorded live videos:
@@ -22,8 +22,8 @@ The response will contain the HLS/DASH URL that can be used to play the current 
 {
   "result": [
     {
-      "uid": "55b9b5ce48c3968c6b514c458959d6a",
-      "thumbnail": "https://videodelivery.net/55b9b5ce48c3968c6b514c458959d6a/thumbnails/thumbnail.jpg",
+      "uid": "6b6972f427f51793099c6b427783398e",
+      "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/thumbnails/thumbnail.jpg",
       "thumbnailTimestampPct": 0,
       "readyToStream": false,
       "status": {
@@ -37,7 +37,7 @@ The response will contain the HLS/DASH URL that can be used to play the current 
       "created": "2021-09-23T05:44:30.453838Z",
       "modified": "2021-09-23T05:44:30.453838Z",
       "size": 0,
-      "preview": "https://watch.videodelivery.net/55b9b5ce48c3968c6b514c458959d6a",
+      "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/watch",
       "allowedOrigins": [],
       "requireSignedURLs": false,
       "uploaded": "2021-09-23T05:44:30.453812Z",
@@ -50,15 +50,15 @@ The response will contain the HLS/DASH URL that can be used to play the current 
         "height": -1
       },
       "playback": {
-        "hls": "https://videodelivery.net/55b9b5ce48c3968c6b514c458959d6a/manifest/video.m3u8",
-        "dash": "https://videodelivery.net/55b9b5ce48c3968c6b514c458959d6a/manifest/video.mpd"
+        "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/manifest/video.m3u8",
+        "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/manifest/video.mpd"
       },
       "watermark": null,
       "liveInput": "34036a0695ab5237ce757ac53fd158a2"
     },
     {
-      "uid": "2ba59740c897a197df70814fd5ad991",
-      "thumbnail": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/thumbnails/thumbnail.jpg",
+      "uid": "b236bde30eb07b9d01318940e5fc3eda",
+      "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
       "thumbnailTimestampPct": 0,
       "readyToStream": true,
       "status": {
@@ -73,7 +73,7 @@ The response will contain the HLS/DASH URL that can be used to play the current 
       "created": "2021-09-22T22:12:53.587306Z",
       "modified": "2021-09-23T00:14:05.591333Z",
       "size": 0,
-      "preview": "https://watch.videodelivery.net/2ba59740c897a197df70814fd5ad991",
+      "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/watch",
       "allowedOrigins": [],
       "requireSignedURLs": false,
       "uploaded": "2021-09-22T22:12:53.587288Z",
@@ -86,11 +86,11 @@ The response will contain the HLS/DASH URL that can be used to play the current 
         "height": 360
       },
       "playback": {
-        "hls": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.m3u8",
-        "dash": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.mpd"
+        "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8",
+        "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.mpd"
       },
       "watermark": null,
-      "liveInput": "34036a0695ab5237ce757ac53fd158a2"
+      "liveInput": "6b6972f427f51793099c6b427783398e"
     }
   ],
   "success": true,
@@ -112,7 +112,7 @@ You can use one of the options below to view a live video by input ID:
 Using the input ID in this manner is fully integrated in the Stream player, but may require some additional support for third party players. You can make a `GET` request to the `/lifecycle` endpoint to get additional data about a video id or live input uid for more information to make additional decisions.
 
 ```bash
-GET https://videodelivery.net/34036a0695ab5237ce757ac53fd158a2/lifecycle
+GET https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/lifecycle
 ```
 
 This is a response for an input ID with an active live stream:
@@ -155,7 +155,7 @@ To get the embed code or HLS Manifest URL for your video:
 Live streams are automatically recorded. To get a list of recorded streams for a given input id, make the same `GET` request as you would to get the live video and filter for videos where the state property is set to `ready`:
 
 ```bash
-GET https://dash.cloudflare.com/api/v4/accounts/{account}/stream/live_inputs/{live-input-id}/videos
+GET https://dash.cloudflare.com/api/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<LIVE_INPUT_UID>/videos
 ```
 
 This is what a response looks like:
@@ -165,8 +165,8 @@ This is what a response looks like:
   "result": [
 ...
     {
-      "uid": "2ba59740c897a197df70814fd5ad991",
-      "thumbnail": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/thumbnails/thumbnail.jpg",
+      "uid": "6b6972f427f51793099c6b427783398e",
+      "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/thumbnails/thumbnail.jpg",
       "thumbnailTimestampPct": 0,
       "readyToStream": true,
       "status": {
@@ -181,7 +181,7 @@ This is what a response looks like:
       "created": "2021-09-22T22:12:53.587306Z",
       "modified": "2021-09-23T00:14:05.591333Z",
       "size": 0,
-      "preview": "https://watch.videodelivery.net/2ba59740c897a197df70814fd5ad991",
+      "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/watch",
       "allowedOrigins": [],
       "requireSignedURLs": false,
       "uploaded": "2021-09-22T22:12:53.587288Z",
@@ -194,8 +194,8 @@ This is what a response looks like:
         "height": 360
       },
       "playback": {
-        "hls": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.m3u8",
-        "dash": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.mpd"
+        "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/manifest/video.m3u8",
+        "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/manifest/video.mpd"
       },
       "watermark": null,
       "liveInput": "34036a0695ab5237ce757ac53fd158a2"

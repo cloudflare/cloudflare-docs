@@ -19,8 +19,8 @@ To only review emails marked with a disposition, use [Detection search](/email-s
 To access Mail Trace in the dashboard:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
-2. Click the **Search** bar.
-3. Click **Detection Search** and then select **Mail Trace**.
+2. Select the **Search** bar.
+3. Select **Detection Search** and then select **Mail Trace**.
 4. Fill out one or more of the following variables:
     - **Subject**
     - **Date Range**
@@ -29,4 +29,4 @@ To access Mail Trace in the dashboard:
     - **Message ID**
 
 5. Based on your search, you can review the requested information, as well as the assigned **Disposition**.
-6. For additional details about metadata and Area 1 processing and forwarding, click **View**.
+6. For additional details about metadata and Area 1 processing and forwarding, select **View**.

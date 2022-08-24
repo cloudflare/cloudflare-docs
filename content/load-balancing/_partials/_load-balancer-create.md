@@ -5,6 +5,8 @@ _build:
   list: never
 ---
 
+To create a load balancer in the dashboard:
+
 1.  Go to **Traffic** > **Load Balancing**.
 
 2.  Click **Create Load Balancer**.

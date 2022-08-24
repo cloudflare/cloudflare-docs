@@ -24,8 +24,8 @@ To [create a webhook](/email-security/email-configuration/domains-and-routing/al
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Email Configuration** > **Domains & Routing** > **Alert Webhooks**.
-4. Click **New Webhook**.
+4. Select **New Webhook**.
 5. For **App Type**, select **SIEM**.
 6. Choose **Splunk** or **Sumologic**.
 7. Enter the **Auth Code** and **Target**.
-8. Click **Publish Webhook**.
+8. Select **Publish Webhook**.

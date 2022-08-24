@@ -15,8 +15,8 @@ Add an Output to start retransmitting live video. You can add or remove Outputs 
 ```bash
 curl -X POST \
 --data '{"url": "rtmp://a.rtmp.youtube.com/live2","streamKey": "<redacted>"}' \
--H "Authorization: Bearer $TOKEN" \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/$INPUT_UID/outputs
+-H "Authorization: Bearer <API_TOKEN>" \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<INPUT_UID>/outputs
 ```
 
 ​Example response:
@@ -39,13 +39,13 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/$INPUT
 To get a list of outputs, call the `/outputs` endpoint:
 
 ```bash
-curl -H "Authorization: Bearer $TOKEN" \ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/$INPUT_UID/outputs
+curl -H "Authorization: Bearer <API_TOKEN>" \ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<INPUT_UID>/outputs
 ```
 
 To delete an output, make a `DELETE` request to the `/outputs` endpoint with the output id:
 
 ```bash
-curl -X DELETE \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/$INPUT_UID/outputs/$OUTPUT_UID
+curl -X DELETE \ -H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<INPUT_UID>/outputs/<OUTPUT_UID>
 ```
 
 If the associated live input is already retransmitting to this output when you make the `DELETE` request, that output will be disconnected within 30 seconds.

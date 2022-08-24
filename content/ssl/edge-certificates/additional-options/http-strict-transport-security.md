@@ -48,23 +48,27 @@ If you remove HTTPS before disabling HSTS or before waiting for the duration of 
 
 ## Enable HSTS
 
-To enable HSTS for your website:
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+To enable HSTS using the dashboard:
 
-1.  Log in to the Cloudflare dashboard and select your account.
-
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2.  Select your website.
-
 3.  Go to **SSL/TLS** > **Edge Certificates**.
-
 4.  For **HTTP Strict Transport Security (HSTS)**, click **Enable HSTS**.
-
 5.  Read the dialog and click **I understand**.
-
 6.  Click **Next**.
-
 7.  Configure the [HSTS settings](#configuration-settings).
-
 8.  Click **Save**.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+To enable HSTS with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-security-header-hsts-setting) request with the `value` object that includes your HSTS settings.
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Disable HSTS
 

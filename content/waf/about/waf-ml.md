@@ -50,6 +50,11 @@ Currently, WAF ML provides the following scores:
     <td><code>cf.waf.ml.score.xss</code></td>
     <td>An attack score from 1 to 99 classifying the cross-site scripting (XSS) attack vector.</td>
   </tr>
+  <tr>
+    <td><strong>WAF RCE Attack Score</strong></td>
+    <td><code>cf.waf.score.rce</code></td>
+    <td>An attack score from 1 to 99 classifying the command injection or Remote Code Execution (RCE) attack vector.</td>
+  </tr>
 </table>
 
 You can use the fields for these scores in expressions of [custom rules](/waf/custom-rules/) and [firewall rules](/waf/firewall-rules/), where:

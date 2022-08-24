@@ -10,15 +10,20 @@ A Cloudflare Web3 gateway provides HTTP-accessible interfaces to various Web3 ne
 
 ## Create a gateway
 
-{{<render file="_post-creation-steps.md">}}
-
-### Via the dashboard
-
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 {{<render file="_create-gateway-dashboard.md">}}
-
-### Via the API
-
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 {{<render file="_create-gateway-api.md">}}
+ 
+{{</tab>}}
+{{</tabs>}}
+
+{{<render file="_post-creation-steps.md">}}
 
 ---
 
@@ -28,8 +33,9 @@ Once you have [created a gateway](#create-a-gateway), you can only edit the **Ga
 
 If you need to edit other fields, [delete the gateway](#delete-a-gateway) and create a new one.
 
-### Via the dashboard
-
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 To edit a gateway using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
@@ -38,10 +44,14 @@ To edit a gateway using the dashboard:
 4. On a specific gateway, click **Edit**.
 5. Update the **Gateway Description** and — if editing an **IPFS** gateway — the value for the [DNSLink](/web3/ipfs-gateway/concepts/dnslink/).
 6. Click **Reapply**.
-
-### Via the API
-
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 To edit specific settings for a gateway, use a [PATCH](https://api.cloudflare.com/#web3-hostname-edit-web3-hostname) request.
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ---
 
@@ -49,18 +59,23 @@ To edit specific settings for a gateway, use a [PATCH](https://api.cloudflare.co
 
 When your gateway is stuck in an **Error** [status](/web3/reference/gateway-status/), you should try refreshing the gateway, which attempts to re-create the associated DNS records for the hostname.
 
-### Via the dashboard
-
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 To refresh a gateway using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select your account and website.
 3. Go to **Web3**.
 4. On a specific gateway, click the dropdown then **Refresh**.
-
-### Via the API
-
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 To refresh a gateway using the API, send a [PATCH](https://api.cloudflare.com/#web3-hostname-edit-web3-hostname) request with an empty request body.
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ---
 
@@ -68,8 +83,9 @@ To refresh a gateway using the API, send a [PATCH](https://api.cloudflare.com/#w
 
 When you delete a gateway, Cloudflare will automatically remove all associated hostname DNS records. This action will impact your traffic and cannot be undone.
 
-### Via the dashboard
-
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 To delete a gateway using the dashboard: 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
@@ -77,7 +93,11 @@ To delete a gateway using the dashboard:
 3. Go to **Web3**.
 4. On a specific gateway, click the dropdown then **Remove**.
 5. Click **Delete hostname**.
-
-### Via the API
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 To delete a gateway using the API, send a [DELETE](https://api.cloudflare.com/#web3-hostname-delete-web3-hostname) request.
+ 
+{{</tab>}}
+{{</tabs>}}

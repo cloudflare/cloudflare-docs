@@ -20,6 +20,7 @@ declare global {
   events.clipboardButton();
   events.copy();
   contents.toc();
+  events.toggleSidebar();
   events.activeTab();
   events.tabs();
 })();

@@ -2,36 +2,32 @@
 pcx_content_type: how-to
 title: Device posture
 weight: 4
-meta:
-  title: Device posture attributes
+layout: single
 ---
 
-# Device posture attributes
+# Enforce device posture
 
-With Cloudflare Zero Trust, you can configure Zero Trust policies that rely on additional signals from endpoint security providers to allow or deny connections to your applications.
+With Cloudflare Zero Trust, you can configure Zero Trust policies that rely on additional signals from the WARP client or from third-party endpoint security providers. When device posture checks are configured, users can only connect to a protected application or network resource if they have a managed or healthy device.
 
-When device posture checks are configured, users can only connect to a protected application if they have a managed or healthy device, as determined by the endpoint security provider associated to the Access policy regulating access to the protected application.
+## 1. Enable device posture checks
 
-To enable one or more device posture attributes, navigate to **My Team** > **Devices** > **Device posture** on the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and click **+Add**.
+Setup instructions vary depending on the device posture attribute. Refer to the links below to view the setup guide for your provider.
 
-{{<Aside>}}
+* [WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/) are performed by the Cloudflare WARP client.
+* [Service-to-service checks](/cloudflare-one/identity/devices/service-providers/) are performed by third-party device posture providers.
+* [Access integration checks](/cloudflare-one/identity/devices/access-integrations/) are only configurable for Access applications. These attributes cannot be used in Gateway policies.
 
-When setting up new device posture checks, we recommend first testing them without setting certificate thumbprint or SHA256 checksum values.
+## 2. Verify device posture checks
 
-{{</Aside>}}
+Before integrating a device posture check in a Gateway or Access policy, you should verify that the Pass/Fail result from the device matches your expectations.
 
-## Available device posture attributes
+1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), go to **My Team** > **Devices**.
+2. Find the device running the posture check and select **View**.
+3. Scroll down to **WARP client posture checks** and **Service provider posture checks**.
+4. Select a result to review details. You will see the value returned from the device, as well as the value required to pass the check.
 
-{{<directory-listing>}}
+![Device posture results in the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/devices/device-posture-dash-result.png)
 
-## Verify device posture checks in the WARP client
+## 3. Build a device posture policy
 
-On desktop clients, you can always verify which device posture checks are active on your devices. To do that:
-
-1.  Open the WARP client.
-1.  Go to **Settings** > **Advanced**.
-1.  Click on **Device posture information**.
-
-This will show a list of active device posture checks.
-
-![Device posture attributes](/cloudflare-one/static/documentation/identity/devices/device-posture-client-ui.png)
+You can now use your device posture check in an [Access policy](/cloudflare-one/policies/access/) or a Gateway [network policy](/cloudflare-one/policies/filtering/network-policies/common-policies/#enforce-device-posture). In Access, the enabled device posture attributes will appear in the list of available [selectors](/cloudflare-one/policies/access/#selectors). In Gateway, the attributes will appear when you choose the [Passed Device Posture Check](/cloudflare-one/policies/filtering/network-policies/#device-posture) selector.

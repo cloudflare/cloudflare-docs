@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Migrate legacy tunnels
-weight: 2
+weight: 4
 meta:
   title: Migrate legacy tunnels to named tunnels
 ---
@@ -21,7 +21,7 @@ Today, Cloudflare Tunnel’s architecture distinguishes between the persistent o
 
 To migrate your legacy tunnels to the named tunnels architecture:
 
-1.  [Create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#3-create-a-tunnel-and-give-it-a-name).
+1.  [Create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/#3-create-a-tunnel-and-give-it-a-name).
 
     ```sh
     $ cloudflared tunnel create <TUNNEL-NAME>
@@ -41,7 +41,7 @@ To migrate your legacy tunnels to the named tunnels architecture:
         $ cloudflared tunnel route lb <TUNNEL-NAME> <LOAD-BALANCER-NAME> <LOAD-BALANCER-POOL>
         ```
 
-1. Next, [create a configuration file](/cloudflare-one/connections/connect-apps/configuration/local-management/configuration-file/) with ingress rules. The ingress rules describe how to dispatch requests to your origins based on hostname and path. For example, if in the past you used to run `cloudflared tunnel --hostname tunnel.example.com --url https://localhost:3000`, you should add an equivalent ingress rule to your configuration file:
+1. Next, [create a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/) with ingress rules. The ingress rules describe how to dispatch requests to your origins based on hostname and path. For example, if in the past you used to run `cloudflared tunnel --hostname tunnel.example.com --url https://localhost:3000`, you should add an equivalent ingress rule to your configuration file:
 
     ```yml
     ingress:
@@ -51,7 +51,7 @@ To migrate your legacy tunnels to the named tunnels architecture:
     # Note that the last rule is the catch-all rule and is required.
     ```
 
-1.  Next, [run your tunnel](/cloudflare-one/connections/connect-apps/run-tunnel/).
+1.  [Run your tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/run-tunnel/).
 
 ## Make sure everything works
 

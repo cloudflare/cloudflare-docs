@@ -53,11 +53,11 @@ Additionally, you can control security features through these fields:
 
 - `thumbnailTimestampPct` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 0{{</prop-meta>}}
 
-  - Sets the timestamp location of [thumbnail](/stream/edit-manage-videos/edit-videos/displaying-thumbnails/) image to a percentage location of the video from 0 to 1.
+  - Sets the timestamp location of [thumbnail](/stream/viewing-videos/displaying-thumbnails/) image to a percentage location of the video from 0 to 1.
 
 - `watermark` {{<type>}}string{{</type>}} {{<prop-meta>}}default: _none_{{</prop-meta>}}
 
-  - `uid` of the watermark profile to be included in this video. Video uploaded by the link will be [watermarks](/stream/edit-manage-videos/edit-videos/applying-watermarks/) automatically.
+  - `uid` of the watermark profile to be included in this video. Video uploaded by the link will be [watermarks](/stream/edit-videos/applying-watermarks/) automatically.
 
 - `meta` {{<type>}}json map{{</type>}} {{<prop-meta>}}default: _none_{{</prop-meta>}}
   - Set the video's `name` along with any other additional arbitrary keys for metadata to be stored.
@@ -72,8 +72,8 @@ The first step is to request a token by calling the `direct_upload` end point fr
 
 ```bash
 curl -X POST \
- -H 'Authorization: Bearer $TOKEN' \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload \
+ -H 'Authorization: Bearer <API_TOKEN>' \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/direct_upload \
  --data '{
     "maxDurationSeconds": 3600,
     "expiry": "2020-04-06T02:20:00Z",
@@ -81,7 +81,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload \
     "allowedOrigins": ["example.com"],
     "thumbnailTimestampPct": 0.568427,
     "watermark": {
-        "uid": "$watermark_uid"
+        "uid": "<WATERMARK_UID>"
     }
  }'
 ```
@@ -90,6 +90,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload \
 
 A successful response looks like:
 
+<!-- videodelivery.net is correct domain. See STREAM-4364 -->
 ```bash
 {
   "result": {
@@ -125,13 +126,14 @@ An unsuccessful response might look like:
 
 The `uploadURL` provided in the `result` body of a successful request should be passed along to the end-user to make their upload request.
 
-The `uid` references the reserved media object's unique identifier and can be kept as a reference to query our [API](/stream/edit-manage-videos/manage-video-library/searching/).
+The `uid` references the reserved media object's unique identifier and can be kept as a reference to query our [API](/stream/manage-video-library/searching/).
 
 ## Direct creator upload request from end users
 
 Using the `uploadURL` provided in the previous request, users can upload video
 files. Uploads are limited to 200 MB in size.
 
+<!-- videodelivery.net is correct domain. See STREAM-4364 -->
 ```bash
 curl -X POST \
   -F file=@/Users/mickie/Downloads/example_video.mp4 \
@@ -190,9 +192,9 @@ Typically, tus uploads require the authentication information to be sent with ev
 To get around this, you can request a one-time tokenized URL by making a POST request to the `/stream?direct_user=true` end point:
 
 ```bash
-curl -H "Authorization: bearer $TOKEN" -X POST -H 'Tus-Resumable: 1.0.0' -H 'Upload-Length: $VIDEO_SIZE' 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true'
+curl -H "Authorization: bearer <API_TOKEN>" -X POST -H 'Tus-Resumable: 1.0.0' -H 'Upload-Length: <VIDEO_SIZE>' 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream?direct_user=true'
 ```
-In the example above, replace $VIDEO_SIZE with your video's size in bytes, as per the [TUS specification](https://tus.io/protocols/resumable-upload.html).
+In the example above, replace `<VIDEO_SIZE>` with your video's size in bytes, as per the [TUS specification](https://tus.io/protocols/resumable-upload.html).
 
 The response will contain a `Location` header which provides the one-time URL the client can use to upload the video using tus.
 
@@ -209,11 +211,11 @@ addEventListener('fetch', event => {
  */
 async function handleRequest(request) {
   const response = await fetch(
-    'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true',
+    'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream?direct_user=true',
     {
       method: 'POST',
       headers: {
-        'Authorization': 'bearer $TOKEN',
+        'Authorization': 'bearer <API_TOKEN>',
         'Tus-Resumable': '1.0.0',
         'Upload-Length': request.headers.get('Upload-Length'),
         'Upload-Metadata': request.headers.get('Upload-Metadata'),
@@ -263,8 +265,8 @@ After the creation of a unique one-time upload URL, you may wish to retain the
 
 You can do that two ways:
 
-1.  You can [query the media API](/stream/edit-manage-videos/manage-video-library/searching/) with the UID
+1.  You can [query the media API](/stream/manage-video-library/searching/) with the UID
     to understand it's status.
 
-2.  You can [create a webhook subscription](/stream/edit-manage-videos/manage-video-library/using-webhooks/) to receive notifications
+2.  You can [create a webhook subscription](/stream/manage-video-library/using-webhooks/) to receive notifications
     regarding the status of videos. These notifications include the video's UID.
