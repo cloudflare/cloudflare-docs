@@ -74,7 +74,7 @@ $ wrangler generate [name] [template]
 
 - `name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
-- `template` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} 
+- `template` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on [cloudflare/templates](https://github.com/cloudflare/templates) repository.
 
 {{</definitions>}}
@@ -132,7 +132,15 @@ None of the options for this command are required. Many of these options can be 
 - `--tsconfig` {{<type>}}string{{</type>}}
   - Path to a custom `tsconfig.json` file.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+
   - Run the preview of the Worker directly on your local machine.
+
+    {{<Aside type="warning">}}
+
+This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's Edge (for instance, this includes your data stored on KV). If you'd like to persist data locally, the experimental option `--experimental-enable-local-persistence` will store data in the `wrangler-local-state` subdirectory.
+
+{{</Aside>}}
+
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the script.
 
@@ -747,9 +755,11 @@ $ wrangler secret put <KEY> [OPTIONS]
 {{<definitions>}}
 
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
   - The variable name for this secret to be accessed in the Worker.
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -790,8 +800,8 @@ $ wrangler secret delete <KEY> [OPTIONS]
 
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The variable name for this secret to be accessed in the Worker.
-  
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -810,6 +820,7 @@ $ wrangler secret list [OPTIONS]
 {{<definitions>}}
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}

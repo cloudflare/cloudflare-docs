@@ -124,7 +124,7 @@ function parse(filename: string): string | void {
          * @see https://docs.github.com/en/issues/tracking-your-work-with-issues/assigning-issues-and-pull-requests-to-other-github-users
          * @todo figure out how to use `team_reviewers: ['pcx']` instead.
          */
-        reviewers: pcx_and_reviewers
+        reviewers: [...pcx_and_reviewers]
       });
     }
 
