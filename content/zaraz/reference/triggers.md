@@ -72,7 +72,7 @@ Refer to the [Zaraz event and system properties](/zaraz/reference/properties-ref
 Tracks clicks in a web page. You can set up click listeners using CSS selectors or XPath expressions. **Wait for actions** (in milliseconds) tells Zaraz to prevent the page from changing for the amount of time specified. This allows all requests triggered by the click listener to reach their destination.
 
 {{<Aside type="note">}}
-When using CSS type rules in triggers, you have to include the CSS selector, for example, the ID (`#`) or the class (`.`) symbols. Otherwise, the click listener will not work.
+When using CSS type rules in triggers, you have to include the CSS selector — for example, the ID (`#`) or the class (`.`) symbols. Otherwise, the click listener will not work.
 {{</Aside>}}
 
 **Trigger example for CSS selector:**
