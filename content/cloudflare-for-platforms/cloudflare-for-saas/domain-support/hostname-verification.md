@@ -10,7 +10,7 @@ Cloudflare verifies ownership of each new hostname before traffic is allowed to 
 
 {{<Aside type="note">}}
 
-If a custom hostname is already on Cloudflare, then traffic will only shift to your fallback origin once the [DNS target has changed](/cloudflare-for-saas/start/getting-started/#step-5--have-customer-create-a-cname-record).
+If a custom hostname is already on Cloudflare, then traffic will only shift to your fallback origin once the [DNS target has changed](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#step-5--have-customer-create-a-cname-record).
 
 {{</Aside>}}
 

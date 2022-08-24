@@ -14,13 +14,13 @@ By default, Cloudflare routes customer traffic through the closest data center. 
 
 Prior to enabling Regional Services for SaaS:
 
-* Ensure you have access to [Cloudflare for SaaS](/cloudflare-for-saas/#availability).
+* Ensure you have access to [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/#availability).
 
-* If you have 10 or more unique origins, ensure your [fallback origin](/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin-and-cname-target) is set up.
+* If you have 10 or more unique origins, ensure your [fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin-and-cname-target) is set up.
 
 * Ensure that [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) is enabled.
 
-* You must have [access to a custom origin](/cloudflare-for-saas/start/advanced-settings/custom-origin). Using Cloudflare's default fallback origin for Regional Services will lead to an error.
+* You must have [access to a custom origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin). Using Cloudflare's default fallback origin for Regional Services will lead to an error.
 
 ---
 
@@ -60,7 +60,7 @@ You cannot enable **Edge TLS Termination** or **IP Access Rules** while using HT
 
 3. Point each custom hostname to the Spectrum app by selecting **Custom origin server** and inputting your origin.
 
-4. If you are creating a new custom hostname, select **Add Custom Hostname** and follow the instructions to [verify custom hostname](/cloudflare-for-saas/domain-support/hostname-verification/). Otherwise, select **Save**.
+4. If you are creating a new custom hostname, select **Add Custom Hostname** and follow the instructions to [verify custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/). Otherwise, select **Save**.
 
 6. Navigate to **DNS**.
 

@@ -10,13 +10,13 @@ Cloudflare for SaaS allows you, as a SaaS provider, to extend the benefits of Cl
  
 ## Prerequisites
  
-Ensure you have reviewed [Get Started with Cloudflare for SaaS](/cloudflare-for-saas/start/getting-started/). The following are only applicable once custom hostnames have been created:
+Ensure you have reviewed [Get Started with Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/). The following are only applicable once custom hostnames have been created:
  
-* [Verify custom hostnames](/cloudflare-for-saas/domain-support/hostname-verification/)
-* [Migrating custom hostnames](/cloudflare-for-saas/domain-support/migrating-custom-hostnames/)
+* [Verify custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/)
+* [Migrating custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/migrating-custom-hostnames/)
  
 {{<Aside type="note">}}
  
-To further customize hostname specific behavior, refer to [custom metadata](/cloudflare-for-saas/workers-for-platforms/custom-metadata/).
+To further customize hostname specific behavior, refer to [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/workers-for-platforms/custom-metadata/).
  
 {{</Aside>}}
