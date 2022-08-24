@@ -565,8 +565,8 @@ html[is-site-page] .DocsContent {
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: .5em;
-    padding-right: .5em;
+    padding-left: .4em;
+    padding-right: .4em;
     align-items: center;
     justify-content: center;
 }
@@ -617,7 +617,7 @@ html[is-site-page] .DocsContent {
 .TriBlock {    
     display: flex;
     width: 20em;
-    height: 16.5em;
+    height: 20em;
     background: #f3f3f4;
     padding: .5em 2em;
     margin-bottom: 1em;
