@@ -80,15 +80,16 @@
 }
 
 .background {
-    background:rgba(var(--gray-6-rgb));
+    background:rgba(var(--color-rgb), .1);
     margin-top: 0px;
-    border-top: 2px solid #242628;
+    border: 2px solid rgb(216 216 218);
+    border-radius: .5em;
     padding-bottom: 10em;
 }
 
 [theme=dark] .background {
-    background: #404242;
-    border-top: 2px solid #f3f3f4;
+    background: rgba(var(--color-rgb), .1);
+    border: 2px solid #404242;
 }
 
 .learningPathModule {
