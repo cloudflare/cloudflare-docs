@@ -42,7 +42,7 @@ Contact your account team to get access to WAF content scanning.
 
 ### 1. Enable WAF content scanning
 
-Enable the feature using  a `POST` request similar to the following:
+Enable the feature using a `POST` request similar to the following:
 
 ```bash
 $ curl -X POST \
