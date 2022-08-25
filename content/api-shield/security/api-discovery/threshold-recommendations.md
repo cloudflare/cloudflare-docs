@@ -14,7 +14,7 @@ API Discovery only looks at requests that satisfy all of the following criteria:
 
 1. Requests must send the session identifier or identifiers (**HTTP header** or **Cookie**) that have been configured for the zone.
 2. Requests must return 2XX response codes from the edge.
-3. Requests must come from humans (i.e. Worker requests are ignored at this point).
+3. Requests must come from humans (Worker requests are ignored at this point).
 4. At least 500 requests are made to the discovered endpoint within a 10 day period.
 
 ### Why do I not receive threshold recommendations for my discovered API endpoints?
