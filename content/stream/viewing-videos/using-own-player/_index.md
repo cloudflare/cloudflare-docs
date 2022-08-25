@@ -79,7 +79,7 @@ SRT and RTMPS playback is built into [ffmpeg](https://ffmpeg.org/). You will nee
 
 We recommend using [ffmpeg-kit](https://github.com/tanersener/ffmpeg-kit) as a cross-platform wrapper for ffmpeg.
 
-### Examples:
+### Examples
 
 * [RTMPS Playback with ffplay](/stream/examples/rtmps_playback)
 * [SRT playback with ffplay](/stream/examples/srt_playback)
