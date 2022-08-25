@@ -7,6 +7,6 @@ _build:
 
 {{<Aside type="note">}}
 
-Before you can play live video, you must first be [actively streaming to a live input](/stream/stream-live/start-stream-live)
+Before you can play live video, you must first be [actively streaming to a live input](/stream/stream-live/start-stream-live).
 
 {{</Aside>}}
