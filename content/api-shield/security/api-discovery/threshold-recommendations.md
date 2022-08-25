@@ -1,6 +1,6 @@
 ---
 pcx_content_type: FAQ
-title: Threshold Recommendations
+title: Threshold recommendations
 weight: 1
 layout: list
 ---
