@@ -1,14 +1,17 @@
 ---
 pcx_content_type: how-to
-title: SaaS applications
+title: Area 1
 weight: 2
 ---
 
-# Add a SaaS application to Access
+# Integrate Cloudflare Area 1 with Access
 
-Cloudflare Access allows you to add an additional authentication layer to your SaaS applications. When you integrate a SaaS application with Access, users log in using your existing identity providers and are only granted access if they pass your Access policies.
+[Cloudflare Area 1](/products/zero-trust/email-security/) is an email security platform that protects your inbox from phishing, spam, and other malicious messages. You can integrate Area 1 with Cloudflare Access to control who can log in to your Area 1 dashboard. 
 
-This page provides generic instructions for setting up a SaaS application on the Zero Trust dashboard.
+## Prerequisites
+
+- An Area 1 administrator account
+- In order to log in to Access, the user's email addresses in Cloudflare Area 1 must match their email in Cloudflare Zero Trust.
 
 ## 1. Get SaaS application URLs
 
@@ -66,3 +69,4 @@ Finally, you will need to configure your SaaS application to require users to lo
 2. Select **Done**.
 
 Your application will appear on the **Applications** page.
+
