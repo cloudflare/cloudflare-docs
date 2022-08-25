@@ -8,26 +8,28 @@ layout: list
 
 ### Why are my API endpoints not found by API Discovery?
 
-In most cases, this is due to the system not being able to observe enough valid requests continuously. 
+In most cases, this is due to the system not observing enough valid requests over a continuous period.
 
 API Discovery only looks at requests that satisfy all of the following criteria:
 
-1. Requests must send the session identifiers (**HTTP header** or **Cookie**) that is configured for the zone.
+1. Requests must send the session identifier or identifiers (**HTTP header** or **Cookie**) that have been configured for the zone.
 2. Requests must return 2XX response codes from the edge.
 3. Requests must come from humans (i.e. Worker requests are ignored at this point).
-4. At least 500 requests are made to the discovered endpoint within a 10 day period* (*This number could be subject to change*).
+4. At least 500 requests are made to the discovered endpoint within a 10 day period.
 
-### Why do I not get threshold recommendations for my discovered API endpoints?
+### Why do I not receive threshold recommendations for my discovered API endpoints?
 
-`404 response`: We have never seen sufficient valid traffic for this zone to generate recommendations.
-
-`551 response`: We have successfully generated recommendations at some point in the past, but we have not seen sufficient *recent* valid traffic to provide up-to-date recommendations.
-
-Thresholds are only guaranteed to be recommended for endpoints that receive sufficient valid traffic. 
+Thresholds can only be recommended for endpoints that receive sufficient levels of traffic that meet the following criteria: 
 
 * Only requests with the same criteria as API Discovery are considered. 
 * If traffic has been erratic or intermittent to this endpoint, the threshold might not show up. Cloudflare needs endpoints to receive sufficient valid traffic in any 24-hour period in the last 7 days or since the initial discovery of the endpoint to make statistically safe threshold suggestions.
 * Cloudflare also requires at least 50 distinct sessions to have accessed the endpoint in any 24-hour period in the last 7 days or since the initial discovery of the endpoint.
+
+If you don't receive threshold recommendations for a discovered endpoint, you will see one of the following error codes: 
+
+**`404 response`**: We have not seen sufficient valid traffic for this zone to generate recommendations.
+
+**`551 response`**: We have successfully generated recommendations at some point in the past, but we have not seen sufficient *recent* valid traffic to provide up-to-date recommendations.
 
 ### Does this work for JDCloud customers?
 Not currently.
