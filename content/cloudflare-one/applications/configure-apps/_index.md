@@ -4,7 +4,7 @@ title: Add web applications
 weight: 1
 ---
 
-# Web applications
+# Web applications in Access
 
 Cloudflare Access allows you to secure your web applications by acting as an identity aggregator, or proxy. Users can only log in to the application if they meet the criteria you want to introduce.
 
