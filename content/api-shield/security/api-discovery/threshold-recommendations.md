@@ -27,9 +27,9 @@ Thresholds can only be recommended for endpoints that receive sufficient levels 
 
 If you don't receive threshold recommendations for a discovered endpoint, you will see one of the following error codes: 
 
-**`404 response`**: We have not seen sufficient valid traffic for this zone to generate recommendations.
+`404 response`: We have not seen sufficient valid traffic for this zone to generate recommendations.
 
-**`551 response`**: We have successfully generated recommendations at some point in the past, but we have not seen sufficient *recent* valid traffic to provide up-to-date recommendations.
+`551 response`: We have successfully generated recommendations at some point in the past, but we have not seen sufficient *recent* valid traffic to provide up-to-date recommendations.
 
 ### Does this work for JDCloud customers?
 Not currently.
