@@ -68,6 +68,22 @@ header: Example
 https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8?clientBandwidthHint=1.8
 ```
 
+
+## Play live video in native apps with less than 1 second latency
+
+If you need ultra low latency, and your users view live video in native apps, you can stream live video with [**glass-to-glass latency of less than 1 second**](https://blog.cloudflare.com/magic-hdmi-cable/), by using SRT or RTMPS for playback.
+
+![Diagram showing SRT and RTMPS playback via the Cloudflare Network](/stream/static/stream-rtmps-srt-playback-magic-hdmi-cable.png)
+
+SRT and RTMPS playback is built into [ffmpeg](https://ffmpeg.org/). You will need to integrate ffmpeg with your own video player —  neither [AVPlayer (iOS)](/stream/viewing-videos/using-own-player/ios/) nor [ExoPlayer (Android)](/stream/viewing-videos/using-own-player/android/) natively support SRT or RTMPS playback.
+
+We recommend using [ffmpeg-kit](https://github.com/tanersener/ffmpeg-kit) as a cross-platform wrapper for ffmpeg.
+
+### Examples
+
+* [RTMPS Playback with ffplay](/stream/examples/rtmps_playback)
+* [SRT playback with ffplay](/stream/examples/srt_playback)
+
 ## Limitations
 
 [Client-size Analytics](/stream/getting-analytics/#client-side-analytics) are not available if you use your own player.
