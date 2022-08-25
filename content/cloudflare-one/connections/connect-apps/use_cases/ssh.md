@@ -7,17 +7,17 @@ hidden: false
 
 # Connect through Cloudflare Tunnels over SSH
 
-You can connect to machines over SSH using Cloudflare's Zero Trust platform.
+You can connect to machines over SSH using Cloudflare's Zero Trust platform. Tunnels can route to a private network or a public hostname, so the method of SSH can reflect the users need. 
 
 ## WARP to Tunnel
 
-Our connector, cloudflared, can be deployed on the machine that will be remotely accessed in order to connect it to the Cloudflare Global network. The WARP agent can then be used to securely connect to the SSH server.
+Our connector, cloudflared, can be deployed on the machine that will be remotely accessed in order to connect it to the Cloudflare Global network. The WARP agent can then be used to securely connect to the SSH server through the users private network. 
 
-### Server side setup
+### Connector Setup
 
 With the cloudflared daemon, Zero Trust network rules can make the server accessible only by intended users.
 
-To set up the machine use the following steps:
+To set up the connector use the following steps:
 1. Log in to the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and go to **Access** > **Tunnels**. 
 
 1. Select **Create a tunnel**.
@@ -41,13 +41,13 @@ To set up the machine use the following steps:
 
 Once the tunnel is running it is important to connect it to a Gateway Network Policy.
 
-### Controlling who has access
-In the Gateway section of the Zero Trust Dashboard, [policies](/cloudflare-one/policies/filtering/network-policies/) can be created to modify what users are able to connect to the SSH server. It is worth noting that some IP addresses are automatically excluded by WARP. WARP automatically excludes  RFC 1918 IP addresses, which are IP addresses used in private networks and not reachable from the Internet. If the IP address a user is trying to reach is also in the RFC IP range it needs to be removed from this exclusion list from Settings>Network>Split Tunnels.
+### Controlling accesss via Gateway
+In the Gateway section of the Zero Trust Dashboard, [policies](/cloudflare-one/policies/filtering/network-policies/) can be created to modify what users are able to connect to the SSH server. It is worth noting that some IP addresses are automatically excluded by WARP (such ass addresses in the range 10.0.0.0/8). WARP automatically excludes  RFC 1918 IP addresses, which are IP addresses typically used in private networks and not reachable from the Internet. If the IP address a user is trying to reach is also in the RFC IP range it needs to be removed from this exclusion list from Settings>Network>Split Tunnels.
     ![Settings Page](/cloudflare-one/static/documentation/connections/connect-apps/use-cases/settings.png)
 Policies and rules can be created to control who can enroll a device. This will be done from Settings>WARP>Device enrollment permissions. The TLS decryption and Proxy modes must be enabled in the network settings as well.
 
-### Connecting to the server as a client
-A user trying to access the machine through SSH will need to install the WARP client, download the root certificate, and log in to the configured access group in the WARP preferences. 
+### Connecting over WARP
+A user trying to access the machine through SSH will need to [install the WARP client](/cloudflare-one/connections/connect-devices/warp/download-warp/), [download the root certificate](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#4-install-the-cloudflare-root-certificate-on-your-devices), and [log in to the configured access group](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) in the WARP app preferences.
 
 The user can then SSH to the machine using the IP address. If a key pair exists to access the SSH server the key should be included in the command.
 
@@ -56,8 +56,8 @@ $ ssh -i "key" ubuntu@<private IP Address>
 ```
 
 ## Connecting with cloudflared access
-A tunnel for using SSH to access a machine can also be routed through a public hostname so it can be accessed without being on a virtual private network. Accessing the machine will require having cloudflared installed on both the server machine and on the client machine. The cloudflared daemon will maintain a secure, persistent, outbound-only connection from the server machine to Cloudflare. The SSH traffic can then be proxied over this connection to access the content.
-Connecting through a public hostname requires having an active zone in Cloudflare and having the daemons installed on the host and any client machines. This can be done in conjunction with routing over WARP so that there are multiple ways to connect to the SSH server.
+Cloudflare Tunnels can also be routed through public hostnames which allows them to be accessed without the WARP client and instead use cloudflared and Cloudflare Access to preform the onramp to the Cloudflare Network. Accessing the machine will require having cloudflared installed on both the server machine and on the client machine. The SSH traffic can then be proxied over this connection to access the content.
+This can be done in conjunction with routing over WARP so that there are multiple ways to connect to the SSH server.
 
 
 ### Before you start
