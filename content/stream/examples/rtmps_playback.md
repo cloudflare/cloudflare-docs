@@ -21,4 +21,4 @@ header: RTMPS playback with ffplay
 ffplay -analyzeduration 1 -fflags -nobuffer -probesize 32 -sync ext 'rtmps://live.cloudflare.com:443/live/<RTMPS_PLAYBACK_KEY>'
 ```
 
-For more, see [read the docs](/stream/viewing-videos/using-own-player/#play-live-video-in-native-apps-with-less-than-1-second-latency).
+For more, refer to [Play live video in native apps with less than one second latency](/stream/viewing-videos/using-own-player/#play-live-video-in-native-apps-with-less-than-1-second-latency).
