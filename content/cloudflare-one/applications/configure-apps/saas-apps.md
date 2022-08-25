@@ -4,72 +4,65 @@ title: SaaS applications
 weight: 2
 ---
 
-# SaaS applications
+# Add a SaaS application to Access
 
-Cloudflare Access allows you to integrate your SaaS products by acting as an identity aggregator, or proxy. This way, users cannot login to SaaS applications without first meeting the criteria you want to introduce.
+Cloudflare Access allows you to add an additional authentication layer to your SaaS applications. When you integrate a SaaS application with Access, users log in using your existing identity providers and are only granted access if they pass your Access policies.
 
-![SaaS applications diagram](/cloudflare-one/static/documentation/applications/diagram-saas.jpg)
+This page provides generic instructions for setting up a SaaS application on the Zero Trust dashboard.
 
-## 1. Add your application
+## 1. Get SaaS application URLs
 
-1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
+Obtain the following URLs from your SaaS application account:
 
-2.  Click **Add an application**.
+- **Entity ID**: A unique URL issued for your SaaS application, for example `https://<your-domain>.my.salesforce.com`.
+- **Assertion Consumer Service URL**: The service provider's endpoint for receiving and parsing SAML assertions.
 
-3.  Select **SaaS**.
+## 2. Add your application to Access
 
-    ![Access Saas and Self-Hosted](/cloudflare-one/static/documentation/applications/add-saas-application.png)
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Access** > **Applications**.
 
-4.  In the **Configure app** section, select an application from the Application drop-down menu. If your application is not listed, type its name in the textbox and select it.
+2. Select **Add an application**.
 
-5.  In the **Entity ID** field, provide the unique identifier of your SaaS application.
-    SaaS applications store this information in different ways.
+3. Select **SaaS**.
 
-6.  In the **Assertion Consumer Service URL** field, input the service provider’s endpoint for receiving and parsing SAML assertions.
+4. Select your **Application** from the drop-down menu. If your application is not listed, enter a custom name in the **Application** field and select the textbox that appears below.
 
-7.  If your SaaS application requires additional SAML statements, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
+5. Enter the **Entity ID** and **Assertion Consumer Service URL** obtained from your SaaS application account.
 
-    ![Custom SaaS statements](/cloudflare-one/static/documentation/applications/custom-saas-statements.png)
+6. Select the **Name ID Format** expected by your SaaS application (usually _Email_).
 
-8.  Scroll down to the **Application visibility** card.
+7. If your SaaS application requires additional **SAML attribute statements**, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
 
-    * Toggle on **Show application in the App Launcher** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application. Users with no access to the application will not see it in the App Launcher regardless of whether the toggle is enabled. Users with access to the application will still be able to reach it with a direct link.
+8. Turn on **App Launcher visibility** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application. Users with no access to the application will not see it in the App Launcher regardless of whether the toggle is enabled. Users with access to the application will still be able to reach it with a direct link.
 
-    * (Optional) Add a custom logo for your application by clicking **Custom** and entering a link to your desired image.
+9. (Optional) Add a custom logo for your application by selecting **Custom** and entering a link to your desired image.
 
-    {{<Aside type="note">}}
+{{<Aside type="note">}}
 If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
-    {{</Aside>}}
+{{</Aside>}}
 
-9.  Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.
+10. Next, choose the **Identity providers** you want to enable for your app.
 
-    ![Setup SaaS IdPs](/cloudflare-one/static/documentation/applications/saas-idp.png)
+11. Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
 
-10.  Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
+12. Select **Next**.
 
-11.  Click **Next**.
+## 2. Add an Access policy
 
-## 2. Add a policy
+To control who can access your application, [create an Access policy](/cloudflare-one/policies/access/) and select **Next**.
 
-You can now configure a policy to control who can access your app.
+## 3. Configure SSO in your SaaS application
 
-To learn more about how policies work, read our [Policies](/cloudflare-one/policies/).
+Finally, you will need to configure your SaaS application to require users to log in through Cloudflare Access.
 
-1.  First, specify a name for your rule. This is a mandatory field.
-2.  Specify a policy action.
-3.  Specify one or more rules in the **Configure a rule** box. You can add as many include, exception, or require statements as needed.
-4.  Click **Next** to add your application to Access.
+1. Configure the following fields with your SAML SSO-compliant application:
 
-## 3. Integrate your SaaS application with Access
+    * **SSO endpoint**
+    * **Access Entity ID or Issuer**
+    * **Public key**
 
-Before you begin using your application through Access, your last step is to integrate your SaaS application to Access.
+    ![Copy SSO settings for a SaaS application from the Zero Trust dashboard](/cloudflare-one/static/documentation/applications/saas-integrate.png)
 
-1.  First, configure these fields with your SAML SSO-compliant application. Take note of these fields before you click **Done**:
+2. Select **Done**.
 
-    - Your SSO endpoint
-    - Your Access Entity ID or Issuer
-    - Your Public key
-
-    ![Setup SaaS IdPs](/cloudflare-one/static/documentation/applications/saas-integrate.png)
-
-2.  Click **Done** to see your application listed on your Applications tab.
+Your application will appear on the **Applications** page.

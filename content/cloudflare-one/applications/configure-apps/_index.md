@@ -1,12 +1,16 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: concept
 title: Add web applications
 weight: 1
 ---
 
-# Add web applications
+# Web applications
 
-With Cloudflare Zero Trust, you can protect two types of web applications: SaaS and self-hosted.
+Cloudflare Access allows you to secure your web applications by acting as an identity aggregator, or proxy. Users can only log in to the application if they meet the criteria you want to introduce.
+
+![Cloudflare Access verifies a user's identity before granting access to your application.](/cloudflare-one/static/documentation/applications/diagram-saas.jpg)
+
+You can protect two types of web applications: SaaS and self-hosted.
 
 * [**SaaS applications**](/cloudflare-one/applications/configure-apps/saas-apps/) consist of applications your team relies on that are not hosted by your organization. Examples include Salesforce and Workday. To secure SaaS applications, you must integrate Cloudflare Access with the SaaS application's SSO configuration.
 
