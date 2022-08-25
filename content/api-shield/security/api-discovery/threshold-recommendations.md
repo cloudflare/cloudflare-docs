@@ -4,7 +4,7 @@ title: Threshold recommendations
 weight: 1
 layout: list
 ---
-# Threshold Recommendations FAQ
+# Threshold recommendations FAQ
 
 ### Why are my API endpoints not found by API Discovery?
 
