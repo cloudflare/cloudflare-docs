@@ -25,7 +25,7 @@ Thresholds can only be recommended for endpoints that receive sufficient levels 
 * If traffic has been erratic or intermittent to this endpoint, the threshold might not show up. Cloudflare needs endpoints to receive sufficient valid traffic in any 24-hour period in the last 7 days or since the initial discovery of the endpoint to make statistically safe threshold suggestions.
 * Cloudflare also requires at least 50 distinct sessions to have accessed the endpoint in any 24-hour period in the last 7 days or since the initial discovery of the endpoint.
 
-If you don't receive threshold recommendations for a discovered endpoint, you will see one of the following error codes: 
+If you do not receive threshold recommendations for a discovered endpoint, you will see one of the following error codes: 
 
 `404 response`: We have not seen sufficient valid traffic for this zone to generate recommendations.
 
