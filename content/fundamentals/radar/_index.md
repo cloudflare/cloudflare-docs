@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Cloudflare Radar
-weight: 4
+weight: 9
 ---
 
 # Cloudflare Radar
