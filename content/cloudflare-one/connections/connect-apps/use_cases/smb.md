@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: SMB
 weight: 8
-hidden: true
+hidden: false
 ---
 # Using SMB through Cloudflare Tunnels
 
