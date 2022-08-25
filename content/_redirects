@@ -415,8 +415,8 @@
 /registrar/domain-registration/ /registrar/get-started/register-domain/ 301
 /registrar/domain-registration/cloudflare-custom-domain-protection/ /registrar/why-choose-cloudflare/custom-domain-protection/ 301
 /registrar/domain-registration/sec-reg-diff/ /registrar/why-choose-cloudflare/custom-domain-protection/ 301
-/registrar/domain-registration/tlds-supported/ /registrar/why-choose-cloudflare/top-level-domains-supported/ 301
-/registrar/domain-registration/tld-support/ /registrar/why-choose-cloudflare/top-level-domains-supported/ 301
+/registrar/domain-registration/tlds-supported/ /registrar/top-level-domains-supported/ 301
+/registrar/domain-registration/tld-support/ /registrar/top-level-domains-supported/ 301
 /registrar/domain-registration/whois-redaction/ /registrar/why-choose-cloudflare/whois-redaction/ 301
 /registrar/domain-transfers/ /registrar/get-started/transfer-domain-to-cloudflare/ 301
 /registrar/domain-transfers/domain-billing-exp/ /registrar/faq/ 301
@@ -435,6 +435,7 @@
 /registrar/transfer-instructions/namecheap/ /registrar/get-started/transfer-domain-to-cloudflare/ 301
 /registrar/transfer-instructions/network-solutions/ /registrar/get-started/transfer-domain-to-cloudflare/ 301
 /registrar/transfer-instructions/oneandone/ /registrar/get-started/transfer-domain-to-cloudflare/ 301
+
 
 # rules
 /rules/transform/api/ /rules/transform/url-rewrite/create-api/ 301
