@@ -611,6 +611,7 @@
 /waf/custom-rules/rate-limiting/parameters/ /waf/rate-limiting-rules/parameters/ 301
 /waf/custom-rules/rate-limiting/request-rate/ /waf/rate-limiting-rules/request-rate/ 301
 /waf/custom-rules/rate-limiting/use-cases/ /waf/rate-limiting-rules/use-cases/ 301
+/waf/about/file-scanning/ /waf/about/content-scanning/ 301
 
 # waiting-room
 /waiting-room/about/ /waiting-room/ 301
