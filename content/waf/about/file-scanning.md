@@ -1,109 +1,293 @@
 ---
-title: File scanning
+title: Uploaded content scanning
 pcx_content_type: concept
 weight: 3
-layout: list
 ---
 
-# File scanning
+# Uploaded content scanning
 
-WAF file scanning scans files being uploaded to your application.
+WAF content scanning will scan content being uploaded to your application.
 
-{{<Aside type="note">}}
+{{<Aside type="warning" header="Important">}}
+
 This feature is only available for select customers on an Enterprise plan. Contact your account team to get access.
+
+At this stage, WAF content scanning API endpoints may change on short notice.
+
 {{</Aside>}}
 
-WAF file scanning will automatically attempt to detect uploaded files and scan them for malicious content and malware. The scan results, along with additional metadata, will be exposed as fields available in WAF custom rules, allowing you to implement fine-grained mitigation rules.
+Content scanning, when enabled, will attempt to detect content objects such as uploaded files and scan them for malicious signatures such as malware. The scan results, along with additional metadata, will be exposed as fields available in WAF [custom rules](/waf/custom-rules/), allowing you to implement fine-grained mitigation rules.
+
+## Default configuration
+
+Content scanning is disabled by default. After getting access and enabling the feature, the default content scanner behavior is to scan certain content objects such as `multipart/form-data` file uploads for malicious content. However, the WAF will only perfom an action on requests with content considered malicious once you create a WAF custom rule.
+
+## Custom scan expressions
+
+Sometimes, you may wish to specify where to find the content objects, such as when the content is a Base64-encoded string within a JSON payload. For example:
+
+```json
+{"file": "<BASE64_ENCODED_STRING>"}
+```
+
+In these situations, configure a custom scan expression to tell the content scanner where to find the content objects. For more information, refer to [Configure a custom scan expression](#2-optional-configure-a-custom-scan-expression).
+
+---
+
+## Start using WAF content scanning
+
+{{<Aside type="note" header="Before you start">}}
+Contact your account team to get access to WAF content scanning.
+{{</Aside>}}
+
+### 1. Enable WAF content scanning
+
+Enable the feature using  a `POST` request similar to the following:
+
+```bash
+$ curl -X POST \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/enable" \
+-H "Authorization: Bearer <API_TOKEN>"
+```
+
+### 2. (Optional) Configure a custom scan expression
+
+If you wish to check uploaded content in a way that is not covered by the [default configuration](#default-configuration), add a custom scan expression. For example:
+
+```json
+$ curl -X POST \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/payloads" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-d '[{"payload": "lookup_json_string(http.request.body.raw, \"file\")"}]'
+```
+
+The above `POST` request will add the following expression to the current list of custom scan expressions:
+
+```txt
+lookup_json_string(http.request.body.raw, "file")
+```
+
+This expression will scan any string found in an HTTP body with the following JSON string:
+
+```json
+{"file": "<BASE64_ENCODED_STRING>"}
+```
+
+{{<Aside type="note" header="Note">}}
+The content scanner will automatically decode Base64 strings.
+{{</Aside>}}
+
+### 3. Validate the content scanning behavior
+
+Use Security Analytics and HTTP logs to validate that malicious content objects are being detected correctly.
+
+Alternatively, create a WAF custom rule like described in the next step using a _Log_ action instead of a mitigation action like _Block_. This rule will generate firewall events (available in **Security** > **Overview**) that will allow you to validate your configuration.
+
+### 4. Create a WAF custom rule
+
+Create a WAF [custom rule](/waf/custom-rules/) that blocks detected malicious content objects uploaded to your application.
+
+For example, create a custom rule with the _Block_ action and the following expression:
+
+```txt
+(cf.waf.content_scan.has_malicious_obj)
+```
+
+This rule will match requests where the WAF detects a suspicious or malicious content object. For a list of fields provided by WAF content scanning, refer to [Available fields](#available-fields).
+
+You can combine the previous expression with other [fields](/ruleset-engine/rules-language/fields/) and [functions](/ruleset-engine/rules-language/functions/) of the Rules language. This allows you to customize the rule scope or combine content scanning with other security features. For example:
+
+* The following expression will match requests with malicious content objects uploaded to the specified endpoint:
+
+    ```txt
+    (cf.waf.content_scan.has_malicious_obj and http.request.uri.path contains "upload.php")
+    ```
+
+* The following expression will match requests from bots uploading content objects:
+
+    ```txt
+    (cf.waf.content_scan.has_obj and cf.bot_management.score lt 10)
+    ```
+
+
+---
 
 ## Available fields
 
-WAF file scanning provides the following fields:
+When enabled, WAF content scanning provides the following fields you can use in expressions of WAF [custom rules](/waf/custom-rules/):
 
 <table>
   <thead>
     <tr>
-      <th style="width: 40%">Field</th>
+      <th style="width: 52%">Field</th>
       <th>Description</th>
     </tr>
   </thead>
   <tbody>
   </tbody>
   <tr>
-    <td><code>cf.waf.file_scanner.has_file</code><br />{{<type>}}Boolean{{</type>}}</td>
-    <td>When true, the request contains at least one file.</td>
+    <td><code>cf.waf.content_scan.has_obj</code><br />{{<type>}}Boolean{{</type>}}</td>
+    <td>When true, the request contains at least one content object.</td>
   </tr>
   <tr>
-    <td><code>cf.waf.file_scanner.has_malicious_file</code><br />{{<type>}}Boolean{{</type>}}</td>
-    <td>When true, the request contains at least one malicious file.</td>
+    <td><code>cf.waf.content_scan.has_malicious_obj</code><br />{{<type>}}Boolean{{</type>}}</td>
+    <td>When true, the request contains at least one malicious content object.</td>
   </tr>
   <tr>
-    <td><code>cf.waf.file_scanner.scan_failed</code><br />{{<type>}}Boolean{{</type>}}</td>
-    <td>When true, the file scanner was unable to scan all the files in the request.</td>
+    <td><code>cf.waf.content_scan.num_malicious_obj</code><br />{{<type>}}Integer{{</type>}}</td>
+    <td>The number of malicious content objects detected in the request (zero or greater).</td>
   </tr>
   <tr>
-    <td><code>cf.waf.file_scanner.num_files</code><br />{{<type>}}Integer{{</type>}}</td>
-    <td>The number of files detected for this request (zero or greater).</td>
+    <td><code>cf.waf.content_scan.scan_failed</code><br />{{<type>}}Boolean{{</type>}}</td>
+    <td>When true, the file scanner was unable to scan all the content objects detected in the request.</td>
   </tr>
   <tr>
-    <td><code>cf.waf.file_scanner.max_file_size</code><br />{{<type>}}Integer{{</type>}}</td>
-    <td>The file size in bytes of the largest file in the request.</td>
+    <td><code>cf.waf.content_scan.num_obj</code><br />{{<type>}}Integer{{</type>}}</td>
+    <td>The number of content objects detected in the request (zero or greater).</td>
   </tr>
   <tr>
-    <td><code>cf.waf.file_scanner.file_sizes</code><br />{{<type>}}Array&lt;Integer&gt;{{</type>}}</td>
-    <td>An array of file sizes in the order the files were detected in the request.</td>
+    <td><code>cf.waf.content_scan.obj_sizes</code><br />{{<type>}}Array&lt;Integer&gt;{{</type>}}</td>
+    <td>An array of file sizes in the order the content objects were detected in the request.</td>
   </tr>
   <tr>
-    <td><code>cf.waf.file_scanner.file_types</code><br />{{<type>}}Array&lt;String&gt;{{</type>}}</td>
-    <td>An array of file types in the order the files were detected in the request.</td>
+    <td><code>cf.waf.content_scan.obj_types</code><br />{{<type>}}Array&lt;String&gt;{{</type>}}</td>
+    <td>An array of file types in the order the content objects were detected in the request.</td>
   </tr>
   <tr>
-    <td><code>cf.waf.file_scanner.scan_results</code><br />{{<type>}}Array&lt;String&gt;{{</type>}}</td>
-    <td>An array of scan results in the order the files were detected in the request.</td>
+    <td><code>cf.waf.content_scan.obj_results</code><br />{{<type>}}Array&lt;String&gt;{{</type>}}</td>
+    <td>An array of scan results in the order the content objects were detected in the request.<br/>
+    The possible values are: <code>clean</code>, <code>suspicious</code>, and <code>malicious</code>.</td>
   </tr>
 </table>
 
-You can use the fields in expressions of [custom rules](/waf/custom-rules/).
-
 ---
 
-## Start using file scanning
+## Common API calls
 
-{{<Aside type="note" header="Before you start">}}
-Contact your account team to get access to WAF file scanning.
-{{</Aside>}}
+### General operations
 
-### Step 1 — Create a WAF custom rule
+<details>
+<summary>Enable WAF content scanning</summary>
+<div>
 
-Create a custom rule that logs detected malicious files uploaded to your application.
+To enable content scanning, use a `POST` request similar to the following:
 
-For example, create a custom rule with the _Log_ action and the following expression:
-
-```txt
-(cf.waf.file_scanner.has_malicious_file)
+```bash
+---
+header: Example cURL request
+---
+$ curl -X POST \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/enable" \
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
-This rule will match requests where the WAF detects at least one malicious file.
+</div>
+</details>
 
-You can combine the previous expression with other [fields](/ruleset-engine/rules-language/fields/) and [functions](/ruleset-engine/rules-language/functions/) of the Rules language. This allows you to customize the rule scope or combine this feature with other security features. For example:
+<details>
+<summary>Disable WAF content scanning</summary>
+<div>
 
-* The following expression will match requests uploading malicious files if they target the specified endpoint:
+To disable content scanning, use a `POST` request similar to the following:
 
-    ```txt
-    (cf.waf.file_scanner.has_malicious_file and http.request.uri.path contains "upload.php")
-    ```
+```bash
+---
+header: Example cURL request
+---
+$ curl -X POST \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/disable" \
+-H "Authorization: Bearer <API_TOKEN>"
+```
 
-* The following expression will match requests from bots uploading files:
+</div>
+</details>
 
-    ```txt
-    (cf.waf.file_scanner.has_file and cf.bot_management.score lt 10)
-    ```
+<details>
+<summary>Get WAF content scanning status</summary>
+<div>
 
-### Step 2 — Monitor traffic
+To obtain the current status of the content scanning feature, use a `GET` request similar to the following:
 
-After deploying your custom rule, go to Firewall Events, available at **Security** > **Overview**, and check for logged requests matching the rule you created.
+```bash
+---
+header: Example cURL request
+---
+$ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/settings" \
+-H "Authorization: Bearer <API_TOKEN>"
+```
 
-If you find legitimate traffic being logged due to the custom rule, adjust your rule expression so that the rule does not match these incoming requests.
+</div>
+</details>
 
-### Step 3 — Update your rule to block traffic
+### Custom expression operations
 
-After making sure that you are only blocking the right requests, change the custom rule action from _Log_ to _Block_ so that the WAF starts blocking requests uploading malicious files.
+<details>
+<summary>Get existing custom scan expressions</summary>
+<div>
+
+To get a list of existing custom scan expressions, use a `GET` request similar to the following:
+
+```bash
+---
+header: Example cURL request
+---
+$ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/payloads" \
+-H "Authorization: Bearer <API_TOKEN>"
+```
+
+```json
+---
+header: Example response
+---
+{
+  "result": [
+    {
+      "id": "<EXPRESSION_ID>",
+      "payload": "lookup_json_string(http.request.body.raw, \"file\")"
+    }
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+</div>
+</details>
+
+<details>
+<summary>Add a custom scan expression</summary>
+<div>
+
+Use a `POST` request similar to the following:
+
+```json
+---
+header: Example cURL request
+---
+$ curl -X POST \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/payloads" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-d '[{"payload": "lookup_json_string(http.request.body.raw, \"file\")"}]'
+```
+
+</div>
+</details>
+
+<details>
+<summary>Delete a custom scan expression</summary>
+<div>
+
+Use a `DELETE` request similar to the following:
+
+```bash
+---
+header: Example cURL request
+---
+$ curl -X DELETE \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/payloads/<EXPRESSION_ID>" \
+-H "Authorization: Bearer <API_TOKEN>"
+```
+
+</div>
+</details>
