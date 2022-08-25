@@ -18,21 +18,40 @@ Our connector, cloudflared, can be deployed on the machine that will be remotely
 With the cloudflared daemon, Zero Trust network rules can make the server accessible only by intended users.
 
 To set up the machine use the following steps:
-1. Create a tunnel through the Zero Trust Dashboard using this [guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote).
-1. After creating the connection with the server machine, add the private IP subnet in the private network section. The private IP subnet should include the IP address of the SSH server. This will tell Cloudflare to send the traffic to that IP address in the private network to this tunnel.
-By creating the tunnel through the dashboard it will automatically run as a service and will restart if the machine restarts.
-Once the tunnel is running automatically it is important to connect it to a Gateway Network Policy.
+1. Log in to the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and go to **Access** > **Tunnels**. 
+
+1. Select **Create a tunnel**.
+
+1. Enter a name for your tunnel.
+    ![Connector appearing in the UI after cloudflared has run](/cloudflare-one/static/documentation/connections/connect-apps/use-cases/name-the-tunnel.png)
+
+1. Select **Save tunnel**.
+
+1. Next, you will need to install `cloudflared` and run it. To do so, check that the environment under **Choose an environment** reflects the operating system on your machine, then copy the command in the box below and paste it into a terminal window. Run the command.
+
+1. Once the command has finished running, your connector will appear on the Zero Trust dashboard.
+
+    ![Connector appearing in the UI after cloudflared has run](/cloudflare-one/static/documentation/connections/connect-apps/use-cases/connect-the-tunnel.png)
+
+1. Select **Next**.
+
+1. In the **Private Networks** tab, add the private IP subnet in the private network section. The private IP subnet should include the IP address of the SSH server. This will tell Cloudflare to send the traffic to that IP address in the private network to this tunnel.
+
+1. Select **Save `<tunnel-name>`**.
+
+Once the tunnel is running it is important to connect it to a Gateway Network Policy.
 
 ### Controlling who has access
-n the Gateway section of the Zero Trust Dashboard, policies can be created to modify what users are able to connect to the SSH server. It is worth noting that some IP addresses are automatically excluded by WARP. WARP automatically excludes  RFC 1918 IP addresses, which are IP addresses used in private networks and not reachable from the Internet. Since the IP address a user is trying to reach is also in the RFC IP range it needs to be removed from this exclusion list from Settings>Network>Split Tunnels.
-Policies and rules can be created to control who can enroll into the private network. This will be done from Settings>WARP>Device enrollment permissions. The TLS decryption and Proxy modes must be enabled in the network settings as well.
+In the Gateway section of the Zero Trust Dashboard, [policies](/cloudflare-one/policies/filtering/network-policies/) can be created to modify what users are able to connect to the SSH server. It is worth noting that some IP addresses are automatically excluded by WARP. WARP automatically excludes  RFC 1918 IP addresses, which are IP addresses used in private networks and not reachable from the Internet. If the IP address a user is trying to reach is also in the RFC IP range it needs to be removed from this exclusion list from Settings>Network>Split Tunnels.
+    ![Settings Page](/cloudflare-one/static/documentation/connections/connect-apps/use-cases/settings.png)
+Policies and rules can be created to control who can enroll a device. This will be done from Settings>WARP>Device enrollment permissions. The TLS decryption and Proxy modes must be enabled in the network settings as well.
 
 ### Connecting to the server as a client
 A user trying to access the machine through SSH will need to install the WARP client, download the root certificate, and log in to the configured access group in the WARP preferences. 
 
 The user can then SSH to the machine using the IP address. If a key pair exists to access the SSH server the key should be included in the command.
 
-```sh
+```
 $ ssh -i "key" ubuntu@<private IP Address>
 ```
 
