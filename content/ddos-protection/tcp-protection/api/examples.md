@@ -207,7 +207,7 @@ header: Example response
 
 ## Create a SYN flood rule
 
-This example creates a SYN flood rule with a regional scope in monitoring mode.
+This example creates a SYN flood rule with a regional scope (Western Europe) in monitoring mode.
 
 ```json
 ---
