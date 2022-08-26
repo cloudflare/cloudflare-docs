@@ -79,7 +79,7 @@ Advanced HTTP DDoS Attack Alert      | Yes<sup>1</sup> |        –        |    
 Layer 3/4 DDoS Attack Alert          |        –        | Yes<sup>2</sup> |       Yes       |       Yes
 Advanced Layer 3/4 DDoS Attack Alert |        –        | Yes<sup>2</sup> | Yes<sup>2</sup> | Yes<sup>2</sup>
 
-<sup>1</sup> _Only available to Advanced DDoS Protection customers._ <br>
+<sup>1</sup> _Only available to Enterprise customers with the Advanced DDoS add-on._ <br>
 <sup>2</sup> _Only available on an Enterprise plan._
 
 ### Advanced alert configuration
