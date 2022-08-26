@@ -42,6 +42,8 @@ When you onboard your domain onto Cloudflare, Cloudflare protection will be in a
 
 This means that DNS records - even those set to [proxy traffic through Cloudflare](#proxied-records) -- will be [DNS-only](#dns-only-records) until your zone has been activated and any requests to your DNS records will return your origin server's IP address.
 
+If this warning is still present after 24 hours, make sure you have [changed your nameservers](/dns/zone-setups/full-setup/setup/#step-3--update-your-nameservers) at your registrar.
+
 For enhanced security, we recommend rolling your origin IP addresses at your hosting provider after your zone has been activated. This action prevents your origin IPs from being leaked during onboarding.
 
 #### Windows authentication
