@@ -101,7 +101,7 @@ $ curl -X POST \
   },
   {
     "prefix": "192.0.2.2/26",
-    "comment": "Counter Strike range",
+    "comment": "Range for a specific game",
     "excluded": true
   }
 ]'
@@ -125,7 +125,7 @@ header: Example response
       "id": "<PREFIX_2_ID>",
       "prefix": "192.0.2.2/26",
       "excluded": true,
-      "comment": "Counter Strike range",
+      "comment": "Range for a specific game",
       "created_on": "<TIMESTAMP>",
       "modified_on": "<TIMESTAMP>"
     }
