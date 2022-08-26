@@ -46,7 +46,7 @@ Enable the feature using a `POST` request similar to the following:
 
 ```bash
 $ curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/enable" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/enable" \
 -H "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -56,7 +56,7 @@ If you wish to check uploaded content in a way that is not covered by the [defau
 
 ```json
 $ curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/payloads" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d '[{"payload": "lookup_json_string(http.request.body.raw, \"file\")"}]'
 ```
@@ -177,7 +177,7 @@ To enable content scanning, use a `POST` request similar to the following:
 header: Example cURL request
 ---
 $ curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/enable" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/enable" \
 -H "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -195,7 +195,7 @@ To disable content scanning, use a `POST` request similar to the following:
 header: Example cURL request
 ---
 $ curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/disable" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/disable" \
 -H "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -212,7 +212,7 @@ To obtain the current status of the content scanning feature, use a `GET` reques
 ---
 header: Example cURL request
 ---
-$ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/settings" \
+$ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/settings" \
 -H "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -231,7 +231,7 @@ To get a list of existing custom scan expressions, use a `GET` request similar t
 ---
 header: Example cURL request
 ---
-$ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/payloads" \
+$ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads" \
 -H "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -266,7 +266,7 @@ Use a `POST` request similar to the following:
 header: Example cURL request
 ---
 $ curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/payloads" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d '[{"payload": "lookup_json_string(http.request.body.raw, \"file\")"}]'
 ```
@@ -285,7 +285,7 @@ Use a `DELETE` request similar to the following:
 header: Example cURL request
 ---
 $ curl -X DELETE \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/file-upload-scan/payloads/<EXPRESSION_ID>" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads/<EXPRESSION_ID>" \
 -H "Authorization: Bearer <API_TOKEN>"
 ```
 
