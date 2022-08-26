@@ -28,6 +28,8 @@ curl -X DELETE https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images
 --header 'Authorization: Bearer <API_TOKEN>'
 ```
 
+`<IMAGE_ID>` must be fully URL encoded in the API call URL.
+
 You will receive a response similar to this:
 
 ```json
