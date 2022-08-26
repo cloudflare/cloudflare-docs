@@ -1,6 +1,7 @@
 ---
 pcx_content_type: reference
 title: WHOIS redaction
+weight: 4
 ---
 
 # WHOIS redaction

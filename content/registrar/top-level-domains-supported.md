@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Top Level Domains supported
-weight: 4
+weight: 3
 ---
 
 # Top Level Domains supported

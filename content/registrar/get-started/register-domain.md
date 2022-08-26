@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Register a new domain
-weight: 4
+weight: 1
 ---
 
 # Register a new domain

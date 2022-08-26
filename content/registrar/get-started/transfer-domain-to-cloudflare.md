@@ -1,7 +1,7 @@
 ---
 pcx_content_type: tutorial
 title: Transfer your domain to Cloudflare
-weight: 5
+weight: 2
 ---
 
 # Transfer your domain to Cloudflare
