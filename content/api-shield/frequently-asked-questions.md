@@ -1,10 +1,10 @@
 ---
 pcx_content_type: FAQ
-title: FAQ
-weight: 1
+title: FAQs
+weight: 3
 layout: list
 ---
-# FAQ
+# Frequently Asked Questions
 
 ### Why are my API endpoints not found by API Discovery?
 
