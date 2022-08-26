@@ -102,7 +102,7 @@ The following command creates the connection from the device to Cloudflare. Any 
     ```bash
     cloudflared access tcp --hostname smb.example.com --url localhost:8445
     ```
-Use the SMB cliend to point to `tcp:localhost:8445`.
+Use the SMB client to point to `tcp:localhost:8445`. The client will open a browser window to authenticate the user.
 
 #### Windows-specific requirements
 
