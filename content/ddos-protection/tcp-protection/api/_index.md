@@ -47,7 +47,7 @@ Update Advanced<br> TCP Protection status | `PATCH accounts/<ACCOUNT_ID>/magic/a
 
 Operation | Method and endpoint / Description
 ----------|----------------------------------
-Get prefixes | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/prefixes`<br>Fetches all Advanced TCP Protection prefixes in the account.
+List prefixes | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/prefixes`<br>Fetches all Advanced TCP Protection prefixes in the account.
 Add prefixes in bulk | `POST accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/prefixes/bulk`<br>Adds prefixes in bulk to the account (up to 300 prefixes per request).
 Get a prefix | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/prefixes/<PREFIX_ID>`<br>Fetches the details of an existing prefix.
 Update a prefix | `PATCH accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/prefixes/<PREFIX_ID>`<br>Updates an existing prefix.
@@ -62,7 +62,7 @@ Delete all prefixes | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protectio
 
 Operation | Method and endpoint / Description
 ----------|----------------------------------
-Get allowlisted prefixes | `GET accounts/<ACCOUNT_ID>/configs/allowlist`<br>Fetches all prefixes in the account allowlist.
+List allowlisted prefixes | `GET accounts/<ACCOUNT_ID>/configs/allowlist`<br>Fetches all prefixes in the account allowlist.
 Add an allowlisted prefix | `POST accounts/<ACCOUNT_ID>/configs/allowlist`<br>Adds a prefix to the allowlist.
 Get an allowlisted prefix | `GET accounts/<ACCOUNT_ID>/configs/allowlist/<ALLOWLIST_ID>`<br>Fetches the details of an existing prefix in the allowlist.
 Update an allowlisted prefix | `PATCH accounts/<ACCOUNT_ID>/configs/allowlist/<ALLOWLIST_ID>`<br>Updates an existing prefix in the allowlist.
@@ -77,7 +77,7 @@ Delete all allowlisted prefixes | `DELETE accounts/<ACCOUNT_ID>/configs/allowlis
 
 Operation | Method and endpoint / Description
 ----------|----------------------------------
-Get SYN flood rules | `GET accounts/<ACCOUNT_ID>/configs/syn_protection/rules`<br>Fetches all SYN flood rules in the account.
+List SYN flood rules | `GET accounts/<ACCOUNT_ID>/configs/syn_protection/rules`<br>Fetches all SYN flood rules in the account.
 Add a SYN flood rule | `POST accounts/<ACCOUNT_ID>/configs/syn_protection/rules`<br>Adds a SYN flood rule to the account.
 Get a SYN flood rule | `GET accounts/<ACCOUNT_ID>/configs/syn_protection/rules/<RULE_ID>`<br>Fetches the details of an existing SYN flood rule in the account.
 Update a SYN flood rule | `PATCH accounts/<ACCOUNT_ID>/configs/syn_protection/rules/<RULE_ID>`<br>Updates an existing SYN flood rule in the account.
@@ -92,7 +92,7 @@ Delete all SYN flood rules | `DELETE accounts/<ACCOUNT_ID>/configs/syn_protectio
 
 Operation | Method and endpoint / Description
 ----------|----------------------------------
-Get out-of-state TCP rules | `GET accounts/<ACCOUNT_ID>/configs/tcp_flow_protection/rules`<br>Fetches all out-of-state TCP rules in the account.
+List out-of-state TCP rules | `GET accounts/<ACCOUNT_ID>/configs/tcp_flow_protection/rules`<br>Fetches all out-of-state TCP rules in the account.
 Add an out-of-state TCP rule | `POST accounts/<ACCOUNT_ID>/configs/tcp_flow_protection/rules`<br>Adds an out-of-state TCP rule to the account.
 Get an out-of-state TCP rule | `GET accounts/<ACCOUNT_ID>/configs/tcp_flow_protection/rules/<RULE_ID>`<br>Fetches the details of an existing out-of-state TCP rule in the account.
 Update an out-of-state TCP rule | `PATCH accounts/<ACCOUNT_ID>/configs/tcp_flow_protection/rules/<RULE_ID>`<br>Updates an existing out-of-state TCP rule in the account.
