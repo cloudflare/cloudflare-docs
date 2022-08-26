@@ -50,8 +50,14 @@ Besides defining rules with one of the above scopes, you must also select the [p
 
 ## Burst sensitivity
 
-The rule sensitivity to short-term bursts in the packet rate. A low sensitivity means that bigger spikes in the packet rate may trigger a mitigation action. A high sensitivity means that smaller spikes in the packet rate may trigger a mitigation action.
+The burst sensitivity is the rule's sensitivity to short-term bursts in the packet rate:
+
+* A low sensitivity means that bigger spikes in the packet rate may trigger a mitigation action.
+* A high sensitivity means that smaller spikes in the packet rate may trigger a mitigation action.
 
 ## Rate sensitivity
 
-The rule sensitivity to the sustained packet rate. A low sensitivity means that higher sustained packet rates can trigger a mitigation action. A high sensitivity means that lower sustained packet rates may trigger a mitigation action. A high sensitivity offers increased protection, but you may get more false positives (that is, mitigated packets that belong to legitimate traffic).
+The rate sensitivity is the rule's sensitivity to the sustained packet rate:
+
+* A low sensitivity means that higher sustained packet rates can trigger a mitigation action.
+* A high sensitivity means that lower sustained packet rates may trigger a mitigation action. A high sensitivity offers increased protection, but you may get more false positives (that is, mitigated packets that belong to legitimate traffic).
