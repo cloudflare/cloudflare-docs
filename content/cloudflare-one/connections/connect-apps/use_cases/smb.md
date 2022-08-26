@@ -99,7 +99,7 @@ For example, if the drive is shared at smb.example.com, build a policy so that o
 A user trying to access the SMB server will need to [install cloudflared](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) on their device.
 The following command creates the connection from the device to Cloudflare. Any available port can be specified.
 
-    ```bash
+    ```sh
     cloudflared access tcp --hostname smb.example.com --url localhost:8445
     ```
 Use the SMB client to point to `tcp:localhost:8445`. The client will open a browser window to authenticate the user.
