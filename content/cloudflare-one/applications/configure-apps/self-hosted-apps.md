@@ -19,7 +19,7 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 ![Self-hosted applications diagram](/cloudflare-one/static/documentation/applications/network-diagram.png)
 
-Make sure you create [Access policies](/cloudflare-one/policies/access/) before connecting your application to Cloudflare. To [connect your origin](/cloudflare-one/connections/connect-apps/) to Cloudflare, you can use [Cloudflare Tunnel](/cloudflare-one/glossary/#cloudflare-tunnel). If you do not wish to use Cloudflare Tunnel, you must [validate the token](/cloudflare-one/identity/users/validating-json/) issued by Cloudflare on your origin.
+Make sure you create [Access policies](/cloudflare-one/policies/access/) before connecting your application to Cloudflare. To [connect your origin](/cloudflare-one/connections/connect-apps/) to Cloudflare, you can use [Cloudflare Tunnel](/cloudflare-one/glossary/#cloudflare-tunnel). If you do not wish to use Cloudflare Tunnel, you must [validate the token](/cloudflare-one/identity/authorization-cookie/validating-json/) issued by Cloudflare on your origin.
 
 ### 1. Add your application
 
@@ -82,7 +82,7 @@ To learn more about how policies work, read our [Policies section](/cloudflare-o
 
 The **Setup section** allows you to configure a few advanced settings for your application.
 
-1.  Configure [Cross-Origin Resource Sharing (CORS) settings](/cloudflare-one/policies/access/cors/).
+1.  Configure [Cross-Origin Resource Sharing (CORS) settings](/cloudflare-one/identity/authorization-cookie/cors/).
 
     ![Advanced settings](/cloudflare-one/static/documentation/applications/advanced-settings.png)
 

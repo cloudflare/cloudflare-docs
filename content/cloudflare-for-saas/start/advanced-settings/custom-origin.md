@@ -19,13 +19,13 @@ To use a custom origin server, you need to meet the following requirements:
 
 ## Use a custom origin
 
-To use a custom origin, select that option when [creating a new custom hostname](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/) in the dashboard or include the `"custom_origin_server": your_custom_origin_server` parameter when using the API [POST command](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname).
+To use a custom origin, select that option when [creating a new custom hostname](/cloudflare-for-saas/security/certificate-management/issue-and-validate/) in the dashboard or include the `"custom_origin_server": your_custom_origin_server` parameter when using the API [POST command](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname).
 
 ## SNI rewrites
 
 When Cloudflare establishes a connection to your default origin server, the `Host` header and [SNI](/fundamentals/glossary/#server-name-indication-sni) will both be the value of the original custom hostname.
 
-However, if you configure that custom hostname with a custom origin, the value of the SNI will be that of the custom origin and the `Host` header will be the original custom hostname. Since these values will not match, you will not be able to use the [Full (strict)](/ssl/origin-configuration/ssl-modes/#full-strict) on your origins.
+However, if you configure that custom hostname with a custom origin, the value of the SNI will be that of the custom origin and the `Host` header will be the original custom hostname. Since these values will not match, you will not be able to use the [Full (strict)](/ssl/origin-configuration/ssl-modes/full-strict/) on your origins.
 
 To solve this problem, you can contact your account team to request an entitlement for **SNI rewrites**.
 
@@ -46,15 +46,17 @@ Choose how your custom hostname populates the SNI value with SNI rewrites:
   - If wildcards are not enabled and a request comes to `example.com`, choose whether to set the SNI as `example.com` or `www.example.com`.
   - If wildcards are enabled, you set the SNI to `example.com`, and a request comes to `www.example.com`, then the SNI is `example.com`.
 
-{{<Aside type="note">}}
+{{<Aside type="warning" header="Important">}}
 
-Currently, SNI Rewrite is not supported for wildcard custom hostnames. Subdomains covered by a wildcard custom hostname send the custom origin server name as the SNI value.
+* Currently, SNI Rewrite is not supported for wildcard custom hostnames. Subdomains covered by a wildcard custom hostname send the custom origin server name as the SNI value.
+
+* SNI overrides defined using an Origin Rule will take precedence over SNI rewrites.
 
 {{</Aside>}}
 
 ### Set an SNI rewrite
 
-To set an SNI rewrite in the dashboard, choose your preferred option from **Origin SNI value** when [creating a custom hostname](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/).
+To set an SNI rewrite in the dashboard, choose your preferred option from **Origin SNI value** when [creating a custom hostname](/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
 
 To set an SNI rewrite via the API, set the `custom_origin_sni` parameter when [creating a custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname):
 

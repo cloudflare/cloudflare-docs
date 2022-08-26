@@ -1,10 +1,27 @@
 ---
 pcx_content_type: changelog
 title: Changelog
-weight: 8
+weight: 10
 ---
 
 # Changelog
+
+## 2022-08-15
+
+### Unique subdomain for your Stream Account
+
+URLs in the Stream Dashboard and Stream API now use a subdomain specific to your Cloudflare Account: `customer-{CODE}.cloudflarestream.com`. This change allows you to:
+
+1. Use [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (CSP) directives specific to your Stream subdomain, to ensure that only videos from your Cloudflare account can be played on your website. 
+2. Allowlist only your Stream account subdomain at the network-level to ensure that only videos from a specific Cloudflare account can be accessed on your network.
+
+No action is required from you, unless you use Content Security Policy (CSP) on your website. For more on CSP, read the docs [here](/stream/faq/#i-use-content-security-policy-csp-on-my-website-what-domains-do-i-need-to-add-to-which-directives).
+
+## 2022-08-02
+
+### Clip videos using the Stream API
+
+You can now change the start and end times of a video uploaded to Cloudflare Stream. For more information, refer to [Clip videos](/stream/edit-videos/video-clipping/).
 
 ## 2022-07-26
 
@@ -28,7 +45,7 @@ During or after uploading a video to Stream, you can now specify a value for a n
 
 ### Analytics panel in Stream Dashboard
 
-The Stream Dashboard now has an analytics panel that shows the number of minutes of both live and recorded video delivered. This view can be filtered by **Creator ID**, **Video ID**, and **Country**. For more in-depth analytics data, refer to the [bulk analytics documentation](/stream/getting-analytics/fetching-bulk-analytics/)
+The Stream Dashboard now has an analytics panel that shows the number of minutes of both live and recorded video delivered. This view can be filtered by **Creator ID**, **Video UID**, and **Country**. For more in-depth analytics data, refer to the [bulk analytics documentation](/stream/getting-analytics/fetching-bulk-analytics/)
 
 ## 2022-03-16
 
@@ -96,7 +113,7 @@ You can now use Cloudflare Stream for 24/7 live streaming.
 
 ### Persistent Live Stream IDs
 
-You can now start and stop live broadcasts without having to provide a new video ID to the Stream Player (or your own player) each time the stream starts and stops. [Read the docs](/stream/stream-live/watch-live-stream/#view-by-live-input-id).
+You can now start and stop live broadcasts without having to provide a new video UID to the Stream Player (or your own player) each time the stream starts and stops. [Read the docs](/stream/stream-live/watch-live-stream/#view-by-live-input-id).
 
 ## 2021-10-14
 

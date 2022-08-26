@@ -76,3 +76,4 @@ To set up your static routes, refer to [Configure static routes](/magic-wan/how-
 - 0s reauth time or no reauth
 - 4h rekey time
 - Disable [anti-replay protection](/magic-wan/reference/anti-replay-protection/)
+- Null encryption

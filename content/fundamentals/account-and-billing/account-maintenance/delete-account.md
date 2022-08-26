@@ -50,8 +50,6 @@ Deleting your account is permanent. Any accounts where you are the primary owner
 
 4. Follow the prompts to finish deleting your account.
 
-The email associated with a deleted account cannot be reused for up to a year after deactivation.
-
 {{<Aside type="note">}}
 
 Cloudflare will purge your personal information within a year of a deletion request unless required to retain it for legal obligations (such as ongoing abuse investigations or pending litigation). Refer to the [Cloudflare Data Processing Addendum](https://www.cloudflare.com/cloudflare-customer-dpa/) for further information about the deletion of personal information following the cancellation of your account.

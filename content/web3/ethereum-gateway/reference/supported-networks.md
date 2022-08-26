@@ -13,4 +13,6 @@ Currently, Cloudflare gateways support [interacting with](/web3/how-to/use-ether
 | Network | Usage |
 | --- | --- |
 | [Ethereum Mainnet](https://ethereum.org/en/enterprise/) | Append `/v1/mainnet` to calls to your gateway or the Cloudflare public gateway (`cloudflare-eth.com`). |
-| [Rinkeby Testnet](https://www.rinkeby.io/) | Append `/v1/rinkeby` to calls to your gateway. |
+| [Goerli Testnet](https://goerli.net/) | Append `/v1/goerli` to calls to your gateway. |
+| [Rinkeby Testnet](https://www.rinkeby.io/) | Append `/v1/rinkeby` to calls to your gateway. The Rinkeby Testnet gateway will be deprecated December 31, 2022. |
+| [Sepolia Testnet](https://sepolia.dev/) | Append `/v1/sepolia` to calls to your gateway. |

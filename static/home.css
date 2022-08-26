@@ -248,7 +248,7 @@
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    padding: 0 1rem;
+    padding: 0 .8rem;
     color: inherit
 }
 
@@ -5425,4 +5425,8 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     .DocsTutorials--column[data-column=length] {
         display: none
     }
+}
+
+.slashPlaceholder {
+      visibility: hidden;
 }

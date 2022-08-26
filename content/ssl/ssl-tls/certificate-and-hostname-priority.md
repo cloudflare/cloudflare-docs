@@ -32,7 +32,7 @@ For any given hostname, Cloudflare uses the following order to determine which c
 
 {{<Aside type="warning">}}
 
-If you [issue a custom hostname certificate](/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/) with wildcards enabled, you cannot update TLS settings for these wildcard hostnames.
+If you [issue a custom hostname certificate](/cloudflare-for-saas/security/certificate-management/issue-and-validate/) with wildcards enabled, you cannot update TLS settings for these wildcard hostnames.
 
 {{</Aside>}}
 
@@ -57,7 +57,7 @@ Cloudflare determines this priority in the following order (assuming each record
 1.  **Exact hostname match**:
 
     1.  [New Custom Hostname](/cloudflare-for-saas/start/getting-started/) (Belonging to a SaaS Provider)
-    2.  [Legacy Custom Hostname](/cloudflare-for-saas/ssl/reference/versioning/) (Belonging to a SaaS Provider)
+    2.  [Legacy Custom Hostname](/cloudflare-for-saas/reference/versioning/) (Belonging to a SaaS Provider)
     3.  [DNS](/dns/manage-dns-records/reference/proxied-dns-records/) (Belonging to the logical DNS zone)
 
 2.  **Wildcard hostname match**:

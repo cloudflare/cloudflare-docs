@@ -24,7 +24,7 @@ export const OWNERS: Record<string, string[]> = {
   "ddos-protection": ["pedrosousa"],
   dns: ["kodster28"],
   "email-routing": ["marciocloudflare"],
-  "email-security": ["kodster28"],
+  "email-security": ["marciocloudflare"],
   firewall: ["pedrosousa"],
   fundamentals: ["kodster28"],
   images: ["marciocloudflare"],
@@ -58,4 +58,9 @@ export const OWNERS: Record<string, string[]> = {
   web3: ["kodster28"],
   workers: ["deadlypants1973"],
   zaraz: ["marciocloudflare"],
+};
+
+export const REVIEWERS: Record<string, string[]> = {
+  analytics: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
+  logs: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
 };

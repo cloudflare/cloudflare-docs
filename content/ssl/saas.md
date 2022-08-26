@@ -1,13 +1,9 @@
 ---
-pcx_content_type: reference
-weight: 8
+pcx_content_type: navigation
 title: SSL for SaaS
+external_link: /cloudflare-for-saas/
+weight: 8
+_build:
+  publishResources: false
+  render: never
 ---
-
-# SSL for SaaS
-
-{{<render file="../../cloudflare-for-saas/_partials/_ssl-for-saas-definition.md">}} <br>
-
-For example, a customer may want to use their vanity domain `app.customer.com` to point to an application hosted on your Cloudflare zone `service.saas.com`.
-
-SSL for SaaS is now part of the broader feature, [Cloudflare for SaaS](/cloudflare-for-saas/). As of July 11, 2022, the documentation has been relocated to [Cloudflare for SaaS - SSL](/cloudflare-for-saas/ssl/).

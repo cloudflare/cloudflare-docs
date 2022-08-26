@@ -49,7 +49,7 @@ Currently, the Cloudflare WAF provides the following attack scores:
     <td>An attack score from 1 to 99 classifying the cross-site scripting (XSS) attack vector.</td>
   </tr>
   <tr>
-    <td><strong>WAF Command Injection Attack Score</strong></td>
+    <td><strong>WAF RCE Attack Score</strong></td>
     <td><code>cf.waf.score.rce</code></td>
     <td>An attack score from 1 to 99 classifying the command injection or Remote Code Execution (RCE) attack vector.</td>
   </tr>

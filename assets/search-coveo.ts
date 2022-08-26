@@ -93,8 +93,8 @@
       search.style.display = bool ? "none" : "";
       loading.style.display = bool ? "" : "none";
     }
-    coveo.$$(root).on('newQuery', () => showLoadingToggle(true))
-    coveo.$$(root).on('newResultsDisplayed', () => showLoadingToggle(false))
+      coveo.$$(root).on('newQuery', () => showLoadingToggle(true))
+      coveo.$$(root).on('newResultsDisplayed', () => showLoadingToggle(false))
   }
 
   // init

@@ -25,6 +25,7 @@ function parseRange(encoded: string | null): undefined | { offset: number, lengt
 
   return {
     offset: Number(parts[0]),
+    end:    Number(parts[1]),
     length: Number(parts[1]) + 1 - Number(parts[0]),
   }
 }
@@ -79,6 +80,9 @@ export default {
         const headers = new Headers()
         object.writeHttpMetadata(headers)
         headers.set('etag', object.httpEtag)
+        if (range) {
+          headers.set("content-range", `bytes ${range.offset}-${range.end}/${object.size}`)
+        }
         const status = object.body ? (range ? 206 : 200) : 304
         return new Response(object.body, {
           headers,

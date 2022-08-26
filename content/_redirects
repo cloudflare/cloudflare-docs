@@ -83,13 +83,13 @@
 /access/getting-started/access-setup/ /cloudflare-one/identity/ 301
 /access/rdp/ /cloudflare-one/tutorials/rdp/ 301
 /access/rdp/connect-rdp/ /cloudflare-one/tutorials/rdp/ 301
-/access/service-auth/mtls/ /cloudflare-one/identity/devices/mutual-tls-authentication/ 301
+/access/service-auth/mtls/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
 /access/service-auth/service-token/ /cloudflare-one/identity/service-tokens/ 301
 /access/setting-up-access/ /cloudflare-one/identity/ 301
 /access/setting-up-access/access-groups/ /cloudflare-one/identity/users/groups/ 301
 /access/setting-up-access/audit-logs/ /cloudflare-one/analytics/logs/audit-logs/ 301
 /access/setting-up-access/configuring-access-policies/ /cloudflare-one/policies/zero-trust/policy-management/ 301
-/access/setting-up-access/validate-jwt-tokens/ /cloudflare-one/identity/service-tokens/ 301
+/access/setting-up-access/validate-jwt-tokens/ /cloudflare-one/identity/authorization-cookie/validating-json/ 301
 /access/ssh/ /cloudflare-one/tutorials/ssh/ 301
 /access/ssh/short-live-cert-server/ /cloudflare-one/tutorials/ssh-cert-bastion/ 301
 /access/ssh/ssh-guide/ /cloudflare-one/tutorials/ssh/ 301
@@ -288,6 +288,8 @@
 /load-balancing/understand-basics/load-balancing-rules/ /load-balancing/additional-options/load-balancing-rules/ 301
 /load-balancing/understand-basics/load-shedding/ /load-balancing/additional-options/load-shedding/ 301
 /load-balancing/understand-basics/region-mapping-api/ /load-balancing/reference/region-mapping-api/ 301
+/load-balancing/reference/release-notes/ /load-balancing/reference/migration-guides/load-balancing-graphql-nodes/ 301
+/load-balancing/troubleshooting/faq/ /load-balancing/troubleshooting/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/reference/common-configurations/ 301
 
@@ -336,7 +338,7 @@
 /magic-transit/set-up/provide-configuration-data/ /magic-transit/get-started/configure-tunnels/ 301
 /magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities/ /magic-transit/get-started/configure-tunnels/assign-tunnel-route-priorities/ 301
 /magic-transit/set-up/provide-configuration-data/map-routes-for-prefixes-smaller-than-24/ /magic-transit/get-started/configure-tunnels/assign-tunnel-route-priorities/#map-route-prefixes-smaller-than-24 301
-/magic-transit/set-up/provide-configuration-data/specify-gre-tunnel-endpoints/ /magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/ 301
+/magic-transit/set-up/provide-configuration-data/specify-gre-tunnel-endpoints/ /magic-transit/how-to/configure-tunnels/ 301
 /magic-transit/set-up/provide-configuration-data/specify-ip-addresses-for-endpoint-health-checks/ /magic-transit/get-started/configure-tunnels/specify-ip-addresses-for-endpoint-health-checks/ 301
 /magic-transit/set-up/provide-configuration-data/specify-prefixes-to-advertise/ /magic-transit/get-started/configure-tunnels/specify-prefixes-to-advertise/ 301
 /magic-transit/set-up/requirements/ /magic-transit/get-started/requirements/ 301
@@ -348,7 +350,6 @@
 /magic-transit/get-started/configure-tunnels/specify-ip-addresses-for-endpoint-health-checks/ /magic-transit/how-to/run-endpoint-health-checks/ 301
 /magic-transit/get-started/configure-tunnels/specify-prefixes-to-advertise/ /magic-transit/how-to/advertise-prefixes/ 301
 /magic-transit/get-started/requirements/ /magic-transit/prerequisites/ 301
-/magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/ /magic-transit/how-to/configure-tunnels/ 301
 
 # magic-wan
 /magic-wan/on-ramp/ /magic-wan/tutorials/on-ramp/ 301
@@ -483,30 +484,46 @@
 /ssl/notifications/ /fundamentals/notifications/notification-available/ 301
 
 # cloudflare for saas
-/ssl/ssl-for-saas/certificate-validation-methods/ /cloudflare-for-saas/ssl/common-tasks/certificate-validation-methods/ 301
-/ssl/ssl-for-saas/common-api-calls/ /cloudflare-for-saas/ssl/reference/common-api-calls/ 301
-/ssl/ssl-for-saas/hostname-specific-behavior/regional-services-for-saas/ /cloudflare-for-saas/related-products/regional-services-for-saas/ 301
-/ssl/ssl-for-saas/hostname-specific-behavior/waf-for-saas/ /cloudflare-for-saas/related-products/waf-for-saas/ 301
-/ssl/ssl-for-saas/hostname-verification/ /cloudflare-for-saas/ssl/common-tasks/hostname-verification/ 301
-/ssl/ssl-for-saas/hostname-verification-backoff-schedule/ /cloudflare-for-saas/ssl/reference/hostname-verification-backoff-schedule/ 301
-/ssl/ssl-for-saas/issuing-certificates/ /cloudflare-for-saas/ssl/common-tasks/issuing-certificates/ 301
-/ssl/ssl-for-saas/reference/validation-backoff-schedule/ /ssl/ssl-tls/validation-backoff-schedule/ 301
-/ssl/ssl-for-saas/status-codes/ /cloudflare-for-saas/ssl/reference/status-codes/ 301
-/ssl/ssl-for-saas/status-codes/certificate-authority-specific/ /cloudflare-for-saas/ssl/reference/status-codes/certificate-authority-specific/ 301
-/ssl/ssl-for-saas/status-codes/custom-csrs/ /cloudflare-for-saas/ssl/reference/status-codes/custom-csrs/ 301
-/ssl/ssl-for-saas/status-codes/custom-hostnames/ /cloudflare-for-saas/ssl/reference/status-codes/custom-hostnames/ 301
-/ssl/ssl-for-saas/troubleshooting/ /cloudflare-for-saas/ssl/troubleshooting/ 301
-/ssl/ssl-for-saas/uploading-certificates/ /cloudflare-for-saas/ssl/custom-certificates/uploading-certificates/ 301
-/ssl/ssl-for-saas/validation-backoff-schedule/ /ssl/ssl-tls/validation-backoff-schedule/ 301
-/ssl/ssl-for-saas/versioning/ /cloudflare-for-saas/ssl/reference/versioning/ 301
-/cloudflare-for-saas/ssl/common-tasks/certificate-validation-methods/ /cloudflare-for-saas/ssl/common-tasks/issue-and-validate/ 301
-/cloudflare-for-saas/ssl/common-tasks/issuing-certificates/ /cloudflare-for-saas/ssl/common-tasks/issue-and-validate/ 301
+/ssl/ssl-for-saas/certificate-validation-methods/ /cloudflare-for-saas/security/certificate-management/issue-and-validate/ 301
+/ssl/ssl-for-saas/common-api-calls/ /cloudflare-for-saas/start/common-api-calls/ 301
+/ssl/ssl-for-saas/hostname-specific-behavior/regional-services-for-saas/ /cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ 301
+/ssl/ssl-for-saas/hostname-specific-behavior/waf-for-saas/ /cloudflare-for-saas/security/waf-for-saas/ 301
+/ssl/ssl-for-saas/hostname-verification/ /cloudflare-for-saas/domain-support/hostname-verification/ 301
+/ssl/ssl-for-saas/hostname-verification-backoff-schedule/ /cloudflare-for-saas/start/hostname-verification-backoff-schedule/ 301
+/ssl/ssl-for-saas/issuing-certificates/ /cloudflare-for-saas/security/certificate-management/issue-and-validate/ 301
+/ssl/ssl-for-saas/reference/validation-backoff-schedule/ /cloudflare-for-saas/start/hostname-verification-backoff-schedule/ 301
+/ssl/ssl-for-saas/status-codes/ /cloudflare-for-saas/reference/status-codes/ 301
+/ssl/ssl-for-saas/status-codes/certificate-authority-specific/ /cloudflare-for-saas/reference/status-codes/certificate-authority-specific/ 301
+/ssl/ssl-for-saas/status-codes/custom-csrs/ /cloudflare-for-saas/reference/status-codes/custom-csrs/ 301
+/ssl/ssl-for-saas/status-codes/custom-hostnames/ /cloudflare-for-saas/reference/status-codes/custom-hostnames/ 301
+/ssl/ssl-for-saas/troubleshooting/ /cloudflare-for-saas/reference/troubleshooting/ 301
+/ssl/ssl-for-saas/uploading-certificates/ /cloudflare-for-saas/security/certificate-management/custom-certificates/uploading-certificates/ 301
+/ssl/ssl-for-saas/validation-backoff-schedule/ /cloudflare-for-saas/start/hostname-verification-backoff-schedule/ 301
+/ssl/ssl-for-saas/versioning/ /cloudflare-for-saas/reference/versioning/ 301
+/cloudflare-for-saas/ssl/common-tasks/certificate-validation-methods/ /cloudflare-for-saas/security/certificate-management/issue-and-validate/ 301
+/cloudflare-for-saas/ssl/common-tasks/issuing-certificates/ /cloudflare-for-saas/security/certificate-management/issue-and-validate/ 301
 /cloudflare-for-saas/getting-started/ /cloudflare-for-saas/start/getting-started/ 301
 /cloudflare-for-saas/ssl/reference/common-api-calls/ /cloudflare-for-saas/start/common-api-calls/ 301
 /cloudflare-for-saas/ssl/hostname-specific-behavior/custom-origin/ /cloudflare-for-saas/start/advanced-settings/custom-origin/ 301
 /cloudflare-for-saas/related-products/regional-services-for-saas/ /cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ 301
-/cloudflare-for-saas/ssl/common-tasks/hostname-verification/ /cloudflare-for-saas/domain-support/hostname-verification/
+/cloudflare-for-saas/ssl/common-tasks/hostname-verification/ /cloudflare-for-saas/domain-support/hostname-verification/ 301
 /cloudflare-for-saas/ssl/hostname-specific-behavior/migrating-custom-hostnames/ /cloudflare-for-saas/domain-support/migrating-custom-hostnames/ 301
+/cloudflare-for-saas/ssl/custom-certificates/ /cloudflare-for-saas/security/certificate-management/custom-certificates/ 301
+/cloudflare-for-saas/ssl/common-tasks/issue-and-validate/ /cloudflare-for-saas/security/certificate-management/issue-and-validate/ 301
+/cloudflare-for-saas/ssl/custom-certificates/uploading-certificates/ /cloudflare-for-saas/security/certificate-management/custom-certificates/uploading-certificates/ 301
+/cloudflare-for-saas/ssl/custom-certificates/certificate-signing-requests/ /cloudflare-for-saas/security/certificate-management/custom-certificates/certificate-signing-requests/ 301
+/cloudflare-for-saas/ssl/common-tasks/enforce-mtls/ /cloudflare-for-saas/security/certificate-management/enforce-mtls/ 301
+/cloudflare-for-saas/related-products/waf-for-saas/ /cloudflare-for-saas/security/waf-for-saas/ 301
+/cloudflare-for-saas/related-products/early-hints-for-saas/ /cloudflare-for-saas/performance/early-hints-for-saas/ 301
+/cloudflare-for-saas/ssl/reference/worker-as-origin/ /cloudflare-for-saas/workers-for-platforms/worker-as-origin/ 301
+/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/ /cloudflare-for-saas/workers-for-platforms/custom-metadata/ 301
+/cloudflare-for-saas/ssl/hostname-specific-behavior/connection-details/ /cloudflare-for-saas/reference/connection-details/ 301
+/cloudflare-for-saas/ssl/reference/hostname-analytics/ /cloudflare-for-saas/hostname-analytics/ 301
+/cloudflare-for-saas/ssl/ /cloudflare-for-saas/security/certificate-management/ 301
+/cloudflare-for-saas/ssl/reference/hostname-verification-backoff-schedule/ /cloudflare-for-saas/start/hostname-verification-backoff-schedule/ 301
+/cloudflare-for-saas/ssl/reference/versioning/ /cloudflare-for-saas/reference/versioning/ 301
+/cloudflare-for-saas/ssl/troubleshooting/ /cloudflare-for-saas/reference/troubleshooting/ 301
+/cloudflare-for-saas/hostname-specific-behavior/ /cloudflare-for-saas/domain-support/ 301
 # Includes dynamic redirects listed at bottom
 
 # stream
@@ -543,10 +560,20 @@
 /stream/uploading-videos/using-webhooks/ /stream/edit-manage-videos/manage-video-library/using-webhooks/ 301
 /stream/uploading-videos/creator-id/ /stream/edit-manage-videos/manage-video-library/creator-id/ 301
 /stream/uploading-videos/searching/ /stream/edit-manage-videos/manage-video-library/searching/ 301
-/stream/viewing-videos/displaying-thumbnails/ /stream/edit-manage-videos/edit-videos/displaying-thumbnails/ 301
+/stream/edit-manage-videos/edit-videos/adding-captions/ /stream/edit-videos/adding-captions/ 301
+/stream/edit-manage-videos/edit-videos/applying-watermarks/ /stream/edit-videos/applying-watermarks/ 301
+/stream/edit-manage-videos/edit-videos/video-clipping/ /stream/edit-videos/video-clipping/ 301
+/stream/edit-manage-videos/manage-video-library/using-webhooks/ /stream/manage-video-library/using-webhooks/ 301
+/stream/edit-manage-videos/manage-video-library/creator-id/ /stream/manage-video-library/creator-id/ 301
+/stream/edit-manage-videos/manage-video-library/searching/ /stream/manage-video-library/searching/ 301
 
 # tenant_redirects
 /tenant/tutorial/ /tenant/get-started/ 301
+/tenant/get-started/prerequisites/ /tenant/get-started/ 301
+/tenant/get-started/provisioning-resources/ /tenant/how-to/manage-accounts/ 301
+/tenant/get-started/user-access/ /tenant/get-started/ 301
+/tenant/get-started/enabling-services/ /tenant/how-to/manage-subscriptions/ 301
+/tenant/get-started/service-configuration/ /tenant/get-started/ 301
 
 # terraform
 /terraform/advanced-topics/importing-cloudflare-resources/ /terraform/advanced-topics/import-cloudflare-resources/ 301
@@ -584,6 +611,7 @@
 /waf/custom-rules/rate-limiting/parameters/ /waf/rate-limiting-rules/parameters/ 301
 /waf/custom-rules/rate-limiting/request-rate/ /waf/rate-limiting-rules/request-rate/ 301
 /waf/custom-rules/rate-limiting/use-cases/ /waf/rate-limiting-rules/use-cases/ 301
+/waf/about/file-scanning/ /waf/about/content-scanning/ 301
 /waf/about/waf-ml/ /waf/about/waf-attack-score/ 301
 
 # waiting-room
@@ -600,6 +628,7 @@
 /waiting-room/how-to/mobile-traffic/ /waiting-room/additional-options/mobile-traffic/ 301
 /waiting-room/how-to/test-waiting-room/ /waiting-room/additional-options/test-waiting-room/ 301
 /waiting-room/how-to/use-waiting-room-api/ /waiting-room/reference/waiting-room-api/ 301
+/waiting-room/troubleshooting/ /waiting-room/ 301
 
 # warp-client
 /warp-client/for-teams/ /cloudflare-one/connections/connect-devices/warp/ 301
@@ -907,6 +936,8 @@
 /workers/writing-workers/handling-errors/ /workers/about/tips/debugging/#4-go-to-origin-on-error 301
 /workers/writing-workers/resource-limits/ /workers/about/limits/ 301
 /workers/runtime-apis/r2/ /r2/runtime-apis/ 301
+/workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-application/ 301
+/workers/examples/http2-server-push/ /workers/examples/103-early-hints/ 301
 
 # zaraz
 
@@ -918,6 +949,8 @@
 
 # cloudflare-one / zero-trust
 
+/cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare /cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare 301
+
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/analytics/logs/gateway-logs/manage-pii/ 301
 
 /cloudflare-one/applications/arbitrary-tcp/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
@@ -926,18 +959,38 @@
 /cloudflare-one/applications/non-HTTP/RDP/ /cloudflare-one/tutorials/rdp/ 301
 /cloudflare-one/applications/non-HTTP/SMB-file-shares/ /cloudflare-one/tutorials/smb/ 301
 
-/cloudflare-one/connections/connect-apps/configuration/config/ /cloudflare-one/connections/connect-apps/configuration/arguments/ 301
-/cloudflare-one/connections/connect-apps/configuration/ingress/ /cloudflare-one/connections/connect-apps/configuration/local-management/ingress/ 301
-/argo-tunnel/configuration/ingress/ /cloudflare-one/connections/connect-apps/configuration/local-management/ingress/ 301
-/argo-tunnel/faq/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
-/cloudflare-one/connections/connect-apps/configuration/configuration-file/ /cloudflare-one/connections/connect-apps/configuration/local-management/configuration-file/ 301
-/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/ /cloudflare-one/connections/connect-apps/configuration/local-management/ingress/ 301
-/cloudflare-one/connections/connect-apps/configuration/private-networks/ /cloudflare-one/connections/connect-networks/private-net/ 301
-/cloudflare-one/connections/connect-apps/create-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
-/cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare/ /cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare/ 301
+/cloudflare-one/connections/connect-apps/configuration/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/setup/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
-/cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/ /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/ 301
-/cloudflare-one/connections/connect-apps/trycloudflare/ /cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/ /cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/ 301
+/cloudflare-one/connections/connect-apps/create-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
+/cloudflare-one/connections/connect-apps/configuration/remote-management/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/remote-management/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/run-tunnel/ 301
+/cloudflare-one/connections/connect-apps/configuration/local-management/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ 301
+/cloudflare-one/connections/connect-apps/configuration/local-management/configuration-file/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/ 301
+/cloudflare-one/connections/connect-apps/configuration/configuration-file/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/ 301
+/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/ 301
+/cloudflare-one/connections/connect-apps/configuration/ingress/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/ 301
+/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/ 301
+/argo-tunnel/configuration/ingress/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/ 301
+/cloudflare-one/connections/connect-apps/configuration/config/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/ 301
+/cloudflare-one/connections/connect-apps/configuration/arguments/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/linux/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/linux/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/macos/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/macos/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/windows/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/windows/ 301
+/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-commands/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/tunnel-useful-commands/ 301
+/cloudflare-one/connections/connect-apps/configuration/private-networks/ /cloudflare-one/connections/connect-apps/private-net/ 301
+
+/cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/ /cloudflare-one/connections/connect-apps/deployment-guides/ 301
+/cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/aws/ /cloudflare-one/connections/connect-apps/deployment-guides/aws/ 301
+/cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/azure/ /cloudflare-one/connections/connect-apps/deployment-guides/azure/ 301
+/cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/google-cloud-platform/ /cloudflare-one/connections/connect-apps/deployment-guides/google-cloud-platform/ 301
+/cloudflare-one/connections/connect-apps/routing-to-tunnel/kubernetes/ /cloudflare-one/connections/connect-apps/deployment-guides/kubernetes/ 301
+/cloudflare-one/connections/connect-apps/configuration/ports-and-ips/ /cloudflare-one/connections/connect-apps/do-more-with-tunnels/ports-and-ips/ 301
+/cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare/ /cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare/ 301
+/cloudflare-one/connections/connect-apps/trycloudflare/ /cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare/ 301
+/argo-tunnel/faq/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
 
 /cloudflare-one/connections/connect-browsers/ /cloudflare-one/policies/browser-isolation/ 301
 /cloudflare-one/connections/connect-browsers/configuration/ /cloudflare-one/policies/browser-isolation/configuration/ 301
@@ -971,16 +1024,36 @@
 /cloudflare-one/faq/tunnel/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
 /cloudflare-one/faq/tunnels/ /cloudflare-one/faq/ 301
 
+/cloudflare-one/identity/devices/azure-ad/ /cloudflare-one/identity/devices/access-integrations/azure-ad/ 301
+/cloudflare-one/identity/devices/mutual-tls-authentication/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
+/cloudflare-one/identity/devices/tanium/ /cloudflare-one/identity/devices/access-integrations/tanium/ 301
+/cloudflare-one/identity/devices/crowdstrike/ /cloudflare-one/identity/devices/service-providers/crowdstrike/ 301
+/cloudflare-one/identity/devices/microsoft/ /cloudflare-one/identity/devices/service-providers/microsoft/ 301
+/cloudflare-one/identity/devices/uptycs/ /cloudflare-one/identity/devices/service-providers/uptycs/ 301
+/cloudflare-one/identity/devices/workspace-one/ /cloudflare-one/identity/devices/service-providers/workspace-one/ 301
+/cloudflare-one/identity/devices/application-check/ /cloudflare-one/identity/devices/warp-client-checks/application-check/ 301
+/cloudflare-one/identity/devices/carbon-black/ /cloudflare-one/identity/devices/warp-client-checks/carbon-black/ 301
+/cloudflare-one/identity/devices/corp-device/ /cloudflare-one/identity/devices/warp-client-checks/corp-device/ 301
+/cloudflare-one/identity/devices/disk-encryption/ /cloudflare-one/identity/devices/warp-client-checks/disk-encryption/ 301
+/cloudflare-one/identity/devices/domain-joined/ /cloudflare-one/identity/devices/warp-client-checks/domain-joined/ 301
+/cloudflare-one/identity/devices/file-check/ /cloudflare-one/identity/devices/warp-client-checks/file-check/ 301
+/cloudflare-one/identity/devices/firewall/ /cloudflare-one/identity/devices/warp-client-checks/firewall/ 301
+/cloudflare-one/identity/devices/os-version/ /cloudflare-one/identity/devices/warp-client-checks/os-version/ 301
+/cloudflare-one/identity/devices/require-gateway/ /cloudflare-one/identity/devices/warp-client-checks/require-gateway/ 301
+/cloudflare-one/identity/devices/require-warp/ /cloudflare-one/identity/devices/warp-client-checks/require-warp/ 301
+/cloudflare-one/identity/devices/sentinel-one/ /cloudflare-one/identity/devices/warp-client-checks/sentinel-one/ 301
+
 /cloudflare-one/identity/idp-integration/one-time-pin/ /cloudflare-one/identity/one-time-pin/ 301
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
 /cloudflare-one/identity/service-auth/service-tokens/ /cloudflare-one/identity/service-tokens/ 301
+/cloudflare-one/identity/users/validating-json/ /cloudflare-one/identity/authorization-cookie/validating-json/ 301
 
 /cloudflare-one/policies/lists/ /cloudflare-one/policies/filtering/lists 301
 /cloudflare-one/policies/zero-trust/ /cloudflare-one/policies/access/ 301
 /cloudflare-one/policies/zero-trust/app-paths/ /cloudflare-one/policies/access/app-paths/ 301
 /cloudflare-one/policies/zero-trust/common-configs/ /cloudflare-one/policies/access/ 301
-/cloudflare-one/policies/zero-trust/cors/ /cloudflare-one/policies/access/cors/ 301
+/cloudflare-one/policies/zero-trust/cors/ /cloudflare-one/identity/authorization-cookie/cors/  301
 /cloudflare-one/policies/zero-trust/mfa-requirements/ /cloudflare-one/policies/access/mfa-requirements/ 301
 /cloudflare-one/policies/zero-trust/policy-management/ /cloudflare-one/policies/access/policy-management/ 301
 /cloudflare-one/policies/zero-trust/require-purpose-justification/ /cloudflare-one/policies/access/require-purpose-justification/ 301
@@ -994,6 +1067,9 @@
 /cloudflare-one/policies/filtering/http-policies/application-app-types/ /cloudflare-one/policies/filtering/application-app-types/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/ /cloudflare-one/policies/filtering/dns-policies/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/categories/ /cloudflare-one/policies/filtering/dns-policies/dns-categories/ 301
+
+/cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
+
 /cloudflare-one/tutorials/corp-device-tag/ /cloudflare-one/identity/devices/ 301
 
 # new_doc_redirects
@@ -1014,7 +1090,7 @@
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
 /load-balancing/understand-basics/load-balancing-rules/* /load-balancing/additional-options/load-balancing-rules/:splat 301
 /fundamentals/get-started/origin-health/* /fundamentals/get-started/task-guides/origin-health/:splat 301
-/tenant/tutorial/* /tenant/get-started/:splat 301
+/tenant/tutorial/* /tenant/get-started/ 301
 /argo-tunnel/run-tunnel/run-as-service/* /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/:splat 301
 /docs-engine/* https://github.com/cloudflare/cloudflare-docs/blob/production/README.md 301
 
@@ -1024,6 +1100,7 @@
 /ssl/ssl-for-saas/hostname-specific-behavior/* /cloudflare-for-saas/ssl/hostname-specific-behavior/:splat
 /ssl/ssl-for-saas/reference/* /cloudflare-for-saas/ssl/reference/:splat 301
 /ssl/ssl-for-saas/* /cloudflare-for-saas/:splat 301
+/cloudflare-for-saas/ssl/reference/status-codes/* /cloudflare-for-saas/reference/status-codes/:splat 301
 
 /warp-client/setting-up/* /warp-client/get-started/:splat 301
 /warp-client/setting-up/linux/* /warp-client/get-started/linux/:splat 301

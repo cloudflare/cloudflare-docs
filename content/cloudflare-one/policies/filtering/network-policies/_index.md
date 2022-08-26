@@ -114,7 +114,7 @@ With the Device Posture selector, admins can use signals from end-user devices t
 
 | UI name        | API example                                                                                                                                                             |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Device Posture | `any(device_posture.checks.failed[*] in {"1308749e-fcfb-4ebc-b051-fe022b632644"})`, `any(device_posture.checks.passed[*] in {"1308749e-fcfb-4ebc-b051-fe022b632644"})"` |
+| Passed Device Posture Check | `any(device_posture.checks.failed[*] in {"1308749e-fcfb-4ebc-b051-fe022b632644"})`, `any(device_posture.checks.passed[*] in {"1308749e-fcfb-4ebc-b051-fe022b632644"})"` |
 
 ### Protocol
 
@@ -181,7 +181,7 @@ The IP address of the user making the request.
 
 ### Source Port
 
-The IP address of the user making the request.
+The source port of the user making the request.
 
 | UI name     | API example              |
 | ----------- | ------------------------ |
