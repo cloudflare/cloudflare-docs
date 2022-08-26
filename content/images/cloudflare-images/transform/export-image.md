@@ -25,6 +25,8 @@ To download an image via API, the syntax is as follows:
 GET accounts/<ACCOUNT_ID>/images/v1/<IMAGE_ID>/blob
 ```
 
+`<IMAGE_ID>` must be fully URL encoded in the API call URL.
+
 Example:
 
 ```bash

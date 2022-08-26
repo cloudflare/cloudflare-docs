@@ -52,3 +52,9 @@ You will then receive a response similar to this:
 You can use the custom ID feature with the ability to [serve images from custom domains](/images/cloudflare-images/serve-images/#serving-images-from-custom-domains) for added flexibility.
 
 Refer to [Make your first API request](/images/cloudflare-images/api-request/) to learn more about API tokens.
+
+## Custom IDs in delivery URLs
+
+When [serving images](/images/cloudflare-images/serve-images), you can include non URL-encoded Custom IDs directly in the image URLs.
+
+However, any `%` char present in Custom IDs must be encoded to `%25` in the image delivery URLs.
