@@ -28,7 +28,7 @@ https://api.cloudflare.com/client/v4
 
 The `<ACCOUNT_ID>` argument is the account ID (a hexadecimal string). You can find this value in the Cloudflare dashboard.
 
-The following tables summarize the available operations.
+The tables in the following sections summarize the available operations.
 
 ### General operations
 
@@ -100,3 +100,7 @@ Delete an out-of-state TCP rule | `DELETE accounts/<ACCOUNT_ID>/configs/tcp_flow
 Delete all out-of-state TCP rules | `DELETE accounts/<ACCOUNT_ID>/configs/tcp_flow_protection/rules`<br>Deletes all existing out-of-state TCP rules from the account.
 
 {{</table-wrap>}}
+
+## Pagination
+
+The API operations that return a list of items use pagination. For more information on the available pagination query parameters, refer to [Requests: Pagination](https://api.cloudflare.com/#getting-started-requests) in the API documentation.
