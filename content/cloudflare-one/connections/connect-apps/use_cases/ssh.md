@@ -79,7 +79,7 @@ This can be done in conjunction with routing over WARP so that there are multipl
 
 1. To save the policy, select **Save**. You can edit the policy later to change allowed users or authentication providers.
 
-## Install `cloudflared` on the server
+### Install `cloudflared` on the server
 
 Cloudflare Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
@@ -92,7 +92,7 @@ $ sudo wget https://github.com/cloudflare/cloudflared/releases/latest/download/c
 $ sudo dpkg -i ./cloudflared-linux-amd64.deb
 ```
 
-## Authenticate `cloudflared`
+### Authenticate `cloudflared`
 
 Run the following command on the server to authenticate cloudflared into your Cloudflare account.
 
@@ -104,7 +104,7 @@ $ cloudflared tunnel login
 
 Choose any hostname presented in the list. Cloudflare will issue a certificate scoped to your account. You do not need to pick the specific hostname where you will serve the Tunnel.
 
-## Create a Tunnel
+### Create a Tunnel
 
 Next, [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/) on the server with the command below.
 
@@ -120,7 +120,7 @@ The command will output an ID for the Tunnel and generate an associated credenti
 $ cloudflared tunnel list
 ```
 
-## Configure the Tunnel
+### Configure the Tunnel
 
 You can now [configure the Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/) to serve traffic.
 
@@ -144,7 +144,7 @@ ingress:
   # the earlier rules
 ```
 
-## Route to the Tunnel
+### Route to the Tunnel
 
 You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/).
 
@@ -160,7 +160,7 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
 
 4. Select **Save**.
 
-## Run the Tunnel
+### Run the Tunnel
 
 You can now run the Tunnel to connect the target service to Cloudflare. Use the following command to run the Tunnel, replacing `<NAME>` with the name created for your Tunnel.
 
@@ -170,9 +170,9 @@ $ cloudflared tunnel run <NAME>
 
 We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/) that is configured to launch on start.
 
-## Connect from a client machine
+### Connect from a client machine
 
-### Native Terminal
+#### Native Terminal
 
 You can now connect from a client machine using `cloudflared`.
 
@@ -197,7 +197,7 @@ Host azure.widgetcorp.tech
 
 You can now test the SSH flow by running a command to reach the service. When the command is run, `cloudflared` will launch a browser window to prompt you to authenticate with your identity provider before establishing the connection from your terminal.
 
-### Browser-rendered terminal
+#### Browser-rendered terminal
 
 Cloudflare can render an SSH client in your browser without the need for client software or end user configuration changes.
 
