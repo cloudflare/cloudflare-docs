@@ -57,20 +57,36 @@ To edit, delete, or disable a notification, go to your [account notifications](h
 
 ## Alert types
 
-Cloudflare can issue notifications for the following DDoS alerts:
+Cloudflare can issue notifications for different types of DDoS attack alerts.
+
+### Standard alerts
 
 * **HTTP DDoS Attack Alert**: Alert for HTTP attacks with a duration over two minutes that generate more than 2,000 requests per second.
-* **Advanced HTTP DDoS Attack Alert**: Customizable alert for HTTP attacks with a duration over two minutes that generate more than the configured number of requests per second (100 rps by default). Refer to [Advanced alert configuration](#advanced-alert-configuration) for more information on the available parameters.
 * **Layer 3/4 DDoS Attack Alert**: Alert for Layer 3/4 attacks with a duration over two minutes that generate more than 20,000 packets per second.
-* **Advanced Layer 3/4 DDoS Attack Alert**: Customizable alert for Layer 3/4 attacks with a duration over two minutes that generate more than the configured number of packets per second (12,000 pps by default). Refer to [Advanced alert configuration](#advanced-alert-configuration) for more information on the available parameters.
 
-{{<Aside type="note" header="Configuring regular and advanced alerts">}}
-If you configure more than one alert type for the same kind of attack (for example, both an HTTP DDoS Attack Alert and an Advanced HTTP DDoS Attack Alert) you may get more than one notification when an attack occurs. To avoid receiving duplicate notifications, delete one of the configured alerts.
+### Advanced alerts
+
+{{<Aside type="note">}}
+The availability of advanced DDoS attack alerts depends on your Cloudflare plan and subscribed services. Refer to [Availability](#availability) for details.
 {{</Aside>}}
 
-### Availability
+Advanced DDoS attack alerts support additional configuration, allowing you to filter the notifications you wish to receive.
 
-The available alerts depend on your Cloudflare plan and services:
+* **Advanced HTTP DDoS Attack Alert**: Customizable alert for HTTP attacks with a duration over two minutes that generate more than the configured number of requests per second (100 rps by default). Supports the following filtering parameters:
+
+    * The zones in your account for which you wish to receive notifications.
+    * The specific hostnames for which you wish to receive notifications.
+    * The minimum requests-per-second rate that will trigger the alert (100 rps by default).
+
+* **Advanced Layer 3/4 DDoS Attack Alert**: Customizable alert for Layer 3/4 attacks with a duration over two minutes that generate more than the configured number of packets per second (12,000 pps by default). Supports the following filtering parameters:
+
+    * The IP prefixes for which you wish to receive notifications.
+    * The specific IP addresses for which you with to receive notifications.
+    * The minimum packets-per-second rate that will trigger the alert (12,000 pps by default).
+
+## Availability
+
+The available alerts depend on your Cloudflare plan and subscribed services:
 
 Alert type                           |     WAF/CDN     |    Spectrum     | Spectrum BYOIP  |  Magic Transit
 -------------------------------------|:---------------:|:---------------:|:---------------:|:--------------:
@@ -82,26 +98,6 @@ Advanced Layer 3/4 DDoS Attack Alert |        –        | Yes<sup>2</sup> | Yes
 <sup>1</sup> _Only available to Enterprise customers with the Advanced DDoS add-on._ <br>
 <sup>2</sup> _Only available on an Enterprise plan._
 
-### Advanced alert configuration
-
-{{<Aside type="note">}}
-The availability of advanced DDoS attack alerts depends on your Cloudflare plan and subscribed services. Refer to [Availability](#availability) for details.
-{{</Aside>}}
-
-Advanced DDoS attack alerts support additional configuration, allowing you to filter the notifications you wish to receive.
-
-The Advanced HTTP DDoS Attack Alert supports the following filtering parameters:
-
-* The zones in your account for which you wish to receive notifications.
-* The specific hostnames for which you wish to receive notifications.
-* The minimum requests-per-second rate that will trigger the alert (100 rps by default).
-
-The Advanced Layer 3/4 DDoS Attack Alert supports the following filtering parameters:
-
-* The IP prefixes for which you wish to receive notifications.
-* The specific IP addresses for which you with to receive notifications.
-* The minimum packets-per-second rate that will trigger the alert (12,000 pps by default).
-
 ## Example notification
 
 The following image shows an example notification delivered via email:
@@ -112,4 +108,6 @@ To investigate a possibly ongoing attack, click **View Dashboard**.
 
 ## Final remarks
 
-Events listed under [Firewall Events](/waf/analytics/paid-plans/) with the `Connection Close` mitigation action are not covered by DDoS alerts. Cloudflare only sends notifications when the mitigation action is one of the following: `force-conn-close`, `block`, `ratelimit`, or `captcha`.
+* If you configure more than one alert type for the same kind of attack (for example, both an HTTP DDoS Attack Alert and an Advanced HTTP DDoS Attack Alert) you may get more than one notification when an attack occurs. To avoid receiving duplicate notifications, delete one of the configured alerts.
+
+* Events listed under [Firewall Events](/waf/analytics/paid-plans/) with the `Connection Close` mitigation action are not covered by DDoS alerts. Cloudflare only sends notifications when the mitigation action is one of the following: `force-conn-close`, `block`, `ratelimit`, or `captcha`.
