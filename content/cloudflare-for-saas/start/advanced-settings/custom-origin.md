@@ -25,7 +25,7 @@ To use a custom origin, select that option when [creating a new custom hostname]
 
 When Cloudflare establishes a connection to your default origin server, the `Host` header and [SNI](/fundamentals/glossary/#server-name-indication-sni) will both be the value of the original custom hostname.
 
-However, if you configure that custom hostname with a custom origin, the value of the SNI will be that of the custom origin and the `Host` header will be the original custom hostname. Since these values will not match, you will not be able to use the [Full (strict)](/ssl/origin-configuration/ssl-modes/#full-strict) on your origins.
+However, if you configure that custom hostname with a custom origin, the value of the SNI will be that of the custom origin and the `Host` header will be the original custom hostname. Since these values will not match, you will not be able to use the [Full (strict)](/ssl/origin-configuration/ssl-modes/full-strict/) on your origins.
 
 To solve this problem, you can contact your account team to request an entitlement for **SNI rewrites**.
 
@@ -46,9 +46,11 @@ Choose how your custom hostname populates the SNI value with SNI rewrites:
   - If wildcards are not enabled and a request comes to `example.com`, choose whether to set the SNI as `example.com` or `www.example.com`.
   - If wildcards are enabled, you set the SNI to `example.com`, and a request comes to `www.example.com`, then the SNI is `example.com`.
 
-{{<Aside type="note">}}
+{{<Aside type="warning" header="Important">}}
 
-Currently, SNI Rewrite is not supported for wildcard custom hostnames. Subdomains covered by a wildcard custom hostname send the custom origin server name as the SNI value.
+* Currently, SNI Rewrite is not supported for wildcard custom hostnames. Subdomains covered by a wildcard custom hostname send the custom origin server name as the SNI value.
+
+* SNI overrides defined using an Origin Rule will take precedence over SNI rewrites.
 
 {{</Aside>}}
 

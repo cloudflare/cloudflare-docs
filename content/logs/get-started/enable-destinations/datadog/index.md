@@ -141,7 +141,9 @@ Response:
 ```
 
 {{<Aside type="note" header="Note">}}
-
 The Datadog destination is exclusive to new jobs and might not be backward compatible with older jobs. Create new jobs if you expect to send your logs directly to Datadog instead of modifying already existing ones. If you try to modify an existing job for another destination to push logs to Datadog, you may observe errors.
+{{</Aside>}}
 
+{{<Aside type="note" header="Note">}}
+To analyze and visualize Cloudflare metrics using the Cloudflare Integration tile for Datadog, follow the steps in the [Datadog Analytics integration page](/fundamentals/data-products/analytics-integrations/datadog/).
 {{</Aside>}}

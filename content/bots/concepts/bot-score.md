@@ -28,6 +28,12 @@ Customers with a Pro plan or higher can automatically see bot traffic divided in
 | **Likely human** | Bot scores of 30 through 99. |
 | **Verified bot** | Non-malicious automated traffic (used to power search engines and other applications). |
 
+{{<Aside type="note" header="Note:">}}
+
+Bot scores are not computed for requests to paths that are handled by Cloudflare and will never be blocked or forwarded to the origin. 
+
+{{</Aside>}}
+
 ## How Cloudflare generates bot scores
 
 {{<Aside type="note" header="Note:">}}
