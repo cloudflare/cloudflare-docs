@@ -33,15 +33,17 @@ Obtain the following URLs from your SaaS application account:
 
 7. If your SaaS application requires additional **SAML attribute statements**, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
 
-8. Turn on **App Launcher visibility** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application. Users with no access to the application will not see it in the App Launcher regardless of whether the toggle is enabled. Users with access to the application will still be able to reach it with a direct link.
+8. (Optional) Turn on **App Launcher visibility** if you want the application to be visible in the [App Launcher](/cloudflare-one/applications/app-launcher/). 
+{{<Aside type="note">}}
+The toggle does not impact the ability for users to reach the application. Users with no access to the application will not see it in the App Launcher regardless of whether the toggle is enabled. Users with access to the application will still be able to reach it with a direct link.
+{{</Aside>}}
 
 9. (Optional) Add a custom logo for your application by selecting **Custom** and entering a link to your desired image.
-
 {{<Aside type="note">}}
 If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
 {{</Aside>}}
 
-10. Next, choose the **Identity providers** you want to enable for your app.
+10. Next, choose the **Identity providers** you want to enable for your application.
 
 11. Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
 
@@ -49,7 +51,9 @@ If you are having issues specifying a custom logo, check that the image is serve
 
 ## 2. Add an Access policy
 
-To control who can access your application, [create an Access policy](/cloudflare-one/policies/access/) and select **Next**.
+1. To control who can access your application, [create an Access policy](/cloudflare-one/policies/access/).
+
+2. Select **Next**.
 
 ## 3. Configure SSO in your SaaS application
 
