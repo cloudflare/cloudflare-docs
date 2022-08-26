@@ -14,9 +14,7 @@ When registering or transferring a domain to Cloudflare Registrar, there are a f
 
 ## List of TLDs supported
 
-Cloudflare supports over 200 [top-level domains (TLDs)](https://www.cloudflare.com/learning/ddos/glossary/domain-name-system-dns/) and is always evaluating adding new TLDs. You can find the full list of supported and coming soon TLDs on [our TLD policies page](https://www.cloudflare.com/tld-policies/).
-
-If you want to register a `.us` domain refer to  [Additional requirements for .US domains](#additional-requirements-for-us-domains).
+Cloudflare supports over 200 [top-level domains (TLDs)](https://www.cloudflare.com/learning/dns/top-level-domain/) and is always evaluating adding new TLDs. You can find the full list of supported and coming soon TLDs on [our TLD policies page](https://www.cloudflare.com/tld-policies/). If you want to register a `.us` domain refer to  [Additional requirements for .US domains](#additional-requirements-for-us-domains).
 
 ## Domain availability
 
