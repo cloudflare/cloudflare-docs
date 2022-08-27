@@ -45,7 +45,7 @@ To set up the tunnel on the machine use the following steps:
 Once the tunnel is running you can create Zero Trust security policies to manage access.
 
 ### Zero Trust Policies
-In the Access section of the Zero Trust Dashboard, you will need to create a Private Network application and Zero Trust security policy to manage access to your RDP server. 
+In the Access section of the [Zero Trust Dashboard](http://dash.teams.cloudflare.com), you will need to create a Private Network application and Zero Trust security policy to manage access to your RDP server. 
 
 To get started, navigate to Access > Applications > Create an Application. 
 
@@ -69,7 +69,7 @@ Else block rule
 {{</table-wrap>}}
 
 Access rules are evaluated in order so a user with an email ending in @example.com will be able to access 10.0.0.0/8 while any other users will be blocked.
-This rule is a great example to get started, but for more in-depth information on how identity-aware network policies work, read our dedicated documentation page.
+This rule is a great example to get started, but for more in-depth information on how identity-aware network policies work, read our d[dedicated documentation page](cloudflare-one/policies/filtering/network-policies/).
  
 ### WARP Management
 It is worth noting that some IP addresses are automatically excluded by WARP (such as addresses in the range 10.0.0.0/8). WARP automatically excludes RFC 1918 IP addresses, which are IP addresses typically used in private networks and not reachable from the Internet. If the IP address a user is trying to reach is also in the RFC IP range it needs to be removed from this exclusion list from Settings>Network>Split Tunnels.
