@@ -56,7 +56,7 @@ Else block rule
 
 
 Access rules are evaluated in order so a user with an email ending in @example.com will be able to access 10.0.0.0/8 while any other users will be blocked.
-This rule is a great example to get started, but for more in-depth information on how identity-aware network policies work, read our [dedicated documentation page](cloudflare-one/policies/filtering/network-policies/).
+This rule is a great example to get started, but for more in-depth information on how identity-aware network policies work, read our [dedicated documentation page](/cloudflare-one/policies/filtering/network-policies/).
  
 ### WARP Management
 It is worth noting that some IP addresses are automatically excluded by WARP (such as addresses in the range 10.0.0.0/8). WARP automatically excludes RFC 1918 IP addresses, which are IP addresses typically used in private networks and not reachable from the Internet. If the IP address a user is trying to reach is also in the RFC IP range it needs to be removed from this exclusion list from Settings>Network>Split Tunnels.

@@ -88,7 +88,7 @@ Else block rule
 {{</table-wrap>}}
 
 Access rules are evaluated in order so a user with an email ending in @example.com will be able to access 10.0.0.0/8 while any other users will be blocked.
-This rule is a great example to get started, but for more in-depth information on how identity-aware network policies work, read our [dedicated documentation page](cloudflare-one/policies/filtering/network-policies/).
+This rule is a great example to get started, but for more in-depth information on how identity-aware network policies work, read our [dedicated documentation page](/cloudflare-one/policies/filtering/network-policies/).
 
 ### Cloudflare Warp: Client side setup
 Users can now connect over this private network by enrolling their devices into the Warp agent in the same account as the Cloudflare Tunnel configuration. As a note, they must be using Gateway with WARP mode which can be found by clicking the gear icon in the top right of the Warp agent. 
