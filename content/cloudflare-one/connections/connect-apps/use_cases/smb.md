@@ -60,13 +60,13 @@ To get started, navigate to Access > Applications > Create an Application.
 |--|--|--|--|
 |  Destination IP |in|10.0.0.0/8 |Allow|
 |User email| Matches regex| *@example.com| Allow|
-{{<table-wrap>}}
+{{</table-wrap>}}
 Else block rule
 {{<table-wrap>}}
 | Selector | Operator | Value | Action |
 |--|--|--|--|
 |  Destination IP |in|10.0.0.0/8 |Block|
-{{<table-wrap>}}
+{{</table-wrap>}}
 
 Access rules are evaluated in order so a user with an email ending in @example.com will be able to access 10.0.0.0/8 while any other users will be blocked.
 This rule is a great example to get started, but for more in-depth information on how identity-aware network policies work, read our dedicated documentation page.
