@@ -20,12 +20,17 @@ $ npm install @cloudflare/pages-plugin-honeycomb
 ---
 filename: functions/_middleware.ts
 ---
-import honeycombPlugin from "@cloudflare/pages-plugin-honeycomb";
+import honeycombPlugin from '@cloudflare/pages-plugin-honeycomb'
 
-export const onRequest = honeycombPlugin({
-  apiKey: "YOUR_HONEYCOMB_API_KEY",
-  dataset: "YOUR_HONEYCOMB_DATASET_NAME",
-});
+export const onRequest: PagesFunction<{
+  HONEYCOMB_API_KEY: string
+  HONEYCOMB_DATASET: string
+}> = async context => {
+  return honeycombPlugin({
+    apiKey: context.env.HONEYCOMB_API_KEY,
+    dataset: context.env.HONEYCOMB_DATASET,
+  })(context)
+}
 ```
 
 This Plugin is based on the `@cloudflare/workers-honeycomb-logger` and accepts the same [configuration options](https://github.com/cloudflare/workers-honeycomb-logger#config).
