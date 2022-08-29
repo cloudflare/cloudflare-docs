@@ -89,11 +89,7 @@ In the next page, input the authorization code for each domain you are transferr
 
 In the final stage of the transfer process, input the contact information for your registration. Cloudflare Registrar redacts this information by default but is required to collect the authentic contact information for this registration. It is important that you provide accurate WHOIS contact information. You may be required to verify the contact information. Failure to provide accurate information and/or failure to verify the information may result in suspension or deletion of your domain.
 
-You can modify the contact information, if needed:
-
-1. From your **Account Home**, select **Registrar**.
-2. Under the **Manage** tab, select **Edit** in the **Default Contact** card.
-3. Update your information.
+You can always [modify the contact information](/registrar/account-options/domain-contact-updates/) later, if needed.
 
 After entering the contact information, agree to the domain registration terms of service by selecting **Confirm transfer**.
 
