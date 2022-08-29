@@ -19,7 +19,12 @@ Summary - Brief welcoming introductory content. A few sentences describing the p
  
 ## Features
  
-{{<feature header="Name of feature" href="/link/to/feature/">}}
+{{<feature header="Cloudflare for SaaS" href="/cloudflare-for-platforms/cloudflare-for-saas">}}
+Description highlighting capabilities of product feature. This section accepts Markdown lists for multiple attributes.
+{{</feature>}}
+ 
+
+{{<feature header="Workers for Platforms" href="/cloudflare-for-platforms/workers-for-platforms">}}
 Description highlighting capabilities of product feature. This section accepts Markdown lists for multiple attributes.
 {{</feature>}}
  
@@ -27,7 +32,7 @@ Description highlighting capabilities of product feature. This section accepts M
  
 ## Related products
  
-{{<related header="<Name of product>" href="</link/to/product>" product="<slugified-product-name>">}}
+{{<related header="Workers" href="</workers>" product="<workers>">}}
 Description of product used together or connected configuration with current product.
 {{</related>}}
  
