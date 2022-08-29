@@ -14,13 +14,13 @@ You can enable and configure Managed Rulesets for a zone in **Security** > **WAF
 
 ## Deploy a Managed Ruleset
 
-Under **Managed Rulesets**, click **Add** on the right of a Managed Ruleset to deploy the Managed Ruleset for the current zone.
+Under **Managed Rulesets**, select **Add** next to a Managed Ruleset to deploy that Managed Ruleset for the current zone.
 
 When you deploy a Managed Ruleset, the WAF adds an _Execute_ rule, displayed under **Managed rules**, that deploys the Managed Ruleset.
 
 ## Enable or disable a Managed Ruleset
 
-Click the **Enabled** toggle on the right of a Managed Ruleset to enable or disable it.
+Select the **Enabled** toggle on the right of a Managed Ruleset to enable or disable it.
 
 ## Configure a Managed Ruleset
 
@@ -45,7 +45,7 @@ To configure rule field values for all the rules in a Managed Ruleset:
 
 2. Go to **Security** > **WAF** > **Managed rules**.
 
-3. On the right of the _Execute_ rule that deploys the Managed Ruleset you want to configure, click **Edit**.
+3. Next to the _Execute_ rule that deploys the Managed Ruleset you want to configure, select **Edit**.
 
 4. Under **Ruleset configuration**, set one or more rule fields from the available values in the drop-down lists.
 
@@ -53,7 +53,7 @@ To configure rule field values for all the rules in a Managed Ruleset:
 
     ![The Configure Managed Ruleset page displaying the available options to override all the rules in the ruleset. In the displayed Managed Ruleset you can override the ruleset action.](/waf/static/waf-configure-ruleset.png)
 
-5. Click **Save**.
+5. Select **Save**.
 
 ### View the rules of a Managed Ruleset
 
@@ -67,11 +67,9 @@ To view the rules of a Managed Ruleset:
 
 2. Go to **Security** > **WAF** > **Managed rules**.
 
-3. On the right of the _Execute_ rule that deploys the Managed Ruleset you want to browse, click **Edit**.
+3. Next to the _Execute_ rule that deploys the Managed Ruleset you want to browse, select **Edit**.
 
-4. Click **Browse rules**.
-
-    The Browse Managed Ruleset interface displays.
+4. Select **Browse rules**.
 
     ![The Browse rules page displaying the list of rules in the Cloudflare Managed Ruleset](/waf/static/waf-browse-rules.png)
 
@@ -91,11 +89,11 @@ Do the following:
 
     ![The Browse rules page displaying the list of rules in the Cloudflare Managed Ruleset. In this interface you can override the behavior of specific rules.](/waf/static/waf-browse-rules.png)
 
-4. Click **Next**.
+4. Select **Next**.
 
     The Configure Managed Ruleset interface displays, listing the configuration you just defined.
 
-5. Click **Save**.
+5. Select **Save**.
 
 ### Configure rules in bulk in a Managed Ruleset
 
@@ -107,15 +105,15 @@ Do the following:
 
     ![Example of filtering rules by the wordpress tag in the Browse rules page](/waf/static/waf-selected-tag.png)
 
-2. In the results list, click the checkbox on the left of all the rules you want to configure.
+2. In the results list, select the checkbox on the left of all the rules you want to configure.
 
-    Alternatively, click a tag name under the search input to filter the rules with that tag, and then click the checkboxes for the rules you want to configure.
+    Alternatively, select a tag name under the search input to filter the rules with that tag, and then select the checkboxes for the rules you want to configure.
 
 3. Update one or more fields for the selected rules using the drop-down lists displayed in the top right corner of the table.
 
     ![Selecting all rules in a page displays additional drop-down lists above the table to override the behavior of several rules at once.](/waf/static/waf-modify-selected-rules.png)
 
-4. Click **Next**.
+4. Select **Next**.
 
     {{<Aside type="note" header="Note">}}
 
@@ -127,4 +125,4 @@ Select **Apply to new rules** if you want to apply your configurations to any ne
 
     {{</Aside>}}
 
-5. Click **Save**.
+5. Select **Save**.
