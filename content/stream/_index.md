@@ -34,7 +34,7 @@ Cloudflare Stream is compatible with all video players that support HLS and DASH
 
 {{</feature>}}
 
-{{<feature header="Stream Live" href="/stream/stream-live/start-live-stream/">}}
+{{<feature header="Stream Live" href="/stream/stream-live/start-stream-live/">}}
  
 Live stream video with to popular streaming platforms with low latency RTMP ingestion. When your live stream is done, you automatically receive recordings of your live stream to replay later.
 
