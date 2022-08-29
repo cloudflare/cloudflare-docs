@@ -1,28 +1,28 @@
 ---
-title: Secure Web Gateway
+title: Cloudflare Gateway
 pcx_content_type: tutorial
 meta:
-  title: Connect to Secure Web Gateway with Magic WAN
+  title: Connect to Cloudflare Gateway with Magic WAN
 ---
 
-# Connect to Secure Web Gateway with Magic WAN
+# Connect to Cloudflare Gateway with Magic WAN
 
-You can route traffic through Magic WAN and Secure Web Gateway to secure Internet browsing and SaaS application access from internal users and devices.
+You can route traffic through Magic WAN and Cloudflare Gateway, our comprehensive secure web gateway, to secure Internet browsing and SaaS application access from internal users and devices.
 
-In this tutorial, you will learn how to configure the Anycast GRE or IPsec tunnel on-ramp to Magic WAN, which connects to Secure Web Gateway (SWG), from enterprise site routers.
+In this tutorial, you will learn how to configure the Anycast GRE or IPsec tunnel on-ramp to Magic WAN, which connects to Cloudflare Gateway, from enterprise site routers.
 
 ## Prerequisites
 
 Before you can configure the Anycast GRE or IPsec tunnel on-ramp to Magic WAN, the following items should already be completed:
 
-- Purchased Magic WAN and Secure Web Gateway
+- Purchased Magic WAN and Cloudflare Gateway
 - Added a root certificate
-- Cloudflare created and provisioned Magic WAN and Secure Web Gateway
+- Cloudflare created and provisioned Magic WAN and Gateway
 - Received the Cloudflare GRE endpoint (Anycast IP address) assigned to Magic WAN
 - Established connectivity between site edge routers and the Cloudflare GRE endpoint via the Internet or Cloudflare Network Interconnect (CNI)
-- Use site routers that support Anycast GRE or IPsec tunnels and Policy-based Routing (PBR) so that specific Internet-bound traffic from the sites' private networks can be routed over the Anycast GRE or IPsec tunnel to Magic WAN, and subsequently Secure Web Gateway, to enforce a user's specific web access policies.
+- Use site routers that support Anycast GRE or IPsec tunnels and Policy-based Routing (PBR) so that specific Internet-bound traffic from the sites' private networks can be routed over the Anycast GRE or IPsec tunnel to Magic WAN, and subsequently Cloudflare Gateway, to enforce a user's specific web access policies.
 
-Proper routing techniques, such as policy-based routing, should also be utilized on the site routers to match relevant Internet-bound traffic from the site’s appropriate local private subnets and route them over the GRE tunnel to Cloudflare Magic WAN and Secure Web Gateway for processing. Otherwise, such Internet-bound traffic would likely be routed straight out of the physical uplink of the site router without the protection enforced by the Cloudflare Secure Web Gateway.
+Proper routing techniques, such as policy-based routing, should also be utilized on the site routers to match relevant Internet-bound traffic from the site’s appropriate local private subnets and route them over the GRE tunnel to Cloudflare Magic WAN and Gateway for processing. Otherwise, such Internet-bound traffic would likely be routed straight out of the physical uplink of the site router without the protection enforced by Cloudflare Gateway.
 
 ## Example scenario
 
@@ -62,10 +62,10 @@ In keeping with the example scenario, the list of static routes should match the
 
 ![Static route configuration with defined prefixes, next hops, and priorities](/magic-wan/static/static-route-values.png)
 
-## Secure Web Gateway
+## Cloudflare Gateway configuration
 
-After setting up the Anycast GRE and static routes, configure the policies for Secure Web Gateway in the Teams dashboard. To set up the policies, refer to [Secure Web Gateway policies](/cloudflare-one/policies/filtering/). 
+After setting up the Anycast GRE and static routes, configure your Cloudflare Gateway policies from the [Zero Trust dashboard](https://dash.teams.cloudflare.com/). To set up the policies, refer to our [Gateway documentation](/cloudflare-one/policies/filtering/).
 
-The Secure Web Gateway upgrade supports all TCP and UDP ports, traffic sourced from RFC, and BYOIP.
+The Cloudflare Gateway upgrade supports all TCP and UDP ports, traffic sourced from RFC, and BYOIP.
 
-After you configured Secure Web Gateway, enterprise users and devices from each of the sites mentioned in the example scenario would be able to safely browse or access Internet resources under the protection of the Cloudflare edge network.
+After you have configured Cloudflare Gateway, enterprise users and devices from each of the sites mentioned in the example scenario will be able to safely browse or access Internet resources under the protection of the Cloudflare edge network.
