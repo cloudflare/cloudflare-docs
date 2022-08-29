@@ -57,9 +57,9 @@ To set the priority number for a firewall rule:
 
     ![Editing a firewall rule in the dashboard to define its Priority value](/firewall/static/firewall-rules-order-and-priority-4.png)
 
-3. Select **Save** to commit your changes and return to the rules list.
+3. Select **Save**.
 
-The **Priority** column displays the priority value for each rule.
+The **Priority** column in the rules list displays the priority value for each rule.
 
 ![When using priority order, the Firewall rules tab displays the priority of each rule (if any) in the first column of the rules list](/firewall/static/firewall-rules-order-and-priority-5.png)
 
