@@ -25,6 +25,7 @@ The OS Version device posture attribute checks whether the version of a deviceâ€
 2. Scroll down to **WARP client checks** and select **Add new**.
 3. Select **OS version**.
 4. Configure the **Operating system**, **Operator**, and **Value** fields to specify the OS version you want devices to match.
+5. (Optional) Configure Linux operating system distro **Name** and **Revision** field(s) to specify the version you want devices to match. 
 
 {{<Aside type="note">}}
 
@@ -70,4 +71,29 @@ Linux currently relies on the system Kernel version instead of a specific distro
     ```
 
 1. The valid SemVer would be the first 3 whole numbers of the output you obtain in the previous step. For instance, if the command above returned `5.14.0-25.el9.x86_64`, the valid SemVer would be `5.14.0`.
+
+Determining **Name** and **Revision**:
+
+{{<Aside type="note">}}
+
+Note that the **Revision** field matches with an equal-to operator (==) rather than greater or lesser than (> or <) operator.
+
+{{</Aside>}}
+
+The following parameters are obtained via the `/etc/os-release` file. **Name** comes from the **ID** field, and **Revision** comes from the **VERSION_ID** field. 
+
+1. Open a Terminal window.
+1. Run the `cat /etc/os-release | grep "ID"` command to get OS identification fields that contain `ID`.
+
+    ```bash
+    cat /etc/os-release | grep "ID"
+    ```
+
+1. If the output of the above command contained the fields `ID=ubuntu` and `VERSION_ID=22.04`, our **Name** value would be `ubuntu` and **Revision** would be `22.04`.
+
+
+
+
+
+
 
