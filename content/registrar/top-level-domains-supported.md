@@ -6,15 +6,9 @@ weight: 3
 
 # Top Level Domains supported
 
-When registering or transferring a domain to Cloudflare Registrar, there are a few aspects to consider:
+Cloudflare supports over 200 [top-level domains (TLDs)](https://www.cloudflare.com/learning/dns/top-level-domain/) and is always evaluating adding new TLDs.
 
-* If Cloudflare Registrar [supports the top-level domain (TLD)](https://www.cloudflare.com/tld-policies/) you want to transfer.
-* Availability of the domain you want to register.
-* If you want to [register a `.us` TLD](#additional-requirements-for-us-domains).
-
-## List of TLDs supported
-
-Cloudflare supports over 200 [top-level domains (TLDs)](https://www.cloudflare.com/learning/dns/top-level-domain/) and is always evaluating adding new TLDs. You can find the full list of supported and coming soon TLDs on [our TLD policies page](https://www.cloudflare.com/tld-policies/). If you want to register a `.us` domain refer to  [Additional requirements for .US domains](#additional-requirements-for-us-domains).
+You can find the full list of supported and coming soon TLDs on the [TLD policies page](https://www.cloudflare.com/tld-policies/). If you want to register a `.us` domain refer to  [Additional requirements for .US domains](#additional-requirements-for-us-domains).
 
 ## Domain availability
 
@@ -26,9 +20,13 @@ Possible causes for the domain not being available include:
 * It is a premium domain, that is, one with non-standard pricing, which Cloudflare Registrar does not support.
 * It is an Internationalized Domain Name (IDN) which Cloudflare Registrar does not support. These domains include international characters (such as `á`, `ü`, among others).
 
+## Transfer a domain
+
+When transferring a domain to Cloudflare Registrar, refer to [Restrictions](/registrar/get-started/transfer-domain-to-cloudflare/#restrictions) for a full list of aspects to consider before starting the transfer.
+
 ## Additional requirements for .US domains
 
-Registrants of `.us` domains must have a genuine connection to the United States as described in the [usTLD Nexus Policy](https://www.about.us/policies). When registering a domain name, registrants must identify the category under which they qualify for the usTLD Nexus Requirement:
+If you want to register a `.us` domain, you must have a genuine connection to the United States as described in the [usTLD Nexus Policy](https://www.about.us/policies). When registering a domain name, registrants must identify the category under which they qualify for the usTLD Nexus Requirement:
 
 <details>
 <summary>Nexus Category 1</summary>
