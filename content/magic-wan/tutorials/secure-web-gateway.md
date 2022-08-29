@@ -7,7 +7,7 @@ meta:
 
 # Connect to Cloudflare Gateway with Magic WAN
 
-You can route traffic through Magic WAN and Cloudflare Gateway, our comprehensive secure web gateway, to secure Internet browsing and SaaS application access from internal users and devices.
+You can route traffic through Magic WAN and [Cloudflare Gateway](/cloudflare-one/policies/filtering/) to secure Internet browsing and SaaS application access from internal users and devices.
 
 In this tutorial, you will learn how to configure the Anycast GRE or IPsec tunnel on-ramp to Magic WAN, which connects to Cloudflare Gateway, from enterprise site routers.
 
@@ -15,12 +15,12 @@ In this tutorial, you will learn how to configure the Anycast GRE or IPsec tunne
 
 Before you can configure the Anycast GRE or IPsec tunnel on-ramp to Magic WAN, the following items should already be completed:
 
-- Purchased Magic WAN and Cloudflare Gateway
+- Purchased Magic WAN and Gateway
 - Added a root certificate
 - Cloudflare created and provisioned Magic WAN and Gateway
 - Received the Cloudflare GRE endpoint (Anycast IP address) assigned to Magic WAN
 - Established connectivity between site edge routers and the Cloudflare GRE endpoint via the Internet or Cloudflare Network Interconnect (CNI)
-- Use site routers that support Anycast GRE or IPsec tunnels and Policy-based Routing (PBR) so that specific Internet-bound traffic from the sites' private networks can be routed over the Anycast GRE or IPsec tunnel to Magic WAN, and subsequently Cloudflare Gateway, to enforce a user's specific web access policies.
+- Use site routers that support Anycast GRE or IPsec tunnels and Policy-based Routing (PBR) so that specific Internet-bound traffic from the sites' private networks can be routed over the Anycast GRE or IPsec tunnel to Magic WAN, and subsequently Gateway, to enforce a user's specific web access policies.
 
 Proper routing techniques, such as policy-based routing, should also be utilized on the site routers to match relevant Internet-bound traffic from the site’s appropriate local private subnets and route them over the GRE tunnel to Cloudflare Magic WAN and Gateway for processing. Otherwise, such Internet-bound traffic would likely be routed straight out of the physical uplink of the site router without the protection enforced by Cloudflare Gateway.
 
