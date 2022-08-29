@@ -49,7 +49,7 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
     </div></details>
 
-3. Scroll down to the **Top events by source** >> **HTTP DDoS rules**.
+3. Scroll down to **Top events by source** > **HTTP DDoS rules**.
 
 4. Copy the rule name.
 
@@ -61,7 +61,7 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
 8. Click **Next** and then **Save**.
 
-_\* Available in the Network Analytics v2 Logs or API. Not available in Network Analytics dashboard yet._
+_\* Available in the Network Analytics v2 Logs or API. Not available in the Network Analytics dashboard yet._
 
 Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/ddos-protection/reference/analytics/).
 
