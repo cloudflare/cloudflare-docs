@@ -61,7 +61,7 @@ Use the toggle switch associated with a firewall rule to enable or disable it.
 ### Delete rule
 
 1. Next to the rule you want to delete, select **Delete** (**X** icon).
-2. In the confirmation dialog, select **Delete** to confirm and complete the operation.
+2. In the confirmation dialog, select **Delete** to complete the operation.
 
 ### Order rules
 

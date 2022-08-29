@@ -120,4 +120,4 @@ When uploading CSV data, keep in mind that duplicate data is treated as follows:
 
 4. Select **Remove**.
 
-5. In the confirmation dialog, select **Remove**.
+5. In the confirmation dialog, select **Remove** to complete the operation.

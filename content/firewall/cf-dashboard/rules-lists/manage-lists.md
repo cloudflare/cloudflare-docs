@@ -54,7 +54,7 @@ To delete an IP List, follow these steps:
 
 1. Select **Delete**.
 
-1. In the confirmation dialog, select **Delete** to confirm the operation.
+1. In the confirmation dialog, select **Delete** to complete the operation.
 
 The **Lists** card displays the updated collection of lists.
 
