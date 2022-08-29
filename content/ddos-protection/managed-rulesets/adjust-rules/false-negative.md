@@ -66,3 +66,13 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 _\* Not available in Network Analytics dashboard yet._
 
 Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/ddos-protection/reference/analytics/).
+
+### Alternate procedure
+
+If you cannot stop an attack from overloading your origin web server using the above steps, [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476#h_4b8753c8-f422-4c74-9e8e-07026c4da730) for assistance, providing the following details:
+
+- Time period of the attack (UTC timestamp)
+- Domain/path being targeted (zone name/ID)
+- Attack frequency
+- Steps to reproduce the issue, with actual results versus expected results
+- Any relevant additional information such as site URLs, error messages, screenshots, or relevant logs from your origin web server
