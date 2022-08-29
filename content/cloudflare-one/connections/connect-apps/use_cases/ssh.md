@@ -11,6 +11,37 @@ In this guide, we’ll walk through how to use Cloudflare’s Zero Trust platfor
 Cloudflare Zero Trust provides two solutions to securely SSH to a server
 - Private subnet routing with Cloudflare WARP to Tunnel
 - Cloudflared on client and server
+## SSH Server Setup
+In this example, we’ll walkthrough how to connect via SSH to an instance hosted in the Google Cloud Platform (GCP).
+### Creating an Instance in Google Cloud
+To get started, you will need to navigate to the Google Cloud Console and create a project. This project will contain all of your future Google Cloud resources, including the Virtual Machine (VM) instances you will create.
+Before creating your instance you will need to create a SSH key pair.
+1. In the command line enter:
+```sh
+$ ssh-keygen -t rsa -f ~/.ssh/gcp_ssh -C <server name in GCP>
+```
+1. This will prompt you to enter a passphrase. It will need to be entered twice.
+1. Two files will be generated: gcp_ssh which contains the private key, and gcp_ssh.pub which contains the public key.
+1. In the command line enter:
+```sh
+$ cat ~/.ssh/gcp_ssh.pub
+```
+1. Copy the output. This will be used when creating the instance.
+It is possible to configure instances to not require a SSH key and rely exclusively on Cloudflare Access policies to secure the server.
+Now that the SSH key pair has been created, you can make your VM instance.
+1. From the Cloud Console, navigate to Computer Engine
+1. Under Compute Engine, select VM instances
+1. In the main window, select Create Instance
+1. Name your VM instance. (i.e. ssh-server)
+1. Configure your VM Instance
+1. Machine Family: General Purpose
+  - Series: E2
+  - Machine Type: e2-medium
+  - Boot Disk : Debian GNU/Linux 11 (bullseye)
+  - Advanced options: Security: Manage Access: Add manually generated SSH keys: paste the public key that you have created
+1. Once your image is running, select the drop down next to SSH in the Connect column and select open in browser window
+In order to be able to SSH into the instance it is necessary to ensure that OS-login is not enabled.
+
 ## WARP to Tunnel
 Creating a private network has two components: the server, and the client.
 The server’s infrastructure (whether that is a single application, multiple applications, or a network segment) is connected to Cloudflare by Cloudflare Tunnel. This is done by running the cloudflared daemon on the server. Simply put, Tunnel is what connects the network to Cloudflare.
@@ -83,7 +114,7 @@ Your rule will now be visible under the Device enrollment rules list.
 A user trying to access the machine through SSH will need to [install the WARP client](/cloudflare-one/connections/connect-devices/warp/download-warp/), [download the root certificate](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#4-install-the-cloudflare-root-certificate-on-your-devices), and [log in to the configured access group](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) in the WARP app preferences.
 The user can then SSH to the machine using the IP address. If a key pair exists to access the SSH server the key should be included in the command.
 ```
-$ ssh -i "key" ubuntu@<private IP Address>
+$ ssh -i ~/.ssh/gcp_ssh <server name in GCP>u@<private IP Address>
 ```
 ## Connecting with cloudflared access
 Cloudflare Tunnels can also be routed through a public hostname, which allows them to be accessed without the WARP client. This instead uses cloudflared and Cloudflare Access to perform the onramp to the Cloudflare Network. Accessing the machine will require having cloudflared installed on both the server machine and on the client machine. The SSH traffic can then be proxied over this connection to access the content.
