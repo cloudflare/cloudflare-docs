@@ -17,7 +17,7 @@ weight: 1
 
 ## How to register a new domain
 
-{{<Aside type="note">}}If you are registering a `.us` domain, refer to the [Additional requirements for .US domains](/registrar/faq/#additional-requirements-for-us-domains) before proceeding.{{</Aside>}}
+{{<Aside type="note">}}If you are registering a `.us` domain, refer to the [Additional requirements for .US domains](/registrar/top-level-domains-supported/#additional-requirements-for-us-domains) before proceeding.{{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account. 
 

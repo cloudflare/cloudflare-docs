@@ -8,9 +8,9 @@ weight: 3
 
 When registering or transferring a domain to Cloudflare Registrar, there are a few aspects to consider:
 
-* If Cloudflare Registrar supports the top-level domain (TLD) in question.
+* If Cloudflare Registrar [supports the top-level domain (TLD)](https://www.cloudflare.com/tld-policies/) you want to transfer.
 * Availability of the domain you want to register.
-* If you want to register a `.us` TLD.
+* If you want to [register a `.us` TLD](#additional-requirements-for-us-domains).
 
 ## List of TLDs supported
 
