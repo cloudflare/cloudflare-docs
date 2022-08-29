@@ -37,7 +37,7 @@ Cloudflare Registrar also cannot register premium domains, that is, domains that
 
 5. Select the term (number of years) you wish to register the domain from the **Payment option** drop-down menu. Most top-level domains (TLDs) can be registered for a maximum of ten years. Some TLDs may have different term limits and these will be reflected in the drop-down options.
    
-    The expiration date and price will update automatically based on the term selected. The **Renew On** date is the date that the system will attempt to auto-renew the domain. All registrations have Auto-renew turned on by default; however, you may disable this option at any time.
+    The expiration date and price will update automatically based on the term selected. The **Renew On** date is the date that the system will attempt to auto-renew the domain. All registrations have Auto-renew turned on by default. However, you may [disable this option](/registrar/account-options/renew-domains/) at any time.
 
 6. Enter the contact details for the domain. These details will be used to create all of the required contacts (Registrant, Admin, Technical, and Billing), and may be updated after registration is completed. Refer to [Contact requirements](#contact-requirements) to learn the specific requirements for each contact field.    
 
