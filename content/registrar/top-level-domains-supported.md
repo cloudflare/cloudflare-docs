@@ -6,7 +6,7 @@ weight: 3
 
 # Top Level Domains supported
 
-Cloudflare supports over 200 [top-level domains (TLDs)](https://www.cloudflare.com/learning/dns/top-level-domain/) and is always evaluating adding new TLDs.
+Cloudflare supports over 200 top-level domains (TLDs)[^1] and is always evaluating adding new TLDs.
 
 You can find the full list of supported and coming soon TLDs on the [TLD policies page](https://www.cloudflare.com/tld-policies/). If you want to register a `.us` domain refer to  [Additional requirements for .US domains](#additional-requirements-for-us-domains).
 
@@ -80,3 +80,5 @@ The .US registry requires that domain contact data is displayed in the public WH
 Transferring a `.us` domain works in a similar way to other domains, but always requires approval via the Form of Authorization (FOA) email. You must select the approve link within five days for the transfer to proceed. If you do not respond, the transfer request will be cancelled.
 
 Refer to [Transfer your domain to Cloudflare](/registrar/get-started/transfer-domain-to-cloudflare/) for more information.
+
+[^1]: In the DNS hierarchy, a top-level domain (or TLD) represents what comes after the final dot in a domain name - like `.com`. Learn more in the [Learning Center](https://www.cloudflare.com/learning/dns/top-level-domain/)
