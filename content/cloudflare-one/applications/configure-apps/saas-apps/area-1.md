@@ -50,7 +50,7 @@ Finally, you will need to configure Area 1 to allow users to log in through Clou
 
 2. Turn on **Single Sign On**.
 
-3. (Optional) To require users to sign in through Access, set **SSO Enforcement** to _All_.
+3. (Optional) To require users to sign in through Access, set **SSO Enforcement** to _All_. When SSO is enforced, users will no longer be able to sign in with their Area 1 credentials.
 
 4. In **SAML SSO Domain**, enter `<your-team-name>.cloudflareaccess.com`.
 
@@ -71,4 +71,4 @@ Finally, you will need to configure Area 1 to allow users to log in through Clou
 
 8. In the Zero Trust dashboard, select **Done**.
 
-Your application will appear on the **Applications** page. If you set **SSO Enforcement** to _All_, you can test the integration by logging back in to the [Area 1 portal](https://horizon.area1security.com/).
+Your application will appear on the **Applications** page. If you added the application to your App Launcher, you can test the integration by going to `<your-team-name>.cloudflareaccess.com`.
