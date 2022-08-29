@@ -29,10 +29,6 @@ Unlike most DNS resolvers, 1.1.1.1 does not sell user data to advertisers. 1.1.1
 1.1.1.1 offers an encrypted service through DNS over HTTPS (DoH) or DNS over TLS (DoT) for increased security and privacy. You can also access 1.1.1.1 [as a Tor hidden service](/1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-tor/).
 {{</feature>}}
 
-{{<feature header="Infrastructure" href="/1.1.1.1/infrastructure/">}}
-1.1.1.1 offers a variety of features specific for network operators, and those who manage IPv6 networks.
-{{</feature>}}
-
 ---
 
 ## Related products
