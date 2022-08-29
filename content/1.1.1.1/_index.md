@@ -38,7 +38,7 @@ Access the Internet in a more secure and private way.
 {{</related>}}
 
 {{<related header="DNS" href="/dns/" product="dns">}}
-Cloudflare's global DNS platform provides speed and resilience. DNS customers also benefit from free DNSSEC, and protection against route leaks and hijicking.
+Cloudflare's global DNS platform provides speed and resilience. DNS customers also benefit from free DNSSEC, and protection against route leaks and hijacking.
 {{</related>}}
 
 {{<related header="Cloudflare Spectrum" href="/spectrum/" product="spectrum">}}
