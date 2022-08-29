@@ -42,7 +42,7 @@ Cloudflare Firewall Rules does not impose default priorities, and you are not re
 
 To manually enable priority ordering:
 
-1. Above the rules list, click **Ordering**.
+1. Above the rules list, select **Ordering**.
 2. Select _Priority Numbers_.
 
 Once priority ordering is enabled, you can set a priority number for each firewall rule.
@@ -51,13 +51,13 @@ Once priority ordering is enabled, you can set a priority number for each firewa
 
 To set the priority number for a firewall rule:
 
-1. Locate the desired rule in the rules list and click **Edit** (wrench icon).
+1. Locate the desired rule in the rules list and select **Edit** (wrench icon).
 
 2. In the **Edit firewall rule** panel, enter a positive integer value in **Priority**.
 
     ![Editing a firewall rule in the dashboard to define its Priority value](/firewall/static/firewall-rules-order-and-priority-4.png)
 
-3. Click **Save** to commit your changes and return to the rules list.
+3. Select **Save** to commit your changes and return to the rules list.
 
 The **Priority** column displays the priority value for each rule.
 
