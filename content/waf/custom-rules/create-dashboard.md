@@ -26,7 +26,7 @@ To create a new custom rule:
 
 3. Navigate to **Security** > **WAF** > **Custom rules**.
 
-4. Click **Create Firewall rule**.
+4. Select **Create firewall rule**.
 
 5. In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
@@ -38,7 +38,7 @@ To create a new custom rule:
 
 8. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configuring-a-custom-response-for-blocked-requests).
 
-9. To save and deploy your rule, click **Save and Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
+9. To save and deploy your rule, select **Save and Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 ## Configuring a custom response for blocked requests
 
