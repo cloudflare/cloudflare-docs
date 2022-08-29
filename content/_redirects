@@ -118,6 +118,7 @@
 # api-shield / api-security
 /api-security/ /api-shield/ 301
 /api-shield/products/ /api-shield/security/ 301
+/api-shield/security/api-discovery/threshold-recommendations/ /api-shield/frequently-asked-questions/ 301
 
 # bots
 /bots/about/ /bots/ 301
