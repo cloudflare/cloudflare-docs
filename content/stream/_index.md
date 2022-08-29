@@ -14,7 +14,7 @@ Serverless live and on-demand streaming
 
 {{</description>}}
 
-Cloudflare Stream is a live streaming and on-demand video platform, which can ingest, encode, record, and play videos from one unified product.
+Cloudflare Stream is a live streaming and on-demand video platform, which can ingest, encode, record, and play videos from one unified product. You can use Cloudflare Stream without a domain on Cloudflare, and videos are not associated with domains.
 
 Cloudflare Stream is built for developers on the world’s most-connected network, offering effortless scale and affordable pricing to build your video pipeline.
 
