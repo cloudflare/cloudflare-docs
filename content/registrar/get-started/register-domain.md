@@ -29,7 +29,7 @@ weight: 1
 
 Cloudflare Registrar currently does not support internationalized domain names (IDNs), also known as unicode. For that reason, you cannot search for words with special characters, such as `à`, `ü`, `ç`, among others.
 
-Cloudflare Registrar also cannot register premium domains (domains that have non-standard pricing) and Internationalized Domain Names (IDNs).
+Cloudflare Registrar also cannot register premium domains, that is, domains that have non-standard pricing.
 
 {{</Aside>}}
 
