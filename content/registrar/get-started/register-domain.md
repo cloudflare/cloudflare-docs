@@ -25,7 +25,7 @@ weight: 1
 
 3. In the search box, enter the domain name you wish to register, and select **Search**. You may also enter one or more keywords. The search results will contain a list of suggested domains. If the domain you entered does not appear in the list, this means it is not available for registration.
 
-{{<Aside type="note">}}
+{{<Aside type="warning" header="Important">}}
 
 Cloudflare Registrar currently does not support internationalized domain names (IDNs), also known as unicode. For that reason, you cannot search for words with special characters, such as `à`, `ü`, `ç`, among others.
 
