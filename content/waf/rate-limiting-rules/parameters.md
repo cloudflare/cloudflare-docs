@@ -109,7 +109,7 @@ Use _IP with NAT support_ to handle situations such as requests under NAT sharin
 
 ## Configuration restrictions
 
-If the rule expression includes [IP Lists](/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
+* If the rule expression includes [IP Lists](/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
 
 * The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP Lists](/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/). If you use IP Lists, you must enable the **Also apply rate limiting to cached assets** parameter.
 
