@@ -6,18 +6,20 @@ weight: 0
 
 # Machine Learning Models
 
-## Enable Auto-Updates to the Machine Learning Models
-Cloudflare allows Enterprise customers to enable auto-updates to its Machine Learning models for the newest bot detection models as they are released. 
+## Enable Auto-updates to the Machine Learning Models
 
-To enable auto-updates:
+Cloudflare allows Enterprise customers to enable Auto-updates to its Machine Learning models for the newest bot detection models as they are released. 
+
+To enable Auto-updates:
+
 1. Log in to the Cloudflare dashboard and select your account and domain.
 2. Go to **Security** > **Bots**.
-3. Click **Configure Bot Management**.
+3. Select **Configure Bot Management**.
 4. From Auto-update Machine Learning Model, turn on the toggle.
 
-{{<Aside type="note" header="Note:">}}
+{{<Aside type="note" header="Note">}}
 
-If you enable auto-updates for the Machine Learning model, you will be upgraded to the latest version immediately. You can toggle the button off within 24 hours to revert to the previous version. After 24 hours, you will remain on the current Machine Learning model version and will need to contact support for any changes.
+If you enable Auto-updates for the Machine Learning model, you will be upgraded to the latest version immediately. You can toggle the button off within 24 hours to revert to the previous version. After 24 hours, you will remain on the current Machine Learning model version and will need to contact support for any changes.
 
 {{</Aside>}}
 
