@@ -8,7 +8,7 @@ weight: 5
 
 Gateway does not currently support inspection of HTTP/3 traffic.
 
-## Disable QUIC in Google Chrome
+### Disable QUIC in Google Chrome
 
 Google Chrome by default enables support for QUIC, which is used to connect to HTTP/3 capable webpages. In order to apply HTTP policies to Google Chrome traffic, you will need to disable QUIC in the browser. This forces the browser to fall back to HTTP/2.
 

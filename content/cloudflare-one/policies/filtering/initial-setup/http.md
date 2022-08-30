@@ -23,7 +23,6 @@ To filter HTTP requests from a device:
     3. (Optional) Enable **Proxy** for UDP. All port 443 UDP traffic will be inspected by Gateway except when using QUIC. QUIC traffic will only be proxied.
     4. Enable **TLS decryption**.
 
-
 ## 2. Verify device connectivity
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
@@ -38,7 +37,7 @@ We recommend adding the following policies:
 
 ### Bypass inspection for incompatible applications
 
-Bypass HTTP inspection for applications which use embedded certificates.
+Bypass HTTP inspection for applications which use [embedded certificates](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#limitations).
 This will help avoid any certificate pinning errors that may arise from an initial rollout.
 
 | Selector      | Operator | Value           | Action         |
