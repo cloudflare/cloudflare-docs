@@ -2,6 +2,7 @@
 title: Overview
 pcx_content_type: overview
 weight: 1
+layout: overview
 meta:
   title: Cloudflare Stream
 ---
@@ -18,32 +19,31 @@ Cloudflare Stream is a live streaming and on-demand video platform, which can in
 
 Cloudflare Stream is built for developers on the world’s most-connected network, offering effortless scale and affordable pricing to build your video pipeline.
 
+{{<button-group>}}
+  {{<button type="primary" href="/stream/get-started/">}}Get started{{</button>}}
+  {{<button type="secondary" href="https://dash.cloudflare.com/?to=/:account/stream">}}Stream dashboard{{</button>}}
+  {{<button type="secondary" href="https://api.cloudflare.com/#stream-videos-properties">}}Stream API docs{{</button>}}
+{{</button-group>}}
+
 ---
 
 ## Features
  
-{{<feature header="Stream player" href="/stream/viewing-videos/using-the-stream-player/">}}
+{{<feature header="Signed URLs" href="/stream/viewing-videos/securing-your-stream/">}}
  
-Play videos with a customizable web player that supports on-demand and live videos without additional engineering work.
+Restrict access to paid or authenticated content with signed URLs that only give access to users with a signed URL token.
  
 {{</feature>}}
 
-{{<feature header="Your own player" href="/stream/viewing-videos/using-own-player/">}}
+{{<feature header="Direct creator uploads" href="/stream/uploading-videos/direct-creator-uploads/">}}
  
-Cloudflare Stream is compatible with all video players that support HLS and DASH, which means you can stream on-demand and live videos with web players, iOS, and Android apps.
+Upload videos directly to Stream with a unique, one-time upload URL instead of an API token. 
 
 {{</feature>}}
 
-{{<feature header="Stream Live" href="/stream/stream-live/start-stream-live/">}}
+{{<feature header="Play on any device" href="/stream/viewing-videos/">}}
  
-Live stream video with to popular streaming platforms with low latency RTMP ingestion. When your live stream is done, you automatically receive recordings of your live stream to replay later.
-
-{{</feature>}}
-
-
-{{<feature header="Analytics" href="/stream/getting-analytics/">}}
- 
-Learn how your videos are performing with analytics for individual videos or review bulk usage data using the GraphQL API. 
+Stream provides an embedded web player that requires zero engineering work to use, and lets you integrate with any web or native iOS or Android video player that supports HLS or DASH.
 
 {{</feature>}}
 
