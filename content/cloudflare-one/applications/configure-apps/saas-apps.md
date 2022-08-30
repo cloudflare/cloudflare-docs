@@ -2,6 +2,7 @@
 pcx_content_type: how-to
 title: SaaS applications
 weight: 1
+layout: single
 ---
 
 # Add a SaaS application to Access
@@ -70,3 +71,19 @@ Finally, you will need to configure your SaaS application to require users to lo
 2. Select **Done**.
 
 Your application will appear on the **Applications** page.
+
+## Related tutorials
+
+The following tutorials provide detailed integration instructions for specific SaaS applications.
+
+- [Cloudflare Area 1](/cloudflare-one/tutorials/area-1/)
+
+- [Zendesk](/cloudflare-one/tutorials/zendesk-sso-saas/)
+
+- [Docusign](/cloudflare-one/tutorials/docusign-access/)
+
+- [Hubspot](/cloudflare-one/tutorials/hubspot-saas/)
+
+- [AWS](/cloudflare-one/tutorials/aws-sso-saas/)
+
+- [Salesforce](/cloudflare-one/tutorials/salesforce-saas/)
