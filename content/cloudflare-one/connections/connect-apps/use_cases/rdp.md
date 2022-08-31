@@ -10,8 +10,8 @@ The Remote Desktop Protocol, or RDP, provides a graphical interface for users to
 In this guide, we’ll walk through how to use Cloudflare’s Zero Trust platform to securely connect to machines over RDP through a positive security model. With Cloudflare Zero Trust, you can still enjoy the convenience of making your RDP server available over the Internet without the risk of opening any inbound ports on your local server. 
 
 Today, Cloudflare Zero Trust offers two solutions to provide secure access to RDP servers.
-- Private subnet routing with Cloudflare Warp to Tunnel
-- Cloudflared on client and server
+-[Private subnet routing with Cloudflare Warp to Tunnel](#private-subnet-routing-with-cloudflare-warp-to-tunnel)
+- [Cloudflared on client and server](#Cloudflare-Access)
 
 ## Private subnet routing with Cloudflare Warp to Tunnel
 Building out a private network has two primary components: the server side, and the client side.
