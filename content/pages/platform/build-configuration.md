@@ -125,7 +125,7 @@ Many common tools have been pre-installed as well. The environment variable avai
 | NPM         | Corresponds with Node.js version            | Any version                       | `NPM_VERSION`        |
 | pip         | Version corresponding with Python version   |                                   |                      |
 | Pipenv      | Latest version                              |                                   |                      |
-| sqlite3     | Version 3.11.0                              | Any version                       |                      |
+| sqlite3     | Version 3.11.0                              |                                   |                      |
 | Yarn        | Version 1.22.10                             | Any version from 0.2.0 to 1.22.19 | `YARN_VERSION`       |
 | Zola        | (requires environment variable)             | Any version from 0.5.0 to 0.14.0  | `ZOLA_VERSION`       |
 
