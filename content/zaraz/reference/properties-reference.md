@@ -8,7 +8,7 @@ meta:
 
 # Zaraz event and system properties
 
-Cloudflare Zaraz offers properties that you can use when configuring the product. They are helpful to send data to a third-party tool or to create triggers as they have context about a specific user's browser session and the actions they take on the website. Below is a list of properties, how can you access them, and their values:
+Cloudflare Zaraz offers properties that you can use when configuring the product. They are helpful to send data to a third-party tool or to create triggers as they have context about a specific user's browser session and the actions they take on the website. Below is a list of the properties you can access from the dash and their values.
 
 ## Web API
 
