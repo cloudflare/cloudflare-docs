@@ -79,6 +79,44 @@ To refresh a gateway using the API, send a [PATCH](https://api.cloudflare.com/#w
 
 ---
 
+## Update blocklist
+
+When you set up a [IPFS Universal Path gateway](/web3/ipfs-gateway/concepts/universal-gateway/), you may want to items to the gateway blocklist, which allows you to block access to specific content.
+
+You have the ability to block access to one or more:
+
+- CIDs (`QmPZ9gcCEpqKTo6aq61g2nXGUhM4iCL3ewB6LDXZCtioEB`)
+- CID paths (`/ipfs/QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/readme`)
+- IPNS hostnames (`/ipns/example.com`)
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+To add an item to the blocklist using the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select your account and website.
+3. Go to **Web3**.
+4. On a specific gateway, click the dropdown then **Blocklist**.
+5. Click **Add entry**.
+6. Enter the following information:
+
+    - **Blocklist entry type**: Choose **CID** or **Content path**.
+    - **Blocklist entry content**: Add a CID or content path to block, meaning either a valid CIDv0 or CIDv1 string (CID) or the entry should start with `/ipfs/` or `/ipns/` (content path).
+    - **Blocklist entry description**: Add a description to help you identify the blocklist entry.
+
+7. Click **Add**.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+TBD...
+ 
+{{</tab>}}
+{{</tabs>}}
+
+---
+
 ## Delete a gateway
 
 When you delete a gateway, Cloudflare will automatically remove all associated hostname DNS records. This action will impact your traffic and cannot be undone.
