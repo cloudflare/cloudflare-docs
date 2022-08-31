@@ -8,10 +8,6 @@ meta:
 
 # WAF ML
 
-{{<Aside type="note">}}
-This feature is available in early access to customers on an Enterprise plan. To get access, contact your account team.
-{{</Aside>}}
-
 WAF ML (Machine Learning) is a feature that complements [WAF Managed Rulesets](/waf/managed-rulesets/).
 
 Managed Rulesets contain rules that are continuously updated to better detect malicious payloads. They target specific patterns of established attack vectors and have a very low rate of false positives. However, Managed Rulesets are not optimized for attacks based on variations of the original signature introduced, for example, by fuzzing techniques.
