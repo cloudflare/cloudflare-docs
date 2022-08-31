@@ -5215,6 +5215,7 @@ pre {
   background: linear-gradient(var(--background-color),
     rgba(var(--background-color-rgb)));
   border: 1px solid rgb(216 216 218);
+  color: inherit;
 }
 
 [theme="dark"] .noCodeTab {
