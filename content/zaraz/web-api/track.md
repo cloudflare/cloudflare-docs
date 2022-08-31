@@ -34,12 +34,12 @@ After using `zaraz.track()` in your website, you will usually want to create a t
 
 {{<table-wrap>}}
 
-| Rule type    | Variable name               | Match operation | Match string |
-| ------------ | --------------------------- | --------------- | ------------ |
-| _Match rule_ | `{{ client.__zarazTrack }}` | _Equals_        | `purchase`   |
+| Rule type    | Variable name | Match operation | Match string |
+| ------------ | ------------- | --------------- | ------------ |
+| _Match rule_ | _Track Name_  | _Equals_        | `purchase`   |
 
 {{</table-wrap>}}
 
 In every tool you want to use this trigger, add an action with this trigger [configured as a firing trigger](/zaraz/get-started/create-actions/). Each action that uses this trigger can access the `eventProperties` you have sent. In the **Action** fields, you can use `{{ client.<KEY_NAME> }}` to get the value of `<KEY_NAME>`. In the above example, Zaraz will replace `{{ client.value }}` with `200`.
 
-For more information regarding the properties you can use with `zaraz.track()`, refer to [Event properties](/zaraz/reference/properties-reference/#event-properties).
+For more information regarding the properties you can use with `zaraz.track()`, refer to [Zaraz properties](/zaraz/reference/properties-reference/).
