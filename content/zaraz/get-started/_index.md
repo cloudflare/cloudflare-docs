@@ -12,7 +12,7 @@ Before being able to use Zaraz, it is recommended that you proxy your website th
 
 Zaraz relies on events and triggers to determine when to load the tools you need in your website, and what action they need to perform. The way you configure Zaraz and where you start largely depend on the tool you wish to use.
 
-Every tool action needs a trigger, and a trigger can be based on an event, or a condition. A tool without actions will not do anything.
+Every tool needs an action to work, and actions must have a trigger. A trigger can be based on an event, or a condition. A tool without actions will not do anything.
 
 Some tools come with a preconfigured `Pageview` action, that uses the built-in `Pageview` system trigger. For example, when adding Google Analytics to your site, Zaraz will, by default, send page views whenever a page is loaded. Other tools might not use the concept of page views. These tools will require you to create triggers and define your own actions. Whatever the case, Zaraz is flexible and allows you to configure it for your specific use case or needs.
 
