@@ -9,3 +9,4 @@ Cloudflare Tunnel creates a secure, outbound-only connection between your servic
 
 - [SMB](/cloudflare-one/connections/connect-apps/use_cases/smb/)
 - [SSH](/cloudflare-one/connections/connect-apps/use_cases/ssh/)
+- [RDP](/cloudflare-one/connections/connect-apps/use_cases/rdp/)
