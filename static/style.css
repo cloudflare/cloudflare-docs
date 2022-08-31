@@ -5223,6 +5223,14 @@ pre {
   background-color: rgb(var(--background-color-rgb));
 }
 
+.noCodeTab > pre {
+  margin-bottom: 2em;
+}
+
+.noCodeTab > *:last-child {
+  margin-bottom: 0;
+}
+
 .noCodeLabel {
   font-family: var(--sans-serif-font-family);
 }
