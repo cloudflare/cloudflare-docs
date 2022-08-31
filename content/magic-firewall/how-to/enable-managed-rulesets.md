@@ -1,5 +1,5 @@
 ---
-title: Enable Managed Ruesets
+title: Enable Managed Rulesets
 pcx-content-type: how-to
 ---
 

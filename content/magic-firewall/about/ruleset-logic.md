@@ -29,3 +29,22 @@ For best practices when configuring your security policy, refer to [Best practic
 Cloudflare-sourced traffic is also subject to the Magic Firewall rules you configure. If you block all ICMP traffic, you will also block Cloudflare's endpoint health checks. When blocking ICMP traffic, ensure your rules first allow ICMP sourced from Cloudflare public IPs to your prefix endpoint IPs before applying a block ICMP rule.
 
 For a list of Cloudflare's public IPs, refer to [IP Ranges](https://www.cloudflare.com/ips/).
+
+## Magic Firewall phases
+
+Magic Firewall processes traffic in two phases: in the first phase, Magic Firewall matches packets against rules in the Root phase. In the second phase, Magic Firewall matches packets against rules in the Managed phase.
+
+### Root phase ruleset
+
+The Root phase is maintained by the network owners, and rule expressions, order of execution, and rule action
+can all be customized.
+
+You can add a rule in the root phase to override the behavior of a managed rule.
+
+### Managed phase ruleset
+
+Managed Phase rulesets are updated and maintained by Cloudflare and based on rogue traffic patterns.
+Cloudflare maintains the expressions and order of execution for rules in the managed phase, and rules
+can be enabled, disabled, or made to log matching packets.
+
+Refer to [Enable Managed Rulesets](/magic-firewall/how-to/enable-managed-rulesets/) for more information.
