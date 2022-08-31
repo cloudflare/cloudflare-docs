@@ -56,7 +56,7 @@ To configure rule field values for all the rules in a Managed Ruleset:
 
     ![The Configure Managed Ruleset page displaying the available options to override all the rules in the ruleset. In the displayed Managed Ruleset you can override the ruleset action.](/waf/static/waf-configure-ruleset.png)
 
-5. (Optional) To apply the rules in the ruleset to a subset of incoming requests instead of all requests, select **Edit filter** and [set the scope using a custom filter expression](#specify-a-custom-expression-for-the-ruleset).
+5. (Optional) To apply the rules in the ruleset to a subset of incoming requests instead of all requests, [set the scope using a custom filter expression](#specify-a-custom-expression-for-the-ruleset).
 
 6. Select **Save**.
 
