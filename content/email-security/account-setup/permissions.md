@@ -29,10 +29,10 @@ Child accounts control settings and services associated with an Area 1 instance.
 
 Users created at child level will only have access to the assigned child account. These users can have one of the following roles:
 
-- **Super Admin**: Can make any configuration changes for the account. Can access **Settings** (the gear icon).
-- **Configuration Admin**: Can make configuration changes but has limited ability to review messages.
-- **SOC Analyst**: Can view email and detection statistics, as well as message preview, retraction, detection search, and mail trace. No access to **Settings** (the gear icon).
-- **Viewer**: Only have access to view the email and detection statistics. No access to **Settings** (the gear icon).
+- **Super Admin**: Full access to the account and can make any configuration changes. Can access **Settings** (the gear icon).
+- **Configuration Admin**: Can make configuration changes and manage users, except for Super Admin. Has no ability to review messages.
+- **SOC Analyst**: Can search, review and retract messages. Has no admin capabilites.
+- **Viewer**: Only has access to metrics withing the system.No access to **Settings** (the gear icon).
 
 {{<table-wrap>}}
 
