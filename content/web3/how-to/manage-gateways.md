@@ -86,8 +86,8 @@ When you set up a [IPFS Universal Path gateway](/web3/ipfs-gateway/concepts/univ
 You have the ability to block access to one or more:
 
 - CIDs (`QmPZ9gcCEpqKTo6aq61g2nXGUhM4iCL3ewB6LDXZCtioEB`)
-- CID paths (`/ipfs/QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/readme`)
-- IPNS hostnames (`/ipns/example.com`)
+- IPFS content paths (`/ipfs/QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/readme`)
+- IPNS content paths (`/ipns/example.com`)
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
