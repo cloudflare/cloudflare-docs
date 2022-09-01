@@ -25,7 +25,7 @@ function buildHtml(destination, array) {
 }
 
 function getSelectValues() {
-    let ui_components = ["products", "roles", "difficulty"];
+    let ui_components = ["products", "category"];
     let selected_values = [];
     for (const component of ui_components) {
         let select = document.getElementById(component);
@@ -46,7 +46,7 @@ export function filterResults() {
         dropdown.addEventListener("change", () => {
             filteredPaths = JSON.parse(JSON.stringify(paths))
             let selectedOptions = getSelectValues()
-            if (selectedOptions[0][1] === 'all' && selectedOptions[1][1] === 'all' && selectedOptions[2][1] === 'all') {
+            if (selectedOptions[0][1] === 'all' && selectedOptions[1][1] === 'all') {
                 passed = filteredPaths
             } else {
                 passed = filteredPaths.filter(function(element) {

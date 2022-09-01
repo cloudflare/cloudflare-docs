@@ -1,17 +1,13 @@
 {{- $data := .Site.Data.learning_paths -}}
 {{- $numTrails := len $data -}}
 {{ $product_array := slice }}
-{{ $difficulty_array := slice }}
-{{ $role_array := slice }}
+{{ $category_array := slice }}
 {{- range $data -}}
 {{ with .products }}
 {{- $product_array = union $product_array . -}}
 {{- end -}}
-{{ with .roles }}
-{{- $role_array = union $role_array . -}}
-{{- end -}}
-{{ with .difficulty }}
-{{- $difficulty_array = $difficulty_array | append . | uniq -}}
+{{ with .category }}
+{{- $category_array = union $category_array . -}}
 {{- end -}}
 {{- end -}}
 
@@ -21,6 +17,17 @@
 </div>
 
 <div class="selectorDropdowns">
+
+<div>
+<label for="roles">Category</label>
+<select class="selectorFilter" name="data-category" id="category">
+    <option value="all">Select...</option>
+    {{- range $category_array -}}
+    <option value="{{.}}">{{.}}</option>
+    {{- end -}}
+</select>
+</div>
+
 <div>
 <label for="products">Products</label>
 <select class="selectorFilter" name="data-products" id="products">
@@ -31,25 +38,6 @@
 </select>
 </div>
 
-<div>
-<label for="difficulty">Difficulty</label>
-<select class="selectorFilter" name="data-difficulty" id="difficulty">
-    <option value="all">Select...</option>
-    {{- range $difficulty_array -}}
-    <option value="{{.}}">{{.}}</option>
-    {{- end -}}
-</select>
-</div>
-
-<div>
-<label for="roles">Roles</label>
-<select class="selectorFilter" name="data-roles" id="roles">
-    <option value="all">Select...</option>
-    {{- range $role_array -}}
-    <option value="{{.}}">{{.}}</option>
-    {{- end -}}
-</select>
-</div>
 </div>
 
 <div class="pathGrid" id="pathGrid">
