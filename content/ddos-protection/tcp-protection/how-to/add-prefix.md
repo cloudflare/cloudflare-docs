@@ -25,6 +25,6 @@ Alternatively, enter a prefix and (optionally) a description in **Prefix** and *
 
 {{<Aside type="note" header="Note">}}
 
-The **Add existing prefix** list will not display [delegated prefixes](/byoip/about/prefix-delegations/) or leased prefixes. You can add these prefixes manually in the Cloudflare dashboard or [using the API](/ddos-protection/tcp-protection/api/).
+The **Add existing prefix** list will not display leased prefixes, but you can add them manually in the Cloudflare dashboard or [using the API](/ddos-protection/tcp-protection/api/). You cannot add [delegated prefixes](/byoip/about/prefix-delegations/) to Advanced TCP Protection.
 
 {{</Aside>}}
