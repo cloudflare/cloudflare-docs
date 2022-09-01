@@ -32,19 +32,19 @@ For a list of Cloudflare's public IPs, refer to [IP Ranges](https://www.cloudfla
 
 ## Magic Firewall phases
 
-Magic Firewall processes traffic in two phases: in the first phase, Magic Firewall matches packets against rules in the Root phase. In the second phase, Magic Firewall matches packets against rules in the Managed phase.
+Magic Firewall processes traffic in two phases: in the first phase, Magic Firewall matches packets against rules in the Custom phase. In the second phase, Magic Firewall matches packets against rules in the Managed phase.
 
-### Root phase ruleset
+### Custom phase ruleset
 
-The Root phase is maintained by the network owners, and rule expressions, order of execution, and rule action
-can all be customized.
+The Magic Firewall Custom phase is a set of rules defined by the user. The expression, order, and actions of those rules can be customized by the user.
 
-You can add a rule in the root phase to override the behavior of a managed rule.
+Additionally, users can add a rule in this custom phase to override the behavior of a rule in the managed phase.
 
 ### Managed phase ruleset
 
-Managed Phase rulesets are updated and maintained by Cloudflare and based on rogue traffic patterns.
-Cloudflare maintains the expressions and order of execution for rules in the managed phase, and rules
+Managed Phase rulesets are updated and maintained by Cloudflare, and Cloudflare creates these rules based on best practices, known malicious patterns, and other criteria.
+
+Cloudflare maintains the expressions and order of execution for rules in the managed phase. Rules
 can be enabled, disabled, or made to log matching packets.
 
 Refer to [Enable Managed Rulesets](/magic-firewall/how-to/enable-managed-rulesets/) for more information.

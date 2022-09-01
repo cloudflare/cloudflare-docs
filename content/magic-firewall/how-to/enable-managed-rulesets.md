@@ -9,11 +9,11 @@ With [Managed Rulesets](/ruleset-engine/managed-rulesets/), you can quickly depl
 
 {{<Aside type="note" header="Note:">}}
 
-Before you can begin using Managed Rulesets with Magic Firewall, your account must be set up to use Managed Rulesets.
+Before you can begin using Managed Rulesets with Magic Firewall, your account must first be entitled to use Managed Rulesets. Contact your account team for access.
 
 {{</Aside>}}
 
-To enabled or disable a rule, you can specify which properties should be overriden. The overrides occur in the managed phase, root kind ruleset. Currently, you can only have one rule in the root ruleset.
+To enable or disable a rule, you can specify which properties should be overriden. The overrides occur in the managed phase, root kind ruleset. Currently, you can only have one rule in the root ruleset, but a single rule can contain multiple overrides. 
 
 You have multiple options for enabling rules:
 
@@ -31,7 +31,7 @@ To create a Managed Ruleset, you must first build a request with the following:
 Additionally, you need the properties you want to override. The properties you can override include:
 
 - `enabled`: This value can be set to `true` or `false`. When set to `true`, the rule matches packets and applies the rule's default action if the action is not overriden. When set to `false`, the rule is disabled and does not match any packets.
-- `action`: The value can only be set to `log` if the rule's default action is not applied. When this occurs, the rule only produces logs.
+- `action`: The value can be set to `log` so the rule only produces logs instead of applying the rule's default action.
 
 The `enabled` and `action` properties for a rule are set in the managed phase managed kind ruleset. All rules in the managed phase are currently disabled by default.
 
@@ -62,7 +62,8 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ruleset
             "rules": [
               {
                 "id": "<MANAGED_RULE_ID>",
-                "enabled": true
+                "enabled": true,
+                "action": "log"
               }
             ]
           }
