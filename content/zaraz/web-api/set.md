@@ -38,7 +38,9 @@ Another example:
 zaraz.set('product_name', 't-shirt', {scope: 'page'})
 ```
 
-Keys that are sent using `zaraz.set()` can be used inside tool actions exactly like keys in the `eventProperties` of `zaraz.track()`. So, the above `product` key is accessible through the dash with the variable _Track Property: name:_, and setting its name as `product_name`. Zaraz will then replace it with `tshirt`.
+Keys that are sent using `zaraz.set()` can be used inside tool actions exactly like keys in the `eventProperties` of `zaraz.track()`. So, the above `product` key is accessible through the dash with the variable _Track Property name:_, and setting its name as `product_name`. Zaraz will then replace it with `tshirt`.
+
+![Example of how to create a variable with the Set method, tracking t-shirts](/zaraz/static/set.png)
 
 The `[options]` argument is an optional object and can include a `scope` property that has a string value. This property determines the lifetime of this key, meaning for how long Zaraz should keep attaching it to `zaraz.track()` calls. Allowed values are:
 
