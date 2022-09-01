@@ -15,7 +15,7 @@ The exact composition of the trigger will change depending on the type of rule y
 
 ### Match rule
 
-Zaraz matches the variable you input in **Variable name** with the text under **Match string**. For a complete list of supported variables, refer to [Zaraz event and system properties](/zaraz/reference/properties-reference/).
+Zaraz matches the variable you input in **Variable name** with the text under **Match string**. For a complete list of supported variables, refer to [Properties reference](/zaraz/reference/properties-reference/).
 
 **Trigger example: Match `zaraz.track("purchase")`**
 
@@ -65,7 +65,7 @@ When matching based on a System property, you will often want to add a second ru
 
 {{</table-wrap>}}
 
-Refer to the [Zaraz event and system properties](/zaraz/reference/properties-reference/) for more information on the variables you can use when using Match rule.
+Refer to the [Properties reference](/zaraz/reference/properties-reference/) for more information on the variables you can use when using Match rule.
 
 ### Click listener
 

@@ -42,4 +42,4 @@ After using `zaraz.track()` in your website, you will usually want to create a t
 
 In every tool you want to use this trigger, add an action with this trigger [configured as a firing trigger](/zaraz/get-started/create-actions/). Each action that uses this trigger can access the `eventProperties` you have sent. In the **Action** fields, you can use `{{ client.<KEY_NAME> }}` to get the value of `<KEY_NAME>`. In the above example, Zaraz will replace `{{ client.value }}` with `200`.
 
-For more information regarding the properties you can use with `zaraz.track()`, refer to [Zaraz properties](/zaraz/reference/properties-reference/).
+For more information regarding the properties you can use with `zaraz.track()`, refer to [Properties reference](/zaraz/reference/properties-reference/).
