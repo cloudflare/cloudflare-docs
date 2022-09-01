@@ -27,7 +27,7 @@ Zaraz matches the variable you input in **Variable name** with the text under **
 
 {{</table-wrap>}}
 
-When matching based on a System property, you will often want to add a second rule that matches `{{ client.__zarazTrack }}` to `Pageview`. Otherwise, your trigger will be valid for every other event happening on this page too. Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how to add more than one condition to a trigger.
+When creating rules for `zaraz.track()`, you will often want to add a second rule that matches it to `Pageview`. Otherwise, your trigger will be valid for every other event happening on this page too. Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how to add more than one condition to a trigger.
 
 
 **Trigger example: All pages under `/blog`**
@@ -37,6 +37,7 @@ When matching based on a System property, you will often want to add a second ru
 | Rule type    | Variable name  | Match operation | Match string |
 | ------------ | -------------- | --------------- | ------------ |
 | _Match rule_ | _URL pathname_ | _Starts with_   | `/blog`      |
+
 {{</table-wrap>}}
 
 {{<table-wrap>}}
@@ -65,7 +66,7 @@ When matching based on a System property, you will often want to add a second ru
 
 {{</table-wrap>}}
 
-Refer to the [Properties reference](/zaraz/reference/properties-reference/) for more information on the variables you can use when using Match rule.
+Refer to [Properties reference](/zaraz/reference/properties-reference/) for more information on the variables you can use when using Match rule.
 
 ### Click listener
 
