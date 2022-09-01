@@ -1,1 +1,1 @@
-[]
+[{"kind": "PLANNED", "rule_id": "...e4fe8e55", "rule_ref": "ADV0002", "description": "User-Agent-aware DDoS Protection (Available only to Enterprise zones with Advanced DDoS service).", "comments": "This rule detects floods of requests coming from suspicious user agents.", "previous_action": null, "new_action": "log", "announcement_date": "2022-09-01", "release_date": "2022-09-12"}]
