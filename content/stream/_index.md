@@ -11,7 +11,7 @@ meta:
 
 {{<description>}}
 
-Serverless live and on-demand streaming
+Serverless live and on-demand video streaming
 
 {{</description>}}
 
