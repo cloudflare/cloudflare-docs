@@ -6,24 +6,19 @@ weight: 2
 
 # Get started with Cloudflare Stream
 
-You have multiple options to upload your first video:
+{{<Aside type="note" header="Before you get started:">}}
 
-- Drag and drop the video into the dashboard.
-- Add a link to the video.
-- Use the Stream API.
-
-{{<Aside type="note" header="Note:">}}
-
-Before you can use Cloudflare Stream, you must first [create a Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/) and [create an API token](/api/tokens/create/).
+You must first [create a Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/) and [create an API token](/api/tokens/create/) to begin using Stream.
 
 {{</Aside>}}
 
-## 1. Upload your first video
+You can start using Cloudflare Stream by starting a live stream or uploading a video.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream).
-2. Choose an option to upload your video:
-    - To drag and drop a video, select **Quick Upload** and drag your video file into the pane.
-    - To use a link, select **Use Link** and under **Video URL**, enter the video URL. Select **Upload**.
+Whether you choose to start a live stream or upload a video, viewing a video is the same for both options.
+
+## Upload your first video
+
+Upload your video from the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream).
  
 To use the API, replace the `API_TOKEN` and `ACCOUNT_ID` values with your credentials in the example below.
 
@@ -35,14 +30,13 @@ curl \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy
 ```
 
-## 2. Start a live stream
+Next, [watch your video](/stream/get-started/#watch-your-video).
 
-1. From the [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream), click the **Live Inputs** tab.
-2. Click **Create Live Input**.
-3. Enter a name for your Live Input and click **Create Live Input**.
-4. Under **Connection Information** > **Protocol**, choose **RTMPS** or **SRT**.
+## Start a live stream
 
-After you have created a Live Input, you can retrieve the RTMPS URL and Key, or if you used the SRT protocol, you can view the SRT URL. 
+[Create a live input](https://dash.cloudflare.com/?to=/:account/stream/inputs/create) and choose **RTMPS** or **SRT**.
+
+After you create a Live Input, you can retrieve the **RTMPS URL** and **RTMPS Key**, or if you used the SRT protocol, you can view the **SRT URL**. 
  
 To use the API, replace the `API_TOKEN` and `ACCOUNT_ID` values with your credentials in the example below.
 
@@ -55,11 +49,9 @@ curl \
 
 Within seconds of you pushing your live stream to Cloudflare Stream, you should see the live video stream.
 
-## 3. Watch your live stream
+## Watch your video
 
-After the live input begins receiving the live stream, you can use the HLS or DASH URL to view the current live video. 
-
-1. From the [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream), locate your video inthe videos list and select it.
+1. From the [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream), select your video from the list.
 2. From the **Settings** tab, select **Click to copy** for the **HLS Manifest URL** or **Dash Manifest URL**.
 3. Paste the URL in your browser.
 

@@ -15,14 +15,15 @@ Serverless live and on-demand streaming
 
 {{</description>}}
 
-Cloudflare Stream is a live streaming and on-demand video platform, which can ingest, encode, record, and play videos from one unified product. You can use Cloudflare Stream without a domain on Cloudflare, and videos are not associated with domains.
+Cloudflare Stream lets you or your end users upload, store, encode, and deliver live and on-demand video with one API, without configuring or maintaining infrastructure.
 
-Cloudflare Stream is built for developers on the world’s most-connected network, offering effortless scale and affordable pricing to build your video pipeline.
+You can use Stream to build your own video features in websites and native apps, from simple playback to an entire video platform.
+
+Cloudflare Stream runs on [Cloudflare’s global cloud network](https://www.cloudflare.com/network/) in over 270 cities around the world.
 
 {{<button-group>}}
   {{<button type="primary" href="/stream/get-started/">}}Get started{{</button>}}
   {{<button type="secondary" href="https://dash.cloudflare.com/?to=/:account/stream">}}Stream dashboard{{</button>}}
-  {{<button type="secondary" href="https://api.cloudflare.com/#stream-videos-properties">}}Stream API docs{{</button>}}
 {{</button-group>}}
 
 ---
@@ -53,4 +54,6 @@ Stream provides an embedded web player that requires zero engineering work to us
 
 {{<resource-group>}}
 
-{{<resource  header="Billing" href="https://support.cloudflare.com/hc/en-us/articles/360016450871-Billing-for-Cloudflare-Stream" icon="price">}} Explore billing for Cloudflare Stream{{</resource>}}
+{{<resource header="Billing" href="https://support.cloudflare.com/hc/en-us/articles/360016450871-Billing-for-Cloudflare-Stream" icon="price">}} Explore billing for Cloudflare Stream{{</resource>}}
+
+{{<resource header="Discord" href="https://discord.com/channels/595317990191398933/893253103695065128" icon="logo-Discord">}} Join the developer community {{</resource>}}
