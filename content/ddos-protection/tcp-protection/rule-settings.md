@@ -55,9 +55,13 @@ The burst sensitivity is the rule's sensitivity to short-term bursts in the pack
 * A low sensitivity means that bigger spikes in the packet rate may trigger a mitigation action.
 * A high sensitivity means that smaller spikes in the packet rate may trigger a mitigation action.
 
+The default burst sensitivity is _Medium_.
+
 ## Rate sensitivity
 
 The rate sensitivity is the rule's sensitivity to the sustained packet rate:
 
 * A low sensitivity means that higher sustained packet rates can trigger a mitigation action.
 * A high sensitivity means that lower sustained packet rates may trigger a mitigation action. A high sensitivity offers increased protection, but you may get more false positives (that is, mitigated packets that belong to legitimate traffic).
+
+The default rate sensitivity is _Medium_.
