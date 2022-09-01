@@ -34,6 +34,15 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<I
 }
 ```
 
+## Enable outputs
+
+You can actively control when you broadcast video by enabling or disabling outputs added to a live input. When a live input is in use for streaming and has a disabled output added to it, the video is not restreamed to the output. 
+
+By default, all outputs are enabled.
+
+1. From Live Inputs in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs), select an input from the list.
+2. Under **Outputs** > **Enabled**, set the toggle to enabled or disabled.
+
 ## Managing outputs
 
 To get a list of outputs, call the `/outputs` endpoint:
