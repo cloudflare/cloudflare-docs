@@ -1,25 +1,14 @@
 ---
 title: About
-pcx_content_type: concept
+pcx_content_type: navigation
 weight: 2
 meta:
     title: What is a registrar
 ---
 
-# What is a registrar?
+# About Cloudflare Registrar
 
-![There are several parties involved in the domain registration. Read more about this in this page.](/registrar/static/domain-registry-process.png)
+Cloudflare Registrar offers several advantages over other [registrars](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/), such as domain name registration renewal [without markups fees](https://www.cloudflare.com/products/registrar/). You only pay what is charged by registries and [ICANN](https://www.icann.org/). Cloudflare Registrar also offers additional security features, such as free, one-click activation for [Domain Name System Security Extensions (DNSSEC)](/registrar/account-options/enable-dnssec/), [custom domain protection](/registrar/reference/custom-domain-protection/), and [WHOIS redaction](/registrar/get-started/whois-redaction/).
 
-There are several steps you have to take before getting your website online and one of the first is making sure you have the address you want. 
+You can buy your domain from Cloudflare Registrar or from a third party. Even when you buy it from a third party, you can manage your domain with Cloudflare to benefit from all the features Cloudflare offers.
 
-You have to buy your Internet address, also known as domain, from a registrar. Registrars are businesses that handle the reservation of domain names, as well as the assignment of IP addresses to those domains.
-
-You can think of registrars as car dealerships: they sell you the car but they do not manufacture it. In this analogy, your domain is the car, the registrar is the car dealership, and the manufacturer are the registries, entities responsible for top-level domains (TLD) like `.com`.
-
-This is a complex topic, but the main takeaway is this: there are several entities responsible for different aspects of the Internet. The place where you buy your domain can be different from the place where you manage it and is not necessarily the same place where you host your website. The domain name only tells the world where your website is located.
-
-For a comprehensive explanation regarding this subject, refer to [What is a domain name registrar?](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/).
-
-## Cloudflare Registrar
-
-Cloudflare Registrar offers several advantages, such as additional security and a no-markup fee — you only pay what is charged by registries and ICANN. Learn more in [Why choose Cloudflare](/registrar/why-choose-cloudflare/).

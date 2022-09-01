@@ -3,12 +3,12 @@ pcx_content_type: concept
 title: Secure Web Gateway
 weight: 1
 meta:
-  title: Secure Web Gateway policies
+  title: Cloudflare Gateway policies
 ---
 
-# Secure Web Gateway policies
+# Cloudflare Gateway policies
 
-With Secure Web Gateway, Cloudflare Zero Trust allows you to set up policies to inspect DNS, Network, and HTTP traffic.
+Cloudflare Gateway, our comprehensive Secure Web Gateway, allows you to set up policies to inspect DNS, Network, and HTTP traffic.
 
 - **DNS policies** inspect DNS queries. You can block domains and IP addresses from resolving on your devices. For more information on DNS filtering, refer to our [Learning Center article](https://www.cloudflare.com/learning/access-management/what-is-dns-filtering/).
 - **Network policies** inspect individual TCP/UDP/GRE packets. You can block access to specific ports on your origin server, including non-HTTP resources.
