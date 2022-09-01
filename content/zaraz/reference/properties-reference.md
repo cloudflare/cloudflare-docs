@@ -1,12 +1,9 @@
 ---
 pcx_content_type: reference
 title: Properties reference
-# layout: table
-meta:
-  title: Zaraz event and system properties
 ---
 
-# Zaraz system properties
+# Properties reference
 
 Cloudflare Zaraz offers properties that you can use when configuring the product. They are helpful to send data to a third-party tool or to create triggers as they have context about a specific user's browser session and the actions they take on the website. Below is a list of the properties you can access from the dash and their values.
 
