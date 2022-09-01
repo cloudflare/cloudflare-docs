@@ -45,7 +45,7 @@
     {{- end -}}
 
     {{with .additional_description}}
-    <p class="learningPathNote">{{ . | markdownify}}</p>
+    <p class="learningPathNote">{{- . | markdownify -}}</p>
     {{- end -}}
     
     </li>

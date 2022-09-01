@@ -4,8 +4,7 @@
         "title": "Get started with Cloudflare",
         "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability.",
         "products": ["Cloudflare Essentials", "DNS", "SSL", "WAF"],
-        "difficulty": "Easy",
-        "roles": ["Network admin", "Web admin"],
+        "category": ["Security", "Performance", "Reliability"],
         "modules": [
             {
                 "title": "Concepts",
@@ -75,7 +74,7 @@
                     {
                     "url_path": "https://developers.cloudflare.com/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/",
                     "link_title": "(For some) Allow Cloudflare IP addresses",
-                    "additional_description": "If you control your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/) and plan on using [Cloudflare’s proxy](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records/), you should review your server configuration to make sure you are not accidentally blocking Cloudflare IP addresses."
+                    "additional_description": "If you control your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/) and plan on using [Cloudflare’s proxy](/dns/manage-dns-records/reference/proxied-dns-records/), you should review your server configuration to make sure you are not accidentally blocking Cloudflare IP addresses."
                     },
                     {
                     "url_path": "/fundamentals/get-started/setup/add-site/",
