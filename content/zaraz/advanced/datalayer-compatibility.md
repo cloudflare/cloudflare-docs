@@ -31,7 +31,7 @@ dataLayer.push({
 
 Cloudflare Zaraz then translates the `dataLayer.push()` call to a `zaraz.track()` call. So, `dataLayer.push({event: "purchase", price: "24", "currency": "USD"})` is equivalent to `zaraz.track("purchase", {"price": "24", "currency": "USD"})`.
 
-Because Zaraz converts the `dataLayer.push` call to `zaraz.track`, creating a trigger based on `dataLayer.push` calls is the same as creating triggers for `zaraz.track`. As an example, the trigger below would match the above `dataLayer.push` call because it matches the event name (`{{ client.__zarazTrack }}`) with `purchase`.
+Because Zaraz converts the `dataLayer.push` call to `zaraz.track`, creating a trigger based on `dataLayer.push` calls is the same as creating triggers for `zaraz.track`. As an example, the trigger below would match the above `dataLayer.push` call because it matches the event with `purchase`.
 
 {{<table-wrap>}}
 
