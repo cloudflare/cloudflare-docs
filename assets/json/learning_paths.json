@@ -132,7 +132,7 @@
             },
             {
                 "title": "Other optimizations",
-                "description": "Go beyond the basics and optimize other aspects of your domain.",
+                "description": "Go beyond the basics and optimize other aspects of your domain setup.",
                 "pages": [
                     {
                     "url_path": "/cache/get-started/",
