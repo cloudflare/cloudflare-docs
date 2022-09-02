@@ -61,7 +61,7 @@ In order to be able to establish an SSH connection, do not enable [OS Login](htt
 
 ## Connect to SSH server with WARP to Tunnel
 
-You can use Cloudflare Tunnel to create a secure, outbound-only connection from your server to Cloudflare's edge. Users reach the service by installing the [Cloudflare WARP client](/cloudflare-one/connections/connect-devices/warp/) on their device and enrolling in your Zero Trust organization. You can optionally build Zero Trust policies to achieve granular control over user access.
+You can use Cloudflare Tunnel to create a secure, outbound-only connection from your server to Cloudflare's edge. Users reach the service by installing the [Cloudflare WARP client](/cloudflare-one/connections/connect-devices/warp/) on their device and enrolling in your Zero Trust organization. By default, all devices enrolled in your organization can access the service unless you build policies to allow or block specific users.
 
 ### 1. Connect the server to Cloudflare
 
@@ -69,13 +69,13 @@ You can use Cloudflare Tunnel to create a secure, outbound-only connection from 
 
 2. In the **Private Networks** tab for the tunnel, enter the IP address of your SSH server (or a range that includes the server IP). In GCP, the server IP is the  **Internal IP** of the VM instance.
 
-3. (Optional) [Set up Zero Trust policies](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#2-recommended-filter-network-traffic-with-gateway) to fine-tune access to your server.
+3. (Optional) [Set up Zero Trust policies](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#2-recommended-filter-network-traffic-with-gateway) to fine-tune access to your server.  
 
 ### 2. Set up the client
 
 In order for devices to connect to your Zero Trust organization, you will need to:
-1. [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices in Gateway with WARP mode.  The Cloudflare certificate is only required if you want to display a custom block page or perform HTTP filtering.
-2. [Create device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) to determine which devices can enroll to your Zero Trust organization. By default, all devices enrolled in your organization can access the server.
+- [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices in Gateway with WARP mode.  The Cloudflare certificate is only required if you want to display a custom block page or perform HTTP filtering.
+- [Create device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) to determine which devices can enroll to your Zero Trust organization.
 
 ### 3. Connect as a user
 
