@@ -41,7 +41,7 @@ Cloudflare CASB labels each finding with one of the following severity levels:
 
 ### Change the severity level
 
-You can change the severity level for a finding at any time, in case the default assignment does not suit your environment.
+You can change the severity level for a finding at any time, in case the default assignment does not suit your environment:
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **CASB** > **Findings**.
 2. Locate the finding you want to modify and select **View**.
