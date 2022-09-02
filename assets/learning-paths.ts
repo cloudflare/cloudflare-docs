@@ -27,13 +27,13 @@ function buildHtml(destination, array) {
 }
 
 function getSelectValues(selectElementCollection: HTMLCollectionOf<Element>) {
-    let selectedValues: Record<string, string> = {};
-    for (const htmlElement of selectElementCollection) {
-        let selectElement = htmlElement as HTMLSelectElement;
-        let selectedValue = selectElement.options[selectElement.selectedIndex].value;
-        selectedValues[selectElement.id] = selectedValue;
-    }
-    return selectedValues;
+  let selectedValues: Record<string, string> = {};
+  for (const htmlElement of selectElementCollection) {
+    let selectElement = htmlElement as HTMLSelectElement;
+    let selectedValue = selectElement.options[selectElement.selectedIndex].value;
+    selectedValues[selectElement.id] = selectedValue;
+  }
+  return selectedValues;
 }
 
 export function filterResults() {
@@ -42,21 +42,21 @@ export function filterResults() {
     const selectorDropdowns = document.getElementsByClassName("selectorFilter");
     let passed = [];
     for (const dropdown of selectorDropdowns) {
-        dropdown.addEventListener("change", () => {
-          let selectedOptions = getSelectValues(selectorDropdowns);
-          if (Object.values(selectedOptions).every(selectedValue => selectedValue === "all")) {
-            passed = paths;
-          } else {
-            passed = paths.filter((currentPath) => {
-                let keepItem = true;
-                for (const [filterName, filterValue] of Object.entries(selectedOptions)) {
-                    if (filterValue === "all") {
-                      continue;
-                    } else if (!currentPath[filterName].includes(filterValue)) {
-                    keepItem = false;
-                    break;
-                    }
-                }
+      dropdown.addEventListener("change", () => {
+        let selectedOptions = getSelectValues(selectorDropdowns);
+        if (Object.values(selectedOptions).every(selectedValue => selectedValue === "all")) {
+          passed = paths;
+        } else {
+          passed = paths.filter((currentPath) => {
+            let keepItem = true;
+            for (const [filterName, filterValue] of Object.entries(selectedOptions)) {
+              if (filterValue === "all") {
+                continue;
+              } else if (!currentPath[filterName].includes(filterValue)) {
+                keepItem = false;
+                break;
+              }
+            }
             return keepItem;
           });
         }

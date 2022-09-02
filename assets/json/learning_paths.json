@@ -80,7 +80,7 @@
           {
             "url_path": "https://developers.cloudflare.com/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/",
             "link_title": "(For some) Allow Cloudflare IP addresses",
-            "additional_description": "If you control your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/) and plan on using [Cloudflare’s proxy](/dns/manage-dns-records/reference/proxied-dns-records/), you should review your server configuration to make sure you are not accidentally blocking Cloudflare IP addresses."
+            "additional_description": "If you control your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/) and plan on using [Cloudflare’s proxy](/dns/manage-dns-records/reference/proxied-dns-records/), review your server configuration to avoid accidentally blocking Cloudflare IP addresses."
           },
           {
             "url_path": "/fundamentals/get-started/setup/add-site/",
@@ -96,7 +96,7 @@
           {
             "url_path": "/dns/manage-dns-records/how-to/create-dns-records/",
             "link_title": "Review DNS records",
-            "additional_description": "Though Cloudflare automatically scans for DNS records, you should review your records to guarantee site performance."
+            "additional_description": "Though Cloudflare automatically scans for DNS records, you should review your records to avoid unexpected issues."
           },
           {
             "url_path": "/dns/manage-dns-records/reference/proxied-dns-records/",
@@ -132,7 +132,7 @@
           },
           {
             "url_path": "/learning-paths/application-security/",
-            "link_title": "Customize other security settings"
+            "link_title": "Secure your application - Learning path"
           }
         ]
       },
@@ -174,6 +174,10 @@
           {
             "url_path": "/fundamentals/get-started/basic-tasks/access-cloudflare-resources/",
             "link_title": "What resources does Cloudflare offer?"
+          },
+          {
+            "url_path": "/fundamentals/get-started/basic-tasks/interact-with-cloudflare/",
+            "link_title": "How can I interact with Cloudflare?"
           }
         ]
       }
@@ -238,12 +242,12 @@
             "url_path": "/fundamentals/account-and-billing/account-setup/verify-email-address/"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/account-setup/manage-account-members/"
-          },
-          {
             "external_link": true,
             "url_path": "https://support.cloudflare.com/hc/articles/200167906",
             "link_title": "Set up two-factor authentication (2FA)"
+          },
+          {
+            "url_path": "/fundamentals/account-and-billing/account-setup/manage-account-members/"
           },
           {
             "url_path": "/fundamentals/account-and-billing/account-security/manage-active-sessions/"
@@ -252,7 +256,8 @@
             "url_path": "/fundamentals/account-and-billing/account-security/review-audit-logs/"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/account-security/securing-a-compromised-account/"
+            "url_path": "/fundamentals/account-and-billing/account-security/securing-a-compromised-account/",
+            "link_title": "Secure a compromised account (if needed)"
           }
         ]
       },
@@ -303,7 +308,7 @@
           {
             "url_path": "/waf/rate-limiting-rules/",
             "link_title": "Rate Limiting Rules",
-            "additional_description": "Define rate limits for requests matching an expression, and the action to perform when those rate limits are reached."
+            "additional_description": "Define rate limits for requests matching an expression and the action to perform when those rate limits are reached."
           },
           {
             "url_path": "/waf/tools/ip-access-rules/",
@@ -414,7 +419,7 @@
         ]
       },
       {
-        "title": "(Optional) Helpful resources",
+        "title": "Next steps",
         "estimated_time": "~30 mins",
         "pages": [
           {
