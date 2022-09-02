@@ -35,9 +35,9 @@ To configure your Split Tunnel settings:
     - If you are using **Exclude** mode, the IP ranges you see listed are those that Cloudflare excludes from WARP encryption. If your network's IP/CIDR range is listed on this page, delete it.
     - If you are using **Include** mode, the IP ranges you see listed are the only ones Cloudflare is encrypting through WARP. Add your network's IP/CIDR range to the list.
 
-## 3. Create Zero Trust policies
+## 3. (Recommended) Create Zero Trust policies
 
-Next, create Zero Trust policies to control who can reach applications on your private network.
+By default, only users enrolled in your Zero Trust organization can connect to your private network. You can create additional Zero Trust policies to manage access to specific applications.
 
 1. Go to **Access** > **Applications** > **Add an application**.
 2. Select **Private Network**.
@@ -48,7 +48,7 @@ Next, create Zero Trust policies to control who can reach applications on your p
 If you would like to create a policy for an IP/CIDR range instead of a specific IP address, you can build a [Gateway Network policy](/cloudflare-one/policies/filtering/network-policies/) using the **Destination IP** selector.
 {{</Aside>}}
 
-6. (Optional) Configure your [App Launcher](/cloudflare-one/applications/app-launcher/) visibility and logo.
+6. Configure your [App Launcher](/cloudflare-one/applications/app-launcher/) visibility and logo.
 7. Select **Next**. You will see two auto-generated Gateway Network policies: one that allows access to the destination IP and another that blocks access.
 8. Modify the policies to include additional identity-based conditions. For example:
 
