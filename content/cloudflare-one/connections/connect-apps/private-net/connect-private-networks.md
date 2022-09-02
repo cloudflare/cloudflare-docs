@@ -14,16 +14,21 @@ To connect a private network to Cloudflare’s edge, follow the guide below. You
 
 ## Prerequisites
 
-- [Set up Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default) on your devices.
-- (Recommended) [Enable Gateway HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/) in the Zero Trust dashboard.
+- [Set up the WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/) on your end user devices in Gateway with WARP mode.
 
-## 1. Create a tunnel
+## 1. Connect the server to Cloudflare
 
-1. To create a tunnel, follow our [dashboard setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/#1-create-a-tunnel). You can skip the connect an application step and go straight to connecting a network.
+To connect your infrastructure to Cloudflare with Cloudflare Tunnel:
+
+1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/). You can skip the connect an application step and go straight to connecting a network.
 
 2. In the [Connect a network](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/#3-connect-a-network) step, enter the IP/CIDR range of your private network (for example `10.0.0.0/8`). This makes the WARP client aware that any requests to this IP range need to be routed to your new tunnel.
 
-## 2. (Recommended) Route private network IPs through Gateway
+## 2. (Recommended) Filter network traffic with Gateway
+
+Enable the Gateway proxy
+
+### Route private network IPs through Gateway
 
 By default, WARP automatically excludes some IP addresses from Gateway visibility as part of its [Split Tunnel feature](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/). For example, WARP automatically excludes RFC 1918 IP addresses such as `10.0.0.0/8`, which are IP addresses typically used in private networks and not reachable from the Internet. You will need to make sure that traffic to the IP/CIDR you are associating with your private network are sent to Gateway for filtering.
 
@@ -35,7 +40,7 @@ To configure your Split Tunnel settings:
     - If you are using **Exclude** mode, the IP ranges you see listed are those that Cloudflare excludes from WARP encryption. If your network's IP/CIDR range is listed on this page, delete it.
     - If you are using **Include** mode, the IP ranges you see listed are the only ones Cloudflare is encrypting through WARP. Add your network's IP/CIDR range to the list.
 
-## 3. (Recommended) Create Zero Trust policies
+### Create Zero Trust policies
 
 By default, only users enrolled in your Zero Trust organization can connect to your private network. You can create additional Zero Trust policies to manage access to specific applications.
 
@@ -65,13 +70,11 @@ If you would like to create a policy for an IP/CIDR range instead of a specific 
 
     Access rules are evaluated in order, so a user with an email ending in @example.com will be able to access `10.128.0.7` while all others will be blocked. For more information on building network policies, refer to our [dedicated documentation](/cloudflare-one/policies/filtering/network-policies/).
 
-    If you enabled [Gateway HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/), you can also create [HTTP policies](/cloudflare-one/policies/filtering/http-policies/) to fine-tune access to your application.
-
 9. Select **Add application**.
 
 Your application will appear on the **Applications** page.
 
-## 4. Connect as a user
+## 3. Connect as a user
 
 End users can now reach HTTP or TCP-based services on your network by navigating to any IP address in the range you have specified.
 

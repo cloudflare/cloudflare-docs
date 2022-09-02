@@ -5,18 +5,18 @@ weight: 8
 hidden: false
 ---
 
-# Connect through Cloudflare Tunnels over SSH
+# Connect with SSH through Cloudflare Tunnel
 
 The Secure Shell Protocol (SSH) enables users to remotely access devices through the command line. With Cloudflare Zero Trust, you can make your SSH server available over the Internet without the risk of opening inbound ports on the server.
 
 Cloudflare Zero Trust offers two solutions to provide secure access to SSH servers:
 
-- Private subnet routing with Cloudflare WARP to Tunnel
-- Public hostname routing with `cloudflared` authentication
+- [Private subnet routing] with Cloudflare WARP to Tunnel
+- [Public hostname routing] with `cloudflared access`
 
-In this guide, you will learn how to connect an SSH server to Cloudflare, set up Zero Trust policies, and finally connect to the server as a user.
+In this guide, you will learn how to connect an SSH server to Cloudflare and how to connect to the server as a user.
 
-## 1. Set up an SSH server in GCP
+## Set up an SSH server in GCP
 
 This example walks through how to set up an SSH server on a Google Cloud Platform (GCP) virtual machine (VM), but you can use any machine that supports SSH connections.
 
@@ -61,31 +61,36 @@ Now that the SSH key pair has been created, you can create a VM instance.
 In order to be able to establish an SSH connection, do not enable [OS Login](https://cloud.google.com/compute/docs/oslogin) on the VM instance.
 {{</Aside>}}
 
-## 2. Connect to SSH server with WARP to Tunnel
+## Connect to SSH server with WARP to Tunnel
 
+### 1. Set up the client
+
+### 2. Set up the server
 After logging in to your SSH server, follow [these instructions](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/) to connect the server to Cloudflare as a private network application. For **CIDR**, you will enter the IP address of your SSH server (or a range that includes the server IP). In GCP, the server IP is the  **Internal IP** of the VM instance.
 
+### 3. Connect as a user
 Once you have set up the application and the user device, the user can now SSH into the machine using its IP address.  If your SSH server requires an SSH key, the key should be included in the command.
 
 ```sh
 $ ssh -i ~/.ssh/gcp_ssh <username>@<server IP>
 ```
 
-## 3. Connect to SSH server with cloudflared
+## Connect to SSH server with `cloudflared access`
 
-Cloudflare Tunnel can also route applications through a public hostname, which allows users to connect to the application without the WARP client. Accessing the machine will require having `cloudflared` installed on both the server machine and on the client machine. The SSH traffic is proxied over this connection, and the user logs in to the server with their Cloudflare Access.
+Cloudflare Tunnel can also route applications through a public hostname, which allows users to connect to the application without the WARP client. This method requires having `cloudflared` installed on both the server machine and on the client machine. 
+
+The SSH traffic is proxied over this connection, and the user logs in to the server with their Cloudflare Access credentials.
 
 To create a tunnel, follow our [dashboard setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/#1-create-a-tunnel).
 
-The public hostname method can be implemented in conjunction with routing over WARP so that there are multiple ways to connect to the SSH server. You can reuse the same tunnel and simply add a new public hostname route.
+The public hostname method can be implemented in conjunction with routing over WARP so that there are multiple ways to connect to the SSH server. You can reuse the same tunnel for both the private network and public hostname routes.
 
-### Route SSH server to public hostname
+### 1. Connect the server to Cloudflare
+  Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/).
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Access** > **Tunnels**.
+### 2. Route server to public hostname
 
-2. Locate the tunnel you created for [WARP to Tunnel](#2-connect-to-ssh-server-with-warp-to-tunnel) and select **Configure**.
-
-   If you skipped over WARP to Tunnel and do not have a tunnel for your SSH server, create one by following our [dashboard setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/).
+1. 
 
 3. In the **Public Hostnames** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `ssh.example.com`).
 
@@ -104,7 +109,7 @@ Connection closed by UNKNOWN port 65535
 
 6. (Recommended) Add a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) to Cloudflare Access in order to manage access to your server.
 
-### Connect from a client machine
+### 3. Connect as a user
 
 Users can now connect from their device using `cloudflared`, or from a browser-rendered terminal.
 
@@ -132,6 +137,7 @@ Users can now connect from their device using `cloudflared`, or from a browser-r
    ```
 
 ----------------Why do I no longer need to include the key?--------------------
+-----------------Should we note to disable the External IP on the server? -------------
 
 When the command is run, `cloudflared` will launch a browser window to prompt you to authenticate with your identity provider before establishing the connection from your terminal.
 

@@ -36,6 +36,9 @@ To get started, you will need to navigate to the Google Cloud Console and create
     - Machine Type: e2-medium
     - Boot Disk: Windows Server 2016 Datacenter
         - Note: Be sure to select an image which specifies Server with Desktop Experience
+
+        -------For RDP it has to be windows that has desktop so we were more explicit for that. -----
+
 1. Once your image is running, select the drop down next to RDP in the Connect column
     - Next, select View gcloud command to reset password and Run in Cloud Shell
         - Save the auto-generated username and password securely. We’ll circle back to this at the end. 
