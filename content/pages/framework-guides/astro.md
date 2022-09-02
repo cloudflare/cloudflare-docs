@@ -7,7 +7,7 @@ title: Deploy an Astro site
 
 [Astro](https://astro.build) Astro is an **all-in-one web framework** for building fast, **content-focused websites**. By default, Astro builds websites that have zero JavaScript runtime code.
 
-Check out the detailed [Why Astro](https://docs.astro.build/en/concepts/why-astro/) breakdown to learn more about what makes Astro special. ✨
+Visit the [Astro Docs](https://docs.astro.build/) to learn more about Astro or for any assistance with an Astro project.  
 
 In this guide, you will create a new Astro application and deploy it using Cloudflare Pages.
 
