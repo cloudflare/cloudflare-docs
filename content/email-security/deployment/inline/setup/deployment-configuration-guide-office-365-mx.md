@@ -81,7 +81,9 @@ Enable-OrganizationCustomization
 
 ## 3. Enhanced Filtering configuration
 
-Configuring the Enhanced Filtering function will allow Office 365 to properly identify the original connecting IP before the message was received by Area 1. This helps with SPF analysis. You will first need to create an inbound connector. 
+Configuring the Enhanced Filtering function will allow Office 365 to properly identify the original connecting IP before the message was received by Area 1. This helps with SPF analysis. This has two steps: creating an inbound connector and enabling the enhanced filtering configuration of the connector.
+
+### 3.1 Create an inbound connector
 
 1. From the **Microsoft Exchange admin center**, select **mail flow** > **connectors**.
 
@@ -89,3 +91,26 @@ Configuring the Enhanced Filtering function will allow Office 365 to properly id
     2.1. _Partner organization_ in the **From** drop-down.
     2.2. _Office 365_ in the **To** drop-down.
 
+    Select **Next**.
+
+3. Provide a **Name** and a **Description** for the new connector. Leave the **Turn it on** checkbox enabled. Select **Next**.
+
+4. Select **Use the sender’s IP address** in the **How do you want to identify the partner organization?** configuration panel. Select **Next**.
+
+5. In **What sender IP addresses do you want to use to identify your partner?** add the IP addresses and CIDR blocks found in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/). Select **Next**.
+
+6. Keep the **Reject email messages if they aren't sent over TLS** toggle enabled. Select **Next**.
+
+7. Review the connector configuration and select **Save**.
+
+### 3.2 Enable enhanced filtering
+
+Now that the inbound connector has been configured, you will need to enable the enhanced filtering configuration of the connector. Exit the Exchange Admin console, return to the main [Office 365 Administration Console](https://admin.microsoft.com) and select the [Security admin console](https://protection.office.com/homepage).
+
+1. Go to [Security Admin console](https://protection.office.com/homepage) > **Threat Management** > **Policy**. Select **Enhanced filtering**.
+
+2. In **Enhanced Filtering for Connectors**, you will find the connector that was previously configured. Double click the connector to edit its configuration parameters. Select **Automatically detect and skip the last IP address** and **Apply to entire organization**.
+
+3. Select **Save**.
+
+## 4. Configure Area 1 Quarantine Policies
