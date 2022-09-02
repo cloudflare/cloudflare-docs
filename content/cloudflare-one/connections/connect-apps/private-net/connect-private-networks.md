@@ -8,25 +8,33 @@ layout: single
 
 # Connect private networks
 
-Creating a private network has two components: the server and the client. The server's infrastructure (whether that is a single application, multiple applications, or a network segment) is connected to Cloudflare's edge by Cloudflare Tunnel. This is done by running the cloudflared daemon on the server. Simply put, Cloudflare Tunnel is what connects your network to Cloudflare. On the client side, end users connects to Cloudflare's edge using the Cloudflare WARP agent.
+Creating a private network has two components: the server and the client. The server's infrastructure (whether that is a single application, multiple applications, or a network segment) is connected to Cloudflare's edge by Cloudflare Tunnel. This is done by running the `cloudflared` daemon on the server. Simply put, Cloudflare Tunnel is what connects your network to Cloudflare. On the client side, end users connect to Cloudflare's edge using the Cloudflare WARP agent.
 
 To connect a private network to Cloudflare’s edge, follow the guide below. You can also check out our [tutorial](/cloudflare-one/tutorials/warp-to-tunnel/).
 
 ## Prerequisites
 
-- [Set up the WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/) on your end user devices in Gateway with WARP mode.
+- [Deploy the WARP client]() on your devices in Gateway with WARP mode.  The Cloudflare certificate is only required if you want to display a custom block page or perform HTTP filtering.
+- [Create device enrollment rules]() to determine which devices can enroll to your Zero Trust organization.
 
 ## 1. Connect the server to Cloudflare
 
-To connect your infrastructure to Cloudflare with Cloudflare Tunnel:
+To connect your infrastructure with Cloudflare Tunnel:
 
 1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/). You can skip the connect an application step and go straight to connecting a network.
 
-2. In the [Connect a network](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/#3-connect-a-network) step, enter the IP/CIDR range of your private network (for example `10.0.0.0/8`). This makes the WARP client aware that any requests to this IP range need to be routed to your new tunnel.
+2. In the **Private Networks** tab for the tunnel, enter the IP/CIDR range of your private network (for example `10.0.0.0/8`). This makes the WARP client aware that any requests to this IP range need to be routed to your new tunnel.
 
 ## 2. (Recommended) Filter network traffic with Gateway
 
-Enable the Gateway proxy
+By default, all WARP devices enrolled in your Zero Trust organization can connect to your private network through Tunnel. You can configure Gateway to inspect your network traffic and either block or allow access based on user identity.
+
+### Enable the Gateway proxy
+
+1. In the Zero Trust dashboard, go to **Settings** > **Network**.
+2. Enable **Proxy** for TCP.
+
+This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded in your [split tunnel settings](#route-private-network-ips-through-gateway).
 
 ### Route private network IPs through Gateway
 
@@ -42,7 +50,7 @@ To configure your Split Tunnel settings:
 
 ### Create Zero Trust policies
 
-By default, only users enrolled in your Zero Trust organization can connect to your private network. You can create additional Zero Trust policies to manage access to specific applications.
+You can create Zero Trust policies to manage access to specific applications on your network.
 
 1. Go to **Access** > **Applications** > **Add an application**.
 2. Select **Private Network**.
@@ -78,7 +86,7 @@ Your application will appear on the **Applications** page.
 
 End users can now reach HTTP or TCP-based services on your network by navigating to any IP address in the range you have specified.
 
-To check that their device is properly configured, the end user can visit `https://help.teams.cloudflare.com/` to ensure that:
+To check that their device is properly configured, the user can visit `https://help.teams.cloudflare.com/` to ensure that:
 
 - The page returns **Your network is fully protected**.
 - In **HTTP filtering**, both **WARP** and **Gateway Proxy** are enabled.
