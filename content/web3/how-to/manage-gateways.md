@@ -81,7 +81,7 @@ To refresh a gateway using the API, send a [PATCH](https://api.cloudflare.com/#w
 
 ## Update blocklist
 
-When you set up a [IPFS Universal Path gateway](/web3/ipfs-gateway/concepts/universal-gateway/), you may want to items to the gateway blocklist, which allows you to block access to specific content.
+When you set up a [IPFS Universal Path gateway](/web3/ipfs-gateway/concepts/universal-gateway/), you may want to add items to the gateway blocklist, which allows you to block access to specific content.
 
 You have the ability to block access to one or more:
 
