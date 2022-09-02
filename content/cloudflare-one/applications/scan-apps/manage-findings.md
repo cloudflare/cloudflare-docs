@@ -34,10 +34,10 @@ Other actions you can take include [creating an HTTP block policy](#resolve-find
 
 Cloudflare CASB labels each finding with one of the following severity levels:
 
-* **Critical** suggests the finding is something your team should act on today.
-* **High** suggests the finding is something your team should act on this week.
-* **Medium** suggests the finding should be reviewed sometime this month.
-* **Low** suggests the finding is informational or part of a scheduled review process.
+* **Critical**: Suggests the finding is something your team should act on today.
+* **High**: Suggests the finding is something your team should act on this week.
+* **Medium**: Suggests the finding should be reviewed sometime this month.
+* **Low**: Suggests the finding is informational or part of a scheduled review process.
 
 ### Change the severity level
 
