@@ -67,7 +67,7 @@ To refresh a gateway using the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select your account and website.
 3. Go to **Web3**.
-4. On a specific gateway, click the dropdown then **Refresh**.
+4. On a gateway, click the dropdown then **Refresh**.
  
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
