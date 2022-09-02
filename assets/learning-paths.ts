@@ -1,7 +1,6 @@
-import * as learningPath from "./json/learning_paths.json";
+import * as learningPath from "json/learning_paths.json";
 
 let paths = learningPath["default"];
-var filteredPaths = JSON.parse(JSON.stringify(paths));
 
 function buildHtml(destination, array) {
   const numTrails = document.getElementById("numTrails");
@@ -27,15 +26,14 @@ function buildHtml(destination, array) {
   }
 }
 
-function getSelectValues() {
-  let ui_components = ["products", "category"];
-  let selected_values = [];
-  for (const component of ui_components) {
-    let select = document.getElementById(component);
-    let selected_value = select.options[select.selectedIndex].value;
-    selected_values.push([component, selected_value]);
-  }
-  return selected_values;
+function getSelectValues(selectElementCollection: HTMLCollectionOf<Element>) {
+    let selectedValues: Record<string, string> = {};
+    for (const htmlElement of selectElementCollection) {
+        let selectElement = htmlElement as HTMLSelectElement;
+        let selectedValue = selectElement.options[selectElement.selectedIndex].value;
+        selectedValues[selectElement.id] = selectedValue;
+    }
+    return selectedValues;
 }
 
 export function filterResults() {
@@ -43,30 +41,23 @@ export function filterResults() {
   if (pathGrid) {
     const selectorDropdowns = document.getElementsByClassName("selectorFilter");
     let passed = [];
-    let array_length = 0;
     for (const dropdown of selectorDropdowns) {
-      dropdown.addEventListener("change", () => {
-        filteredPaths = JSON.parse(JSON.stringify(paths));
-        let selectedOptions = getSelectValues();
-        if (
-          selectedOptions[0][1] === "all" &&
-          selectedOptions[1][1] === "all"
-        ) {
-          passed = filteredPaths;
-        } else {
-          passed = filteredPaths.filter(function (element) {
-            let failed = false;
-            for (const option of selectedOptions) {
-              if (option[1] === "all") {
-                continue;
-              } else if (!element[option[0]].includes(option[1])) {
-                failed = true;
-              }
-            }
-            if (!failed) {
-              array_length += 1;
-              return element;
-            }
+        dropdown.addEventListener("change", () => {
+          let selectedOptions = getSelectValues(selectorDropdowns);
+          if (Object.values(selectedOptions).every(selectedValue => selectedValue === "all")) {
+            passed = paths;
+          } else {
+            passed = paths.filter((currentPath) => {
+                let keepItem = true;
+                for (const [filterName, filterValue] of Object.entries(selectedOptions)) {
+                    if (filterValue === "all") {
+                      continue;
+                    } else if (!currentPath[filterName].includes(filterValue)) {
+                    keepItem = false;
+                    break;
+                    }
+                }
+            return keepItem;
           });
         }
         buildHtml(pathGrid, passed);
