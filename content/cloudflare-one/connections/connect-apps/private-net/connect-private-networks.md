@@ -14,8 +14,8 @@ To connect a private network to Cloudflare’s edge, follow the guide below. You
 
 ## Prerequisites
 
-- [Deploy the WARP client]() on your devices in Gateway with WARP mode.  The Cloudflare certificate is only required if you want to display a custom block page or perform HTTP filtering.
-- [Create device enrollment rules]() to determine which devices can enroll to your Zero Trust organization.
+1. [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices in Gateway with WARP mode.  The Cloudflare certificate is only required if you want to display a custom block page or perform HTTP filtering.
+2. [Create device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) to determine which devices can enroll to your Zero Trust organization. By default, all devices enrolled in your organization can access the server.
 
 ## 1. Connect the server to Cloudflare
 
