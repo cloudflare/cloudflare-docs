@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Slack
-weight: 2
+weight: 3
 ---
 
 # Slack
@@ -11,12 +11,12 @@ The Slack integration detects a variety of user security, data loss prevention, 
 ## Integration prerequisites
 
 * A Slack user account
-* Membership in a Slack Workspace (Free, Pro, Business+, Enterprise Grid)
+* Membership in a Slack Workspace (Free, Pro, Business+, or Enterprise Grid)
 * If you are not the Workspace Owner and the `Require App Approval` setting is enabled for the Workspace, [request permission](https://slack.com/help/articles/202035138-Add-apps-to-your-Slack-workspace) to install apps.
 
 ## Integration permissions
 
-For the Slack integration to function, CASB requires the following API scopes for access:
+For the Slack integration to function, CASB requires the following Slack API scopes:
 
 * `channels:read`
 * `files:read`
@@ -47,4 +47,4 @@ The Slack integration currently scans for the following findings, or security ri
 | Finding                                       | Severity | Description |
 |-----------------------------------------------|----------|------------ |
 | Slack File Publicly Accessible     | Medium | An external link has been created for a file uploaded to the Slack Workspace. |
-| Large File (2GB+) Shared in Slack            | Low     | A large file (at least 2 GB in size) has been uploaded to the Slack Workspace. |
+| Large File (2GB+) Shared in Slack            | Low     | A file ≥ 2 GB has been uploaded to the Slack Workspace. |
