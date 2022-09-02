@@ -11,8 +11,8 @@ The Secure Shell Protocol (SSH) enables users to remotely access devices through
 
 Cloudflare Zero Trust offers two solutions to provide secure access to SSH servers:
 
-- [Private subnet routing](#connect-to-ssh-server-with-warp-to-tunnel) with Cloudflare WARP to Tunnel
-- [Public hostname routing](#connect-to-ssh-server-with-cloudflared-access) with `cloudflared access`
+- [Private subnet routing with Cloudflare WARP to Tunnel](#connect-to-ssh-server-with-warp-to-tunnel)
+- [Public hostname routing with `cloudflared access`](#connect-to-ssh-server-with-cloudflared-access)
 
 ## Set up an SSH server in GCP
 
