@@ -88,9 +88,6 @@ You have the ability to block access to one or more:
 - CIDs (`QmPZ9gcCEpqKTo6aq61g2nXGUhM4iCL3ewB6LDXZCtioEB`)
 - IPFS content paths (`/ipfs/QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/readme`)
 - IPNS content paths (`/ipns/example.com`)
-
-{{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard" no-code="true">}}
  
 To add an item to the blocklist using the dashboard:
 
@@ -106,14 +103,6 @@ To add an item to the blocklist using the dashboard:
     - **Blocklist entry description**: Add a description to help you identify the blocklist entry.
 
 7. Click **Add**.
- 
-{{</tab>}}
-{{<tab label="api" no-code="true">}}
- 
-TBD...
- 
-{{</tab>}}
-{{</tabs>}}
 
 ---
 

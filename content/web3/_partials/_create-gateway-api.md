@@ -5,7 +5,12 @@ _build:
   list: never
 ---
 
-For a full list of gateway properties, refer to [Create Web3 Hostname](https://api.cloudflare.com/#web3-hostname-create-web3-hostname). If you need help with API authentication, refer to [Cloudflare API Quickstart](/api/).
+To create a gateway using the API, send a [`POST`](https://api.cloudflare.com/#web3-hostname-create-web3-hostname) request that includes the following parameters:
+
+- `name`: The hostname that will point to the target gateway via a [`CNAME`]() record.
+- `target`: The gateway target for the hostname (`ethereum`, `ipfs`, `ipfs_universal_path`).
+
+If you need help with API authentication, refer to [Cloudflare API Quickstart](/api/).
 
 ```json
 ---
