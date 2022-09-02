@@ -13,7 +13,7 @@ In this guide, you will create a new Astro application and deploy it using Cloud
 
 ## Setting up a new project
 
-Get a new Astro project up and running locally with our helpful `create-astro` CLI wizard!
+Get a new Astro project up and running locally with the helpful `create-astro` CLI wizard!
 
 ```sh
 $ npm create astro@latest
