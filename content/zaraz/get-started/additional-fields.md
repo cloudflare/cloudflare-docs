@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Additional fields
-weight: 6
+weight: 5
 ---
 
 # Additional fields

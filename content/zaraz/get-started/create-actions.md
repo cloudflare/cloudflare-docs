@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Create actions
-weight: 5
+weight: 3
 meta:
   title: Creating third-party tool actions
 ---

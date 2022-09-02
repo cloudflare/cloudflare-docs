@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Edit tools and actions
-weight: 7
+weight: 6
 ---
 
 # Edit tools and actions

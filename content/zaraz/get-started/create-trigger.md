@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Create a trigger
-weight: 4
+weight: 2
 ---
 
 # Create a trigger

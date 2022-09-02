@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Add a third-party tool
-weight: 3
+weight: 1
 ---
 
 # Add a third-party tool

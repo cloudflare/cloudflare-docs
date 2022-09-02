@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Edit triggers
-weight: 8
+weight: 7
 meta:
   title: Edit a trigger
 ---
