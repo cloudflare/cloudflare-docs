@@ -68,7 +68,7 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 {{<Aside type="warning" header="Important">}}
 
-Astro requires Node.js `v14.18.0` or higher to build successfully. You must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
+Cloudflare requires [node v16.13](https://miniflare.dev/get-started/cli#installation), which is a more recent version than Astro’s out-of-the-box minmimum. You can expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16.13` or greater and also check the version of node you’re using locally (`node -v`) matches the version you’re specifying in the environment variable.
 
 {{</Aside>}}
 
