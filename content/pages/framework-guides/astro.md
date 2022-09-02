@@ -5,26 +5,24 @@ title: Deploy an Astro site
 
 # Deploy an Astro site
 
-[Astro](https://astro.build) is a new static-site generator that allows you to build faster, SEO-friendly websites that use less client-side JavaScript code. By default, Astro builds websites that have zero JavaScript runtime code.
+[Astro](https://astro.build) Astro is an **all-in-one web framework** for building fast, **content-focused websites**. By default, Astro builds websites that have zero JavaScript runtime code.
+
+Check out the detailed [Why Astro](https://docs.astro.build/en/concepts/why-astro/) breakdown to learn more about what makes Astro special. ✨
 
 In this guide, you will create a new Astro application and deploy it using Cloudflare Pages.
 
-{{<Aside type="warning">}}
-
-At the time of publication, Astro is in early beta. Refer to the Astro [GitHub repository](https://github.com/snowpackjs/astro) to stay current with the project's status.
-
-{{</Aside>}}
-
 ## Setting up a new project
 
-Create a new project directory (for example, `astro-site`) and then initiate Astro's official setup tool by running [`npm init`](https://docs.npmjs.com/cli/v6/commands/npm-init) in your terminal inside that new `astro-site` directory:
+Get a new Astro project up and running locally with our helpful `create-astro` CLI wizard!
 
 ```sh
-$ mkdir astro-site && cd astro-site
-$ npm init astro
+$ npm create astro@latest
 ```
 
-During `init`, Astro will ask you which project type you would like to set up. Your answers will not affect the rest of this tutorial. Select an answer ideal for your project.
+Astro will ask you which project type you would like to set up. Your answers will not affect the rest of this tutorial. Select an answer ideal for your project.
+
+Any issues, consult [Astro's docs](https://docs.astro.build/en/guides/deploy/cloudflare/)
+
 
 {{<render file="_tutorials-before-you-start.md">}}
 
@@ -69,7 +67,7 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 {{<Aside type="warning" header="Important">}}
 
-Astro requires Node.js v14.x or later to build successfully. You must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
+Astro requires Node.js `v14.18.0` or higher to build successfully. You must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
 
 {{</Aside>}}
 
