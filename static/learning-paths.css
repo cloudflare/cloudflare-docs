@@ -84,7 +84,7 @@
     margin-top: 0px;
     border: 2px solid rgb(216 216 218);
     border-radius: .5em;
-    padding-bottom: 10em;
+    padding-bottom: 4em;
 }
 
 [theme=dark] .background {
@@ -117,7 +117,7 @@
 
 .durationEstimate {
     opacity: 70%;
-    margin-right: 5em;
+    margin-right: 2em;
     padding-top: 2.8em;
     align-self: center;
 }
