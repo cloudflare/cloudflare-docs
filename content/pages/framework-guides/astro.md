@@ -21,7 +21,8 @@ $ npm create astro@latest
 
 Astro will ask you which project type you would like to set up. Your answers will not affect the rest of this tutorial. Select an answer ideal for your project.
 
-Any issues, consult [Astro's docs](https://docs.astro.build/en/guides/deploy/cloudflare/)
+> **Note**
+> You can explore Astro's available templates at [astro.new](https://astro.new)
 
 
 {{<render file="_tutorials-before-you-start.md">}}
