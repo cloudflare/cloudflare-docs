@@ -10,19 +10,22 @@ Direct creator uploads let your end users to upload videos directly to Cloudflar
 
 **Two options:**
 
-1. For videos under 200MB, [generate URLs that accept simple HTTP POST requests](/stream/uploading-videos/direct-creator-uploads#basic-upload-flow-for-small-videos).
-2. For videos over 200MB, or if you need to allow users to resume uploads that may be interrupted by poor network connections or users closing apps while videos are still uploading, [generate URLs that use the TUS protocol](/stream/uploading-videos/direct-creator-uploads#tus).
+1. For videos under 200MB, [generate URLs that accept an HTTP POST request](/stream/uploading-videos/direct-creator-uploads#basic-upload-flow-for-small-videos).
+2. For videos over 200MB, or if you need to allow users to resume uploads that may be interrupted by poor network connections or users closing your app while videos are still uploading, [generate URLs that use the tus protocol](/stream/uploading-videos/direct-creator-uploads#tus).
 
-### Example Apps
+#### Example Apps
 
-- [Direct Creator Uploads (using simple POST requests)](https://workers.new/stream/upload/direct-creator-uploads)
-- [Direct Creator Uploads (using TUS for resumable, multi-part uploads)](https://workers.new/stream/upload/direct-creator-uploads-tus)
+- [Direct Creator Uploads (using a HTTP POST request)](https://workers.new/stream/upload/direct-creator-uploads)
+- [Direct Creator Uploads (using tus for resumable, multi-part uploads)](https://workers.new/stream/upload/direct-creator-uploads-tus)
 
 ## Basic upload flow, for small videos
 
 Use this if your users upload videos under 200MB, and you do not need to allow resumable uploads.
 
 ### Step 1: Generate a unique one-time upload URL
+
+- [End-to-end code example on Stackblitz](https://workers.new/stream/upload/direct-creator-uploads)
+- [API Reference Docs for `/direct_upload`](https://api.cloudflare.com/#stream-videos-upload-videos-via-direct-upload-urls)
 
 ```bash
 ---
@@ -32,8 +35,7 @@ curl -X POST \
  -H 'Authorization: Bearer <API_TOKEN>' \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/direct_upload \
  --data '{
-    "maxDurationSeconds": 3600,
-    "expiry": "2020-04-06T02:20:00Z"
+    "maxDurationSeconds": 3600
  }'
 ```
 
@@ -52,9 +54,6 @@ header: Response
   "messages": []
 }
 ```
-
-<!-- TODO: Make sure these are up-to-date, look at old content from this page -->
-[API Reference Docs for `/direct_upload`](https://api.cloudflare.com/#stream-videos-upload-videos-via-direct-upload-urls)
 
 ## Step 2: Use the upload URL in your app 
 
@@ -75,7 +74,7 @@ A successful upload will receive a `200` HTTP status code response. If the uploa
 the upload constraints defined at time of creation or is larger than 200 MB in
 size, you will receive a `4xx` HTTP status code response.
 
-## Advanced upload flow using TUS, for large videos
+## Advanced upload flow using tus, for large videos
 
 [tus](https://tus.io/) is a protocol that supports resumable uploads. Use TUS if your users upload videos over 200MB **or** you need to allow resumable uploads. If your users upload via a mobile app or often use your app or website using a mobile network (ex: LTE, 5G), we strongly encourage you to use TUS.
 
@@ -83,10 +82,9 @@ size, you will receive a `4xx` HTTP status code response.
 
 [Run and edit this code in your browser using Stackblitz](https://workers.new/stream/upload/direct-creator-uploads-tus)
 
-<!-- TODO: The direct_user query param is not in our API docs -->
 ```javascript
 ---
-header: Example API endpoint that requests a TUS upload URL, and returns it in the location header
+header: Example API endpoint that requests a tus upload URL, and returns it in the location header
 ---
 export async function onRequest(context) {
 	const { request, env } = context;
@@ -118,15 +116,57 @@ export async function onRequest(context) {
 
 Note in the example above that the one-time upload URL is returned in the `Location` header of the response, not in the response body.
 
-### Step 2: Use this API endpoint with your TUS client
+### Step 2: Use this API endpoint with your tus client
 
 [Run and edit this code in your browser using Stackblitz](https://workers.new/stream/upload/direct-creator-uploads-tus)
 
-```
+```html
 ---
-header: Upload a video, using your API endpoint with a TUS client
+header: Upload a video, using your API endpoint using the uppy tus client
 ---
-<!-- TODO: Super minimal TUS example, maybe use node client? -->
+<html>
+	<head>
+		<link href="https://releases.transloadit.com/uppy/v3.0.1/uppy.min.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="drag-drop-area" style="height: 300px"></div>
+		<div class="for-ProgressBar"></div>
+		<button class="upload-button" style="font-size: 30px; margin: 20px">Upload</button>
+		<div class="uploaded-files" style="margin-top: 50px">
+			<ol></ol>
+		</div>
+		<script type="module">
+			import {
+				Uppy,
+				Tus,
+				DragDrop,
+				ProgressBar,
+			} from 'https://releases.transloadit.com/uppy/v3.0.1/uppy.min.mjs';
+
+			const uppy = new Uppy({ debug: true, autoProceed: true });
+
+			const onUploadSuccess = el => (file, response) => {
+				const li = document.createElement('li');
+				const a = document.createElement('a');
+				a.href = response.uploadURL;
+				a.target = '_blank';
+				a.appendChild(document.createTextNode(file.name));
+				li.appendChild(a);
+
+				document.querySelector(el).appendChild(li);
+			};
+
+			uppy
+				.use(DragDrop, { target: '#drag-drop-area' })
+				.use(Tus, { endpoint: '/api/get-upload-url', chunkSize: 150 * 1024 * 1024 })
+				.use(ProgressBar, { target: '.for-ProgressBar', hideAfterFinish: false })
+				.on('upload-success', onUploadSuccess('.uploaded-files ol'));
+
+			const uploadBtn = document.querySelector('button.upload-button');
+			uploadBtn.addEventListener('click', () => uppy.upload());
+		</script>
+	</body>
+</html>
 ```
 
 For more details on using a tus and example client code, refer to [Resumable uploads with tus](/stream/uploading-videos/upload-video-file/#resumable-uploads-with-tus-for-large-files).
@@ -145,17 +185,15 @@ _NjAw_ is the base64 encoded value for "600" (or 10 minutes).
 
 ## Tracking user upload progress
 
-After the creation of a unique one-time upload URL, you may wish to retain the
-`uid` returned in the response to track the progress of a user's upload.
+After the creation of a unique one-time upload URL, you may wish to retain the unique identifier (`uid`) returned in the response to track the progress of a user's upload.
 
 You can do that two ways:
 
-1.  You can [query the media API](/stream/manage-video-library/searching/) with the UID
+1.  You can [search for a video](/stream/manage-video-library/searching/) with the UID
     to understand it's status.
 
 2.  You can [create a webhook subscription](/stream/manage-video-library/using-webhooks/) to receive notifications
     regarding the status of videos. These notifications include the video's UID.
-
 
 
 ### Billing considerations
