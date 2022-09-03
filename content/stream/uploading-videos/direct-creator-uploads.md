@@ -24,8 +24,8 @@ Use this if your users upload videos under 200MB, and you do not need to allow r
 
 ### Step 1: Generate a unique one-time upload URL
 
-- [End-to-end code example on Stackblitz](https://workers.new/stream/upload/direct-creator-uploads)
-- [API Reference Docs for `/direct_upload`](https://api.cloudflare.com/#stream-videos-upload-videos-via-direct-upload-urls)
+[End-to-end code example on Stackblitz](https://workers.new/stream/upload/direct-creator-uploads)
+[API Reference Docs for `/direct_upload`](https://api.cloudflare.com/#stream-videos-upload-videos-via-direct-upload-urls)
 
 ```bash
 ---
@@ -84,7 +84,7 @@ size, you will receive a `4xx` HTTP status code response.
 
 ```javascript
 ---
-header: Example API endpoint that requests a tus upload URL, and returns it in the location header
+header: Example API endpoint that requests a one-time tus upload URL from Cloudflare Stream, and returns it in the location header
 ---
 export async function onRequest(context) {
 	const { request, env } = context;
@@ -117,6 +117,8 @@ export async function onRequest(context) {
 Note in the example above that the one-time upload URL is returned in the `Location` header of the response, not in the response body.
 
 ### Step 2: Use this API endpoint with your tus client
+
+Use this API endpoint **directly** in your tus client. A common mistake is to extract the upload URL from your new API endpoint, and use this directly. See below for a complete example of how to use the API from Step 1 with the uppy tus client.
 
 [Run and edit this code in your browser using Stackblitz](https://workers.new/stream/upload/direct-creator-uploads-tus)
 
@@ -169,7 +171,7 @@ header: Upload a video, using your API endpoint using the uppy tus client
 </html>
 ```
 
-For more details on using a tus and example client code, refer to [Resumable uploads with tus](/stream/uploading-videos/upload-video-file/#resumable-uploads-with-tus-for-large-files).
+For more details on using tus and example client code, refer to [Resumable uploads with tus](/stream/uploading-videos/upload-video-file/#resumable-uploads-with-tus-for-large-files).
 
 ### Upload-Metadata header syntax
 
