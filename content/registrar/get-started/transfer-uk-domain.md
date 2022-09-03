@@ -11,7 +11,7 @@ weight: 3
 - The domain must not be locked or suspended.
 - There must be an active zone [for the domain](/fundamentals/get-started/setup/add-site/) in your Cloudflare account.
 - The domain must have [Cloudflare nameservers](/dns/zone-setups/full-setup/).
-- The domain must not be expiring within the next 10 days.
+- The domain must not be expiring (or renewing) within the next 10 days.
 
 ---
 
@@ -38,5 +38,6 @@ For security reasons, domains transferred to Cloudflare Registrar are locked for
 
 - The domain is locked or suspended.
 - The nameservers were updated after the checkout process.
+- The domain is expiring (or renewing) within the next 10 days.
 
 {{<render file="_next-steps.md">}}
