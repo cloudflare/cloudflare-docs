@@ -17,7 +17,7 @@ In this tutorial you will learn how to configure Microsoft Office 365 with Area 
 * 4: Configure Area 1 Quarantine Policies.
 * 5: Update your domain MX Records.
 
-![A schematic showing where Area 1 security is in the lifeline of an email sent](/email-security/static/office365-mx-record-flow.png)
+![A schematic showing where Area 1 security is in the lifeline of an email received](/email-security/static/office365-mx-record-flow.png)
 
 ## 1. Add Area 1 IP addresses to Allow List
 
