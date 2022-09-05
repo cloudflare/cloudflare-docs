@@ -12,7 +12,7 @@ meta:
 In this tutorial you will learn how to configure Microsoft Office 365 with Area 1 as MX record. This tutorial is broken down into several steps:
 
 * 1: Add Area 1 IP addresses to Allow List.
-* 2: Execute Office 365 `Enable-OrganizationCustomization` (if required).
+* 2: Execute Office 365 Enable-OrganizationCustomization (if required).
 * 3: Enhanced Filtering Configuration.
 * 4: Configure Area 1 Quarantine Policies.
 * 5: Update your domain MX Records.
@@ -25,7 +25,7 @@ In this tutorial you will learn how to configure Microsoft Office 365 with Area 
 
 2. Select the [Anti-spam option](https://protection.office.com/antispam).
 
-3. Select **Connection filter policy (Default)** to edit the policy, then select **Edit connection filter policy**.
+3. Select **Connection filter policy (Default)** to edit the policy > **Edit connection filter policy**.
 
 4. In **Always allow messages from the following IP addresses or address range**, add the IP addresses and CIDR blocks mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
 
@@ -83,7 +83,7 @@ Enable-OrganizationCustomization
 
 Configuring the Enhanced Filtering function will allow Office 365 to properly identify the original connecting IP before the message was received by Area 1. This helps with SPF analysis. This has two steps: creating an inbound connector and enabling the enhanced filtering configuration of the connector.
 
-### 3.1 Create an inbound connector
+### Create an inbound connector
 
 1. From the **Microsoft Exchange admin center**, select **mail flow** > **connectors**.
 
@@ -103,7 +103,7 @@ Configuring the Enhanced Filtering function will allow Office 365 to properly id
 
 7. Review the connector configuration and select **Save**.
 
-### 3.2 Enable enhanced filtering
+### Enable enhanced filtering
 
 Now that the inbound connector has been configured, you will need to enable the enhanced filtering configuration of the connector. Exit the Exchange Admin console, return to the main [Office 365 Administration Console](https://admin.microsoft.com) and select the [Security admin console](https://protection.office.com/homepage).
 
