@@ -10,12 +10,17 @@ You can start a live stream using the Stream dashboard or the API. After you sub
 
 ## Using the dashboard
 
-1. To start a live stream using the Stream dashboard, click the **Live Inputs** tab.
-2. Click **Create Live Input**.
-3. Enter a name for your Live Input and click **Create Live Input**.
-4. Under **Connection Information** > **Protocol**, choose **RTMPS** or **SRT**.
+**Step 1:** [Create a live input via the Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs/create)
 
-After you have created a Live Input, you can retrieve the RTMPS URL and Key, or if you used the SRT protocol, you can view the SRT URL. Within seconds of you pushing your live stream to Cloudflare Stream, you should see the live video stream.
+![Screenshot of creating a live input via the Stream Dashboard](/stream/static/create-live-input-from-stream-dashboard.png)
+
+**Step 2:** Copy the RTMPS URL and key, and use them with your live streaming application. We recommend using [Open Broadcaster Software (OBS)](https://obsproject.com/) to get started.
+
+![Screenshot of copying a RTMPS stream key from the Stream Dashboard](/stream/static/copy-rtmps-url-from-stream-dashboard.png)
+
+**Step 3:** Go live and preview your live stream in the Stream Dashboard
+
+In the Stream Dashboard, within seconds of going live, you will see a preview of what your viewers will see. To add live video playback to your website or app, refer to [Play videos](/stream/viewing-videos)
 
 ## Using the API
 
