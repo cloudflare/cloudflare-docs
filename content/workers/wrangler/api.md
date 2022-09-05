@@ -17,13 +17,13 @@ Start a local server for testing your Worker.
 
 {{<Aside type="note">}}
 
-The `unstable_dev` function has the `unstable_` prefix because the API may change in the future. There are no known bugs at the moment and it is safe to use. If you discover any issues, please do report them as a [GitHub Issue](https://github.com/cloudflare/wrangler2/issues/new/choose) and we will patch them as soon as possible.
+The `unstable_dev` function has an `unstable_` prefix because the API may change in the future. There are no known bugs at the moment and it is safe to use. If you discover any issues, please do report them as a [GitHub Issue](https://github.com/cloudflare/wrangler2/issues/new/choose) and we will patch them as soon as possible.
 
 
 {{</Aside>}}
 
 ```js
-//index.test.js
+//src/index.test.js
 import { unstable_dev } from 'wrangler'
 
 describe("worker", () => {
