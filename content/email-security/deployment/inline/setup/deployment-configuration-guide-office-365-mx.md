@@ -11,11 +11,11 @@ meta:
 
 In this tutorial you will learn how to configure Microsoft Office 365 with Area 1 as MX record. This tutorial is broken down into several steps:
 
-1. Add Area 1 IP addresses to Allow List.
-2. Execute Office 365 Enable-OrganizationCustomization (if required).
-3. Enhanced Filtering Configuration.
-4. Configure Area 1 Quarantine Policies.
-5. Update your domain MX Records.
+1. [Add Area 1 IP addresses to Allow List](#1-add-area-1-ip-addresses-to-allow-list).
+2. [Execute Office 365 Enable-OrganizationCustomization (if required)](#2-execute-enable-organizationcustomization-if-required).
+3. [Enhanced Filtering Configuration](#3-enhanced-filtering-configuration).
+4. [Configure Area 1 Quarantine Policies](#4-configure-area-1-quarantine-policies).
+5. [Update your domain MX Records](#5-update-your-domain-mx-records).
 
 ![A schematic showing where Area 1 security is in the lifeline of an email received](/email-security/static/office365-mx-record-flow.png)
 
