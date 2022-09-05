@@ -4,14 +4,14 @@ title: API
 weight: 12
 ---
 
-## Wrangler API
+# Wrangler API
 
 Wrangler offers an API to programmatically manage your Cloudflare Workers
 
 - [`unstable_dev`](#unstable_dev) - Start a local server for running integration tests against your Worker.
 
 
-### unstable_dev
+## unstable_dev
 
 Start a local server for testing your Worker.
 
@@ -22,8 +22,35 @@ The `unstable_dev` function has an `unstable_` prefix because the API may change
 
 {{</Aside>}}
 
+### Constructor
+
 ```js
-//src/index.test.js
+const worker = unstable_dev(script, options, apiOptions)
+```
+
+### Parameters
+
+{{<definitions>}}
+
+*   `script` {{<type>}}string{{</type>}}
+
+    *   A string containing a path to your Worker script.
+
+*   `options` {{<type>}}object{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}
+
+    *   Optional options object containing `wrangler dev` configuration settings.
+
+*   `apiOptions` {{<type>}}object{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}
+
+    *   Optional API options object containing `disableExperimentalWarning`. Set `disableExperimentalWarning` to true to disable wrangler's warning about using `unstable_` prefixed APIs.
+
+{{</definitions>}}
+### Usage
+
+```js
+---
+filename: src/index.test.js
+---
 import { unstable_dev } from 'wrangler'
 
 describe("worker", () => {
