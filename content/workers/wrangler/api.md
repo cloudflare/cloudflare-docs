@@ -6,7 +6,7 @@ weight: 12
 
 # Wrangler API
 
-Wrangler offers an API to programmatically manage your Cloudflare Workers
+Wrangler offers an experimental API to programmatically manage your Cloudflare Workers
 
 - [`unstable_dev`](#unstable_dev) - Start a local server for running integration tests against your Worker.
 
