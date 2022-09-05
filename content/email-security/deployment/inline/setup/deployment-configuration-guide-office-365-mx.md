@@ -168,3 +168,16 @@ If you prefer to send the message to the Junk folder, in the **Do the followingâ
 
 7. Select **Save** to save the new rule.
 
+## 5. Update your domain MX records
+
+Instructions to update your MX records will depend on the DNS provider you are using. You will need to update and replace your existing MX record with the Area 1 hosts:
+
+MX Priority | Host
+--- | ---
+10 | mailstream-east.mxrecord.io
+10 | mailstream-west.mxrecord.io
+20 | mailstream-central.mxrecord.mx
+
+When configuring the Area 1 MX records, it is important to configure both hosts with the same MX priority. This will allow mail flows to load balance between the hosts.
+
+Once the MX change has been updated, the DNS updates may take up to 36 hours to fully propagate around the Internet. Some of the faster DNS providers will start to update records within minutes. DNS will reach the major DNS servers in about an hour.
