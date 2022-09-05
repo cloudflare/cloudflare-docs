@@ -114,3 +114,57 @@ Now that the inbound connector has been configured, you will need to enable the 
 3. Select **Save**.
 
 ## 4. Configure Area 1 Quarantine Policies
+
+### Selecting the disposition that you want to quarantine
+
+Quarantining messages is a per domain configuration. To modify which domains will have their message quarantines, access the domain configuration: 
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+
+2. Go to **Settings** (the gear icon) > **Domains**.
+
+3. Locate the domain you want to edit, and select the `...` icon > **Edit**.
+
+4. Select the additional dispositions you want to quarantine.
+
+{{<Aside type="note">}}When Area 1 is deployed as the MX record and protecting Office 365, Malicious and Spam detections will automatically be quarantined. This behavior cannot be modified.{{</Aside>}}
+
+### Managing the Admin Quarantine
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+
+2. Go to **Email** > **Admin Quarantine**.
+
+3. Locate the message you want to manage, and select the `...` icon next to it. Thill will let you preview, download, or release the quarantined message.
+
+### Optional - Quarantining using the Microsoft Hosted Quarantine
+
+As previously noted, malicious and spam detections are automatically quarantined in Area 1’s quarantine (this behavior cannot be modified). However, for the suspicious and spoof dispositions, you may prefer to apply a different behavior, where these messages can be quarantined into the Microsoft Hosted Quarantine or sent to the user’s junk folder.
+
+For this alternate behavior, you will need to configure a transport rule in Office 365:
+
+1. Go to the **Exchange administrator** console > **mail flow** > **rules**.
+
+2. Select the **+** button > **Create a new rule**.
+
+3. In the new dialog box, select **More options…** to open the advanced version of the rule creator. Set the following conditions and actions:
+
+* Name: **Quarantine Area 1 Suspicious Messages**
+* Configure the first condition, select **A message header … → includes any of these words:**
+    * Enter text: **X-Area1Security-Disposition**
+    * Enter words: `SUSPICIOUS`
+
+{{<Aside type="note">}}If you also want to quarantine the spoof detections, add the string `SPOOF` to the list of words.{{</Aside>}}
+
+4. Select the **add** condition button to add a second condition.
+
+5. In the new condition, select **The sender… → IP address is in any of these ranges or exactly matches.** Enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
+
+6. In the **Do the following…** section, select **Redirect the message to ...  → hosted quarantine.**.
+
+{{<Aside type="note">}}
+If you prefer to send the message to the Junk folder, in the **Do the following…** section, select **Modify the message properties ...  → set the spam confidence level (SCL)**. Then, select the SCL value that will send the message to the junk folder. This behavior is dependent on the configured spam filter policies (spam and bulk actions).
+{{</Aside>}}
+
+7. Select **Save** to save the new rule.
+
