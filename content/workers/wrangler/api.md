@@ -25,7 +25,7 @@ The `unstable_dev` function has an `unstable_` prefix because the API may change
 ### Constructor
 
 ```js
-const worker = unstable_dev(script, options, apiOptions)
+const worker = await unstable_dev(script, options, apiOptions)
 ```
 
 ### Parameters
