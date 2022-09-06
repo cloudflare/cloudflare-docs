@@ -22,24 +22,24 @@ In this tutorial you will learn how to configure Google G-suite with Area 1 as M
 ## Requirements
 
 * Provisioned Area 1 Account.
-* Access to the Gmail administrator console (https://admin.google.com >  Apps > Google Workspace > Gmail).
+* Access to the Gmail administrator console ([Gmail administrator console](https://admin.google.com) >  Apps > Google Workspace > Gmail).
 * Access to the domain nameserver hosting the MX records for the domains that will be processed by Area 1.
 
 ## 1. Add Area 1 IP addresses to the Inbound gateway configuration
 
 When Area 1 is deployed as MX records upstream of Gmail, the Inbound gateways need to be configured such that Gmail is aware that they are no longer the MX record for the domain. This is a critical step as it will allow Gmail to accept messages from Area 1.
 
-1. Access the [Gmail Administrative Console](https://admin.google.com/), then select **Apps** > **Google Workspace** > **Gmail**.
+1. Go to the [Gmail Administrative Console](https://admin.google.com/), and navigate to **Apps** > **Google Workspace** > **Gmail**.
 
-2. Select **Spam, Phishing, and Malware** and navigate to **Inbound Gateway configuration**.
+2. Select **Spam, Phishing, and Malware** and scroll to **Inbound Gateway configuration**.
 
-3. Enable **Inbound Gateway**, and configure it with the following details. 
+3. Enable **Inbound Gateway**, and configure it with the following details: 
 
-* Gateway IPs: Select the **Add** link, and add the IPs mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
-* Select **Automatically detect external IP (recommended)**.
-* Select **Require TLS for connections from the email gateways listed above**.
+    * Gateway IPs: Select the **Add** link, and add the IPs mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
+    * Select **Automatically detect external IP (recommended)**.
+    * Select **Require TLS for connections from the email gateways listed above**.
 
-{{<Aside type="note">}}Do not select **Reject all mail not from gateway IPs** until the MX records have fully propagated. Refer to step 4 for more details.{{</Aside>}}
+{{<Aside type="note">}}Do not select **Reject all mail not from gateway IPs** until the MX records have fully propagated. [Refer to step 4](#4-secure-your-email-flow) for more details.{{</Aside>}}
 
 Select the **Save** button at the bottom of the dialog box to save the configuration once the details have been entered. Once saved, the administrator console will show the Inbound Gateway as **enabled**.
 
@@ -48,9 +48,8 @@ Select the **Save** button at the bottom of the dialog box to save the configura
 This optional step is highly recommended to prevent users from being exposed to malicious messages.
 
 When messages are identified as malicious, Area 1 Horizon will insert the X-header `X-Area1Security-Disposition` into the message with the corresponding disposition. Based on the value of the `X-Area1Security-Disposition`, a content compliance filter can be configured to send malicious detections to an administrative quarantine. This section will outline the steps required to:
-
-*Create an Area 1 Malicious quarantine
-*Create the content compliance filter to send malicious messages to quarantine
+* Create an Area 1 Malicious quarantine.
+* Create the content compliance filter to send malicious messages to quarantine.
 
 ### Create Area 1 Malicious Quarantine
 
@@ -62,10 +61,10 @@ If you would like to send Area 1 malicious detection to a separate quarantine ot
 
 3. In the quarantine configuration pop-up, enter the following:
 
-    * Name: Area 1 Malicious
-    * Description: Area 1 Malicious
-    * For the **Inbound denial consequence**, select **Drop Message**
-    * For the **Outbound denial consequence**, select **Drop Message**
+    * **Name**: `Area 1 Malicious`.
+    * **Description**: `Area 1 Malicious`.
+    * For the **Inbound denial consequence**, select **Drop Message**.
+    * For the **Outbound denial consequence**, select **Drop Message**.
 
 When you are finished entering these details, select **SAVE**.
 
@@ -81,26 +80,26 @@ When you are finished entering these details, select **SAVE**.
 
 3. In the **Content compliance filter** configuration, enter the following:
 
-    * Name: **Quarantine Area 1 Malicious**.
+    * **Name**: `Quarantine Area 1 Malicious`.
     * In the **Email message to affect** section, select **Inbound**.
     * In the **Add expression that describe the content you want to search for in each message section**, configure the following:
         * Select **Add** to add the condition
             * Match drop down, select **Advanced content match**
             * Location, select **Full headers**
             * Match type, select **Contains text**
-            * Content, enter **X-Area1Security-Disposition: MALICIOUS**
-        * Select **SAVE** to save the condition
-    * In the **If the above expression match, do the following** section, select the action dropdown and select **Quarantine message** and the **Area 1 Malicious** quarantine that was created in the previous step.
+            * Content, enter `X-Area1Security-Disposition: MALICIOUS`
+        * Select **SAVE** to save the condition.
+    * In the **If the above expression match, do the following** section, select the action dropdown and select *Quarantine message* and the *Area 1 Malicious* quarantine that was created in the previous step.
 
     After you enter this information, select **SAVE**.
 
 4. Once saved, the console will update with the newly configured **content compliance filter**.
 
     If you’d like to quarantine the other dispositions, simply repeat the above steps and use the following strings for the other dispositions:
-    * X-Area1Security-Disposition: MALICIOUS
-    * X-Area1Security-Disposition: SUSPICIOUS
-    * X-Area1Security-Disposition: SPOOF
-    * X-Area1Security-Disposition: UCE
+    * `X-Area1Security-Disposition: MALICIOUS`
+    * `X-Area1Security-Disposition: SUSPICIOUS`
+    * `X-Area1Security-Disposition: SPOOF`
+    * `X-Area1Security-Disposition: UCE`
 
     If desired, you can create a separate quarantine for each of the dispositions.
 
@@ -155,7 +154,7 @@ After 36 hours, the MX record DNS update will have sufficiently propagated acros
 
 3. Navigate to **Inbound Gateway configuration** and select **Configure**.
 
-4. Enable **Reject all mail not from gateway IPs** and select **Save**
+4. Enable **Reject all mail not from gateway IPs** and select **Save**.
 
 5. Select **Save** once more to commit and activate the configuration change in the Gmail advanced configuration console.
 
