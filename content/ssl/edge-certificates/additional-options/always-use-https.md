@@ -40,7 +40,7 @@ For example, you could forward traffic from a specific subdomain to HTTPS. You w
 {{<example>}}
 | **Source URL** | **Target URL** | **Status** | **Selected parameters** |
 | --------- | --------- | --- | --- |
-| `https://example.com` | `https://example.com` | 301 | _Subpath matching_ and _Preserve path suffix_ |
+| `http://example.com` | `https://example.com` | 301 | _Subpath matching_ and _Preserve path suffix_ |
 {{</example>}}
 
 ### Limitations
