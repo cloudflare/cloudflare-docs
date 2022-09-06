@@ -17,9 +17,9 @@ You must first [create a Cloudflare account](/fundamentals/account-and-billing/a
 
 ## Upload your first video
 
-### Step 1: 
+### Step 1: Upload an example video from a public URL
 
-You can upload videos directly from the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream) or using the API.
+You can upload videos directly from the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream) or using the API.
 
 To use the API, replace the `API_TOKEN` and `ACCOUNT_ID` values with your credentials in the example below.
 
@@ -103,7 +103,7 @@ The embed code above can also be found in the Cloudflare Dashboard [Cloudflare D
   </div>
 </figure>
 
-### Next steps:
+### Next steps
 
 - link one to recommended next step
 - link two to recommended next step
@@ -172,7 +172,7 @@ To play the live stream you just started on your website with the [Stream Player
 
 The embed code above can also be found in the Cloudflare Dashboard [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
 
-### Next steps:
+### Next steps
 
 - link one to recommended next step
 - link two to recommended next step

@@ -23,7 +23,7 @@ Cloudflare Stream runs on [Cloudflare’s global cloud network](https://www.clou
 
 {{<button-group>}}
 {{<button type="primary" href="/stream/get-started/">}}Get started{{</button>}}
-{{<button type="secondary" href="https://dash.cloudflare.com/?to=/:account/stream">}}Stream Dashboard{{</button>}}
+{{<button type="secondary" href="https://dash.cloudflare.com/?to=/:account/stream">}}Stream dashboard{{</button>}}
 {{</button-group>}}
 
 ---
@@ -50,8 +50,7 @@ Play on-demand and live video on websites, in native iOS and Android apps, and d
 
 {{<flexible-feature header="Get detailed analytics" href="/stream/getting-analytics/" cta="Explore Analytics">}}
 
-Understand and analyze which videos and live streams are viewed most, and break down metrics on a per-creator basis.
-
+Understand and analyze which videos and live streams are viewed most and break down metrics on a per-creator basis.
 
 {{</flexible-feature>}}
 
