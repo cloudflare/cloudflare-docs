@@ -144,3 +144,33 @@ MX Priority | Host
 The European region will be the primary MX, with a fail-over to the US regions. If you wish to exclusively use the European region, update with only the European host.
 
 Once the MX records updates complete, the DNS updates may take up to 36 hours to fully propagate around the Internet. Some of the faster DNS providers will start to update records within minutes. The DNS update will typically reach the major DNS servers in about an hour.
+
+## 4. Secure your email flow
+
+After 36 hours, the MX record DNS update will have sufficiently propagated across the Internet. It is now safe to secure your email flow. This will ensure that Gmail only accepts messages that are first received by Area 1. This step is highly recommended to prevent threat actors from using cached MX entries to bypass Area 1 by injecting messages directly into Gmail.
+
+1. Access the [Gmail Administrative Console](https://admin.google.com/), then select **Apps** > **Google Workspace** > **Gmail**.
+
+2. Select **Spam, Phishing, and Malware**.
+
+3. Navigate to **Inbound Gateway configuration** and select **Configure**.
+
+4. Enable **Reject all mail not from gateway IPs** and select **Save**
+
+5. Select **Save** once more to commit and activate the configuration change in the Gmail advanced configuration console.
+
+## 5. Send Area 1 SPAM to user spam folder (optional)
+
+Unlike the configuration in [step 2](#2-quarantine-malicious-detections) where the message can be sent to an administrative quarantine, this optional step can be configured to send messages that are identified as SPAM by Area 1 to the user’s spam folder. 
+
+1. Access the [Gmail Administrative Console](https://admin.google.com/), then select **Apps** > **Google Workspace** > **Gmail**.
+
+2. Select **Spam, Phishing, and Malware**.
+
+3. Navigate to **Inbound Gateway configuration** and select **Configure**.
+
+4. In the **Message Tagging** section, select **Message is considered spam if the following header regexp matches**.
+
+5. In the **Regexp** section, enter the string `X-Area1Security-Disposition: UCE`.
+
+6. Select **SAVE** to save the updated configuration.
