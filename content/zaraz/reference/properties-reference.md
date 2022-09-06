@@ -34,7 +34,7 @@ _URL host_ | String | Returns the domain (that is, the hostname) followed by a `
 _URL hostname_ | String | Returns the domain of the URL.
 _URL origin_ | String | Returns the origin of the URL — that is, its scheme, domain, and port.
 _URL password_ | String | Returns the password specified before the domain name.
-_ULR pathname_ | String | Returns the path of the URL, including the initial `/`. Does not include the query string or fragment.
+_URL pathname_ | String | Returns the path of the URL, including the initial `/`. Does not include the query string or fragment.
 _URL port_ | String | Returns the port number of the URL.
 _URL protocol scheme_ | String | Returns the protocol scheme of the URL, including the final `:`.
 _URL query parameters_ | String | Returns query parameters provided, beginning with the leading `?` character.
