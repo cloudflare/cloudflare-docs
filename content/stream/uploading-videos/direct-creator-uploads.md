@@ -201,4 +201,4 @@ You can do that two ways:
 
 ### Billing considerations
 
-- Pending uploads count towards your storage limit.
+- One-time upload URLs count towards your storage limit, even if your users have not yet uploaded video to this URL. For example, if you generate a one-time upload URL with a `maxDurationSeconds` value of `60`, that expires 30 minutes from now (the default value of `expiry`), until the upload URL expires, this will count as one minute of video stored. This ensures that you do not inadvertently generate upload URLs that fail for your users once you've reached your storage limit. You can add storage to your subscription anytime via the Cloudflare Dashboard, and customize the `expiry` to a duration of your choosing. We recommend setting a short duration and generating this URL on-demand, at the moment when the user needs to upload a video.
