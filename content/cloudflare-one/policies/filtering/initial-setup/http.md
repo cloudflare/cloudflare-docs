@@ -20,7 +20,7 @@ To filter HTTP requests from a device:
 4. Enable the Gateway proxy:
     1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
     2. Enable **Proxy** for TCP.
-    3. (Optional) Enable **Proxy** for UDP. All port 443 UDP traffic will be inspected by Gateway except when using QUIC. QUIC traffic will only be proxied.
+    3. (Optional) Enable **Proxy** for UDP. All port 443 UDP traffic will be inspected by Gateway.
     4. Enable **TLS decryption**.
 
 ## 2. Verify device connectivity
@@ -32,7 +32,7 @@ To filter HTTP requests from a device:
 
 ## 3. Add recommended policies
 
-To create a new HTTP policy, navigate to **Gateway** > **Policies** > **HTTP** in the Zero Trust dashboard. 
+To create a new HTTP policy, navigate to **Gateway** > **Policies** > **HTTP** in the Zero Trust dashboard.
 We recommend adding the following policies:
 
 ### Bypass inspection for incompatible applications
