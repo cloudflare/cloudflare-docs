@@ -15,7 +15,7 @@ meta:
 
 ## Delete a variable
 
-{{<Aside type="note" header="Important">}}You cannot delete a variable being used in tools or triggers.{{</Aside>}}
+{{<Aside type="warning" header="Important">}}You cannot delete a variable being used in tools or triggers.{{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2. Go to **Zaraz** > **Tools**. Locate any tools using the variable, and delete the variable from those tools.
