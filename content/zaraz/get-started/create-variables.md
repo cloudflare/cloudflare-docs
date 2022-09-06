@@ -24,7 +24,7 @@ Your variable is now ready to be used with tools and triggers.
 
 ## Use variables with tools
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2. Select **Zaraz** > **Tools**.
 3. Find the tool you want to use the variable in, and select **Edit**.
 4. Select **Settings**.
@@ -34,5 +34,5 @@ Your variable is now ready to be used with tools and triggers.
 
 ## Use variables with triggers
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2. Select **Zaraz** > **Triggers**.
