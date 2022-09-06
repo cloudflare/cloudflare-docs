@@ -72,7 +72,7 @@
           </svg>ES Modules</a
         >
         {{ else }}
-        <a class="tab-label {{ if eq $idx 0 }} active {{ end }}" href="#" data-link="tab-{{lower $link}}" data-id="{{lower $unique_id}}">
+        <a class="tab-label noCodeLabel {{ if eq $idx 0 }}active{{ end }}" href="#" data-link="tab-{{lower $link}}" data-id="{{lower $unique_id}}">
           {{$link}}</a>
         {{ end }}
       </li>

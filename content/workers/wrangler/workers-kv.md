@@ -38,7 +38,7 @@ kv_namespaces = [
 
 2. In your `wrangler.toml` file, add the following with the values generated in your terminal:
 
-```sh
+```bash
 kv_namespaces = [
     { binding = "<YOUR_BINDING>", id = "<YOUR_ID>" }
 ]

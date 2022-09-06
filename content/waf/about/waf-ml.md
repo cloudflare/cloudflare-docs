@@ -9,7 +9,7 @@ meta:
 # WAF ML
 
 {{<Aside type="note">}}
-This feature is available in early access to customers on an Enterprise plan. To get access, contact your account team.
+This feature is only available on Enterprise plans. To get access, contact your account team.
 {{</Aside>}}
 
 WAF ML (Machine Learning) is a feature that complements [WAF Managed Rulesets](/waf/managed-rulesets/).
@@ -49,6 +49,11 @@ Currently, WAF ML provides the following scores:
     <td><strong>WAF XSS Attack Score</strong></td>
     <td><code>cf.waf.ml.score.xss</code></td>
     <td>An attack score from 1 to 99 classifying the cross-site scripting (XSS) attack vector.</td>
+  </tr>
+  <tr>
+    <td><strong>WAF RCE Attack Score</strong></td>
+    <td><code>cf.waf.score.rce</code></td>
+    <td>An attack score from 1 to 99 classifying the command injection or Remote Code Execution (RCE) attack vector.</td>
   </tr>
 </table>
 

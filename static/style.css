@@ -5215,12 +5215,25 @@ pre {
   background: linear-gradient(var(--background-color),
     rgba(var(--background-color-rgb)));
   border: 1px solid rgb(216 216 218);
+  color: inherit;
 }
 
 [theme="dark"] .noCodeTab {
   border: 1px solid #404242;
   border-top: none;
   background-color: rgb(var(--background-color-rgb));
+}
+
+.noCodeTab > pre {
+  margin-bottom: 2em;
+}
+
+.noCodeTab > *:last-child {
+  margin-bottom: 0;
+}
+
+.noCodeLabel {
+  font-family: var(--sans-serif-font-family);
 }
 
 .skip-link {
