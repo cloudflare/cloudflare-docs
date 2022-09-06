@@ -30,29 +30,29 @@ Cloudflare Stream runs on [Cloudflare’s global cloud network](https://www.clou
 
 ## Features
 
-{{<flexible-feature header="Control access to video content" href="/stream/viewing-videos/securing-your-stream/" cta="Use Signed URLs">}}
+{{<feature header="Control access to video content" href="/stream/viewing-videos/securing-your-stream/" cta="Use Signed URLs">}}
 
 Restrict access to paid or authenticated content with signed URLs.
 
-{{</flexible-feature>}}
+{{</feature>}}
 
-{{<flexible-feature header="Let your users upload their own videos" href="/stream/uploading-videos/direct-creator-uploads/" cta="Direct Creator Uploads">}}
+{{<feature header="Let your users upload their own videos" href="/stream/uploading-videos/direct-creator-uploads/" cta="Direct Creator Uploads">}}
 
 Let users in your app upload videos directly to Stream with a unique, one-time upload URL.
 
-{{</flexible-feature>}}
+{{</feature>}}
 
-{{<flexible-feature header="Play video on any device" href="/stream/viewing-videos/" cta="Play videos">}}
+{{<feature header="Play video on any device" href="/stream/viewing-videos/" cta="Play videos">}}
 
 Play on-demand and live video on websites, in native iOS and Android apps, and dedicated streaming devices like Apple TV.
 
-{{</flexible-feature>}}
+{{</feature>}}
 
-{{<flexible-feature header="Get detailed analytics" href="/stream/getting-analytics/" cta="Explore Analytics">}}
+{{<feature header="Get detailed analytics" href="/stream/getting-analytics/" cta="Explore Analytics">}}
 
 Understand and analyze which videos and live streams are viewed most and break down metrics on a per-creator basis.
 
-{{</flexible-feature>}}
+{{</feature>}}
 
 ---
 
