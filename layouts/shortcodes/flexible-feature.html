@@ -1,0 +1,27 @@
+{{- $header := .Get "header" -}} {{- $url := .Get "href" -}} {{- $cta := .Get "cta" -}}
+
+<h3 id="{{ $header }}">
+  <span class="DocsMarkdown--header-anchor-positioner">
+    <a
+      class="DocsMarkdown--header-anchor Link Link-without-underline"
+      href="#{{ $header }}"
+      >&#8203;​</a
+    >
+  </span>
+  <span>{{ $header }}</span>
+</h3>
+<div class="DocsMarkdown--feature-group">
+  <div>
+    <p>{{- .Page.RenderString .Inner -}}</p>
+  </div>
+  {{- if $url -}}
+  <div class="DocsMarkdown--feature-button">
+    <a
+      class="Button Button-is-docs-primary DocsMarkdown--link-content"
+      href="{{ $url }}"
+      >{{ $cta }} {{- if strings.HasPrefix $url "http" -}} {{-
+      partialCached "external.icon" . -}} {{- end -}}</a
+    >
+  </div>
+  {{- end -}}
+</div>
