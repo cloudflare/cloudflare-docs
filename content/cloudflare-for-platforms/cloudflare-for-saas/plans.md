@@ -30,6 +30,15 @@ meta:
     </tr>
     <tr>
       <td>
+        <strong>Max hostnames</strong>
+      </td>
+      <td style="text-align:center">
+        5000
+      </td>
+      <td>Unlimited<a href="#footnote-1"><sup>1</sup></a></td>
+    </tr>
+    <tr>
+      <td>
         <strong>
           <a href="/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/">Custom analytics</a>
         </strong>
@@ -123,6 +132,8 @@ meta:
 </table>
 
 {{</table-wrap>}}
+
+<p id="footnote-1">1. If you are planning on using more than 5000 custom hostnames, <a href="https://www.cloudflare.com/plans/enterprise/contact/">contact Sales.</a></p>
 
 ## Enterprise plan benefits
 

@@ -17,35 +17,21 @@ Before you can integrate a SaaS application with CASB, your SaaS account must me
 
 ## Add an integration
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), navigate to **CASB** > **Integrations**.
-2. Click **Add integration**.
-3. Browse the available SaaS integrations and click the application you would like to add.
+1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), go to **CASB** > **Integrations**.
+2. Select **Add integration**.
+3. Browse the available SaaS integrations and select the application you would like to add.
 4. Follow the step-by-step integration instructions in the UI.
-5. To run your first scan, click **Save integration**. You will be redirected to the Findings page to see an in-depth listing of issues found.
+5. To run your first scan, select **Save integration**. You will be redirected to the [Findings page](/cloudflare-one/applications/scan-apps/manage-findings/) to see an in-depth listing of issues found.
 
 After the first scan, CASB will automatically scan your application on a frequent basis to keep up with any changes. Due to each application having their own set of requirements, scan intervals will vary, but the frequency is typically between every 1 hour and every 24 hours.
 
-## View security findings
-
-1. Go to **CASB** > **Findings**.
-2. To view details for an individual finding, select **View**.  You will see all detected instances of the finding as well as a step-by-step guide for resolving the issue.
-
-### Severity levels
-
-Findings, or security issues detected from an integration, are tagged with one of the following severity levels:
-
-* **Critical** suggests the finding is something your team should act on today.
-* **High** suggests the finding is something your team should act on this week.
-* **Medium** suggests the finding should be reviewed sometime this month.
-* **Low** suggests the finding is informational or part of a scheduled review process.
-
 ## Pause an integration
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), navigate to **CASB** > **Integrations**.
-2. Identify the integration for which you would like to pause and click **Manage**.
-3. To stop scanning the application, click **Pause**.
+1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), go to **CASB** > **Integrations**.
+2. Identify the integration for which you would like to pause and select **Manage**.
+3. To stop scanning the application, select **Pause**.
 
-You can resume application scanning at any time by clicking **Resume**.
+You can resume application scanning at any time by selecting **Resume**.
 
 ## Delete an integration
 
@@ -55,6 +41,6 @@ When you delete an integration, all keys and OAuth data will be deleted. This me
 
 {{</Aside>}}
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), navigate to **CASB** > **Integrations**.
-2. Identify the integration for which you would like to delete and click **Manage**.
-3. Click **Delete**.
+1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), go to **CASB** > **Integrations**.
+2. Identify the integration for which you would like to delete and select **Manage**.
+3. Select **Delete**.
