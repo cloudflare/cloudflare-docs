@@ -24,7 +24,7 @@ When you deploy a Managed Ruleset, the WAF adds an _Execute_ rule, displayed in 
 
 ## Enable or disable a Managed Ruleset
 
-Select the **Enabled** toggle on the right of a Managed Ruleset to enable or disable it.
+Select the **Enabled** toggle next to a Managed Ruleset to enable or disable it.
 
 ## Configure a Managed Ruleset
 
