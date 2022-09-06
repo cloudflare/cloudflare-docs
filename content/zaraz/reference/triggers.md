@@ -107,9 +107,9 @@ If you need to track a link of an element using CSS selectors - for example, on 
 
 {{<table-wrap>}}
 
-| Rule type    | Variable name  | Match operation | Match string                     |
-| -------------| -------------- | --------------- | -------------------------------- |
-| _Match rule_ | _URL pathname_ | _Equals_        | `a[href$='/#my-css-selector']`   |
+| Rule type        | Type  | Selector                         | Wait for actions |
+| ---------------- | ----- | -------------------------------- | ---------------- |
+| _Click listener_ | _CSS_ | `a[href$='/#my-css-selector']`   | `500`            |
 
 {{</table-wrap>}}
 
