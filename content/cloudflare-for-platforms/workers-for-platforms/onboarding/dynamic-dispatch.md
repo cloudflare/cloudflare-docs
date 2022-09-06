@@ -6,10 +6,10 @@ weight: 3
 
 # Dynamic Dispatch
 
-Once you've created a Dispatch Namespace, you can fetch any user Workers in the namespace using a dispatcher worker. The distpacher worker has a namespace binding  (this is step #2 on the [Configuration](/cloudflare-for-platforms/workers-for-platforms/onboarding/walkthrough) page). 
+Once you've created a dispatch namespace, you can fetch any user Workers in the namespace using a dispatcher Worker. The distpacher Worker has a namespace binding  (Step #2 on the [Configuration](/cloudflare-for-platforms/workers-for-platforms/onboarding/walkthrough) page). 
 
 
-Any method of 'routing' to a namespaced worker can be used (reading the subdomain, request header, or lookup in a database). In the end we just need the name of the user Worker.
+Any method of 'routing' to a namespaced Worker can be used (reading the subdomain, request header, or lookup in a database). In the end we just need the name of the user Worker.
 
 
 In the following example, routing to user workers is done through reading the subdomain `<USER_WORKER_NAME>.example.com/*`. For example, `my-customer.example.com` will run the script uploaded to `PUT accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/my-dispatch-namespace/scripts/my-customer`

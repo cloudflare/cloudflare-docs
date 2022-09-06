@@ -19,7 +19,7 @@ wrangler dispatch-namespace create <NAMESPACE_NAME>
 
 ## 2. Dispatcher creation
 
-The dispatcher Worker calls Workers from the namespace and executes them. A dispatch namespace binding is use in order to create a dispatcher Worker. After creating a Worker, add the following to your wrangler.toml file. 
+The dispatcher Worker calls user Workers from the namespace and executes them. A dispatch namespace binding is use in order to create a dispatcher Worker. After creating a Worker, add the following to your wrangler.toml file. 
 
 
 ```json
@@ -28,7 +28,7 @@ binding = "dispatcher"
 namespace = "<NAMESPACE_NAME>"
 ```
 
-For special cases (such as using wrangler@d1 which at the moment isn’t caught up), An unsafe binding is available. This is subject to change, use at your own risk.
+For special cases (such as using wrangler@d1 which at the moment isn’t caught up), an unsafe binding is available. This is subject to change, use at your own risk.
 
 ```json
 [[unsafe.bindings]]
@@ -36,7 +36,7 @@ name = "dispatcher"
 type = "namespace"
 namespace = "<NAMESPACE_NAME>"
 ```
-If you're doing your own multipart uploads, just include a similar object in your metadata's bindings property:
+If you're doing your own multipart uploads, include a similar object in your metadata's bindings property:
 ```json
 
 {
@@ -81,14 +81,13 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/
      -H "X-Auth-Key: <AUTH_KEY>" \
      -H "Content-Type: application/javascript" \
     --data "['TAG1', 'TAG2', 'TAG3']"
-"
 ```
 To tag a script, tags can now be included on multipart script uploads in the metadata blob (alongside bindings, etc.):
 ```json
 {
     "body_part": "script",
     "bindings": [...],
-    "tags": ["customer-123", "staging", "free-user"]
+    "tags": ["TAG1", "TAG2", "TAG3"]
 }
 ```
 
