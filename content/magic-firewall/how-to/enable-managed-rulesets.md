@@ -25,7 +25,7 @@ You have multiple options for enabling rules:
 
 To create a Managed Ruleset, you must first build a request with the following:
 
-- `managed_ruleset_id`: The ID of the Managed Phase Managed Kind ruleset the contains the rule you want to enable.
+- `managed_ruleset_id`: The ID of the Managed Phase Managed Kind ruleset that contains the rule you want to enable.
 - `managed_rule_id`: The ID of the rule you want to enable.
 
 Additionally, you need the properties you want to override. The properties you can override include:
@@ -35,11 +35,11 @@ Additionally, you need the properties you want to override. The properties you c
 
 The `enabled` and `action` properties for a rule are set in the managed phase managed kind ruleset. All rules in the managed phase are currently disabled by default.
 
-The example below contains a request for a Managed Phase Managed Kind  ruleset.
+The example below contains a request for a Managed Phase Managed Kind ruleset.
 
 ```bash
 ---
-header: Example request - Create a Managed Phase Managed Kind  ruleset
+header: Example request - Create a Managed Phase Managed Kind ruleset
 ---
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets"
 -H 'X-Auth-Email: user@example.com' \
