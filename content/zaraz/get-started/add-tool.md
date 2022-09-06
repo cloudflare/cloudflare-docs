@@ -11,10 +11,9 @@ You can add new third-party tools and load them into your website through the Cl
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2. Select **Zaraz** > **Tools**.
 3. Select **Add new tool** and choose a tool from the tools library page. Select **Continue** to confirm your selection.
-4. In **Set up**, configure the settings for your new tool. The information you need to enter will depend on the tool you choose. This is also where you can [use your variables](/zaraz/get-started/create-variables).
-    4.1 Select a field or add a field to your tool.
-    4.2 Select the `+` sign and scroll to **Variables**.
-    4.3 Choose your variable.
-5. Select **Save**.
+4. In **Set up**, configure the settings for your new tool. The information you need to enter will depend on the tool you choose. 
+5. If you want to use a [previously set up Variable](/zaraz/get-started/create-variables), select the `+` sign in the drop-down menu.
+6. Scroll to **Variables** and choose one of your variables.
+7. Select **Save**.
 
 While your tool is now configured, it needs to have actions defined before it can work. Depending on the tool you chose, Cloudflare Zaraz might automatically create a `Pageview` action. Refer to [Create actions](/zaraz/get-started/create-actions/) to learn how to create additional actions.

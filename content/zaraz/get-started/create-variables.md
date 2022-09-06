@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Create variables
+title: Create a variable
 weight: 4
 ---
 
-# Create variables
+# Create a variable
 
 Variables are reusable blocks of information. This allows you to have one source of data you can reuse across tools and triggers in the dashboard. When you need to change or update the data, you only need to do it once and it will be reflected on all the places you are using that variable.
 
@@ -20,19 +20,8 @@ Variables are accessible from drop-downs in tools settings and triggers.
 4. In **Variable value** give your variable a value. For now, Zaraz only accepts strings, so you cannot change the Variable type field.
 5. Select **Save**.
 
-Your variable is now ready to be used with tools and triggers. 
+Your variable is now ready to be used with tools and triggers.
 
-## Use variables with tools
+## Next steps
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Select **Zaraz** > **Tools**.
-3. Find the tool you want to use the variable in, and select **Edit**.
-4. Select **Settings**.
-5. Select the `+` sign in the drop-down field, and scroll to the **Variables** section to choose your variable.
-6. (Optional): Select an actions associated with the tool > **Add field**.
-
-
-## Use variables with triggers
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Select **Zaraz** > **Triggers**.
+You now need to use your variables. Refer to [Add a third-party tool](/zaraz/get-started/add-tool/) and [Create a trigger](/zaraz/get-started/create-trigger/) for more information.

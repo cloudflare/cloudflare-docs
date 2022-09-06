@@ -1,12 +1,12 @@
 ---
 pcx_content_type: how-to
-title: Create actions
+title: Create an action
 weight: 3
 meta:
-  title: Creating third-party tool actions
+  title: Create a third-party tool action
 ---
 
-# Creating third-party tool actions
+# Create a third-party tool action
 
 Tools on Zaraz must have actions configured in order to do something. Every action has triggers assigned to it. When the conditions of the triggers are met, the action will start. An action can be anything the tool can do - sending analytics information, showing a widget, adding a script and much more.
 
