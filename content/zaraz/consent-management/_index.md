@@ -17,11 +17,11 @@ The consent modal added to your website is concise and gives your users an easy 
 
 The Zaraz Consent Management platform (CMP) has a **Purposes** section. This is where you will have to create purposes for the third-party tools your website uses. To better understand the terms involved in dealing with personal data, refer to these definitions:
 
-* **Purpose**: the reason you are loading a given tool on your website, such as to track conversions or improve your website’s layout based on behavior tracking. One purpose can be assigned to many tools, but one tool can be assigned only to one purpose.
-* **Consent**: this is an affirmative action that the user makes that is necessary in order to store and get access to cookies (or other persistent data, like `LocalStorage`) on the users’ computer/browser.
+* **Purpose**: The reason you are loading a given tool on your website, such as to track conversions or improve your website’s layout based on behavior tracking. One purpose can be assigned to many tools, but one tool can be assigned only to one purpose.
+* **Consent**: An affirmative action that the user makes, required to store and access cookies (or other persistent data, like `LocalStorage`) on the users’ computer/browser.
 
 {{<Aside type="note">}}
-All tools use consent as a legal basis. This is due to the fact that they all use cookies and are not strictly necessary for the website’s correct operation. Due to this, all purposes are opt-in.
+All tools use consent as a legal basis. This is due to the fact that they all use cookies that are not strictly necessary for the website’s correct operation. Due to this, all purposes are opt-in.
 {{</Aside>}}
 
 ## Purposes and tools
