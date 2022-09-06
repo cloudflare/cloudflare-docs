@@ -30,7 +30,7 @@ zaraz.track("cart viewed", {items: 3, userId: “ABC-123”})
 
 Here, all the events are collecting the `userId` key, and the code for setting that key repeats itself. With `zaraz.set()` you can avoid repetition by setting the key once when the page loads. Zaraz will then attach this key to all future `zaraz.track()` calls. 
 
-Using the above data as the example, if you use `zaraz.set(“userId”, “ABC-123”)` once, before the `zaraz.track()` calls, you can remove the `userId` key from all `zaraz.track()` calls.
+Using the above data as the example, if you use `zaraz.set("userId", "ABC-123")` once, before the `zaraz.track()` calls, you can remove the `userId` key from all `zaraz.track()` calls.
 
 Another example:
 
@@ -38,14 +38,14 @@ Another example:
 zaraz.set('product_name', 't-shirt', {scope: 'page'})
 ```
 
-Keys that are sent using `zaraz.set()` can be used inside tool actions exactly like keys in the `eventProperties` of `zaraz.track()`. So, the above `product` key is accessible through the dash with the variable _Track Property name:_, and setting its name as `product_name`. Zaraz will then replace it with `tshirt`.
+Keys that are sent using `zaraz.set()` can be used inside tool actions exactly like keys in the `eventProperties` of `zaraz.track()`. So, the above `product` key is accessible through the Cloudflare dashboard with the variable _Track Property name:_, and setting its name as `product_name`. Zaraz will then replace it with `t-shirt`.
 
 ![Example of how to create a variable with the Set method, tracking t-shirts](/zaraz/static/set.png)
 
 The `[options]` argument is an optional object and can include a `scope` property that has a string value. This property determines the lifetime of this key, meaning for how long Zaraz should keep attaching it to `zaraz.track()` calls. Allowed values are:
 
-* `page`: to set the key for the context of the current page only.
-* `session`: to make the key last the whole session.
-* `persist`: to save the key across sessions. This is the default mode and uses `localStorage` to save the value.
+* `page`: To set the key for the context of the current page only.
+* `session`: To make the key last the whole session.
+* `persist`: To save the key across sessions. This is the default mode and uses `localStorage` to save the value.
 
-In the previous example, `{scope: 'page'}` makes the `product_name` property available to all `zaraz.track` calls in the current page, but will not affect calls after visitors navigate to other pages. Refer to [Properties reference](/zaraz/reference/properties-reference/) for more details.
+In the previous example, `{scope: 'page'}` makes the `product_name` property available to all `zaraz.track()` calls in the current page, but will not affect calls after visitors navigate to other pages. Refer to [Properties reference](/zaraz/reference/properties-reference/) for more details.
