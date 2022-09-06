@@ -3,55 +3,94 @@ pcx_content_type: how-to
 title: Configuration
 weight: 1
 meta:
-    title: Configuration - Workers for Platforms
+    title: Configuration
 ---
 
-# Configuration - Workers for Platforms
+# Configuration
 
 ---
+## 1. Dispatch Namespace creation
 
-## Step 1 - Namespace creation
-
-The first step to working with namespaces is to create a namespace, which requires only a name:
+The first step to working with dispatch namespaces is to create a namespace. Once you've logged into Wrangler, run the following commang to create a new dispatch namespace:
 
 ```json
-POST /api/dispatch/namespaces
+wrangler dispatch-namespace create <NAMESPACE_NAME>
+```
+
+## 2. Dispatcher creation
+
+The dispatcher Worker calls Workers from the namespace and executes them. A dispatch namespace binding is use in order to create a dispatcher Worker. After creating a Worker, add the following to your wrangler.toml file. 
+
+
+```json
+[[dispatch_namespaces]]
+binding = "dispatcher"
+namespace = "<NAMESPACE_NAME>"
+```
+
+For special cases (such as using wrangler@d1 which at the moment isn’t caught up), An unsafe binding is available. This is subject to change, use at your own risk.
+
+```json
+[[unsafe.bindings]]
+name = "dispatcher"
+type = "namespace"
+namespace = "<NAMESPACE_NAME>"
+```
+If you're doing your own multipart uploads, just include a similar object in your metadata's bindings property:
+```json
+
 {
-    "name": "customer-workers-production"
+    "bindings": [
+        ...,
+        {
+            "name": "dispatcher",
+            "type": "dispatch_namespace",
+            "namespace": "my-namespace"
+        }
+    ]
 }
 ```
 
-## Step 2 - Dispatcher creation
+## 3. Upload User Workers to a Namespace
 
-The dispatcher worker gets workers from the namespace and executes them. The following example works with Wrangler 2:
+This is the same as our standard Worker upload API, but will upload the worker to a dispatch namespace instead of to your account in general. User Workers must be uploaded via the Cloudflare API, wrangler does not support this operation.Workers uploaded this way will not appear on your dashboard
 
 ```json
-src/index.ts
-
-export default {
-  async fetch(request, env) {
-    try {
-        let worker_name = new URL(request.url).host.split('.')[0]
-        let user_worker = env.dispatcher.get(worker_name)
-        return user_worker.fetch()
-    } catch (e) {
-        if (e.message == 'Error: Worker not found.') {
-            // we tried to get a worker that doesn't exist in our namespace
-            return new Response('', {status: 404})
-        }
-
-        // this could be any other exception from `fetch()` *or* an exception
-        // thrown by the called worker (e.g. if the dispatched worker has 
-        // `throw MyException()`, you could check for that here).
-        return new Response(e.message, {status: 500})
-    }
-  }
-}
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>" \
+     -H "X-Auth-Email: <EMAIL>" \
+     -H "X-Auth-Key: <AUTH_KEY>" \
+     -H "Content-Type: application/javascript" \
+--data "addEventListener('fetch', event => { event.respondWith(fetch(event.request)) })"
+```
+For uploading files, use the following:
+```json
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>" \
+     -H "X-Auth-Email: <EMAIL>" \
+     -H "X-Auth-Key: <AUTH_KEY>" \
+     -F "metadata=@metadata.json;type=application/json" \
+     -F "script=@script.js;type=application/javascript"
 ```
 
-## Step 3 - Tag your users' Workers
+## 4. Tag your users' Workers
 
 To help you manage your customers’ Workers, you can use tags to better perform CRUD operations at scale. You can tag scripts based on things like user ID, account ID, project ID, environment, etc, such that when a user deletes their project, you can easily clean up all of their Workers.
+
+```json
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>/tags" \
+     -H "X-Auth-Email: <EMAIL>" \
+     -H "X-Auth-Key: <AUTH_KEY>" \
+     -H "Content-Type: application/javascript" \
+    --data "['TAG1', 'TAG2', 'TAG3']"
+"
+```
+To tag a script, tags can now be included on multipart script uploads in the metadata blob (alongside bindings, etc.):
+```json
+{
+    "body_part": "script",
+    "bindings": [...],
+    "tags": ["customer-123", "staging", "free-user"]
+}
+```
 
 ### Tags API
 
