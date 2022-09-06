@@ -3,19 +3,19 @@ pcx_content_type: reference
 title: Consent management
 weight: 4
 meta:
-    title: Zaraz Consent Management Platform
+    title: Zaraz Consent Management platform
 layout: single
 ---
 
-# Zaraz Consent Management Platform
+# Zaraz Consent Management platform
 
-Zaraz provides a Consent Management Platform (CMP) to help you address and manage required consents under the European [General Data Protection Regulation (GDPR)](https://gdpr-info.eu/) and the [Directive on privacy and electronic communications](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02002L0058-20091219&from=EN#tocId7). This consent platform lets you easily create a consent modal for your website based on the tools you have configured. With Zaraz CMP, you can make sure Zaraz only loads tools under the umbrella of the specific purposes your users have agreed to. 
+Zaraz provides a Consent Management platform (CMP) to help you address and manage required consents under the European [General Data Protection Regulation (GDPR)](https://gdpr-info.eu/) and the [Directive on privacy and electronic communications](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02002L0058-20091219&from=EN#tocId7). This consent platform lets you easily create a consent modal for your website based on the tools you have configured. With Zaraz CMP, you can make sure Zaraz only loads tools under the umbrella of the specific purposes your users have agreed to. 
 
 The consent modal added to your website is concise and gives your users an easy way to opt-in to any purposes of data processing your tools need.
 
 ## Crucial vocabulary
 
-The Zaraz Consent Management Platform(CMP) has a **Purposes** section. This is where you will have to create purposes for the third-party tools your website uses. To better understand the terms involved in dealing with personal data, refer to these definitions:
+The Zaraz Consent Management platform (CMP) has a **Purposes** section. This is where you will have to create purposes for the third-party tools your website uses. To better understand the terms involved in dealing with personal data, refer to these definitions:
 
 * **Purpose**: the reason you are loading a given tool on your website, such as to track conversions or improve your website’s layout based on behavior tracking. One purpose can be assigned to many tools, but one tool can be assigned only to one purpose.
 * **Consent**: this is an affirmative action that the user makes that is necessary in order to store and get access to cookies (or other persistent data, like `LocalStorage`) on the users’ computer/browser.
