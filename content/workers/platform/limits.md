@@ -26,7 +26,7 @@ To increase any of our limits, [please fill out our form!](https://forms.gle/ukp
 | [Worker size](#worker-size)                                                     | 1 MB      | 1 MB      |
 | [Number of Workers](#number-of-workers)                                         | 30        | 100       |
 | [Number of Cron Triggers<br/>per Worker](#number-of-schedules)                  | 3         | 3         |
-| [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 90        |
+| [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 250       |
 
 {{</table-wrap>}}
 

@@ -13,7 +13,7 @@ Triggers define the conditions under which a tool will start an action. Since a 
 3. Select **Create trigger**.
 4. In **Trigger Name** enter a descriptive name for your trigger.
 5. In **Rule type**, choose from the actions available in the drop-down menu to start building your rule. Refer to [Triggers and rules](/zaraz/reference/triggers/) for more information on what each rule type means.
-6. In **Variable name**, input the variable you want as the trigger. For example, use the `{{ client.__zarazTrack }}` variable if you are [using `zaraz.track()` in your website](/zaraz/web-api/track/).
+6. In **Variable name**, input the variable you want as the trigger. For example, use _Track Name_ if you are using [`zaraz.track()`](/zaraz/web-api/track/) in your website.
 7. Use the **Match operation** drop-down list to choose a comparison operator. For an expression to match, the value in **Variable name** and **Match string** must satisfy the comparison operator.
 8. In **Match string**, input the string that completes the rule.
 9. You can add more than one rule to your trigger. Select **Add rule** and repeat steps 5-8 to add another set of rules and conditions. If you add more than one rule, your trigger will only be valid when all conditions are true.
