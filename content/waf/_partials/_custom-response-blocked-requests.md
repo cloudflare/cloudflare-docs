@@ -9,7 +9,7 @@ When you select the _Block_ action in a rule you can optionally define a custom 
 
 The custom response has three settings:
 
-* **Response type**: Choose a content type or the default WAF block response from the list. The available custom response types are the following:
+* **Response type**: Choose a content type or the default block response from the list. The available custom response types are the following:
 
     | Dashboard value | API value |
     |---|---|
