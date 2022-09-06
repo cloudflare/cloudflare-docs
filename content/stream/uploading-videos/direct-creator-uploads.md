@@ -24,7 +24,7 @@ Use this if your users upload videos under 200MB, and you do not need to allow r
 
 ### Step 1: Generate a unique one-time upload URL
 
-- [End-to-end code example on Stackblitz](https://workers.new/stream/upload/direct-creator-uploads)
+- [End-to-end code example on Stackblitz](https://workers.new/stream/direct-creator-uploads)
 - [API Reference Docs for `/direct_upload`](https://api.cloudflare.com/#stream-videos-upload-videos-via-direct-upload-urls)
 
 
@@ -81,7 +81,7 @@ size, you will receive a `4xx` HTTP status code response.
 
 ### Step 1: Create your own API endpoint that returns an upload URL
 
-[Run and edit this code in your browser using Stackblitz](https://workers.new/stream/upload/direct-creator-uploads-tus)
+[Run and edit this code in your browser using Stackblitz](https://workers.new/stream/direct-creator-uploads-tus)
 
 ```javascript
 ---
