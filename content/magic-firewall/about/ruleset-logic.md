@@ -38,13 +38,13 @@ Magic Firewall processes traffic in two phases: in the first phase, Magic Firewa
 
 The Magic Firewall Custom phase is a set of rules defined by the user. The expression, order, and actions of those rules can be customized by the user.
 
-Additionally, users can add a rule in this custom phase to override the behavior of a rule in the managed phase.
+Additionally, users can add a rule in this custom phase to override the behavior of a rule in the Managed phase.
 
 ### Managed phase ruleset
 
-Managed Phase rulesets are updated and maintained by Cloudflare, and Cloudflare creates these rules based on best practices, known malicious patterns, and other criteria.
+Managed phase rulesets are updated and maintained by Cloudflare, and Cloudflare creates these rules based on best practices, known malicious patterns, and other criteria.
 
-Cloudflare maintains the expressions and order of execution for rules in the managed phase. Rules
+Cloudflare maintains the expressions and order of execution for rules in the Managed phase. Rules
 can be enabled, disabled, or made to log matching packets.
 
 Refer to [Enable Managed Rulesets](/magic-firewall/how-to/enable-managed-rulesets/) for more information.
