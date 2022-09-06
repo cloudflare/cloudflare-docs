@@ -21,8 +21,6 @@ To configure several rules at once in the Browse Managed Ruleset interface:
 
 4. Select **Next**.
 
-    {{<Aside type="note" header="Note">}}
-
 5. If you selected a tag, a dialog appears asking you if any new rules with the selected tag should be configured with the field values you selected.
 
     * Select **Do not apply to new rules** to apply your configurations to the selected rules only.
