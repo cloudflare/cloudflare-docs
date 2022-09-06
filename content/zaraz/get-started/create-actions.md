@@ -14,7 +14,7 @@ To start using actions, first create a trigger to determine when this action wil
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2. Go to **Zaraz** > **Tools**.
-3. Under **Third-party tools**, select **Edit** on the third-party tool you want to configure an action for.
+3. Under **Third-party tools**, locate the tool you want to configure an action for, and select **Edit**.
 4. Select **Create action**.
 5. Give the action a descriptive name.
 6. In the **Firing Triggers** field, choose the relevant trigger or triggers you [previously created](/zaraz/get-started/create-trigger/). If you choose more than one trigger, the action will start when any of the selected triggers are matched.
