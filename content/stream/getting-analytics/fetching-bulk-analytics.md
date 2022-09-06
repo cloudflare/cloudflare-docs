@@ -147,12 +147,12 @@ header: GraphQL response
 }
 ```
 
-**About the response above:**
+About the response above:
 
-*   Each object inside videoPlaybackEventsAdaptiveGroups represents one video
-*   uid property represents the video uid
-*   count property shows the view count for one video during the specified date range
-*   timeViewedMinutes property shows the minutes viewed per video during the specified date range
+*   Each object inside `videoPlaybackEventsAdaptiveGroups` represents one video.
+*   `uid` represents the unique identifier for the video.
+*   `count` shows the view count for one video during the specified date range.
+*   `timeViewedMinutes` shows the minutes viewed per video during the specified date range.
 *   If a video did not have views in the date range specified, it will NOT be included in the response
 
 ## Server side analytics
