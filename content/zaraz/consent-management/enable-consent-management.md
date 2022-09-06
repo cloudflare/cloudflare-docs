@@ -8,7 +8,7 @@ meta:
 
 # Enable the Consent Management Platform (CMP)
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2. Go to **Zaraz** > **Consent**.
 3. Turn on **Enable Consent Management**.
 4. Fill the information pertaining to **Administrator identity**, **Company street address**, and **Administrator email address**. This information is required under GDPR, and without it the consent modal will not work.
