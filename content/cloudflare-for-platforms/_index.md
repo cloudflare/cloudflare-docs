@@ -8,42 +8,21 @@ pcx_content_type: overview
 # Cloudflare for Platforms
  
 {{<description>}}
-Product description - What does this product do? Why would you use it? Short overview of product capability (~10-15 words).
+Cloudflare's offering for SaaS businesses. 
 {{</description>}}
- 
-{{<plan type="<type>">}}
- 
-Summary - Brief welcoming introductory content. A few sentences describing the product’s benefits to the customer. Focus on customer benefit but can also include general product information.
- 
----
- 
-## Features
- 
-{{<feature header="Cloudflare for SaaS" href="/cloudflare-for-platforms/cloudflare-for-saas">}}
-Description highlighting capabilities of product feature. This section accepts Markdown lists for multiple attributes.
-{{</feature>}}
- 
 
-{{<feature header="Workers for Platforms" href="/cloudflare-for-platforms/workers-for-platforms">}}
-Description highlighting capabilities of product feature. This section accepts Markdown lists for multiple attributes.
+{{<plan type="<type>">}}
+
+Extend Cloudflare's security, reliability and performance services to your customers with Cloudflare for Platforms. Together, with Cloudflare for SaaS and Workers for Platforms your customers can build custom logic to meet their needs right into your application. 
+
+---
+ 
+## Products
+ 
+{{<feature header="Cloudflare for SaaS" href="/cloudflare-for-platforms/cloudflare-for-saas/">}}
+Cloudflare for SaaS allows you to extend the security and performance benefits of Cloudflare’s network to your customers via their own custom or vanity domains.
 {{</feature>}}
- 
----
- 
-## Related products
- 
-{{<related header="Workers" href="</workers>" product="<workers>">}}
-Description of product used together or connected configuration with current product.
-{{</related>}}
- 
----
- 
-## More resources
- 
-{{<resource-group>}}
- 
-{{<resource header="<Resource name>" href="https://www.cloudflare.com/link-to-resource/" icon="icon-name">}}
-Description of external resource related to current product.
-{{</resource>}}
- 
-{{</resource-group>}}
+
+{{<feature header="Workers for Platforms" href="/cloudflare-for-platforms/workers-for-platforms/">}}
+Workers for Platforms is intended to help you deploy serverless functions programmatically, on behalf of your customers.{{</feature>}}
+  

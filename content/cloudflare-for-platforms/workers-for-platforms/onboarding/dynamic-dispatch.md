@@ -1,50 +1,41 @@
 ---
 pcx_content_type: how-to
-title: Dynamic dispatch
+title: Dynamic Dispatch
 weight: 3
 ---
 
-# Dynamic dispatch
+# Dynamic Dispatch
 
-To define your Worker as a Dynamic Dispatch Worker, you will need to add the following to metadata to the Worker in `metadata.json` as part of a multipart upload:
+Once you've created a dispatch namespace, you can fetch any user Workers in the namespace using a dispatcher Worker. The distpacher Worker has a namespace binding  (Step #2 on the [Configuration](/cloudflare-for-platforms/workers-for-platforms/onboarding/walkthrough) page). 
+
+
+Any method of 'routing' to a namespaced Worker can be used (reading the subdomain, request header, or lookup in a database). In the end we just need the name of the user Worker.
+
+
+In the following example, routing to user workers is done through reading the subdomain `<USER_WORKER_NAME>.example.com/*`. For example, `my-customer.example.com` will run the script uploaded to `PUT accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/my-dispatch-namespace/scripts/my-customer`
+
+
+`src/index.ts`
 
 ```json
-{
-  "name": "dispatcher",  // name of the binding, any valid JS variable name
-  "type": "dynamic_dispatch"
+export default {
+  async fetch(request, env) {
+    try {
+        // parse the URL, read the subdomain
+        let worker_name = new URL(request.url).host.split('.')[0]
+        let user_worker = env.dispatcher.get(worker_name)
+        return user_worker.fetch(request)
+    } catch (e) {
+        if (e.message == 'Error: Worker not found.') {
+            // we tried to get a worker that doesn't exist in our dispatch namespace
+            return new Response('', {status: 404})
+        }
+
+        // this could be any other exception from `fetch()` *or* an exception
+        // thrown by the called worker (e.g. if the dispatched worker has 
+        // `throw MyException()`, you could check for that here).
+        return new Response(e.message, {status: 500})
+    }
+  }
 }
-```
-
-## Destination Worker upload
-
-Worker uploads will return an additional `etag_bypass` key in the response:
-
-```json
-{
-  "result": {
-    "id": "shop-123",
-    "etag": "361ef37b88aaff0ad42a47b5f76e6f8891351ff9f521f5e57bf415260ce6b494.",
-    "etag_bypass": "1.bf12a5caeb1cb14236df2d97d2cbe1c87e6642e05196e37af19462d0752d32c6.",
-    "handlers": [
-      "fetch"
-    ],
-    "modified_on": "2022-03-08T19:27:00.358226Z",
-    "created_on": "2022-03-08T19:27:00.358226Z",
-    "usage_model": "bundled"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
-
-This value will change on each upload of a worker, even on consecutive uploads to the same script name.
-
-## Use the Binding
-
-In the worker with the `dynamic_dispatch` binding, call `.get()` on the dispatcher’s binding name with the value from `etag_bypass` to get a `fetcher` for that worker:
-
-```json
-let user_worker = dispatcher.get('shop-123');
-let response = await user_worker.fetch(request);
 ```
