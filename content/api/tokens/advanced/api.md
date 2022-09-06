@@ -1,12 +1,14 @@
 ---
-title: Create tokens via API
-pcx_content_type: how-to
-weight: 12
+title: Creating tokens via API
+pcx_content_type: tutorial
+weight: 11
+meta:
+  title: Creating API tokens via the API
 ---
 
-# Create API tokens via the API
+# Creating API tokens via the API
 
-Generate new API tokens on the fly via the API. Doing so first requires creating an API Token in the UI with the ability to create subsequent tokens. This page walks through how to create the seed token, and then creating API Tokens via the API
+With API Tokens it is possible to be able to generate new tokens on the fly via the API. Doing so requires creating an API Token in the UI with the ability to create subsequent tokens. This page walks through how to create the seed token, and then creating API Tokens via the API
 
 ## Generating the initial token
 

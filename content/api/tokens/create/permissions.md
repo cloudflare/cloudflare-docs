@@ -1,7 +1,9 @@
 ---
-title: API token permissions
+type: overview
 pcx_content_type: reference
+title: API token permissions
 weight: 11
+layout: list
 ---
 
 # API token permissions
