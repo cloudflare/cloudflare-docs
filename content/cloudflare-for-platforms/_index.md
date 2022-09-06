@@ -2,7 +2,7 @@
 title: Cloudflare for Platforms
 order: 1
 layout: overview
-pcx-content-type: overview
+pcx_content_type: overview
 ---
 
 # Cloudflare for Platforms
