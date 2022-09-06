@@ -27,7 +27,7 @@ Zaraz matches the variable you input in **Variable name** with the text under **
 
 {{</table-wrap>}}
 
-When creating rules for `zaraz.track()`, you will often want to add a second rule that matches it to the Track name used for `Pageview`. Otherwise, your trigger will be valid for every other event happening on this page too. Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how to add more than one condition to a trigger.
+If you create a trigger with match rules using variables from Page Properties, Cookies, Device Properties or Miscellaneous categories, you will often want to add a second rule that matches to `Pageview`. Otherwise, your trigger will be valid for every other event happening on this page too. Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how to add more than one condition to a trigger.
 
 **Trigger example: All pages under `/blog`**
 
