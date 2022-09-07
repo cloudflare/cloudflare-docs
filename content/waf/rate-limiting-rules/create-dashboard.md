@@ -23,7 +23,7 @@ To create a new rate limiting rule:
 
 2. Navigate to **Security** > **WAF** > **Rate limiting rules**.
 
-3. Click **Create rate limiting rule**.
+3. Select **Create rate limiting rule**.
 
 4. In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
@@ -45,13 +45,14 @@ To create a new rate limiting rule:
 
 12. (Optional) Under **Cache status**, disable **Also apply rate limiting to cached assets** to consider only the requests that reach the origin when determining the rate.
 
-13. To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
+13. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 ## Configuring a custom response for blocked requests
 
 When you select the _Block_ action in a rate limiting rule you can optionally define a custom response for requests exceeding the configured rate limit.
 
 The custom response has three settings:
+
 * **Response type**: Choose a content type or the default rate limiting response from the list. The available custom response types are the following:
 
     | Dashboard value | API value |

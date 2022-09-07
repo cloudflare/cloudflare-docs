@@ -30,11 +30,11 @@ To set up a notification:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
-2. Click **Notifications**.
+2. Select **Notifications**.
 
-3. Under **Notifications**, click **Add**.
+3. Under **Notifications**, select **Add**.
 
-4. Click **Select** next to one of the [available DDoS alerts](#alert-types) (depending on your plan and services):
+4. Select one of the [available DDoS alerts](#alert-types) (depending on your plan and services):
 
     * HTTP DDoS Attack Alert
     * Layer 3/4 DDoS Attack Alert
@@ -47,7 +47,7 @@ To set up a notification:
 
 7. If you are creating a notification for one of the advanced DDoS attack alerts, click **Next** and define the parameters that will filter the notifications you will receive.
 
-8. Click **Save**.
+8. Select **Save**.
 
 ## Edit an existing notification
 
@@ -104,7 +104,7 @@ The following image shows an example notification delivered via email:
 
 ![Example notification email of a DDoS attack](/ddos-protection/static/ddos-notification-example.png)
 
-To investigate a possibly ongoing attack, click **View Dashboard**.
+To investigate a possibly ongoing attack, select **View Dashboard**.
 
 ## Final remarks
 

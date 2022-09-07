@@ -20,8 +20,4 @@ The available Managed Rulesets are:
 
     *   This ruleset includes rules to detect and mitigate DDoS attacks on L3/4 of the OSI model such as UDP floods, SYN-ACK reflection attacks, SYN Floods, and DNS floods.
 
-*   **[Advanced TCP Protection](/ddos-protection/managed-rulesets/tcp-protection/)**
-
-    *   This ruleset protects against sophisticated and out-of-state TCP DDoS attacks.
-
 {{</definitions>}}
