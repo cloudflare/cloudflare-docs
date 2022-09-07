@@ -609,7 +609,7 @@
 /waf/custom-rules/custom-firewall/skip/options/ /waf/custom-rules/skip/options/ 301
 /waf/custom-rules/rate-limiting/ /waf/rate-limiting-rules/ 301
 /waf/custom-rules/rate-limiting/create-api/ /waf/rate-limiting-rules/create-api/ 301
-/waf/custom-rules/rate-limiting/create-dashboard/ /waf/rate-limiting-rules/create-dashboard/ 301
+/waf/custom-rules/rate-limiting/create-dashboard/ /waf/rate-limiting-rules/create-zone-dashboard/ 301
 /waf/custom-rules/rate-limiting/parameters/ /waf/rate-limiting-rules/parameters/ 301
 /waf/custom-rules/rate-limiting/request-rate/ /waf/rate-limiting-rules/request-rate/ 301
 /waf/custom-rules/rate-limiting/use-cases/ /waf/rate-limiting-rules/use-cases/ 301
@@ -618,6 +618,7 @@
 /waf/managed-rulesets/cloudflare-managed-ruleset/ /waf/managed-rulesets/reference/cloudflare-managed-ruleset/ 301
 /waf/managed-rulesets/owasp-core-ruleset/ /waf/managed-rulesets/reference/owasp-core-ruleset/ 301
 /waf/managed-rulesets/exposed-credentials-check/ /waf/managed-rulesets/reference/exposed-credentials-check/ 301
+/waf/rate-limiting-rules/create-dashboard/ /waf/rate-limiting-rules/create-zone-dashboard/ 301
 
 # waiting-room
 /waiting-room/about/ /waiting-room/ 301

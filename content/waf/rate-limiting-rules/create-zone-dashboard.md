@@ -1,13 +1,13 @@
 ---
 pcx_content_type: how-to
 type: overview
-title: Create rate limiting rules in the dashboard
+title: Create in the dashboard for a zone
 weight: 14
 ---
 
-# Create rate limiting rules in the dashboard
+# Create rate limiting rules in the dashboard for a zone
 
-Create rate limiting rules in **Security** > **WAF** > **Rate limiting rules**.
+Create rate limiting rules for a zone in **Security** > **WAF** > **Rate limiting rules**.
 
 {{<Aside type="note">}}
 
