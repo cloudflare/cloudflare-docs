@@ -78,7 +78,7 @@
             "additional_description": "If your domain is particularly sensitive to downtime, you may want to do a bit of pre-work before adding it to Cloudflare."
           },
           {
-            "url_path": "https://developers.cloudflare.com/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/",
+            "url_path": "/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/",
             "link_title": "(For some) Allow Cloudflare IP addresses",
             "additional_description": "If you control your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/) and plan on using [Cloudflare’s proxy](/dns/manage-dns-records/reference/proxied-dns-records/), review your server configuration to avoid accidentally blocking Cloudflare IP addresses."
           },
