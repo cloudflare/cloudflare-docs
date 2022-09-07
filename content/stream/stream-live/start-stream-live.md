@@ -10,29 +10,36 @@ You can start a live stream using the Stream dashboard or the API. After you sub
 
 ## Using the dashboard
 
-1. To start a live stream using the Stream dashboard, click the **Live Inputs** tab.
-2. Click **Create Live Input**.
-3. Enter a name for your Live Input and click **Create Live Input**.
-4. Under **Connection Information** > **Protocol**, choose **RTMPS** or **SRT**.
+**Step 1:** [Create a live input via the Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs/create)
 
-After you have created a Live Input, you can retrieve the RTMPS URL and Key, or if you used the SRT protocol, you can view the SRT URL. Within seconds of you pushing your live stream to Cloudflare Stream, you should see the live video stream.
+![Screenshot of creating a live input via the Stream Dashboard](/stream/static/create-live-input-from-stream-dashboard.png)
+
+**Step 2:** Copy the RTMPS URL and key, and use them with your live streaming application. We recommend using [Open Broadcaster Software (OBS)](https://obsproject.com/) to get started.
+
+![Screenshot of copying a RTMPS stream key from the Stream Dashboard](/stream/static/copy-rtmps-url-from-stream-dashboard.png)
+
+**Step 3:** Go live and preview your live stream in the Stream Dashboard
+
+In the Stream Dashboard, within seconds of going live, you will see a preview of what your viewers will see. To add live video playback to your website or app, refer to [Play videos](/stream/viewing-videos)
 
 ## Using the API
 
 To start a live stream programmatically, make a `POST` request to the `/live_inputs` endpoint:
 
 ```bash
-curl -X POST \ -H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs --data '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10, "requireSignedURLs": false, "allowedOrigins": ["*.example.com"] }}'
+---
+header: Request
+---
+curl -X POST \
+-H "Authorization: Bearer <API_TOKEN>" \
+-D '{"meta": {"name":"test stream"},"recording": { "mode": "automatic" }}' \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs
 ```
 
-- When the mode property is set to `automatic`, it means the live stream will be automatically available for viewing using HLS/DASH. In addition, the live stream will be automatically recorded for later replays.
-- The `timeoutSeconds` property specifies how long a live feed can be disconnected before it results in a new video being created.
-- The `requireSignedURLs` property indicates if signed URLs are required to view the video. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
-- The `allowedOrigins` property can optionally be invoked to provide a list of allowed origins. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
-
-A successful response will return information about the live input.
-
 ```json
+---
+header: Response
+---
 {
   "uid": "f256e6ea9341d51eea64c9454659e576",
   "rtmps": {
@@ -42,16 +49,40 @@ A successful response will return information about the live input.
   "created": "2021-09-23T05:05:53.451415Z",
   "modified": "2021-09-23T05:05:53.451415Z",
   "meta": {
-    "name": "My Live Stream"
+    "name": "test stream"
   },
   "status": null,
   "recording": {
     "mode": "automatic",
     "requireSignedURLs": false,
-    "allowedOrigins": ["*.example.com"]
+    "allowedOrigins": null
   }
 }
 ```
+
+#### Optional API parameters
+
+[API Reference Docs for `/live_inputs`](https://api.cloudflare.com/#stream-live-inputs-create-live-inputs)
+
+{{<definitions>}}
+
+- `mode` {{<type>}}string{{</type>}} {{<prop-meta>}}default: `off`{{</prop-meta>}}
+
+  - When the mode property is set to `automatic`, the live stream will be automatically available for viewing using HLS/DASH. In addition, the live stream will be automatically recorded for later replays. By default, recording mode is set to `off`, and the input will not be recorded or available for playback.
+
+- `timeoutSeconds` {{<type>}}integer{{</type>}} {{<prop-meta>}}default: `0`{{</prop-meta>}}
+
+  -  The `timeoutSeconds` property specifies how long a live feed can be disconnected before it results in a new video being created.
+
+- `requireSignedURLs` {{<type>}}boolean{{</type>}} {{<prop-meta>}}default: `false`{{</prop-meta>}}
+
+  - The `requireSignedURLs` property indicates if signed URLs are required to view the video. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
+
+- `allowedOrigins` {{<type>}}integer{{</type>}} {{<prop-meta>}}default: `null` (any){{</prop-meta>}}
+
+  - The `allowedOrigins` property can optionally be invoked to provide a list of allowed origins. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
+
+{{</definitions>}}
 
 ## Managing live inputs
 

@@ -63,4 +63,5 @@ export const OWNERS: Record<string, string[]> = {
 export const REVIEWERS: Record<string, string[]> = {
   analytics: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
   logs: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
+  pages: ["WalshyDev"]
 };
