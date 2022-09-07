@@ -19,7 +19,7 @@
     <a
       class="Button Button-is-docs-primary DocsMarkdown--link-content"
       href="{{ $url }}"
-      >Use {{ $header }} {{- if strings.HasPrefix $url "http" -}} {{-
+      >{{ with .Get "cta" }} {{- . -}} {{ else }} Use {{ $header }} {{ end }} {{- if strings.HasPrefix $url "http" -}} {{-
       partialCached "external.icon" . -}} {{- end -}}</a
     >
   </div>
