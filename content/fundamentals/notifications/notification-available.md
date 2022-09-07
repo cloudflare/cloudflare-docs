@@ -172,10 +172,10 @@ Success alerts require no further action. Actions for failure notifications will
 </div>
 </details>
 
-## DoS Protection
+## DDoS Protection
 
 <details>
-<summary>HTTP DDoS Attack Alerter</summary>
+<summary>HTTP DDoS Attack Alert</summary>
 <div>
 
 **Who is it for?**
@@ -198,7 +198,7 @@ All Cloudflare plans.
 </details>
 
 <details>
-<summary>Layer 4 Attack Alerter</summary>
+<summary>Layer 3/4 DDoS Attack Alert</summary>
 <div>
 
 **Who is it for?**
@@ -208,6 +208,60 @@ BYOIP customers and Spectrum customers with Network Analytics who want to receiv
 **Other options / filters**
 
 None.
+
+**Included with**
+
+Purchase of Magic Transit and/or BYOIP.
+
+**What should you do if you receive one?**
+
+{{<render file="_ddos.md">}}
+
+</div>
+</details>
+
+<details>
+<summary>Advanced HTTP DDoS Attack Alert</summary>
+<div>
+
+**Who is it for?**
+
+WAF/CDN customers with the Advanced DDoS add-on who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics.
+
+**Other options / filters**
+
+- Customers can choose when to trigger a notification. Available filters are:
+
+  - The zones in the account for which they wish to receive notifications.
+  - The specific hostnames for which they wish to receive notifications.
+  - The minimum requests-per-second rate that will trigger the alert.
+
+**Included with**
+
+Enterprise plans.
+
+**What should you do if you receive one?**
+
+{{<render file="_ddos.md">}}
+
+</div>
+</details>
+
+<details>
+<summary>Advanced Layer 3/4 DDoS Attack Alert</summary>
+<div>
+
+**Who is it for?**
+
+BYOIP customers and Magic Transit customers with Network Analytics who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics.
+
+**Other options / filters**
+
+- Customers can choose when to trigger a notification. Available filters are:
+
+  - The IP prefixes for which they wish to receive notifications.
+  - The specific IP addresses for which they wish to receive notifications.
+  - The minimum packets-per-second rate that will trigger the alert.
 
 **Included with**
 
@@ -234,7 +288,7 @@ Customers who want to be warned about changes to server health as determined by 
 
 Multiple filters available:
 
-- Customers can can search for and add health checks from their list of health checks. 
+- Customers can search for and add health checks from their list of health checks.
 - Customers can choose a trigger to fire the notification. Available triggers are:
   - Becomes unhealthy
   - Becomes healthy
