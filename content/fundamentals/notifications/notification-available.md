@@ -175,7 +175,7 @@ Success alerts require no further action. Actions for failure notifications will
 ## DoS Protection
 
 <details>
-<summary>HTTP DDoS Attack Alerter</summary>
+<summary>HTTP DDoS Attack Alert</summary>
 <div>
 
 **Who is it for?**
@@ -198,7 +198,7 @@ All Cloudflare plans.
 </details>
 
 <details>
-<summary>Layer 4 Attack Alerter</summary>
+<summary>Layer 3/4 DDoS Attack Alert</summary>
 <div>
 
 **Who is it for?**
