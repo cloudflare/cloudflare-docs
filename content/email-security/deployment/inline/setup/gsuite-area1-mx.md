@@ -1,13 +1,13 @@
 ---
 title: G-suite MX Record
-pcx_content_type: how-to
+pcx_content_type: tutorial
 weight: 2
 layout: single
 meta:
    title: Deploy and configure Google G-suite with Area 1 as MX Record
 ---
 
-# Email Security for G-suite
+# Deploy and configure Google G-suite with Area 1 as MX Record
 
 In this tutorial you will learn how to configure Google G-suite with Area 1 as MX record. This tutorial is broken down into several steps:
 

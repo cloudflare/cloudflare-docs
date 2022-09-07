@@ -1,6 +1,6 @@
 ---
 title: Office 365 MX Record
-pcx_content_type: how-to
+pcx_content_type: tutorial
 weight: 1
 layout: single
 meta:
