@@ -21,11 +21,11 @@ zaraz.track("form completed", {userId: "ABC-123"})
 ```
 
 ```js
-zaraz.track("button clicked", {userId: “ABC-123”, value: 200})
+zaraz.track("button clicked", {userId: "ABC-123", value: 200})
 ```
 
 ```js
-zaraz.track("cart viewed", {items: 3, userId: “ABC-123”})
+zaraz.track("cart viewed", {items: 3, userId: "ABC-123"})
 ```
 
 Here, all the events are collecting the `userId` key, and the code for setting that key repeats itself. With `zaraz.set()` you can avoid repetition by setting the key once when the page loads. Zaraz will then attach this key to all future `zaraz.track()` calls. 
