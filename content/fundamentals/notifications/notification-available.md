@@ -220,6 +220,60 @@ Purchase of Magic Transit and/or BYOIP.
 </div>
 </details>
 
+<details>
+<summary>Advanced HTTP DDoS Attack Alert</summary>
+<div>
+
+**Who is it for?**
+
+WAF/CDN customers with the Advanced DDoS add-on who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics.
+
+**Other options / filters**
+
+- Customers can choose when to trigger a notification. Available filters are:
+
+  - The zones in the account for which they wish to receive notifications.
+  - The specific hostnames for which they wish to receive notifications.
+  - The minimum requests-per-second rate that will trigger the alert.
+
+**Included with**
+
+Enterprise plans.
+
+**What should you do if you receive one?**
+
+{{<render file="_ddos.md">}}
+
+</div>
+</details>
+
+<details>
+<summary>Advanced Layer 3/4 DDoS Attack Alert</summary>
+<div>
+
+**Who is it for?**
+
+BYOIP customers and Magic Transit customers with Network Analytics who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics.
+
+**Other options / filters**
+
+- Customers can choose when to trigger a notification. Available filters are:
+
+  - The IP prefixes for which they wish to receive notifications.
+  - The specific IP addresses for which they wish to receive notifications.
+  - The minimum packets-per-second rate that will trigger the alert.
+
+**Included with**
+
+Purchase of Magic Transit and/or BYOIP.
+
+**What should you do if you receive one?**
+
+{{<render file="_ddos.md">}}
+
+</div>
+</details>
+
 ## Health checks
 
 <details>
