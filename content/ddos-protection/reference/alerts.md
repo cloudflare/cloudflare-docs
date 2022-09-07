@@ -83,6 +83,8 @@ Advanced DDoS attack alerts support additional configuration, allowing you to fi
     * The IP prefixes for which you wish to receive notifications.
     * The specific IP addresses for which you wish to receive notifications.
     * The minimum packets-per-second rate that will trigger the alert (12,000 pps by default).
+    * The minimum megabits-per-second rate that will trigger the alert.
+    * The protocols for which you wish to receive notifications (all protocols by default).
 
 ## Availability
 
