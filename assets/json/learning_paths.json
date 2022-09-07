@@ -64,6 +64,11 @@
           {
             "url_path": "/fundamentals/account-and-billing/account-setup/manage-account-members/",
             "link_title": "Add other account members"
+          },
+          {
+            "url_path": "/api/tokens/create/",
+            "link_title": "(For some) Create an API token",
+            "additional_description": "If you plan on using the Cloudflare API to manage various account settings, you should also create an API token associated with your account."
           }
         ]
       },
