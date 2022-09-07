@@ -24,4 +24,4 @@ Your variable is now ready to be used with tools and triggers.
 
 Refer to [Add a third-party tool](/zaraz/get-started/add-tool/) and [Create a trigger](/zaraz/get-started/create-trigger/) for more information on how to add a variable to tools and triggers.
 
-If you need to edit or delete variables, [refer to Edit variables](/zaraz/get-started/edit-variables/).
+If you need to edit or delete variables, refer to [Edit variables](/zaraz/get-started/edit-variables/).
