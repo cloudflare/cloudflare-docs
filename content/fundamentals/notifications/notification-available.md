@@ -234,7 +234,7 @@ Customers who want to be warned about changes to server health as determined by 
 
 Multiple filters available:
 
-- Customers can can search for and add health checks from their list of health checks. 
+- Customers can search for and add health checks from their list of health checks.
 - Customers can choose a trigger to fire the notification. Available triggers are:
   - Becomes unhealthy
   - Becomes healthy
