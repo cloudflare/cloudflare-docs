@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: SSH
-weight: 8
+weight: 1
 hidden: false
 ---
 

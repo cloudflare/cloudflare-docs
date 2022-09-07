@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: RDP
 weight: 8
-hidden: false
+hidden: true
 ---
 # Remote Desktop Protocol
 The Remote Desktop Protocol, or RDP, provides a graphical interface for users to connect to a computer remotely. It’s most commonly used to facilitate simple remote access to machines or workstations which users cannot physically access. However, this also makes it the frequent subject of attacks as, if misconfigured, it could be inadvertently exposed to the Internet. 

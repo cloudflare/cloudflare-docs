@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: SMB
 weight: 8
-hidden: false
+hidden: true
 ---
 # Accessing a SMB drive through Cloudflare Tunnels
  
@@ -34,7 +34,6 @@ To set up the tunnel on the machine use the following steps:
  
 1. Once the command has finished running, your connector will appear on the Zero Trust dashboard.
  
-   ![Connector appearing in the UI after cloudflared has run](/cloudflare-one/static/documentation/connections/connect-apps/use-cases/connect-the-tunnel.png)
  
 1. Select **Next**.
  
@@ -127,7 +126,6 @@ To set up the tunnel to route the SMB server to a public hostname use the follow
  
 1. Once the command has finished running, your connector will appear on the Zero Trust dashboard.
  
-   ![Connector appearing in the UI after cloudflared has run](/cloudflare-one/static/documentation/connections/connect-apps/use-cases/connect-the-tunnel.png)
  
 1. Select **Next**.
  
