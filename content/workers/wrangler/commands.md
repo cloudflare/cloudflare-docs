@@ -49,7 +49,7 @@ Flags:
 Create a skeleton Wrangler project, including the `wrangler.toml` file.
 
 ```sh
-$ wrangler init [NAME] [-y / --yes]
+$ wrangler init [NAME] [-y / --yes] [--from-dash]
 ```
 
 {{<definitions>}}
@@ -58,7 +58,9 @@ $ wrangler init [NAME] [-y / --yes]
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
 - `--yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Answer yes to any prompts for new projects.
-
+- `--from-dash` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Fetch a worker initialized from the Dashboard. This is done by passing the flag and the worker name. `wrangler init --from-dash <WORKER_NAME>` 
+  - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
 {{</definitions>}}
 
 ---
