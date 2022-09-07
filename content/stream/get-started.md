@@ -41,6 +41,9 @@ Because Stream must download and process the video, the video might not be avail
 Use the video UID from the first step to poll the video:
 
 ```bash
+---
+header: Request
+---
 curl \
 -H "Authorization: Bearer <API_TOKEN>" \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>
@@ -48,6 +51,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>
 
 ```json
 ---
+header: Response
 highlight: [6]
 ---
 {
@@ -89,7 +93,7 @@ To play video on your website with the [Stream Player](/stream/viewing-videos/us
 </iframe>
 ```
 
-The embed code above can also be found in the Cloudflare Dashboard [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
+The embed code above can also be found in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream).
 
 <figure data-type="stream">
   <div className="AspectRatio" style={{"--aspect-ratio": "calc(16 / 9)"}}>
@@ -105,14 +109,14 @@ The embed code above can also be found in the Cloudflare Dashboard [Cloudflare D
 
 ### Next steps
 
-- link one to recommended next step
-- link two to recommended next step
+- [Edit your video](/stream/edit-videos/) and add captions or watermarks
+- [Customize the Stream player](/stream/viewing-videos/using-the-stream-player/)
 
 ## Start your first live stream
 
 ### Step 1: Create a live input
 
-You can create a live input via the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs/create) or using the API.
+You can create a live input via the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs/create) or using the API.
  
 To use the API, replace the `API_TOKEN` and `ACCOUNT_ID` values with your credentials in the example below.
 
@@ -170,9 +174,9 @@ To play the live stream you just started on your website with the [Stream Player
 </iframe>
 ```
 
-The embed code above can also be found in the Cloudflare Dashboard [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
+The embed code above can also be found in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream).
 
 ### Next steps
 
-- link one to recommended next step
-- link two to recommended next step
+- [Secure your stream](/stream/viewing-videos/securing-your-stream/)
+- [View live viewer counts](/stream/getting-analytics/live-viewer-count/)
