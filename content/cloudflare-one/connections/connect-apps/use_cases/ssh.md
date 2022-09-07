@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: SSH
 weight: 1
-hidden: false
 ---
 
 # Connect with SSH through Cloudflare Tunnel
@@ -74,8 +73,8 @@ You can use Cloudflare Tunnel to create a secure, outbound-only connection from 
 ### 2. Set up the client
 
 In order for devices to connect to your Zero Trust organization, you will need to:
-- [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices in Gateway with WARP mode.  The Cloudflare certificate is only required if you want to display a custom block page or perform HTTP filtering.
-- [Create device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) to determine which devices can enroll to your Zero Trust organization.
+
+{{<render file="_warp-to-tunnel-client.md">}}
 
 ### 3. Connect as a user
 
