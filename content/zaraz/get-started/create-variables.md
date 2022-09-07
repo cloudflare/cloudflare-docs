@@ -13,7 +13,7 @@ For example, instead of typing a specific user ID in multiple fields, you can cr
 ## Create a new variable
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Select **Zaraz** > **Variables**.
+2. Go to **Zaraz** > **Variables**.
 3. Select **Create variable**, and give it a name.
 4. In **Variable value** give your variable a value. For now, Zaraz only accepts strings.
 5. Select **Save**.

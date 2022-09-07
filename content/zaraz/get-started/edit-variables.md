@@ -9,7 +9,7 @@ meta:
 # Edit a variable
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Select **Zaraz** > **Variables**.
+2. Go to **Zaraz** > **Variables**.
 3. Locate the variable you want to edit, and select **Edit** to make your changes.
 4. Select **Save** to save your edits. 
 
