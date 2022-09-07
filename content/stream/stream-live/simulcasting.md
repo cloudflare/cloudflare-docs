@@ -34,7 +34,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<I
 }
 ```
 
-## Enable live events
+## Enable live broadcasting
 
 You can control when you broadcast video by enabling or disabling outputs added to a live input. For example, if you are preparing to host a live stream, you can start the stream while the output is disabled. As soon as you are ready to officially go live, you can enable the output associate with the live input.
 
