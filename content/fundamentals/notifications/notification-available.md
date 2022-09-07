@@ -172,7 +172,7 @@ Success alerts require no further action. Actions for failure notifications will
 </div>
 </details>
 
-## DoS Protection
+## DDoS Protection
 
 <details>
 <summary>HTTP DDoS Attack Alert</summary>
