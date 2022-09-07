@@ -26,7 +26,6 @@ To set up the tunnel on the machine use the following steps:
 1. Select **Create a tunnel**.
  
 1. Enter a name for your tunnel.
-   ![Connector appearing in the UI after cloudflared has run](/cloudflare-one/static/documentation/connections/connect-apps/use-cases/name-smb.png)
  
 1. Select **Save tunnel**.
  
@@ -72,7 +71,6 @@ This rule is a great example to get started, but for more in-depth information o
  
 ### WARP Management
 It is worth noting that some IP addresses are automatically excluded by WARP (such as addresses in the range 10.0.0.0/8). WARP automatically excludes RFC 1918 IP addresses, which are IP addresses typically used in private networks and not reachable from the Internet. If the IP address a user is trying to reach is also in the RFC IP range it needs to be removed from this exclusion list from Settings>Network>Split Tunnels.
-   ![Settings Page](/cloudflare-one/static/documentation/connections/connect-apps/use-cases/settings.png)
 You also need to configure WARP to inspect HTTP traffic.
 
 1. Go to Settings > Network.
