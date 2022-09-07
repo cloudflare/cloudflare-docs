@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Use Direct Upload with continuous integration
 ---
 
@@ -128,10 +128,7 @@ version: 2.1
 jobs:
  Publish-to-Pages:
    docker:
-     - image: cimg/node:18
-     environment:
-        CLOUDFLARE_ACCOUNT_ID: $CLOUDFLARE_ACCOUNT_ID
-        CLOUDFLARE_API_TOKEN: $CLOUDFLARE_API_TOKEN
+     - image: cimg/node:18.7.0
 
    steps:
      - checkout

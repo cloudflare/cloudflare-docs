@@ -1,6 +1,6 @@
 ---
 title: Cipher suites
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 2
 meta:
   title: Cipher suites — Edge certificates
@@ -59,7 +59,7 @@ With **Advanced Certificate Manager** or within **SSL for SaaS**, you can restri
 - [Zone](https://api.cloudflare.com/#zone-settings-change-ciphers-setting)
 - [Hostname (SSL for SaaS only)](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname)
 
-To specify certain [cipher suites](#supported-cipher-suites-by-protocol), include an array of applicable options in the `value` field.
+To specify certain [cipher suites](#supported-cipher-suites-by-protocol), include an array of applicable cipher suites used for TLS 1.2 or lower, in the `value` field.
 
 To reset to the default cipher suites, send an empty array in the `value` field.
 

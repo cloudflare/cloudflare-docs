@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Cron Triggers
 layout: single
 ---
@@ -51,6 +51,10 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 - `*/30 * * * *`
 
   - Every 30 minutes
+
+- `45 * * * *`
+
+  - On the 45th minute of every hour
 
 - `0 17 * * sun` or `0 17 * * 1`
 

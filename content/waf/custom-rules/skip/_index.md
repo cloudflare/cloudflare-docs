@@ -1,6 +1,6 @@
 ---
 title: Configure a rule with the Skip action
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 4
 meta:
   title: Configure a custom rule with the Skip action
@@ -19,7 +19,7 @@ For more information on the available options, refer to [Available skip options]
 
 2. Go to **Security** > **WAF** > **Custom rules**.
 
-3. [Create a custom rule](/waf/custom-rules/create-dashboard/) by clicking **Create Firewall rule**, or edit an existing custom rule.
+3. [Create a custom rule](/waf/custom-rules/create-dashboard/) by selecting **Create firewall rule**, or edit an existing custom rule.
 
 4. Define the rule name and the rule expression.
 

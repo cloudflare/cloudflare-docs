@@ -1,6 +1,6 @@
 ---
 title: Tiered Cache
-pcx-content-type: concept
+pcx_content_type: concept
 ---
 
 # Tiered Cache

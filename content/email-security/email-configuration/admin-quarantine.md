@@ -1,6 +1,6 @@
 ---
 title: Admin Quarantine
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 7
 ---
 
@@ -18,7 +18,7 @@ You can view all quarantined emails as needed.
 
 ## Release quarantined emails
 
-From **Admin Quarantine**, you can also release quarantined emails by selecting one or more messages and then clicking **...** > **Release**.
+From **Admin Quarantine**, you can also release quarantined emails by selecting one or more messages and then selecting **...** > **Release**.
 
 These email messages will then be sent to the original recipients from the `quarantine@area1reports.com` email address with the original message attached in a zip file.
 

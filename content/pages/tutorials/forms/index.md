@@ -1,13 +1,13 @@
 ---
-updated: 2021-11-30
+updated: 2022-07-28
 difficulty: Beginner
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
-title: HTML forms
+pcx_content_type: tutorial
+title: Create an HTML form
 layout: single
 ---
 
-# HTML forms
+# Create an HTML form
 
 In this tutorial, you will create a simple `<form>` using plain HTML and CSS and deploy it to Cloudflare Pages. While doing so, you will learn about some of the HTML form attributes and how to collect submitted data within a Worker.
 
@@ -195,7 +195,6 @@ Technically, only the `<form>` and its child elements are necessary. The `<head>
 The HTML page is also completely unstyled at this point, relying on the browsers' default UI and color palettes. Styling the page is entirely optional and not necessary for the form to function. If you would like to attach a CSS stylesheet, you may [add a `<link>` element](https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps/Getting_started#adding_css_to_our_document). Refer to the finished tutorial's [source code](https://github.com/cloudflare/submit.pages.dev/blob/8c0594f48681935c268987f2f08bcf3726a74c57/public/index.html#L11) for an example or any inspiration – the only requirement is that your CSS stylesheet also resides within the `public` directory.
 
 {{</Aside>}}
-
 ### Worker
 
 The HTML form is complete and ready for deployment. When the user submits this form, all data will be sent in a `POST` request to the `/api/submit` URL. This is due to the form's `method` and `action` attributes. However, there is currently no request handler at the `/api/submit` address. You will now create it.

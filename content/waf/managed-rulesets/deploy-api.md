@@ -1,5 +1,5 @@
 ---
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Deploy rulesets via API
 weight: 6
 ---
@@ -16,11 +16,7 @@ Other Managed Rulesets, like DDoS Managed Rulesets, must be deployed to a differ
 
 You can define overrides to customize the behavior of the rules included in a Managed Ruleset.
 
-**Note:** There are a few requirements when deploying WAF Managed Rulesets to the `http_request_firewall_managed` phase at the **zone** level:
-
-- The zone-level phase can only have two `execute` rules deploying Managed Rulesets: one rule for deploying the OWASP Managed Ruleset and another rule for deploying the Cloudflare Managed Ruleset.
-
-- You must set the `expression` field to `true` in these two rules, which means that they apply to all zone requests.
+**Note:** The zone-level `http_request_firewall_managed` phase can have at most three `execute` rules deploying Managed Rulesets, one for each available Managed Ruleset.
 
 To learn more about deploying Managed Rulesets and configuring overrides using the Rulesets API, refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/).
 

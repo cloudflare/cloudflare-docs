@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Registrant contact updates
 ---
 
@@ -10,9 +10,11 @@ It is important that you keep your contact details accurate and up-to-date. [ICA
 To update your registrant contacts:
 
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Click **Registrar**.
-3. Find the domain where you want to update your contact information, and click **Manage**.
-4. Click the **Contacts** tab, and edit the contact information.
+2. Select **Registrar** > **Manage domains**.
+3. Find **Default contact** and select **Edit**.
+4. Update the relevant information.
+3. Find the domain where you want to update your contact information, and select **Manage**.
+4. Select the **Contacts** tab, and edit the contact information.
 
 If you change any of the following fields, Cloudflare Registrar will require a Change of Registrant approval before the changes are finalized:
 
@@ -27,9 +29,9 @@ If you do not update these fields, your contact information is updated immediate
 
 {{<Aside type="warning" header="Important">}}
 
-After clicking the link in the approval email Cloudflare sends you, you have the option to accept or reject the contact changes. If you click the **Accept** button, your domain will be transfer-locked for 60 days.
+After selecting the link in the approval email Cloudflare sends you, you have the option to accept or reject the contact changes. If you select the **Accept** button, your domain will be transfer-locked for 60 days.
 
-If you do not want your domain to be locked, be sure to click the **Do not apply 60 day transfer lock** checkbox _before_ clicking the **Accept** button. This applies to all supported TLDs, including `.uk`.
+If you do not want your domain to be locked, be sure to select the **Do not apply 60 day transfer lock** checkbox _before_ selecting the **Accept** button. This applies to all supported TLDs, including `.uk`.
 
 {{</Aside>}}
 

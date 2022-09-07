@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Commands
 weight: 2
 ---
@@ -9,6 +9,7 @@ weight: 2
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
+- [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
 - [`kv:namespace`](#kvnamespace) - Manage Workers KV namespaces.
@@ -20,6 +21,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`pages`](#pages) - Configure Cloudflare Pages.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
+- [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 
 {{<Aside type="note">}}
 
@@ -56,6 +58,25 @@ $ wrangler init [NAME] [-y / --yes]
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
 - `--yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Answer yes to any prompts for new projects.
+
+{{</definitions>}}
+
+---
+
+## generate
+
+Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
+
+```sh
+$ wrangler generate [name] [template]
+```
+
+{{<definitions>}}
+
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
+  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
+- `template` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on [cloudflare/templates](https://github.com/cloudflare/templates) repository.
 
 {{</definitions>}}
 
@@ -112,7 +133,15 @@ None of the options for this command are required. Many of these options can be 
 - `--tsconfig` {{<type>}}string{{</type>}}
   - Path to a custom `tsconfig.json` file.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+
   - Run the preview of the Worker directly on your local machine.
+
+    {{<Aside type="warning">}}
+
+This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's Edge (for instance, this includes your data stored on KV). If you'd like to persist data locally, the experimental option `--experimental-enable-local-persistence` will store data in the `wrangler-local-state` subdirectory.
+
+{{</Aside>}}
+
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the script.
 
@@ -721,13 +750,19 @@ Manage the secret variables for a Worker.
 Create or replace a secret for a Worker.
 
 ```sh
-$ wrangler secret put <NAME> [OPTIONS]
+$ wrangler secret put <KEY> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
   - The variable name for this secret to be accessed in the Worker.
+
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
 
@@ -759,13 +794,17 @@ $ echo "-----BEGIN PRIVATE KEY-----\nM...==\n-----END PRIVATE KEY-----\n" | wran
 Delete a secret for a Worker.
 
 ```sh
-$ wrangler secret delete <NAME> [OPTIONS]
+$ wrangler secret delete <KEY> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The variable name for this secret to be accessed in the Worker.
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
 
@@ -780,6 +819,10 @@ $ wrangler secret list [OPTIONS]
 ```
 
 {{<definitions>}}
+
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment
@@ -994,3 +1037,13 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by 
 2. Go to **Overview** > **Get your API token** in the right-side menu.
 3. Select the three-dot menu on your Wrangler token.
 4. Select **Delete**.
+
+---
+
+## whoami
+
+Retrieve your user information and test your authentication configuration.
+
+```sh
+$ wrangler whoami
+```

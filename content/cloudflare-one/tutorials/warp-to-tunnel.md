@@ -2,7 +2,7 @@
 updated: 2022-07-15
 category: 🌐 Connections
 difficulty: Advanced
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Connect from WARP to a private network on Cloudflare using Cloudflare Tunnel
 ---
 
@@ -47,7 +47,7 @@ If you already have `cloudflared` installed, make sure to update to the latest v
 
 ## Create a Tunnel
 
-You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#set-up-a-tunnel-locally-cli-setup) that will connect `cloudflared` to Cloudflare's edge.
+You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/) that will connect `cloudflared` to Cloudflare's edge.
 
 1. Begin by creating a Tunnel with an associated name. This example uses the name `grafana`.
 
@@ -63,7 +63,7 @@ You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-a
 
 2. Create a route. Routes map a Tunnel ID to a CIDR range that you specify. You can use private IP space specified by [RFC 1918](https://tools.ietf.org/html/rfc1918) or other routes. The private IP space specified should match the private IP space of your subnet or environment where Cloudflare Tunnel will send connections.
 
-    This example tells Cloudflare Tunnel that, for users in this organization, connections to `100.64.0.0/10` should be served by this Tunnel. For the purposes of this tutorial, Grafana is running in a Digital Ocean environment where a virtual interface has been applied that will send traffic bound for localhost to `100.64.0.1`.
+    This example tells Cloudflare Tunnel that, for users in this organization, connections to `100.64.0.0/10` should be served by this Tunnel. For the purposes of this tutorial, Grafana is running in a DigitalOcean environment where a virtual interface has been applied that will send traffic bound for localhost to `100.64.0.1`.
 
     ```sh
     $ cloudflared tunnel route ip add 100.64.0.0/10 8e343b13-a087-48ea-825f-9783931ff2a5
@@ -94,7 +94,7 @@ You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-a
     $ cloudflared tunnel run grafana
     ```
 
-This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/#create-route-and-configure-the-tunnel) for long-lived connections.
+This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/#create-route-and-configure-the-tunnel) for long-lived connections.
 
 ## Route private IP ranges through WARP
 
@@ -144,7 +144,7 @@ To download the Cloudflare certificate, refer to [Install the Cloudflare certifi
 
 ## Enable the Cloudflare proxy
 
-Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. 
+Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic.
 
 1. Go to **Settings** > **Network**.
 

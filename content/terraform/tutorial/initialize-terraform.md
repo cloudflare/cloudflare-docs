@@ -1,6 +1,6 @@
 ---
 title: 1 –  Initialize Terraform
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 2
 meta:
   title: Introduction to Terraform init
@@ -28,7 +28,6 @@ terraform {
 }
 
 provider "cloudflare" {
-  email = "you@example.com"
   api_token = "your-api-token"
 }
 

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Optimize site speed
 weight: 1
 ---
@@ -33,7 +33,7 @@ With a few clicks, you can also adjust your [cache settings](/cache/get-started/
 
 ### Dedicated products
 
-Cloudflare offers a several products dedicated to improving site speed and availability:
+Cloudflare offers a several products dedicated to improving [site speed](https://www.cloudflare.com/learning/performance/how-website-speed-boosts-seo/) and availability:
 
 - [Image Optimization](/images/): Optimizes image storage and delivery.
 - [Load Balancing](/load-balancing/): Distributes traffic across your origin servers.

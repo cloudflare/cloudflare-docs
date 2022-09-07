@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Improve SEO
 weight: 1
 ---
@@ -8,7 +8,7 @@ weight: 1
 
 The goal of Search Engine Optimization (SEO) is to get your website to rank higher on various search engine providers (Google, Bing, etc.).
 
-In practice, SEO is primarily about quality content, user experience, and not making things more difficult for search engine crawlers. While Cloudflare cannot write quality content for you, our service can help with user experience — especially related to site speed — and search crawlers.
+In practice, SEO is primarily about quality content, user experience, and not making things more difficult for search engine crawlers. While Cloudflare cannot write quality content for you, our service can help with user experience — especially related to [site speed](https://www.cloudflare.com/learning/performance/how-website-speed-boosts-seo/) — and search crawlers.
 
 {{<Aside type="note" header="Tip:">}}
 

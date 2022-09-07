@@ -1,7 +1,7 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Logging from Workers
-weight: 0
+weight: 4
 ---
 
 # Logging from Workers

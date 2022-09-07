@@ -1,6 +1,6 @@
 ---
 title: Origin CA certificates
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 4
 ---
 

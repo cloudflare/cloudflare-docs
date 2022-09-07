@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: HTTP request headers
 ---
 
@@ -47,6 +47,11 @@ If you do not wish to receive the `X-Forwarded-For` header or any HTTP header th
 To restore the original visitor IP address at your origin web server, Cloudflare recommends that your logs or applications look at `CF-Connecting-IP` or `True-Client-IP` instead of `X-Forwarded-For`. `CF-Connecting-IP` and `True-Client-IP` both have a consistent format containing only one IP address.
 
 {{</Aside>}}
+
+## X-Forwarded-Proto
+
+`X-Forwarded-Proto` is used to identify the protocol (HTTP or HTTPS) that Cloudflare uses to connect to origin web server. By default, it is `http`. Certain [encryption mode](/ssl/origin-configuration/ssl-modes/) may change this header to `https` if the connection is encrypted.
+
 
 ## CF-RAY
 

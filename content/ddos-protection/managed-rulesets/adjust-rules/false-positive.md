@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Handle a false positive
 weight: 2
 ---
@@ -22,7 +22,7 @@ To remedy a false positive:
 
     2\. Navigate to **Security** > **Overview**.
 
-    3\. Click **Add filter** and filter by `Service equals HTTP DDoS`.
+    3\. Select **Add filter** and filter by `Service equals HTTP DDoS`.
 
     </div></details>
 
@@ -36,17 +36,17 @@ To remedy a false positive:
 
 3. Scroll down to the **Activity log**.
 
-4. Click **Edit columns** and enable **Rule ID**\*.
+4. Select **Edit columns** and enable **Rule ID**\*.
 
 5. Copy the rule ID from one of the DDoS log entries.
 
-6. Navigate to **Security** > **DDoS** and click **Configure** next to the Managed Ruleset containing the rule you will adjust.
+6. Navigate to **Security** > **DDoS** and select **Configure** next to the Managed Ruleset containing the rule you will adjust.
 
-7. Click **Browse rules** and paste the Rule ID in the search field.
+7. Select **Browse rules** and paste the Rule ID in the search field.
 
 8. Decrease the rule’s **Sensitivity Level** to _Essentially Off_ or change the action of the rule to _Log_.
 
-9. Click **Next** and then **Save**.
+9. Select **Next** and then select **Save**.
 
 _\* Not available in Network Analytics dashboard yet._
 

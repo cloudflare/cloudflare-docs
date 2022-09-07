@@ -1,6 +1,6 @@
 ---
 title: Business
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 3
 meta:
   title: Super Bot Fight Mode (Business) Analytics

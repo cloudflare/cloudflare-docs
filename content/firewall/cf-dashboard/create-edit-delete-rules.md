@@ -1,6 +1,6 @@
 ---
 title: Create, edit, and delete rules
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 1
 ---
 
@@ -22,7 +22,7 @@ Firewall rule expressions have a 4 KB limit (approximately 4,000 text characters
 
 2. Navigate to **Security** > **WAF** > **Firewall rules**.
 
-3. Click **Create a firewall rule**.
+3. Select **Create a firewall rule**.
 
 4. In the **Create firewall rule** page that displays, use the **Rule name** input to supply a descriptive name.
 
@@ -36,11 +36,11 @@ Firewall rule expressions have a 4 KB limit (approximately 4,000 text characters
 
 7. Next, specify the value to match. If the value is an enumeration, then the **Value** control will be a drop-down list. Otherwise, it will be a text input.
 
-8. To add a new sub-expression to the rule expression, click **And** or **Or** next to the **Value** control.
+8. To add a new sub-expression to the rule expression, select **And** or **Or** next to **Value**.
 
 9. Select an action for your rule in the **Action** drop-down list.
 
-10. To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as draft**.
+10. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as draft**.
 
 After you choose an option, you return to the rules list, which displays your new rule.
 
@@ -52,7 +52,7 @@ Use the available options in the rules list to manage firewall rules.
 
 ### Edit rule
 
-Click **Edit** (wrench icon) located on the right of your rule in the rules list to open the **Edit firewall rule** panel and make the changes you want.
+Select **Edit** (wrench icon) located on the right of your rule in the rules list to open the **Edit firewall rule** panel and make the changes you want.
 
 ### Enable or disable rule
 
@@ -60,9 +60,8 @@ Use the toggle switch associated with a firewall rule to enable or disable it.
 
 ### Delete rule
 
-To delete an existing rule from the **Firewall rules** panel, click **Delete** (**X** icon) next to the rule you want to remove.
-
-In the confirmation dialog that appears, click **Delete** to confirm and complete the operation.
+1. Next to the rule you want to delete, select **Delete** (**X** icon).
+2. In the confirmation dialog, select **Delete** to complete the operation.
 
 ### Order rules
 
@@ -74,6 +73,6 @@ Once there are more than 200 total rules (including inactive rules), you must ma
 
 ## Test firewall rules with Rule Preview
 
-Rule Preview allows customers on an Enterprise plan to understand the potential impact of a new firewall rule, by testing it against a sample of requests drawn from the last 72 hours of traffic. 
+Rule Preview allows customers on an Enterprise plan to understand the potential impact of a new firewall rule, by testing it against a sample of requests drawn from the last 72 hours of traffic.
 
 Rule Preview is built into the **Create firewall rule** and **Edit firewall rule** panels so that you can test a rule as you edit it. For more information, refer to [Preview rules](/firewall/cf-dashboard/rule-preview/).

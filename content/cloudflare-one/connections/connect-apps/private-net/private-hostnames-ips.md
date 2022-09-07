@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Private hostnames and IPs
 weight: 5
 ---
@@ -24,7 +24,7 @@ Follow the steps below to define your internal DNS resolver with Cloudflare Zero
 
 ## Prerequisites
 
-- Cloudflare Tunnel must be properly [configured](/cloudflare-one/connections/connect-apps/configuration/) to route traffic to a private IP space.
+- Cloudflare Tunnel must be properly [configured](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#configure-tunnels) to route traffic to a private IP space.
 - `cloudflared` must be connected to Cloudflare from your target private network.
 - Cloudflare WARP must be installed on end-user devices to connect your users to Cloudflare.
 
@@ -58,7 +58,7 @@ While on the Network Settings page, ensure that **Split Tunnels** are configured
 
 ## Update `cloudflared`
 
-Next, update your Cloudflare Tunnel configuration to ensure it is using QUIC as the default transport protocol. To do this, you can either set the `protocol: quic` property in your [configuration file](/cloudflare-one/connections/connect-apps/configuration/local-management/configuration-file/) or [pass the `–-protocol quic` flag](/cloudflare-one/connections/connect-apps/configuration/arguments/) directly through your CLI.
+Next, update your Cloudflare Tunnel configuration to ensure it is using QUIC as the default transport protocol. To do this, you can either set the `protocol: quic` property in your [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/) or [pass the `–-protocol quic` flag](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/) directly through your CLI.
 
 Finally, update to the latest available version (2021.12.3 as of the time of writing) of cloudflared running on your target private network.
 

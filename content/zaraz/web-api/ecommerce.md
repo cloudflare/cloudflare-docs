@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Ecommerce
 weight: 6
 meta:
@@ -20,15 +20,15 @@ Right now, Zaraz is compatible with Google Analytics 3 (Universal Analytics), Go
 
 You do not need to map ecommerce events to triggers. Zaraz will automatically forward data using the right format to the tools with ecommerce support.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and website.
-2. Click **Zaraz** > **Settings**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+2. Select **Zaraz** > **Settings**.
 3. Enable **Ecommerce tracking**.
-4. Click **Save**.
+4. Select **Save**.
 5. Go to **Zaraz** > **Tools**.
-6. Locate the tool you want to use with ecommerce tracking and click **Edit**.
-7. Click **Settings**.
+6. Locate the tool you want to use with ecommerce tracking and select **Edit**.
+7. Select **Settings**.
 8. Under **Advanced**, enable **Ecommerce tracking**.
-9. Click **Save**.
+9. Select **Save**.
 
 ## Add ecommerce tracking to your website
 
@@ -91,7 +91,6 @@ To create a complete tracking event, you need to add an event and one or more pa
 | `checkout_id`            | String | Checkout ID.                                                                                |
 | `order_id`               | String | Internal ID of order/transaction/purchase.                                                  |
 | `affiliation`            | String | Name of affiliate from which the order occurred.                                            |
-| `subtotal`               | Number | Order total after discounts but before adding taxes and shipping.                           |
 | `total`                  | Number | Revenue with discounts and coupons added in.                                                |
 | `revenue`                | Number | Revenue excluding shipping and tax.                                                         |
 | `shipping`               | Number | Cost of shipping for transaction.                                                           |
@@ -102,6 +101,8 @@ To create a complete tracking event, you need to add an event and one or more pa
 | `value`                  | Number | Total value of the product after quantity.                                                  |
 | `creative`               | String | Label for creative asset of promotion being tracked.                                        |
 | `query`                  | String | Product search term.                                                                        |
+| `step`                   | Number | The Number of the checkout step in the checkout process
+                                                                     |
 
 {{</table-wrap>}}
 
@@ -172,6 +173,14 @@ zaraz.ecommerce('Product Added', {
   quantity: 1,
   coupon: 'SUMMER-SALE',
   position: 2,
+});
+```
+
+### Checkout Step Viewed
+
+```js
+zaraz.ecommerce('Checkout Step Viewed', {
+  step: 1,
 });
 ```
 

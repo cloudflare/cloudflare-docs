@@ -1,6 +1,6 @@
 ---
 title: Business email compromise (BEC)
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 1
 layout: single
 ---
@@ -22,7 +22,7 @@ Using the dashboard, you can add email addresses indivdually or upload a CSV fil
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Enhanced Detections**.
-4. Click **New Display Name**.
+4. Select **New Display Name**.
 5. Enter an email address manually or upload a CSV file.
 
 #### CSV uploads

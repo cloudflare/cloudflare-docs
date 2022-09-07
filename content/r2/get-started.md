@@ -1,6 +1,6 @@
 ---
 title: Get started
-pcx-content-type: get-started
+pcx_content_type: get-started
 weight: 1
 meta:
   title: Get started guide
@@ -252,20 +252,24 @@ $ wrangler publish
 
 You can verify your authorization logic is working through the following commands, using your deployed Worker endpoint:
 
+{{<Aside type="warning">}}
+When uploading files to R2 via `curl`, ensure you use **[`--data-binary`](https://everything.curl.dev/http/post/binary)** instead of `--data` or `-d`. Files will otherwise be truncated.
+{{</Aside>}}
+
 ```sh
 # Attempt to write an object without providing the "X-Custom-Auth-Key" header
-$ curl https://your-worker.dev/cat-pic.jpg -X PUT --header --data 'test'
+$ curl https://your-worker.dev/cat-pic.jpg -X PUT --data-binary 'test'
 #=> Forbidden
 # Expected because header was missing
 
 # Attempt to write an object with the wrong "X-Custom-Auth-Key" header value
-$ curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: hotdog" --data 'test'
+$ curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: hotdog" --data-binary 'test'
 #=> Forbidden
 # Expected because header value did not match the AUTH_KEY_SECRET value
 
 # Attempt to write an object with the correct "X-Custom-Auth-Key" header value
 # Note: Assume that "*********" is the value of your AUTH_KEY_SECRET Wrangler secret
-$ curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: *********" --data 'test'
+$ curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: *********" --data-binary 'test'
 #=> Put cat-pic.jpg successfully!
 
 # Attempt to read object called "foo"

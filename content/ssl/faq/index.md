@@ -1,6 +1,6 @@
 ---
-title: FAQ
-pcx-content-type: navigation
+title: FAQs
+pcx_content_type: navigation
 weight: 202
 meta:
   title: General FAQs

@@ -1,13 +1,13 @@
 ---
 title: WARP
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 meta:
   title: Use WARP as an on-ramp
 ---
 
 # WARP on-ramp to Magic WAN
 
-Use WARP as an on-ramp to Magic WAN and route traffic from user devices with WARP installed to any network connected with Magic IP-layer tunnels (Anycast [GRE](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/), [IPsec](/magic-wan/how-to/ipsec/), or [CNI](/network-interconnect/)).
+Use WARP as an on-ramp to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (Anycast [GRE](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/), [IPsec](/magic-wan/how-to/ipsec/), or [CNI](/network-interconnect/)).
 
 ## Prerequisites
 
@@ -40,7 +40,7 @@ You should be able to access Private IP addresses specified in the Split Tunnel 
 
 Route packets back to WARP devices from services behind an Anycast GRE or other type tunnel.
 
-WARP devices will be assigned IP addresses from the Magic WARP Virtual IP (VIP) space.
+WARP devices will be assigned IP addresses from the Magic WARP Virtual IP (VIP) space. To view your virtual IP address, open the **Cloudflare Zero Trust** dashboard and select **My Team** > **Devices**.
 
 All packets with a destination IP in the VIP space need to be routed back through the tunnel. For example, with a single GRE tunnel named `gre1`, in Linux, the following command would add a routing rule that would route such packets:
 

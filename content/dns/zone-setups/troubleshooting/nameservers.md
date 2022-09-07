@@ -1,6 +1,6 @@
 ---
 title: Nameservers
-pcx-content-type: faq
+pcx_content_type: faq
 weight: 1
 meta:
   title: Troubleshooting zone setups - Nameservers

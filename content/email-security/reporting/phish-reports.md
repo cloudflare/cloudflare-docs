@@ -1,6 +1,6 @@
 ---
 title: Phish reports
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 3
 ---
 
@@ -21,6 +21,6 @@ To subscribe an email address to daily or weekly reports:
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Subscriptions** > **Email Subscriptions**.
-4. Click **Add Subscriber**.
+4. Select **Add Subscriber**.
 5. Enter an **Email** and choose the desired reports.
-6. Click **Add Subscriber**.
+6. Select **Add Subscriber**.

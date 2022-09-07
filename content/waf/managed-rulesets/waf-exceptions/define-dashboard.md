@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Define WAF exceptions in the dashboard
 weight: 2
 ---
@@ -10,7 +10,7 @@ weight: 2
 
 2. Go to **Security** > **WAF** > **Managed rules**.
 
-3. Click **Add exception**.
+3. Select **Add exception**.
 
 4. Enter a name for the exception.
 
@@ -21,6 +21,6 @@ weight: 2
 6. In **Then**, select the [exception type](/waf/managed-rulesets/waf-exceptions/#types-of-waf-exceptions) that determines which rules to skip:
 
     - _Skip all remaining rules_ — Skips all remaining rules of WAF Managed Rulesets.
-    - _Skip specific rules from a Managed Ruleset_ — Click **Select rules** to select the specific rules to skip. Learn more about [searching and selecting Managed Ruleset rules](/waf/managed-rulesets/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
+    - _Skip specific rules from a Managed Ruleset_ — Select **Select rules** to select the specific rules to skip. Learn more about [searching and selecting Managed Ruleset rules](/waf/managed-rulesets/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
 
-7. To save and deploy your exception, click **Deploy**. If you are not ready to deploy your exception, click **Save as Draft**.
+7. To save and deploy your exception, select **Deploy**. If you are not ready to deploy your exception, select **Save as Draft**.

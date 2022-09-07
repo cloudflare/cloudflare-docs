@@ -1,11 +1,10 @@
 ---
-pcx-content-type: navigation
+pcx_content_type: navigation
 title: DNS
 weight: 1
 ---
 
 # Agentless DNS filtering
-
 
 {{<Aside type="warning">}}
 

@@ -1,6 +1,6 @@
 ---
 title: Enable only Joomla rules
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 3
 meta:
   title: Use category overrides to enable Joomla rules

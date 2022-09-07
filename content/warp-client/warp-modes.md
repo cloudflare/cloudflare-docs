@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: WARP modes
 weight: 2
 ---
@@ -39,7 +39,7 @@ This will enable the **WARP via Local Proxy** option in the **WARP Settings** me
 
 ## WARP+
 
-While WARP is able to take advantage of the many Cloudflare data centers around the world to give you a more private and robust connection, WARP+ improves on that with intelligent routing. Leveraging the same technology that powers [Argo Smart Routing](/argo-smart-routing/), WARP+ will route your traffic around congested Internet routes and improve overall end-to-end performance. You can purchase WARP+ via iOS and Android devices, and use it both with Cloudflare's mobile and desktop apps.
+While WARP is able to take advantage of the many Cloudflare data centers around the world to give you a more private and robust connection, WARP+ subscribers get access to a larger network. More cities to connect to means you are likely to be closer to a Cloudflare data center – which can reduce the latency between your device and Cloudflare, and improve your browsing speed. As a result, sites load faster, both for those on the Cloudflare network and those that are not.
 
 ## WARP Unlimited
 

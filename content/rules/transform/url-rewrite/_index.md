@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: URL Rewrite Rules
 weight: 2
 ---

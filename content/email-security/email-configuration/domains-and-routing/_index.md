@@ -1,6 +1,6 @@
 ---
 title: Domains and routing
-pcx-content-type: navigation
+pcx_content_type: navigation
 weight: 1
 ---
 

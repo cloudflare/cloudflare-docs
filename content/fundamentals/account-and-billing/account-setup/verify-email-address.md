@@ -1,6 +1,6 @@
 ---
 title: Verify email address
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 1
 ---
 
@@ -17,6 +17,12 @@ To verify your email:
 1. Log into your email provider and find your recent message from Cloudflare. If you cannot find the message, check your Spam folder.
 2. Click the link in the email.
 3. Log into Cloudflare to verify the email address associated with your account.
+
+{{<Aside type="note">}}
+
+If someone else used your email to sign up for a Cloudflare account, you can remove this account by going to our [unintended registration](https://dash.cloudflare.com/unintended-registration) page and entering the information at the end of your confirmation email.
+
+{{</Aside>}}
 
 ## Resend verification emails
 

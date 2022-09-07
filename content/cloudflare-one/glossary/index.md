@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Glossary
 weight: 11
 layout: single
@@ -197,7 +197,7 @@ The customizable portion of your [team domain](#team-domain). You can view your 
 | --------------------------------------- | ---------------- |
 | `<your-team-name>.cloudflareaccess.com` | `your-team-name` |
 
-You can change your team name at any time, unless you have the Cloudflare dashboard SSO feature enabled on your account. Cloudflare dashboard SSO does not currently support team name changes. If you change your team name, you may need to update your identity provider and other third-party integrations to reflect your new team name.
+To learn about the consequences of changing your team name, refer to the [FAQ](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domainteam-name).
 
 ## Terraform
 

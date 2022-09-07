@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Deploy a Svelte site
 ---
 
@@ -62,7 +62,7 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 | Production branch     | `main`             |
 | Build command         | `npm run build`    |
 | Build directory       | `build`            |
-| Environment Variables | `NODE_VERSION: 16` |
+| Environment Variables | `NODE_VERSION: 17` |
 
 </div>
 
@@ -70,7 +70,7 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 {{<Aside type="warning">}}
 
-**Important:** SvelteKit requires Node.js v16.x or later to build successfully. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Pages** > **Settings** > **Environment Variables** section and add a `NODE_VERSION` variable with a value of `16` or greater.
+**Important:** SvelteKit requires Node.js >=16.9 or later to build successfully. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Pages** > **Settings** > **Environment Variables** section and add a `NODE_VERSION` variable with a value of `17` or greater.
 
 {{</Aside>}}
 
@@ -168,7 +168,7 @@ When deploying with [`@sveltejs/adapter-cloudflare`](https://www.npmjs.com/packa
 | Production branch     | `main`                  |
 | Build command         | `npm run build`         |
 | Build directory       | `.svelte-kit/cloudflare`|
-| Environment Variables | `NODE_VERSION: 16 `|
+| Environment Variables | `NODE_VERSION: 17 `|
 
 </div>
 

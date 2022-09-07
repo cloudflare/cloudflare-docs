@@ -1,6 +1,6 @@
 ---
 title: Overview
-pcx-content-type: overview
+pcx_content_type: overview
 layout: single
 weight: 1
 meta:
@@ -32,7 +32,7 @@ The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloud
 
     Only Enterprise customers of Magic Transit and Spectrum can customize the Network-layer DDoS Attack Protection Managed Ruleset.
 
-*   **Advanced TCP Protection Managed Ruleset**. Available in early access to Magic Transit customers.
+*   **Advanced TCP Protection Managed Ruleset**. The Cloudflare dashboard settings and the API are available in early access to Magic Transit customers.
 
 ## Related resources
 

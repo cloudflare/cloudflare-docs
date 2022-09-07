@@ -1,6 +1,6 @@
 ---
 title: Escalation contacts
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 2
 ---
 
@@ -13,12 +13,12 @@ You can enable these special notifications through an opt-in process:
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Subscriptions** > **Escalation Contacts**.
-4. Click **Add Contact**.
+4. Select **Add Contact**.
 5. Fill out the form.
-6. Click **Save**.
+6. Select **Save**.
 
 {{<Aside type="note">}}
 
-If you select **Critical Service Events**, the contact will be sent a text and/or an email message. They will need to click on the link to confirm the subscriptions.
+If you select **Critical Service Events**, the contact will be sent a text and/or an email message. They will need to select the link to confirm the subscriptions.
 
 {{</Aside>}}

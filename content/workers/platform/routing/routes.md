@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Routes
 ---
 
@@ -68,7 +68,7 @@ While they look similar to a [regex](https://en.wikipedia.org/wiki/Regular_expre
 
 - Route patterns are case sensitive, for example, `example.com/Images/*` and `example.com/images/*` are two distinct routes.
 
-A route can be specified without being associated with a Worker; this will act to negate any less specific patterns. For example, consider this pair of route patterns, one with a Workers script and one without:
+A route can be specified without being associated with a Worker. This will act to negate any less specific patterns. For example, consider this pair of route patterns, one with a Workers script and one without:
 
 ```txt
 *example.com/images/cat.png -> <no script>
@@ -82,10 +82,9 @@ In this example, all requests destined for example.com and whose paths are prefi
 To configure a route in your `wrangler.toml`, add the following to your environment:
 
 ```toml
-Route = [
-{pattern = “example.com/about”, 
-Zone_id = <YOUR_ZONE_ID>,
-}]
+routes = [
+    { pattern = "example.com/about", zone_id = "<YOUR_ZONE_ID>" }
+]
 ```
 
 If you have specified your zone ID in the environment of your `wrangler.toml`, you will not need to write it again in object form.

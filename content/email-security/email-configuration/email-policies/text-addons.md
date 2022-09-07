@@ -1,6 +1,6 @@
 ---
 title: Text add-ons
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 1
 ---
 
@@ -23,11 +23,11 @@ To update or add a new add-on to the subject or body of a message:
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Email Policies** > **Text Add-Ons**.
-4. Click **Edit**.
+4. Select **Edit**.
 5. For each **Disposition**, choose whether prefixes are **Enabled** and whether you want to update the **Custom Label**.
 6. If desired, you can also use **Subject Prefix** or **Body Prefix** to update the text added before or after the rendered disposition:
 
     - **Subject Prefix**: Includes a dynamic value for `%LABELS` that lists the disposition and can include additional text.
     - **Body Prefix**: Includes a dynamic value for `%LABELS` that lists the disposition and `%REASONS` that lists the reasons behind an assigned disposition. Can include additional, HTML-formatted text.
 
-7. Click **Update Text Add-Ons**.
+7. Select **Update Text Add-Ons**.

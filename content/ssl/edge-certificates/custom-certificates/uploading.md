@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Manage custom certificates
 weight: 2
 ---
@@ -126,9 +126,10 @@ For more guidance, refer to [Create a CAA record](/ssl/edge-certificates/custom-
 
 ## Update a certificate
 
-### Using the dashboard
-
-To update a certificate:
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+To update a certificate in the dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2.  Select your application.
@@ -136,6 +137,14 @@ To update a certificate:
 4.  In **Edge Certificates**, locate a custom certificate.
 5.  Click the wrench icon and click **Replace SSL certificate and key**.
 6.  Follow the same steps as [create a new certificate](#upload-a-custom-certificate).
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+To update a certificate using the API, send a [`PATCH`](https://api.cloudflare.com/#custom-ssl-for-a-zone-edit-ssl-configuration) command.
+ 
+{{</tab>}}
+{{</tabs>}}
 
 {{<Aside type="note">}}
 
@@ -143,6 +152,4 @@ To update the **Private Key Restriction** setting of a certificate, delete and r
 
 {{</Aside>}}
 
-### Using the API
 
-Use a [PATCH](https://api.cloudflare.com/#custom-ssl-for-a-zone-edit-ssl-configuration) command.

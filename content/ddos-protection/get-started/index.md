@@ -1,5 +1,5 @@
 ---
-pcx-content-type: get-started
+pcx_content_type: get-started
 title: Get started
 weight: 3
 layout: single
@@ -53,11 +53,11 @@ Configure ruleset actions to _Log_ for each of the [DDoS Attack Protection Manag
 Do the following in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and zone.
-1. Go to **Security** > **DDoS**.
-1. Next to the Managed Ruleset you are configuring, click **Configure**.
-1. In **Ruleset configuration** > **Ruleset action**, select _Log_.
-1. Click **Save**.
-1. Repeat the procedure for all DDoS Attack Protection Managed Rulesets.
+2. Go to **Security** > **DDoS**.
+3. Next to the Managed Ruleset you are configuring, select **Configure**.
+4. In **Ruleset configuration** > **Ruleset action**, select _Log_.
+5. Select **Save**.
+6. Repeat the procedure for all DDoS Attack Protection Managed Rulesets.
 
 Alternatively, if you are using the API, define an override at the ruleset level to set the action of all Managed Ruleset rules to `log` by following these instructions:
 
@@ -92,9 +92,9 @@ Revert the change you did in [Step 1](#1-configure-ruleset-actions-to-log), chan
 Do the following in the Cloudflare dashboard:
 
 1. Go to **Security** > **DDoS**.
-1. Next to the Managed Ruleset you would like to configure, click **Configure**.
-1. In **Ruleset configuration** > **Ruleset action**, select _Default_.
-1. Click **Save**.
+2. Next to the Managed Ruleset you would like to configure, select **Configure**.
+3. In **Ruleset configuration** > **Ruleset action**, select _Default_.
+4. Select **Save**.
 
 Alternatively, if you are using the API, [remove the override](/ddos-protection/managed-rulesets/http/configure-api/#configure-an-override-for-http-ddos-attack-protection) you previously configured at the ruleset level. Ensure that you only remove the ruleset override and not any of the rule overrides you may have configured in [Step 3](#3-customize-managed-ruleset-rules).
 

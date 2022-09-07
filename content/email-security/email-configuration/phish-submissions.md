@@ -1,6 +1,6 @@
 ---
 title: Phish submissions
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 6
 ---
 
@@ -10,9 +10,9 @@ As part of your email configuration, your administrators and email recipients ca
 
 ## What happens after phish submission
 
-After you or your users submit a phish sample, we add that sample directly into our machine learning (M/L) queue.
+After you or your users submit a phish sample, we add that sample directly into our machine learning (ML) queue.
 
-Some samples will be directly converted to `Malicious` upon going through machine learning and the rest will be further processed by our M/L module.
+Some samples will be directly converted to `Malicious` upon going through machine learning and the rest will be further processed by our ML module.
 
 ## Setup
 

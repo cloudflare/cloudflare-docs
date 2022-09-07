@@ -2,7 +2,7 @@
 content/1.1.1.1/ @cloudflare/PCX @cloudflare/dns
 
 # Analytics
-content/analytics/ @soheiokamoto @jherre @tlozoot @tanushreesharma-cf @cloudflare/PCX
+content/analytics/ @soheiokamoto @jherre @tlozoot @bharatnc @victor-perov @cloudflare/PCX
 
 # API
 content/api/ @cloudflare/sdk @cloudflare/PCX
@@ -53,7 +53,7 @@ content/images/ @kornelski @GregBrimble @sejoker @cloudflare/PCX
 content/load-balancing/ @ConzorKingKong @cloudflare/PCX
 
 # Logs
-content/logs/ @soheiokamoto @jherre @tlozoot @bharatnc @tanushreesharma-cf @cloudflare/PCX
+content/logs/ @soheiokamoto @jherre @tlozoot @bharatnc @victor-perov @cloudflare/PCX
 
 # Magic Transit
 content/magic-transit/ @annikagarbers @cloudflare/PCX

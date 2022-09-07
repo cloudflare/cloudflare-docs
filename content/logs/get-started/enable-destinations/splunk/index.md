@@ -1,6 +1,6 @@
 ---
 title: Enable Splunk
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 64
 layout: single
 meta:
@@ -190,3 +190,8 @@ If you have the Cloudflare Web Application Firewall (WAF) turned on, you may see
 3.  Click **Deploy**.
 
 The WAF should now ignore requests made to Splunk HEC by Cloudflare.
+
+{{<Aside type="note" header="Note">}}
+To analyze and visualize Cloudflare Logs using the Cloudflare App for Splunk, follow the steps in the [Splunk Analytics integration page](/fundamentals/data-products/analytics-integrations/splunk/).
+{{</Aside>}}
+

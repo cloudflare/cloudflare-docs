@@ -1,5 +1,5 @@
 ---
-pcx-content-type: changelog
+pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
 layout: list
@@ -22,13 +22,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
+      <td>2022-09-01</td>
+      <td>2022-09-12</td>
+      <td>...e4fe8e55</td>
+      <td>User-Agent-aware DDoS Protection (Available only to Enterprise zones with Advanced DDoS service).</td>
       <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>log</td>
+      <td>This rule detects floods of requests coming from suspicious user agents.</td>
     </tr>
   </tbody>
 </table>

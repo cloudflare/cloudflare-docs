@@ -1,6 +1,6 @@
 ---
 title: Activate the Cloudflare WordPress plugin
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 8
 ---
 

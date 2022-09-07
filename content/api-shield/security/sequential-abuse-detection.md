@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 type: overview
 title: Sequential Abuse Detection (Beta)
 weight: 4

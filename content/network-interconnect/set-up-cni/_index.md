@@ -1,6 +1,6 @@
 ---
 title: CNI Setup
-pcx-content-type: get-started
+pcx_content_type: get-started
 weight: 3
 meta:
   title: Cloudflare Network Interconnect SetupOnboarding

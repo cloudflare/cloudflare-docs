@@ -1,12 +1,12 @@
 ---
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Configuration and activation
 weight: 7
 ---
 
 # Configuration and activation
 
-Railgun is configured in `/etc/railgun/railgun.conf` (GNU/Linux). The most important directives are `wan.port`, which specifies the port Railgun listens on, `memcached.servers`, a space separated list of `host:port` memcached instances for Railgun to utilize. It is also possible to specify the full path to a single socket file for memcached. Using a socket file is recommended for best performance if your memcached does not require network communication. Make sure at least one memcached instance is defined. Full details on the available options [can be found in the Railgul Execution docs](/railgun/user-guide/railgun-execution/).
+Railgun is configured in `/etc/railgun/railgun.conf` (GNU/Linux). The most important directives are `wan.port`, which specifies the port Railgun listens on, `memcached.servers`, a space separated list of `host:port` memcached instances for Railgun to utilize. It is also possible to specify the full path to a single socket file for memcached. Using a socket file is recommended for best performance if your memcached does not require network communication. Make sure at least one memcached instance is defined. Full details on the available options [can be found in the Railgun Execution docs](/railgun/user-guide/railgun-execution/).
 
 If you will be using Railgun in combination with a website hosted behind the same NAT scheme, then you will also need to configure static IP mapping. In other words, if your website and Railgun node are running behind the same router or firewall, there are extra configuration steps necessary to properly route requests. More details in the [Potential problems and common issues](/railgun/user-guide/set-up/potential-problems/) section. Contact support for assistance, or you can use the examples in `/etc/railgun/railgun-nat.conf` to define one yourself.
 
@@ -96,4 +96,4 @@ Oct 27 23:36:06 www railgun[199.27.130.135:22114]: Transmit time: 48us
 
 It is recommended that you consult the [Testing Railgun](#testing-railgun) section before enabling Railgun for all visitors to your site.
 
-When you wish to go live, you should select the desired Railgun for your domain on the [Cloudflare Settings](https://www.cloudflare.com/a/account/my-account) page from the drop-down and then toggle the switch to **On**. Railgun may take up to five minutes to fully activate, after which you should see the `CF-Railgun` HTTP header present in responses from all your active Cloudflare DNS records.
+When you wish to go live, you should select the desired Railgun for your domain on the [Cloudflare Settings](https://dash.cloudflare.com/?to=/:account/configurations/railgun) page from the drop-down and then toggle the switch to **On**. Railgun may take up to five minutes to fully activate, after which you should see the `CF-Railgun` HTTP header present in responses from all your active Cloudflare DNS records.

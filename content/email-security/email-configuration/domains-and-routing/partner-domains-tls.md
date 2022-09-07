@@ -1,6 +1,6 @@
 ---
 title: Partner Domains TLS
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 3
 ---
 
@@ -15,9 +15,9 @@ To require that email from a specific domain passes SSL/TLS inspection:
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Domains & Routing** > **Partner Domains TLS**.
-4. Click **New Partner Domain**.
+4. Select **New Partner Domain**.
 4. Enter a **Domain** and any **Notes**.
-5. Click **Save**.
+5. Select **Save**.
 
 ## Exempt TLS inspection
 

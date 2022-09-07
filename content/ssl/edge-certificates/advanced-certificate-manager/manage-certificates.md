@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Manage advanced certificates
 weight: 1
 ---
@@ -12,8 +12,9 @@ If you are using an existing [Universal SSL certificate](/ssl/edge-certificates/
 
 Once you order a certificate, you can review the [certificate's status](/ssl/ssl-tls/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](https://api.cloudflare.com/#certificate-packs-list-certificate-packs).
 
-### Using the dashboard
-
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 To create a new advanced certificate in the dashboard:
 
 1.  Log in to your Cloudflare account and select a domain.
@@ -26,6 +27,14 @@ To create a new advanced certificate in the dashboard:
     - Validation method
     - Certificate Validity Period
 6.  Click **Save**.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+To create a new certificate using the API, send a [POST request](https://api.cloudflare.com/#certificate-packs-order-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
+ 
+{{</tab>}}
+{{</tabs>}}
 
 {{<Aside type="warning" header="Important">}}
 
@@ -33,26 +42,27 @@ To create a new advanced certificate in the dashboard:
 
 {{</Aside>}}
 
-### Using the API
-
-To create a new certificate, send a [POST request](https://api.cloudflare.com/#certificate-packs-order-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
-
 ---
 
 ## Delete a certificate
 
-### Using the dashboard
-
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 To delete an advanced certificate in the dashboard:
 
 1.  Log in to your Cloudflare account and select a domain.
 2.  Select **SSL/TLS** > **Edge Certificates**.
 3.  Click a certificate.
 4.  Click **Delete Certificate**.
-
-### Using the API
-
-To delete a certificate, send a [DELETE request](https://api.cloudflare.com/#certificate-packs-delete-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+To delete a certificate using the API, send a [DELETE request](https://api.cloudflare.com/#certificate-packs-delete-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ---
 

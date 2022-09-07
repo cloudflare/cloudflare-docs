@@ -1,12 +1,12 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Custom origin trust store
 layout: single
 ---
 
 # Custom origin trust store
 
-By default, Cloudflare's edge network maintains a list of publicly trusted certificate authorities. This means that when using [Full (strict) encryption mode](/ssl/origin-configuration/ssl-modes/#full-strict), Cloudflare will only trust origin server certificates issued by a CA in this trust store.
+By default, Cloudflare's edge network maintains a list of publicly trusted certificate authorities. This means that when using [Full (strict) encryption mode](/ssl/origin-configuration/ssl-modes/full-strict/), Cloudflare will only trust origin server certificates issued by a CA in this trust store.
 
 {{<render file="_custom-origin-trust-store-definition.md">}}
 
@@ -24,7 +24,7 @@ To manage using the API, refer to the [API commands](#api-commands).
 
 ## Limitations
 
-If your uploaded CA expires and no alternative CAs are valid within the trust store, Cloudflare will not be able to properly authenticate connections to the origin server with [Full (strict) encryption mode](/ssl/origin-configuration/ssl-modes/#full-strict) enabled.
+If your uploaded CA expires and no alternative CAs are valid within the trust store, Cloudflare will not be able to properly authenticate connections to the origin server with [Full (strict) encryption mode](/ssl/origin-configuration/ssl-modes/full-strict/) enabled.
 
 ## API commands
 

@@ -1,6 +1,6 @@
 ---
 title: Language support
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 2
 ---
 
@@ -17,7 +17,7 @@ The Area 1 email dashboard is localized to English and Japanese.
 To update your language settings:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
-2. At the bottom of the page, click the language icon.
+2. At the bottom of the page, select the language icon.
 
-    ![Click the language icon to toggle your dashboard between English and Japanese.](/email-security/static/language-switcher.png)
+    ![Select the language icon to toggle your dashboard between English and Japanese.](/email-security/static/language-switcher.png)
 3. Select your preferred language.

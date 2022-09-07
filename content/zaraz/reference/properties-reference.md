@@ -1,67 +1,87 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Properties reference
-layout: list
-meta:
-  title: Zaraz event and system properties
 ---
 
-{{<content-column>}}
+# Properties reference
 
-# Zaraz event and system properties
+Cloudflare Zaraz offers properties that you can use when configuring the product. They are helpful to send data to a third-party tool or to create triggers as they have context about a specific user's browser session and the actions they take on the website. Below is a list of the properties you can access from the Cloudflare dashboard and their values.
 
-Cloudflare Zaraz offers event and system properties that you can use when configuring the product. They are helpful to send data to a third-party tool or to create triggers as they have context about a specific user's browser session and the actions they take on the website. Below is a list of event and system properties, how can you access them, and their values:
-
-{{</content-column>}}
-
-## System properties
+## Web API
 
 {{<table-wrap>}}
 
-| Property | Type | Description |
-| --- | --- | --- |
-| `{{ system.page.query.QUERY_PARAM }}` | String | Returns the value of a URL query parameter. Replace `QUERY_PARAM` with the name of your parameter. |
-| `{{ system.page.title }}` | String | Returns the page title. |
-| `{{ system.page.url.search }}` | String | Returns search parameters provided, beginning with the leading `?` character. |
-| `{{ system.page.url.pathname }}` | String | Returns the path of the URL, including the initial `/`. Does not include the query string or fragment. |
-| `{{ system.page.url.port }}` | String | Returns the port number of the URL. |
-| `{{ system.page.url.hostname }}` | String | Returns the domain of the URL. |
-| `{{ system.page.url.host }}` | String | Returns the domain (that is the hostname) followed by a `:` and the port of the URL (if a port was specified). |
-| `{{ system.page.url.password }}` | String | Returns the password specified before the domain name. |
-| `{{ system.page.url.username }}` | String | Returns the username specified before the domain name. |
-| `{{ system.page.url.protocol }}` | String | Returns the protocol scheme of the URL, including the final `:`. |
-| `{{ system.page.url.origin }}` | String | Returns the origin of the URL, that is its scheme, its domain and its port. |
-| `{{ system.page.url.href }}` | String | Returns a string containing the entire URL |
-| `{{ system.page.url.baseDomain }}` | String | Returns the base domain part of the URL, without any subdomains. |
-| `{{ system.page.referrer }}` | String | Returns the page referrer from `document.referrer`. |
-| `{{ system.page.encoding }}` | String | Returns the document character encoding from `document.characterSet`. |
-| `{{ system.cookies.NAME_OF_COOKIE }}` | Object | Returns cookies obtained from the browser `document`. |
-| `{{ system.device.ip }}` | String | Returns the incoming IP address. |
-| `{{ system.device.resolution }}` | String | Returns screen resolution for device. |
-| `{{ system.device.viewport }}` | String | Returns the visible web page area in user’s device. |
-| `{{ system.device.language }}` | String | Returns the language used. |
-| `{{ system.device.user-agent.ua }}` | String | Returns the browser’s user agent. |
-| `{{ system.device.user-agent.browser.name }}` | String | Returns the browser’s name. |
-| `{{ system.device.user-agent.browser.version }}` | String | Returns the browser’s version. |
-| `{{ system.device.user-agent.engine.name }}` | String | Returns the type of browser engine (for example, WebKit). |
-| `{{ system.device.user-agent.engine.version }}` | String | Returns the version of the browser’s engine. |
-| `{{ system.device.user-agent.os.name }}` | String | Returns the operating system. |
-| `{{ system.device.user-agent.os.version }}` | String | Returns the version of the operating system. |
-| `{{ system.device.user-agent.device }}` | String | Returns the type of device used (for example, iPhone). |
-| `{{ system.device.user-agent.cpu }}` | String | Returns the device’s CPU. |
-| `{{ system.misc.random }}` | Number | Returns a random number unique to each request. |
-| `{{ system.misc.timestamp }}` | Number | Returns Unix time in seconds. |
-| `{{ system.misc.timestampMilliseconds }}` | Number | Returns Unix time in milliseconds. |
+Property | Type | Description
+--- | --- | ---
+_Track Name_ | String | Returns the name of the event sent using the Track method of the Web API. Refer to the [Track method](/zaraz/web-api/track/) for more information.
+_Track Property: name:_ |String | Returns the value of a `zaraz.track()` `eventProperties` key. The key can either be directly used in `zaraz.track()` or set using `zaraz.set()`. Set the name of your key here. Refer to the [Set method](/zaraz/web-api/set/) for more information.
 
 {{</table-wrap>}}
 
-## Event properties
+## Page Properties
 
 {{<table-wrap>}}
 
-| Property | Type | Description |
-| --- | --- | --- |
-| `{{ client.__zarazTrack }}` | String | Returns the name of the event sent using the Track method of the Web API. Refer to [Zaraz Track](/zaraz/web-api/track/) for more information. |
-| `{{ client.<KEY_NAME> }}` | String | Returns the value of a `zaraz.track()` `eventProperties` key. The key can either be directly used in `zaraz.track()` or set using `zaraz.set()`. Replace `<KEY_NAME>` with the name of your key. Refer to [Zaraz Track](/zaraz/web-api/track/) for more information. |
+Property | Type | Description
+--- | --- | ---
+_Page character encoding_ | String | Returns the document character encoding from `document.characterSet`.
+_Page referrer_ | String | Returns the page referrer from `document.referrer`.
+_Page title_ | String | Returns the page title.
+_Query param: name:_ | String | Returns the value of a URL query parameter. When you choose this variable, you need to set the name of your parameter.
+_URL_ | String | Returns a string containing the entire URL.
+_URL base domain_ | String | Returns the base domain part of the URL, without any subdomains.
+_URL host_ | String | Returns the domain (that is, the hostname) followed by a `:` and the port of the URL (if a port was specified).
+_URL hostname_ | String | Returns the domain of the URL.
+_URL origin_ | String | Returns the origin of the URL — that is, its scheme, domain, and port.
+_URL password_ | String | Returns the password specified before the domain name.
+_URL pathname_ | String | Returns the path of the URL, including the initial `/`. Does not include the query string or fragment.
+_URL port_ | String | Returns the port number of the URL.
+_URL protocol scheme_ | String | Returns the protocol scheme of the URL, including the final `:`.
+_URL query parameters_ | String | Returns query parameters provided, beginning with the leading `?` character.
+_URL username_ | String | Returns the username specified before the domain name.
+
+{{</table-wrap>}}
+
+## Cookies
+
+{{<table-wrap>}}
+
+Property | Type | Description
+--- | --- | ---
+_Cookie: name:_ | Object | Returns cookies obtained from the browser `document`.
+
+{{</table-wrap>}}
+
+## Device properties
+
+{{<table-wrap>}}
+
+Property | Type | Description
+--- | --- | ---
+_Browser engine_ | String | Returns the type of browser engine (for example, `WebKit`).
+_Browser engine version_ | String | Returns the version of the browser’s engine.
+_Browser name_ | String | Returns the browser’s name.
+_Browser version_ | String | Returns the browser’s version.
+_Device CPU_ | String | Returns the device’s CPU.
+_Device IP address_ | String | Returns the incoming IP address.
+_Device language_ | String | Returns the language used.
+_Device screen resolution_ | String | Returns the screen resolution of the device.
+_Device type_ | String | Returns the type of device used (for example, `iPhone`).
+_Device viewport_ | String | Returns the visible web page area in user’s device.
+_Operating system name_ | String | Returns the operating system.
+_Operating system version_ | String | Returns the version of the operating system.
+_User-agent string_	| String | Returns the browser’s user agent.
+
+{{</table-wrap>}}
+
+## Miscellaneous
+
+{{<table-wrap>}}
+
+Property | Type | Description
+--- | --- | ---
+_Random number_ | Number | Returns a random number unique to each request.
+_Timestamp (milliseconds)_ | Number | Returns the Unix time in milliseconds.
+_Timestamp (seconds)_ | Number | Returns the Unix time in seconds.
 
 {{</table-wrap>}}

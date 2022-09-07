@@ -1,6 +1,6 @@
 ---
 title: Setup
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 1
 meta:
   title: Change your authoritative nameservers (Full setup)

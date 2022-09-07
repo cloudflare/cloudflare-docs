@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Upload via link
 weight: 2
 ---
@@ -8,7 +8,7 @@ weight: 2
 
 If you have videos stored in a cloud storage bucket, you can simply pass a HTTP link for the file. Stream will fetch the file and make it available for streaming.
 
-By using [webhooks](/stream/uploading-videos/using-webhooks/) you can receive a notification when the video is ready to be played or if it errors.
+By using [webhooks](/stream/manage-video-library/using-webhooks/) you can receive a notification when the video is ready to be played or if it errors.
 
 ## Step 1: Make an API call with the link
 
@@ -18,15 +18,15 @@ Make a HTTP request to the Stream API with the URL of the video.
 curl \
 -X POST \
 -d '{"url":"https://storage.googleapis.com/zaid-test/Watermarks%20Demo/cf-ad-original.mp4","meta":{"name":"My First Stream Video"}}' \
--H "Authorization: Bearer $TOKEN" \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/copy
+-H "Authorization: Bearer <API_TOKEN>" \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy
 ```
 
 ```json
 {
   "result": {
-    "uid": "4544715edbe00808d89aec0a3a765c40",
-    "thumbnail": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/thumbnails/thumbnail.jpg",
+    "uid": "b236bde30eb07b9d01318940e5fc3eda",
+    "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
     "thumbnailTimestampPct": 0,
     "readyToStream": false,
     "status": {
@@ -39,7 +39,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/copy
     "created": "2020-10-16T20:20:17.872170843Z",
     "modified": "2020-10-16T20:20:17.872170843Z",
     "size": 9032701,
-    "preview": "https://watch.cloudflarestream.com/4544715edbe00808d89aec0a3a765c40",
+    "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/watch",
     "allowedOrigins": [],
     "requireSignedURLs": false,
     "uploaded": "2020-10-16T20:20:17.872170843Z",
@@ -52,8 +52,8 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/copy
       "height": -1
     },
     "playback": {
-      "hls": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/manifest/video.m3u8",
-      "dash": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/manifest/video.mpd"
+      "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8",
+      "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.mpd"
     },
     "watermark": null
   },
@@ -65,13 +65,13 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/copy
 
 ## Step 2: Poll the API or wait for a webhook
 
-Because Stream must download and encode the video, the video might not be available for a few seconds to a few minutes depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/stream/uploading-videos/using-webhooks/) to be notified when a video is ready for streaming.
+Because Stream must download and encode the video, the video might not be available for a few seconds to a few minutes depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/stream/manage-video-library/using-webhooks/) to be notified when a video is ready for streaming.
 
 ## Step 3: View the video
 
 The `uid` of the video can be used refer to the video after uploading and can be used to play it using the [Stream video player](/stream/viewing-videos/using-the-stream-player/).
 
-If you're using your own player or rendering the video in a mobile app, view information on [using your own player](/stream/viewing-videos/using-the-player-api/).
+If you're using your own player or rendering the video in a mobile app, view information on [using your own player](/stream/viewing-videos/using-the-stream-player/using-the-player-api/).
 
 <!--
 Update to Stream component once available

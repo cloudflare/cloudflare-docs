@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Data layer compatibility mode
 weight: 0
 ---
@@ -14,7 +14,7 @@ To keep the Zaraz script as small and fast as possible, the data layer compatibi
 
 ## Using the data layer with Zaraz
 
-After enabling the compatibility mode, Zaraz will automatically translate your `dataLayer.push` calls to `zaraz.track`, so you can keep using the `dataLayer.push` function to send events from the browser to Zaraz.
+After enabling the compatibility mode, Zaraz will automatically translate your `dataLayer.push()` calls to `zaraz.track()`, so you can keep using the `dataLayer.push()` function to send events from the browser to Zaraz.
 
 {{<Aside type="note" header="Note">}}Zaraz does not support automatic ecommerce mapping through the `dataLayer` compatibility mode. If you need to track ecommerce events, refer to the [Ecommerce API](/zaraz/web-api/ecommerce/).{{</Aside>}}
 
@@ -31,13 +31,13 @@ dataLayer.push({
 
 Cloudflare Zaraz then translates the `dataLayer.push()` call to a `zaraz.track()` call. So, `dataLayer.push({event: "purchase", price: "24", "currency": "USD"})` is equivalent to `zaraz.track("purchase", {"price": "24", "currency": "USD"})`.
 
-Because Zaraz converts the `dataLayer.push` call to `zaraz.track`, creating a trigger based on `dataLayer.push` calls is the same as creating triggers for `zaraz.track`. As an example, the trigger below would match the above `dataLayer.push` call because it matches the event name (`{{ client.__zarazTrack }}`) with `purchase`.
+Because Zaraz converts the `dataLayer.push()` call to `zaraz.track()`, creating a trigger based on `dataLayer.push()` calls is the same as creating triggers for `zaraz.track()`. As an example, the trigger below will match the above `dataLayer.push()` call because it matches the event with `purchase`.
 
 {{<table-wrap>}}
 
 | Rule type    | Variable name               | Match operation | Match string |
 | ------------ | --------------------------- | --------------- | ------------ |
-| _Match rule_ | `{{ client.__zarazTrack }}` | _Equals_        | `purchase`   |
+| _Match rule_ | _Track Name_                | _Equals_        | `purchase`   |
 
 {{</table-wrap>}}
 

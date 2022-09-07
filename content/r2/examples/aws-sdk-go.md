@@ -1,7 +1,7 @@
 ---
 title: Configure `aws-sdk-go` for R2
 summary: Example of how to configure `aws-sdk-go` to use R2.
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 1001
 layout: example
 ---
@@ -83,4 +83,21 @@ func main() {
 	// 		"Name": "sdk-example"
 	// }
 }
+```
+  
+You can also generate presigned links that can be used to temporarily share public write access to a bucket.
+
+```
+presignClient := s3.NewPresignClient(client)
+
+	presignResult, err := presignClient.PresignPutObject(context.TODO(), &s3.PutObjectInput{
+		Bucket: aws.String(bucketName),
+		Key:    aws.String("example.txt"),
+	})
+
+	if err != nil {
+		panic("Couldn't get presigned URL for PutObject")
+	}
+
+	fmt.Printf("Presigned URL For object: %s\n", presignResult.URL)
 ```

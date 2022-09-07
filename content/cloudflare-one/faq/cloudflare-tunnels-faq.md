@@ -1,5 +1,5 @@
 ---
-pcx-content-type: faq
+pcx_content_type: faq
 title: Tunnels
 weight: 4
 ---
@@ -15,6 +15,10 @@ Yes. With [Named Tunnels](https://blog.cloudflare.com/argo-tunnels-that-live-for
 ## ​Does Cloudflare Tunnel support Websockets?
 
 Yes. Cloudflare Tunnel has full support for Websockets.
+
+## ​Does Cloudflare Tunnel support gRPC?
+
+Yes. Cloudflare Tunnel supports gRPC for services within a [private network](/cloudflare-one/connections/connect-apps/private-net/). Public hostname deployments are not supported at this time.
 
 ## How can Tunnel be used with Partial DNS (CNAME Setup)?
 
@@ -55,19 +59,23 @@ No. When using Cloudflare Tunnel, all requests to the origin are made internally
 
 To log external visitor IPs, you will need to [configure an alternative method](https://support.cloudflare.com/hc/en-us/articles/200170786-Restoring-original-visitor-IPs-Logging-visitor-IP-addresses-with-mod-cloudflare-).
 
-## Why does the name "warp" appear in some legacy materials?
+## Why does the name "warp" and "argo" appear in some legacy materials?
 
-Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was added to the Argo product family, we changed the name to match.
+Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was added to the Argo product family, we changed the name to Argo Tunnel to match. Once we no longer required users to purchase Argo to create Tunnels, we renamed Argo Tunnel to Cloudflare Tunnel.
 
 ## How can I troubleshoot a Tunnel that was configured from the Zero Trust dashboard?
 
-### Ensure that only one Tunnel is installed
+### Ensure that only one instance of `cloudflared` is installed as a service
 
-If you are unable to create a Tunnel using the installation script ("cloudflared service is already installed"), ensure that no other Tunnels are running as a service on this machine. Only a single Tunnel may run as a service on any given machine. Instead, we recommend adding additional routes to your existing Tunnel.  Alternatively, you can run `sudo cloudflared service uninstall` to uninstall the Tunnel.
+If you are unable to create a Tunnel using the installation script ("cloudflared service is already installed"), ensure that no other `cloudflared` instances are running as a service on this machine. Only a single instance of `cloudflared` may run as a service on any given machine. Instead, we recommend adding additional routes to your existing Tunnel.  Alternatively, you can run `sudo cloudflared service uninstall` to uninstall `cloudflared`.
 
 ### Check your DNS records
 
 If you are unable to save your Tunnel's public hostname ("An A, AAAA, or CNAME record with that host already exists"), choose a different hostname or delete the existing DNS record. [Check the DNS records](/dns/manage-dns-records/how-to/create-dns-records/) for your domain from the [Cloudflare dashboard](https://dash.cloudflare.com).
+
+### Run Tunnel with debug logging
+
+If you created a Cloudflare Tunnel from the Zero Trust dashboard, the tunnel runs as a service on your OS. You can modify the Cloudflare Tunnel service with one or more configuration options. To learn more, refer to our [remote management](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/remote-management/) documentation.
 
 ## How can I troubleshoot a Tunnel that was configured through the CLI?
 
@@ -110,11 +118,11 @@ Before contacting the Cloudflare support team:
 
 - Take note of any options you specified, either on the command line or in your configuration file, when starting your tunnel.
 
-- Set [`log-level`](/cloudflare-one/connections/connect-apps/configuration/arguments/#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
+- Set [`log-level`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
 
-- Set [`transport-log`](/cloudflare-one/connections/connect-apps/configuration/arguments/#transport-loglevel) level to `debug`.
+- Set [`transport-log`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#transport-loglevel) level to `debug`.
 
-- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-apps/configuration/arguments/#logfile) either on the command line or in your configuration file.
+- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#logfile) either on the command line or in your configuration file.
 
 - Include your full `config.yml` file for the affected tunnel.
 

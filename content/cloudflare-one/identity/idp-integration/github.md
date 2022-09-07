@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: GitHub
 weight: 13
 ---
@@ -14,13 +14,9 @@ To configure GitHub access in both GitHub and Cloudflare Zero Trust:
 
 1.  Log in to GitHub.
 
-1.  Go to your account **Settings > Developer Settings**, select **OAuth Apps** and click **Register a new application**.
+1.  Go to your account **Settings > Developer Settings**, select **OAuth Apps** and click **Register a new application**. The **Register a new OAuth application** window displays.
 
-    ![GitHub OAuth page](/cloudflare-one/static/documentation/identity/github/github1.png)
-
-    The **Register a new OAuth application** window displays.
-
-    ![GitHub Register a new OAuth application window](/cloudflare-one/static/documentation/identity/github/github2.png)
+    ![GitHub Register a new OAuth application window without any form fields completed](/cloudflare-one/static/documentation/identity/github/github2.png)
 
 1.  Enter an **Application name**. Your users will see this name on the login page.
 
@@ -38,7 +34,7 @@ To configure GitHub access in both GitHub and Cloudflare Zero Trust:
 
 1.  Copy the **Client ID** and **Client Secret**.
 
-    ![Client ID and Client secret](/cloudflare-one/static/documentation/identity/github/github4.png)
+    ![GitHub Cloudflare Access App showing Client ID and Client secret](/cloudflare-one/static/documentation/identity/github/github4.png)
 
 1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
