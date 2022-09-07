@@ -253,7 +253,7 @@ Enterprise plans.
 
 **Who is it for?**
 
-BYOIP customers and Magic Transit customers with Network Analytics who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics.
+BYOIP and Magic Transit customers with Network Analytics who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics.
 
 **Other options / filters**
 
@@ -262,10 +262,12 @@ BYOIP customers and Magic Transit customers with Network Analytics who want to r
   - The IP prefixes for which they wish to receive notifications.
   - The specific IP addresses for which they wish to receive notifications.
   - The minimum packets-per-second rate that will trigger the alert.
+  - The minimum megabits-per-second rate that will trigger the alert.
+  - The protocols for which they wish to receive notifications.
 
 **Included with**
 
-Purchase of Magic Transit and/or BYOIP.
+Purchase of Magic Transit and/or BYOIP (Enterprise plans).
 
 **What should you do if you receive one?**
 
