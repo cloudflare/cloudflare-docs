@@ -81,7 +81,7 @@ Advanced DDoS attack alerts support additional configuration, allowing you to fi
 * **Advanced Layer 3/4 DDoS Attack Alert**: Customizable alert for Layer 3/4 attacks that generate more than the configured number of packets per second (12,000 pps by default). Supports the following configuration parameters:
 
     * The IP prefixes for which you wish to receive notifications.
-    * The specific IP addresses for which you with to receive notifications.
+    * The specific IP addresses for which you wish to receive notifications.
     * The minimum packets-per-second rate that will trigger the alert (12,000 pps by default).
 
 ## Availability
