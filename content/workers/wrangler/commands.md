@@ -21,7 +21,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`pages`](#pages) - Configure Cloudflare Pages.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
-- [`whoami`](#whoami) - Retrieve your user info and test your auth config.
+- [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 
 {{<Aside type="note">}}
 
@@ -1031,7 +1031,7 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by 
 
 ## whoami
 
-Retrieve your user info and test your auth config.
+Retrieve your user information and test your authentication configuration.
 
 ```sh
 $ wrangler whoami
