@@ -116,7 +116,6 @@ To set up the tunnel to route the SMB server to a public hostname use the follow
 1. Select **Create a tunnel**.
  
 1. Enter a name for your tunnel.
-   ![Connector appearing in the UI after cloudflared has run](/cloudflare-one/static/documentation/connections/connect-apps/use-cases/name-the-tunnel.png)
  
 1. Select **Save tunnel**.
  
