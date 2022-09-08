@@ -40,7 +40,7 @@ If you are on the Enterprise plan, you can request a dedicated DNS resolver IPv4
 
 ### Source IP
 
-Gateway uses the public source IPv4 address of your network to identify your location, apply policies and log DNS requests. You must provide source IP addresses for the IPv4 traffic you want to filter with DNS policies. Otherwise, Gateway will not be able to attribute the traffic to your account.
+Gateway uses the public source IPv4 address of your network to identify your location, apply policies and log DNS requests. Unless you have purchased a [dedicated IPv4 resolver IP](#dns-resolver-ip), you must provide source IP addresses for the IPv4 traffic you want to filter with DNS policies. Otherwise, Gateway will not be able to attribute the traffic to your account.
 
 When creating a location, the Zero Trust dashboard automatically identifies the source IP address of the network you are on.
 
