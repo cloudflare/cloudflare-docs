@@ -264,7 +264,7 @@ If you try to purge by prefix, this will happen:
   </tbody>
 </table>
 
-This means that if the prefix being purged does not match what Cloudflare’s cache sees, regardless of how the URL looked when it hit the edge, purge by prefix will not work. Specifically:
+This means that if the prefix being purged does not match what Cloudflare’s cache sees  purge by prefix will not work, regardless of how the URL looked when it hit the edge. Specifically:
 
 - If the visitor request was for `https://cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg`, then currently purge by prefix will not be able to purge this asset because no matter what prefix you try to purge, for instance `cloudflare.com/انشاء-موقع-الكتروني/` or `cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg`, what will be purged is `cloudflare.com/انشاء-موقع-الكتروني/` which will not match the asset that was cached by the visitor request.
 
