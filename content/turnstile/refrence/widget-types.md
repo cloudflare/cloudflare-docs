@@ -1,13 +1,13 @@
 ---
-title: Challenge Modes
+title: Widget Types
 pcx_content_type: reference
 weight: 6
 layout: single
 ---
 
-# Challenge Modes
+# Widget Types
 
-Every instance of Turnstile belongs to a Turnstile widget. It is configured on a per-widget level instead of the traditional per-zone level. Every widget has a mode, a sitekey, and a secret key. 
+Every instance of Turnstile belongs to a Turnstile widget. It is configured on a per-widget level. Every widget has a mode, a label, a sitekey, and a secret key. 
 
 The 3 modes for Turnstile are **Managed**, **Non-Interactive**, and **Invisible**.
 
