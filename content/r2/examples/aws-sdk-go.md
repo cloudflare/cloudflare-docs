@@ -87,7 +87,7 @@ func main() {
   
 You can also generate presigned links that can be used to temporarily share public write access to a bucket.
 
-```
+```go
 presignClient := s3.NewPresignClient(client)
 
 	presignResult, err := presignClient.PresignPutObject(context.TODO(), &s3.PutObjectInput{
