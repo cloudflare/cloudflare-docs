@@ -9,18 +9,6 @@ layout: single
 
 Cloudflare Data Loss Prevention can inspect upload and download traffic to and from Google Drive.
 
-## Policy recommendations
-
-To reduce false positives and ensure that users can still access Google services, we recommend [excluding the following subdomains](/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/configuration-guides/) from your DLP policy:
-
-- `drive.google.com`
-- `play.google.com`
-- `www.google.com`
-
-{{<Aside type="note">}}
-File uploads to Google Drive do not actually go to `drive.google.com`.
-{{</Aside>}}
-
 ## Configuring for compatibility
 
 ### Browsers
@@ -59,4 +47,4 @@ DLP for Google Drive supports the same file types as all other DLP scans. Suppor
 
 ### Limitations
 
-Google Drive breaks large upload and download requests into multiple requests of size <= 280 MB. If your file is being transmitted as a ZIP and is broken into multiple requests, DLP cannot scan the internal files.
+Google Drive breaks large upload and download requests into multiple requests of size ≤ 280 MB. If your file is being transmitted as a ZIP and is broken into multiple requests, DLP cannot scan the internal files.
