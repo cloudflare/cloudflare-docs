@@ -164,7 +164,7 @@ Currently, when a purge by prefix request comes into Cloudflare for a normalized
 
 #### How does URL Normalization work
 
-As an example of this behavior change, take the following website as an example: `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg`. The table below shows you how Cloudflare’s cache views these paths with [normalization on/off](https://developers.cloudflare.com/rules/normalization/).
+As an example of this behavior change, take the following website as an example: `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg`. The table below shows you how Cloudflare’s cache views these paths with [normalization on/off](/rules/normalization/).
 
 <table>
   <tbody>
