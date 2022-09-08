@@ -66,7 +66,7 @@ Finally, you will need to configure your SaaS application to require users to lo
     * **Access Entity ID or Issuer**
     * **Public key**
 
-    ![Copy SSO settings for a SaaS application from the Zero Trust dashboard](/cloudflare-one/static/documentation/applications/saas-integrate.png)
+    ![Copy SSO settings for a SaaS application from the Zero Trust dashboard](/cloudflare-one/static/documentation/applications/saas-sso-endpoint.png)
 
 2. Select **Done**.
 

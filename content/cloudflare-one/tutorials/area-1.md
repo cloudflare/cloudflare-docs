@@ -30,9 +30,11 @@ title: Integrate Cloudflare Area 1 with Access for SaaS
 4. In the **Application** field, enter `Area 1` and select **Area 1**. (Area 1 is not currently listed in the default drop-down menu.)
 
 5. Enter the following values for your application configuration:
-    - **Entity ID**: `https://horizon.area1security.com`
-    -  **Assertion Consumer Service URL**: `https://horizon.area1security.com/api/users/saml`
-    - **Name ID Format**: _Email_
+    | | |
+    |----- |-------|
+    | **Entity ID** | `https://horizon.area1security.com`  |
+    | **Assertion Consumer Service URL** | `https://horizon.area1security.com/api/users/saml`|
+    | **Name ID Format**| _Email_ |
 
 6. (Optional) In **Application Appearance**, customize your [App Launcher](/cloudflare-one/applications/app-launcher/) visibility and logo.
 
@@ -48,7 +50,7 @@ title: Integrate Cloudflare Area 1 with Access for SaaS
 
 2. Select **Next**.
 
-## 2. Configure SSO for Area 1
+## 3. Configure SSO for Area 1
 
 Finally, you will need to configure Area 1 to allow users to log in through Cloudflare Access.
 
@@ -62,10 +64,11 @@ Finally, you will need to configure Area 1 to allow users to log in through Clou
 
 5. Get your Metadata XML file:
 
-    1. In the Zero Trust dashboard, copy the **SSO Endpoint** for your application. The URL is of the form: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/saml/<app-id>`.
+    1. In the Zero Trust dashboard, copy the **SSO Endpoint** for your application.
 
-    2. In a new browser tab, paste the **SSO Endpoint** and append `/saml-metadata` to the end of the URL. For example,
-    `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/saml/<app-id>/saml-metadata`.
+        ![Copy SSO settings for a SaaS application from the Zero Trust dashboard](/cloudflare-one/static/documentation/applications/saas-sso-endpoint.png)
+
+    2. In a new browser tab, paste the **SSO Endpoint** and append `/saml-metadata` to the end of the URL. For example, `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/saml/<app-id>/saml-metadata`.
 
     3. Copy the resulting metadata.
 
