@@ -36,7 +36,7 @@ For passive monitoring, [create notifications](/fundamentals/notifications/creat
 
 ### Block traffic
 
-For more details, refer to [Secure your website](/fundamentals/get-started/task-guides/secure-your-website/).
+For more details, refer to [Secure your website](/learning-paths/application-security/).
 
 ### Increase caching
 

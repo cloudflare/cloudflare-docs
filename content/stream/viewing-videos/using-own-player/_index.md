@@ -86,4 +86,4 @@ We recommend using [ffmpeg-kit](https://github.com/tanersener/ffmpeg-kit) as a c
 
 ## Limitations
 
-[Client-size Analytics](/stream/getting-analytics/#client-side-analytics) are not available if you use your own player.
+[Client-side Analytics](/stream/getting-analytics/#client-side-analytics) are not available if you use your own player.

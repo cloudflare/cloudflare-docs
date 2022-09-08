@@ -8,7 +8,8 @@ weight: 7
 
 Cloudflare Images supports image exports. This feature is available both in the Cloudflare dashboard and via API.
 
-## Export one or more images in the dashboard
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Select **Images**.
@@ -17,7 +18,8 @@ Cloudflare Images supports image exports. This feature is available both in the 
 
 Your images will be downloaded to your computer.
 
-## Export a single image via API
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 To download an image via API, the syntax is as follows:
 
@@ -36,3 +38,6 @@ $ curl -X GET "https://api.cloudflare.com/client/v4/accounts/023e105f4ecef8ad9ca
 ```
 
 Refer to the [API documentation](https://api.cloudflare.com/#cloudflare-images-base-image) for more information.
+
+{{</tab>}}
+{{</tabs>}}

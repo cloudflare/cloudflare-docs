@@ -37,7 +37,7 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
     2\. Navigate to **Security** > **Overview**.
 
-    3\. Click **Add filter** and filter by `Service equals HTTP DDoS`.
+    3\. Select **Add filter** and filter by `Service equals HTTP DDoS`.
 
     </div></details>
 
@@ -53,13 +53,13 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
 4. Copy the rule name.
 
-5. Navigate to **Security** > **DDoS** and click **Configure** next to the Managed Ruleset containing the rule you will adjust.
+5. Navigate to **Security** > **DDoS** and select **Configure** next to the Managed Ruleset containing the rule you will adjust.
 
-6. Click **Browse rules** and paste the Rule ID in the search field.
+6. Select **Browse rules** and paste the rule name in the search field.
 
 7. Change the rule’s **Action** to _Block_.
 
-8. Click **Next** and then **Save**.
+8. Select **Next** and then select **Save**.
 
 _\* Available in the Network Analytics v2 Logs or API. Not available in the Network Analytics dashboard yet._
 

@@ -26,7 +26,7 @@ To increase any of our limits, [please fill out our form!](https://forms.gle/ukp
 | [Worker size](#worker-size)                                                     | 1 MB      | 1 MB      |
 | [Number of Workers](#number-of-workers)                                         | 30        | 100       |
 | [Number of Cron Triggers<br/>per Worker](#number-of-schedules)                  | 3         | 3         |
-| [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 90        |
+| [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 250       |
 
 {{</table-wrap>}}
 
@@ -38,7 +38,7 @@ Request headers observe a total limit of 32 KB, but each header is limited to 16
 
 Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare Account's plan, which is separate from your Workers plan. When the request body size of your POST/PUT/PATCH requests exceed your plan's limit, the request is rejected with a `(413) Request entity too large` error.
 
-Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit beyond 500 MB.
+Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to have a request body limit beyond 500 MB.
 
 {{<table-wrap>}}
 
@@ -47,7 +47,7 @@ Cloudflare Enterprise customers may contact their account team or [Cloudflare Su
 | Free            | 100MB             |
 | Pro             | 100MB             |
 | Business        | 200MB             |
-| Enterprise      | 500MB             |
+| Enterprise      | 500MB (by default)|
 
 {{</table-wrap>}}
 
