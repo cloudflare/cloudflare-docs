@@ -46,6 +46,8 @@ When a live output is disabled, video is not simulcast to the live output, even 
 
 By default, all live outputs are enabled.
 
+### Enable outputs from the dashboard:
+
 1. From Live Inputs in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs), select an input from the list.
 2. Under **Outputs** > **Enabled**, set the toggle to enabled or disabled.
 
