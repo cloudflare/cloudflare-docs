@@ -20,7 +20,7 @@ Right now, Zaraz is compatible with Google Analytics 3 (Universal Analytics), Go
 
 You do not need to map ecommerce events to triggers. Zaraz will automatically forward data using the right format to the tools with ecommerce support.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Select **Zaraz** > **Settings**.
 3. Enable **Ecommerce tracking**.
 4. Select **Save**.
@@ -101,6 +101,8 @@ To create a complete tracking event, you need to add an event and one or more pa
 | `value`                  | Number | Total value of the product after quantity.                                                  |
 | `creative`               | String | Label for creative asset of promotion being tracked.                                        |
 | `query`                  | String | Product search term.                                                                        |
+| `step`                   | Number | The Number of the checkout step in the checkout process
+                                                                     |
 
 {{</table-wrap>}}
 
@@ -171,6 +173,14 @@ zaraz.ecommerce('Product Added', {
   quantity: 1,
   coupon: 'SUMMER-SALE',
   position: 2,
+});
+```
+
+### Checkout Step Viewed
+
+```js
+zaraz.ecommerce('Checkout Step Viewed', {
+  step: 1,
 });
 ```
 

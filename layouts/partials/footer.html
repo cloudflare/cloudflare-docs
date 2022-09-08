@@ -15,7 +15,7 @@
         />
       </svg>
       <span class="DocsFooter--content-additional-wrapper">
-        Learn more at the {{- with .File -}} {{- $url := (printf
+        Learn more at the {{ with .File }} {{- $url := (printf
         "https://www.cloudflare.com/learning/") -}} {{- partial "external.link"
         (dict "text" "Learning Center" "url" $url) }} {{- end -}}
       </span>
@@ -52,7 +52,7 @@
       </svg>
 
       <span class="DocsFooter--content-additional-wrapper">
-        Engage with the community on the {{- with .File -}} {{- $url := (printf
+        Engage with the community on the {{ with .File }} {{- $url := (printf
         "https://community.cloudflare.com/") -}} {{- partial "external.link"
         (dict "text" "Community Forum" "url" $url) }} {{- end -}}
       </span>
@@ -73,7 +73,7 @@
       </svg>
 
       <span class="DocsFooter--content-additional-wrapper">
-        Get answers to common questions and issues from the {{- with .File -}}
+        Get answers to common questions and issues from the {{ with .File }}
         {{- $url := (printf "https://support.cloudflare.com/") -}} {{- partial
         "external.link" (dict "text" "Help Center" "url" $url) }} {{- end -}}
       </span>

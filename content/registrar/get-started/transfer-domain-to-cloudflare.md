@@ -1,7 +1,7 @@
 ---
 pcx_content_type: tutorial
 title: Transfer your domain to Cloudflare
-weight: 5
+weight: 2
 ---
 
 # Transfer your domain to Cloudflare
@@ -64,7 +64,9 @@ You will be presented with the price for each transfer. When you transfer a doma
 
 If you do not have a payment method on file, add one at this step before proceeding.
 
-![Cloudflare checkout interface](/registrar/static/checkout-page.png)
+You will not be billed at this step. Cloudflare will only bill your card when you input the auth code and confirm the contact information at the conclusion of your transfer request.
+
+{{<Aside type="note">}}
 
 Sites can be unavailable for a few reasons, including:
 
@@ -75,7 +77,7 @@ Sites can be unavailable for a few reasons, including:
 - The domain has a status that does not allow for a transfer.
 - You failed to follow the steps highlighted above in [creating an account with your domain](/fundamentals/account-and-billing/account-setup/create-account/) and [changing your DNS nameservers to Cloudflare](/dns/zone-setups/full-setup/).
 
-You will not be billed at this step. Cloudflare will only bill your card when you input the auth code and confirm the contact information at the conclusion of your transfer request.
+{{</Aside>}}
 
 {{<render file="_email-verification.md">}}
 
@@ -87,11 +89,7 @@ In the next page, input the authorization code for each domain you are transferr
 
 In the final stage of the transfer process, input the contact information for your registration. Cloudflare Registrar redacts this information by default but is required to collect the authentic contact information for this registration. It is important that you provide accurate WHOIS contact information. You may be required to verify the contact information. Failure to provide accurate information and/or failure to verify the information may result in suspension or deletion of your domain.
 
-You can modify the contact information, if needed:
-
-1. From your **Account Home**, select **Registrar**.
-2. Under the **Manage** tab, select **Edit** in the **Default Contact** card.
-3. Update your information.
+You can always [modify the contact information](/registrar/account-options/domain-contact-updates/) later, if needed.
 
 After entering the contact information, agree to the domain registration terms of service by selecting **Confirm transfer**.
 
