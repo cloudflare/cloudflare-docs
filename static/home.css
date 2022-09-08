@@ -695,6 +695,7 @@ html[is-site-page] .DocsContent {
     padding-right: .75em;
     margin-top: 2em;
     margin-bottom: 1em;
+    justify-content: space-between;
 }
 
 .FeaturedContentBlock {
@@ -704,7 +705,6 @@ html[is-site-page] .DocsContent {
     background: #f3f3f4;
     margin-top: 1em;
     margin-bottom: 1em;
-    margin-right: 2em;
     padding-bottom: .5em;
     padding-left: 2em;
     padding-right: 2em;
