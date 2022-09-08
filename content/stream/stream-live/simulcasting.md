@@ -34,18 +34,21 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<I
 }
 ```
 
-## Enable live broadcasting
+## Control when you start and stop simulcasting
 
-You can control when you broadcast video by enabling or disabling outputs added to a live input. For example, if you are preparing to host a live stream, you can start the stream while the output is disabled. As soon as you are ready to officially go live, you can enable the output associate with the live input.
+You can enable and disable individual live outputs via the [API](https://api.cloudflare.com/#stream-live-inputs-update-a-single-output-on-a-live-input) or [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs), allowing you to:
 
-When a live input is in use for streaming and has a disabled output added to it, the video is not restreamed to the output. 
+- Start a live stream, but wait to start simulcasting to YouTube and Twitch until right before the content begins.
+- Stop simulcasting before the live stream ends, to encourage viewers to transition from a third-party service like YouTube or Twitch to a direct live stream.
+- Give your own users manual control over when they go live to specific simulcasting destinations.
 
-By default, all outputs are enabled.
+When a live output is disabled, video is not simulcast to the live output, even when actively streaming to the corresponding live input.
+
+By default, all live outputs are enabled.
 
 1. From Live Inputs in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs), select an input from the list.
 2. Under **Outputs** > **Enabled**, set the toggle to enabled or disabled.
 
-You can also use the Stream API to [Update a single output on a live input](https://api.cloudflare.com/#stream-live-inputs-update-a-single-output-on-a-live-input).
 
 ## Managing outputs
 
