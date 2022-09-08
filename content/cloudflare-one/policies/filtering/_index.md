@@ -3,10 +3,10 @@ pcx_content_type: concept
 title: Secure Web Gateway
 weight: 1
 meta:
-  title: Cloudflare Gateway policies
+  title: Gateway policies
 ---
 
-# Cloudflare Gateway policies
+# Gateway policies
 
 Cloudflare Gateway, our comprehensive Secure Web Gateway, allows you to set up policies to inspect DNS, Network, and HTTP traffic.
 
