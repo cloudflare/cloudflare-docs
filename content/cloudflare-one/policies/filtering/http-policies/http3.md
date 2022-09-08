@@ -10,7 +10,7 @@ Gateway supports inspection of HTTP/3 traffic, which uses the QUIC protocol over
 
 ## Browser limitations
 
-The following browsers are incompatible with HTTP/3 inspection:
+The following browsers do not support HTTP/3 inspection:
 
 - Google Chrome
 - Safari
