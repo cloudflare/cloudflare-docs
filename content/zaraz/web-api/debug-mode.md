@@ -19,18 +19,4 @@ You can set this cookie manually or via the `zaraz.debug` helper function availa
     zaraz.debug("YOUR_DEBUG_KEY")
     ```
 
-6.  Refresh your browser to see the debug logs. They will appear in the Console pane.
-
-Zaraz’s debug mode is now enabled. To exit debug mode, just remove the cookie with `zaraz.debug()`.
-
-## Activate Preserve Log in Google Chrome
-
-Due to the temporary nature of the Console pane in web browsers, you might want to activate the **Preserve Log** option for the Console pane. If you do not activate this option, you will lose the previous debug information whenever the page refreshes.
-
-To activate the **Preserve Log** option in Google Chrome:
-
-1. Open **Developer Tools**.
-2. Go to **Console**.
-3. Select the **Console settings** cog > **Preserve logs**.
-
-![Chrome's console panel to access preserve logs](/zaraz/static/console-settings.png)
+Zaraz’s debug mode is now enabled. A pop-up window will show up with the debugger information. To exit debug mode, remove the cookie by typing `zaraz.debug()` in the console pane of the browser.
