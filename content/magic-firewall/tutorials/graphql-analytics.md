@@ -30,21 +30,6 @@ In your browser's address bar, the URL should show `https://dash.cloudflare.com/
 3. From the **Edit Rule** page, locate the **Rule ID** and select the copy button. 
 4. Select **Cancel** to return to the **Magic Firewall** page.
 
-```bash
-  {
-    "id": "76a53b38cd9329ef632677g4525hi5929",
-    "version": "69",
-    "action": "block",
-    "description": "Anonymizer test",
-    "expression": "(ip.src in $cf.anonymizer)",
-    "last_updated": "2022-01-17T22:41:45.60268Z",
-    "ref": "76a53b38cd9329ef632677g4525hi5929",
-    "enabled": true
-  },
-  ```
-
-In the example above, the `id` value is the Magic Firewall rule ID.
-
 ## Explore GraphQL schema with Magic Firewall query example
 
 In this section, you will run a test query to retrieve a five minute count of all configured Magic Firewall rules within five minute intervals. You can copy and paste the code below into GraphiQL.
