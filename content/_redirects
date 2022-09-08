@@ -947,6 +947,8 @@
 /cloudflare-one/tutorials/warp-to-tunnel-internal-dns/ /cloudflare-one/connections/connect-networks/private-net/private-hostnames-ips/ 301
 /cloudflare-one/policies/filtering/http-policies/application-app-types/ /cloudflare-one/policies/filtering/application-app-types/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/ /cloudflare-one/policies/filtering/dns-policies/ 301
+/cloudflare-one/policies/filtering/dns-policies-builder/categories/ /cloudflare-one/policies/filtering/dns-policies/dns-categories/ 301
+/cloudflare-one/policies/filtering/http-policies/incompatible-traffic/ /cloudflare-one/policies/filtering/http-policies/ 301
 
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
 
