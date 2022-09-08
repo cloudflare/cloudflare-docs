@@ -160,11 +160,11 @@ Example: If you purge `foo.com/bar`, any asset that starts with `foo.com/bar` wi
 
 ### Purge by prefix normalization
 
-Currently, when a purge by prefix request comes into Cloudflare for a normalized URL path, the purge service does not respect the URL normalization. We are changing the purge by prefix functionality so that normalized URLs will be purged as expected. We plan for this change to occur on <needs to be added>.
+Currently, when a purge by prefix request comes into Cloudflare for a normalized URL path, the purge service does not respect the [URL normalization](https://developers.cloudflare.com/rules/normalization/). We are changing the purge by prefix functionality so that normalized URLs will be purged as expected. We plan for this change to occur on <needs to be added>.
 
 #### How does URL Normalization work
 
-As an example of this behavior change, take the following website as an example: `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg`. The table below shows you how Cloudflare’s cache views these paths with normalization on/off.
+As an example of this behavior change, take the following website as an example: `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg`. The table below shows you how Cloudflare’s cache views these paths with [normalization on/off](https://developers.cloudflare.com/rules/normalization/).
 
 <table>
   <tbody>
@@ -220,13 +220,13 @@ If you try to purge by prefix, this will happen:
 <table>
   <tbody>
     <th colspan="5" rowspan="1">
-      Purging By Prefix
+      What the user wants to purge
     </th>
     <th colspan="5" rowspan="1">
-      Purge By Prefix (current behavior)
+      What the EDGE purges (current behavior)
     </th>
     <th colspan="5" rowspan="1">
-      Purge By Prefix (new behavior)
+      What the EDGE purges (new behavior)
     </th>
     <tr>
       <td colspan="5" rowspan="1">
