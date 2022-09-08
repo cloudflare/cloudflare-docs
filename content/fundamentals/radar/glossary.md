@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Glossary
-weight: 1
+weight: 10
 ---
 
 # Glossary
