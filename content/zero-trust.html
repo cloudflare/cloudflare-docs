@@ -8,7 +8,7 @@ meta:
   title: Cloudflare Zero Trust - Home
 ---
 <div class="HomeTitle">
-<h1>Looking for the fastest Zero <br /> Trust platform?</h1>
+<h1>Looking for a secure and <br /> performant Zero Trust platform?</h1>
   <p class="StartHere"><strong><a href="/cloudflare-one/setup/">Start here.</a></strong></p>
 </div>
 
@@ -30,6 +30,11 @@ meta:
 </div>
 <div>
 {{<quad-block>}}
+  [WARP client](/warp-client/)
+{{</quad-block>}}
+  </div>
+<div>
+{{<quad-block>}}
   [Browser Isolation](/cloudflare-one/policies/browser-isolation/)
 {{</quad-block>}}
 </div>
@@ -38,11 +43,7 @@ meta:
   [CASB](/cloudflare-one/applications/scan-apps/)
 {{</quad-block>}}
 </div>
-<div>
-{{<quad-block>}}
-  [Email security](/email-security/)
-{{</quad-block>}}
-</div>
+
 </div>
 
 <div class="TriBlockGrid">
@@ -67,9 +68,9 @@ meta:
 <p>Popular tutorials</p>
 </div>
 
-- [Add non-HTTP applications](/cloudflare-one/applications/non-http/)
-- [Integrate Single Sign-On](/cloudflare-one/identity/idp-integration/)
 - [Connect WARP to a private network](/cloudflare-one/tutorials/warp-to-tunnel/)
+- [Connect non-HTTP applications](/cloudflare-one/applications/non-http/)
+- [Zero Trust GitLab SSH & HTTP](/cloudflare-one/tutorials/gitlab/)
 
 <br>
 <br>
@@ -98,6 +99,51 @@ meta:
 </div>
 
 <div class="FeaturedContentGrid">
+
+<div>
+{{<featured-content-block>}}
+<div class="FeatureContentHeader">
+<p class="FeatureContentTitle">Integrate an Identity Provider</p>
+<p class="FeaturedContentDescription">Cloudflare Zero Trust allows you to integrate your organization’s identity providers (IdPs) with Cloudflare Access.</p>
+
+[Add an IdP >](/cloudflare-one/identity/idp-integration/)
+</div>
+{{</featured-content-block>}}
+</div>
+
+<div>
+{{<featured-content-block>}}
+<div class="FeatureContentHeader">
+<p class="FeatureContentTitle">Secure a web-based application</p>
+<p class="FeaturedContentDescription">Learn how to protect SaaS and self-hosted web applications with Cloudflare Access.</p>
+
+[Protect web applications >](/cloudflare-one/applications/configure-apps/)
+</div>
+{{</featured-content-block>}}
+</div>
+
+<div>
+{{<featured-content-block>}}
+<div class="FeatureContentHeader">
+<p class="FeatureContentTitle">Connect to private resources over SSH</p>
+<p class="FeaturedContentDescription">With Cloudflare Zero Trust, you can make your SSH server available over the Internet without the risk of opening inbound ports on the server.</p>
+    
+[Download WARP >](/cloudflare-one/connections/connect-apps/use_cases/ssh/)
+</div>
+{{</featured-content-block>}}
+</div>
+
+<div>
+{{<featured-content-block>}}
+<div class="FeatureContentHeader">
+<p class="FeatureContentTitle">Filter DNS or home or office networks</p>
+<p class="FeaturedContentDescription">Cloudflare Gateway, our comprehensive Secure Web Gateway, allows you to set up policies to inspect DNS, Network, and HTTP traffic.</p>
+
+[Create gateway policy >](/cloudflare-one/policies/filtering/)
+</div>
+{{</featured-content-block>}}
+</div>
+
 <div>
 {{<featured-content-block>}}
 <div class="FeatureContentHeader">
@@ -112,27 +158,7 @@ meta:
 <div>
 {{<featured-content-block>}}
 <div class="FeatureContentHeader">
-<p class="FeatureContentTitle">Install the Cloudflare certificate</p>
-<p class="FeaturedContentDescription">Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device.</p>
-
-[Install certificate >](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert)
-</div>
-{{</featured-content-block>}}
-</div>
-<div>
-{{<featured-content-block>}}
-<div class="FeatureContentHeader">
-<p class="FeatureContentTitle">Download WARP</p>
-<p class="FeaturedContentDescription">Download the WARP client from the Zero Trust dashboard or a link on this page.</p>
-    
-[Download WARP >](/cloudflare-one/connections/connect-devices/warp/download-warp/)
-</div>
-{{</featured-content-block>}}
-</div>
-<div>
-{{<featured-content-block>}}
-<div class="FeatureContentHeader">
-<p class="FeatureContentTitle">Set up Area 1 Email Security</p>
+<p class="FeatureContentTitle">Implement email filtering</p>
 <p class="FeaturedContentDescription">Learn how to deploy Area 1 email security to stop phishing attacks across all threat vectors (email, web, and network).</p>
 
 [Stop phish >](/email-security/deployment/)
