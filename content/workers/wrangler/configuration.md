@@ -424,8 +424,7 @@ services = [
 
 ## Bundling
 
-You can bundle assets into your Worker using the `rules` key, making these available to
-be imported when your Worker is invoked. The `rules` key will be an array of the below object.
+You can bundle assets into your Worker using the `rules` key, making these assets available to be imported when your Worker is invoked. The `rules` key will be an array of the below object.
 
 {{<definitions>}}
 
