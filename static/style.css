@@ -4730,7 +4730,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   margin-left: var(--docs-sidebar-width);
   padding: 3.5rem 0;
   padding-left: var(--docs-content-gap);
-  padding-right: calc(var(--docs-body-sidebar-width) + var(--docs-content-gap));
+  padding-right: var(--docs-content-gap);
   --border-color: rgba(var(--color-rgb), 0.08);
   border-top: 1px solid var(--border-color);
 }
@@ -4746,9 +4746,9 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   display: grid;
   grid-template-columns: 2.5em 1fr;
   grid-auto-rows: 3em;
-
   padding-bottom: 2em;
 }
+
 .AdditionalResources--icon {
   color: inherit;
   flex-shrink: 0;
@@ -4768,10 +4768,19 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     display: block;
     margin-bottom: 0.5em;
   }
+}
 
-  .DocsFooter--content-dot-spacer {
-    display: none;
-  }
+.DocsFooterResources {
+  display: flex;
+  justify-content:baseline;
+  flex-wrap: wrap;
+  margin-bottom: 1em;
+  width: 100%;
+  font-size: .9em;
+}
+
+.DocsFooterResources > * {
+  padding-right: 1em;
 }
 
 .DocsCodeExamplesOverview {
@@ -5443,4 +5452,3 @@ pre {
 [theme="dark"] .littlefoot-footnote__button {
   background: rgba(110, 110, 110, 0.5);
 }
-

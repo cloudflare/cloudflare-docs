@@ -1,3 +1,5 @@
+{{ $DATA := (index $.Site.Data .Section) }}
+
 <footer class="DocsFooter">
   <div class="DocsFooter--content">
     {{ if eq .Params.layout "overview"}}
@@ -15,9 +17,9 @@
         />
       </svg>
       <span class="DocsFooter--content-additional-wrapper">
-        Learn more at the {{ with .File }} {{- $url := (printf
-        "https://www.cloudflare.com/learning/") -}} {{- partial "external.link"
-        (dict "text" "Learning Center" "url" $url) }} {{- end -}}
+        Learn more at the {{- $url := 
+        "https://www.cloudflare.com/learning/" -}} {{- partial "external.link"
+        (dict "text" "Learning Center" "url" $url) }}
       </span>
 
       <svg
@@ -52,9 +54,9 @@
       </svg>
 
       <span class="DocsFooter--content-additional-wrapper">
-        Engage with the community on the {{ with .File }} {{- $url := (printf
-        "https://community.cloudflare.com/") -}} {{- partial "external.link"
-        (dict "text" "Community Forum" "url" $url) }} {{- end -}}
+        Engage with the community on the {{- $url := 
+        "https://community.cloudflare.com/" -}} {{- partial "external.link"
+        (dict "text" "Community Forum" "url" $url) }}
       </span>
       <svg
         class="AdditionalResources--icon"
@@ -73,10 +75,48 @@
       </svg>
 
       <span class="DocsFooter--content-additional-wrapper">
-        Get answers to common questions and issues from the {{ with .File }}
-        {{- $url := (printf "https://support.cloudflare.com/") -}} {{- partial
-        "external.link" (dict "text" "Help Center" "url" $url) }} {{- end -}}
+        Get answers to common questions and issues from the
+        {{- $url := "https://support.cloudflare.com/" -}} {{- partial
+        "external.link" (dict "text" "Help Center" "url" $url) }}
       </span>
+    </div>
+    {{ else }}
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper">
+        {{- $url := default "https://dash.cloudflare.com" $DATA.resources.dashboard_link -}} {{- partial
+        "external.link" (dict "text" "Cloudflare Dashboard" "url" $url) }}
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      {{ with $DATA.resources.discord }}
+      <span class="DocsFooter--content-additional-wrapper">
+        {{- $url := default "https://discord.gg/cloudflaredev" $DATA.resources.discord -}} {{- partial
+        "external.link" (dict "text" "Discord" "url" $url) }}
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      {{ end }}
+      <span class="DocsFooter--content-additional-wrapper">
+        {{- $url := default "https://community.cloudflare.com" $DATA.resources.community -}} {{- partial
+        "external.link" (dict "text" "Community" "url" $url) }}
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        {{- $url := default "https://www.cloudflare.com/learning/" $DATA.resources.learning_center -}} {{- partial
+        "external.link" (dict "text" "Learning Center" "url" $url) }}
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        {{- $url := "https://dash.cloudflare.com/?to=/:account/support" -}} {{- partial
+        "external.link" (dict "text" "Support Portal" "url" $url) }}
+      </span>
+
     </div>
     {{ end }}
     <div>
