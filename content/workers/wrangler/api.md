@@ -13,7 +13,9 @@ Wrangler offers an experimental API to programmatically manage your Cloudflare W
 
 ## unstable_dev
 
-Start a local server for testing your Worker.
+Start a local HTTP server for testing your Worker. 
+
+Once called, `unstable_dev` will return a `fetch` function for invoking your Worker without needing to know the address or port, as well as a `stop` function to shut-down the HTTP server.
 
 {{<Aside type="note">}}
 
@@ -47,26 +49,71 @@ const worker = await unstable_dev(script, options, apiOptions)
 {{</definitions>}}
 ### Usage
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 ```js
 ---
 filename: src/index.test.js
 ---
 import { unstable_dev } from 'wrangler'
 
-describe("worker", () => {
-	it("should return Hello World", async () => {
-		const worker = await unstable_dev(
+describe("Worker", () => {
+	let worker;
+
+	beforeAll(async () => {
+		worker = await unstable_dev(
 			"src/index.js",
 			{},
 			{ disableExperimentalWarning: true }
 		);
+	});
+
+	afterAll(async () => {
+		await worker.stop();
+	});
+
+	it("should return Hello World", async () => {
 		const resp = await worker.fetch();
 		if (resp) {
 			const text = await resp.text();
 			expect(text).toMatchInlineSnapshot(`"Hello World!"`);
 		}
-		await worker.stop();
 	});
 });
 ```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+---
+filename: src/index.test.ts
+---
+import { unstable_dev } from "wrangler";
+import type { UnstableDevWorker } from "wrangler";
+
+describe("Worker", () => {
+	let worker: UnstableDevWorker;
+
+	beforeAll(async () => {
+		worker = await unstable_dev(
+			"src/index.ts",
+			{},
+			{ disableExperimentalWarning: true }
+		);
+	});
+
+	afterAll(async () => {
+		await worker.stop();
+	});
+
+	it("should return Hello World", async () => {
+		const resp = await worker.fetch();
+		if (resp) {
+			const text = await resp.text();
+			expect(text).toMatchInlineSnapshot(`"Hello World!"`);
+		}
+	});
+});
+```
+{{</tab>}}
+{{</tabs>}}
 
