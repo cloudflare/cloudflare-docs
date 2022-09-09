@@ -6,35 +6,94 @@ weight: 41
 
 # Kubernetes
 
-You can deploy Cloudflare Tunnel to route traffic to Kubernetes clusters. Cloudflare no longer maintains an ingress controller, but we recommend two options for connecting Kubernetes clusters to Cloudflare without introducing downtime caused by application restarts or `cloudflared` updates.
+Kubernetes, or K8s, is a container orchestration and management tool. Kubernetes is declarative, so you define the end state in a .yml file. A Kubernetes cluster has two components, the master, and the workers. The master is the control plane that the user interacts with to manage the containers. Worker nodes are where the containers are deployed and ran. A Kubernetes cluster is connected internally through a private network. Cloudflare Tunnel can be used to expose services running inside the Kubernetes cluster to the public.
+![Tunnels in Kubernetes](/cloudflare-one/static/documentation/connections/connect-apps/kubernetes/k8s-layout.png)
 
-Both options rely on Cloudflare's Load Balancer to send traffic for a single hostname to two or more instances of `cloudflared`, allowing you to update or modify `cloudflared` without downtime. Those instances of `cloudflared` should point to a service or ingress controller that runs in front of your Kubernetes cluster.
+## Creating the Kubernetes Cluster
+This guide will use a Google managed Kubernetes GKE.
+You will need the [gcloud command line tool installed and connected to your account](https://cloud.google.com/sdk/docs/install) and the [kubectl command line tool installed](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl). In the GCP console create a new Kubernetes cluster.
+![Create the cluster](/cloudflare-one/static/documentation/connections/connect-apps/kubernetes/create-cluster.png)
+In order to connect to the cluster, in the dropdown form the three dots select connect.
+![Create to the cluster](/cloudflare-one/static/documentation/connections/connect-apps/kubernetes/connect-cluster.png)
+Copy the command that appears and paste it into your local terminal.
+![Connection command](/cloudflare-one/static/documentation/connections/connect-apps/kubernetes/connect-command.png)
 
-| Before you start                                                               |
-| ------------------------------------------------------------------------------ |
-| [Enable Cloudflare Load Balancers](/load-balancing/how-to/create-load-balancer/) |
-| [Create a tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/)  |
+## Creating the Pods
+A pod is the basic deployable object that Kubernetes creates. It represents an instance of a running process in the cluster. The following .yml file ( httpbin-app.yml) will create a pod that contains the httpbin application. It will create two replicas so as to prevent any downtime. The application will be accessible inside the cluster at web-service:80.
+```sh
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpbin-deployment
+spec:
+  selector:
+    matchLabels:
+      app: httpbin
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: httpbin
+    spec:
+      containers:
+      - name: httpbin
+        image: kennethreitz/httpbin:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+spec:
+  selector:
+    app: httpbin
+  ports:
+    - protocol: TCP
+      port: 80
+```
+Using the following command the application will begin to run inside the cluster.
+```sh
+kubectl create -f httpbin-app.yml
+```
+The pods' status can be seen through the console or using the kubectl get pod command.
+```sh
+kubectl get pods
+```
 
-## Deploy `cloudflared` to an upstream service
-
-1.  Create at least two Tunnels; each with their own dedicated Tunnel ID and associated credentials file.
-
-1.  Upload the credentials file for each Tunnel as k8s secrets.
-
-1.  Create a service that represents your application. In doing so, updates to the application do not impact the Tunnel configuration. For example, an `httpbin` service can be used.
-
-1.  Create two deployments with one replica each using `cloudflared`. Configure `cloudflared` to point to the service IP of the upstream service. Mount the secrets created in Step 1 and point `cloudflared` to the right path.
-
-1.  In the Cloudflare dashboard, create a Load Balancer pool and [point the pool](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to the two or more Cloudflare Tunnel connections.
-
-Once configured, you can update `cloudflared` by updating one deployment and then proceeding to the next one once you've verified the newly updated cloudflared pod is running and connected.
-
-## Deploy in front of an ingress controller
-
-1.  Create at least two Tunnels; each with their own dedicated Tunnel ID and associated credentials file.
-
-1.  Upload the credentials file for each Tunnel as k8s secrets.
-
-1.  Create two deployments with one replica each using `cloudflared`. Configure `cloudflared` to point to an ingress controller. Mount the secrets created in Step 1 and point `cloudflared` to the right path.
-
-1.  In the Cloudflare dashboard, create a Load Balancer pool and [point the pool](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to the two or more Cloudflare Tunnel connections.
+## Routing with Cloudflare Tunnel
+The tunnel can be created through the dashboard using [this guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/). Instead of running the command to install a connector you will select docker as the environment and copy just the token rather than the whole command. Configure the tunnel to route to k8.example.com from the service http://web-service:80. Create the cloudflared-deployement.yml file with the following content.
+```sh
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cloudflared
+  name: cloudflared-deployment
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      pod: cloudflared
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        pod: cloudflared
+    spec:
+      containers:
+      - command:
+        - cloudflared
+        - tunnel
+        - run
+        args:
+        - --token
+        - <token value>
+        image: cloudflare/cloudflared:latest
+        name: cloudflared
+```
+This file will be deployed with the following command.
+```sh
+kubectl create -f cloudflared-deployment.yml
+```
