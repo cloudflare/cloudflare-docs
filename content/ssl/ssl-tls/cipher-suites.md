@@ -1,6 +1,7 @@
 ---
 title: Cipher suites
 pcx_content_type: reference
+layout: list
 weight: 2
 meta:
   title: Cipher suites — Edge certificates
@@ -16,33 +17,46 @@ We no longer support [RC4 cipher suites](https://blog.cloudflare.com/end-of-the-
 
 ---
 
-## Supported cipher suites by protocol
+## Cipher suites recommendations
 
-| OpenSSL Name                        | TLS 1.0 | TLS 1.1 | TLS 1.2 | TLS 1.3 |
+### Security level
+
+If your application has specific security requirements, Cloudflare recommends using the following values when you [restrict cipher suites](#disable-cipher-suites).
+
+| Recommended security level | Description | Cipher suites (used in an [API call](#disable-cipher-suites)]) |
+| --- | --- | --- |
+| Modern | Offers best security and performance, limiting your range of clients to modern devices and browsers. Supports TLS 1.2-1.3 cipher suites. All suites are forward-secret and support authenticated encryption (AEAD). | `["AEAD_AES_128_GCM_SHA256", "AEAD_AES_256_GCM_SHA384", "AEAD_CHACHA20_POLY1305_SHA256", "ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-ECDSA-CHACHA20-POLY1305", "ECDHE-RSA-AES128-GCM-SHA256", "ECDHE-RSA-CHACHA20-POLY1305", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-RSA-AES256-GCM-SHA384"]` |
+| Compatible | Provides broader compatibility with somewhat weaker security. Supports TLS 1.2-1.3 cipher suites. All suites are forward-secret. | `["AEAD_AES_128_GCM_SHA256", "AEAD_AES_256_GCM_SHA384", "AEAD_CHACHA20_POLY1305_SHA256", "ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-ECDSA-CHACHA20-POLY1305", "ECDHE-RSA-AES128-GCM-SHA256", "ECDHE-RSA-CHACHA20-POLY1305", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-RSA-AES256-GCM-SHA384", "ECDHE-ECDSA-AES128-SHA256", "ECDHE-RSA-AES128-SHA256", "ECDHE-ECDSA-AES256-SHA384", "ECDHE-RSA-AES256-SHA384"]` |
+| Legacy | Includes all cipher suites that Cloudflare supports today. Broadest compatibility with the weakest security. Supports TLS 1.0-1.3 cipher suites. | `["AEAD_AES_128_GCM_SHA256", "AEAD_AES_256_GCM_SHA384", "AEAD_CHACHA20_POLY1305_SHA256", "ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-ECDSA-CHACHA20-POLY1305", "ECDHE-RSA-AES128-GCM-SHA256", "ECDHE-RSA-CHACHA20-POLY1305", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-RSA-AES256-GCM-SHA384", "ECDHE-ECDSA-AES128-SHA256", "ECDHE-RSA-AES128-SHA256", "ECDHE-ECDSA-AES256-SHA384", "ECDHE-RSA-AES256-SHA384", "ECDHE-ECDSA-AES128-SHA", "ECDHE-RSA-AES128-SHA", "AES128-GCM-SHA256", "AES128-SHA256", "AES128-SHA", "ECDHE-RSA-AES256-SHA", "AES256-GCM-SHA384", "AES256-SHA256", "AES256-SHA", "DES-CBC3-SHA"]` |
+
+## Supported cipher suites
+
+| OpenSSL Name | Minimum protocol | [Security recommendation](#security-level) | Cipher suite | IANA name |
 | ----------------------------------- | ------- | ------- | ------- | ------- |
-| ECDHE-ECDSA-AES128-GCM-SHA256       | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-ECDSA-CHACHA20-POLY1305       | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-RSA-AES128-GCM-SHA256         | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-RSA-CHACHA20-POLY1305         | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-ECDSA-AES128-SHA256           | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-ECDSA-AES128-SHA              | ✅      | ✅      | ✅      | ❌      |
-| ECDHE-RSA-AES128-SHA256             | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-RSA-AES128-SHA                | ✅      | ✅      | ✅      | ❌      |
-| AES128-GCM-SHA256                   | ❌      | ❌      | ✅      | ❌      |
-| AES128-SHA256                       | ❌      | ❌      | ✅      | ❌      |
-| AES128-SHA                          | ✅      | ✅      | ✅      | ❌      |
-| ECDHE-ECDSA-AES256-GCM-SHA384       | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-ECDSA-AES256-SHA384           | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-RSA-AES256-GCM-SHA384         | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-RSA-AES256-SHA384             | ❌      | ❌      | ✅      | ❌      |
-| ECDHE-RSA-AES256-SHA                | ✅      | ✅      | ✅      | ❌      |
-| AES256-GCM-SHA384                   | ❌      | ❌      | ✅      | ❌      |
-| AES256-SHA256                       | ❌      | ❌      | ✅      | ❌      |
-| AES256-SHA                          | ✅      | ✅      | ✅      | ❌      |
-| DES-CBC3-SHA                        | ✅      | ❌      | ❌      | ❌      |
-| AEAD-AES128-GCM-SHA256 [^1]         | ❌      | ❌      | ❌      | ✅      |
-| AEAD-AES256-GCM-SHA384 [^1]         | ❌      | ❌      | ❌      | ✅      |
-| AEAD-CHACHA20-POLY1305-SHA256 [^1]  | ❌      | ❌      | ❌      | ✅      |
+| ECDHE-ECDSA-AES128-GCM-SHA256       | TLS 1.2 | Modern | [0xc02b] | TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 |
+| ECDHE-ECDSA-CHACHA20-POLY1305       | TLS 1.2 | Modern | [0xcca9] | TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 |
+| ECDHE-RSA-AES128-GCM-SHA256         | TLS 1.2 | Modern | [0xc02f] | TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 |
+| ECDHE-RSA-CHACHA20-POLY1305         | TLS 1.2 | Modern  | [0xcca8] | TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA25 |
+| ECDHE-ECDSA-AES128-SHA256           | TLS 1.2 | Compatible | [0xc023] | TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256 |
+| ECDHE-ECDSA-AES128-SHA              | TLS 1.0 | Modern | [0xc009] | TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
+| ECDHE-RSA-AES128-SHA256             | TLS 1.2 | Compatible | [0xc027] | TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+| ECDHE-RSA-AES128-SHA                | TLS 1.0 | Modern | [0xc013] | TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA |
+| AES128-GCM-SHA256                   | TLS 1.2 | Legacy | [0x9c] | TLS_RSA_WITH_AES_128_GCM_SHA256 |
+| AES128-SHA256                       | TLS 1.2 | Legacy | [0x3c] | TLS_RSA_WITH_AES_128_CBC_SHA256 |
+| AES128-SHA                          | TLS 1.0 | Legacy | [0x2f] | TLS_RSA_WITH_AES_128_CBC_SHA |
+| ECDHE-ECDSA-AES256-GCM-SHA384       | TLS 1.2 | Modern | [0xc02c] | TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 |
+| ECDHE-ECDSA-AES256-SHA384           | TLS 1.2 | Compatible | [0xc024] | TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384 |
+| ECDHE-RSA-AES256-GCM-SHA384         | TLS 1.2 | Modern | [0xc030] | TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 |
+| ECDHE-RSA-AES256-SHA384             | TLS 1.2 | Compatible | [0xc028] | TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 |
+| ECDHE-RSA-AES256-SHA                | TLS 1.0 | Compatible | [0xc014] | TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA |
+| AES256-GCM-SHA384                   | TLS 1.2 | Legacy | [0x9d] | TLS_RSA_WITH_AES_256_GCM_SHA384 |
+| AES256-SHA256                       | TLS 1.2 | Legacy | [0x3d] | TLS_RSA_WITH_AES_256_CBC_SHA256
+ |
+| AES256-SHA                          | TLS 1.0 | Legacy | [0x35] | TLS_RSA_WITH_AES_256_CBC_SHA |
+| DES-CBC3-SHA                        | TLS 1.0 | Legacy | [0x0701c0] | SSL_CK_DES_192_EDE3_CBC_WITH_SHA |
+| AEAD_AES_128_GCM_SHA256 [^1]        | TLS 1.2 | Modern | N/A | N/A |
+| AEAD_AES_256_GCM_SHA384 [^1]        | TLS 1.2 | Modern | N/A | N/A |
+| AEAD_CHACHA20_POLY1305_SHA256 [^1]  | TLS 1.2 | Modern | N/A | N/A |
 
 [^1]: _Although TLS 1.3 uses the same cipher suite space as previous versions of TLS, TLS 1.3 cipher suites are defined differently. They only specifying the symmetric ciphers and cannot be used for TLS 1.2. Similarly, TLS 1.2 and lower cipher suites cannot be used with TLS 1.3 (IETF TLS 1.3 draft 21). BoringSSL also hard-codes cipher preferences in this order for TLS 1.3._
 
