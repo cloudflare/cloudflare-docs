@@ -40,7 +40,7 @@ To remedy a false positive:
 
 5. Navigate to **Security** > **DDoS** and select **Configure** next to the Managed Ruleset containing the rule you will adjust.
 
-6. Select **Browse rules** and paste the Rule name in the search field.
+6. Select **Browse rules** and paste the rule name in the search field.
 
 7. Decrease the rule’s **Sensitivity Level** to _Essentially Off_ or change the action of the rule to _Log_.
 
