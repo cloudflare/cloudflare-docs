@@ -18,104 +18,52 @@ In order to use Ansible to deploy tunnels in GCP you will need to have [Ansible 
 The configuration files will all need to be stored in one folder in order for Terraform to deploy everything properly.
 
 Ansible playbooks declare the configuration that Ansible will deploy. The playbook is written in a .yml files. [Keywords](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#play) are used to define how Ansible will deploy. For example, the vars_files keyword specifies where any variables that the .yml file will use are stored. The tasks keyword specifies the actions that Ansible will actually perform. Ansible uses modules to specify what actions to complete. For example the copy module is used to create a copy of a file in the deployment. In this guide the copy module uses the content keyword to declare what will be in the file rather than providing a source file. 
-
-```txt
----
-
-- hosts: all
-
-  become: yes
-
-  
-
-# In order to run the tunnels certain values will need to be passed in to the VM
-
-  vars_files:
-
-    - ./tf_ansible_vars_file.yml
-
-# The tasks section specifies the actions that will take place on the VM
-
-  tasks:
-
-    - name: download cloudflared package
-
-      shell: wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-
-    - name: depackage cloudflared
-
-      shell: sudo dpkg -i cloudflared-linux-amd64.deb
-
-      
-
-    - name: Create cloudflared service directory 
-
-      shell: mkdir -p /etc/cloudflared/
-
-    
-
-    - name: Creating the ingress rules and the config file for cloudflared
-
-      copy:
-
-        dest: "/etc/cloudflared/config.yml"
-
-        content: |
-
-          tunnel: "{{ tunnel_id }}"
-
-          credentials-file: /etc/cloudflared/cert.json
-
-          logfile: /var/log/cloudflared.log
-
-          loglevel: info    
-
-          ingress:
-
-            - hostname: "ssh.{{ zone }}"
-
-              service: ssh://localhost:22
-
-            - service: http_status:404
-
-    - name: Creating cred.json file for cloudflared
-
-      copy:
-
-        dest: "/etc/cloudflared/cert.json"
-
-        content: |
-
-          {
-
-            "AccountTag"   : "{{ account | quote }}",
-
-            "TunnelID"     : "{{ tunnel_id | quote }}",
-
-            "TunnelName"   : "{{ tunnel_name | quote }}",
-
-            "TunnelSecret" : "{{ secret | quote }}"
-
-          }
-
-    - name: Installing cloudflared as a service
-
-      shell: cloudflared service install
-
-    
-
-    - name: Start cloudflared service
-
-      systemd:
-
-        name: cloudflared
-
-        state: started
-
-        enabled: true
-
-        masked: no
-```
+    ```sh
+    ---
+    - hosts: all
+      become: yes
+    # In order to run the tunnels certain values will need to be passed in to the VM
+    vars_files:
+      - ./tf_ansible_vars_file.yml
+    # The tasks section specifies the actions that will take place on the VM
+    tasks:
+      - name: download cloudflared package
+        shell: wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+      - name: depackage cloudflared
+        shell: sudo dpkg -i cloudflared-linux-amd64.deb
+      - name: Create cloudflared service directory 
+        shell: mkdir -p /etc/cloudflared/
+      - name: Creating the ingress rules and the config file for cloudflared
+        copy:
+          dest: "/etc/cloudflared/config.yml"
+          content: |
+            tunnel: "{{ tunnel_id }}"
+            credentials-file: /etc/cloudflared/cert.json
+            logfile: /var/log/cloudflared.log
+            loglevel: info    
+            ingress:
+              - hostname: "ssh.{{ zone }}"
+                service: ssh://localhost:22
+              - service: http_status:404
+      - name: Creating cred.json file for cloudflared
+        copy:
+          dest: "/etc/cloudflared/cert.json"
+          content: |
+            {
+              "AccountTag"   : "{{ account | quote }}",
+              "TunnelID"     : "{{ tunnel_id | quote }}",
+              "TunnelName"   : "{{ tunnel_name | quote }}",
+              "TunnelSecret" : "{{ secret | quote }}"
+            }
+      - name: Installing cloudflared as a service
+        shell: cloudflared service install
+      - name: Start cloudflared service
+        systemd:
+          name: cloudflared
+          state: started
+          enabled: true
+          masked: no
+    ```
 
 ### Terraform Configuration
 The tunnel will be created through the Cloudflare Terraform provider. Using Terraform to deploy tunnels will require saving sensitive identification information. This can be stored in a .tfvars file and then passed in as a variable to the .tf file. This file should not be saved by the version control used in order to prevent accidentally exposing this information. If the version control is git, this file should be included in the .gitignore file. Terraform will automatically use these variables if the file is named terraform.tfvars, otherwise the variable file will need to be manually passed in. 
