@@ -44,7 +44,7 @@ To remedy a false positive:
 
 7. Decrease the rule’s **Sensitivity Level** to _Essentially Off_ or change the action of the rule to _Log_.
 
-8. Select **Next** and then **Save**.
+8. Select **Next** and then select **Save**.
 
 _\* Available in the Network Analytics v2 Logs or API. Not available in Network Analytics dashboard yet._
 
