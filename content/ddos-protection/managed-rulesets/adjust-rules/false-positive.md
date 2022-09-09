@@ -46,8 +46,6 @@ To remedy a false positive:
 
 8. Select **Next** and then select **Save**.
 
-_\* Available in the Network Analytics v2 Logs or API. Not available in Network Analytics dashboard yet._
-
 Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/ddos-protection/reference/analytics/).
 
 ## Updating the adjusted rules later
