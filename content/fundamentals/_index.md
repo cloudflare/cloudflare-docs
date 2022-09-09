@@ -8,4 +8,4 @@ weight: 1
 
 Cloudflare Fundamentals provides information about features and outcomes that span Cloudflare products.
 
-If you are new to Cloudflare, check out our [new user guide](/fundamentals/get-started/).
+If you are new to Cloudflare, check out our [new user guide](/learning-paths/get-started/).

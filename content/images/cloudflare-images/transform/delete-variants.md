@@ -14,19 +14,22 @@ Deleting a variant is a global action that will affect other images that contain
 
 {{</Aside>}}
 
-## Delete a variant using the dashboard
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Select **Images** > **Variants**.
 3. Find the variant you want to remove and select **Delete**.
 
-{{<Aside type="note" header="Note">}}
+{{<Aside type="note">}}
 
 You cannot delete the public variant.
 
 {{</Aside>}}
 
-## Delete a variant using the API
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 For detailed information on using the API, refer to the [API endpoint](https://api.cloudflare.com/#cloudflare-images-variants-delete-a-variant) documentation.
 
@@ -47,3 +50,6 @@ You will receive a response similar to this:
   "messages": []
 }
 ```
+
+{{</tab>}}
+{{</tabs>}}
