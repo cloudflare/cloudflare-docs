@@ -77,5 +77,7 @@ Operations can be added to the queries to modify what is displayed. For example,
 
 ## Other Resources
 [Prometheus Querying Language](https://prometheus.io/docs/prometheus/latest/querying/basics/) - Prometheus' own page about using it querying language
+
 [Grafana Docs](https://grafana.com/docs/)
+
 [Grafana Tutorials](https://grafana.com/tutorials/)
