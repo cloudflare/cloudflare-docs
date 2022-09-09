@@ -12,12 +12,12 @@ Ansible can be integrated with Terraform in order to take advantage of the featu
 This guide will go over how to deploy a tunnel on a GCP instance through Terraform and Ansible.
 
 ## Install and Setup
-In order to use Ansible to deploy tunnels in GCP you will need to have Ansible installed, Terraform installed, and the GCP CLI configured.
+In order to use Ansible to deploy tunnels in GCP you will need to have [Ansible installed](https://docs.ansible.com/ansible/latest/installation_guide/index.html), [Terraform installed](https://learn.hashicorp.com/tutorials/terraform/install-cli), and the [GCP CLI configured](https://cloud.google.com/sdk/docs/install).
 
 ### Creating the Ansible Playbook
 The configuration files will all need to be stored in one folder in order for Terraform to deploy everything properly.
 
-Ansible playbooks declare the configuration that Ansible will deploy. The playbook is written in a .yml files. Keywords are used to define how Ansible will deploy. For example, the vars_files keyword specifies where any variables that the .yml file will use are stored. The tasks keyword specifies the actions that Ansible will actually perform. Ansible uses modules to specify what actions to complete. For example the copy module is used to create a copy of a file in the deployment. In this guide the copy module uses the content keyword to declare what will be in the file rather than providing a source file. 
+Ansible playbooks declare the configuration that Ansible will deploy. The playbook is written in a .yml files. [Keywords](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#play) are used to define how Ansible will deploy. For example, the vars_files keyword specifies where any variables that the .yml file will use are stored. The tasks keyword specifies the actions that Ansible will actually perform. Ansible uses modules to specify what actions to complete. For example the copy module is used to create a copy of a file in the deployment. In this guide the copy module uses the content keyword to declare what will be in the file rather than providing a source file. 
 
 ```sh
 ---
