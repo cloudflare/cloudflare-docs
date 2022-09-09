@@ -42,7 +42,7 @@ To remedy a false positive:
 
 6. Select **Browse rules** and paste the rule name in the search field.
 
-7. Decrease the rule’s **Sensitivity Level** to _Essentially Off_ or change the action of the rule to _Log_.
+7. Decrease the rule’s **Sensitivity Level** to _Essentially Off_ or change the rule action to _Log_.
 
 8. Select **Next** and then select **Save**.
 
