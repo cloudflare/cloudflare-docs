@@ -10,7 +10,7 @@ The port that metrics are sent to can be manually set.
 cloudflared tunnel --metrics <service-URL>:<service-port>
 ```
 This server is accessed through <service-URL>:<service-port>/metrics. If no port is set a random one will be chosen when the tunnel is run.
-![Default Metrics Port](/cloudflare-one/static/documentation/connections/grafana/metrics-port.png)
+![Default Metrics Port](/cloudflare-one/static/documentation/connections/connect-apps/grafana/metrics-port.png)
 The port is highlighted in the above image.
 
 ## Setting Up Prometheus
@@ -72,7 +72,7 @@ Grafana will automatically start running on http://localhost:3000. A different p
 Go to the site that Grafana is listing on. In the bottom left corner of the page click on the gear and then Data Sources.
 Click "Add data source" and select Prometheus from the options. Enter the url that leads to the site that shows the Prometheus dashboard.
 A dashboard can now be created within Grafana to monitor tunnel metrics. Select the new data source and enter the Prometheus queries to monitor. Some simple queries to start with are "cloudflared_tunnel_request_errors" and "cloudflared_tunnel_requests". Create a new dashboard and then in the upper right corner of the page click the "Add panel" button, and "Add a new panel". Select the above metric names in the metrics drop down to populate a graph with them. 
-![Grafana query](/cloudflare-one/static/documentation/connections/grafana/grafana-ops.png)
+![Grafana query](/cloudflare-one/static/documentation/connections/connect-apps/grafana/grafana-ops.png)
 Operations can be added to the queries to modify what is displayed. For example, showing all tunnel requests to showing all tunnel requests over a recent period of time, such as a day rather than all tunnel requests since it started running.
 
 ## Other Resources
