@@ -13,9 +13,7 @@ Cloudflare Data Loss Prevention can inspect upload and download traffic to and f
 
 ### Browsers
 
-DLP for Google Drive is compatible with all popular browsers.
-
-To inspect Google Drive traffic in Chrome, you will need to [disable QUIC in Chrome](/cloudflare-one/policies/filtering/http-policies/incompatible-traffic/#disable-quic-in-google-chrome).
+No additional configuration is required to scan Google Drive traffic in a browser.
 
 ### Desktop app
 
