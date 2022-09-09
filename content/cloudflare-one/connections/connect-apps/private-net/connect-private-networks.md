@@ -8,7 +8,7 @@ layout: single
 
 # Connect private networks
 
-Creating a private network has two components: the server and the client. The server's infrastructure (whether that is a single application, multiple applications, or a network segment) is connected to Cloudflare's edge by Cloudflare Tunnel. This is done by running the `cloudflared` daemon on the server. Simply put, Cloudflare Tunnel is what connects your network to Cloudflare. On the client side, end users connect to Cloudflare's edge using the Cloudflare WARP agent.
+Creating a private network has two components: the server and the client. The server's infrastructure (whether that is a single application, multiple applications, or a network segment) is connected to Cloudflare's edge by Cloudflare Tunnel. This is done by running the `cloudflared` daemon on the server. Simply put, Cloudflare Tunnel is what connects your network to Cloudflare. On the client side, end users connect to Cloudflare's edge using the Cloudflare WARP agent. This agent can be rolled out to your entire organization in just a few minutes using your in-house MDM tooling.
 
 To connect a private network to Cloudflare’s edge, follow the guide below. You can also check out our [tutorial](/cloudflare-one/tutorials/warp-to-tunnel/).
 
