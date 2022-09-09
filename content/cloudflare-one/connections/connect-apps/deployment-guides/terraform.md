@@ -108,6 +108,7 @@ variable "cloudflare_token" {
   description = "The Cloudflare user's API token."
   type        = string
 }
+```
 To create a tunnel you will need to also generate the tunnel secret. This will be used in the tunnel creation and to create the permission file so that the tunnel can be run. Terraform can then create the CNAME record that points traffic to the tunnel. Terraform can also create an Access Application associated with the subdomain and a policy associated with that application.
 
 ```sh
@@ -160,6 +161,7 @@ resource "cloudflare_access_policy" "ssh_policy" {
   }
 }
 ```
+
 The specifications for the GCP instance can be specified. A start up script can be passed in to the instance to complete any internal configuration for the instance. The needed variables for the tunnel will be passed in through Terraform so that the script is able to create the tunnel cert.json file and config file.
 ```sh
 # OS the server will use
