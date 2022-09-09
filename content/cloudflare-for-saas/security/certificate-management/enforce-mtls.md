@@ -40,7 +40,7 @@ While TLS 1.3 is the most recent and secure version, it is not supported by some
 
 ## Cipher suites
 
-For security and regulatory reasons, you may want to only allow connections from certain cipher suites. Cloudflare provides recommended values and full cipher suite reference in our [Cipher suites documentation](/ssl/ssl-tls/cipher-suites/)
+For security and regulatory reasons, you may want to only allow connections from certain cipher suites. Cloudflare provides recommended values and full cipher suite reference in our [Cipher suites documentation](/ssl/ssl-tls/cipher-suites/).
 
 <details>
 <summary>Restrict cipher suites for zone</summary>

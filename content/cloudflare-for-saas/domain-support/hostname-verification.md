@@ -53,7 +53,7 @@ If you have an Enterprise account, you can utilize Apex verification (after talk
 
 For verification, the account that owns the custom hostname must also own all A and AAAA records for the apex. To verify ownership, the IP returned for the hostname must reside in the IP prefix allocated to the account.
 
-The few seconds Cloudflare requires to iterate over the CNAME can cause a slight downtime. This is likely acceptable for CNAME verification of Custom Hostnames for staging or development sites. However, Cloudflare recommends verification of Custom Hostnames via TXT record or HTTP token for live production traffic. When TXT or HTTP verification completes and the Custom Hostname shows **Active** in the Cloudflare **SSL/TLS** app under the **Custom Hostnames** tab, inform your customer to CNAME traffic to Cloudflare.
+When you are adding a new custom hostname to Cloudflare, the few seconds Cloudflare requires to iterate over the CNAME can cause a slight downtime. This is likely acceptable for CNAME verification of Custom Hostnames for staging or development sites. However, Cloudflare recommends verification of Custom Hostnames via TXT record or HTTP token for live production traffic. When TXT or HTTP verification completes and the Custom Hostname shows **Active** in the Cloudflare **SSL/TLS** app under the **Custom Hostnames** tab, inform your customer to CNAME traffic to Cloudflare.
 
 ## TXT
 
