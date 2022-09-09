@@ -178,3 +178,9 @@ async function handleRequest(request) {
 ```
 
 When testing image resizing, please deploy the script first. Resizing will not be active in the online editor in the dashboard.
+
+## Warning about `cacheKey`
+
+Resized images are always cached. They are cached as additional variants under a cache entry for the URL of the full-size source image in the `fetch` subrequest. Do not worry about using many different Workers or many external URLs — they do not influence caching of resized images, and you do not need to do anything for resized images to be cached correctly.
+
+If you use the `cacheKey` fetch option to unify caches of multiple different source URLs, you must not add any resizing options to the `cacheKey`, as this will fragment the cache and hurt caching performance. The `cacheKey` option is meant for the full-size source image URL only, not for its resized variants.
