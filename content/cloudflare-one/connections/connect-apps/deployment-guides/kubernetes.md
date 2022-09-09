@@ -97,3 +97,4 @@ This file will be deployed with the following command.
 ```sh
 kubectl create -f cloudflared-deployment.yml
 ```
+The application within the cluster will now be accessible through the domain name you configured.
