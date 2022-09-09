@@ -57,4 +57,4 @@ To change the status of multiple applications to Approved, Unapproved, In review
 
 1. Select the status you want to assign to your applications.
 
-Each application’s status will now be updated across charts and visualizations within Shadow IT Discovery.
+Each application’s status will now be updated across charts and visualizations within Private Network Discovery.
