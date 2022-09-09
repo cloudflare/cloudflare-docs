@@ -38,7 +38,7 @@ You can learn more about how DoH works in RFC8484, more specifically [the HTTP l
 Example request:
 
 ```sh
-$ curl --http2 -H "accept: application/dns-json" https://1.1.1.1/dns-query?name=cloudflare.com --next --http2 -H "accept: application/dns-json" https://1.1.1.1/dns-query?name=example.com
+$ curl --http2 -H "accept: application/dns-json" "https://1.1.1.1/dns-query?name=cloudflare.com" --next --http2 -H "accept: application/dns-json" "https://1.1.1.1/dns-query?name=example.com"
 ```
 
 ## Authentication
