@@ -59,7 +59,7 @@ $ wrangler init [NAME] [-y / --yes] [--from-dash]
 - `--yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Answer yes to any prompts for new projects.
 - `--from-dash` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Fetch a worker initialized from the Dashboard. This is done by passing the flag and the worker name. `wrangler init --from-dash <WORKER_NAME>` 
+  - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>` 
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
 {{</definitions>}}
 
