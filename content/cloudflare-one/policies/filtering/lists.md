@@ -19,9 +19,13 @@ You can create a list by:
 
 ## Create a list from a CSV file
 
-If you would like to test how this feature works, here is a [sample CSV file](/cloudflare-one/static/documentation/list-test.csv) of URLs. 
-Each line should be a single entry, no trailing whitespace is allowed, CRLF (Windows) and LF (Unix) line endings are valid.
-You can upload it to the Zero Trust dashboard by following the instructions below:
+If you would like to test how this feature works, here is a [sample CSV file](/cloudflare-one/static/documentation/list-test.csv) of URLs. When formatting the CSV:
+
+- Each line should be a single entry.
+- Trailing whitespaces are not allowed.
+- CRLF (Windows) and LF (Unix) line endings are valid.
+
+To upload the list to the Zero Trust dashboard:
 
 1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team** > **Lists**.
 2. Click **Upload CSV**.
