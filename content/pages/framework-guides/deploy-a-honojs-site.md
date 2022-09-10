@@ -104,4 +104,4 @@ Every time you commit new code to your Honojs site, Cloudflare Pages will automa
 
 ## Learn more
 
-By completing this guide, you have successfully deployed your Next.js site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+By completing this guide, you have successfully deployed your Honojs site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
