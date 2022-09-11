@@ -474,7 +474,7 @@ filename: index.js
 highlight: [2, 3]
 ---
 if (url.pathname === '/thumbnail') {
- const imageURL = “https://github.com/lauragift21/social-image-demo/blob/1ed9044463b891561b7438ecdecbdd9da48cdb03/assets/cover.png?raw=true”
+ const imageURL = "https://github.com/lauragift21/social-image-demo/blob/1ed9044463b891561b7438ecdecbdd9da48cdb03/assets/cover.png?raw=true"
  fetch(imageURL, {
    cf: {
      image: {}
