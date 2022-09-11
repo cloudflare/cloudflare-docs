@@ -16,10 +16,13 @@ $ mkdir my-hono-app
 $ cd my-hono-app
 $ npm init -y
 
+# Make sure Hono is installed
+$ npm install hono
+
 # Install the required dependencies. 
 # ESBuild is needed to bundle the hono app code
 # npm-run-all enables us to run multiple npm commands at once 
-$ npm i --save-dev wrangler hono esbuild npm-run-all 
+$ npm install --save-dev wrangler esbuild npm-run-all 
 ```
 
 Now open the project in your cod editor of choice. For, example, we will use VS Code in this tutorial.
