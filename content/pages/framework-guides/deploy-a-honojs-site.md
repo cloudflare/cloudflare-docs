@@ -25,11 +25,7 @@ $ npm install hono
 $ npm install --save-dev wrangler esbuild npm-run-all 
 ```
 
-Now open the project in your cod editor of choice. For, example, we will use VS Code in this tutorial.
-
-```shell
-$ code .
-```
+Now open the project in your code editor of choice.
 
 In the project, add a `src/server.js` file.
 
