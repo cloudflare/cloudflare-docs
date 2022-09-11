@@ -5,7 +5,7 @@ title: Deploy a Honojs site
 
 # Deploy a Honojs site
 
-[Hono](https://honojs.dev/) - [炎] means flame🔥 in Japanese - is a small, simple, and ultrafast web framework for Cloudflare Workers, Deno, Bun, and others. Fast, but not only fast.  In this guide, you will create a new Honojs application and deploy it using Cloudflare Pages.
+[Hono](https://honojs.dev/) - [炎] means flame🔥 in Japanese - is a small, simple, and ultrafast web framework for Cloudflare Pages/Workers, Deno, Bun, and others. Fast, but not only fast.  In this guide, you will create a new Honojs application and deploy it using Cloudflare Pages.
 
 ## Creating a new project
 
