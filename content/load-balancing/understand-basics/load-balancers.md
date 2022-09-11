@@ -56,9 +56,9 @@ The Cloudflare API supports the following commands for load balancers.
 
 | Command | Method | Endpoint |
 | --- | --- | --- |
-| [Create Load Balancer](https://api.cloudflare.com/#load-balancers-create-load-balancer) | `GET` | `/zones/:zone_id/load_balancers` |
+| [Create Load Balancer](https://api.cloudflare.com/#load-balancers-create-load-balancer) | `POST` | `/zones/:zone_id/load_balancers` |
 | [Delete Load Balancer](https://api.cloudflare.com/#load-balancers-delete-load-balancer) | `DELETE` | `/zones/:zone_id/load_balancers/:id` |
 | [List Load Balancers](https://api.cloudflare.com/#load-balancers-list-load-balancers) | `GET` | `/zones/:zone_id/load_balancers`
-| [Load Balancer Details](https://api.cloudflare.com/#load-balancers-load-balancer-details) | `POST` | `/zones/:zone_id/load_balancers/:id` |
+| [Load Balancer Details](https://api.cloudflare.com/#load-balancers-load-balancer-details) | `GET` | `/zones/:zone_id/load_balancers/:id` |
 | [Overwrite specific properties](https://api.cloudflare.com/#load-balancers-patch-load-balancer) | `PATCH` | `/zones/:zone_id/load_balancers/:id`
 | [Overwrite entire Load Balancer](https://api.cloudflare.com/#load-balancers-update-load-balancer) | `PUT` | `/zones/:zone_id/load_balancers/:id`
