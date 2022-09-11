@@ -40,6 +40,15 @@ app.get('/', (c) => c.text('Hello world, this is Hono!!'))
 export default app
 ```
 
+If you want to serve any static files like css, image or js files, you will need to add this bit code
+
+```javascript
+app.get('/pub/*', async (c) => {
+    return await c.env.ASSETS.fetch(c.req)
+})
+```
+This will cause all the files in the `pub` folder within `dist` to be served in your app.
+
 Now, open your `package.json` file and update the `scripts` section.
 
 ```json
