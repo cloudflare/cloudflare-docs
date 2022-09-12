@@ -56,6 +56,11 @@ The on-disk configuration of the Windows client can be changed at any time by mo
 
 Changes to this file are processed immediately by the WARP client.
 
+### Authentication Experience
+By default WARP will use the default browser associated with the user to performance registration. You can override this to optionally uses an embeded browser to work around protocol handler issues. To use an embeded browser you must complete the following steps:
+1. Download and install WebView2 by following the instructions [here](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section)
+2. Add a registery key with the following command: `REG ADD HKLM\SOFTWARE\Cloudflare\CloudflareWARP /f /v UseWebView2 /t REG_SZ /d y`
+
 ## Install WARP on macOS
 
 The Cloudflare WARP macOS client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally this plist can be wrapped in a `.mobileconfig`.
