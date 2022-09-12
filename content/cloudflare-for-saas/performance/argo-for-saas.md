@@ -1,5 +1,5 @@
 ---
-pcx-content-type: overview
+pcx_content_type: overview
 title: Argo Smart Routing for SaaS
 weight: 3
 ---
