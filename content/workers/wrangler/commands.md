@@ -876,6 +876,10 @@ $ wrangler tail <NAME> [OPTIONS]
 
 {{</definitions>}}
 
+{{<Aside type="note">}}
+Filtering with `--ip self` will allow tailing a Worker beyond the normal request per second limits.
+{{</Aside>}}
+
 After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
 
 ---
