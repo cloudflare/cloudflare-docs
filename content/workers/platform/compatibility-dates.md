@@ -44,6 +44,11 @@ Most developers will not need to use `compatibility_flags`; instead, Cloudflare 
 
 Newest changes are listed first.
 
+{{ $data := getJSON "./content/workers/platform/compatibility-dates.json" }}
+{{ range $data.compatibility_dates }}
+{{ partial "_platform-compatibility-date.md" }}
+{{ end }}
+
 ### Minimal subrequests
 
 <table>
@@ -75,9 +80,9 @@ Newest changes are listed first.
 
 With the `minimal_subrequests` flag set, `fetch()` subrequests sent to endpoints on the Worker's own zone (also called same-zone subrequests) have a reduced set of features applied to them. In general, these features should not have been applied to same-zone subrequests in the first place, and very few user-facing behavior changes are anticipated. Specifically, Workers might observe the following behavior changes with the new flag:
 
-* Response bodies will not be opportunistically gzipped before being transmitted to the Workers runtime. If a Worker reads the response body, it will read it in plaintext, as has always been the case, so disabling this prevents unnecessary decompression. Meanwhile, if the Worker passes the response through to the client, Cloudflare's HTTP proxy will opportunistically gzip the response body on that side of the Workers runtime instead. The behavior change observable by a Worker script should be that some `Content-Encoding: gzip` headers will no longer appear.
-* Automatic Platform Optimization may previously have been applied on both the Worker's initiating request and its subrequests in some circumstances. It will now only apply to the initiating request.
-* Link prefetching will now only apply to the Worker's response, not responses to the Worker's subrequests.
+- Response bodies will not be opportunistically gzipped before being transmitted to the Workers runtime. If a Worker reads the response body, it will read it in plaintext, as has always been the case, so disabling this prevents unnecessary decompression. Meanwhile, if the Worker passes the response through to the client, Cloudflare's HTTP proxy will opportunistically gzip the response body on that side of the Workers runtime instead. The behavior change observable by a Worker script should be that some `Content-Encoding: gzip` headers will no longer appear.
+- Automatic Platform Optimization may previously have been applied on both the Worker's initiating request and its subrequests in some circumstances. It will now only apply to the initiating request.
+- Link prefetching will now only apply to the Worker's response, not responses to the Worker's subrequests.
 
 ### Global `navigator`
 
@@ -223,7 +228,7 @@ User code should never try to reuse an `ArrayBuffer` that has been passed into a
 
 ```js
 // Consume and discard `readable` using a single 4KiB buffer.
-let reader = readable.getReader({ mode: 'byob' });
+let reader = readable.getReader({ mode: "byob" });
 let arrayBufferView = new Uint8Array(4096);
 while (true) {
   let result = await reader.read(arrayBufferView);
