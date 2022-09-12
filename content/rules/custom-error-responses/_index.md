@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Custom error responses (beta)
-weight: 7
+weight: 8
 layout: single
 ---
 
