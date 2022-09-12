@@ -10,7 +10,7 @@ meta:
 
 # Create a Configuration Rule via API
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create Configuration Rules via API. Define the [configuration settings](/rules/configuration-rules/settings/) in the `action_parameters` field.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create Configuration Rules via API.
 
 When creating a Configuration Rule via API, make sure you:
 
