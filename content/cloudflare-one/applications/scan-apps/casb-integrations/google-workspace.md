@@ -15,7 +15,7 @@ The Google Workspace integration detects a variety of user security, data loss p
 
 ## Integration permissions
 
-For the Google Workspace integration to function, CASB requires the following API scopes for access:
+For the Google Workspace integration to function, Cloudflare CASB requires the following Google API permissions:
 
 * `https://www.googleapis.com/auth/admin.directory.domain.readonly`
 * `https://www.googleapis.com/auth/admin.directory.user.readonly`
