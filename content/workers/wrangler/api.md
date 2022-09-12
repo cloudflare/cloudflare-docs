@@ -47,7 +47,30 @@ const worker = await unstable_dev(script, options, apiOptions)
     *   Optional API options object containing `disableExperimentalWarning`. Set `disableExperimentalWarning` to true to disable wrangler's warning about using `unstable_` prefixed APIs.
 
 {{</definitions>}}
+
+### Return Type
+
+`unstable_dev` returns an object containing the following functions:
+
+{{<definitions>}}
+
+*   `fetch` {{<type>}}Promise\<Response>{{</type>}}
+
+    *   Send a request to your worker. Returns a promise that resolves with a [`Response`](/workers/runtime-apis/response) object
+
+*   `stop` {{<type>}}Promise\<void>{{</type>}}
+
+    *   Shuts down the dev server. 
+
+{{</definitions>}}
+
 ### Usage
+
+Typically, you'll want to start each test suite with a `beforeAll` function that starts `unstable_dev`. We use the `beforeAll` function because starting the dev server takes a few hundred milliseconds, starting and stopping for each individual test adds up quickly, slowing your tests down.
+
+In each test case you'll call `await worker.fetch`, and check that the response is what you expect. 
+
+To wrap up a test suite, you should call `await worker.stop` in an `afterAll` function.
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
