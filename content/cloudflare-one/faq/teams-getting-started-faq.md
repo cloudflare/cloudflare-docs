@@ -38,9 +38,9 @@ Cloudflare Zero Trust subscriptions consist of seats that users in your account 
 
 User seats can be removed for Access and Gateway at **My Team** > **Users**. Removing a user will have consequences both on Access and on Gateway:
 
-- **Access**: All active sessions for that user will be invalidated. Note: A user will be able to log back into an application unless the Application’s policy is also updated to block future logins from that user.
+- **Access**: All active sessions for that user will be invalidated. A user will be able to log back into an application unless you create an [Access policy](/cloudflare-one/policies/access/) to block future logins from that user.
 
-- **Gateway**: All active devices for that user will be revoked. Revoking a device means that all filtering and routing via the WARP client will cease until the user re-enrolls the device.
+- **Gateway**: All active devices for that user will be logged out of your Zero Trust organization, which stops all filtering and routing via the WARP client. A user will be able to re-enroll their device unless you create a [device enrollment policy](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) to block them.
 
 {{<Aside type="warning">}}
 
