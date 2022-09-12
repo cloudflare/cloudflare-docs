@@ -21,7 +21,7 @@ The following limits apply to Cloudflare's [IPFS Gateway](/web3/ipfs-gateway/).
 
 ## Ethereum Gateway
 
-The following limits apply to Cloudflare's [Ethereum Gateway](/web3/ipfs-gateway/).
+The following limits apply to Cloudflare's [Ethereum Gateway](/web3/ethereum-gateway/).
 
 | Feature | Non-Enterprise | Enterprise |
 | --- | --- | --- |

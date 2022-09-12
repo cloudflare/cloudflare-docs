@@ -55,7 +55,7 @@ Valid options for the `options` object include: {{<definitions>}}
 - `bodyUsed` {{<type>}}boolean{{</type>}}
   - A boolean indicating if the body was used in the response.
 - `encodeBody` {{<type>}}string{{</type>}}
-  - Workers have to compress data according to the `content-encoding` header when transmitting, to serve data that is already compressed, this property has to be set to `"manual"`, otherwise the default is `"auto"`.
+  - Workers have to compress data according to the `content-encoding` header when transmitting, to serve data that is already compressed, this property has to be set to `"manual"`, otherwise the default is `"automatic"`.
 - `headers` {{<type-link href="/runtime-apis/request#parameters">}}Headers{{</type-link>}}
   - The headers for the response.
 - `ok` {{<type>}}boolean{{</type>}}

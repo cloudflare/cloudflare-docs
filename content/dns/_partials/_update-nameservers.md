@@ -79,6 +79,6 @@ Cloudflare automatically assigns nameservers to a domain and these assignments c
 
 ### Verify changes
 
-To check whether you correctly changed your nameservers, you can log in to the [Cloudflare dashboard](https://dash.cloudflare.com) or use a [third-party tool](https://www.whatsmydns.net/).
+To check whether you correctly changed your nameservers, you can log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and make sure your [domain status](/dns/zone-setups/reference/domain-status/) is **Active** or use a [third-party tool](https://www.whatsmydns.net/).
 
 If you see unexpected results, refer to our [troubleshooting information](/dns/zone-setups/troubleshooting/).

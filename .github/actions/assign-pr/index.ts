@@ -82,29 +82,7 @@ function parse(filename: string): string | void {
 
     const client = github.getOctokit(token);
 
-    if (PCX.has(author)) {
-      PCX.delete(author); // no self-review
-      console.log('~> request PCX team review');
-      return await client.rest.pulls.requestReviewers({
-        repo: repository.name,
-        owner: repository.owner.login,
-        pull_number: prnumber,
-        /**
-         * We SKIP the "@cloudflare/pcx" handle because of
-         * stupid GITHUB_TOKEN/PAT permission issues. Assign all
-         * PCX team members manually instead, effectively the same.
-         * @note Allowed up to 10 reviewers
-         * @see https://docs.github.com/en/issues/tracking-your-work-with-issues/assigning-issues-and-pull-requests-to-other-github-users
-         * @todo figure out how to use `team_reviewers: ['pcx']` instead.
-         */
-        reviewers: [...PCX].slice(0, 10)
-      });
-    }
-
-    // ---
-    // At this point, author is external and/or not PCX member.
-    // ~> determine PCX codeowners based on files in PR diff.
-    // ---
+    // Determine reviewers based on files in PR diff.
 
     // https://octokit.github.io/rest.js/v18#pulls-list-files
     const products = await list(client, {
@@ -130,6 +108,29 @@ function parse(filename: string): string | void {
         reviewers_list.forEach(x => reviewers.add(x));
       }
     }
+
+    if (PCX.has(author)) {
+      const pcx_and_reviewers = new Set([...PCX, ...reviewers]);
+      pcx_and_reviewers.delete(author); // no self-review
+      console.log('~> request PCX team review');
+      return await client.rest.pulls.requestReviewers({
+        repo: repository.name,
+        owner: repository.owner.login,
+        pull_number: prnumber,
+        /**
+         * We SKIP the "@cloudflare/pcx" handle because of
+         * stupid GITHUB_TOKEN/PAT permission issues. Assign all
+         * PCX team members manually instead, effectively the same.
+         * @see https://docs.github.com/en/issues/tracking-your-work-with-issues/assigning-issues-and-pull-requests-to-other-github-users
+         * @todo figure out how to use `team_reviewers: ['pcx']` instead.
+         */
+        reviewers: [...pcx_and_reviewers]
+      });
+    }
+
+    // ---
+    // At this point, author is external and/or not PCX member.
+    // ---
 
     const requested = new Set<string>();
 

@@ -14,6 +14,10 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
+resources:
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/email
+  discord: https://discord.com/channels/595317990191398933/930503753583435836
+
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com

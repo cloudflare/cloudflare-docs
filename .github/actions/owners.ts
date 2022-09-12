@@ -12,12 +12,12 @@ export const OWNERS: Record<string, string[]> = {
   analytics: ["angelampcosta"],
   api: ["ranbel"],
   "api-shield": ["patriciasantaana"],
-  "argo-smart-routing": ["maxvp"],
+  "argo-smart-routing": ["dcpena"],
   "automatic-platform-optimization": ["dcpena"],
   bots: ["patriciasantaana"],
   byoip: [], // TODO
   cache: ["angelampcosta"],
-  "china-network": ["pedrosousa"], // TODO
+  "china-network": ["pedrosousa"],
   "client-ip-geolocation": ["pedrosousa"],
   "cloudflare-for-saas": ["kodster28"],
   "cloudflare-one": ["ranbel"],
@@ -63,4 +63,5 @@ export const OWNERS: Record<string, string[]> = {
 export const REVIEWERS: Record<string, string[]> = {
   analytics: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
   logs: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
+  pages: ["WalshyDev"]
 };
