@@ -23,7 +23,11 @@ Builds will timeout after 20 minutes.
 
 ## Custom domains
 
-A Cloudflare Pages project can be attached to a maximum of ten (10) custom domains at a time.
+A Cloudflare Pages project can be attached to a certain number of domains at a time.
+
+| Free | Pro | Business | Enterprise |
+| ---- | --- | -------- | ---------- |
+| 100  | 250 | 500      | 500        |
 
 ## Files
 
