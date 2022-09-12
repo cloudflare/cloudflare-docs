@@ -91,4 +91,3 @@ After making sure that your rule is logging the correct requests, change the rul
 ## Additional remarks
 
 * The WAF ML Attack Score is different from Threat Score and Bot Score. WAF ML Attack Score identifies variation of attacks that WAF Managed Rulesets do not catch. Bot Score identifies bots, while Threat Score measures IP reputation across Cloudflare services.
-* The WAF ML Attack Score is not available yet in Cloudflare Logpush.
