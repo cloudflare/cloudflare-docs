@@ -484,3 +484,9 @@ The actions that you need to perform to renew certificates depend on your [valid
   }
 }
 ```
+
+## Troubleshooting
+
+Occasionally, you may see webhook notifications that do not include a corresponding `<<CUSTOM_HOSTNAME_ID>>` and `hostname` values.
+
+This behavior is because each custom hostname can only have one certificate attached to it. Previously attached certificates can still emit webhook events but will not include the associated hostname and ID values.
