@@ -11,10 +11,5 @@ weight: 3
 3. Click **Create configuration rule**.
 4. Enter a descriptive name for the rule in **Rule name**.
 5.  Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/edit-expressions/).
-
-    {{<Aside type="note">}}
-Check the [available fields and functions](/rules/transform/request-header-modification/reference/fields-functions/).
-    {{</Aside>}}
-
 6. Under **Then the settings are**, define the [configuration settings](/rules/configuration-rules/settings/) you wish to change for requests matching the rule expression.
 7.  To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
