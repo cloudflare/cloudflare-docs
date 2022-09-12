@@ -6,6 +6,12 @@ weight: 10
 
 # Changelog
 
+## 2022-09-15
+
+### Manually control when you start and stop simulcasting
+
+You can now enable and disable individual live outputs via the API or Stream dashboard, allowing you to control precisely when you start and stop simulcasting to specific destinations like YouTube and Twitch. For more, [read the docs](/stream/stream-live/simulcasting/#control-when-you-start-and-stop-simulcasting).
+
 ## 2022-08-15
 
 ### Unique subdomain for your Stream Account
