@@ -15,7 +15,7 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create Configuration Ru
 When creating a Configuration Rule via API, make sure you:
 
 * Set the rule action to `set_config`.
-* Define the [parameters](/rules/configuration-rules/parameters/) in the `action_parameters` field according to the [settings](/rules/configuration-rules/settings/) you wish to override for matching requests.
+* Define the parameters in the `action_parameters` field according to the [settings](/rules/configuration-rules/settings/) you wish to override for matching requests.
 * Deploy the rule to the `http_config_settings` phase at the zone level.
 
 ***
