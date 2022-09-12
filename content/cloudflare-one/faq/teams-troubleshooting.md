@@ -14,7 +14,7 @@ If you believe a domain has been incorrectly blocked, you can use [this form](ht
 
 ## I see an error saying `No Access-Control-Allow-Origin header is present on the requested resource`.
 
-Cloudflare Access requires that the credentials: `same-origin parameter` be added to JavaScript when using the Fetch API (to include cookies). AJAX requests fail without this parameter present. For more information, refer to our documentation about [CORS settings](/cloudflare-one/policies/access/cors/#list-of-cors-settings).
+Cloudflare Access requires that the credentials: `same-origin parameter` be added to JavaScript when using the Fetch API (to include cookies). AJAX requests fail without this parameter present. For more information, refer to our documentation about [CORS settings](/cloudflare-one/identity/authorization-cookie/cors/#list-of-cors-settings).
 
 ## I see untrusted certificate warnings for every page and I am unable to browse the Internet.
 

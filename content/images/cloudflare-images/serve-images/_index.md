@@ -34,7 +34,7 @@ https://imagedelivery.net/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66ac
 In this example:
 
 * `ZWd9g1K7eljCn_KDTu_MWA` is the Images account hash.
-* `083eb7b2-5392-4565-b69e-aff66acddd00` is the image ID.
+* `083eb7b2-5392-4565-b69e-aff66acddd00` is the image ID; you can also use [Custom IDs](/images/cloudflare-images/upload-images/custom-id) instead of the generated ID.
 * `public` is the variant name.
 
 When a client requests an image, Cloudflare Images will pick the optimal format. This is determined by client headers and the image type. Refer to [Adaptive optimized format delivery](/images/cloudflare-images/serve-images/adaptive-images-format/) for more information.

@@ -29,7 +29,16 @@ To retrieve those values:
 5. Select **Add**.
 6. Copy the **Client ID**, **Client Secret**, and **Base URL** to a safe place.
 7. Go to **Host setup and management** > **Sensor downloads** and copy your Customer ID.
-8. Get an [auth token](https://falcon.us-2.crowdstrike.com/documentation/93/oauth2-auth-token-apis) from your CrowdStrike API endpoint. For example, if your base URL is `https://api.us-2.crowdstrike.com`, then make a `POST` request to `https://api.us-2.crowdstrike.com/oauth2/token` with your Client ID and Client Secret.
+8. Get an auth token from your CrowdStrike API endpoint:
+
+    ```curl
+    curl -X POST "<BASE_URL>/oauth2/token" \
+        -H "accept: application/json" \
+        -H "Content-Type: application/x-www-form-urlencoded" \
+        -d "client_id=<CLIENT_ID>&client_secret=<CLIENT_SECRET>"
+    ```
+
+    This POST request authorizes Cloudflare Zero Trust to [add CrowdStrike as a service provider](#2-add-crowdstrike-as-a-service-provider). For more information, refer to the Crowdstrike [auth token documentation](https://falcon.us-2.crowdstrike.com/documentation/93/oauth2-auth-token-apis).
 
 ### 2. Add CrowdStrike as a service provider
 

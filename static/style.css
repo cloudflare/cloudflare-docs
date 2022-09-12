@@ -4730,7 +4730,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   margin-left: var(--docs-sidebar-width);
   padding: 3.5rem 0;
   padding-left: var(--docs-content-gap);
-  padding-right: calc(var(--docs-body-sidebar-width) + var(--docs-content-gap));
+  padding-right: var(--docs-content-gap);
   --border-color: rgba(var(--color-rgb), 0.08);
   border-top: 1px solid var(--border-color);
 }
@@ -4746,9 +4746,9 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   display: grid;
   grid-template-columns: 2.5em 1fr;
   grid-auto-rows: 3em;
-
   padding-bottom: 2em;
 }
+
 .AdditionalResources--icon {
   color: inherit;
   flex-shrink: 0;
@@ -4768,10 +4768,19 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     display: block;
     margin-bottom: 0.5em;
   }
+}
 
-  .DocsFooter--content-dot-spacer {
-    display: none;
-  }
+.DocsFooterResources {
+  display: flex;
+  justify-content:baseline;
+  flex-wrap: wrap;
+  margin-bottom: 1em;
+  width: 100%;
+  font-size: .9em;
+}
+
+.DocsFooterResources > * {
+  padding-right: 1em;
 }
 
 .DocsCodeExamplesOverview {
@@ -5079,7 +5088,6 @@ pre {
 
 .tabs-wrapper {
   width: 100%;
-  max-width: 700px;
   margin: 0 auto;
   position: relative;
   padding-bottom: 1rem;
@@ -5089,7 +5097,7 @@ pre {
 
 .tabs {
   position: relative;
-  margin-top: 3rem;
+  margin-top: 1rem;
   box-shadow: 0 1px rgba(var(--shadow-color-rgb), 0.12);
   height: 2.4rem;
 }
@@ -5108,7 +5116,7 @@ pre {
 }
 
 [theme="dark"] .tabs > ul {
-  background-color: rgb(var(--accent-color-rgb));
+  background-color: rgba(var(--color-rgb),.1)
 }
 
 .tabs > ul > li {
@@ -5210,6 +5218,33 @@ pre {
 .tab-content > .CodeBlock {
   border-radius: 0;
 }
+
+.noCodeTab {
+  padding: 1em .75em .75em .5em;
+  background: linear-gradient(var(--background-color),
+    rgba(var(--background-color-rgb)));
+  border: 1px solid rgb(216 216 218);
+  color: inherit;
+}
+
+[theme="dark"] .noCodeTab {
+  border: 1px solid #404242;
+  border-top: none;
+  background-color: rgb(var(--background-color-rgb));
+}
+
+.noCodeTab > pre {
+  margin-bottom: 2em;
+}
+
+.noCodeTab > *:last-child {
+  margin-bottom: 0;
+}
+
+.noCodeLabel {
+  font-family: var(--sans-serif-font-family);
+}
+
 .skip-link {
   background: #f3f3f4;
   z-index: 1;
@@ -5417,4 +5452,3 @@ pre {
 [theme="dark"] .littlefoot-footnote__button {
   background: rgba(110, 110, 110, 0.5);
 }
-

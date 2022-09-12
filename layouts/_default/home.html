@@ -48,10 +48,10 @@
 
         <div class="SiteHeader--nav">
           <a class="SiteHeader--nav-link" href="/products/"><span>Products</span></a>
-          <a class="SiteHeader--nav-link" href="/sponsorships/"><span>Sponsorships</span></a>
+          <a class="SiteHeader--nav-link" href="/learning-paths/"><span>Learning paths</span></a>
           <a class="SiteHeader--nav-link" href="/tutorials/"><span>Tutorials</span></a>
           <a class="SiteHeader--nav-link" href="https://support.cloudflare.com/hc/"><span>Support</span></a>
-          <a class="SiteHeader--nav-link" href="https://cloudflare.github.io"><span>Open Source</span></a>
+          <a class="SiteHeader--nav-link" href="/sponsorships/"><span>Sponsorships</span></a>
         </div>
 
         <div class="SiteHeader--theme-toggle">
@@ -59,7 +59,8 @@
         </div>
       </div>
 
-      {{ if not .IsHome }}
+      {{ if or (.IsHome) (eq .Page.RelPermalink "/zero-trust/") }}
+      {{ else }}
       <div class="SiteHeader---shadow"></div>
       <div class="SiteHeader---shadow-cover"></div>
       {{ end }}
@@ -67,6 +68,8 @@
       <main class="DocsBody">
         {{ if .IsHome }}
         <div class="HeroImage">
+        {{ else if eq .Page.RelPermalink "/zero-trust/" }}
+        <div class="ZTHeroImage">
         {{ end }}
         <div id="docs-content" data-reach-skip-nav-content></div>
         <div class="DocsContent" page-type="developers-site">
@@ -74,7 +77,7 @@
             {{- .Content -}}
           </article>
         </div>
-      {{ if .IsHome }}
+      {{ if or (.IsHome) (eq .Page.RelPermalink "/zero-trust/") }}
       </div>
       {{ end }}
       </main>

@@ -100,4 +100,23 @@
         "description": "Includes content from a partial in the current document",
         "scope": "markdown"
     },
+    "Adds two tabs for dashboard/API instructions": {
+        "prefix": ["addtabs", "twotabs"],
+        "body": [
+            "{{<tabs labels=\"Dashboard | API\">}}",
+            "{{<tab label=\"dashboard\" no-code=\"true\">}}",
+            "",
+            "$0",
+            "",
+            "{{</tab>}}",
+            "{{<tab label=\"api\" no-code=\"true\">}}",
+            "",
+            "",
+            "",
+            "{{</tab>}}",
+            "{{</tabs>}}",
+        ],
+        "description": "Adds a new tabs section with two tabs for dashboard and API instructions",
+        "scope": "markdown"
+    },
 }

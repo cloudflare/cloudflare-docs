@@ -8,7 +8,7 @@ weight: 2
 
 If you have videos stored in a cloud storage bucket, you can simply pass a HTTP link for the file. Stream will fetch the file and make it available for streaming.
 
-By using [webhooks](/stream/edit-manage-videos/manage-video-library/using-webhooks/) you can receive a notification when the video is ready to be played or if it errors.
+By using [webhooks](/stream/manage-video-library/using-webhooks/) you can receive a notification when the video is ready to be played or if it errors.
 
 ## Step 1: Make an API call with the link
 
@@ -65,13 +65,13 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy
 
 ## Step 2: Poll the API or wait for a webhook
 
-Because Stream must download and encode the video, the video might not be available for a few seconds to a few minutes depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/stream/edit-manage-videos/manage-video-library/using-webhooks/) to be notified when a video is ready for streaming.
+Because Stream must download and encode the video, the video might not be available for a few seconds to a few minutes depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/stream/manage-video-library/using-webhooks/) to be notified when a video is ready for streaming.
 
 ## Step 3: View the video
 
 The `uid` of the video can be used refer to the video after uploading and can be used to play it using the [Stream video player](/stream/viewing-videos/using-the-stream-player/).
 
-If you're using your own player or rendering the video in a mobile app, view information on [using your own player](/stream/viewing-videos/using-the-player-api/).
+If you're using your own player or rendering the video in a mobile app, view information on [using your own player](/stream/viewing-videos/using-the-stream-player/using-the-player-api/).
 
 <!--
 Update to Stream component once available

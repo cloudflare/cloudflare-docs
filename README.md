@@ -66,6 +66,7 @@ Prefixes | Description
 `metatitle` | Inserts meta title fields in existing Markdown header. Used to complement a full file header.
 `headerpartialfile` | Inserts a header for a partial Markdown file.
 `partialinclude` or `renderpartial` | Inserts a `render` shortcode to include content from a partial in the current document.
+`twotabs` or `addtabs` | Inserts a new tabs section with two tabs for dashboard and API instructions.
 
 Triggering one of the available snippets will insert their body content at the current cursor position.
 

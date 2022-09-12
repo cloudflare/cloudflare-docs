@@ -1,10 +1,16 @@
 ---
 pcx_content_type: changelog
 title: Changelog
-weight: 8
+weight: 10
 ---
 
 # Changelog
+
+## 2022-09-15
+
+### Manually control when you start and stop simulcasting
+
+You can now enable and disable individual live outputs via the API or Stream dashboard, allowing you to control precisely when you start and stop simulcasting to specific destinations like YouTube and Twitch. For more, [read the docs](/stream/stream-live/simulcasting/#control-when-you-start-and-stop-simulcasting).
 
 ## 2022-08-15
 
@@ -21,7 +27,7 @@ No action is required from you, unless you use Content Security Policy (CSP) on 
 
 ### Clip videos using the Stream API
 
-You can now change the start and end times of a video uploaded to Cloudflare Stream. For more information, refer to [Clip videos](/stream/edit-manage-videos/edit-videos/video-clipping/).
+You can now change the start and end times of a video uploaded to Cloudflare Stream. For more information, refer to [Clip videos](/stream/edit-videos/video-clipping/).
 
 ## 2022-07-26
 
