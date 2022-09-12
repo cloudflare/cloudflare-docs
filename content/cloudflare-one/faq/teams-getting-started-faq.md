@@ -40,7 +40,7 @@ User seats can be removed for Access and Gateway at **My Team** > **Users**. Rem
 
 - **Access**: All active sessions for that user will be invalidated. Note: A user will be able to log back into an application unless the Application’s policy is also updated to block future logins from that user.
 
-- **Gateway**: All filtering and routing via the WARP client will cease until the user re-enrolls with their WARP client
+- **Gateway**: All active devices for that user will be revoked. Revoking a device means that all filtering and routing via the WARP client will cease until the user re-enrolls the device.
 
 {{<Aside type="warning">}}
 
