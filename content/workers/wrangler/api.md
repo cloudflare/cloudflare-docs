@@ -19,7 +19,9 @@ Once called, `unstable_dev` will return a `fetch` function for invoking your Wor
 
 {{<Aside type="note">}}
 
-The `unstable_dev` function has an `unstable_` prefix because the API may change in the future. There are no known bugs at the moment and it is safe to use. If you discover any bugs, please open a [GitHub Issue](https://github.com/cloudflare/wrangler2/issues/new/choose) and we'll fix them as soon as possible.
+The `unstable_dev` function has an `unstable_` prefix because the API may change in the future. 
+
+There are no known bugs at the moment and it is safe to use. If you discover any bugs, please open a [GitHub Issue](https://github.com/cloudflare/wrangler2/issues/new/choose) and we'll fix them as soon as possible.
 
 
 {{</Aside>}}
@@ -56,7 +58,7 @@ const worker = await unstable_dev(script, options, apiOptions)
 
 *   `fetch` {{<type>}}Promise\<Response>{{</type>}}
 
-    *   Send a request to your worker. Returns a promise that resolves with a [`Response`](/workers/runtime-apis/response) object
+    *   Send a request to your worker. Returns a promise that resolves with a [`Response`](/workers/runtime-apis/response) object.
 
 *   `stop` {{<type>}}Promise\<void>{{</type>}}
 
