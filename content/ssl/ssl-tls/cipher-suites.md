@@ -50,13 +50,12 @@ If your application has specific security requirements, Cloudflare recommends us
 | ECDHE-RSA-AES256-SHA384             | TLS 1.2 | Compatible | [0xc028] | TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 |
 | ECDHE-RSA-AES256-SHA                | TLS 1.0 | Compatible | [0xc014] | TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA |
 | AES256-GCM-SHA384                   | TLS 1.2 | Legacy | [0x9d] | TLS_RSA_WITH_AES_256_GCM_SHA384 |
-| AES256-SHA256                       | TLS 1.2 | Legacy | [0x3d] | TLS_RSA_WITH_AES_256_CBC_SHA256
- |
+| AES256-SHA256                       | TLS 1.2 | Legacy | [0x3d] | TLS_RSA_WITH_AES_256_CBC_SHA256 |
 | AES256-SHA                          | TLS 1.0 | Legacy | [0x35] | TLS_RSA_WITH_AES_256_CBC_SHA |
 | DES-CBC3-SHA                        | TLS 1.0 | Legacy | [0x0701c0] | SSL_CK_DES_192_EDE3_CBC_WITH_SHA |
-| AEAD_AES_128_GCM_SHA256 [^1]        | TLS 1.3 | Modern | N/A | N/A |
-| AEAD_AES_256_GCM_SHA384 [^1]        | TLS 1.3 | Modern | N/A | N/A |
-| AEAD_CHACHA20_POLY1305_SHA256 [^1]  | TLS 1.3 | Modern | N/A | N/A |
+| AEAD_AES_128_GCM_SHA256 [^1]        | TLS 1.3 | Modern | {0x13,0x01} | TLS_AES_128_GCM_SHA256 |
+| AEAD_AES_256_GCM_SHA384 [^1]        | TLS 1.3 | Modern | {0x13,0x02} | TLS_AES_256_GCM_SHA384 |
+| AEAD_CHACHA20_POLY1305_SHA256 [^1]  | TLS 1.3 | Modern | {0x13,0x03} | TLS_CHACHA20_POLY1305_SHA256 |
 
 [^1]: _Although TLS 1.3 uses the same cipher suite space as previous versions of TLS, TLS 1.3 cipher suites are defined differently. They only specifying the symmetric ciphers and cannot be used for TLS 1.2. Similarly, TLS 1.2 and lower cipher suites cannot be used with TLS 1.3 (IETF TLS 1.3 draft 21). BoringSSL also hard-codes cipher preferences in this order for TLS 1.3._
 
