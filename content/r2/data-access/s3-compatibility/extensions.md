@@ -9,7 +9,7 @@ R2 implements some extensions on top of the basic S3 API. This page outlines the
 
 ## Extended metadata using Unicode
 
-The [Workers R2 API](/r2/runtime-apis/) supports Unicode in keys and values natively without requiring any additional encoding or decoding for the `customMetadata` field. These fields map to the `x-amz-meta-`-prefixed headers used within the R2 S3-compatible API endpoint.
+The [Workers R2 API](/r2/data-access/bindings/bindings-reference/) supports Unicode in keys and values natively without requiring any additional encoding or decoding for the `customMetadata` field. These fields map to the `x-amz-meta-`-prefixed headers used within the R2 S3-compatible API endpoint.
 
 HTTP header names and values may only contain ASCII characters, which is a small subset of the Unicode character library. To easily accommodate users, R2 adheres to [RFC2047](https://datatracker.ietf.org/doc/html/rfc2047) and automatically decodes all `x-amz-meta-*` header values before storage. On retrieval, any metadata values with unicode are RFC2047-encoded before rendering the response. The length limit for metadata values is applied to the decoded Unicode value.
 
@@ -30,7 +30,7 @@ These headers map to the `httpMetadata` field in the [R2 bindings](/workers/plat
 | `Expires`             | `httpMetadata.expires`            |
 {{</table-wrap>}}
 
-If using Unicode in object key names, refer to [Unicode Interoperability](/r2/learning/unicode-interoperability/).
+If using Unicode in object key names, refer to [Unicode Interoperability](/r2/platform/learning/unicode-interoperability/).
 
 ## Auto-creating buckets on upload
 

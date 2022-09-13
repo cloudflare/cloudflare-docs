@@ -11,7 +11,7 @@ Cloudflare’s Log Retrieval API allows you to query logs from R2 by providing a
 ## Before getting started
 
 - Set up a [Logpush to R2](/logs/get-started/enable-destinations/r2/) job.
-- Create an [R2 access key](/r2/platform/s3-compatibility/tokens/) with at least R2 read permissions.
+- Create an [R2 access key](/r2/data-access/s3-compatibility/tokens/) with at least R2 read permissions.
 - Ensure that you have Logshare read permissions.
 - Alternatively, create a Cloudflare API token with the following permissions:
     - Account scope

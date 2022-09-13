@@ -7,7 +7,7 @@ title: Bindings API Reference
 
 The in-Worker R2 API is accessed by binding an R2 bucket to a [Worker](/workers). The Worker you write can expose external access to  buckets via a route or manipulate R2 objects internally.
 
-The R2 API includes some extensions and semantic differences from the S3 API. If you need S3 compatibility, consider using the [S3-compatible API](/r2/platform/s3-compatibility/).
+The R2 API includes some extensions and semantic differences from the S3 API. If you need S3 compatibility, consider using the [S3-compatible API](/r2/data-access/s3-compatibility/).
 
 ## Concepts
 

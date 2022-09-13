@@ -41,7 +41,7 @@ To get started with R2:
 
 * Read the [Get started guide](/r2/get-started/).
 * Learn about R2 [Limits](/r2/platform/limits/).
-* Review the [R2 Runtime API](/r2/runtime-apis/).
+* Review the [R2 Runtime API](/r2/data-access/bindings/bindings-reference/).
 
 ## R2 and KV comparison
 

@@ -824,7 +824,7 @@
 /workers/writing-workers/ /workers/get-started/guide/ 301
 /workers/writing-workers/debugging-tips/ /workers/about/tips/debugging/ 301
 /workers/writing-workers/resource-limits/ /workers/about/limits/ 301
-/workers/runtime-apis/r2/ /r2/runtime-apis/ 301
+/workers/runtime-apis/r2/ /r2/data-access/bindings/bindings-reference/ 301
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-application/ 301
 /workers/examples/http2-server-push/ /workers/examples/103-early-hints/ 301
 
