@@ -2272,7 +2272,6 @@ html[is-docs-page] body {
   --docs-logo-lockup-gap-small: 0.2rem;
   position: relative;
   width: 100%;
-  max-width: var(--docs-max-page-width);
   min-height: 100%;
   margin: 0 auto;
 }
