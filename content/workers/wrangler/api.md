@@ -52,7 +52,7 @@ const worker = await unstable_dev(script, options, apiOptions)
 
 ### Return Type
 
-`unstable_dev` returns an object containing the following methods:
+`unstable_dev()` returns an object containing the following methods:
 
 {{<definitions>}}
 
@@ -60,7 +60,7 @@ const worker = await unstable_dev(script, options, apiOptions)
 
     *   Send a request to your Worker. Returns a Promise that resolves with a [`Response`](/workers/runtime-apis/response) object.
 
-*   `stop` {{<type>}}Promise\<void>{{</type>}}
+*   `stop()` {{<type>}}Promise\<void>{{</type>}}
 
     *   Shuts down the dev server. 
 
@@ -68,26 +68,27 @@ const worker = await unstable_dev(script, options, apiOptions)
 
 ### Usage
 
-Typically, you'll want to start each test suite with a `beforeAll` function that starts `unstable_dev`. We use the `beforeAll` function because starting the dev server takes a few hundred milliseconds, starting and stopping for each individual test adds up quickly, slowing your tests down.
+Typically, you'll want to start each test suite with a `beforeAll` function that starts `unstable_dev()`. We use the `beforeAll` function because starting the dev server takes a few hundred milliseconds, starting and stopping for each individual test adds up quickly, slowing your tests down.
 
 In each test case, call `await worker.fetch()`, and check that the response is what you expect. 
 
 To wrap up a test suite, call `await worker.stop()` in an `afterAll` function.
 
-{{<tabs labels="js | ts">}}
-{{<tab label="js">}}
-```js
+{{<tabs labels="ts | js">}}
+{{<tab label="ts" default="true">}}
+```ts
 ---
-filename: src/index.test.js
+filename: src/index.test.ts
 ---
-import { unstable_dev } from 'wrangler'
+import { unstable_dev } from "wrangler";
+import type { UnstableDevWorker } from "wrangler";
 
 describe("Worker", () => {
-	let worker;
+	let worker: UnstableDevWorker;
 
 	beforeAll(async () => {
 		worker = await unstable_dev(
-			"src/index.js",
+			"src/index.ts",
 			{},
 			{ disableExperimentalWarning: true }
 		);
@@ -107,20 +108,19 @@ describe("Worker", () => {
 });
 ```
 {{</tab>}}
-{{<tab label="ts" default="true">}}
-```ts
+{{<tab label="js">}}
+```js
 ---
-filename: src/index.test.ts
+filename: src/index.test.js
 ---
-import { unstable_dev } from "wrangler";
-import type { UnstableDevWorker } from "wrangler";
+import { unstable_dev } from 'wrangler'
 
 describe("Worker", () => {
-	let worker: UnstableDevWorker;
+	let worker;
 
 	beforeAll(async () => {
 		worker = await unstable_dev(
-			"src/index.ts",
+			"src/index.js",
 			{},
 			{ disableExperimentalWarning: true }
 		);
