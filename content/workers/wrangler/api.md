@@ -74,21 +74,20 @@ In each test case, call `await worker.fetch()`, and check that the response is w
 
 To wrap up a test suite, call `await worker.stop()` in an `afterAll` function.
 
-{{<tabs labels="ts | js">}}
-{{<tab label="ts" default="true">}}
-```ts
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+```js
 ---
-filename: src/index.test.ts
+filename: src/index.test.js
 ---
-import { unstable_dev } from "wrangler";
-import type { UnstableDevWorker } from "wrangler";
+import { unstable_dev } from 'wrangler'
 
 describe("Worker", () => {
-	let worker: UnstableDevWorker;
+	let worker;
 
 	beforeAll(async () => {
 		worker = await unstable_dev(
-			"src/index.ts",
+			"src/index.js",
 			{},
 			{ disableExperimentalWarning: true }
 		);
@@ -108,19 +107,20 @@ describe("Worker", () => {
 });
 ```
 {{</tab>}}
-{{<tab label="js">}}
-```js
+{{<tab label="ts" >}}
+```ts
 ---
-filename: src/index.test.js
+filename: src/index.test.ts
 ---
-import { unstable_dev } from 'wrangler'
+import { unstable_dev } from "wrangler";
+import type { UnstableDevWorker } from "wrangler";
 
 describe("Worker", () => {
-	let worker;
+	let worker: UnstableDevWorker;
 
 	beforeAll(async () => {
 		worker = await unstable_dev(
-			"src/index.js",
+			"src/index.ts",
 			{},
 			{ disableExperimentalWarning: true }
 		);
