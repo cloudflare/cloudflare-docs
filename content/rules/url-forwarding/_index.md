@@ -3,6 +3,8 @@ pcx_content_type: concept
 title: URL forwarding
 weight: 5
 layout: single
+meta:
+  title: URL forwarding / URL redirection
 ---
 
 # URL forwarding
