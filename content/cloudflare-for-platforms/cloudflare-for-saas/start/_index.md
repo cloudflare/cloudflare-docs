@@ -1,9 +1,9 @@
 ---
-pcx_content_type: overview
-title: Get Started
+pcx_content_type: navigation
+title: Get started
 weight: 2
 meta:
-    title: Get Started - Cloudflare for SaaS
+    title: Get started - Cloudflare for SaaS
 ---
 
 # Get Started - Cloudflare for SaaS

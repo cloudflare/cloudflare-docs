@@ -1,5 +1,5 @@
 ---
-pcx_content_type: overview
+pcx_content_type: navigation
 title: Advanced Settings
 weight: 3
 ---

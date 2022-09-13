@@ -1,10 +1,10 @@
 ---
-title: Configuration
+title: Configuring Cloudflare for SaaS
 pcx_content_type: get-started
 weight: 1
 ---
 
-# Configuration
+# Configuring Cloudflare for SaaS
 
 ---
 

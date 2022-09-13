@@ -13,7 +13,7 @@ Cloudflare's offering for SaaS businesses.
 
 {{<plan type="<type>">}}
 
-Extend Cloudflare's security, reliability and performance services to your customers with Cloudflare for Platforms. Together, with Cloudflare for SaaS and Workers for Platforms your customers can build custom logic to meet their needs right into your application. 
+Extend Cloudflare's security, reliability, and performance services to your customers with Cloudflare for Platforms. Together with Cloudflare for SaaS and Workers for Platforms, your customers can build custom logic to meet their needs right into your application.
 
 ---
  
@@ -24,5 +24,4 @@ Cloudflare for SaaS allows you to extend the security and performance benefits o
 {{</feature>}}
 
 {{<feature header="Workers for Platforms" href="/cloudflare-for-platforms/workers-for-platforms/">}}
-Workers for Platforms is intended to help you deploy serverless functions programmatically, on behalf of your customers.{{</feature>}}
-  
+Workers for Platforms help you deploy serverless functions programmatically on behalf of your customers.{{</feature>}}
