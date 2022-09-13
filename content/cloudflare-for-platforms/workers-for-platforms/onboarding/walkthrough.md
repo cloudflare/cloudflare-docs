@@ -11,7 +11,7 @@ meta:
 ---
 ## 1. Dispatch Namespace creation
 
-The first step to working with dispatch namespaces is to create a namespace. Once you've logged into Wrangler, run the following commang to create a new dispatch namespace:
+The first step to working with dispatch namespaces is to create a namespace. Once you've [installed and authenticated Wrangler](/workers/get-started/guide/#1-install-wrangler-workers-cli), run the following command to create a new dispatch namespace:
 
 ```json
 wrangler dispatch-namespace create <NAMESPACE_NAME>
@@ -19,7 +19,7 @@ wrangler dispatch-namespace create <NAMESPACE_NAME>
 
 ## 2. Dispatcher creation
 
-The dispatcher Worker calls user Workers from the namespace and executes them. A dispatch namespace binding is use in order to create a dispatcher Worker. After creating a Worker, add the following to your wrangler.toml file. 
+The dispatcher Worker calls user Workers from the namespace and executes them. A dispatch namespace binding is use in order to create a dispatcher Worker. After [starting a new project](/workers/get-started/guide/#3-start-a-new-project), add the following to your wrangler.toml file. 
 
 
 ```json
@@ -33,7 +33,7 @@ For special cases (such as using wrangler@d1 which at the moment isn’t caught 
 ```json
 [[unsafe.bindings]]
 name = "dispatcher"
-type = "namespace"
+type = "dispatch_namespace"
 namespace = "<NAMESPACE_NAME>"
 ```
 If you're doing your own multipart uploads, include a similar object in your metadata's bindings property:
@@ -53,7 +53,7 @@ If you're doing your own multipart uploads, include a similar object in your met
 
 ## 3. Upload User Workers to a Namespace
 
-This is the same as our standard Worker upload API, but will upload the worker to a dispatch namespace instead of to your account in general. User Workers must be uploaded via the Cloudflare API, wrangler does not support this operation.Workers uploaded this way will not appear on your dashboard
+This is the same as our standard Worker upload API, but will upload the worker to a dispatch namespace instead of to your account in general. User Workers must be uploaded via the Cloudflare API, wrangler does not support this operation. Workers uploaded this way will not appear on your dashboard
 
 ```json
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>" \
@@ -61,14 +61,6 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/
      -H "X-Auth-Key: <AUTH_KEY>" \
      -H "Content-Type: application/javascript" \
 --data "addEventListener('fetch', event => { event.respondWith(fetch(event.request)) })"
-```
-For uploading files, use the following:
-```json
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>" \
-     -H "X-Auth-Email: <EMAIL>" \
-     -H "X-Auth-Key: <AUTH_KEY>" \
-     -F "metadata=@metadata.json;type=application/json" \
-     -F "script=@script.js;type=application/javascript"
 ```
 
 ## 4. Tag your users' Workers
@@ -90,17 +82,21 @@ To tag a script, tags can now be included on multipart script uploads in the met
     "tags": ["TAG1", "TAG2", "TAG3"]
 }
 ```
-
 ### Tags API
 
-`GET /dispatch/namespaces/:name/scripts/:name/tags` lists tags through a response body of a list of tag strings. 
+`GET https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>/tags` Lists tags through a response body of a list of tag strings.
 
-`PUT /dispatch/namespaces/:name/scripts/:name/tags` sets the tags associated with the worker to match the tags specified in the body. If there are tags already associated with the worker script that are not in the request, they will be removed.
+`GET https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>/tags?tags=FILTER` Returns true or false. Where filter is a comma separated pairs of tag names to a yes or no value (eg. my-tag-value:yes)
 
-`PUT /dispatch/namespaces/:name/scripts/:name/tags/:tag` adds the single specified tag to the list of tags associated with the worker script.
+`GET https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts?tags=FILTER` Gets all worker scripts that have tags that match the filter specified. The filter must be comma separated pairs of tag names to a yes or no value depending if the tag should act as an allowlist or blocklist.
 
-`DELETE /dispatch/namespaces/:name/scripts/` deletes the specified tag from the list of tags associated with the worker script.
+`PUT https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>/tags` Sets the tags associated with the worker to match the tags specified in the body. If there are tags already associated with the worker script that are not in the request, they will be removed.
 
-`GET /workers/scripts?tags=FILTER` gets all worker scripts that have tags that match the filter specified. The filter must be comma separated pairs of tag names to a yes or no value depending if the tag should act as an allowlist or blocklist.
+`PUT https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>/tags/<TAG>` Adds the single specified tag to the list of tags associated with the worker script.
 
-`DELETE /workers/scripts?tags=FILTER` deletes all worker scripts matching the filter
+`DELETE https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>/tags/<TAG>` Deletes the single specified tag from the list of tags associated with the worker script.
+
+`DELETE https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts?tags=FILTER` Deletes all worker scripts matching the filter
+
+
+

@@ -39,3 +39,12 @@ export default {
   }
 }
 ```
+### Dynamic Dispatch API
+
+`GET https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/?limit=<LIMIT>&cursor=:<CURSOR>&tags=:<TAGS_LIST>` Lists the Workers that have been uploaded to this dispatch namespace. This endpoint is paginated using the query parameters limit (to limit the number of results given, default and max of 1000) and cursor (for fetching pages after the first).
+It also accepts a comma-separated list of script 'tags' and whether or not they should be included in the response, in the format tag-name:[yes|no]. Example: `tags=customer-123:yes,production:no`.
+
+
+`PUT https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>` Uploads a Worker to a dispatch namespace.
+
+`DELETE https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>` Deletes a script from a dispatch namespace. This will fully delete the given script, immediately making it unavailable to all of the dispatch namespace bindings referencing this dispatch namespace.
