@@ -240,6 +240,7 @@
 /gateway/locations/setup-instructions/router/ /cloudflare-one/policies/filtering/dns-policies/locations/ 301
 
 # images
+/images/cloudflare-images/upload-images/supported-formats/ /images/cloudflare-images/upload-images/formats-limitations/ 301
 /images/cloudflare-images/resize-images/ /images/cloudflare-images/transform/ 301
 /image-resizing/ /images/image-resizing/ 301
 /image-resizing/url-format/ /images/image-resizing/url-format/ 301
