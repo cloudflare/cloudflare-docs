@@ -58,7 +58,7 @@ Beyond hiding your origin's IP address from potential attackers, Cloudflare also
 
 Cloudflare automatically mitigates security risks using our [WAF](/waf/about/) and [DDoS protection](/ddos-protection/).
 
-For additional details on security, refer to our guide on how to [Secure your website](/fundamentals/get-started/task-guides/secure-your-website/).
+For additional details on security, refer to our guide on how to [Secure your website](/learning-paths/application-security/).
 
 ### Performance
 

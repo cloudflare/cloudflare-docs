@@ -12,6 +12,10 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
+resources:
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/custom-hostnames
+  discord: https://discord.com/channels/595317990191398933/897916119782928394
+
 externals:
   - title: Marketing page
     url: https://www.cloudflare.com/saas/

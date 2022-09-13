@@ -21,6 +21,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`pages`](#pages) - Configure Cloudflare Pages.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
+- [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 
 {{<Aside type="note">}}
 
@@ -48,7 +49,7 @@ Flags:
 Create a skeleton Wrangler project, including the `wrangler.toml` file.
 
 ```sh
-$ wrangler init [NAME] [-y / --yes]
+$ wrangler init [NAME] [-y / --yes] [--from-dash]
 ```
 
 {{<definitions>}}
@@ -57,7 +58,9 @@ $ wrangler init [NAME] [-y / --yes]
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
 - `--yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Answer yes to any prompts for new projects.
-
+- `--from-dash` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>` 
+  - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
 {{</definitions>}}
 
 ---
@@ -873,6 +876,10 @@ $ wrangler tail <NAME> [OPTIONS]
 
 {{</definitions>}}
 
+{{<Aside type="note">}}
+Filtering with `--ip self` will allow tailing a Worker beyond the normal request per second limits.
+{{</Aside>}}
+
 After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
 
 ---
@@ -1036,3 +1043,13 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by 
 2. Go to **Overview** > **Get your API token** in the right-side menu.
 3. Select the three-dot menu on your Wrangler token.
 4. Select **Delete**.
+
+---
+
+## whoami
+
+Retrieve your user information and test your authentication configuration.
+
+```sh
+$ wrangler whoami
+```

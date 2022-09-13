@@ -26,27 +26,9 @@ In your browser's address bar, the URL should show `https://dash.cloudflare.com/
 ### Obtain the rule ID for a firewall rule
 
 1. From the Cloudflare dashboard, click **Firewall Rulesets** > **Magic Firewall**.
-2. After the **Magic Firewall Rules** page displays, open your web browser's Developer Tools.
-3. From the **Developer Tools** pane, switch to the **Network** tab.
-4. From the **Network** tab, clear the network content.
-5. Refresh the **Magic Firewall Rules** page to repopulate the **Network** tab with the HTTP request and response packets between the browser and Cloudflare API.
-6. In the list of items, locate the three digit number with a **fetch** type. This will show you your Magic Firewalll rules.
-7. Click the item and then click the **Response** tab. A list of all of your Magic Firewall rules and their descriptions display similar to the example below.
-
-```bash
-  {
-    "id": "76a53b38cd9329ef632677g4525hi5929",
-    "version": "69",
-    "action": "block",
-    "description": "Anonymizer test",
-    "expression": "(ip.src in $cf.anonymizer)",
-    "last_updated": "2022-01-17T22:41:45.60268Z",
-    "ref": "76a53b38cd9329ef632677g4525hi5929",
-    "enabled": true
-  },
-  ```
-
-In the example above, the `id` value is the Magic Firewall rule ID.
+2. Locate the rule you need the rule ID for from the list and click **Edit**.
+3. From the **Edit Rule** page, locate the **Rule ID** and select the copy button. 
+4. Select **Cancel** to return to the **Magic Firewall** page.
 
 ## Explore GraphQL schema with Magic Firewall query example
 

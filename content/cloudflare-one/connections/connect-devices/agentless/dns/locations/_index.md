@@ -17,7 +17,9 @@ To add a location to Gateway:
 
 3. Choose a name for your location.
 
-4. Enterprise customers can manually enter a **Source IPv4 Address**. You do not need the IPv4 address field if:
+4. Cloudflare will prefill the [**Source IPv4 Address**](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#source-ip) based on the network you are on. Enterprise customers have the option of manually entering IPs.
+
+    You do not need the IPv4 address field if:
 
     - Your location only uses IPv6.
     - Users will be sending all DNS requests from this location using DNS over HTTPS via a browser.

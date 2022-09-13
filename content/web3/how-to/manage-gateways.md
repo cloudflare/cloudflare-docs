@@ -48,7 +48,7 @@ To edit a gateway using the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To edit specific settings for a gateway, use a [PATCH](https://api.cloudflare.com/#web3-hostname-edit-web3-hostname) request.
+To edit specific settings for a gateway, use a [`PATCH`](https://api.cloudflare.com/#web3-hostname-edit-web3-hostname) request.
  
 {{</tab>}}
 {{</tabs>}}
@@ -72,7 +72,7 @@ To refresh a gateway using the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To refresh a gateway using the API, send a [PATCH](https://api.cloudflare.com/#web3-hostname-edit-web3-hostname) request with an empty request body.
+To refresh a gateway using the API, send a [`PATCH`](https://api.cloudflare.com/#web3-hostname-edit-web3-hostname) request with an empty request body.
  
 {{</tab>}}
 {{</tabs>}}
@@ -89,6 +89,9 @@ You have the ability to block access to one or more:
 - IPFS content paths (`/ipfs/QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/readme`)
 - IPNS content paths (`/ipns/example.com`)
  
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
 To add an item to the blocklist using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
@@ -103,6 +106,14 @@ To add an item to the blocklist using the dashboard:
     - **Blocklist entry description**: Add a description to help you identify the blocklist entry.
 
 7. Click **Add**.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+To add a blocklist item using the API, send a [`POST`](https://api.cloudflare.com/#web3-hostname-create-ipfs-universal-path-gateway-content-list-entry) request. 
+
+{{</tab>}}
+{{</tabs>}}
 
 ---
 
@@ -124,7 +135,7 @@ To delete a gateway using the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To delete a gateway using the API, send a [DELETE](https://api.cloudflare.com/#web3-hostname-delete-web3-hostname) request.
+To delete a gateway using the API, send a [`DELETE`](https://api.cloudflare.com/#web3-hostname-delete-web3-hostname) request.
  
 {{</tab>}}
 {{</tabs>}}
