@@ -50,7 +50,8 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 
 ### Unimplemented bucket-level operations
 
-Below is a list of unimplemented bucket-level operations.
+<details>
+<summary> Click to expand a list of unimplemented bucket-level operations. </summary>
 
 {{<table-wrap style="width:123%">}}
 
@@ -107,6 +108,7 @@ Below is a list of unimplemented bucket-level operations.
 | ❌ [PutPublicAccessBlock](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutPublicAccessBlock.html) | ❌ Checksums: <br> &emsp; ❌ Content-MD5 <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 
 {{</table-wrap>}}
+</details>
 
 ## Object-level operations
 
