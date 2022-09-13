@@ -5356,8 +5356,8 @@ pre {
 }
 
 .DocsMarkdown--feature-button a {
-  width: 12em;
   text-align: start;
+  font-size: clamp(1rem, 2.75vm, 2.5rem);
 }
 
 @media (max-width: 768px) {
