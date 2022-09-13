@@ -68,7 +68,7 @@ const worker = await unstable_dev(script, options, apiOptions)
 
 ### Usage
 
-Typically, you'll want to start each test suite with a `beforeAll` function that starts `unstable_dev`. We use the `beforeAll` function because starting the dev server takes a few hundred milliseconds, starting and stopping for each individual test adds up quickly, slowing your tests down.
+When initiating each test suite, use a `beforeAll` function to start `unstable_dev`. The `beforeAll` function is used to minimize overhead: starting the dev server takes a few hundred milliseconds, starting and stopping for each individual test adds up quickly, slowing your tests down.
 
 In each test case, call `await worker.fetch()`, and check that the response is what you expect. 
 
