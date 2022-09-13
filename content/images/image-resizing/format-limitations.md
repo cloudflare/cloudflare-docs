@@ -19,7 +19,7 @@ Cloudflare Image Resizing can:
 
 Cloudflare Image Resizing does not:
 
-- Support SVG since this format is inherently scalable and does not need resizing.
+- Resize SVG since this format is inherently scalable and does not need resizing.
 - Support HEIC (HEIF) format. Cloudflare does not plan to support this format.
 
 AVIF format is supported on a best-effort basis. Images that cannot be compressed as AVIF will be served as WebP instead.
