@@ -24,6 +24,8 @@ Cloudflare Image Resizing does not:
 
 AVIF format is supported on a best-effort basis. Images that cannot be compressed as AVIF will be served as WebP instead.
 
+{{<render file="_svg.md">}}
+
 ## Maximum sizes
 
 Maximum image size is 100 megapixels (for example, 10,000×10,000 pixels large). Maximum file size is 70 MB. GIF animations are limited to 100 megapixels total (sum of sizes of all frames).
