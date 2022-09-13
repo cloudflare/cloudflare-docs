@@ -56,7 +56,7 @@ const worker = await unstable_dev(script, options, apiOptions)
 
 {{<definitions>}}
 
-*   `fetch` {{<type>}}Promise\<Response>{{</type>}}
+*   `fetch()` {{<type>}}Promise\<Response>{{</type>}}
 
     *   Send a request to your Worker. Returns a Promise that resolves with a [`Response`](/workers/runtime-apis/response) object.
 
@@ -70,9 +70,9 @@ const worker = await unstable_dev(script, options, apiOptions)
 
 Typically, you'll want to start each test suite with a `beforeAll` function that starts `unstable_dev`. We use the `beforeAll` function because starting the dev server takes a few hundred milliseconds, starting and stopping for each individual test adds up quickly, slowing your tests down.
 
-In each test case, call `await worker.fetch`, and check that the response is what you expect. 
+In each test case, call `await worker.fetch()`, and check that the response is what you expect. 
 
-To wrap up a test suite, call `await worker.stop` in an `afterAll` function.
+To wrap up a test suite, call `await worker.stop()` in an `afterAll` function.
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
