@@ -1,5 +1,5 @@
 ---
-pcx_content_type: configuration
+pcx_content_type: how-to
 title: Public Buckets
 ---
 

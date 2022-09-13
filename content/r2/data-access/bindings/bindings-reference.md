@@ -1,6 +1,6 @@
 ---
-pcx_content_type: configuration
-title: Runtime APIs
+pcx_content_type: reference
+title: Bindings API Reference
 ---
 
 # R2
