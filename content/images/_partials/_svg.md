@@ -7,7 +7,9 @@ _build:
 
 ## SVG files
 
-Cloudflare Images can deliver SVG files. However, as this is an [inherently scalable format](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics), Cloudflare does not resize SVGs. As such, variants cannot be used to resize SVG files. Variants, named or flexible, are intended to transform bitmap (raster) images into whatever size you want to serve them.
+Cloudflare Images and Image Resizing can deliver SVG files. However, as this is an [inherently scalable format](https://www.w3.org/TR/SVG2/), Cloudflare does not resize SVGs. 
+
+As such, Cloudflare Images variants cannot be used to resize SVG files. Variants, named or flexible, are intended to transform bitmap (raster) images into whatever size you want to serve them. 
 
 You can, however, use variants to serve SVGs, using any named variant as a placeholder to allow your image to be delivered. For example:
 
@@ -15,18 +17,24 @@ You can, however, use variants to serve SVGs, using any named variant as a place
 https://imagedelivery.net/<ACCOUNT_HASH>/<SVG_ID>/public
 ```
 
-If you intend to use flexible variants to serve your SVG files, you could pass `format=auto` as the parameter. Parameters are ignored when used with SVGs as Cloudflare does not resize images. However, you still need one parameter to make flexible variant calls valid. For example:
+Cloudflare recommends you use named variants with SVG files. If you use flexible variants, all your parameters will be ignored. In either case, Cloudflare applies SVG sanitizing to your files.
 
-```txt
-https://imagedelivery.net/<ACCOUNT_HASH>/<SVG_ID/format=auto
-```
+You can also use Image Resizing to sanitize SVG files stored in your origin. However, as stated above, Image Resizing will ignore all transform parameters, as Cloudflare does not resize SVGs.
 
 ### Sanitized SVGs
 
-Cloudflare sanitizes SVG files with `svg-hush` before serving them. This open-source tool developed by Cloudflare is intended to make SVGs as safe as possible. Because SVG files are HTML documents, they can have links or JavaScript features that may pose a security concern. As such, `svg-hush` filters SVGs and removes any potential risky features, such as:
+Cloudflare sanitizes SVG files with `svg-hush` before serving them. This open-source tool developed by Cloudflare is intended to make SVGs as safe as possible. Because SVG files are XML documents, they can have links or JavaScript features that may pose a security concern. As such, `svg-hush` filters SVGs and removes any potential risky features, such as:
 
 * **Scripting**: Prevents SVG files from being used for cross-site scripting attacks. Although browsers do not allow scripts in the `<img>` tag, they do allow scripting when SVG files are opened directly as a top-level document.
 * **Hyperlinks to other documents**: Makes SVG files less attractive for SEO spam and phishing.
 * **References to cross-origin resources**: Stops third parties from tracking who is viewing the image.
+
+SVG files can also contain embedded images in other formats, like JPEG and PNG, in the form of Data URLs. We treat these embedded images just like other images that we process, and optimize them too. We don't support SVG files embedded in SVG recursively. That's just going too far.
+
+We still use Content-Security-Policy (CSP) headers to disable unwanted features, but filtering acts as a defense in depth in case these headers are lost (e.g. if the image was saved as a file and served elsewhere).
+
+`svg-hush` is open-source. It's written in Rust and can filter SVG files in a streaming fashion without buffering, so it's fast enough for filtering on the fly.
+
+The SVG format is pretty complex, with lots of features. If there is safe SVG functionality that we don't support yet, you can report issues and contribute to development of the filter. 
 
 For more information about `svg-hush`, refer to [Cloudflare GitHub repository](https://github.com/cloudflare/svg-hush).
