@@ -11,4 +11,4 @@ weight: 1
 
 Cloudflare Images automatically serves AVIF and WebP when the browser supports these efficient image formats, regardless of the format you upload. 
 
-The first format that Cloudflare Images will try to serve is AVIF. It will fall back to WebP if the browser does not support AVIF. If the browser does not support either AVIF or WebP, Cloudflare Images will default to serving the [image format you uploaded](/images/cloudflare-images/upload-images/supported-formats/).
+The first format that Cloudflare Images will try to serve is AVIF. It will fall back to WebP if the browser does not support AVIF. If the browser does not support either AVIF or WebP, Cloudflare Images will default to serving the [image format you uploaded](/images/cloudflare-images/upload-images/formats-limitations/).
