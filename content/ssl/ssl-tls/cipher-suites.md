@@ -29,12 +29,6 @@ If your application has specific security requirements, Cloudflare recommends us
 
 ---
 
-## Compliance status
-
-
-
----
-
 ## Supported cipher suites
 
 | OpenSSL Name | Minimum protocol | [Security recommendation](#cipher-suites-recommendations) | Cipher suite | IANA name |
