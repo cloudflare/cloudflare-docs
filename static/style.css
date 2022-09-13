@@ -2384,6 +2384,10 @@ html[is-docs-page] body {
     left: 4.5em;
   }
 
+  .DocsFooter.collapsed {
+    margin-left: 4.5em;
+  }
+
   .DocsContent.collapsed {
     padding-left: 0em;
     padding-right: 0em;
