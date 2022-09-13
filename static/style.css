@@ -5353,7 +5353,11 @@ pre {
 .DocsMarkdown--feature-button {
   display: flex;
   justify-content: flex-end;
-  white-space: nowrap;
+}
+
+.DocsMarkdown--feature-button a {
+  width: 12em;
+  text-align: start;
 }
 
 @media (max-width: 768px) {
