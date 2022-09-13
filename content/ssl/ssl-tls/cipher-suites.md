@@ -57,7 +57,7 @@ If your application has specific security requirements, Cloudflare recommends us
 | TLS_AES_256_GCM_SHA384[^1]        | TLS 1.3 | Modern | {0x13,0x02} | TLS_AES_256_GCM_SHA384 |
 | TLS_CHACHA20_POLY1305_SHA256[^1]  | TLS 1.3 | Modern | {0x13,0x03} | TLS_CHACHA20_POLY1305_SHA256 |
 
-[^1]: Automatically supported by your zone if you [enable TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13). TLS 1.3 uses the same cipher suite space as previous versions of TLS, but define these cipher suites differently. They only specify the symmetric ciphers and cannot be used for TLS 1.2. Similarly, TLS 1.2 and lower cipher suites cannot be used with TLS 1.3 (IETF TLS 1.3 draft 21). BoringSSL also hard-codes cipher preferences in this order for TLS 1.3.
+[^1]: Automatically supported by your zone if you [enable TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13). TLS 1.3 uses the same cipher suite space as previous versions of TLS, but defines these cipher suites differently. TLS 1.3 only specifies the symmetric ciphers and cannot be used for TLS 1.2. Similarly, TLS 1.2 and lower cipher suites cannot be used with TLS 1.3 (IETF TLS 1.3 draft 21). BoringSSL also hard-codes cipher preferences in this order for TLS 1.3.
 
 ### Custom certificates
 
