@@ -10,7 +10,7 @@ This page provides a list of terms and concepts to help you understand Radar and
 
 ## Application-level attacks
 
-[Layer 7](https://www.cloudflare.com/learning/ddos/what-is-layer-7/) threat information based on requests that were blocked. Includes the most frequent blocking reasons as well as the development of blocked requests over time.
+Attacks that happen on [layer 7](https://www.cloudflare.com/learning/ddos/what-is-layer-7/). Includes the most frequent blocking reasons as well as the development of blocked requests over time.
 
 ## Autonomous systems
 
@@ -20,11 +20,11 @@ Data packets hop from one AS to another until they reach their final destination
 
 ## BGP announcements
 
-Border Gateway Protocol (BGP) is the routing protocol for the Internet. Much like the post office processing mail, BGP picks the most efficient routes for delivering Internet traffic. A BGP announcement is a way for an [Autonomous System](#autonomous-systems) (AS) to say to another, "When you receive traffic to this network prefix, please send it to me". That message is then processed and (possibly) forwarded to other ASes, allowing for every AS in the path to learn where to send traffic to that network prefix. Learn more in [What is BGP routing](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/).
+Border Gateway Protocol (BGP) is the routing protocol for the Internet. Much like the post office processing mail, BGP picks the most efficient routes for delivering Internet traffic. A BGP announcement allows an [autonomous system](#autonomous-systems) (AS) to interface with another AS ask for messages of certain network prefixes. These messages are then processed and (possibly) forwarded to other ASes, allowing for every AS in the path to learn where to send traffic to that network prefix. Learn more in [What is BGP routing](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/).
 
 ## Certificates
 
-Encryption is a critical part of a safe Internet. SSL/TLS is the standard security technology for establishing an encrypted link between a server and a browser.
+Digital certificates authenticate a website's identity and enables an encrypted connection. Encryption is a critical part of a safe Internet. SSL/TLS is the standard security technology for establishing an encrypted link between a server and a browser.
 
 In Cloudflare Radar, you can view all SSL certificates issued for a given site by a trusted Certificate Authority that are listed in active certificate transparency logs.
 
@@ -40,11 +40,11 @@ In some cases, a domain can be miscategorized. For example, a social media site 
 
 Countries contributing traffic to this [Autonomous System](#autonomous-systems) (AS), and their relative contribution as percentage of the total AS traffic seen by Cloudflare. The total traffic includes other ASes through which traffic flows to their final destinations, as well as any devices that connect directly to this AS.
 
-## Global Traffic Ranking Trend
+## Global traffic ranking trend
 
 The Cloudflare 100k ranking is a measure of a website or web application's relative popularity. This ranking is calculated using a range of data that Cloudflare has about global Internet traffic patterns. The most popular website or web application, based on our ranking methodology, is ranked #1.
 
-This chart shows the Cloudflare 100k daily global ranking for a site over the last 7 / 30 days.
+This chart shows the Cloudflare 100k daily global ranking for a site. You can adjust the period shown, from 24 hours to 30 days.
 
 ## Internet traffic change
 
@@ -56,11 +56,11 @@ Attacks mitigated by our Level 3 and 4 [Denial of Service Attack prevention syst
 
 ## Traffic type filter
 
-* **Human only traffic**: Traffic that Cloudflare's algorithms determine as being human due to its activity.
+* **Human-only traffic**: Traffic that Cloudflare's algorithms determine as being human due to its activity.
 
-* **Automated only traffic**: Traffic that Cloudflare's algorithms determine as being from bots and automated script due to its activity.
+* **Automated-only traffic**: Traffic that Cloudflare's algorithms determine as being from bots and automated script due to its activity.
 
-* **All Traffic**: Use all traffic, which includes both human activity and automated activity.
+* **All traffic**: Use all traffic, which includes both human activity and automated activity.
 
 ## Trending domains and most popular domains
 
@@ -84,7 +84,7 @@ Each entry on the list of verified bots exists because a corresponding IP was se
 
 Some bots are useful, such as search engine bots that index content for search or customer service bots that help users. Other bots may be used to perform malicious activities, such as break into user accounts or scan the web for contact information to send spam.
 
-## Visitor Location
+## Visitor location
 
 The data displayed on domain-specific geographic traffic patterns is based solely on data from our recursive DNS services. All data displayed is in accordance with our privacy policies and commitments. This data may include attack traffic and cross-origin requests.
 
