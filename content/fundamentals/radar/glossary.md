@@ -6,7 +6,7 @@ weight: 1
 
 # Glossary
 
-Here is a list of terms and concepts to help you understand Radar and the information shown.
+This page provides a list of terms and concepts to help you understand Radar and the information shown.
 
 ## Application-level attacks
 
@@ -52,11 +52,11 @@ The change in the amount of Internet traffic within the selected time range, bas
 
 ## Network-level DDoS attacks
 
-Attacks mitigated by our Level 3 and 4 [Denial of Service Attack prevention systems](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/). Cloudflare show the most used attack vectors as well as the change in attack volume over the selected time range.
+Attacks mitigated by our Level 3 and 4 [Denial of Service Attack prevention systems](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/). Cloudflare shows the most used attack vectors and the change in attack volume over the selected time range.
 
 ## Traffic type filter
 
-* **Human only traffic**: Traffic that Cloudflare's algorithms determine as being Human due to its activity.
+* **Human only traffic**: Traffic that Cloudflare's algorithms determine as being human due to its activity.
 
 * **Automated only traffic**: Traffic that Cloudflare's algorithms determine as being from bots and automated script due to its activity.
 
@@ -68,7 +68,7 @@ Our global and country-level domain ranking is calculated using aggregated data 
 
 The top trending domains are calculated based on a combination of domain popularity, the percentage change in traffic patterns, and the change in rank over the selected time period.
 
-Domains for a given web application are grouped together and are displayed in the ranking table using their best known domain. For example, TikTok, which shows up in the ranking data as 'tiktok.com', includes all domains associated with TikTok, such as 'tiktokcdn.com' and 'tiktokv.com'.
+Domains for a given web application are grouped together and displayed in the ranking table using their best-known domain. For example, TikTok, which shows up in the ranking data as 'tiktok.com', includes all domains associated with TikTok, such as 'tiktokcdn.com' and 'tiktokv.com'.
 
 Domains categorized as pornography or content servers have been excluded from our ranking.
 
@@ -76,11 +76,11 @@ Domain-specific trend information, such as rankings, is made available for all w
 
 ## Trends
 
-Based on the meta data we collect on HTTP requests we are able to show trends over a diverse set of data points. This includes the distribution of mobile versus desktop traffic, the percentage of traffic detected as coming from bots and the distribution of browsers. Radar is also looking into some ongoing developments such as the usage of HTTPS or the share of IPv6.
+Based on the metadata Cloudflare collects on HTTP requests, we are able to show trends over a diverse set of data points. This includes the distribution of mobile versus desktop traffic, the percentage of traffic detected as coming from bots and the distribution of browsers.
 
 ## Verified bots
 
-Each entry on the list of Verified bots exists because a corresponding IP was seen associated with a verified bot in the last 30 days. Bot traffic describes any non-human traffic to a website or an app. A verified bot is not necessarily good or bad.
+Each entry on the list of verified bots exists because a corresponding IP was seen associated with a verified bot in the last 30 days. Bot traffic describes any non-human traffic to a website or an application. A verified bot is not necessarily good or bad.
 
 Some bots are useful, such as search engine bots that index content for search or customer service bots that help users. Other bots may be used to perform malicious activities, such as break into user accounts or scan the web for contact information to send spam.
 
