@@ -33,6 +33,10 @@ Currently you can only create Origin Rules [using the API](/rules/origin-rules/c
 
 {{</table-wrap>}}
 
+## Execution order
+
+{{<render file="_product_execution_order.md">}}
+
 ## Important remarks
 
 If you override the hostname with an Origin Rule (via Host header override or resolve override) and add a header override to your load balancer configuration, the Origin Rule will take precedence over the load balancer configuration.

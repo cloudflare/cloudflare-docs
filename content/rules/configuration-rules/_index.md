@@ -24,3 +24,7 @@ The number of available Configuration Rules varies according to your Cloudflare 
 | Number of Configuration Rules |  10  | 25  |    50    |    125     |
 
 {{</table-wrap>}}
+
+## Execution order
+
+{{<render file="_product_execution_order.md">}}
