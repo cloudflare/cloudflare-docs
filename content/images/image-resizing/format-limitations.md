@@ -8,19 +8,30 @@ weight: 3
 
 # Supported formats and limitations
 
-Cloudflare Image Resizing can:
+## Supported formats
 
-- Read JPEG, PNG, GIF (including animations), and WebP images.
-- Resize and generate JPEG and PNG images, and optionally AVIF or WebP.
-- Save animations as GIF or animated WebP.
-- Support ICC color profiles in JPEG and PNG images.
-- Preserve JPEG metadata. Metadata of other formats is discarded.
-- Convert the first frame of GIF animations to a still image.
+* JPEG
+* PNG
+* GIF (including animations)
+* WebP
+* SVG
 
-Cloudflare Image Resizing does not:
+## Supported features
 
-- Resize SVG since this format is inherently scalable and does not need resizing.
-- Support HEIC (HEIF) format. Cloudflare does not plan to support this format.
+Image Resizing can:
+
+* Resize and generate JPEG and PNG images, and optionally AVIF or WebP.
+* Save animations as GIF or animated WebP.
+* Support ICC color profiles in JPEG and PNG images.
+* Preserve JPEG metadata (metadata of other formats is discarded).
+* Convert the first frame of GIF animations to a still image.
+
+## Not supported
+
+Image Resizing does not:
+
+* Resize SVGs since this format is inherently scalable and does not need resizing.
+* Support HEIC (HEIF) format. Cloudflare does not plan to support this format.
 
 AVIF format is supported on a best-effort basis. Images that cannot be compressed as AVIF will be served as WebP instead.
 
