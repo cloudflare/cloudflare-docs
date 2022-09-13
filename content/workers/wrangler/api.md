@@ -75,7 +75,7 @@ In each test case, call `await worker.fetch()`, and check that the response is w
 To wrap up a test suite, call `await worker.stop()` in an `afterAll` function.
 
 {{<tabs labels="js | ts">}}
-{{<tab label="js">}}
+{{<tab label="js" default="true">}}
 ```js
 ---
 filename: src/index.test.js
@@ -107,7 +107,7 @@ describe("Worker", () => {
 });
 ```
 {{</tab>}}
-{{<tab label="ts" default="true">}}
+{{<tab label="ts" >}}
 ```ts
 ---
 filename: src/index.test.ts
