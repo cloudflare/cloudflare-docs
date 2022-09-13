@@ -1,10 +1,12 @@
 ---
 pcx_content_type: reference
-title: Supported image formats
+title: Formats and limitations
 weight: 5
+meta:
+    title: Supported image formats and limitations
 ---
 
-# Supported image formats
+# Supported image formats and limitations
 
 You can upload the following image formats to Cloudflare Images:
 
