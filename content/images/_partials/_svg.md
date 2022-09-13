@@ -29,12 +29,10 @@ Cloudflare sanitizes SVG files with `svg-hush` before serving them. This open-so
 * **Hyperlinks to other documents**: Makes SVG files less attractive for SEO spam and phishing.
 * **References to cross-origin resources**: Stops third parties from tracking who is viewing the image.
 
-SVG files can also contain embedded images in other formats, like JPEG and PNG, in the form of Data URLs. We treat these embedded images just like other images that we process, and optimize them too. We don't support SVG files embedded in SVG recursively. That's just going too far.
+SVG files can also contain embedded images in other formats, like JPEG and PNG, in the form of [Data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs). Cloudflare treats these embedded images just like other images that we process, and optimize them too. Cloudflare does not support SVG files embedded in SVG recursively, though.
 
-We still use Content-Security-Policy (CSP) headers to disable unwanted features, but filtering acts as a defense in depth in case these headers are lost (e.g. if the image was saved as a file and served elsewhere).
+Cloudflare still uses Content Security Policy (CSP) headers to disable unwanted features, but filtering acts as a defense-in-depth in case these headers are lost (like if the image was saved as a file and served elsewhere).
 
-`svg-hush` is open-source. It's written in Rust and can filter SVG files in a streaming fashion without buffering, so it's fast enough for filtering on the fly.
-
-The SVG format is pretty complex, with lots of features. If there is safe SVG functionality that we don't support yet, you can report issues and contribute to development of the filter. 
+`svg-hush` is open-source. It is written in Rust and can filter SVG files in a streaming fashion without buffering, so it is fast enough for filtering on the fly.
 
 For more information about `svg-hush`, refer to [Cloudflare GitHub repository](https://github.com/cloudflare/svg-hush).
