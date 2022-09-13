@@ -32,7 +32,7 @@ When Cloudflare performs outgoing transfers, we transfer out the origin IP or ho
 
 {{<Aside type="note">}}
 
-If you need Cloudflare to transfer out edge IP addresses instead of origin IP addresses or hostname for proxied records, reach out to your account team for further instructions.
+If you need Cloudflare to transfer out edge IP addresses instead of origin IP addresses or hostnames for proxied records, reach out to your account team for further instructions.
 
 {{</Aside>}}
 
