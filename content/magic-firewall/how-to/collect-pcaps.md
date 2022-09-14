@@ -63,7 +63,7 @@ header: Full PCAP example request
           "packet_limit": 10000,
           "byte_limit": 100000000,
           "type": "full",
-          "colo": "sfo06",
+          "colo": "ORD",
           "system": "magic-transit",
            "destination_conf": "${bucket}"
            }'
