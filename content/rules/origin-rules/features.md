@@ -29,18 +29,18 @@ If you have configured load balancing through Cloudflare and you wish to overrid
 
 {{</Aside>}}
 
-## Resolve override
+## DNS record override
 
-This feature allows you to override the resolved hostname of incoming requests.
+This feature, also known as resolve override, allows you to override the resolved hostname of incoming requests.
 
-A common use case for this functionality is when you are serving an application from the URI (for example, `mydomain.com/app`). In this case, the `app` may be hosted on a different server or by a third party. A resolve override allows you to redirect requests to this endpoint to the server for that third-party application.
+A common use case for this functionality is when you are serving an application from the URI (for example, `mydomain.com/app`). In this case, the `app` may be hosted on a different server or by a third party. A DNS record override allows you to redirect requests to this endpoint to the server for that third-party application.
 
-You must specify a valid hostname in a resolve override that is either:
+You must specify a valid hostname in a DNS record override that is either:
 
 * A hostname on the same Cloudflare account (possibly on a different zone).
 * A hostname for which Cloudflare is not proxying traffic (gray-clouded).
 
-For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#resolve-override-and-destination-port-override-parameters).
+For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#dns-record-override-and-destination-port-override-parameters).
 
 ## Destination port override
 
@@ -50,7 +50,7 @@ When you configure a destination port override, you can redirect incoming reques
 
 The destination port must be between 1 and 65,535.
 
-For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#resolve-override-and-destination-port-override-parameters).
+For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#dns-record-override-and-destination-port-override-parameters).
 
 ## SNI override
 

@@ -13,7 +13,7 @@ Create [different overrides](/rules/origin-rules/features/) by including differe
 Override type | What to include
 --------------|---------------------
 Host header override | [`host_header` parameter](#host-header-override-parameters)
-Resolve override / Destination port override| [`origin` object](#resolve-override-and-destination-port-override-parameters)
+DNS record override / Destination port override| [`origin` object](#dns-record-override-and-destination-port-override-parameters)
 SNI override | [`sni` object](#sni-override-parameters)
 
 {{<Aside type="note">}}
@@ -30,7 +30,7 @@ The full syntax of the `action_parameters` field for overriding the HTTP `Host` 
 }
 ```
 
-## Resolve override and destination port override parameters
+## DNS record override and destination port override parameters
 
 The full syntax of the `action_parameters` field for overriding both the hostname and the destination port of incoming requests is the following:
 
