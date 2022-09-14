@@ -10,8 +10,8 @@ meta:
 
 Create a static or dynamic URL redirect based on the parameter name provided in the `action_parameters` field:
 
-*   Define the `"from_value"` > `"target_url"` > `"value"` parameter to specify a static URL redirect.
-*   Define the `"from_value"` > `"target_url"` > `"expression"` parameter to specify an expression that defines the dynamic URL redirect to perform.
+* Define the `"from_value"` > `"target_url"` > `"value"` parameter to specify a static URL redirect.
+* Define the `"from_value"` > `"target_url"` > `"expression"` parameter to specify an expression that defines the dynamic URL redirect to perform.
 
 ## Static URL redirect parameters
 
