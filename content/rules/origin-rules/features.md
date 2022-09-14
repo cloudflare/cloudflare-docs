@@ -1,18 +1,18 @@
 ---
-title: Available features
+title: Available settings
 pcx_content_type: concept
 weight: 2
 meta:
-  title: Available Origin Rules features
+  title: Available Origin Rules settings
 ---
 
-# Available features
+# Available settings
 
-The following sections describe the features currently supported by Origin Rules.
+The following sections describe the available settings in Origin Rules.
 
-## Host header override
+## Host header
 
-This feature allows you to rewrite the HTTP `Host` header of incoming requests.
+Allows you to rewrite the HTTP `Host` header of incoming requests.
 
 A common use case for this functionality is when your content is hosted on a third-party server that only accepts `Host` headers with their own server names. In this situation, you must update the `Host` HTTP header in incoming requests from `Host: example.com` to `Host: thirdpartyserver.example.net`.
 
@@ -29,11 +29,11 @@ If you have configured load balancing through Cloudflare and you wish to overrid
 
 {{</Aside>}}
 
-## DNS record override
+## DNS record
 
-This feature, also known as resolve override, allows you to override the resolved hostname of incoming requests.
+Allows you to override the resolved hostname of incoming requests. This functionality is also known as resolve override.
 
-A common use case for this functionality is when you are serving an application from the URI (for example, `mydomain.com/app`). In this case, the `app` may be hosted on a different server or by a third party. A DNS record override allows you to redirect requests to this endpoint to the server for that third-party application.
+A common use case is when you are serving an application from the URI (for example, `mydomain.com/app`). In this case, the `app` may be hosted on a different server or by a third party. A DNS record override allows you to redirect requests to this endpoint to the server for that third-party application.
 
 You must specify a valid hostname in a DNS record override that is either:
 
@@ -42,9 +42,9 @@ You must specify a valid hostname in a DNS record override that is either:
 
 For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#dns-record-override-and-destination-port-override-parameters).
 
-## Destination port override
+## Destination port
 
-This feature allows you to override the destination port of a request.
+Allows you to override the destination port of a request.
 
 When you configure a destination port override, you can redirect incoming requests to a different port. For example, you could override the destination port for requests received for `mydomain.com` so that they are served by the application running on port 9000 (`mydomain.com:9000`).
 
@@ -52,17 +52,17 @@ The destination port must be between 1 and 65,535.
 
 For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#dns-record-override-and-destination-port-override-parameters).
 
-## SNI override
+## Server Name Indication (SNI)
 
-This feature allows you to override the Server Name Indication (SNI) [^1] value of a request. For more information, refer to [What is SNI (Server Name Indication)?](https://www.cloudflare.com/learning/ssl/what-is-sni/) in the Learning Center.
+Allows you to override the Server Name Indication (SNI) [^1] value of a request. For more information, refer to [What is SNI (Server Name Indication)?](https://www.cloudflare.com/learning/ssl/what-is-sni/) in the Learning Center.
 
-The SNI override value must be a valid hostname on the same Cloudflare account (possibly on a different zone).
+The new SNI value must be a valid hostname on the same Cloudflare account (possibly on a different zone).
 
 For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#sni-override-parameters).
 
 {{<Aside type="note" header="Notes">}}
-* Currently, you can only use a static value in an SNI Override.
-* An SNI Override will take precedence over [SNI rewrites of custom origins](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/#sni-rewrites) when using Cloudflare for SaaS.
+* Currently, you can only use a static value when overriding SNI.
+* An SNI override will take precedence over [SNI rewrites of custom origins](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/#sni-rewrites) when using Cloudflare for SaaS.
 {{</Aside>}}
 
 [^1]: SNI allows a server to host multiple TLS Certificates for multiple websites using a single IP address. SNI adds the website hostname in the TLS handshake to inform the server which website to present when using shared IPs.

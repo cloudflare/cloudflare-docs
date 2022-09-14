@@ -9,16 +9,12 @@ layout: single
 
 Origin Rules allow you to customize where the incoming traffic will go and with which parameters. Currently you can perform the following overrides:
 
-* [Host header override](/rules/origin-rules/features/#host-header-override): Overrides the `Host` header of incoming requests.
-* [DNS record override](/rules/origin-rules/features/#dns-record-override): Overrides the resolved hostname of incoming requests.
-* [Destination port override](/rules/origin-rules/features/#destination-port-override): Overrides the resolved destination port of incoming requests.
-* [SNI override](/rules/origin-rules/features/#sni-override): Overrides the Server Name Indication (SNI) value of incoming requests.
+* [Host header](/rules/origin-rules/features/#host-header): Overrides the `Host` header of incoming requests.
+* [Server Name Indication (SNI)](/rules/origin-rules/features/#server-name-indication-sni): Overrides the Server Name Indication (SNI) value of incoming requests.
+* [DNS record](/rules/origin-rules/features/#dns-record): Overrides the resolved hostname of incoming requests.
+* [Destination port](/rules/origin-rules/features/#destination-port): Overrides the resolved destination port of incoming requests.
 
-The Origin Rule expression will determine when these overrides are applied.
-
-{{<Aside type="warning">}}
-Currently you can only create Origin Rules [using the API](/rules/origin-rules/create-api/).
-{{</Aside>}}
+The Origin Rule expression will determine when these overrides will be applied.
 
 ## Availability
 
@@ -26,10 +22,10 @@ Currently you can only create Origin Rules [using the API](/rules/origin-rules/c
 |                           | Free | Pro | Business | Enterprise |
 |---------------------------|:----:|:---:|:--------:|:----------:|
 | Number of Origin Rules    |  10  | 20  |    50    |    100     |
-| Host header override      |  —   |  —  |    —     |    Yes     |
-| DNS record override       |  —   |  —  |    —     |    Yes     |
-| SNI override              |  —   |  —  |    —     |    Yes     |
-| Destination port override | Yes  | Yes |   Yes    |    Yes     |
+| Override Host header      |  —   |  —  |    —     |    Yes     |
+| Override DNS record       |  —   |  —  |    —     |    Yes     |
+| Override SNI              |  —   |  —  |    —     |    Yes     |
+| Override destination port | Yes  | Yes |   Yes    |    Yes     |
 
 {{</table-wrap>}}
 
