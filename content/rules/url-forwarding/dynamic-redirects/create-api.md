@@ -54,7 +54,9 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
 }'
 ```
 
-The response will be similar to the following:
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 {
@@ -65,7 +67,7 @@ The response will be similar to the following:
     "version": "1",
     "rules": [
       {
-        "id": "8da312df846b4258a05bcd454ea943be",
+        "id": "235e557b92fd4e5e8753ee665a9ddd75",
         "version": "1",
         "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") and http.request.uri.path eq \"/\"",
         "description": "Redirect GB and FR users in home page to localized site.",
@@ -90,6 +92,9 @@ The response will be similar to the following:
   "messages": []
 }
 ```
+
+</div>
+</details>
 
 If there is already a phase entry point ruleset for the `http_request_dynamic_redirect` phase, use the [Update zone ruleset](https://api.cloudflare.com/#zone-rulesets-update-zone-ruleset) operation instead, like in the following example:
 
@@ -134,12 +139,14 @@ curl -X PUT \
 }'
 ```
 
-The response will be similar to the following:
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 {
   "result": {
-    "id": "67013aa153df4e5fbda92f92bc979331",
+    "id": "528f4f03bf0da53a29907199625867be",
     "name": "Dynamic redirects ruleset",
     "description": "",
     "kind": "zone",
@@ -191,3 +198,6 @@ The response will be similar to the following:
   "messages": []
 }
 ```
+
+</div>
+</details>
