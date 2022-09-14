@@ -65,7 +65,6 @@ The same Origin Rule can have different types of overrides. For example, a singl
 "action_parameters": {
   "host_header": "<HOST_HEADER_VALUE>",
   "origin": {
-    "host": "<HOSTNAME>",
     "port": <PORT>
   }
 }
