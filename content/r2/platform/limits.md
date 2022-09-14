@@ -24,8 +24,6 @@ To increase any of our limits, [please fill out our form!](https://forms.gle/ukp
 | Data storage per bucket         | Unlimited                             |
 | Object size                     | 5 TB per object<sup>1</sup>           |
 | Maximum upload size<sup>3</sup> | 5 GB<sup>2</sup>                      |
-| Class A Operations per bucket   | 250 per second<sup>4</sup>            |
-| Class B Operations per bucket   | 1000 per second<sup>4</sup>           |
 
 {{</table-wrap>}}
 
@@ -35,6 +33,5 @@ To increase any of our limits, [please fill out our form!](https://forms.gle/ukp
 copying into a part of a multipart upload. If you have a Worker, its inbound request size is
 constrained by [Workers request limits](/workers/platform/limits#request-limits). The max upload size limit does not apply to subrequests.<br>
 Review the [Examples](/r2/examples/) on how to use SDKs with the S3 API to upload large files.<br>
-<sup>4</sup> During [open beta](/workers/platform/betas/), the number of operations per bucket will be temporarily restricted.
 
 To increase these limits, contact your Cloudflare account team.
