@@ -59,9 +59,9 @@ $ wrangler init [NAME] [-y / --yes] [--from-dash]
 - `--yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Answer yes to any prompts for new projects.
 - `--from-dash` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>` 
+  - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
-{{</definitions>}}
+    {{</definitions>}}
 
 ---
 
@@ -146,6 +146,9 @@ This runs an ephemeral local version of your Worker, and will not be able to acc
 
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the script.
+- `--test-scheduled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+
+  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (cron trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
 
 {{</definitions>}}
 
