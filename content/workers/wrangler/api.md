@@ -80,7 +80,7 @@ To wrap up a test suite, call `await worker.stop()` in an `afterAll` function.
 ---
 filename: src/index.test.js
 ---
-import { unstable_dev } from 'wrangler'
+const { unstable_dev } = require("wrangler");
 
 describe("Worker", () => {
 	let worker;
