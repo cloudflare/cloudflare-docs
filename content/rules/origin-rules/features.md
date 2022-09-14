@@ -29,6 +29,21 @@ If you have configured load balancing through Cloudflare and you wish to overrid
 
 {{</Aside>}}
 
+## Server Name Indication (SNI)
+
+Allows you to override the Server Name Indication (SNI) [^1] value of a request. For more information, refer to [What is SNI (Server Name Indication)?](https://www.cloudflare.com/learning/ssl/what-is-sni/) in the Learning Center.
+
+The new SNI value must be a valid hostname on the same Cloudflare account (possibly on a different zone).
+
+For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#sni-override-parameters).
+
+{{<Aside type="note" header="Notes">}}
+* Currently, you can only use a static value when overriding SNI.
+* An SNI override will take precedence over [SNI rewrites of custom origins](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/#sni-rewrites) when using Cloudflare for SaaS.
+{{</Aside>}}
+
+[^1]: SNI allows a server to host multiple TLS Certificates for multiple websites using a single IP address. SNI adds the website hostname in the TLS handshake to inform the server which website to present when using shared IPs.
+
 ## DNS record
 
 Allows you to override the resolved hostname of incoming requests. This functionality is also known as resolve override.
@@ -51,18 +66,3 @@ When you configure a destination port override, you can redirect incoming reques
 The destination port must be between 1 and 65,535.
 
 For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#dns-record-override-and-destination-port-override-parameters).
-
-## Server Name Indication (SNI)
-
-Allows you to override the Server Name Indication (SNI) [^1] value of a request. For more information, refer to [What is SNI (Server Name Indication)?](https://www.cloudflare.com/learning/ssl/what-is-sni/) in the Learning Center.
-
-The new SNI value must be a valid hostname on the same Cloudflare account (possibly on a different zone).
-
-For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#sni-override-parameters).
-
-{{<Aside type="note" header="Notes">}}
-* Currently, you can only use a static value when overriding SNI.
-* An SNI override will take precedence over [SNI rewrites of custom origins](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/#sni-rewrites) when using Cloudflare for SaaS.
-{{</Aside>}}
-
-[^1]: SNI allows a server to host multiple TLS Certificates for multiple websites using a single IP address. SNI adds the website hostname in the TLS handshake to inform the server which website to present when using shared IPs.
