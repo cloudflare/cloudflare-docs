@@ -15,4 +15,4 @@ Unlike [Bulk Redirects](/rules/url-forwarding/bulk-redirects/), Dynamic Redirect
 
 ---
 
-Refer to [Availability](/rules/url-forwarding/#availability) for more information on the limits and features per Cloudflare plan.
+Refer to [Availability](/rules/url-forwarding/#availability) for more information on the quotas and features per Cloudflare plan.

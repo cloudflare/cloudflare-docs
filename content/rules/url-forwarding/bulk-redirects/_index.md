@@ -13,4 +13,4 @@ Unlike [Dynamic Redirects](/rules/url-forwarding/dynamic-redirects/), Bulk Redir
 
 ---
 
-Refer to [Availability](/rules/url-forwarding/#availability) for more information on the limits and features per Cloudflare plan.
+Refer to [Availability](/rules/url-forwarding/#availability) for more information on the quotas and features per Cloudflare plan.
