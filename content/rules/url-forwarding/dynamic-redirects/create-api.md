@@ -43,7 +43,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
       "action_parameters": {
         "from_value": {
           "target_url": {
-            "expression":"lower(concat(\"https://\", ip.geoip.country, \".example.com\"))"
+            "expression": "lower(concat(\"https://\", ip.geoip.country, \".example.com\"))"
           },
           "status_code": 307,
           "preserve_query_string": true
@@ -73,7 +73,7 @@ The response will be similar to the following:
         "action_parameters": {
           "from_value": {
             "target_url": {
-              "expression":"lower(concat(\"https://\", ip.geoip.country, \".example.com\"))"
+              "expression": "lower(concat(\"https://\", ip.geoip.country, \".example.com\"))"
             },
             "status_code": 307,
             "preserve_query_string": true
@@ -110,7 +110,7 @@ curl -X PUT \
       "action_parameters": {
         "from_value": {
           "target_url": {
-            "expression":"lower(concat(\"https://\", ip.geoip.country, \".example.com\"))"
+            "expression": "lower(concat(\"https://\", ip.geoip.country, \".example.com\"))"
           },
           "status_code": 307,
           "preserve_query_string": true
@@ -124,7 +124,7 @@ curl -X PUT \
       "action_parameters": {
         "from_value": {
           "target_url": {
-            "value":"https://example.com/contact-us/"
+            "value": "https://example.com/contact-us/"
           },
           "status_code": 308
         }
@@ -152,7 +152,7 @@ The response will be similar to the following:
         "action_parameters": {
           "from_value": {
             "target_url": {
-              "expression":"lower(concat(\"https://\", ip.geoip.country, \".example.com\"))"
+              "expression": "lower(concat(\"https://\", ip.geoip.country, \".example.com\"))"
             },
             "status_code": 307,
             "preserve_query_string": true
@@ -171,7 +171,7 @@ The response will be similar to the following:
         "action_parameters": {
           "from_value": {
             "target_url": {
-              "value":"https://example.com/contact-us/"
+              "value": "https://example.com/contact-us/"
             },
             "status_code": 308
           }
