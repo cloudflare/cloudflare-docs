@@ -19,7 +19,7 @@ Use the following Cloudflare products to perform URL redirects, according to you
 
 ## Availability
 
-Bulk Redirects and Dynamic Redirects are available on all Cloudflare plans. The exact limits and features depend on your plan.
+Bulk Redirects and Dynamic Redirects are available on all Cloudflare plans. The exact quotas and features depend on your plan.
 
 | Feature                                         | Free | Pro | Business | Enterprise |
 |-------------------------------------------------|-----:|----:|---------:|-----------:|
@@ -31,7 +31,8 @@ Bulk Redirects and Dynamic Redirects are available on all Cloudflare plans. The 
 | Number of Dynamic Redirect Rules                |   10 |  25 |       50 |        125 |
 | Dynamic Redirect Rules with regular expressions |    — |   — |      Yes |        Yes |
 
+The quotas in the table are the default quotas for each Cloudflare plan. If you need more URL redirects in Bulk Redirects, contact your account team.
 
-The limits in the table are the default limits for each Cloudflare plan. If you need more URL redirects in Bulk Redirects, contact your account team.
+Bulk Redirects features and quotas are per account and they depend on the highest Cloudflare plan on your account.
 
-When determining the available features and their limits, Cloudflare takes into consideration the highest plan on your account.
+Dynamic Redirects features and quotas are per zone and depend on the zone plan.
