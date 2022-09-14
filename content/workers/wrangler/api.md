@@ -38,7 +38,7 @@ const worker = await unstable_dev(script, options, apiOptions)
 
 *   `script` {{<type>}}string{{</type>}}
 
-    *   A string containing a path to your Worker script.
+    *   A string containing a path to your Worker script, relative to your Worker project's root directory.
 
 *   `options` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
