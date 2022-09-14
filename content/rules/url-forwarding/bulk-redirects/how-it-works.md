@@ -40,7 +40,7 @@ The following URL Redirect parameters control the matching behavior between the 
 
 {{</definitions>}}
 
-For detailed information on these parameters, refer to [URL Redirect parameters](/rules/bulk-redirects/reference/parameters/).
+For detailed information on these parameters, refer to [URL Redirect parameters](/rules/url-forwarding/bulk-redirects/reference/parameters/).
 
 ## Configuring the path and query string behavior
 
@@ -74,7 +74,7 @@ The following parameters configure how Cloudflare determines the path and query 
 
 {{</definitions>}}
 
-For detailed information on these parameters, refer to [URL Redirect parameters](/rules/bulk-redirects/reference/parameters/).
+For detailed information on these parameters, refer to [URL Redirect parameters](/rules/url-forwarding/bulk-redirects/reference/parameters/).
 
 ## URL matching algorithm
 

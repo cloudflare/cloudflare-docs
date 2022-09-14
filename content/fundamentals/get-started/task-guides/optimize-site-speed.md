@@ -27,7 +27,7 @@ Once your domain is onboarded and your DNS records are [proxied through Cloudfla
 
 ### Optimization with minimal setup
 
-Simply by using [Bulk Redirects](/rules/bulk-redirects) or [Page Rules](https://support.cloudflare.com/hc/articles/4729826525965) for URL forwarding, you can perform redirects at Cloudflare's edge network instead of at your origin server.
+Simply by using [Bulk Redirects](/rules/url-forwarding/bulk-redirects) or [Page Rules](https://support.cloudflare.com/hc/articles/4729826525965) for URL forwarding, you can perform redirects at Cloudflare's edge network instead of at your origin server.
 
 With a few clicks, you can also adjust your [cache settings](/cache/get-started/) to make resources more cacheable and improve cache hit rates.
 

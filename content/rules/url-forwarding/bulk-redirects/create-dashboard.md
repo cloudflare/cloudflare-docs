@@ -37,7 +37,7 @@ You can enter URL Redirects one at a time in the dashboard, or import a CSV file
 
 ### Import a CSV file with URL Redirects
 
-Instead of adding URL Redirects manually, you can upload a CSV file with the list of redirects. For more information on the file format, refer to the [CSV file format](/rules/bulk-redirects/reference/csv-file-format/).
+Instead of adding URL Redirects manually, you can upload a CSV file with the list of redirects. For more information on the file format, refer to the [CSV file format](/rules/url-forwarding/bulk-redirects/reference/csv-file-format/).
 
 1.  Click **Upload CSV** and select the CSV file you wish to upload.
 

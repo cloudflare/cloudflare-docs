@@ -123,7 +123,7 @@ Add Bulk Redirect Rules to the entry point ruleset of the `http_request_redirect
 A Bulk Redirect Rule must have:
 
 * `action` set to `redirect`
-* An `action_parameters` object with additional configuration settings — refer to [API JSON objects: Bulk Redirect Rule](/rules/bulk-redirects/reference/json-objects/#bulk-redirect-rule) for details.
+* An `action_parameters` object with additional configuration settings — refer to [API JSON objects: Bulk Redirect Rule](/rules/url-forwarding/bulk-redirects/reference/json-objects/#bulk-redirect-rule) for details.
 
 The following request of the [Create account ruleset](https://api.cloudflare.com/#account-rulesets-create-account-ruleset) operation creates a phase entry point ruleset for the `http_request_redirect` phase at the account level, and defines a single redirect rule. Use this operation if you have not created a phase entry point ruleset for the `http_request_redirect` phase yet.
 

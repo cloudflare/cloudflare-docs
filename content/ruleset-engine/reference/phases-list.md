@@ -40,7 +40,7 @@ The phases execute in the order they appear in the table.
 | `http_ratelimit` | [Rate limiting rules](/waf/rate-limiting-rules/create-api/) |
 | `http_request_firewall_managed` | [Web Application Firewall (WAF)](/waf/managed-rulesets/deploy-api/) |
 | `http_request_sbfm` | [Super Bot Fight Mode](/bots/get-started/pro/) |
-| `http_request_redirect` | [Bulk Redirects](/rules/bulk-redirects/create-api/) |
+| `http_request_redirect` | [Bulk Redirects](/rules/url-forwarding/bulk-redirects/create-api/) |
 | _N/A_ (internal phase) | [Managed Transforms](/rules/transform/managed-transforms/) |
 | `http_request_late_transform` | [HTTP Request Header Modification Rules](/rules/transform/request-header-modification/create-api/) |
 
