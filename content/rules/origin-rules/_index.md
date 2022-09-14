@@ -23,8 +23,8 @@ The Origin Rule expression will determine when these overrides will be applied.
 |---------------------------|:----:|:---:|:--------:|:----------:|
 | Number of Origin Rules    |  10  | 20  |    50    |    100     |
 | Override Host header      |  —   |  —  |    —     |    Yes     |
-| Override DNS record       |  —   |  —  |    —     |    Yes     |
 | Override SNI              |  —   |  —  |    —     |    Yes     |
+| Override DNS record       |  —   |  —  |    —     |    Yes     |
 | Override destination port | Yes  | Yes |   Yes    |    Yes     |
 
 {{</table-wrap>}}
