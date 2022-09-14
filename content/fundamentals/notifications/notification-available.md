@@ -580,7 +580,7 @@ Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configu
 
 Customers with custom hostname certificates who want to receive a notification on validation, issuance, renewal, and expiration of certificates.
 
-For more details around data formatting for webhooks, refer to the [Cloudflare for SaaS docs](/cloudflare-for-saas/security/certificate-management/webhook-definitions/).
+For more details around data formatting for webhooks, refer to the [Cloudflare for SaaS docs](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/webhook-definitions/).
 
 **Other options / filters**
 

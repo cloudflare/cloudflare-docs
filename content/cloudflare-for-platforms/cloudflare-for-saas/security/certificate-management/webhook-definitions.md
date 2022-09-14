@@ -12,7 +12,7 @@ The following section details the data Cloudflare sends to a webhook destination
 
 ## Certificate validation
 
-Before a Certificate Authority will issue a certificate for a domain, the requestor must prove they have control over that domain. This process is known as [domain control validation (DCV)](/cloudflare-for-saas/security/certificate-management/issue-and-validate/#validate-certificates).
+Before a Certificate Authority will issue a certificate for a domain, the requestor must prove they have control over that domain. This process is known as [domain control validation (DCV)](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#validate-certificates).
 
 ### Validation succeeded
 
@@ -354,7 +354,7 @@ Once issued, certificates are deployed to Cloudflare's global edge network.
 
 Once issued, certificates are valid for a period of time depending on the [certificate authority](/ssl/ssl-tls/certificate-validity-periods/).
 
-The actions that you need to perform to renew certificates depend on your [validation method](/cloudflare-for-saas/security/certificate-management/issue-and-validate/#renew-certificates-issued-by-dcv).
+The actions that you need to perform to renew certificates depend on your [validation method](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#renew-certificates-issued-by-dcv).
 
 ### Upcoming renewal
 
