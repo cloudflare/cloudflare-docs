@@ -1,8 +1,8 @@
 ---
-title: S3 Compatibility
+title: S3 API
 pcx_content_type: navigation
 ---
 
-# S3 Compatibility
+# S3 API
 
 {{<directory-listing>}}

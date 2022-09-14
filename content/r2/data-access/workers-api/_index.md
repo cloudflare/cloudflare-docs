@@ -1,5 +1,5 @@
 ---
-title: Runtime API
+title: Workers API
 pcx_content_type: navigation
 ---
 
