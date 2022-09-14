@@ -1,6 +1,6 @@
 ---
 pcx_content_type: reference
-title: Bindings API Reference
+title: Runtime API Reference
 ---
 
 # R2

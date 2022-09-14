@@ -1,8 +1,8 @@
 ---
-title: Bindings API
+title: Runtime API
 pcx_content_type: navigation
 ---
 
-# Bindings API
+# Runtime API
 
 {{<directory-listing>}}

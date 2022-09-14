@@ -16,7 +16,7 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 {{<button-group>}}
 {{<button type="primary" href="/r2/get-started/">}}Get started{{</button>}}
 {{<button type="secondary" href="/r2/examples/">}}Browse the examples{{</button>}}
-{{<button type="secondary" href="/r2/data-access/bindings/bindings-reference">}}Review the Workers APIs{{</button>}}
+{{<button type="secondary" href="/r2/data-access/runtime-api/runtime-api-reference">}}Review the Workers APIs{{</button>}}
 {{</button-group>}}
 
 ---

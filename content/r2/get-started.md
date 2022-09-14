@@ -26,6 +26,6 @@ To purchase R2:
 
 Cloudflare provides multiple ways for developers to access their R2 buckets:
 
-* [Worker bindings](/r2/data-access/bindings/bindings-usage/) - Access R2 buckets from a Worker
+* [Worker Runtime API](/r2/data-access/runtime-api/runtime-api-usage/) - Access R2 buckets from a Worker
 * [S3 API Compatibility](/r2/data-access/s3-compatibility/tokens) - Access R2 buckets using the S3 API
 * [Public Buckets](/r2/data-access/public-buckets/) - Access R2 buckets directly
