@@ -9,6 +9,6 @@ weight: 1
 
 # Adaptive optimized format delivery
 
-Cloudflare Images automatically serves AVIF and WebP when the browser supports these efficient image formats. This transcoding happens with [all supported formats](/images/cloudflare-images/upload-images/formats-limitations/), except SVG. If you upload SVGs, Cloudflare Images will serve SVG files.
+Cloudflare Images automatically transcodes uploaded PNG, JPEG and GIF files to the more efficient AVIF format. This happens whenever the customer browser supports it. If the browser does not support AVIF, Cloudflare will fall back to WebP. If there is no support for WebP, then Cloudflare Images will serve your original files.
 
-The first format that Cloudflare Images will try to serve is AVIF. It will fall back to WebP if the browser does not support AVIF. If the browser does not support either AVIF or WebP, Cloudflare Images will default to serving the [image format you uploaded](/images/cloudflare-images/upload-images/formats-limitations/).
+When you upload SVG files, Cloudflare serves them after they have been [sanitized by `svg-hush`](/images/cloudflare-images/upload-images/formats-limitations/#sanitized-svgs).
