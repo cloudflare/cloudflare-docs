@@ -34,6 +34,7 @@ The phases execute in the order they appear in the table.
 | `http_request_sanitize` | [URL normalization](/rules/normalization/) |
 | `http_request_transform` | [URL Rewrite Rules](/rules/transform/url-rewrite/create-api/) |
 | `http_request_origin` | [Origin Rules](/rules/origin-rules/) |
+| `http_request_dynamic_redirect` | [Dynamic Redirects](/rules/url-forwarding/dynamic-redirects/) |
 | `ddos_l7`* | [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/configure-api/) |
 | `http_request_firewall_custom` | [Web Application Firewall (WAF)](/waf/custom-rules/create-api/) |
 | `http_ratelimit` | [Rate limiting rules](/waf/rate-limiting-rules/create-api/) |
