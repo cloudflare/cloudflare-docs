@@ -10,13 +10,13 @@ meta:
 
 The following sections describe the features currently supported by Origin Rules.
 
-## Host Header Override
+## Host header override
 
 This feature allows you to rewrite the HTTP `Host` header of incoming requests.
 
 A common use case for this functionality is when your content is hosted on a third-party server that only accepts `Host` headers with their own server names. In this situation, you must update the `Host` HTTP header in incoming requests from `Host: example.com` to `Host: thirdpartyserver.example.net`.
 
-You must specify a valid hostname in a Host Header Override that is either:
+You must specify a valid hostname in a Host header override that is either:
 
 * A hostname on the same Cloudflare account (possibly on a different zone).
 * A hostname for which Cloudflare is not proxying traffic (gray-clouded).
@@ -29,34 +29,34 @@ If you have configured load balancing through Cloudflare and you wish to overrid
 
 {{</Aside>}}
 
-## Resolve Override
+## Resolve override
 
 This feature allows you to override the resolved hostname of incoming requests.
 
-A common use case for this functionality is when you are serving an application from the URI (for example, `mydomain.com/app`). In this case, the `app` may be hosted on a different server or by a third party. Resolve Override allows you to redirect requests to this endpoint to the server for that third-party application.
+A common use case for this functionality is when you are serving an application from the URI (for example, `mydomain.com/app`). In this case, the `app` may be hosted on a different server or by a third party. A resolve override allows you to redirect requests to this endpoint to the server for that third-party application.
 
-You must specify a valid hostname in a Resolve Override that is either:
+You must specify a valid hostname in a resolve override that is either:
 
 * A hostname on the same Cloudflare account (possibly on a different zone).
 * A hostname for which Cloudflare is not proxying traffic (gray-clouded).
 
 For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#resolve-override-and-destination-port-override-parameters).
 
-## Destination Port Override
+## Destination port override
 
 This feature allows you to override the destination port of a request.
 
-When you configure Destination Port Override, you can redirect incoming requests to a different port. For example, you could override the destination port for requests received for `mydomain.com` so that they are served by the application running on port 9000 (`mydomain.com:9000`).
+When you configure a destination port override, you can redirect incoming requests to a different port. For example, you could override the destination port for requests received for `mydomain.com` so that they are served by the application running on port 9000 (`mydomain.com:9000`).
 
 The destination port must be between 1 and 65,535.
 
 For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#resolve-override-and-destination-port-override-parameters).
 
-## SNI Override
+## SNI override
 
 This feature allows you to override the Server Name Indication (SNI) [^1] value of a request. For more information, refer to [What is SNI (Server Name Indication)?](https://www.cloudflare.com/learning/ssl/what-is-sni/) in the Learning Center.
 
-The SNI Override value must be a valid hostname on the same Cloudflare account (possibly on a different zone).
+The SNI override value must be a valid hostname on the same Cloudflare account (possibly on a different zone).
 
 For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#sni-override-parameters).
 
