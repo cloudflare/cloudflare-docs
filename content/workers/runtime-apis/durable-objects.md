@@ -222,6 +222,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
     - {{<code>}}reverse{{<param-type>}}boolean{{</param-type>}}{{</code>}}
 
       - If true, return results in descending lexicographic order instead of the default ascending order.
+      - Note that enabling this does not change the meaning of `start`, `startKey`, or `endKey`. `start` still defines the smallest key in lexicographic order that can be returned (inclusive), effectively serving as the endpoint for a reverse-order list. `end` still defines the largest key in lexicographic order that the list should consider (exclusive), effectively serving as the starting point for a reverse-order list.
 
     - {{<code>}}limit{{<param-type>}}number{{</param-type>}}{{</code>}}
 
