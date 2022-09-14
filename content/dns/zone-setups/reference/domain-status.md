@@ -19,7 +19,7 @@ Once you [add a domain](/fundamentals/get-started/setup/add-site/) to Cloudflare
   - **Limitations**:
 
     - Pending zones cannot be used to [proxy traffic to Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/#pending-domains).
-    - If your domain is not activated within 28 days and is on the Free plan, it will be deleted automatically.
+    - If your domain is not activated within 28 days and is on the Free plan, it will be deleted automatically. Any pending zone with a paid plan (Pro, Business, Enterprise) will remain pending until the plan is removed or the domain is activated or [removed from Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/remove-domain/).
 
 - **Active**: Cloudflare has authenticated your [nameserver changes](/dns/zone-setups/full-setup/setup/#step-3--update-your-nameservers) or [verification TXT record](/dns/zone-setups/partial-setup/setup/#step-2--verify-ownership-for-your-domain) and you can proxy domain traffic through Cloudflare.
 
