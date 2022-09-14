@@ -38,7 +38,6 @@ The only required parameter is `"from_value"` > `"target_url"` > `"value"`. The 
 The full syntax of the `"action_parameters"` field for a Dynamic Redirect Rule with a dynamic value for the destination URL is the following:
 
 ```json
-
 "action_parameters": {
   "from_value": {
     "target_url": {
