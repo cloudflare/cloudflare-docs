@@ -558,3 +558,7 @@ To solve this you can either do less work per request, or send fewer requests, f
 #### Error: Durable Object storage operation exceeded timeout which caused object to be reset.
 
 To prevent indefinite locking, there is a limit on how much time storage operations can take. In objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact your Cloudflare account team.
+
+#### Error: Your account is generating too much load on Durable Objects. Please back off and try again later.
+
+There is a limit on how quickly you can [create new objects or lookup existing objects](/workers/runtime-apis/durable-objects/#obtaining-an-object-stub). Those lookups are usually cached, so catching this error and retrying after a short backoff is safe. If possible, also consider spreading those lookups across multiple requests.
