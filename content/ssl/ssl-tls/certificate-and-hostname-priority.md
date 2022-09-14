@@ -32,7 +32,9 @@ For any given hostname, Cloudflare uses the following order to determine which c
 
 {{<Aside type="warning">}}
 
-If you [issue a custom hostname certificate](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/) with wildcards enabled, you cannot update TLS settings for these wildcard hostnames.
+When you [issue a custom hostname certificate](/cloudflare-for-saas/security/certificate-management/issue-and-validate/) with wildcards enabled, any cipher suites or Minimum TLS settings applied to that hostname will only apply to the direct hostname.
+
+However, if you want to update the Minimum TLS settings for all wildcard hostnames, you can change the [zone-level Minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/).
 
 {{</Aside>}}
 

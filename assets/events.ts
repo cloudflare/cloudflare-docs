@@ -278,7 +278,7 @@ export function toggleSidebar() {
     let div = document.querySelector(".DocsSidebar--sections .toggleSidebar")
     let btn = div.querySelector("button");
     btn.addEventListener("click", () => {
-      let classToggleList = ['.DocsSidebar', '.DocsToolbar', '.DocsContent', '.DocsMarkdown', '.DocsSidebar--sections .toggleSidebar'];
+      let classToggleList = ['.DocsSidebar', '.DocsToolbar', '.DocsFooter', '.DocsContent', '.DocsMarkdown', '.DocsSidebar--sections .toggleSidebar'];
       
       classToggleList.forEach(function(querySelector){
         let item = document.querySelector(querySelector);
