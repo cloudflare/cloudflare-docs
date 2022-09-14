@@ -23,7 +23,6 @@ For details on each method available for DCV, refer to the following resources:
 
 For full zones[^1], the only required action is to confirm the your nameservers are still [pointing to Cloudflare](https://support.cloudflare.com/hc/articles/4426809598605).
 
-
 {{<render file="_full-zone-acm-dcv.md">}}
 
 ### DCV - Partial zones
