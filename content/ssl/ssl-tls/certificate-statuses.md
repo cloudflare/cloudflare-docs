@@ -53,4 +53,4 @@ For more details on certificate validation, refer to [Changing DCV method](/ssl/
 
 Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by [using the API](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details).
 
-For more details on certificate validation, refer to [Changing DCV method](/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
+For more details on certificate validation, refer to [Changing DCV method](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).

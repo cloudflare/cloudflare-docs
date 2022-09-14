@@ -12,7 +12,7 @@ With [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-pri
 
 ## Limitations
 
-### CNAME at zone apex
+### DNS-only CNAME at zone apex
 
 If you are using Cloudflare as your [primary DNS provider](/dns/zone-setups/full-setup/), we allow you to set a `CNAME` record on the zone apex because we do [`CNAME` Flattening](/dns/additional-options/cname-flattening/). 
 
@@ -20,7 +20,7 @@ If you take advantage of this behavior within Cloudflare (using a `CNAME` record
 
 {{<Aside type="note">}}
 
-Cloudflare is actively working to transfer flattened IPs to the secondary DNS provider.
+If you need Cloudflare to transfer out flattened IP addresses instead of a CNAME record, reach out to your account team for further instructions.
 
 {{</Aside>}}
 
@@ -28,11 +28,11 @@ Cloudflare is actively working to transfer flattened IPs to the secondary DNS pr
 
 If your zone has [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/), you may also experience issues with outgoing zone transfers.
 
-When Cloudflare performs outgoing transfers, we also transfer out the IP or hostname of each DNS record. This means that - if Cloudflare (as primary) and your secondary provider are both authoritative - they will not reply with the same response for proxied DNS records. Cloudflare would respond with two [Cloudflare edge IP addresses](https://www.cloudflare.com/ips) and your secondary provider would respond with the origin IP or hostname.
+When Cloudflare performs outgoing transfers, we transfer out the origin IP or hostname of each DNS record. This means that - if Cloudflare (as primary) and your secondary provider are both authoritative - they will not reply with the same response for proxied DNS records. Cloudflare would respond with two [Cloudflare edge IP addresses](https://www.cloudflare.com/ips) and your secondary provider would respond with the origin IP or hostname.
 
 {{<Aside type="note">}}
 
-Cloudflare is actively working to support outgoing zone transfers of proxied records.
+If you need Cloudflare to transfer out edge IP addresses instead of origin IP addresses or hostnames for proxied records, reach out to your account team for further instructions.
 
 {{</Aside>}}
 

@@ -9,16 +9,19 @@ Once you [add a domain](/fundamentals/get-started/setup/add-site/) to Cloudflare
 
 - **Setup**: You initiated but did not finish the signup process.
 
-- **Pending Nameserver Update**: If your domain is not activated, it will be deleted automatically after 62 days.
+- **Pending Nameserver Update**: 
 
-  - [_Full setups_](/dns/zone-setups/full-setup/): You have either not changed your authoritative nameservers at your registrar or your change has not yet been authenticated.
-  - [_Partial setups_](/dns/zone-setups/partial-setup/): You have either not added the verification TXT record to your authoritative DNS or that record has not yet been authenticated.
+  - **Causes**:
+  
+    - [_Full setups_](/dns/zone-setups/full-setup/): You have either not changed your authoritative nameservers at your registrar or your change has not yet been authenticated.
+    - [_Partial setups_](/dns/zone-setups/partial-setup/): You have either not added the verification TXT record to your authoritative DNS or that record has not yet been authenticated.
+  
+  - **Limitations**:
 
-  {{<Aside type="warning">}}
-  Pending zones cannot be used to [proxy traffic to Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/#pending-domains).
-  {{</Aside>}}
+    - Pending zones cannot be used to [proxy traffic to Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/#pending-domains).
+    - If your domain is not activated within 28 days and is on the Free plan, it will be deleted automatically.
 
-- **Active**: Cloudflare has authenticated your nameserver changes or verification TXT record and you can proxy domain traffic through Cloudflare.
+- **Active**: Cloudflare has authenticated your [nameserver changes](/dns/zone-setups/full-setup/setup/#step-3--update-your-nameservers) or [verification TXT record](/dns/zone-setups/partial-setup/setup/#step-2--verify-ownership-for-your-domain) and you can proxy domain traffic through Cloudflare.
 
 - **Moved**: Your domain has failed multiple DNS checks, indicating that your authoritative DNS no longer points to Cloudflare nameservers. The domain will be deleted automatically after 7 days, unless there is an active plan subscription.
 
