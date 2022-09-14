@@ -5349,7 +5349,7 @@ pre {
 /* 'Features' section */
 .DocsMarkdown--feature-group {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) 1fr;
+  grid-template-columns: minmax(0, 3fr) .85fr;
   gap: 1em;
   align-items: center;
 }
@@ -5360,8 +5360,8 @@ pre {
 }
 
 .DocsMarkdown--feature-button a {
-  text-align: start;
-  font-size: clamp(1rem, 2.75vm, 2.5rem);
+  text-align: center;
+  font-size: clamp(0.7em, var(--font-size), 1em);
 }
 
 @media (max-width: 768px) {
