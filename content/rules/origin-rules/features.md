@@ -16,7 +16,7 @@ This feature allows you to rewrite the HTTP `Host` header of incoming requests.
 
 A common use case for this functionality is when your content is hosted on a third-party server that only accepts `Host` headers with their own server names. In this situation, you must update the `Host` HTTP header in incoming requests from `Host: example.com` to `Host: thirdpartyserver.example.net`.
 
-You must specify a valid hostname when in a Host header override that is either:
+You must specify a valid hostname in a Host header override that is either:
 
 * A hostname on the same Cloudflare account (possibly on a different zone).
 * A hostname for which Cloudflare is not proxying traffic (gray-clouded).
