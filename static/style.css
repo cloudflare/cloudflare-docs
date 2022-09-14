@@ -2257,10 +2257,10 @@ html[is-docs-page] body {
   --sixty-four-px-rem: 3.7647058824rem;
   --docs-content-gap: var(--sixty-four-px-rem);
   --docs-header-height: var(--sixty-four-px-rem);
-  --docs-sidebar-width: 18.25rem;
+  --docs-sidebar-width: 21.25rem;
   --docs-body-sidebar-width: var(--docs-sidebar-width);
   --docs-page-side-padding: 1rem;
-  --docs-max-page-width: 1440px;
+  --docs-max-page-width: 1640px;
   --docs-page-width: var(--docs-max-page-width);
   --docs-sidebars-combined-width: calc(
     var(--docs-sidebar-width) + var(--docs-body-sidebar-width)
@@ -2382,6 +2382,10 @@ html[is-docs-page] body {
 
   .DocsToolbar.collapsed {
     left: 4.5em;
+  }
+
+  .DocsFooter.collapsed {
+    margin-left: 4.5em;
   }
 
   .DocsContent.collapsed {
@@ -5345,7 +5349,7 @@ pre {
 /* 'Features' section */
 .DocsMarkdown--feature-group {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) 1fr;
+  grid-template-columns: minmax(0, 3fr) .85fr;
   gap: 1em;
   align-items: center;
 }
@@ -5353,7 +5357,11 @@ pre {
 .DocsMarkdown--feature-button {
   display: flex;
   justify-content: flex-end;
-  white-space: nowrap;
+}
+
+.DocsMarkdown--feature-button a {
+  text-align: center;
+  font-size: clamp(0.7em, var(--font-size), 1em);
 }
 
 @media (max-width: 768px) {

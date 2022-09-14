@@ -17,6 +17,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
+- [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`pages`](#pages) - Configure Cloudflare Pages.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
@@ -59,9 +60,9 @@ $ wrangler init [NAME] [-y / --yes] [--from-dash]
 - `--yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Answer yes to any prompts for new projects.
 - `--from-dash` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>` 
+  - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
-{{</definitions>}}
+    {{</definitions>}}
 
 ---
 
@@ -847,6 +848,59 @@ $ wrangler secret list
 {{</Aside>}}
 
 ---
+
+## `secret:bulk`
+
+Manage multiple secrets for a Worker.
+
+### `json`
+
+The path to a JSON file containing secrets in key-value pairs to upload.
+
+```sh
+$ wrangler secret:bulk json <FILE> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `JSON` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The JSON file of key-value pairs to upload, in form {"key": value, ...}
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+
+- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Perform on a specific environment
+    {{</definitions>}}
+
+  {{<Aside type="note">}}
+  Below is an example of uploading secrets from a JSON file.
+
+  ```json
+  {
+    "secret-name-1": "secret-value-1",
+    "secret-name-2": "secret-value-2"
+  }
+  ```
+
+  {{</Aside>}}
+  {{<Aside type="note">}}
+  When complete the output summary will show the number of secrets uploaded and number failed.
+
+  ```
+  🌀 Creating the secrets for the Worker "script-name"
+  ✨ Successfully created secret for key: secret-name-1
+  ...
+  🚨 Error uploading secret for key: secret-name-1
+  ✨ Successfully created secret for key: secret-name-2
+
+  Finished processing secrets JSON file:
+  ✨ 1 secrets successfully uploaded
+  🚨 1 secrets failed to upload
+  ```
+
+  {{</Aside>}}
 
 ## tail
 
