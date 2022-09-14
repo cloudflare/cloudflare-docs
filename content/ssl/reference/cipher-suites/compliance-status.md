@@ -9,7 +9,7 @@ meta:
 
 # Compliance status
 
-When you choose various [cipher suites](/ssl/ssl-tls/cipher-suites/supported-cipher-suites) to use with your edge certificates, your application may need to be in compliance with various regulatory standards.
+When you choose various [cipher suites](/ssl/reference/cipher-suites/supported-cipher-suites) to use with your edge certificates, your application may need to be in compliance with various regulatory standards.
 
 The following table provides a status list of various cipher suites.
 

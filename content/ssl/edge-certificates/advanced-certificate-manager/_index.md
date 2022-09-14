@@ -21,7 +21,7 @@ Advanced certificates allow you multiple customization options:
 *   Choose the Certificate Authority to issue the certificate.
 *   Remove Cloudflare branding that are normally present on Universal certificates.
 *   Select a custom trust store for origin authentication.
-*   Control [cipher suites used for TLS](/ssl/ssl-tls/cipher-suites/disable-cipher-suites/).
+*   Control [cipher suites used for TLS](/ssl/reference/cipher-suites/disable-cipher-suites/).
 
 {{<Aside type="note">}}
 

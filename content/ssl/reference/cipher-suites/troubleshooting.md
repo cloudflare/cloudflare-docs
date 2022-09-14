@@ -14,7 +14,7 @@ If you encounter issues with edge certificate cipher suites, refer to the follow
 
 When you adjust the setting used for your domain's [Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/), your domain only allows HTTPS connections using that TLS protocol version.
 
-This setting can cause issues if you are not supporting TLS 1.2 ciphers on your domain. If you experience issues, review your domain's [Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/) setting and Cloudflare's [supported cipher list](/ssl/ssl-tls/cipher-suites/supported-cipher-suites/).
+This setting can cause issues if you are not supporting TLS 1.2 ciphers on your domain. If you experience issues, review your domain's [Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/) setting and Cloudflare's [supported cipher list](/ssl/reference/cipher-suites/supported-cipher-suites/).
 
 ## Compatability with certificate type
 
@@ -24,6 +24,6 @@ For example, if you have upload an RSA certificate, your cipher suite selection 
 
 ## TLS 1.3 settings
 
-Based on current Cloudflare functionality, you cannot [set](/ssl/ssl-tls/cipher-suites/disable-cipher-suites/) specific 1.3 ciphers through the API.
+Based on current Cloudflare functionality, you cannot [set](/ssl/reference/cipher-suites/disable-cipher-suites/) specific 1.3 ciphers through the API.
 
-Instead, you will need to enable [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13) for your entire domain and Cloudflare will use [all applicable TLS 1.3 cipher suites](/ssl/ssl-tls/cipher-suites/supported-cipher-suites/).
+Instead, you will need to enable [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13) for your entire domain and Cloudflare will use [all applicable TLS 1.3 cipher suites](/ssl/reference/cipher-suites/supported-cipher-suites/).

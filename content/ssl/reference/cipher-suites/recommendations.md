@@ -9,9 +9,9 @@ meta:
 
 # Cipher suites recommendations — Edge certificates
 
-If your application has specific security requirements, Cloudflare recommends using the following values when you [restrict cipher suites](/ssl/ssl-tls/cipher-suites/disable-cipher-suite/).
+If your application has specific security requirements, Cloudflare recommends using the following values when you [restrict cipher suites](/ssl/reference/cipher-suites/disable-cipher-suite/).
 
-| Recommended security level | Description | Cipher suites [to specify](/ssl/ssl-tls/cipher-suites/disable-cipher-suite/) | Other settings |
+| Recommended security level | Description | Cipher suites [to specify](/ssl/reference/cipher-suites/disable-cipher-suite/) | Other settings |
 | --- | --- | --- | --- |
 | Modern | Offers best security and performance, limiting your range of clients to modern devices and browsers. Supports TLS 1.2-1.3 cipher suites. All suites are forward-secret and support authenticated encryption (AEAD). | `["ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-ECDSA-CHACHA20-POLY1305", "ECDHE-RSA-AES128-GCM-SHA256", "ECDHE-RSA-CHACHA20-POLY1305", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-RSA-AES256-GCM-SHA384"]` | Enable [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13). |
 | Compatible | Provides broader compatibility with somewhat weaker security. Supports TLS 1.2-1.3 cipher suites. All suites are forward-secret. | `["ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-ECDSA-CHACHA20-POLY1305", "ECDHE-RSA-AES128-GCM-SHA256", "ECDHE-RSA-CHACHA20-POLY1305", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-RSA-AES256-GCM-SHA384", "ECDHE-ECDSA-AES128-SHA256", "ECDHE-RSA-AES128-SHA256", "ECDHE-ECDSA-AES256-SHA384", "ECDHE-RSA-AES256-SHA384"]` | Enable [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13). |
