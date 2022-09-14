@@ -13,13 +13,26 @@ meta:
 
 ## Perform DCV
 
-When you perform DCV through Cloudflare, we recommend that you validate against your domain apex (`example.com`) instead of individual subdomains (`blog.example.com`). This recommendation applies even if you do not intend to proxy traffic from your apex domain.
-
-When you validate against the apex, Cloudflare can complete DCV for all subdomains. Otherwise, you will have to validate each subdomain manually.
-
 For details on each method available for DCV, refer to the following resources:
 
 {{<directory-listing>}}
+
+---
+
+### DCV - Full zones
+
+For full zones[^1], the only required action is to confirm the your nameservers are still [pointing to Cloudflare](https://support.cloudflare.com/hc/articles/4426809598605).
+
+
+{{<render file="_full-zone-acm-dcv.md">}}
+
+### DCV - Partial zones
+
+For partial zones[^2], the process depends on whether the certificate uses a wildcard hostname.
+
+{{<render file="_partial-zone-acm-dcv.md">}}
+
+---
 
 ## Verify DCV status
 
@@ -30,3 +43,6 @@ A status of `active` means that the certificate has been deployed to Cloudflareâ
 ## Update DCV methods
 
 You cannot update the DCV method for an active certificate. To update the DCV method for a subdomain, wait until the DCV expires and then change the DCV method.
+
+[^1]: Meaning that Cloudflare is your Authoritative DNS provider.
+[^2]: Meaning that another DNS provider - not Cloudflare - maintains your Authoritative DNS.

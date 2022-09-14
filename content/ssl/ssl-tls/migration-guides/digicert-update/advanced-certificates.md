@@ -86,17 +86,13 @@ If you want to take control of migrating your certificates and choose a particul
 
 For full zones[^1], the only required action is to confirm the your nameservers are still [pointing to Cloudflare](https://support.cloudflare.com/hc/articles/4426809598605).
 
-Certificates on full zones - whether using a wildcard hostname or not - will be automatically renewed and validated without any action from you. Cloudflare can complete DCV on your behalf by serving the TXT DCV tokens.
+{{<render file="_full-zone-acm-dcv.md">}}
 
 #### DCV - Partial zones
 
 For partial zones[^2], the process depends on whether the certificate uses a wildcard hostname.
 
-Non-wildcard hostname certificates will automatically renew as long as the hostnames on the certificate are still proxying their traffic through Cloudflare. However, if one or more of the hostnames on the certificate is not proxying through Cloudflare, you will be required to complete DCV for those hostnames in order for the certificate to renew. 
-
-Wildcard hostname certificates will be required to use TXT based DCV for future renewals of the certificate. You will need to place one TXT DCV token for every hostname on the certificate for it to successfully renew. If one or more of the hostnames on the certificate fail to validate, the certificate will not be renewed. 
-
-This means that a wildcard certificate covering `example.com` and `*.example.com` will require two DCV tokens to be placed at the authoritative DNS provider. Similarly, a certificate with five hostnames in the SAN (including a wildcard) will require five DCV tokens to be placed at the authoritative DNS provider. 
+{{<render file="_partial-zone-acm-dcv.md">}}
 
 ##### Fetch DCV tokens
 

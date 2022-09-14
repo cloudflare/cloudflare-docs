@@ -27,14 +27,18 @@ Once you have [set up your Cloudflare for SaaS application](/cloudflare-for-plat
 ## Validate certificates
  
 {{<render file="../../ssl/_partials/_dcv-definition.md">}}
+
+### Non-wildcard custom hostnames
+
+{{<render file="../../ssl/_partials/_custom-hostname-non-wildcard.md">}}
+
+### Wildcard custom hostnames
+
+{{<render file="../../ssl/_partials/_custom-hostname-wildcard.md">}}
+
+---
  
 ### DCV methods
- 
-If you want to pre-validate your customer's certificate before they set a CNAME record — either to avoid downtime or prevent any issuance errors — explore [TXT](#txt), [Email](#email), or [HTTP (manual)](#http-manual), or [CNAME](#cname) validation.
- 
-If you create custom hostnames with wildcards, use [TXT](#txt) or [Email](#email) validation.
- 
-If you value simplicity and your customers can tolerate a few minutes of downtime, use [HTTP (automatic)](#http-automatic) validation.
  
 #### TXT record
  
@@ -90,9 +94,7 @@ HTTP adds a DCV token to your origin. You can either add that token [manually](#
  
 {{<Aside type="warning">}}
  
-HTTP DCV validation is no longer allowed for wildcard certificates. For more details and next steps, refer to [DCV Validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#dcv-methods).
- 
-
+HTTP DCV validation is no longer allowed for wildcard certificates. For more details and next steps, refer to [DCV Validation](#validate-certificates).
 
 {{</Aside>}}
  
