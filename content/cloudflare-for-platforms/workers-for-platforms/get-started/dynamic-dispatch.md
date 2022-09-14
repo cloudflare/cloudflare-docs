@@ -15,7 +15,7 @@ In the following example, routing to user workers is done through reading the su
 
 `src/index.ts`
 
-```json
+```js
 export default {
   async fetch(request, env) {
     try {
