@@ -3,7 +3,6 @@ title: Create a rule via API
 pcx_content_type: how-to
 type: overview
 weight: 4
-layout: list
 meta:
   title: Create a Configuration Rule via API
 ---
