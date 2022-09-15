@@ -21,8 +21,6 @@ You must specify a valid hostname in a Host header override that is either:
 * A hostname on the same Cloudflare account (possibly on a different zone).
 * A hostname for which Cloudflare is not proxying traffic (gray-clouded).
 
-For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#host-header-override-parameters).
-
 {{<Aside type="note" header="Host header overrides when using load balancing">}}
 
 If you have configured load balancing through Cloudflare and you wish to override the HTTP `Host` header per origin or for a given monitor, refer to [Override HTTP Host headers](/load-balancing/additional-options/override-http-host-headers/) in the Load Balancing documentation for more information.
@@ -34,8 +32,6 @@ If you have configured load balancing through Cloudflare and you wish to overrid
 Allows you to override the Server Name Indication (SNI) [^1] value of a request. For more information, refer to [What is SNI (Server Name Indication)?](https://www.cloudflare.com/learning/ssl/what-is-sni/) in the Learning Center.
 
 The new SNI value must be a valid hostname on the same Cloudflare account (possibly on a different zone).
-
-For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#sni-override-parameters).
 
 {{<Aside type="note" header="Notes">}}
 * Currently, you can only use a static value when overriding SNI.
@@ -55,8 +51,6 @@ You must specify a valid hostname in a DNS record override that is either:
 * A hostname on the same Cloudflare account (possibly on a different zone).
 * A hostname for which Cloudflare is not proxying traffic (gray-clouded).
 
-For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#dns-record-override-and-destination-port-override-parameters).
-
 ## Destination port
 
 Allows you to override the destination port of a request.
@@ -64,5 +58,3 @@ Allows you to override the destination port of a request.
 When you configure a destination port override, you can redirect incoming requests to a different port. For example, you could override the destination port for requests received for `mydomain.com` so that they are served by the application running on port 9000 (`mydomain.com:9000`).
 
 The destination port must be between 1 and 65,535.
-
-For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#dns-record-override-and-destination-port-override-parameters).
