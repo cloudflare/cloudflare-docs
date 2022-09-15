@@ -701,7 +701,7 @@ y
 Interact with buckets in an R2 store.
 
 {{<Aside type="note">}}
-The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/runtime-apis/).
+The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/data-access/workers-api/workers-api-reference).
 {{</Aside>}}
 
 ### `create`
