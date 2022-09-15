@@ -9,7 +9,7 @@ meta:
 
 # Supported cipher suites — Edge certificates
 
-Cloudflare supports the following cipher suites by default. If needed, you can [restrict your application](/ssl/reference/cipher-suites/disable-cipher-suites/) to only use specific cipher suites.
+Cloudflare supports the following cipher suites by default. If needed, you can [restrict your application](/ssl/reference/cipher-suites/customize-cipher-suites/) to only use specific cipher suites.
 
 | OpenSSL Name | Minimum protocol | [Security recommendation](/ssl/reference/cipher-suites/recommendations/) | Cipher suite | IANA name |
 | ----------------------------------- | ------- | ------- | ------- | ------- |

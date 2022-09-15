@@ -1,12 +1,12 @@
 ---
-title: Disable cipher suites
+title: Customize cipher suites
 pcx_content_type: how-to
 weight: 2
 meta:
-  title: Disable cipher suites — Edge certificates
+  title: Customize cipher suites — Edge certificates
 ---
 
-# Disable cipher suites — Edge certificates
+# Customize cipher suites — Edge certificates
 
 With [**Advanced Certificate Manager**](/ssl/edge-certificates/advanced-certificate-manager/) or within [**SSL for SaaS**](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections to specific cipher suites. Currently, this functionality is only available when using the API:
 

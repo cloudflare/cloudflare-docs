@@ -24,6 +24,6 @@ For example, if you have upload an RSA certificate, your cipher suite selection 
 
 ## TLS 1.3 settings
 
-Based on current Cloudflare functionality, you cannot [set](/ssl/reference/cipher-suites/disable-cipher-suites/) specific 1.3 ciphers through the API.
+Based on current Cloudflare functionality, you cannot [set](/ssl/reference/cipher-suites/customize-cipher-suites/) specific 1.3 ciphers through the API.
 
 Instead, you will need to enable [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13) for your entire domain and Cloudflare will use [all applicable TLS 1.3 cipher suites](/ssl/reference/cipher-suites/supported-cipher-suites/).
