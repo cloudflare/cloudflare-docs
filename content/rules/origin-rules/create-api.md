@@ -1,8 +1,7 @@
 ---
 title: Create a rule via API
 pcx_content_type: how-to
-type: overview
-weight: 4
+weight: 3
 meta:
   title: Create an Origin Rule via API
 ---

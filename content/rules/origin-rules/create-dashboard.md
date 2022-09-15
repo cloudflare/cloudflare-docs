@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Create a rule in the dashboard
-weight: 3
+weight: 2
 meta:
   title: Create an Origin Rule in the dashboard
 ---

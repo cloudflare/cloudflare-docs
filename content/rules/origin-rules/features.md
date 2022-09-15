@@ -1,7 +1,7 @@
 ---
 title: Available settings
 pcx_content_type: concept
-weight: 2
+weight: 4
 meta:
   title: Available Origin Rules settings
 ---
