@@ -30,7 +30,7 @@ headers.get('x-foo'); //=> "hello, world"
 
 - Despite the fact that the `Headers.getAll` method has been made obsolete, Cloudflare still offers this method but only for use with the `Set-Cookie` header. This is because cookies will often contain date strings, which include commas. This can make parsing multiple values in a `Set-Cookie` header more difficult. Any attempts to use `Headers.getAll` with other header names will throw an error. A brief history `Headers.getAll` is available in this [GitHub issue](https://github.com/whatwg/fetch/issues/973).
 
-- In Cloudflare Workers, the `Headers.get` method returns a [`USVString`](https://developer.mozilla.org/en-US/docs/Web/API/USVString) instead of a [`ByteString`](https://developer.mozilla.org/en-US/docs/Web/API/ByteString), which is specified by the spec. For most scenarios, this should have no noticeable effect. To compare the differences between these two string classes, refer to this [Playground example](https://cloudflareworkers.com/#97c644202d0ef43fd73acb6b045529e8:https://tutorial.cloudflareworkers.com).
+- In Cloudflare Workers, the `Headers.get` method returns a [`USVString`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) instead of a [`ByteString`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), which is specified by the spec. For most scenarios, this should have no noticeable effect. To compare the differences between these two string classes, refer to this [Playground example](https://cloudflareworkers.com/#97c644202d0ef43fd73acb6b045529e8:https://tutorial.cloudflareworkers.com).
 
 ## Cloudflare headers
 

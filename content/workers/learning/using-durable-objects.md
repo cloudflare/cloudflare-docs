@@ -12,7 +12,7 @@ Durable Objects provide low-latency coordination and consistent storage for the 
 
 - The transactional storage API provides strongly consistent key-value storage to the Durable Object. Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
 
-For a high-level introduction to Durable Objects, refer to [the announcement blog post](https://blog.cloudflare.com/introducing-workers-durable-objects).
+For a high-level introduction to Durable Objects, refer to [the announcement blog post](https://blog.cloudflare.com/introducing-workers-durable-objects/).
 
 For details on the specific Durable Object APIs, refer to the [Runtime API documentation](/workers/runtime-apis/durable-objects/).
 
@@ -153,7 +153,7 @@ Alarms are directly scheduled from within your Durable Object. Cron Triggers, on
 
 {{</Aside>}}
 
-Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. They also provide a method for guaranteeing work within a Durable Object will complete without relying on incoming requests to keep the object alive. For more discussion about alarms, refer to the [announcement blog post](https://blog.cloudflare.com/durable-objects-alarms).
+Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. They also provide a method for guaranteeing work within a Durable Object will complete without relying on incoming requests to keep the object alive. For more discussion about alarms, refer to the [announcement blog post](https://blog.cloudflare.com/durable-objects-alarms/).
 
 ## Instantiating and communicating with a Durable Object
 
