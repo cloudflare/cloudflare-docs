@@ -22,5 +22,9 @@ Buy and manage your domain with Cloudflare Registrar and add an additional layer
 ## Features
 
 {{<feature header="DNSSEC" href="/registrar/account-options/enable-dnssec/">}}
-Cloudflare Registrar offers one-click Domain Name System Security Extensions (DNSSEC) activation. DNSSEC secures DNS records with cryptographic signatures. It is free to all Cloudflare customers.
+Cloudflare Registrar offers one-click DNSSEC activation. DNSSEC secures DNS records with cryptographic signatures, and is free to all Cloudflare customers.
+{{</feature>}}
+
+{{<feature header="WHOIS redaction" href="/registrar/get-started/whois-redaction/">}}
+Cloudflare Registrar offers WHOIS redaction by default. This means that your personal information is redaction, whenever permitted by the registry.
 {{</feature>}}
