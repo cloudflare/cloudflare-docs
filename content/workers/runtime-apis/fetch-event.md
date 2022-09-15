@@ -18,8 +18,8 @@ In the Service Worker format, events are handled by using `addEventListener` to 
 Incoming HTTP requests can be handled by assigning a `"fetch"` event handler:
 
 ```js
-addEventListener('fetch', event => {
-  event.respondWith(new Response('Hello'));
+addEventListener("fetch", (event) => {
+    event.respondWith(new Response("Hello"));
 });
 ```
 
@@ -29,23 +29,23 @@ addEventListener('fetch', event => {
 
 - `event.type` {{<type>}}string{{</type>}}
 
-  - The type of event. This will always return `"fetch"`.
+	- The type of event. This will always return `"fetch"`.
 
 - `event.request` {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
 
-  - The incoming HTTP request.
+	- The incoming HTTP request.
 
 - {{<code>}}event.respondWith(response{{<type-link href="/runtime-apis/response">}}Response{{</type-link>}}|<span style="margin-left:-6px">{{<param-type>}}Promise{{</param-type>}}</span>){{</code>}} {{<type>}}void{{</type>}}
 
-  - Refer to [`respondWith`](#respondwith).
+	- Refer to [`respondWith`](#respondwith).
 
 - {{<code>}}event.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
-  - Refer to [`waitUntil`](#waituntil).
+	- Refer to [`waitUntil`](#waituntil).
 
 - {{<code>}}event.passThroughOnException(){{</code>}} {{<type>}}void{{</type>}}
 
-  - Refer to [`passThroughOnException`](#passthroughonexception).
+	- Refer to [`passThroughOnException`](#passthroughonexception).
 
 {{</definitions>}}
 
@@ -59,13 +59,31 @@ In the Module Worker format, events are handled by defining and exporting an obj
 
 While an incoming HTTP request is still given the `"fetch"` name, a Module Worker does not surface the `FetchEvent` interface. Instead, Module Workers receive the [`Request`](/workers/runtime-apis/request/) and must reply with a [`Response`](/workers/runtime-apis/response/) directly.
 
+{{<tabs labels="js/esm | ts/esm">}}
+{{<tab label="js/esm" default="true">}}
 ```js
 export default {
-  fetch(request, env, context) {
-    return new Response('Hello');
-  },
+    fetch(request, env, context) {
+        return new Response("Hello");
+    },
 };
 ```
+{{</tab>}}
+{{<tab label="ts/esm">}}
+```ts
+interface Environment {
+	// Bindings would be defined here, like so:
+	// KV: KVNamespace
+}
+
+export default <ExportedHandler<Environment>> {
+	fetch(request, env, context) {
+		return new Response("Hello");
+	},
+};
+```
+{{</tab>}}
+{{</tabs>}}
 
 ### Parameters
 
@@ -73,19 +91,19 @@ export default {
 
 - `request` {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
 
-  - The incoming HTTP request.
+	- The incoming HTTP request.
 
 - `env` {{<type>}}object{{</type>}}
 
-  - The [bindings](/workers/platform/environment-variables/) assigned to the Worker. As long as the environment has not changed, the same object (equal by identity) is passed to all requests.
+	- The [bindings](/workers/platform/environment-variables/) assigned to the Worker. As long as the environment has not changed, the same object (equal by identity) is passed to all requests.
 
 - {{<code>}}context.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
-  - Refer to [`waitUntil`](#waituntil).
+	- Refer to [`waitUntil`](#waituntil).
 
 - {{<code>}}context.passThroughOnException(){{</code>}} {{<type>}}void{{</type>}}
 
-  - Refer to [`passThroughOnException`](#passthroughonexception).
+	- Refer to [`passThroughOnException`](#passthroughonexception).
 
 {{</definitions>}}
 
@@ -114,15 +132,14 @@ If a `fetch` event handler does not call `respondWith`, the runtime delivers the
 If no `fetch` event handler calls `respondWith`, then the runtime forwards the request to the origin as if the Worker did not. However, if there is no origin – or the Worker itself is your origin server, which is always true for `*.workers.dev` domains – then you must call `respondWith` for a valid response.
 
 ```js
-// Format: Service Worker
-addEventListener('fetch', event => {
-  let { pathname } = new URL(event.request.url);
+addEventListener("fetch", (event) => {
+    let { pathname } = new URL(event.request.url);
 
-  // Allow "/ignore/*" URLs to hit origin
-  if (pathname.startsWith('/ignore/')) return;
+    // Allow "/ignore/*" URLs to hit origin
+    if (pathname.startsWith("/ignore/")) return;
 
-  // Otherwise, respond with something
-  event.respondWith(handler(event));
+    // Otherwise, respond with something
+    event.respondWith(handler(event));
 });
 ```
 
@@ -134,55 +151,52 @@ With the Service Worker format, `waitUntil` is available within the `event` beca
 
 With the Module Worker format, `waitUntil` is moved and available on the `context` parameter object.
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
 ```js
----
-filename: service-worker.js
----
-// Format: Service Worker
-addEventListener('fetch', event => {
-  event.respondWith(handler(event));
+export default {
+    async fetch(request, env, context) {
+        // Forward / Proxy original request
+        let res = await fetch(request);
+
+        // Add custom header(s)
+        res = new Response(res.body, res);
+        res.headers.set("x-foo", "bar");
+
+        // Cache the response
+        // NOTE: Does NOT block / wait
+        context.waitUntil(caches.default.put(request, res.clone()));
+
+        // Done
+        return res;
+    },
+};
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
+```js
+addEventListener("fetch", (event) => {
+    event.respondWith(handler(event));
 });
 
 async function handler(event) {
-  // Forward / Proxy original request
-  let res = await fetch(event.request);
-
-  // Add custom header(s)
-  res = new Response(res.body, res);
-  res.headers.set('x-foo', 'bar');
-
-  // Cache the response
-  // NOTE: Does NOT block / wait
-  event.waitUntil(caches.default.put(event.request, res.clone()));
-
-  // Done
-  return res;
-}
-```
-
-```js
----
-filename: module-worker.mjs
----
-// Format: Module Worker
-export default {
-  async fetch(request, env, context) {
     // Forward / Proxy original request
-    let res = await fetch(request);
+    let res = await fetch(event.request);
 
     // Add custom header(s)
     res = new Response(res.body, res);
-    res.headers.set('x-foo', 'bar');
+    res.headers.set("x-foo", "bar");
 
     // Cache the response
     // NOTE: Does NOT block / wait
-    context.waitUntil(caches.default.put(request, res.clone()));
+    event.waitUntil(caches.default.put(event.request, res.clone()));
 
     // Done
     return res;
-  },
-};
+}
 ```
+{{</tab>}}
+{{</tabs>}}
 
 ### `passThroughOnException`
 
@@ -194,28 +208,25 @@ With the Service Worker format, `passThroughOnException` is added to the `FetchE
 
 With the Module Worker format, `passThroughOnException` is available on the `context` parameter object.
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
 ```js
----
-filename: service-worker.js
----
-// Format: Service Worker
-addEventListener('fetch', event => {
-  // Proxy to origin on unhandled/uncaught exceptions
-  event.passThroughOnException();
-  throw new Error('Oops');
-});
-```
-
-```js
----
-filename: module-worker.mjs
----
-// Format: Module Worker
 export default {
-  async fetch(request, env, context) {
-    // Proxy to origin on unhandled/uncaught exceptions
-    context.passThroughOnException();
-    throw new Error('Oops');
-  },
+    async fetch(request, env, context) {
+        // Proxy to origin on unhandled/uncaught exceptions
+        context.passThroughOnException();
+        throw new Error("Oops");
+    },
 };
 ```
+{{</tab>}}
+{{<tab label="js/sw">}}
+```js
+addEventListener("fetch", (event) => {
+    // Proxy to origin on unhandled/uncaught exceptions
+    event.passThroughOnException();
+    throw new Error("Oops");
+});
+```
+{{</tab>}}
+{{</tabs>}}
