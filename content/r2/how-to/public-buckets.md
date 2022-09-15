@@ -49,63 +49,65 @@ To enable access management, Cache and bot management features, you must set up 
 
 {{</Aside>}}
 
-## Connecting the Bucket to a domain
+## Connect your bucket to a custom domain
 
-Domain access allows websites to serve content from the associated Bucket. They also benefit from features such as Access, Cache and bot management.
+Domain access allows websites to serve content from the associated bucket. They also benefit from features such as access management, Cache and bot management.
 
-Here’s how you can connect a domain:
-1. Select the bucket to connect from the R2 overview screen
-2. Navigate to the Settings tab of the bucket
-3. Scroll down to the Domain Access section
+To connect a custom domain to your bucket:
 
-![Domain Access](/r2/static/public-buckets-domain-access.png)
+1. Go to **R2** and select your bucket.
+2. Go to **Settings**.
+3. Go to **Domain Access**.
 
-4. Click on Connect Domain to begin the process of connecting the domain.
+![Follow the steps below to enable Domain Access](/r2/static/public-buckets-domain-access.png)
 
-![Connect Domain](/r2/static/public-buckets-connect-domain.png)
+4. Select **Connect Domain**.
 
-5. Enter the domain name you want to connect to and click the Continue button. (Note: Currently, we only support active domains under your account on Cloudflare. Also, you cannot enter domains or subdomains already reserved by other Cloudflare products.)
+![Follow the steps described to connect a custom domain to your bucket](/r2/static/public-buckets-connect-domain.png)
+
+5. Enter the domain name you want to connect to and select **Continue**.
 
 ![Add Domain](/r2/static/public-buckets-add-domain.png)
 
-6. You’ll now see a preview of the new record that will be added to the DNS table. If everything looks good, click Connect Domain.
-7. That’s it! The domain is now connected. It takes a few minutes for the status to change from Initializing to Active. You may need to refresh to see the status update. If you notice the status hasn’t changed for a long time, use the Retry connection action (in the overflow menu).
+6. Review the new record that will be added to the DNS table and select **Connect Domain**.
+
+Your domain is now connected. It takes a few minutes for the status to change from **Initializing** to **Active**. Refresh to review the status update. If the status has not changed, select the *...* next to your bucket and select **Retry connection**.
 
 ![Active and Allowed](/r2/static/public-buckets-active-allowed.png)
 
-8. To view the added DNS record, click on the overflow button with the ellipsis for the connected domain and click on Manage DNS.
+To view the added DNS record, select *...* next to the connected domain and select **Manage DNS**.
 
 ![Manage Cloudflare DNS](/r2/static/public-buckets-manage-cloudflare-dns.png)
 
-
 ## Disable domain access
 
-Here’s how you can disable a domain:
+To disable a domain:
 
-1. From the R2 overview screen, select the bucket for which you want to disable access
-2. Navigate to the Settings tab of the bucket
-3. Scroll down to the Domain Access section
-4. Select the domain to disable by navigating to the appropriate overflow button with ellipsis and click Disable domain.
+1. In **R2**, select the bucket for which you want to disable custom domain access.
+2. Go to **Settings**.
+3. Scroll down to **Domain Access**.
+4. Next to the domain you want to disable, select **...** and select **Disable domain**.
 
 ![Disable Domain](/r2/static/public-buckets-disable-domain.png)
 
-5. The badge under Access to Bucket will update to ‘Not allowed’.
+5. The badge under **Access to Bucket** will update to **Not allowed**.
 
 ![Not Allowed](/r2/static/public-buckets-not-allowed-2.png)
 
 ## Remove domain
 
-Here’s how you can remove a domain:
+To remove a domain:
 
-1. Select the bucket from the R2 overview screen for which you want to remove the domain
-2. Navigate to the Settings tab of the bucket
-3. Scroll down to the Domain Access section
-4. Select the domain to disable by navigating to the appropriate overflow button with ellipsis and click Remove domain.
+1. In **R2**, select the bucket for which you want to remove domain access.
+2. Go to **Settings**.
+3. Scroll down to **Domain Access**.
+4. Select **...** next to the domain to disable and select **Remove domain**.
 
 ![Remove Domain](/r2/static/public-buckets-remove-domain.png)
 
-5. Click the ‘Remove domain’ button in the confirmation window. Note the CNAME record pointing to the record will also be removed as part of this step. You can always add the domain back.
-6. That’s it. The domain is no longer connected and will no longer appear in the connected domains list.
+5. Select ‘Remove domain’ in the confirmation window. The CNAME record pointing to the domain will also be removed as part of this step. You can always add the domain again.
+
+The domain is no longer connected to your bucket and will no longer appear in the connected domains list.
 
 ## Disable public access for your bucket
 
