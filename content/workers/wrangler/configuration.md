@@ -458,6 +458,10 @@ rules = [
 You can import and refer to these assets within your Worker, like so:
 
 ```js
+---
+  header: index.js
+  highlight: [1]
+---
 import markdown from './example.md'
 
 export default {
