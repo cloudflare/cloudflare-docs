@@ -12,32 +12,32 @@ Public Bucket is a feature that allows users to expose the contents of their R2 
 
 Public buckets can be set up in one of two ways. The first exposes it as a custom domain that you control. The second exposes it as a https://pub-<UUID>.r2.dev/<object> domain that Cloudflare owns. You can use neither (the default), one, or both options as you desire. r2.dev is perfect for testing out a very minimal configuration or if you don't have a domain name you control. Using a custom domain name gives you more fine-grained configuration over the domain like configuring firewall rules, caching, access controls, and bot management.
 
-## Enabling public access for the Bucket
+## Enable public access for your bucket
 
-Here’s how you can enable public access for your buckets:
+To enable public access for your buckets:
 
-1. Navigate to the R2 product screen using the sidebar
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > **R2**.
 
 ![Choose R2 from the side menu](/r2/static/public-buckets-r2.png)
 
-2. From the R2 overview screen, select the bucket for which you want to enable public access by clicking on the name.
+2. In. **R2**, select the bucket you want to enable public access for.
 
 ![Select your bucket](/r2/static/public-buckets-bucket.png)
 
-3. Next, navigate to the Settings tab of the bucket
+3. Go to **Settings**.
 
 ![Select settings](/r2/static/public-buckets-settings.png)
 
-4. Under settings, you will see a new section called Bucket Access
+4. In **Settings**, go to **Bucket Access**.
 
 ![Select bucket access](/r2/static/public-buckets-not-allowed.png)
 
-5. To enable public access, click on the Allow Access button.
+5. Under **Bucket Access**, select **Allow Access**.
 
 ![Allow access](/r2/static/public-buckets-allow-access.png)
 
-6. In the confirmation dialog, type in ‘allow’ to confirm and click the Allow button.
-7. That’s it! You can now access the bucket and its objects using the Public Bucket URL.
+6. You will be prompted to confirm your choice. In the confirmation dialog, type ‘allow’ to confirm and select **Allow**.
+7. You can now access the bucket and its objects using the Public Bucket URL.
 
 ![Show Public Bucket URL](/r2/static/public-buckets-allowed.png)
 
