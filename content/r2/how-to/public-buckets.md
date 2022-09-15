@@ -43,7 +43,11 @@ To enable public access for your buckets:
 
 8. You can also see which buckets have public access from the overview page.
 
-**Note**: *To enable Access, Cache and bot management features you'll need to map a custom domain to your public bucket.*
+{{<Aside type="note">}}
+
+To enable access management, Cache and bot management features, you must set up a custom domain when enabling public access to your bucket.
+
+{{</Aside>}}
 
 ## Connecting the Bucket to a domain
 
