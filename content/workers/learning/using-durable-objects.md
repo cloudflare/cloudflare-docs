@@ -561,4 +561,4 @@ To prevent indefinite locking, there is a limit on how much time storage operati
 
 #### Error: Your account is generating too much load on Durable Objects. Please back off and try again later.
 
-There is a limit on how quickly you can [create new objects or lookup different existing objects](/workers/runtime-apis/durable-objects/#obtaining-an-object-stub). Those lookups are usually cached, meaning attempts for the same set of recently accessed objects should be successful, so catching this error and retrying after a short backoff is safe. If possible, also consider spreading those lookups across multiple requests.
+There is a limit on how quickly you can [create new objects or lookup different existing objects](/workers/runtime-apis/durable-objects/#obtaining-an-object-stub). Those lookups are usually cached, meaning attempts for the same set of recently accessed objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.
