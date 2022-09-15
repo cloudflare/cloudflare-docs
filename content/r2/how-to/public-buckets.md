@@ -109,23 +109,24 @@ Here’s how you can remove a domain:
 
 ## Disabling public access for the Bucket
 
-Here’s how you can disable public access for your buckets:
+To disable public access for your bucket:
 
-1. From the R2 overview screen, select the bucket for which you want to turn off public access by clicking on the name.
+1. In **R2**, select the bucket for which you want to turn off public access.
 
 ![Choose R2 from the side menu](/r2/static/public-buckets-r2.png)
 
-2. Navigate to the Settings tab of the bucket
+2. Go to **Settings**.
 
 ![Select settings](/r2/static/public-buckets-settings.png)
 
-3. Scroll down to the Public Access section
+3. Scroll down to **Public Access**.
 
 ![Public Access](/r2/static/public-buckets-allowed.png)
 
-3. Next, click on the ‘Disallow Access’ button to disallow public access.
+3. Select **Disallow Access**.
 
 ![Disallow access](/r2/static/public-buckets-disallow-access.png)
 
-4. In the confirmation dialog type ‘disallow’ to confirm and click the Disallow button.
-5. That’s it! Your Bucket and its objects can no longer be accessed using the Public Bucket URL. 
+4. In the confirmation dialog, type ‘disallow’ to confirm and select **Disallow**.
+
+Your bucket and its objects can no longer be accessed using the Public Bucket URL. 
