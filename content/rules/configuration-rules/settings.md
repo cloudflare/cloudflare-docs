@@ -21,9 +21,10 @@ Enable or disable [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-o
 
 API configuration property name: `"automatic_https_rewrites"` (boolean).
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
   "automatic_https_rewrites": true
 }
@@ -44,9 +45,10 @@ Select which file extensions to minify automatically using [Auto Minify](https:/
 
 API configuration object name: `"autominify"` (object).
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
   "autominify": {
     "html": true,
@@ -71,9 +73,10 @@ Enable or disable [Browser Integrity Check](https://support.cloudflare.com/hc/ar
 
 API configuration property name: `"bic"` (boolean).
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
   "bic": true
 }
@@ -94,9 +97,10 @@ Disable all active [Cloudflare Apps](https://www.cloudflare.com/apps/developer/d
 
 API configuration property name: `"disable_apps"` (boolean).
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
   "disable_apps": true
 }
@@ -117,9 +121,10 @@ Disable [Cloudflare Railgun](/railgun/) [^5] for matching requests.
 
 API configuration property name: `"disable_railgun"` (boolean).
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
   "disable_railgun": true
 }
@@ -140,9 +145,10 @@ Disable [Cloudflare Zaraz](/zaraz/) [^6] for matching requests.
 
 API configuration property name: `"disable_zaraz"` (boolean).
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
   "disable_zaraz": true
 }
@@ -163,9 +169,10 @@ Enable or disable [Hotlink Protection](https://support.cloudflare.com/hc/article
 
 API configuration property name: `"hotlink_protection"` (boolean).
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
     "hotlink_protection": false
 }
@@ -186,9 +193,10 @@ Enable or disable [Email Obfuscation](https://support.cloudflare.com/hc/articles
 
 API configuration property name: `"email_obfuscation"` (boolean).
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
   "email_obfuscation": false
 }
@@ -209,9 +217,10 @@ Enable or disable [Mirage](https://support.cloudflare.com/hc/articles/219178057)
 
 API configuration property name: `"mirage"` (boolean).
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
   "mirage": false
 }
@@ -232,9 +241,10 @@ Enable or disable [Opportunistic Encryption](/ssl/edge-certificates/additional-o
 
 API configuration property name: `"opportunistic_encryption"` (boolean).
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
   "opportunistic_encryption": true
 }
@@ -257,9 +267,10 @@ API configuration property name: `"polish"` (string).
 
 API values: `"off"`, `"lossless"`, `"lossy"`.
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
   "polish": "lossless"
 }
@@ -280,9 +291,10 @@ Enable or disable [Rocket Loader](https://support.cloudflare.com/hc/articles/200
 
 API configuration property name: `"rocket_loader"` (boolean).
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
   "rocket_loader": true
 }
@@ -292,7 +304,6 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 </div>
 </details>
-
 
 ## Security Level
 
@@ -306,9 +317,10 @@ API configuration property name: `"security_level"` (string).
 
 API values: `"off"`, `"essentially_off"`, `"low"`, `"medium"`, `"high"`, `"under_attack"`.
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
   "security_level": "low"
 }
@@ -329,9 +341,10 @@ Enable or disable [Server Side Excludes](https://support.cloudflare.com/hc/artic
 
 API configuration property name: `"server_side_excludes"` (boolean).
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
   "server_side_excludes": false
 }
@@ -354,9 +367,10 @@ API configuration property name: `"ssl"` (string).
 
 API values: `"off"`, `"flexible"`, `"full"`, `"strict"`, `"origin_pull"`.
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
   "ssl": "flexible"
 }
@@ -377,9 +391,10 @@ Enable or disable [Signed Exchanges (SXG)](/fundamentals/signed-exchanges/signed
 
 API configuration property name: `"sxg"` (boolean).
 
-API configuration example:
-
 ```json
+---
+header: API configuration example
+---
 "action_parameters": {
   "sxg": false
 }
