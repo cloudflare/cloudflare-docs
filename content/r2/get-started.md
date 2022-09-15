@@ -28,4 +28,4 @@ Cloudflare provides multiple ways for developers to access their R2 buckets:
 
 * [Worker Runtime API](/r2/data-access/workers-api/workers-api-usage/) - Access R2 buckets from a Worker
 * [S3 API Compatibility](/r2/data-access/s3-api/tokens) - Access R2 buckets using the S3 API
-* [Public Buckets](/r2/data-access/public-buckets/) - Access R2 buckets directly
+* [Public Buckets](/r2/how-to/public-buckets/) - Access R2 buckets directly
