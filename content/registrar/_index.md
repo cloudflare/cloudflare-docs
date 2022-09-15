@@ -25,6 +25,10 @@ Buy and manage your domain with Cloudflare Registrar and add an additional layer
 Cloudflare Registrar offers one-click DNSSEC activation. DNSSEC secures DNS records with cryptographic signatures, and is free to all Cloudflare customers.
 {{</feature>}}
 
-{{<feature header="WHOIS redaction" href="/registrar/get-started/whois-redaction/">}}
-Cloudflare Registrar offers WHOIS redaction by default. This means that your personal information is redaction, whenever permitted by the registry.
-{{</feature>}}
+---
+ 
+## Related products
+ 
+{{<related header="DNS" href="/dns/" product="dns">}}
+When you use Cloudflare DNS, all DNS queries for your domain are answered by Cloudflare’s global Anycast network. This network delivers performance and global availability.
+{{</related>}}
