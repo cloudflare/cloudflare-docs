@@ -6,7 +6,7 @@ meta:
   title: Using R2 from Workers
 ---
 
-# Using R2 from Workers
+# Use R2 from Workers
 
 ## 1. Install Wrangler
 
