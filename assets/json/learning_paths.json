@@ -68,7 +68,7 @@
           {
             "url_path": "/api/tokens/create/",
             "link_title": "(For some) Create an API token",
-            "additional_description": "If you plan on using the Cloudflare API to manage various account settings, you should also create an API token associated with your account."
+            "additional_description": "If you plan on using the Cloudflare API to manage various account settings, create an API token associated with your account."
           }
         ]
       },
@@ -240,7 +240,7 @@
       },
       {
         "title": "Before you begin",
-        "description": "Before can secure your site, you should make sure you have already added that site to Cloudflare.",
+        "description": "Before can secure your site, make sure you have already added that site to Cloudflare.",
         "estimated_time": "~30 mins",
         "pages": [
           {
@@ -459,8 +459,8 @@
     "modules": [
       {
         "title": "Concepts",
-        "description": "Learn the fundamentals of website security. <br /> <br /> Feel free to skip if you have a technical background.",
-        "estimated_time": "~30 mins",
+        "description": "Learn the fundamentals of website performance. <br /> <br /> Feel free to skip if you have a technical background.",
+        "estimated_time": "~20 mins",
         "pages": [
           {
             "external_link": true,
@@ -480,13 +480,13 @@
           {
             "external_link": true,
             "url_path": "https://www.cloudflare.com/learning/performance/glossary/what-is-latency/",
-            "link_title": "What is Latency?"
+            "link_title": "What is latency?"
           }
         ]
       },
       {
         "title": "Before you begin",
-        "description": "Before can secure your site, you should make sure you have already added that site to Cloudflare.",
+        "description": "Before can improve your site's performance, make sure you have already added that site to Cloudflare.",
         "estimated_time": "~30 mins",
         "pages": [
           {
@@ -507,7 +507,7 @@
       },
       {
         "title": "Optimizations - One click needed",
-        "description": "Once your domain is onboarded and your DNS records are [proxied through Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/), Cloudflare offers the following one-click options for speeding up your site:",
+        "description": "Once your domain is onboarded and your DNS records are [proxied through Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/), Cloudflare offers the following one-click optimizations for speeding up your site:",
         "estimated_time": "~1 hour",
         "pages": [
           {
@@ -540,6 +540,7 @@
             "additional_description": "Route requests across the fastest network path available."
           },
           {
+            "external_link": true,
             "url_path": "https://support.cloudflare.com/hc/articles/219178057",
             "link_title": "Mirage",
             "additional_description": "Lazy load all images in a browser (applied through client-side JavaScript)."
@@ -553,7 +554,7 @@
           {
             "url_path": "/rules/bulk-redirects/",
             "link_title": "Bulk redirects",
-            "additional_description": "Simply by using Bulk Redirects or [Page Rules](https://support.cloudflare.com/hc/articles/4729826525965) for URL forwarding, you can perform redirects at Cloudflare’s edge network instead of at your origin server."
+            "additional_description": "Simply by using Bulk Redirects or [Page Rules](https://support.cloudflare.com/hc/articles/4729826525965) for URL forwarding, you can perform redirects at Cloudflare’s edge network instead of making requests travel all the way to your origin server."
           },
           {
             "url_path": "/cache/get-started/",
