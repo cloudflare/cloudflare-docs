@@ -23,7 +23,7 @@ Email Routing (beta) is free and private by design. Cloudflare will not store or
 
 ## Features
 
-{{<feature header="Email addresses" href="/email-routing/get-started/enable-email-routing/">}}
+{{<feature header="Custom addresses" href="/email-routing/get-started/enable-email-routing/">}}
 With Email Routing you can have many custom email addresses to use for specific situations.
 {{</feature>}}
 
