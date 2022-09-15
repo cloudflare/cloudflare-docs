@@ -21,7 +21,7 @@ The Origin Rule expression will determine when these overrides will be applied.
 {{<table-wrap>}}
 |                           | Free | Pro | Business | Enterprise |
 |---------------------------|:----:|:---:|:--------:|:----------:|
-| Number of Origin Rules    |  10  | 20  |    50    |    100     |
+| Number of Origin Rules    |  10  | 25  |    50    |    125     |
 | Override Host header      |  —   |  —  |    —     |    Yes     |
 | Override SNI              |  —   |  —  |    —     |    Yes     |
 | Override DNS record       |  —   |  —  |    —     |    Yes     |
