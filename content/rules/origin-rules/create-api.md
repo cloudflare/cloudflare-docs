@@ -10,7 +10,7 @@ meta:
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create Origin Rules via API. Define the route configuration in the `action_parameters` field.
 
-When creating a Origin Rule via API, make sure you:
+When creating an Origin Rule via API, make sure you:
 
 * Set the rule action to `route`.
 * Define the [parameters](/rules/origin-rules/parameters/) in the `action_parameters` field according to the type of origin override.
