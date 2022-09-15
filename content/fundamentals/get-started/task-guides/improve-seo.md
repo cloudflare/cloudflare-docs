@@ -33,7 +33,7 @@ Since search engines use HTTPS as [a ranking signal](https://webmasters.googlebl
 To make sure your domain is accessible over HTTPS:
 
 1.  Get an [SSL/TLS certificate](/ssl/get-started/) for your domain.
-2.  [Redirect visitors](/ssl/edge-certificates/additional-options/always-use-https/) to the HTTPS version of your domain.
+2.  [Redirect visitors](/ssl/edge-certificates/encrypt-visitor-traffic/) to the HTTPS version of your domain.
 
 ### Enable Crawler Hints
 
