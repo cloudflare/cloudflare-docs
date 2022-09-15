@@ -13,7 +13,7 @@ A `ScheduledEvent` is the event type for scheduled requests to a Worker. It is t
 
 The recommended way of testing Scheduled events is using `Wrangler`.
 
-Cron triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to `wrangler dev`. This will expose a `/__scheduled` route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+Cron Triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to `wrangler dev`. This will expose a `/__scheduled` route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
 $ wrangler dev --test-scheduled
