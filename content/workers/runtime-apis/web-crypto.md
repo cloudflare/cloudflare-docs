@@ -275,6 +275,16 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
       - An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax)
 
+- {{<code>}}timingSafeEqual(a, b){{</code>}} {{<type>}}bool{{</type>}}
+
+  - Compare two buffers in a way that is resistant to timing attacks. This is a non-standard extension to the Web Crypto API.
+
+    **Parameters:**
+
+    - {{<code>}}a{{<param-type>}}ArrayBuffer | TypedArray{{</param-type>}}{{</code>}}
+
+    - {{<code>}}b{{<param-type>}}ArrayBuffer | TypedArray{{</param-type>}}{{</code>}}
+
 {{</definitions>}}
 
 ### Supported algorithms
