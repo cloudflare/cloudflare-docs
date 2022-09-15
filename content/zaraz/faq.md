@@ -35,6 +35,10 @@ To prevent Zaraz from loading on specific pages, refer to [Block Zaraz on specif
 
 ## Tools
 
+### After moving from Google Analytics 4 to Zaraz, I can no longer see demographics data. Why?
+
+You probably have enabled **Hide Originating IP Address** in the [Settings option](/zaraz/get-started/edit-tools-and-actions/) for Google Analytics 4. This tells Zaraz to not send the IP address to Google. To have access to demographics data and anonymize your visitor's IP, you should use [**Anonymize Originating IP Address**](#i-see-two-ways-of-anonymizing-ip-address-information-on-the-third-party-tool-google-analytics-one-in-privacy-and-one-in-additional-fields-which-is-the-correct-one) instead.
+
 ### I see two ways of anonymizing IP address information on the third-party tool Google Analytics: one in Privacy, and one in Additional fields. Which is the correct one?
 
 There is not a correct option, as the two options available in Google Analytics (GA) do different things.
