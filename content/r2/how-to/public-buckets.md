@@ -6,12 +6,15 @@ title: Public Buckets
 # Getting started with Public Buckets on R2
 
 ## Overview
+
 Public Bucket is a feature that allows users to expose the contents of their R2 buckets directly to the internet. By default, buckets are never publicly accessible and will always require explicit user permission to enable.
 
 Public buckets can be set up in one of two ways. The first exposes it as a custom domain that you control. The second exposes it as a https://pub-<UUID>.r2.dev/<object> domain that Cloudflare owns. You can use neither (the default), one, or both options as you desire. r2.dev is perfect for testing out a very minimal configuration or if you don't have a domain name you control. Using a custom domain name gives you more fine-grained configuration over the domain like configuring firewall rules, caching, access controls, and bot management.
 
 ## Enabling public access for the Bucket
+
 Here’s how you can enable public access for your buckets:
+
 1. Navigate to the R2 product screen using the sidebar
 
 ![Choose R2 from the side menu](/r2/static/public-buckets-r2.png)
