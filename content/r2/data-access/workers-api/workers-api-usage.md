@@ -1,9 +1,9 @@
 ---
-title: Using R2 from Workers
+title: Use R2 from Workers
 pcx_content_type: how-to
 weight: 1
 meta:
-  title: Using R2 from Workers
+  title: Use R2 from Workers
 ---
 
 # Use R2 from Workers
