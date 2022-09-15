@@ -438,7 +438,7 @@ You can bundle assets into your Worker using the `rules` key, making these asset
 
 - `fallthrough` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - TODO
+  - When set to `true` on a rule, this allows you to have multiple rules for the same `Type`.
 
 {{</definitions>}}
 
@@ -458,7 +458,13 @@ rules = [
 You can import and refer to these assets within your Worker, like so:
 
 ```js
-// do things
+import markdown from './example.md'
+
+export default {
+  async fetch() {
+    return new Response(markdown)
+  }
+}
 ```
 
 ## Local development settings
