@@ -146,7 +146,8 @@ Here is a list of all the criteria you can apply:
 - **Login Methods** - checks the identity provider used at the time of login.
 - **Authentication Method** - checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider.
 - **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an OIDC or SAML identity provider.
-- **Warp** - checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
+- **Warp** - checks that the device is connected to WARP, including the consumer version.
+- **Gateway** - checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
 
 ## Order of execution
 
