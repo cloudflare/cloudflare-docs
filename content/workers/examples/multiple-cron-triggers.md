@@ -35,11 +35,11 @@ async function triggerEvent(event) {
 }
 ```
 
-## Testing Cron Triggers using Wrangler
+## Test Cron Triggers using Wrangler
 
-The recommended way of testing Cron Triggers is using `Wrangler`.
+The recommended way of testing Cron Triggers is using Wrangler.
 
-Cron Triggers can be tested using Wrangler by passing in the `--test-scheduled` flag to `wrangler dev`. This will expose a `/__scheduled` route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+Cron Triggers can be tested using Wrangler by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
 $ wrangler dev --test-scheduled

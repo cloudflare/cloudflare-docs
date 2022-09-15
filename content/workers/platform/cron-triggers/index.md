@@ -79,9 +79,9 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 {{<Aside type="note" header="Testing Cron Triggers and potential delays">}}
 
-The recommended way of testing Cron Triggers is using `Wrangler`, as adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take minutes for changes to propagate to the Cloudflare network edge.
+The recommended way of testing Cron Triggers is using Wrangler. Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take several minutes to propagate to the Cloudflare network edge.
 
-Cron triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to `wrangler dev`. This will expose a `/__scheduled` route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+Cron triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
 $ wrangler dev --test-scheduled
