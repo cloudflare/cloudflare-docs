@@ -1,8 +1,8 @@
 ---
 title: Overview
 pcx_content_type: overview
-weight: 1
 layout: overview
+weight: 1
 meta:
   title: Cloudflare Zaraz
 ---
