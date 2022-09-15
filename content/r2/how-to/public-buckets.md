@@ -107,7 +107,7 @@ Here’s how you can remove a domain:
 5. Click the ‘Remove domain’ button in the confirmation window. Note the CNAME record pointing to the record will also be removed as part of this step. You can always add the domain back.
 6. That’s it. The domain is no longer connected and will no longer appear in the connected domains list.
 
-## Disabling public access for the Bucket
+## Disable public access for your bucket
 
 To disable public access for your bucket:
 
