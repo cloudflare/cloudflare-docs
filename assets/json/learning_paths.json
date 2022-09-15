@@ -464,8 +464,23 @@
         "pages": [
           {
             "external_link": true,
-            "url_path": "https://www.cloudflare.com/learning/security/what-is-web-application-security/",
-            "link_title": "What is web application security?"
+            "url_path": "https://www.cloudflare.com/learning/cdn/what-is-a-cdn/",
+            "link_title": "What is a Content Delivery Network (CDN)?"
+          },
+          {
+            "external_link": true,
+            "url_path": "https://www.cloudflare.com/learning/performance/why-site-speed-matters/",
+            "link_title": "Why site speed matters"
+          },
+          {
+            "external_link": true,
+            "url_path": "https://www.cloudflare.com/learning/performance/how-website-speed-boosts-seo/",
+            "link_title": "How website speed boosts SEO"
+          },
+          {
+            "external_link": true,
+            "url_path": "https://www.cloudflare.com/learning/performance/glossary/what-is-latency/",
+            "link_title": "What is Latency?"
           }
         ]
       },
