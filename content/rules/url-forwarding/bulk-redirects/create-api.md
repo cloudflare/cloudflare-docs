@@ -8,14 +8,14 @@ weight: 7
 
 To create Bulk Redirects via API, you must:
 
-1.  Create a Bulk Redirect List via API.
-2.  Add items (URL Redirects) to the list created in step 1.
-3.  Create a Bulk Redirect Rule via API, which enables the list created in step 1.
+1. Create a Bulk Redirect List via API.
+2. Add items (URL Redirects) to the list created in step 1.
+3. Create a Bulk Redirect Rule via API, which enables the list created in step 1.
 
 The API token used in API requests to manage Bulk Redirects objects (lists, list items, and rules) must have at least the following permissions:
 
-*   Account Rulesets: Edit
-*   Account Filter Lists: Edit
+* _Account_ > _Account Rulesets_ > _Edit_
+* _Account_ > _Account Filter Lists_ > _Edit_
 
 ## 1. Create a Bulk Redirect List via API
 
