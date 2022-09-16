@@ -63,3 +63,7 @@ The Customer Metadata Boundary is for customers who want to limit personal data 
 To enable Customer Metadata Boundary on your account, contact your CSM/Account team.
 
 Currently, the Metadata Boundary can only be enabled by Cloudflare for an entire account . If you only want the Metadata Boundary applied to some zones but not other zones in the same account, you will have to move those zones to a new account.
+
+## What are the analytics products available for Metadata Boundary?
+
+HTTP and Firewall analytics are available. At the moment, there are no analytics available for Workers, DNS, Network Analytics, Load Balancing and Rate Limiting.
