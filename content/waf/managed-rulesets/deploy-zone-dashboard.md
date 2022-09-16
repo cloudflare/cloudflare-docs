@@ -10,7 +10,7 @@ meta:
 
 You can deploy and configure Managed Rulesets for a zone in **Security** > **WAF** > **Managed rules**.
 
-If you wish to deploy a Managed Ruleset for several zones in your account, refer to [Deploy a Managed Ruleset in the dashboard for an account](/waf/managed-rulesets/deploy-account-dashboard/).
+To deploy a Managed Ruleset for several Enterprise zones in your account, refer to [Deploy a Managed Ruleset in the dashboard for an account](/waf/managed-rulesets/deploy-account-dashboard/).
 
 ![Example Managed Rules configuration in the Managed rules tab under Security > WAF. There is a configured rule for executing the Cloudflare Managed Ruleset, and there are two Managed Rulesets available for deployment.](/waf/static/waf-managed-rules-tab.png)
 

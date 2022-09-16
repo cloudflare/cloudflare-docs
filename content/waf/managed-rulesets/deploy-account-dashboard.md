@@ -14,7 +14,7 @@ You can enable and configure Managed Rulesets for an account in **Account Home**
 Account-level WAF configuration is only available on Enterprise plans.
 {{</Aside>}}
 
-If you wish to deploy a Managed Ruleset for a single zone, refer to [Deploy a Managed Ruleset in the dashboard for a zone](/waf/managed-rulesets/deploy-zone-dashboard/).
+To deploy a Managed Ruleset for a single zone, refer to [Deploy a Managed Ruleset in the dashboard for a zone](/waf/managed-rulesets/deploy-zone-dashboard/).
 
 ![Example Managed Rulesets configuration in the Managed rulesets tab under Application Security > WAF.](/waf/static/account/managed-rulesets-dashboard.png)
 
