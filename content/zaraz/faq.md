@@ -67,6 +67,6 @@ If you proxy your domain through Cloudflare, you do not need to add any code to 
 
 The Zaraz team is working with third-party vendors to build their own Zaraz integrations using the Zaraz SDK. To request a new tool integration, or to collaborate on our SDK, contact us at zaraz@cloudflare.com.
 
-### Using the zaraz.ecommerce() method returns undefined error
+### Using the `zaraz.ecommerce()` method returns an undefined error.
 
-Zaraz E=commerce features need to be enabled in [the Zaraz Settings page](https://developers.cloudflare.com/zaraz/reference/settings/#e-commerce-tracking). Make sure you enabled E-commerce tracking before trying to use the Web API. 
+E-commerce tracking needs to be enabled in [the Zaraz Settings page](https://developers.cloudflare.com/zaraz/reference/settings/#e-commerce-tracking) before you can start using the E-commerce Web API.
