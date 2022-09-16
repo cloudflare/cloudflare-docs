@@ -20,19 +20,19 @@ If you wish to deploy a Managed Ruleset for a single zone, refer to [Deploy a Ma
 
 2. Navigate to **Application Security** > **WAF** > **Managed rulesets**.
 
-3. Next to **Deployed managed rulesets**, select **Deploy** > **Managed ruleset**.
+3. Next to **Deployed managed rulesets**, select **Deploy** > **Deploy managed ruleset**.
 
-4. Next to the Managed Ruleset you wish to deploy, select **Select ruleset**.
+4. Select the Managed Ruleset you wish to deploy.
 
-5. In the **Configure ruleset** page, give a name to the rule deploying the ruleset.
+5. In the **Deploy managed ruleset** page, give a name to the rule deploying the ruleset in **Execution name**.
 
-6. (Optional) Specify overrides for [all the rules in the Managed Ruleset](#configure-field-values-for-all-the-rules). You can also create overrides for [specific rules or tags](#configure-rules-in-bulk-in-a-managed-ruleset).
-
-7. Under **Ruleset scope**, review the scope of the deployed Managed Ruleset. If necessary, select **Edit scope** and configure the expression that will determine the scope of the current rule.
+6. Under **Execution scope**, review the scope of the deployed Managed Ruleset. If necessary, select **Edit scope** and configure the expression that will determine the scope of the current rule.
 
     {{<Aside type="warning">}}
 Deployed custom rulesets will only apply to incoming traffic of zones on an Enterprise plan. The Expression Builder will automatically include this filter. If you define a custom expression using the Expression Editor, you must include `AND zone.level eq "ENT"` in your expression so that the rule only applies to zones on an Enterprise plan.
     {{</Aside>}}
+
+7. (Optional) Specify overrides for [all the rules in the Managed Ruleset](#configure-field-values-for-all-the-rules). You can also create overrides for [specific rules or tags](#configure-rules-in-bulk-in-a-managed-ruleset).
 
 8. To deploy your rule immediately, select **Deploy**. If you are not ready to deploy your rule, select **Save as draft**.
 
