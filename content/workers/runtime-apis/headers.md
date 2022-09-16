@@ -85,7 +85,7 @@ Used for loop detection, similar to the `CDN-Loop` [header](https://blog.cloudfl
 <summary>Accept-Encoding</summary>
 <div>
 
-For incoming requests, the value of this header will always be set to `gzip`. If the client set a different value, such as `*` or `br`, it will be overwritten.
+For incoming requests, the value of this header will always be set to `gzip`. If the client set a different value, such as `*` or `br`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
 
 </div>
 </details>
