@@ -62,9 +62,6 @@ Maximum sampling period | 10 minutes | 1 hour
 
 You can configure rate limiting rules at the zone level and at the account level, depending on your plan and product subscriptions.
 
-To configure rate limiting rules in the Cloudflare dashboard, refer to the following pages:
-
-* [Create rate limiting rules in the dashboard for a zone](/waf/rate-limiting-rules/create-zone-dashboard/)
-* [Create rate limiting rules in the dashboard for an account](/waf/rate-limiting-rules/create-account-dashboard/)
+To configure rate limiting rules in the Cloudflare dashboard, refer to [Create rate limiting rules in the dashboard for a zone](/waf/rate-limiting-rules/create-zone-dashboard/).
 
 You can also configure rate limiting rules using the [Rulesets API](/ruleset-engine/rulesets-api/). Refer to [Create rate limiting rules via API](/waf/rate-limiting-rules/create-api/) for more information.
