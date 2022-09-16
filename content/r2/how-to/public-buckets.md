@@ -10,11 +10,16 @@ weight: 5
 
 Public Bucket is a feature that allows users to expose the contents of their R2 buckets directly to the internet. By default, buckets are never publicly accessible and will always require explicit user permission to enable.
 
-Public buckets can be set up in one of two ways. The first exposes it as a custom domain that you control. The second exposes it as a https://pub-<UUID>.r2.dev/<object> domain that Cloudflare owns. You can use neither (the default), one, or both options as you desire. r2.dev is perfect for testing out a very minimal configuration or if you don't have a domain name you control. Using a custom domain name gives you more fine-grained configuration over the domain like configuring firewall rules, caching, access controls, and bot management.
+Public buckets can be set up in two ways:
+
+1. The first exposes your bucket as a custom domain. 
+2. The second exposes your bucket as an `*.r2.dev` Cloudflare subdomain that is generated after you set up your bucket. 
+
+To configure firewall rules, caching, access controls, or bot management for your bucket, you must set up a custom domain.
 
 ## Enable public access for your bucket
 
-To enable public access for your buckets:
+Enabling public access for your bucket will make the content of your bucket available to the Internet. To enable public access for your buckets:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > **R2**.
 
@@ -41,7 +46,7 @@ To enable public access for your buckets:
 
 ![Show Public Bucket URL](/r2/static/public-buckets-allowed.png)
 
-8. You can also see which buckets have public access from the overview page.
+You can review if your bucket is publicly accessible by going to your bucket and checking that **Public URL Access** states **Allowed**.
 
 {{<Aside type="note">}}
 
@@ -51,7 +56,7 @@ To enable access management, Cache and bot management features, you must set up 
 
 ## Connect your bucket to a custom domain
 
-Domain access allows websites to serve content from the associated bucket. They also benefit from features such as access management, Cache and bot management.
+Domain access through a custom domain allows you to use features such as access management, Cache and bot management.
 
 To connect a custom domain to your bucket:
 
@@ -81,6 +86,8 @@ To view the added DNS record, select *...* next to the connected domain and sele
 
 ## Disable domain access
 
+Disabling a domain will turn off public access to your bucket through that domain. Your bucket will still be publicly accessible.
+
 To disable a domain:
 
 1. In **R2**, select the bucket for which you want to disable custom domain access.
@@ -96,6 +103,8 @@ To disable a domain:
 
 ## Remove domain
 
+Removing a domain will remove custom domain configuration that you have set up on the dashboard. Your bucket will still be publicly accessible.
+
 To remove a domain:
 
 1. In **R2**, select the bucket for which you want to remove domain access.
@@ -110,6 +119,8 @@ To remove a domain:
 The domain is no longer connected to your bucket and will no longer appear in the connected domains list.
 
 ## Disable public access for your bucket
+
+Your bucket will not be exposed to the Internet after you disable public access.
 
 To disable public access for your bucket:
 
