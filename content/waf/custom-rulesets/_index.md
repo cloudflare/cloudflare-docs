@@ -9,7 +9,7 @@ layout: single
 
 Custom rulesets are collections of custom rules that you can deploy at the account level.
 
-Like [custom rules](/waf/custom-rules/) at the zone level, custom rulesets allow you to control incoming traffic by filtering requests. You can apply a custom ruleset to all incoming traffic of zones on an Enterprise plan or to a subset of incoming requests.
+Like [custom rules](/waf/custom-rules/) at the zone level, custom rulesets allow you to control incoming traffic by filtering requests. You can apply a custom ruleset to all incoming traffic of your Enterprise domains or to a subset of incoming requests.
 
 {{<Aside type="note">}}
 Account-level WAF configuration is only available for Enterprise domains.
