@@ -65,44 +65,43 @@ To create a complete tracking event, you need to add an event and one or more pa
 
 {{<table-wrap>}}
 
-| Parameter                | Type   | Description                                                                                 |
-| ------------------------ | ------ | ------------------------------------------------------------------------------------------- |
-| `product_id`             | String | Product ID.                                                                                 |
-| `sku`                    | String | Product SKU number.                                                                         |
-| `category`               | String | Product category.                                                                           |
-| `name`                   | String | Product name.                                                                               |
-| `brand`                  | String | Product brand name.                                                                         |
-| `variant`                | String | Product variant (depending on the product, it could be product color, size, etc.).          |
-| `price`                  | Number | Product price.                                                                              |
-| `quantity`               | Number | Product number of units.                                                                    |
-| `coupon`                 | String | Name or serial number of coupon code associated with product.                               |
-| `position`               | Number | Product position in the product list (for example, `2`).                                    |
-| `products`               | Array  | List of products displayed in the product list.                                             |
-| `products.[].product_id` | String | Product ID displayed on the product list.                                                   |
-| `products.[].sku`        | String | Product SKU displayed on the product list.                                                  |
-| `products.[].category`   | String | Product category displayed on the product list.                                             |
-| `products.[].name`       | String | Product name displayed on the product list.                                                 |
-| `products.[].brand`      | String | Product brand displayed on the product list.                                                |
-| `products.[].variant`    | String | Product variant displayed on the product list.                                              |
-| `products.[].price`      | Number | Price of the product displayed on the product list.                                         |
-| `products.[].quantity`   | Number | Quantity of a product displayed on the product list.                                        |
-| `products.[].coupon`     | String | Name or serial number of coupon code associated with product displayed on the product list. |
-| `products.[].position`   | Number | Product position in the product list (for example, `2`).                                    |
-| `checkout_id`            | String | Checkout ID.                                                                                |
-| `order_id`               | String | Internal ID of order/transaction/purchase.                                                  |
-| `affiliation`            | String | Name of affiliate from which the order occurred.                                            |
-| `total`                  | Number | Revenue with discounts and coupons added in.                                                |
-| `revenue`                | Number | Revenue excluding shipping and tax.                                                         |
-| `shipping`               | Number | Cost of shipping for transaction.                                                           |
-| `tax`                    | Number | Total tax for transaction.                                                                  |
-| `discount`               | Number | Total discount for transaction.                                                             |
-| `coupon`                 | String | Name or serial number of coupon redeemed on the transaction-level.                          |
-| `currency`               | String | Currency code for the transaction.                                                          |
-| `value`                  | Number | Total value of the product after quantity.                                                  |
-| `creative`               | String | Label for creative asset of promotion being tracked.                                        |
-| `query`                  | String | Product search term.                                                                        |
-| `step`                   | Number | The Number of the checkout step in the checkout process
-                                                                     |
+Parameter | Type | Description |
+--- | --- | --- 
+`product_id`             | String | Product ID.
+`sku`                    | String | Product SKU number.
+`category`               | String | Product category.
+`name`                   | String | Product name.
+`brand`                  | String | Product brand name.
+`variant`                | String | Product variant (depending on the product, it could be product color, size, etc.).
+`price`                  | Number | Product price.
+`quantity`               | Number | Product number of units.
+`coupon`                 | String | Name or serial number of coupon code associated with product.
+`position`               | Number | Product position in the product list (for example, `2`).
+`products`               | Array  | List of products displayed in the product list.
+`products.[].product_id` | String | Product ID displayed on the product list.
+`products.[].sku`        | String | Product SKU displayed on the product list.
+`products.[].category`   | String | Product category displayed on the product list.
+`products.[].name`       | String | Product name displayed on the product list.
+`products.[].brand`      | String | Product brand displayed on the product list.
+`products.[].variant`    | String | Product variant displayed on the product list.
+`products.[].price`      | Number | Price of the product displayed on the product list.
+`products.[].quantity`   | Number | Quantity of a product displayed on the product list.
+`products.[].coupon`     | String | Name or serial number of coupon code associated with product displayed on the product list.
+`products.[].position`   | Number | Product position in the product list (for example, `2`).
+`checkout_id`            | String | Checkout ID.
+`order_id`               | String | Internal ID of order/transaction/purchase.
+`affiliation`            | String | Name of affiliate from which the order occurred.
+`total`                  | Number | Revenue with discounts and coupons added in.
+`revenue`                | Number | Revenue excluding shipping and tax.
+`shipping`               | Number | Cost of shipping for transaction.
+`tax`                    | Number | Total tax for transaction.
+`discount`               | Number | Total discount for transaction.
+`coupon`                 | String | Name or serial number of coupon redeemed on the transaction-level.
+`currency`               | String | Currency code for the transaction.
+`value`                  | Number | Total value of the product after quantity.
+`creative`               | String | Label for creative asset of promotion being tracked.
+`query`                  | String | Product search term.
+`step`                   | Number | The Number of the checkout step in the checkout process.
 
 {{</table-wrap>}}
 
