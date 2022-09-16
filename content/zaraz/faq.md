@@ -73,4 +73,4 @@ The Zaraz team is working with third-party vendors to build their own Zaraz inte
 
 ### Using the `zaraz.ecommerce()` method returns an undefined error.
 
-E-commerce tracking needs to be enabled in [the Zaraz Settings page](https://developers.cloudflare.com/zaraz/reference/settings/#e-commerce-tracking) before you can start using the E-commerce Web API.
+E-commerce tracking needs to be enabled in [the Zaraz Settings page](/zaraz/reference/settings/#e-commerce-tracking) before you can start using the E-commerce Web API.
