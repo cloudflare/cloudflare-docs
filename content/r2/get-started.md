@@ -22,7 +22,7 @@ To purchase R2:
 4. Select **Proceed to Payment Details** to review your payment.
 5. Select **Return to R2** to go to the R2 dashboard.
 
-## Using R2
+## Use R2
 
 Cloudflare provides multiple ways for developers to access their R2 buckets:
 
