@@ -1,6 +1,7 @@
-import * as learningPath from "json/learning_paths.json";
+import { a, b, c } from "./json-collector"
 
-let paths = learningPath["default"];
+let paths = [a, b, c];
+console.log(paths)
 
 function buildHtml(destination, array) {
   const numTrails = document.getElementById("numTrails");
