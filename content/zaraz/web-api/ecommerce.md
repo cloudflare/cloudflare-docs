@@ -1,38 +1,38 @@
 ---
 pcx_content_type: how-to
-title: Ecommerce
+title: E-commerce
 weight: 6
 meta:
   title: zaraz.ecommerce
 ---
 
-# Ecommerce
+# E-commerce
 
 You can use `zaraz.ecommerce()` anywhere inside the `<body>` tag of a page.
 
-`zaraz.ecommerce()` allows you to track common events of the ecommerce user journey, such as when a user adds a product to cart, starts the checkout funnel or completes an order on your website.
+`zaraz.ecommerce()` allows you to track common events of the e-commerce user journey, such as when a user adds a product to cart, starts the checkout funnel or completes an order on your website.
 
-To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz account and on the tool you plan to send ecommerce data to. Then, add `zaraz.ecommerce()` to the `<body>` element of your website.
+To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz account and on the tool you plan to send e-commerce data to. Then, add `zaraz.ecommerce()` to the `<body>` element of your website.
 
 Right now, Zaraz is compatible with Google Analytics 3 (Universal Analytics), Google Analytics 4, Bing and Facebook Pixel.
 
-## Enable ecommerce tracking
+## Enable e-commerce tracking
 
-You do not need to map ecommerce events to triggers. Zaraz will automatically forward data using the right format to the tools with ecommerce support.
+You do not need to map e-commerce events to triggers. Zaraz will automatically forward data using the right format to the tools with e-commerce support.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Select **Zaraz** > **Settings**.
-3. Enable **Ecommerce tracking**.
+3. Enable **E-commerce tracking**.
 4. Select **Save**.
 5. Go to **Zaraz** > **Tools**.
-6. Locate the tool you want to use with ecommerce tracking and select **Edit**.
+6. Locate the tool you want to use with e-commerce tracking and select **Edit**.
 7. Select **Settings**.
-8. Under **Advanced**, enable **Ecommerce tracking**.
+8. Under **Advanced**, enable **E-commerce tracking**.
 9. Select **Save**.
 
-## Add ecommerce tracking to your website
+## Add e-commerce tracking to your website
 
-After enabling ecommerce tracking on your Zaraz dashboard, you need to add `zaraz.ecommerce()` to the `<body>` element of your website:
+After enabling e-commerce tracking on your Zaraz dashboard, you need to add `zaraz.ecommerce()` to the `<body>` element of your website:
 
 ```js
 zaraz.ecommerce('Event Name', { parameters });
