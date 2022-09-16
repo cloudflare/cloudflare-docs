@@ -30,6 +30,8 @@ You do not need to map e-commerce events to triggers. Zaraz will automatically f
 8. Under **Advanced**, enable **E-commerce tracking**.
 9. Select **Save**.
 
+E-commerce tracking is now enabled. If you add additional tools to your website that you want to use with `zaraz.ecommerce()`, you will need to repeat steps 6-9 for that tool.
+
 ## Add e-commerce tracking to your website
 
 After enabling e-commerce tracking on your Zaraz dashboard, you need to add `zaraz.ecommerce()` to the `<body>` element of your website:
