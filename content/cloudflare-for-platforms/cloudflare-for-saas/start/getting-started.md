@@ -14,7 +14,7 @@ Before you can start creating custom hostnames, you need to have access to [Clou
 
 If you have not used the Cloudflare API previously, review our [API Quickstart](/api/).
 
-If there are multiple proxied DNS records for one zone, Cloudflare must prioritize which record controls the zone settings and associated origin server. Adding a new custom hostname may take priority over your current settings or cause your settings to no longer apply. To prevent overriding or voiding your settings, review [Hostname priority (Cloudflare for SaaS)](/ssl/ssl-tls/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas)
+If there are multiple proxied DNS records for one zone, Cloudflare must prioritize which record controls the zone settings and associated origin server. Adding a new custom hostname may take priority over your current settings or cause your settings to no longer apply. To prevent overriding or voiding your settings, review [Hostname priority (Cloudflare for SaaS)](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas)
  
 ---
 
@@ -158,7 +158,7 @@ This routes traffic from `app.customer.com` to your origin.
 
 ## Step 6 — Offboard custom hostnames
 
-As a SaaS provider, you must remove a customer's custom hostname from your zone if they decide to churn. This is especially important if your end customers are using Cloudflare because if the custom hostname changes the DNS target to point away from your SaaS zone, the custom hostname will continue to route to your service. This is a result of the [custom hostname priority logic](/ssl/ssl-tls/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas).
+As a SaaS provider, you must remove a customer's custom hostname from your zone if they decide to churn. This is especially important if your end customers are using Cloudflare because if the custom hostname changes the DNS target to point away from your SaaS zone, the custom hostname will continue to route to your service. This is a result of the [custom hostname priority logic](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas).
 
 ### Delete custom hostname
 

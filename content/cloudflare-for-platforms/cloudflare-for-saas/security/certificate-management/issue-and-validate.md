@@ -132,7 +132,7 @@ Once you create a new hostname [via the dashboard](/cloudflare-for-platforms/clo
  
 Cloudflare is able to serve a random token from our edge due to the fact that `site.example.com` has a CNAME in place to `$CNAME_TARGET`, which ultimately resolves to Cloudflare IPs. If your customer has not yet added the CNAME, the CA will not be able to retrieve the token and the process will not complete.
  
-We will attempt to retry this validation check for a finite period before timing out. Refer to [Validation Retry Schedule](/ssl/ssl-tls/validation-backoff-schedule/) for more details.
+We will attempt to retry this validation check for a finite period before timing out. Refer to [Validation Retry Schedule](/ssl/reference/validation-backoff-schedule/) for more details.
  
 {{</Aside>}}
  

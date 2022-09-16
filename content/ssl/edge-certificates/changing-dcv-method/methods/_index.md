@@ -23,7 +23,7 @@ For details on each method available for DCV, refer to the following resources:
 
 ## Verify DCV status
 
-To verify the [DCV status](/ssl/ssl-tls/certificate-statuses/) of a certificate, either monitor the certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or use the [Verification Status endpoint](https://api.cloudflare.com/#ssl-verification-ssl-verification-details).
+To verify the [DCV status](/ssl/reference/certificate-statuses/) of a certificate, either monitor the certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or use the [Verification Status endpoint](https://api.cloudflare.com/#ssl-verification-ssl-verification-details).
 
 A status of `active` means that the certificate has been deployed to Cloudflare’s edge network and will be served as soon as HTTP traffic is proxied to Cloudflare.
 
