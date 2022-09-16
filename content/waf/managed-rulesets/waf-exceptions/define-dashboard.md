@@ -17,7 +17,7 @@ To define a WAF exception at the zone level:
 To define a WAF exception at the account level (Enterprise plans only):
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
-2. Go to **Application Security Security** > **WAF** > **Managed rulesets**.
+2. Go to **Application Security** > **WAF** > **Managed rulesets**.
 3. Select **Deploy** > **Deploy managed exception**.
 
 ## 2. Create the WAF exception
