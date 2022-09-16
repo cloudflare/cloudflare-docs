@@ -240,11 +240,11 @@
       },
       {
         "title": "Before you begin",
-        "description": "Before can secure your site, make sure you have already added that site to Cloudflare.",
+        "description": "Before you can secure your site, make sure you have already added that site to Cloudflare.",
         "estimated_time": "~30 mins",
         "pages": [
           {
-            "url_path": "/learning-paths/get-started",
+            "url_path": "/learning-paths/get-started/",
             "title": "Get started with Cloudflare (learning path)"
           }
         ]
@@ -490,7 +490,7 @@
         "estimated_time": "~30 mins",
         "pages": [
           {
-            "url_path": "/learning-paths/get-started",
+            "url_path": "/learning-paths/get-started/",
             "title": "Get started with Cloudflare (learning path)"
           }
         ]
@@ -501,7 +501,7 @@
           {
             "url_path": "/dns/zone-setups/full-setup/",
             "link_title": "Domain onboarding",
-            "additional_description": "Cloudflare provides [lightning fast DNS resolution](https://www.cloudflare.com/dns/), so you likely will see speed improvements by onboarding your domain to Cloudflare."
+            "additional_description": "Cloudflare provides [lightning fast DNS resolution](/dns/), so you likely will see speed improvements by onboarding your domain to Cloudflare."
           }
         ]
       },
@@ -554,7 +554,7 @@
           {
             "url_path": "/rules/bulk-redirects/",
             "link_title": "Bulk redirects",
-            "additional_description": "Simply by using Bulk Redirects or [Page Rules](https://support.cloudflare.com/hc/articles/4729826525965) for URL forwarding, you can perform redirects at Cloudflare’s edge network instead of making requests travel all the way to your origin server."
+            "additional_description": "By using Bulk Redirects or [Page Rules](https://support.cloudflare.com/hc/articles/4729826525965) for URL forwarding, you can perform redirects at Cloudflare’s edge network instead of making requests travel all the way to your origin server."
           },
           {
             "url_path": "/cache/get-started/",
