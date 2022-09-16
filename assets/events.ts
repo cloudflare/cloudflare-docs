@@ -173,10 +173,31 @@ export function tabs() {
     for (let i = 0; i < wrappers.length; i++) {
       const labels = wrappers[i].querySelectorAll(".tab-label");
       const tabs = wrappers[i].querySelectorAll(".tab");
+      const defaultTab = wrappers[i].querySelector(".tab.tab-default")
 
       if (tabs.length > 0) {
-        // Set the first tab in a group to display
-        (tabs[0] as HTMLElement).style.display = "block";
+        // if a tab has been specified as default, set that
+        // as active as opposed to defaulting to the first tab
+        if (defaultTab) {
+          // changes an id (tab-js-esm-6f3904f86f90c21d) into just the type (tab-js-esm)
+          const tabId = defaultTab.id.split("-").slice(0, 3).join("-");
+
+          let defaultTabLabel;
+          let found = false;
+          labels.forEach((label) => {
+            const labelId = label.getAttribute("data-link");
+            if (!found) {
+              if (labelId === tabId) { defaultTabLabel = label; found = true }
+            }
+          });
+
+          (defaultTab as HTMLElement).style.display = "block";
+          (defaultTabLabel as HTMLElement).classList.add("active");
+        } else {
+          (tabs[0] as HTMLElement).style.display = "block";
+          (labels[0] as HTMLElement).classList.add("active");
+        }
+
         for (let i = 0; i < labels.length; i++)
           labels[i].addEventListener("click", $tab);
       }
