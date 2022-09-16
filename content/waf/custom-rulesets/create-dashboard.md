@@ -3,7 +3,6 @@ pcx_content_type: how-to
 type: overview
 title: Use the dashboard
 weight: 2
-layout: list
 ---
 
 # Work with custom rulesets in the dashboard
@@ -11,9 +10,7 @@ layout: list
 Create custom rulesets in **Application Security** > **WAF** > **Custom rulesets**. After creating a custom ruleset, you must deploy it to your account to apply its rules.
 
 {{<Aside type="note">}}
-
-This feature is only available for customers on an Enterprise plan.
-
+Account-level WAF configuration is only available for Enterprise domains.
 {{</Aside>}}
 
 ## Create a custom ruleset
@@ -32,7 +29,7 @@ This feature is only available for customers on an Enterprise plan.
 
 6. Enter a descriptive name for the rule.
 
-7. Under **When incoming requests match...**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**. Alternatively, select **Edit expression** to define your expression using the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor).
+7. Under **When incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**. Alternatively, select **Edit expression** to define your expression using the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor).
 
 8. Select the rule action from the **Choose action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
 
@@ -54,11 +51,11 @@ To enable the custom ruleset you created, you must deploy it to your account.
 
 3. Next to **Deployed custom rulesets**, select **Deploy custom ruleset**.
 
-4. Next to the custom ruleset you wish to deploy, select **Select ruleset**.
+4. Select the custom ruleset to deploy.
 
-5. In the **Configure ruleset** page, give a name to the rule deploying the custom ruleset. This page also shows the rules in the custom ruleset that you will be deploying.
+5. In the ruleset deployment page, give a name to the rule deploying the custom ruleset. This page also shows the rules in the custom ruleset that you will be deploying.
 
-6. Under **Ruleset scope**, review the scope of the deployed custom ruleset. If necessary, select **Edit scope** and configure the expression that will determine the scope of the current rule.
+6. Under **Execution scope**, review the scope of the deployed custom ruleset. If necessary, select **Edit scope** and configure the expression that will determine the scope of the current rule.
 
     {{<Aside type="warning">}}
 Deployed custom rulesets will only apply to incoming traffic of zones on an Enterprise plan. The Expression Builder will automatically include this filter. If you define a custom expression using the Expression Editor, you must include `AND zone.level eq "ENT"` in your expression so that the rule only applies to your zones on an Enterprise plan.
