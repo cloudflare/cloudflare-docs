@@ -46,7 +46,7 @@ Some Managed Rulesets may not allow custom configuration, depending on your Clou
 
 To configure rule field values for all the rules in a Managed Ruleset:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
 2. Go to **Security** > **WAF** > **Managed rules**.
 
@@ -70,7 +70,7 @@ Use the available filters in the Browse Managed Ruleset interface.
 
 To view the rules of a Managed Ruleset:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
 2. Go to **Security** > **WAF** > **Managed rules**.
 
@@ -92,7 +92,7 @@ To view the rules of a Managed Ruleset:
 
 To apply the rules in the ruleset to a subset of incoming requests, specify a custom filter expression for the rule that executes the Managed Ruleset.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
 2. Go to **Security** > **WAF** > **Managed rules**.
 
