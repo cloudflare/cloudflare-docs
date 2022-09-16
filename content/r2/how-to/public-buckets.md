@@ -4,7 +4,7 @@ title: Public Buckets
 weight: 5
 ---
 
-# Getting started with Public Buckets on R2
+# Create Public Buckets on R2
 
 ## Overview
 
