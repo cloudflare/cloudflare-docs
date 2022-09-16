@@ -91,6 +91,8 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/analy
 
 Note that, for our initial version, blobs and doubles are accessed via names that have 1-based indexing. In the future, when we let developers name blobs and doubles in their binding, these names will also be available via the SQL API.
 
+See the [Workers Analytics Engine SQL Reference](../sql-reference/) for a full list of supported SQL functionality.
+
 ### Working with time series
 
 Workers Analytics Engine is optimized for powering time series analytics that can be visualized using tools like Grafana. Every event written from the runtime is automatically populated with a `timestamp` field. It is expected that most time series will round, and then `GROUP BY` the `timestamp`. For example:
