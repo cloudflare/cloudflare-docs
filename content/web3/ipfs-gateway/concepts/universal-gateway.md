@@ -19,3 +19,9 @@ Likely, you will also want to add items to the [gateway blocklist](/web3/how-to/
 - CIDs (`QmPZ9gcCEpqKTo6aq61g2nXGUhM4iCL3ewB6LDXZCtioEB`)
 - IPFS content (`/ipfs/QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/readme`)
 - IPNS content paths (`/ipns/example.com`)
+
+{{<Aside type="note">}}
+
+This feature is limited to specific plans. For more detail, refer to [Limits](/web3/reference/limits/).
+
+{{</Aside>}}

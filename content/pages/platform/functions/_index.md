@@ -154,7 +154,7 @@ Another helpful example for handling single path segments can be querying an API
 
 ```js
 ---
-filename:function/character/[id].js
+filename:functions/character/[id].js
 ---
 export async function onRequestGet({ params }) {
   const res = await fetch(`https://rickandmortyapi.com/api/character/${params.id}`);

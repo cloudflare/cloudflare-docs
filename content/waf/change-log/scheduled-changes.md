@@ -23,21 +23,12 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-08-30</td>
-      <td>2022-09-05</td>
+      <td>2022-09-12</td>
+      <td>2022-09-19</td>
       <td>Block</td>
-      <td>100303_BETA</td>
-      <td>...d5488862</td>
-      <td>Command Injection - Nslookup BETA</td>
-      <td>This detection will replace ...b090ba9a on new WAF</td>
-    </tr>
-    <tr>
-      <td>2022-08-30</td>
-      <td>2022-09-05</td>
-      <td>Block</td>
-      <td>100135E</td>
-      <td>...99de0930</td>
-      <td>XSS - JS On Events - 2</td>
+      <td>100546</td>
+      <td>...1d870399</td>
+      <td>XSS - HTML Encoding</td>
       <td>N/A</td>
     </tr>
 </tbody>

@@ -24,7 +24,7 @@ For any given hostname, Cloudflare uses the following order to determine which c
     | -------- | ---------------------------------------------------------------- |
     | 1        | [Custom Legacy](/ssl/edge-certificates/custom-certificates/)     |
     | 2        | [Custom Modern](/ssl/edge-certificates/custom-certificates/)   |
-    | 3        | [Custom Hostname (SSL for SaaS)](/cloudflare-for-saas/)             |
+    | 3        | [Custom Hostname (SSL for SaaS)](/cloudflare-for-platforms/cloudflare-for-saas/)             |
     | 4        | [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) |
     | 5        | [Universal](/ssl/edge-certificates/universal-ssl/)               |
 
@@ -32,7 +32,9 @@ For any given hostname, Cloudflare uses the following order to determine which c
 
 {{<Aside type="warning">}}
 
-If you [issue a custom hostname certificate](/cloudflare-for-saas/security/certificate-management/issue-and-validate/) with wildcards enabled, you cannot update TLS settings for these wildcard hostnames.
+When you [issue a custom hostname certificate](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/) with wildcards enabled, any cipher suites or Minimum TLS settings applied to that hostname will only apply to the direct hostname.
+
+However, if you want to update the Minimum TLS settings for all wildcard hostnames, you can change the [zone-level Minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/).
 
 {{</Aside>}}
 
@@ -56,8 +58,8 @@ Cloudflare determines this priority in the following order (assuming each record
 
 1.  **Exact hostname match**:
 
-    1.  [New Custom Hostname](/cloudflare-for-saas/start/getting-started/) (Belonging to a SaaS Provider)
-    2.  [Legacy Custom Hostname](/cloudflare-for-saas/reference/versioning/) (Belonging to a SaaS Provider)
+    1.  [New Custom Hostname](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) (Belonging to a SaaS Provider)
+    2.  [Legacy Custom Hostname](/cloudflare-for-platforms/cloudflare-for-saas/reference/versioning/) (Belonging to a SaaS Provider)
     3.  [DNS](/dns/manage-dns-records/reference/proxied-dns-records/) (Belonging to the logical DNS zone)
 
 2.  **Wildcard hostname match**:
@@ -71,7 +73,7 @@ If a hostname resource record is not proxied (gray-clouded) for a zone on Cloudf
 
 #### Scenario 1
 
-Customer1 uses Cloudflare for authoritative DNS for the zone `shop.example.com`. Customer2 is a SaaS provider that creates and successfully [verifies the new Custom Hostname](/cloudflare-for-saas/domain-support/hostname-verification/) `shop.*example.com*`. Afterward, traffic starts routing over Customer2’s zone:
+Customer1 uses Cloudflare for authoritative DNS for the zone `shop.example.com`. Customer2 is a SaaS provider that creates and successfully [verifies the new Custom Hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/) `shop.*example.com*`. Afterward, traffic starts routing over Customer2’s zone:
 
 - If Customer1 wants to regain control of their zone, Customer 1 contacts Customer2 and requests them to delete the Custom Hostname record. Another possibility is to stop proxying (gray-cloud) the record.
 - If Customer1 is already proxying a new Custom Hostname for `www.example.com`, Customer2 creates and verifies `www.example.com` so traffic starts routing over Customer2’s zone. Since this new Custom Hostname is the last one validated, the new custom hostname on Customer1’s zone enters a _moved_ status.

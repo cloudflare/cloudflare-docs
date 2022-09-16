@@ -43,3 +43,29 @@ tutorial_token = "xxa5a7d4c9-db72-424d-860d-ae68ff7f60ac"
 		lineNoStart = 1
 		lineNos = false
 		hl_Lines = ""
+
+[module]
+
+  [[module.mounts]]
+  	source = "assets/json/"
+  	target = "data"
+
+  [[module.mounts]]
+    source = "content"
+    target = "content"
+
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+
+  [[module.mounts]]
+    source = "layouts"
+    target = "layouts"
+
+  [[module.mounts]]
+    source = "data"
+    target = "data"
+
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
