@@ -67,7 +67,7 @@ To configure rule field values for all the rules in a Managed Ruleset:
 
 3. Under **Deployed managed rulesets**, next to the _Execute_ rule that deploys the Managed Ruleset you want to configure, select **Edit**.
 
-4. Under **Ruleset configuration**, set one or more rule fields from the available values in the drop-down lists.
+4. In the ruleset configuration section, set one or more rule fields from the available values in the drop-down lists.
 
     For example, select the action to perform for all the rules in the ruleset from the **Ruleset action** drop-down list.
 
@@ -100,3 +100,10 @@ To view the rules of a Managed Ruleset:
 ### Configure rules in bulk in a Managed Ruleset
 
 {{<render file="_managed-ruleset-configure-rules-in-bulk.md">}}
+
+### Delete a Managed Ruleset deployment rule or a WAF exception
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Navigate to **Application Security** > **WAF** > **Managed rulesets**.
+3. Under **Deployed managed rulesets** and next to the rule you want to delete, select **Edit**.
+4. Select **Delete deployment** and confirm the operation.
