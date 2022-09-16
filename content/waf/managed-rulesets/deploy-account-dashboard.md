@@ -50,8 +50,8 @@ Select the **Enabled** toggle next to a deployed Managed Ruleset to enable or di
 
 Configure a Managed Ruleset to:
 
-- Define specific field values for one or more rules (for example, configure a rule with an action different from the action configured by Cloudflare)
-- Disable one or more rules
+- Define specific field values for one or more rules (for example, configure a rule with an action different from the action configured by Cloudflare).
+- Disable one or more rules.
 
 To skip one or more rules or WAF Managed Rulesets, [add a WAF exception](/waf/managed-rulesets/waf-exceptions/). WAF exceptions are shown as _Skip_ rules in the **Deployed managed rulesets** list.
 
@@ -75,7 +75,7 @@ To configure rule field values for all the rules in a Managed Ruleset:
 
     For example, select the action to perform for all the rules in the ruleset from the **Ruleset action** drop-down list.
 
-    ![The Configure Managed Ruleset page displaying the available options to override all the rules in the ruleset. In the displayed Managed Ruleset you can override the ruleset action.](/waf/static/waf-configure-ruleset.png)
+    ![The Deploy Managed Ruleset page displaying the available options to override all the rules in the ruleset. In the displayed Managed Ruleset you can override the ruleset action.](/waf/static/account/waf-configure-ruleset-account.png)
 
 5. Select **Save**.
 
