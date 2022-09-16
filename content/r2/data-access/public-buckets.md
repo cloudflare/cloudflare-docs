@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Public Buckets
-weight: 5
+weight: 3
 ---
 
 # Create Public Buckets on R2
