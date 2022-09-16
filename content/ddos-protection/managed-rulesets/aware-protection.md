@@ -58,9 +58,9 @@ For L3/4 Aware DDoS Protection rules, currently you must use [Logpush](/logs/abo
 
 ## Configure the rules
 
-You can adjust the action and sensitivity of the Aware DDoS Protection rules. The default action is _Log_, except for the User-agent-aware DDoS Protection rule. You can use the _Log_ action to first observe what traffic is flagged before deciding on a mitigation action.
+You can adjust the action and sensitivity of the Aware DDoS Protection rules. The default action is _Log_. Use this action to first observe what traffic is flagged before deciding on a mitigation action.
 
-To configure the geo-profiling rule, refer to the instructions in [Configure one or more rules](/ddos-protection/managed-rulesets/http/configure-dashboard/#configure-one-or-more-rules), searching for the following rule IDs:
+To configure a rule, refer to the instructions in [Configure one or more rules](/ddos-protection/managed-rulesets/http/configure-dashboard/#configure-one-or-more-rules), searching for the following rule IDs:
 
 {{<render file="_aware-rule-ids.md">}}
 
