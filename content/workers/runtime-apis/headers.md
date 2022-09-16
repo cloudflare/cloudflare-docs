@@ -80,3 +80,48 @@ Used for loop detection, similar to the `CDN-Loop` [header](https://blog.cloudfl
 
 </div>
 </details>
+
+<details>
+<summary>Accept-Encoding</summary>
+<div>
+
+For incoming requests, the value of this header will always be set to `gzip`. If the client set a different value, such as `*` or `br`, it will be overwritten.
+
+</div>
+</details>
+
+<details>
+<summary>Connection</summary>
+<div>
+
+For incoming requests, the value of this header will always be set to `Keep-Alive`. If the client set a different value, such as `close`, it will be overwritten. Note that is also the case when the client uses HTTP/2 or HTTP/3 to connect.
+
+</div>
+</details>
+
+<details>
+<summary>X-Forwarded-For</summary>
+<div>
+
+For incoming requests, this header has no special behaviour. It reflects the `X-Forwarded-For` header as sent by the client. Cloudflare will not add the `X-Forwarded-For` header to `request.headers` if it was not sent by the client, and will not change it if the client provided it.
+
+</div>
+</details>
+
+<details>
+<summary>X-Forwarded-Proto</summary>
+<div>
+
+For incoming requests, the value of this header will be set to the protocol the client used (`http` or `https`). If the client set a different value, it will be overwritten.
+
+</div>
+</details>
+
+<details>
+<summary>X-Real-IP</summary>
+<div>
+
+For incoming requests, the value of this header will be set to the client's IP address. If the client set a different value, it will be overwritten. The value has the same semantics as [`CF-Connecting-IP`](/fundamentals/get-started/reference/http-request-headers/#cf-connecting-ip) and [`True-Client-IP`](/fundamentals/get-started/reference/http-request-headers/#true-client-ip-enterprise-plan-only).
+
+</div>
+</details>
