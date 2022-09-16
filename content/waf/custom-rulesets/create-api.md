@@ -9,9 +9,7 @@ weight: 3
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to work with custom rulesets using an API.
 
 {{<Aside type="note">}}
-
-This feature is only available for customers on an Enterprise plan.
-
+Account-level WAF configuration is only available for Enterprise domains.
 {{</Aside>}}
 
 To deploy a custom ruleset in your account, follow these general steps:
@@ -23,7 +21,7 @@ For more information, refer to [Work with custom rulesets](/ruleset-engine/custo
 
 {{<Aside type="warning" header="Important">}}
 
-* Deployed custom rulesets will only apply to incoming traffic of zones on an Enterprise plan. You must include `AND zone.level eq "ENT"` in the expression of the rule deploying the custom ruleset or else the API operation will fail.
+* Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. You must include `AND zone.level eq "ENT"` in the expression of the rule deploying the custom ruleset or else the API operation will fail.
 
 * Currently, you can only deploy custom rulesets to a phase at the account level.
 
