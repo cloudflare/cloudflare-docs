@@ -11,7 +11,7 @@ meta:
 You can enable and configure Managed Rulesets for an account in **Account Home** > **Application Security** > **WAF** > **Managed rulesets**.
 
 {{<Aside type="note">}}
-Account-level WAF configuration is only available for Enterprise domains.
+Account-level WAF configuration is only available for Enterprise customers in the WAF Advanced plan.
 {{</Aside>}}
 
 To deploy a Managed Ruleset for a single zone, refer to [Deploy a Managed Ruleset in the dashboard for a zone](/waf/managed-rulesets/deploy-zone-dashboard/).
