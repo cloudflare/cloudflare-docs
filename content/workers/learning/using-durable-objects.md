@@ -378,7 +378,7 @@ You should provide an `--old-tag` value whenever possible. This value should be 
 
 The list of CLI migration arguments that can be added to `wrangler publish` is as follows:
 
-```sh
+```bash
 --old-tag <tag name> # Optional if your script does not have a migration tag set yet.
 --new-tag <tag name> # new-tag and old-tag are optional if you only use CLI migrations.
 

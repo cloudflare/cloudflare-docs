@@ -19,7 +19,7 @@ To create an account subscription, send a [POST](https://api.cloudflare.com/#acc
 
 {{</definitions>}}
 
-```sh
+```bash
 ---
 header: Request
 ---

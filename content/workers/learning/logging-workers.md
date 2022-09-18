@@ -38,7 +38,7 @@ async function handleRequest(request) {
 After you deploy the above code, run `wrangler tail` in your terminal, and then access your Worker. Your terminal will display:
 
 ```sh
-☁  logging-example [master] ⚡  wrangler tail --format=pretty
+$ wrangler tail --format=pretty
 [2021-08-18 17:06:55] [LAX] [Ok] GET https://logging-example.jkup.workers.dev/
  | [Info] Request came from city: Pacifica in country: US
 [2021-08-18 17:06:56] [LAX] [Ok] GET https://logging-example.jkup.workers.dev/favicon.ico

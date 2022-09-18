@@ -56,14 +56,14 @@ By default, all live outputs are enabled.
 
 To get a list of outputs, call the `/outputs` endpoint:
 
-```bash
-curl -H "Authorization: Bearer <API_TOKEN>" \ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<INPUT_UID>/outputs
+```sh
+$ curl -H "Authorization: Bearer <API_TOKEN>" \ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<INPUT_UID>/outputs
 ```
 
 To delete an output, make a `DELETE` request to the `/outputs` endpoint with the output id:
 
-```bash
-curl -X DELETE \ -H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<INPUT_UID>/outputs/<OUTPUT_UID>
+```sh
+$ curl -X DELETE \ -H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<INPUT_UID>/outputs/<OUTPUT_UID>
 ```
 
 If the associated live input is already retransmitting to this output when you make the `DELETE` request, that output will be disconnected within 30 seconds.

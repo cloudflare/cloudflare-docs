@@ -91,7 +91,7 @@ curl -s https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs -X POS
 
 Response:
 
-```bash
+```json
 {
    "errors" : [],
    "messages" : [],
@@ -129,7 +129,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/100 -d'{"enabl
 
 Response:
 
-```bash
+```json
 {
    "errors" : [],
    "messages" : [],

@@ -65,8 +65,8 @@ Linux currently relies on the system Kernel version instead of a specific distro
 1. Open a Terminal window.
 1. Run the `uname -r` command to get the complete version.
 
-    ```bash
-    uname -r
+    ```sh
+    $ uname -r
     ```
 
 1. The valid SemVer would be the first 3 whole numbers of the output you obtain in the previous step. For instance, if the command above returned `5.14.0-25.el9.x86_64`, the valid SemVer would be `5.14.0`.

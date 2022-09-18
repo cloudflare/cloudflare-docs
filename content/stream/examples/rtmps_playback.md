@@ -14,11 +14,11 @@ layout: example
 
 Copy the RTMPS _playback_ key for your live input from the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs) or the [Stream API](/stream/stream-live/start-stream-live/#using-the-api), and paste it into the URL below, replacing `<RTMPS_PLAYBACK_KEY>`:
 
-```bash
+```sh
 ---
 header: RTMPS playback with ffplay
 ---
-ffplay -analyzeduration 1 -fflags -nobuffer -probesize 32 -sync ext 'rtmps://live.cloudflare.com:443/live/<RTMPS_PLAYBACK_KEY>'
+$ ffplay -analyzeduration 1 -fflags -nobuffer -probesize 32 -sync ext 'rtmps://live.cloudflare.com:443/live/<RTMPS_PLAYBACK_KEY>'
 ```
 
 For more, refer to [Play live video in native apps with less than one second latency](/stream/viewing-videos/using-own-player/#play-live-video-in-native-apps-with-less-than-1-second-latency).

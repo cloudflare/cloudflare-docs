@@ -22,8 +22,8 @@ Since video ids are effectively public within signed URLs, you will need to turn
 
 Restricting viewing can be done by updating the video's metadata.
 
-```bash
-curl -X POST -H "Authorization: Bearer <API_TOKEN>" "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>" -H "Content-Type: application/json" -d "{\"uid\": \"<VIDEO_UID>\", \"requireSignedURLs\": true }"
+```sh
+$ curl -X POST -H "Authorization: Bearer <API_TOKEN>" "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>" -H "Content-Type: application/json" -d "{\"uid\": \"<VIDEO_UID>\", \"requireSignedURLs\": true }"
 ```
 
 Response:
@@ -163,8 +163,8 @@ If you are generating a high-volume of tokens, it is best to generate new tokens
 
 ### Step 1: Call the `/stream/key` endpoint *once* to obtain a key
 
-```bash
-curl -X POST -H "Authorization: Bearer <API_TOKEN>"  "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/keys"
+```sh
+$ curl -X POST -H "Authorization: Bearer <API_TOKEN>"  "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/keys"
 ```
 
 The response will return `pem` and `jwk` values.
@@ -372,7 +372,7 @@ In the dashboard, you will see a text box by each video labeled `Enter allowed o
 
 You can also control embed limitation programmatically using the Stream API. `uid` in the example below refers to the video id.
 
-```sh
+```bash
 curl -X POST \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d "{\"uid\": \"<VIDEO_UID>\", \"allowedOrigins\": [\"example.com\"]}" \

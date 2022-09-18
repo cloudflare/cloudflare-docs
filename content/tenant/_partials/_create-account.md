@@ -19,7 +19,7 @@ To create an account, make a `POST` request to the `/accounts` endpoint and incl
 
 {{</definitions>}}
 
-```sh
+```bash
 ---
 header: Request
 ---

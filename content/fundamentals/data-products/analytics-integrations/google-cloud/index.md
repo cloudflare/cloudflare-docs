@@ -69,8 +69,8 @@ To clone and deploy the cloud function:
 
 4.  Then in the **Google Shell**, run the following command to deploy your instance of the cloud function:
 
-    ```bash
-    sh ./deploy.sh
+    ```sh
+    $ sh ./deploy.sh
     ```
 
 Once you've deployed your new cloud function, verify that it appears in the **Cloud Functions** interface by navigating to **Google Cloud Platform** > **Compute** > **Cloud Functions**.

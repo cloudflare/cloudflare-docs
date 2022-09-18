@@ -46,7 +46,7 @@ If you want to give customers access to their individual accounts, it is the sam
 
 You can also grant access to the Cloudflare dashboard by using the API.
 
-```sh
+```bash
 ---
 header: Request
 ---
@@ -78,7 +78,7 @@ This capability is not enabled by default. If you need this functionality, conta
 
 To grant access via an interface, you need to create a service user, as no one will log in to the dashboard with them. If you are planning to use this method, Cloudflare will enable you to see the API key in order to make API calls as this user.
 
-```sh
+```bash
 ---
 header: Request
 ---
@@ -124,7 +124,7 @@ Now that you have a customer account and customer users (or service users), you 
 
 To do this, send a [`POST`](https://api.cloudflare.com/#zone-create-zone) request to the `/zones` endpoint (including the customer account ID you received in [Step 1](#step-1---create-an-account)).
 
-```sh
+```bash
 ---
 header: Request
 ---

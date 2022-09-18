@@ -237,8 +237,8 @@ Wrangler supports the following environment variable names:
 
 For example, to configure this on macOS add `HTTP_PROXY=http://<YOUR_PROXY_HOST>:<YOUR_PROXY_PORT>` before your wrangler commands, as shown below:
 
-```bash
-HTTP_PROXY=http://localhost:8080 wrangler dev
+```sh
+$ HTTP_PROXY=http://localhost:8080 wrangler dev
 ```
 
 If your IT team has configured your computer's proxy settings, be aware that the first non-empty environment variable in this list will be used when Wrangler makes outgoing requests.

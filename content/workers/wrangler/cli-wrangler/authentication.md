@@ -75,7 +75,7 @@ Defining environment variables inline will override the default credentials stor
 
 After getting your token or key, you can set up your default credentials on your local machine by running `wrangler config`:
 
-```bash
+```sh
 $ wrangler config
 Enter API token:
 superlongapitoken
@@ -83,7 +83,7 @@ superlongapitoken
 
 Use the `--api-key` flag to instead configure with email and global API key:
 
-```bash
+```sh
 $ wrangler config --api-key
 Enter email:
 testuser@example.com

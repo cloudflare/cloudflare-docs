@@ -69,8 +69,8 @@ A Docker image of `cloudflared` is [available on DockerHub](https://hub.docker.c
 
 You can update cloudflared by running the following command.
 
-```bash
-cloudflared update
+```sh
+$ cloudflared update
 ```
 
 The update will cause `cloudflared` to restart which would impact traffic currently being served. You can perform zero-downtime upgrades by using Cloudflare's Load Balancer product or by using multiple `cloudflared` instances.

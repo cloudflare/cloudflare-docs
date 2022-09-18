@@ -49,7 +49,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8
 
 **Example data:**
 
-```bash
+```json
 {
   "success": true,
   "errors": [],

@@ -50,7 +50,7 @@ Cloudflare Tunnel creates a secure, outbound-only connection between this machin
 
 2.  Place the `cloudflared` executable in a location accessible to the OS, for example:
 
-    ```sh
+    ```bash
     C:\Cloudflared\bin\cloudflared.exe
     ```
 

@@ -71,7 +71,7 @@ header: Full PCAP example request
 
 While the collection is in progress, the response returns the `status` field as `pending`. You must wait for the PCAP collection to complete before downloading the file. When the PCAP is ready to download, the status changes to `success`.
 
-```bash
+```json
 ---
 header: Full PCAP example response
 ---
@@ -123,7 +123,7 @@ header: Simple PCAP example request
 
 The response is a JSON body that contains the details of the job running to build the packet capture. The response contains a unique identifier for the packet capture request along with the details sent in the request.
 
-```bash
+```json
 ---
 header: Simple PCAP example response
 ---
@@ -188,7 +188,7 @@ To check the status of a running job, send a request to the endpoint and specify
 
 The response will be similar to the one received when requesting a PCAP collection.
 
-```bash
+```json
 ---
 header: Simple PCAP example result
 ---
@@ -307,7 +307,7 @@ header: List request example
 
 The response returns an array that includes up to 50 sent requests, which includes completed and ongoing requests.
 
-```bash
+```json
 ---
 header: List response example
 ---

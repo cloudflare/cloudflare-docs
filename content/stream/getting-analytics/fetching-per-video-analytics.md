@@ -48,8 +48,8 @@ The AND operator is defined using a semicolon (;) or AND keyword surrounded by w
 
 ## Analytics request structure
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/analytics/views?metrics={metrics}&dimensions={dimensions}&filters=videoId==<VIDEO_UID>&since=2018-01-01T16:57:00Z&sort={sort}&until={to-timestamp}&limit={limit}
+```sh
+$ curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/analytics/views?metrics={metrics}&dimensions={dimensions}&filters=videoId==<VIDEO_UID>&since=2018-01-01T16:57:00Z&sort={sort}&until={to-timestamp}&limit={limit}
 ```
 
 - `metrics` is one or more metrics (such as count) to compute
@@ -77,7 +77,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/analytic
 
 ## Example analytics response
 
-```bash
+```json
 {
   "result": {
     "rows": 1,
@@ -127,7 +127,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/analytic
 - `totalTimedViewMs` is the amount of time viewed in milliseconds
 - In this example, there are 7 `totalImpressions` and 37663 `totalTimeViewedMs`
 
-```bash
+```json
     "data": [
       {
         "dimensions": [

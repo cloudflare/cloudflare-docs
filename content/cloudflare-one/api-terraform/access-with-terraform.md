@@ -38,7 +38,7 @@ weight: 4
 
 2.  Next, we need to export our environment variables and secrets:
 
-    ```bash
+    ```sh
     $ export CLOUDFLARE_EMAIL=<CLOUDFLARE_EMAIL>
     $ export CLOUDFLARE_API_KEY=<CLOUDFLARE_API_KEY>
     ```
@@ -156,7 +156,7 @@ To do so:
 
 2.  Next, apply these changes using the `apply` command, once they look accurate and you're comfortable moving forward:
 
-    ```bash
+    ```sh
     $ terraform apply --auto-approve
     ```
 

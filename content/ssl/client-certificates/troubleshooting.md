@@ -16,8 +16,8 @@ If your query returns an error even after configuring and embedding a client SSL
 
 On your terminal, use the following command to check whether an SSL/TLS connection can be established successfully between the client and the API endpoint.
 
-```bash
-curl -v --cert /path/to/certificate.pem --key /path/to/key.pem  https://your-api-endpoint.com
+```sh
+$ curl -v --cert /path/to/certificate.pem --key /path/to/key.pem  https://your-api-endpoint.com
 ```
 
 If the SSL/TLS handshake cannot be completed, check whether the certificate and the private key are correct.

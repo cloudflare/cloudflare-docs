@@ -22,25 +22,25 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
 
     1. Within your staging environment, authenticate `cloudflared`:
 
-        ```bash
+        ```sh
         $ cloudflared login
         ```
 
     2. Create a tunnel to connect your staging network to Cloudflare.
 
-        ```bash
+        ```sh
         $ cloudflared tunnel create staging-tunnel
         ```
 
     3. Within your production environment, authenticate `cloudflared`:
 
-        ```bash
+        ```sh
         $ cloudflared login
         ```
 
     4. Create a tunnel to connect your production network to Cloudflare.
 
-        ```bash
+        ```sh
         $ cloudflared tunnel create production-tunnel
         ```
 
@@ -48,14 +48,14 @@ The following steps may be executed from any `cloudflared` instance.
 
 2. Create two unique Virtual Networks.
 
-    ```bash
+    ```sh
     $ cloudflared tunnel vnet add staging-vnet
     $ cloudflared tunnel vnet add production-vnet
     ```
 
 3. Before moving on, run the following command to verify that your newly created Virtual Networks are listed correctly:
 
-    ```bash
+    ```sh
     $ cloudflared tunnel vnet list
     ```
 
@@ -67,7 +67,7 @@ All accounts come pre-configured with a Virtual Network named `default`. You can
 
 4. Configure your tunnels with the IP/CIDR range of your private networks, and assign the tunnels to their respective Virtual Networks.
 
-    ```bash
+    ```sh
     $ cloudflared tunnel route ip add --vnet staging-vnet 10.128.0.3/32 staging-tunnel
     $ cloudflared tunnel route ip add --vnet production-vnet 10.128.0.3/32 production-tunnel
     ```
@@ -80,7 +80,7 @@ If no `--vnet` option is specified, the tunnel will be assigned to the default V
 
 5. Verify that the IP routes are listed correctly:
 
-    ```
+    ```sh
     $ cloudflared tunnel route ip list
     ```
 We now have two overlapping IP addresses routed over `staging-vnet` and `production-vnet` respectively.
@@ -98,7 +98,7 @@ We now have two overlapping IP addresses routed over `staging-vnet` and `product
 
 2. Run your tunnel.
 
-    ```
+    ```sh
     $ cloudflared tunnel run staging-tunnel
     ```
 
@@ -120,19 +120,19 @@ Now when you visit `10.128.0.3/32`, WARP routes your request to the staging envi
 
 1. Delete all IP routes in the Virtual Network. For example,
 
-    ```bash
+    ```sh
     $ cloudflared tunnel route ip delete --vnet staging-vnet 10.128.0.3/32
     ```
 
 2. (Optional) Delete the tunnel associated with the Virtual Network.
 
-    ```bash
+    ```sh
     $ cloudflared tunnel delete staging-tunnel 
     ```
 
 3. Delete the Virtual Network.
 
-    ```bash
+    ```sh
     $ cloudflared tunnel vnet delete staging-vnet
     ```
     

@@ -23,7 +23,7 @@ Before you can clip a video, you will need an API token. For more information on
 
 To clip your video, determine the start and end times you want to use from the existing video to create the new video. Use the `videoUID` and the start end times to make your request.
 
-```bash
+```json
 ---
 header: Required parameters
 ---
@@ -62,7 +62,7 @@ To receive a notification when your video is done processing and ready to play, 
 
 When you clip a video, you can also specify a new name for the clipped video. In the example below, the `name` field indicates the new name to use for the clipped video.
 
-```bash
+```json
 ---
 header: Example: Specify a custom name
 highlight: [6]
@@ -83,7 +83,7 @@ When the video has been clipped and processed, your newly named video displays i
 
 You can also add a custom watermark to your video. For more information on watermarks and uploading a watermark profile, refer to [Apply watermarks](/stream/edit-videos/applying-watermarks).
 
-```bash
+```json
 ---
 header: Example: Clip a video, set a new video name, and apply a watermark
 highlight: [5,6,9]
@@ -105,7 +105,7 @@ highlight: [5,6,9]
 
 When clipping a video, you can make a video private and accessible only to certain users by [requiring a signed URL](/stream/viewing-videos/securing-your-stream/).
 
-```bash
+```json
 ---
 header: Example: Clip a video and require signed URLs
 highlight: [5]
@@ -127,7 +127,7 @@ After the video clipping is complete, you can open the Cloudflare dashboard and 
 
 You can also specify a thumbnail image for your video using a percentage value. To convert the thumbnail's timestamp from seconds to a percentage, divide the timestamp you want to use by the total duration of the video. For more information about thumbnails, refer to [Display thumbnails](/stream/viewing-videos/displaying-thumbnails).
 
-```bash
+```json
 ---
 header: Example: Clip a video with a thumbnail generated at the 50% mark
 highlight: [5]

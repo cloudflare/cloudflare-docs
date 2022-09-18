@@ -14,14 +14,14 @@ Carefully review the manufacturer documentation for your HSM and properly restri
 
 To get started with your PKCS#11 token you will need to initialize it with a private key, PIN, and token label. The instructions to do this will be specific to each hardware device, and you should follow the instructions provided by your vendor. You will also need to find the path to your `module`, a shared object file (`.so`). Having initialized your device, you can query it to check your token label with:
 
-```bash
-pkcs11-tool --module <module path> --list-token-slots
+```sh
+$ pkcs11-tool --module <module path> --list-token-slots
 ```
 
 You will also want to check the label of the private key you imported (or generated). Run the following command and look for a `Private Key Object`:
 
 ```bash
-pkcs11-tool --module <module path> --pin <pin> \
+$ pkcs11-tool --module <module path> --pin <pin> \
     --list-token-slots --login --list-objects
 ```
 

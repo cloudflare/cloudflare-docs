@@ -14,7 +14,7 @@ Create a `.sh` file in your project directory. You can choose your file's name, 
 
 In the following script, you will use the `CF_PAGES_BRANCH` environment variable to check which branch is currently being built. Populate your `.sh` file with the following:
 
-```sh
+```bash
 # !/bin/bash
 
 if [ "$CF_PAGES_BRANCH" == "production" ]; then

@@ -20,7 +20,7 @@ To view any accounts owned by your Cloudflare user, send a [`GET`](https://api.c
 
 You will get back a list of all the accounts you have created plus any accounts your user already had access to.
 
-```sh
+```bash
 ---
 header: Request
 ---
@@ -73,7 +73,7 @@ To delete an account you have created, send a `DELETE` request to the `/accounts
 
 Account deletion is permanent and will delete any zones or other resources under the account.
 
-```sh
+```bash
 ---
 header: Request
 ---

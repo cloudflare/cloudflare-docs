@@ -103,12 +103,12 @@ For example, a request made to `https://api.cloudflare.com/client/v4/accounts/<A
 
 You will also need to download a tus client. This tutorial will use the [tus Python client](https://github.com/tus/tus-py-client), available through pip, Python's package manager.
 
-```bash
-pip install -U tus.py
+```sh
+$ pip install -U tus.py
 ```
 
-```bash
-tus-upload --chunk-size 52428800 --header Authorization "Bearer <API_TOKEN>" <PATH_TO_VIDEO> https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream
+```sh
+$ tus-upload --chunk-size 52428800 --header Authorization "Bearer <API_TOKEN>" <PATH_TO_VIDEO> https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream
 ```
 
 In the beginning of the response from tus, you’ll see the endpoint for getting information about your newly uploaded video.
@@ -182,8 +182,8 @@ Please see [go-tus](https://github.com/eventials/go-tus) on GitHub for functiona
 
 1. Install tus-js-client
 
-```bash
-npm install tus-js-client
+```sh
+$ npm install tus-js-client
 ```
 
 1. Set up an index.js and configure:

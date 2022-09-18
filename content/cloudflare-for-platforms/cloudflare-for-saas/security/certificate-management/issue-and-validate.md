@@ -103,7 +103,7 @@ location "/.well-known/pki-validation/ca3-0052344e54074d9693e89e27486692d6.txt" 
  
 Once your configuration is live, test that the DCV text file is in place with `curl`:
  
-```bash
+```sh
 $ curl "http://http-preval.example.com/.well-known/pki-validation/ca3-0052344e54074d9693e89e27486692d6.txt"
 ca3-be794c5f757b468eba805d1a705e44f6
 ```

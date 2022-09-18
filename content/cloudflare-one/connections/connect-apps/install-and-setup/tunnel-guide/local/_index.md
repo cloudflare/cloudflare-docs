@@ -92,8 +92,8 @@ $ go install github.com/cloudflare/cloudflared/cmd/cloudflared
 
 Depending on where you installed `cloudflared`, you can move it to a known path as well.
 
-```bash
-mv /root/cloudflared/cloudflared /usr/bin/cloudflared
+```sh
+$ mv /root/cloudflared/cloudflared /usr/bin/cloudflared
 ```
 
 </div>
@@ -101,7 +101,7 @@ mv /root/cloudflared/cloudflared /usr/bin/cloudflared
 
 ## 2. Authenticate `cloudflared`
 
-```bash
+```sh
 $ cloudflared tunnel login
 ```
 
@@ -112,7 +112,7 @@ Running this command will:
 
 ## 3. Create a tunnel and give it a name
 
-```bash
+```sh
 $ cloudflared tunnel create <NAME>
 ```
 
@@ -126,7 +126,7 @@ From the output of the command, take note of the tunnel’s UUID and the path to
 
 Confirm that the tunnel has been successfully created by running:
 
-```bash
+```sh
 $ cloudflared tunnel list
 ```
 
@@ -155,7 +155,7 @@ warp-routing:
 
 Confirm that the configuration file has been successfully created by running:
 
-```bash
+```sh
 $ cat config.yml
 ```
 
@@ -165,7 +165,7 @@ Now assign a CNAME record that points traffic to your tunnel subdomain.
 
 **If you are connecting an application**
 
-```bash
+```sh
 $ cloudflared tunnel route dns <UUID or NAME> <hostname>
 ```
 
@@ -173,13 +173,13 @@ $ cloudflared tunnel route dns <UUID or NAME> <hostname>
 
 Add the IP/CIDR you would like to be routed through the tunnel.
 
-```bash
+```sh
 $ cloudflared tunnel route ip add <IP/CIDR> <UUID or NAME>
 ```
 
 You can confirm that the route has been successfully established by running:
 
-```bash
+```sh
 $ cloudflared tunnel route ip show
 ```
 
@@ -187,7 +187,7 @@ $ cloudflared tunnel route ip show
 
 Run the tunnel to proxy incoming traffic from the tunnel to any number of services running locally on your origin.
 
-```bash
+```sh
 $ cloudflared tunnel run <UUID or NAME>
 ```
 
@@ -207,6 +207,6 @@ Cloudflare Tunnel can install itself as a system service on Linux and Windows an
 
 Your tunnel configuration is complete! If you want to get information on the tunnel you just created, you can run:
 
-```bash
+```sh
 $ cloudflared tunnel info
 ```

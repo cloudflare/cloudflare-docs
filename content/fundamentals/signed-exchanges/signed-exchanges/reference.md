@@ -12,7 +12,7 @@ Make a request with the the signed exchange request header:
 
 1. Open a terminal and run the following command, replacing `https://example.com` with your domain:
 
-```bash
+```sh
 $ curl -svo /dev/null https://example.com -H "Accept: application/signed-exchange;v=b3"
 ```
 
