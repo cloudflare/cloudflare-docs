@@ -78,7 +78,7 @@ export default {
   - Stores the given {{<code>}}value{{</code>}} and metadata under the associated {{<code>}}key{{</code>}}. Once the write succeeds, returns an `R2Object` containing metadata about the stored Object.
   - R2 writes are strongly consistent. Once the Promise resolves, all subsequent read operations will see this key value pair globally.
 
-- {{<code>}}delete(key{{<param-type>}}string[]{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}void {{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}delete(key{{<param-type>}}string | string[]{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}void {{</param-type>}}>{{</type>}}{{</code>}}
 
   - Deletes the given {{<code>}}values{{</code>}} and metadata under the associated {{<code>}}keys{{</code>}}. Once the delete succeeds, returns {{<code>}}void{{</code>}}.
    - R2 deletes are strongly consistent. Once the Promise resolves, all subsequent read operations will no longer see the provided key value pairs globally.
@@ -154,6 +154,10 @@ export default {
 - {{<code>}}range{{</code>}} {{<param-type>}}R2Range{{</param-type>}}
 
   - A `R2Range` object containing the returned range of the object.
+
+- {{<code>}}checksums{{</code>}} {{<param-type>}}R2Checksums{{</param-type>}}
+
+  - A `R2Checksums` object containing the stored checksums of the object. Refer to [checksums](#checksums).
 
 - {{<code>}}writeHttpMetadata(headers{{<param-type>}}Headers{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
@@ -368,3 +372,31 @@ Generally, these fields match the HTTP metadata passed when the object was creat
 - {{<code>}}cacheExpiry{{<param-type>}}Date{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
 
  {{</definitions>}}
+
+## Checksums
+
+If an additional checksum was provided when using the `put()` binding, it will be available on the returned object under the `checksums` property.
+
+{{<definitions>}}
+
+- {{<code>}}md5{{</code>}} {{<param-type>}}ArrayBuffer{{</param-type>}}
+
+  - The MD5 checksum of the object.
+
+- {{<code>}}sha1{{</code>}} {{<param-type>}}ArrayBuffer{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The SHA-1 checksum of the object.
+
+- {{<code>}}sha256{{</code>}} {{<param-type>}}ArrayBuffer{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The SHA-256 checksum of the object.
+
+- {{<code>}}sha384{{</code>}} {{<param-type>}}ArrayBuffer{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The SHA-384 checksum of the object.
+
+- {{<code>}}sha512{{</code>}} {{<param-type>}}ArrayBuffer{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The SHA-512 checksum of the object.
+
+{{</definitions>}}
