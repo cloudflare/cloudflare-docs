@@ -20,29 +20,29 @@ For more information on the available parameters and allowed values, refer to [M
 ## Override all the rules in the ruleset
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-1. In the account home page, open **Application Security** and go to **DDoS**.
-1. Click **Deploy a DDoS override**.
+1. In the account home page, open **Application Security** and go to **DDoS** > **Network-layer DDoS Protection**.
+1. Select **Deploy a DDoS override**.
 1. In **Set scope**, specify if you wish to apply the override to all incoming packets or to a subset of the packets.
 1. If you are creating an override for a subset of the incoming packets, define the expression that matches the incoming packets you wish to target in the override, using either the Rule Builder or the Expression Editor.
-1. Click **Next**, and click **Next** again.
+1. Select **Next**, and then select **Next** again.
 1. Enter a name for your override in **Rule description**.
 1. To always apply a given action for all the rules in the ruleset, select an action in **Ruleset action**.
 1. To set the sensitivity for all the rules in the ruleset, select a sensitivity level in **Ruleset sensitivity**.
-1. To save and deploy the override, click **Deploy**. If you are not ready to deploy your override, click **Save as Draft**.
+1. To save and deploy the override, select **Deploy**. If you are not ready to deploy your override, select **Save as Draft**.
 
 ## Override one or more rules
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
-1. In the account home page, go to **Application Security** > **DDoS**.
+1. In the account home page, open **Application Security** and go to **DDoS** > **Network-layer DDoS Protection**.
 
-1. Click **Deploy a DDoS override**.
+1. Select **Deploy a DDoS override**.
 
 1. In **Set scope**, specify if you wish to apply the override to all incoming packets or to a subset of the packets.
 
 1. If you are creating an override for a subset of the incoming packets, define the expression that matches the incoming packets you wish to target in the override, using either the Rule Builder or the Expression Editor.
 
-1. Click **Next**.
+1. Select **Next**.
 
 1. Search for the rules you wish to override using the available filters. You can search for tags.
 
@@ -50,8 +50,8 @@ For more information on the available parameters and allowed values, refer to [M
 
     To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a Managed Ruleset](/waf/managed-rulesets/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
 
-1. Click **Next**.
+1. Select **Next**.
 
 1. Enter a name for your override in **Rule description**.
 
-1. To save and deploy the override, click **Deploy**. If you are not ready to deploy your override, click **Save as Draft**.
+1. To save and deploy the override, select **Deploy**. If you are not ready to deploy your override, select **Save as Draft**.

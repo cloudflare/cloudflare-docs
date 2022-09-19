@@ -9,6 +9,7 @@ weight: 2
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
+- [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
 - [`kv:namespace`](#kvnamespace) - Manage Workers KV namespaces.
@@ -16,10 +17,12 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
+- [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`pages`](#pages) - Configure Cloudflare Pages.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
+- [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 
 {{<Aside type="note">}}
 
@@ -47,7 +50,7 @@ Flags:
 Create a skeleton Wrangler project, including the `wrangler.toml` file.
 
 ```sh
-$ wrangler init [NAME] [-y / --yes]
+$ wrangler init [NAME] [-y / --yes] [--from-dash]
 ```
 
 {{<definitions>}}
@@ -56,6 +59,27 @@ $ wrangler init [NAME] [-y / --yes]
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
 - `--yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Answer yes to any prompts for new projects.
+- `--from-dash` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`
+  - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
+    {{</definitions>}}
+
+---
+
+## generate
+
+Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
+
+```sh
+$ wrangler generate [name] [template]
+```
+
+{{<definitions>}}
+
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
+  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
+- `template` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on [cloudflare/templates](https://github.com/cloudflare/templates) repository.
 
 {{</definitions>}}
 
@@ -112,7 +136,15 @@ None of the options for this command are required. Many of these options can be 
 - `--tsconfig` {{<type>}}string{{</type>}}
   - Path to a custom `tsconfig.json` file.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+
   - Run the preview of the Worker directly on your local machine.
+
+    {{<Aside type="warning">}}
+
+This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's Edge (for instance, this includes your data stored on KV). If you'd like to persist data locally, the experimental option `--experimental-enable-local-persistence` will store data in the `wrangler-local-state` subdirectory.
+
+{{</Aside>}}
+
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the script.
 
@@ -669,7 +701,7 @@ y
 Interact with buckets in an R2 store.
 
 {{<Aside type="note">}}
-The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/workers/runtime-apis/r2/).
+The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/runtime-apis/).
 {{</Aside>}}
 
 ### `create`
@@ -727,9 +759,11 @@ $ wrangler secret put <KEY> [OPTIONS]
 {{<definitions>}}
 
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
   - The variable name for this secret to be accessed in the Worker.
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -770,8 +804,8 @@ $ wrangler secret delete <KEY> [OPTIONS]
 
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The variable name for this secret to be accessed in the Worker.
-  
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -790,6 +824,7 @@ $ wrangler secret list [OPTIONS]
 {{<definitions>}}
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -813,6 +848,59 @@ $ wrangler secret list
 {{</Aside>}}
 
 ---
+
+## `secret:bulk`
+
+Manage multiple secrets for a Worker.
+
+### `json`
+
+The path to a JSON file containing secrets in key-value pairs to upload.
+
+```sh
+$ wrangler secret:bulk json <FILE> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `JSON` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The JSON file of key-value pairs to upload, in form {"key": value, ...}
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+
+- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Perform on a specific environment
+    {{</definitions>}}
+
+  {{<Aside type="note">}}
+  Below is an example of uploading secrets from a JSON file.
+
+  ```json
+  {
+    "secret-name-1": "secret-value-1",
+    "secret-name-2": "secret-value-2"
+  }
+  ```
+
+  {{</Aside>}}
+  {{<Aside type="note">}}
+  When complete the output summary will show the number of secrets uploaded and number failed.
+
+  ```
+  🌀 Creating the secrets for the Worker "script-name"
+  ✨ Successfully created secret for key: secret-name-1
+  ...
+  🚨 Error uploading secret for key: secret-name-1
+  ✨ Successfully created secret for key: secret-name-2
+
+  Finished processing secrets JSON file:
+  ✨ 1 secrets successfully uploaded
+  🚨 1 secrets failed to upload
+  ```
+
+  {{</Aside>}}
 
 ## tail
 
@@ -841,6 +929,10 @@ $ wrangler tail <NAME> [OPTIONS]
   - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
 
 {{</definitions>}}
+
+{{<Aside type="note">}}
+Filtering with `--ip self` will allow tailing a Worker beyond the normal request per second limits.
+{{</Aside>}}
 
 After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
 
@@ -1005,3 +1097,13 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by 
 2. Go to **Overview** > **Get your API token** in the right-side menu.
 3. Select the three-dot menu on your Wrangler token.
 4. Select **Delete**.
+
+---
+
+## whoami
+
+Retrieve your user information and test your authentication configuration.
+
+```sh
+$ wrangler whoami
+```

@@ -17,6 +17,11 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
+resources:
+  community: https://community.cloudflare.com/c/security/access/51
+  dashboard_link: https://dash.teams.cloudflare.com/
+  learning_center: https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/
+
 externals:
   - title: 'Blog: Introducing Cloudflare One'
     url: https://blog.cloudflare.com/introducing-cloudflare-one/

@@ -26,13 +26,13 @@ To add a trusted domain:
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Allow List** > **Trusted Domains**.
-4. Click **+ Add Domain**.
+4. Select **+ Add Domain**.
 5. The exact flow varies based on what you select for your **Pattern Type**:
 
     - **Domain**: Allows you to specify a particular domain and then adjust triggers for *Proximity Domain* and *Recent Domain*.
     - **Create Regex**: Allows you to create Regex rules for the domain name, top-level domain (TLDs), and subdomains and then adjust triggers for *Proximity Domain* and *Recent Domain*.
 
-6. Click **Save**.
+6. Select **Save**.
 
 ### CSV uploads
 

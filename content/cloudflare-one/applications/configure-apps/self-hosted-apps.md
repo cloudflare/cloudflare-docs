@@ -19,7 +19,7 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 ![Self-hosted applications diagram](/cloudflare-one/static/documentation/applications/network-diagram.png)
 
-Make sure you create [Access policies](/cloudflare-one/policies/access/) before connecting your application to Cloudflare. To [connect your origin](/cloudflare-one/connections/connect-apps/) to Cloudflare, you can use [Cloudflare Tunnel](/cloudflare-one/glossary/#cloudflare-tunnel). If you do not wish to use Cloudflare Tunnel, you must [validate the token](/cloudflare-one/identity/users/validating-json/) issued by Cloudflare on your origin.
+Make sure you create [Access policies](/cloudflare-one/policies/access/) before connecting your application to Cloudflare. To [connect your origin](/cloudflare-one/connections/connect-apps/) to Cloudflare, you can use [Cloudflare Tunnel](/cloudflare-one/glossary/#cloudflare-tunnel). If you do not wish to use Cloudflare Tunnel, you must [validate the token](/cloudflare-one/identity/authorization-cookie/validating-json/) issued by Cloudflare on your origin.
 
 ### 1. Add your application
 
@@ -28,8 +28,6 @@ Make sure you create [Access policies](/cloudflare-one/policies/access/) before 
 1.  Click **Add an application**.
 
 1.  Select **Self-hosted**.
-
-    ![Access Saas and Self-Hosted](/cloudflare-one/static/documentation/applications/add-saas-application.png)
 
     You are now ready to start configuring your app.
 
@@ -58,8 +56,6 @@ If you are having issues specifying a custom logo, check that the image is serve
 
 1.  Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.
 
-    ![Select identity providers](/cloudflare-one/static/documentation/applications/saas-idp.png)
-
 1.  Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
 
 1.  Click **Next**.
@@ -82,7 +78,7 @@ To learn more about how policies work, read our [Policies section](/cloudflare-o
 
 The **Setup section** allows you to configure a few advanced settings for your application.
 
-1.  Configure [Cross-Origin Resource Sharing (CORS) settings](/cloudflare-one/policies/access/cors/).
+1.  Configure [Cross-Origin Resource Sharing (CORS) settings](/cloudflare-one/identity/authorization-cookie/cors/).
 
     ![Advanced settings](/cloudflare-one/static/documentation/applications/advanced-settings.png)
 

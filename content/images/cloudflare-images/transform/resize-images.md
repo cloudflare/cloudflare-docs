@@ -14,14 +14,18 @@ Each variant has several properties, including the width and height of resized i
 
 ## How to resize an image
 
+{{<Aside type="note">}}Cloudflare Images does not resize SVGs. Refer to [SVG files](/images/cloudflare-images/upload-images/formats-limitations/#svg-files) for more information.{{</Aside>}}
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Select **Images** > **Variants**.
 3. Name your variant and select **Add New Variant**.
 4. Define variables for your new variant, such as resizing options, type of fit, and what do to with metadata.
 
-### Resize via API
-
-You can also create variants via API:
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/variants" \
@@ -31,6 +35,9 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/
 ```
 
 Refer to the [API documentation](https://api.cloudflare.com/#cloudflare-images-variants-properties) for more information regarding creating variants via API.
+
+{{</tab>}}
+{{</tabs>}}
 
 ## Fit options
 

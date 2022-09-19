@@ -21,7 +21,6 @@ Send messages to Area 1 via BCC configurations within your email provider:
 
  Send messages to Area 1 via a Journalling configuration within your email provider:
 
-   - [GSuite Journalling Setup](/email-security/static/GSuite-Journalling-Setup.pdf)
    - [Office 365 Journalling Setup](/email-security/static/Deployment_and_Configuration_Guide_for_O365_using_Journaling.pdf)
 
 ## Next steps

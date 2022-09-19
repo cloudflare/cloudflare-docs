@@ -19,4 +19,4 @@ The NTS protocol is divided into two phases:
 
 [Chrony](https://chrony.tuxfamily.org/doc/devel/chrony.conf.html) and [NTPsec](https://www.ntpsec.org/) have support for NTS. Read the relevant documentation for guidance on setting them up to point to our time service, `time.cloudflare.com`.
 
-If you would like to hear about the development of additional clients or updates on our service or would like to announce that your client supports NTS, email `time-services@cloudflare.com` to be added to our distribution list.
+If you would like to hear about the development of additional clients or updates on our service or would like to announce that your client supports NTS, send an email `time-services+subscribe@cloudflare.com` and then reply to the confirmation email to be added to our distribution list.

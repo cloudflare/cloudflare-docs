@@ -23,14 +23,14 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>2022-09-12</td>
+      <td>2022-09-19</td>
+      <td>Block</td>
+      <td>100546</td>
+      <td>...1d870399</td>
+      <td>XSS - HTML Encoding</td>
       <td>N/A</td>
     </tr>
-  </tbody>
+</tbody>
 </table>
 {{</table-wrap>}}

@@ -115,7 +115,9 @@ To set a Broker-level global expiration on an existing Pub/Sub Broker, set the `
 $ wrangler pubsub broker update YOUR_BROKER --namespace=NAMESPACE_NAME --expiration=7d
 ```
 
-This will cause any token issued by the Broker to have a default expiration of 7 days. You can make this _shorter_ by passing the `--expiration` flag to `wrangler pubsub broker issue [...]`. If you set a longer `--expiration` than the Broker itself has, the Broker's expiration will be used instead (shortest wins).
+This will cause any token issued by the Broker to have a default expiration of 7 days. You can make this _shorter_ by passing the `--expiration` flag to `wrangler pubsub broker issue [...]`. For example:
+* If you set a longer `--expiration` than the Broker itself has, the Broker's expiration will be used instead (shortest wins).
+* Using `wrangler pubsub broker issue [...] --expiration -1` will remove the `exp` claim from the token - essentially returning a non-expiring token - even if a Broker-level expiration has been set.
 
 ### Best Practices
 

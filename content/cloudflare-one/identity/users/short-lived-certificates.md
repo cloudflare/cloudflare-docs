@@ -14,7 +14,7 @@ Cloudflare Access removes the burden on the end user of generating a key, while 
 
 ## 1. Secure a server behind Cloudflare Access
 
-To protect a resource behind Cloudflare Access, first follow [these instructions](/cloudflare-one/tutorials/ssh/) to secure the server.
+To protect a resource behind Cloudflare Access, first follow [these instructions](/cloudflare-one/connections/connect-apps/use_cases/ssh/) to secure the server.
 
 ## 2. Ensure Unix usernames match user SSO identities
 
@@ -55,7 +55,7 @@ Cloudflare Access will take the identity from a token and, using short-lived cer
 
 ### Configure your client SSH config
 
-On the client side, follow [this tutorial](/cloudflare-one/tutorials/ssh/) to configure your device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file.
+On the client side, follow [this tutorial](/cloudflare-one/connections/connect-apps/use_cases/ssh/) to configure your device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file.
 
 To save time, you can use the following cloudflared command to print the required configuration command:
 
@@ -80,6 +80,6 @@ Host cfpipe-vm.example.com
 
 ### Connect through a browser-based terminal
 
-End users can connect to the SSH session without any configuration by using Cloudflare's browser-based terminal. Users visit the URL of the application and Cloudflare's terminal handles the short-lived certificate flow. To enable, follow the instructions [here](/cloudflare-one/tutorials/ssh-browser/).
+End users can connect to the SSH session without any configuration by using Cloudflare's browser-based terminal. Users visit the URL of the application and Cloudflare's terminal handles the short-lived certificate flow. To enable, follow the instructions [here](/cloudflare-one/applications/non-http/#rendering-in-the-browser).
 
 Your SSH server is now protected behind Cloudflare Access — users will be prompted to authenticate with your identity provider before they can connect. You can also enable SSH command logging by configuring a [Gateway Audit SSH policy](/cloudflare-one/policies/filtering/network-policies/ssh-logging).
