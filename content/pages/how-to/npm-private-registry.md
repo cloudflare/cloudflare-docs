@@ -75,4 +75,4 @@ In the event that your local development no longer works with your new `.npmrc` 
 
 2. Restore your previous `.npmrc` file – the version that was previously working for you and your teammates.
 
-3. Go to your Pages project > **Settings** > **Environment variables**, add a new [environment variable](/platform/build-configuration#environment-variables) named [`NPM_CONFIG_USERCONFIG`](https://docs.npmjs.com/cli/v6/using-npm/config#npmrc-files) and set its value to `/opt/buildhome/repo/.npmrc.pages`. If your `.npmrc.pages` file is not in your project's root directory, adjust this path accordingly.
+3. Go to your Pages project > **Settings** > **Environment variables**, add a new [environment variable](/pages/platform/build-configuration/#environment-variables) named [`NPM_CONFIG_USERCONFIG`](https://docs.npmjs.com/cli/v6/using-npm/config#npmrc-files) and set its value to `/opt/buildhome/repo/.npmrc.pages`. If your `.npmrc.pages` file is not in your project's root directory, adjust this path accordingly.
