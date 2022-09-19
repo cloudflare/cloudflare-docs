@@ -563,7 +563,7 @@
 /r2/platform/s3-compatibility/api/ /r2/data-access/s3-api/api/ 301
 /r2/platform/s3-compatibility/tokens/ /r2/data-access/s3-api/tokens/ 301
 /r2/platform/s3-compatibility/extensions/ /r2/data-access/s3-api/extensions/ 301
-/r2/runtime-apis /r2/data-access/workers-api/workers-api-reference/ 301
+/r2/runtime-apis/ /r2/data-access/workers-api/workers-api-reference/ 301
 
 # tenant_redirects
 /tenant/tutorial/ /tenant/get-started/ 301
