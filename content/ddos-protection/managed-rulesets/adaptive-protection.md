@@ -26,7 +26,7 @@ Feature | Profiling dimension  | WAF/CDN<sup>1</sup> | Magic Transit /<br/>Spect
 **HTTP Adaptive DDoS Protection** |                           |     |
 Origin-aware     | Origin errors                              | Yes | —
 User-agent-aware | User Agent<br/>(entire Cloudflare network) | Yes | —
-Location-aware   | Client IP country and region               | Yes | Yes
+Location-aware   | Client IP country and region               | Yes | —
 **L3/4 Adaptive DDoS Protection** |                           |     |
 Protocol-aware   | IP protocol                                | —   | Yes
 
