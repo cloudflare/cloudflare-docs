@@ -35,7 +35,7 @@ You can now use your device posture check in an [Access policy](/cloudflare-one/
 
 ## 4. Ensure traffic is going through WARP
 
-[WARP client](/cloudflare-one/identity/devices/warp-client-checks/) and [Service-to-service](/cloudflare-one/identity/devices/service-providers/) posture checks rely on traffic going through WARP to properly lookup posture information for a device. You may have to [configure split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) rules such that the following is included in the tunnel where appropriate.
+[WARP client](/cloudflare-one/identity/devices/warp-client-checks/) and [Service-to-service](/cloudflare-one/identity/devices/service-providers/) posture checks rely on traffic going through WARP to properly lookup posture information for a device. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/), ensure that the following domains are included in WARP:
 
 * The IdP used to authenticate to Cloudflare Zero Trust if posture check is part of an Access policy.
 * `<your-team-name>.cloudflareaccess.com` if posture check is part of an Access policy.
