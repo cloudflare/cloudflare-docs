@@ -10,7 +10,10 @@ meta:
 
 Setting your encryption mode to **Flexible** makes your site partially secure. Cloudflare allows HTTPS connections between your visitor and Cloudflare, but all connections between Cloudflare and your origin are made through HTTP. As a result, an SSL certificate is not required on your origin.
 
-![With an encryption mode of Flexible, your application encrypts traffic between the visitor and Cloudflare, but not between Cloudflare and your server.](/ssl/static/ssl-encryption-mode-flexible.png)
+<div class="mermaid">
+flowchart LR
+       A[Browser] <--Encrypted--> B((Cloudflare))<--Unencrypted--> C[(Origin server)]
+</div>
 
 ## Use when
 
