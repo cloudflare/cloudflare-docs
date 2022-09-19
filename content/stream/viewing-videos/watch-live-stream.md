@@ -1,10 +1,10 @@
 ---
 pcx_content_type: tutorial
-title: Watch live streams
-weight: 2
+title: Watch a live stream
+weight: 3
 ---
 
-# Watch live streams
+# Watch a live stream
 
 When an input begins receiving the live stream, a new video with HLS and DASH URLs is automatically created as long as the mode property for the input is set to `automatic`.
 
