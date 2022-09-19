@@ -51,7 +51,7 @@ To view traffic flagged by HTTP Adaptive DDoS Protection rules:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 2. Navigate to **Security** > **Overview**.
-3. Filter by `Service equals HTTP DDoS` and by [rule ID](#rules-reference).
+3. Filter by `Service equals HTTP DDoS` and by the rule ID.
 
 For L3/4 Adaptive DDoS Protection rules, currently you must use [Logpush](/logs/about/) or the [GraphQL API](/analytics/graphql-api/) to view the flagged traffic.
 
@@ -59,7 +59,7 @@ For L3/4 Adaptive DDoS Protection rules, currently you must use [Logpush](/logs/
 
 You can adjust the action and sensitivity of the Adaptive DDoS Protection rules. The default action is _Log_. Use this action to first observe what traffic is flagged before deciding on a mitigation action.
 
-To configure a rule, refer to the instructions in the following pages, searching for the [specific rule ID](#rules-reference):
+To configure a rule, refer to the instructions in the following pages:
 
 * [Configure one or more rules](/ddos-protection/managed-rulesets/http/configure-dashboard/#configure-one-or-more-rules) (for L7 rules)
 * [Override one or more rules](/ddos-protection/managed-rulesets/network/configure-dashboard/#override-one-or-more-rules) (for L3/4 rules)
@@ -70,13 +70,3 @@ For more information on the available configuration parameters, refer to the fol
     * [HTTP DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/http/override-parameters/)
 * For the Protocol-aware DDoS Protection rule:
     * [Network-layer DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/network/override-parameters/)
-
----
-
-## Rules reference
-
-Layer | Description | Rule ID
-------|-------------|--------
-Layer 7 | Origin-aware DDoS Protection | `dd42da7baabe4e518eaf11c393596a9d`
-Layer 7 | User-agent-aware DDoS Protection | `7709d496081e458899c1e3a6e4fe8e55`
-Layer 7 | Location-aware DDoS Protection | `a8c6333711ff4b0a81371d1c444be2c3`
