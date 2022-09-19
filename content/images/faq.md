@@ -83,11 +83,11 @@ No, you only get billed for the number of original images. There is no extra cos
 
 ### Is there a limit on the file size for uploaded images?
 
-Refer to [Supported image formats](/images/cloudflare-images/upload-images/supported-formats/) for more information.
+Refer to [Supported image formats](/images/cloudflare-images/upload-images/formats-limitations/) for more information.
 
 ### Which file formats does Cloudflare Images support?
 
-Refer to [Supported image formats](/images/cloudflare-images/upload-images/supported-formats/) for more information.
+Refer to [Supported image formats](/images/cloudflare-images/upload-images/formats-limitations/) for more information.
 
 ### Can Cloudflare Images convert my images to AVIF or WebP?
 

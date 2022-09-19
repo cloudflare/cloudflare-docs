@@ -2,6 +2,7 @@
 title: Changelog
 pcx_content_type: concept
 weight: 20
+layout: single
 meta:
   title: Changelog for Managed Rulesets
 ---
