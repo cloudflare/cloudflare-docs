@@ -154,6 +154,7 @@
 /ddos-protection/managed-rulesets/tcp-protection/ /ddos-protection/tcp-protection/ 301
 /ddos-protection/managed-rulesets/tcp-protection/configure-api/ /ddos-protection/tcp-protection/api/ 301
 /ddos-protection/managed-rulesets/tcp-protection/configure-dashboard/ /ddos-protection/tcp-protection/setup/ 301
+/ddos-protection/managed-rulesets/http/location-aware-protection/ /ddos-protection/managed-rulesets/adaptive-protection/ 301
 
 # dns
 /dns/zone-setups/secondary-dns/ /dns/zone-setups/zone-transfers/ 301
