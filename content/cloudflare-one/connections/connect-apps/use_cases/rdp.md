@@ -3,7 +3,8 @@ pcx_content_type: how-to
 title: RDP
 weight: 2
 ---
-# Remote Desktop Protocol
+
+# Connect to Remote Desktop through Cloudflare Tunnel
 
 The Remote Desktop Protocol (RDP) provides a graphical interface for users to connect to a computer remotely. RDP is most commonly used to facilitate simple remote access to machines or workstations which users cannot physically access. However, this also makes RDP connections the frequent subject of attacks, since a misconfiguration can inadvertently allow unauthorized access to the machine.
 
