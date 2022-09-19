@@ -50,7 +50,7 @@ The Remove action will remove a user’s seat, but it will not permanently revok
 
 ### Revoking users
 
-The Revoke action will terminate active sessions and remove active devices, but will not remove the user’s consumption of an active seat.
+The Revoke action will terminate active sessions and log out active devices, but will not remove the user’s consumption of an active seat.
 
 ## How do I know if my network is protected behind Cloudflare Zero Trust?
 
