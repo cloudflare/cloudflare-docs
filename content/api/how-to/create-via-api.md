@@ -6,35 +6,38 @@ weight: 12
 
 # Create API tokens via the API
 
-Generate new API tokens on the fly via the API. Doing so first requires creating an API Token in the UI with the ability to create subsequent tokens. This page walks through how to create the seed token, and then creating API Tokens via the API
+Generate new API tokens on the fly via the API. Doing so first requires creating an API token in the UI with the ability to create subsequent tokens.
 
 ## Generating the initial token
 
-Before you can create Tokens via the API you need to generate the initial Token which will have the ability to do so via the Cloudflare dashboard. From the [API Tokens management screen](https://dash.cloudflare.com/profile/api-tokens), select `Create Token` and select the `Create Additional Tokens` Template. This template will contain the user permission for creating API Tokens. This allows you to mimic the exact behavior presented in the UI from the API.
+Before you can create tokens via the API you need to generate the initial token via the Cloudflare dashboard. 
+
+1. From the [API Tokens management screen](https://dash.cloudflare.com/profile/api-tokens), select `Create Token`.
+2. Select the `Create Additional Tokens` Template. This template will contain the user permission for creating API tokens. This allows you to mimic the exact behavior presented in the UI from the API.
 
 {{<Aside type="note">}}
 
-It is highly recommended when using this template to not grant other permissions to the token. This token should be safeguarded given it can create tokens with access to any resource the user has.
+Cloudflare highly recommends not granting other permissions to the token when using this template. This token should be safeguarded because it can create tokens with access to any resource the user has.
 
 {{</Aside>}}
 
-Limiting the use of the token via IP filtering or TTL is also recommended to reduce the potential for abuse in the event that the token is compromised. See [adding restrictions](/api/tokens/advanced/restrictions/) for more information.
+Cloudflare also recommends limiting the use of the token via IP filtering or TTL to reduce the potential for abuse in the event that the token is compromised. Refer to [adding restrictions](/api/how-to/restrict-tokens/) for more information.
 
 ## Creating API tokens with the API
 
-Once an API Token is created that can create other tokens, the next step is using it in the API. The complete API schema docs for these operations are [available here](https://api.cloudflare.com/#user-api-tokens-properties), but below is a walkthrough of the process to create a token with the API.
+Once an API token is created that can create other tokens, the next step is using it in the API. The complete API schema docs for these operations are [available here](https://api.cloudflare.com/#user-api-tokens-properties), but below is a walkthrough of the process to create a token with the API.
 
-Creating a Token requires defining two sections of config and then sending the API request.
+Creating a token requires defining two sections of config and then sending the API request.
 
-1.  Define the policy
-2.  Define the restrictions
-3.  Create the token
+1.  Define the policy.
+2.  Define the restrictions.
+3.  Create the token.
 
 ### Define the Access Policy
 
-A Access Policy defines what resources the token can act on and what permissions it has to those resources. If you have created tokens in the UI, you will notice similarities in how this works.
+An Access Policy defines what resources the token can act on and what permissions it has to those resources. If you have created tokens in the UI, you will notice similarities in how this works.
 
-Let's look at an example Token's policy. Each token can contain multiple policies.
+Let's look at an example token's policy. Each token can contain multiple policies.
 
 ```json
 [
@@ -71,7 +74,7 @@ Now to define each field of the policy:
 
 #### Resources
 
-Currently API Token Policies support 3 resource types: `User`, `Account`, `Zone`.
+Currently API token Policies support 3 resource types: `User`, `Account`, `Zone`.
 
 Note: Each respective object's `tag` can be fetched by calling the appropriate `GET <object>` API. See [User](https://api.cloudflare.com/#user-properties), [Account](https://api.cloudflare.com/#accounts-list-accounts), and [Zone](https://api.cloudflare.com/#zone-list-zones) documentation for details.
 
@@ -100,7 +103,7 @@ The last piece to defining a policy is what Permission Groups should be applied.
 
 ### Define the restrictions
 
-Last in defining the token is setting up any limitations on how the token can be used. Currently, API Tokens allow for IP filtering and TTLs. You can find general info in [Restricting Token Use](/api/tokens/advanced/restrictions/).
+Last in defining the token is setting up any limitations on how the token can be used. Currently, API tokens allow for IP filtering and TTLs. You can find general info in [Restricting Token Use](/api/tokens/advanced/restrictions/).
 
 When defining TTLs you can set the time at which a token becomes active, `not_before` and the time when it expires, `expires_on`. Both of these fields take timestamps in UTC in the following format: `"2018-07-01T05:20:00Z"`.
 

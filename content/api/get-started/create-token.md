@@ -6,67 +6,63 @@ weight: 11
 
 # Create an API token
 
-Before you begin, [find your zone and account IDs](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+{{<Aside type="note" header="Prerequisite">}}
+ 
+Before you begin, [get your zone and account IDs](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+ 
+{{</Aside>}}
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens) and go to **User Profile** -> **API Tokens**.
+1. From the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens), go to **My Profile** > **API Tokens**.
 2. Select **Create Token**.
+3. Select a template from the available [API token templates](/api/reference/template) or create a custom token. We use **Edit zone DNS** in the following examples.
+4. Add or edit the token name to describe why or how the token is used. Templates are prefilled with a token name and permissions.
 
-If you are new to API tokens or the Cloudflare API, templates are the quickest way to get started. If a specific template matches your needs, select the desired template to further customize it. If no template matches your use case or you want to build the token from scratch, select **Create Custom Token**.
+![Token template overview screen](/api/static/template-customize.png)
 
-![API token template selection options](/api/static/template-select.png)
+5. Modify the token's permissions. After selecting a permissions group (Account, User, Zone), choose what level of access to grant the token. Most groups offer `Edit` or `Read` options. `Edit` is full CRUDL (create, read, update, delete, list) access, while `Read` is just the read permission and list where appropriate. Refer to the [available token permissions](/api/reference/permissions) for more information.
+6. Select which resources the token can take authorized access against. For example, granting `Zone DNS Read` access to a zone `example.com` will allow the token to read DNS records for only that specific zone. Any other zone will return an error for DNS record reads operations. Any other operation on that zone will also return an error.
+7. (Optional) Restrict how a token is used in the **Client IP Address Filtering** and **TTL (time to live)** fields.
+8. Select `Continue to summary`.
+9. Review the token summary. Select **Edit token** to make adjustments. You can also edit a token after creation.
 
-### Customizing the token
+![Token summary screen displaying the resources and permissions selected](/api/static/token-summary.png)
 
-For this example, the `Edit Zone DNS` template has been selected. After selecting a template, you are presented with a view of the currently selected permissions. There are three required inputs to creating a Token:
+10. Select **Create Token** to generate the token's secret.
+11. Copy the secret to a secure place.
 
-1.  The token name
-2.  The permissions granted to the token
-3.  The resources the token can affect
+  {{<Aside type="warning" header="Warning">}}
+ 
+  The token secret is **only shown once**. Do not store the secret in plaintext where others can to access it. Anyone with this token can perform the authorized actions against the resources the token has been granted access to.
+  {{</Aside>}}
 
-There are two additional inputs that can be used to restrict how a token is used. These are *IP restrictions* and *Time to Live (TTL) restrictions*. Both of these are covered in Advance Usage under [Restricting Token Use](/api/tokens/advanced/restrictions/)
+![Token creation completion screen displaying your API token and the `curl`command to test your token](/api/static/token-complete.png)
 
-![API token template customization](/api/static/template-customize.png)
+This screen also includes an example command to test the token. The `/user/tokens/verify` endpoint allows fetching the current status of the given token.
 
-Because a template was selected, both the name and the permissions have been pre-selected. In the case of a custom token, both of inputs one and two would need to be filled in. the only required selection is which zones the token should belong to. Let's cover each of these sections.
+```bash
+ curl -X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \
+     -H "Authorization: Bearer <token secret>" \
+     -H "Content-Type:application/json"
+```
 
-#### Token name
+The result:
 
-This can be anything text and should be informative of why or how the token is being used as a reference.
+```json
+{
+  "result": {
+    "id": "100bf38cc8393103870917dd535e0628",
+    "status": "active"
+  },
+  "success": true,
+  "errors": [],
+  "messages": [
+    {
+      "code": 10000,
+      "message": "This API Token is valid and active",
+      "type": null
+    }
+  ]
+}
+```
 
-#### Token Permissions
-
-Permissions are segmented into three categories based on resource:
-
-1.  Zone Permissions
-2.  Account Permissions
-3.  User Permissions
-Each category contains Permission Groups related to those resources. DNS permissions belong to the Zone category, while Billing permissions belong to the Account category. A full list of the Permission Groups can be [found here](/api/tokens/create/permissions/)
-
-After selecting a Permission Group, you can choose what level of access to grant the token. Most groups offer `Edit` or `Read` options. `Edit` is full *CRUDL* (*create*, *read*, *update*, *delete*, *list*) access, while `Read` is just the *read* permission and *list* where appropriate.
-
-#### Token Resources
-
-The resources selected will be the only ones that the token will be able to perform the authorized actions against. For example granting `Zone DNS Read` access to a zone `example.com` will allow the token to read DNS records for only that specific zone. Any other zone will return an error for DNS record reads operations. Any other operation on that zone will also return an error.
-
-As permissions are selected in resource categories, options for selecting the appropriate resources will appear. Note that for user permissions, there is no necessary selection as the token will operate on the user creating the token.
-
-##### Zone Resources
-
-When creating tokens with access to zone resources there are multiple ways to define the access. The options available are:
-
-1.  A specific zone - ex: example.com.
-2.  All zones from a specific account - ex: All zones belonging to the account named `example production`.
-3.  All zones in all accounts. This grants access to every zone you have access to. Exercise caution when granting permissions this widely.
-Note: When selections of option 2 or 3 are included, then excluding zones can be used to "allow all" zones as defined except specific zones.
-For this example, we go with option 1 and select the zone `theburritobot.com`.
-
-![Selecting a specific zone](./media/zone-selection.png)
-
-##### Account Resources
-
-Account resources are similar to zone resources but with 1 less option:
-
-1.  A specific account - ex: My Production Account.
-2.  All accounts. This would be all the accounts the user has access to.
-
-Once you have selected the appropriate permissions and resources, select `Continue to Summary` to review the token before creating.
+With this you have successfully created an API token and can start working with the Cloudflare API. After creating your first API token, you can create API tokens [via the API](/api/how-to/create-via-api).

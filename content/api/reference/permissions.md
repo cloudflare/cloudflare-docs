@@ -1,12 +1,20 @@
 ---
-title: API token templates
+title: API token permissions
 pcx_content_type: reference
-weight: 6
+weight: 20
 ---
 
-# API token templates
+# API token permissions
 
-Below is a table of the currently available API token templates and the default [token permissions](/api/tokens/create/permissions/) they grant. You can start creating a token with one of these templates and modify the permissions and resources from there.
+Permissions are segmented into three categories based on resource:
+
+- Zone Permissions
+- Account Permissions
+- User Permissions
+
+Each category contains Permission Groups related to those resources. DNS permissions belong to the Zone category, while Billing permissions belong to the Account category. Below is a list of the available token permissions.
+
+To obtain an updated list of token permissions, including the permission ID and the scope of each permission, use the [List permission groups](https://api.cloudflare.com/#permission-groups-list-permission-groups) API method.
 
 ## User permissions
 
@@ -16,8 +24,8 @@ The applicable scope of user permissions is `com.cloudflare.api.user`.
 
 | Name               | Description                                          |
 | ------------------ | ---------------------------------------------------- |
-| API Tokens Read    | Grants read access to user's API Tokens.             |
-| API Tokens Edit    | Grants write access to user's API Tokens.            |
+| API Tokens Read    | Grants read access to user's API tokens.             |
+| API Tokens Edit    | Grants write access to user's API tokens.            |
 | Memberships Read   | Grants read access to a user's account memberships.  |
 | Memberships Edit   | Grants write access to a user's account memberships. |
 | User Details Read  | Grants read access to user details.                  |
@@ -29,7 +37,6 @@ The applicable scope of user permissions is `com.cloudflare.api.user`.
 
 The applicable scope of account permissions is `com.cloudflare.api.account`.
 
-{{<table-wrap>}}
 
 | Name                                                         | Description                                                                                           |
 | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
@@ -102,13 +109,10 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 | Workers Scripts Edit                                         | Grants write access to Cloudflare Workers scripts.                                                    |
 | Workers Tail Read                                            | Grants `wrangler tail` read permissions.                                                              |
 
-{{</table-wrap>}}
 
 ## Zone permissions
 
 The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
-
-{{<table-wrap>}}
 
 | Name                             | Description                                                              |
 | -------------------------------- | ------------------------------------------------------------------------ |
@@ -162,5 +166,3 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | Transform Rules Edit             | Grants write access to Transform Rules at zone level.                    |
 | Zone WAF Read                    | Grants read access to Zone WAF.                                          |
 | Zone WAF Edit                    | Grants write access to Zone WAF.                                         |
-
-{{</table-wrap>}}

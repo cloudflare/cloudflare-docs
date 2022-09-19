@@ -6,7 +6,7 @@ weight: 1
 
 # Get started
 
-When you use the Cloudflare API, you need to authenticate your requests so we know who you are and what permissions you have.Whenever possible, use API tokens to interact with the Cloudflare API.
+When you use the Cloudflare API, you need to authenticate your requests so we know who you are and what permissions you have. Whenever possible, use API tokens to interact with the Cloudflare API.
 
 {{<Aside type="note">}}
 

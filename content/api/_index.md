@@ -5,39 +5,6 @@ pcx_content_type: overview
 ---
 
 # Cloudflare's API
+Interact with Cloudflare's products and services via the Cloudflare API. New to Cloudflare? [Start here](/fundamentals/get-started).
 
-Using the Cloudflare API requires authentication so that Cloudflare knows who is making requests and what permissions they have. Create an API token to grant access to the API to perform actions. Refer to [creating an API token](/api/get-started/#create-an-api-token) for more information.
-
-{{<Aside type="note">}}
-
-API keys allow for less granular access and each user can only have one. For these reasons, we advise customers using API keys to transition to using API tokens.
-
-{{</Aside>}}
-
-DELETE BELOW thiS LINE
-
-## Making API Calls
-
-Once you have your API Token created, all API requests are authorized in the same way. Cloudflare uses the [RFC standard](https://tools.ietf.org/html/rfc6750#section-2.1) `Authorization: Bearer <Token>` interface. When used in an example Cloudflare API request it looks like this:
-
-```bash
-curl -X GET "https://api.cloudflare.com/client/v4/zones/<ACCOUNT_ID>" \
--H "Content-Type:application/json" \
--H "Authorization: Bearer YQSn-xWAQiiEh9qM58wZNnyQS7FUdoqGIUAbrh7T"
-```
-
-The above example is just that, an example. Never send anyone or store you API Token secret in plaintext. Also be sure not to check it into code repositories especially public ones like on github.
-
-## Finding your zone and account IDs
-
-When using the Cloudflare API, you will need to know your **Account ID** and **Zone ID**.
-
-For help finding those values, refer to [Finding your zone and account IDs](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
-
-## Using Cloudflare’s APIs
-
-For specific guidance on making API calls, see the following:
-
-*   The specific [Developer Docs section](/) for a service for how to guides.
-*   [API schema docs](https://api.cloudflare.com) for request and response payloads for each endpoint.
-*   If you are using [golang](https://github.com/cloudflare/cloudflare-go) or [Hashicorp's Terraform](https://github.com/cloudflare/terraform-provider-cloudflare) you can leverage our 1st party libraries to integrate with Cloudflare's API.
+Using the Cloudflare API requires authentication so that Cloudflare knows who is making requests and what permissions they have. [Create an API token](/api/get-started/create-token) to grant access to the API to perform actions. You can also authenticate with [API keys](/api/get-started/keys), though Cloudflare recommends transitioning to using API tokens.
