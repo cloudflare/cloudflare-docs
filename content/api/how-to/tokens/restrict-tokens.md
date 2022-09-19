@@ -1,12 +1,12 @@
 ---
+title: Restrict tokens
 pcx_content_type: concept
-title: Restricting token use
-weight: 6
+weight: 13
 ---
 
-# Restricting token use
+# Restrict token use
 
-API Tokens can be restricted at runtime in two ways:
+API tokens can be restricted at runtime in two ways:
 
 1.  [IP Address Range Filtering](#ip-address-range-filtering)
 2.  [Time To Live (TTL) constraints](#time-to-live)
@@ -18,7 +18,6 @@ IP Restrictions control which IP address API requests with this token can and ca
 ![IP Address filtering options](../media/ip-filter.png)
 
 ## Time to live
-
 By default, tokens don't expire. They are long lived. Defining a TTL allows for setting when a token starts being valid and when a token is no longer valid. This is often referred to as `notBefore` and `notAfter`. Setting these timestamps will limit the lifetime of the token to the defined period. Not setting the start date or `notBefore` means the token is active as soon as it is created. Not setting the end date or `notAfter` means the token does not expire.
 
 {{<Aside type="note">}}
@@ -27,4 +26,4 @@ Dates selected are defined as 00:00 UTC of that day. For finer grained time sele
 
 {{</Aside>}}
 
-![Time to Live selection calendar](../media/ttl.png)
+![Time to Live selection calendar](../static/ttl.png)

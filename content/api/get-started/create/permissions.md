@@ -1,20 +1,12 @@
 ---
-type: overview
+title: API token templates
 pcx_content_type: reference
-title: API token permissions
-weight: 11
-layout: list
+weight: 6
 ---
 
-# API token permissions
+# API token templates
 
-{{<content-column>}}
-
-Below is a list of the available token permissions.
-
-To obtain an updated list of token permissions, including the permission ID and the scope of each permission, use the [List permission groups](https://api.cloudflare.com/#permission-groups-list-permission-groups) API method.
-
-{{</content-column>}}
+Below is a table of the currently available API token templates and the default [token permissions](/api/tokens/create/permissions/) they grant. You can start creating a token with one of these templates and modify the permissions and resources from there.
 
 ## User permissions
 

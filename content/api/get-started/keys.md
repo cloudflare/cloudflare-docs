@@ -1,18 +1,16 @@
 ---
 pcx_content_type: how-to
 title: API keys (legacy)
-weight: 11
+weight: 15
 ---
 
 # API keys (legacy)
-
 API Keys are the legacy authorization scheme for talking to Cloudflare's APIs.
-
 ## Limitations
 
 When possible, you should use [API tokens](/api/tokens/create/) instead of API Keys.
 
-API Keys have multiple limitations when compared to API Tokens:
+API Keys have multiple limitations when compared to API tokens:
 
 1.  **Access to all Cloudflare Resources** - API Keys have access to all the resources of the user. This makes it impossible to safely use API Keys for access to non-production resources when a user also has access to production resources.
 
@@ -20,9 +18,9 @@ API Keys have multiple limitations when compared to API Tokens:
 
 3.  **Limited to 1 per user** - Only one API Key can be provisioned per user. This complicates using Cloudflare's API in production systems where maintaining two secrets for accessing the API is important in the case 1 needs to be rolled.
 
-4.  **Lack of advanced limits on usage** - API Tokens can be limited to use in specific time windows and expire or be limited to use from specific IP ranges.
+4.  **Lack of advanced limits on usage** - API tokens can be limited to use in specific time windows and expire or be limited to use from specific IP ranges.
 
-For these reasons, API Keys are not recommended for new customers. Current customers using API Keys are encouraged to migrate and use API Tokens instead. You can find information about using API Keys in the [API schema docs](https://api.cloudflare.com/#getting-started-requests).
+For these reasons, API Keys are not recommended for new customers. Current customers using API Keys are encouraged to migrate and use API tokens instead. You can find information about using API Keys in the [API schema docs](https://api.cloudflare.com/#getting-started-requests).
 
 ## View your API key
 

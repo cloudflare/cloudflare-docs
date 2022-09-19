@@ -1,17 +1,20 @@
 ---
-title: Quickstart
-pcx_content_type: tutorial
-layout: single
-weight: 1
-meta:
-  title: Getting access to the Cloudflare API
+title: Overview
+weight: xx
+pcx_content_type: overview
 ---
 
-# Getting access to the Cloudflare API
+# Cloudflare's API
 
-Using the Cloudflare API, requires authentication so that Cloudflare knows who is making requests and what permissions they have. An API Token can be created to grant access to the API to perform actions. See [creating an API Token](/api/tokens/create/) for more on this.
+Using the Cloudflare API requires authentication so that Cloudflare knows who is making requests and what permissions they have. Create an API token to grant access to the API to perform actions. Refer to [creating an API token](/api/get-started/#create-an-api-token) for more information.
 
-Legacy Note: Existing customers may be familiar with API Keys. These allow for less granular access and each user can only have one. For these reasons, we advice customers using API Keys to transition to using API Tokens.
+{{<Aside type="note">}}
+
+API keys allow for less granular access and each user can only have one. For these reasons, we advise customers using API keys to transition to using API tokens.
+
+{{</Aside>}}
+
+DELETE BELOW thiS LINE
 
 ## Making API Calls
 
