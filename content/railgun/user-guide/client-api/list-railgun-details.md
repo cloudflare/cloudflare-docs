@@ -6,7 +6,7 @@ weight: 13
 
 # List Railgun details
 
-The following API calls can be used to determine details and the status or one or more Railguns assigned to an account. These calls are sometimes needed to determine the unique `rtkn` or `id` assigned to a Railgun.
+The following API calls can be used to determine details and the status of one or more Railguns assigned to an account. These calls are sometimes needed to determine the unique `rtkn` or `id` assigned to a Railgun.
 
 ## POST user\_get\_all
 
@@ -16,8 +16,8 @@ Assign a Railgun to a domain.
 
 ### Form parameters
 
-*   **email** – User account email
-*   **tkn** – User API token
+*   `email` – User account email
+*   `tkn` – User API token
 
 <details>
 <summary>Example request</summary>
@@ -121,8 +121,8 @@ Assign a Railgun to a domain.
 
 ### Query parameters
 
-*   **email** – User account email
-*   **tkn** – User API token
+*   `email` – User account email
+*   `tkn` – User API token
 
 <details>
 <summary>Example request</summary>
@@ -226,8 +226,8 @@ List all active Railgun connections for a domain.
 
 ### Form parameters
 
-*   **email** – User account email
-*   **tkn** – User API token
+*   `email` – User account email
+*   `tkn` – User API token
 
 <details>
 <summary>Example request</summary>
@@ -286,8 +286,8 @@ List all active Railgun connections for a domain.
 
 ### Form parameters
 
-*   **email** – User account email
-*   **tkn** – User API token
+*   `email` – User account email
+*   `tkn` – User API token
 
 <details>
 <summary>Example request</summary>
