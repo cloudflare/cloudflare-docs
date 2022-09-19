@@ -264,7 +264,7 @@ To set filters through the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select the domain you want to use.
 2. Go to **Analytics** > **Logs**.
-3. Click **Connect a service** and a modal window will open.
+3. Select **Connect a service**. A modal window will open.
 4. Select the dataset you want to push to a storage service.
 5. Below **Select data fields**, in the **Filter** section, you can set up your filters.
 6. You need to select  a [Field](/logs/reference/log-fields/), an [Operator](/logs/reference/filters/#logical-operators), and a **Value**.
