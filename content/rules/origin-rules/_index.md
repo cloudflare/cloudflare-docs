@@ -1,11 +1,13 @@
 ---
 pcx_content_type: concept
-title: Origin Rules (beta)
+title: Origin Rules
 weight: 6
 layout: single
+meta:
+  title: Origin Rules (beta)
 ---
 
-# Origin Rules (beta)
+{{<beta>}} Origin Rules {{</beta>}}
 
 Origin Rules allow you to customize where the incoming traffic will go and with which parameters. Currently you can perform the following overrides:
 
