@@ -1,11 +1,13 @@
 ---
 pcx_content_type: concept
-title: Bulk Redirects (beta)
+title: Bulk Redirects
 layout: single
 weight: 2
+meta:
+  title: Bulk Redirects (beta)
 ---
 
-# Bulk Redirects (beta)
+{{<beta>}} Bulk Redirects {{</beta>}}
 
 Bulk Redirects allow you to define a large number of URL redirects at the account level. These redirects navigate the user from a source URL to a target URL using a given HTTP status code. URL redirection is also known as URL forwarding.
 

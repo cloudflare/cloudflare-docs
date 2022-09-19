@@ -1,11 +1,13 @@
 ---
 pcx_content_type: concept
-title: Dynamic Redirects (beta)
+title: Dynamic Redirects
 layout: single
 weight: 3
+meta:
+  title: Dynamic Redirects (beta)
 ---
 
-# Dynamic Redirects (beta)
+{{<beta>}} Dynamic Redirects {{</beta>}}
 
 Dynamic Redirects allow you to create powerful URL redirects [^1] like redirects based on the source country of requests.
 
