@@ -268,6 +268,6 @@ To set filters through the dashboard:
 4. Select the dataset you want to push to a storage service.
 5. Below **Select data fields**, in the **Filter** section, you can set up your filters.
 6. You need to select  a [Field](/logs/reference/log-fields/), an [Operator](/logs/reference/filters/#logical-operators), and a **Value**.
-7. You can connect more filters using AND, OR logical operators.
+7. You can connect more filters using `AND` and `OR` logical operators.
 8. Click **Next** to continue the setting up of your Logpush job.
 
