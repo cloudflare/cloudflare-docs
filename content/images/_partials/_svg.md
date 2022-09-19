@@ -11,7 +11,7 @@ Cloudflare Images and Image Resizing can deliver SVG files. However, as this is 
 
 As such, Cloudflare Images variants cannot be used to resize SVG files. Variants, named or flexible, are intended to transform bitmap (raster) images into whatever size you want to serve them. 
 
-You can, however, use variants to serve SVGs, using any named variant as a placeholder to allow your image to be delivered. For example:
+You can, nevertheless, use variants to serve SVGs, using any named variant as a placeholder to allow your image to be delivered. For example:
 
 ```txt
 https://imagedelivery.net/<ACCOUNT_HASH>/<SVG_ID>/public
