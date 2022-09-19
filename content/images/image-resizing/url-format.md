@@ -34,7 +34,7 @@ Here is an example of an URL with `<OPTIONS>` set to `width=80,quality=75` and a
 <img src="/cdn-cgi/image/width=80,quality=75/uploads/avatar1.jpg" />
 ```
 
-{{<Aside type="note">}}You can use Image Resizing to sanitize SVGs, but not to resize them. Refer to [SVG files](/images/image-resizing/format-limitations/#svg-files) for more information.{{</Aside>}}
+{{<render file="_ir-svg-aside.md">}}
 
 ## Options
 

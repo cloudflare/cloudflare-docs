@@ -13,10 +13,8 @@ You can upload the following image formats to Cloudflare Images:
 - PNG
 - GIF
 - JPEG
-- WebP
+- WebP (Cloudflare Images does not support uploading animated WebP files)
 - SVG
-
-{{<render file="_svg.md">}}
 
 ## Dimensions and sizes
 
@@ -26,3 +24,5 @@ These are the maximum allowed sizes and dimensions Cloudflare Images supports:
 - Image metadata is limited to 1024 bytes.
 - Images have a 10 megabyte (MB) size limit.
 - Animated GIFs, including all frames, are limited to 100 megapixels (MP).
+
+{{<render file="_svg.md">}}
