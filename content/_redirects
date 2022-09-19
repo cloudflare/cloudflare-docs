@@ -558,6 +558,13 @@
 /stream/edit-manage-videos/manage-video-library/creator-id/ /stream/manage-video-library/creator-id/ 301
 /stream/edit-manage-videos/manage-video-library/searching/ /stream/manage-video-library/searching/ 301
 
+# r2
+/r2/platform/s3-compatibility/ /r2/data-access/s3-api/ 301
+/r2/platform/s3-compatibility/api/ /r2/data-access/s3-api/api/ 301
+/r2/platform/s3-compatibility/tokens/ /r2/data-access/s3-api/tokens/ 301
+/r2/platform/s3-compatibility/extensions/ /r2/data-access/s3-api/extensions/ 301
+/r2/runtime-apis /r2/data-access/workers-api/workers-api-reference/ 301
+
 # tenant_redirects
 /tenant/tutorial/ /tenant/get-started/ 301
 /tenant/get-started/prerequisites/ /tenant/get-started/ 301
