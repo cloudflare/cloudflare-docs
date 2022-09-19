@@ -18,7 +18,7 @@ You can add an alert for **Failing Logpush Job Disabled** via the **Notification
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Navigate to **Notifications** in the left-panel of the account view.
-3. Next, select the **add**.
+3. Next, select **add**.
 4. Select the alert **Failing Logpush Job Disabled**.
 5. Configure the alert: choose a name, add a description (optional), select the notification services, Webhooks and enter the email where you want to be notified.
 6. Select **Save**.
