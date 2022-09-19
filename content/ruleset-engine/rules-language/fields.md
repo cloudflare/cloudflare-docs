@@ -245,6 +245,28 @@ The Cloudflare Rules language supports these standard fields:
          <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
       </td>
    </tr>
+   <tr id="field-ip-src-postal_code">
+      <td valign="top"><code>ip.src.postal_code</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Represents the postal code associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">78701</code>
+         </p>
+         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-metro_code">
+      <td valign="top"><code>ip.src.metro_code</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Represents the metro code (DMA) associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">635</code>
+         </p>
+         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
+      </td>
+   </tr>
    <tr id="field-ip-geoip-asnum">
       <td valign="top"><code>ip.geoip.asnum</code><br />{{<type>}}Number{{</type>}}</td>
       <td>
