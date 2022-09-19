@@ -1,9 +1,9 @@
 ---
-title: Learning
+title: S3 API
 pcx_content_type: navigation
-weight: 4
+weight: 2
 ---
 
-# Learning
+# S3 API
 
 {{<directory-listing>}}
