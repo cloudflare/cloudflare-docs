@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Introduction
-weight: 3
+weight: 2
 ---
 
 # Introduction
@@ -96,7 +96,7 @@ Railgun works by recognizing that uncacheable web pages do not change very rapid
 
 CNN sets the caching on this page to 60 seconds. After one minute it is necessary to download the entire page again. But looking inside the page itself not much has changed. In fact, the change between versions is on order of hundreds of bytes out of almost 100 KB. Here is a screenshot of one of the small binary differences between the CNN home page at five minute intervals. The yellow bytes have changed, the rest have not:
 
-![Binary code that makes CNN's homepage](../media/cnn.webp)
+![Binary code that makes CNN homepage](/railgun/static/cnn.webp)
 
 Experiments at Cloudflare have revealed similar change values across the web. For example, `reddit.com` changes by about 2.15% over five minutes and 3.16% over an hour. The New York Times home page changes by about 0.6% over five minutes and 3% over an hour. BBC News changes by about 0.4% over five minutes and 2% over an hour.
 
