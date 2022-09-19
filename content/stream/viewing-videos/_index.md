@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Play videos
-weight: 3
+weight: 5
 ---
 
 # Play videos
