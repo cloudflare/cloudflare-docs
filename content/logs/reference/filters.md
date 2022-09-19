@@ -236,7 +236,13 @@ Here are some examples of how the logical operators can be implemented. `X`, `Y`
 
 - (X AND Y) OR Z - `{"where":{"or":[{"and": [{X},{Y}]},{Z}]}}`
 
-Example request using cURL:
+## Setting filters via API or dashboard
+
+Filters can be set via API or the Cloudflare dashboard.
+
+### API
+
+Here is an example request using cURL via API:
 
 ```bash
 curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
@@ -251,3 +257,17 @@ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
 "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2/"
 }' | jq .
 ```
+
+### Dashboard
+
+To set filters through the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select the domain you want to use.
+2. Go to **Analytics** > **Logs**.
+3. Click **Connect a service** and a modal window will open.
+4. Select the dataset you want to push to a storage service.
+5. Below **Select data fields**, in the **Filter** section, you can set up your filters.
+6. You need to select  a [Field](/logs/reference/log-fields/), an [Operator](/logs/reference/filters/#logical-operators), and a **Value**.
+7. You can connect more filters using AND, OR logical operators.
+8. Click **Next** to continue the setting up of your Logpush job.
+
