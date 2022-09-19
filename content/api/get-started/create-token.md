@@ -14,7 +14,7 @@ Before you begin, [get your zone and account IDs](/fundamentals/get-started/basi
 
 1. From the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens), go to **My Profile** > **API Tokens**.
 2. Select **Create Token**.
-3. Select a template from the available [API token templates](/api/reference/template) or create a custom token. We use **Edit zone DNS** in the following examples.
+3. Select a template from the available [API token templates](/api/reference/template) or create a custom token. We use the **Edit zone DNS** template in the following examples.
 4. Add or edit the token name to describe why or how the token is used. Templates are prefilled with a token name and permissions.
 
 ![Token template overview screen](/api/static/template-customize.png)

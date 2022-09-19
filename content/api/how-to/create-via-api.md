@@ -99,11 +99,11 @@ For user resources, the only option is referencing one's self which is done with
 
 ### Permission groups
 
-The last piece to defining a policy is what Permission Groups should be applied. You can see the full list of permission groups either in [the docs here](/api/tokens/create/permissions/), or [fetched via the API](https://api.cloudflare.com/#permission-groups-list-permission-groups). It is only required to pass the `id` of the permission group in the policy. Permission Groups are scoped to specific resources, so a permission group in a policy will only apply to the resource type it is scoped for.
+The last piece to defining a policy is what Permission Groups should be applied. You can see the full list of permission groups either in [the docs here](/api/reference/permissions/), or [fetched via the API](https://api.cloudflare.com/#permission-groups-list-permission-groups). It is only required to pass the `id` of the permission group in the policy. Permission Groups are scoped to specific resources, so a permission group in a policy will only apply to the resource type it is scoped for.
 
 ### Define the restrictions
 
-Last in defining the token is setting up any limitations on how the token can be used. Currently, API tokens allow for IP filtering and TTLs. You can find general info in [Restricting Token Use](/api/tokens/advanced/restrictions/).
+Last in defining the token is setting up any limitations on how the token can be used. Currently, API tokens allow for IP filtering and TTLs. You can find general info in [Restricting Token Use](/api/how-to/restrict-tokens/).
 
 When defining TTLs you can set the time at which a token becomes active, `not_before` and the time when it expires, `expires_on`. Both of these fields take timestamps in UTC in the following format: `"2018-07-01T05:20:00Z"`.
 

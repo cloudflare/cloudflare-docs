@@ -10,7 +10,7 @@ When you use the Cloudflare API, you need to authenticate your requests so we kn
 
 {{<Aside type="note">}}
 
-Although you can still use API keys to access the Cloudflare API, these keys have [several limitations](/api/keys/#limitations) that make them less secure than API tokens.
+Although you can still use API keys to access the Cloudflare API, these keys have [several limitations](/api/get-started/keys/#limitations) that make them less secure than API tokens.
 
 {{</Aside>}}
 
