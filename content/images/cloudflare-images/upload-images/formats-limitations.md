@@ -14,6 +14,7 @@ You can upload the following image formats to Cloudflare Images:
 - GIF
 - JPEG
 - WebP (Cloudflare Images does not support uploading animated WebP files)
+- SVG
 
 ## Dimensions and sizes
 
