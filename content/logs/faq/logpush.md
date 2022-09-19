@@ -20,6 +20,12 @@ No. Cloudflare pushes logs in batches as soon as possible.
 
 No. **Logpush** only pushes the logs once as they become available and is unable to backfill. However, the logs are stored for at least 72 hours and can be downloaded using the **Logpull API**.
 
+## I have reconfigured the job to a new destination, but still receiving the logs at the old place?
+
+Typically there will be a delay no greater than 15 minutes to complete the transition.
+
+**Logpush** is designed to retry in case of errors. If your destination is temporarily unavailable, Logpush will retry around five times over five minutes. However, note that this number and time are just approximations. If Cloudflare persistently receives errors from your destination, and cannot keep up with incoming batches, Logpush will eventually drop logs. If the errors continue for a prolonged period of time, Logpush will assume that the destination is permanently unavailable and disable your push job. You can always re-enable the job later.
+
 ## Why am I receiving a validating destination error while setting up a Splunk job? 
 
 You could be seeing this error for multiple reasons:
