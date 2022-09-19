@@ -77,7 +77,7 @@ The intended purpose of this header is to provide a means for recipients (for ex
 
 {{<Aside type="note">}}
 
-When configuring firewall rules, do not match on this header. Firewall rules are applied before Cloudflare adds the `CF-Worker` header. Instead, use the `cf.worker.upstream_zone`(https://tinyurl.com/2wx4senh) dynamic field, which contains the same value and exists for the same purpose.
+When configuring firewall rules, do not match on this header. Firewall rules are applied before Cloudflare adds the `CF-Worker` header. Instead, use the `cf.worker.upstream_zone`(https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#standard-fields) dynamic field, which contains the same value and exists for the same purpose.
 
 {{</Aside>}}
 
