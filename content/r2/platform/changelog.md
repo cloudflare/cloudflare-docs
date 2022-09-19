@@ -5,6 +5,11 @@ title: Changelog
 
 # Changelog
 
+## 2022-09-06
+
+- The S3 `CopyObject` operation now includes `x-amz-version-id` and `x-amz-copy-source-version-id` in the response headers for consistency with other methods.
+- The `ETag` for multipart files uploaded until shortly after Open Beta uploaded now include the number of parts as a suffix.
+
 ## 2022-08-17
 
 - The S3 `DeleteObjects` operation no longer trims the space from around the keys before deleting. This would result in files with leading / trailing spaces not being able to be deleted. Additionally, if there was an object with the trimmed key that existed it would be deleted instead. The S3 `DeleteObject` operation was not affected by this.

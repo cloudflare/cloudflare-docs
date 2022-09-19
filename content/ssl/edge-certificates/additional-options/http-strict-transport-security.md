@@ -10,7 +10,7 @@ layout: list
 
 {{<render file="_hsts-definition.md">}}
 
-HSTS adds an HTTP header that directs [compliant web browsers](/ssl/ssl-tls/browser-compatibility/) to:
+HSTS adds an HTTP header that directs [compliant web browsers](/ssl/reference/browser-compatibility/) to:
 
 - Transform HTTP links to HTTPS links
 - Prevent users from bypassing SSL browser warnings

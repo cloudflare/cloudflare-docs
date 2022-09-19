@@ -88,7 +88,7 @@ Certificate pinning is a security mechanism used to prevent on-path attacks on t
 
 A set of encryption algorithms for establishing a secure communications connection. There are several cipher suites in wide use, and a client and server agree on the cipher suite to use when establishing the TLS connection. Support of multiple cipher suites allows compatibility across various clients.
 
-**Relevant links:** [cipher suites documentation](/ssl/ssl-tls/cipher-suites/)
+**Relevant links:** [cipher suites documentation](/ssl/reference/cipher-suites/)
 
 ## cloud
 
