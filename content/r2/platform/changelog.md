@@ -6,6 +6,13 @@ weight: 3
 
 # Changelog
 
+## 2022-09-19
+
+- The R2 `put()` binding options can now be given an `onlyIf` field, similar to `get()`, that performs a conditional upload.
+- The R2 `delete()` binding now supports deleting multiple keys at once.
+- The R2 `put()` binding now supports user-specified SHA-1, SHA-256, SHA-384, SHA-512 checksums in options.
+- User-specified object checksums will now be available in the R2 `get()` and `head()` bindings response. MD5 is included by default for non-multipart uploaded objects.
+
 ## 2022-09-06
 
 - The S3 `CopyObject` operation now includes `x-amz-version-id` and `x-amz-copy-source-version-id` in the response headers for consistency with other methods.
