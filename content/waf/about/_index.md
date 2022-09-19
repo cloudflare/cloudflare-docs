@@ -37,7 +37,7 @@ Cloudflare evaluates different types of rules when processing incoming requests.
 2. [Custom rulesets](/waf/custom-rulesets/)
 3. [Custom rules](/waf/custom-rules/)
 4. [Rate limiting rules](/waf/rate-limiting-rules/)
-5. [Managed Rulesets](/waf/managed-rulesets/)
+5. [WAF Managed Rulesets](/waf/managed-rulesets/)
 6. [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128) (previous version)
 
 For more information on the Ruleset Engine phases where each WAF feature will execute, refer to [WAF phases](/waf/reference/phases/).
