@@ -270,4 +270,3 @@ To set filters through the dashboard:
 6. You need to select  a [Field](/logs/reference/log-fields/), an [Operator](/logs/reference/filters/#logical-operators), and a **Value**.
 7. You can connect more filters using `AND` and `OR` logical operators.
 8. Select **Next** to continue the setting up of your Logpush job.
-
