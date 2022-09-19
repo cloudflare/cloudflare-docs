@@ -9,7 +9,7 @@ weight: 4
 To add an IP address or prefix to the Advanced TCP Protection [allowlist](/ddos-protection/tcp-protection/concepts/#allowlist):
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Account Home** > **Firewall Rulesets** > **DDoS**.
+2. Go to **Account Home** > **Application Security** > **DDoS** > **Advanced TCP Protection**.
 3. Under **General settings** > **Allowlist**, select **Edit**.
 4. Enter a prefix and (optionally) a description in **Prefix** and **Description**, respectively.
 5. To exclude the current prefix from the allowlist instead of including it, uncheck the **Enabled** checkbox.
