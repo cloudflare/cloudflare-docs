@@ -30,9 +30,10 @@ When using Cloudflare with [unproxied DNS records](/dns/manage-dns-records/refer
 
 Another way of thinking about this concept is that visitors directly connect with your origin server.
 
-{{<example>}}
-Visitor <--[Connection]--> Origin Server
-{{</example>}}
+<div class="mermaid">
+        flowchart LR
+        A[Visitor] <-- Connection --> B[Origin server]
+</div>
 
 ### With Cloudflare
 
@@ -44,9 +45,10 @@ With Cloudflare — meaning your domain or subdomain is using [proxied DNS recor
 
 This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server.
 
-{{<example>}}
-Visitor <--[Connection 1]--> Cloudflare Edge <--[Connection 2]--> Origin Server
-{{</example>}}
+<div class="mermaid">
+        flowchart LR
+        A[Visitor] <-- Connection --> B[Cloudflare Edge] <-- Connection --> C[Origin Server]
+</div>
 
 ## Benefits
 
