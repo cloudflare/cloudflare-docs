@@ -6,7 +6,7 @@ weight: 6
 
 # Core Web Vitals
 
-Core Web Vitals are high-level metrics designed by Google to capture the user experience. Three core Web Vitals metrics are measured: Largest Contentful Paint, First Input Delay, and Cumulative Layout Shift. Each of these metrics is automatically assigned a rating of Good, Needs Improvement, or Poor based on the industry standard methodology and testing designed by Google. Page load time statistics are supplemented by First Paint and First Contentful Paint.
+[Core Web Vitals](https://www.cloudflare.com/learning/performance/what-are-core-web-vitals/) are high-level metrics designed by Google to capture the user experience. Three core Web Vitals metrics are measured: Largest Contentful Paint, First Input Delay, and Cumulative Layout Shift. Each of these metrics is automatically assigned a rating of Good, Needs Improvement, or Poor based on the industry standard methodology and testing designed by Google. Page load time statistics are supplemented by First Paint and First Contentful Paint.
 
 {{<Aside type="note">}}
 

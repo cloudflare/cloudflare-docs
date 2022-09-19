@@ -12,4 +12,7 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
+resources:
+  discord: https://discord.com/channels/595317990191398933/967783711955365899
+
 externals:

@@ -79,7 +79,7 @@ $ curl -X PUT \
         "content": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Access denied</title></head><body><h1>You do not have access to this page</h1><p>Contact us if you think this is an error.</p></body></html>",
         "content_type": "text/html"
       },
-      "expression": "cf.response.1xxx_error eq 1020",
+      "expression": "cf.response.1xxx_code eq 1020",
       "enabled": true
     }
   ]

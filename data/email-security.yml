@@ -11,6 +11,9 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
+resources:
+  learning_center: https://www.cloudflare.com/learning/email-security/what-is-email-security/
+
 externals:
   - title: Cloudflare Area 1
     url: https://www.cloudflare.com/products/zero-trust/email-security/

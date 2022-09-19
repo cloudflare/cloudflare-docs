@@ -49,6 +49,8 @@ The on-disk configuration of the Windows client can be changed at any time by mo
 <dict>
   <key>organization</key>
   <string>yourorganization</string>
+	<key>onboarding</key>
+	<false/>
 </dict>
 ```
 

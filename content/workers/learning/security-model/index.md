@@ -17,7 +17,7 @@ While these early design decisions have proven effective, Cloudflare is continui
 
 The Workers approach is very different from the approach taken by most of the industry. It is resistant to the entire range of [Spectre-style attacks](https://www.cloudflare.com/learning/security/threats/meltdown-spectre/), without requiring special attention paid to each one and without needing to block speculation in general. However, because the Workers approach is different, it requires careful study. Cloudflare is currently working with researchers at Graz University of Technology (TU Graz) to study what has been done. These researchers include some of the people who originally discovered Spectre. Cloudflare will publish the results of this research as they becomes available.
 
-For more details, refer to [this talk](https://www.infoq.com/presentations/cloudflare-v8) by Kenton Varda, architect of Cloudflare Workers. Spectre is covered near the end.
+For more details, refer to [this talk](https://www.infoq.com/presentations/cloudflare-v8/) by Kenton Varda, architect of Cloudflare Workers. Spectre is covered near the end.
 
 ## Architectural overview
 

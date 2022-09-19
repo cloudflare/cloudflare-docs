@@ -42,7 +42,7 @@ console.log(headers.getAll("Set-Cookie"));
 // Array(2) [ cookie1=value_for_cookie_1; Path=/; HttpOnly;, cookie2=value_for_cookie_2; Path=/; HttpOnly; ]
 ```
 
-- In Cloudflare Workers, the `Headers.get` method returns a [`USVString`](https://developer.mozilla.org/en-US/docs/Web/API/USVString) instead of a [`ByteString`](https://developer.mozilla.org/en-US/docs/Web/API/ByteString), which is specified by the spec. For most scenarios, this should have no noticeable effect. To compare the differences between these two string classes, refer to this [Playground example](https://cloudflareworkers.com/#97c644202d0ef43fd73acb6b045529e8:https://tutorial.cloudflareworkers.com).
+- In Cloudflare Workers, the `Headers.get` method returns a [`USVString`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) instead of a [`ByteString`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), which is specified by the spec. For most scenarios, this should have no noticeable effect. To compare the differences between these two string classes, refer to this [Playground example](https://cloudflareworkers.com/#97c644202d0ef43fd73acb6b045529e8:https://tutorial.cloudflareworkers.com).
 
 ## Cloudflare headers
 

@@ -95,7 +95,7 @@ With the catch-all rule, you can set `cloudflared` to respond to traffic with an
 | HTTP over Unix socket | Just like HTTP, but using a Unix socket instead.                                               | `unix:/home/production/echo.sock` |
 | HTTPS over Unix socket | Just like HTTPS, but using a Unix socket instead.                                               | `unix+tls:/home/production/echo.sock` |
 | TCP                     | TCP connections are proxied to your local service.                                               | `tcp://localhost:2222`            |
-| SSH                     | SSH connections are proxied to your local service. [Learn more](/cloudflare-one/tutorials/ssh/). | `ssh://localhost:22`              |
+| SSH                     | SSH connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-apps/use_cases/ssh/). | `ssh://localhost:22`              |
 | RDP                     | RDP connections are proxied to your local service. [Learn more](/cloudflare-one/tutorials/rdp/). | `rdp://localhost:3389`            |
 | kubectl bastion mode    | `cloudflared` will act like a jumphost, allowing access to any local address.                    | `bastion`                         |
 | Hello World             | Test server for validating your Cloudflare Tunnel setup.                                         | `hello_world`                     |
