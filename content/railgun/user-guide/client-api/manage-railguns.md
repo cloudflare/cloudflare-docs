@@ -12,14 +12,14 @@ Creating and activating a Railgun requires two API calls. First, a Railgun must 
 
 `POST /api/v2/railgun/init`
 
-Create a Railgun. If request is successful, a new Railgun is added to a user account and placed in initializing status (`INI`).
+Creates a Railgun. If request is successful, a new Railgun is added to a user account and placed in initializing status (`INI`).
 
 ### Form parameters
 
-*   **email** – User account email
-*   **tkn** – User API token
-*   **name** – Name of Railgun
-*   **pubname** – Name of Railgun shown to users
+*   `email` – User account email
+*   `tkn` – User API token
+*   `name` – Name of Railgun
+*   `pubname` – Name of Railgun shown to users
 
 <details>
 <summary>Example request</summary>
@@ -70,14 +70,14 @@ Content-Type: application/json
 
 `GET /api/v2/railgun/init`
 
-Create a Railgun. If request is successful, a new Railgun is added to a user account and placed in initializing status (`INI`).
+Creates a Railgun. If request is successful, a new Railgun is added to a user account and placed in initializing status (`INI`).
 
 ### Query parameters
 
-*   **email** – User account email
-*   **tkn** – User API token
-*   **name** – Name of Railgun
-*   **pubname** – Name of Railgun shown to users
+*   `email` – User account email
+*   `tkn` – User API token
+*   `name` – Name of Railgun
+*   `pubname` – Name of Railgun shown to users
 
 <details>
 <summary>Example request</summary>
@@ -128,13 +128,13 @@ Content-Type: application/json
 
 `POST /api/v2/railgun/delete`
 
-Delete a Railgun. If request is successful, the Railgun with a token matching `rtkn` is removed from the account and set to deleted status (`D`).
+Deletes a Railgun. If request is successful, the Railgun with a token matching `rtkn` is removed from the account and set to deleted status (`D`).
 
 ### Form parameters
 
-*   **email** – User account email
-*   **tkn** – User API token
-*   **rtkn** – Railgun token
+*   `email` – User account email
+*   `tkn` – User API token
+*   `rtkn` – Railgun token
 
 <details>
 <summary>Example request</summary>
@@ -181,13 +181,13 @@ Content-Type: application/json
 
 `GET /api/v2/railgun/delete`
 
-Delete a Railgun. If request is successful, the Railgun with a token matching `rtkn` is removed from the account and set to deleted status (`D`).
+Deletes a Railgun. If request is successful, the Railgun with a token matching `rtkn` is removed from the account and set to deleted status (`D`).
 
 ### Query parameters
 
-*   **email** – User account email
-*   **tkn** – User API token
-*   **rtkn** – Railgun token
+*   `email` – User account email
+*   `tkn` – User API token
+*   `rtkn` – Railgun token
 
 <details>
 <summary>Example request</summary>
