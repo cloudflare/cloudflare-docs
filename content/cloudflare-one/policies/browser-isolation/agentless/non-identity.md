@@ -1,5 +1,5 @@
 ---
-pcx_content_type: concept
+pcx_content_type: how-to
 title: Non-identity on-ramps
 weight: 5
 ---
@@ -11,12 +11,6 @@ With Cloudflare Zero Trust, you can isolate HTTP traffic from on-ramps such as [
 {{<Aside type="note">}}
 If you want to apply Isolate policies based on user identity, you will need to either install the [WARP client](/cloudflare-one/connections/connect-devices/warp/) or manually redirect users to the [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/agentless/clientless-browser-isolation/) URL.
 {{</Aside>}}
-
-## Security best practices
-
-Non-identity browser isolation is disabled by default because the lack of user identity information poses potential security risks.
-
-----------fill in-----------------
 
 ## Set up non-identity browser isolation
 
