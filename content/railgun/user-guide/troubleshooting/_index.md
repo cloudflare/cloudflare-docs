@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Troubleshooting
-weight: 9
+weight: 6
 ---
 
 # Troubleshooting
