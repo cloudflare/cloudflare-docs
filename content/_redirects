@@ -387,11 +387,16 @@
 /page-shield/reference/script-monitor-api/ /page-shield/reference/page-shield-api/ 301
 
 # railgun
-/railgun/user-guide/optimized-partner-api/enable-and-disable-connections/ /railgun/user-guide/optimized-partner-api/ 301
-/railgun/user-guide/optimized-partner-api/manage-railguns/ /railgun/user-guide/optimized-partner-api/ 301
-/railgun/user-guide/optimized-partner-api/list-railgun-details/ /railgun/user-guide/optimized-partner-api/ 301
-/railgun/user-guide/optimized-partner-api/railguns-via-ip-ranges/ /railgun/user-guide/optimized-partner-api/ 301
-/railgun/user-guide/optimized-partner-api/using-curl-with-the-api/ /railgun/user-guide/optimized-partner-api/ 301
+/railgun/user-guide/introduction/ /railgun/about/ 301
+/railgun/user-guide/set-up/potential-problems/ /railgun/user-guide/troubleshooting/potential-problems/ 301
+/railgun/user-guide/increase-logging/ /railgun/user-guide/troubleshooting/increase-logging/ 301
+/railgun/user-guide/client-api/ /railgun/partners/client-api/ 301
+/railgun/user-guide/optimized-partner-api/ /railgun/partners/ 301
+/railgun/user-guide/optimized-partner-api/enable-and-disable-connections/ /railgun/partners/client-api/enable-and-disable-connections/ 301
+/railgun/user-guide/optimized-partner-api/manage-railguns/ /railgun/partners/client-api/manage-railguns/ 301
+/railgun/user-guide/optimized-partner-api/list-railgun-details/ /railgun/partners/client-api/list-railgun-details/ 301
+/railgun/user-guide/optimized-partner-api/railguns-via-ip-ranges/ /railgun/partners/client-api/ 301
+/railgun/user-guide/optimized-partner-api/using-curl-with-the-api/ /railgun/partners/client-api/ 301
 
 # randomness-beacon
 /randomness-beacon/about/Background/ /randomness-beacon/about/background/ 301

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Changelog
-weight: 22
+weight: 7
 ---
 
 # Changelog
