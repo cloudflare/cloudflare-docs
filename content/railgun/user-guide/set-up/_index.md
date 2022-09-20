@@ -1,5 +1,5 @@
 ---
-pcx_content_type: tutorial
+pcx_content_type: navigation
 title: Installation
 weight: 2
 ---
