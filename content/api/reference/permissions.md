@@ -20,8 +20,6 @@ To obtain an updated list of token permissions, including the permission ID and 
 
 The applicable scope of user permissions is `com.cloudflare.api.user`.
 
-{{<table-wrap>}}
-
 | Name               | Description                                          |
 | ------------------ | ---------------------------------------------------- |
 | API Tokens Read    | Grants read access to user's API tokens.             |
@@ -30,8 +28,6 @@ The applicable scope of user permissions is `com.cloudflare.api.user`.
 | Memberships Edit   | Grants write access to a user's account memberships. |
 | User Details Read  | Grants read access to user details.                  |
 | User Details Edit  | Grants write access to user details.                 |
-
-{{</table-wrap>}}
 
 ## Account permissions
 

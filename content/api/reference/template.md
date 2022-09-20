@@ -8,8 +8,6 @@ weight: 21
 
 Below is a table of the currently available API token templates and the default [token permissions](/api/reference/permissions/) they grant. You can start creating a token with one of these templates and modify the permissions and resources from there.
 
-{{<table-wrap>}}
-
 <table>
   <tbody>
     <tr>
@@ -133,5 +131,3 @@ Below is a table of the currently available API token templates and the default 
     </tr>
   </tbody>
 </table>
-
-{{</table-wrap>}}

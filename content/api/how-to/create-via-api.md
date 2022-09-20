@@ -6,14 +6,14 @@ weight: 12
 
 # Create API tokens via the API
 
-Generate new API tokens on the fly via the API. Doing so first requires creating an API token in the UI with the ability to create subsequent tokens.
+Generate new API tokens on the fly via the API. Doing so first requires creating an API token from the Cloudflare dashboard that has the ability to create subsequent tokens.
 
 ## Generating the initial token
 
-Before you can create tokens via the API you need to generate the initial token via the Cloudflare dashboard. 
+Before you can create tokens via the API, you need to generate the initial token via the Cloudflare dashboard.
 
 1. From the [API Tokens management screen](https://dash.cloudflare.com/profile/api-tokens), select `Create Token`.
-2. Select the `Create Additional Tokens` Template. This template will contain the user permission for creating API tokens. This allows you to mimic the exact behavior presented in the UI from the API.
+2. Select the `Create Additional Tokens` template. This template contains the user permission for creating API tokens. This allows you to mimic the exact behavior presented in the UI from the API.
 
 {{<Aside type="note">}}
 
@@ -21,23 +21,23 @@ Cloudflare highly recommends not granting other permissions to the token when us
 
 {{</Aside>}}
 
-Cloudflare also recommends limiting the use of the token via IP filtering or TTL to reduce the potential for abuse in the event that the token is compromised. Refer to [adding restrictions](/api/how-to/restrict-tokens/) for more information.
+Cloudflare also recommends limiting the use of the token via client IP address filtering or TTL to reduce the potential for abuse in the event that the token is compromised. Refer to [adding restrictions](/api/how-to/restrict-tokens/) for more information.
 
 ## Creating API tokens with the API
 
-Once an API token is created that can create other tokens, the next step is using it in the API. The complete API schema docs for these operations are [available here](https://api.cloudflare.com/#user-api-tokens-properties), but below is a walkthrough of the process to create a token with the API.
+Once you create an API token that can create other tokens, you can now use it in the API. Refer to the [API schema docs](https://api.cloudflare.com/#user-api-tokens-properties) for more information.
 
-Creating a token requires defining two sections of config and then sending the API request.
+To create a token:
 
 1.  Define the policy.
 2.  Define the restrictions.
 3.  Create the token.
 
-### Define the Access Policy
+### 1. Define the Access Policy
 
-An Access Policy defines what resources the token can act on and what permissions it has to those resources. If you have created tokens in the UI, you will notice similarities in how this works.
+An Access Policy defines what resources the token can act on and what permissions the token has to those resources. This process is similar to how you create tokens [in the Cloudflare dashboard](/api/get-started/create-token).
 
-Let's look at an example token's policy. Each token can contain multiple policies.
+Each token can contain multiple policies.
 
 ```json
 [
@@ -62,32 +62,33 @@ Let's look at an example token's policy. Each token can contain multiple policie
 ]
 ```
 
-Now to define each field of the policy:
+| Field              | Description                                          |
+| ------------------ | ---------------------------------------------------- |
+| `id`               | A unique read-only identifier for the policy generated after creation. |
+| `effect`           | Defines whether this policy is allowing or denying access. If only creating one policy, use `allow`. The evaluation order for policies is as follows: 1.  Explicit `DENY` Policies; 2.  Explicit `ALLOW` Policies; 3.  Implicit `DENY ALL`.            |
+| `resources`         | Defines what resources are allowed to be configured. |
+| `permission_groups` | Defines what permissions the policy grants to the included resources. |
 
-*   `id` - This is a unique identifier for the policy generated after creation and is read-only
-*   `effect` - Whether this policy is allowing or denying access. If only creating 1 policy then `allow` should be used. The evaluation order for policies is as follows:
-    1.  Explicit `DENY` Policies
-    2.  Explicit `ALLOW` Policies
-    3.  Implicit `DENY ALL`
-*   `resources` - This is where you define what resources are allowed to be configured. More detail below.
-*   `permission_groups` - This defines what permissions will the policy grant to the included resources. More detail below.
 
 #### Resources
 
-Currently API token Policies support 3 resource types: `User`, `Account`, `Zone`.
+Currently API token policies support three resource types: `User`, `Account`, and `Zone`.
 
-Note: Each respective object's `tag` can be fetched by calling the appropriate `GET <object>` API. See [User](https://api.cloudflare.com/#user-properties), [Account](https://api.cloudflare.com/#accounts-list-accounts), and [Zone](https://api.cloudflare.com/#zone-list-zones) documentation for details.
+{{<Aside type="note">}}
+ 
+Each respective object's `tag` can be fetched by calling the appropriate `GET <object>` API. Refer to [User](https://api.cloudflare.com/#user-properties), [Account](https://api.cloudflare.com/#accounts-list-accounts), and [Zone](https://api.cloudflare.com/#zone-list-zones) documentation for more details.
+  {{</Aside>}}
 
 ##### Account
 
-A **single account** or **all accounts** can be included in a token policy.
+Include a **single account** or **all accounts** in a token policy.
 
 *   A **single account** is denoted as:`"com.cloudflare.api.account.<account_tag>": "*"`.
 *   **All accounts** is denoted as:`"com.cloudflare.api.account.*": "*"`
 
 ##### Zone
 
-A **single zone**, **all zones in an account**, or **all zones in all accounts** can be included in a token policy:
+Include a **single zone**, **all zones in an account**, or **all zones in all accounts** in a token policy.
 
 *   A **single zone** is denoted as:`"com.cloudflare.api.account.zone.<zone_tag>": "*"`
 *   **All Zones in an account** are denoted as:`"com.cloudflare.api.account.<account_tag>": {"com.cloudflare.api.account.zone.*": "*"}`
@@ -95,19 +96,19 @@ A **single zone**, **all zones in an account**, or **all zones in all accounts**
 
 ##### User
 
-For user resources, the only option is referencing one's self which is done with:`"com.cloudflare.api.user.<user_tag>": "*"`
+For user resources, the only option is referencing one's self, which is done with:`"com.cloudflare.api.user.<user_tag>": "*"`
 
-### Permission groups
+#### Permission groups
 
-The last piece to defining a policy is what Permission Groups should be applied. You can see the full list of permission groups either in [the docs here](/api/reference/permissions/), or [fetched via the API](https://api.cloudflare.com/#permission-groups-list-permission-groups). It is only required to pass the `id` of the permission group in the policy. Permission Groups are scoped to specific resources, so a permission group in a policy will only apply to the resource type it is scoped for.
+Determine what permission groups should be applied. Refer to the full list of permission groups either in [the documentation](/api/reference/permissions/) or fetch the permission groups [via the API](https://api.cloudflare.com/#permission-groups-list-permission-groups). It is only required to pass the `id` of the permission group in the policy. Permission groups are scoped to specific resources, so a permission group in a policy will only apply to the resource type it is scoped for.
 
-### Define the restrictions
+### 2. Define the restrictions
 
-Last in defining the token is setting up any limitations on how the token can be used. Currently, API tokens allow for IP filtering and TTLs. You can find general info in [Restricting Token Use](/api/how-to/restrict-tokens/).
+Set up any limitations on how the token can be used. Currently API tokens allow for client IP address filtering and TTLs. Refer to [Restricting Token Use](/api/how-to/restrict-tokens/) for more information.
 
-When defining TTLs you can set the time at which a token becomes active, `not_before` and the time when it expires, `expires_on`. Both of these fields take timestamps in UTC in the following format: `"2018-07-01T05:20:00Z"`.
+When defining TTLs, you can set the time at which a token becomes active with `not_before` and the time when it expires with `expires_on`. Both of these fields take timestamps in UTC in the following format: `"2018-07-01T05:20:00Z"`.
 
-Limiting usage of a token by IP filters is defined with the following object:
+Limit usage of a token by client IP address filters with the following object:
 
 ```json
 {
@@ -124,14 +125,15 @@ Limiting usage of a token by IP filters is defined with the following object:
 }
 ```
 
-Each parameter in the `in` and `not_in` objects must be in CIDR notation. For example, specifying a single IP would be `192.168.0.1/32`.
+Each parameter in the `in` and `not_in` objects must be in CIDR notation. For example, to specify a single IP address, use `192.168.0.1/32`.
 
-## Creating the token
+## 3. Create the token
 
-Putting this all together we can now create a token like so:
+Combine the previous information to create a token as in the following example:
 
 ```json
-curl -X POST "https://api.cloudflare.com/client/v4/user/tokens" \
+curl -X POST 
+"https://api.cloudflare.com/client/v4/user/tokens" \
      -H "Authorization: Bearer <api token secret>" \
      -H "Content-Type: application/json" \
      --data '
