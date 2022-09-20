@@ -20,7 +20,7 @@ If Railgun and Apache are on two separate machines, configure `mod_cloudflare` t
 CloudFlareRemoteIPTrustedProxy 192.168.1.100
 ```
 
-By default, Railgun runs on port `2408` via TCP. This port will need to be open to connections from [Cloudflare IPs](https://www.cloudflare.com/ips). If you are unfamiliar with networking, please reach out to your hosting provider to determine the proper way to open the port for your environment. You can script out adding rules for software firewalls as follows (use with caution):
+By default, Railgun runs on port `2408` via TCP. This port will need to accept connections from [Cloudflare IPs](https://www.cloudflare.com/ips). If you are unfamiliar with networking, please reach out to your hosting provider to determine the proper way to open the port for your environment. You can script out adding rules for software firewalls as follows (use with caution):
 
 ```bash
 $ for i in `curl https://www.cloudflare.com/ips-v4`; do ufw allow proto tcp from $i to any port 2408; done

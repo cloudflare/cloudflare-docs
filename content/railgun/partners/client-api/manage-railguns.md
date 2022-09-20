@@ -12,7 +12,7 @@ Creating and activating a Railgun requires two API calls. First, a Railgun must 
 
 `POST /api/v2/railgun/init`
 
-Creates a Railgun. If request is successful, a new Railgun is added to a user account and placed in initializing status (`INI`).
+Creates a Railgun. If the request is successful, a new Railgun is added to a user account and placed in initializing status (`INI`).
 
 ### Form parameters
 
@@ -70,7 +70,7 @@ Content-Type: application/json
 
 `GET /api/v2/railgun/init`
 
-Creates a Railgun. If request is successful, a new Railgun is added to a user account and placed in initializing status (`INI`).
+Creates a Railgun. If the request is successful, a new Railgun is added to a user account and placed in initializing status (`INI`).
 
 ### Query parameters
 
@@ -128,7 +128,7 @@ Content-Type: application/json
 
 `POST /api/v2/railgun/delete`
 
-Deletes a Railgun. If request is successful, the Railgun with a token matching `rtkn` is removed from the account and set to deleted status (`D`).
+Deletes a Railgun. If the request is successful, the Railgun with a token matching `rtkn` is removed from the account and set to deleted status (`D`).
 
 ### Form parameters
 
@@ -181,7 +181,7 @@ Content-Type: application/json
 
 `GET /api/v2/railgun/delete`
 
-Deletes a Railgun. If request is successful, the Railgun with a token matching `rtkn` is removed from the account and set to deleted status (`D`).
+Deletes a Railgun. If the request is successful, the Railgun with a token matching `rtkn` is removed from the account and set to deleted status (`D`).
 
 ### Query parameters
 

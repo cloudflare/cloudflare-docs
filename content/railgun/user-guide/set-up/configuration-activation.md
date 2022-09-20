@@ -34,7 +34,7 @@ Oct 27 22:29:41 www rg-listener: [Activation] Acquired cert from server
 
 If there is a certificate error in the system log or during startup, ensure that the necessary certificate bundle is installed as described in [Preparing the Environment](/railgun/user-guide/set-up/preparing-environment/) so that Railgun may connect securely back to Cloudflare’s activation servers.
 
-As an example, we are going to use domain `port2408.net`. The newly generated certificate is signed against the `port2408.net` domain and our system will automatically set your new `port2408.net` subdomain to resolve to the IP specified by `activation.public_ip`. You can use this hostname to test Railgun without enabling the service for all users. More details are in the [Testing Railgun](#testing-railgun) section below.
+As an example, we are going to use domain `port2408.net`. The newly generated certificate is signed against the `port2408.net` domain and our system will automatically set your new `port2408.net` subdomain to resolve to the IP specified by `activation.public_ip`. You can use this hostname to test Railgun without enabling the service for all users. For more details, refer to the [Testing Railgun](#testing-railgun) section below.
 
 ## Starting the service
 
@@ -63,7 +63,7 @@ $ netstat -plnt | grep 2408
 tcp        0      0 :::2408                     :::*                        LISTEN      2981/rg-listener
 ```
 
-Provided that your port is open to Cloudflare traffic, it’s time for testing. If you don’t see the process running, then there may be an issue with activation or your configuration. The Railgun panic log, which is written to `/var/log/railgun/panic.log` by default, may contain more information. You can also attempt to start Railgun without the `init` script to see if any errors are present at start:
+Provided that your port is open to Cloudflare traffic, it is time for testing. If you do not see the process running, then there may be an issue with activation or your configuration. The Railgun panic log, which is written to `/var/log/railgun/panic.log` by default, may contain more information. You can also attempt to start Railgun without the `init` script to see if any errors are present at start:
 
 ```bash
 ---
@@ -75,7 +75,7 @@ $ sudo -u railgun /usr/bin/rg-listener -config=/etc/railgun/railgun.conf
 
 ## Testing Railgun
 
-Once you have configured Railgun, you can test its operation using the **Test** button on the Cloudflare dashboard:
+Once you have configured Railgun, you can test its operation on the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Speed**.
@@ -83,7 +83,7 @@ Once you have configured Railgun, you can test its operation using the **Test** 
 
 This will indicate whether a request to your web server uses Railgun.
 
-The log file can also be used to monitor results. By default, Cloudflare only logs errors. For testing, you need to raise the `log.level` option from `0` to `5` in your Railgun configuration and then restart the service. You can then tail the logs to watch the requests being processed:
+You can also use the log file to monitor results. By default, Cloudflare only logs errors. For testing, you need to raise the `log.level` option from `0` to `5` in your Railgun configuration and then restart the service. You can then `tail` the logs to watch the requests being processed:
 
 ```bash
 $  tail -f /var/log/messages
@@ -110,10 +110,10 @@ Oct 27 23:36:06 www railgun[199.27.130.135:22114]: Tx [ab18927f79... FnPush]
 Oct 27 23:36:06 www railgun[199.27.130.135:22114]: Transmit time: 48us
 ```
 
-Railgun will produce `5xx` messages when the `rg-listener` service is unable to reach the origin web server. Checking that the route between the Railgun server and the web server is clear is essential before contacting support. The easiest way of checking that is by performing a curl command from the Railgun server to the origin web server. If Railgun and the web server are both run on the same physical server, check that it allows loopback HTTP connections on ports `80` and `443` in its firewall settings. Please ensure the correct port is open and contact support if errors persist.
+Railgun will produce `5xx` messages when the `rg-listener` service is unable to reach the origin web server. It is essential that you check that the route between the Railgun server and the web server is clear before contacting support. The easiest way of checking that is by performing a `curl` command from the Railgun server to the origin web server. If Railgun and the web server are both run on the same physical server, check that it allows loopback HTTP connections on ports `80` and `443` in its firewall settings. Please ensure the correct port is open and contact support if errors persist.
 
 ## Going live
 
 It is recommended that you consult the [Testing Railgun](#testing-railgun) section before enabling Railgun for all visitors to your site.
 
-When you wish to go live, you should select the desired Railgun for your domain on the [Configurations](https://dash.cloudflare.com/?to=/:account/configurations/railgun) page, and then toggle the switch to **On**. Railgun may take up to five minutes to fully activate, after which you should see the `CF-Railgun` HTTP header present in responses from all your active Cloudflare DNS records.
+When you wish to go live, select the desired Railgun for your domain on the [Configurations](https://dash.cloudflare.com/?to=/:account/configurations/railgun) page and toggle the switch to **On**. Railgun may take up to five minutes to fully activate, after which you should see the `CF-Railgun` HTTP header present in responses from all your active Cloudflare DNS records.

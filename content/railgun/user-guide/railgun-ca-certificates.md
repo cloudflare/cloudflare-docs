@@ -27,10 +27,10 @@ Here are the following options available to avoid these errors:
 1.  Set `validate.cert = 0` in the `railgun.conf` file.
 2.  Add to the trust store specified in the `ca.bundle` parameter in the `railgun.conf`. This can be done by simply adding these root certificates at the end of the file using a text editor.
 
-By default, `railgun.conf` defines the listener's trust store as (for Debian/Ubuntu) `ca.bundle = /etc/ssl/railgun-ca-certs.crt`.
+By default, `railgun.conf` defines the listener's trust store as `ca.bundle = /etc/ssl/railgun-ca-certs.crt` (for Debian/Ubuntu).
 
 {{<Aside type="note">}}
 
-The listener will need to be restarted after making changes to the configuration file.
+You will need to restart the listener after making changes to the configuration file.
 
 {{</Aside>}}
