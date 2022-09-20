@@ -1,8 +1,9 @@
 ---
-title: S3 Compatibility
+title: Workers API
 pcx_content_type: navigation
+weight: 1
 ---
 
-# S3 Compatibility
+# Workers API
 
 {{<directory-listing>}}
