@@ -19,8 +19,8 @@ Before you begin, [get your zone and account IDs](/fundamentals/get-started/basi
 
 ![Token template overview screen](/api/static/template-customize.png)
 
-5. Modify the token's permissions. After selecting a permissions group (Account, User, Zone), choose what level of access to grant the token. Most groups offer `Edit` or `Read` options. `Edit` is full CRUDL (create, read, update, delete, list) access, while `Read` is just the read permission and list where appropriate. Refer to the [available token permissions](/api/reference/permissions) for more information.
-6. Select which resources the token can take authorized access against. For example, granting `Zone DNS Read` access to a zone `example.com` will allow the token to read DNS records for only that specific zone. Any other zone will return an error for DNS record reads operations. Any other operation on that zone will also return an error.
+5. Modify the token's permissions. After selecting a permissions group (Account, User, or Zone), choose what level of access to grant the token. Most groups offer `Edit` or `Read` options. `Edit` is full CRUDL (create, read, update, delete, list) access, while `Read` is the read permission and list where appropriate. Refer to the [available token permissions](/api/reference/permissions) for more information.
+6. Select which resources the token can take authorized access against. For example, granting `Zone DNS Read` access to a zone `example.com` will allow the token to read DNS records only for that specific zone. Any other zone will return an error for DNS record reads operations. Any other operation on that zone will also return an error.
 7. (Optional) Restrict how a token is used in the **Client IP Address Filtering** and **TTL (time to live)** fields.
 8. Select `Continue to summary`.
 9. Review the token summary. Select **Edit token** to make adjustments. You can also edit a token after creation.
@@ -32,7 +32,8 @@ Before you begin, [get your zone and account IDs](/fundamentals/get-started/basi
 
   {{<Aside type="warning" header="Warning">}}
  
-  The token secret is **only shown once**. Do not store the secret in plaintext where others can to access it. Anyone with this token can perform the authorized actions against the resources the token has been granted access to.
+  The token secret is **only shown once**. Do not store the secret in plaintext where others can access it. Anyone with this token can perform the authorized actions against the resources that the token has access to.
+
   {{</Aside>}}
 
 ![Token creation completion screen displaying your API token and the `curl`command to test your token](/api/static/token-complete.png)
@@ -40,7 +41,8 @@ Before you begin, [get your zone and account IDs](/fundamentals/get-started/basi
 This screen also includes an example command to test the token. The `/user/tokens/verify` endpoint allows fetching the current status of the given token.
 
 ```bash
- curl -X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \
+ curl -X GET 
+ "https://api.cloudflare.com/client/v4/user/tokens/verify" \
      -H "Authorization: Bearer <token secret>" \
      -H "Content-Type:application/json"
 ```
@@ -65,4 +67,4 @@ The result:
 }
 ```
 
-With this you have successfully created an API token and can start working with the Cloudflare API. After creating your first API token, you can create API tokens [via the API](/api/how-to/create-via-api).
+With this you have successfully created an API token and can start working with the Cloudflare API. After creating your first API token, you can create additional API tokens [via the API](/api/how-to/create-via-api).

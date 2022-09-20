@@ -5,20 +5,20 @@ weight: 12
 ---
 
 # Get API keys (legacy)
-API Keys are the legacy authorization scheme for interacting with Cloudflare's APIs. When possible, use [API tokens](../create-token/) instead of API Keys.
+API keys are the legacy authorization scheme for interacting with the Cloudflare API. When possible, use [API tokens](../create-token/) instead of API keys.
 
 ## Limitations
-API Keys have multiple limitations when compared to API tokens:
+API keys have multiple limitations when compared to API tokens:
 
-1.  **Access to all Cloudflare Resources** - API Keys have access to all the resources of the user. This makes it impossible to safely use API Keys for access to non-production resources when a user also has access to production resources.
+- **Access to all Cloudflare Resources** - API keys have access to all the resources of the user. This makes it impossible to safely use API keys for access to non-production resources when a user also has access to production resources.
 
-2.  **Full permissions** - Similar to (1), API Keys have the exact same permissions as the user which means if the user can delete zones, or change DNS records so can the key.
+- **Full permissions** - Similarly, API keys have the exact same permissions as the user, which means if the user can delete zones or change DNS records, so can the API key.
 
-3.  **Limited to 1 per user** - Only one API Key can be provisioned per user. This complicates using Cloudflare's API in production systems where maintaining two secrets for accessing the API is important in the case 1 needs to be rolled.
+- **Limited to one per user** - Only one API key can be provisioned per user. This complicates using Cloudflare's API in production systems where maintaining two secrets for accessing the API is important in the case one needs to be rolled.
 
-4.  **Lack of advanced limits on usage** - API tokens can be limited to use in specific time windows and expire or be limited to use from specific IP ranges.
+- **Lack of advanced limits on usage** - API tokens can be limited to specific time windows and expire or be limited to use from specific IP ranges.
 
-For these reasons, API Keys are not recommended for new customers. Current customers using API Keys are encouraged to migrate and use API tokens instead. You can find information about using API Keys in the [API schema docs](https://api.cloudflare.com/#getting-started-requests).
+For these reasons, API keys are not recommended for new customers. Current customers using API keys are encouraged to migrate and use API tokens instead. Refer to the [API schema docs](https://api.cloudflare.com/#getting-started-requests) for more information about using API keys.
 
 ## View your API key
 
