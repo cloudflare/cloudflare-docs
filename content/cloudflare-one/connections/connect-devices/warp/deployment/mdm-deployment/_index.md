@@ -58,7 +58,7 @@ Changes to this file are processed immediately by the WARP client.
 
 ### Authenticate in embedded browser
 
-By default WARP will use the user’s default browser to log in to Zero Trust. You can override the default setting to instead authenticate in an embedded browser. The embedded browser will work around any protocol handler issues that may prevent the default browser from launching.
+By default WARP will use the user’s default browser to perform registration. You can override the default setting to instead authenticate users in an embedded browser. The embedded browser will work around any protocol handler issues that may prevent the default browser from launching.
 
 To use an embedded browser:
 
@@ -67,6 +67,8 @@ To use an embedded browser:
     ```txt
     REG ADD HKLM\SOFTWARE\Cloudflare\CloudflareWARP /f /v UseWebView2 /t REG_SZ /d y
     ```
+
+The WARP client will now launch WebView2 when the user is registering their device with Zero Trust.
 
 ## Install WARP on macOS
 
