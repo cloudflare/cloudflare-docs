@@ -58,7 +58,9 @@ Changes to this file are processed immediately by the WARP client.
 
 ### Authenticate in embedded browser
 
-By default WARP will use the user’s default browser to perform registration. You can override this behavior to optionally use an embedded browser to work around protocol handler issues. To use an embedded browser for WARP registration:
+By default WARP will use the user’s default browser to log in to Zero Trust. You can override the default setting to instead authenticate in an embedded browser. The embedded browser will work around any protocol handler issues that may prevent the default browser from launching.
+
+To use an embedded browser:
 
 1. Download and install WebView2 by following the instructions [here](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section).
 2. Add a registry key with the following command:
