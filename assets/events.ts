@@ -173,7 +173,7 @@ export function tabs() {
     for (let i = 0; i < wrappers.length; i++) {
       const labels = wrappers[i].querySelectorAll(".tab-label");
       const tabs = wrappers[i].querySelectorAll(".tab");
-      const defaultTab = wrappers[i].querySelector(".tab.tab-default")
+      const defaultTab = wrappers[i].querySelector(".tab.tab-default");
 
       if (tabs.length > 0) {
         // if a tab has been specified as default, set that
@@ -182,7 +182,7 @@ export function tabs() {
           // changes an id (i.e tab-js-esm-6f3904f86f90c21d) into just the type (tab-js-esm)
           // by removing the last element from the split array and then re-joining it
           const parts = defaultTab.id.split("-");
-          const tabId = parts.slice(0, parts.length - 1).join("-")
+          const tabId = parts.slice(0, parts.length - 1).join("-");
 
           let defaultTabLabel;
           let found = false;
