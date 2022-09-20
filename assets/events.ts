@@ -187,7 +187,10 @@ export function tabs() {
           labels.forEach((label) => {
             const labelId = label.getAttribute("data-link");
             if (!found) {
-              if (labelId === tabId) { defaultTabLabel = label; found = true }
+              if (labelId === tabId) { 
+                defaultTabLabel = label; 
+                found = true;
+               }
             }
           });
 
