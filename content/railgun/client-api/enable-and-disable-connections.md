@@ -6,7 +6,7 @@ weight: 3
 
 # Enable and disable connections
 
-After a Railgun has been activated, it can be assigned to a particular domain with the [`conn\_set`](/railgun/user-guide/client-api/enable-and-disable-connections/#post-conn_set) API call. [`conn\_setmode\_enabled`](/railgun/user-guide/client-api/enable-and-disable-connections/#post-conn_setmode_enabled) and [`conn\_setmode\_disabled`](/railgun/user-guide/client-api/enable-and-disable-connections/#post-conn_setmode_disabled) can be used to toggle Railgun on or off for the domain. [`conn\_set`](/railgun/user-guide/client-api/enable-and-disable-connections/#post-conn_set) also accepts a mode parameter to assign and enable Railgun in a single API call. [`zone\_conn\_get\_active`](/railgun/user-guide/client-api/list-railgun-details/#post-zone_conn_get_active) can be used to view active Railgun connections.
+After a Railgun has been activated, it can be assigned to a particular domain with the [`conn\_set`](/railgun/client-api/enable-and-disable-connections/#post-conn_set) API call. [`conn\_setmode\_enabled`](/railgun/client-api/enable-and-disable-connections/#post-conn_setmode_enabled) and [`conn\_setmode\_disabled`](/railgun/client-api/enable-and-disable-connections/#post-conn_setmode_disabled) can be used to toggle Railgun on or off for the domain. [`conn\_set`](/railgun/client-api/enable-and-disable-connections/#post-conn_set) also accepts a mode parameter to assign and enable Railgun in a single API call. [`zone\_conn\_get\_active`](/railgun/client-api/list-railgun-details/#post-zone_conn_get_active) can be used to view active Railgun connections.
 
 ## POST conn\_set
 
