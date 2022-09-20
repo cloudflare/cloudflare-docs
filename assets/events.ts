@@ -179,8 +179,10 @@ export function tabs() {
         // if a tab has been specified as default, set that
         // as active as opposed to defaulting to the first tab
         if (defaultTab) {
-          // changes an id (tab-js-esm-6f3904f86f90c21d) into just the type (tab-js-esm)
-          const tabId = defaultTab.id.split("-").slice(0, 3).join("-");
+          // changes an id (i.e tab-js-esm-6f3904f86f90c21d) into just the type (tab-js-esm)
+          // by removing the last element from the split array and then re-joining it
+          const parts = defaultTab.id.split("-").length;
+          const tabId = defaultTab.id.split("-").slice(0, parts - 1).join("-")
 
           let defaultTabLabel;
           let found = false;
