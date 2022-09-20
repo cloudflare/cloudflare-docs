@@ -16,7 +16,6 @@ Cloudflare Zero Trust logs are stored for a varying period of time based on the 
 
 | Zero Trust plan | Access Logs | DNS logs | Network logs | HTTP logs |
 | --- | --- | --- | --- |
-  
 | **Free** | 24 hours | 24 hours | 24 hours | 24 hours |
 | **Standard** | 30 hours | 30 days | 30 days | 30 days |
 | **Enterprise** | 180 hours | 180 days | 30 days | 30 days |
