@@ -108,6 +108,25 @@ Add new filter to compare the rate of other IPv4 packets against customer traffi
       <td>
 Add new filter to compare the rate of IPv4 ESP packets against customer traffic history</td>
     </tr>
+<tr>
+      <td>2022-09-20</td>
+      <td>2022-10-03</td>
+      <td>...34228119</td>
+      <td>IPv4 UDP SIP traffic</td>
+      <td>N/A</td>
+      <td>log</td>
+      <td>
+Implements new filters to detect Session Initiation Protocol (SIP) floods</td>
+    </tr>
+<tr>
+      <td>2022-09-20</td>
+      <td>2022-10-03</td>
+      <td>...ea9e05c3</td>
+      <td>IPv6 UDP SIP traffic</td>
+      <td>N/A</td>
+      <td>log</td>
+      <td></td>
+    </tr>
   </tbody>
 </table>
 {{</table-wrap>}}
