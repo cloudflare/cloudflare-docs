@@ -223,6 +223,12 @@ There are 3 variations of arguments that can be used in a range:
 
   - A map of custom, user-defined metadata that will be stored with the object.
 
+{{<Aside type="note">}}
+
+Only a single hashing algorithm can be specified at once.
+
+{{</Aside>}}
+
 - {{<code>}}md5{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
 
   - A md5 hash to use to check the received object's integrity.
@@ -379,7 +385,7 @@ If an additional checksum was provided when using the `put()` binding, it will b
 
 {{<definitions>}}
 
-- {{<code>}}md5{{</code>}} {{<param-type>}}ArrayBuffer{{</param-type>}}
+- {{<code>}}md5{{</code>}} {{<param-type>}}ArrayBuffer{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The MD5 checksum of the object.
 
