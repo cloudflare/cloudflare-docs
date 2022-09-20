@@ -1,10 +1,10 @@
 ---
 pcx_content_type: tutorial
-title: Installation Overview
+title: Installation overview
 weight: 6
 ---
 
-# Installation Overview
+# Installation overview
 
 ## Package Repository
 
