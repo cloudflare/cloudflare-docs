@@ -346,7 +346,7 @@ Content-Type: application/json
 
 `POST /api/v2/railgun/conn_delete`
 
-Remove a connection between a domain and a Railgun. This API call will allow a connected Railgun to be assigned to a different domain. Removing the connection of an enabled Railgun and domain will disable Railgun for the domain until a new connection is made with [conn\_set](/railgun/user-guide/client-api/enable-and-disable-connections/#post-conn_set).
+Remove a connection between a domain and a Railgun. This API call will allow a connected Railgun to be assigned to a different domain. Removing the connection of an enabled Railgun and domain will disable Railgun for the domain until a new connection is made with [conn\_set](/railgun/client-api/enable-and-disable-connections/#post-conn_set).
 
 ### Form parameters
 
@@ -401,7 +401,7 @@ Content-Type: application/json
 
 `GET /api/v2/railgun/conn_delete`
 
-Remove a connection between a domain and a Railgun. This API call will allow a connected Railgun to be assigned to a different domain. Removing the connection of an enabled Railgun and domain will disable Railgun for the domain until a new connection is made with [conn\_set](/railgun/user-guide/client-api/enable-and-disable-connections/#post-conn_set).
+Remove a connection between a domain and a Railgun. This API call will allow a connected Railgun to be assigned to a different domain. Removing the connection of an enabled Railgun and domain will disable Railgun for the domain until a new connection is made with [conn\_set](/railgun/client-api/enable-and-disable-connections/#post-conn_set).
 
 ### Query parameters
 
