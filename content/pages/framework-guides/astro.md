@@ -51,24 +51,23 @@ $ git push -u origin main
 
 [Pages Functions](/pages/platform/functions/) enable you to run server-side code to add dynamic functionality without running a dedicated server.
 
-To get started, create a `functions` directory at the root of your project. Writing your Functions files in this directory automatically generates a Worker with custom functionality at the predesignated routes. To learn more about writing Functions, see the [Pages Functions documentation](/pages/platform/functions/).
+To get started, create a `functions` directory at the root of your project. Writing your Functions files in this directory automatically generates a Worker with custom functionality at the predesignated routes. To learn more, refer to[Pages Functions](/pages/platform/functions/).
 
 ### Astro Configuration
 
-You can also deploy an Astro Server-side Rendered (SSR) site to Cloudflare Pages using the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme). SSR sites render on Pages Functions and allow for dynamic functionality and customizations.
+You can deploy an Astro Server-side Rendered (SSR) site to Cloudflare Pages using the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme). SSR sites render on Pages Functions and allow for dynamic functionality and customizations.
 
-To enable an SSR site and deploy to Cloudflare Pages, you will need to add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) to your project's `package.json` by running:
+To enable an SSR site and deploy to Cloudflare Pages, add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) to your project's `package.json` by running:
 
 ```sh
 $ npm run astro add cloudflare
 ```
 
-
 ### Modes
 
 There are currently two modes supported when using Pages Functions with the [`@astrojs/cloudflare`](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) adapter. 
 
-1. **Advanced** mode: This mode is used when you want to run your function in `advanced` mode which picks up the `_worker.js` in `dist`, or a directory mode where pages will compile the worker out of a functions folder in the project root.  
+1. **Advanced** mode: This mode is used when you want to run your Function in `advanced` mode. This mode picks up the `_worker.js` in `dist`, or a directory mode where Pages will compile the Worker out of a Functions folder in the project root.  
 
 {{<Aside type="note">}}
 
@@ -76,9 +75,10 @@ If no mode is set, the default is `"advanced"`
 
 {{</Aside>}}
 
-2. **Directory** mode: This mode is used when you want to run your function in `directory` mode, which means the adapter will compile the client-side part of your app the same way, but it will move the worker script into a `functions` folder in the project root. The adapter will allow you to access your Pages Functions from your `functions` folder, allowing you to add [Pages Plugins](/pages/platform/functions/plugins/) and [Middleware](/pages/platform/functions/#adding-middleware) which can be checked into version control.
+2. **Directory** mode: This mode is used when you want to run your Function in `directory` mode. In this mode, the adapter will compile the client-side part of your application the same way, but it will move the Worker into a `functions` folder in the project root. The adapter will allow you to access your Pages Functions from your `functions` folder, allowing you to add [Pages Plugins](/pages/platform/functions/plugins/) and [Middleware](/pages/platform/functions/#adding-middleware) which can be checked into version control.
 
 To use Directory mode, modify your `astro.config.mjs` file to add `mode: "directory"` to the adapter configuration:
+
 ```js
 --- 
 filename: astro.config.mjs
