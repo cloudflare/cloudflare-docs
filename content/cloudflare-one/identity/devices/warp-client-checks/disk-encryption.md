@@ -72,7 +72,7 @@ All disks on the system must be encrypted for the posture check to pass.
 
 ### On Linux
 
-Disk encryption is not supported on Linux at the moment
+Disk encryption checks are not currently supported on Linux.
 
 ### On iOS, Android and ChromeOS
 
