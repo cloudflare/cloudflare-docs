@@ -20,7 +20,7 @@ No. Cloudflare pushes logs in batches as soon as possible.
 
 No. **Logpush** only pushes the logs once as they become available and is unable to backfill. However, the logs are stored for at least 72 hours and can be downloaded using the **Logpull API**.
 
-## I have reconfigured the job to a new destination, but still receiving the logs at the old place?
+## I have reconfigured the job to a new destination, but why am I still receiving the logs at the old destination?
 
 Typically there will be a delay no greater than 15 minutes to complete the transition.
 
