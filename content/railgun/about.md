@@ -16,16 +16,6 @@ It proxies traffic through a special protocol that would normally travel between
 
 Typically, the markup of websites, or the body of a JSON API response, does not change that frequently from one request to the next. Instead of transferring the entire request between Cloudflare and your environment, Railgun will transfer only the changes in markup from one request to the next. This cuts down on bandwidth, transfer time, and overall page load times. Railgun caches these differences in memory to make page processing as fast as possible.
 
-## Support
-
-When contacting [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476), provide the following information (if accessible):
-
-- Your `railgun.conf` and `railgun-nat.conf` (if applicable) files.
-- Output from `/var/log/messages` from Railgun.
-- A copy of `/var/log/railgun/panic.log`, if not empty.
-
-Providing the IP address or hostname of your Railgun server will also allow our Support team to test connectivity remotely. Please let us know if you have firewalled your Railgun server when lodging support request.
-
 ## Implementation Details
 
 Railgun works by recognizing that uncacheable web pages do not change very rapidly. For example, we captured the CNN homepage HTML once, then again after five minutes and then again after one hour. The page sizes were 92,516 bytes, five minutes later still 92,516 bytes and one hour later 93,727 bytes.
@@ -34,7 +24,7 @@ CNN sets the caching on this page to 60 seconds. After one minute it is necessar
 
 ![Binary code that makes CNN homepage](/railgun/static/cnn.webp)
 
-Experiments at Cloudflare have revealed similar change values across the web. For example, `reddit.com` changes by about 2.15% over five minutes and 3.16% over an hour. The New York Times home page changes by about 0.6% over five minutes and 3% over an hour. BBC News changes by about 0.4% over five minutes and 2% over an hour.
+Experiments at Cloudflare have revealed similar change values across the web. For example, Reddit changes by about 2.15% over five minutes and 3.16% over an hour. The New York Times home page changes by about 0.6% over five minutes and 3% over an hour. BBC News changes by about 0.4% over five minutes and 2% over an hour.
 
 Although the dynamic web is not cacheable, it is also not changing quickly. That means that from moment to moment there is only a small change between versions of a page. Railgun uses this fact to achieve very high rates of compression. This is very similar to how video compression looks for changes from frame to frame; Railgun looks for changes on a page from download to download.
 
@@ -53,3 +43,13 @@ Of course, compression is used on web pages today. The most common technique is 
 But the Railgun compression technique goes much further. The compression between versions one and two of the page above (at five minute intervals) results in just 266 bytes of difference data being sent (a compression to 0.29% of the original page size). The one hour difference (versions two to three above) is 2,885 bytes (a compression to 3% of the original page size). Clearly, Railgun compression outperforms Gzip enormously.
 
 For pages that are frequently accessed the deltas are often so small that they fit inside a single TCP packet, and because the connection between the two parts of Railgun is kept active, problems with TCP connection time and slow start are eliminated.
+
+## Support
+
+When contacting [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476), provide the following information (if accessible):
+
+- Your `railgun.conf` and `railgun-nat.conf` (if applicable) files.
+- Output from `/var/log/messages` from Railgun.
+- A copy of `/var/log/railgun/panic.log`, if not empty.
+
+Providing the IP address or hostname of your Railgun server will also allow our Support team to test connectivity remotely. Please let us know if you have firewalled your Railgun server when lodging support request.
