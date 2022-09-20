@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Managed Rulesets
+layout: single
 weight: 5
 ---
 
@@ -19,9 +20,5 @@ The available Managed Rulesets are:
 *   **[Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/)**
 
     *   This ruleset includes rules to detect and mitigate DDoS attacks on L3/4 of the OSI model such as UDP floods, SYN-ACK reflection attacks, SYN Floods, and DNS floods.
-
-*   **[Advanced TCP Protection](/ddos-protection/managed-rulesets/tcp-protection/)**
-
-    *   This ruleset protects against sophisticated and out-of-state TCP DDoS attacks.
 
 {{</definitions>}}

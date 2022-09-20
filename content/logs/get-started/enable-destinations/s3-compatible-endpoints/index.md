@@ -13,7 +13,7 @@ Cloudflare Logpush supports pushing logs to S3-compatible destinations via the C
 
 - [Alibaba Cloud OSS](https://www.alibabacloud.com/help/doc-detail/64919.htm#title-37m-7gl-xy2)
 - [Backblaze B2](https://www.backblaze.com/b2/docs/s3_compatible_api.html)
-- [Digital Ocean Spaces](https://www.digitalocean.com/docs/spaces/)
+- [DigitalOcean Spaces](https://www.digitalocean.com/docs/spaces/)
 - [IBM Cloud Object Storage](https://cloud.ibm.com/apidocs/cos/cos-compatibility)
 - [JD Cloud Object Storage Service](https://docs.jdcloud.com/en/object-storage-service/introduction-2)
 - [Linode Object Storage](https://www.linode.com/products/object-storage/)

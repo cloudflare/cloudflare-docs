@@ -5,15 +5,11 @@ title: Deploy an Astro site
 
 # Deploy an Astro site
 
-[Astro](https://astro.build) is a new static-site generator that allows you to build faster, SEO-friendly websites that use less client-side JavaScript code. By default, Astro builds websites that have zero JavaScript runtime code.
+[Astro](https://astro.build) is an all-in-one web framework for building fast, content-focused websites. By default, Astro builds websites that have zero JavaScript runtime code.
+
+Refer to the [Astro Docs](https://docs.astro.build/) to learn more about Astro or for assistance with an Astro project.  
 
 In this guide, you will create a new Astro application and deploy it using Cloudflare Pages.
-
-{{<Aside type="warning">}}
-
-At the time of publication, Astro is in early beta. Refer to the Astro [GitHub repository](https://github.com/snowpackjs/astro) to stay current with the project's status.
-
-{{</Aside>}}
 
 ## Setting up a new project
 
@@ -25,7 +21,12 @@ $ npm create astro@latest
 $ cd <project-name>
 ```
 
-During `init`, Astro will ask you which project type you would like to set up. Your answers will not affect the rest of this tutorial. Select an answer ideal for your project.
+Astro will ask you which project type you would like to set up. Your answers will not affect the rest of this tutorial. Select an answer ideal for your project.
+
+{{<Aside type="note">}}
+Refer to Astro's available templates at [astro.new](https://astro.new).
+{{</Aside>}}
+
 
 {{<render file="_tutorials-before-you-start.md">}}
 
@@ -113,7 +114,7 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 {{<Aside type="warning" header="Important">}}
 
-Astro requires Node.js v14.x or later to build successfully. You must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
+Cloudflare requires [node v16.13](https://miniflare.dev/get-started/cli#installation), which is a more recent version than Astro’s out-of-the-box minmimum. Go to your **Pages** project > **Settings** > **Environment Variables (advanced)** and add a `NODE_VERSION` variable with a value of `16.13` or greater. Check the version of node you are using locally (by running `node -v`) matches the version you are specifying in the environment variable.
 
 {{</Aside>}}
 

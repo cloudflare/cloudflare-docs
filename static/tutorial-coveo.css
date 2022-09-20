@@ -59,7 +59,7 @@
 }
 
 .CoveoResult {
-  height: 18em;
+  height: 22em !important;
   width: 22em !important;
   background: #f3f3f4;
   border-radius: 25px !important;
@@ -74,10 +74,8 @@
 }
 
 .tutorialHeading {
-  vertical-align:top;
   font-size:1.25em;
   color: #0051c3;
-  justify-self: flex-start;
   padding-bottom: 1em;
   letter-spacing: .1em;
 }
@@ -123,4 +121,8 @@
 .coveo-main-section {
   display: flex !important;
   flex-direction: row !important;
+}
+
+.CoveoFieldValue {
+  font-size:1.25em;
 }

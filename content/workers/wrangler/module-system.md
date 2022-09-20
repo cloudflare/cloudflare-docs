@@ -34,7 +34,7 @@ $ wrangler init -y
 $ npm i meaning-of-life
 ```
 
-Then, open `/src/index.ts' and add:
+Then, open `/src/index.ts` and add:
 
 ```typescript
 import meaning from "meaning-of-life";

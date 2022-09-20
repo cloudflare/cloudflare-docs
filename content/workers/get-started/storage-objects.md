@@ -1,6 +1,6 @@
 ---
 title: Storage options guide
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 2
 meta:
   title: Storage options guide
@@ -41,7 +41,7 @@ To get started with R2:
 
 * Read the [Get started guide](/r2/get-started/).
 * Learn about R2 [Limits](/r2/platform/limits/).
-* Review the [R2 Runtime API](/r2/runtime-apis/).
+* Review the [R2 Workers API](/r2/data-access/workers-api/workers-api-reference/).
 
 ## R2 and KV comparison
 
@@ -74,7 +74,7 @@ It is ideal for projects that require:
 
 To get started with Durable Objects:
 
-* Read the [introductory blog post](https://blog.cloudflare.com/introducing-workers-durable-objects/).
+* Read the [introductory blog post](https://blog.cloudflare.com/introducing-workers-durable-objects//).
 * Get started with [Durable Objects](/workers/learning/using-durable-objects/).
 * Review the [Durable Objects Runtime API](/workers/runtime-apis/durable-objects/).
 * Learn about Durable Objects [Limits](/workers/platform/limits/#durable-objects-limits/).

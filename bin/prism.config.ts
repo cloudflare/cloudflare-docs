@@ -22,6 +22,8 @@ import 'prismjs/components/prism-sql.min.js';
 import 'prismjs/components/prism-typescript.min.js';
 import 'prismjs/components/prism-toml.min.js';
 import 'prismjs/components/prism-yaml.min.js';
+import 'prismjs/components/prism-kotlin.min.js';
+import 'prismjs/components/prism-swift.min.js';
 
 // Custom `shell` grammar
 Prism.languages.sh = {
@@ -113,8 +115,8 @@ const ESCAPE = /[&"<>]/g;
 const CHARS = {
   '"': '&quot;',
   '&': '&amp;',
-  '<': '&lt',
-  '>': '&gt',
+  '<': '&lt;',
+  '>': '&gt;',
 };
 
 // @see lukeed/tempura

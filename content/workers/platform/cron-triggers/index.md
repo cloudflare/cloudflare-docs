@@ -52,6 +52,10 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
   - Every 30 minutes
 
+- `45 * * * *`
+
+  - On the 45th minute of every hour
+
 - `0 17 * * sun` or `0 17 * * 1`
 
   - 5PM on Sunday

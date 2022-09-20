@@ -1,6 +1,6 @@
 ---
 title: Collect PCAPs
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 5
 ---
 
@@ -21,7 +21,13 @@ Currently, when a packet capture is requested, packets flowing at the edge throu
 Cloudflare supports two types of packet captures:
 
 - **Simple**: Simple packets are best for debugging and providing a global picture across all data centers. Simple packets generate single, smaller files and only contain the first 160 bytes of the payload. Sampled packets are collected across all edge metals to build a PCAP file.
-- **Full**: Full packets are best for targeted data collection with a detailed view into a single data center. Full packets generate multiple large files, and they are captured within a given data center and sent to either a GCP or AWS bucket specified by the user.
+- **Full**: Full packets are best for targeted data collection with a detailed view into a single data center. Full packets generate multiple large files, and they are captured within a given data center or set of data centers and sent to either a GCP or AWS bucket specified by the user.
+
+{{<Aside type="note" header="Note:">}}
+
+For help determining which data center to select for a packet capture, visit https://cloudflare.com/cdn-cgi/trace and refer to the `colo` field. Note some colos can be regional such as `ORD` while other names may be more specific like `ord02`. Either of these names can be used for this same field.
+
+{{</Aside>}}
 
 <details>
 <summary>
@@ -57,7 +63,7 @@ header: Full PCAP example request
           "packet_limit": 10000,
           "byte_limit": 100000000,
           "type": "full",
-          "colo": "sfo06",
+          "colo": "ORD",
           "system": "magic-transit",
            "destination_conf": "${bucket}"
            }'
@@ -80,7 +86,7 @@ header: Full PCAP example response
         "system": "magic-transit",
         "packet_limit": 10000,
         "byte_limit": 100000000,
-        "colo": "sfo06",
+        "colo": "ORD",
         "destination_conf": "gs://test-magic-pcaps"
       },
       "success": true,

@@ -11,14 +11,14 @@ The domain name system (DNS) translates domain names into numeric Internet addre
 
 DNSSEC creates a secure layer to the domain name system by adding cryptographic signatures to DNS records. By doing so, your request can check the signature to verify that the record you need comes from the authoritative name server and was not altered along the way. [Read more about how DNSSEC works on cloudflare.com](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/).
 
-## Enable DNSSEC
+## Enable or disable DNSSEC
 
 Cloudflare Registrar offers one-click DNSSEC activation for free to all customers. You will not need to set the DS record details manually. However, your domain must be using Cloudflare as the [authoritative DNS provider](/dns/zone-setups/full-setup/).
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select **Registrar**.
 2. Select **Manage** on the domain you want to activate DNSSEC.
 3. Select **Configuration**.
-4. **Enable** DNSSEC.
+4. Select **Enable DNSSEC** or **Disable DNSSEC**.
 
 If your domain is not on Cloudflare Registrar, you can enable DNSSEC in [**DNS**](/dns/additional-options/dnssec/) on the Cloudflare dashboard.
 

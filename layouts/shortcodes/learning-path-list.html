@@ -1,0 +1,57 @@
+{{ $data := slice }}
+{{ $fileplaceholder := "" }}
+{{- range readDir "./assets/json/" -}}
+{{- $fileplaceholder :=  print "./assets/json/" .Name -}}
+{{- $file_data := getJSON $fileplaceholder -}}
+{{ $data = $data | append $file_data }}
+{{- end -}}
+{{- $numTrails := len $data -}}
+{{ $product_array := slice }}
+{{ $category_array := slice }}
+{{- range $data -}}
+{{ with .products }}
+{{- $product_array = union $product_array . -}}
+{{- end -}}
+{{ with .category }}
+{{- $category_array = union $category_array . -}}
+{{- end -}}
+{{- end -}}
+
+<div class="headerInfo">
+<p class="numTrails" id="numTrails">{{$numTrails}} results</p>
+<p>Learning paths guide you through modules and projects so you can get started with Cloudflare as quickly as possible.</p>
+</div>
+
+<div class="selectorDropdowns">
+
+<div>
+<label for="roles">Category</label>
+<select class="selectorFilter" name="data-category" id="category">
+    <option value="all">Select...</option>
+    {{- range $category_array -}}
+    <option value="{{.}}">{{.}}</option>
+    {{- end -}}
+</select>
+</div>
+
+<div>
+<label for="products">Products</label>
+<select class="selectorFilter" name="data-products" id="products">
+    <option value="all">Select...</option>
+    {{- range $product_array -}}
+    <option value="{{.}}">{{.}}</option>
+    {{- end -}}
+</select>
+</div>
+
+</div>
+
+<div class="pathGrid" id="pathGrid">
+    {{- range $data }}
+    <div class="individualPath">
+        <p class="pathHeading">Learning path</p>
+        <a href="{{ .path }}"><h2>{{ .title }}</h2></a>
+        <p>{{ .description }}</p>        
+    </div>
+    {{- end -}}
+</div>
