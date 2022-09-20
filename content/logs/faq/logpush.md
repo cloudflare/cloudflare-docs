@@ -22,7 +22,7 @@ No. **Logpush** only pushes the logs once as they become available and is unable
 
 ## I have reconfigured the job to a new destination, but why am I still receiving the logs at the old destination?
 
-Typically there will be a delay no greater than 15 minutes to complete the transition.
+Typically there will be a delay no greater than 15 minutes to complete the transition. Refer to the question about [destination temporarily unavailable](/logs/faq/logpush/#what-happens-if-my-cloud-storage-destination-is-temporarily-unavailable), for more details on this topic. 
 
 **Logpush** is designed to retry in case of errors. If your destination is temporarily unavailable, Logpush will retry around five times over five minutes. However, note that this number and time are just approximations. If Cloudflare persistently receives errors from your destination, and cannot keep up with incoming batches, Logpush will eventually drop logs. If the errors continue for a prolonged period of time, Logpush will assume that the destination is permanently unavailable and disable your push job. You can always re-enable the job later.
 
