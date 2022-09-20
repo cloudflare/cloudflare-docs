@@ -114,7 +114,7 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 {{<Aside type="warning" header="Important">}}
 
-Cloudflare requires [node v16.13](https://miniflare.dev/get-started/cli#installation), which is a more recent version than Astro’s out-of-the-box minmimum. Go to your **Pages** project > **Settings** > **Environment Variables (advanced)** and add a `NODE_VERSION` variable with a value of `16.13` or greater. Check the version of node you are using locally (by running `node -v`) matches the version you are specifying in the environment variable.
+Cloudflare requires [node v16.13](https://miniflare.dev/get-started/cli#installation), which is a more recent version than Astro’s out-of-the-box minimum. Go to your **Pages** project > **Settings** > **Environment Variables (advanced)** and add a `NODE_VERSION` variable with a value of `16.13` or greater. Check the version of node you are using locally (by running `node -v`) matches the version you are specifying in the environment variable.
 
 {{</Aside>}}
 
