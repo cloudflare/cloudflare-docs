@@ -160,7 +160,7 @@ Example: If you purge `foo.com/bar`, any asset that starts with `foo.com/bar` wi
 
 ### Purge by prefix normalization
 
-Currently, when a purge by prefix request comes into Cloudflare for a normalized URL path, the purge service does not respect the [URL normalization](/rules/normalization/). Cloudflare is changing the purge by prefix functionality so that normalized URLs will be purged as expected. We plan for this change to occur on <needs to be added>.
+Currently, when a purge by prefix request comes into Cloudflare for a normalized URL path, the purge service does not respect the [URL normalization](/rules/normalization/). Cloudflare is changing the purge by prefix functionality so that normalized URLs will be purged as expected. We plan for this change to occur on October 12th, 2022.
 
 #### How does URL Normalization work
 
