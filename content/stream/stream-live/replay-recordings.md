@@ -17,8 +17,6 @@ curl -X GET \
 https://dash.cloudflare.com/api/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<LIVE_INPUT_UID>/videos
 ```
 
-This is what a response looks like:
-
 ```json
 ---
 header: Response
