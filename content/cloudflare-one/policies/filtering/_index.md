@@ -17,3 +17,13 @@ Cloudflare Gateway, our comprehensive Secure Web Gateway, allows you to set up p
 {{<Aside>}}
 When creating or editing policies, keep in mind that it may take up to 60 seconds for that policy to be updated across all of our data centers.
 {{</Aside>}}
+
+## What type of policy should I create?
+
+The recommended policy type depends on what kind of traffic you are trying to block. Generally speaking:
+
+- To block websites, create an HTTP policy.
+- To block non-HTTP traffic such as SSH and RDP, create a network policy.
+- To block malware and other security threats, create both DNS and HTTP policies.
+
+Refer to the [DNS](/cloudflare-one/policies/filtering/dns-policies/), [network](/cloudflare-one/policies/filtering/network-policies/), and [HTTP](/cloudflare-one/policies/filtering/http-policies/) configuration pages to see the available filtering options within each policy builder.
