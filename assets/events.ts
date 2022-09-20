@@ -181,8 +181,8 @@ export function tabs() {
         if (defaultTab) {
           // changes an id (i.e tab-js-esm-6f3904f86f90c21d) into just the type (tab-js-esm)
           // by removing the last element from the split array and then re-joining it
-          const parts = defaultTab.id.split("-").length;
-          const tabId = defaultTab.id.split("-").slice(0, parts - 1).join("-")
+          const parts = defaultTab.id.split("-");
+          const tabId = parts.slice(0, parts.length - 1).join("-")
 
           let defaultTabLabel;
           let found = false;
