@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Partners
-weight: 6
+weight: 5
 ---
 
 # Partners
