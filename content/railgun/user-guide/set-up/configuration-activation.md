@@ -1,7 +1,7 @@
 ---
 pcx_content_type: tutorial
 title: Configuration and activation
-weight: 7
+weight: 3
 ---
 
 # Configuration and activation

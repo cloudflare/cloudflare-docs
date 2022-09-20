@@ -1,7 +1,7 @@
 ---
 pcx_content_type: tutorial
 title: Installation overview
-weight: 6
+weight: 2
 ---
 
 # Installation overview

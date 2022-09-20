@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Administration
-weight: 10
+weight: 4
 ---
 
 # Administration

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: tutorial
 title: Preparing the environment
-weight: 5
+weight: 1
 ---
 
 # Preparing the environment

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Enable and disable connections
-weight: 14
+weight: 3
 ---
 
 # Enable and disable connections

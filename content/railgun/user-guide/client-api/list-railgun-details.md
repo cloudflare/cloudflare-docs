@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: List Railgun details
-weight: 13
+weight: 2
 ---
 
 # List Railgun details

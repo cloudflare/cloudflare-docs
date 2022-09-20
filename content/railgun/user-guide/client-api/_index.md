@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Client API
-weight: 11
+weight: 5
 ---
 
 # Client API

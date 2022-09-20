@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Manage Railguns
-weight: 12
+weight: 1
 ---
 
 # Manage Railguns
