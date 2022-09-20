@@ -16,11 +16,11 @@ As our [Network Map](https://www.cloudflare.com/network/) shows, we have locatio
 - Your Internet provider may choose to route traffic along an alternate path for reasons such as cost savings, reliability, or other infrastructure concerns.
 - Not all Cloudflare locations are WARP enabled. We are constantly evaluating performance and how users are connecting, bringing more servers online with WARP all the time.
 
-## Why is my public IP address sometimes visible?
+## Does WARP reveal my IP address to the websites I'm visiting?
 
-Cloudflare WARP Client in WARP mode was meant to ensure all your traffic is kept private between you and the [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/) (that is, the site you are connecting to), but not from the origin itself. In a number of cases, if the origin site you are communicating with cannot determine who you are and where you are from, it cannot serve locale-relevant content to you (that is, anything related to a customized user experience, such as language or regional configurations).
+No. 1.1.1.1 + WARP replaces your original IP address with a Cloudflare IP that consistently and accurately represents your approximate location. This happens regardless of whether the site is on the Cloudflare network or not. 
 
-Sites inside Cloudflare's network are able to see this information. If a site is showing you your IP address, chances are they are in our network. Most sites outside our network, however, are unable to see this information and instead see the nearest egress server to their server. We are working to see if in the future we can find a way to more easily share this information with a limited number of sites outside Cloudflare's network, where it is relevant to both parties.
+For more information on how we do this, see our [blog post](https://blog.cloudflare.com/geoexit-improving-warp-user-experience-larger-network/) on the topic.
 
 ## Why has my throughput dropped while using WARP?
 
