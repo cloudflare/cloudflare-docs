@@ -386,9 +386,8 @@
 
 # railgun
 /railgun/user-guide/introduction/ /railgun/about/ 301
-/railgun/user-guide/introduction/#requirements /railgun/user-guide/requirements/ 301
-/railgun/user-guide/introduction/#support /railgun/user-guide/troubleshooting/potential-problems/#support 301
 /railgun/user-guide/set-up/potential-problems/ /railgun/user-guide/troubleshooting/potential-problems/ 301
+/railgun/user-guide/increase-logging/ /railgun/user-guide/troubleshooting/increase-logging/ 301
 /railgun/user-guide/client-api/ /railgun/partners/client-api/ 301
 /railgun/user-guide/optimized-partner-api/ /railgun/partners/ 301
 /railgun/user-guide/optimized-partner-api/enable-and-disable-connections/ /railgun/partners/client-api/enable-and-disable-connections/ 301

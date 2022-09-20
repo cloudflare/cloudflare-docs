@@ -25,7 +25,7 @@ By default, Railgun will listen on all interfaces. It is best practice to specif
 
 You can find the Railgun activation token listed on your account home, under [**Manage Account** > **Configurations** > **Railgun**](https://dash.cloudflare.com/?to=/:account/configurations/railgun). Details on this page can be found in the [Administration documentation](/railgun/user-guide/administration/). You should add a Railgun on the listing page, if you have not already. It can be named anything you like. After adding a Railgun, the token will be listed on the page and you can toggle the Railgun to **On**. The token is a 32 character hash of numbers and letters. Copy this hash into the `activation.token` option in your Railgun configuration file. If your public IP and activation token are properly configured, the first time you start Railgun it will register and download a newly generated SSL certificate to encrypt traffic. To make sure that activation works properly, check your logs for a successful activation response when starting Railgun:
 
-```bash
+```sh
 $  tail -f /var/log/messages
 Oct 27 22:29:41 www rg-listener: [Activation] Activation POST completed.
 Oct 27 22:29:41 www rg-listener: [Activation] Assigned Railgun ID: 1
@@ -78,8 +78,8 @@ $ sudo -u railgun /usr/bin/rg-listener -config=/etc/railgun/railgun.conf
 Once you have configured Railgun, you can test its operation on the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Speed**.
-3. Select **Optimization** and scroll down to **Railgun** > **Test**. 
+2. Go to **Speed** > **Optimization**.
+3. Scroll down to **Railgun** and select **Test**. 
 
 This will indicate whether a request to your web server uses Railgun.
 

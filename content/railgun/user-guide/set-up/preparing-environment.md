@@ -8,7 +8,7 @@ weight: 1
 
 There are no dependencies to install Railgun. The only external requirement is a Memcached instance for Railgun to use as a cache backend. However, you should ensure that the latest CA certificate bundle is installed for your operating system as it will be used to connect securely back to Cloudflare during activation. CentOS, Red Hat, Debian, and Ubuntu users should make sure that the `ca-certificates` package is installed and up-to-date via `yum` or `apt`.
 
-Users of [`mod_cloudflare`](https://www.cloudflare.com/resources-downloads), an Apache module which displays a visitor’s true source IP, should update their Apache configuration to include the IP of their Railgun instance as a trusted proxy. If Apache and Railgun run on the same server, the following line is needed within your Apache configuration (typically, this lives in `/etc/apache2/httpd.conf` or `/etc/httpd/httpd.conf`):
+Users of [`mod_cloudflare`](https://support.cloudflare.com/hc/articles/200170786#cF7JFXws2pZ4bgu), an Apache module which displays a visitor’s true source IP, should update their Apache configuration to include the IP of their Railgun instance as a trusted proxy. If Apache and Railgun run on the same server, the following line is needed within your Apache configuration (typically, this lives in `/etc/apache2/httpd.conf` or `/etc/httpd/httpd.conf`):
 
 ```txt
 CloudFlareRemoteIPTrustedProxy 127.0.0.1
