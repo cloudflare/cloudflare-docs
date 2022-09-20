@@ -1,10 +1,10 @@
 ---
+title: About
 pcx_content_type: reference
-title: Introduction
 weight: 2
 ---
 
-# Introduction
+# About
 
 One of the major advantages of using Cloudflare is that cacheable content (such as images, JavaScript, CSS and HTML) is both cached by Cloudflare and delivered from our data centers around the world. Because Cloudflare has data centers covering the entire globe, cached content gets delivered quickly to web surfers wherever they are (and overcomes latency problems).
 
