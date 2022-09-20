@@ -43,7 +43,7 @@ To enable or disable **Prefetch URLs** with the API, send a [`PATCH`](https://ap
 
 After you [enable the feature](#enable-prefetch-urls), you also need to indicate which URLs Cloudflare should prefetch.
 
-To do this, include a Link HTTP response header pointing to a manifest file with the `rel="prefetch"` attribute and then serve the manifest file with text/plain as the Content-type response header.
+To do this, include a Link HTTP response header pointing to a manifest file with the `rel="prefetch"` attribute and then serve the manifest file with `text/plain` as the Content-type response header.
 
 {{<example>}}
 Example HTTP response header:<br/>
