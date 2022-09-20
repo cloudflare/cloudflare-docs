@@ -15,11 +15,11 @@ Stream Live supports webhooks that notify your service when an Input connects or
 4.  Enter the information for your webhook and click **Save and Test**.
 5.  To create the notification, from the **Notifications** page, click the **All Notifications** tab.
 6.  Next to **Notifications**, click **Add**.
-7.  Under the list of products, locate **Stream** and and click **Select**.
+7.  Under the list of products, locate **Stream** and click **Select**.
 8.  Enter a name and optional description.
 9.  Under **Webhooks**, click **Add webhook** and click your newly created webhook.
-10.  Click **Next**.
-11.  By default, you will receive webhook notifications for all Live Inputs. If you only wish to receive webhooks for certain inputs, enter a comma delimited list of Input IDs in the text field.
+10. Click **Next**.
+11.  By default, you will receive webhook notifications for all Live Inputs. If you only wish to receive webhooks for certain inputs, enter a comma-delimited list of Input IDs in the text field.
 12.  When you are done, click **Create**.<br><br>
 
 ```json
