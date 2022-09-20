@@ -6,7 +6,7 @@ weight: 4
 
 # Enable and disable connections
 
-After a Railgun has been activated, it can be assigned to a particular domain with the [`conn\_set`](/railgun/client-api/enable-and-disable-connections/#post-conn_set) API call. [`conn\_setmode\_enabled`](/railgun/client-api/enable-and-disable-connections/#post-conn_setmode_enabled) and [`conn\_setmode\_disabled`](/railgun/client-api/enable-and-disable-connections/#post-conn_setmode_disabled) can be used to toggle Railgun on or off for the domain. [`conn\_set`](/railgun/client-api/enable-and-disable-connections/#post-conn_set) also accepts a mode parameter to assign and enable Railgun in a single API call. [`zone\_conn\_get\_active`](/railgun/client-api/list-railgun-details/#post-zone_conn_get_active) can be used to view active Railgun connections.
+After a Railgun has been activated, it can be assigned to a particular domain with the [`conn\_set`](/railgun/partners/client-api/enable-and-disable-connections/#post-conn_set) API call. [`conn\_setmode\_enabled`](/railgun/partners/client-api/enable-and-disable-connections/#post-conn_setmode_enabled) and [`conn\_setmode\_disabled`](/railgun/partners/client-api/enable-and-disable-connections/#post-conn_setmode_disabled) can be used to toggle Railgun on or off for the domain. [`conn\_set`](/railgun/partners/client-api/enable-and-disable-connections/#post-conn_set) also accepts a mode parameter to assign and enable Railgun in a single API call. [`zone\_conn\_get\_active`](/railgun/partners/client-api/list-railgun-details/#post-zone_conn_get_active) can be used to view active Railgun connections.
 
 ## POST conn\_set
 
@@ -346,7 +346,7 @@ Content-Type: application/json
 
 `POST /api/v2/railgun/conn_delete`
 
-Remove a connection between a domain and a Railgun. This API call will allow a connected Railgun to be assigned to a different domain. Removing the connection of an enabled Railgun and domain will disable Railgun for the domain until a new connection is made with [conn\_set](/railgun/client-api/enable-and-disable-connections/#post-conn_set).
+Remove a connection between a domain and a Railgun. This API call will allow a connected Railgun to be assigned to a different domain. Removing the connection of an enabled Railgun and domain will disable Railgun for the domain until a new connection is made with [conn\_set](/railgun/partners/client-api/enable-and-disable-connections/#post-conn_set).
 
 ### Form parameters
 
@@ -401,7 +401,7 @@ Content-Type: application/json
 
 `GET /api/v2/railgun/conn_delete`
 
-Remove a connection between a domain and a Railgun. This API call will allow a connected Railgun to be assigned to a different domain. Removing the connection of an enabled Railgun and domain will disable Railgun for the domain until a new connection is made with [conn\_set](/railgun/client-api/enable-and-disable-connections/#post-conn_set).
+Remove a connection between a domain and a Railgun. This API call will allow a connected Railgun to be assigned to a different domain. Removing the connection of an enabled Railgun and domain will disable Railgun for the domain until a new connection is made with [conn\_set](/railgun/partners/client-api/enable-and-disable-connections/#post-conn_set).
 
 ### Query parameters
 
