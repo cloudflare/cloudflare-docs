@@ -43,13 +43,3 @@ Of course, compression is used on web pages today. The most common technique is 
 But the Railgun compression technique goes much further. The compression between versions one and two of the page above (at five minute intervals) results in just 266 bytes of difference data being sent (a compression to 0.29% of the original page size). The one hour difference (versions two to three above) is 2,885 bytes (a compression to 3% of the original page size). Clearly, Railgun compression outperforms Gzip enormously.
 
 For pages that are frequently accessed the deltas are often so small that they fit inside a single TCP packet, and because the connection between the two parts of Railgun is kept active, problems with TCP connection time and slow start are eliminated.
-
-## Support
-
-When contacting [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476), provide the following information (if accessible):
-
-- Your `railgun.conf` and `railgun-nat.conf` (if applicable) files.
-- Output from `/var/log/messages` from Railgun.
-- A copy of `/var/log/railgun/panic.log`, if not empty.
-
-Providing the IP address or hostname of your Railgun server will also allow our Support team to test connectivity remotely. Please let us know if you have firewalled your Railgun server when lodging support request.

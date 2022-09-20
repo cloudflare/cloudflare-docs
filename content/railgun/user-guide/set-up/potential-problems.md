@@ -54,3 +54,13 @@ Railgun Flag map.file used to change IP
 Railgun Flag rg-sender sent dictionary
 Railgun Flag rg-listener found dictionary
 ```
+
+## Support
+
+When contacting [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476), provide the following information (if accessible):
+
+- Your `railgun.conf` and `railgun-nat.conf` (if applicable) files.
+- Output from `/var/log/messages` from Railgun.
+- A copy of `/var/log/railgun/panic.log`, if not empty.
+
+Providing the IP address or hostname of your Railgun server will also allow our Support team to test connectivity remotely. Please let us know if you have firewalled your Railgun server when lodging support request.
