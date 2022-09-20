@@ -14,11 +14,11 @@ Railgun can be load-balanced and multiple Railgun daemons can be used per activa
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Manage Account** > **Configurations** > **Railgun**.
-2. In **Enter new Railgun name** text box, enter a descriptive title for your Railgun, and select the **Create** button.
-3. Within your Railgun configuration file, update `activation.public_ip` to the public IP or a hostname which resolves to the public IP of your Railgun’s server and set the `activation.token` to the activation key displayed on the page.
-4. Start the Railgun daemon so that it can proceed with activation.
-5. If everything went smoothly, the red icon will change to a green check mark after refreshing the page, and the Railgun can then be toggled on.
-6. If the Railgun fails to activate, check your logs for errors and [contact support](https://support.cloudflare.com/hc/articles/200172476) if the issue persists.
+3. In **Enter new Railgun name** text box, enter a descriptive title for your Railgun, and select the **Create** button.
+4. Within your Railgun configuration file, update `activation.public_ip` to the public IP or a hostname which resolves to the public IP of your Railgun’s server and set the `activation.token` to the activation key displayed on the page.
+5. Start the Railgun daemon so that it can proceed with activation.
+6. If everything went smoothly, the red icon will change to a green check mark after refreshing the page, and the Railgun can then be toggled on.
+7. If the Railgun fails to activate, check your logs for errors and [contact support](/railgun/user-guide/set-up/potential-problems/#support) if the issue persists.
 
 ## Enabling Railgun
 
