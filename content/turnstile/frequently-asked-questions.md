@@ -24,7 +24,7 @@ Action can be used in analytics and is more limited in size. It should identify 
 
 Action should not contain any PII as this is placed into the analytics.
 
-cData is not stored in our analytics. cData can contain data that may vary by each challenge instance.
+cData is not stored in our analytics. It can contain data that may vary by each challenge instance.
 
 Both cData and action are returned by the siteverify API if a token is presented.
 
