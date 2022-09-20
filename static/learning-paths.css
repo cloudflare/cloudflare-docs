@@ -1,3 +1,8 @@
+html {
+    scroll-padding-top:7em;
+    overflow-anchor: auto;
+}
+
 .numTrails {
     opacity: 70%;
     margin-top: 0;

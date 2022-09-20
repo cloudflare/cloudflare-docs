@@ -2,9 +2,6 @@
 {{ $data := slice }}
 {{ $fileplaceholder := "" }}
 {{- range readDir "./assets/json/" -}}
-<script>
-    console.log({{.Name}})
-</script>
 {{- if eq .Name $filename }}
 {{- $fileplaceholder :=  print "./assets/json/" .Name -}}
 {{- $file_data := getJSON $fileplaceholder -}}
