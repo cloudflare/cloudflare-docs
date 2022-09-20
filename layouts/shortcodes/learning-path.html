@@ -1,7 +1,18 @@
-{{- $filename := .Page.RelPermalink -}}
-{{- $data := .Site.Data.learning_paths -}}
+{{- $filename := default (.Get "file") (.Get 0) -}}
+{{ $data := slice }}
+{{ $fileplaceholder := "" }}
+{{- range readDir "./assets/json/" -}}
+<script>
+    console.log({{.Name}})
+</script>
+{{- if eq .Name $filename }}
+{{- $fileplaceholder :=  print "./assets/json/" .Name -}}
+{{- $file_data := getJSON $fileplaceholder -}}
+{{ $data = $data | append $file_data }}
+{{- end -}}
+{{- end -}}
 
-{{- range where $data "path" $filename -}}
+{{- range $data -}}
 
 <p class="viewOtherPaths"><a href="/learning-paths/"><strong>&lt;</strong>  View other learning paths</a></p>
 
