@@ -6,7 +6,7 @@ weight: 4
 
 # Stream live video
 
-Use Cloudflare Stream to stream live video and broadcast your own live events or add live video to your own app.  When you use Stream, you get low latency without having to worry about encoding or ingestion fees, finding a CDN, or modifying your configuration; Stream takes care of this for you.
+Use Cloudflare Stream to stream live video and broadcast your own live events or add live video to your own app. When you use Stream, you get low latency without having to worry about encoding or ingestion fees, finding a CDN, or modifying your configuration; Stream takes care of this for you.
 
 ## How Stream works
 
