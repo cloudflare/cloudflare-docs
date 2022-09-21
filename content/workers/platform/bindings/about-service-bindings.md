@@ -48,6 +48,7 @@ The `wrangler.toml` options are:
 * `environment` (optional): name of the environment on the target Worker you'd like to communicate with. This is optional, by default the 'Default' environment will be inferred
 
 ### `wrangler.toml` example
+
 For the example outlined above, a `wrangler.toml` might look like this:
 
 ```toml
