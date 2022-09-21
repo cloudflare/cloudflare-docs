@@ -14,11 +14,9 @@ If you are looking to use Cloudflare Railgun to optimize the load times of dynam
 
 ![Diagram describing how a single Railgun client should be placed in front of the load balancer, firewall or NAT.](/railgun/static/single-railgun-listener.png)
 
-This setup is Cloudlfare's recommended configuration.
+Cloudflare recommends installing the [Railgun client](/railgun/user-guide/railgun-execution/) (`rg-listener`) in front of the load balancer/firewall/NAT scheme, as shown in illustration above.
 
-Cloudflare strongly encourages the installation of the Railgun client (`rg-listener`) "in front of" the load balancer/firewall/NAT scheme, as shown in illustration above.
-
-When activation the Railgun client, you must specify in the `railgun.conf` file, for the `activation.railgun_host` setting, the public IP address of the server it is installed on (`3.3.3.3` in the example). Thus, all requests that cannot be served from Cloudflare's edge servers will be forwarded to `3.3.3.3` via `rg-sender`, instead of your origin (`1.1.1.1` in the example).
+When activation the Railgun client, you must specify in the [`railgun.conf` file](/railgun/user-guide/set-up/configuration-activation/), for the `activation.railgun_host` setting, the public IP address of the server it is installed on (`3.3.3.3` in the example). Thus, all requests that cannot be served from Cloudflare's edge servers will be forwarded to `3.3.3.3` [via `rg-sender`](/railgun/user-guide/railgun-execution/), instead of your origin (`1.1.1.1` in the example).
 
 Each request received by the server at `3.3.3.3` on port `2408` will then be processed by the `rg-listener` service. `rg-listener` will check the process's host header and forward it (by default) to the IP address of your origin server's hostname, according to your Cloudflare DNS configuration. `rg-listener` sends this request with the HTTP header `CF-ORIGIN-IP`. The `rg-listener` strips out this header when forwarding requests to your origin over HTTPS.
 
@@ -40,7 +38,7 @@ It is also possible to put multiple `rg-listeners` behind the load balancer and 
 
 For this configuration to work you need to:
 
-* Create a single Railgun server in your Cloudflare dashboard
+* [Create a single Railgun server](/railgun/user-guide/administration/#adding-a-railgun) in your Cloudflare dashboard
 * Install the `rg-listener` service on all your web servers (from the example above, `2.2.2.1`, `2.2.2.2`, `2.2.2.3`) and activate them all using the same Railgun activation token.
 
 Within each of the `railgun.conf` files, you will also need to specify the public IP address of the load balancer (`1.1.1.1`) as the `activation.railgun_host`.
