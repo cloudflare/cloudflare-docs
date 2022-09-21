@@ -10,7 +10,7 @@ title: Custom Domains
 Custom Domains allow you to connect your Worker to a hostname, without having to make changes to your DNS settings or do extra certificate management. Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker.
 
 {{<Aside type="note">}}
-Custom Domains are available to use in Open Beta.
+Custom Domains are Generally Available.
 {{</Aside>}}
 
 ## Build a Custom Domain

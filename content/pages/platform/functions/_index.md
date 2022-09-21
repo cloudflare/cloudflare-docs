@@ -537,6 +537,12 @@ $ npx wrangler pages dev ./dist --kv KV_NAMESPACE
 # Bind to a Durable Object
 $ npx wrangler pages dev ./dist --do ENV_NAME=CLASS_NAME
 
+# Bind to an R2 Bucket
+$ npx wrangler pages dev ./dist --r2 MY_BUCKET
+
+# Bind to a D1 Database
+$ npx wrangler pages dev ./dist --d1 MY_DATABASE
+
 # Or automatically proxy your existing tools
 $ npx wrangler pages dev -- npx react-scripts start
 
