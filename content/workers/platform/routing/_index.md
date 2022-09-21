@@ -18,7 +18,7 @@ and
 
 Routes add Workers functionality to your existing proxied hostnames, in front of your application server. These allow your  Workers to act as a proxy and perform any necessary work before reaching out to an application server behind Cloudflare.
 
-Custom Domains automatically attach a Worker to your hostname by creating a DNS record and an SSL certificate on your behalf. With Custom Domains, there's no application server to 'phone home' to - and that also means your application can use the power of Cloudflare’s global network to run your application. Custom Domains can also be invoked within the same zone via `fetch()`, unlike Routes.
+Custom Domains automatically attach a Worker to your hostname by creating a DNS record and an SSL certificate on your behalf. With Custom Domains, there is no application server to travel to because your Custom Domain is considered as the origin server. Your application will use Cloudflare’s global network to run your application. Custom Domains can also be invoked within the same zone via `fetch()`, unlike Routes.
 
 ## Custom Domains
 
