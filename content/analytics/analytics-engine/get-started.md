@@ -75,12 +75,11 @@ Here's how we represent that as SQL:
 
 ```sql
 SELECT blob1 as city, avg(double2) as avg_humidity 
-FROM analytics_engine 
-WHERE dataset = 'WEATHER' 
-  AND double1 > 0 
+FROM WEATHER 
+WHERE double1 > 0 
 GROUP BY city 
-ORDER BY avg_humidity 
-DESC LIMIT 10
+ORDER BY avg_humidity DESC
+LIMIT 10
 ```
 
 You can then perform the query using any HTTP client. Here's an example of doing it using cURL:
@@ -102,13 +101,12 @@ SELECT
   intDiv(toUInt32(timestamp), 300) * 300 as t, 
   blob1 as city, 
   avg(double2) as avg_humidity
-FROM analytics_engine
-WHERE 
-  dataset = 'WEATHER'
-  AND timestamp >= now() - INTERVAL '1' DAY
+FROM WEATHER
+WHERE
+  timestamp >= now() - INTERVAL '1' DAY
   AND double1 > 0
 GROUP BY t, city
-ORDER BY t, avg_humidity desc
+ORDER BY t, avg_humidity DESC
 ```
 
 This query first rounds the `timestamp` field to the nearest five minutes. Then we group by that field and city, and calculate the average humidity in each city for a five minute period. 

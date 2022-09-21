@@ -1,7 +1,7 @@
 ---
 title: SQL Reference
 pcx_content_type: reference
-weight: 2
+weight: 5
 meta:
   title: Workers Analytics Engine SQL Reference
 ---
@@ -14,7 +14,10 @@ meta:
 
 ```SQL
 SHOW TABLES
+[FORMAT <format>]
 ```
+
+See (below)[#format-clause] for the available `FORMAT` options.
 
 ## SELECT statement
 
@@ -277,22 +280,22 @@ Example:
 SUM(item_cost)
 ```
 
-### QUANTILE
+### QUANTILEWEIGHTED
 
 Usage:
 ```SQL
-QUANTILE(q, column_name) 
+QUANTILEWEIGHTED(q, column_name, weight_column_name) 
 ```
 
-Quantile is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set.
+`QUANTILEWEIGHTED` is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set. Each row will be weighted by the value in `weight_column_name`. Typically this would be `_sample_interval` (see (how sampling works)[../sql-api/#sampling]).
 
 Example:
 ```SQL
--- find the median value of <column_name>
-QUANTILE(0.5, column_name) 
+-- estimate the median value of <double1>
+QUANTILEWEIGHTED(0.5, double1, _sample_interval) 
 
--- in a table of query times, find the 95th centile query time
-QUANTILE(0.95, query_time)
+-- in a table of query times, estimate the 95th centile query time
+QUANTILEWEIGHTED(0.95, query_time, _sample_interval)
 ```
 
 ### IF
