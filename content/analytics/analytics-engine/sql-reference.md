@@ -17,7 +17,7 @@ SHOW TABLES
 [FORMAT <format>]
 ```
 
-See (below)[#format-clause] for the available `FORMAT` options.
+See [below](#format-clause) for the available `FORMAT` options.
 
 ## SELECT statement
 
@@ -34,7 +34,7 @@ SELECT <expression_list>
 [FORMAT <format>]
 ```
 
-See below for the syntax of each clause and see [LINK](TODO:link) for some example queries.
+See below for the syntax of each clause and see the [SQL API docs](../sql-api/) for some example queries.
 
 ### SELECT clause
 
