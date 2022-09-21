@@ -21,7 +21,7 @@ WAF feature  | Scope | Phase | Ruleset kind | Location in the dashboard
 -------------|-------|-------|--------------|--------------------------
 [Custom rulesets](/waf/custom-rulesets/)<br> | Account | `http_request_firewall_custom` | `custom`&nbsp;(create)<br/>`root` (deploy) | **Account Home** > **Application Security** > **WAF** > **Custom rulesets**
 [Custom rules](/waf/custom-rules/) | Zone | `http_request_firewall_custom` | `zone` | Your zone > **Security** > **WAF** > **Custom rules**
-[Rate limiting rules](/waf/rate-limiting-rules/) | Account | `http_ratelimit` | `root` | **Account Home** > **Application Security** > **WAF** > **Rate limiting**
+[Rate limiting rules](/waf/rate-limiting-rules/) | Account | `http_ratelimit` | `root` | N/A
 [Rate limiting rules](/waf/rate-limiting-rules/) | Zone | `http_ratelimit` | `zone` | Your zone > **Security** > **WAF** > **Rate limiting rules**
 [WAF Managed Rulesets](/waf/managed-rulesets/) | Account | `http_request_firewall_managed` | `root` | **Account Home** > **Application Security** > **WAF** > **Managed rulesets**
 [WAF Managed Rulesets](/waf/managed-rulesets/) | Zone | `http_request_firewall_managed` | `zone` | Your zone > **Security** > **WAF** > **Managed rules**
