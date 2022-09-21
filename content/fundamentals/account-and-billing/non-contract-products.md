@@ -20,3 +20,7 @@ To enable a non-contract service, use the **Dashboard link** in the following ta
 Once you enable the product or feature, it will not be an officially contracted service until you purchase it. Cloudflare will reach out in case you have any questions or feedback, and provide you with a sales quote if you are enjoying the product.
 
 To get started, check out our product docs and visit the various Cloudflare communities highlighted above.
+
+## View enabled products
+
+To view which products you have previously enabled, go to your [Account Subscriptions](https://dash.cloudflare.com/?to=/:account/billing/subscriptions) page and look for items that with **Terms** of **NOT IN CONTRACT**.
