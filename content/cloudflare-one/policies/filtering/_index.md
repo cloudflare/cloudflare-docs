@@ -20,7 +20,7 @@ When creating or editing policies, keep in mind that it may take up to 60 second
 
 ## What type of policy should I create?
 
-The recommended policy type depends on what kind of traffic you are trying to block. Generally speaking:
+The recommended policy type depends on what kind of traffic you are trying to filter. Generally speaking:
 
 - To block websites, create an HTTP policy.
 - To block non-HTTP traffic such as SSH and RDP, create a network policy.

@@ -36,7 +36,7 @@ Gateway evaluates network policies in [order of precedence](#order-of-precedence
 
 Gateway applies HTTP policies based on a combination of [action type](/cloudflare-one/policies/filtering/http-policies/#actions) and [order of precedence](#order-of-precedence):
 
-1. All Do Not Inspect policies are evaluated first, in order of precedence.
+1. All [Do Not Inspect](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) policies are evaluated first, in order of precedence.
 2. If no policies match, all Isolate policies are evaluated in order of precedence.
 3. All Allow, Block and Do Not Scan policies are evaluated in order of precedence.
 
@@ -44,7 +44,7 @@ This order of enforcement allows Gateway to first determine whether decryption s
 
 Next, Gateway checks decrypted traffic against your Isolate policies. When a user makes a request which triggers an Isolate policy, the request will be rerouted to a [remote browser](/cloudflare-one/policies/browser-isolation/).
 
-Lastly, Gateway evaluates all Allow, Block, and Do Not Scan policies. These policies apply to both isolated and non-isolated traffic.
+Lastly, Gateway evaluates all Allow, Block, and Do Not Scan policies. These policies apply to both isolated and non-isolated traffic. For example, if `example.com` is isolated and `example.com/subpage` is blocked, the subpage will get blocked by Gateway inside of the remote browser.
 
 ### Order of precedence
 
@@ -81,7 +81,7 @@ When a user navigates to `https://test.example.com`, Gateway performs the follow
     2. Policy #2 matches, so DNS resolution is Allowed.
     3. Policy #3 is not evaluated because there has already been an explicit match.
 2. Evaluate HTTPS request against HTTP policies:
-    1. Policy #2 is evaluated first but does not match, so we move on to check Policy #1.
+    1. Policy #2 is evaluated first because Do Not Inspect [always take precedence](#http-policies) over Allow or Block. Since there is no match, we move on to check Policy #1.
     2. Policy #1 does not match `test.example.com`. Since there are no matching Block policies, the request passes the HTTP filter and moves on to network policy evaluation.
 3. Evaluate HTTPS request against network policies:
     1. Policy #1 does not match because port 80 is used for standard HTTP, not HTTPS.
