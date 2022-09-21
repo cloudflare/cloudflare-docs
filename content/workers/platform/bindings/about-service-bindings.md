@@ -66,7 +66,8 @@ In the example above, the Service bindings for the `authentication` and `logout`
 Local development is supported for Service bindings. For each Worker, open a terminal and use [`wrangler dev --local`](/workers/wrangler/commands/#dev) in the relevant directory or use the `SCRIPT` option to specify the relevant Worker's entrypoint.
 
 ### Use Service bindings
-Service bindings are available in your Worker code under the `<binding_name>` specified in `wrangler.toml`, via API, or Dashboard. For example, a Service binding that's named "auth" will be available under the binding name `auth` in your Worker. The API `fetch()` is implemented on each Service binding by default.
+
+Service bindings are available in your Worker code under the `<BINDING_NAME>` specified in `wrangler.toml`, via API, or the dashboard. For example, a Service binding that is named "auth" will be available under the binding name `auth` in your Worker. The API `fetch()` is implemented on each Service binding by default.
 
 ### Connected Workers
 
