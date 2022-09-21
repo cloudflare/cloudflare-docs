@@ -1,7 +1,7 @@
 ---
 title: License agreement
 pcx_content_type: reference
-weight: 6
+weight: 7
 meta:
   title: License
 ---
