@@ -21,7 +21,7 @@ API Discovery only looks at requests that satisfy all of the following criteria:
 
 We use both the volume and frequency of traffic to guide your recommended rate. You can view the `P50`/`95`/`99` of your request count for more details under an endpoint’s expanded view.
 
-## Will I be able to re-access an endpoint’s data after I delete it?
+## Will I be able to access an endpoint’s data after I delete it?
 
 No. Cloudflare will stop tracking performance data when you delete an endpoint and its previous data will not be stored. This means that if you save this endpoint again, the metrics will start tracking from the point that you save it.
 
