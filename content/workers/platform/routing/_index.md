@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Custom Domains
+title: Routing
 layout: single
 ---
 
