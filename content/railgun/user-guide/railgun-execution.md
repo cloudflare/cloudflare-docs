@@ -10,7 +10,7 @@ Railgun consists of two programs: `rg-listener` and `rg-sender`. `rg-listener` i
 
 `rg-sender` acts as an HTTP proxy and accepts HTTP requests (with the `CF-ORIGIN-IP` and `CF-WAN-ID` headers) and sends them across the WAN to the `rg-listener` which then contacts the real web server.
 
-Both ends use memcached for page caching for the delta compression. If memcached is not working then both ends still operate without delta compression.
+Both ends use Memcached for page caching for the delta compression. If Memcached is not working then both ends still operate without delta compression.
 
 Both programs write a log file containing detailed information about operation. `rg-listener` reads a configuration file named `rg.config` which is assumed to be in the same directory as the program. The location of the configuration file can be set on the command line with the `-config` option.
 
