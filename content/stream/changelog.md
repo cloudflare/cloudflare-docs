@@ -119,7 +119,7 @@ You can now use Cloudflare Stream for 24/7 live streaming.
 
 ### Persistent Live Stream IDs
 
-You can now start and stop live broadcasts without having to provide a new video UID to the Stream Player (or your own player) each time the stream starts and stops. [Read the docs](/stream/viewing-videos/watch-live-stream/#view-by-live-input-id).
+You can now start and stop live broadcasts without having to provide a new video UID to the Stream Player (or your own player) each time the stream starts and stops. [Read the docs](/stream/stream-live/watch-live-stream/#view-by-live-input-id).
 
 ## 2021-10-14
 

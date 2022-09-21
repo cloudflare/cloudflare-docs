@@ -19,13 +19,3 @@ Stream handles video streaming end-to-end, from ingestion through delivery.
 
 
 ![Diagram the explains the live stream workflow](/stream/static/live-stream-workflow.png)
-
-## Latency
-
-You can use different streaming protocol options with Stream. Stream supports RTMPS and SRT.
-
-**RTMPS and SRT**
-- Provides 10+ second latency.
-- RTMP is ideal when broadcasting to users with low bandwith.
-- SRT is ideal for broadcasting high quality video to users with unreliable networks.
-- Both options allow you to record video for later playback.
