@@ -43,22 +43,28 @@ For this configuration to work you need to:
 
 Within each `railgun.conf` file, you will also need to specify the public IP address of the load balancer (`1.1.1.1`) as the `activation.railgun_host`.
 
-Cloudflare advises experienced systems administrators and engineers to use this setup when it is important to maintain the benefits of content compression when running in a degraded state (due to server or `rg-listener` failure). However, running Railgun behind a load balancer/firewall/NAT could:
+Cloudflare advises experienced systems administrators and engineers to use this setup when it is important to maintain the benefits of content compression when running in a degraded state (due to server or `rg-listener` failure). However, running Railgun behind a load balancer/firewall/NAT can have the following downsides:
 
-- Add complexity to the network device configuration, as traffic inbound on port `2408` needs to be distributed across the `rg-listeners`.
-- Prevent a load balancer from distributing requests correctly, as all requests will be routed from the load balancer to the Railgun listeners in layer 4 (TCP) mode. Traffic can not be decrypted until it reaches the servers. 
-- Prevent the firewall from analyzing incoming traffic, as all inbound traffic from Cloudflare is encrypted with Railgun's certificate.
-- Mean the web servers need more resources to accommodate running the Railgun listener clients.
+- It may add complexity to the network device configuration, as inbound traffic on port `2408` needs to be distributed across the `rg-listeners`.
+- It may prevent a load balancer from distributing requests correctly, as all requests will be routed from the load balancer to the Railgun listeners in layer 4 (TCP) mode. Traffic can not be decrypted until it reaches the servers. 
+- It may prevent the firewall from analyzing incoming traffic, as all inbound traffic from Cloudflare is encrypted with Railgun's certificate.
+- It may mean the web servers need more resources to accommodate running the Railgun listener clients.
 
-Also, note that the server firewalls will need to be modified to allow traffic inbound on port `2408` as well as ensure that connectivity with an instance of Memcached can be established.
+Also, note that the server firewalls will need to be modified to allow inbound traffic on port `2408` as well as ensure that connectivity with an instance of Memcached can be established.
 
 Having Railgun installed behind a load balancer requires that the `railgun-nat.conf` file (found in the Railgun directory) is modified to ensure that each of the `rg-listeners` knows where to forward requests to. By default, each client will forward the request to the `CF-ORIGIN-IP` (`1.1.1.1`). While this may work, it is more likely you will want the request to be processed by the web server on the same server as the `rg-listener` that received the request.
 
-<div class="large-img">
+```txt
+# This is a comment. It starts with #
 
-![Example of how to configure the railgun-nat config file.](/railgun/static/railgun-nat.png)
+#example.com=127.0.0.1
 
-</div>
+www.domain.com=127.0.0.1
+api.domain.com=127.0.0.1
+host.anotherdomain.com=127.0.0.1
+
+default=127.0.0.1
+```
 
 The `railgun-nat.conf` file overrides the default behavior. You can either add each of your hostnames with an appropriate IP address (in our example, the localhost IP) or uncomment `default=127.0.0.1`. The default value tells `rg-listener` that any request for a hostname not defined in the file should be forwarded to this IP.
 
