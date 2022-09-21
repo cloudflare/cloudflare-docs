@@ -1,6 +1,6 @@
 ---
 pcx_content_type: reference
-title: Github
+title: GitHub
 weight: 1
 ---
 
@@ -10,13 +10,12 @@ The GitHub integration detects a variety of user security, data loss prevention,
 
 ## Integration prerequisites
 
-* A GithHub account with a Free, Pro, or Enterprise plan
+* A GitHub account with a Free, Pro, or Enterprise plan
 * Membership to a GitHub Organization with Owner or GitHub App manager permissions
 
 ## Integration permissions
 
 For the GitHub integration to function, Cloudflare CASB requires the following GitHub API permissions:
-
 
 | Permission | Access | Description |
 | ---------- | -------- | ----------- |
