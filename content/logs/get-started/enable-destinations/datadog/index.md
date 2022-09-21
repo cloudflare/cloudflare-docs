@@ -33,7 +33,7 @@ To enable the Cloudflare Logpush service:
 
 8.  Enter or select the following destination information:
 
-    - **Datadog URL Endpoint**, which can be found at [Datadog API reference](https://docs.datadoghq.com/api/latest/logs/).
+    - **Datadog URL Endpoint**, which can be either one below. You can find the difference at [Datadog API reference](https://docs.datadoghq.com/api/latest/logs/).
 
 {{<tabs labels="V1 | V2">}}
 {{<tab label="v1" no-code="true">}}
@@ -78,7 +78,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 - **name** (optional) - Use your domain name as the job name.
 - **destination_conf** - A log destination consisting of an endpoint URL, authorization header, and zero or more optional parameters that Datadog supports in the string format below.
 
-  - **\<DATADOG_ENDPOINT_URL>**: The Datadog HTTP logs intake endpoint, which can be found at [Datadog API reference](https://docs.datadoghq.com/api/latest/logs/).
+  - **\<DATADOG_ENDPOINT_URL>**: The Datadog HTTP logs intake endpoint, which can be either one below. You can find the difference at [Datadog API reference](https://docs.datadoghq.com/api/latest/logs/).
 
 {{<tabs labels="V1 | V2">}}
 {{<tab label="v1" no-code="true">}}
