@@ -14,9 +14,9 @@ If you are looking to use Cloudflare Railgun to optimize the load times of dynam
 
 ![Diagram describing how a single Railgun client should be placed in front of the load balancer, firewall or NAT.](/railgun/static/single-railgun-listener.png)
 
-Cloudflare recommends installing the [Railgun client](/railgun/user-guide/railgun-execution/) (`rg-listener`) in front of the load balancer/firewall/NAT scheme, as shown in illustration above.
+Cloudflare recommends installing the [Railgun client](/railgun/user-guide/set-up/) (`rg-listener`) in front of the load balancer/firewall/NAT scheme, as shown in illustration above.
 
-When activation the Railgun client, you must specify in the [`railgun.conf` file](/railgun/user-guide/set-up/configuration-activation/), for the `activation.railgun_host` setting, the public IP address of the server it is installed on (`3.3.3.3` in the example). Thus, all requests that cannot be served from Cloudflare's edge servers will be forwarded to `3.3.3.3` [via `rg-sender`](/railgun/user-guide/railgun-execution/), instead of your origin (`1.1.1.1` in the example).
+When activating the Railgun client, you must specify in the [`railgun.conf`](/railgun/user-guide/set-up/configuration-activation/) file, for the `activation.railgun_host` setting, the public IP address of the server it is installed on (`3.3.3.3` in the example). Thus, all requests that cannot be served from Cloudflare's edge servers will be forwarded to `3.3.3.3` [via `rg-sender`](/railgun/user-guide/railgun-execution/), instead of your origin (`1.1.1.1` in the example).
 
 Each request received by the server at `3.3.3.3` on port `2408` will then be processed by the `rg-listener` service. `rg-listener` will check the process's host header and forward it (by default) to the IP address of your origin server's hostname, according to your Cloudflare DNS configuration. `rg-listener` sends this request with the HTTP header `CF-ORIGIN-IP`. The `rg-listener` strips out this header when forwarding requests to your origin over HTTPS.
 
@@ -38,15 +38,15 @@ It is also possible to put multiple `rg-listeners` behind the load balancer and 
 
 For this configuration to work you need to:
 
-* [Create a single Railgun server](/railgun/user-guide/administration/#adding-a-railgun) in your Cloudflare dashboard
-* Install the `rg-listener` service on all your web servers (from the example above, `2.2.2.1`, `2.2.2.2`, `2.2.2.3`) and activate them all using the same Railgun activation token.
+* [Create a single Railgun server](/railgun/user-guide/administration/#adding-a-railgun) in your Cloudflare dashboard.
+* Install the `rg-listener` service on all your web servers (from the example above, `2.2.2.1`, `2.2.2.2`, `2.2.2.3`) and activate them all using the same Railgun [activation token](/railgun/user-guide/administration/#adding-a-railgun).
 
 Within each of the `railgun.conf` files, you will also need to specify the public IP address of the load balancer (`1.1.1.1`) as the `activation.railgun_host`.
 
-Cloudflare advises experienced systems administrators and engineers to use this setup when the benefits of maintaining content compression when running in a degraded state (due to server or `rg-listener` failure) is important. However, running Railgun behind a load balancer/firewall/NAT could:
+Cloudflare advises experienced systems administrators and engineers to use this setup when it is important to maintain the benefits of content compression when running in a degraded state (due to server or `rg-listener` failure). However, running Railgun behind a load balancer/firewall/NAT could:
 
 - Add complexity to the network device configuration, as traffic inbound on port `2408` needs to be distributed across the `rg-listeners`.
-- Prevent a load balancer from distributing requests correctly, as all requests will be routed from the load balancer to the Railgun listeners in layer 4 (TCP) mode. The traffic can not be decrypted until it reaches the servers. 
+- Prevent a load balancer from distributing requests correctly, as all requests will be routed from the load balancer to the Railgun listeners in layer 4 (TCP) mode. Traffic can not be decrypted until it reaches the servers. 
 - Prevent the firewall from analyzing incoming traffic, as all inbound traffic from Cloudflare is encrypted with the Railgun's certificate.
 - Mean the web servers need more resources to accommodate running the Railgun listener clients.
 
@@ -54,7 +54,11 @@ Also, note that the server firewalls will need to be modified to allow traffic i
 
 Having Railgun installed behind a load balancer requires that the `railgun-nat.conf` file (found in the Railgun directory) is modified to ensure that each of the `rg-listeners` knows where to forward requests to. By default, each client will forward the request to the `CF-ORIGIN-IP` (`1.1.1.1`) which may work, but it is more likely you will want the request to be processed by the web server on the same server as the `rg-listener` that received the request.
 
+<div class="large-img">
+
 ![Example of how to configure the railgun-nat config file.](/railgun/static/railgun-nat.png)
+
+</div>
 
 The `railgun-nat.conf` file overrides the default behavior. You can either add each of your hostnames with an appropriate IP address (in our example, the localhost IP) or simply uncomment `default=127.0.0.1`. The default value here tells `rg-listener` that any request for a hostname not defined in the file should be forwarded to this IP.
 
