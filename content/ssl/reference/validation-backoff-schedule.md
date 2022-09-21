@@ -11,6 +11,7 @@ Domain control validation (DCV) has to happen before a Certificate Authority (CA
 DCV happens with Cloudflare's CA partners according to the following schedule:
 
 - Digicert - 30 days
+- Google Trust Services - 14 days
 - Let's Encrypt - 7 days
 
 Afterward, DCV tokens expire as dictated by the CA/B Baseline Requirements, which govern issuance of publicly trusted SSL certificates.

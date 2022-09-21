@@ -6,22 +6,26 @@ weight: 5
 
 # Simulcast (restream) videos
 
-Simulcasting lets you forward your live stream to third-party platforms such as YouTube Live and Facebook Live. To begin simulcasting, select an input and add one or more Outputs:
+Simulcasting lets you forward your live stream to third-party platforms such as YouTube Live and Facebook Live. To begin simulcasting, select an input and add one or more Outputs.
 
 ## Add an Output using the API
 
 Add an Output to start retransmitting live video. You can add or remove Outputs at any time during a broadcast to start and stop retransmitting.
 
 ```bash
+---
+header: Request
+---
 curl -X POST \
 --data '{"url": "rtmp://a.rtmp.youtube.com/live2","streamKey": "<redacted>"}' \
 -H "Authorization: Bearer <API_TOKEN>" \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<INPUT_UID>/outputs
 ```
 
-​Example response:
-
 ```json
+---
+header: Response
+---
 {
   "result": {
     "uid": "6f8339ed45fe87daa8e7f0fe4e4ef776",
@@ -52,18 +56,11 @@ By default, all live outputs are enabled.
 2. Under **Outputs** > **Enabled**, set the toggle to enabled or disabled.
 
 
-## Managing outputs
+## Manage outputs
 
-To get a list of outputs, call the `/outputs` endpoint:
-
-```bash
-curl -H "Authorization: Bearer <API_TOKEN>" \ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<INPUT_UID>/outputs
-```
-
-To delete an output, make a `DELETE` request to the `/outputs` endpoint with the output id:
-
-```bash
-curl -X DELETE \ -H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<INPUT_UID>/outputs/<OUTPUT_UID>
-```
+| Command      | Method | Endpoint|
+|--------------|--------|---------|
+| [List outputs](https://api.cloudflare.com/#stream-live-inputs-list-live-inputs)| `GET` | `accounts/:account_identifier/stream/live_inputs`|
+| [Delete outputs](https://api.cloudflare.com/#stream-live-inputs-delete-a-live-input)| `DELETE` |  `accounts/:account_identifier/stream/live_inputs/:live_input_identifier`|
 
 If the associated live input is already retransmitting to this output when you make the `DELETE` request, that output will be disconnected within 30 seconds.

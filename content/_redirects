@@ -387,11 +387,16 @@
 /page-shield/reference/script-monitor-api/ /page-shield/reference/page-shield-api/ 301
 
 # railgun
-/railgun/user-guide/optimized-partner-api/enable-and-disable-connections/ /railgun/user-guide/optimized-partner-api/ 301
-/railgun/user-guide/optimized-partner-api/manage-railguns/ /railgun/user-guide/optimized-partner-api/ 301
-/railgun/user-guide/optimized-partner-api/list-railgun-details/ /railgun/user-guide/optimized-partner-api/ 301
-/railgun/user-guide/optimized-partner-api/railguns-via-ip-ranges/ /railgun/user-guide/optimized-partner-api/ 301
-/railgun/user-guide/optimized-partner-api/using-curl-with-the-api/ /railgun/user-guide/optimized-partner-api/ 301
+/railgun/user-guide/introduction/ /railgun/about/ 301
+/railgun/user-guide/set-up/potential-problems/ /railgun/user-guide/troubleshooting/potential-problems/ 301
+/railgun/user-guide/increase-logging/ /railgun/user-guide/troubleshooting/increase-logging/ 301
+/railgun/user-guide/client-api/ /railgun/partners/client-api/ 301
+/railgun/user-guide/optimized-partner-api/ /railgun/partners/ 301
+/railgun/user-guide/optimized-partner-api/enable-and-disable-connections/ /railgun/partners/client-api/enable-and-disable-connections/ 301
+/railgun/user-guide/optimized-partner-api/manage-railguns/ /railgun/partners/client-api/manage-railguns/ 301
+/railgun/user-guide/optimized-partner-api/list-railgun-details/ /railgun/partners/client-api/list-railgun-details/ 301
+/railgun/user-guide/optimized-partner-api/railguns-via-ip-ranges/ /railgun/partners/client-api/ 301
+/railgun/user-guide/optimized-partner-api/using-curl-with-the-api/ /railgun/partners/client-api/ 301
 
 # randomness-beacon
 /randomness-beacon/about/Background/ /randomness-beacon/about/background/ 301
@@ -557,6 +562,13 @@
 /stream/edit-manage-videos/manage-video-library/using-webhooks/ /stream/manage-video-library/using-webhooks/ 301
 /stream/edit-manage-videos/manage-video-library/creator-id/ /stream/manage-video-library/creator-id/ 301
 /stream/edit-manage-videos/manage-video-library/searching/ /stream/manage-video-library/searching/ 301
+
+# r2
+/r2/platform/s3-compatibility/ /r2/data-access/s3-api/ 301
+/r2/platform/s3-compatibility/api/ /r2/data-access/s3-api/api/ 301
+/r2/platform/s3-compatibility/tokens/ /r2/data-access/s3-api/tokens/ 301
+/r2/platform/s3-compatibility/extensions/ /r2/data-access/s3-api/extensions/ 301
+/r2/runtime-apis/ /r2/data-access/workers-api/workers-api-reference/ 301
 
 # tenant_redirects
 /tenant/tutorial/ /tenant/get-started/ 301
@@ -829,7 +841,7 @@
 /workers/writing-workers/ /workers/get-started/guide/ 301
 /workers/writing-workers/debugging-tips/ /workers/about/tips/debugging/ 301
 /workers/writing-workers/resource-limits/ /workers/about/limits/ 301
-/workers/runtime-apis/r2/ /r2/runtime-apis/ 301
+/workers/runtime-apis/r2/ /r2/data-access/workers-api/workers-api-reference/ 301
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-application/ 301
 /workers/examples/http2-server-push/ /workers/examples/103-early-hints/ 301
 
