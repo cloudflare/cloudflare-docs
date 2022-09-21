@@ -2,9 +2,6 @@
 {{ $data := slice }}
 {{ $fileplaceholder := "" }}
 {{- range readDir "./assets/json/" -}}
-<script>
-    console.log({{.Name}})
-</script>
 {{- if eq .Name $filename }}
 {{- $fileplaceholder :=  print "./assets/json/" .Name -}}
 {{- $file_data := getJSON $fileplaceholder -}}
@@ -27,7 +24,15 @@
 
 <div class="learningPathModule">
 <div class="moduleHeader">
-<h2>{{.title}}</h2>
+<h2 id="{{ .title | safeURL | anchorize }}"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+      class="DocsMarkdown--header-anchor Link Link-without-underline"
+      href="#{{ .title | safeURL | anchorize }}"
+      >&#8203;​</a
+    >
+  </span>
+  <span>{{.title}}</span>
+</h2>
 {{ with .estimated_time }}
 <p class="durationEstimate">{{ . }}</p>
 {{- end -}}
