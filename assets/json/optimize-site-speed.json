@@ -9,8 +9,9 @@
       "Cache"
     ],
     "category": ["Performance"],
-    "modules": [
+    "elements": [
       {
+        "type": "module",
         "title": "Concepts",
         "description": "Learn the fundamentals of website performance. <br /> <br /> Feel free to skip if you have a technical background.",
         "estimated_time": "~20 mins",
@@ -38,6 +39,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Before you begin",
         "description": "Before can improve your site's performance, make sure you have already added that site to Cloudflare.",
         "estimated_time": "~30 mins",
@@ -49,6 +51,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Optimization - By default",
         "pages": [
           {
@@ -59,6 +62,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Optimizations - One click needed",
         "description": "Once your domain is onboarded and your DNS records are [proxied through Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/), Cloudflare offers the following one-click optimizations for speeding up your site:",
         "estimated_time": "~1 hour",
@@ -101,6 +105,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Optimization - Minimal setup",
         "estimated_time": "~45 min",
         "pages": [
@@ -117,6 +122,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Explore dedicated speed products",
         "description": "Cloudflare offers several dedicated products to improve the performance of your website.",
         "estimated_time": "~45 mins",
@@ -175,6 +181,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Next steps",
         "estimated_time": "~30 mins",
         "pages": [

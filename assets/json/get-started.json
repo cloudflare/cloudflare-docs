@@ -10,8 +10,9 @@
       "Cache"
     ],
     "category": ["Security", "Performance", "Reliability"],
-    "modules": [
+    "elements": [
       {
+        "type": "module",
         "title": "Concepts",
         "description": "Concepts explain the basic ideas behind how Cloudflare works and how you can work with Cloudflare. <br /> <br /> Feel free to skip if you have a technical background.",
         "estimated_time": "~25 mins",
@@ -40,6 +41,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Account setup",
         "description": "Create and customize your Cloudflare account.",
         "estimated_time": "~10 mins",
@@ -72,11 +74,30 @@
         ]
       },
       {
+        "type": "question",
+        "question": "Do you already own a [domain](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/)?",
+        "id": "domain_ownership",
+        "choices": [
+          { 
+            "name": "Yes",
+            "value": true
+          },
+          { 
+            "name": "No",
+            "value": false
+          }
+        ]
+      },
+      {
+        "type": "module",
         "title": "Add a domain",
         "description": "Make a few updates at your registrar and within Cloudflare to improve your domain's [speed, security, and reliability](/fundamentals/get-started/concepts/how-cloudflare-works/#benefits).",
         "estimated_time": "~5 mins",
         "pages": [
           {
+            "conditional_variable": "domain_ownership",
+            "default_visibility": true,
+            "conditional_variable_value": true,
             "url_path": "/fundamentals/get-started/setup/minimize-downtime/",
             "link_title": "(For some) Minimize downtime",
             "additional_description": "If your domain is particularly sensitive to downtime, you may want to do a bit of pre-work before adding it to Cloudflare."
@@ -87,12 +108,16 @@
             "additional_description": "If you control your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/) and plan on using [Cloudflare’s proxy](/dns/manage-dns-records/reference/proxied-dns-records/), review your server configuration to avoid accidentally blocking Cloudflare IP addresses."
           },
           {
+            "conditional_variable": "domain_ownership",
+            "default_visibility": true,
+            "conditional_variable_value": true,
             "url_path": "/fundamentals/get-started/setup/add-site/",
             "additional_description": "**Note**: If do not already have a domain name, start with [Cloudflare Registrar](/registrar/get-started/register-domain/) instead."
           }
         ]
       },
       {
+        "type": "module",
         "title": "Domain resolution",
         "description": "After your domain is active on Cloudflare, review your DNS settings to make sure visitors can access your site.",
         "estimated_time": "~10 mins",
@@ -122,6 +147,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Security",
         "description": "Review and optimize your security settings so your visitors' information and your site infrastructure are protected.",
         "estimated_time": "~1 hour",
@@ -141,6 +167,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Other optimizations",
         "description": "Go beyond the basics and optimize other aspects of your domain setup.",
         "pages": [
@@ -162,6 +189,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "(Optional) Helpful resources",
         "estimated_time": "~30 mins",
         "pages": [

@@ -19,10 +19,10 @@
 <p>{{- .description | markdownify -}}</p>
 </div>
 
-<div class="background">
-{{- range $index, $module := .modules -}}
-
+<div id="path-container" class="background">
+{{- range $index, $elements := .elements -}}
 <div class="learningPathModule">
+{{ if eq .type "module" }}
 <div class="moduleHeader">
 <h2 id="{{ .title | safeURL | anchorize }}"><span class="DocsMarkdown--header-anchor-positioner">
     <a
@@ -70,6 +70,21 @@
 
 </div>
 </details>
+
+{{ else if eq .type "question"}}
+<div id="questionChoices">
+{{ $id :=  .id }}
+<fieldset id="{{ $id }}">
+  <legend>{{ .question | markdownify }}</legend>
+  {{ range .choices }}
+  <div>
+    <input type="radio" name="{{$id}}" id="{{ .value | lower }}" value="{{ .value | lower }}">
+    <label for="{{ .name | lower }}">{{ .name }}</label>
+  </div>
+{{ end }}
+</fieldset>
+</div>
+{{- end -}}
 </div>
 
 {{- end -}}
