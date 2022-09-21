@@ -6,7 +6,11 @@ weight: 7
 
 # Order of enforcement
 
-With Cloudflare Gateway, you can [enable and configure](/cloudflare-one/policies/filtering/initial-setup/) any combination of DNS, network, and HTTP policies. Gateway applies your policies in the following order:
+With Cloudflare Gateway, you can [enable and configure](/cloudflare-one/policies/filtering/initial-setup/) any combination of DNS, network, and HTTP policies.
+
+## Priority between policy builders
+
+Gateway applies your policies in the following order:
 
 1. DNS
 2. HTTP
@@ -46,4 +50,42 @@ Lastly, Gateway evaluates all Allow, Block, and Do Not Scan policies. These poli
 
 Order of precedence refers to the priority of individual policies within the DNS, network, or HTTP policy builder (lowest value first, or from top to bottom as shown in the UI).  You can modify the order of precedence by dragging and dropping individual policies in the UI.
 
-The order of precedence works like a series of filters: if a site passes Policy #1, it can still be blocked by Policy #2. Once a site is blocked, it cannot be allowed through by any subsequent policies.
+In Gateway, the order of precedence follows the first match principle — once a site matches an Allow or Block policy, evaluation stops and no subsequent policies can override the decision. Therefore, we recommend putting the most specific policies and exceptions at the top of the list and the most general policies at the bottom.
+
+## Example
+
+Suppose you have a list of policies arranged in the following order of precedence:
+
+- DNS policies:
+    | Precedence | Selector       | Operator | Value           | Action         |
+    | ------     | ---------------| ---------| ----------------| -------------- |
+    | 1          | Host           | is       | `example.com`   | Block        |
+    | 2          | Host           | is       | `test.example.com` | Allow |
+    | 3          | Domain         | matches regex | `.\`       | Block |
+- HTTP policies:
+    | Precedence | Selector       | Operator | Value           | Action         |
+    | ------     | ---------------| ---------| ----------------| -------------- |
+    | 1          | Host           | is       | `example.com`   | Block        |
+    | 2          | Host           | is       | `test2.example.com` | Do Not Inspect |
+- Network policies:
+    | Precedence | Selector       | Operator | Value           | Action         |
+    | ------     | ---------------| ---------| ----------------| -------------- |
+    | 1          | Destination Port    | is       | `80`       | Block        |
+    | 2          | Destination port    | is       | `443`     | Allow |
+    | 3          | SNI Domain          | is       | `test.example.com` | Block |
+
+When a user navigates to `https://test.example.com`, Gateway performs the following operations:
+
+1. Evaluate DNS request against DNS policies:
+    1. Policy #1 does not match `test.example.com`, so we move on to check Policy #2.
+    2. Policy #2 matches, so DNS resolution is Allowed.
+    3. Policy #3 is not evaluated because there has already been an explicit match.
+2. Evaluate HTTPS request against HTTP policies:
+    1. Policy #2 is evaluated first but does not match, so we move on to check Policy #1.
+    2. Policy #1 does not match `test.example.com`. Since there are no matching Block policies, the request passes the HTTP filter and moves on to network policy evaluation.
+3. Evaluate HTTPS request against network policies:
+    1. Policy #1 does not match because port 80 is used for standard HTTP, not HTTPS.
+    2. Policy #2 matches, so the request is Allowed and proxied to the upstream server.
+    3. Policy #3 is not evaluated because there has already been an explicit match.
+
+The user is therefore able to connect to `https://test.example.com`.
