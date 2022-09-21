@@ -71,10 +71,12 @@ The SQL API is available as an HTTP endpoint at `/v4/$accountTag/analytics_engin
 
 In the following example, we use the SQL API to query the top 10 cities that had the highest average humidity readings when the temperature was above zero.
 
-Here's how we represent that as SQL:
+Here's how we represent that as SQL. We're using a custom averaging function to take into account [sampling](../sql-api/#sampling):
 
 ```sql
-SELECT blob1 as city, avg(double2) as avg_humidity 
+SELECT 
+  blob1 AS city,
+  SUM(_sample_interval * double1) / SUM(_sample_interval) AS avg_humidity
 FROM WEATHER 
 WHERE double1 > 0 
 GROUP BY city 
@@ -98,15 +100,17 @@ Workers Analytics Engine is optimized for powering time series analytics that ca
 
 ```sql
 SELECT
-  intDiv(toUInt32(timestamp), 300) * 300 as t, 
-  blob1 as city, 
-  avg(double2) as avg_humidity
+  intDiv(toUInt32(timestamp), 300) * 300 AS t, 
+  blob1 AS city, 
+  SUM(_sample_interval * double1) / SUM(_sample_interval) AS avg_humidity
 FROM WEATHER
 WHERE
-  timestamp >= now() - INTERVAL '1' DAY
+  timestamp >= NOW() - INTERVAL '1' DAY
   AND double1 > 0
 GROUP BY t, city
 ORDER BY t, avg_humidity DESC
 ```
 
-This query first rounds the `timestamp` field to the nearest five minutes. Then we group by that field and city, and calculate the average humidity in each city for a five minute period. 
+This query first rounds the `timestamp` field to the nearest five minutes. Then we group by that field and city, and calculate the average humidity in each city for a five minute period.
+
+See [Querying Workers Analytics Engine from Grafana](../grafana/) for more details on how to create efficient Grafana queries against Workers Analytics Engine.
