@@ -35,7 +35,20 @@ You can also change the environment of a Workers Service binding, so you can tar
 
 ### Wrangler
 
-To configure a Service binding in your `wrangler.toml`, add the following:
+To configure a Service binding in your `wrangler.toml`, use the following syntax:
+
+```toml
+services = [
+  { binding = "<binding_name>", service = "<worker_name>", environment = "<environment_name>" }
+]
+```
+The `wrangler.toml` options are:
+* `binding`: variable name for the binding in your Worker code, accessible under the `env` parameter in [Module syntax](/workers/learning/migrating-to-module-workers/), or in the global scope in [Service Worker syntax](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+* `service`: name of the target Worker you'd like to communicate with. This Worker should be on your Account
+* `environment` (optional): name of the environment on the target Worker you'd like to communicate with. This is optional, by default the 'Default' environment will be inferred
+
+### `wrangler.toml` example
+For the example outlined above, a `wrangler.toml` might look like this:
 
 ```toml
 services = [
@@ -44,7 +57,14 @@ services = [
 ]
 ```
 
-Local development is supported for Service bindings. For each Worker, open a terminal and use `wrangler dev --local` in the relevant directory or use the `SCRIPT` option to specify the relevant Worker's entrypoint.
+In the example above, the Service bindings for the `authentication` and `logout` Workers are accessible in code via `env.auth` and `env.logout`, respectively (when using Module syntax).
+
+### Local development
+
+Local development is supported for Service bindings. For each Worker, open a terminal and use [`wrangler dev --local`](/workers/wrangler/commands/#dev) in the relevant directory or use the `SCRIPT` option to specify the relevant Worker's entrypoint.
+
+### Use Service bindings
+Service bindings are available in your Worker code under the `<binding_name>` specified in `wrangler.toml`, via API, or Dashboard. For example, a Service binding that's named "auth" will be available under the binding name `auth` in your Worker. The API `fetch()` is implemented on each Service binding by default.
 
 ### Connected Workers
 
