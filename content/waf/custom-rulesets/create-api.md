@@ -9,7 +9,7 @@ weight: 3
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to work with custom rulesets using an API.
 
 {{<Aside type="note">}}
-Account-level WAF configuration is only available for Enterprise customers in the WAF Advanced plan.
+Account-level WAF configuration is only available for Enterprise customers with the WAF Advanced plan.
 {{</Aside>}}
 
 To deploy a custom ruleset in your account, follow these general steps:

@@ -10,7 +10,7 @@ weight: 2
 Create custom rulesets in **Application Security** > **WAF** > **Custom rulesets**. After creating a custom ruleset, you must deploy it to your account to apply its rules.
 
 {{<Aside type="note">}}
-Account-level WAF configuration is only available for Enterprise customers in the WAF Advanced plan.
+Account-level WAF configuration is only available for Enterprise customers with the WAF Advanced plan.
 {{</Aside>}}
 
 ## Create a custom ruleset
