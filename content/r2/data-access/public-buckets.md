@@ -54,11 +54,6 @@ To enable access management, Cache and bot management features, you must set up 
 
 {{</Aside>}}
 
-There are a few restrictions to the domain or subdomain used for access:
-
-1. The domain being used must belong to the same account as the R2 bucket
-2. Use of a domain with CNAME flattening enabled is not supported--you'll need to disable [CNAME flattening](/dns/additional-options/cname-flattening/) before enabling domain access
-
 ## Connect your bucket to a custom domain
 
 Domain access through a custom domain allows you to use features such as access management, Cache and bot management.
@@ -88,6 +83,11 @@ Your domain is now connected. It takes a few minutes for the status to change fr
 To view the added DNS record, select *...* next to the connected domain and select **Manage DNS**.
 
 ![Manage Cloudflare DNS](/r2/static/public-buckets-manage-cloudflare-dns.png)
+
+**Note**: There are a few restrictions to the domain or subdomain used for access:
+
+1. The domain being used must belong to the same account as the R2 bucket
+2. Use of a domain with CNAME flattening enabled is not supported--you'll need to disable [CNAME flattening](/dns/additional-options/cname-flattening/) before enabling domain access
 
 ## Disable domain access
 
