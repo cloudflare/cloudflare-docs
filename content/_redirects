@@ -562,7 +562,7 @@
 /stream/edit-manage-videos/manage-video-library/using-webhooks/ /stream/manage-video-library/using-webhooks/ 301
 /stream/edit-manage-videos/manage-video-library/creator-id/ /stream/manage-video-library/creator-id/ 301
 /stream/edit-manage-videos/manage-video-library/searching/ /stream/manage-video-library/searching/ 301
-/stream/viewing-videos/using-the-player-api /stream/viewing-videos/using-the-stream-player/using-the-player-api 301
+/stream/viewing-videos/using-the-player-api/ /stream/viewing-videos/using-the-stream-player/using-the-player-api 301
 
 # r2
 /r2/platform/s3-compatibility/ /r2/data-access/s3-api/ 301
