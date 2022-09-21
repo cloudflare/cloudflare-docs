@@ -54,7 +54,7 @@ In the example above, a Custom Domain for `api.example.com` can point to your Wo
 
 ## Certificates
 
-Creating a Custom Domain will also generate an Advanced Certificate on your target zone, with a Subject Name of the target hostname. These certificates are generated with default settings. If you'd like to override these settings, you can manually create your certificate in the Cloudflare Dashboard or via API.
+Creating a Custom Domain will also generate an Advanced Certificate on your target zone, with a Subject Name of the target hostname. These certificates are generated with default settings. To override these settings, create your certificate in the Cloudflare Dashboard or via API.
 
 ## Configuring your Custom Domain
 
