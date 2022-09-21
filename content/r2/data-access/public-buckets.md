@@ -17,6 +17,8 @@ Public buckets can be set up in two ways:
 
 To configure firewall rules, caching, access controls, or bot management for your bucket, you must set up a custom domain.
 
+When access is configured object access is only available via HTTPS; plaintxt HTTP is not supported.
+
 ## Enable public access for your bucket
 
 Enabling public access for your bucket will make the content of your bucket available to the Internet. To enable public access for your buckets:
