@@ -64,7 +64,7 @@ html {
     border-radius: 25px;
     display: flex;
     flex-direction: column;
-    justify-content:end;
+    justify-content: space-around;
     padding: .5em;
     max-width: 100%;
     margin-bottom: 1em;
@@ -161,6 +161,9 @@ details div ul li {
     }
     .learningPathModule {
         padding-left: 1em;
+    }
+    .individualPath {
+        height: 12em;
     }
 }
 
