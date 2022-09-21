@@ -350,7 +350,7 @@ TODATETIME(double1)
 -- blob1 contains an datetime in the format 'YYYY-MM-DD hh:mm:ss'
 TODATETIME(blob1)
 
--- constant values:
+-- literal values:
 TODATETIME(355924804) -- unix timestamp
 TODATETIME('355924804') -- string containing unix timestamp
 TODATETIME('1981-04-12 12:00:04') -- string with datetime in 'YYYY-MM-DD hh:mm:ss' format
@@ -423,7 +423,7 @@ The following operators are supported:
 {{</table-wrap>}}
 
 
-## Constants
+## Literals
 
 {{<table-wrap>}}
 
