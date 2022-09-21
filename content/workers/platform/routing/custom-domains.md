@@ -58,7 +58,7 @@ Creating a Custom Domain will also generate an Advanced Certificate on your targ
 
 ## Configuring your Custom Domain
 
-Custom Domains need to be configured on an appropriate zone. If you attempt to create a Custom Domain on a hostname with an existing DNS record, Cloudflare will confirm that you would like to replace the existing record. If you attempt to create a Custom Domain on a zone you don't own, the attempt will fail.
+Custom Domains need to be configured on an appropriate zone. If you attempt to create a Custom Domain on a hostname with an existing DNS record, Cloudflare will confirm that you would like to replace the existing record. If you attempt to create a Custom Domain on a zone you do not own, the attempt will fail.
 
 ## Migrate from Routes
 
