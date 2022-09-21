@@ -39,7 +39,7 @@ To configure a Service binding in your `wrangler.toml`, use the following syntax
 
 ```toml
 services = [
-  { binding = "<binding_name>", service = "<worker_name>", environment = "<environment_name>" }
+  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>", environment = "<ENVIRONMENT_NAME>" }
 ]
 ```
 The `wrangler.toml` options are:
