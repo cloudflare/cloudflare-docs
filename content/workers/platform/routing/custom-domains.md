@@ -30,7 +30,7 @@ routes = [
 
 ## Fetch
 
-Custom Domains are considered the origin for your request. This means calling `fetch()` on the incoming request object is an anti-pattern (there's nowhere to go!). Instead, create new `Request` objects to reference any external dependencies, or use Cloudflare's built in primitives via bindings.
+Custom Domains are considered the origin for your request. This means calling `fetch()` on the incoming request object is an anti-pattern. Instead, create new `Request` objects to reference any external dependencies, or use Cloudflare's built in primitives via bindings.
 
 ![Workers can use the fetch API to request external dependencies](/workers/platform/routing/media/custom-domains-dependencies.png)
 
