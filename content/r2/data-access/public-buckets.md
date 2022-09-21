@@ -17,8 +17,6 @@ Public buckets can be set up in two ways:
 
 To configure firewall rules, caching, access controls, or bot management for your bucket, you must set up a custom domain.
 
-When access is configured object access is only available via HTTPS; plaintxt HTTP is not supported.
-
 ## Enable public access for your bucket
 
 Enabling public access for your bucket will make the content of your bucket available to the Internet. To enable public access for your buckets:
@@ -86,10 +84,11 @@ To view the added DNS record, select *...* next to the connected domain and sele
 
 ![Manage Cloudflare DNS](/r2/static/public-buckets-manage-cloudflare-dns.png)
 
-**Note**: There are a few restrictions to the domain or subdomain used for access:
+**Note**: There are a few restrictions when using custom domains to access R2 buckets:
 
 1. The domain being used must belong to the same account as the R2 bucket
 2. Use of a domain with CNAME flattening enabled is not supported--you'll need to disable [CNAME flattening](/dns/additional-options/cname-flattening/) before enabling domain access
+3. Object access is only available via HTTPS; plaintxt HTTP is not supported.
 
 ## Disable domain access
 
