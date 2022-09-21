@@ -18,7 +18,7 @@
         "pages": [
           {
             "external_link": true,
-            "url_path": "/bad-link/test/",
+            "url_path": "https://www.cloudflare.com/learning/cdn/what-is-a-cdn/",
             "link_title": "What is a Content Delivery Network (CDN)?"
           },
           {
