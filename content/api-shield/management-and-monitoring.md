@@ -1,5 +1,5 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: concept
 type: overview
 title: Management and Monitoring
 weight: 3
