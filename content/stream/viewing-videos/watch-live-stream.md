@@ -119,7 +119,7 @@ In the example below, the response indicates the `ID` is for an input with an ac
 
 ```json
 ---
-header: Response for active live stream
+header: Response for an active live stream
 ---
 {    
     "isInput": true,
@@ -128,11 +128,10 @@ header: Response for active live stream
 }
 ```
 
-The example below confirms the ID is for an input but is not actively streaming.
 
 ```json
 ---
-header: Response for inactive live stream
+header: Response for an inactive live stream
 ---
 {
     "isInput": true,
@@ -141,4 +140,4 @@ header: Response for inactive live stream
 }
 ```
 
-When viewing a livestream via the live input ID, the `requireSignedURLs` and `allowedOrigins` options in the live input recording settings are used. These settings are independent of the video-level settings.
+When viewing a live stream via the live input ID, the `requireSignedURLs` and `allowedOrigins` options in the live input recording settings are used. These settings are independent of the video-level settings.

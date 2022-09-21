@@ -4,9 +4,9 @@ title: Replay recordings
 weight: 4
 ---
 
-# Replay recordings
+# Record and replay live streams
 
-Live streams are automatically recorded by default. To get a list of recorded streams for a given input ID, make the same `GET` request as you would to get the live video and filter for videos where the state property is set to `ready`:
+Live streams are automatically recorded, and available instantly once a live stream ends. To get a list of recordings for a given input ID, make a `GET` request to `/live_inputs/<UID>/videos` and filter for videos where `state` is set to `ready`:
 
 ```bash
 ---

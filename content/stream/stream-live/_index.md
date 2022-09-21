@@ -6,11 +6,17 @@ weight: 4
 
 # Stream live video
 
-Use Cloudflare Stream to stream live video and broadcast your own live events or add live video to your own app. When you use Stream, you get low latency without having to worry about encoding or ingestion fees, finding a CDN, or modifying your configuration; Stream takes care of this for you.
+Cloudflare Stream lets you or your users stream live video, and play live video in your website or app, without managing and configuring any of your own infrastructure.
 
 ## How Stream works
 
-After you set up a live input, Stream works by using your stream URL and Key along with your broadcasting system to live stream your video. Refer to the diagram below to learn how each item interacts with each other to produce a live stream.
+Stream handles video streaming end-to-end, from ingestion through delivery.
+
+1. For each live stream, you create a unique live input, either using the Stream Dashboard or API.
+2. Each live input has a unique Stream Key, that you provide to you the creator who is streaming live video.
+3. Creators use this Stream Key to broadcast live video to Cloudflare Stream, over either RTMPS or SRT.
+4. Cloudflare Stream encodes this live video at multiple resolutions and delivers it to viewers, using Cloudflare's Global Network. You can play video on your website using the [Stream Player](/stream/viewing-videos/using-the-stream-player/) or using [any video player that supports HLS or DASH](/stream/viewing-videos/using-own-player/).
+
 
 ![Diagram the explains the live stream workflow](/stream/static/live-stream-workflow.png)
 

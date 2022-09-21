@@ -62,6 +62,5 @@ By default, all live outputs are enabled.
 |--------------|--------|---------|
 | [List outputs](https://api.cloudflare.com/#stream-live-inputs-list-live-inputs)| `GET` | `accounts/:account_identifier/stream/live_inputs`|
 | [Delete outputs](https://api.cloudflare.com/#stream-live-inputs-delete-a-live-input)| `DELETE` |  `accounts/:account_identifier/stream/live_inputs/:live_input_identifier`|
-```
 
 If the associated live input is already retransmitting to this output when you make the `DELETE` request, that output will be disconnected within 30 seconds.
