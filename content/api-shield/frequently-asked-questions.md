@@ -1,7 +1,7 @@
 ---
 pcx_content_type: FAQ
 title: FAQs
-weight: 3
+weight: 4
 layout: list
 ---
 # Frequently Asked Questions
@@ -16,6 +16,19 @@ API Discovery only looks at requests that satisfy all of the following criteria:
 2. Requests must return `2XX` response codes from the edge.
 3. Requests must not come directly from Cloudflare Workers.
 4. At least 500 requests are made to the discovered endpoint within a 10 day period.
+
+## How does Cloudflare calculate the recommended rate limit for my endpoint?
+
+We use both the volume and frequency of traffic to guide your recommended rate. You can view the `P50`/`95`/`99` of your request count for more details under an endpoint’s expanded view.
+
+## Will I be able to re-access an endpoint’s data after I delete it?
+
+No. Cloudflare will stop tracking performance data when you delete an endpoint and its previous data will not be stored. This means that if you save this endpoint again, the metrics will start tracking from the point that you save it.
+
+## Why do I still see my endpoint in Discovery after I’ve added it to Endpoint Management?
+
+Your endpoints will continue to appear in Discovery after being added to Endpoint Management for the immediate future. In a future release, we plan to differentiate between endpoints that are in Discovery that have not yet been added to Endpoint Management.
+
 
 ## Why do I not receive threshold recommendations for my discovered API endpoints?
 
