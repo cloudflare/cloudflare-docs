@@ -21,6 +21,8 @@ While the interface among Service bindings is HTTP, the networking is not. Unlik
 
 ## Set a Service binding
 
+### Dashboard
+
 To manage a Workers Service binding:
 
 1. Log in to the Cloudflare dashboard > Account Home > [Workers](https://dash.cloudflare.com/?zone=workers). 
@@ -30,6 +32,21 @@ To manage a Workers Service binding:
 You can also change the environment of a Workers Service binding, so you can target a specific version of a Workers Service.
 
 ![To configure a Service binding, go to your Worker > Settings > Variables and follow the steps above](/workers/platform/bindings/media/service-bindings-config.png)
+
+### Wrangler
+
+To configure a Service binding in your `wrangler.toml`, add the following:
+
+```toml
+services = [
+  { binding = "auth", service = "authentication" },
+  { binding = "logout", service = "logout", environment = "production" }
+]
+```
+
+Local development is supported for Service bindings. For each Worker, open a terminal and use `wrangler dev --local` in the relevant directory or use the `SCRIPT` option to specify the relevant Worker's entrypoint.
+
+### Connected Workers
 
 Workers bound to your Worker will be listed in [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Triggers** > **Bound Services**. Your team can easily view cross-service dependencies in this manner.
 

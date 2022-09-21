@@ -10,17 +10,17 @@ title: Custom Domains
 Custom Domains allow you to connect your Worker to a hostname, without having to make changes to your DNS settings or do extra certificate management. Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker.
 
 {{<Aside type="note">}}
-Custom Domains are available to use in Open Beta.
+Custom Domains are Generally Availabile.
 {{</Aside>}}
 
 ## Build a Custom Domain
 
 To create a Custom Domain, you must have:
 
-1. An active Cloudflare zone on your target domain.
+1. An active Cloudflare zone.
 2. A Worker to invoke.
 
-The interface provides active feedback on valid and invalid entries. Valid entries are hostnames on an active Cloudflare zone. If you attempt to create a Custom Domain on a hostname with an existing DNS record, Cloudflare will confirm that you would like to replace the existing record. Custom Domains can be attached to your Worker via API or within the Cloudflare dashboard under **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Add Custom Domain**.
+The interface provides active feedback on valid and invalid entries. Valid entries are hostnames on an active Cloudflare zone. Custom Domains can be attached to your Worker via API, Wrangler, or within the Cloudflare dashboard under **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Add Custom Domain**.
 
 ## Configure your `wrangler.toml`
 
@@ -28,13 +28,13 @@ To configure a subdomain for a Custom Domain in your `wrangler.toml`, add the fo
 
 ```toml
 routes = [
-	{ pattern = "subdomain.example.com", custom_domain = true }
+	{ pattern = "subdomain.example.com", custom_domain = true, zone_name = "example.com" }
 ]
 ```
 
 ## Fetch
 
-Custom Domains are considered the origin for your request. This means calling `fetch()` on the initial request is, in most cases, an anti-pattern. Instead, create new `Request` objects to reference any external dependencies, or use Cloudflare's built in primitives via bindings.
+Custom Domains are considered the origin for your request. This means calling `fetch()` on the incoming request object is an anti-pattern (there's nowhere to go!). Instead, create new `Request` objects to reference any external dependencies, or use Cloudflare's built in primitives via bindings.
 
 ![Workers can use the fetch API to request external dependencies](/workers/platform/routing/media/custom-domains-dependencies.png)
 
@@ -50,9 +50,19 @@ Custom Domains follow standard DNS ordering and matching logic. Custom Domains d
 
 ## Interaction with Routes
 
-Custom Domains are evaluated before Route rules, but take lower precedence. [Routes](/workers/platform/routing/routes) defined on your Custom Domain will run first, but can optionally call the Worker registered on your Custom Domain. In the example above, a Custom Domain for `api.example.com` can point to your Worker `api`. A Route added to `api.example.com/auth` can point to your Worker `auth`. Using `fetch(request)` within the Worker `auth` will invoke the Worker `api`, as if it was a normal application server. This means you can run your Workers in series, creating layers of proxy Workers and application Workers.
+Custom Domains are evaluated before Route rules, but take lower precedence. [Routes](/workers/platform/routing/routes) defined on your Custom Domain will run first, and can optionally call the Worker registered on your Custom Domain by issuing `fetch(request)` with the incoming `Request` object.
+
+In the example above, a Custom Domain for `api.example.com` can point to your Worker `api`. A Route added to `api.example.com/auth` can point to your Worker `auth`. A request to `api.example.com//auth` will trigger the `auth` Worker. Using `fetch(request)` within the Worker `auth` will invoke the Worker `api`, as if it was a normal application server. This means you can run your Workers in series, creating layers of proxy Workers and application Workers.
 
 ![Routes can be run in front of Custom Domains](/workers/platform/routing/media/routes-with-custom-domains.png)
+
+## Certificates
+
+Creating a Custom Domain will also generate an Advanced Certificate on your target zone, with a Subject Name of the target hostname. These certificates are generated with default settings. If you'd like to override these settings, you can manually create your certificate in the Cloudflare Dashboard or via API.
+
+## Configuring your Custom Domain
+
+Custom Domains need to be configured on an appropriate zone. If you attempt to create a Custom Domain on a hostname with an existing DNS record, Cloudflare will confirm that you would like to replace the existing record. If you attempt to create a Custom Domain on a zone you don't own, the attempt will fail.
 
 ## Migrate from Routes
 
