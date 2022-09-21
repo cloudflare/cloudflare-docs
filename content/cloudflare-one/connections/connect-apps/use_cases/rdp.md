@@ -107,7 +107,7 @@ You now have secure, remote access to the RDP server.
     ```sh
     $ cloudflared access rdp --hostname rdp.example.com --url rdp://localhost:3389
     ```
-
+This process will need to be configured to stay alive and autostart. If the process is killed, users will not be able to connect.
 3. While `cloudflared access` is running, connect from an RDP client such as Microsoft Remote Desktop:
     1. Open Microsoft Remote Desktop and select **Add a PC**.
     2. For **PC name**, enter `localhost:3389`.
