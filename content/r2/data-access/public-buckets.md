@@ -88,8 +88,8 @@ To view the added DNS record, select *...* next to the connected domain and sele
 
 There are a few restrictions when using custom domains to access R2 buckets:
 
-* The domain being used must belong to the same account as the R2 bucket
-* Use of a domain with CNAME flattening enabled is not supported--you'll need to disable [CNAME flattening](/dns/additional-options/cname-flattening/) before enabling domain access
+* The domain being used must belong to the same account as the R2 bucket.
+* Use of a domain with CNAME flattening enabled is not supported--you'll need to disable [CNAME flattening](/dns/additional-options/cname-flattening/) before enabling domain access.
 * Object access is only available via HTTPS; plaintxt HTTP is not supported.
 
 {{</Aside>}}
