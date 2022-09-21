@@ -77,7 +77,7 @@ In order for devices to connect to your Zero Trust organization, you will need t
     ```sh
    $ cloudflared access tcp --hostname smb.example.com --url localhost:8445
    ```
-
+This command can be wrapped as a desktop shortcut so that end users do not need to use the command line.
 3. Use the SMB client to point to `tcp://localhost:8445`. The client will open a browser window to authenticate the user.
 
 #### Windows-specific requirements
