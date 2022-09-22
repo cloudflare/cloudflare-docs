@@ -39,7 +39,7 @@
       },
       {
         "title": "Before you begin",
-        "description": "Before can improve your site's performance, make sure you have already added that site to Cloudflare.",
+        "description": "Before you can improve your site's performance, make sure you have already added that site to Cloudflare.",
         "estimated_time": "~30 mins",
         "pages": [
           {
