@@ -420,6 +420,7 @@ The following operators are supported:
 |-----|----------|
 | `AND` | boolean "AND" (true if both sides are true) |
 | `OR` | boolean "OR" (true if either side or both sides are true) |
+| `NOT` | boolean "NOT" (true if following expression is false and visa-versa) |
 
 {{</table-wrap>}}
 
@@ -430,7 +431,6 @@ The following operators are supported:
 | Operator  | Description |
 |-----|----------|
 | `-` | negation operator (e.g. `-42`) |
-| `~` | bitwise not |
 
 {{</table-wrap>}}
 
