@@ -244,36 +244,39 @@ There are 3 variations of arguments that can be used in a range:
 
   This means applications must be careful to avoid comparing the amount of returned objects against your `limit`. Instead, use the `truncated` property to determine if the `list` request has more data to be returned.
 
-  ```js
-  const options = {
-      limit: 500,
-      include: ['customMetadata'],
-  }
+```js
+---
+filename: index.js
+---
+const options = {
+  limit: 500,
+  include: ['customMetadata'],
+}
 
-  const listed = await env.MY_BUCKET.list(options);
+const listed = await env.MY_BUCKET.list(options);
 
-  let truncated = listed.truncated;
-  let cursor = truncated ? listed.cursor : undefined;
+let truncated = listed.truncated;
+let cursor = truncated ? listed.cursor : undefined;
 
-  // ❌ - if your limit can't fit into a single response or your
-  // bucket has less objects than the limit, it will get stuck here.
-  while (listed.objects.length < options.limit) {
-    // ...
-  }
+// ❌ - if your limit can't fit into a single response or your
+// bucket has less objects than the limit, it will get stuck here.
+while (listed.objects.length < options.limit) {
+  // ...
+}
 
-  // ✅ - use the truncated property to check if there are more
-  // objects to be returned
-  while (truncated) {
-      const next = await env.MY_BUCKET.list({
-        ...options,
-        cursor: cursor,
-      });
-      listed.objects.push(...next.objects);
+// ✅ - use the truncated property to check if there are more
+// objects to be returned
+while (truncated) {
+  const next = await env.MY_BUCKET.list({
+    ...options,
+    cursor: cursor,
+  });
+  listed.objects.push(...next.objects);
 
-      truncated = next.truncated;
-      cursor = next.cursor
-  }
-  ```
+  truncated = next.truncated;
+  cursor = next.cursor
+}
+```
 
 {{</definitions>}}
 
