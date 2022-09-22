@@ -13,8 +13,8 @@ Create [different overrides](/rules/origin-rules/features/) by including differe
 Override type | What to include
 --------------|---------------------
 Host header override | [`host_header` parameter](#host-header-override-parameters)
-DNS record override / Destination port override| [`origin` object](#dns-record-override-and-destination-port-override-parameters)
 SNI override | [`sni` object](#sni-override-parameters)
+DNS record override / Destination port override| [`origin` object](#dns-record-override-and-destination-port-override-parameters)
 
 {{<Aside type="note">}}
 The same Origin Rule can have different types of overrides. Refer to [Configuring several overrides in the same rule](#configuring-several-overrides-in-the-same-rule) for a syntax example.
@@ -27,6 +27,18 @@ The full syntax of the `action_parameters` field for overriding the HTTP `Host` 
 ```json
 "action_parameters": {
   "host_header": "<HOST_HEADER_VALUE>"
+}
+```
+
+## SNI override parameters
+
+The full syntax of the `action_parameters` field for overriding the SNI value of incoming requests is the following:
+
+```json
+"action_parameters": {
+  "sni": {
+    "value": "<SNI_VALUE>"
+  }
 }
 ```
 
@@ -44,18 +56,6 @@ The full syntax of the `action_parameters` field for overriding both the hostnam
 ```
 
 If you are only overriding the hostname or the port, omit the `port` or `host` parameter, respectively.
-
-## SNI override parameters
-
-The full syntax of the `action_parameters` field for overriding the SNI value of incoming requests is the following:
-
-```json
-"action_parameters": {
-  "sni": {
-    "value": "<SNI_VALUE>"
-  }
-}
-```
 
 ## Configuring several overrides in the same rule
 
