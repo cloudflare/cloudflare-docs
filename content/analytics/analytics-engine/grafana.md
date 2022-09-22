@@ -42,7 +42,7 @@ The Altinity plugin provides some useful macros that can simplify writing querie
 
 ```SQL
 SELECT
-    $timeseries AS t,
+    $timeSeries AS t,
     blob1 AS label,
     SUM(_sample_interval * double1) / SUM(_sample_interval) AS average_metric
 FROM dataset_name
