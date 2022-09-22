@@ -99,7 +99,7 @@ When creating a Configuration Rule via API, make sure you:
 
 The API token used in API requests to manage Cache Rules must have the following permissions:
 
-- Zone > Config Settings > Edit
+- Zone > Config Rules > Edit
 - Account Rulesets > Edit  
 - Account Filter Lists > Edit
 
