@@ -321,7 +321,7 @@ Returns `<true_expression>` if `<condition>` evaluates to true, else returns `<f
 
 Example:
 ```SQL
-IF(temp > 20, "It's warm", "Bring a jumper")
+IF(temp > 20, 'It is warm', 'Bring a jumper')
 ```
 
 ### INTDIV
