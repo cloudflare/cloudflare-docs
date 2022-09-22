@@ -6,7 +6,7 @@ weight: 3
 
 # Configure `wrangler.toml`
 
-Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker. By default, `wrangler.toml` is the [source of truth](#source-of-truth) for configuring a Worker.
+Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker. It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
 
 The configuration for a Worker can become complex when you can define different [environments](/workers/platform/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.
