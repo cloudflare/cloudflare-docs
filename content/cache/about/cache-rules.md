@@ -92,7 +92,7 @@ When creating a Configuration Rule via API, make sure you:
 1. Use the [List existing rulesets](/ruleset-engine/rulesets-api/view/#list-existing-rulesets) method to obtain the list of rules already present in the `http_request_cache_settings` phase entry point ruleset.
 2. If the phase ruleset does not exist, create it using the [Create ruleset](/ruleset-engine/rulesets-api/create/) method with the zone-level endpoint. In the new ruleset properties, set the following values:
     - kind: `zone`
-    - phase: `set_cache_settings`
+    - phase: `http_request_cache_settings`
 3. Alternatively, you can also use the [Update ruleset](/ruleset-engine/rulesets-api/update/) method to add a Cache Rule to the list of ruleset rules.
 
 ### Required API token permissions
