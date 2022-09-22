@@ -6,10 +6,12 @@ weight: 3
 
 # Configure `wrangler.toml`
 
-Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker. This document serves as a reference for all the fields and acceptable values in this configuration file.
+Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker. By default, `wrangler.toml` is the [source of truth](#source-of-truth) for configuring a Worker.
 
 The configuration for a Worker can become complex when you can define different [environments](/workers/platform/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.
+
+This document serves as a reference for all the fields and acceptable values in `wrangler.toml`.
 
 ```toml
 ---
@@ -51,17 +53,22 @@ routes = ["routes"] | [{ pattern = "*", zone_id = "ZONE_ID" }] | [{ pattern = "*
 # The same as routes, but only one.
 route = "routes" | { pattern = "*", zone_id = "ZONE_ID" } | { pattern = "*", zone_name = "ZONE_NAME" }
 
-# Lets you call Workers periodically, much like a cron job.
-# More details: https://developers.cloudflare.com/workers/platform/cron-triggers
-# @default `{crons:[]}`
-[triggers]
-crons = ["1 * * * *"]
+# Stop wrangler from deleting vars that are not present in the wrangler.toml
+# By default Wrangler will remove all vars and replace them with those found in the wrangler.toml configuration.
+# If your development approach is to modify vars after deployment via the dashboard you may wish to enable this option.
+keep_vars = true
 
 # A map of environment variables to set when deploying your Worker.
 # @default `{}`
 # not inherited
 [vars]
 KEY = "value"
+
+# Lets you call Workers periodically, much like a cron job.
+# More details: https://developers.cloudflare.com/workers/platform/cron-triggers
+# @default `{crons:[]}`
+[triggers]
+crons = ["1 * * * *"]
 
 # These specify any Workers KV Namespaces you want to
 # access from inside your Worker.
@@ -261,3 +268,11 @@ header: .dev.vars
 ---
 SECRET_KEY = "value"
 ```
+
+## Source of truth
+
+By default, `wrangler.toml` serves as a source of truth for your Worker configuration. This allows you to treat `wrangler.toml` as a form of Infrastructure as Code.
+
+If you change your environment variables in the Cloudflare dashboard, Wrangler _will_ override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`. 
+
+Note that wrangler won't delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.
