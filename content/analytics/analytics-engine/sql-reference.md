@@ -69,7 +69,7 @@ SELECT
 
 SELECT
     blob2 AS probe_name,
-    IF(double3 <= 0, "FREEZING", "NOT FREEZING") AS description -- use of functions
+    IF(double3 <= 0, 'FREEZING', 'NOT FREEZING') AS description -- use of functions
 
 SELECT
     blob2 AS probe_name,
