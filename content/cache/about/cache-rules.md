@@ -62,7 +62,7 @@ To create a new cache rule:
 
 ### Available fields
 
-These are the fields available for Cache Rules:
+These are the fields available for Cache Rule expressions:
 
 - Cookie - `http.cookie`
 - Hostname - `http.host`
