@@ -148,7 +148,9 @@ GROUP BY <expression>, ...
 For example. If you had a table of temperature readings:
 ```SQL
 -- return the average temperature for each probe
-SELECT probe_name, AVG(temperature) AS average_temp
+SELECT 
+    blob1 AS probe_name, 
+    AVG(double1) AS average_temp
 FROM temperature_readings
 GROUP BY probe_name
 ```
@@ -200,10 +202,10 @@ LIMIT 10 -- return at most 10 rows
 
 Usage:
 ```SQL
-FORMAT [JSON|JSONEachRow]
+FORMAT [JSON|JSONEachRow|TabSeparated]
 ```
 
-By default, results are returned as tab separated values with no headers.
+If no format clause is included then the default format of `JSON` will be used.
 
 Override the default by setting a format. For example:
 ```SQL
@@ -251,6 +253,16 @@ Data is returned with a separate JSON object per row. Rows are newline separated
 ```JSON
 {"<column 1 name>": "<column 1 value>", "<column 2 name>": "<column 2 value>"}
 {"<column 1 name>": "<column 1 value>", "<column 2 name>": "<column 2 value>"}
+...
+```
+
+#### TabSeparated
+
+Data is returned with newline separated rows. Columns are separated with tabs. There is no header.
+
+```TSV
+column 1 value  column 2 value
+column 1 value  column 2 value
 ...
 ```
 
