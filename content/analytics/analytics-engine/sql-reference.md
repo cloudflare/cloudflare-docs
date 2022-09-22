@@ -275,7 +275,7 @@ SUM(column_name)
 Sum is an aggregation function that returns the sum of column values across all rows in each group or results set.
 
 Example:
-```SQL 
+```SQL
 -- return the total cost of all items
 SUM(item_cost)
 ```
