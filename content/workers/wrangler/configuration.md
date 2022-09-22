@@ -271,7 +271,7 @@ SECRET_KEY = "value"
 
 ## Source of truth
 
-By default, `wrangler.toml` serves as a source of truth for your Worker configuration. This allows you to treat `wrangler.toml` as a form of Infrastructure as Code.
+It is a recommended best-practice to treat `wrangler.toml` as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard. This allows you to treat `wrangler.toml` as a form of Infrastructure as Code.
 
 If you change your environment variables in the Cloudflare dashboard, Wrangler _will_ override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`. 
 
