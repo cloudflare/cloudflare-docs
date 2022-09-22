@@ -34,7 +34,7 @@ The following table describes Cache Rules availability per plan.
   </tbody>
 </table>
 
-## Create Cache Rules in the dash
+## Create Cache Rules in the dashboard
 
 To create a new cache rule:
 
