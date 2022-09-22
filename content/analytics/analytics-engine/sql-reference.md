@@ -242,7 +242,8 @@ Data is returned as a single JSON object with schema data included:
             ...
         },
         ...
-    ]
+    ],
+    "rows": 10
 }
 ```
 
