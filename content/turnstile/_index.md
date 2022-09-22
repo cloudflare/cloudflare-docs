@@ -26,6 +26,6 @@ Turnstile [widget types](/turnstile/refrence/widget-types/) include:
 
 ## Availability
 
-Turnstile is currently in open beta and available as a free tool for all users.
+Turnstile is currently in open beta and available as a free tool for all customers.
 
 For the beta, customers are limited to 1 million siteverify calls per month. Customers who need additional requests can upgrade to [Enterprise Bot Management](/bots/get-started/bm-subscription/).

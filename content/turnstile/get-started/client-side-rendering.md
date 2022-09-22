@@ -58,7 +58,7 @@ The HTML is scanned for elements that have a `cf-turnstile` class name:
 
 ```html
 
-<div class="cf-turnstile" data-sitekey="yourSitekey" data-mode="managed" data-callback="javascriptCallback"></div>
+<div class="cf-turnstile" data-sitekey="yourSitekey" data-callback="javascriptCallback"></div>
 
 ```
 </div>
@@ -96,8 +96,9 @@ If a given widget has expired or needs to be reloaded, the `turnstile.reset(widg
 | --- | --- | --- |
 | sitekey | `data-sitekey` | Every widget has a sitekey. This sitekey is associated with the corresponding widget configuration and is created upon the widget creation. |
 | action | `data-action` | A customer value that can be used to differentiate widgets under the same sitekey in analytics and which is returned upon validation. |
-| cData | `data-cData` | A customer payload that can be used to attach data of the customer with the challenge throughout its issuance and which is returned upon validation. |
+| cData | `data-cdata` | A customer payload that can be used to attach data of the customer with the challenge throughout its issuance and which is returned upon validation. |
 | callback | `data-callback` | A JavaScript callback that is invoked upon success of the challenge. The callback is passed a token that can be validated. |
-| error-callback | `data-error-callback` | A JavaScript callback that is invoked upon the expiration of the challenge. |
+| expired-callback | `data-expired-callback` | A JavaScript callback that is invoked upon the expiration of the challenge. |
+| error-callback | `data-error-callback` | A JavaScript callback that is invoked upon the occurrence of a network error. |
 | theme | `data-theme` | `light`, `dark`, `auto`. <br><br>The default is `auto`, which respects the user-preference. This can be forced to light or dark by setting the theme accordingly. |
-| tabindex | `data-tabindex` | Number (tabindex of iframe for accessibility). |
+| tabindex | `data-tabindex` | The default value is 0 (tabindex of iframe for accessibility). |

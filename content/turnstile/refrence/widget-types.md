@@ -13,7 +13,7 @@ The 3 modes for Turnstile are **Managed**, **Non-Interactive**, and **Invisible*
 
 ## Managed
 
-A challenge that may require light user interaction.
+Cloudflare will use information from the request and session to decide if an interactive challenge should be used. If we show an interaction, the user will be prompted to check a box (no images or text to decipher).
 
 ### Light mode
 
@@ -29,7 +29,7 @@ A challenge that may require light user interaction.
 
 ## Non-Interactive
 
-A non-interactive challenge where once it is invoked, it is executed and requires no user interaction.
+Users will see a widget with a loading bar while the browser challenges run. Users will never be required or prompted to interact with the widget. 
 
 ### Light mode
 
@@ -43,5 +43,4 @@ A non-interactive challenge where once it is invoked, it is executed and require
 
 ## Invisible
 
-An invisible challenge that does not require any user interaction.
-
+Users will not see a widget or any indication that an invisible browser challenge is in progress. Invisible challenges should take a few seconds to complete. 
