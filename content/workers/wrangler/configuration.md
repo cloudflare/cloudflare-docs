@@ -64,7 +64,7 @@ keep_vars = true
 [vars]
 KEY = "value"
 
-# Lets you call Workers periodically, much like a cron job.
+# Lets you trigger Workers periodically, much like a cron job.
 # More details: https://developers.cloudflare.com/workers/platform/cron-triggers
 # @default `{crons:[]}`
 [triggers]
