@@ -46,7 +46,7 @@ If [TLS decryption](/cloudflare-one/policies/filtering/http-policies/tls-decrypt
 | ---------| ---------| ----------------| -------------- |
 | Domain   | is       | `mysite.com`   | Do Not Inspect  |
 
-When accessing a Do Not Inspect site in the remote browser, you will see a **Your connection is not private** warning which you can proceed through in order to connect.
+When accessing a Do Not Inspect site in the remote browser, you will see a **Your connection is not private** warning which you can proceed through to connect.
 
 ### Connect private networks
 
