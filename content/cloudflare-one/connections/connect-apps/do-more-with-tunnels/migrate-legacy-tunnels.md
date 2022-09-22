@@ -19,6 +19,8 @@ Originally, a Cloudflare Tunnel connection corresponded to a DNS record in your 
 
 Today, Cloudflare Tunnel’s architecture distinguishes between the persistent objects (DNS records, `cloudflared`) and the ephemeral objects (the connections). To do that, it assigns permanent names and UUIDs to tunnels, which makes them more stable and easier to use. Since the name and UUID for a tunnel do not change, your DNS record never needs to be cleaned up or recreated when Cloudflare Tunnel restarts. In the event of a restart, the enrolled instance of `cloudflared` connects back to that UUID address.
 
+To check if you still have Legacy Tunnels, log into the Cloudflare Dashboard->Zone->Traffic->Cloudflare Tunnel. Note: Legacy Tunnels are associated with the zone and not by account. If nothing appears, this indicates there are no Legacy Tunnels associated with the zone. Named tunnels will only appear in the Cloudflare Zero Trust dashboard under Access->Tunnels. If Legacy Tunnels appear, please follow the migration instructions below.
+
 To migrate your legacy tunnels to the named tunnels architecture:
 
 1.  [Create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/#3-create-a-tunnel-and-give-it-a-name).
