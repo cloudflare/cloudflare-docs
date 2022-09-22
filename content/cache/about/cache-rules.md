@@ -179,7 +179,7 @@ curl -X PUT \
 <summary>Cache Key</summary>
 <div>
 
-In this example, `cache_deception_armor`, and `ignore_query_strings_order` parameters are set to `true`. `query_string` is set to query all query string parameters. The `header` parameter is set to include `header1` and check presence of `header_1` and the `origin header` is also included. The `cookie` parameter is set to include `cookie1` and check the presence of `cookie_1` and the `origin header` is also included. The parameter `host : resolved` is set to `false`, `geo`, and `lang` are also set to `false`.
+In this example, `cache_deception_armor` and `ignore_query_strings_order` parameters are set to `true`. `query_string` is set to query all query string parameters. The `header` parameter is set to include `header1` and check presence of `header_1` and the `origin header` is also included. The `cookie` parameter is set to include `cookie1` and check the presence of `cookie_1` and the `origin header` is also included. The parameter `host : resolved` is set to `false`, `geo`, and `lang` are also set to `false`.
 
 ```json
 curl -X PUT \
