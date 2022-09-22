@@ -81,11 +81,11 @@ Suppose you have a list of policies arranged in the following order of precedenc
 When a user navigates to `https://test.example.com`, Gateway performs the following operations:
 
 1. Evaluate DNS request against DNS policies:
-    1. Policy #1 does not match `test.example.com`, so we move on to check Policy #2.
+    1. Policy #1 does not match `test.example.com` — move on to check Policy #2.
     2. Policy #2 matches, so DNS resolution is Allowed.
     3. Policy #3 is not evaluated because there has already been an explicit match.
 2. Evaluate HTTPS request against HTTP policies:
-    1. Policy #2 is evaluated first because Do Not Inspect [always takes precedence](#http-policies) over Allow and Block. Since there is no match, we move on to check Policy #1.
+    1. Policy #2 is evaluated first because Do Not Inspect [always takes precedence](#http-policies) over Allow and Block. Since there is no match, move on to check Policy #1.
     2. Policy #1 does not match `test.example.com`. Since there are no matching Block policies, the request passes the HTTP filter and moves on to network policy evaluation.
 3. Evaluate HTTPS request against network policies:
     1. Policy #1 does not match because port 80 is used for standard HTTP, not HTTPS.
