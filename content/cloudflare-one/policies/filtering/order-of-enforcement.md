@@ -52,7 +52,7 @@ Lastly, Gateway evaluates all Allow, Block, and Do Not Scan policies. These poli
 
 ### Order of precedence
 
-Order of precedence refers to the priority of individual policies within the DNS, network, or HTTP policy builder (lowest value first, or from top to bottom as shown in the UI).  You can modify the order of precedence by dragging and dropping individual policies in the UI.
+Order of precedence refers to the priority of individual policies within the DNS, network, or HTTP policy builder (lowest value first, or from top to bottom as shown in the dashboard).  You can modify the order of precedence by dragging and dropping individual policies in the dashboard.
 
 In Gateway, the order of precedence follows the first match principle — once a site matches an Allow or Block policy, evaluation stops and no subsequent policies can override the decision. Therefore, we recommend putting the most specific policies and exceptions at the top of the list and the most general policies at the bottom.
 
