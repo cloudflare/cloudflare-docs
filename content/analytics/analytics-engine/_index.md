@@ -10,7 +10,7 @@ Workers Analytics Engine is a new way to quickly get analytics about anything us
 
 Also, as our customer you may need to expose analytics to your customers. With Workers Analytics Engine, you can quickly deploy analytics about your own product that your customers can use.
 
-At the moment, Workers Analytics Engine is only available as an invite-only beta. An open beta will start soon.
+At the moment, Workers Analytics Engine is in beta.
 
 {{<button-group>}}
 {{<button type="primary" href="/analytics/analytics-engine/get-started/">}}Get started{{</button>}}
