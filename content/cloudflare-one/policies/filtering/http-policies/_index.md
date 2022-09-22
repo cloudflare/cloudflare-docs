@@ -55,13 +55,13 @@ For more information on this action, refer to the documentation on [Browser Isol
 
 {{<Aside type="warning" header="Warning">}}
 
-When a *Do Not Inspect* rule is created for a given hostname, application, or app type, no traffic will be inspected.
+When a Do Not Inspect rule is created for a given hostname, application, or app type, no traffic will be inspected.
 
 {{</Aside>}}
 
-*Do Not Inspect* lets you bypass certain elements from inspection. To bypass a site, your policy must match against the host in order to prevent HTTP inspection from occurring on encrypted traffic.
+Do Not Inspect lets you bypass certain elements from inspection. To bypass a site, your policy must match against the host in order to prevent HTTP inspection from occurring on encrypted traffic.
 
-The L7 firewall will evaluate *Do Not Inspect* rules before any subsequent Allow or Block rules. For encrypted traffic, Gateway uses the Server Name Indicator (SNI) in the TLS header to determine whether to decrypt the traffic for further HTTP inspection against Allow or Block rules. All *Do Not Inspect* rules are evaluated first to determine if decryption should occur. This means regardless of precedence in a customer's list of rules, all *Do Not Inspect* rules will take precedence over Allow or Block rules.
+The L7 firewall will evaluate Do Not Inspect rules before any subsequent Allow or Block rules. For encrypted traffic, Gateway uses the Server Name Indicator (SNI) in the TLS header to determine whether to decrypt the traffic for further HTTP inspection against Allow or Block rules. All Do Not Inspect rules are evaluated first to determine if decryption should occur. This means regardless of precedence in a customer's list of rules, all Do Not Inspect rules will take precedence over Allow or Block rules.
 
 ### Do Not Scan
 

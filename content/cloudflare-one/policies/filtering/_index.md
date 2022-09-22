@@ -18,7 +18,7 @@ Cloudflare Gateway, our comprehensive Secure Web Gateway, allows you to set up p
 When creating or editing policies, keep in mind that it may take up to 60 seconds for that policy to be updated across all of our data centers.
 {{</Aside>}}
 
-## What type of policy should I create?
+## Selecting a policy type
 
 The recommended policy type depends on what kind of traffic you are trying to filter. Generally speaking:
 
