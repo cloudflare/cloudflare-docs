@@ -35,18 +35,18 @@ To enable the Cloudflare Logpush service:
 
     - **Datadog URL Endpoint**, which can be either one below. You can find the difference at [Datadog API reference](https://docs.datadoghq.com/api/latest/logs/).
 
-{{<tabs labels="V1 | V2">}}
-{{<tab label="v1" no-code="true">}}
+    {{<tabs labels="V1 | V2">}}
+    {{<tab label="v1" no-code="true">}}
  
-`https://http-intake.logs.datadoghq.com/v1/input`
+  `https://http-intake.logs.datadoghq.com/v1/input`
  
-{{</tab>}}
-{{<tab label="v2" no-code="true">}}
+    {{</tab>}}
+    {{<tab label="v2" no-code="true">}}
  
-`https://http-intake.logs.datadoghq.com/api/v2/logs`
+  `https://http-intake.logs.datadoghq.com/api/v2/logs`
  
-{{</tab>}}
-{{</tabs>}}
+    {{</tab>}}
+    {{</tabs>}}
 
     - **Datadog API Key**, can be retrieved by following [these steps](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token).
     
@@ -78,24 +78,24 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 - **name** (optional) - Use your domain name as the job name.
 - **destination_conf** - A log destination consisting of an endpoint URL, authorization header, and zero or more optional parameters that Datadog supports in the string format below.
 
-  - **\<DATADOG_ENDPOINT_URL>**: The Datadog HTTP logs intake endpoint, which can be either one below. You can find the difference at [Datadog API reference](https://docs.datadoghq.com/api/latest/logs/).
+  - `<DATADOG_ENDPOINT_URL>`: The Datadog HTTP logs intake endpoint, which can be either one below. You can find the difference at [Datadog API reference](https://docs.datadoghq.com/api/latest/logs/).
 
-{{<tabs labels="V1 | V2">}}
-{{<tab label="v1" no-code="true">}}
+  {{<tabs labels="V1 | V2">}}
+  {{<tab label="v1" no-code="true">}}
  
 `https://http-intake.logs.datadoghq.com/v1/input`
  
-{{</tab>}}
-{{<tab label="v2" no-code="true">}}
+  {{</tab>}}
+  {{<tab label="v2" no-code="true">}}
  
 `https://http-intake.logs.datadoghq.com/api/v2/logs`
  
-{{</tab>}}
-{{</tabs>}}
+  {{</tab>}}
+  {{</tabs>}}
 
-  - **\<DATADOG_API_KEY>**: The Datadog API token can be retrieved by following [these steps](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token). For example, `20e6d94e8c57924ad1be3c29bcaee0197d`.
-  - **ddsource**: Set to `cloudflare`.
-  - **service**, **host**, **ddtags**: Optional parameters allowed by Datadog.
+  - `<DATADOG_API_KEY>`: The Datadog API token can be retrieved by following [these steps](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token). For example, `20e6d94e8c57924ad1be3c29bcaee0197d`.
+  - `ddsource`: Set to `cloudflare`.
+  - `service`, **host**, **ddtags**: Optional parameters allowed by Datadog.
 
 ```bash
 "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>"
