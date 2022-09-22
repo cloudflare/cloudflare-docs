@@ -34,7 +34,7 @@ Follow this workflow to create a Configuration Rule for a given zone via API:
 
 The API token used in API requests to manage Configuration Rules must have at least the following permission:
 
-* _Zone_ > _Config Settings_ > _Edit_
+* _Zone_ > _Config Rules_ > _Edit_
 
 ## Examples
 
