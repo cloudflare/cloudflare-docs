@@ -23,7 +23,7 @@ let response = new Response(body, init);
     - {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">}}FormData{{</type-link>}}
     - {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream">}}ReadableStream{{</type-link>}}
     - {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams">}}URLSearchParams{{</type-link>}}
-    - {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/USVString">}}USVString{{</type-link>}}
+    - {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">}}USVString{{</type-link>}}
 
 - `init` {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -41,8 +41,8 @@ Valid options for the `options` object include: {{<definitions>}}
 
   - The status message associated with the status code, such as, `OK`.
 
-- `headers` {{<type-link href="/runtime-apis/request#parameters">}}Headers{{</type-link>}} | {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/ByteString">}}ByteString{{</type-link>}}
-  - Any headers to add to your response that are contained within a [`Headers`](/workers/runtime-apis/request/#parameters) object or object literal of [`ByteString`](https://developer.mozilla.org/en-US/docs/Web/API/ByteString) key-value pairs.
+- `headers` {{<type-link href="/runtime-apis/request#parameters">}}Headers{{</type-link>}} | {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">}}ByteString{{</type-link>}}
+  - Any headers to add to your response that are contained within a [`Headers`](/workers/runtime-apis/request/#parameters) object or object literal of [`ByteString`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) key-value pairs.
 
 {{</definitions>}}
 
@@ -114,9 +114,9 @@ Valid options for the `options` object include: {{<definitions>}}
 
   - Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with the result of parsing the body text as [`JSON`](https://developer.mozilla.org/en-US/docs/Web/).
 
-- {{<code>}}text(){{</code>}} {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/USVString">}}Promise{`<USVString>`}{{</type-link>}}
+- {{<code>}}text(){{</code>}} {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">}}Promise{`<USVString>`}{{</type-link>}}
 
-  - Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with a [`USVString`](https://developer.mozilla.org/en-US/docs/Web/API/USVString) (text).
+  - Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with a [`USVString`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) (text).
 
 {{</definitions>}}
 

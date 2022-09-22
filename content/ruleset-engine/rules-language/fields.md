@@ -220,7 +220,6 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">37.78044</code>
          </p>
-         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
       </td>
    </tr>
    <tr id="field-ip-src-lon">
@@ -231,7 +230,6 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">-122.39055</code>
          </p>
-         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
       </td>
    </tr>
    <tr id="field-ip-src-city">
@@ -242,7 +240,26 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">San Francisco</code>
          </p>
-         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-postal_code">
+      <td valign="top"><code>ip.src.postal_code</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Represents the postal code associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">78701</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-metro_code">
+      <td valign="top"><code>ip.src.metro_code</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Represents the metro code or Designated Market Area (DMA) code associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">635</code>
+         </p>
       </td>
    </tr>
    <tr id="field-ip-geoip-asnum">

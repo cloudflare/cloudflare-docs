@@ -22,7 +22,7 @@ To ensure that your service is not disrupted, you need to perform an additional 
 
 ### Recommended validation methods
 
-Using a [TXT](#dns-txt-record) or [HTTP](#http-token) validation method helps you avoid downtime during your migration. If you choose to use [CNAME validation](#cname-validation), your domain might fall behind on its [backoff schedule](/ssl/ssl-tls/validation-backoff-schedule/).
+Using a [TXT](#dns-txt-record) or [HTTP](#http-token) validation method helps you avoid downtime during your migration. If you choose to use [CNAME validation](#cname-validation), your domain might fall behind on its [backoff schedule](/ssl/reference/validation-backoff-schedule/).
 
 #### DNS TXT Record
 

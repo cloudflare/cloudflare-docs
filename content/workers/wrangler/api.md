@@ -58,7 +58,9 @@ const worker = await unstable_dev(script, options, apiOptions)
 
 *   `fetch()` {{<type>}}Promise\<Response>{{</type>}}
 
-    *   Send a request to your Worker. Returns a Promise that resolves with a [`Response`](/workers/runtime-apis/response) object.
+    *   Send a request to your Worker. Returns a Promise that resolves with a [`Response`](/workers/runtime-apis/response) object.  
+    *   Refer to [`Fetch`](/workers/runtime-apis/fetch/).
+
 
 *   `stop()` {{<type>}}Promise\<void>{{</type>}}
 
