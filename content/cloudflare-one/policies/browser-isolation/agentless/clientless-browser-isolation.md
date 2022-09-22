@@ -38,6 +38,16 @@ For example, if you use a third-party Secure Web Gateway to block `example.com`,
 | ---------| ---------| ----------------| -------------- |
 | Domain   | in       | `example.com`   | Block          |
 
+### Bypass TLS decryption
+
+If [TLS decryption](/cloudflare-one/policies/filtering/http-policies/tls-decryption/) is turned on, Gateway will decrypt all sites accessed through the Clientless Web Isolation URL. To connect to sites that are incompatible with TLS decryption, you will need to add a Do Not Inspect HTTP policy for the application or domain.
+
+| Selector | Operator | Value           | Action         |
+| ---------| ---------| ----------------| -------------- |
+| Domain   | is       | `mysite.com`   | Do Not Inspect  |
+
+When accessing a Do Not Inspect site in the remote browser, you will see a **Your connection is not private** warning which you can proceed through in order to connect.
+
 ### Connect private networks
 
 With Clientless Web Isolation, users can reach any private IP resource you have connected through [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/). To connect a private network to Cloudflare, refer to our [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/).
