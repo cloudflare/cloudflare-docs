@@ -292,6 +292,21 @@ Example:
 SUM(item_cost)
 ```
 
+### AVG
+
+Usage:
+```SQL
+AVG(column_name)
+```
+
+Avg is an aggregation function that returns the mean of column values across all rows in each group or results set.
+
+Example:
+```SQL
+-- return the mean item cost
+AVG(item_cost)
+```
+
 ### QUANTILEWEIGHTED
 
 Usage:
