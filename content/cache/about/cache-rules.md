@@ -3,7 +3,7 @@ title: Cache Rules (beta)
 pcx_content_type: concept
 ---
 
-# Cache Rules (beta)
+{{<beta>}} Cache Rules {{</beta>}}
 
 Use cache rules to customize cache properties of your HTTP requests. For example, create a rule to specify how long to cache a resource in the Cloudflare edge network.
 
