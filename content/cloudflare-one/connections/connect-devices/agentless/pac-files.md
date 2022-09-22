@@ -174,6 +174,3 @@ You can test any [supported HTTP policy](#limitations), such as the example poli
 ## Limitations
 
 At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/) or mTLS authentication.
-
-[Browser Isolation](/cloudflare-one/policies/browser-isolation/) is disabled by default, because the lack of user identity information poses a potential security risk. If you want to apply Isolate policies, request access from your account team.
-

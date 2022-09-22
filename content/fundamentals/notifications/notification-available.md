@@ -1,7 +1,7 @@
 ---
 title: Available Notifications
 pcx_content_type: concept
-weight: 7
+weight: 2
 layout: single
 ---
 
@@ -368,6 +368,37 @@ All Cloudflare plans with [Load Balancing purchase](/load-balancing/how-to/enabl
 **What should you do if you receive one?**
 
 Evaluate [load balancing analytics](/load-balancing/reference/load-balancing-analytics/) to review changes in health status over time.
+
+</div>
+</details>
+
+## Logpush
+
+<details>
+<summary>Failing Logpush Job Disabled</summary>
+<div>
+
+**Who is it for?**
+
+This is for any customer who uses Logpush and wants to monitor their job health.
+
+
+**Other options / filters**
+
+- Notification Name
+  - Custom name for this notification
+- Description (optional)
+  - Custom description for this notification
+- Notification Email (can be multiple emails)
+  - Email address of recipient for this notification
+
+**Included with**
+
+Enterprise plans.
+
+**What should you do if you receive one?**
+
+In the email for the notification, you can find the destination name for the failing Logpush job. With this destination name, you should be able to figure out which zone this relates to. There can be multiple reasons why a job fails, but it is best to test that the destination endpoint is healthy, and that necessary credentials are still working.  You can also check that the destination has allowlisted [Cloudflare IPs](https://www.cloudflare.com/ips/).
 
 </div>
 </details>
@@ -849,7 +880,7 @@ Stream notifications are entirely customizable by the customer. Action will depe
 
 Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in firewall events.
 
-For more information, refer to [WAF alerts](/waf/alerts/).
+For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
 **Other options / filters**
 
@@ -874,7 +905,7 @@ Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to id
 
 Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in firewall events.
 
-For more information, refer to [WAF alerts](/waf/alerts/).
+For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
 **Other options / filters**
 

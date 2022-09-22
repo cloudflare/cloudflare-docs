@@ -34,5 +34,5 @@ You cannot add unapproved prefixes to Advanced TCP Protection. Contact your acco
 
 ## Step 5 – Enable Advanced TCP Protection
 
-1. Go to **Account Home** > **Firewall Rulesets** > **DDoS** in the dashboard.
-2. Under **Advanced TCP Protection** > **General settings**, toggle the feature status to **Enabled**.
+1. In the Cloudflare dashboard, go to **Account Home** > **Application Security** > **DDoS** > **Advanced TCP Protection**.
+2. Under **General settings**, toggle the feature status to **Enabled**.

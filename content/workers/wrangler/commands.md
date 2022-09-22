@@ -147,6 +147,9 @@ This runs an ephemeral local version of your Worker, and will not be able to acc
 
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the script.
+- `--test-scheduled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+
+  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (cron trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
 
 {{</definitions>}}
 
@@ -701,7 +704,7 @@ y
 Interact with buckets in an R2 store.
 
 {{<Aside type="note">}}
-The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/runtime-apis/).
+The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/data-access/workers-api/workers-api-reference).
 {{</Aside>}}
 
 ### `create`
