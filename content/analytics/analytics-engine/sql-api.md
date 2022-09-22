@@ -59,8 +59,9 @@ The table will have the following columns:
 | dataset | string | This column will contain the dataset name in every row. |
 | timestamp | DateTime | The timestamp at which the event was logged in your worker. |
 | _sample_interval | integer | In case that the data has been sampled, this column indicates what the sample rate is for this row (i.e. how many rows of the original data are represented by this row). See the [sampling](#sampling) section below for more information. |
-| double1<br>...<br>double20 | double | The double values that were logged with the event. |
+| index1 | string | The index value that was logged with the event. The value in this column is used as the key for sampling.
 | blob1<br>...<br>blob20 | string | The blob values that were logged with the event. |
+| double1<br>...<br>double20 | double | The double values that were logged with the event. |
 
 {{</table-wrap>}}
 
