@@ -110,4 +110,4 @@ To view the rules of a Managed Ruleset:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Navigate to **Application Security** > **WAF** > **Managed rulesets**.
 3. Under **Deployed managed rulesets** and next to the rule you want to delete, select **Edit**.
-4. Select **Delete deployment** and confirm the operation.
+4. Select **Delete deployment** (or **Delete exception**) and confirm the operation.
