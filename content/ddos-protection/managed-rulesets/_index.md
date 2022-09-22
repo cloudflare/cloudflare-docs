@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Managed Rulesets
+layout: single
 weight: 5
 ---
 

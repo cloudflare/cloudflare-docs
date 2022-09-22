@@ -28,6 +28,15 @@ Before integrating a device posture check in a Gateway or Access policy, you sho
 
 ![Device posture results in the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/devices/device-posture-dash-result.png)
 
+
 ## 3. Build a device posture policy
 
 You can now use your device posture check in an [Access policy](/cloudflare-one/policies/access/) or a Gateway [network policy](/cloudflare-one/policies/filtering/network-policies/common-policies/#enforce-device-posture). In Access, the enabled device posture attributes will appear in the list of available [selectors](/cloudflare-one/policies/access/#selectors). In Gateway, the attributes will appear when you choose the [Passed Device Posture Check](/cloudflare-one/policies/filtering/network-policies/#device-posture) selector.
+
+## 4. Ensure traffic is going through WARP
+
+[WARP client](/cloudflare-one/identity/devices/warp-client-checks/) and [Service-to-service](/cloudflare-one/identity/devices/service-providers/) posture checks rely on traffic going through WARP to properly lookup posture information for a device. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/), ensure that the following domains are included in WARP:
+
+* The IdP used to authenticate to Cloudflare Zero Trust if posture check is part of an Access policy.
+* `<your-team-name>.cloudflareaccess.com` if posture check is part of an Access policy.
+* The application protected by the Access or Gateway policy.

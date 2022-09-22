@@ -1,7 +1,7 @@
 ---
 title: Available Notifications
 pcx_content_type: concept
-weight: 7
+weight: 2
 layout: single
 ---
 
@@ -372,6 +372,37 @@ Evaluate [load balancing analytics](/load-balancing/reference/load-balancing-ana
 </div>
 </details>
 
+## Logpush
+
+<details>
+<summary>Failing Logpush Job Disabled</summary>
+<div>
+
+**Who is it for?**
+
+This is for any customer who uses Logpush and wants to monitor their job health.
+
+
+**Other options / filters**
+
+- Notification Name
+  - Custom name for this notification
+- Description (optional)
+  - Custom description for this notification
+- Notification Email (can be multiple emails)
+  - Email address of recipient for this notification
+
+**Included with**
+
+Enterprise plans.
+
+**What should you do if you receive one?**
+
+In the email for the notification, you can find the destination name for the failing Logpush job. With this destination name, you should be able to figure out which zone this relates to. There can be multiple reasons why a job fails, but it is best to test that the destination endpoint is healthy, and that necessary credentials are still working.  You can also check that the destination has allowlisted [Cloudflare IPs](https://www.cloudflare.com/ips/).
+
+</div>
+</details>
+
 ## Magic Transit
 
 <details>
@@ -579,6 +610,8 @@ Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configu
 **Who is it for?**
 
 Customers with custom hostname certificates who want to receive a notification on validation, issuance, renewal, and expiration of certificates.
+
+For more details around data formatting for webhooks, refer to the [Cloudflare for SaaS docs](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/webhook-definitions/).
 
 **Other options / filters**
 

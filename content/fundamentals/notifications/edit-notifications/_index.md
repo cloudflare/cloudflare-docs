@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Edit a Notification
-weight: 9
+weight: 4
 ---
 
 # Edit a Notification
