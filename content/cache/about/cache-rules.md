@@ -55,7 +55,7 @@ To create a new cache rule:
         - In the **Cookie** section, you can include cookie names and their values, and check the presence of another cookie.
         - In the **Host** section, you can select **Use original host** and **Resolved host**.
         - In the **User** section, you can select **Device type**, **Country**, and **Language**.
-    - **Serve stale content** - Turn on or off if you want to serve stale content while updating from the origin server. If serving stale content is disabled, origin cache-control headers will be used to tell Cloudflare how to handle content from the origin.
+    - **Serve stale content** - Enable or disable serving stale content while updating from the origin server. If serving stale content is disabled, origin cache-control headers will be used to tell Cloudflare how to handle content from the origin.
     - **Respect Strong ETags** - Turn on or off byte-for-byte equivalency checks between the Cloudflare cache and the origin server. When enabled, Cloudflare will use strong ETag header validation to ensure that resources in the Cloudflare cache and on the origin server are byte-by-byte identical. If disabled, Cloudflare converts ETag headers into weak ETag headers.
     - **Origin error page pass-thru** - Turn on or off Cloudflare error pages generated from issues sent from the origin server. If enabled, this setting triggers error pages issued by the origin.
 8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
