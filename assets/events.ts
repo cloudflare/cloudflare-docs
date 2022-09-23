@@ -93,9 +93,11 @@ function $clicktoClipboard(ev: MouseEvent) {
   const pre = button.parentElement;
   if (pre) {
     const code = pre.getElementsByTagName("code")[0];
-    const text = code.innerText;
+    let text = code.innerText;
     if (text) {
       try {
+        // remove double new lines
+        text = text.replace(/\n\n/g, "\n");
         //copy to clipboard
         navigator.clipboard.writeText(text);
         //change SVG
