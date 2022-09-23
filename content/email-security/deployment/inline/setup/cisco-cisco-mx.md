@@ -92,9 +92,15 @@ To create a new Content Filter:
     * **Description**: `Area 1 inspected messages for final delivery`
     * **Order**: This filter must come before the previously created filter.
     * Add seven conditions of type **Remote IP/Hostname** with the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/). For example: 
-    Order | Condition | Rule
-    --- | --- | ---
+    Order | Condition          | Rule
+    --- | -------------------- | ---
     `1` | `Remote IP/Hostname` | `52.11.209.211`
+    `2` | `Remote IP/Hostname` | `52.89.255.11`
+    `3` | `Remote IP/Hostname` | `52.0.67.109`
+    `4` | `Remote IP/Hostname` | `54.173.50.115`
+    `5` | `Remote IP/Hostname` | `104.30.32.0/19`
+    `6` | `Remote IP/Hostname` | `158.51.64.0/26`
+    `7` | `Remote IP/Hostname` | `158.51.65.0/26`
     * Ensure that the **Apply rule:** drop-down is set to *If one or more conditions match*.
     * **Actions**:
         * **Action**: **Skip Remaining Content Filters (Final Action)**
