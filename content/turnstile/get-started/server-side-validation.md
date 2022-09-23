@@ -86,9 +86,9 @@ In case of a successful validation, the response should look like this:
 
 * `challenge_ts` is the ISO timestamp for the time the challenge was solved.
 * `hostname` is the hostname for which the challenge was served.
-* `action` is the customer widget identifier that got passed to the widget on the client side. This is used to differentiate widgets using the same sitekey in analytics. It is integrity protected by modifications from an attacker.
+* `action` is the customer widget identifier that got passed to the widget on the client side. This is used to differentiate widgets using the same sitekey in analytics. It is integrity protected by modifications from an attacker. It is recommended to validate that the action matches an expected value.
 * `cdata` is customer data that got passed to the widget on the client side. This can be used by the customer to convey state. It is integrity protected by modifications from an attacker.
-* `error-codes` is a list of errors that occured.
+* `error-codes` is a list of errors that occurred.
 
 In case of a validation failure, the response should look like this:
 

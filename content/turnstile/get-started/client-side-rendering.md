@@ -5,7 +5,7 @@ weight: 3
 layout: single
 ---
 
-# Client-side Rendering
+# Client-side Render
 
 Initializing and customizing the Turnstile widget on your webpage can be done via **explicit** or **implicit** rendering. 
 
@@ -73,6 +73,29 @@ Once a token has been issued, it can be validated within the next 300 seconds. A
 
 To configure the challenge, see [Configurations](/turnstile/get-started/client-side-rendering/#configurations) containing data attributes and render parameters.
 
+## Protect Forms
+
+Turnstile is often used to protect forms on websites such as login forms, contact forms, and more. After inserting the JavaScript script tag, customers can embed `<div class="cf-turnstile"></div>` into their site to protect their forms.
+
+For example:
+<div>
+
+```html
+
+<form action="/login" method="POST">
+   <input type="text" placeholder="username"/>
+   <input type="password" placeholder="password"/>
+   <div class="cf-challenge" data-sitekey="yourSitekey"></div> 
+   <button type="submit" value="Submit">Log in</button>
+</form>
+
+```
+
+</div>
+
+An invisible input with the name `cf-turnstile-response` is added, and will be sent to the server with the other fields.
+
+
 ## Disable implicit rendering 
 Implicit rendering can be disabled by customers by replacing the script from 
 
@@ -82,11 +105,13 @@ to
 
 `https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit`
 
-## Accessing a widget's state
+When this option is used, HTML elements with the `cf-turnstile` class will not show a challenge. The `turnstile.render` function must be invoked.
+
+## Access a widget's state
 
 In addition to the `render()` function, Turnstile supports obtaining the widget's response from a widgetId via the `turnstile.getResponse(widgetId: string)` function.
 
-## Resetting a widget
+## Reset a widget
 
 If a given widget has expired or needs to be reloaded, the `turnstile.reset(widgetId: string)` function can be used.
 
