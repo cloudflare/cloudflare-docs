@@ -37,7 +37,7 @@ The user-agent with the following requirements:
 
 {{<Aside type="example" header="Example">}}
 
-GoogleBot/1.0 is a valid UA. 
+`GoogleBot/1.0` is a valid UA. 
 
 {{</Aside>}}
 
