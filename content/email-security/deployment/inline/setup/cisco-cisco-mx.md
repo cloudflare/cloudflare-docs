@@ -1,5 +1,5 @@
 ---
-title: Cisco as MX record
+title: Cisco - Cisco as MX record
 pcx_content_type: tutorial
 weight: 4
 layout: single

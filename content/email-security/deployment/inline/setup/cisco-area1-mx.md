@@ -1,5 +1,5 @@
 ---
-title: Cisco Area 1 MX Record
+title: Cisco - Area 1 as MX Record
 pcx_content_type: tutorial
 weight: 3
 layout: single
