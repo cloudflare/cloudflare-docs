@@ -69,7 +69,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/
 
 {{<Aside type="note">}}
 
-You can set a maximum of 8 tags per script. Avoid special characters like `,` and `&` when naming your tag.
+You can set a maximum of eight tags per script. Avoid special characters like `,` and `&` when naming your tag.
 
 {{</Aside>}}
 
