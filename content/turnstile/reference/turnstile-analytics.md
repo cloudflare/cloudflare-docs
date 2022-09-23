@@ -18,19 +18,23 @@ To view the Overview metrics of your Turnstile widgets, go to… (*step to view 
 These metrics show changes in the solve rate, widget traffic, and top actions for your website.
 
 ## Change in Solve Rate
+
 Customers can view the history of their website’s widget solve rate with Turnstile Analytics. 
 
 {{<Aside type="note">}}
 
-You can toggle additional filters for specific dates, time, ... (*other filter options*) 
+Customers can filter the data by `Action=(free input)` or by time.
 
 {{</Aside>}}
 
 ## Widget Traffic
+
 Widget traffic metrics provide customers with data on the number of widgets displayed, interactive widgets solved, and non-interactive widgets solved on their website over time.
 
 ## Top Actions
-Top Actions refer to the custom labels created by customers for their widgets. Learn more about Actions [here](link).
+
+Top Actions refer to the custom labels created by customers for their widgets.
 
 # Solve events 
+
 definitions

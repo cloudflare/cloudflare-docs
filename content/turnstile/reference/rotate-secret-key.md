@@ -8,7 +8,7 @@ layout: single
 
 Customers are able to rotate the secret key using the following steps: 
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) and select your account and domain.
 2. *Step to get to landing page*
 3. Select a widget and navigate to the **Settings**.
 4. Select **Rotate Secret**.
