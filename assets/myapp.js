@@ -8,9 +8,9 @@ for (const item in paths) {
     }
 }
 
-console.log(current_path)
-
-var vueApp = Vue.createApp({
-    data() {return {display: `This is ${current_path.title}`}},
+Vue.createApp({
+    data() {return {
+        this: current_path
+    }},
     delimiters: ['[[', ']]'],
   }).mount('#vapp');
