@@ -6,7 +6,7 @@ weight: 8
 
 # Access an SMB drive through Cloudflare Tunnel
 
-The Server Message Block (SMB) protocol allows users to read, write, and access shared resources on a network. Due to security risks, firewalls and ISPs usually block external users from accessing an SMB file share via its public IP address.  With Cloudflare Tunnel, you can provide secure and simple SMB access to users outside of your network.
+The Server Message Block (SMB) protocol allows users to read, write, and access shared resources on a network. Due to security risks, firewalls and ISPs usually block public connections to an SMB file share.  With Cloudflare Tunnel, you can provide secure and simple SMB access to users outside of your network.
 
 Cloudflare Zero Trust offers two solutions for connecting to SMB servers:
 
