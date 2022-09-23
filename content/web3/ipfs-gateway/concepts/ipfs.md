@@ -16,7 +16,7 @@ If someone runs IPFS on their computer and uploads a file to the IPFS network, t
 
 Every file added to IPFS is given a unique address derived from a hash of the file's content. This address is called a Content Identifier (CID) and it combines the hash of the file and a unique identifier for the hash algorithm used into a single string.
 
-IPFS currently uses [SHA-256](https://en.wikipedia.org/wiki/SHA-2) by default,which produces a 256 bit (32 byte) output, and that output is encoded with [Base58](https://en.wikipedia.org/wiki/Base58). Base58 is a binary-to-text encoding scheme originally developed for Bitcoin and has the advantage that letters that might be mistaken for each other in certain fonts (like zero and the capital letter O) are not included.
+IPFS currently uses [SHA-256](https://en.wikipedia.org/wiki/SHA-2) by default, which produces a 256 bit (32 byte) output, and that output is encoded with [Base58](https://en.wikipedia.org/wiki/Base58). Base58 is a binary-to-text encoding scheme originally developed for Bitcoin and has the advantage that letters that might be mistaken for each other in certain fonts (like zero and the capital letter O) are not included.
 
 A CID will typically look something like `QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco`.
 
