@@ -27,7 +27,7 @@ To add a new Sender Group:
 
 3. Configure the new Sender Group as follows:
     * **Name**: `Area1`.
-    * **Order**: Order above the existing WHITELIST Sender Group.
+    * **Order**: Order above the existing **WHITELIST** sender group.
     * **Comment**: `Area 1 Email Protection egress IP Addresses`.
     * **Policy**: `TRUSTED` (by default, spam detection is disabled for this mail flow policy).
     * **SBRS**: Leave blank.
