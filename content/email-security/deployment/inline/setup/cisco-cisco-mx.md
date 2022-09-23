@@ -1,15 +1,15 @@
 ---
-title: Cisco hosted email
+title: Cisco as MX record
 pcx_content_type: tutorial
 weight: 4
 layout: single
 meta:
-   title: Deploy and configure Area 1 with with Cisco hosted email
+   title: Deploy and configure Area 1 with with Cisco as MX record
 ---
 
-# Deploy and configure Area 1 with with Cisco hosted email
+# Deploy and configure Area 1 with with Cisco as MX record
 
-In this tutorial you will learn how to configure Area 1 email security with Cisco hosted email. This tutorial is broken down into several steps:
+In this tutorial you will learn how to configure Area 1 email security with Cisco as MX record. This tutorial is broken down into several steps:
 
 1. Add a new Sender Group to include Area 1’s egress IPs.
 2. Add a new SMTP route for Area 1 Email Protection Service.
