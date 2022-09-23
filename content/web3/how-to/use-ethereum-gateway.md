@@ -18,7 +18,7 @@ The Cloudflare Ethereum Gateway allows HTTP requests where the body of the reque
 
 Each blob use a valid [`method` parameter](/web3/ethereum-gateway/reference/supported-api-methods/). The `params` array here contains the block number that we would like to locate and a boolean expressing whether each individual transaction in the block should be shown in their entirety (`true`) or as stubs (`false`).
 
-To send this query to the your [custom Ethereum Gateway](/web3/how-to/manage-gateways/), you could use a cURL command:
+To send this query to your [custom Ethereum Gateway](/web3/how-to/manage-gateways/), you could use a cURL command:
 
 ```bash
 curl https://eth.example.com/v1/mainnet -H 'Content-Type: application/json' --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x2244", true],"id":1}'
