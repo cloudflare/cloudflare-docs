@@ -34,7 +34,7 @@ To add a new Sender Group:
     * **DNS Lists**: Leave blank.
     * **Connecting Host DNS Verification**: Leave all options unchecked.
 
-4. Select **Submit and Add Senders >>** and add IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
+4. Select **Submit and Add Senders >>** and add the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
 
 
 ## 2. Configure Incoming Relays
