@@ -26,16 +26,7 @@ The dispatcher Worker calls user Workers from the namespace and executes them. A
 binding = "dispatcher"
 namespace = "<NAMESPACE_NAME>"
 ```
-
-For special cases (such as using wrangler@d1, which is not caught up at the moment), an unsafe binding is available. This is subject to change, use at your own risk.
-
-```toml
-[[unsafe.bindings]]
-name = "dispatcher"
-type = "dispatch_namespace"
-namespace = "<NAMESPACE_NAME>"
-```
-
+ 
 If you are doing your own multipart uploads, include a similar object in your metadata's bindings property:
 
 ```json
@@ -75,6 +66,12 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/
      -H "Content-Type: application/javascript" \
     --data "['TAG1', 'TAG2', 'TAG3']"
 ```
+
+{{<Aside type="note">}}
+
+You can set a maximum of 8 tags per script. Avoid special characters like `,` and `&` when naming your tag.
+
+{{</Aside>}}
 
 To tag a script, tags can now be included on multipart script uploads in the metadata blob (alongside bindings, etc.):
 
