@@ -18,6 +18,8 @@ In this tutorial you will learn how to configure Cisco IronPort with Area 1 as M
     2. Detect returning messages from Area 1 and deliver to email provider.
 4. Apply incoming message filters to incoming policies.
 
+![A schematic showing where Area 1 security is in the lifeline of an email received](/email-security/static/cisco-mx-flow.png)
+
 ## 1. Add a Sender Group for Area 1 Email Protection IPs
 
 To add a new Sender Group:
