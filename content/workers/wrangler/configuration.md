@@ -240,7 +240,7 @@ Example:
 header: wrangler.toml
 ---
 [triggers]
-crons = ["1 * * * *"]
+crons = ["* * * * *"]
 ```
 
 ## Custom Builds
