@@ -14,7 +14,7 @@ If you created a hostname pointing to these gateways during the [private beta](h
 
 ## Migration guide
 
-The migration is a simple process:
+The migration is a simple process.
 
 First, create a [Cloudflare account](/learning-paths/get-started/#account-setup).
 
