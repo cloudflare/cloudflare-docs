@@ -1,7 +1,7 @@
 ---
 title: SQL API
 pcx_content_type: reference
-weight: 2
+weight: 4
 meta:
   title: Workers Analytics Engine SQL API
 ---
