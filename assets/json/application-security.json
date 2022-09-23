@@ -10,8 +10,9 @@
       "Bots"
     ],
     "category": ["Security"],
-    "modules": [
+    "elements": [
       {
+        "type": "module",
         "title": "Concepts",
         "description": "Learn the fundamentals of website security. <br /> <br /> Feel free to skip if you have a technical background.",
         "estimated_time": "~30 mins",
@@ -48,6 +49,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Before you begin",
         "description": "Before you can secure your site, make sure you have already added that site to Cloudflare.",
         "estimated_time": "~30 mins",
@@ -59,6 +61,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Account security",
         "description": "Make sure your Cloudflare account is protected from takeover or compromise",
         "estimated_time": "~15 mins",
@@ -87,6 +90,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "General security — Minimal setup",
         "description": "Take a few simple steps to make sure your application is protected from a broad array of threats.",
         "estimated_time": "~1 hour",
@@ -116,6 +120,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Customize Web Application Firewall (WAF)",
         "description": "Use a variety of rules to customize the behavior of your application's firewall. This step may require [detailed analysis](/waf/analytics/) of your application traffic.",
         "estimated_time": "~2 hours",
@@ -155,6 +160,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Customize other security settings",
         "description": "Update various settings to further refine how your application processes incoming traffic. This step may require [detailed analysis](/waf/analytics/) of your application traffic.",
         "estimated_time": "~2 hours",
@@ -212,6 +218,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Explore dedicated security products",
         "description": "Cloudflare offers several dedicated products to increase the security of your website and underlying infrastructure.",
         "estimated_time": "~30 mins",
@@ -244,6 +251,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Next steps",
         "estimated_time": "~30 mins",
         "pages": [

@@ -10,8 +10,9 @@
       "Cache"
     ],
     "category": ["Security", "Performance", "Reliability"],
-    "modules": [
+    "elements": [
       {
+        "type": "module",
         "title": "Concepts",
         "description": "Concepts explain the basic ideas behind how Cloudflare works and how you can work with Cloudflare. <br /> <br /> Feel free to skip if you have a technical background.",
         "estimated_time": "~25 mins",
@@ -40,6 +41,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Account setup",
         "description": "Create and customize your Cloudflare account.",
         "estimated_time": "~10 mins",
@@ -72,6 +74,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Add a domain",
         "description": "Make a few updates at your registrar and within Cloudflare to improve your domain's [speed, security, and reliability](/fundamentals/get-started/concepts/how-cloudflare-works/#benefits).",
         "estimated_time": "~5 mins",
@@ -93,6 +96,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Domain resolution",
         "description": "After your domain is active on Cloudflare, review your DNS settings to make sure visitors can access your site.",
         "estimated_time": "~10 mins",
@@ -122,6 +126,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Security",
         "description": "Review and optimize your security settings so your visitors' information and your site infrastructure are protected.",
         "estimated_time": "~1 hour",
@@ -141,6 +146,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "Other optimizations",
         "description": "Go beyond the basics and optimize other aspects of your domain setup.",
         "pages": [
@@ -162,6 +168,7 @@
         ]
       },
       {
+        "type": "module",
         "title": "(Optional) Helpful resources",
         "estimated_time": "~30 mins",
         "pages": [
