@@ -23,16 +23,20 @@
             "link_title": "What is a Content Delivery Network (CDN)?"
           },
           {
-            "url_path": "/fundamentals/get-started/concepts/what-is-cloudflare/"
+            "url_path": "/fundamentals/get-started/concepts/what-is-cloudflare/",
+            "link_title": "What is Cloudflare?"
           },
           {
-            "url_path": "/fundamentals/get-started/concepts/how-cloudflare-works/"
+            "url_path": "/fundamentals/get-started/concepts/how-cloudflare-works/",
+            "link_title": "How does Cloudflare work?"
           },
           {
-            "url_path": "/fundamentals/get-started/concepts/cloudflare-ip-addresses/"
+            "url_path": "/fundamentals/get-started/concepts/cloudflare-ip-addresses/",
+            "link_title": "Cloudflare IP addresses"
           },
           {
-            "url_path": "/fundamentals/get-started/concepts/cloudflare-challenges/"
+            "url_path": "/fundamentals/get-started/concepts/cloudflare-challenges/",
+            "link_title": "Cloudflare challenges"
           },
           {
             "url_path": "/fundamentals/get-started/concepts/network-layers/",
@@ -47,7 +51,8 @@
         "estimated_time": "~10 mins",
         "pages": [
           {
-            "url_path": "/fundamentals/account-and-billing/account-setup/create-account/"
+            "url_path": "/fundamentals/account-and-billing/account-setup/create-account/",
+            "link_title": "Create an account"
           },
           {
             "external_link": true,
@@ -60,7 +65,8 @@
             "link_title": "Add billing information"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/account-setup/customize-account/"
+            "url_path": "/fundamentals/account-and-billing/account-setup/customize-account/",
+            "link_title": "Customize your account"
           },
           {
             "url_path": "/fundamentals/account-and-billing/account-setup/manage-account-members/",
@@ -74,8 +80,29 @@
         ]
       },
       {
+        "type": "question",
+        "question": "Do you already own a <a href='https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/'>domain</a>?",
+        "id": "domain_ownership",
+        "choices": [
+          { 
+            "name": "Yes",
+            "value": true
+          },
+          { 
+            "name": "No",
+            "value": false
+          }
+        ]
+      },
+      {
         "type": "module",
         "title": "Add a domain",
+        "variables": [
+          {
+          "name": "domain_ownership",
+          "value": true
+          }
+        ],
         "description": "Make a few updates at your registrar and within Cloudflare to improve your domain's [speed, security, and reliability](/fundamentals/get-started/concepts/how-cloudflare-works/#benefits).",
         "estimated_time": "~5 mins",
         "pages": [
@@ -91,7 +118,25 @@
           },
           {
             "url_path": "/fundamentals/get-started/setup/add-site/",
+            "link_title": "Add a site",
             "additional_description": "**Note**: If do not already have a domain name, start with [Cloudflare Registrar](/registrar/get-started/register-domain/) instead."
+          }
+        ]
+      },
+      {
+        "type": "module",
+        "title": "Get a domain",
+        "visible_by_default": false,
+        "variables": [{
+          "name": "domain_ownership",
+          "value": false
+        }],
+        "description": "Buy an at-cost domain name through Cloudflare Registrar.",
+        "estimated_time": "~5 mins",
+        "pages": [
+          {
+            "url_path": "/registrar/get-started/register-domain/",
+            "link_title": "Register a new domain"
           }
         ]
       },
@@ -112,16 +157,20 @@
             "additional_description": "Make sure you understand Cloudflare's proxy status, which affects how Cloudflare treats incoming traffic to a DNS record."
           },
           {
-            "url_path": "/dns/additional-options/dnssec/"
+            "url_path": "/dns/additional-options/dnssec/",
+            "link_title": "Set up DNSSEC"
           },
           {
-            "url_path": "/dns/manage-dns-records/how-to/create-root-domain/"
+            "url_path": "/dns/manage-dns-records/how-to/create-root-domain/",
+            "link_title": "Create a root domain"
           },
           {
-            "url_path": "/dns/manage-dns-records/how-to/create-subdomain/"
+            "url_path": "/dns/manage-dns-records/how-to/create-subdomain/",
+            "link_title": "Create a subdomain"
           },
           {
-            "url_path": "/dns/manage-dns-records/how-to/email-records/"
+            "url_path": "/dns/manage-dns-records/how-to/email-records/",
+            "link_title": "Set up email records"
           }
         ]
       },
@@ -159,7 +208,8 @@
             "link_title": "Optimize site speed (Learning Path)"
           },
           {
-            "url_path": "/fundamentals/get-started/task-guides/origin-health/"
+            "url_path": "/fundamentals/get-started/task-guides/origin-health/",
+            "link_title": "Secure your origin server"
           },
           {
             "url_path": "/products/",
@@ -173,7 +223,8 @@
         "estimated_time": "~30 mins",
         "pages": [
           {
-            "url_path": "/fundamentals/get-started/basic-tasks/manage-domains/redirect-domain/"
+            "url_path": "/fundamentals/get-started/basic-tasks/manage-domains/redirect-domain/",
+            "link_title": "Redirect one domain to another"
           },
           {
             "url_path": "/email-routing/get-started/",

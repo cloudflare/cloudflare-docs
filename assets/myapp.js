@@ -8,16 +8,38 @@ for (const item in paths) {
     }
 }
 
-console.log(current_path)
+let filteredElements = current_path.elements.filter (element => { return element.visible_by_default !== false})
 
 Vue.createApp({
+    methods: {
+        test() {
+            alert("I am working")
+        },
+        onRadioButtonChange(event) {
+            this.elements = current_path.elements.filter (element => {
+                if (element.type === "question") {
+                    return element
+                } else if (element.variables !== undefined) {
+                    for (const i in element.variables) {
+                        if (event.target.name === element.variables[i].name) {
+                            return event.target.value === element.variables[i].value.toString()
+                        }
+                    }
+                } else {
+                    return element
+                }
+                
+            })
+        }
+    },
     template: `<div class='header'>
     <h1>[[ title ]]</h1>
     <p><em>Learning path</em></p>
     <p>[[ description ]]</p>
     </div>
     <div class="background">
-    <div v-for="element in elements" class="learningPathModule">
+    <div v-for="element in elements" class="learningPathModule" v-on:change="onRadioButtonChange">
+        <div v-if="element.type === 'module'">
         <div class="moduleHeader">
             <h2 :id="element.title.toLowerCase().replaceAll(' ', '-')"><span class="DocsMarkdown--header-anchor-positioner">
                 <a
@@ -28,6 +50,27 @@ Vue.createApp({
             </span>
             <span>[[ element.title ]]</span>
             </h2>
+            <p v-if="element.estimated_time" class="durationEstimate">[[ element.estimated_time ]]</p>
+        </div>
+        <div v-if="element.description" v-html="element.description"></div>
+        <details>
+            <summary>Contains [[ element.pages.length ]] units</summary>
+            <div>
+                <ul>
+                    <li v-for="page in element.pages"><a href="page.url_path">[[ page.link_title ]]</a></li>
+                </ul>
+            </div>
+        </details>
+        </div>
+        <div v-else-if="element.type === 'question'" class="questionChoices" :id="element.id">
+            <fieldset :id="element.id">
+            <legend v-html="element.question"></legend>
+                <div v-for="choice in element.choices">
+                    <input type="radio" :name="element.id" :id="choice.value" 
+                    :value=choice.value @change="onRadioButtonChange($event)">
+                    <label :for="choice.name">[[ choice.name ]]</label>
+                </div>
+            </fieldset>
         </div>
     </div>
     </div>`,
@@ -35,7 +78,7 @@ Vue.createApp({
     data() {return {
         title: current_path.title,
         description: current_path.description,
-        elements: current_path.elements
+        elements: filteredElements
     }},
     delimiters: ['[[', ']]'],
   }).mount('#vapp');
