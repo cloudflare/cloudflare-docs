@@ -986,6 +986,7 @@
 /distributed-web/* /web3/:splat 301
 /fundamentals/internet/* /fundamentals/the-internet/ 301
 /fundamentals/get-started/basic-tasks/account-maintenance/* /fundamentals/account-and-billing/account-maintenance/:splat 301
+/fundamentals/get-started/setup/troubleshooting/* /fundamentals/get-started/setup/add-site/ 301
 /fundamentals/get-started/basic-tasks/account-security/* /fundamentals/account-and-billing/account-security/:splat 301
 /fundamentals/get-started/setup/account-setup/* /fundamentals/account-and-billing/account-setup/:splat 301
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
