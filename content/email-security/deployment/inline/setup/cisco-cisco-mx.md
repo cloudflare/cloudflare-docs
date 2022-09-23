@@ -74,10 +74,10 @@ To create a new Content Filter:
     * **Name**: `ESA_to_A1S`
     * **Description**: `Redirect messages to Area 1 for anti-phishing inspection`
     * **Order**: This will depend on your other filters, but do note the order you select.
-    * **Condition**: No conditions
+    * **Condition**: No conditions.
     * **Actions**:
-        * **Action**: **Send to Alternate Destination Host**
-        * **Mail Host**: `a1s.mailstream` (the SMTP route configured in step 2)
+        * For **Action** select **Send to Alternate Destination Host**.
+        * For **Mail Host** input `a1s.mailstream` (the SMTP route configured in step 2).
 
 ### Incoming Content Filter - From Area 1
 
