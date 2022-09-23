@@ -83,11 +83,11 @@ When you are finished entering these details, select **SAVE**.
     * **Name**: `Quarantine Area 1 Malicious`.
     * In the **Email message to affect** section, select **Inbound**.
     * In the **Add expression that describe the content you want to search for in each message section**, configure the following:
-        * Select **Add** to add the condition
-            * Match drop down, select **Advanced content match**
-            * Location, select **Full headers**
-            * Match type, select **Contains text**
-            * Content, enter `X-Area1Security-Disposition: MALICIOUS`
+        * Select **Add** to add the condition.
+            * In the **Match** drop down, select *Advanced content match*.
+            * In **Location**, select **Full headers**.
+            * In **Match type**, select **Contains text**.
+            * In **Content**, enter `X-Area1Security-Disposition: MALICIOUS`.
         * Select **SAVE** to save the condition.
     * In the **If the above expression match, do the following** section, select the action dropdown and select *Quarantine message* and the *Area 1 Malicious* quarantine that was created in the previous step.
 
