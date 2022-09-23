@@ -11,13 +11,7 @@ In order to be listed by Cloudflare as a Verified Bot, your bot must conform to 
 
 ### Minimum Traffic
 
-A bot or proxy must have a minimum amount of traffic for Cloudflare to be able find it in the sampled data. 
-
-{{<Aside type="example" header="Example">}}
-
-The minimum traffic should have more than 1000 requests per day across multiple domains. 
-
-{{</Aside>}}
+A bot or proxy must have a minimum amount of traffic for Cloudflare to be able find it in the sampled data. The minimum traffic should have more than 1000 requests per day across multiple domains. 
 
 ### Minimum Zones
 
@@ -30,6 +24,7 @@ A bot crawling one site is not valid.
 {{</Aside>}}
 
 ### Bot Identification
+
 The user-agent with the following requirements: 
 * Have at least 5 characters.
 * Must not contain special characters.
