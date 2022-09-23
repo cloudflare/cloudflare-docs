@@ -43,7 +43,7 @@ The user-agent with the following requirements:
 
 ### Domain Owner Consent
 
-Domains should only be crawled with the explicit or implicit consent of the zone's owner or terms of use. Search engines crawlers must read the `robots.txt` to exclude paths to crawl from owner. 
+Domains should only be crawled with the explicit or implicit consent of the zone's owner or terms of use. Search engines crawlers must read the `robots.txt` to exclude paths to crawl from the owner. 
 
 {{<Aside type="example" header="Example">}}
 
