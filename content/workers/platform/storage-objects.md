@@ -27,7 +27,7 @@ To get started with KV:
 * Review the [KV Runtime API](/workers/runtime-apis/kv/).
 * Learn about KV [Limits](/workers/platform/limits/#kv-limits).
 
-## R2 (beta)
+## R2
 
 R2 is S3-compatible blob storage that allows developers to store large amounts of unstructured data without egress fees associated with typical cloud storage services.
 
