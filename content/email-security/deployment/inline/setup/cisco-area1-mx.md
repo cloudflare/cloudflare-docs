@@ -39,7 +39,15 @@ To add a new Sender Group:
 
 ## 2. Configure Incoming Relays
 
-EMPTY STEP WITH NO TEXT!!!!
+You need to configure the Incoming Relays section to tell IronPort to ignore upstream hops, since all the connections are now coming from Area 1. This step is needed so the IronPort can retrieve the original IPs to calculate IP reputation. IronPort also uses this information in the Anti-Spam (IPAS) scoring of messages.
+
+1. To enable the Incoming Relays Feature, select **Network** > **Incoming Relays**.
+2. Select **Enable** and commit your changes.
+3. Now, you will have to add an Incoming Relay. Select **Network** > **Incoming Relays**.
+4. Select **Add Relay** and give your relay a name.
+5. Enter the IP address of the MTA, MX, or other machine that connects to the email gateway to relay incoming messages. You can use IPv4 or IPv6 addresses.
+6. Specify the `Received:` header that will identify the IP address of the original external sender.
+7. Commit your changes.
 
 ## 3. Update your domain MX records
 
