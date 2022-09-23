@@ -1,6 +1,6 @@
 ---
 title: Configure R2 with Terraform
-summary: Example of how to configure R2 with Terraform
+summary: Example of how to configure R2 with Terraform.
 pcx-content-type: configuration
 weight: 1001
 layout: example
