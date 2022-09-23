@@ -607,11 +607,16 @@
 /waf/custom-rules/custom-firewall/skip/options/ /waf/custom-rules/skip/options/ 301
 /waf/custom-rules/rate-limiting/ /waf/rate-limiting-rules/ 301
 /waf/custom-rules/rate-limiting/create-api/ /waf/rate-limiting-rules/create-api/ 301
-/waf/custom-rules/rate-limiting/create-dashboard/ /waf/rate-limiting-rules/create-dashboard/ 301
+/waf/custom-rules/rate-limiting/create-dashboard/ /waf/rate-limiting-rules/create-zone-dashboard/ 301
 /waf/custom-rules/rate-limiting/parameters/ /waf/rate-limiting-rules/parameters/ 301
 /waf/custom-rules/rate-limiting/request-rate/ /waf/rate-limiting-rules/request-rate/ 301
 /waf/custom-rules/rate-limiting/use-cases/ /waf/rate-limiting-rules/use-cases/ 301
 /waf/about/file-scanning/ /waf/about/content-scanning/ 301
+/waf/alerts/ /waf/reference/alerts/ 301
+/waf/managed-rulesets/cloudflare-managed-ruleset/ /waf/managed-rulesets/reference/cloudflare-managed-ruleset/ 301
+/waf/managed-rulesets/owasp-core-ruleset/ /waf/managed-rulesets/reference/owasp-core-ruleset/ 301
+/waf/managed-rulesets/exposed-credentials-check/ /waf/managed-rulesets/reference/exposed-credentials-check/ 301
+/waf/rate-limiting-rules/create-dashboard/ /waf/rate-limiting-rules/create-zone-dashboard/ 301
 
 # waiting-room
 /waiting-room/about/ /waiting-room/ 301
@@ -840,6 +845,7 @@
 /workers/runtime-apis/r2/ /r2/data-access/workers-api/workers-api-reference/ 301
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-application/ 301
 /workers/examples/http2-server-push/ /workers/examples/103-early-hints/ 301
+/workers/get-started/storage-objects/ /workers/platform/storage-objects 301
 
 # zaraz
 
@@ -980,6 +986,7 @@
 /distributed-web/* /web3/:splat 301
 /fundamentals/internet/* /fundamentals/the-internet/ 301
 /fundamentals/get-started/basic-tasks/account-maintenance/* /fundamentals/account-and-billing/account-maintenance/:splat 301
+/fundamentals/get-started/setup/troubleshooting/* /fundamentals/get-started/setup/add-site/ 301
 /fundamentals/get-started/basic-tasks/account-security/* /fundamentals/account-and-billing/account-security/:splat 301
 /fundamentals/get-started/setup/account-setup/* /fundamentals/account-and-billing/account-setup/:splat 301
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301

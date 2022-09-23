@@ -880,7 +880,7 @@ Stream notifications are entirely customizable by the customer. Action will depe
 
 Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in firewall events.
 
-For more information, refer to [WAF alerts](/waf/alerts/).
+For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
 **Other options / filters**
 
@@ -905,7 +905,7 @@ Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to id
 
 Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in firewall events.
 
-For more information, refer to [WAF alerts](/waf/alerts/).
+For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
 **Other options / filters**
 

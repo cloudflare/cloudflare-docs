@@ -1,13 +1,13 @@
 ---
 pcx_content_type: how-to
 type: overview
-title: Create rate limiting rules in the dashboard
+title: Create in the dashboard for a zone
 weight: 14
 ---
 
-# Create rate limiting rules in the dashboard
+# Create rate limiting rules in the dashboard for a zone
 
-Create rate limiting rules in **Security** > **WAF** > **Rate limiting rules**.
+Create rate limiting rules for a zone in **Security** > **WAF** > **Rate limiting rules**.
 
 {{<Aside type="note">}}
 
@@ -19,7 +19,7 @@ For guidance on the previous version of rate limiting rules, refer to [Configuri
 
 To create a new rate limiting rule:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
 2. Navigate to **Security** > **WAF** > **Rate limiting rules**.
 
@@ -49,18 +49,4 @@ To create a new rate limiting rule:
 
 ## Configuring a custom response for blocked requests
 
-When you select the _Block_ action in a rate limiting rule you can optionally define a custom response for requests exceeding the configured rate limit.
-
-The custom response has three settings:
-
-* **Response type**: Choose a content type or the default rate limiting response from the list. The available custom response types are the following:
-
-    | Dashboard value | API value |
-    |---|---|
-    | Custom HTML | `"text/html"` |
-    | Custom Text | `"text/plain"` |
-    | Custom JSON | `"application/json"` |
-    | Custom XML | `"text/xml"` |
-
-* **Response code**: Choose an HTTP status code for the response, in the range 400-499. The default response code is 429.
-* **Response body**: The body of the response. Configure a valid body according to the response type you selected.
+{{<render file="_custom-response-blocked-requests.md">}}
