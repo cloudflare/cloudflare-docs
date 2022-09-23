@@ -77,8 +77,10 @@ async function markdown(file: string): Promise<void> {
 
     let html = highlight(inner, lang);
 
+    html = html.replace(/[\r\n]/g, '').replace(/\{\{\</g, '{\\{<');
+
     // prevent hugo from looking at "{{<" pattern
-    output += "\n\n" + ' '.repeat(spaces?.length ?? 0) + '{{<raw>}}' + html.replace(/\{\{\</g, '{\\{<') + '{{</raw>}}';
+    output += "\n\n" + ' '.repeat(spaces?.length ?? 0) + '{{<raw>}}' + html + '{{</raw>}}';
 
     last = current + full.length;
   }
