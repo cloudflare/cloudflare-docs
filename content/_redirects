@@ -80,8 +80,9 @@
 /access/configuring-identity-providers/ /cloudflare-one/identity/idp-integration/ 301
 /access/getting-started/applications/ /cloudflare-one/applications/ 301
 /access/getting-started/access-setup/ /cloudflare-one/identity/ 301
-/access/rdp/ /cloudflare-one/tutorials/rdp/ 301
-/access/rdp/connect-rdp/ /cloudflare-one/tutorials/rdp/ 301
+/access/rdp/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
+/access/rdp/connect-rdp/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
+/cloudflare-one/tutorials/rdp/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
 /access/service-auth/mtls/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
 /access/service-auth/service-token/ /cloudflare-one/identity/service-tokens/ 301
 /access/setting-up-access/ /cloudflare-one/identity/ 301
@@ -861,8 +862,9 @@
 /cloudflare-one/applications/arbitrary-tcp/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
 /cloudflare-one/applications/configure-apps/app-paths/ /cloudflare-one/policies/zero-trust/app-paths/ 301
 /cloudflare-one/applications/non-HTTP/ /cloudflare-one/applications/non-http/ 301
-/cloudflare-one/applications/non-HTTP/RDP/ /cloudflare-one/tutorials/rdp/ 301
-/cloudflare-one/applications/non-HTTP/SMB-file-shares/ /cloudflare-one/tutorials/smb/ 301
+/cloudflare-one/applications/non-HTTP/RDP/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
+/cloudflare-one/applications/non-HTTP/SMB-file-shares/ /cloudflare-one/connections/connect-apps/use_cases/smb/ 301
+/cloudflare-one/tutorials/smb/ /cloudflare-one/connections/connect-apps/use_cases/smb/ 301
 /cloudflare-one/connections/connect-apps/configuration/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/setup/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
 /cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/ /cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/ 301
@@ -971,6 +973,7 @@
 /cloudflare-one/policies/filtering/dns-policies-builder/ /cloudflare-one/policies/filtering/dns-policies/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/categories/ /cloudflare-one/policies/filtering/dns-policies/dns-categories/ 301
 /cloudflare-one/policies/filtering/http-policies/incompatible-traffic/ /cloudflare-one/policies/filtering/http-policies/ 301
+/cloudflare-one/policies/filtering/http-policies/order-of-enforcement-http-policies/ /cloudflare-one/policies/filtering/order-of-enforcement/ 301
 
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
 

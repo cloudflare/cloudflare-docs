@@ -77,38 +77,3 @@ If a bot skips `robots.txt`, it will be rejected.
 ### Public Documentation
 
 The bot must have publicly documented expected behavior or user-agent format.
-
-
-## Corporate Proxy Policy
-
-### Service Scope
-
-Service must be made for a widespread use of zones. 
-
-### Service Purpose
-
-The purpose of the service should be in general benign or helpful to both the owner of a zone and users of the service, such as: 
-
-* Security enhancer
-* Privacy enhancer
-* Content enhancer
-
-The service cannot perform any of the following: 
-
-* Open Proxies
-* Public Proxies
-* Residential Proxies 
-* Rotating Proxies
-* Free VPNs
-
-### Strict Service Use
-
-The provider has strict user or abuse policies/SLAs.
-
-### Public Documentaion
-
-The bot must have publicly documented expected behavior or user-agent format.
-
-### Traffic Categorization
-
-Traffic can include automated traffic but the majority should be human traffic. 
