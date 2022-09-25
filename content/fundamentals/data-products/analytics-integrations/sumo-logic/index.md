@@ -7,7 +7,7 @@ layout: single
 
 # Sumo Logic
 
-This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) using the [Cloudflare App for Sumo Logic](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare).
+This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) using the [Cloudflare App for Sumo Logic](https://www.sumologic.com/application/cloudflare/).
 
 ## Overview
 
@@ -22,7 +22,7 @@ Before sending your Cloudflare log data to Sumo Logic, make sure that you:
 - Have an existing Sumo Logic account
 - Have a Cloudflare Enterprise account with Cloudflare Logs enabled
 - Configure [Logpush](/logs/about/) or [Logpull](/logs/logpull/)
-- Consult the [Sumo Logic documentation](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare) for the Cloudflare App
+- Consult the [Sumo Logic documentation](https://www.sumologic.com/application/cloudflare/) for the Cloudflare App
 
 {{<Aside type="note" header="Note">}}
 
@@ -64,7 +64,7 @@ Under **Processing Rules for Logs** create a **Filter** (processing rule regex o
 
 ## Task 3 - Install the Cloudflare App
 
-To install the [Cloudflare App for Sumo Logic](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare):
+To install the [Cloudflare App for Sumo Logic](https://www.sumologic.com/application/cloudflare/):
 
 1.  In the Sumo Logic UI, click **App Catalog** and search for _Cloudflare_.
     ![Sumo Logic Cloudflare in App Catalog page with Cloudflare in search bar and Cloudflare app](/fundamentals/static/images/sumo-logic/screenshots/cloudflare-app-sumo-logic-app-catalog.png)
