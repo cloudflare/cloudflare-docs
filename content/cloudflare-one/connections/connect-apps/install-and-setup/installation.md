@@ -44,7 +44,7 @@ This is due to a recent update which now points the `cloudflared` repository to 
 Download and install `cloudflared` via Homebrew:
 
 ```sh
-$ brew install cloudflare/cloudflare/cloudflared
+$ brew install cloudflared
 ```
 
 Alternatively, [download the latest Darwin amd64 release directly](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz).
