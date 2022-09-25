@@ -171,6 +171,10 @@ The following example demonstrates the setup procedure for Firefox.
 
 You can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-your-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
 
+{{<Aside type="note">}}
+When a browser is connected to Gateway by a proxy endpoint, the browser does not perform DNS lookups. Only HTTP policies will apply.
+{{</Aside>}}
+
 ## Limitations
 
 At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/) or mTLS authentication.
