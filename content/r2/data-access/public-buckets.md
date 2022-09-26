@@ -17,43 +17,6 @@ Public buckets can be set up in two ways:
 
 To configure firewall rules, caching, access controls, or bot management for your bucket, you must set up a custom domain.
 
-## Enable public access for your bucket
-
-Enabling public access for your bucket will make the content of your bucket available to the Internet. To enable public access for your buckets:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > **R2**.
-
-![Choose R2 from the side menu](/r2/static/public-buckets-r2.png)
-
-2. In. **R2**, select the bucket you want to enable public access for.
-
-![Select your bucket](/r2/static/public-buckets-bucket.png)
-
-3. Go to **Settings**.
-
-![Select settings](/r2/static/public-buckets-settings.png)
-
-4. In **Settings**, go to **Bucket Access**.
-
-![Select bucket access](/r2/static/public-buckets-not-allowed.png)
-
-5. Under **Bucket Access**, select **Allow Access**.
-
-![Allow access](/r2/static/public-buckets-allow-access.png)
-
-6. You will be prompted to confirm your choice. In the confirmation dialog, type ‘allow’ to confirm and select **Allow**.
-7. You can now access the bucket and its objects using the Public Bucket URL.
-
-![Show Public Bucket URL](/r2/static/public-buckets-allowed.png)
-
-You can review if your bucket is publicly accessible by going to your bucket and checking that **Public URL Access** states **Allowed**.
-
-{{<Aside type="note">}}
-
-To enable access management, Cache and bot management features, you must set up a custom domain when enabling public access to your bucket.
-
-{{</Aside>}}
-
 ## Connect your bucket to a custom domain
 
 Domain access through a custom domain allows you to use features such as access management, Cache and bot management.
@@ -127,6 +90,43 @@ To remove a domain:
 5. Select ‘Remove domain’ in the confirmation window. The CNAME record pointing to the domain will also be removed as part of this step. You can always add the domain again.
 
 The domain is no longer connected to your bucket and will no longer appear in the connected domains list.
+
+## Enable public access for your bucket
+
+Enabling public access for your bucket will make the content of your bucket available to the Internet. To enable public access for your buckets:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > **R2**.
+
+![Choose R2 from the side menu](/r2/static/public-buckets-r2.png)
+
+2. In. **R2**, select the bucket you want to enable public access for.
+
+![Select your bucket](/r2/static/public-buckets-bucket.png)
+
+3. Go to **Settings**.
+
+![Select settings](/r2/static/public-buckets-settings.png)
+
+4. In **Settings**, go to **Bucket Access**.
+
+![Select bucket access](/r2/static/public-buckets-not-allowed.png)
+
+5. Under **Bucket Access**, select **Allow Access**.
+
+![Allow access](/r2/static/public-buckets-allow-access.png)
+
+6. You will be prompted to confirm your choice. In the confirmation dialog, type ‘allow’ to confirm and select **Allow**.
+7. You can now access the bucket and its objects using the Public Bucket URL.
+
+![Show Public Bucket URL](/r2/static/public-buckets-allowed.png)
+
+You can review if your bucket is publicly accessible by going to your bucket and checking that **Public URL Access** states **Allowed**.
+
+{{<Aside type="note">}}
+
+To enable access management, Cache and bot management features, you must set up a custom domain when enabling public access to your bucket.
+
+{{</Aside>}}
 
 ## Disable public access for your bucket
 
