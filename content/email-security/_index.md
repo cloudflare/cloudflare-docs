@@ -29,7 +29,7 @@ Area 1 provides to architectures to protect your organization: inline or API set
 In addition to standard logins, Area 1 offers support for SAML based single sign-on (SSO) logins to your dashboard.
 {{</feature>}}
 
-{{<feature header="Business email compromise" href="/email-configuration/enhanced-detections/business-email-compromise/">}}
+{{<feature header="Business email compromise" href="/email-security/email-configuration/enhanced-detections/business-email-compromise/">}}
 Attackers often try to impersonate executives within an organization when sending malicious emails. The Business email compromise (BEC) feature protects against these attacks.
 {{</feature>}}
 
