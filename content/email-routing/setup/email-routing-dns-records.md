@@ -12,7 +12,7 @@ You can check the status of your DNS records in the **Settings** section of Emai
 
 ## Email DNS records
 
-Check the status of your account's DNS records in the Email DNS records card:
+Check the status of your account's DNS records in the **Email DNS records** card:
 
 * **Email DNS records configured** - DNS records are properly configured.
 * **Email DNS records misconfigured** - There is a problem with your accounts DNS records. Select **Enable Email Routing** to [start troubleshooting problems](/email-routing/troubleshooting/).
