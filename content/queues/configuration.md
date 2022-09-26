@@ -8,13 +8,13 @@ meta:
 
 # Configuration
 
-Cloudflare Queues can be configured using [wrangler](/workers/wrangler/get-started/), the command-line interface for our Developer Platform, which includes [Workers](/workers/), [R2](/r2/), and much more.
+Cloudflare Queues can be configured using [Wrangler](/workers/wrangler/get-started/), the command-line interface for Cloudflare's Developer Platform, which includes [Workers](/workers/), [R2](/r2/), and other developer products.
 
-Each Worker has a `wrangler.toml` configuration file that specifies environment variables, triggers, resources, such as a Queue. Use the options below to configure your Queue.
+Each Worker has a `wrangler.toml` configuration file that specifies environment variables, triggers, and resources, such as a Queue. Use the options below to configure your Queue.
 
 {{<Aside type="note">}}
 
-Below are options for Queues, check out the full reference for [`wrangler.toml`](/workers/wrangler/configuration/).
+Below are options for Queues, refer to the Wrangler Configuration documentation for a full reference for [`wrangler.toml`](/workers/wrangler/configuration/).
 
 {{</Aside>}}
 

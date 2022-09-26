@@ -8,13 +8,13 @@ meta:
 
 # JavaScript APIs
 
-Cloudflare Queues is integrated with [Cloudflare Workers](/workers). To send and receive messages, you must use a Worker. A Worker can send messages to a Queue, known as a "producer," or receive messages from a Queue, refered to as a "consumer."
+Cloudflare Queues is integrated with [Cloudflare Workers](/workers). To send and receive messages, you must use a Worker. A Worker can send messages to a Queue, known as a producer Worker, or receive messages from a Queue, refered to as a consumer Worker.
 
 In the future, we expect to support other APIs, such as HTTP endpoints to send or receive messages. If you have any feedback about these APIs, please [contact us](mailto:queues@cloudflare.com) and we would be happy to hear from you.
 
 ## Producer
 
-These APIs allow a Worker to send messages to a Queue.
+These APIs allow a producer Worker to send messages to a Queue.
 
 ```ts
 type Environment = {
@@ -47,14 +47,14 @@ interface Queue<Body = any> {
 
 - {{<code>}}send(body{{<param-type>}}any{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
 
-  - Sends a message to the queue. The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
+  - Sends a message to the Queue. The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
   - When the promise resolves, the message is confirmed to be written to disk.
 
 {{</definitions>}}
 
 ## Consumer
 
-These APIs allow a Worker to consume messages from a Queue.
+These APIs allow a consumer Worker to consume messages from a Queue.
 
 ```ts
 export default {
@@ -68,7 +68,7 @@ export default {
 
 ### `MessageBatch`
 
-A batch of messages that are sent to a consumer.
+A batch of messages that are sent to a consumer Worker.
 
 ```ts
 interface MessageBatch<Body = any> {
@@ -96,7 +96,7 @@ interface MessageBatch<Body = any> {
 
 ### `Message`
 
-A message that is sent to a consumer.
+A message that is sent to a consumer Worker.
 
 ```ts
 interface Message<Body = any> {

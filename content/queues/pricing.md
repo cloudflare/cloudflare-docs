@@ -30,7 +30,7 @@ In most cases, it takes 3 operations to deliver a message: 1 write, 1 read, and 
 
 ### Example
 
-If an application writes 1 million messages a day, and each message is less than 64 KB in size, the estimated bill for the month would be:
+If an application writes one million messages a day, and each message is less than 64 KB in size, the estimated bill for the month would be:
 
 {{<table-wrap>}}
 

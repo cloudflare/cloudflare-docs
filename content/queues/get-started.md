@@ -6,15 +6,15 @@ meta:
   title: Cloudflare Queues - Get Started
 ---
 
-# Get Started
+# Get started
 
 Cloudflare Queues allows developers to send and receive messages with guaranteed delivery. It integrates with [Cloudflare Workers](/workers) and offers at-least once delivery, message batching, and does not charge for egress bandwidth.
 
-Use this guide to deploy your first Queue, as well as a producer and consumer Worker.
+Use this guide to create a producer and consumer Worker to deploy your first Queue.
 
-## 1. Install wrangler
+## 1. Install Wrangler
 
-First, you will need to install [wrangler](https://github.com/cloudflare/wrangler2), the command-line interface for developers to use Cloudflare.
+First, install [Wrangler](https://github.com/cloudflare/wrangler2), the command-line interface for developers to build Cloudflare Workers, by running:
 
 {{<Aside type="note">}}
 
@@ -40,7 +40,7 @@ Next, run the `wrangler login` command, which will open your web browser and com
 $ wrangler login
 ```
 
-Open the browser, log in to your account, and select **Allow**. This will send an OAuth token to wrangler so it can deploy resources to your account.
+Open the browser, log in to your account, and select **Allow**. This will send an OAuth token to Wrangler so it can deploy resources to your account.
 
 ## 3. Create a Queue
 
@@ -56,30 +56,30 @@ To check that your Queue was created, run:
 $ wrangler queues list
 ```
 
-## 4. Configure a Producer
+## 4. Configure a producer Worker
 
-You will need to send messages to the Queue. You can do this by defining a "producer" Worker, which will have a binding that can send messages to the Queue.
+A producer Worker is a Worker that can send messages to your Queue. After you create a producer Worker and bind it to your Queue, you can send messages to the Queue.
 
 {{<Aside type="note" header="What is a binding?">}}
 
-A binding is a how a Worker interacts with resources such as a Queue, [R2 bucket](/r2/api), or [KV namespace](/workers/runtime-apis/kv/). Each binding has a name, which is the name a variable in JavaScript, and a resource that it binds to, like the name of a Queue.
+A [binding](/workers/platform/bindings/) is a how a Worker interacts with resources such as a Queue, [R2 bucket](/r2/api), or [KV namespace](/workers/runtime-apis/kv/). Each binding has a name, which is the name a variable in JavaScript, and a resource that it binds to, like a Queue.
 
 {{</Aside>}}
 
 First, create a Worker using a [template](/workers/get-started/quickstarts/#templates).
 
 ```sh
-$ wrangler init <producer-name>
+$ wrangler init <PRODUCER_NAME>
 ```
 
 Next, find your newly generated `wrangler.toml` file in your project's directory and configure your producer.
 
 ```toml
-name = "<producer-name>"
+name = "<PRODUCER_NAME>"
 
 [[queues.producers]]
-queue = "<queue-name>"
-binding = "MY_QUEUE"
+  queue = "<QUEUE_NAME>"
+binding = "<MY_QUEUE>"
 ```
 
 For more details about the configuration format...
