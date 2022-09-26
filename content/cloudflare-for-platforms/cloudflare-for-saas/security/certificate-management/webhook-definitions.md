@@ -103,7 +103,7 @@ Before a Certificate Authority will issue a certificate for a domain, the reques
 
 ## Certificate issuance
 
-Once validated, certificates are issued by Cloudflare in conjunction with your chosen [certificate authority](/ssl/ssl-tls/certificate-authorities/).
+Once validated, certificates are issued by Cloudflare in conjunction with your chosen [certificate authority](/ssl/reference/certificate-authorities/).
 
 ### Issuance succeeded
 
@@ -352,7 +352,7 @@ Once issued, certificates are deployed to Cloudflare's global edge network.
 
 ## Certificate renewal
 
-Once issued, certificates are valid for a period of time depending on the [certificate authority](/ssl/ssl-tls/certificate-validity-periods/).
+Once issued, certificates are valid for a period of time depending on the [certificate authority](/ssl/reference/certificate-validity-periods/).
 
 The actions that you need to perform to renew certificates depend on your [validation method](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#renew-certificates-issued-by-dcv).
 

@@ -1,7 +1,7 @@
 ---
 title: Platform
 pcx_content_type: navigation
-weight: 2
+weight: 4
 ---
 
 # Platform
