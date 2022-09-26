@@ -17,17 +17,15 @@ In the Email DNS records card you can check the status of your account's DNS rec
 * **Email DNS records configured** - DNS records are properly configured.
 * **Email DNS records misconfigured** - There is a problem with your accounts DNS records. Select **Enable Email Routing** to [start troubleshooting for problems](/email-routing/troubleshooting/).
 
-## Locked DNS records
+### Start disabling
 
-To avoid email routing problems, Cloudflare recommends that you have your account's DNS records locked. This means that the DNS records required for Email Routing to work will be locked and can only be changed if you disable Email Routing on your domain.
+When you successfully configure Email Routing, your DNS records will be locked and you will see a **Start disabling** button in the Email DNS records card. This is the recommended setting by Cloudflare. It means that the DNS records required for Email Routing to work are locked and can only be changed if you disable Email Routing on your domain.
 
-When you successfully configure Email Routing, the Email DNS records card will show a **Start disabling** button, with a `MX records locked` message. Depending on your zone configuration, however, you might also have a **Lock DNS records** button, which means your DNS records are unlocked and can be changed.
+If you need to delete Email Routing or migrate to another provider, select **Start disabling**. Refer to [Disable Email Routing](/email-routing/setup/disable-email-routing/) for more information.
 
-## Start disabling
+### Lock DNS records
 
-The **Start disabling** button allows you to delete Email Routing from your account or keep your records and migrate to another provider. Refer to [Disable Email Routing](/email-routing/setup/disable-email-routing/) for more information.
-
-{{<Aside type="note">}}This button is onlw shown when you have the DNS records for your account locked.{{</Aside>}}
+Depending on your zone configuration, you might have your DNS records unlocked. This will also be true if, for some reason, you have unlocked your DNS records. Select **Lock DNS records** to lock your DNS records and protect them from being accidentally changed or deleted. 
 
 ## View DNS records
 
