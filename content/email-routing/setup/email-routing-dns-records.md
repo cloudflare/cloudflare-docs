@@ -8,7 +8,7 @@ meta:
 
 # DNS records
 
-You can check the status and a list of your DNS records in the Settings section of Email Routing. This section also allows you to troubleshoot any potential problems you might have with DNS records.
+You can check the status of your DNS records in the **Settings** section of Email Routing. This section also allows you to troubleshoot any potential problems you might have with DNS records.
 
 ## Email DNS records
 
@@ -29,4 +29,6 @@ Depending on your zone configuration, you might have your DNS records unlocked. 
 
 ## View DNS records
 
-Select the **View DNS records** button for a list of the required `MX` and sender policy framework (SPF) records Email Routing is using. If you are having trouble with your account's DNS records, refer to the [Troubleshooting](/email-routing/troubleshooting/) section.
+Select the **View DNS records** button for a list of the required `MX` and sender policy framework (SPF) records Email Routing is using. 
+
+If you are having trouble with your account's DNS records, refer to the [Troubleshooting](/email-routing/troubleshooting/) section.
