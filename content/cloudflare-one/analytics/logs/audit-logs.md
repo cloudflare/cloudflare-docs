@@ -1,73 +1,49 @@
 ---
 pcx_content_type: reference
-title: Access Audit logs
+title: Access audit logs
 weight: 6
 ---
 
-# Access Audit logs
+# Access audit logs
 
 Cloudflare Access generates two types of audit logs:
 
 *   **[Authentication audit logs](#authentication-audit-logs)** maintain a record of authentication events.
 *   **[Per-request audit logs](#per-request-audit-logs)** record HTTP requests to protected URI paths.
 
-## Authentication Audit Logs
+## Authentication audit logs
 
 Cloudflare logs an Access authentication event whenever a user or service attempts to log in to an application, whether the attempt succeeds or not.
 
-To view authentication logs, navigate to the **Logs** > **Access** section of the Zero Trust dashboard. You can expand each row to view details such as the login method, the IP address of the user, and more. If a login attempt was blocked, click **View** for information about why Access denied the user access. Block policy decisions are retained for a week. Authentication logs are retained for six months.
+Requests blocked by a non-identity policy not appear in the **Logs** section of the Zero Trust dashboard.
 
-{{<Aside>}}
+### Identity-based authentication
 
-Authentication audit logs do not capture actions the user takes once they have authenticated.
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+To view authentication logs, navigate to the **Logs** > **Access** section of the Zero Trust dashboard. You can expand each row to view details such as the login method, the IP address of the user, and more. If a login attempt was blocked, click **View** for information about why Access denied the user access. 
 
-{{</Aside>}}
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
-### Explanation of the fields
-
-Access authentication logs contain the following fields:
-
-| Field | Description |
-|-------|-------------|
-| **user\_email** |  The email address of the authenticating user. |
-| **ip\_address** |  The IP address of the authenticating user. |
-| **app\_uid** | The unique identifier for the protected application. |
-| **add\_domain** |  The URL of the protected application. |
-| **action** | The event that occurred, such as a login attempt. |
-| **allowed** | The result of the authentication event. |
-| **created\_at** | The event timestamp. |
-| **connection**  | The IdP used to authenticate. |
-| **country** | The country associated with the user’s IP address. |
-| **ray\_id** | A unique identifier for every request through Cloudflare. |
-| **app\_type** | The type specifies if the app is self-hosted or SaaS. |
-
-### Access Requests Audit API endpoint
-
-The [Access Requests Audit](https://api.cloudflare.com/#access-requests-access-requests-audit) API endpoint provides a custom URL to export audit log events for your account.
-
-    GET accounts/:identifier/access/logs/access_requests
-
-#### Optional fields
-
-| Name /type | Description/example | Constraints |
-| ---------- | ------------------- | ----------- |
-| limit (number) | Limit the number of results `25`. | - |
-| direction (string) | Change the direction of the chronological sorting `"desc"`. | default value: `desc`, valid values: `desc`, `asc` |
-| since (date-time string) | 	The time the query begins `"2020-07-01T05:20:00Z"`. | read only |
-| until (date-time string)	| The time the query ends `"2020-10-01T05:20:00Z"`. | read only |
-
-#### cURL (example)
+The [Access authentication logs](https://api.cloudflare.com/#access-authentication-logs-properties) API endpoint provides a custom URL to export audit log events for your account.
 
 ```curl
+---
+header: Request
+---
 curl -X GET "https://api.cloudflare.com/client/v4/accounts/699d98642c564d2e855e9661899b7252/access/logs/access_requests?limit=25&direction=desc&since=2020-07-01T05:20:00Z&until=2020-10-01T05:20:00Z" \
      -H "X-Auth-Email: user@example.com" \
      -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
      -H "Content-Type: application/json"
 ```
 
-#### Response (example)
 
 ```json
+---
+header: Response
+---
 {
   "success": true,
   "errors": [],
@@ -87,6 +63,38 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/699d98642c564d2e855e9
   ]
 }
 ```
+
+{{</tab>}}
+{{</tabs>}}
+
+
+#### Log retention
+Block policy decisions are retained for a week. Authentication logs are retained for six months.
+
+{{<Aside>}}
+
+Authentication audit logs do not capture actions the user takes once they have authenticated.
+
+{{</Aside>}}
+
+#### Explanation of the fields
+
+Access authentication logs contain the following fields:
+
+| Field | Description |
+|-------|-------------|
+| **user\_email** |  The email address of the authenticating user. |
+| **ip\_address** |  The IP address of the authenticating user. |
+| **app\_uid** | The unique identifier for the protected application. |
+| **add\_domain** |  The URL of the protected application. |
+| **action** | The event that occurred, such as a login attempt. |
+| **allowed** | The result of the authentication event. |
+| **created\_at** | The event timestamp. |
+| **connection**  | The IdP used to authenticate. |
+| **country** | The country associated with the user’s IP address. |
+| **ray\_id** | A unique identifier for every request through Cloudflare. |
+| **app\_type** | The type specifies if the app is self-hosted or SaaS. |
+
 
 ## Per-Request Audit Logs
 
