@@ -3,7 +3,6 @@ pcx_content_type: concept
 type: overview
 title: Determining the rate
 weight: 12
-layout: list
 ---
 
 # Determining the rate
