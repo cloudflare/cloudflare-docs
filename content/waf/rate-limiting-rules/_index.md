@@ -10,7 +10,7 @@ Rate limiting rules allow you to define rate limits for requests matching an exp
 
 {{<Aside type="note">}}
 
-This feature is only available for customers on an Enterprise plan. Refer to [Availability](#availability) for details.
+This feature is available on all plans. Refer to [Availability](#availability) for details.
 
 For guidance on the previous version of rate limiting rules, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 
@@ -41,22 +41,23 @@ Applying rate limiting rules to verified bots might affect Search Engine Optimiz
 
 ## Availability
 
-Rate limiting rules are available to Enterprise customers. The available features depend on the exact plan:
+Rate limiting rules are available to all customers. The available features depend on the exact plan:
 
-{{<table-wrap>}}
+{{<table-wrap style="font-size: 87%">}}
 
-Feature | Enterprise | Enterprise Advanced |
----|---|---
-Available fields<br/>in rule expression | URL, Method, Headers, Source IP | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Bot Management fields*)
-Counting characteristics | IP | IP, IP with NAT support, Query, Headers, Cookie, ASN, Country, JA3 Fingerprint*
-Available fields<br/>in counting expression | URL, Method, Request headers, Source IP, Response code, Response headers | URL, Method, Request headers, Source IP, Response code, Response headers
-Counting model | Number of requests | Number of requests<br/>[Complexity score](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting)
-Maximum sampling period | 10 minutes | 1 hour
+
+Feature | Free | Pro | Business | Enterprise w/ WAF Essential | Enterprise w/ Advanced Rate Limiting |
+---|---|---|---|---|---
+Available fields<br/>in rule expression | Path | Host, URI, Path, Full URI, Query | Host, URI, Path, Full URI, Query, Method, Source IP, User Agent | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Bot Management fields<sup>1</sup>) | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Bot Management fields<sup>1</sup>), [request body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields)<sup>2</sup>
+Counting characteristics | IP | IP | IP | IP, IP with NAT support | IP, IP with NAT support, Query, Headers, Cookie, ASN, Country, JA3 Fingerprint<sup>1</sup>
+Available fields<br/>in counting expression | N/A | N/A | URI, Method, Request headers, Source IP, Response code, Response headers | URI, Method, Request headers, Source IP, Response code, Response headers | URI, Method, Request headers, Source IP, Response code, Response headers
+Counting model | Number of requests | Number of requests | Number of requests | Number of requests | Number of requests<br/>[Complexity score](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting)
+Maximum sampling period | 10 seconds | 60 seconds | 10 minutes | 1 hour | 1 hour
 
 {{</table-wrap>}}
 
-\* Only available to Enterprise customers who have purchased [Bot Management](/bots/plans/bm-subscription/).
-
+<sup>1</sup> _Only available to Enterprise customers who have purchased [Bot Management](/bots/plans/bm-subscription/)._<br>
+<sup>2</sup> _Requires a separate add-on._
 
 ## Next steps
 

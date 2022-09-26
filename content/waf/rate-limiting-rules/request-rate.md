@@ -17,7 +17,7 @@ Consider a rule configured with the following characteristics:
 
 In this case, two incoming requests with the **same** value for the HTTP header `X-API-Key` with **different** IP addresses are counted separately, since the value combination is different. Additionally, counters are not shared across data centers.
 
-The counting model of this rate limiting rule is based on the number of incoming requests. Enterprise customers on the Advanced plan can also configure rules whose counting model is based on the complexity of serving incoming requests. Refer to [Complexity-based rate limiting](#complexity-based-rate-limiting) for more information.
+The counting model of this rate limiting rule is based on the number of incoming requests. Enterprise customers with Advanced Rate Limiting can also configure rules whose counting model is based on the complexity of serving incoming requests. Refer to [Complexity-based rate limiting](#complexity-based-rate-limiting) for more information.
 
 {{<Aside type="warning" header="Important">}}
 
@@ -112,14 +112,14 @@ Request 4 matches the rule expression and therefore Cloudflare evaluates the rat
 ## Complexity-based rate limiting
 
 {{<Aside type="note">}}
-Complexity-based rate limiting is available in beta to Enterprise customers on the Advanced plan, and can only be configured via API.
+Complexity-based rate limiting is available in beta to Enterprise customers with Advanced Rate Limiting, and can only be configured via API.
 {{</Aside>}}
 
 A complexity-based rate limiting rule performs rate limiting based on the complexity or cost of handling requests during a given period, instead of the number of requests in the same period.
 
 A common use case is to score each request with an estimate of the cost (or complexity) required to serve that request. The rate limiting rule can then enforce a maximum limit on the total complexity that each client can put on the application over a given period, regardless of the total number of requests sent by that client.
 
-When you configure a complexity-based rate limiting rule, the origin server must include an HTTP header in the response with its complexity score. 
+When you configure a complexity-based rate limiting rule, the origin server must include an HTTP header in the response with its complexity score.
 
 Complexity-based rate limiting rules must contain the following properties:
 
