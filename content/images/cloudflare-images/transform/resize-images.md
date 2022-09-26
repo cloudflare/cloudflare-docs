@@ -14,6 +14,8 @@ Each variant has several properties, including the width and height of resized i
 
 ## How to resize an image
 
+{{<Aside type="note">}}Cloudflare Images does not resize SVGs. Refer to [SVG files](/images/cloudflare-images/upload-images/formats-limitations/#svg-files) for more information.{{</Aside>}}
+
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 

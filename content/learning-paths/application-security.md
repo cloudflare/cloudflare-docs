@@ -5,4 +5,4 @@ layout: home
 pcx_content_type: learning-path
 ---
 
-{{<learning-path>}}
+{{<learning-path file="application-security.json">}}

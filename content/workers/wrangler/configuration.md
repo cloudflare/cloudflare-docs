@@ -6,7 +6,7 @@ weight: 3
 
 # Configure `wrangler.toml`
 
-Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker. This document serves as a reference for all the fields and acceptable values in this configuration file.
+Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker. It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
 
 The configuration for a Worker can become complex when you can define different [environments](/workers/platform/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.
@@ -623,3 +623,11 @@ kv_namespaces = [
   { binding = "MY_NAMESPACE", id = "STAGING_KV_ID" }
 ]
 ```
+
+## Source of truth
+
+It is a recommended best practice to treat `wrangler.toml` as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard. This allows you to treat `wrangler.toml` as a form of Infrastructure as Code.
+
+If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`. 
+
+Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.

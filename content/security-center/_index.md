@@ -32,3 +32,7 @@ Cloudflare Security Center brings together our suite of security products, our s
 Cloudflare Security Center is available to customers on all plans. If you have any comments, questions, or bugs to report, contact us at securitycenter@cloudflare.com or create a post in the [Cloudflare Community forum](https://community.cloudflare.com/c/security/security-center/65).
 
 The frequency of security scans depends on your Cloudflare plan — refer to [Scan frequency](/security-center/about/#scan-frequency) for more information.
+
+## Limitation
+
+*   Users with a [Administrator Read Only](/fundamentals/account-and-billing/account-setup/account-roles/#enterprise-roles) role cannot access the Cloudflare Security Center.

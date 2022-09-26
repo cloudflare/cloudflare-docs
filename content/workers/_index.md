@@ -22,6 +22,7 @@ Learn more about [how Workers works](/workers/learning/how-workers-works/).
 {{<button type="primary" href="/workers/get-started/guide">}}Get started{{</button>}}
 {{<button type="secondary" href="/workers/tutorials">}}View the tutorials{{</button>}}
 {{<button type="secondary" href="/workers/platform/betas">}}Explore betas{{</button>}}
+{{<button type="secondary" href="/workers/platform/storage-objects">}}Storage options guide{{</button>}}
 {{</button-group>}}
 
 ---
@@ -72,6 +73,7 @@ export default {
 - [Pricing](/workers/platform/pricing/) – Learn about the Free and Bundled plans
 - [HTMLRewriter](/workers/runtime-apis/html-rewriter/) – Parse and transform HTML from inside a Worker
 - [Limits](/workers/platform/limits/) – Learn about plan limits (Free plans get 100,000 req/day)
+- [Storage objects guide](/workers/platform/storage-objects/) - Learn which storage object is best for your project.
 
 ---
 

@@ -14,7 +14,7 @@ meta:
 
 | Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| macOS, Windows, Linux | WARP with Gateway                                                                         | All plans                                                     |
+| macOS, Windows | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>
@@ -69,3 +69,11 @@ All disks on the system must be encrypted for the posture check to pass.
 1. **Protection Status** must be set to **On**.
 
 All disks on the system must be encrypted for the posture check to pass.
+
+### On Linux
+
+Disk encryption checks are not currently supported on Linux.
+
+### On iOS, Android and ChromeOS
+
+These platforms are always encrypted and so no disk encryption check is supported.
