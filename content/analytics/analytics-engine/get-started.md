@@ -74,7 +74,7 @@ The SQL API is available as an HTTP endpoint at `/v4/$accountTag/analytics_engin
 
 In the following example, we use the SQL API to query the top 10 cities that had the highest average humidity readings when the temperature was above zero.
 
-Here's how we represent that as SQL. We're using a custom averaging function to take into account [sampling](../sql-api/#sampling):
+Here is how we represent that as SQL. We are using a custom averaging function to take into account [sampling](../sql-api/#sampling):
 
 ```sql
 SELECT 
@@ -87,15 +87,15 @@ ORDER BY avg_humidity DESC
 LIMIT 10
 ```
 
-You can then perform the query using any HTTP client. Here's an example of doing it using cURL:
+You can then perform the query using any HTTP client. Here is an example of doing it using cURL:
 
 ```curl
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/analytics_engine/sql" -H "Authorization: Bearer YOUR_API_TOKEN" -d "SELECT blob1 AS city, SUM(_sample_interval * double1) / SUM(_sample_interval) AS avg_humidity FROM WEATHER WHERE double1 > 0 GROUP BY city ORDER BY avg_humidity DESC LIMIT 10"
 ```
 
-Note that, for our initial version, blobs and doubles are accessed via names that have 1-based indexing. In the future, when we let developers name blobs and doubles in their binding, these names will also be available via the SQL API.
+Note that, for our initial version, blobs and doubles are accessed via names that have 1-based indexing. In the future, when developers will be able to name blobs and doubles in their binding, these names will also be available via the SQL API.
 
-See the [SQL API docs](../sql-api/) for more information on connecting to and querying SQL API and the [Workers Analytics Engine SQL Reference](../sql-reference/) for a full list of supported SQL functionality.
+Refer to the [SQL API docs](../sql-api/) for more information on connecting to and querying SQL API and the [Workers Analytics Engine SQL Reference](../sql-reference/) for a full list of supported SQL functionality.
 
 ### Working with time series
 
@@ -116,4 +116,4 @@ ORDER BY t, avg_humidity DESC
 
 This query first rounds the `timestamp` field to the nearest five minutes. Then we group by that field and city, and calculate the average humidity in each city for a five minute period.
 
-See [Querying Workers Analytics Engine from Grafana](../grafana/) for more details on how to create efficient Grafana queries against Workers Analytics Engine.
+Refer to [Querying Workers Analytics Engine from Grafana](../grafana/) for more details on how to create efficient Grafana queries against Workers Analytics Engine.

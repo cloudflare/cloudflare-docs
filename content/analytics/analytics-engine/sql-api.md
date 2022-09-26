@@ -14,16 +14,16 @@ The API is hosted at `https://api.cloudflare.com/client/v4/accounts/<account_id>
 
 ## Authentication
 
-Authentication is via bearer token. An `Authorization: Bearer <token>` header must be supplied with every request to the API.
+Authentication is done via bearer token. An `Authorization: Bearer <token>` header must be supplied with every request to the API.
 
 Use the dashboard to create a token with permssion to read analytics data on your account:
 
 1. Visit the [API tokens](https://dash.cloudflare.com/profile/api-tokens) page in the Cloudflare dashboard.
-2. Select "Create Token".
-3. Select to "Create Custom Token".
-4. Complete the "Create Custom Token" form as follows:
+2. Select **Create Token**.
+3. Select **Create Custom Token**.
+4. Complete the **Create Custom Token** form as follows:
    * Give your token a descriptive name.
-   * For "permissions" select `Account` | `Account Analytics` | `Read`
+   * For **Permissions** select _Account_ | _Account Analytics_ | _Read_
    * Optionally configure account and IP restrictions and TTL.
    * Submit and confirm the form to create the token.
 5. Make a note of the token string.
@@ -38,13 +38,13 @@ You can use cURL to test the API as follows, replacing the `<account_id>` with y
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/analytics_engine/sql" -H "Authorization: Bearer <token>" -d "SELECT 'Hello Workers Analytics Engine'"
 ```
 
-If you have already published some data you might try executing the following to see that the dataset has been created in the DB.
+If you have already published some data, you might try executing the following to confirm that the dataset has been created in the DB.
 
 ```sh
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/analytics_engine/sql" -H "Authorization: Bearer <token>" -d "SHOW TABLES"
 ```
 
-See the Workers Analytics Engine [SQL reference](../sql-reference/) for the full supported query syntax.
+Refer to the Workers Analytics Engine [SQL reference](../sql-reference/), for the full supported query syntax.
 
 ## Table structure
 
@@ -58,7 +58,7 @@ The table will have the following columns:
 |------|------|-------------|
 | dataset | string | This column will contain the dataset name in every row. |
 | timestamp | DateTime | The timestamp at which the event was logged in your worker. |
-| _sample_interval | integer | In case that the data has been sampled, this column indicates what the sample rate is for this row (i.e. how many rows of the original data are represented by this row). See the [sampling](#sampling) section below for more information. |
+| _sample_interval | integer | In case that the data has been sampled, this column indicates what the sample rate is for this row (i.e. how many rows of the original data are represented by this row). Refer to the [sampling](#sampling) section below for more information. |
 | index1 | string | The index value that was logged with the event. The value in this column is used as the key for sampling.
 | blob1<br>...<br>blob20 | string | The blob values that were logged with the event. |
 | double1<br>...<br>double20 | double | The double values that were logged with the event. |
@@ -68,9 +68,9 @@ The table will have the following columns:
 ## Sampling
 
 At very high volumes of data, Analytics Engine will downsample data in order to be able to maintain performance. Sampling can occur on write and on read.
-Sampling is based on the index of your dataset so that only indexes that receive large numbers of events will be sampled. For example, if your worker serves multiple customers you might consider making customer ID the index field. This would mean that if one customer starts making a high rate of requests then events from that customer could be sampled while other customers data remains unsampled.
+Sampling is based on the index of your dataset so that only indexes that receive large numbers of events will be sampled. For example, if your worker serves multiple customers, you might consider making customer ID the index field. This would mean that if one customer starts making a high rate of requests then events from that customer could be sampled while other customers data remains unsampled.
 
-We've tested this system of sampling over a number of years at Cloudflare and it has enabled us to scale our web analytics systems to very high throughput while still providing statistically meaningful results irrespective of the amount of traffic a website receives.
+We have tested this system of sampling over a number of years at Cloudflare and it has enabled us to scale our web analytics systems to very high throughput, while still providing statistically meaningful results irrespective of the amount of traffic a website receives.
 
 The rate at which the data is sampled is exposed via the `_sample_interval` column. This means that if you are doing statistical analysis of your data, you may need to take this column into account. For example:
 
@@ -104,7 +104,7 @@ WHERE timestamp > NOW() - INTERVAL '1' DAY
 
 ### Aggregation taking into account sample interval
 
-Calculate number of readings taken at each location in the last 7 days. In this case we are grouping by the index field so an exact count can be calculated even in the case that the data has been sampled:
+Calculate number of readings taken at each location in the last 7 days. In this case, we are grouping by the index field so an exact count can be calculated even in the case that the data has been sampled:
 
 ```SQL
 SELECT

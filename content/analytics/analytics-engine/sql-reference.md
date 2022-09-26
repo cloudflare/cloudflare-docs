@@ -10,14 +10,14 @@ meta:
 
 ## SHOW statement
 
-`SHOW` can be used to list the tables on your account. The table name is the name you specified as `dataset` when configuring the workers binding (see [Get started with Workers Analytics Engine](../get-started/#1-configure-your-dataset-and-binding-in-wrangler)). The table is automatically created when you write event data in your worker. 
+`SHOW` can be used to list the tables on your account. The table name is the name you specified as `dataset` when configuring the workers binding (refer to [Get started with Workers Analytics Engine](../get-started/#1-configure-your-dataset-and-binding-in-wrangler), for more information). The table is automatically created when you write event data in your worker. 
 
 ```SQL
 SHOW TABLES
 [FORMAT <format>]
 ```
 
-See [below](#format-clause) for the available `FORMAT` options.
+Refer to [FORMAT clause](#format-clause) for the available `FORMAT` options.
 
 ## SELECT statement
 
@@ -34,7 +34,7 @@ SELECT <expression_list>
 [FORMAT <format>]
 ```
 
-See below for the syntax of each clause and see the [SQL API docs](../sql-api/) for some example queries.
+Below you can find the syntax of each clause. Refer to the [SQL API docs](../sql-api/) for some example queries.
 
 ### SELECT clause
 
@@ -315,7 +315,7 @@ Usage:
 QUANTILEWEIGHTED(q, column_name, weight_column_name) 
 ```
 
-`QUANTILEWEIGHTED` is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set. Each row will be weighted by the value in `weight_column_name`. Typically this would be `_sample_interval` (see (how sampling works)[../sql-api/#sampling]).
+`QUANTILEWEIGHTED` is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set. Each row will be weighted by the value in `weight_column_name`. Typically this would be `_sample_interval` (refer to [how sampling works](../sql-api/#sampling), for more information).
 
 Example:
 ```SQL
@@ -347,7 +347,7 @@ Usage:
 INTDIV(a, b)
 ```
 
-Divide a by b rounding the answer down to the nearest whole number.
+Divide a by b, rounding the answer down to the nearest whole number.
 
 
 ### TOUINT32
@@ -387,7 +387,7 @@ TODATETIME('1981-04-12 12:00:04') -- string with datetime in 'YYYY-MM-DD hh:mm:s
 ### NOW
 
 Usage:
-```
+```SQL
 NOW()
 ```
 
