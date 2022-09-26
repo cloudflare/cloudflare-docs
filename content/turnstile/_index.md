@@ -11,6 +11,8 @@ meta:
 
 Turnstile is a Cloudflare security product designed to stop non-human web visitors. It can be embedded into any website and works without showing visitors a CAPTCHA.
 
+![Turnstile Overview](/turnstile/static/images/turnstile-overview.png)
+
 In contrast to our Challenge page offerings, Turnstile allows customers to run challenges anywhere on their site in a less-intrusive way without requiring the use of Cloudflare's CDN.
 
 Customers are able to choose the widget type via Turnstile. This helps avoid [CAPTCHAs](https://www.cloudflare.com/learning/bots/how-captchas-work/), which also reduces the lifetimes of human time spent solving CAPTCHAs across the Internet.

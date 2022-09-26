@@ -7,17 +7,17 @@ layout: single
 
 # Server-side Validation
 
-Customers must call the siteverify endpoint to validate the Turnstile widget response from their website’s backend.
+Customers must call the siteverify endpoint to validate the Turnstile widget response from their website’s backend. The widget response must only be considered valid once it has been verified by the siteverify endpoint. The presence of a response alone is not enough to verify it as it does not protect from replay or forgery attacks. In some cases, Turnstile may purposely create invalid responses that are rejected by the siteverify API.
 
 Tokens issued to Turnstile using the success callbacks, via explicit or implicit rendering, must be validated using the siteverify endpoint.
 
-The siteverify endpoint needs to be passed a secret key that is associated with the sitekey. The secret key will be provisioned alongside the sitekey.
+The siteverify endpoint needs to be passed a secret key that is associated with the sitekey. The secret key will be provisioned alongside the sitekey upon widget creation.
 
-Furthermore, the token needs to be passed to the siteverify endpoint.
+Furthermore, the response needs to be passed to the siteverify endpoint.
 
 {{<Aside type="note">}}
 
-A token may only be validated once. If the same token is presented twice, the second and each subsequent request will yield an error that the token has been spent.
+A response may only be validated once. If the same response is presented twice, the second and each subsequent request will yield an error that the response has been spent.
 
 {{</Aside>}}
 
@@ -27,7 +27,7 @@ Example using cURL:
 
 ```bash
 
-curl -L -X POST 'https://challenges.cloudflare.com/turnstile/v0/siteverify' --data 'secret=verysecret&response=<token>'
+curl -L -X POST 'https://challenges.cloudflare.com/turnstile/v0/siteverify' --data 'secret=verysecret&response=<response>'
 
 ```
 </div>
@@ -39,15 +39,16 @@ Example using fetch from Cloudflare Worker's:
 ```javascript
 
 async function handleRequest() {
-    // ... receive token
+    // ... receive response
     let formData = new FormData();
     formData.append('secret', 'verysecret');
-    formData.append('response', 'receivedToken');
-    await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify',
-    {
-        body: formData,
-        method: 'post'
-    }
+    formData.append('response', 'receivedResponse);
+    await fetch(
+        'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+        {
+            body: formData,
+            method: 'post'
+        }
     );
     // ...
 }
@@ -60,7 +61,7 @@ async function handleRequest() {
 | POST Parameter | Required/Optional | Description |
 | --- | --- | --- |
 | `secret` | Required | The site's secret key. |
-|`response` | Required | The token provided by the Turnstile client-side render on your site. |
+|`response` | Required | The response provided by the Turnstile client-side render on your site. |
 | `remoteip` | Optional | The user's IP address. |
 
 The siteverify endpoint behaves similar to reCaptcha’s siteverify endpoint. The response type of the siteverify is application/json.
@@ -106,6 +107,8 @@ In case of a validation failure, the response should look like this:
 
 ```
 </div>
+
+A validation error is indicated by having the `success` as `false`. A list of error codes is provided to indicate why a response has failed to verify. The response may also contain additional fields based on whether Turnstile siteverify was able to parse the response successfully or unsuccessfully.
 
 ## Error codes
 

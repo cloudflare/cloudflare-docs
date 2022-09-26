@@ -19,7 +19,21 @@ Alternatively, please add the following values to the directives:
 
 We recommend validating your CSP with [Google's CSP Evaluator](https://csp-evaluator.withgoogle.com/).
 
+## What is Visitor Solve Rate?
+
+A full Turnstile Challenge Token Flow comprises of a few things:
+* A challenge is rendered (issued).
+* A challenge is solved on the front end and a token is harvested (solved).
+* The token is passed to siteverify and it is consumed (site-verified).
+
+Visitor Solve Rate is the percentage of tokens that were harvested compared to issued.
+
+## What is API Solve Rate?
+
+API Solve rate is the share of tokens that were site-verified compared to issued. 
+
 ## What is the difference between action and cData?
+
 Action can be used in analytics and is more limited in size. It should identify different pages in a website where a widget is used.
 
 Action should not contain any PII as this is placed into the analytics.
@@ -41,14 +55,17 @@ No, the siteverify API will only validate a token once. If a token has already b
 The Turnstile widget needs to be refreshed to generate a new token. This can be done using the `turnstile.reset` function.
 
 ## Why does a Turnstile token need to be verified using siteverify?
+
 Turnstile is a front-end widget that creates a token which is cryptographically secured. However, the customer cannot check the validity of the token on their end.
 
 To ensure that a token is not forged by an attacker or has not been consumed yet, the customer needs to check the validity of a token using Cloudflare's siteverify API.
 
 ## Can the front-end use siteverify?
+
 The siteverify API must not be called by the front-end as this may reveal the secretkey used to authenticate. An attacker may simply modify the front-end to not perform the siteverify check at all, rendering Turnstile ineffective.
 
 ## What is the length of a Turnstile token?
+
 Currently, a Turnstile token can have up to 2048 characters.
 
 ## What is challenges.cloudflare.com and why does my application connect to this origin?
