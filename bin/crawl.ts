@@ -16,6 +16,7 @@ let ERRORS = 0;
 
 const ROOT = resolve('.');
 const PUBDIR = join(ROOT, 'public');
+const LEARNINGPATHDIR = join(ROOT, 'assets/json');
 const VERBOSE = process.argv.includes('--verbose');
 const EXTERNALS = process.argv.includes('--externals');
 
@@ -28,6 +29,7 @@ async function walk(dir: string) {
 
       let stats = await fs.stat(abs);
       if (stats.isDirectory()) return walk(abs);
+      if (name.endsWith('.json')) return test_json(abs);
     })
   );
 }
@@ -74,6 +76,10 @@ interface Message {
   html: string;
   value?: string;
   text?: string;
+}
+
+async function test_json(file: string) {
+  return console.log(file)
 }
 
 async function task(file: string) {
@@ -177,7 +183,7 @@ try {
   await walk(PUBDIR);
 
   if (!ERRORS && !WARNS) {
-    console.log('\n~> Test --> TEST --> DONE~!\n\n');
+    console.log('\n~> DONE~!\n\n');
   } else {
     let msg = '\n~> DONE with:';
     if (ERRORS > 0) {
@@ -189,6 +195,13 @@ try {
     }
     console.log(msg + '\n\n');
   }
+} catch (err) {
+  console.error(err.stack || err);
+  process.exit(1);
+}
+
+try {
+  await walk(LEARNINGPATHDIR);
 } catch (err) {
   console.error(err.stack || err);
   process.exit(1);
