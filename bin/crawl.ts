@@ -88,8 +88,12 @@ interface Message {
 }
 
 async function test_json(file: string) {
-  let json = require(file);
-  console.log(json);
+  const { default: info } = await import(file, {
+    assert: {
+      type: "json",
+    },
+  });
+  console.log(info);
 }
 
 async function task(file: string) {
