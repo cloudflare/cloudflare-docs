@@ -12,14 +12,14 @@ You can check the status of your DNS records in the **Settings** section of Emai
 
 ## Email DNS records
 
-In the Email DNS records card you can check the status of your account's DNS records: 
+Check the status of your account's DNS records in the Email DNS records card:
 
 * **Email DNS records configured** - DNS records are properly configured.
-* **Email DNS records misconfigured** - There is a problem with your accounts DNS records. Select **Enable Email Routing** to [start troubleshooting for problems](/email-routing/troubleshooting/).
+* **Email DNS records misconfigured** - There is a problem with your accounts DNS records. Select **Enable Email Routing** to [start troubleshooting problems](/email-routing/troubleshooting/).
 
 ### Start disabling
 
-When you successfully configure Email Routing, your DNS records will be locked and you will see a **Start disabling** button in the Email DNS records card. This is the recommended setting by Cloudflare. It means that the DNS records required for Email Routing to work are locked and can only be changed if you disable Email Routing on your domain.
+When you successfully configure Email Routing, your DNS records will be locked and the dashboard will show a **Start disabling** button in the Email DNS records card. This is the recommended setting by Cloudflare. It means that the DNS records required for Email Routing to work are locked and can only be changed if you disable Email Routing on your domain.
 
 If you need to delete Email Routing or migrate to another provider, select **Start disabling**. Refer to [Disable Email Routing](/email-routing/setup/disable-email-routing/) for more information.
 
@@ -29,6 +29,6 @@ Depending on your zone configuration, you might have your DNS records unlocked. 
 
 ## View DNS records
 
-Select the **View DNS records** button for a list of the required `MX` and sender policy framework (SPF) records Email Routing is using. 
+Select **View DNS records** for a list of the required `MX` and sender policy framework (SPF) records Email Routing is using. 
 
 If you are having trouble with your account's DNS records, refer to the [Troubleshooting](/email-routing/troubleshooting/) section.
