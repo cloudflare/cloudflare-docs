@@ -10,12 +10,12 @@ meta:
 # Cloudflare Registrar
 
 {{<description>}}
-Buy and manage your domain with Cloudflare Registrar.
+Buy and renew your domain at cost with Cloudflare Registrar.
 {{</description>}}
 
 {{<plan type="all">}}
 
-Buy and manage your domain with Cloudflare Registrar and add an additional layer of security to your DNS records for free. Cloudflare Registrar also offers redacted WHOIS information by default and will only charge you what is paid to the registry for your domain. No markup. No surprise fees.
+Buy and manage your domain with Cloudflare Registrar, and add an additional layer of security to your DNS records for free. Cloudflare Registrar also offers redacted WHOIS information by default and will only charge you what is paid to the registry for your domain. No markup. No surprise fees.
 
 ---
  
@@ -25,7 +25,7 @@ Buy and manage your domain with Cloudflare Registrar and add an additional layer
 Cloudflare Registrar offers one-click DNSSEC activation. DNSSEC secures DNS records with cryptographic signatures, and is free to all Cloudflare customers.
 {{</feature>}}
 
-{{<feature header="Buy domain" href="/registrar/get-started/register-domain/">}}
+{{<feature header="Buy domains at cost" href="/registrar/get-started/register-domain/">}}
 Buy and renew domains through Cloudflare Registrar at cost, without markup fees. You only pay what is charged by [registries and ICANN](https://www.cloudflare.com/products/registrar/).
 {{</feature>}}
 
