@@ -11,7 +11,7 @@ Sub-second latency live streaming (using WHIP) and playback (using WHEP) to unli
 WebRTC is ideal for when you need live video to playback in near real-time, such as:
 
 - When the outcome of a live event is time-sensitive (live sports, financial news)
-- When viewers interact with the live stream (live Q&A, live betting, gambling, and auctions)
+- When viewers interact with the live stream (live Q&A, auctions, etc.)
 - When you want your end users to be able to easily go live or create their own video content, from a web browser or native app
 
 {{<Aside>}}
