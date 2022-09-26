@@ -39,7 +39,7 @@ $ cd github-twilio-notifications
 
 Inside of your new `github-sms-notifications` directory, `index.js` represents the entry point to your Cloudflare Workers application. You will configure this file for most of the tutorial.
 
-You will also need a GitHub account and a repository for this tutorial. If you do not have either setup, [create a new GitHub account](https://github.com/join) and [create a new repository](https://docs.github.com/en/github/getting-started-with-github/create-a-repo) to continue with this tutorial.
+You will also need a GitHub account and a repository for this tutorial. If you do not have either setup, [create a new GitHub account](https://github.com/join) and [create a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) to continue with this tutorial.
 
 First, create a webhook for your repository to post updates to your Worker. Inside of your Worker, you will then parse the updates. Finally, you will send a `POST` request to Twilio to send a text message to you.
 
@@ -121,7 +121,7 @@ async function githubWebhookHandler(request) {
 }
 ```
 
-Next, validate that the request is sent with the right secret key. GitHub attaches a hash signature for [each payload using the secret key](https://developer.github.com/webhooks/securing/). Use a helper function called `checkSignature` on the request to ensure the hash is correct. Then, you can access data from the webhook by parsing the request as JSON.
+Next, validate that the request is sent with the right secret key. GitHub attaches a hash signature for [each payload using the secret key](https://docs.github.com/en/developers/webhooks-and-events/webhooks/securing-your-webhooks). Use a helper function called `checkSignature` on the request to ensure the hash is correct. Then, you can access data from the webhook by parsing the request as JSON.
 
 ```js
 ---
@@ -186,7 +186,7 @@ zone_id = ""
 
 ## Sending a text with Twilio
 
-You will send a text message to you about your repository activity using Twilio. You need a Twilio account and a phone number that can receive text messages. [Refer to the Twilio guide to get set up](https://www.twilio.com/sms/api). (If you are new to Twilio, they have [an interactive game](https://www.twilio.com/quest) where you can learn how to use their platform and get some free credits for beginners to the service.)
+You will send a text message to you about your repository activity using Twilio. You need a Twilio account and a phone number that can receive text messages. [Refer to the Twilio guide to get set up](https://www.twilio.com/messaging/sms). (If you are new to Twilio, they have [an interactive game](https://www.twilio.com/quest) where you can learn how to use their platform and get some free credits for beginners to the service.)
 
 You can then create a helper function to send text messages by sending a `POST` request to the Twilio API endpoint. [Refer to the Twilio reference](https://www.twilio.com/docs/sms/api/message-resource#create-a-message-resource) to learn more about this endpoint.
 
@@ -265,7 +265,7 @@ $ wrangler publish
 
 ![Video of receiving a text after pushing to a repo](./media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
-Now when you make an update (that you configured in the GitHub **Webhook** settings) to your repository, you will get a text soon after. If you have never used git before, refer to this [quick guide](https://www.datacamp.com/community/tutorials/git-push-pull) to pushing to your repository.
+Now when you make an update (that you configured in the GitHub **Webhook** settings) to your repository, you will get a text soon after. If you have never used git before, refer to this [quick guide](https://www.datacamp.com/tutorial/git-push-pull) to pushing to your repository.
 
 You can reference the finished code [on GitHub](https://github.com/davidtsong/github-twilio-notifications/).
 

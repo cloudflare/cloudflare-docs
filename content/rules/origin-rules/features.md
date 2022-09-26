@@ -61,8 +61,8 @@ The SNI override value must be a valid hostname on the same Cloudflare account (
 For more information, refer to the [API instructions](/rules/origin-rules/create-api/) and the [API parameter reference](/rules/origin-rules/parameters/#sni-override-parameters).
 
 {{<Aside type="note" header="Notes">}}
-* Currently, you can only use a static value in an SNI override.
-* An SNI override will take precedence over [SNI rewrites of custom origins](/cloudflare-for-saas/start/advanced-settings/custom-origin/#sni-rewrites) when using Cloudflare for SaaS.
+* Currently, you can only use a static value in an SNI Override.
+* An SNI Override will take precedence over [SNI rewrites of custom origins](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/#sni-rewrites) when using Cloudflare for SaaS.
 {{</Aside>}}
 
 [^1]: SNI allows a server to host multiple TLS Certificates for multiple websites using a single IP address. SNI adds the website hostname in the TLS handshake to inform the server which website to present when using shared IPs.

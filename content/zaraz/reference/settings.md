@@ -17,7 +17,7 @@ The debug key is used to enable Debug Mode. Refer to [Debug mode](/zaraz/web-api
 
 ### E-commerce tracking
 
-Toggle this option on to enable the Zaraz E-commerce API. Refer to [Ecommerce](/zaraz/web-api/ecommerce/) for more information.
+Toggle this option on to enable the Zaraz E-commerce API. Refer to [E-commerce](/zaraz/web-api/ecommerce/) for more information.
 
 ## Compatibility
 

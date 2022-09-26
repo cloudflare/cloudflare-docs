@@ -275,11 +275,21 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
       - An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax)
 
+- {{<code>}}timingSafeEqual(a, b){{</code>}} {{<type>}}bool{{</type>}}
+
+  - Compare two buffers in a way that is resistant to timing attacks. This is a non-standard extension to the Web Crypto API.
+
+    **Parameters:**
+
+    - {{<code>}}a{{<param-type>}}ArrayBuffer | TypedArray{{</param-type>}}{{</code>}}
+
+    - {{<code>}}b{{<param-type>}}ArrayBuffer | TypedArray{{</param-type>}}{{</code>}}
+
 {{</definitions>}}
 
 ### Supported algorithms
 
-Workers implements all operation of the [WebCrypto standard](https://www.w3.org/TR/WebCryptoAPI), as shown in the following table. The Workers team continuously adds support for more algorithms — [share your use case with the community](https://community.cloudflare.com/c/developers/workers).
+Workers implements all operation of the [WebCrypto standard](https://www.w3.org/TR/WebCryptoAPI/), as shown in the following table. The Workers team continuously adds support for more algorithms — [share your use case with the community](https://community.cloudflare.com/c/developers/workers).
 
 A checkmark (✓) indicates that this feature is believed to be fully supported according to the spec.<br>
 An x (✘) indicates that this feature is part of the specification but not implemented.<br>
@@ -326,5 +336,5 @@ If a feature only implements the operation partially, details are listed.
 ## Related resources
 
 - [SubtleCrypto documentation on MDN.](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto)
-- [SubtleCrypto documentation as part of the W3C Web Crypto API specification.](https://www.w3.org/TR/WebCryptoAPI/#subtlecrypto-interface)
+- [SubtleCrypto documentation as part of the W3C Web Crypto API specification.](https://www.w3.org/TR/WebCryptoAPI//#subtlecrypto-interface)
 - [Example: signing requests](/workers/examples/signing-requests/)

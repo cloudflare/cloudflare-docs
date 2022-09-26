@@ -6,7 +6,7 @@ weight: 6
 
 # Delete variants
 
-You can delete variants via the Images dashboard or via API.
+You can delete variants via the Images dashboard or API. The only variant you cannot delete is `public`.
 
 {{<Aside type="warning" header="Warning">}}
 
@@ -20,13 +20,6 @@ Deleting a variant is a global action that will affect other images that contain
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Select **Images** > **Variants**.
 3. Find the variant you want to remove and select **Delete**.
-
-{{<Aside type="note">}}
-
-You cannot delete the public variant.
-
-{{</Aside>}}
-
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
