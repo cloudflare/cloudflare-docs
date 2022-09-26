@@ -13,16 +13,29 @@ Cloudflare Access generates two types of audit logs:
 
 ## Authentication audit logs
 
-Cloudflare logs an Access authentication event whenever a user or service attempts to log in to an application, whether the attempt succeeds or not.
+Cloudflare Access logs an authentication event whenever a user or service attempts to log in to an application, whether the attempt succeeds or not.
 
-Requests blocked by a non-identity policy not appear in the **Logs** section of the Zero Trust dashboard.
+[Identity-based authentication](#identity-based-authentication) refers to login attempts that matched on user email, IdP group, SAML group, or OIDC claim.
+
+[Non-identity authentication](#non-identity-authentication) refers to login attempts that matched a non-identity policy such as IP address, device posture, country, valid certificate, or service token.
+
+
+{{<Aside type="note">}}
+
+Authentication audit logs do not capture actions the user takes once they have authenticated.
+
+{{</Aside>}}
 
 ### Identity-based authentication
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
- 
-To view authentication logs, navigate to the **Logs** > **Access** section of the Zero Trust dashboard. You can expand each row to view details such as the login method, the IP address of the user, and more. If a login attempt was blocked, click **View** for information about why Access denied the user access. 
+
+To view logs for identity-based authentication events:
+
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to  **Logs** > **Access**.
+2. Expand a row to view details such as the login method, the IP address of the user, and more.
+3. If a login attempt was blocked, select **View** for information about why Access denied the user access.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
@@ -38,7 +51,6 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/699d98642c564d2e855e9
      -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
      -H "Content-Type: application/json"
 ```
-
 
 ```json
 ---
@@ -67,19 +79,9 @@ header: Response
 {{</tab>}}
 {{</tabs>}}
 
-
-#### Log retention
-Block policy decisions are retained for a week. Authentication logs are retained for six months.
-
-{{<Aside>}}
-
-Authentication audit logs do not capture actions the user takes once they have authenticated.
-
-{{</Aside>}}
-
 #### Explanation of the fields
 
-Access authentication logs contain the following fields:
+Identity-based authentication logs contain the following fields:
 
 | Field | Description |
 |-------|-------------|
@@ -95,14 +97,16 @@ Access authentication logs contain the following fields:
 | **ray\_id** | A unique identifier for every request through Cloudflare. |
 | **app\_type** | The type specifies if the app is self-hosted or SaaS. |
 
+### Non-identity authentication
+
+Requests blocked by a non-identity policy not appear in the Zero Trust dashboard. To retrieve logs for non-identity authentication events, use the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/).
+
+### Log retention
+Block policy decisions are retained for a week. Authentication logs are retained for six months.
 
 ## Per-Request Audit Logs
 
 Users who have authenticated through Access have access to authorized URL paths for the duration of their session. Cloudflare provides several ways to audit these requests.
-
-A video guide is also available:
-
-<StreamVideo id="19987899aa95453b6bbdb7e6b4431223"/>
 
 ### Cloudflare logging
 

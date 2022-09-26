@@ -5,13 +5,16 @@ title: Querying Access login events with GraphQL
 
 # Querying Access login events with GraphQL
 
-In this example, we are going to use the GraphQL Analytics API to query for Magic Firewall Samples over a specified time period.
+In this example, we are going to use the GraphQL Analytics API to retrieve logs for an Access login event. These logs are particularly useful for determining why a user received a `403` Forbidden error, since they surface additional data beyond what is shown in the dashboard Access logs.
 
-The following API call will request Magic Firewall Samples over a one hour period, and output the requested fields. Be sure to replace `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your zone tag and API credentials, and adjust the `datetime_geg` and `datetime_leq` values to your liking.
+The following API call will request logs for a single Access login event and output the requested fields. The authentication request is identified by its **Ray ID**, which you can obtain from the `403` Forbidden page shown to the user.
 
-NOTE: Rather than filter by Ray ID, you may also filter by any other fields listed above (e.g., userUuid or deviceId). Documentation for filtering can be found here: https://graphql-docs.cfdata.org/reference/filtering/.
+You will need to insert your API credentials in `<EMAIL>` and `<API_KEY>` and substitute your own values for the following variables:
 
-
+- `accountTag`: Your Cloudflare account ID.
+- `rayID`: A unique identifier assigned to the authentication request.
+- `datetimeStart`: The earliest event time to query (no earlier than September 16, 2022).
+- `datetimeEnd`: The latest event time to query. Make sure to specify a time range that includes the login event you are querying.
 
 ## API Call
 
@@ -44,7 +47,7 @@ echo '{ "query":
     }
   }",
   "variables": {
-    "accountTag": "1080348b2df3bd07d1fb5237cd5d593a",
+    "accountTag": "699d98642c564d2e855e9661899b7252",
     "rayId": "74e4ac510dfdc44f",
     "datetimeStart": "2022-09-20T14:36:38Z",
     "datetimeEnd": "2022-09-22T14:36:38Z"
@@ -53,23 +56,10 @@ echo '{ "query":
   -X POST \
   -H "Content-Type: application/json" \
   -H "X-Auth-Email: <EMAIL>" \
-  -H "X-Auth-key: <API KEY>" \
+  -H "X-Auth-key: <API_KEY>" \
   -s \
   -d @- \
-  https://api.cloudflare.com/client/v4/graphql/
-```
-
-The returned values represent the total number of packets and bits received during the five minute interval for a particular rule. The result will be in JSON (as requested), so piping the output to `jq` will make it easier to read, like in the following example:
-
-```bash
-... | curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  -s \
-  -d @- \
-  https://api.cloudflare.com/client/v4/graphql/ | jq .
+  https://api.cloudflare.com/client/v4/graphql/ | jq.
 ```
 
 ## Response
@@ -109,3 +99,7 @@ The returned values represent the total number of packets and bits received duri
   "errors": null
 }
 ```
+
+{{<Aside type="note">}}
+Rather than filter by `cfRayId`, you may also [filter](/analytics/graphql-api/features/filtering/) by any other field listed in the query such as `userUuid` or `deviceId`.
+{{</Aside>}}
