@@ -35,6 +35,6 @@ Widget traffic metrics provide customers with data on the number of widgets disp
 
 Top Actions refer to the custom labels created by customers for their widgets.
 
-# Solve events 
+# GraphQL
 
 definitions

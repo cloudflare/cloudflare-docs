@@ -19,9 +19,17 @@ The sitekey is public and used to invoke the Turnstile widget on your site.
 
 The sitekey and secret key is generated upon the creation of a widget, allowing communication between your site and Cloudflare to verify responses for a solved challenge from Turnstile. The secret key should be kept safe and only known to the customer for security purposes.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) and select your account and domain.
-2. *Step to get to landing page*
-3. Select **Add a site** and fill out the form.
+### New sites
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. From the dashboard, select **Turnstile** > **Add a site** and fill out the form.
+3. Copy your sitekey and secret key.
+
+### Existing sites
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. From the dashboard, select **Turnstile**.
+3. In the widget overview, select **Settings**.
 4. Copy your sitekey and secret key.
 
 ## Add the Turnstile widget to your site
