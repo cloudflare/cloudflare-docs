@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-If you believe your API key might be compromised, you should change your API key:
+If your API key might be compromised, change your API key:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2.  Go to **Profile** > **API Tokens**.

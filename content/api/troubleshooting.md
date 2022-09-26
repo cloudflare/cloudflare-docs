@@ -6,7 +6,7 @@ weight: 3
 
 # Troubleshooting API tokens and keys
 
-## The token itself is not verified
+## The token is not verified
 Ensure the token has been verified by running the following curl and confirming that the response returns `"status": "active"`.
 
 ```bash

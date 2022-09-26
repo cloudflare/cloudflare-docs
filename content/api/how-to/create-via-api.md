@@ -17,11 +17,11 @@ Before you can create tokens via the API, you need to generate the initial token
 
 {{<Aside type="note">}}
 
-Cloudflare highly recommends not granting other permissions to the token when using this template. This token should be safeguarded because it can create tokens with access to any resource the user has.
+Cloudflare highly recommends not granting other permissions to the token when using this template. This token should be safeguarded because it can create tokens with access to any of a user's resources.
 
 {{</Aside>}}
 
-Cloudflare also recommends limiting the use of the token via client IP address filtering or TTL to reduce the potential for abuse in the event that the token is compromised. Refer to [adding restrictions](/api/how-to/restrict-tokens/) for more information.
+Cloudflare also recommends limiting the use of the token via client IP address filtering or TTL to reduce the potential for abuse in the event that the token is compromised. Refer to [Restrict token use](/api/how-to/restrict-tokens/) for more information.
 
 ## Creating API tokens with the API
 
@@ -64,7 +64,7 @@ Each token can contain multiple policies.
 
 | Field              | Description                                          |
 | ------------------ | ---------------------------------------------------- |
-| `id`               | A unique read-only identifier for the policy generated after creation. |
+| `id`               | Unique read-only identifier for the policy generated after creation. |
 | `effect`           | Defines whether this policy is allowing or denying access. If only creating one policy, use `allow`. The evaluation order for policies is as follows: 1.  Explicit `DENY` Policies; 2.  Explicit `ALLOW` Policies; 3.  Implicit `DENY ALL`.            |
 | `resources`         | Defines what resources are allowed to be configured. |
 | `permission_groups` | Defines what permissions the policy grants to the included resources. |
@@ -72,11 +72,11 @@ Each token can contain multiple policies.
 
 #### Resources
 
-Currently API token policies support three resource types: `User`, `Account`, and `Zone`.
+API token policies support three resource types: `User`, `Account`, and `Zone`.
 
 {{<Aside type="note">}}
  
-Each respective object's `tag` can be fetched by calling the appropriate `GET <object>` API. Refer to [User](https://api.cloudflare.com/#user-properties), [Account](https://api.cloudflare.com/#accounts-list-accounts), and [Zone](https://api.cloudflare.com/#zone-list-zones) documentation for more details.
+Fetch each object's `tag` by calling the appropriate `GET <object>` API. Refer to [User](https://api.cloudflare.com/#user-properties), [Account](https://api.cloudflare.com/#accounts-list-accounts), and [Zone](https://api.cloudflare.com/#zone-list-zones) documentation for more details.
   {{</Aside>}}
 
 ##### Account
@@ -96,7 +96,7 @@ Include a **single zone**, **all zones in an account**, or **all zones in all ac
 
 ##### User
 
-For user resources, the only option is referencing one's self, which is done with:`"com.cloudflare.api.user.<user_tag>": "*"`
+For user resources, you can only reference yourself, which is denoted as:`"com.cloudflare.api.user.<user_tag>": "*"`
 
 #### Permission groups
 
@@ -104,7 +104,7 @@ Determine what permission groups should be applied. Refer to the full list of pe
 
 ### 2. Define the restrictions
 
-Set up any limitations on how the token can be used. Currently API tokens allow for client IP address filtering and TTLs. Refer to [Restricting Token Use](/api/how-to/restrict-tokens/) for more information.
+Set up any limitations on how the token can be used. API tokens allow restrictions for client IP address filtering and TTLs. Refer to [Restrict token use](/api/how-to/restrict-tokens/) for more information.
 
 When defining TTLs, you can set the time at which a token becomes active with `not_before` and the time when it expires with `expires_on`. Both of these fields take timestamps in UTC in the following format: `"2018-07-01T05:20:00Z"`.
 
@@ -125,7 +125,7 @@ Limit usage of a token by client IP address filters with the following object:
 }
 ```
 
-Each parameter in the `in` and `not_in` objects must be in CIDR notation. For example, to specify a single IP address, use `192.168.0.1/32`.
+Each parameter in the `in` and `not_in` objects must be in CIDR notation. For example, use `192.168.0.1/32` to specify a single IP address.
 
 ## 3. Create the token
 

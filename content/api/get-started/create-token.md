@@ -8,7 +8,7 @@ weight: 11
 
 {{<Aside type="note" header="Prerequisite">}}
  
-Before you begin, [get your zone and account IDs](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+Before you begin, [find your zone and account IDs](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
  
 {{</Aside>}}
 
@@ -38,7 +38,7 @@ Before you begin, [get your zone and account IDs](/fundamentals/get-started/basi
 
 ![Token creation completion screen displaying your API token and the `curl`command to test your token](/api/static/token-complete.png)
 
-This screen also includes an example command to test the token. The `/user/tokens/verify` endpoint allows fetching the current status of the given token.
+The token secret page also includes an example command to test the token. Use the `/user/tokens/verify` endpoint to fetch the current status of the given token.
 
 ```bash
  curl -X GET 
