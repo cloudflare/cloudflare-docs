@@ -64,7 +64,7 @@ async function handleRequest() {
 |`response` | Required | The response provided by the Turnstile client-side render on your site. |
 | `remoteip` | Optional | The user's IP address. |
 
-The siteverify endpoint behaves similar to reCaptcha’s siteverify endpoint. The response type of the siteverify is application/json.
+The siteverify endpoint behaves similar to reCAPTCHA’s siteverify endpoint. The response type of the siteverify is application/json.
 
 It always contains a "success" property, either true or false, indicating whether the operation was successful or not. 
 

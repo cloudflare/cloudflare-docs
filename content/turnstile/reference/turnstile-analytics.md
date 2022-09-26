@@ -13,7 +13,10 @@ Using Turnstile analytics, you can:
 * Evaluate the challenge solve rate
 * View the metrics of issued challenges
  
-To view the Overview metrics of your Turnstile widgets, go to… (*step to view analytics in Dash UI*).
+## View metrics of your widgets
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. From the dashboard, select **Turnstile** and navigate to your website to see an overview of its widget metrics.
 
 These metrics show changes in the solve rate, widget traffic, and top actions for your website.
 
@@ -35,6 +38,6 @@ Widget traffic metrics provide customers with data on the number of widgets disp
 
 Top Actions refer to the custom labels created by customers for their widgets.
 
-# GraphQL
+## GraphQL
 
 definitions

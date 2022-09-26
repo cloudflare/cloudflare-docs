@@ -97,6 +97,7 @@ An invisible input with the name `cf-turnstile-response` is added, and will be s
 
 
 ## Disable implicit rendering 
+
 Implicit rendering can be disabled by customers by replacing the script from 
 
 `https://challenges.cloudflare.com/turnstile/v0/api.js`

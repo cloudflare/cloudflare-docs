@@ -48,7 +48,7 @@ To add the Turnstile widget:
 </div>
 
 
-2. Render the client-side integration
+2. [Render the client-side integration](/turnstile/get-started/client-side-rendering/)
 
     * [Explicit rendering](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget)
     * [Implicit rendering](/turnstile/get-started/client-side-rendering/#implicitly-render-the-turnstile-widget)

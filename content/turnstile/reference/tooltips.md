@@ -12,4 +12,4 @@ layout: single
 
 **Change in Solve Rate**: It is expected to be relatively stable over time. A change in the solve rate is an indication of something happening on the website, such as undergoing attacks from bots.
 
-**Top Actions**: Allows the user to add a label for their actions.
+**Top Actions**: Top actions allow the customer to add a label for their actions.
