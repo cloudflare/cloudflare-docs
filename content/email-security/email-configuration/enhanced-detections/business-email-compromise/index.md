@@ -41,5 +41,5 @@ Phish Ee, phishee@nophish.com
 
 If you want your BEC contacts automatically synced, Area 1 also supports directory integration for Microsoft and Gmail:
 
-- [Microsoft Directory Guide](/email-security/static/O365-Directory-Integration-Guide.pdf)
-- [Gmail Directory Guide](/email-security/static/Deployment_and_Configuration_Guide_Directory_Integration_for_Gmail.pdf)
+- [Microsoft Directory Guide (PDF)](/email-security/static/O365-Directory-Integration-Guide.pdf)
+- [Gmail Directory Guide (PDF)](/email-security/static/Deployment_and_Configuration_Guide_Directory_Integration_for_Gmail.pdf)

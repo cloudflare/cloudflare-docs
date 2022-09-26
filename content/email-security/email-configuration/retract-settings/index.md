@@ -42,5 +42,5 @@ To set up automatic retraction:
 
 For more details, refer to:
 
-- [Retraction Guide for Gmail](/email-security/static/Gmail-Message-Retraction.pdf)
-- [Retraction Guide for Office 365](/email-security/static/O365-Message-Retraction.pdf)
+- [Retraction Guide for Gmail (PDF)](/email-security/static/Gmail-Message-Retraction.pdf)
+- [Retraction Guide for Office 365 (PDF)](/email-security/static/O365-Message-Retraction.pdf)
