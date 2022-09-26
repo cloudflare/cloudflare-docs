@@ -25,7 +25,7 @@ Buy and manage your domain with Cloudflare Registrar, and add an additional laye
 Cloudflare Registrar offers one-click DNSSEC activation. DNSSEC secures DNS records with cryptographic signatures, and is free to all Cloudflare customers.
 {{</feature>}}
 
-{{<feature header="Buy domains at cost" href="/registrar/get-started/register-domain/">}}
+{{<feature header="Buy domains at cost" href="/registrar/get-started/register-domain/" cta="Buy domains at cost">}}
 Buy and renew domains through Cloudflare Registrar at cost, without markup fees. You only pay what is charged by [registries and ICANN](https://www.cloudflare.com/products/registrar/).
 {{</feature>}}
 

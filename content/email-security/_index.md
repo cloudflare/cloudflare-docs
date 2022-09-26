@@ -21,8 +21,8 @@ With globally distributed sensors and comprehensive attack analytics, Area 1 pro
  
 ## Features
 
-{{<feature header="Deployment" href="/email-security/deployment/">}}
-Area 1 provides to architectures to protect your organization: inline or API setup. Inline architecture evaluates email messages before they reach a user's inbox. API architecture evaluates emails when they have already reached a user's inbox.
+{{<feature header="Deployment" href="/email-security/deployment/" cta="Evaluate deployment options">}}
+Area 1 provides two architectures to protect your organization: inline or API setup. Inline architecture evaluates email messages before they reach a user's inbox. API architecture evaluates emails when they have already reached a user's inbox.
 {{</feature>}}
 
 {{<feature header="SSO integration" href="/email-security/account-setup/sso/">}}
