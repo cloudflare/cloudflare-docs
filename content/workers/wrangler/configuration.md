@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Configuration
 weight: 3
 ---
@@ -145,7 +145,7 @@ There are four types of routes.
 
 #### Simple Route
 
-This is a simple route, which you will be accustomed to using from Wrangler 1.
+This is a simple route that only requires a pattern.
 
 Example: `"example.com/*"`
 
@@ -195,8 +195,7 @@ Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
 #### Custom Domain Route
 
-This is a route that is associated with an SSL for SaaS custom hostname. If you are not using
-SSL for SaaS, this is effectively a simple route.
+This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
 
 {{<definitions>}}
 
@@ -594,8 +593,7 @@ Example:
 HTTP_PROXY=http://localhost:8080 wrangler dev
 ```
 
-If your IT team has configured your computer's proxy settings, be aware that the first non-empty environment variable
-in this list will be used when Wrangler makes outgoing requests.
+If your IT team has configured your computer's proxy settings, be aware that the first non-empty environment variable in this list will be used when Wrangler makes outgoing requests.
 
 For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only use `https_proxy` for outgoing requests.
 
