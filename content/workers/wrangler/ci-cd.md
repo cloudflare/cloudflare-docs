@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Running in CI/CD
-weight: 9
+weight: 8
 ---
 
 # Running Wrangler in CI/CD
