@@ -1,6 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Edit a PagerDuty connected service
+title: Edit PagerDuty
+meta:
+    title: Edit a PagerDuty connected service
+weight: 1
 ---
 
 # Edit a PagerDuty connected service

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Changelog
-weight: 7
+weight: 8
 ---
 
 # Changelog
@@ -21,7 +21,7 @@ weight: 7
 - Standardise error codes for origin failures
 - Return HTTP 527 for communication errors between sender and listener
 - Set railgun user agent if none is specified by client
-- Add memcached as package dependency
+- Add Memcached as package dependency
 
 * Dec 16 2015 CloudFlare Inc <help@cloudflare.com> - 5.2.0
 - Refactor listener's response/error event flow code
@@ -52,12 +52,12 @@ weight: 7
 - Misc bugfixes
 
 * Nov 20 2012 CloudFlare Inc <help@cloudflare.com> - 2.7.0
-- memcached fixes and timeout adjustments
+- Memcached fixes and timeout adjustments
 - Direct HTTP request failover improvements
 - Misc bugfixes
 
 * Sep 14 2012 CloudFlare Inc <help@cloudflare.com> - 2.6.0
-- Implement memcached backend
+- Implement Memcached backend
 - Add activation and SSL systems
 - Misc bugfixes
 

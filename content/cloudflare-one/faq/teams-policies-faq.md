@@ -10,9 +10,7 @@ weight: 5
 
 ## What is the order of policy enforcement?
 
-Zero Trust and DNS policies trigger top to bottom, based on their position in the policy table in the UI. The exception is Bypass policies, which Access evaluates first. For Allow and Deny policies, you can modify the order by dragging and dropping individual policies in the UI.
-
-Similarly, the L7 firewall will evaluate Do Not Inspect policies before any subsequent Allow or Block policies, to determine if decryption should occur. This means regardless of precedence in your list of policies, all Do Not Inspect policies will take precedence over Allow or Block policies.
+Gateway and Access policies generally trigger from top to bottom based on their position in the policy table in the UI. Exceptions include Bypass and Service Auth policies, which Access evaluates first. Similarly, for Gateway HTTP policies, Do Not Inspect and Isolate policies take precedence over all Allow or Block policies. To learn more about order of enforcement, refer to our documentation for [Access policies](/cloudflare-one/policies/access/#order-of-execution) and [Gateway policies](/cloudflare-one/policies/filtering/order-of-enforcement/).
 
 ## **How can I bypass the L7 firewall for a website?**
 
