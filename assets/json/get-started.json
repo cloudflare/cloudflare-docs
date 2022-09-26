@@ -81,7 +81,7 @@
       },
       {
         "type": "question",
-        "question": "Do you already own a <a href='https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/'>domain</a>?",
+        "description": "Do you already own a <a href='https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/'>domain</a>?",
         "id": "domain_ownership",
         "choices": [
           { 

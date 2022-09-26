@@ -61,7 +61,7 @@ Vue.createApp({
         </div>
         <div v-else-if="element.type === 'question'" class="questionChoices" :id="element.id">
             <fieldset :id="element.id">
-            <legend v-html="element.question"></legend>
+            <legend v-html="element.description"></legend>
                 <div v-for="choice in element.choices">
                     <input type="radio" :name="element.id" :id="choice.value" 
                     :value=choice.value @change="onRadioButtonChange($event)">
