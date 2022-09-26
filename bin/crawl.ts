@@ -215,7 +215,7 @@ try {
 }
 
 try {
-  await walk(LEARNINGPATHDIR);
+  await walk_learning_path(LEARNINGPATHDIR);
 } catch (err) {
   console.error(err.stack || err);
   process.exit(1);
