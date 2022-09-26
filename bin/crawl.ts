@@ -29,6 +29,15 @@ async function walk(dir: string) {
 
       let stats = await fs.stat(abs);
       if (stats.isDirectory()) return walk(abs);
+    })
+  );
+}
+
+async function walk_learning_path(dir: string) {
+  let files = await fs.readdir(dir);
+  await Promise.all(
+    files.map(async name => {
+      let abs = join(dir, name);
       if (name.endsWith('.json')) return test_json(abs);
     })
   );
@@ -79,7 +88,8 @@ interface Message {
 }
 
 async function test_json(file: string) {
-  return console.log(file)
+  let json = require(file);
+  console.log(json);
 }
 
 async function task(file: string) {
