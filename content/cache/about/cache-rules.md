@@ -7,8 +7,6 @@ pcx_content_type: concept
 
 Use Cache Rules to customize cache properties of your HTTP requests. For example, create a rule to specify how long to cache a resource in the Cloudflare edge network. 
 
-Be aware that when you select **Eligible for cache** in Cache Rules, this is equivalent to [cache everything](/cache/how-to/create-page-rules/#cache-everything) cache level. If you do not enable eligible for cache, the expected behavior is the standard cache level present in Page Rules.
-
 ## Availability
 
 The following table describes Cache Rules availability per plan.
@@ -28,6 +26,13 @@ To create a new cache rule:
 4. Enter a descriptive name for the rule in **Rule name**.
 5. Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/edit-expressions/#expression-builder). Use the **Field** drop-down list to choose an HTTP property (refer to [Available fields](/cache/about/cache-rules/#available-fields) for the list of available fields). For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 6. Under **Then**, in the **Cache status** section, select **Bypass cache**, if matching requests will bypass cache and fetch a response from the origin server or **Eligible for cache** if requests will be eligible for cache. Note that proper [origin cache-control headers](/cache/about/cache-control/) are also required for cache eligibility.
+
+{{<Aside type="note">}}
+
+Be aware that when you select **Eligible for cache** in Cache Rules, this is equivalent to [cache everything](/cache/how-to/create-page-rules/#cache-everything) cache level. If you do not enable eligible for cache, the expected behavior is the standard cache level present in Page Rules.
+
+{{</Aside>}}
+
 7. If you select **Eligible for cache**, you can customize the following options:
 
 <details>
