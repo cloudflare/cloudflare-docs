@@ -84,7 +84,7 @@ You can also use this URL with any client that supports the [WebRTC-HTTP ingesti
 
 Copy the URL from the `webRTCPlayback` key in the API response (see above), or directly from the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs). There are no limits on the number of concurrent viewers.
 
-Paste this URL into the provided WHEP example code, which you [can run in your browser on Stackblitz]((https://workers.new/stream/webrtc-whip)).
+Paste this URL into the provided WHEP example code, which you [can run in your browser on Stackblitz]((https://workers.new/stream/webrtc-whep)).
 
 ```javascript
 ---
