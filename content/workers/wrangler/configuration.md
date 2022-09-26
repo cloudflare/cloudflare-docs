@@ -38,7 +38,7 @@ At a minimum, `name`, `main` and `compatibility_date` are required to publish a 
 
 - `main` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The entrypoint/path to the JavaScript file that will be executed.
+  - The path to the entrypoint of your Worker that will be executed. For example: `./src/index.ts`
 
 - `compatibility_date` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
@@ -58,7 +58,7 @@ At a minimum, `name`, `main` and `compatibility_date` are required to publish a 
 
 - `workers_dev` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether we use `<name>.<subdomain>.workers.dev` to test and deploy your Worker. If you have a Worker that
+  - Enables use of `<name>.<subdomain>.workers.dev` to test and deploy your Worker. If you have a Worker that
     is only for `scheduled` events, you can set this to `false`. Defaults to `true`.
 
 - `route` {{<type-link href="#route-type">}}Route{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -143,7 +143,7 @@ specified for each environment.
 
 There are four types of routes.
 
-#### Simple Route
+### Simple Route
 
 This is a simple route that only requires a pattern.
 
@@ -171,7 +171,7 @@ Example: `"example.com/*"`
 
 Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
-#### Zone Name Route
+### Zone Name Route
 
 {{<definitions>}}
 
@@ -193,7 +193,7 @@ Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
 Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
-#### Custom Domain Route
+### Custom Domain Route
 
 This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
 
