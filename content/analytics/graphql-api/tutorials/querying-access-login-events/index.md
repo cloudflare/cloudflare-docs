@@ -14,7 +14,7 @@ You will need to insert your API credentials in `<EMAIL>` and `<API_KEY>` and su
 - `accountTag`: Your Cloudflare account ID.
 - `rayID`: A unique identifier assigned to the authentication request.
 - `datetimeStart`: The earliest event time to query (no earlier than September 16, 2022).
-- `datetimeEnd`: The latest event time to query. Make sure to specify a time range that includes the login event you are querying.
+- `datetimeEnd`: The latest event time to query. Be sure to specify a time range that includes the login event you are querying.
 
 ## API Call
 
@@ -62,6 +62,10 @@ echo '{ "query":
   https://api.cloudflare.com/client/v4/graphql/ | jq.
 ```
 
+{{<Aside type="note">}}
+Rather than filter by `cfRayId`, you may also [filter](/analytics/graphql-api/features/filtering/) by any other field in the query such as `userUuid` or `deviceId`.
+{{</Aside>}}
+
 ## Response
 
 ```json
@@ -100,6 +104,4 @@ echo '{ "query":
 }
 ```
 
-{{<Aside type="note">}}
-Rather than filter by `cfRayId`, you may also [filter](/analytics/graphql-api/features/filtering/) by any other field listed in the query such as `userUuid` or `deviceId`.
-{{</Aside>}}
+You can compare the query results to your Access policies to see why a user was blocked. For example, if your application requires a valid mTLS certificate, Access blocked the request shown above because `mtlsStatus`, `mtlsCommonName`, and `mtlsCertSerialId` are empty.
