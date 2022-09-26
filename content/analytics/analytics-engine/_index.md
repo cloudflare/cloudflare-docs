@@ -1,10 +1,10 @@
 ---
 pcx_content_type: overview
-title: Workers Analytics Engine
+title: Workers Analytics Engine (beta)
 weight: 1
 ---
 
-# Workers Analytics Engine
+{{<beta>}} Workers Analytics Engine {{</beta>}}
 
 Workers Analytics Engine is a new way to quickly get analytics about anything using Cloudflare Workers. Whether you are developing a new software application, deploying a fleet of IoT devices, or just writing an edge worker, it is critical to know what is happening. Teams need analytics to understand how many users are signing up, whether your devices are online, and what is happening in the business logic of your workers.
 
