@@ -63,7 +63,7 @@ Number of rules | 1 | 2 | 5 | 100 | 100
 {{</table-wrap>}}
 
 <sup>1</sup> _Only available to Enterprise customers who have purchased [Bot Management](/bots/plans/bm-subscription/)._<br>
-<sup>2</sup> _May require a separate add-on._
+<sup>2</sup> _Availability depends on your WAF plan._
 
 {{<content-column>}}
 
