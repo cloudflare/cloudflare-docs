@@ -8,4 +8,4 @@ weight: 8
 
 Area 1 partners have the option to set up accounts for themselves and their customers.
 
-For more details, refer to our [MSPP setup guide](/email-security/static/MSSP_Onboarding_Deployment_Guide.pdf).
+For more details, refer to our [MSPP setup guide (PDF)](/email-security/static/MSSP_Onboarding_Deployment_Guide.pdf).

@@ -150,7 +150,7 @@ export default {
 - {{<code>}}customMetadata{{<param-type>}}Record\<string, string>{{</param-type>}}{{</code>}}
 
   - A map of custom, user-defined metadata associated with the object.
-  
+
 - {{<code>}}range{{</code>}} {{<param-type>}}R2Range{{</param-type>}}
 
   - A `R2Range` object containing the returned range of the object.
@@ -170,7 +170,7 @@ export default {
 - {{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}{{</code>}}
 
   - Specifies that the object should only be returned given satisfaction of certain conditions in the `R2Conditional`. Refer to [Conditional operations](#conditional-operations).
-  
+
 - {{<code>}}range{{<param-type>}}R2Range{{</param-type>}}{{</code>}}
 
   - Specifies that only a specific length (from an optional offset) or suffix of bytes from the object should be returned. Refer to [Ranged reads](#ranged-reads).
@@ -196,7 +196,7 @@ There are 3 variations of arguments that can be used in a range:
 - {{<code>}}length{{<param-type>}}number{{</param-type>}}{{</code>}}
 
   - The number of bytes to return. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
-  
+
 - {{<code>}}suffix{{<param-type>}}number{{</param-type>}}{{</code>}}
 
   - The number of bytes to return from the end of the file, starting from the last byte. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
@@ -229,7 +229,7 @@ There are 3 variations of arguments that can be used in a range:
   - The number of results to return. Defaults to `1000`, with a maximum of `1000`.
 
 - {{<code>}}prefix{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
-  - The prefix to match keys against. Keys will only be returned if they start with given prefix. 
+  - The prefix to match keys against. Keys will only be returned if they start with given prefix.
 
 - {{<code>}}cursor{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
   - An opaque token that indicates where to continue listing objects from. A cursor can be retrieved from a previous list operation.
@@ -300,8 +300,8 @@ An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 - {{<code>}}delimitedPrefixes{{<param-type>}}Array\<{{<type>}}string{{</type>}}\>{{</param-type>}}{{</code>}}
 
   - If a delimiter has been specified, contains all prefixes between the specified prefix and the next occurence of the delimiter.
-  
-  - For example, if no prefix is provided and the delimiter is '/', `foo/bar/baz` would return `foo` as a delimited prefix. If `foo/` was passed as a prefix with the same structure and delimiter, `foo/bar` would be returned as a delimited prefix. 
+
+  - For example, if no prefix is provided and the delimiter is '/', `foo/bar/baz` would return `foo` as a delimited prefix. If `foo/` was passed as a prefix with the same structure and delimiter, `foo/bar` would be returned as a delimited prefix.
 
 {{</definitions>}}
 
