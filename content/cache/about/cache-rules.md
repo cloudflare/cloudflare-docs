@@ -5,9 +5,9 @@ pcx_content_type: concept
 
 {{<beta>}} Cache Rules {{</beta>}}
 
-Use cache rules to customize cache properties of your HTTP requests. For example, create a rule to specify how long to cache a resource in the Cloudflare edge network. 
+Use Cache Rules to customize cache properties of your HTTP requests. For example, create a rule to specify how long to cache a resource in the Cloudflare edge network. 
 
-Be aware that when you select **Eligible for cache** in Cache Rules, this is equivalent to [cache everything](/cache/how-to/create-page-rules/#cache-everything) cache level. If you do not enable eligible for cache, the expected behavior is the standard cache level present in page rules.
+Be aware that when you select **Eligible for cache** in Cache Rules, this is equivalent to [cache everything](/cache/how-to/create-page-rules/#cache-everything) cache level. If you do not enable eligible for cache, the expected behavior is the standard cache level present in Page Rules.
 
 ## Availability
 
@@ -29,19 +29,68 @@ To create a new cache rule:
 5. Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/edit-expressions/#expression-builder). Use the **Field** drop-down list to choose an HTTP property (refer to [Available fields](/cache/about/cache-rules/#available-fields) for the list of available fields). For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 6. Under **Then**, in the **Cache status** section, select **Bypass cache**, if matching requests will bypass cache and fetch a response from the origin server or **Eligible for cache** if requests will be eligible for cache. Note that proper [origin cache-control headers](/cache/about/cache-control/) are also required for cache eligibility.
 7. If you select **Eligible for cache**, you can customize the following options:
-    - **Edge TTL** - Select **Respect origin** if matching requests will respect cache headers received from the origin server, or **Override origin**. If you wish to override the Edge TTL value, you need to select how long you want to cache resources in the Cloudflare edge network.
-        - In **Status code TTL** you can define the cache time-to-live (TTL) duration for one or more response status codes received from the origin server. This setting can be applied to a _Single code_ status code, to a _Greater than_ or _Less than_ status code or to a _Range_ of status codes. For more information, refer to [Status code TTL](/cache/how-to/configure-cache-status-code/).
-    - **Browser TTL** - Select if you want to **Respect origin** or **Override origin**. If you wish to override the browser TTL value, define how long resources cached by client browsers will remain valid. For more information, refer to [Browser Cache TTL](/cache/about/edge-browser-cache-ttl/#browser-cache-ttl).
-    - **Cache Key** - Define the request components used to define a [custom cache key](/cache/about/cache-keys/). A cache key is an identifier that Cloudflare uses for a file stored in the cache. These are the options that you can customize:
-        - You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/about/cache-deception-armor/), and [Ignore query string order](https://support.cloudflare.com/hc/articles/360023040812).
-        - In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **Only these parameters** and enter the parameters, or **Ignore query string**.
-        - In the **Headers** section, you can include headers names and their values, check the presence of another header, and **Include origin header**.
-        - In the **Cookie** section, you can include cookie names and their values, and check the presence of another cookie.
-        - In the **Host** section, you can select **Use original host** and **Resolved host**.
-        - In the **User** section, you can select **Device type**, **Country**, and **Language**.
-    - **Serve stale content** - Enable or disable serving stale content while updating from the origin server. If serving stale content is disabled, origin cache-control headers will be used to tell Cloudflare how to handle content from the origin.
-    - **Respect Strong ETags** - Turn on or off byte-for-byte equivalency checks between the Cloudflare cache and the origin server. When enabled, Cloudflare will use strong ETag header validation to ensure that resources in the Cloudflare cache and on the origin server are byte-by-byte identical. If disabled, Cloudflare converts ETag headers into weak ETag headers.
-    - **Origin error page pass-thru** - Turn on or off Cloudflare error pages generated from issues sent from the origin server. If enabled, this setting triggers error pages issued by the origin.
+
+<details>
+<summary>Edge TTL</summary>
+<div>
+
+Select **Respect origin** if matching requests will respect cache headers received from the origin server, or **Override origin**. If you wish to override the Edge TTL value, you need to select how long you want to cache resources in the Cloudflare edge network.
+- In **Status code TTL** you can define the cache time-to-live (TTL) duration for one or more response status codes received from the origin server. This setting can be applied to a _Single code_ status code, to a _Greater than_ or _Less than_ status code or to a _Range_ of status codes. For more information, refer to [Status code TTL](/cache/how-to/configure-cache-status-code/).
+
+</div>
+</details>
+
+<details>
+<summary>Browser TTL</summary>
+<div>
+
+Select if you want to **Respect origin** or **Override origin**. If you wish to override the browser TTL value, define how long resources cached by client browsers will remain valid. For more information, refer to [Browser Cache TTL](/cache/about/edge-browser-cache-ttl/#browser-cache-ttl).
+
+</div>
+</details>
+
+<details>
+<summary>Cache Key</summary>
+<div>
+
+Define the request components used to define a [custom cache key](/cache/about/cache-keys/). A cache key is an identifier that Cloudflare uses for a file stored in the cache. These are the options that you can customize:
+ - You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/about/cache-deception-armor/), and [Ignore query string order](https://support.cloudflare.com/hc/articles/360023040812).
+ - In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **Only these parameters** and enter the parameters, or **Ignore query string**.
+ - In the **Headers** section, you can include headers names and their values, check the presence of another header, and **Include origin header**.
+ - In the **Cookie** section, you can include cookie names and their values, and check the presence of another cookie.
+ - In the **Host** section, you can select **Use original host** and **Resolved host**.
+ - In the **User** section, you can select **Device type**, **Country**, and **Language**.
+
+</div>
+</details>
+
+<details>
+<summary>Serve stale content</summary>
+<div>
+
+Enable or disable serving stale content while updating from the origin server. If serving stale content is disabled, origin cache-control headers will be used to tell Cloudflare how to handle content from the origin.
+
+</div>
+</details>
+
+<details>
+<summary>Respect Strong ETags</summary>
+<div>
+
+Turn on or off byte-for-byte equivalency checks between the Cloudflare cache and the origin server. When enabled, Cloudflare will use strong ETag header validation to ensure that resources in the Cloudflare cache and on the origin server are byte-by-byte identical. If disabled, Cloudflare converts ETag headers into weak ETag headers.
+
+</div>
+</details>
+
+<details>
+<summary>Origin error page pass-thru</summary>
+<div>
+
+Turn on or off Cloudflare error pages generated from issues sent from the origin server. If enabled, this setting triggers error pages issued by the origin.
+
+</div>
+</details>
+
 8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 ### Available fields
