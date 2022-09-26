@@ -71,3 +71,8 @@ Linux currently relies on the system Kernel version instead of a specific distro
 
 1. The valid SemVer would be the first 3 whole numbers of the output you obtain in the previous step. For instance, if the command above returned `5.14.0-25.el9.x86_64`, the valid SemVer would be `5.14.0`.
 
+
+### On ChromeOS
+
+On ChromeOS Zero Trust WARP services is served via our Android client which technically runs inside an Android VM on ChromeOS. WARP for Android version 6.16 and below repor the Android VM version as Android OS version. Starting with client 6.17 we introduced a distinct ChromeOS OS Version posture check and the Android client now only returns the actual Chrome OS version.
+
