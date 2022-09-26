@@ -92,18 +92,18 @@ header: Simplified example code
 highlight: [4]
 ---
 // Add a <video> element to the HTML page this code runs in:
-// <video id="input-video" autoplay muted></video>
+// <video id="output-video" autoplay muted></video>
 
 import WHEPClient from "./WHEPClient.js"; // an example WHEP client, see https://github.com/cloudflare/templates/tree/main/stream/webrtc/src/WHEPClient.ts
 
 const url = "<WEBRTC_URL_FROM_YOUR_LIVE_INPUT>"; // add the webRTCPlayback URL from your live input here
-const videoElement = document.getElementById("input-video");
+const videoElement = document.getElementById("output-video");
 const client = new WHEPClient(url, videoElement);
 ```
 
 As long as the creator is actively streaming, viewers should see their broadcast in their browser, with less than 1 second of latency.
 
-You can also use this URL with any client that supports the [WebRTC-HTTP egress protocol (WHEP)](https://www.ietf.org/id/draft-murillo-whep-00.html).
+You can also use this URL with any client that supports the [WebRTC-HTTP egress protocol (WHEP)](https://www.ietf.org/id/draft-murillo-whep-00.html). As more WHEP clients are published, we are committed to supporting them and being fully compliant with the WHEP protocol as it evolves into a standard.
 
 ## Using WebRTC in native apps
 
@@ -117,9 +117,9 @@ If you are building a native app, the example code above can run within a [WkWeb
 
 ## Limitations while in beta
 
-- [Recording](/stream/stream-live/replay-recordings/) is not yet supported (coming soon)
+- [Recording](/stream/stream-live/watch-live-stream/#replaying-recordings) is not yet supported (coming soon)
 - [Simulcasting](/stream/stream-live/simulcasting) (restreaming) is not yet supported (coming soon)
 - [Live viewer counts](/stream/getting-analytics/live-viewer-count/) are not yet supported (coming soon)
 - [Analytics](/stream/getting-analytics/fetching-bulk-analytics/) are not yet supported (coming soon)
-- Though we don't anticipate major API changes, while in beta, the WHIP and WHEP protocol versions used by our APIs is subject to change without notice. You can find the version in the `protocol-version` header in API responses. The value of this header references the IETF draft slug for each protocol, for example, `draft-ietf-wish-whip-04` and `draft-murillo-whep-00`.
+- Though we don't anticipate major API changes, while in beta, the WHIP and WHEP protocol versions used by our APIs is subject to change without notice. You can find the version in the `protocol-version` header in WHIP and WHEP API responses. The value of this header references the IETF draft slug for each protocol, for example, `draft-ietf-wish-whip-04` and `draft-murillo-whep-00`.
 - Once generally available, WebRTC streaming will be priced just like the rest of Cloudflare Stream, based on minutes stored and minutes of video delivered.
