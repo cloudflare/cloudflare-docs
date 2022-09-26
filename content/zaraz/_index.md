@@ -23,7 +23,7 @@ Cloudflare Zaraz is built for speed, privacy, and security, and you can use it t
 
 ## Features
 
-{{<feature header="Tools support" href="/zaraz/get-started/add-tool/">}}
+{{<feature header="Third-party tools" href="/zaraz/get-started/add-tool/">}}
 You can add many third-party tools to Zaraz, and offload them from your website.
 {{</feature>}}
 
