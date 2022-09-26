@@ -12,9 +12,6 @@ let filteredElements = current_path.elements.filter (element => { return element
 
 Vue.createApp({
     methods: {
-        test() {
-            alert("I am working")
-        },
         onRadioButtonChange(event) {
             this.elements = current_path.elements.filter (element => {
                 if (element.type === "question") {
@@ -57,7 +54,7 @@ Vue.createApp({
             <summary>Contains [[ element.pages.length ]] units</summary>
             <div>
                 <ul>
-                    <li v-for="page in element.pages"><a href="page.url_path">[[ page.link_title ]]</a></li>
+                    <li v-for="page in element.pages"><a :href="page.url_path" target="_blank">[[ page.link_title ]]</a></li>
                 </ul>
             </div>
         </details>

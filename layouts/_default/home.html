@@ -9,7 +9,7 @@
     {{- partial "script" (dict "src" "home.ts" "defer" true) -}}
     {{ if gt (len (findRE "\\/learning\\-paths\\/.+" .Page.RelPermalink)) 0 }}
     {{- partial "vue" -}}
-    {{- partial "script" (dict "src" "myapp.js" "defer" true) -}}
+    {{- partial "script" (dict "src" "dynamic-learning-path-vue.js" "defer" true) -}}
     {{ end }}
   </head>
   <body>

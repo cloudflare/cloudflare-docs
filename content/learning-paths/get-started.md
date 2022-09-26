@@ -5,4 +5,4 @@ layout: home
 pcx_content_type: learning-path
 ---
 
-{{<vue_vapp>}}
+{{<dynamic-learning-path>}}
