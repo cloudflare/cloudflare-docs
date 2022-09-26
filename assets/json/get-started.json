@@ -51,7 +51,7 @@
         "estimated_time": "~10 mins",
         "pages": [
           {
-            "url_path": "/bad-link/",
+            "url_path": "/fundamentals/account-and-billing/account-setup/create-account/",
             "link_title": "Create an account"
           },
           {
@@ -137,10 +137,6 @@
           {
             "url_path": "/registrar/get-started/register-domain/",
             "link_title": "Register a new domain"
-          },
-          {
-            "url_path": "/bad-link2/",
-            "link_title": "Bad link 2"
           }
         ]
       },

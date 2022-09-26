@@ -177,7 +177,7 @@ try {
   await walk(PUBDIR);
 
   if (!ERRORS && !WARNS) {
-    console.log('\n~> DONE~!\n\n');
+    console.log('\n~> Test --> TEST --> DONE~!\n\n');
   } else {
     let msg = '\n~> DONE with:';
     if (ERRORS > 0) {
