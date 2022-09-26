@@ -14,7 +14,7 @@ Email Routing provides two options for disabling the service:
 ## Delete and disable Email Routing
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Email** > **Settings**.
+2. Go to **Email** > **Email Routing** > **Settings**.
 3. Select **Start disabling** > **Delete and Disable**. Email Routing will show you the list of records associated with your account that will be deleted.
 4. Select **Delete records**.
 
@@ -23,7 +23,7 @@ Email Routing is now disabled for your account and will stop forwarding email. T
 ## Unlock and keep DNS records
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Email** > **Settings**.
+2. Go to **Email** > **Email Routing** > **Settings**.
 3. Select **Start disabling** > **Unlock records and continue**.
 4. Select **Edit records on DNS**.
 
