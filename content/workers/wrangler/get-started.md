@@ -8,7 +8,6 @@ weight: 1
 
 Wrangler is a command-line tool for building [Cloudflare Workers](https://workers.cloudflare.com/).
 
-
 {{<Aside type="note">}}
 
 Wrangler has launched a new version. If you are looking for the Wrangler 1 documentation, you can find it [here](/workers/wrangler/cli-wrangler/install-update/).
@@ -23,7 +22,7 @@ If you previously had Wrangler 1 installed or were working on a Wrangler 1 proje
 
 Installing Wrangler, the Workers CLI, allows you to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm`](https://www.npmjs.com/get-npm) and [`Node.js`](https://nodejs.org/en/) installed. Wrangler requires a Node version of `16.13.0` or later. 
+To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm`](https://www.npmjs.com/get-npm) and [`Node.js`](https://nodejs.org/en/) installed. Wrangler requires a Node version of `16.13.0` or later.
 
 {{<Aside type="note">}}
 Consider using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions.
@@ -72,6 +71,24 @@ Successfully logged in.
 If you prefer to use API tokens for authentication, such as in headless or continuous integration environments, refer to [Running Wrangler in CI/CD](/workers/wrangler/ci-cd/).
 
 Open the browser, log in to your account, and select **Allow**. This will send an OAuth Token to Wrangler so it can deploy your scripts to Cloudflare.
+
+### Using `wrangler login` in a remote machine
+
+If you are using wrangler from a remote machine but run the login flow from your local browser, you will get an error after logging in that `This site can't be reached`. To finish the login flow, you can use `curl` or an equivalent request library on the remote machine to fetch this `localhost` url.
+
+```sh
+$ wrangler login
+ ⛅️ wrangler 2.1.6
+-------------------
+Attempting to login via OAuth...
+Opening a link in your default browser: https://dash.cloudflare.com/oauth2/auth?xyz...
+```
+
+In a second terminal session:
+
+```
+$ curl http://localhost:8976/oauth/callback?code=xyz...
+```
 
 ## Update
 
