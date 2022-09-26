@@ -5,7 +5,9 @@ pcx_content_type: concept
 
 {{<beta>}} Cache Rules {{</beta>}}
 
-Use cache rules to customize cache properties of your HTTP requests. For example, create a rule to specify how long to cache a resource in the Cloudflare edge network.
+Use cache rules to customize cache properties of your HTTP requests. For example, create a rule to specify how long to cache a resource in the Cloudflare edge network. 
+
+Be aware that when you select **Eligible for cache** in Cache Rules, this is equivalent to [cache everything](/cache/how-to/create-page-rules/#cache-everything) cache level. If you do not enable eligible for cache, the expected behavior is the standard cache level present in page rules.
 
 ## Availability
 
