@@ -21,6 +21,6 @@ Railgun is a WAN optimization technology developed by Cloudflare and is availabl
  
 ## Features
  
-{{<feature header="Dynamic content" href="/link/to/feature/">}}
+{{<feature header="Cache dynamic content" href="/railgun/user-guide/">}}
 Cache dynamically generated or personalized web pages dramatically reducing bandwidth used and improving download times.
 {{</feature>}}
