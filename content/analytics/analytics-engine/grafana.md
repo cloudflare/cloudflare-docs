@@ -34,7 +34,7 @@ FROM dataset_name
 WHERE 
     timestamp <= NOW() 
     AND timestamp > NOW() - INTERVAL '1' DAY
-GROUP BY t
+GROUP BY blob1, t
 ORDER BY t
 ```
 
@@ -47,7 +47,7 @@ SELECT
     SUM(_sample_interval * double1) / SUM(_sample_interval) AS average_metric
 FROM dataset_name
 WHERE $timeFilter
-GROUP BY t
+GROUP BY blob1, t
 ORDER BY t
 ```
 
