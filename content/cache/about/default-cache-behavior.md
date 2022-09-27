@@ -9,11 +9,14 @@ meta:
 
 Cloudflare respects the origin web server’s cache headers in the following order unless an Edge Cache TTL page rule overrides the headers.
 
-- Cloudflare does not cache the resource if the `Cache-Control` header is set to `private`, `no-store`, `no-cache`, or `max-age=0` or if there is a cookie in the response.
-- Cloudflare caches the resource in the following scenarios:
-  - The `Cache-Control` header is set to `public` and the `max-age` is greater than 0.
+- Cloudflare **does not** cache the resource when:
+  - The `Cache-Control` header is set to `private`, `no-store`, `no-cache`, or `max-age=0`.
+  - The `Set-Cookie` header exists, or there is a cookie in the response.
+- Cloudflare **does** cache the resource when:
+  - The `Cache-Control` header is set to `public` and `max-age` is greater than 0.
   - The `Expires` header is set to a future date.
-- If both the `max-age` and an `Expires` header are set, `max-age` is used.
+
+Note: If both `max-age` and an `Expires` header are set, `max-age` will be used by Cloudflare.
 
 For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, see [Cache-Control directives](/cache/about/cache-control/#cache-control-directives).
 
