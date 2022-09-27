@@ -1,20 +1,12 @@
 ---
-type: overview
-pcx_content_type: reference
 title: API token templates
-weight: 6
-layout: list
+pcx_content_type: reference
+weight: 21
 ---
 
 # API token templates
 
-{{<content-column>}}
-
-Below is a table of the currently available API token templates and the default [token permissions](/api/tokens/create/permissions/) they grant. You can start creating a token with one of these templates and modify the permissions and resources from there.
-
-{{</content-column>}}
-
-{{<table-wrap>}}
+Below is a table of the currently available API token templates and the default [token permissions](/api/reference/permissions/) they grant. You can start creating a token with one of these templates and modify the permissions and resources from there.
 
 <table>
   <tbody>
@@ -139,5 +131,3 @@ Below is a table of the currently available API token templates and the default 
     </tr>
   </tbody>
 </table>
-
-{{</table-wrap>}}
