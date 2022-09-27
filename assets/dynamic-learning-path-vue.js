@@ -1,5 +1,6 @@
 import { learning_paths as paths } from "json-collector";
 
+
 let current_path;
 
 for (const item in paths) {
@@ -8,7 +9,7 @@ for (const item in paths) {
     }
 }
 
-let filteredElements = current_path.elements.filter (element => { return element.visible_by_default !== false})
+let filteredElements = current_path.elements.filter(element => { return element.visible_by_default !== false})
 
 Vue.createApp({
     methods: {
@@ -29,11 +30,7 @@ Vue.createApp({
             })
         }
     },
-    template: `<div class='header'>
-    <h1>[[ title ]]</h1>
-    <p><em>Learning path</em></p>
-    <p>[[ description ]]</p>
-    </div>
+    template: `
     <div class="background">
     <div v-for="element in elements" class="learningPathModule" v-on:change="onRadioButtonChange">
         <div v-if="element.type === 'module'">
@@ -71,11 +68,8 @@ Vue.createApp({
         </div>
     </div>
     </div>`,
-    props: ['title','name'],
     data() {return {
-        title: current_path.title,
-        description: current_path.description,
         elements: filteredElements
     }},
     delimiters: ['[[', ']]'],
-  }).mount('#vapp');
+  }).mount('#dynamicPath');
