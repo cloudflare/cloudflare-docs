@@ -35,7 +35,7 @@ export const onRequest: PagesFunction<{
 }
 ```
 
-Alternatively, you can hardcode (not advisable for API key) your settings the following way:
+Alternatively, you can hard-code (not advisable for API key) your settings the following way:
 
 ```typescript
 ---
