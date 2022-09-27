@@ -6,18 +6,18 @@ weight: 12
 
 # Create API tokens via the API
 
-Generate new API tokens on the fly via the API. Doing so first requires creating an API token from the Cloudflare dashboard that has the ability to create subsequent tokens.
+Generate new API tokens on the fly via the API. Before you can do this, you must create an API token in the Cloudflare dashboard that can create subsequent tokens.
 
 ## Generating the initial token
 
 Before you can create tokens via the API, you need to generate the initial token via the Cloudflare dashboard.
 
-1. From the [API Tokens management screen](https://dash.cloudflare.com/profile/api-tokens), select `Create Token`.
-2. Select the `Create Additional Tokens` template. This template contains the user permission for creating API tokens. This allows you to mimic the exact behavior presented in the UI from the API.
+1. From the [API Tokens management screen](https://dash.cloudflare.com/profile/api-tokens), select **Create Token**.
+2. Select the `Create Additional Tokens` template. This template contains the user permission for creating API tokens. This allows you to mimic the exact behavior presented in the dashboard from the API.
 
 {{<Aside type="note">}}
 
-Cloudflare highly recommends not granting other permissions to the token when using this template. This token should be safeguarded because it can create tokens with access to any of a user's resources.
+Cloudflare highly recommends that you do not grant other permissions to the token when using this template. Make sure you safeguard the new token because it can create tokens with access to any of a user's resources.
 
 {{</Aside>}}
 
@@ -35,7 +35,7 @@ To create a token:
 
 ### 1. Define the Access Policy
 
-An Access Policy defines what resources the token can act on and what permissions the token has to those resources. This process is similar to how you create tokens [in the Cloudflare dashboard](/api/get-started/create-token).
+An Access Policy defines what resources the token can act on and what permissions the token has to those resources. This process is similar to how you [create tokens in the Cloudflare dashboard](/api/get-started/create-token/).
 
 Each token can contain multiple policies.
 
