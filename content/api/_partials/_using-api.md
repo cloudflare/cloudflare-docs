@@ -9,6 +9,6 @@ Using the Cloudflare API requires authentication so that Cloudflare knows who is
 
 {{<Aside type="note">}}
 
-You can also authenticate with [API keys](/api/get-started/keys), but these keys have [several limitations](/api/get-started/keys/#limitations) that make them less secure than API tokens. Whenever possible, use API tokens to interact with the Cloudflare API.
+You can also authenticate with [API keys](/api/get-started/keys/), but these keys have [several limitations](/api/get-started/keys/#limitations) that make them less secure than API tokens. Whenever possible, use API tokens to interact with the Cloudflare API.
 
 {{</Aside>}}
