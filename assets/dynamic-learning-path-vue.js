@@ -2,9 +2,14 @@ import { learning_paths as paths } from "json-collector";
 
 
 let current_path;
+const regex = '\/$'
 
 for (const item in paths) {
-    if (paths[item].path == location.pathname) {
+    let amended_path = location.pathname
+    if (!location.pathname.match(regex)) {
+        amended_path += '/'
+    }
+    if (paths[item].path === amended_path) {
         current_path = paths[item];
     }
 }
