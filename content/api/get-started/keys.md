@@ -5,12 +5,14 @@ weight: 12
 ---
 
 # Get API keys (legacy)
-API keys are the previous authorization scheme for interacting with the Cloudflare API. When possible, use [API tokens](../create-token/) instead of API keys.
+
+API keys are the previous authorization scheme for interacting with the Cloudflare API. When possible, use [API tokens](/api/get-started/create-token/) instead of API keys.
 
 ## Limitations
+
 API keys have multiple limitations when compared to API tokens:
 
-- **Access to all Cloudflare Resources** - API keys have access to all of a user's resources. This makes it impossible to safely use API keys for access to non-production resources when a user also has access to production resources.
+- **Access to all Cloudflare resources** - API keys have access to all of a user's resources. This makes it impossible to safely use API keys to access non-production resources when a user also has access to production resources.
 
 - **Full permissions** - Similarly, API keys have the exact same permissions as the user, which means if the user can delete zones or change DNS records, so can the API key.
 
