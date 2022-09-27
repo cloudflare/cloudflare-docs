@@ -68,7 +68,7 @@ Once you have configured your Gateway policy to block the category, the test dom
 
 ## Test EDNS
 
-To test EDNS for your location:
+If you [enabled EDNS client subnet](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) for your location, you can validate EDNS as follows:
 
 1. Obtain your location's DOH subdomain:
 
@@ -82,7 +82,7 @@ To test EDNS for your location:
     $ curl 'https://<DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query?type=TXT&name=o-o.myaddr.google.com' -H 'Accept: application/dns-json' | json_pp
     ```
 
-3. If you enabled **EDNS client subnet** for your location, you should see your EDNS client subnet:
+    The output should contain your EDNS client subnet:
 
     ```json
     ---
@@ -118,7 +118,7 @@ To test EDNS for your location:
     }
     ```
 
-4. To verify your EDNS client subnet, obtain your source IP address:
+3. To verify your EDNS client subnet, obtain your source IP address:
 
         ```sh
         $ curl ifconfig.me
