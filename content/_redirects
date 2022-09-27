@@ -117,6 +117,18 @@
 /argo-tunnel/run-tunnel/run-as-service/ /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/ 301
 /argo-tunnel/trycloudflare/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
 
+# api
+/api/v4docs/ /api/how-to/make-api-calls/ 301
+/api/tokens/ /api/get-started/ 301
+/api/tokens/create/ /api/get-started/create-token/ 301
+/api/tokens/create/template/ /api/reference/template/ 301
+/api/tokens/create/permissions/ /api/reference/permissions/ 301
+/api/tokens/advanced/ /api/how-to/ 301
+/api/tokens/advanced/restrictions/ /api/how-to/restrict-tokens/ 301
+/api/tokens/advanced/api/ /api/how-to/create-via-api/ 301
+/api/keys/ /api/get-started/keys/ 301
+/api/limits/ /api/reference/limits/ 301
+
 # api-shield / api-security
 /api-security/ /api-shield/ 301
 /api-shield/products/ /api-shield/security/ 301
