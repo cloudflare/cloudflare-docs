@@ -8,9 +8,9 @@ weight: 20
 
 Permissions are segmented into three categories based on resource:
 
-- Zone Permissions
-- Account Permissions
-- User Permissions
+- Zone permissions
+- Account permissions
+- User permissions
 
 Each category contains Permission Groups related to those resources. DNS permissions belong to the Zone category, while Billing permissions belong to the Account category. Below is a list of the available token permissions.
 

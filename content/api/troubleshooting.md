@@ -7,13 +7,12 @@ weight: 3
 # Troubleshooting API tokens and keys
 
 ## The token is not verified
-Ensure the token has been verified by running the following curl and confirming that the response returns `"status": "active"`.
+
+Ensure the token has been verified by running the following `curl` command and confirming that the response returns `"status": "active"`.
 
 ```bash
-curl -X GET 
-"https://api.cloudflare.com/client/v4/user/tokens/verify" \
--H "Authorization: Bearer " \
--H "Content-Type:application/json"
+curl "https://api.cloudflare.com/client/v4/user/tokens/verify" \
+-H "Authorization: Bearer <API_TOKEN"
 
 {
   "success": true,
@@ -25,6 +24,7 @@ curl -X GET
     "not_before": "2018-07-01T05:20:00Z",
     "expires_on": "2020-01-01T00:00:00Z"
   }
+}
   ```
 
 ## The token has incorrect permissions
