@@ -12,7 +12,7 @@ The Workers configuration API was initially built around managing a relatively s
 
 Dispatch namespaces are Cloudflare's solution to these problems. Instead of adding individual routes to your users’ Workers, you will upload them to a dispatch namespace and then dynamically dispatch to them at runtime using a dispatch namespace binding. This allows you to run your own code as a wrapper around the namespaced Worker while still managing it as a single script; logically groups your code separately from your users’ code; and provides additional APIs like `script tags` for bulk operations on the namespaced workers.
 
-Prior to using Workers for Platforms, [generate an API token](/api/get-started/create-token) or [obtain your API key](/api/get-started/keys).
+Prior to using Workers for Platforms, [generate an API token](/api/get-started/create-token/) or [obtain your API key](/api/get-started/keys/).
 
 {{<directory-listing>}}
 
