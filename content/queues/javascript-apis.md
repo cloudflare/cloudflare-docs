@@ -8,7 +8,9 @@ meta:
 
 # JavaScript APIs
 
-Cloudflare Queues is integrated with [Cloudflare Workers](/workers). To send and receive messages, you must use a Worker. A Worker can send messages to a Queue, known as a producer Worker, or receive messages from a Queue, refered to as a consumer Worker.
+Cloudflare Queues is integrated with [Cloudflare Workers](/workers). To send and receive messages, you must use a Worker.
+
+A Worker that can send messages to a Queue is a producer Worker, while a Worker that can receive messages from a Queue is a consumer Worker. It is possible for the same Worker to be a producer and consumer, if desired.
 
 In the future, we expect to support other APIs, such as HTTP endpoints to send or receive messages. If you have any feedback about these APIs, please [contact us](mailto:queues@cloudflare.com) and we would be happy to hear from you.
 
@@ -56,6 +58,8 @@ interface Queue<Body = any> {
 
 These APIs allow a consumer Worker to consume messages from a Queue.
 
+To define a consumer Worker, add a `queue` function to the default export of the Worker. This will allow it to receive messages from the Queue.
+
 ```ts
 export default {
   async queue(batch: MessageBatch, env: Environment) {
@@ -82,7 +86,7 @@ interface MessageBatch<Body = any> {
 
 - {{<code>}}queue{{<param-type>}}string{{</param-type>}}{{</code>}}
 
-  - The name of the queue that belongs to this batch.
+  - The name of the Queue that belongs to this batch.
 
 - {{<code>}}messages{{<param-type>}}Message[]{{</param-type>}}{{</code>}}
 
@@ -103,7 +107,6 @@ interface Message<Body = any> {
   readonly id: string;
   readonly timestamp: Date;
   readonly body: Body;
-  retry(): void;
 }
 ```
 
@@ -121,9 +124,5 @@ interface Message<Body = any> {
 
   - The body of the message.
   - The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
-
-- {{<code>}}retry() {{<type>}}void{{</type>}}{{</code>}}
-
-  - Marks the message to be retried in the next batch.
 
 {{</definitions>}}

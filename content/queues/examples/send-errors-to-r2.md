@@ -17,17 +17,17 @@ filename: wrangler.toml
 name = "my-worker"
 
 [[queues.producers]]
-queue = "my-queue"
-binding = "ERROR_QUEUE"
+  queue = "my-queue"
+  binding = "ERROR_QUEUE"
 
 [[queues.consumers]]
-queue = "my-queue"
-max_batch_size = 100
-max_batch_timeout = 30
+  queue = "my-queue"
+  max_batch_size = 100
+  max_batch_timeout = 30
 
 [[r2_buckets]]
-bucket_name = "my-bucket"
-binding = "ERROR_BUCKET"
+  bucket_name = "my-bucket"
+  binding = "ERROR_BUCKET"
 ```
 
 ```ts
@@ -61,8 +61,8 @@ export default {
 
 function doRequest(request: Request): Promise<Response> {
   if (Math.random() > 0.5) {
-    return new Response("Ok");
+    return new Response("Success!");
   }
-  throw new Error("Oops!");
+  throw new Error("Failed!");
 }
 ```

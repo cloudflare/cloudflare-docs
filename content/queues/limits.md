@@ -27,4 +27,4 @@ Limits are restrictive during the private Beta. We will increase them over time.
 
 {{</table-wrap>}}
 
-<sup>1</sup> This is a limit that we aspire to effectively eliminate, in the future.
+<sup>1</sup> This is a limit that we will increase, and aspire to effectively eliminate in the future.

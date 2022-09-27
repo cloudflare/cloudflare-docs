@@ -6,7 +6,6 @@ weight: 4
 meta:
   title: Cloudflare Queues - Examples
 layout: list
-hideChildren: true
 ---
 
 # Examples
