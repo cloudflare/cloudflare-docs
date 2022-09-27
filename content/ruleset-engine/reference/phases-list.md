@@ -43,6 +43,7 @@ The phases execute in the order they appear in the table.
 | `http_request_redirect` | [Bulk Redirects](/rules/url-forwarding/bulk-redirects/create-api/) |
 | _N/A_ (internal phase) | [Managed Transforms](/rules/transform/managed-transforms/) |
 | `http_request_late_transform` | [HTTP Request Header Modification Rules](/rules/transform/request-header-modification/create-api/) |
+| `http_request_cache_settings` | [Cache Rules](/cache/about/cache-rules/) |
 
 {{</table-wrap>}}
 
