@@ -12,6 +12,9 @@ meta:
 
 Signed exchanges remove cookies and headers from HTTP requests, which can create problems with dynamic or personalized content. This is intentional since signed exchanges can be distributed to multiple browsers. Therefore, packaging any personalized or dynamic content into a signed exchange could be a security risk. The only request headers that are not removed are the following:
 
+* `AMP-Cache-Transform`
+* `Accept`
+* `From`
 * `User-Agent`
 * `Accept`
 * `Via`
