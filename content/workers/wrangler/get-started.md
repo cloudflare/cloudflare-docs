@@ -76,6 +76,8 @@ Open the browser, log in to your account, and select **Allow**. This will send a
 
 If you are using wrangler from a remote machine, but run the login flow from your local browser, after logging in you will see the following error message: `This site can't be reached`.
 
+To finish the login flow, you can use `curl` or an equivalent request library on the remote machine to fetch this `localhost` url.
+
 ```sh
 $ wrangler login
  ⛅️ wrangler 2.1.6
