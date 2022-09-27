@@ -66,7 +66,7 @@ Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks)
 
 ## Crowdstrike device posture attributes
 
-Device posture data is gathered from the [CrowdStrike Zero Trust Assessment APIs](https://falcon.us-2.crowdstrike.com/documentation/156/zero-trust-assessment-apis). To learn more about how scores are calculated see the [CrowdStrike Zero Trust Assessment](https://falcon.us-2.crowdstrike.com/documentation/138/zero-trust-assessment) documentation.
+Device posture data is gathered from the [CrowdStrike Zero Trust Assessment APIs](https://falcon.us-2.crowdstrike.com/documentation/156/zero-trust-assessment-apis). To learn more about how scores are calculated, refer to the [CrowdStrike Zero Trust Assessment](https://falcon.us-2.crowdstrike.com/documentation/138/zero-trust-assessment) documentation.
 
 | Selector      | Description          | Value    |
 | ------------- | ---------------------|----------|
