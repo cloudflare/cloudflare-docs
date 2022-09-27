@@ -13,23 +13,32 @@ let filteredElements = current_path.elements.filter(element => { return element.
 
 Vue.createApp({
     methods: {
-        onRadioButtonChange(event) {
+        onRadioButtonChange() {
+            const selectedOptions = document.querySelectorAll('input[type=radio]:checked');
             this.elements = current_path.elements.filter (element => {
-                if (element.type === "question") {
-                    return element
-                } else if (element.variables !== undefined) {
+                let keepItem = true;
+                if (element.variables !== undefined) {
                     for (const i in element.variables) {
-                        if (event.target.name === element.variables[i].name) {
-                            return event.target.value === element.variables[i].value.toString()
-                        }
+                        let variableActive = false;
+                        selectedOptions.forEach((item) => {
+                            if(item.name === element.variables[i].name) {
+                                variableActive = true;
+                               if (item.value !== element.variables[i].value.toString()) {
+                                keepItem = false;
+                               }
+                            }
+                        })
+                        if (!variableActive) {
+                           return false; 
+                        } 
                     }
+                    return keepItem;
                 } else {
-                    return element
+                    return keepItem;
                 }
-                
-            })
-        }
-    },
+                })
+            }
+        },
     template: `
     <div class="background">
     <div v-for="element in elements" v-on:change="onRadioButtonChange">
@@ -65,7 +74,7 @@ Vue.createApp({
             <legend v-html="element.description"></legend>
                 <div v-for="choice in element.choices">
                     <input type="radio" :name="element.id" :id="choice.value" 
-                    :value=choice.value @change="onRadioButtonChange($event)">
+                    :value=choice.value @change="onRadioButtonChange()">
                     <label :for="choice.name">[[ choice.name ]]</label>
                 </div>
             </fieldset>

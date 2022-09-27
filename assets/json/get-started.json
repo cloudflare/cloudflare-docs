@@ -99,8 +99,8 @@
         "title": "Add a domain",
         "variables": [
           {
-          "name": "domain_ownership",
-          "value": true
+            "name": "domain_ownership",
+            "value": true
           }
         ],
         "description": "Make a few updates at your registrar and within Cloudflare to improve your domain's <a href='/fundamentals/get-started/concepts/how-cloudflare-works/#benefits'>speed, security, and reliability</a>.",
@@ -113,13 +113,69 @@
           },
           {
             "url_path": "/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/",
-            "link_title": "(For some) Allow Cloudflare IP addresses",
+            "link_title": "Allow Cloudflare IP addresses",
             "additional_description": "If you control your <a href='https://www.cloudflare.com/learning/cdn/glossary/origin-server/'>origin server</a> and plan on using <a href='/dns/manage-dns-records/reference/proxied-dns-records/'>Cloudflare’s proxy</a>, review your server configuration to avoid accidentally blocking Cloudflare IP addresses."
+          },
+          {
+            "url_path": "/dns/additional-options/dnssec/#disable-dnssec",
+            "link_title": "(At your registrar) Disable DNSSEC",
+            "additional_description": "Make sure DNSSEC is disabled at your registrar (where you purchased your domain name). Otherwise, your domain will experience connectivity errors when you change your nameservers."
           },
           {
             "url_path": "/fundamentals/get-started/setup/add-site/",
             "link_title": "Add a site",
             "additional_description": "<strong>Note</strong>: If do not already have a domain name, start with <a href='/registrar/get-started/register-domain/'>Cloudflare Registrar</a> instead."
+          },
+          {
+            "url_path": "/fundamentals/get-started/setup/add-site/#step-2--update-nameservers",
+            "link_title": "Update your nameservers",
+            "additional_description": "Before your domain can begin using Cloudflare for DNS resolution, you need to update your nameservers at your registrar."
+          }
+        ]
+      },
+      {
+        "type": "question",
+        "description": "Do you want to transfer your domain to use Cloudflare Registrar?",
+        "id": "registrar_transfer",
+        "visible_by_default": false,
+        "variables": [
+          {
+            "name": "domain_ownership",
+            "value": true
+          }
+      ],
+        "choices": [
+          { 
+            "name": "Yes",
+            "value": true
+          },
+          { 
+            "name": "No",
+            "value": false
+          }
+        ]
+      },
+      {
+        "type": "module",
+        "title": "Transfer your domain",
+        "visible_by_default": false,
+        "variables": [
+          {
+            "name": "domain_ownership",
+            "value": true
+          },
+          {
+            "name": "registrar_transfer",
+            "value": true
+          }
+        ],
+        "description": "Transfer your domain to use Cloudflare Registrar. Transferring your domain to Cloudflare tells your registry that a different registrar can now set those authoritative records for you.",
+        "estimated_time": "~5 mins",
+        "pages": [
+          {
+            "url_path": "/registrar/get-started/transfer-domain-to-cloudflare/",
+            "link_title": "Transfer a domain to Cloudflare",
+            "additional_description": "<strong>Note</strong>: If you have a .uk domain, refer to <a href='/registrar/get-started/transfer-uk-domain/'>Transfer a .UK domain to Cloudflare</a>."
           }
         ]
       },
@@ -127,16 +183,60 @@
         "type": "module",
         "title": "Get a domain",
         "visible_by_default": false,
-        "variables": [{
-          "name": "domain_ownership",
-          "value": false
-        }],
-        "description": "Buy an at-cost domain name through Cloudflare Registrar.",
+        "variables": [
+          {
+            "name": "domain_ownership",
+            "value": false
+          }
+        ],
+        "description": "Buy an at-cost domain name through <a href='/registrar/'>Cloudflare Registrar</a>.",
         "estimated_time": "~5 mins",
         "pages": [
           {
             "url_path": "/registrar/get-started/register-domain/",
             "link_title": "Register a new domain"
+          }
+        ]
+      },
+      {
+        "type": "module",
+        "title": "Making website content available",
+        "visible_by_default": false,
+        "variables": [
+          {
+            "name": "domain_ownership",
+            "value": false
+          }
+        ],
+        "description": "Once you have purchased your domain name, you should make sure that visitors can access content hosted at your domain.",
+        "estimated_time": "~10 mins",
+        "pages": [
+          {
+            "url_path": "https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web",
+            "link_title": "Create your website (Outside of Cloudflare)",
+            "additional_description": "As a <a href='https://www.cloudflare.com/learning/cdn/what-is-a-cdn/'>CDN</a>, Cloudflare does not generally host content online. You will need to build your website and host your content somewhere else."
+          },
+          {
+            "url_path": "/dns/manage-dns-records/how-to/create-root-domain/",
+            "link_title": "Create a root domain"
+          },
+          {
+            "url_path": "/dns/manage-dns-records/how-to/create-subdomain/",
+            "link_title": "Create a subdomain"
+          },
+          {
+            "url_path": "/fundamentals/get-started/basic-tasks/manage-domains/redirect-domain/",
+            "link_title": "Redirect one domain to another"
+          },
+          {
+            "url_path": "/registrar/account-options/enable-dnssec/#enable-or-disable-dnssec",
+            "link_title": "Enable DNSSEC",
+            "additional_description": "Cloudflare Registrar offers one-click <a href='https://www.cloudflare.com/learning/dns/dns-security/'>DNSSEC</a> activation for free to all customers."
+          },
+          {
+            "url_path": "/dns/manage-dns-records/reference/proxied-dns-records/",
+            "link_title": "Proxy status (concept)",
+            "additional_description": "Make sure you understand Cloudflare's proxy status, which affects how Cloudflare treats incoming traffic to a DNS record."
           }
         ]
       },

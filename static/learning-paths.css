@@ -117,7 +117,7 @@ html {
 .question {
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 80%;
     margin: 3em auto auto auto;
     border: 1px solid #242628;
     padding: 1em 1em 1em 1.75em;
@@ -129,11 +129,6 @@ html {
 [theme=dark] .question {
     border: 1px solid #f3f3f4;
     background-color: rgb(var(--background-color-rgb));
-}
-
-.questionBreak {
-    background-color: #ff9e40;
-    opacity: 70%;
 }
 
 .moduleHeader {
