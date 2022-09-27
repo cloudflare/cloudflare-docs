@@ -72,9 +72,9 @@ If you prefer to use API tokens for authentication, such as in headless or conti
 
 Open the browser, log in to your account, and select **Allow**. This will send an OAuth Token to Wrangler so it can deploy your scripts to Cloudflare.
 
-### Using `wrangler login` in a remote machine
+### Using `wrangler login` on a remote machine
 
-If you are using wrangler from a remote machine but run the login flow from your local browser, you will get an error after logging in that `This site can't be reached`. To finish the login flow, you can use `curl` or an equivalent request library on the remote machine to fetch this `localhost` url.
+If you are using wrangler from a remote machine, but run the login flow from your local browser, after logging in you will see the following error message: `This site can't be reached`.
 
 ```sh
 $ wrangler login
@@ -84,9 +84,9 @@ Attempting to login via OAuth...
 Opening a link in your default browser: https://dash.cloudflare.com/oauth2/auth?xyz...
 ```
 
-In a second terminal session:
+In a second terminal session, run:
 
-```
+```sh
 $ curl http://localhost:8976/oauth/callback?code=xyz...
 ```
 
