@@ -103,7 +103,7 @@
           "value": true
           }
         ],
-        "description": "Make a few updates at your registrar and within Cloudflare to improve your domain's [speed, security, and reliability](/fundamentals/get-started/concepts/how-cloudflare-works/#benefits).",
+        "description": "Make a few updates at your registrar and within Cloudflare to improve your domain's <a href='/fundamentals/get-started/concepts/how-cloudflare-works/#benefits'>speed, security, and reliability</a>.",
         "estimated_time": "~5 mins",
         "pages": [
           {
@@ -114,12 +114,12 @@
           {
             "url_path": "/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/",
             "link_title": "(For some) Allow Cloudflare IP addresses",
-            "additional_description": "If you control your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/) and plan on using [Cloudflare’s proxy](/dns/manage-dns-records/reference/proxied-dns-records/), review your server configuration to avoid accidentally blocking Cloudflare IP addresses."
+            "additional_description": "If you control your <a href='https://www.cloudflare.com/learning/cdn/glossary/origin-server/'>origin server</a> and plan on using <a href='/dns/manage-dns-records/reference/proxied-dns-records/'>Cloudflare’s proxy</a>, review your server configuration to avoid accidentally blocking Cloudflare IP addresses."
           },
           {
             "url_path": "/fundamentals/get-started/setup/add-site/",
             "link_title": "Add a site",
-            "additional_description": "**Note**: If do not already have a domain name, start with [Cloudflare Registrar](/registrar/get-started/register-domain/) instead."
+            "additional_description": "<strong>Note</strong>: If do not already have a domain name, start with <a href='/registrar/get-started/register-domain/'>Cloudflare Registrar</a> instead."
           }
         ]
       },

@@ -114,6 +114,28 @@ html {
     background-color: rgb(var(--background-color-rgb));
 }
 
+.question {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 3em auto auto auto;
+    border: 1px solid #242628;
+    padding: 1em 1em 1em 1.75em;
+    border-radius: .5em;
+    background: linear-gradient(var(--background-color),
+    rgba(var(--background-color-rgb)));
+}
+
+[theme=dark] .question {
+    border: 1px solid #f3f3f4;
+    background-color: rgb(var(--background-color-rgb));
+}
+
+.questionBreak {
+    background-color: #ff9e40;
+    opacity: 70%;
+}
+
 .moduleHeader {
     display: flex;
     flex-direction: row;

@@ -32,8 +32,8 @@ Vue.createApp({
     },
     template: `
     <div class="background">
-    <div v-for="element in elements" class="learningPathModule" v-on:change="onRadioButtonChange">
-        <div v-if="element.type === 'module'">
+    <div v-for="element in elements" v-on:change="onRadioButtonChange">
+        <div class="learningPathModule" v-if="element.type === 'module'">
         <div class="moduleHeader">
             <h2 :id="element.title.toLowerCase().replaceAll(' ', '-')"><span class="DocsMarkdown--header-anchor-positioner">
                 <a
@@ -51,12 +51,16 @@ Vue.createApp({
             <summary>Contains [[ element.pages.length ]] units</summary>
             <div>
                 <ul>
-                    <li v-for="page in element.pages"><a :href="page.url_path" target="_blank">[[ page.link_title ]]</a></li>
+                    <li v-for="page in element.pages"><a :href="page.url_path" target="_blank">[[ page.link_title ]]</a>
+                    <div v-if="page.additional_description" class="learningPathNote" v-html="page.additional_description"></div>
+                    </li>
                 </ul>
             </div>
         </details>
         </div>
-        <div v-else-if="element.type === 'question'" class="questionChoices" :id="element.id">
+        <div v-else-if="element.type === 'question'">
+        <hr class="questionBreak">
+        <div class="question" :id="element.id">
             <fieldset :id="element.id">
             <legend v-html="element.description"></legend>
                 <div v-for="choice in element.choices">
@@ -65,6 +69,8 @@ Vue.createApp({
                     <label :for="choice.name">[[ choice.name ]]</label>
                 </div>
             </fieldset>
+        </div>
+        <hr class="questionBreak">
         </div>
     </div>
     </div>`,
