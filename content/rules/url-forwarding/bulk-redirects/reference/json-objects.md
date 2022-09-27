@@ -34,9 +34,9 @@ The JSON object properties must comply with the following:
 - `from_list` must contain the following properties:
 
   - `name`: The name of an existing Bulk Redirect List to associate with the current Bulk Redirect Rule.
-  - `key`: An expression that defines the value that will be matched against the configured URL Redirect’s source URL values, following the rules of the [URL matching algorithm](/rules/bulk-redirects/how-it-works/#url-matching-algorithm). Refer to [Concepts](/rules/bulk-redirects/concepts/#bulk-redirect-rules) for more information.
+  - `key`: An expression that defines the value that will be matched against the configured URL Redirect’s source URL values, following the rules of the [URL matching algorithm](/rules/url-forwarding/bulk-redirects/how-it-works/#url-matching-algorithm). Refer to [Concepts](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-rules) for more information.
 
-- `expression` must reference the request field used in the `key` property. Refer to [Concepts](/rules/bulk-redirects/concepts/#bulk-redirect-rules) for more information.
+- `expression` must reference the request field used in the `key` property. Refer to [Concepts](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-rules) for more information.
 
 ## URL Redirect List item
 
@@ -59,4 +59,4 @@ A fully populated URL Redirect List item object has the following JSON structure
 }
 ```
 
-For details on the `redirect` object properties, refer to [URL Redirect parameters](/rules/bulk-redirects/reference/parameters/).
+For details on the `redirect` object properties, refer to [URL Redirect parameters](/rules/url-forwarding/bulk-redirects/reference/parameters/).

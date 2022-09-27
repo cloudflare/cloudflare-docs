@@ -32,8 +32,10 @@ https://user:password@www.example.com:443/search?q=term#results
 
 {{</table-wrap>}}
 
-Bulk Redirects also support target URLs without an authority component, like the following URL:
+Bulk Redirects also support target URLs without an authority component [^1], like the following URL:
 
 ```txt
 magnet:?xt=urn:btih:2bd9d334e8d1e5bd7768755173222db5c6dea13b&dn=archlinux-2021.07.01-x86_64.iso
 ```
+
+[^1]: The URL authority is the combination of user information, host, and port components.

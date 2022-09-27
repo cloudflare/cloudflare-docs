@@ -8,7 +8,7 @@ meta:
 
 # CSV file format to create Bulk Redirects
 
-You can use a CSV file to create Bulk Redirects [using the Cloudflare dashboard](/rules/bulk-redirects/create-dashboard/). Each line in the CSV file must follow this format:
+You can use a CSV file to create Bulk Redirects [using the Cloudflare dashboard](/rules/url-forwarding/bulk-redirects/create-dashboard/). Each line in the CSV file must follow this format:
 
 ```txt
 <SOURCE_URL>,<TARGET_URL>[,<STATUS_CODE>,<PRESERVE_QUERY_STRING>,<INCLUDE_SUBDOMAINS>,<SUBPATH_MATCHING>,<PRESERVE_PATH_SUFFIX>]
