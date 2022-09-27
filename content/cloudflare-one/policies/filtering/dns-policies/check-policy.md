@@ -1,68 +1,54 @@
 ---
 pcx_content_type: how-to
-title: Check that a policy is working
+title: Test DNS
 weight: 2
 ---
 
-# Check that a policy is working
+# Test DNS
 
-{{<Aside type="note">}}
+You can use the following procedures to validate your Gateway DNS configuration.
 
-Before you start, please make sure you are connected to a network that is associated with the location where the policy is applied.
+## Prerequisites
 
-{{</Aside>}}
-
-Once you have created a policy to block a domain, you can use either `dig` or `nslookup` on your to see if the policy is working as intended.
-
-If you are using a policy to block `example.com`, you can do the following to see if Gateway is blocking `example.com`:
-
-1.  Open your terminal.
-
-1.  Type `dig example.com` (`nslookup example.com`) if you are using Windows) and press enter.
-
-1.  If the Block page is **disabled** for the policy, then you should see `REFUSED` in the answer section:
-
-![Blocked when block page disabled](/cloudflare-one/static/documentation/faq/blocked-disabled.png)
-
-If the Block page is **enabled** for the policy, then you should see `NOERROR` in the answer section and `162.159.36.12` and `162.159.46.12` as the answers when the domain is successfully blocked.
-
-![Blocked when block page enabled](/cloudflare-one/static/documentation/faq/blocked-enabled.png)
+Before you start, make sure you are connected to a network that is associated with the [location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) where the policy is applied.
 
 ## Test a DNS policy
 
-If you are blocking a security threat or content category, you can test that the policy is working by using the **test domain** associated with each category.
+Once you have created a DNS policy to block a domain, you can use either `dig` or `nslookup` to see if the policy is working as intended.
+
+For example, if you created a policy to block `example.com`, you can do the following to see if Gateway is successfully blocking `example.com`:
+
+1. Open your terminal.
+
+2. Type `dig example.com` (`nslookup example.com` if you are using Windows) and press **Enter**.
+
+3. If the [block page](/cloudflare-one/policies/filtering/configuring-block-page/) is disabled for the policy, you should see `REFUSED` in the answer section:
+
+    ![Verify that a domain is blocked when the block page is disabled.](/cloudflare-one/static/documentation/faq/blocked-disabled.png)
+
+    If the [block page](/cloudflare-one/policies/filtering/configuring-block-page/) is enabled for the policy, you should see `NOERROR` in the answer section and `162.159.36.12` and `162.159.46.12` as the answers:
+
+    ![Verify that a domain is blocked when the block page is disabled.](/cloudflare-one/static/documentation/faq/blocked-enabled.png)
+
+### Test a security or content category
+
+If you are blocking a [security category](/cloudflare-one/policies/filtering/dns-policies/#security-categories) or a [content category](/cloudflare-one/policies/filtering/dns-policies/#content-categories), you can test that the policy is working by using the [test domain](#common-test-domains) associated with each category.
 
 Once you have configured your Gateway policy to block the category, the test domain will show a block page when you attempt to visit the domain in your browser, or will return `REFUSED` when you perform `dig` using the command-line interface.
 
-### Test domains
+#### Test domain format
 
-#### One-word categories
+- **One-word category** — For categories with one-word names (for example, _Malware_), the test domain is of the form:
 
-Test domains use the following format for categories with one-word names:
+    ```txt
+    <NAME_OF_CATEGORY>.testcategory.com
+    ```
 
-```txt
-NAME_OF_CATEGORY.testcategory.com
-```
+- **Multi-word category** — For categories with multiple words in the name (for example, _Parked & For Sale Domains_), the test domain uses the following format:
 
-| Category       | Test domain                     |
-| -------------- | ------------------------------- |
-| _Malware_      | `malware.testcategory.com`      |
-| _Phishing_     | `phishing.testcategory.com`     |
-| _Cryptomining_ | `cryptomining.testcategory.com` |
-
-#### Multi-word categories
-
-If the category has multiple words in the name (for example, _Parked & For Sale Domains_) then the test domain uses the following format:
-
-- Remove any spaces between the words
-- Replace `&` with `and`
-- All letters are lowercase
-
-| Category                       | Test domain                                   |
-| ------------------------------ | --------------------------------------------- |
-| _Parked & For Sale Domains_    | `parkedandforsaledomains.testcategory.com`    |
-| _Private IP Address_           | `privateipaddress.testcategory.com`           |
-| _Command and Control & Botnet_ | `commandandcontrolandbotnet.testcategory.com` |
+    - Remove any spaces between the words
+    - Replace `&` with `and`
+    - All letters are lowercase
 
 #### Common test domains
 
@@ -79,3 +65,28 @@ If the category has multiple words in the name (for example, _Parked & For Sale 
 | _Spam_                         | `spam.testcategory.com`                       |
 | _Spyware_                      | `spyware.testcategory.com`                    |
 | _Unreachable_                  | `unreachable.testcategory.com`                |
+
+## Test EDNS
+
+If you enabled EDNS client subnet for your location:
+
+```sh
+$ curl 'https://scm8k5w9i1.cloudflare-gateway.com/dns-query?type=TXT&name=o-o.myaddr.google.com' -H 'Accept: application/dns-json'
+```
+
+When EDNS is turned off, you should see:
+
+```sh
+{"Status":0,"TC":false,"RD":true,"RA":true,"AD":false,"CD":false,"Question":[{"name":"o-o.myaddr.google.com","type":16}],"Answer":[{"name":"o-o.myaddr.google.com","type":16,"TTL":60,"data":"\"108.162.220.131\""}]}%
+```
+
+When EDNS is turned on, you should see:
+```sh
+{"Status":0,"TC":false,"RD":true,"RA":true,"AD":false,"CD":false,"Question":[{"name":"o-o.myaddr.google.com","type":16}],"Answer":[{"name":"o-o.myaddr.google.com","type":16,"TTL":60,"data":"\"108.162.220.131\""},{"name":"o-o.myaddr.google.com","type":16,"TTL":300,"data":"\"edns0-client-subnet 136.62.0.0/24\""}]}%
+```
+
+```sh
+$ curl ifconfig.me
+136.62.12.156%
+```
+You can see the subnet I get back is a /24 of my ISP ip (e.g. the IP the resolver sees as the source address of the query.)
