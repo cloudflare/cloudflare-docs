@@ -10,6 +10,8 @@ Cloudflare Access can send a one-time PIN (OTP) to approved email addresses as a
 
 For example, if your team uses Okta® but you’re collaborating with someone outside your organization, you can use OTP to grant access to external resources.
 
+Note: By design, blocked users will not receive an email or see a block message.
+
 ## Set up OTP
 
 To set up OTP to allow guest-user access, you simply add the guest user's email address to an [Access policy](/cloudflare-one/policies/access/policy-management/#add-a-policy) and to the [group](/cloudflare-one/identity/users/groups/) that allows your team to reach the application.
