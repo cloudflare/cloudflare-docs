@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Configure webhooks
+weight: 2
 ---
 
 # Configure webhooks

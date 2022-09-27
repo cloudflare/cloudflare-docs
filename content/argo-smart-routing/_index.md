@@ -37,6 +37,10 @@ Argo Smart Routing includes comprehensive analytics to compare performance impro
 Increase cache hit ratios to reduce requests to your origin server.
 {{</related>}}
 
+{{<related header="China Network" href="/china-network/" product="china-network">}}
+Improve security and performance within mainland China.
+{{</related>}}
+
 {{<related header="Magic Transit" href="/magic-transit/" product="magic-transit">}}
 Reduce latency and protect from DDoS attacks using the Cloudflare network.
 {{</related>}}
