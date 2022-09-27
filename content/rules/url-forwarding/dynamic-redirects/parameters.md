@@ -1,9 +1,9 @@
 ---
 title: API parameter reference
 pcx_content_type: reference
-weight: 10
+weight: 5
 meta:
-  title: Dynamic Redirects API parameter reference
+  title: Dynamic redirects API parameter reference
 ---
 
 # API parameter reference
@@ -15,7 +15,7 @@ Create a static or dynamic URL redirect based on the parameter name provided in 
 
 ## Static URL redirect parameters
 
-The full syntax of the `"action_parameters"` field for a Dynamic Redirect Rule with a static value for the destination URL is the following:
+The full syntax of the `"action_parameters"` field for a dynamic redirect rule with a static value for the destination URL is the following:
 
 ```json
  "action_parameters": {
@@ -35,7 +35,7 @@ The only required parameter is `"from_value"` > `"target_url"` > `"value"`. The 
 
 ## Dynamic URL redirect parameters
 
-The full syntax of the `"action_parameters"` field for a Dynamic Redirect Rule with a dynamic value for the destination URL is the following:
+The full syntax of the `"action_parameters"` field for a dynamic redirect rule with a dynamic value for the destination URL is the following:
 
 ```json
 "action_parameters": {
