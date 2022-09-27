@@ -65,7 +65,7 @@ Each token can contain multiple policies.
 | Field              | Description                                          |
 | ------------------ | ---------------------------------------------------- |
 | `id`               | Unique read-only identifier for the policy generated after creation. |
-| `effect`           | Defines whether this policy is allowing or denying access. If only creating one policy, use `allow`. The evaluation order for policies is as follows: 1.  Explicit `DENY` Policies; 2.  Explicit `ALLOW` Policies; 3.  Implicit `DENY ALL`.            |
+| `effect`           | Defines whether this policy is allowing or denying access. If only creating one policy, use `allow`. The evaluation order for policies is as follows: 1. Explicit `DENY` Policies; 2. Explicit `ALLOW` Policies; 3. Implicit `DENY ALL`.            |
 | `resources`         | Defines what resources are allowed to be configured. |
 | `permission_groups` | Defines what permissions the policy grants to the included resources. |
 
@@ -76,27 +76,27 @@ API token policies support three resource types: `User`, `Account`, and `Zone`.
 
 {{<Aside type="note">}}
  
-Fetch each object's `tag` by calling the appropriate `GET <object>` API. Refer to [User](https://api.cloudflare.com/#user-properties), [Account](https://api.cloudflare.com/#accounts-list-accounts), and [Zone](https://api.cloudflare.com/#zone-list-zones) documentation for more details.
+Fetch each object's ID by calling the appropriate `GET <object>` API. Refer to [User](https://api.cloudflare.com/#user-properties), [Account](https://api.cloudflare.com/#accounts-list-accounts), and [Zone](https://api.cloudflare.com/#zone-list-zones) documentation for more details.
   {{</Aside>}}
 
 ##### Account
 
 Include a **single account** or **all accounts** in a token policy.
 
-*   A **single account** is denoted as:`"com.cloudflare.api.account.<account_tag>": "*"`.
+*   A **single account** is denoted as:`"com.cloudflare.api.account.<ACCOUNT_ID>": "*"`.
 *   **All accounts** is denoted as:`"com.cloudflare.api.account.*": "*"`
 
 ##### Zone
 
 Include a **single zone**, **all zones in an account**, or **all zones in all accounts** in a token policy.
 
-*   A **single zone** is denoted as:`"com.cloudflare.api.account.zone.<zone_tag>": "*"`
-*   **All Zones in an account** are denoted as:`"com.cloudflare.api.account.<account_tag>": {"com.cloudflare.api.account.zone.*": "*"}`
+*   A **single zone** is denoted as:`"com.cloudflare.api.account.zone.<ZONE_ID>": "*"`
+*   **All Zones in an account** are denoted as:`"com.cloudflare.api.account.<ACCOUNT_ID>": {"com.cloudflare.api.account.zone.*": "*"}`
 *   **All zones in all accounts** is denoted as:`"com.cloudflare.api.account.zone.*": "*"`
 
 ##### User
 
-For user resources, you can only reference yourself, which is denoted as:`"com.cloudflare.api.user.<user_tag>": "*"`
+For user resources, you can only reference yourself, which is denoted as:`"com.cloudflare.api.user.<USER_TAG>": "*"`
 
 #### Permission groups
 
@@ -106,7 +106,7 @@ Determine what permission groups should be applied. Refer to the full list of pe
 
 Set up any limitations on how the token can be used. API tokens allow restrictions for client IP address filtering and TTLs. Refer to [Restrict token use](/api/how-to/restrict-tokens/) for more information.
 
-When defining TTLs, you can set the time at which a token becomes active with `not_before` and the time when it expires with `expires_on`. Both of these fields take timestamps in UTC in the following format: `"2018-07-01T05:20:00Z"`.
+When defining TTLs, you can set the time at which a token becomes active with `not_before` and the time when it expires with `expires_on`. Both of these fields take UTC timestamps in the following format: `"2018-07-01T05:20:00Z"`.
 
 Limit usage of a token by client IP address filters with the following object:
 
@@ -132,7 +132,7 @@ Each parameter in the `in` and `not_in` objects must be in CIDR notation. For ex
 Combine the previous information to create a token as in the following example:
 
 ```json
-curl -X POST 
+$ curl -X POST 
 "https://api.cloudflare.com/client/v4/user/tokens" \
      -H "Authorization: Bearer <api token secret>" \
      -H "Content-Type: application/json" \
