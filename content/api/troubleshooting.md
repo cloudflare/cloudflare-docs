@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Troubleshooting
-weight: 3
+weight: 5
 ---
 
 # Troubleshooting API tokens and keys
@@ -13,7 +13,9 @@ Ensure the token has been verified by running the following `curl` command and c
 ```bash
 curl "https://api.cloudflare.com/client/v4/user/tokens/verify" \
 -H "Authorization: Bearer <API_TOKEN"
+```
 
+```json
 {
   "success": true,
   "errors": [],
@@ -25,7 +27,7 @@ curl "https://api.cloudflare.com/client/v4/user/tokens/verify" \
     "expires_on": "2020-01-01T00:00:00Z"
   }
 }
-  ```
+```
 
 ## The token has incorrect permissions
 Review the permissions groups for your token in the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens). Refer to [API token permissions](/api/reference/permissions/) for more information.

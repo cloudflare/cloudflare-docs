@@ -81,7 +81,7 @@ Fetch each object's ID by calling the appropriate `GET <object>` API. Refer to [
 
 ##### Account
 
-Include a **single account** or **all accounts** in a token policy.
+Include a single account or all accounts in a token policy.
 
 *   A **single account** is denoted as:`"com.cloudflare.api.account.<ACCOUNT_ID>": "*"`.
 *   **All accounts** is denoted as:`"com.cloudflare.api.account.*": "*"`
