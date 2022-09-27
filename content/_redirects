@@ -442,6 +442,7 @@
 /rules/transform/create-url-rewrite-rule/ /rules/transform/url-rewrite/create-dashboard/ 301
 /rules/transform/url-rewrite/parameters/ /rules/transform/url-rewrite/reference/parameters/ 301
 /rules/transform/use-cases/ /rules/transform/url-rewrite/examples/ 301
+/rules/url-forwarding/dynamic-redirects/parameters/ /rules/url-forwarding/dynamic-redirects/settings/ 301
 
 # ruleset-engine
 /ruleset-engine/common-use-cases/ /ruleset-engine/managed-rulesets/override-examples/ 301
