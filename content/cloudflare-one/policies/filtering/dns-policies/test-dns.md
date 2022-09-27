@@ -70,23 +70,25 @@ Once you have configured your Gateway policy to block the category, the test dom
 
 If you enabled EDNS client subnet for your location:
 
+1. 
 ```sh
 $ curl 'https://scm8k5w9i1.cloudflare-gateway.com/dns-query?type=TXT&name=o-o.myaddr.google.com' -H 'Accept: application/dns-json'
 ```
 
-When EDNS is turned off, you should see:
-
-```sh
-{"Status":0,"TC":false,"RD":true,"RA":true,"AD":false,"CD":false,"Question":[{"name":"o-o.myaddr.google.com","type":16}],"Answer":[{"name":"o-o.myaddr.google.com","type":16,"TTL":60,"data":"\"108.162.220.131\""}]}%
-```
-
-When EDNS is turned on, you should see:
+If EDNS is turned on, you should see:
 ```sh
 {"Status":0,"TC":false,"RD":true,"RA":true,"AD":false,"CD":false,"Question":[{"name":"o-o.myaddr.google.com","type":16}],"Answer":[{"name":"o-o.myaddr.google.com","type":16,"TTL":60,"data":"\"108.162.220.131\""},{"name":"o-o.myaddr.google.com","type":16,"TTL":300,"data":"\"edns0-client-subnet 136.62.0.0/24\""}]}%
 ```
 
+2. 
 ```sh
 $ curl ifconfig.me
 136.62.12.156%
 ```
 You can see the subnet I get back is a /24 of my ISP ip (e.g. the IP the resolver sees as the source address of the query.)
+
+If EDNS is turned off, you should see:
+
+```sh
+{"Status":0,"TC":false,"RD":true,"RA":true,"AD":false,"CD":false,"Question":[{"name":"o-o.myaddr.google.com","type":16}],"Answer":[{"name":"o-o.myaddr.google.com","type":16,"TTL":60,"data":"\"108.162.220.131\""}]}%
+```
