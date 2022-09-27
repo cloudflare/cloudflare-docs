@@ -120,8 +120,9 @@ If you [enabled EDNS client subnet](/cloudflare-one/connections/connect-devices/
 
 3. To verify your EDNS client subnet, obtain your source IP address:
 
-        ```sh
-        $ curl ifconfig.me
-        136.62.12.156%
-        ```
+    ```sh
+    $ curl ifconfig.me
+    136.62.12.156%
+    ```
+
     The source IP address should fall within the /24 range specified by your EDNS client subnet.
