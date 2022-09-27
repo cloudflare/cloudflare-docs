@@ -6,7 +6,7 @@ weight: 2
 
 # Test DNS
 
-You can use the following procedures to validate your Gateway DNS configuration.
+This section covers how to validate your Gateway DNS configuration.
 
 ## Prerequisites
 
@@ -68,53 +68,60 @@ Once you have configured your Gateway policy to block the category, the test dom
 
 ## Test EDNS
 
-If you enabled EDNS client subnet for your location:
+To test EDNS for your location:
 
-1. 
-```sh
-$ curl 'https://scm8k5w9i1.cloudflare-gateway.com/dns-query?type=TXT&name=o-o.myaddr.google.com' -H 'Accept: application/dns-json' | json_pp
-```
+1. Obtain your location's DOH subdomain:
 
-If EDNS is turned on, you should see:
+    1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **Locations**.
+    2. Select the location you are testing.
+    3. Note the value of **DNS over HTTPS**.
 
-```json
----
-highlight: [12]
----
-{
-   "AD" : false,
-   "Answer" : [
-      {
-         "TTL" : 60,
-         "data" : "\"108.162.218.211\"",
-         "name" : "o-o.myaddr.google.com",
-         "type" : 16
-      },
-      {
-         "TTL" : 60,
-         "data" : "\"edns0-client-subnet 104.28.203.0/24\"",
-         "name" : "o-o.myaddr.google.com",
-         "type" : 16
-      }
-   ],
-   "CD" : false,
-   "Question" : [
-      {
-         "name" : "o-o.myaddr.google.com",
-         "type" : 16
-      }
-   ],
-   "RA" : true,
-   "RD" : true,
-   "Status" : 0,
-   "TC" : false
-}
+2. Open a terminal and run the following command:
 
-```
+    ```sh
+    $ curl 'https://<DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query?type=TXT&name=o-o.myaddr.google.com' -H 'Accept: application/dns-json' | json_pp
+    ```
 
-2. 
-```sh
-$ curl ifconfig.me
-136.62.12.156%
-```
-You can see the subnet I get back is a /24 of my ISP ip (e.g. the IP the resolver sees as the source address of the query.)
+3. If you enabled **EDNS client subnet** for your location, you should see your EDNS client subnet:
+
+    ```json
+    ---
+    highlight: [12]
+    ---
+    {
+    "AD" : false,
+    "Answer" : [
+        {
+            "TTL" : 60,
+            "data" : "\"108.162.218.211\"",
+            "name" : "o-o.myaddr.google.com",
+            "type" : 16
+        },
+        {
+            "TTL" : 60,
+            "data" : "\"edns0-client-subnet 136.62.0.0/24\"",
+            "name" : "o-o.myaddr.google.com",
+            "type" : 16
+        }
+    ],
+    "CD" : false,
+    "Question" : [
+        {
+            "name" : "o-o.myaddr.google.com",
+            "type" : 16
+        }
+    ],
+    "RA" : true,
+    "RD" : true,
+    "Status" : 0,
+    "TC" : false
+    }
+    ```
+
+4. To verify your EDNS client subnet, obtain your source IP address:
+
+        ```sh
+        $ curl ifconfig.me
+        136.62.12.156%
+        ```
+    The source IP address should fall within the range of your EDNS client subnet (`136.62.0.0/24`).
