@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Test DNS
+title: Test DNS filtering
 weight: 2
 ---
 
-# Test DNS
+# Test DNS filtering
 
 This section covers how to validate your Gateway DNS configuration.
 
@@ -66,7 +66,7 @@ Once you have configured your Gateway policy to block the category, the test dom
 | _Spyware_                      | `spyware.testcategory.com`                    |
 | _Unreachable_                  | `unreachable.testcategory.com`                |
 
-## Test EDNS
+## Test EDNS configuration
 
 If you [enabled EDNS client subnet](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) for your location, you can validate EDNS as follows:
 
