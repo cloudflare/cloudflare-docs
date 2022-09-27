@@ -42,6 +42,7 @@ Alternatively, you can hardcode (not advisable for API key) your settings the fo
 filename: functions/_middleware.ts
 ---
 import honeycombPlugin from "@cloudflare/pages-plugin-honeycomb";
+
 export const onRequest = honeycombPlugin({
   apiKey: "YOUR_HONEYCOMB_API_KEY",
   dataset: "YOUR_HONEYCOMB_DATASET_NAME",
