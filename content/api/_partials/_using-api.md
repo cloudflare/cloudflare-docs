@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Using the Cloudflare API requires authentication so that Cloudflare knows who is making requests and what permissions you have. [Create an API token](/api/get-started/create-token) to grant access to the API to perform actions.
+Using the Cloudflare API requires authentication so that Cloudflare knows who is making requests and what permissions you have. [Create an API token](/api/get-started/create-token/) to grant access to the API to perform actions.
 
 {{<Aside type="note">}}
 
