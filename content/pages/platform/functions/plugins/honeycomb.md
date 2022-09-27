@@ -16,7 +16,7 @@ $ npm install @cloudflare/pages-plugin-honeycomb
 
 ## Usage
 
-The following usage example uses environment variables you will need to set in your Pages settings. 
+The following usage example uses environment variables you will need to set in your Pages project settings. 
 
 ```typescript
 ---
