@@ -149,7 +149,38 @@ These examples are setting all the Cache Rules of a zone to a single rule, since
 <summary>Edge cache TTL</summary>
 <div>
 
-In this example, `edge_ttl` is set to override origin and cache resources will be cached the Cloudflare edge network for 10 seconds. In this setting, you can choose either to `trust_origin` or `override_origin`. In this example, `status_code_ttl` is also defined for the code `404` with the duration of 30 seconds. Instead of a single status code, you can also define a range.
+In this setting, you can choose either to `respect_origin` (first example) or `override_origin` (second example). In this first example, `edge_ttl` is set to `respect_origin` and cache TTL is set by status code `404` with a duration of 30 seconds.
+
+```json
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_cache_settings/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-d '{
+    "rules": [
+        {
+            "description": "example-cache-rule",
+            "expression": "http.cookie eq \"a=b\" and http.host eq \"example.com\"",
+            "action": "set_cache_settings",
+            "action_parameters": {
+                "cache": true,
+                "edge_ttl": {
+                    "mode": "respect_origin",
+                    "status_code_ttl": [
+                        {
+                            "status_code": 404,
+                            "value": 30
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
+' 
+```
+
+In this second example, `status_code_ttl` is set to `override_origin` and cache TTL is set by status code `404` with a duration of 30 seconds. Instead of a single status code, you can also define a range.
+
 
 ```json
 curl -X PUT \
@@ -187,7 +218,31 @@ curl -X PUT \
 <summary>Browser Cache TTL</summary>
 <div>
 
-In this example, `browser_ttl` is set to cache a resource in the Cloudflare edge network for 30 seconds. In this setting, you can choose either to `respect_origin` or `override_origin`. Like in the example, if you select to override the origin, you need to define how long resources cached by client browsers will remain valid.
+For `set_cache_settings`, you can choose either to `respect_origin` (first example) or `override_origin` (second example).
+
+```json
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_cache_settings/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-d '{
+    "rules": [
+        {
+            "description": "example-cache-rule",
+            "expression": "http.cookie eq \"a=b\" and http.host eq \"example.com\"",
+            "action": "set_cache_settings",
+            "action_parameters": {
+                "cache": true,
+                "browser_ttl": {
+                    "mode": "respect_origin"
+                }
+            }
+        }
+    ]
+}
+'
+```
+
+In this second example, `override_origin` is selected, so you need to define how long resources cached by client browsers will remain valid, in this case 30 seconds.
 
 ```json
 curl -X PUT \
