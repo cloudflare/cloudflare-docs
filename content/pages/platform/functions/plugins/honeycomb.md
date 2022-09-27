@@ -22,7 +22,7 @@ The following usage example uses environment variables you will need to set in y
 ---
 filename: functions/_middleware.ts
 ---
-import honeycombPlugin from '@cloudflare/pages-plugin-honeycomb'
+import honeycombPlugin from "@cloudflare/pages-plugin-honeycomb";
 
 export const onRequest: PagesFunction<{
   HONEYCOMB_API_KEY: string
