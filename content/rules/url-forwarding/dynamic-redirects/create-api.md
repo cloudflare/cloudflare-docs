@@ -23,7 +23,7 @@ Add dynamic redirect rules to the entry point ruleset of the `http_request_dynam
 A dynamic redirect rule must have:
 
 * `action` set to `redirect`
-* An `action_parameters` object with additional configuration settings — refer to [API parameter reference](/rules/url-forwarding/dynamic-redirects/parameters/) for details.
+* An `action_parameters` object with additional configuration settings — refer to [Available settings](/rules/url-forwarding/dynamic-redirects/settings/) for details.
 
 The following request of the [Create zone ruleset](https://api.cloudflare.com/#zone-rulesets-create-zone-ruleset) operation creates a phase entry point ruleset for the `http_request_dynamic_redirect` phase at the zone level, and defines a single dynamic redirect rule. Use this operation if you have not created a phase entry point ruleset for the `http_request_dynamic_redirect` phase yet.
 

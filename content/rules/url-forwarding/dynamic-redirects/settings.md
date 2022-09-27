@@ -22,6 +22,31 @@ A static URL redirect has the following configuration parameters:
 
 * **Preserve query string**: Whether to preserve the query string when redirecting (disabled by default).
 
+<details>
+<summary>API information</summary>
+<div>
+
+The full syntax of the `"action_parameters"` field for a dynamic redirect rule performing a static URL redirect is the following:
+
+```json
+ "action_parameters": {
+  "from_value": {
+    "target_url": {
+      "value": "<STATIC_URL_VALUE>"
+    },
+    "status_code": <STATUS_CODE>,
+    "preserve_query_string": <BOOLEAN_VALUE>
+  }
+}
+```
+
+The only required parameter is `"from_value"` > `"target_url"` > `"value"`.
+
+{{<render file="url-forwarding/_optional-parameters.md">}}
+
+</div>
+</details>
+
 ## Dynamic URL redirect
 
 Performs a dynamic URL redirect, where the target URL is determined by an expression. You can configure the redirect HTTP status code and whether to preserve the query string when redirecting.
@@ -33,3 +58,28 @@ A dynamic URL redirect has the following configuration parameters:
 * **Status code**: The HTTP status code of the redirect response (_301_ by default). Must be one of the following: _301_ (Moved permanently), _302_ (Found, also known as Moved temporarily), _307_ (Temporary redirect), or _308_ (Permanent redirect).
 
 * **Preserve query string**: Whether to preserve the query string when redirecting (disabled by default).
+
+<details>
+<summary>API information</summary>
+<div>
+
+The full syntax of the `"action_parameters"` field for a dynamic redirect rule performing a dynamic URL redirect is the following:
+
+```json
+"action_parameters": {
+  "from_value": {
+    "target_url": {
+      "expression": "<DYNAMIC_URL_EXPRESSION>"
+    },
+    "status_code": <STATUS_CODE>,
+    "preserve_query_string": <BOOLEAN_VALUE>
+  }
+}
+```
+
+The only required parameter is `"from_value"` > `"target_url"` > `"expression"`.
+
+{{<render file="url-forwarding/_optional-parameters.md">}}
+
+</div>
+</details>
