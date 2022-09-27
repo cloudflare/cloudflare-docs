@@ -121,5 +121,6 @@ If you are building a native app, the example code above can run within a [WkWeb
 - [Simulcasting](/stream/stream-live/simulcasting) (restreaming) is not yet supported (coming soon)
 - [Live viewer counts](/stream/getting-analytics/live-viewer-count/) are not yet supported (coming soon)
 - [Analytics](/stream/getting-analytics/fetching-bulk-analytics/) are not yet supported (coming soon)
+- [Playback using the Stream Player](/stream//viewing-videos/using-the-stream-player/) is not yet supported (coming soon) 
 - Though we don't anticipate major API changes, while in beta, the WHIP and WHEP protocol versions used by our APIs is subject to change without notice. You can find the version in the `protocol-version` header in WHIP and WHEP API responses. The value of this header references the IETF draft slug for each protocol, for example, `draft-ietf-wish-whip-04` and `draft-murillo-whep-00`.
 - Once generally available, WebRTC streaming will be priced just like the rest of Cloudflare Stream, based on minutes stored and minutes of video delivered.
