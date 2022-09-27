@@ -202,6 +202,26 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
       </td>
       <td>Yes</td>
     </tr>
+    <tr>
+      <td>
+        <strong>Set Configuration</strong><br />
+        <br />
+        API value:<br />
+        <code>set_config</code>
+      </td>
+      <td>
+        <p>
+          Changes the configuration settings of one or more Cloudflare products.
+        </p>
+        <p>
+          Only available for <a href="/rules/configuration-rules/">Configuration Rules</a>, in the <code>http_config_settings</code> phase.
+        </p>
+        <p>
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, <a href="/rules/configuration-rules/create-dashboard/">create a Configuration Rule</a>.
+        </p>
+      </td>
+      <td>No</td>
+    </tr>
   </tbody>
 </table>
 

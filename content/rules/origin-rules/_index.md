@@ -31,6 +31,10 @@ The Origin Rule expression will determine when these overrides will be applied.
 
 {{</table-wrap>}}
 
+## Execution order
+
+{{<render file="_product_execution_order.md">}}
+
 ## Important remarks
 
 If you override the hostname with an Origin Rule (via Host header override or DNS record override) and add a header override to your load balancer configuration, the Origin Rule will take precedence over the load balancer configuration.
