@@ -15,7 +15,7 @@
         "type": "module",
         "title": "Concepts",
         "description": "Concepts explain the basic ideas behind how Cloudflare works and how you can work with Cloudflare. <br /> <br /> Feel free to skip if you have a technical background.",
-        "estimated_time": "~25 mins",
+        "estimated_time": 25,
         "pages": [
           {
             "external_link": true,
@@ -48,7 +48,7 @@
         "type": "module",
         "title": "Account setup",
         "description": "Create and customize your Cloudflare account.",
-        "estimated_time": "~10 mins",
+        "estimated_time": 10,
         "pages": [
           {
             "url_path": "/fundamentals/account-and-billing/account-setup/create-account/",
@@ -104,7 +104,7 @@
           }
         ],
         "description": "Make a few updates at your registrar and within Cloudflare to improve your domain's <a href='/fundamentals/get-started/concepts/how-cloudflare-works/#benefits'>speed, security, and reliability</a>.",
-        "estimated_time": "~5 mins",
+        "estimated_time": 5,
         "pages": [
           {
             "url_path": "/fundamentals/get-started/setup/minimize-downtime/",
@@ -170,7 +170,7 @@
           }
         ],
         "description": "Transfer your domain to use Cloudflare Registrar. Transferring your domain to Cloudflare tells your registry that a different registrar can now set those authoritative records for you.",
-        "estimated_time": "~5 mins",
+        "estimated_time": 5,
         "pages": [
           {
             "url_path": "/registrar/get-started/transfer-domain-to-cloudflare/",
@@ -190,7 +190,7 @@
           }
         ],
         "description": "Buy an at-cost domain name through <a href='/registrar/'>Cloudflare Registrar</a>.",
-        "estimated_time": "~5 mins",
+        "estimated_time": 5,
         "pages": [
           {
             "url_path": "/registrar/get-started/register-domain/",
@@ -209,9 +209,10 @@
           }
         ],
         "description": "Once you have purchased your domain name, you should make sure that visitors can access content hosted at your domain.",
-        "estimated_time": "~10 mins",
+        "estimated_time": 10,
         "pages": [
           {
+            "external_link": true,
             "url_path": "https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web",
             "link_title": "Create your website (Outside of Cloudflare)",
             "additional_description": "As a <a href='https://www.cloudflare.com/learning/cdn/what-is-a-cdn/'>CDN</a>, Cloudflare does not generally host content online. You will need to build your website and host your content somewhere else."
@@ -244,7 +245,7 @@
         "type": "module",
         "title": "Domain resolution",
         "description": "After your domain is active on Cloudflare, review your DNS settings to make sure visitors can access your site.",
-        "estimated_time": "~10 mins",
+        "estimated_time": 10,
         "pages": [
           {
             "url_path": "/dns/manage-dns-records/how-to/create-dns-records/",
@@ -278,7 +279,7 @@
         "type": "module",
         "title": "Security",
         "description": "Review and optimize your security settings so your visitors' information and your site infrastructure are protected.",
-        "estimated_time": "~1 hour",
+        "estimated_time": 60,
         "pages": [
           {
             "url_path": "/ssl/get-started/",
@@ -320,7 +321,7 @@
       {
         "type": "module",
         "title": "(Optional) Helpful resources",
-        "estimated_time": "~30 mins",
+        "estimated_time": 30,
         "pages": [
           {
             "url_path": "/fundamentals/get-started/basic-tasks/manage-domains/redirect-domain/",

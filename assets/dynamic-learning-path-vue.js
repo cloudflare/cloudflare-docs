@@ -42,11 +42,22 @@ Vue.createApp({
                     return keepItem;
                 }
                 })
+            },
+        calculateModuleNumber(module) {
+            filteredModules = this.elements.filter(item => item.type === "module");
+            for (let element in filteredModules) {
+                if (module.title === filteredModules[element].title) {
+                    return (parseFloat(element) + 1).toString();
+                }
             }
+        }
         },
     template: `
+    <div>
+        <p>This learning path contains [[ onlyModules.length ]] modules and should take you around [[ timeEstimate ]].</p>
+    </div>
     <div class="background">
-    <div v-for="element in elements" v-on:change="onRadioButtonChange">
+    <div v-for="(element, index) in elements" v-on:change="onRadioButtonChange">
         <div class="learningPathModule" v-if="element.type === 'module'">
         <div class="moduleHeader">
             <h2 :id="element.title.toLowerCase().replaceAll(' ', '-')"><span class="DocsMarkdown--header-anchor-positioner">
@@ -56,16 +67,24 @@ Vue.createApp({
                 >&#8203;​</a
                 >
             </span>
-            <span>[[ element.title ]]</span>
+            <span>Step [[ calculateModuleNumber(element) ]] - [[ element.title ]]</span>
             </h2>
-            <p v-if="element.estimated_time" class="durationEstimate">[[ element.estimated_time ]]</p>
+            <p v-if="element.estimated_time" class="durationEstimate">~ [[ element.estimated_time ]] mins</p>
         </div>
         <div v-if="element.description" v-html="element.description"></div>
         <details>
             <summary>Contains [[ element.pages.length ]] units</summary>
             <div>
                 <ul>
-                    <li v-for="page in element.pages"><a :href="page.url_path" target="_blank">[[ page.link_title ]]</a>
+                    <li v-for="page in element.pages"><a :href="page.url_path" target="_blank">[[ page.link_title ]]
+                        <span v-if="page.external_link" class="DocsMarkdown--link-external-icon" aria-hidden="true">
+                        <svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+                            <title id="title-4744738674102027">External link icon</title>
+                            <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+                        </svg>
+                        <span is-visually-hidden>Open external link</span>
+                        </span>
+                    </a>
                     <div v-if="page.additional_description" class="learningPathNote" v-html="page.additional_description"></div>
                     </li>
                 </ul>
@@ -91,5 +110,18 @@ Vue.createApp({
     data() {return {
         elements: filteredElements
     }},
+    computed: {
+        onlyModules() {
+            return this.elements.filter(item => item.type === "module");
+        },
+        timeEstimate() {
+            onlyTimeEstimates = this.elements.filter(item => item.estimated_time).map(item => item.estimated_time);
+            let total_min = onlyTimeEstimates.reduce((previousValue, currentValue) => previousValue + currentValue,
+            0);
+            const hours = Math.floor(total_min / 60)
+            const minutes = total_min % 60;
+            return `${hours} hours and ${minutes} minutes`
+        }
+    },
     delimiters: ['[[', ']]'],
   }).mount('#dynamicPath');
