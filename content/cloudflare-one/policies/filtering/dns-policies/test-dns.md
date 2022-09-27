@@ -124,4 +124,4 @@ To test EDNS for your location:
         $ curl ifconfig.me
         136.62.12.156%
         ```
-    The source IP address should fall within the range of your EDNS client subnet (`136.62.0.0/24`).
+    The source IP address should fall within the /24 range specified by your EDNS client subnet.
