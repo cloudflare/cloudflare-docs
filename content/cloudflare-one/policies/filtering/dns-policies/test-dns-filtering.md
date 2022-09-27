@@ -48,7 +48,7 @@ Once you have configured your Gateway policy to block the category, the test dom
 
     - Remove any spaces between the words
     - Replace `&` with `and`
-    - All letters are lowercase
+    - Lowercase all letters
 
 #### Common test domains
 
