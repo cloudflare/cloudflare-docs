@@ -29,6 +29,17 @@ For help determining which data center to select for a packet capture, visit htt
 
 {{</Aside>}}
 
+### Packet capture limits
+
+**Simple and Full**
+
+- `time_limit`: The minimum value is `1` and maximum value is `300`.
+- `packet_limit`: The minimum value is `1` and maximum value is `10000`.
+
+**Full**
+- `byte_limit`: The minimum value is `1` and maximum value is `1000000000`.
+
+
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
