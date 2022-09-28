@@ -21,13 +21,13 @@ The sitekey and secret key are generated upon the creation of a widget, allowing
 
 ### New sites
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) and select your account.
 2. From the dashboard, select **Turnstile** > **Add a site** and fill out the form.
 3. Copy your sitekey and secret key.
 
 ### Existing sites
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) and select your account.
 2. From the dashboard, select **Turnstile**.
 3. In the widget overview, select **Settings**.
 4. Copy your sitekey and secret key.

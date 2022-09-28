@@ -78,16 +78,15 @@ View the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo-work
 |`response` | Required | The response provided by the Turnstile client-side render on your site. |
 | `remoteip` | Optional | The user's IP address. |
 
-The siteverify endpoint behaves similar to reCAPTCHA’s siteverify endpoint. The response type of the siteverify is application/json.
+The siteverify endpoint behaves similar to reCAPTCHA’s siteverify endpoint. The response type of the siteverify is `application/json`.
 
-It always contains a "success" property, either true or false, indicating whether the operation was successful or not. 
+It always contains a 'success' property, either true or false, indicating whether the operation was successful or not. 
 
 In case of a successful validation, the response should look like this:
 
 <div>
 
 ```json
-
 {
   "success": true,
   "challenge_ts": "2022-02-28T15:14:30.096Z",
@@ -110,7 +109,6 @@ In case of a validation failure, the response should look like this:
 <div>
 
 ```json
-
 {
   "success": false,
   "hostname": "",

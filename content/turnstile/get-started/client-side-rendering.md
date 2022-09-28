@@ -77,7 +77,7 @@ When this option is used, HTML elements with the `cf-turnstile` class will not s
 
 ```html
 
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload= onloadTurnstileCallback" async defer></script>
 
 ```
 </div>
@@ -88,10 +88,9 @@ When this option is used, HTML elements with the `cf-turnstile` class will not s
 
 ```javascript
 
-window.onloadChlApiCallback = function () {
+window.onloadTurnstileCallback = function () {
    const turnstileOptions = {
             sitekey: 'yourSiteKey',
-            mode: managed’,
             callback: function(token) {
                console.log(`Challenge Success ${token}`);
             }
