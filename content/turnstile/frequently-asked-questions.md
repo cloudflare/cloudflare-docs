@@ -11,7 +11,7 @@ layout: list
 
 The HTTP Content-Security-Policy response header allows website administrators to control resources the user agent is allowed to load for a given page. 
 
-We recommend using the nonce-based approach documented with [CSP3](https://w3c.github.io/webappsec-csp/#framework-directive-source-list). Make sure to include your nonce in the `api.js` script tag and we'll handle the rest. Cloudflare Turnstile works with **strict-dynamic**.
+We recommend using the nonce-based approach documented with [CSP3](https://w3c.github.io/webappsec-csp/#framework-directive-source-list). Make sure to include your nonce in the `api.js` script tag and we will handle the rest. Cloudflare Turnstile works with **strict-dynamic**.
 
 Alternatively, please add the following values to the directives:
 
