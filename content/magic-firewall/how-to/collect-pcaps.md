@@ -292,7 +292,7 @@ Once the simple PCAP collection is complete, you can download the PCAP by specif
 2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
 3. From the **Packet captures** page, select the **Captures** tab.
 
-The list of captures associated with your account displays.
+The list of packet captures associated with your account displays.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
