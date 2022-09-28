@@ -1,5 +1,5 @@
 ---
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Access
 layout: single
 weight: 2
@@ -100,7 +100,7 @@ These are the rule types you can choose from:
 
 | Include | Exclude | Require |
 | ------- | ------- | ------- |
-| The Include action is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria. | The Exclude rule works like a NOT logical operator. A user meeting any Exclusion criteria will not be allowed access to the application. | The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access. |
+| The Include rule is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria. | The Exclude rule works like a NOT logical operator. A user meeting any Exclusion criteria will not be allowed access to the application. | The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access. |
 
 ### Requiring multiple conditions
 
@@ -146,7 +146,8 @@ Here is a list of all the criteria you can apply:
 - **Login Methods** - checks the identity provider used at the time of login.
 - **Authentication Method** - checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider.
 - **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an OIDC or SAML identity provider.
-- **Warp** - checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
+- **Warp** - checks that the device is connected to WARP, including the consumer version.
+- **Gateway** - checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
 
 ## Order of execution
 

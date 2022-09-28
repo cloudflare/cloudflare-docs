@@ -1,5 +1,5 @@
 ---
-pcx-content-type: navigation
+pcx_content_type: navigation
 type: overview
 title: Security
 weight: 1
@@ -29,7 +29,7 @@ The following table provides examples of how you might match Cloudflare products
 | Security Misconfiguration| [Schema Validation], [Sensitive Data Detection (Beta)] |
 | Injection| [Schema Validation], [WAF Rulesets](/waf/managed-rulesets/) |
 | Improper Assets Management| [Discovery](/api-shield/security/api-discovery/) |
-| Insufficient Logging & Monitoring| [Discovery SIEM integration](/logs/get-started/enable-destinations/) |
+| Insufficient Logging & Monitoring| [Discovery SIEM integration](/logs/get-started/enable-destinations/), [Management and Monitoring](/api-shield/management-and-monitoring/)|
 
 
 [Schema Validation]: /api-shield/security/schema-validation/

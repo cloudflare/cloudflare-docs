@@ -1,32 +1,48 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Proxy status
 weight: 1
 ---
 
 # Proxy status
 
-When you _proxy_ an `A`, `AAAA`, or `CNAME` DNS record for your application (also known as _orange-clouding_), DNS queries for these records will resolve to Cloudflare Anycast IPs instead of their original DNS target.
+The **Proxy status** of a DNS record affects how Cloudflare treats incoming traffic to that record.
 
-This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server. This behavior allows Cloudflare to [optimize, cache, and protect](/fundamentals/get-started/concepts/how-cloudflare-works/) all requests for your application.
+Cloudlare recommends enabling our proxy for all `A`, `AAAA`, and `CNAME` records.
 
-{{<Aside type="note">}}
+![Proxy status affects how Cloudflare treats traffic intended for specific DNS records](/dns/static/proxy-status-screenshot.png)
 
-Because requests to proxied hostnames go through Cloudflare before reaching your origin server, these requests will appear to be coming from Cloudflare's IP addresses. You may need to adjust your server configuration to [allow Cloudflare IPs](/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/).
+---
 
-{{</Aside>}}
+## Proxied records
 
-## When to proxy your DNS records
+When an `A`, `AAAA`, or `CNAME` record is **Proxied** — also known as being orange-clouded — DNS queries for these will resolve to Cloudflare Anycast IPs instead of their original DNS target. This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server.
 
-In most cases, you should proxy your `A`, `AAAA`, and `CNAME` records. These are the only records that can be proxied.
+This behavior allows Cloudflare to [optimize, cache, and protect](/fundamentals/get-started/concepts/how-cloudflare-works/) all requests to your application, as well as protect your origin server from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/).
 
-Beyond the [performance and caching benefits](/fundamentals/get-started/concepts/how-cloudflare-works/), proxying your records hides your origin server's IP address and protects your application from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/).
+Because requests to proxied hostnames go through Cloudflare before reaching your origin server, all requests will appear to be coming from Cloudflare's IP addresses (and could potentially be blocked or rate limited). If you use proxied records, you may need to adjust your server configuration to [allow Cloudflare IPs](/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/).
 
 ### Limitations
 
+#### Record types
+
+By default, Cloudflare only supports proxied `A`, `AAAA`, and `CNAME` records. You cannot proxy other record types.
+
+If you encounter a `CNAME` record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration.
+
+#### Ports and protocols
+
+By default, Cloudflare only proxies HTTP and HTTPS traffic.
+
+If you need to connect to your origin using a non-HTTP protocol (SSH, FTP, SMTP) or the traffic targets an [unsupported port](/fundamentals/get-started/reference/network-ports/) at the origin, either leave your records [unproxied (DNS-only)](#dns-only-records) or use [Cloudflare Spectrum](/spectrum/).
+
 #### Pending domains
 
-Every zone onboarded onto Cloudflare will initially be in [pending state](/dns/zone-setups/reference/domain-status/) until we can verify ownership. This means that DNS records [are not proxied](/dns/manage-dns-records/reference/proxied-dns-records/) until your zone has been activated and any requests to your DNS records will return your origin server's IP address.
+When you onboard your domain onto Cloudflare, Cloudflare protection will be in a [pending state](/dns/zone-setups/reference/domain-status/) until we can verify ownership. This could take up to 24 hours to complete.
+
+This means that DNS records - even those set to [proxy traffic through Cloudflare](#proxied-records) -- will be [DNS-only](#dns-only-records) until your zone has been activated and any requests to your DNS records will return your origin server's IP address.
+
+If this warning is still present after 24 hours, refer to our [troubleshooting guide](/dns/zone-setups/troubleshooting/nameservers/).
 
 For enhanced security, we recommend rolling your origin IP addresses at your hosting provider after your zone has been activated. This action prevents your origin IPs from being leaked during onboarding.
 
@@ -36,20 +52,10 @@ Because Microsoft Integrated Windows Authentication, NTLM, and Kerberos violate 
 
 To solve this issue, we recommend using [Cloudflare Zero Trust](/cloudflare-one/).
 
-## When to use unproxied records
+---
 
-In some circumstances, you should not proxy your DNS records.
+## DNS-only records
 
-### A, AAAA, and CNAME records
+When an `A`, `AAAA`, or `CNAME` record is **DNS-only** — also known as being gray-clouded — DNS queries for these will resolve to the record's normal IP address. 
 
-If you need to connect to your origin using a non-HTTP protocol (SSH, FTP, SMTP) or the traffic targets an [unsupported port](/fundamentals/get-started/reference/network-ports/) at the origin, either leave your records unproxied (DNS-only) or use [Cloudflare Spectrum](/spectrum/).
-
-{{<Aside type="note">}}
-
-If you encounter a `CNAME` record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration.
-
-{{</Aside>}}
-
-### Other record types
-
-Because Cloudflare only supports proxied `A`, `AAAA`, and `CNAME` records, you do not have the option to proxy other record types.
+In addition to potentially exposing your origin IP addresses to bad actors and [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), leaving your records as **DNS-only** means that Cloudflare cannot [optimize, cache, and protect](/fundamentals/get-started/concepts/how-cloudflare-works/) requests to your application.

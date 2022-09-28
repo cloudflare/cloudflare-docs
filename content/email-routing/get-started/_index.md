@@ -1,6 +1,6 @@
 ---
 title: Get started
-pcx-content-type: get-started
+pcx_content_type: get-started
 weight: 2
 ---
 
@@ -10,6 +10,6 @@ To enable Email Routing, start by creating a custom email address linked to a de
 
 The first time you access Email Routing, you will see a wizard guiding you through the process of creating email rules. You can skip the wizard and add rules manually.
 
-If you need to pause Email Routing or offboard to another service, use the available options in the [Settings page](/email-routing/get-started/settings/).
+If you need to pause Email Routing or offboard to another service, refer to [Disable Email Routing](/email-routing/setup/disable-email-routing/).
 
 {{<directory-listing>}}

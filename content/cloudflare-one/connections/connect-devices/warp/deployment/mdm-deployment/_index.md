@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Managed deployment
 layout: single
 weight: 1
@@ -7,7 +7,7 @@ weight: 1
 
 # Managed deployment
 
-Organizations can deploy WARP automatically to their fleet of devices in a single operation. This can be done using [mobility management solutions](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/partners/) like Intune or JAMF, or by executing an `.msi` file on desktop machines.
+Organizations can deploy WARP automatically to their fleet of devices in a single operation. The WARP client is compatible with the vast majority of managed deployment workflows, including [mobility management solutions](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/partners/) such as Intune or JAMF, or by executing an `.msi` file on desktop machines.
 
 This page provides generic instructions for an automated deployment. If you want to deploy the WARP client manually, refer to the [instructions for manual deployment](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
 
@@ -28,7 +28,7 @@ The WARP Client for Windows allows for an automated install via tools like Intun
 To install the WARP client, run the following command:
 
 ```txt
-Cloudflare_WARP_Release-x64.msi /quiet ORGANIZATION="exampleorg" SERVICE_MODE="warp" SUPPORT_URL="http://support.example.com"
+msiexec /i "Cloudflare_WARP_Release-x64.msi" /qn ORGANIZATION="exampleorg" SUPPORT_URL="http://support.example.com"
 ```
 
 Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument.
@@ -49,10 +49,26 @@ The on-disk configuration of the Windows client can be changed at any time by mo
 <dict>
   <key>organization</key>
   <string>yourorganization</string>
+	<key>onboarding</key>
+	<false/>
 </dict>
 ```
 
 Changes to this file are processed immediately by the WARP client.
+
+### Authenticate in embedded browser
+
+By default WARP will use the user’s default browser to perform registration. You can override the default setting to instead authenticate users in an embedded browser. The embedded browser will work around any protocol handler issues that may prevent the default browser from launching.
+
+To use an embedded browser:
+
+1. Download and install WebView2 by following the instructions [here](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section).
+2. Add a registry key with the following command:
+    ```txt
+    REG ADD HKLM\SOFTWARE\Cloudflare\CloudflareWARP /f /v UseWebView2 /t REG_SZ /d y
+    ```
+
+The WARP client will now launch WebView2 when the user is registering their device with Zero Trust.
 
 ## Install WARP on macOS
 
@@ -121,7 +137,7 @@ Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/war
 
 ## Install WARP on Android
 
-The Cloudflare WARP Android client (known in the Google Play store as [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone\&hl=en\&gl=US)) allows for an automated install via tools like Intune, Google Endpoint Manager, and others.
+The Cloudflare WARP Android client (known in the Google Play store as [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone&hl=en_US&gl=US) allows for an automated install via tools like Intune, Google Endpoint Manager, and others.
 
 To proceed with the installation, here is an example of the XML code you will need:
 

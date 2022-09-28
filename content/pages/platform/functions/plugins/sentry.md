@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Sentry
 weight: 1
 ---
@@ -23,7 +23,7 @@ filename: functions/_middleware.ts
 import sentryPlugin from "@cloudflare/pages-plugin-sentry";
 
 export const onRequest: PagesFunction = sentryPlugin({
-  dsn: "https://sentry.io/xyz",
+  dsn: "https://sentry.io/welcome/xyz",
 });
 ```
 

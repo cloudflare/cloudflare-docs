@@ -1,6 +1,6 @@
 ---
 title: Configure dynamic advertisement
-pcx-content-type: how-to
+pcx_content_type: how-to
 ---
 
 # Configure dynamic advertisement
@@ -13,7 +13,7 @@ To prevent issues and simplify the advertisement process during an attack scenar
 
 ## Before you start (Magic Transit customers only)
 
-If you are advertising a new prefix or enabling the advertisement of an existing IP prefix (changing it from _Withdrawn_ to _Advertised_), make sure you disable the [Advanced TCP Protection Managed Ruleset](/ddos-protection/managed-rulesets/tcp-protection/) first.
+If you are advertising a new prefix or enabling the advertisement of an existing IP prefix (changing it from _Withdrawn_ to _Advertised_), make sure you disable [Advanced TCP Protection](/ddos-protection/tcp-protection/) first.
 
 After enabling the prefix advertisement or advertising a new prefix, do the following:
 

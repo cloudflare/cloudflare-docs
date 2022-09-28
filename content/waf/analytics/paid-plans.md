@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Paid plans
 weight: 3
 meta:
@@ -26,25 +26,25 @@ You can apply multiple filters and exclusions to narrow the scope of Firewall An
 
 The **Events summary** section provides the number of firewall events on traffic during the selected time period, grouped according to the selected dimension (for example, **Action**, **Host**, **Country**, or **ASN**).
 
-![Filter by action by clicking Filter when hovering the desired action in Events summary](/waf/static/analytics-events-summary.png)
+![Filter by action by selecting Filter when hovering the desired action in Events summary](/waf/static/analytics-events-summary.png)
 
-You can adjust the displayed data according to one of the values by clicking **Filter** or **Exclude** when hovering the legend.
+You can adjust the displayed data according to one of the values by selecting **Filter** or **Exclude** when hovering the legend.
 
 ## Events by service
 
 The **Events by service** section lists the firewall activity per Cloudflare security feature (for example, **Managed rules**, **Firewall rules**, **API Shield**).
 
-You can adjust the scope of Firewall Analytics to one of the displayed services by clicking **Filter** or **Exclude** when hovering the legend or by clicking the corresponding graph bar.
+You can adjust the scope of Firewall Analytics to one of the displayed services by selecting **Filter** or **Exclude** when hovering the legend or by selecting the corresponding graph bar.
 
 ## Top events by source
 
 In **Top events by source** you can find details of the traffic flagged or actioned by a Cloudflare security feature — for example, **IP Addresses**, **User Agents**, **Paths**, **Countries**, and **Firewall rules**.
 
-You can adjust the scope of Firewall Analytics to one of the listed source values by clicking **Filter** or **Exclude** when hovering the value.
+You can adjust the scope of Firewall Analytics to one of the listed source values by selecting **Filter** or **Exclude** when hovering the value.
 
 {{<Aside type="note">}}
 
-A deleted firewall rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/get-started/basic-tasks/account-security/review-audit-logs/).
+A deleted firewall rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/account-and-billing/account-security/review-audit-logs/).
 
 {{</Aside>}}
 
@@ -60,7 +60,7 @@ A deleted firewall rule or rate limiting rule will show as `Rule unavailable` un
 
 ## Print or download PDF report
 
-To print or download a snapshot report from your firewall events analytics dashboard, click **Print report** in **Firewall Events**. Your web browser's printing interface will present you with options for printing or downloading the PDF report.
+To print or download a snapshot report from your firewall events analytics dashboard, select **Print report** in **Firewall Events**. Your web browser's printing interface will present you with options for printing or downloading the PDF report.
 
 The generated report will reflect all applied filters.
 

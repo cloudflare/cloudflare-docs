@@ -5,7 +5,7 @@ summary: Sign and verify a request using the HMAC and SHA-256 algorithms or
 tags:
   - Security
   - WebCrypto
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Sign requests
 weight: 1001
 layout: example
@@ -142,8 +142,10 @@ async function generateSignedUrl(url) {
 
   // `mac` is an ArrayBuffer, so you need to make a few changes to get
   // it into a ByteString, and then a Base64-encoded string.
-  const base64Mac = btoa(String.fromCharCode(...new Uint8Array(mac)));
-
+  let base64Mac = btoa(String.fromCharCode(...new Uint8Array(mac)));
+  
+  // must convert "+" to "-" as urls encode "+" as " " 
+  base64Mac = base64Mac.replaceAll("+", "-")
   url.searchParams.set('mac', base64Mac);
   url.searchParams.set('expiry', expiry);
 

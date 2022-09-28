@@ -1,7 +1,7 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Accessibility
-weight: 2
+weight: 3
 ---
 
 # Accessibility

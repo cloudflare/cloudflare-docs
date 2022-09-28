@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Page Shield API
 weight: 4
 ---
@@ -134,11 +134,12 @@ header: Response
       "url_reported_malicious": true,
       "malicious_url_categories": ["Malware"],
       "seen_on_first": "http://malicious.example.com/page_one.html",
-      "count": 10,
       "status": "active",
       "appears_in_cdn_cgi_path": false,
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "js_integrity_score": 10,
+      "obfuscation_score": 10,
+      "dataflow_score": 8,
       "fetched_at": "2021-11-21T16:58:07Z"
     },
     // (...)
@@ -188,11 +189,12 @@ header: Response
       "domain_reported_malicious": false,
       "url_reported_malicious": false,
       "seen_on_first": "http://malicious.example.com/page_one.html",
-      "count": 2,
       "status": "infrequent",
       "appears_in_cdn_cgi_path": false,
       "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
-      "js_integrity_score": 50,
+      "js_integrity_score": 48,
+      "obfuscation_score": 49,
+      "dataflow_score": 45,
       "fetched_at": "2021-11-18T03:58:07Z"
     },
     // (...)
@@ -242,11 +244,12 @@ header: Response
     "url_reported_malicious": true,
     "malicious_url_categories": ["Malware"],
     "seen_on_first": "http://malicious.example.com/page_one.html",
-    "count": 10,
     "status": "active",
     "appears_in_cdn_cgi_path": false,
     "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
-    "js_integrity_score": 50,
+    "js_integrity_score": 48,
+    "obfuscation_score": 49,
+    "dataflow_score": 45,
     "fetched_at": "2021-11-21T16:58:07Z",
     "seen_on": [
       "http://malicious.example.com/page_two.html",

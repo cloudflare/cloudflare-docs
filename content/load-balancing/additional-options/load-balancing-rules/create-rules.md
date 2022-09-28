@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Create custom rules
 weight: 16
 ---
@@ -60,7 +60,6 @@ This example routes certain content requests from our webserver to a different o
 
 <strong>When incoming requests match</strong>:
 
-{' '}
 <table style="width:100%">
   <thead>
     <tr>

@@ -1,6 +1,6 @@
 ---
 title: 1 –  Initialize Terraform
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 2
 meta:
   title: Introduction to Terraform init
@@ -10,7 +10,7 @@ meta:
 
 This tutorial shows you how to get started with Terraform. The tutorial uses an example scenario where you have a web server for your domain, accessible on `203.0.113.10`, and you just signed up your domain (`example.com`) on Cloudflare to manage everything in Terraform.
 
-Before you begin, ensure you [installed Terraform](/terraform/installing/). You will also need to [create an API Token](/api/tokens/create/) with permissions to edit resources for this tutorial.
+Before you begin, ensure you [installed Terraform](/terraform/installing/). You will also need to [create an API Token](/api/get-started/create-token/) with permissions to edit resources for this tutorial.
 
 ## 1. Define your first Terraform config file
 
@@ -28,7 +28,6 @@ terraform {
 }
 
 provider "cloudflare" {
-  email = "you@example.com"
   api_token = "your-api-token"
 }
 

@@ -1,6 +1,6 @@
 ---
 title: Configure WAF Managed Rulesets
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 2
 meta:
   title: Configure WAF Managed Rulesets with Terraform
@@ -217,7 +217,7 @@ The OWASP Managed Ruleset supports the following configurations:
 
 * Set the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID `6179ae15870a4bb7b2d480d4843b323c`), and including the `score_threshold` property.
 
-For more information on the available configuration values, refer to the [Cloudflare OWASP Core Ruleset](/waf/managed-rulesets/owasp-core-ruleset/) page in the WAF documentation.
+For more information on the available configuration values, refer to the [Cloudflare OWASP Core Ruleset](/waf/managed-rulesets/reference/owasp-core-ruleset/) page in the WAF documentation.
 
 The following example rule of a `cloudflare_ruleset` Terraform resource performs the following configuration:
 

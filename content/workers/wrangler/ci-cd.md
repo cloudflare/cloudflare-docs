@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Running in CI/CD
 weight: 9
 ---
@@ -10,7 +10,7 @@ To run Wrangler in a continuous integration/continuous deployment (CI/CD) enviro
 
 ## Cloudflare API token
 
-Add the token to the `CLOUDFLARE_API_TOKEN` environment variable. (for example, `CLOUDFLARE_API_TOKEN=123 wrangler dev`)
+Add the token to the `CLOUDFLARE_API_TOKEN` environment variable. (for example, `CLOUDFLARE_API_TOKEN=123 wrangler publish`)
 
 ## Account ID
 

@@ -1,7 +1,8 @@
 ---
 title: Get started
-pcx-content-type: get-started
+pcx_content_type: get-started
 weight: 2
+layout: single
 meta:
   title: Get started with SSL/TLS
 ---
@@ -29,9 +30,9 @@ Cloudflare offers a variety of options for your application's edge certificates:
 
 {{<Aside type="note" header="Note:">}}
 
-{{<render file="_ssl-for-saas-definition.md">}}
+{{<render file="../../cloudflare-for-platforms/cloudflare-for-saas/_partials/_ssl-for-saas-definition.md">}}
 
-For more details, refer to [SSL for SaaS (managed hostnames)](/ssl/ssl-for-saas/).
+For more details, refer to [Cloudflare for SaaS (managed hostnames)](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/).
 
 {{</Aside>}}
 

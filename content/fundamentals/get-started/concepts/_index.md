@@ -1,7 +1,7 @@
 ---
-pcx-content-type: navigation
+pcx_content_type: navigation
 title: Concepts
-weight: 1
+weight: 2
 ---
 
 # Key concepts

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Add custom HTTP headers
 ---
 
@@ -60,7 +60,7 @@ For example, [here is a Workers script](/workers/examples/security-headers/) you
 
 ## Deploying a Workers function using the CLI
 
-If you would like to skip writing this file yourself, you can use our `custom-headers-example` [template](https://github.com/signalnerve/custom-headers-example) to generate a new Workers function with [wrangler](/workers/wrangler/get-started/), the Workers CLI tool.
+If you would like to skip writing this file yourself, you can use our `custom-headers-example` [template](https://github.com/codewithkristian/custom-headers-example) to generate a new Workers function with [wrangler](/workers/wrangler/get-started/), the Workers CLI tool.
 
 ```sh
 ---

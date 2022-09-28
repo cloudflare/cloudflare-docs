@@ -1,8 +1,7 @@
 ---
 title: Add rules
-pcx-content-type: how-to
-meta:
-  title: Rules
+weight: 1
+pcx_content_type: how-to
 ---
 
 # Rules
@@ -13,7 +12,7 @@ By default, you can create a maximum of 100 rules. We recommend you create lists
 
 ## Add a rule
 
-1.  From your dashboard, click **Firewall Rulesets**.
+1.  From your dashboard, click **Application Security**.
 2.  Click **Magic Firewall**.
 3.  Click **Add a Rule**.
 4.  Fill out the information for your new rule.
@@ -29,7 +28,7 @@ To disable an existing rule, from the **Magic Firewall Rules** page, set the **E
 
 ## Update a rule
 
-1.  From your dashboard, click **Firewall Rulesets**.
+1.  From your dashboard, click **Application Security**.
 2.  Click **Magic Firewall**. A list of firewall rules displays.
 3.  Locate the rule you want to edit and click **Edit**.
 4.  Update the rule with your changes and click **Edit rule**.

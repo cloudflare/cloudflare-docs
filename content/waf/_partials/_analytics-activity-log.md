@@ -11,11 +11,11 @@ The **Activity log** summarizes firewall events by date to show the action taken
 
 Firewall events are shown by individual event rather than by request. For example, if a single request triggers three different Firewall features, the firewall events will show three individual events in the **Activity log**.
 
-Expand each event to check its details, and define filters and exclusions based on the event's field values. Click the **Filter** or **Exclude** button when hovering a field to add the field value to the filters or exclusions list of the displayed analytics. To download the event data in JSON format, click **Export event JSON**.
+Expand each event to check its details, and define filters and exclusions based on the event's field values. Select the **Filter** or **Exclude** button when hovering a field to add the field value to the filters or exclusions list of the displayed analytics. To download the event data in JSON format, select **Export event JSON**.
 
 ### Displayed columns
 
-To configure the columns displayed in the **Activity log**, click **Edit columns**. This gives you flexibility depending on the type of analysis that you need to perform.
+To configure the columns displayed in the **Activity log**, select **Edit columns**. This gives you flexibility depending on the type of analysis that you need to perform.
 
 For example, if you are diagnosing a bot-related issue, you may want to display the **User agent** and the **Country** columns. On the other hand, if you are trying to identify a DDoS attack, you may want to display the **IP address**, **ASN**, and **Path** columns.
 
@@ -30,4 +30,4 @@ Besides the actions you can select when configuring rules in Cloudflare security
 
 For details on these actions, refer to [HTTP DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/http/override-parameters/#action).
 
-The [*Managed Challenge (Recommended)*](https://support.cloudflare.com/hc/articles/200170136#managed-challenge) action that may appear in the **Activity Log** is available in the following security features and products: firewall rules, IP Access rules, User Agent Blocking rules, rate limiting rules, custom rules, and Bot Fight Mode.
+The [*Managed Challenge (Recommended)*](/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge) action that may appear in the **Activity Log** is available in the following security features and products: firewall rules, IP Access rules, User Agent Blocking rules, rate limiting rules, custom rules, and Bot Fight Mode.

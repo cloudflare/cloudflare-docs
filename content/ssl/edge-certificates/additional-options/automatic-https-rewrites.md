@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Automatic HTTPS Rewrites
 weight: 14
 ---
@@ -22,11 +22,22 @@ For security reasons, this feature will run on URLs pointing to `localhost` if t
 
 ## Enable Automatic HTTPS Rewrites
 
-To enable **Automatic HTTPS Rewrites**:
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+To enable **Automatic HTTPS Rewrites** in the dashboard:
 
 1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
 2.  Navigate to **SSL/TLS** > **Edge Certificates**.
 3.  For **Automatic HTTPS Rewrites**, switch the toggle to **On**.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+To enable or disable **Automatic HTTPS Rewrites** with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-automatic-https-rewrites-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Limitations
 
@@ -34,4 +45,4 @@ Before a rewrite is applied, Cloudflare checks the HTTP resources to ensure they
 
 Some resources are loaded by JavaScript or CSS via HTTP when the site is loaded in a browser. You will see mixed content warnings in those situations. To determine which URLs do not have HTTPS support, Cloudflare uses data from [EFF’s HTTPS Everywhere](https://www.eff.org/https-everywhere/faq#how-do-i-add-my-own-site-to-https-everywhere) and [Chrome’s HSTS preload list](https://hstspreload.org). If your zone is not on one of these lists, only active content will be rewritten. Passive content (such as images) will not be rewritten and will still cause mixed content errors.
 
-If a third-party domain supports HTTPS and is not rewritten automatically, you can manually change those links to relative links or HTTPS links. Alternatively, you can ask the third-party domain owner to submit their site for inclusion in the HTTPS Everywhere rulesets, which [accept pull requests on GitHub](https://github.com/EFForg/https-everywhere/). For more information on how to fix mixed content errors, see [Troubleshooting mixed content errors](https://support.cloudflare.com/hc/articles/200170476).
+If a third-party domain supports HTTPS and is not rewritten automatically, you can manually change those links to relative links or HTTPS links. Alternatively, you can ask the third-party domain owner to submit their site for inclusion in the HTTPS Everywhere rulesets, which [accept pull requests on GitHub](https://github.com/EFForg/https-everywhere/). For more information on how to fix mixed content errors, refer to [Troubleshooting mixed content errors](https://support.cloudflare.com/hc/articles/200170476).

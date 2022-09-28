@@ -5,7 +5,7 @@ tags:
   - Cache API
   - Middleware
   - Caching
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Using the Cache API
 weight: 1001
 layout: example

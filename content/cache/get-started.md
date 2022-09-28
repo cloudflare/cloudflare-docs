@@ -1,6 +1,6 @@
 ---
 title: Get started
-pcx-content-type: get-started
+pcx_content_type: get-started
 weight: 3
 meta:
   title: Get started with Cache
@@ -29,9 +29,9 @@ Configure your settings to cache static HTML or cache anonymous page views of dy
 Include or exclude query strings, optimize cache keys, or enable tiered cache to improve hit rates and reduce traffic to your origin.
 
 - [Choose a cache level](/cache/how-to/set-caching-levels/)
-- [Enable Tiered Cache with Argo](https://support.cloudflare.com/hc/articles/115000224552)
+- [Enable Tiered Cache with Argo](/cache/how-to/enable-tiered-cache/)
 - [Configure custom cache keys (Enterprise only)](/cache/about/cache-keys/)
-- [Enable Prefetch URLs (Enterprise only)](https://support.cloudflare.com/hc/articles/206776707)
+- [Enable Prefetch URLs (Enterprise only)](/fundamentals/speed/prefetch-urls/)
 
 ## Secure your cache configuration
 

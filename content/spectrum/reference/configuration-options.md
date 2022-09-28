@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Configuration options
 weight: 0
 ---
@@ -97,7 +97,7 @@ TLS versions supported by Spectrum include TLS 1.1, TLS 1.2, and TLS 1.3.
 
 ## Origin TLS Termination
 
-Below are the cipher suites Cloudflare presents to origins during an SSL/TLS handshake. For cipher suites supported at our edge or presented to browsers and other user agents, refer to [Cipher suites](/ssl/ssl-tls/cipher-suites/).
+Below are the cipher suites Cloudflare presents to origins during an SSL/TLS handshake. For cipher suites supported at our edge or presented to browsers and other user agents, refer to [Cipher suites](/ssl/reference/cipher-suites/).
 
 The cipher suites below are ordered based on how they appear in the ClientHello, communicating our preference to the origin.
 

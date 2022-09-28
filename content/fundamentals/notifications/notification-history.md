@@ -1,7 +1,7 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Notification History
-weight: 6
+weight: 1
 ---
 
 # Notification History

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Rate limiting rules
 weight: 5
 ---
@@ -60,6 +60,8 @@ Maximum sampling period | 10 minutes | 1 hour
 
 ## Next steps
 
-To configure rate limiting rules in the Cloudflare dashboard, go to **Security** > **WAF** > **Rate limiting rules**. For more information, refer to [Create rate limiting rules in the dashboard](/waf/rate-limiting-rules/create-dashboard/).
+You can configure rate limiting rules at the zone level and at the account level, depending on your plan and product subscriptions.
+
+To configure rate limiting rules in the Cloudflare dashboard, refer to [Create rate limiting rules in the dashboard for a zone](/waf/rate-limiting-rules/create-zone-dashboard/).
 
 You can also configure rate limiting rules using the [Rulesets API](/ruleset-engine/rulesets-api/). Refer to [Create rate limiting rules via API](/waf/rate-limiting-rules/create-api/) for more information.

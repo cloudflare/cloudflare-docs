@@ -1,7 +1,7 @@
 ---
 title: Welcome
 hidden: true
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 1
 meta:
   title: What's new?

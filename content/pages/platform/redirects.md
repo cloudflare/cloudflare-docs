@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Redirects
 ---
 
@@ -34,6 +34,15 @@ filename: _redirects
 /blog/* https://blog.my.domain/:splat
 /products/:code/:name /products?code=:code&name=:name
 ```
+{{<Aside type= "note">}}
+
+In the case of some frameworks, such as Jekyll, you may need to manually copy and paste your `_redirects` file to the build output directory. To do this:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Go to **Pages** > your Pages project > **Settings** > **Builds & deployments**.
+3. Go to **Build configurations** > **Edit configurations** > change the build command to `jekyll build && cp _redirects _site/_redirects` and select **Save**.
+
+{{</Aside>}}
 
 A project is limited to 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Each redirect declaration has a 1,000-character limit. Malformed definitions are ignored. If there are multiple redirects for the same `source` path, the topmost redirect is applied.
 

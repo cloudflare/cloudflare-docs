@@ -1,9 +1,10 @@
 ---
 title: Network-layer DDoS Attack Protection
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 4
 meta:
   title: Network-layer DDoS Attack Protection Managed Ruleset
+layout: single
 ---
 
 # Network-layer DDoS Attack Protection Managed Ruleset
@@ -36,6 +37,9 @@ The Network-layer DDoS Attack Protection Managed Ruleset protects Cloudflare cus
 
 ## Related Cloudflare products
 
-Magic Transit customers can create custom [Magic Firewall](/magic-firewall/) rules to block additional network-layer attacks.
+Magic Transit customers can configure the following additional products:
+
+* Enable [Advanced TCP Protection](/ddos-protection/tcp-protection/) to detect and mitigate sophisticated out-of-state TCP attacks such as randomized and spoofed ACK floods or SYN and SYN-ACK floods.
+* Create custom [Magic Firewall](/magic-firewall/) rules to block additional network-layer attacks.
 
 Spectrum customers can use [IP Access](/waf/tools/ip-access-rules/) rules to block additional network-layer attacks.

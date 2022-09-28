@@ -1,6 +1,10 @@
 ---
-pcx-content-type: tutorial
+updated: 2022-08-03
+pcx_content_type: tutorial
+content_type: 📝 Tutorial
+difficulty: Intermediate
 title: Build a blog using Nuxt.js and Sanity.io on Cloudflare Pages
+layout: single
 ---
 
 # Build a blog using Nuxt.js and Sanity.io on Cloudflare Pages
@@ -11,7 +15,7 @@ In this tutorial, you will build a blog application using Nuxt.js and Sanity.io 
 
 ## Prerequisites
 
-- A recent version of [NPM](https://www.npmjs.com/get-npm) on your computer
+- A recent version of [NPM](https://docs.npmjs.com/getting-started) on your computer
 - A [Sanity.io](https://www.sanity.io) account
 
 ## Creating a new Sanity project
@@ -119,7 +123,7 @@ Finally, add `@nuxtjs/sanity` as a **build module** in your Nuxt configuration:
 filename: nuxt.config.js
 ---
 {
-  buildModules: ['@nuxtjs/sanity/module'];
+  buildModules: ['@nuxtjs/sanity'];
 }
 ```
 
@@ -417,7 +421,7 @@ There are many other things inside of your blog schema that you can add to your 
 
 Publishing your project with Cloudflare Pages is an easy, two-step process: first, push your project to GitHub, and then in the Cloudflare Pages dashboard, set up a new project based on that GitHub repository. Pages will deploy a new version of your site each time you publish, and will even set up preview deployments whenever you open a new pull request.
 
-To push your project to GitHub, [create a new repository] (https://repo.new), and follow the instructions to push your local Git repository to GitHub.
+To push your project to GitHub, [create a new repository](https://repo.new), and follow the instructions to push your local Git repository to GitHub.
 
 After you've pushed your project to GitHub, deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, choose _Nuxt_. Pages will set the correct fields for you automatically.
 

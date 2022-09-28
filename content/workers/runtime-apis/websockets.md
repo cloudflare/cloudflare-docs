@@ -1,5 +1,5 @@
 ---
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: WebSockets
 ---
 
@@ -82,7 +82,7 @@ let [client, server] = Object.values(new WebSocketPair());
 
 ### send
 
-- {{<code>}}send(message{{<param-type>}}string{{</param-type>}}){{</code>}}
+- {{<code>}}send(message{{<param-type>}}string{{</param-type>}} | {{<param-type>}}ArrayBuffer{{</param-type>}} | {{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}}
 
   Send a message to the other WebSocket in this WebSocket pair.
 

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Enable Universal SSL certificates
 weight: 2
 ---
@@ -41,4 +41,4 @@ Unless you cover and validate multiple subdomains with an [advanced certificate]
 
 ## Verify your certificate is active
 
-Once you enable Universal SSL, you can review the [certificate's status](/ssl/ssl-tls/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](https://api.cloudflare.com/#certificate-packs-list-certificate-packs).
+Once you enable Universal SSL, you can review the [certificate's status](/ssl/reference/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](https://api.cloudflare.com/#certificate-packs-list-certificate-packs).

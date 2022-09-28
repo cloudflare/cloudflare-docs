@@ -1,7 +1,8 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Add non-HTTP applications
 weight: 5
+layout: single
 ---
 
 # Add non-HTTP applications
@@ -9,10 +10,10 @@ weight: 5
 You can connect applications to Cloudflare Zero Trust over a number of different protocols.
 
 *   [Connect through Access using a CLI](/cloudflare-one/tutorials/cli/)
-*   [Connect through Access over RDP](/cloudflare-one/tutorials/rdp/)
-*   [Connect through Access over SSH](/cloudflare-one/tutorials/ssh/)
+*   [Connect through Access over RDP](/cloudflare-one/connections/connect-apps/use_cases/rdp/)
+*   [Connect through Access over SSH](/cloudflare-one/connections/connect-apps/use_cases/ssh/)
 *   [Connect through Access using kubectl](/cloudflare-one/tutorials/kubectl/)
-*   [Connect through Access over SMB](/cloudflare-one/tutorials/smb/)
+*   [Connect through Access over SMB](/cloudflare-one/connections/connect-apps/use_cases/smb/)
 
 ## Rendering in the browser
 
@@ -24,7 +25,7 @@ SSH and browser-rendered applications can be set for domains and subdomains, but
 
 Cloudflare can render certain non-web applications in your browser without the need for client software or end-user configuration changes. Cloudflare currently supports rendering a terminal for SSH and VNC connections in a user's browser.
 
-To enable this setting, follow the instructions [here](/cloudflare-one/tutorials/ssh/) to connect a machine available over SSH to Cloudflare. Next, navigate to the application page of the Access section in the Zero Trust dashboard. Click **Edit** and select the Settings tab. In the **`cloudflared` settings** card, select *SSH* from the **Browser Rendering** drop-down menu.
+To enable this setting, follow the instructions [here](/cloudflare-one/connections/connect-apps/use_cases/ssh/) to connect a machine available over SSH to Cloudflare. Next, navigate to the application page of the Access section in the Zero Trust dashboard. Click **Edit** and select the Settings tab. In the **`cloudflared` settings** card, select *SSH* from the **Browser Rendering** drop-down menu.
 
 ![Auto Auth](/cloudflare-one/static/documentation/applications/ssh-browser-rendering.png)
 

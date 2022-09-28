@@ -1,6 +1,6 @@
 ---
 title: Create a rule in the dashboard
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 2
 meta:
   title: Create an HTTP Response Header Modification Rule in the dashboard
@@ -22,7 +22,7 @@ Create HTTP Response Header Modification Rules in the **Transform Rules** tab un
 
 4.  Enter a descriptive name for the HTTP Response Header Modification Rule in **Rule name**.
 
-5.  Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/create-edit-delete-rules/#expression-builder-and-editor).
+5.  Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/edit-expressions/).
 
     {{<Aside type="note">}}
 Check the [available fields and functions](/rules/transform/response-header-modification/reference/fields-functions/).

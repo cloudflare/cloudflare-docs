@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Routes
 ---
 
@@ -37,7 +37,7 @@ If your route is configured to a hostname, you will need to add a DNS record to 
 
 Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is configurable in the Cloudflare dashboard. Your `*.workers.dev` subdomain allows you to deploy Workers [without attaching your domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/).
 
-To claim a `*.workers.dev` subdomain, such as `<YOUR_SUBDOMAIN>.workers.dev`, go to **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **Your subdomain**. The `name` field in your Worker configuration is used as the secondary subdomain for the deployed script, (for example, `my-worker.<YOUR_SUBDOMAIN>.workers.dev.`).
+To claim a `*.workers.dev` subdomain, such as `<YOUR_SUBDOMAIN>.workers.dev`, go to **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **Your subdomain**. The `name` field in your Worker configuration is used as the preview subdomain for the deployed script, (for example, `my-worker.<YOUR_SUBDOMAIN>.workers.dev.`).
 
 ### Matching Behavior
 
@@ -68,7 +68,7 @@ While they look similar to a [regex](https://en.wikipedia.org/wiki/Regular_expre
 
 - Route patterns are case sensitive, for example, `example.com/Images/*` and `example.com/images/*` are two distinct routes.
 
-A route can be specified without being associated with a Worker; this will act to negate any less specific patterns. For example, consider this pair of route patterns, one with a Workers script and one without:
+A route can be specified without being associated with a Worker. This will act to negate any less specific patterns. For example, consider this pair of route patterns, one with a Workers script and one without:
 
 ```txt
 *example.com/images/cat.png -> <no script>
@@ -76,6 +76,18 @@ A route can be specified without being associated with a Worker; this will act t
 ```
 
 In this example, all requests destined for example.com and whose paths are prefixed by `/images/` would be routed to `worker-script`, _except_ for `/images/cat.png`, which would bypass Workers completely. Requests with a path of `/images/cat.png?foo=bar` would be routed to `worker-script`, due to the presence of the query string.
+
+## Configure your `wrangler.toml`
+
+To configure a route in your `wrangler.toml`, add the following to your environment:
+
+```toml
+routes = [
+    { pattern = "example.com/about", zone_id = "<YOUR_ZONE_ID>" }
+]
+```
+
+If you have specified your zone ID in the environment of your `wrangler.toml`, you will not need to write it again in object form.
 
 ### Validity
 

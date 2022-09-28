@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-pcx-content-type: faq
+pcx_content_type: faq
 weight: 6
 meta:
   title: Troubleshooting Keyless SSL

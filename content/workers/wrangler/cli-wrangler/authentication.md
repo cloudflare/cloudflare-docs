@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Authentication
 weight: 2
 ---
@@ -20,7 +20,7 @@ In Cloudflare’s system, a user can have multiple accounts and zones. As a resu
 
 ### Using commands
 
-To set up `wrangler` to work with your Cloudflare user, use the following commands:
+To set up Wrangler to work with your Cloudflare user, use the following commands:
 
 - `login`: a command that opens a Cloudflare account login page to authorize Wrangler.
 - `config`: an alternative to `login` that prompts you to enter your `email` and `api` key.
@@ -30,7 +30,7 @@ To set up `wrangler` to work with your Cloudflare user, use the following comman
 
 You can also configure your global user with environment variables. This is the preferred method for using Wrangler in CI (continuous integration) environments.
 
-To customize the authentication tokens that Wrangler uses, you may provide the `CF_ACCOUNT_ID` and `CF_API_TOKEN` environment variables when running any `wrangler` command. The account ID may be obtained from the Cloudflare dashboard in **Overview** and you may [create or reuse an existing API token](#generate-tokens).
+To customize the authentication tokens that Wrangler uses, you may provide the `CF_ACCOUNT_ID` and `CF_API_TOKEN` environment variables when running any Wrangler command. The account ID may be obtained from the Cloudflare dashboard in **Overview** and you may [create or reuse an existing API token](#generate-tokens).
 
 ```sh
 $ CF_ACCOUNT_ID=accountID CF_API_TOKEN=veryLongAPIToken wrangler publish
@@ -52,7 +52,7 @@ Defining environment variables inline will override the default credentials stor
 
 ### API token
 
-1.  In **Overview**, select [**Get your API token**](/api/tokens/create).
+1.  In **Overview**, select [**Get your API token**](/api/get-started/create-token/).
 2.  After being taken to the **Profile** page, select **Create token**.
 3.  Under the **API token templates** section, find the **Edit Cloudflare Workers** template and select **Use template**.
 4.  Fill out the rest of the fields and then select **Continue to summary**, where you can select **Create Token** and issue your token for use.

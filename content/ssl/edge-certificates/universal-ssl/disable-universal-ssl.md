@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Disable Universal SSL certificates
 weight: 3
 ---
@@ -29,12 +29,24 @@ If you disable Universal SSL, you may experience errors with the following scena
 
 ## Disable Universal SSL certificate
 
-To disable Universal SSL:
+Before you disable Universal SSL/TLS, make sure you have [uploaded a custom certificate](/ssl/edge-certificates/custom-certificates/) or purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to protect your domain.
 
-1.  Make sure you have [uploaded a custom certificate](/ssl/edge-certificates/custom-certificates/) or purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to protect your domain.
-2.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-3.  Select your domain.
-4.  Go to **SSL/TLS** > **Edge Certificates**.
-5.  For **Disable Universal SSL**, select **Disable Universal SSL**.
-6.  Read the warnings in the **Acknowledgement**.
-7.  Select **I Understand** and click **Confirm**.
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+To disable Universal SSL in the dashboard:
+
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2.  Select your domain.
+3.  Go to **SSL/TLS** > **Edge Certificates**.
+4.  For **Disable Universal SSL**, select **Disable Universal SSL**.
+5.  Read the warnings in the **Acknowledgement**.
+6.  Select **I Understand** and click **Confirm**.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+To disable Universal SSL with the Cloudflare API, send a [`PATCH`](https://api.cloudflare.com/#universal-ssl-settings-for-a-zone-edit-universal-ssl-settings) request and include the `"enabled": true` parameter.
+ 
+{{</tab>}}
+{{</tabs>}}

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Control waiting room traffic
 weight: 4
 ---
@@ -15,11 +15,13 @@ To enable a waiting room:
 1.  Go to **Traffic** > **Waiting Rooms**.
 2.  On a waiting room, set **Enabled** to **On**.
 
-## Queue activation
+## Queue options
 
-By default, an active waiting room only puts visitors in a queue when traffic reaches the thresholds defined in **Total active users** and **New users per minute**.
+By default, an active waiting room puts visitors in a queue when traffic approaches the target thresholds defined in **Total active users** and **New users per minute**. Refer to [Queuing activation](/waiting-room/how-to/monitor-waiting-room/#queueing-activation) for more information.
 
-However, if you want all visitors to be queued — in preparation for a product release or other time-based event — use the **Queue All** option on a waiting room. So long as the waiting room is active and **Queue All** is enabled, no traffic will reach your application.
+However, if you want all visitors to be queued for a predefined amount of time — in preparation for a product release or other time-based event — use the Waiting Room [event prequeuing](/waiting-room/additional-options/create-events/) option.
+
+You may also use the **Queue All** option on a waiting room as an emergency stop to all traffic during unexpected or temporary downtime. As long as the waiting room is active and **Queue All** is enabled, no traffic will reach your application.
 
 ### Queue visitors when necessary
 

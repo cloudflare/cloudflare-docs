@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Handle a false negative or an incomplete mitigation
 weight: 3
 ---
@@ -27,9 +27,9 @@ The system chooses the mitigation action based on the logic and the DDoS protect
 
 If you are experiencing a DDoS attack detected by Cloudflare and the applied mitigation action is not sufficiently strict, change the rule action to _Block_:
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 
-1.  Navigate to the analytics dashboard and apply filters to the displayed data.
+2. Navigate to the analytics dashboard and apply filters to the displayed data.
 
     <details><summary>For WAF/CDN customers</summary><div>
 
@@ -37,7 +37,7 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
     2\. Navigate to **Security** > **Overview**.
 
-    3\. Click **Add filter** and filter by `Service equals HTTP DDoS`.
+    3\. Select **Add filter** and filter by `Service equals HTTP DDoS`.
 
     </div></details>
 
@@ -47,22 +47,28 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
     2\. Identify the DDoS attack that is having incomplete mitigations. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
 
-     </div></details>
+    </div></details>
 
-1. Scroll down to the **Activity log**.
+3. Scroll down to **Top events by source** > **HTTP DDoS rules**.
 
-1. Click **Edit columns** and enable **Rule ID**\*.
+4. Copy the rule name.
 
-1. Copy the rule ID from one of the DDoS log entries.
+5. Navigate to **Security** > **DDoS** and select **Configure** next to the Managed Ruleset containing the rule you will adjust.
 
-1. Navigate to **Security** > **DDoS** and click **Configure** next to the Managed Ruleset containing the rule you will adjust.
+6. Select **Browse rules** and paste the rule name in the search field.
 
-1. Click **Browse rules** and paste the Rule ID in the search field.
+7. Change the rule’s **Action** to _Block_.
 
-1. Change the rule’s **Action** to _Block_.
-
-1. Click **Next** and then **Save**.
-
-_\* Not available in Network Analytics dashboard yet._
+8. Select **Next** and then select **Save**.
 
 Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/ddos-protection/reference/analytics/).
+
+### Alternate procedure
+
+If you cannot stop an attack from overloading your origin web server using the above steps, [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476#h_4b8753c8-f422-4c74-9e8e-07026c4da730) for assistance, providing the following details:
+
+- Time period of the attack (UTC timestamp)
+- Domain/path being targeted (zone name/ID)
+- Attack frequency
+- Steps to reproduce the issue, with actual results versus expected results
+- Any relevant additional information such as site URLs, error messages, screenshots, or relevant logs from your origin web server

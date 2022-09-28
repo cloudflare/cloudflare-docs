@@ -1,11 +1,9 @@
 ---
 title: Get started
-pcx-content-type: navigation
-weight: 2
-meta:
-  title: General documentation for end users
+pcx_content_type: navigation
+weight: 3
 ---
 
-# General documentation for end users
+# Get started
 
 {{<directory-listing>}}

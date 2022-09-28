@@ -1,9 +1,34 @@
 ---
-pcx-content-type: changelog
+pcx_content_type: changelog
 title: Changelog
 ---
 
 # Changelog
+
+## 2022-08-12
+
+- A `Headers` object with the `range` header can now be used for range within `R2GetOptions` for the `get` R2 binding.
+- When headers are used for `onlyIf` within `R2GetOptions` for the `get` R2 binding, they now correctly compare against the second granularity. This allows correctly round-tripping to the browser and back. Additionally, `secondsGranularity` is now an option that can be passed into options constructed by hand to specify this when constructing outside Headers for the same effect.
+- Fixed the TypeScript type of `DurableObjectState.id` in [@cloudflare/workers-types](https://github.com/cloudflare/workers-types) to always be a `DurableObjectId`.
+- Validation errors during Worker upload for module scripts now include correct line and column numbers.
+- Bugfix, Profiling tools and flame graphs via Chrome’s debug tools now properly report information.
+
+## 2022-06-24
+
+- `wrangler dev` in edge preview mode now supports scheduling alarms.
+- R2 GET requests made with the `range` option now contain the returned range in the `GetObject`’s `range` parameter.
+- Some Web Cryptography API error messages include more information now.
+- Updated V8 from 10.2 to 10.3.
+
+
+## 2022-06-18
+
+- Cron trigger events on Worker scripts using the old `addEventListener` syntax are now treated as failing if there is no event listener registered for `scheduled` events.
+- The `durable_object_alarms` flag no longer needs to be explicitly provided to use DO alarms.
+
+## 2022-06-09
+
+- No externally-visible changes.
 
 ## 2022-06-03
 

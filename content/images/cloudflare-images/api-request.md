@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Make your first API request
 weight: 3
 ---
@@ -26,20 +26,20 @@ account and website.
 To use Cloudflare Images you need to create a custom token with the correct `Read` and `Update` permissions:
 
 1. In the Cloudflare dashboard, locate [API Tokens](https://dash.cloudflare.com/profile/api-tokens) under **My Profile** > **API Tokens**.
-2. Click **Create Token**.
-3. In Custom token, click **Get started**.
+2. Select **Create Token**.
+3. In Custom token, select **Get started**.
 4. Give your custom token a name.
 5. Scroll to **Permissions**.
-6. Click the _Select item..._ drop-down menu and choose _Cloudflare Images_.
+6. On the _Select item..._ drop-down menu, choose _Cloudflare Images_.
 7. In the next drop-down menu, choose _Edit_.
 
 ![How to create a custom token for Cloudflare images](/images/static/tutorials/integrate-cloudflare-images/step-02-custom-token-setup.jpg)
 
-8. Click **Continue to summary** > **Create Token**.
+8. Select **Continue to summary** > **Create Token**.
 
 Your token for Cloudflare Images is now created. Copy it and keep it in a safe place. It grants access to your Cloudflare Images account.
 
-Refer to [Creating API tokens](/api/tokens/create/#getting-started) for more details about API tokens.
+Refer to [Creating API tokens](/api/get-started/create-token/) for more details about API tokens.
 
 </div>
 </details>

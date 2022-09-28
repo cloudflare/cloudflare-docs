@@ -4,7 +4,7 @@ summary: Change the headers sent in a request or returned in a response.
 tags:
   - Headers
   - Middleware
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Alter headers
 weight: 1001
 layout: example
@@ -35,4 +35,4 @@ async function handleRequest(request) {
 }
 ```
 
-You can also use the [`custom-headers-example` template](https://github.com/signalnerve/custom-headers-example) to deploy this code to your custom domain.
+You can also use the [`custom-headers-example` template](https://github.com/codewithkristian/custom-headers-example) to deploy this code to your custom domain.

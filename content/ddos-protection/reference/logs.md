@@ -1,7 +1,7 @@
 ---
 title: Logs
-pcx-content-type: reference
-weight: 4
+pcx_content_type: reference
+weight: 5
 meta:
   title: DDoS logs
 ---

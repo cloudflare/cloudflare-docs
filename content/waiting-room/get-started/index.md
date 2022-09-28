@@ -1,7 +1,8 @@
 ---
-pcx-content-type: get-started
+pcx_content_type: get-started
 title: Get started
 weight: 2
+layout: single
 ---
 
 # Get started
@@ -32,7 +33,7 @@ Specify the URL for your page by setting the `hostname` and `path` in your [conf
 You can direct visitors to your high-traffic page:
 
 - Directly (via URL)
-- Indirectly (via [a redirect](/rules/bulk-redirects/))
+- Indirectly (via [a redirect](/rules/url-forwarding/bulk-redirects/))
 
 ### Queue activation
 
@@ -72,4 +73,4 @@ After you have created and deployed your first waiting room, you might also want
 
 - [Test your waiting room](/waiting-room/additional-options/test-waiting-room/) before it goes live.
 - [Monitor your traffic](/waiting-room/how-to/monitor-waiting-room/) in real time.
-- [Troubleshoot](/waiting-room/troubleshooting/) potential issues.
+- [Troubleshoot](https://support.cloudflare.com/hc/articles/360061431012) potential issues.

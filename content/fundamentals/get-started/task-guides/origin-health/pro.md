@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Pro
 weight: 2
 meta:
@@ -12,6 +12,7 @@ meta:
 
 ## Secure origin connections
 
+{{<render file="_origin-secure-dns.md">}}
 {{<render file="_origin-secure-connections.md">}}
 
 ## Monitor origin health
@@ -30,7 +31,7 @@ meta:
 
 ### Block traffic
 
-For more details, refer to [Secure your website](/fundamentals/get-started/task-guides/secure-your-website/).
+For more details, refer to [Secure your website](/learning-paths/application-security/).
 
 ### Increase caching
 

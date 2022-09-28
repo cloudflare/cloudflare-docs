@@ -1,5 +1,5 @@
 ---
-pcx-content-type: faq
+pcx_content_type: faq
 title: Policies
 weight: 5
 ---
@@ -10,9 +10,7 @@ weight: 5
 
 ## What is the order of policy enforcement?
 
-Zero Trust and DNS policies trigger top to bottom, based on their position in the policy table in the UI. The exception is Bypass policies, which Access evaluates first. For Allow and Deny policies, you can modify the order by dragging and dropping individual policies in the UI.
-
-Similarly, the L7 firewall will evaluate Do Not Inspect policies before any subsequent Allow or Block policies, to determine if decryption should occur. This means regardless of precedence in your list of policies, all Do Not Inspect policies will take precedence over Allow or Block policies.
+Gateway and Access policies generally trigger from top to bottom based on their position in the policy table in the UI. Exceptions include Bypass and Service Auth policies, which Access evaluates first. Similarly, for Gateway HTTP policies, Do Not Inspect and Isolate policies take precedence over all Allow or Block policies. To learn more about order of enforcement, refer to our documentation for [Access policies](/cloudflare-one/policies/access/#order-of-execution) and [Gateway policies](/cloudflare-one/policies/filtering/order-of-enforcement/).
 
 ## **How can I bypass the L7 firewall for a website?**
 
@@ -22,7 +20,7 @@ Bypassing the L7 firewall results in no HTTP traffic inspection, and logging is 
 
 ## **I see an error when browsing Google-related pages. What is the problem?**
 
-If you have enabled the WARP client and are sending requests through Gateway, you need to [disable the QUIC protocol](/cloudflare-one/policies/filtering/http-policies/configuration-guidelines/#enabling-access-to-Google-services) within Google Chrome. This will prevent you from encountering issues such as users who are able to connect to Google-related sites and services (like YouTube) that are explicitly blocked by a Gateway policy.
+If you have enabled the WARP client and are sending requests through Gateway, you need to [disable the QUIC protocol](/cloudflare-one/policies/filtering/http-policies/http3/) within Google Chrome. This will prevent you from encountering issues such as users who are able to connect to Google-related sites and services (like YouTube) that are explicitly blocked by a Gateway policy.
 
 Google Chrome uses QUIC to connect to all Google services by default. This means all requests to Google services via the Google Chrome browser use UDP instead of TCP. **At this time, Gateway does not support inspection of QUIC traffic, and requests using QUIC will bypass Gateway HTTP policies**. Gateway does prevent standard HTTP requests from negotiating to using QUIC with the `Alt-Svc` header by removing this header from HTTP requests.
 

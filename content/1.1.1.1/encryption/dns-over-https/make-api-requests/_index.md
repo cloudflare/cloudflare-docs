@@ -1,14 +1,13 @@
 ---
 weight:  1
-pcx-content-type: reference
+pcx_content_type: reference
 title: Make API requests to 1.1.1.1
+layout: single
 meta:
     title: Make API requests to 1.1.1.1 over DoH
 ---
 
 # Make API requests to 1.1.1.1 over DoH
-
-{{<content-column>}}
 
 Cloudflare offers a DNS over HTTPS resolver at:
 
@@ -39,7 +38,7 @@ You can learn more about how DoH works in RFC8484, more specifically [the HTTP l
 Example request:
 
 ```sh
-$ curl --http2 -H 'accept: application/dns-json' https://1.1.1.1/dns-query?name=cloudflare.com --next --http2 -H 'accept: application/dns-json' https://1.1.1.1/dns-query?name=example.com
+$ curl --http2 -H "accept: application/dns-json" "https://1.1.1.1/dns-query?name=cloudflare.com" --next --http2 -H "accept: application/dns-json" "https://1.1.1.1/dns-query?name=example.com"
 ```
 
 ## Authentication
@@ -62,5 +61,3 @@ Cloudflare's DNS over HTTPS resolver supports TLS 1.2 and TLS 1.3.
 | `504` | Resolver timeout while waiting for the query response. |
 
 {{</table-wrap>}}
-
-{{</content-column>}}

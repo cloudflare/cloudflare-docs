@@ -1,6 +1,6 @@
 ---
 title: Configure rate limiting rules
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 4
 meta:
   title: Configure rate limiting rules with Terraform

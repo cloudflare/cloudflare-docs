@@ -1,6 +1,6 @@
 ---
 title: Convert to full setup
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 3
 meta:
   title: Convert partial setup to full setup
@@ -14,7 +14,7 @@ If you initially set up a partial domain on Cloudflare, you can later migrate it
 
 In the Cloudflare dashboard, either order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) or [upload a custom SSL certificate](/ssl/edge-certificates/custom-certificates/uploading/) for your application.
 
-You also should verify that the [status](/ssl/ssl-tls/certificate-statuses/) of your SSL certificate is **Active**.
+You also should verify that the [status](/ssl/reference/certificate-statuses/) of your SSL certificate is **Active**.
 
 {{<Aside type="note">}}
 
@@ -24,11 +24,14 @@ Universal SSL only supports first-level subdomains. For more coverage and additi
 
 ## Step 2 — Update settings in authoritative DNS
 
-At your authoritative DNS provider, you need to delete the previous [zone activation TXT record](/dns/zone-setups/partial-setup/setup/#step-1--add-your-domain-to-cloudflare). To locate this value in the Cloudflare dashboard, go to **DNS** and find the **Verification TXT Record**.
+At least 24 hours prior to converting your application, disable DNSSEC at your authoritative DNS provider.
 
-After deleting your zone activation TXT record, wait for its Time to Live (TTL) to expire.
+{{<Aside type="note">}}
 
-At least 24 hours prior to converting your application, disable DNSSEC.
+As a best practice, you should also delete the previous [zone activation TXT record](/dns/zone-setups/partial-setup/setup/#step-1--add-your-domain-to-cloudflare) at your authoritative DNS provider. To locate this value in the Cloudflare dashboard, go to **DNS** and find the **Verification TXT Record**.
+  
+{{</Aside>}}
+
 
 ## Step 3 — Convert to full setup
 

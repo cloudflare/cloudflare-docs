@@ -1,12 +1,17 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Enable Cloudflare R2 
 weight: 40
+layout: single
 ---
 
 # Enable Logpush to Cloudflare R2
 
 Cloudflare Logpush supports pushing logs directly to R2 via the Cloudflare dashboard or via API. 
+
+We are offering Enterprise customers interested in storing their logs on Cloudflare access to R2 for evaluation and testing. Note that at this time we are not offering an SLA for R2. It should not be used for production use cases where logs are mission-critical. 
+
+During this phase, we will not be charging for R2 usage. We will be providing 30 days notice ahead of any charges. At that time, your account team will reach out to discuss interest in signing a contract for R2 usage. We expect to start charging for R2 in Q4 2022.
 
 Before getting started:
 
@@ -75,7 +80,7 @@ r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_I
 ```
 
 - **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
-- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/reference/logpush-api-configuration/#options).
+- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [API configuration options](/logs/get-started/api-configuration/#options).
 
 Example request using cURL:
 

@@ -1,7 +1,7 @@
 ---
 updated: 2020-11-30
 category: 🛡️ Web Gateway
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Filter DNS on devices
 ---
 
@@ -27,13 +27,12 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to fil
 
 ## Create a DNS filtering policy
 
-You can [build a policy](/cloudflare-one/policies/filtering/dns-policies/) that will filter DNS queries for known malicious hostnames and other types of threats. Navigate to the `Policies` page. On the DNS tab, click `Create a DNS policy`.
+You can [build a policy](/cloudflare-one/policies/filtering/dns-policies/) that will filter DNS queries for known malicious hostnames and other types of threats. 
 
-![Add Policy](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/start-filtering.png)
+1. Navigate to the **Policies** page. 
+2. On the DNS tab, click **Create a DNS policy**.
 
-First, assign the policy a name and add an optional description. Next, build an expression to determine what is blocked.
-
-![Name Policy](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/name-policy.png)
+3. Assign the policy a name and add an optional description. Next, build an expression to determine what is blocked.
 
 In this example, the policy will block any hostnames that Cloudflare's data intelligence platform identifies as containing security risks like malware or phishing campaigns. You can click `All security risks` to include all options or check individual types of threats in the dropdown.
 
@@ -41,13 +40,9 @@ In this example, the policy will block any hostnames that Cloudflare's data inte
 
 The policy will block security threats for any location or device in your Zero Trust deployment. You can specify that this should only apply to specific locations or to specific users and [directory groups](/cloudflare-one/tutorials/identity-dns/).
 
-Choose `Block` as the action. You can optionally [enable a block page](/cloudflare-one/policies/filtering/configuring-block-page/) that will be presented to users if they have the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on their devices. Click **Save policy** to conclude.
+4. Choose `Block` as the action. You can optionally [enable a block page](/cloudflare-one/policies/filtering/configuring-block-page/) that will be presented to users if they have the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on their devices. Click **Save policy** to conclude.
 
-![Save Block](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/save-dns-block.png)
-
-The policy will now appear in your DNS policies list.
-
-![Policy List](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/dns-rule-list.png)
+5. The policy will now appear in your DNS policies list.
 
 ## Integrate your identity provider
 
@@ -59,17 +54,15 @@ Navigate to the `Settings` section of the Zero Trust Dashboard and select `Authe
 
 Next, build a rule to decide which devices can enroll in your account.
 
-1.  Navigate to **Settings > Devices > Device enrollment**.
+1.  Navigate to **Settings** > **Devices** > **Device enrollment**.
 
 1.  Click **Manage**.
 
 1.  Click **Add a rule**.
 
-    ![Device Enrollment](/cloudflare-one/static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
-
     Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
 
-    ![Allow Cloudflare users](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
+    ![Allow users](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
 
 1.  Click **Save**.
 
@@ -85,31 +78,19 @@ You will need this name to enroll devices. You can confirm the team name selecte
 
 Your team members can run the WARP client to enroll in your Gateway account and send DNS queries to your configured policies. This section documents a self-serve user flow; you can alternatively [deploy the agent with an MDM](/cloudflare-one/connections/connect-devices/warp/deployment/) so that users do not need to take any action.
 
-To begin the self-serve flow, follow the [instructions here](/cloudflare-one/connections/connect-devices/warp/) to install the client depending on your device type.
+1. To begin the self-serve flow, follow the [instructions here](/cloudflare-one/connections/connect-devices/warp/) to install the client depending on your device type.
 
-Once installed, click the logo in the toolbar and select the gear icon in the top right of the panel.
+2. Once installed, click the logo in the toolbar and select the gear icon in the top right of the panel.
 
-![WARP](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
+3. Under the `Account` tab, click **Login to Cloudflare Zero Trust**.
 
-Under the `Account` tab, click **Login with Cloudflare for Teams**.
+4. Input the Cloudflare Zero Trust [team name](/cloudflare-one/glossary/#team-name).
 
-![Account View](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/account-view.png)
+5. The user will be prompted to login with the identity provider configured or with the one-time PIN flow.
 
-Input the Cloudflare Zero Trust [team name](/cloudflare-one/glossary/#team-name).
+6. Once authenticated, the client will update to `Teams` mode.
 
-![Org Name](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
-
-The user will be prompted to login with the identity provider configured or with the one-time PIN flow.
-
-![Login](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/login.png)
-
-Once authenticated, the client will update to `Teams` mode.
-
-![Team Mode](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/team-mode.png)
-
-You can click the gear to toggle between `Gateway with DoH`, which only filters DNS, or `Gateway with WARP`, which functions as a full forward proxy and can filter HTTP requests. In this use case, you only need DNS filtering.
-
-![DoH](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/doh-mode.png)
+7. Click the gear to toggle between `Gateway with DoH`, which only filters DNS, or `Gateway with WARP`, which functions as a full forward proxy and can filter HTTP requests. In this use case, you only need DNS filtering.
 
 ## Review logs and devices
 

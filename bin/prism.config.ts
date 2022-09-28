@@ -22,6 +22,8 @@ import 'prismjs/components/prism-sql.min.js';
 import 'prismjs/components/prism-typescript.min.js';
 import 'prismjs/components/prism-toml.min.js';
 import 'prismjs/components/prism-yaml.min.js';
+import 'prismjs/components/prism-kotlin.min.js';
+import 'prismjs/components/prism-swift.min.js';
 
 // Custom `shell` grammar
 Prism.languages.sh = {
@@ -113,8 +115,8 @@ const ESCAPE = /[&"<>]/g;
 const CHARS = {
   '"': '&quot;',
   '&': '&amp;',
-  '<': '&lt',
-  '>': '&gt',
+  '<': '&lt;',
+  '>': '&gt;',
 };
 
 // @see lukeed/tempura
@@ -232,7 +234,9 @@ export function highlight(code: string, lang: string): string {
     header?: string;
   } = {};
 
-  if (code.substring(0, 3) === '---') {
+  // Check for a YAML frontmatter,
+  // and ensure it's not something like -----BEGIN CERTIFICATE-----
+  if (code.substring(0, 3) === '---' && code[3] != '-') {
     let index = code.indexOf('---', 3);
     if (index > 3) {
       index += 3;

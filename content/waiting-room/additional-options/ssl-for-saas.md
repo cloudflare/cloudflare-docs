@@ -1,12 +1,12 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Combine with SSL for SaaS
 weight: 7
 ---
 
 # Combine with SSL for SaaS
 
-If your application is using a custom hostname — meaning your SaaS provider is using [SSL for SaaS](/ssl/ssl-for-saas/) — your application can support a waiting room.
+If your application is using a custom hostname — meaning your SaaS provider is using [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) — your application can support a waiting room.
 
 ## Applications on Cloudflare
 

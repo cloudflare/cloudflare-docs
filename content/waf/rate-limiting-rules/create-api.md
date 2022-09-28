@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 type: overview
 title: Create rate limiting rules via API
 weight: 16
@@ -60,7 +60,7 @@ curl -X PUT \
 
 ### Example B - Rate limiting with a custom response
 
-This example request defines a [custom response](/waf/rate-limiting-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for requests blocked due to rate limiting.
+This example request defines a [custom response](/waf/rate-limiting-rules/create-zone-dashboard/#configuring-a-custom-response-for-blocked-requests) for requests blocked due to rate limiting.
 
 ```json
 ---

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: faq
+pcx_content_type: faq
 title: Logpush
 weight: 2
 ---
@@ -19,6 +19,10 @@ No. Cloudflare pushes logs in batches as soon as possible.
 ## My job was accidentally turned off, and I did not receive my logs for a certain time period. Can they still be pushed to me?
 
 No. **Logpush** only pushes the logs once as they become available and is unable to backfill. However, the logs are stored for at least 72 hours and can be downloaded using the **Logpull API**.
+
+## I have reconfigured the job to a new destination, but why am I still receiving the logs at the old destination?
+
+Typically there will be a delay no greater than 15 minutes to complete the transition. Refer to the question about [destination temporarily unavailable](/logs/faq/logpush/#what-happens-if-my-cloud-storage-destination-is-temporarily-unavailable), for more details on this topic. 
 
 ## Why am I receiving a validating destination error while setting up a Splunk job? 
 

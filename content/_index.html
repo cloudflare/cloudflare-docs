@@ -1,69 +1,257 @@
 ---
-title: Cloudflare Developers
+title: Cloudflare Docs
 
 meta:
-  description: Browse the latest developer documentation including API reference, articles, and sample code.
+  description: Browse product docs including how-to guides, tutorials, API reference, and sample code.
+  title: Home
 ---
-<div class="Stripe">
-  <div class="Stripe--content">
-    <h1 id="your-imagination-cloudflares-infrastructure">Your imagination, Cloudflare’s infrastructure</h1>
-    <p>Use Cloudflare’s API and edge network — which spans 200 cities in more than 100 countries — to build ultra-fast applications with best-in-class security.</p>
-  </div>
+<div class="HomeTitle">
+<h1>Looking to improve security, <br /> performance, and reliability?</h1>
+  <p class="StartHere"><strong><a href="/learning-paths/get-started/">Start here.</a></strong></p>
 </div>
+
+<div class="QuadBlockGrid">
+<div>
+{{<quad-block>}}
+  [Products](/products/)
+{{</quad-block>}}
+</div>
+<div>
+{{<quad-block>}}
+  [Account and billing](/fundamentals/account-and-billing/)
+{{</quad-block>}}
+</div>
+<div>
+{{<quad-block>}}
+  [Tutorials](/tutorials/)
+{{</quad-block>}}
+</div>
+<div>
+{{<quad-block>}}
+  [API](https://api.cloudflare.com)
+{{</quad-block>}}
+</div>
+<div>
+{{<quad-block>}}
+  [Cloudflare Status](https://www.cloudflarestatus.com/)
+{{</quad-block>}}
+</div>
+</div>
+
+<div class="TriBlockGrid">
+<div>
+{{<tri-block>}}
+<div class="TriBlockHeader">
+<img src="/popular-icon.svg" aria-hidden="true" />
+<p>Most visited</p>
+</div>
+
+- [Troubleshoot 5XX and 1XXX errors](https://support.cloudflare.com/hc/sections/200820298-Cloudflare-Errors)
+- [Register a domain](/registrar/)
+- [Review site diagnostics](https://dash.cloudflare.com/?to=/:account/support/error-analytics)
+- [Update DNS records](/dns/manage-dns-records/)
+- [Customize caching](/cache/)
+{{</tri-block>}}
+</div>
+
+<div>
+{{<tri-block>}}
+<div class="TriBlockHeader">
+<img src="/developer-products-icon.svg" aria-hidden="true" />
+<p>Developer products</p>
+</div>
+
+- [Workers](/workers/)
+- [Pages](/pages/)
+- [R2](/r2/)
+- [Images](/images/)
+- [Stream](/stream/)
+- [Queues](/queues/)
+{{</tri-block>}}
+</div>
+<div>
+{{<tri-block>}}
+<div class="TriBlockHeader">
+<img src="/zero-trust-icon.svg" aria-hidden="true" />
+<p>Zero Trust</p>
+</div>
+
+- [Access](/cloudflare-one/policies/access/)
+- [Tunnel](/cloudflare-one/connections/connect-apps/)
+- [Gateway](/cloudflare-one/policies/filtering/)
+- [Browser Isolation](/cloudflare-one/policies/browser-isolation/)
+
+<br>
+
+[View all Zero Trust products >](/zero-trust/)
+
+{{</tri-block>}}
+</div>
+</div>
+
+<div class="ViewProducts">
+<details>
+<summary>View all products</summary>
+<div>
 
 {{<product-grid>}}
 
-<br>
-<br>
+</div>
+</details>
+</div>
+
+<div class="FeaturedContentSectionTitle">
+  <h2>Featured content</h2>
+</div>
+
+<div class="FeaturedContentGrid">
+<div>
+{{<featured-content-block>}}
+<div class="FeatureContentHeader">
+<p class="FeatureContentTitle">Set up 1.1.1.1</p>
+<p class="FeaturedContentDescription">Use Cloudflare's public DNS resolver for a fast and private way to browse the Internet.</p>
+
+[Set up 1.1.1.1 >](/1.1.1.1/setup/)
+</div>
+{{</featured-content-block>}}
+</div>
+
+<div>
+{{<featured-content-block>}}
+<div class="FeatureContentHeader">
+<p class="FeatureContentTitle">Install an Origin CA certificate</p>
+<p class="FeaturedContentDescription">Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption.</p>
+
+[Install Origin CA >](/ssl/origin-configuration/origin-ca/)
+</div>
+{{</featured-content-block>}}
+</div>
+<div>
+{{<featured-content-block>}}
+<div class="FeatureContentHeader">
+<p class="FeatureContentTitle">Change your nameservers</p>
+<p class="FeaturedContentDescription">Make Cloudflare your primary DNS provider by updating your authoritative nameservers at your domain registrar.</p>
+
+[Update nameservers >](/dns/zone-setups/full-setup/setup/)
+</div>
+{{</featured-content-block>}}
+</div>
+<div>
+{{<featured-content-block>}}
+<div class="FeatureContentHeader">
+<p class="FeatureContentTitle">View Workers examples</p>
+<p class="FeaturedContentDescription">Review fully functional sample scripts to get started with Workers.</p>
+
+[View examples >](/workers/examples/)
+</div>
+{{</featured-content-block>}}
+</div>
+
+<div>
+{{<featured-content-block>}}
+<div class="FeatureContentHeader">
+<p class="FeatureContentTitle">Create API tokens</p>
+<p class="FeaturedContentDescription">If you are going to be using the Cloudflare API, you first need an API token to authenticate your requests.</p>
+
+[Create tokens >](/api/get-started/create-token/)
+</div>
+{{</featured-content-block>}}
+</div>
+<div>
+{{<featured-content-block>}}
+<div class="FeatureContentHeader">
+<p class="FeatureContentTitle">Install the WARP client</p>
+<p class="FeaturedContentDescription">The Cloudflare WARP client allows individuals and organizations to have a faster, more secure, and more private experience online.</p>
+
+[Get started >](/warp-client/)
+</div>
+{{</featured-content-block>}}
+</div>
+<div>
+{{<featured-content-block>}}
+<div class="FeatureContentHeader">
+<p class="FeatureContentTitle">Create IP access rules</p>
+<p class="FeaturedContentDescription">Use IP Access rules to allowlist, block, and challenge traffic based on the visitor’s IP address, country, or Autonomous System Number (ASN).</p>
+
+[Create IP access rules >](/waf/tools/ip-access-rules/)
+</div>
+{{</featured-content-block>}}
+</div>
+<div>
+{{<featured-content-block>}}
+<div class="FeatureContentHeader">
+<p class="FeatureContentTitle">SSL/TLS Encryption mode</p>
+<p class="FeaturedContentDescription">Your domain's SSL/TLS encryption mode controls how Cloudflare connects to your origin web server and how SSL certificates presented by your origin will be validated.</p>
+
+[Set encryption mode >](/ssl/origin-configuration/ssl-modes/)
+</div>
+{{</featured-content-block>}}
+</div>
+</div>
 
 <div class="HeroBlockGrid">
-	<div>
-{{<hero-block>}}
-  ## Serverlist Newsletter
-
-  The Serverlist is a Cloudflare-curated newsletter about all things serverless. You can expect to get the latest scoop on the serverless space, get your hands dirty with new developer tutorials, engage in conversations with other serverless developers, and find upcoming meetups and conferences to attend.
-
-  {{<button type="secondary" href="https://blog.cloudflare.com/serverlist/">}}
-    Subscribe
-  {{</button>}}
-{{</hero-block>}}
-
-    <br>
-    <br>
-    <br>
-
+  <div>
 {{<hero-block>}}
   ## Community
 
-  The Cloudflare community is a place for Cloudflare users to share ideas, answers, code and compare notes.
+  Cloudflare communities are places for Cloudflare users to share ideas, answers, code, and more.
 
-  * [Twitter](https://twitter.com/CloudflareDev)
-  * [Blog](https://blog.cloudflare.com/)
-  * [Community Forum](https://community.cloudflare.com/)
-  * [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev/)
-  * [Stack Overflow](https://stackoverflow.com/questions/tagged/cloudflare?sort=votes&pageSize=15/)
-  * [Cloudflare Open Source](https://cloudflare.github.io/)
-{{</hero-block>}}
-
-    <br>
-    <br>
-    <br>
-
-{{<hero-block>}}
-  ## Meetup Groups
-
-  Join our Real World Serverless meetup groups across the world.
-
-  * [London](https://www.meetup.com/Real-World-Serverless-London/)
-{{</hero-block>}}
+  <div class="QuadBlockGrid">
+  <a href="https://discord.com/invite/cloudflaredev/">
+  <div>
+  {{<community-block>}}
+  <div>
+  <img src="/discord-figma.svg" aria-hidden="true" style="padding-left: .5em"/>
   </div>
+  <div>
+  Discord
+  </div>
+  {{</community-block>}}
+  </div>
+  </a>
+  <a href="https://community.cloudflare.com/">
+  <div>
+  {{<community-block>}}
+  <img src="/community-icon.svg" aria-hidden="true" style="padding-left: 1.15em" />
+  Community
+  {{</community-block>}}
+  </div>
+  </a>
+  <a href="https://twitter.com/CloudflareDev">
+  <div>
+  {{<community-block>}}
+  <img src="/twitter-logo-black.svg" aria-hidden="true" style="padding-left: .25em" />
+  Twitter
+  {{</community-block>}}
+  </div>
+  </a>
+  </div>
+  
+{{</hero-block>}}
+</div>
 
   <div>
 {{<hero-block>}}
-  <a hidden class="twitter-timeline" data-height="1000" href="https://twitter.com/CloudflareDev?ref_src=twsrc%5Etfw">
-    {{<scripts src="twitter.ts" inline="true">}}
-    Tweets by CloudflareDev
-  </a>
+  ## Cloudflare Blog
+
+  Get the latest news on Cloudflare products, technologies, and culture.
+
+  {{<button type="secondary" href="https://blog.cloudflare.com/">}}
+    Read the blog
+  {{</button>}}
+{{</hero-block>}}
+  </div>
+  
+  <div>
+{{<hero-block>}}
+  ## Open source
+
+  Cloudflare contributes to the open-source ecosystem in a variety of ways, including:
+
+  - Developing many projects [directly](https://github.com/cloudflare).
+  - Sponsoring [world-changing open-source projects](/sponsorships/).
+
 {{</hero-block>}}
   </div>
 </div>
+

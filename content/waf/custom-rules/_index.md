@@ -1,12 +1,14 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Custom rules
 weight: 3
 ---
 
 # Custom rules
 
-Custom rules allow you to control incoming traffic by filtering requests. You can perform actions like *Block* or *JS Challenge* on incoming requests according to rules you define.
+Custom rules allow you to control incoming traffic by filtering requests to a zone. You can perform actions like *Block* or *JS Challenge* on incoming requests according to rules you define.
+
+To define sets of custom rules that apply to more than one zone, use [custom rulesets](/waf/custom-rulesets/).
 
 {{<Aside type="note">}}
 

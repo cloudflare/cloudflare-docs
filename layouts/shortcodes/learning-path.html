@@ -1,0 +1,79 @@
+{{- $filename := default (.Get "file") (.Get 0) -}}
+{{ $data := slice }}
+{{ $fileplaceholder := "" }}
+{{- range readDir "./assets/json/" -}}
+{{- if eq .Name $filename }}
+{{- $fileplaceholder :=  print "./assets/json/" .Name -}}
+{{- $file_data := getJSON $fileplaceholder -}}
+{{ $data = $data | append $file_data }}
+{{- end -}}
+{{- end -}}
+
+{{- range $data -}}
+
+<p class="viewOtherPaths"><a href="/learning-paths/"><strong>&lt;</strong>  View other learning paths</a></p>
+
+<div class="header">
+<h1>{{- .title -}}</h1>
+<p><em>Learning path</em></p>
+<p>{{- .description | markdownify -}}</p>
+</div>
+
+<div class="background">
+{{- range $index, $module := .modules -}}
+
+<div class="learningPathModule">
+<div class="moduleHeader">
+<h2 id="{{ .title | safeURL | anchorize }}"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+      class="DocsMarkdown--header-anchor Link Link-without-underline"
+      href="#{{ .title | safeURL | anchorize }}"
+      >&#8203;​</a
+    >
+  </span>
+  <span>{{.title}}</span>
+</h2>
+{{ with .estimated_time }}
+<p class="durationEstimate">{{ . }}</p>
+{{- end -}}
+</div>
+{{ with .description }}
+<p>{{. | markdownify }}</p>
+{{ end }}
+{{- if eq $index 0 -}}
+<details open>
+{{ else }}
+<details>
+{{ end }}
+<summary>Contains {{len .pages}} units</summary>
+<div>
+    <ul>
+    {{- range .pages -}}
+    {{- if isset . "external_link" -}}
+        <li><a href="{{.url_path}}" target="_blank">{{.link_title}}  {{- partialCached "external.icon" . -}}</a>
+    {{- else if isset . "link_title" -}}
+        <li><a href="{{.url_path}}" target="_blank">{{.link_title}}</a>
+    {{- else -}}
+    {{- with $.Site.GetPage (replaceRE "/$" "" .url_path) -}}
+    
+    <li><a href="{{ .RelPermalink }}" target="_blank">{{ .Title }}</a>
+    {{- end -}}
+    {{- end -}}
+
+    {{with .additional_description}}
+    <div class="learningPathNote">{{- . | markdownify -}}</div>
+    {{- end -}}
+    
+    </li>
+    {{- end -}}
+    </ul>
+
+</div>
+</details>
+</div>
+
+{{- end -}}
+
+</div>
+
+{{- end -}}

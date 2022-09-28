@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 type: overview
 title: Update and deploy rulesets
 weight: 6

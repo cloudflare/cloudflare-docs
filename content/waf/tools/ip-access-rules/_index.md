@@ -1,6 +1,6 @@
 ---
 title: IP Access rules
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 2
 ---
 
@@ -22,7 +22,7 @@ Block by country is only available on the Enterprise plan. Other customers may p
 
 ## Important remarks
 
-* Allowing a country code does not bypass Cloudflare's WAF.
+* Allowing a country code does not bypass [WAF Managed Rulesets](/waf/managed-rulesets/) or [WAF managed rules (previous version)](https://support.cloudflare.com/hc/articles/200172016).
 
 * By design, IP Access rules configured to _Allow_ traffic do not show up in [Firewall Analytics](/waf/analytics/).
 
@@ -32,4 +32,4 @@ Block by country is only available on the Enterprise plan. Other customers may p
 
 ## Related resources
 
-To learn more about protection options provided by Cloudflare to protect your website against malicious traffic and bad actors, refer to [Secure your website](/fundamentals/get-started/task-guides/secure-your-website/).
+To learn more about protection options provided by Cloudflare to protect your website against malicious traffic and bad actors, refer to [Secure your website](/learning-paths/application-security/).

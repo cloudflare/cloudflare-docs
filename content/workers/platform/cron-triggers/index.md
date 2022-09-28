@@ -1,6 +1,7 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Cron Triggers
+layout: single
 ---
 
 # Cron Triggers
@@ -15,11 +16,11 @@ You can add Cron Triggers to Workers with the Cloudflare API, or in the dashboar
 
 {{<Aside type="note" header="Requires a ScheduledEvent Listener">}}
 
-To respond to a Cron Trigger, you must add a [`"scheduled"` event](/workers/runtime-apis/scheduled-event/) listener to the Workers script.
+To respond to a Cron Trigger, you must add a [`"scheduled"` event](/workers/runtime-apis/scheduled-event/) listener, or export a default `scheduled` handler to the Workers script.
 
 {{</Aside>}}
 
-![After selecting Triggers, add a trigger to execute time-based Workers](./media/workers-schedule-editor.png)
+![After selecting Triggers, add a trigger to execute time-based Workers](/workers/platform/cron-triggers/media/workers-schedule-editor.png)
 
 ## Supported cron expressions
 
@@ -51,6 +52,10 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
   - Every 30 minutes
 
+- `45 * * * *`
+
+  - On the 45th minute of every hour
+
 - `0 17 * * sun` or `0 17 * * 1`
 
   - 5PM on Sunday
@@ -74,7 +79,15 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 {{<Aside type="note" header="Testing Cron Triggers and potential delays">}}
 
-A recommended way for testing your Cron Trigger is to first deploy it to a test domain. Adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take minutes for changes to propagate to the Cloudflare network edge.
+The recommended way of testing Cron Triggers is using Wrangler. Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take several minutes to propagate to the Cloudflare network edge.
+
+Cron triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+
+```sh
+$ wrangler dev --test-scheduled
+
+$ curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
+```
 
 {{</Aside>}}
 
@@ -82,7 +95,7 @@ A recommended way for testing your Cron Trigger is to first deploy it to a test 
 
 Users can review the execution history of their Cron Triggers in **Past Events** under [**Triggers**](https://dash.cloudflare.com/?to=/:account/workers) or through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api).
 
-![Review the activity log of past cron triggers in Past Events](./media/workers-past-events.png)
+![Review the activity log of past cron triggers in Past Events](/workers/platform/cron-triggers/media/workers-past-events.png)
 
 It can take up to 30 minutes before events are displayed in **Past Events** when creating a new Worker or changing a Worker's name.
 

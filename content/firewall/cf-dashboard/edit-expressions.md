@@ -1,6 +1,6 @@
 ---
 title: Edit rule expressions
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 2
 ---
 
@@ -33,11 +33,11 @@ The **Expression Editor** is a text-only interface for defining rule expressions
 
 ![The Expression Editor used to enter advanced expressions](/firewall/static/firewall-rules-expression-editor-0.png)
 
-To access the Expression Editor, click **Edit expression** in the **Create firewall rule** page:
+To access the Expression Editor, select **Edit expression** in the **Create firewall rule** page:
 
-![Clicking Edit expression in the Create firewall rule page to switch to the Expression Editor](/firewall/static/firewall-rules-expression-builder-0.png)
+![Selecting Edit expression in the Create firewall rule page to switch to the Expression Editor](/firewall/static/firewall-rules-expression-builder-0.png)
 
-To switch back from the Expression Editor to the Expression Builder, click **Use expression builder**.
+To switch back from the Expression Editor to the Expression Builder, select **Use expression builder**.
 
 ### Create nested expressions
 

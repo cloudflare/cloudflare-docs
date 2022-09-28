@@ -1,7 +1,8 @@
 ---
-pcx-content-type: get-started
+pcx_content_type: get-started
 title: Get started
 weight: 3
+layout: single
 ---
 
 # Get started
@@ -22,9 +23,8 @@ This guide is meant for organizations setting up their first load balancer. If y
 
 {{<render file="_monitor-definition.md">}}
 
-<details>
-<summary>Create a monitor (dashboard)</summary>
-<div>
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 <strong>Set up the monitor</strong>
 
@@ -33,13 +33,8 @@ This guide is meant for organizations setting up their first load balancer. If y
 <strong>Prepare your servers</strong>
 
 {{<render file="_monitor-prepare-server.md">}}
-
-</div>
-</details>
-
-<details>
-<summary>Create a monitor (API)</summary>
-<div>
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 <strong>Set up the monitor</strong>
 
@@ -49,8 +44,8 @@ This guide is meant for organizations setting up their first load balancer. If y
 
 {{<render file="_monitor-prepare-server.md">}}
 
-</div>
-</details>
+{{</tab>}}
+{{</tabs>}}
 
 {{<render file="_monitor-example.md">}}
 
@@ -58,33 +53,28 @@ This guide is meant for organizations setting up their first load balancer. If y
 
 {{<render file="_pool-definition.md">}}
 
-<details>
-<summary>Create a pool (dashboard)</summary>
-<div>
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 {{<render file="_pool-create.md">}}
 
-</div>
+{{</tab>}}
 
-</details>
-
-<details>
-<summary>Create a pool (API)</summary>
-<div>
+{{<tab label="api" no-code="true">}}
 
 {{<render file="_pool-create-api.md">}}
 
-</div>
-
-</details>
+{{</tab>}}
+{{</tabs>}}
 
 ## Step 3 — Confirm pool health
 
 Before directing any traffic to your pools, make sure that your pools and monitors are set up correctly. The status of your health check will be _unknown_ until the results of the first check are available.
 
-<details>
-<summary>Confirm pool health (dashboard)</summary>
-<div>
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+To confirm pool health using the dashboard:
 
 1.  Navigate to **Traffic** > **Load Balancing**.
 2.  Click **Manage Pools**.
@@ -92,21 +82,15 @@ Before directing any traffic to your pools, make sure that your pools and monito
 
 For more information on pool and origin health statuses, refer to [How a pool becomes unhealthy](/load-balancing/understand-basics/health-details/#how-a-pool-becomes-unhealthy).
 
-</div>
-
-</details>
-
-<details>
-<summary>Confirm pool health (API)</summary>
-<div>
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 To fetch the latest health status of all pools, use the [List Pools](https://api.cloudflare.com/#account-load-balancer-pools-list-pools) command, paying attention to the `healthy` value for pools and origins.
 
 For troubleshooting a specific pool's health, use the [Pool Health Details](https://api.cloudflare.com/#account-load-balancer-pools-pool-health-details) command.
 
-</div>
-
-</details>
+{{</tab>}}
+{{</tabs>}}
 
 ### Unexpected health status
 
@@ -119,25 +103,18 @@ If you notice that healthy pools are being marked unhealthy:
 
 {{<render file="_load-balancer-definition.md">}}
 
-<details>
-<summary>Create a load balancer (dashboard)</summary>
-<div>
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 {{<render file="_load-balancer-create.md">}}
 
-</div>
-
-</details>
-
-<details>
-<summary>Create a load balancer (API)</summary>
-<div>
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 {{<render file="_load-balancer-create-api.md">}}
 
-</div>
-
-</details>
+{{</tab>}}
+{{</tabs>}}
 
 ### Route traffic to your load balancer
 

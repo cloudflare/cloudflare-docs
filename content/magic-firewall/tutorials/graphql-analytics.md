@@ -1,6 +1,6 @@
 ---
 title: GraphQL Analytics
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 1
 meta:
   title: GraphQL Analytics
@@ -8,13 +8,13 @@ meta:
 
 # GraphQL Analytics
 
-Use the GraphQL Analytics API to review data for Magic Firewall network traffic related to your configured firewall rules. 
+Use the GraphQL Analytics API to review data for Magic Firewall network traffic related to your configured firewall rules.
 
 Before you begin, you must have an [API token](/analytics/graphql-api/getting-started/authentication/). For additional help getting started with GraphQL Analytics, refer to [GraphQL Analytics API](/analytics/graphql-api/).
 
 ## Obtain Cloudflare Account ID and Magic Firewall rule ID
 
-To construct a Magic Firewall GraphQL query for an object, you will need a Cloudflare Account ID and the rule ID for each firewall rule. 
+To construct a Magic Firewall GraphQL query for an object, you will need a Cloudflare Account ID and the rule ID for each firewall rule.
 
 ### Obtain your Cloudflare Account ID
 
@@ -25,28 +25,10 @@ In your browser's address bar, the URL should show `https://dash.cloudflare.com/
 
 ### Obtain the rule ID for a firewall rule
 
-1. From the Cloudflare dashboard, click **Firewall Rulesets** > **Magic Firewall**.
-2. After the **Magic Firewall Rules** page displays, open your web browser's Developer Tools.
-3. From the **Developer Tools** pane, switch to the **Network** tab.
-4. From the **Network** tab, clear the network content.
-5. Refresh the **Magic Firewall Rules** page to repopulate the **Network** tab with the HTTP request and response packets between the browser and Cloudflare API.
-6. In the list of items, locate the three digit number with a **fetch** type. This will show you your Magic Firewalll rules.
-7. Click the item and then click the **Response** tab. A list of all of your Magic Firewall rules and their descriptions display similar to the example below.
-
-```bash
-  {
-    "id": "76a53b38cd9329ef632677g4525hi5929",
-    "version": "69",
-    "action": "block",
-    "description": "Anonymizer test",
-    "expression": "(ip.src in $cf.anonymizer)",
-    "last_updated": "2022-01-17T22:41:45.60268Z",
-    "ref": "76a53b38cd9329ef632677g4525hi5929",
-    "enabled": true
-  },
-  ```
-
-In the example above, the `id` value is the Magic Firewall rule ID.
+1. From the Cloudflare dashboard, click **Application Security** > **Magic Firewall**.
+2. Locate the rule you need the rule ID for from the list and click **Edit**.
+3. From the **Edit Rule** page, locate the **Rule ID** and select the copy button.
+4. Select **Cancel** to return to the **Magic Firewall** page.
 
 ## Explore GraphQL schema with Magic Firewall query example
 
@@ -59,9 +41,9 @@ query {
   viewer {
     accounts(filter: {accountTag: "<YOUR_ACCOUNT_ID>"}) {
       magicFirewallSamplesAdaptiveGroups(
-        filter: {datetime_geq: "2022-01-05T11:00:00Z", 
-          datetime_leq: "2022-01-05T12:00:00Z"}, 
-        limit: 2, 
+        filter: {datetime_geq: "2022-01-05T11:00:00Z",
+          datetime_leq: "2022-01-05T12:00:00Z"},
+        limit: 2,
         orderBy: [datetimeFiveMinute_DESC])
       {
         sum {
@@ -82,13 +64,13 @@ query {
 
 ### Obtain analytics for a specific rule
 
-Use the example below to display the total number of packets and bits for the top ten suspected malicious traffic streams within the last hour. After receiving the results, you can sort by packet rates with a five minute average. 
+Use the example below to display the total number of packets and bits for the top ten suspected malicious traffic streams within the last hour. After receiving the results, you can sort by packet rates with a five minute average.
 
 For each stream, display the:
 
 - Source and destination IP addresses
-- Ingress Cloudflare data centers that received it 
-- Total traffic volume in bits and packets received within the hour 
+- Ingress Cloudflare data centers that received it
+- Total traffic volume in bits and packets received within the hour
 - Actions taken by the firewall rule
 
 ```graphql
@@ -98,7 +80,7 @@ query{
         magicFirewallNetworkAnalyticsAdaptiveGroups(
         filter: {
             ruleId: "<RULE_ID>",
-            datetime_geq: "2022-01-12T10:00:00Z", 
+            datetime_geq: "2022-01-12T10:00:00Z",
             datetime_leq: "2022-01-12T11:00:00Z"
   }
         limit: 10,
@@ -106,7 +88,7 @@ query{
         {
             sum {
               bits
-              packets  
+              packets
             }
             dimensions {
               coloCity

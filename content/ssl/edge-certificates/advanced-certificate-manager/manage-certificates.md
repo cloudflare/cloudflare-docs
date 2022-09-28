@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Manage advanced certificates
 weight: 1
 ---
@@ -10,10 +10,11 @@ weight: 1
 
 If you are using an existing [Universal SSL certificate](/ssl/edge-certificates/universal-ssl/), Cloudflare will automatically replace this certificate once you finish ordering your advanced certificate.
 
-Once you order a certificate, you can review the [certificate's status](/ssl/ssl-tls/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](https://api.cloudflare.com/#certificate-packs-list-certificate-packs).
+Once you order a certificate, you can review the [certificate's status](/ssl/reference/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](https://api.cloudflare.com/#certificate-packs-list-certificate-packs).
 
-### Using the dashboard
-
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 To create a new advanced certificate in the dashboard:
 
 1.  Log in to your Cloudflare account and select a domain.
@@ -26,6 +27,14 @@ To create a new advanced certificate in the dashboard:
     - Validation method
     - Certificate Validity Period
 6.  Click **Save**.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+To create a new certificate using the API, send a [POST request](https://api.cloudflare.com/#certificate-packs-order-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
+ 
+{{</tab>}}
+{{</tabs>}}
 
 {{<Aside type="warning" header="Important">}}
 
@@ -33,26 +42,27 @@ To create a new advanced certificate in the dashboard:
 
 {{</Aside>}}
 
-### Using the API
-
-To create a new certificate, send a [POST request](https://api.cloudflare.com/#certificate-packs-order-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
-
 ---
 
 ## Delete a certificate
 
-### Using the dashboard
-
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 To delete an advanced certificate in the dashboard:
 
 1.  Log in to your Cloudflare account and select a domain.
 2.  Select **SSL/TLS** > **Edge Certificates**.
 3.  Click a certificate.
 4.  Click **Delete Certificate**.
-
-### Using the API
-
-To delete a certificate, send a [DELETE request](https://api.cloudflare.com/#certificate-packs-delete-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+To delete a certificate using the API, send a [DELETE request](https://api.cloudflare.com/#certificate-packs-delete-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ---
 
@@ -66,7 +76,7 @@ To restart validation for a certificate in a `validation_timed_out` status, send
 
 {{<render file="_cipher-suites-definition.md">}}
 
-For more details, refer to [Disable cipher suites](/ssl/ssl-tls/cipher-suites/#disable-cipher-suites).
+For more details, refer to [Disable cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/).
 
 ---
 
@@ -80,6 +90,6 @@ For more information about DCV, refer to [DCV methods](/ssl/edge-certificates/ch
 
 {{<Aside type="warning">}}
 
-Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates or certificates with multiple Subject Alternative Names (SANs). For more details and next steps, refer to [Changes to HTTP DCV](/ssl/ssl-tls/dcv-update/).
+Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates or certificates with multiple Subject Alternative Names (SANs). For more details and next steps, refer to [Changes to HTTP DCV](/ssl/reference/migration-guides/dcv-update/).
 
 {{</Aside>}}

@@ -1,6 +1,6 @@
 ---
 title: Work with Managed Rulesets
-pcx-content-type: navigation
+pcx_content_type: navigation
 type: overview
 weight: 6
 layout: list

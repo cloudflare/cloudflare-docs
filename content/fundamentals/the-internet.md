@@ -1,7 +1,7 @@
 ---
-pcx-content-type: navigation
+pcx_content_type: navigation
 title: The Internet
-weight: 7
+weight: 9
 ---
 
 # The Internet

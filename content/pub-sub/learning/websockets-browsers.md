@@ -1,6 +1,6 @@
 ---
 title: WebSockets and Browser Clients
-pcx-content-type: reference
+pcx_content_type: reference
 type: concept
 summary: Connect to Pub/Sub with WebSockets
 ---
@@ -40,6 +40,8 @@ You can view a live demo available at [demo.mqtt.dev](http://demo.mqtt.dev) that
 In a real-world deployment, our publisher could be another client, a native MQTT client, or a WebSocket client running on a remote server elsewhere. 
 
 ```js
+// Ensure MQTT.js is installed first
+// > npm install mqtt
 import * as mqtt from "mqtt"
 
 // Where 'url' is "mqtts://BROKER.NAMESPACE.cloudflarepubsub.com:8884"

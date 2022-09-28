@@ -1,6 +1,6 @@
 ---
 weight: 8
-pcx-content-type: faq
+pcx_content_type: faq
 title: FAQ
 ---
 
@@ -18,7 +18,7 @@ Computers are configured to talk to specific DNS resolvers, identified by IP add
 
 ## How can I check if my computer / smartphone / tablet is connected to 1.1.1.1?
 
-Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1 and that it is working.
+Visit [1.1.1.1/help](https://one.one.one.one/help) to make sure your system is connected to 1.1.1.1 and that it is working.
 
 ## What do DNS resolvers do?
 
@@ -51,7 +51,7 @@ Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprec
 
 ## What is Purge Cache?
 
-1.1.1.1's Purge Cache tool allows you to refresh 1.1.1.1's DNS cache for domain names. To refresh the cache for a domain name, visit the [Purge Cache page](https://1.1.1.1/purge-cache/).
+1.1.1.1's Purge Cache tool allows you to refresh 1.1.1.1's DNS cache for domain names. To refresh the cache for a domain name, visit the [Purge Cache page](https://one.one.one.one/purge-cache/).
 
 ## What is query name minimization?
 

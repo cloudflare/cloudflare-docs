@@ -1,6 +1,6 @@
 ---
 title: Reference
-pcx-content-type: navigation
+pcx_content_type: navigation
 weight: 5
 meta:
   title: Page Shield reference

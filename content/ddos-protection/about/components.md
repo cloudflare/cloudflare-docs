@@ -1,8 +1,7 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Main components
 weight: 2
-layout: list
 ---
 
 # Main components

@@ -45,15 +45,57 @@ Finally, some of these code-style errors may be fixed automatically. To do so, y
 $ npm run format
 ```
 
+## Deployment
+
+Our docs are deployed using [Cloudflare Pages](https://pages.cloudflare.com). Every commit pushed to production will automatically deploy to [developers.cloudflare.com](https://developers.cloudflare.com), and any pull requests opened will have a corresponding staging URL available in the pull request comments.
+
+## Visual Studio Code snippets
+
+This repository includes a file with [Visual Studio Code snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets) for the most common Hugo shortcodes used Developer Docs.
+
+The available snippets are:
+
+Prefixes | Description
+---|---
+`asideheader` | Inserts an `Aside` shortcode with header text.
+`asidenoheader` | Inserts an `Aside` shortcode without a header.
+`ccol` | Surrounds the current selection with `content-column` shortcodes.
+`tblwrap` | Surrounds the current selection with `table-wrap` shortcodes.
+`directory` | Inserts a `directory-listing` shortcode.
+`headerfullfile` | Inserts a file header for a complete Markdown file.
+`metatitle` | Inserts meta title fields in existing Markdown header. Used to complement a full file header.
+`headerpartialfile` | Inserts a header for a partial Markdown file.
+`partialinclude` or `renderpartial` | Inserts a `render` shortcode to include content from a partial in the current document.
+`twotabs` or `addtabs` | Inserts a new tabs section with two tabs for dashboard and API instructions.
+
+Triggering one of the available snippets will insert their body content at the current cursor position.
+
+Additionally, the following snippets support surrounding existing text:
+* `Aside with header`
+* `Aside without header`
+* `Surround with content-column`
+* `Surround with table-wrap`
+
+### How to use
+
+Note: Make sure you open the root folder of your cloned repository in Visual Studio Code (VSCode), so that VSCode correctly detects the snippets file stored in the `.vscode/` sub-folder.
+
+To enter a snippet:
+1. Enter the snippet prefix and press `Ctrl+Space` (`Command+Space` on a Mac).
+2. Select the desired snippet and press `Enter`.
+3. (Optional) Enter or select a value for the first placeholder supported by the snippet, if any, and press `Tab` to move to the next placeholder. Keep replacing placeholders and pressing `Tab`. When there are no more placeholders, pressing `Tab` will end the process.
+
+To surround existing content with a snippet:
+1. Select the text you wish to surround with a snippet.
+2. Enter the snippet prefix (temporarily replacing the selected text) and press `Ctrl+Space` (`Command+Space` on a Mac).
+3. Select the desired snippet and press `Enter`. VSCode will insert the snippet body and paste the previously selected content in the correct location.
+4. (Optional) Enter or select a value for the first placeholder supported by the snippet, if any, and press `Tab` to move to the next placeholder. Keep replacing placeholders and pressing `Tab`. When there are no more placeholders, pressing `Tab` will end the process.
+
 ## For Cloudflare employees
 
 To get write access to this repo, please reach out to the **Developer Docs** room in chat.
 
-### Deployment
-
-Our docs are deployed using [Cloudflare Pages](https://pages.cloudflare.com). Every commit pushed to production will automatically deploy to [developers.cloudflare.com](https://developers.cloudflare.com), and any pull requests opened will have a corresponding staging URL available in the pull request comments.
-
-### License and Legal Notices
+## License and Legal Notices
 
 Except as otherwise noted, Cloudflare and any contributors grant you a license to the Cloudflare Developer Documentation and other content in this repository under the [Creative Commons Attribution 4.0 International Public License](https://creativecommons.org/licenses/by/4.0/legalcode), see the [LICENSE file](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE), and grant you a license to any code in the repository under the [MIT License](https://opensource.org/licenses/MIT), see the [LICENSE-CODE file](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE-CODE).
 

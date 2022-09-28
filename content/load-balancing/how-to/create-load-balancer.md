@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Manage load balancers
 weight: 4
 ---
@@ -12,13 +12,18 @@ For more details about load balancers, refer to [Load balancers](/load-balancing
 
 ## Create a load balancer
 
-### Via the dashboard
-
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 {{<render file="_load-balancer-create.md">}}
-
-### Via the API
-
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 {{<render file="_load-balancer-create-api.md">}}
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ### Sharing your load balancer with other sites
 
@@ -30,18 +35,25 @@ You can also configure separate load balancers for each domain and reuse monitor
 
 ## Edit a load balancer
 
-### Via the dashboard
-
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 To edit a load balancer in the dashboard:
 
 1.  Go to **Traffic** > **Load Balancing**.
 2.  On a specific load balancer, click **Edit**.
 3.  While going through the [creation workflow](#create-a-load-balancer), update settings as needed.
 4.  On the **Review** step, click **Save**.
-
-### Via the API
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+When you edit a load balancer with the API, your request type depends on how much you want to edit.
 
 To update specific settings without having to resubmit the entire configuration, use a [PATCH](https://api.cloudflare.com/#load-balancers-patch-load-balancer) request. For broader changes, use a [PUT](https://api.cloudflare.com/#load-balancers-update-load-balancer) request.
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ---
 
@@ -49,13 +61,18 @@ To update specific settings without having to resubmit the entire configuration,
 
 If you delete or disable a load balancer, your origin's response to requests will depend on your [existing DNS records](/load-balancing/reference/dns-records/#disabling-a-load-balancer).
 
-### Via the dashboard
-
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 To delete a load balancer in the dashboard:
 
 1.  Go to **Traffic** > **Load Balancing**.
 2.  On a specific load balancer, click **Delete**.
-
-### Via the API
-
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 To delete a load balancer using the API, send a [DELETE](https://api.cloudflare.com/#load-balancers-delete-load-balancer) request.
+ 
+{{</tab>}}
+{{</tabs>}}

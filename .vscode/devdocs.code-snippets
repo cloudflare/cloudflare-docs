@@ -1,0 +1,122 @@
+{
+    "Aside with header": {
+        "prefix": ["asideheader"],
+        "body": [
+            "{{<Aside type=\"${1|note,warning|}\" header=\"${2:header}\">}}",
+            "$0$TM_SELECTED_TEXT",
+            "{{</Aside>}}"
+        ],
+        "description": "Aside shortcode with header text",
+        "scope": "markdown"
+    },
+    "Aside without header": {
+        "prefix": ["asidenoheader"],
+        "body": [
+            "{{<Aside type=\"${1|note,warning|}\">}}",
+            "$0$TM_SELECTED_TEXT",
+            "{{</Aside>}}"
+        ],
+        "description": "Aside shortcode without a header",
+        "scope": "markdown"
+    },
+    "Surround with content-column": {
+        "prefix": ["ccol"],
+        "body": [
+            "{{<content-column>}}",
+            "",
+            "$0$TM_SELECTED_TEXT",
+            "",
+            "{{</content-column>}}"
+        ],
+        "description": "Surround selection with content-column shortcodes",
+        "scope": "markdown"
+    },
+    "Surround with table-wrap": {
+        "prefix": ["tblwrap"],
+        "body": [
+            "{{<table-wrap>}}",
+            "",
+            "$0$TM_SELECTED_TEXT",
+            "",
+            "{{</table-wrap>}}"
+        ],
+        "description": "Surround selection with table-wrap shortcodes",
+        "scope": "markdown"
+    },
+    "Directory listing": {
+        "prefix": ["directory"],
+        "body": [
+            "{{<directory-listing>}}"
+        ],
+        "description": "Add directory-listing shortcode",
+        "scope": "markdown"
+    },
+    "Markdown header: full file": {
+        "prefix": ["headerfullfile"],
+        "body": [
+            "---",
+            "title: ${1:title}",
+            "pcx_content_type: ${2|overview,concept,how-to,configuration,reference,navigation,best-practices,faq,tutorial,glossary|}",
+            "weight: TODO",
+            "---",
+            "",
+            "# ${1:title}",
+            "",
+            "$0"
+
+        ],
+        "description": "Header for a complete Markdown file",
+        "scope": "markdown"
+    },
+    "Markdown header: partial file": {
+        "prefix": ["headerpartialfile"],
+        "body": [
+            "---",
+            "_build:",
+            "  publishResources: false",
+            "  render: never",
+            "  list: never",
+            "---",
+            "",
+            "$0"
+        ],
+        "description": "Header for a partial Markdown file",
+        "scope": "markdown"
+    },
+    "Markdown header: add meta title": {
+        "prefix": ["metatitle"],
+        "body": [
+            "meta:",
+            "  title: $0"
+        ],
+        "description": "Meta title in Markdown header",
+        "scope": "yaml"
+    },
+    "Render/include partial": {
+        "prefix": ["partialinclude", "renderpartial"],
+        "body": [
+            "{{<render file=\"$0\">}}"
+        ],
+        "description": "Includes content from a partial in the current document",
+        "scope": "markdown"
+    },
+    "Adds two tabs for dashboard/API instructions": {
+        "prefix": ["addtabs", "twotabs"],
+        "body": [
+            "{{<tabs labels=\"Dashboard | API\">}}",
+            "{{<tab label=\"dashboard\" no-code=\"true\">}}",
+            "",
+            "$0",
+            "",
+            "{{</tab>}}",
+            "{{<tab label=\"api\" no-code=\"true\">}}",
+            "",
+            "",
+            "",
+            "{{</tab>}}",
+            "{{</tabs>}}",
+        ],
+        "description": "Adds a new tabs section with two tabs for dashboard and API instructions",
+        "scope": "markdown"
+    },
+}
