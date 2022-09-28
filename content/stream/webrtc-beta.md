@@ -125,7 +125,8 @@ Beyond the [example WHIP client](https://github.com/cloudflare/templates/blob/ma
 
 #### WHEP
 
-- [meetecho/simple-whep-client](https://github.com/meetecho/simple-whep-client) (C)
+- [@eyevinn/webrtc-player](https://www.npmjs.com/package/@eyevinn/webrtc-player) (Typescript)
+- [@eyevinn/wrtc-egress](https://www.npmjs.com/package/@eyevinn/wrtc-egress) (Typescript)
 
 As more WHIP and WHEP clients are published, we are committed to supporting them and being fully compliant with the both protocols.
 
