@@ -1,18 +1,18 @@
 ---
 pcx_content_type: how-to
-title: Global Variables
+title: System Environment Variables
 weight: 5
 ---
 
-## Global Variables
+## System Environment Variables
 
-Global variables are process environment variables that are available to Wrangler commands. These variables are used to configure Wrangler's behavior. They can be set in a variety of ways, including:
+System Environment Variables are process environment variables that are available to Wrangler commands. These variables are used to configure Wrangler's behavior. They can be set in a variety of ways, including:
 
 1. Setting them `.env` file in the project directory this is the recommended & persistent way to set these variables.
 2. Inlining them in your Wrangler command for one-off use cases, for example `WRANGLER_LOG="debug" wrangler publish`.
 3. Setting them in your shell environment persists depending on the shell settings, for example `export CF_API_TOKEN=...`.
 
-**Currently, Wrangler supports the following global variables:**
+**Currently, Wrangler supports the following System Environment Variables:**
 
 - `"CLOUDFLARE_ACCOUNT_ID"`: The account ID for the Workers related account, can be found in the Cloudflare dashboard, can usually be inferred by Wrangler.
 - `"CLOUDFLARE_API_TOKEN"`: The API token for your Cloudflare account, can be used for authentication for situations like CI/CD, and other automation.
