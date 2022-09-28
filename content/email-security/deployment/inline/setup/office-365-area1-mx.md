@@ -1,5 +1,5 @@
 ---
-title: Office 365 MX Record
+title: Office 365 - Area 1 as MX Record
 pcx_content_type: tutorial
 weight: 1
 layout: single
