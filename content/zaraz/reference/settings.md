@@ -9,6 +9,10 @@ meta:
 
 To configure Zaraz's general settings, select [**Zaraz**](https://dash.cloudflare.com/?to=/:account/:zone/zaraz) > **Settings**.
 
+## Workflow
+
+Allows you to choose between working in Real-time or Preview & Publish modes. By default, Zaraz instantly publishes all changes you make in your account. Choosing Preview & Pulish lets you test your settings before comitting to them. Refer to [Preview mode](/zaraz/advanced/preview-mode/) for more information.
+
 ## Web API
 
 ### Debug Key
