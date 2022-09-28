@@ -1,19 +1,20 @@
 ---
-title: Domain Management
+title: Domain management
 pcx_content_type: get-started
 weight: 6
 layout: single
 
 ---
-# Domain Management
 
-When creating a widget, customers must specify a list of domains. The widget can only be used on these domains and will not work on any other domains. Customers can use subdomains to restrict the widgets further.
+# Domain management
+
+You must specify a list of domains when creating a widget. The widget can only be used on these domains and will not work on any other domains. You can use subdomains to restrict the widgets further.
 
 The domain should not contain a scheme `http://` or `https://`, a port `443`, or a path `/`. 
 
 Specifying a subdomain is optional.
 
-For example, `www.example.com` will allow widgets on the following domains:
+For example, using the `www.example.com` value will allow widgets on the following domains:
 * `www.example.com`
 * `abc.www.example.com:8080`
 
@@ -27,6 +28,6 @@ When the widget is embedded on a domain not listed, it will show an error messag
 
 {{<Aside type="note">}}
 
-Turnstile has an alpha feature that enables widgets to work on every page without needing a list of domains. Contact your account team for more information on this feature.
+Turnstile has an alpha feature that enables widgets to work on every page without needing a list of domains. For more information on this feature, contact your account team.
 
 {{</Aside>}}

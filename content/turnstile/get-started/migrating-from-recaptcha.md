@@ -3,8 +3,8 @@ title: Migrating from reCAPTCHA
 pcx_content_type: get-started
 weight: 3
 layout: single
-
 ---
+
 # Migrating from reCAPTCHA
 
 Customers using reCAPTCHA today can switch seamlessly to Cloudflare Turnstile. Follow the step-by-step guide below to assist with the upgrade process. 
@@ -30,10 +30,10 @@ To complete the migration, you must obtain the [sitekey and secret key](/turnsti
 
 ## Server-side integration
 
-Update the server-side integration by replacing the siteverify URL.
+Update the server-side integration by replacing the siteverify URL. Replace:
 
 `https://www.google.com/recaptcha/api/siteverify`
 
-becomes
+With:
 
 `https://challenges.cloudflare.com/turnstile/v0/siteverify`

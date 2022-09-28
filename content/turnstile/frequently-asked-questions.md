@@ -63,7 +63,7 @@ To ensure that a token is not forged by an attacker or has not been consumed yet
 
 ## Can the front end use siteverify?
 
-The siteverify API must not be called by the front-end as this may reveal the secretkey used to authenticate. An attacker may simply modify the front-end to not perform the siteverify check at all, rendering Turnstile ineffective.
+The siteverify API must not be called by the front end as this may reveal the secretkey used to authenticate. An attacker may simply modify the front end to not perform the siteverify check at all, rendering Turnstile ineffective.
 
 ## What is the length of a Turnstile token?
 
@@ -81,7 +81,7 @@ An HTML page rendered in a [WebView](https://github.com/react-native-webview/rea
 
 ## Are there sitekeys and secret keys that can be used for testing?
 
-Yes.
+Yes. Use the following sitekeys and secret keys for testing purposes:
 
 | Sitekey | Description |
 | --- | --- |
