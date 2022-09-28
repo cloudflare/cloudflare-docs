@@ -86,10 +86,12 @@ Attempting to login via OAuth...
 Opening a link in your default browser: https://dash.cloudflare.com/oauth2/auth?xyz...
 ```
 
-Leave the login flow active. Open a second terminal session. In that second terminal session, use `curl` or an equivalent request library on the remote machine to fetch this `localhost` URL:
+The browser login flow will redirect you to a `localhost` URL on your machine.
+
+Leave the login flow active. Open a second terminal session. In that second terminal session, use `curl` or an equivalent request library on the remote machine to fetch this `localhost` URL. Copy and paste the `localhost` URL that was generated during the `wrangler login` flow and run:
 
 ```sh
-$ curl http://localhost:8976/oauth/callback?code=xyz...
+$ curl <LOCALHOST_URL>
 ```
 
 ## Update
