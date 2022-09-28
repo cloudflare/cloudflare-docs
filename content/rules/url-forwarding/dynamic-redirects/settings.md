@@ -40,7 +40,7 @@ The full syntax of the `"action_parameters"` field for a dynamic redirect rule p
 }
 ```
 
-The only required parameter is `"from_value"` > `"target_url"` > `"value"`.
+The only required parameter is `<STATIC_URL_VALUE>`.
 
 {{<render file="url-forwarding/_optional-parameters.md">}}
 
@@ -77,7 +77,7 @@ The full syntax of the `"action_parameters"` field for a dynamic redirect rule p
 }
 ```
 
-The only required parameter is `"from_value"` > `"target_url"` > `"expression"`.
+The only required parameter is `<DYNAMIC_URL_EXPRESSION>`.
 
 {{<render file="url-forwarding/_optional-parameters.md">}}
 
