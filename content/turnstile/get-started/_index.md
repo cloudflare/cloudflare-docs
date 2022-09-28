@@ -37,7 +37,7 @@ The sitekey and secret key are generated upon the creation of a widget, allowing
 
 To add the Turnstile widget:
 
-1. Insert the JavaScript:
+1. Insert the Turnstile script snippet in your HTML's `<head>` element
 
 <div>
 
