@@ -6,14 +6,40 @@ weight: 3
 
 # Configure `wrangler.toml`
 
-Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker. It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
+Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker.
+It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
 
-The configuration for a Worker can become complex when you can define different [environments](/workers/platform/environments/), and each environment has its own configuration.
-There is a default (top-level) environment and named environments that provide environment-specific configuration.
+## Sample wrangler.toml configuration
+
+```toml
+---
+filename: wrangler.toml
+---
+# Top-level configuration
+name = "my-worker"
+main = "src/index.js"
+compatibility_date = "2022-07-12"
+
+workers_dev = false
+route = { pattern = "example.org/*", zone_name = "example.org" }
+
+kv_namespaces = [
+  { binding = "MY_NAMESPACE", id = "KV_ID" }
+]
+
+[env.staging]
+name = "my-worker-staging"
+route = { pattern = "staging.example.org/*", zone_name = "example.org" }
+
+kv_namespaces = [
+  { binding = "MY_NAMESPACE", id = "STAGING_KV_ID" }
+]
+```
 
 ## Environments
 
-Environments allow you to configure different configurations for different environments.
+The configuration for a Worker can become complex when you can define different [environments](/workers/platform/environments/), and each environment has its own configuration.
+There is a default (top-level) environment and named environments that provide environment-specific configuration.
 
 These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or publish
 with the `-e` / `--env` flag in the `wrangler` commands like `wrangler publish --env staging`.
@@ -61,13 +87,13 @@ At a minimum, `name`, `main` and `compatibility_date` are required to publish a 
   - Enables use of `<name>.<subdomain>.workers.dev` to test and deploy your Worker. If you have a Worker that
     is only for `scheduled` events, you can set this to `false`. Defaults to `true`.
 
-- `route` {{<type-link href="#route-type">}}Route{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `route` {{<type-link href="#types-of-routes">}}Route{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A route that your Worker should be published to. Only one of `routes` or `route` is required. Refer to [route type](#route-type).
+  - A route that your Worker should be published to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
 
-- `routes` {{<type-link href="#route-type">}}Route[]{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `routes` {{<type-link href="#types-of-routes">}}Route[]{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - An array of routes that your Worker should be published to. Only one of `routes` or `route` is required. Refer to [route type](#route-type).
+  - An array of routes that your Worker should be published to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
 
 - `tsconfig` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -87,9 +113,9 @@ At a minimum, `name`, `main` and `compatibility_date` are required to publish a 
     need to specify rules to use `Text`, `Data` and `CompiledWasm` modules, or when you wish to have a `.js`
     file be treated as an `ESModule` instead of `CommonJS`.
 
-- `build` {{<type-link href="#build">}}Build{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `build` {{<type-link href="#custom-builds">}}Build{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Configures a custom build step to be run by Wrangler when building your Worker. Refer to [build](#build).
+  - Configures a custom build step to be run by Wrangler when building your Worker. Refer to [custom builds](#custom-builds).
 
 - `no_bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -596,33 +622,6 @@ HTTP_PROXY=http://localhost:8080 wrangler dev
 If your IT team has configured your computer's proxy settings, be aware that the first non-empty environment variable in this list will be used when Wrangler makes outgoing requests.
 
 For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only use `https_proxy` for outgoing requests.
-
-## Example configuration
-
-```toml
----
-filename: wrangler.toml
----
-# Top-level configuration
-name = "my-worker"
-main = "src/index.js"
-compatibility_date = "2022-07-12"
-
-workers_dev = false
-route = { pattern = "example.org/*", zone_name = "example.org" }
-
-kv_namespaces = [
-  { binding = "MY_NAMESPACE", id = "KV_ID" }
-]
-
-[env.staging]
-name = "my-worker-staging"
-route = { pattern = "staging.example.org/*", zone_name = "example.org" }
-
-kv_namespaces = [
-  { binding = "MY_NAMESPACE", id = "STAGING_KV_ID" }
-]
-```
 
 ## Source of truth
 
