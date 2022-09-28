@@ -13,7 +13,7 @@ The HTTP Content-Security-Policy response header allows website administrators t
 
 We recommend using the nonce-based approach documented with [CSP3](https://w3c.github.io/webappsec-csp/#framework-directive-source-list). Make sure to include your nonce in the `api.js` script tag and we will handle the rest. Cloudflare Turnstile works with **strict-dynamic**.
 
-Alternatively, please add the following values to the directives:
+Alternatively, add the following values to the directives:
 
 * **script-src** https://challenges.cloudflare.com
 * **frame-src** https://challenges.cloudflare.com
