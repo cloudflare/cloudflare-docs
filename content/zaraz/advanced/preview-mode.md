@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Preview changes
+title: Preview mode
 weight: 6
 meta:
   title: Preview changes before publishing
@@ -14,7 +14,7 @@ Zaraz allows you to test your configurations before publishing them. This is hel
 
 ## Enable Preview & Publish mode
 
-By default, Zaraz is configured to commit changes in real time. To enable preview mode, and test new features you are adding to Zaraz:
+By default, Zaraz is configured to commit changes in real-time. To enable preview mode, and test new features you are adding to Zaraz:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Zaraz** > **Settings**.
