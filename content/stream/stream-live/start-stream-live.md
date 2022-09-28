@@ -8,21 +8,21 @@ weight: 1
 
 You can start a live stream using the Stream dashboard or the API. After you subscribe to Stream, you can create Live Inputs and begin sending your live video to Cloudflare Stream using RTMPS or SRT. SRT supports newer video codecs and makes using accessibility features, such as captions and multiple audio tracks, easier.
 
-## Using the dashboard
+## Use the dashboard
 
-**Step 1:** [Create a live input via the Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs/create)
+**Step 1:** [Create a live input via the Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs/create).
 
-![Screenshot of creating a live input via the Stream Dashboard](/stream/static/create-live-input-from-stream-dashboard.png)
+![Create live input field from dashboard](/stream/static/create-live-input-from-stream-dashboard.png)
 
 **Step 2:** Copy the RTMPS URL and key, and use them with your live streaming application. We recommend using [Open Broadcaster Software (OBS)](https://obsproject.com/) to get started.
 
-![Screenshot of copying a RTMPS stream key from the Stream Dashboard](/stream/static/copy-rtmps-url-from-stream-dashboard.png)
+![Example of RTMPS URL field](/stream/static/copy-rtmps-url-from-stream-dashboard.png)
 
 **Step 3:** Go live and preview your live stream in the Stream Dashboard
 
-In the Stream Dashboard, within seconds of going live, you will see a preview of what your viewers will see. To add live video playback to your website or app, refer to [Play videos](/stream/viewing-videos)
+In the Stream Dashboard, within seconds of going live, you will see a preview of what your viewers will see. To add live video playback to your website or app, refer to [Play videos](/stream/viewing-videos).
 
-## Using the API
+## Use the API
 
 To start a live stream programmatically, make a `POST` request to the `/live_inputs` endpoint:
 
@@ -84,18 +84,27 @@ header: Response
 
 {{</definitions>}}
 
-## Managing live inputs
+## Manage live inputs
 
 You can update live inputs by making a `PUT` request:
 
 ```bash
-curl -X PUT \ -H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id --data '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}'
+---
+header: Request
+---
+curl -X PUT \ 
+-H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id 
+-D '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}'
 ```
 
 Delete a live input by making a `DELETE` request:
 
 ```bash
-curl -X DELETE \ -H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
+---
+header: Request
+---
+curl -X DELETE \ 
+-H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
 ```
 
 ## Requirements and known limitations
@@ -107,7 +116,7 @@ curl -X DELETE \ -H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.
 - Stream Live only supports H.264 video and AAC audio codecs as inputs. This requirement does not apply to inputs that are relayed to Stream Connect outputs. Stream Live supports ADTS but does not presently support LATM.
 - Clients must be configured to reconnect when a disconnection occurs. Stream Live is designed to handle reconnection gracefully by continuing the live stream.
 
-### Known limitations:
+### Known limitations
 
 - Stream Live currently only supports HLS (HTTP Live Streaming), and recordings are only kept for the last seven days of the stream.
 - Watermarks cannot yet be used with live videos.

@@ -39,7 +39,7 @@ To use Cloudflare Images you need to create a custom token with the correct `Rea
 
 Your token for Cloudflare Images is now created. Copy it and keep it in a safe place. It grants access to your Cloudflare Images account.
 
-Refer to [Creating API tokens](/api/tokens/create/#getting-started) for more details about API tokens.
+Refer to [Creating API tokens](/api/get-started/create-token/) for more details about API tokens.
 
 </div>
 </details>

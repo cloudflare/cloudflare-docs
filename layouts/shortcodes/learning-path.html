@@ -1,7 +1,15 @@
-{{- $filename := .Page.RelPermalink -}}
-{{- $data := .Site.Data.learning_paths -}}
+{{- $filename := default (.Get "file") (.Get 0) -}}
+{{ $data := slice }}
+{{ $fileplaceholder := "" }}
+{{- range readDir "./assets/json/" -}}
+{{- if eq .Name $filename }}
+{{- $fileplaceholder :=  print "./assets/json/" .Name -}}
+{{- $file_data := getJSON $fileplaceholder -}}
+{{ $data = $data | append $file_data }}
+{{- end -}}
+{{- end -}}
 
-{{- range where $data "path" $filename -}}
+{{- range $data -}}
 
 <p class="viewOtherPaths"><a href="/learning-paths/"><strong>&lt;</strong>  View other learning paths</a></p>
 
@@ -16,7 +24,15 @@
 
 <div class="learningPathModule">
 <div class="moduleHeader">
-<h2>{{.title}}</h2>
+<h2 id="{{ .title | safeURL | anchorize }}"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+      class="DocsMarkdown--header-anchor Link Link-without-underline"
+      href="#{{ .title | safeURL | anchorize }}"
+      >&#8203;​</a
+    >
+  </span>
+  <span>{{.title}}</span>
+</h2>
 {{ with .estimated_time }}
 <p class="durationEstimate">{{ . }}</p>
 {{- end -}}

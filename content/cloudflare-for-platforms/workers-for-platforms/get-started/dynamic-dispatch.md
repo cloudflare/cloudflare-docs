@@ -1,13 +1,13 @@
 ---
 pcx_content_type: how-to
-title: Create dynamic dispatch
+title: Create a dynamic dispatch Worker
 weight: 3
 layout: list
 ---
 
-# Create dynamic dispatch
+# Create a dynamic dispatch Worker
 
-Once you've created a dispatch namespace, you can fetch any user Workers in the namespace using a dispatcher Worker. The [dispatcher Worker](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-dispatcher) has a namespace binding.
+After you have created a dispatch namespace, you can fetch any user Workers in the namespace using a dispatcher Worker. The [dispatcher Worker](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-dispatcher) has a namespace binding.
 
 Use any method of routing to a namespaced Worker (reading the subdomain, request header, or lookup in a database). Ultimately you need the name of the user Worker.
 
