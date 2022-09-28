@@ -8,7 +8,7 @@ weight: 2
 
 {{<Aside type="note" header="Before you get started:">}}
 
-You must first [create a Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/) and [create an API token](/api/tokens/create/) to begin using Stream.
+You must first [create a Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/) and [create an API token](/api/get-started/create-token/) to begin using Stream.
 
 {{</Aside>}}
 
