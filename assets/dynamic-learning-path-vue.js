@@ -54,7 +54,7 @@ Vue.createApp({
         },
     template: `
     <div>
-        <p>This learning path contains [[ onlyModules.length ]] modules and should take you around [[ timeEstimate ]].</p>
+        <p class="estimate">This learning path contains <span>[[ onlyModules.length ]] modules</span> and should take you around <span>[[ overallTimeEstimate ]]</span>.</p>
     </div>
     <div class="background">
     <div v-for="(element, index) in elements" v-on:change="onRadioButtonChange">
@@ -69,7 +69,7 @@ Vue.createApp({
             </span>
             <span>Step [[ calculateModuleNumber(element) ]] - [[ element.title ]]</span>
             </h2>
-            <p v-if="element.estimated_time" class="durationEstimate">~ [[ element.estimated_time ]] mins</p>
+            <p v-if="element.estimated_time" class="durationEstimate">~[[ element.estimated_time ]] mins</p>
         </div>
         <div v-if="element.description" v-html="element.description"></div>
         <details>
@@ -114,13 +114,16 @@ Vue.createApp({
         onlyModules() {
             return this.elements.filter(item => item.type === "module");
         },
-        timeEstimate() {
+        overallTimeEstimate() {
             onlyTimeEstimates = this.elements.filter(item => item.estimated_time).map(item => item.estimated_time);
             let total_min = onlyTimeEstimates.reduce((previousValue, currentValue) => previousValue + currentValue,
             0);
             const hours = Math.floor(total_min / 60)
             const minutes = total_min % 60;
             return `${hours} hours and ${minutes} minutes`
+        },
+        individualTimeEstimate() {
+            
         }
     },
     delimiters: ['[[', ']]'],

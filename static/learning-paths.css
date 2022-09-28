@@ -84,12 +84,29 @@ html {
     margin-top: 0em;
 }
 
+.pathDescription {
+    font-size: 1.1em;
+}
+
+.estimate span {
+    background: #FBAD41;
+    font-weight: 500;
+    padding: 0 .3em;
+}
+
+[theme=dark] .estimate span{
+    background: #0051c3;
+}
+
 .background {
     background:rgba(var(--color-rgb), .1);
     margin-top: 0px;
     border: 2px solid rgb(216 216 218);
     border-radius: .5em;
     padding-bottom: 4em;
+    display: flex;
+    flex-direction: column;
+    justify-items: flex-end;
 }
 
 [theme=dark] .background {
@@ -117,8 +134,8 @@ html {
 .question {
     display: flex;
     flex-direction: column;
-    width: 80%;
-    margin: 3em auto auto auto;
+    width: 70%;
+    margin: 5em auto 6em auto;
     border: 1px solid #242628;
     padding: 1em 1em 1em 1.75em;
     border-radius: .5em;
