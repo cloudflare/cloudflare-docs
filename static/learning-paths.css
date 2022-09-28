@@ -94,31 +94,21 @@ html {
     padding: 0 .3em;
 }
 
-[theme=dark] .estimate span{
+[theme=dark] .estimate span {
     background: #0051c3;
 }
 
 .background {
-    background:rgba(var(--color-rgb), .1);
     margin-top: 0px;
-    border: 2px solid rgb(216 216 218);
-    border-radius: .5em;
-    padding-bottom: 4em;
     display: flex;
     flex-direction: column;
-    justify-items: flex-end;
-}
-
-[theme=dark] .background {
-    background: rgba(var(--color-rgb), .1);
-    border: 2px solid #404242;
 }
 
 .learningPathModule {
     display: flex;
     flex-direction: column;
     width: 90%;
-    margin: 3em auto auto auto;
+    margin-top: 3em;
     border: 1px solid #242628;
     padding: 0em 1em 1em 1.75em;
     border-radius: .5em;
@@ -134,8 +124,8 @@ html {
 .question {
     display: flex;
     flex-direction: column;
-    width: 70%;
-    margin: 5em auto 6em auto;
+    width: 90%;
+    margin: 3em 0em 3em;
     border: 1px solid #242628;
     padding: 1em 1em 1em 1.75em;
     border-radius: .5em;
