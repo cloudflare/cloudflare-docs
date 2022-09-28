@@ -7,7 +7,7 @@ layout: single
 
 # Get started
 
-This guide is meant for customers to get started on setting up the Turnstile widget. 
+This guide will get you started on setting up the Turnstile widget. 
 
 If you are currently using a CAPTCHA service, you can simply copy and paste our script wherever you have deployed the existing script today. 
  
