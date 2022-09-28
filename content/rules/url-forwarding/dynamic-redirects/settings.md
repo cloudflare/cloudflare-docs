@@ -12,7 +12,7 @@ The following sections describe the settings of dynamic redirect rules to config
 
 ## Static URL redirect
 
-Performs a static URL redirect with a given HTTP status code and optionally preserving the query string.
+Performs a static URL redirect with a given HTTP status code and optionally preserves the query string.
 
 A static URL redirect has the following configuration parameters:
 
