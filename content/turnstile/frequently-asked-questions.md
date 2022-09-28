@@ -4,6 +4,7 @@ pcx_content_type: faq
 weight: 12
 layout: list
 ---
+
 # Frequently Asked Questions
 
 ## How does Content-Security-Policy need to be configured for Turnstile?
