@@ -12,7 +12,9 @@ Setting your encryption mode to **Off (not recommended)** redirects any HTTPS re
 
 <div class="mermaid">
     flowchart LR
-       A[Browser] <--Unencrypted--> B((Cloudflare))<--Unencrypted--> C[(Origin server)]
+        accTitle: No SSL/TLS Encryption
+        accDescr: With an encryption mode of Off, your application does not encrypt traffic between the visitor and Cloudflare or between Cloudflare and your server.
+        A[Browser] <--Unencrypted--> B((Cloudflare))<--Unencrypted--> C[(Origin server)]
 </div>
 
 ## Use when

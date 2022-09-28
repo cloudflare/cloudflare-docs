@@ -12,7 +12,9 @@ When you set your encryption mode to **Full**, Cloudflare allows HTTPS connectio
 
 <div class="mermaid">
 flowchart LR
-       A[Browser] <--Encrypted--> B((Cloudflare))<--Encrypted--> C[(Origin server)]
+        accTitle: Full SSL/TLS Encryption
+        accDescr: With an encryption mode of Full, your application encrypts traffic going to and coming from Cloudflare but does not validate your origin certificate.
+        A[Browser] <--Encrypted--> B((Cloudflare))<--Encrypted--> C[(Origin server)]
 </div>
 
 ## Use when

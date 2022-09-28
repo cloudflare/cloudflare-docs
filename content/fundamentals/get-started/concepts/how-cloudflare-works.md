@@ -32,6 +32,7 @@ Another way of thinking about this concept is that visitors directly connect wit
 
 <div class="mermaid">
         flowchart LR
+        accTitle: Connections without Cloudflare
         A[Visitor] <-- Connection --> B[Origin server]
 </div>
 
@@ -47,6 +48,7 @@ This means that all requests intended for proxied hostnames will go to Cloudflar
 
 <div class="mermaid">
         flowchart LR
+        accTitle: Connections with Cloudflare
         A[Visitor] <-- Connection --> B[Cloudflare Edge] <-- Connection --> C[Origin Server]
 </div>
 
