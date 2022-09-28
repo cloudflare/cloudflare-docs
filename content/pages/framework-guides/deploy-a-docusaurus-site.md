@@ -59,11 +59,11 @@ Deploy your site to Pages:
 
 4. Go to **Environment variables (advanced)** and create a variable name `NODE_VERSION` with a value of `16`.
 
-For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
-
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 
 Every time you commit new code to your Docusaurus site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests and be able to preview how changes look to your site before deploying them to production.
+
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
 ## Related resources
 
