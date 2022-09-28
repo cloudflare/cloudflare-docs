@@ -9,6 +9,8 @@ meta:
 
 # Deploy and configure Area 1 with with Cisco as MX record
 
+![A schematic showing where Area 1 security is in the life time of an email received](/email-security/static/cisco-mx-flow.png)
+
 In this tutorial you will learn how to configure Area 1 email security with Cisco as MX record. This tutorial is broken down into several steps:
 
 1. Add a new Sender Group to include Area 1’s egress IPs.
@@ -18,7 +20,6 @@ In this tutorial you will learn how to configure Area 1 email security with Cisc
     2. Detect returning messages from Area 1 and deliver to email provider.
 4. Apply incoming message filters to incoming policies.
 
-![A schematic showing where Area 1 security is in the lifeline of an email received](/email-security/static/cisco-mx-flow.png)
 
 ## 1. Add a Sender Group for Area 1 Email Protection IPs
 
