@@ -130,6 +130,15 @@ At a minimum, `name`, `main` and `compatibility_date` are required to publish a 
 
   - Add polyfills for node builtin modules and globals. Refer to [node compatibility](#node-compatibility).
 
+- `send_metrics` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Whether Wrangler should send usage metrics to Cloudflare for this project.
+
+- `keep_vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Whether Wrangler should keep variables configured in the dashboard on publish.
+    Refer to [source of truth](#source-of-truth).
+
 {{</definitions>}}
 
 ## Non-inheritable keys
@@ -329,7 +338,6 @@ To bind Durable Objects to your Worker, assign an array of the below object to t
 
   - The service environment of the `script_name` to bind to.
 
-
 {{</definitions>}}
 
 Example:
@@ -341,6 +349,44 @@ header: wrangler.toml
 durable_objects.bindings = [
   { name = "TEST_OBJECT", class_name = "TEST_CLASS" }
 ]
+```
+
+#### Migrations
+
+When making changes to your Durable Object classes, you must perform a migration.
+Refer to [configuring Durable Object classes with migrations](https://developers.cloudflare.com/workers/learning/using-durable-objects#configuring-durable-object-classes-with-migrations).
+
+{{<definitions>}}
+
+- `tag` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - A unique identifier for this migration.
+
+- `new_classes` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The new Durable Objects being defined.
+
+- `renamed_classes` {{<type>}}{from: string, to: string}[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The Durable Objects being renamed.
+
+- `environment` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The Durable Objects being removed.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+[[migrations]]
+tag = ""
+new_classes = [""]
+renamed_classes = [{from = "DurableObjectExample", to = "UpdatedName" }]
+deleted_classes = ["DeprecatedClass"]
 ```
 
 ### KV Namespaces
