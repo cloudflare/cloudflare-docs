@@ -183,4 +183,4 @@ The embed code above can also be found in the [Cloudflare dashboard](https://das
 
 ## Accessibility considerations
 
-To make your video content accessible, include [captions and audio descriptions](https://www.w3.org/WAI/media/av/av-content/). You can create them yourself or consider working with a vendor that provides such a service.
+To make your video content accessible, include [captions](/stream/edit-videos/adding-captions/) and high-quality audio recording.
