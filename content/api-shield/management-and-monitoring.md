@@ -18,7 +18,7 @@ Cloudflare will start collecting [performance data](/api-shield/management-and-m
 ## Access
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Select **Security** and navigate to **API Shield**.
+2. Select **Security** > **API Shield**.
 3. Add your endpoints [manually](#add-endpoints-manually) or from [API Discovery](#add-endpoints-from-api-discovery).
 
 ## Add endpoints from API Discovery
@@ -27,10 +27,9 @@ There are two ways to add API endpoints from Discovery.
 
 ### Add from the Endpoint Management Tab
 
-1. From Endpoint Management, select **Add endpoints**.
-2. Navigate to the **Select from Discovery** tab.
-3. Select the discovered endpoints you would like to add.
-4. Select **Add endpoints**.
+1. From Endpoint Management, select **Add endpoints** > **Select from Discovery** tab.
+2. Select the discovered endpoints you would like to add.
+3. Select **Add endpoints**.
 
 ### Add from the Discovery Tab
 1. From Endpoint Management, select the **Discovery** tab.
@@ -39,10 +38,9 @@ There are two ways to add API endpoints from Discovery.
 
 ## Add endpoints manually
 
-1. From **Endpoint Management**, select **Add endpoints**.
-2. Select **Manually add**.
-3. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
-4. Select **Add endpoints**.
+1. From Endpoint Management, select **Add endpoints** > **Manually add**.
+2. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
+3. Select **Add endpoints**.
 
 {{<Aside type="Note">}}
 

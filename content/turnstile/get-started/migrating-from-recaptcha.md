@@ -13,7 +13,7 @@ To complete the migration, you must obtain the [sitekey and secret key](/turnsti
 
 ## Client-side integration 
 
-1. Update the client-side integration by inserting the JavaScript:
+1. Update the client-side integration inserting the Turnstile script snippet in your HTML's `<head>` element:
 
 <div>
 

@@ -4,7 +4,6 @@ pcx_content_type: how-to
 weight: 10
 layout: single
 ---
-
 # Rotate the secret key
 
 You can rotate the secret key using the following steps: 
