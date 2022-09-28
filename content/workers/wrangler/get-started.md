@@ -76,7 +76,7 @@ Open the browser, log in to your account, and select **Allow**. This will send a
 
 If you are using Wrangler from a remote machine, but run the login flow from your local browser, you will receive the following error message after logging in:`This site can't be reached`.
 
-To finish the login flow, you can use `curl` or an equivalent request library on the remote machine to fetch this `localhost` URL.
+To finish the login flow, run `wrangler login` and go through the login flow in the browser:
 
 ```sh
 $ wrangler login
@@ -86,7 +86,7 @@ Attempting to login via OAuth...
 Opening a link in your default browser: https://dash.cloudflare.com/oauth2/auth?xyz...
 ```
 
-In a second terminal session, run:
+Leave the login flow active. Open a second terminal session. In that second terminal session, use `curl` or an equivalent request library on the remote machine to fetch this `localhost` URL:
 
 ```sh
 $ curl http://localhost:8976/oauth/callback?code=xyz...
