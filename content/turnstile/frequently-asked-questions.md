@@ -61,7 +61,7 @@ Turnstile is a front-end widget that creates a token which is cryptographically 
 
 To ensure that a token is not forged by an attacker or has not been consumed yet, the customer needs to check the validity of a token using Cloudflare's siteverify API.
 
-## Can the front-end use siteverify?
+## Can the front end use siteverify?
 
 The siteverify API must not be called by the front-end as this may reveal the secretkey used to authenticate. An attacker may simply modify the front-end to not perform the siteverify check at all, rendering Turnstile ineffective.
 
