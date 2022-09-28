@@ -31,7 +31,7 @@ Visitor Solve Rate is the percentage of tokens that were issued but have not nec
 
 ## What is API Solve Rate?
 
-API Solve rate is the share of tokens that were siteverified compared to issued. 
+API Solve Rate is the share of tokens that were siteverified compared to issued. 
 
 ## What is the difference between action and cData?
 
