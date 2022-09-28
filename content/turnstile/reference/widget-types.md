@@ -11,7 +11,7 @@ Every instance of Turnstile belongs to a Turnstile widget. It is configured on a
 
 The 3 modes for Turnstile are **Managed**, **Non-Interactive**, and **Invisible**.
 
-## Managed (Recommended)
+## Managed (recommended)
 
 Cloudflare will use information from the visitor to decide if an interactive challenge should be used. If we show an interaction, the user will be prompted to check a box (no images or text to decipher).
 
