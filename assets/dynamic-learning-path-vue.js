@@ -1,5 +1,7 @@
 import { learning_paths as paths } from "json-collector";
 
+// Since we're keying off the actual hostname of the page matching the hostname specified in the json file,
+// need to make sure the page exactly matches via ending slash (if not already there).
 
 let current_path;
 const regex = '\/$'
@@ -121,9 +123,6 @@ Vue.createApp({
             const hours = Math.floor(total_min / 60)
             const minutes = total_min % 60;
             return `${hours} hours and ${minutes} minutes`
-        },
-        individualTimeEstimate() {
-            
         }
     },
     delimiters: ['[[', ']]'],
