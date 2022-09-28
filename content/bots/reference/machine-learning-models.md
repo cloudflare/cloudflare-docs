@@ -15,7 +15,7 @@ To enable Auto-updates:
 1. Log in to the Cloudflare dashboard and select your account and domain.
 2. Go to **Security** > **Bots**.
 3. Select **Configure Bot Management**.
-4. Enable Auto-updates to the Machine Learning Model.
+4. Enable **Auto-updates to the Machine Learning Model**.
 
 {{<Aside type="note" header="Note">}}
 
