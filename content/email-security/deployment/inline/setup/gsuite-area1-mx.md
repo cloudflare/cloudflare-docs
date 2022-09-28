@@ -124,7 +124,7 @@ MX Priority | Host
 10          | alt3.aspmx.l.google.com.
 10          | alt4.aspmx.l.google.com.
 
-### Update MX records with Area 1 US hosts:
+To update your MX records with Area 1, use the following:
 
 MX Priority | Host
 ----------- | ---
@@ -134,7 +134,7 @@ MX Priority | Host
 
 When configuring the Area 1 MX records, it is important to configure both hosts with the same MX priority. This will allow mail flows to load balance between the hosts.
 
-### Update MX records with Area 1 European hosts:
+European customers should update  MX records with Area 1 European hosts:
 
 MX Priority | Host
 --- | --
