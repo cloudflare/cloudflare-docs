@@ -45,7 +45,7 @@ Both cData and action are returned by the siteverify API if a valid token is pre
 
 ## Can a Turnstile token be used twice?
 
-No, the siteverify API will only validate a token once. If a token has already been checked, the siteverify API will yield an error on subsequent verification attempts indicating that a token has already been spent.
+No, the siteverify API will only validate a token once. If a token has already been checked, the siteverify API will yield an error on subsequent verification attempts indicating that a token has already been consumed.
 
 ## How long is a Turnstile token valid for before it is rejected by siteverify?
 
