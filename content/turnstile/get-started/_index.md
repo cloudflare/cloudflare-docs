@@ -15,9 +15,9 @@ If you are currently using a CAPTCHA service, you can simply copy and paste our 
 
 To start using the Turnstile widget, you will need to obtain a sitekey and a secret key. The sitekey and secret key are always associated with one widget and cannot be reused for other widgets.
 
-The sitekey is public and used to invoke the Turnstile widget on your site. 
+The sitekey is public and used to invoke the Turnstile widget on your site.
 
-The sitekey and secret key is generated upon the creation of a widget, allowing communication between your site and Cloudflare to verify responses for a solved challenge from Turnstile. The secret key should be kept safe and only known to the customer for security purposes.
+The sitekey and secret key are generated upon the creation of a widget, allowing communication between your site and Cloudflare to verify responses for a solved challenge from Turnstile. The secret key should be kept safe and only known to the customer for security purposes.
 
 ### New sites
 

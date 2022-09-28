@@ -21,16 +21,16 @@ We recommend validating your CSP with [Google's CSP Evaluator](https://csp-evalu
 
 ## What is Visitor Solve Rate?
 
-A full Turnstile Challenge Token Flow comprises of a few things:
+A full Turnstile Challenge Token Flow consists of a few things:
 * A challenge is rendered (issued).
 * A challenge is solved on the front end and a token is harvested (solved).
-* The token is passed to siteverify and it is consumed (site-verified).
+* The token is passed to siteverify, and it is consumed (siteverified).
 
-Visitor Solve Rate is the percentage of tokens that were harvested compared to issued.
+Visitor Solve Rate is the percentage of tokens that were issued but have not necessarily been siteverified compared to issued challenges.
 
 ## What is API Solve Rate?
 
-API Solve rate is the share of tokens that were site-verified compared to issued. 
+API Solve rate is the share of tokens that were siteverified compared to issued. 
 
 ## What is the difference between action and cData?
 
@@ -40,7 +40,7 @@ Action should not contain any PII as this is placed into the analytics.
 
 cData is not stored in our analytics. It can contain data that may vary by each challenge instance.
 
-Both cData and action are returned by the siteverify API if a token is presented.
+Both cData and action are returned by the siteverify API if a valid token is presented.
 
 ## Can a Turnstile token be used twice?
 
@@ -68,9 +68,15 @@ The siteverify API must not be called by the front-end as this may reveal the se
 
 Currently, a Turnstile token can have up to 2048 characters.
 
-## What is challenges.cloudflare.com and why does my application connect to this origin?
+## What is challenges.cloudflare.com, and why does my application connect to this origin?
 
 Turnstile is hosted under challenges.cloudflare.com. 
+
+## Can I use Turnstile to protect a React Native application?
+
+We currently do not offer an easy and official way to embed Turnstile in a React Native application. 
+
+An HTML page rendered in a [WebView](https://github.com/react-native-webview/react-native-webview) can use Turnstile. The page must be loaded from a domain allowed to use the [sitekey](/turnstile/get-started/domain-management/), either using `uri` or by specifying the `html` and `baseUrl` options.
 
 ## Are there sitekeys and secret keys that can be used for testing?
 

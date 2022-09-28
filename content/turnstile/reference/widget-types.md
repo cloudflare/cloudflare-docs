@@ -5,15 +5,15 @@ weight: 8
 layout: single
 ---
 
-# Widget Types
+# Widget Types 
 
 Every instance of Turnstile belongs to a Turnstile widget. It is configured on a per-widget level. Every widget has a mode, a label, a sitekey, and a secret key. 
 
 The 3 modes for Turnstile are **Managed**, **Non-Interactive**, and **Invisible**.
 
-## Managed
+## Managed (Recommended)
 
-Cloudflare will use information from the request and session to decide if an interactive challenge should be used. If we show an interaction, the user will be prompted to check a box (no images or text to decipher).
+Cloudflare will use information from the visitor to decide if an interactive challenge should be used. If we show an interaction, the user will be prompted to check a box (no images or text to decipher).
 
 ### Light mode
 

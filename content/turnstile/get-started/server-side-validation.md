@@ -25,36 +25,50 @@ Example using cURL:
 
 <div>
 
-```bash
+```sh
 
 curl -L -X POST 'https://challenges.cloudflare.com/turnstile/v0/siteverify' --data 'secret=verysecret&response=<response>'
 
 ```
 </div>
 
-Example using fetch from Cloudflare Worker's:
+Example using fetch from Cloudflare Workers:
 
 <div>
 
 ```javascript
 
-async function handleRequest() {
-    // ... receive response
+// This is the demo secret key. In prod, we recommend you store
+// your secret key(s) safely.
+const SECRET_KEY = '1x0000000000000000000000000000000AA';
+
+async function handlePost(request) {
+    const body = await request.formData();
+    // Turnstile injects a token in "cf-turnstile-response".
+    const token = body['cf-turnstile-response'];
+    const ip = request.headers.get('CF-Connecting-IP');
+
+    // Validate the token by calling the "/siteverify" API.
     let formData = new FormData();
-    formData.append('secret', 'verysecret');
-    formData.append('response', 'receivedResponse);
-    await fetch(
-        'https://challenges.cloudflare.com/turnstile/v0/siteverify',
-        {
-            body: formData,
-            method: 'post'
-        }
-    );
-    // ...
+    formData.append('secret', SECRET_KEY);
+    formData.append('response', token);
+    formData.append('remoteip', ip);
+
+    const result = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+        body: formData,
+        method: 'POST',
+    });
+
+    const outcome = await result.json();
+    if (outcome.success) {
+        // …
+    }
 }
 
 ```
 </div>
+
+View the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/index.mjs).
 
 ## Accepted Parameters
 

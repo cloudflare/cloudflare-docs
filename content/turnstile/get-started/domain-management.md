@@ -9,7 +9,7 @@ layout: single
 
 When creating a widget, customers must specify a list of domains. The widget can only be used on these domains and will not work on any other domains. Customers can use subdomains to restrict the widgets further.
 
-The domain should not contain a scheme `http://` or `https://`, or a path `/`. 
+The domain should not contain a scheme `http://` or `https://`, a port `443`, or a path `/`. 
 
 Specifying a subdomain is optional.
 

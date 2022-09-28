@@ -7,15 +7,77 @@ layout: single
 
 # Client-side Render
 
-Initializing and customizing the Turnstile widget on your webpage can be done via **explicit** or **implicit** rendering. 
+Initializing and customizing the Turnstile widget on your webpage can be done via **implicit** or **explicit** rendering. 
 
-## Explicitly render the Turnstile widget
+## Implicitly render the Turnstile widget
 
-1. Insert the JavaScript:
+The HTML is scanned for elements that have a `cf-turnstile` class name:
+
 
 <div>
 
-```bash
+```html
+
+<div class="cf-turnstile" data-sitekey="yourSitekey" data-callback="javascriptCallback"></div>
+
+```
+</div>
+
+Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our siteverify endpoint. A token can only be validated once and cannot be redeemed twice. 
+
+{{<Aside type="note">}}
+
+Once a token has been issued, it can be validated within the next 300 seconds. After 300 seconds, the token is no longer valid and another challenge needs to be solved.
+
+{{</Aside>}}
+
+To configure the challenge, see [Configurations](/turnstile/get-started/client-side-rendering/#configurations) containing data attributes and render parameters.
+
+See the [demo](https://demo.turnstile.workers.dev/) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/implicit.html).
+
+
+### Protect Forms
+
+Turnstile is often used to protect forms on websites such as login forms, contact forms, and more. After inserting the JavaScript script tag, customers can embed `<div class="cf-turnstile"></div>` into their site to protect their forms.
+
+For example:
+<div>
+
+```html
+
+<form action="/login" method="POST">
+   <input type="text" placeholder="username"/>
+   <input type="password" placeholder="password"/>
+   <div class="cf-turnstile" data-sitekey="yourSitekey"></div> 
+   <button type="submit" value="Submit">Log in</button>
+</form>
+
+```
+
+</div>
+
+An invisible input with the name `cf-turnstile-response` is added, and will be sent to the server with the other fields.
+
+
+### Disable implicit rendering 
+
+Implicit rendering can be disabled by customers by replacing the script from 
+
+`https://challenges.cloudflare.com/turnstile/v0/api.js`
+
+to
+
+`https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit`
+
+When this option is used, HTML elements with the `cf-turnstile` class will not show a challenge. The `turnstile.render` function must be invoked using the following steps.
+
+## Explicitly render the Turnstile widget
+
+1. Insert the JavaScript tag:
+
+<div>
+
+```html
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
@@ -49,64 +111,8 @@ The `turnstile.render: function (container: string | HTMLElement, params: Render
 
 If the invocation is successful, the function returns a `widgetId`. If the invocation is unsuccessful, the function returns undefined.
 
-## Implicitly render the Turnstile widget
+See the [demo](https://demo.turnstile.workers.dev/explicit) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/explicit.html).
 
-The HTML is scanned for elements that have a `cf-turnstile` class name:
-
-
-<div>
-
-```html
-
-<div class="cf-turnstile" data-sitekey="yourSitekey" data-callback="javascriptCallback"></div>
-
-```
-</div>
-
-Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our siteverify endpoint. A token can only be validated once and cannot be redeemed twice. 
-
-{{<Aside type="note">}}
-
-Once a token has been issued, it can be validated within the next 300 seconds. After 300 seconds, the token is no longer valid and another challenge needs to be solved.
-
-{{</Aside>}}
-
-To configure the challenge, see [Configurations](/turnstile/get-started/client-side-rendering/#configurations) containing data attributes and render parameters.
-
-## Protect Forms
-
-Turnstile is often used to protect forms on websites such as login forms, contact forms, and more. After inserting the JavaScript script tag, customers can embed `<div class="cf-turnstile"></div>` into their site to protect their forms.
-
-For example:
-<div>
-
-```html
-
-<form action="/login" method="POST">
-   <input type="text" placeholder="username"/>
-   <input type="password" placeholder="password"/>
-   <div class="cf-challenge" data-sitekey="yourSitekey"></div> 
-   <button type="submit" value="Submit">Log in</button>
-</form>
-
-```
-
-</div>
-
-An invisible input with the name `cf-turnstile-response` is added, and will be sent to the server with the other fields.
-
-
-## Disable implicit rendering 
-
-Implicit rendering can be disabled by customers by replacing the script from 
-
-`https://challenges.cloudflare.com/turnstile/v0/api.js`
-
-to
-
-`https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit`
-
-When this option is used, HTML elements with the `cf-turnstile` class will not show a challenge. The `turnstile.render` function must be invoked.
 
 ## Access a widget's state
 
