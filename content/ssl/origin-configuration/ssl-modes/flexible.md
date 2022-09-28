@@ -12,9 +12,9 @@ Setting your encryption mode to **Flexible** makes your site partially secure. C
 
 <div class="mermaid">
 flowchart LR
-        accTitle: Flexible SSL/TLS Encryption
-        accDescr: With an encryption mode of Flexible, your application encrypts traffic between the visitor and Cloudflare, but not between Cloudflare and your server.
-        A[Browser] <--Encrypted--> B((Cloudflare))<--Unencrypted--> C[(Origin server)]
+    accTitle: Flexible SSL/TLS Encryption
+    accDescr: With an encryption mode of Flexible, your application encrypts traffic between the visitor and Cloudflare, but not between Cloudflare and your server.
+    A[Browser] <--Encrypted--> B((Cloudflare))<--Unencrypted--> C[(Origin server)]
 </div>
 
 ## Use when

@@ -12,9 +12,9 @@ When you set your encryption mode to **Full (strict)**, Cloudflare does everythi
 
 <div class="mermaid">
 graph LR
-        accTitle: Full - Strict SSL/TLS Encryption
-        accDescr: With an encryption mode of Full (strict), your application encrypts traffic going to and coming from Cloudflare.
-        A[Browser] <--Encrypted--> B((Cloudflare))<--Encrypted--> C[("Origin server &#9989;")]
+    accTitle: Full - Strict SSL/TLS Encryption
+    accDescr: With an encryption mode of Full (strict), your application encrypts traffic going to and coming from Cloudflare.
+    A[Browser] <--Encrypted--> B((Cloudflare))<--Encrypted--> C[("Origin server &#9989;")]
 </div>
 
 ## Use when
