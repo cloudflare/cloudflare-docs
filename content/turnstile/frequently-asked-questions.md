@@ -15,8 +15,8 @@ We recommend using the nonce-based approach documented with [CSP3](https://w3c.g
 
 Alternatively, add the following values to the directives:
 
-* **script-src** https://challenges.cloudflare.com
-* **frame-src** https://challenges.cloudflare.com
+* **script-src**: `https://challenges.cloudflare.com`
+* **frame-src**: `https://challenges.cloudflare.com`
 
 We recommend validating your CSP with [Google's CSP Evaluator](https://csp-evaluator.withgoogle.com/).
 
