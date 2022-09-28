@@ -71,7 +71,7 @@ Currently, a Turnstile token can have up to 2048 characters.
 
 ## What is challenges.cloudflare.com, and why does my application connect to this origin?
 
-Turnstile is hosted under challenges.cloudflare.com. 
+Turnstile is hosted under `challenges.cloudflare.com`. 
 
 ## Can I use Turnstile to protect a React Native application?
 
