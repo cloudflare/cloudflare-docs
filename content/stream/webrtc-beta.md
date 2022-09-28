@@ -74,7 +74,7 @@ const client = new WHIPClient(url, videoElement);
 
 Once the creator grants permission to their camera and microphone, live video and audio will automatically start being streamed to Cloudflare, using WebRTC.
 
-You can also use this URL with any client that supports the [WebRTC-HTTP ingestion protocol (WHIP)](https://www.ietf.org/id/draft-ietf-wish-whip-04.html), such as [Gstreamer](https://gstreamer.freedesktop.org/) or [whip-js](https://github.com/medooze/whip-js). There is active development and discussion around [supporting WHIP in OBS Studio](https://github.com/obsproject/obs-studio/pull/7192). 
+You can also use this URL with any client that supports the [WebRTC-HTTP ingestion protocol (WHIP)](https://www.ietf.org/id/draft-ietf-wish-whip-04.html). See [supported WHIP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
 
 {{<Aside>}}
 [Trickle ICE](https://datatracker.ietf.org/doc/rfc8838/) is not yet supported, but will be supported soon. Some WHIP clients require Trickle ICE.
@@ -103,7 +103,7 @@ const client = new WHEPClient(url, videoElement);
 
 As long as the creator is actively streaming, viewers should see their broadcast in their browser, with less than 1 second of latency.
 
-You can also use this URL with any client that supports the [WebRTC-HTTP egress protocol (WHEP)](https://www.ietf.org/id/draft-murillo-whep-00.html). As more WHEP clients are published, we are committed to supporting them and being fully compliant with the WHEP protocol as it evolves into a standard.
+You can also use this URL with any client that supports the [WebRTC-HTTP egress protocol (WHEP)](https://www.ietf.org/id/draft-murillo-whep-00.html). See [supported WHEP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
 
 ## Using WebRTC in native apps
 
@@ -114,6 +114,20 @@ If you are building a native app, the example code above can run within a [WkWeb
 - **Chrome**: Navigate to `chrome://webrtc-internals` tov view detailed logs and graphs.
 - **Firefox**: Navigate to `about:webrtc` to view information about WebRTC sessions, similar to Chrome.
 - **Safari**: To enable WebRTC logs, from the inspector, open the settings tab (cogwheel icon), and set WebRTC logging to "Verbose" in the dropdown menu.
+
+## Supported WHIP and WHEP clients
+
+Beyond the [example WHIP client](https://github.com/cloudflare/templates/blob/main/stream/webrtc/src/WHIPClient.ts) and [example WHEP client](https://github.com/cloudflare/templates/blob/main/stream/webrtc/src/WHEPClient.ts) used in the examples above, we have tested and confirmed that the following clients are compatible with Cloudflare Stream:
+
+#### WHIP
+
+- [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (Typescript)
+
+#### WHEP
+
+- [meetecho/simple-whep-client](https://github.com/meetecho/simple-whep-client) (C)
+
+As more WHIP and WHEP clients are published, we are committed to supporting them and being fully compliant with the both protocols.
 
 ## Limitations while in beta
 
