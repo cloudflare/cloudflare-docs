@@ -102,7 +102,7 @@ We recommend running `cloudflared` [as a service](/cloudflare-one/connections/co
 
 You can now [route traffic](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) to your Tunnel, and on to both applications, using Cloudflare DNS. Visit the [Cloudflare dashboard](https://dash.cloudflare.com), select a website, and click on the `DNS` tab.
 
-Click `+Add record` and choose `CNAME`. In the `Name` field, add the name of the subdomain of your new site. In this example, that would be `grafana` and `blog`. Also ensure you `Proxy status` is turned on. 
+Click `+Add record` and choose `CNAME`. In the `Name` field, add the name of the subdomain of your new site. In this example, that would be `grafana` and `blog`. Also ensure that `Proxy status` is turned on. 
 
 In the `Content` field, paste the ID of your Tunnel created earlier and append `cfargotunnel.com`. Repeat this process for the second subdomain - they will both share the same Tunnel address.
 
