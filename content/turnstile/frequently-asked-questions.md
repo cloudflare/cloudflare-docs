@@ -51,7 +51,7 @@ No, the siteverify API will only validate a token once. If a token has already b
 
 A Turnstile token is valid for 300 seconds.
 
-## What happens if the user takes longer than 5 minutes?
+## What happens if the user takes longer than five minutes?
 
 The Turnstile widget needs to be refreshed to generate a new token. This can be done using the `turnstile.reset` function.
 
