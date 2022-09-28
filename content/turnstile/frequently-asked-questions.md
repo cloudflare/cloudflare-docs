@@ -1,6 +1,6 @@
 ---
 title: FAQ
-pcx_content_type: FAQ
+pcx_content_type: faq
 weight: 12
 layout: list
 ---
