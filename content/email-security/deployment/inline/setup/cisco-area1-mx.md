@@ -35,7 +35,7 @@ To add a new Sender Group:
     * **DNS Lists**: Leave blank.
     * **Connecting Host DNS Verification**: Leave all options unchecked.
 
-4. Select **Submit and Add Senders >>** and add the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
+4. Select **Submit and Add Senders** and add the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
 
 
 ## 2. Configure Incoming Relays
@@ -54,7 +54,7 @@ You need to configure the Incoming Relays section to tell IronPort to ignore ups
 
 Instructions to update your MX records will depend on the DNS provider you are using. In your domain DNS zone, you need to replace your current MX records with the Area 1 hosts. This will have to be done for every domain where Area 1 will be the primary MX.
 
-Update your domain MX records using Area 1:
+To update your MX records with Area 1, use the following:
 
 MX Priority | Host
 --- | ---
@@ -64,7 +64,7 @@ MX Priority | Host
 
 When configuring the Area 1 MX records, it is important to configure both hosts with the same MX priority, this will allow mail flows to load balance between the hosts.
 
-For European customers, update your MX records to:
+European customers should update  MX records with Area 1 European hosts:
 
 MX Priority | Host
 --- |---
