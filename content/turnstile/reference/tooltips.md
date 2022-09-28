@@ -4,7 +4,6 @@ pcx_content_type: reference
 weight: 11
 layout: single
 ---
-
 # Tooltips
 
 **Visitor Solve Rate**: The percentage of humans who have seen the widget and completed it. This can be both interactive and non-interactive.
