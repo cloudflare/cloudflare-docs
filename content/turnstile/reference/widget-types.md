@@ -5,7 +5,7 @@ weight: 8
 layout: single
 ---
 
-# Widget Types 
+# Widget types 
 
 Every instance of Turnstile belongs to a Turnstile widget. It is configured on a per-widget level. Every widget has a mode, a label, a sitekey, and a secret key. 
 
