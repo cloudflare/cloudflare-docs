@@ -611,7 +611,7 @@ configure Wrangler with the appropriate proxy details, use the below environment
 - `http_proxy`
 - `HTTP_PROXY`
 
-To configure this on MacOS, add `HTTP_PROXY=http://<YOUR_PROXY_HOST>:<YOUR_PROXY_PORT>` before your Wrangler commands.
+To configure this on macOS, add `HTTP_PROXY=http://<YOUR_PROXY_HOST>:<YOUR_PROXY_PORT>` before your Wrangler commands.
 
 Example:
 
