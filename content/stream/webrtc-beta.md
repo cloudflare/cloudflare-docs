@@ -15,7 +15,7 @@ WebRTC is ideal for when you need live video to playback in near real-time, such
 - When you want your end users to be able to easily go live or create their own video content, from a web browser or native app
 
 {{<Aside>}}
-WebRTC streaming is currently in beta, and we'd love to hear what you think. Join our [Discord channel](https://discord.com/channels/595317990191398933/893253103695065128) and let us know what you're buliding with WebRTC!
+WebRTC streaming is currently in beta, and we'd love to hear what you think. Join the Cloudflare Discord server [using this invite](https://discord.com/invite/cloudflaredev/) and hop into our [Discord channel](https://discord.com/channels/595317990191398933/893253103695065128) to let us know what you're building with WebRTC!
 {{</Aside>}}
 
 ## Step 1: Create a live input
