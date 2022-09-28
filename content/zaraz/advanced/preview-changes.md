@@ -8,13 +8,13 @@ meta:
 
 # Preview changes before publishing
 
-Zaraz allows you to test your configurations before publishing them. This is helpful to avoid unintended consequences when deploying a new tool or trigger, as it lets you test changes before committing to them. 
+Zaraz allows you to test your configurations before publishing them. This is helpful to avoid unintended consequences when deploying a new tool or trigger. 
 
 {{<Aside type="note">}}This feature is available to customers on a [Workers Paid plan](/workers/platform/pricing/).{{</Aside>}}
 
 ## Enable Preview & Publish mode
 
-By default, Zaraz is configured to commit changes in real time. To enable the preview mode and test new features you are adding to Zaraz:
+By default, Zaraz is configured to commit changes in real time. To enable preview mode, and test new features you are adding to Zaraz:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Zaraz** > **Settings**.
@@ -24,7 +24,7 @@ You are now working in preview mode. To commit changes and make them live, you w
 
 ### Test changes before publishing them
 
-Now that you have Zaraz working on preview mode, you can open your website and test your settings:
+Now that you have Zaraz working in preview mode, you can open your website and test your settings:
 
 1. In [Zaraz settings](https://dash.cloudflare.com/?to=/:account/:zone/zaraz/settings) copy your **Debug Key**.
 2. Navigate to the website you want to test your new settings on.
@@ -39,14 +39,13 @@ Now that you have Zaraz working on preview mode, you can open your website and t
 
 To exit preview mode, close Zaraz debugger.
 
-
 ## Disable Preview & Publish mode
 
-Disable Preview & Publish mode to work in real-time. This means that all changes you make on the dashboard will be instantly applied to your domain.
+Disable Preview & Publish mode to work in real-time. When you work in real-time, any changes made on the dashboard are applied instantly to domain you are working on.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Zaraz** > **Settings**.
 3. In **Workflow**, choose **Real-time**.
-4. In the modal, decide if you want to delete all the unpublished changes, or if you want to publish any change made in the meantime.
+4. In the modal, decide if you want to delete all unpublished changes, or if you want to publish any change made in the meantime.
 
-Zaraz is now working in real time. This means that any change you make will be immediately reflected on the domain you are working on.
+Zaraz is now working in real time. Any change you make will be immediately applied the domain you are working on.
