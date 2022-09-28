@@ -49,7 +49,7 @@ No, the siteverify API will only validate a token once. If a token has already b
 
 ## How long is a Turnstile token valid for before it is rejected by siteverify?
 
-300 seconds.
+A Turnstile token is valid for 300 seconds.
 
 ## What happens if the user takes longer than 5 minutes?
 
