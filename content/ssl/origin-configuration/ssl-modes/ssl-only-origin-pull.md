@@ -18,8 +18,6 @@ The certificate presented by the origin will be validated the same as with [Full
 
 <div class="mermaid">
 graph LR
-    accTitle: Strict (SSL-Only Origin Pull) SSL/TLS Encryption
-    accDescr: With an encryption mode of Strict (SSL-Only Origin Pull), all connections to the origin will always be made using SSL/TLS.
     A[Browser] <--Encrypted--> B((Cloudflare))<--Encrypted--> C[("Origin server &#9989;")]
 </div>
 
