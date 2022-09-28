@@ -28,8 +28,8 @@ There are two ways to add API endpoints from Discovery.
 ### Add from the Endpoint Management Tab
 
 1. From Endpoint Management, select **Add endpoints** > **Select from Discovery** tab.
-3. Select the discovered endpoints you would like to add.
-4. Select **Add endpoints**.
+2. Select the discovered endpoints you would like to add.
+3. Select **Add endpoints**.
 
 ### Add from the Discovery Tab
 1. From Endpoint Management, select the **Discovery** tab.
@@ -39,8 +39,8 @@ There are two ways to add API endpoints from Discovery.
 ## Add endpoints manually
 
 1. From Endpoint Management, select **Add endpoints** > **Manually add**.
-3. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
-4. Select **Add endpoints**.
+2. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
+3. Select **Add endpoints**.
 
 {{<Aside type="Note">}}
 
