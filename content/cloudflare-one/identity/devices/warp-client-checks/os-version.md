@@ -74,5 +74,7 @@ Linux currently relies on the system Kernel version instead of a specific distro
 
 ### On ChromeOS
 
-On ChromeOS Zero Trust WARP services is served via our Android client which technically runs inside an Android VM on ChromeOS. WARP for Android version 6.16 and below repor the Android VM version as Android OS version. Starting with client 6.17 we introduced a distinct ChromeOS OS Version posture check and the Android client now only returns the actual Chrome OS version.
+On Chromebooks, the WARP client runs as an Android application inside an Android VM. For the OS version check, WARP version 6.16 and below reports the Android VM version and not the ChromeOS version. Version 6.17 and above returns the actual ChromeOS version. 
+
+To determine the ChromeOS version on your device, select the time and go to **Settings** > **About ChromeOS**.
 
