@@ -18,7 +18,7 @@ The certificate presented by the origin will be validated the same as with [Full
 
 <div class="mermaid">
 graph LR
-    A[Browser] <--Encrypted--> B((Cloudflare))<--Encrypted--> C[("Origin server (verified)")]
+    A[Browser] <--Encrypted--> B((Cloudflare))<--Encrypted--> C(("Origin server &#9989;"))
 </div>
 
 ## Use when
