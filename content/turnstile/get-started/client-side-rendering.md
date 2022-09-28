@@ -1,7 +1,7 @@
 ---
 title: Client-side Rendering
 pcx_content_type: get-started
-weight: 3
+weight: 4
 layout: single
 ---
 
@@ -35,7 +35,6 @@ To configure the challenge, see [Configurations](/turnstile/get-started/client-s
 
 See the [demo](https://demo.turnstile.workers.dev/) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/implicit.html).
 
-
 ### Protect Forms
 
 Turnstile is often used to protect forms on websites such as login forms, contact forms, and more. After inserting the JavaScript script tag, customers can embed `<div class="cf-turnstile"></div>` into their site to protect their forms.
@@ -56,8 +55,7 @@ For example:
 
 </div>
 
-An invisible input with the name `cf-turnstile-response` is added, and will be sent to the server with the other fields.
-
+An invisible input with the name `cf-turnstile-response` is added and will be sent to the server with the other fields.
 
 ### Disable implicit rendering 
 
@@ -83,7 +81,6 @@ When this option is used, HTML elements with the `cf-turnstile` class will not s
 
 ```
 </div>
-
 
 2. Once the script is embedded, you will have access to a global function with multiple callback options you can customize. To allow this function to work properly, an HTML element with the ID "example-container" must exist. <br> The challenge can be invoked explicitly with the following JavaScript snippet:
 
@@ -112,7 +109,6 @@ The `turnstile.render: function (container: string | HTMLElement, params: Render
 If the invocation is successful, the function returns a `widgetId`. If the invocation is unsuccessful, the function returns undefined.
 
 See the [demo](https://demo.turnstile.workers.dev/explicit) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/explicit.html).
-
 
 ## Access a widget's state
 

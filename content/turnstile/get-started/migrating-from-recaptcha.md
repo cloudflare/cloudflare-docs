@@ -1,7 +1,7 @@
 ---
 title: Migrating from reCAPTCHA
 pcx_content_type: get-started
-weight: 5
+weight: 3
 layout: single
 
 ---
