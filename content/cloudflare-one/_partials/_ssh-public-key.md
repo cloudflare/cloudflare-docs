@@ -23,3 +23,5 @@ _build:
     :w !sudo tee %
     :q!
     ```
+
+Note that the `ca.pub` file can hold multiple keys, listed one per line; empty lines and comments starting with ‘#’ are also allowed.
