@@ -254,7 +254,7 @@ After your request finishes processing, you can download your packet captures.
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
 2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
 3. From the **Packet captures** page, select the **Captures** tab.
-4. Locate your packet capture you want to download and under **Captures**, select the link to open download it.
+4. Locate your packet capture you want to download and under **Captures**, select the link to download it.
 
 Packet captures are available to download when the **Status** displays **Success**. 
 

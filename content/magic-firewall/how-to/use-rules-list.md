@@ -13,14 +13,14 @@ meta:
 In order to use this feature first [create a new list](https://api.cloudflare.com/#rules-lists-create-list).
 
 ```bash
-    curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rules/lists \
-    -H 'Content-Type: application/json' \
-    -H 'X-Auth-Email: user@example.com' \
-    -H 'X-Auth-Key: 00000000000' \
-    --data '{
-        "name":"iplist",
-        "description":"This contains IPs that should be allowed.",
-        "kind":"ip"
+curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rules/lists \
+-H 'Content-Type: application/json' \
+-H 'X-Auth-Email: user@example.com' \
+-H 'X-Auth-Key: 00000000000' \
+--data '{
+    "name":"iplist",
+    "description":"This contains IPs that should be allowed.",
+    "kind":"ip"
     }'
 ```
 
