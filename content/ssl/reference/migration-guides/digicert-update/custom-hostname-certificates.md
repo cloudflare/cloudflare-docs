@@ -9,9 +9,9 @@ meta:
 
 # Custom hostnames
 
-On **September 26, 2022**, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new [custom hostname certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/). This will not affect existing custom hostname certificates.
+On **January 23, 2023**, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new [custom hostname certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/). This will not affect existing custom hostname certificates.
 
-On **October 31, 2022**, Cloudflare will stop using DigiCert as the CA for custom hostname certificate renewals. This will not affect existing custom hostname certificates, but only certificate renewals.
+On **January 31, 2023**, Cloudflare will stop using DigiCert as the CA for custom hostname certificate renewals. This will not affect existing custom hostname certificates, but only certificate renewals.
 
 ## Summary of changes
 
@@ -28,22 +28,22 @@ This table provides a summary of the differences between DigiCert and our other 
 
 ## Domain Control Validation (DCV) updates
 
-CNAME and Email DCV will be deprecated on **September 26th, 2022**, requiring customers to use either [HTTP](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#http) or [TXT](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#txt) DCV.
+CNAME and Email DCV will be deprecated on **January 23, 2023**, requiring customers to use either [HTTP](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#http) or [TXT](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#txt) DCV.
 
 Also, the maximum validity period for certificates will be decreased from 1 year to 90 days. This means that certificates will be renewed - and require DCV - more frequently.
 
 ## Required actions
 
-### Before September 26, 2022
+### Before January 23, 2023
 
 If your system integrates with the SSL for SaaS API to [create custom hostnames](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), you will need to update:
 
 - The value sent in the `"certificate_authority"` field under the SSL object. Your integration should either use Google Trust Services (`"google"`) or Let's Encrypt (`"lets_encrypt"`).
 - The value sent in the `"method"` field under the SSL object. Your integration should either use [`"txt"`](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#txt) or [`"http"`](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#http) (only available for [non-wildcard hostnames](#non-wildcard-hostnames)).
 
-### Before October 31, 2022
+### Before January 31, 2023
 
-We recommend that you migrate all your current custom hostnames away from DigiCert before October 31, 2022. This give you the control to migrate custom hostnames to the new system in a controlled manner instead of having Cloudflare manage the offboarding when the certificates come up for renewal.
+We recommend that you migrate all your current custom hostnames away from DigiCert before January 31, 2023. This give you the control to migrate custom hostnames to the new system in a controlled manner instead of having Cloudflare manage the offboarding when the certificates come up for renewal.
 
 #### Identify certificates
 
