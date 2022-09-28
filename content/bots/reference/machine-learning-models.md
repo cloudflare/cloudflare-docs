@@ -33,6 +33,8 @@ Customers will be notified via email and dashboard prior to a new Machine Learni
 
 By not updating to the latest version, you will be using a Machine Learning model no longer maintained or monitored by our engineering team. As internet traffic changes and new trends evolve, scoring accuracy by older versions may degrade.
 
+### Model versions and release notes
+
 | Version | Release Notes | Launch Date |
 | ---- | ---- | ---- |
 | v1 | First Machine Learning Model released.| Q1 2019 |
