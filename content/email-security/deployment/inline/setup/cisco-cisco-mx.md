@@ -30,7 +30,7 @@ To add a new Sender Group:
     * **DNS Lists**: Leave blank.
     * **Connecting Host DNS Verification**: Leave all options unchecked.
 
-4. Select **Submit and Add Senders >>** and add the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
+4. Select **Submit and Add Senders** and add the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
 
 ## 2. Add SMTP route for the Area 1 Email Protection Hosts
 
@@ -38,11 +38,11 @@ To add a new SMTP Route:
 
 1. Go to **Network** > **SMTP Routes**.
 
-2. Select the **Add Route…** button.
+2. Select **Add Route**.
 
 3. Configure the new SMTP Route as follows:
     * **Receiving Domain**: `a1s.mailstream`
-    * In **Destination Hosts**, select the **Add Row** button, and add the following values to the respective rows:
+    * In **Destination Hosts**, select **Add Row**, and add the following values to the respective rows:
     Priority | Destination                   | Port
     ------- | ----------------------------- | ---
     `0`      | `mailstream-west.mxrecord.io` | `25`
@@ -61,7 +61,7 @@ To create a new Content Filter:
 
 1. Go to **Mail Policies** > **Incoming Content Filters**.
 
-2. Select the **Add Filter…** button to create a new filter.
+2. Select **Add Filter** to create a new filter.
 
 3. Configure the new Incoming Content Filter as follows:
     * **Name**: `ESA_to_A1S`
@@ -78,26 +78,28 @@ To create a new Content Filter:
 
 1. Go to **Mail Policies** > **Incoming Content Filters**.
 
-2. Select the **Add Filter…** button to create a new filter.
+2. Select the **Add Filter** button to create a new filter.
 
 3. Configure the new Incoming Content Filter as follows:
     * **Name**: `A1S_to_ESA`
     * **Description**: `Area 1 inspected messages for final delivery`
     * **Order**: This filter must come before the previously created filter.
-    * Add seven conditions of type **Remote IP/Hostname** with the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/). For example: 
-    Order | Condition          | Rule
+    * **Conditions**: Add seven conditions of type **Remote IP/Hostname** with the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/): 
+    Order | Condition            | Rule
+    ----- | -------------------- | ---
+    `1`   | `Remote IP/Hostname` | `52.11.209.211`
+    `2`   | `Remote IP/Hostname` | `52.89.255.11`
+    `3`   | `Remote IP/Hostname` | `52.0.67.109`
+    `4`   | `Remote IP/Hostname` | `54.173.50.115`
+    `5`   | `Remote IP/Hostname` | `104.30.32.0/19`
+    `6`   | `Remote IP/Hostname` | `158.51.64.0/26`
+    `7`   | `Remote IP/Hostname` | `158.51.65.0/26`
+        * Ensure that the *Apply rule:* drop-down is set to **If one or more conditions match**.
+    * **Actions**: Select **Add Action**, and add the following:
+    Order | Action          | Rule
     --- | -------------------- | ---
-    `1` | `Remote IP/Hostname` | `52.11.209.211`
-    `2` | `Remote IP/Hostname` | `52.89.255.11`
-    `3` | `Remote IP/Hostname` | `52.0.67.109`
-    `4` | `Remote IP/Hostname` | `54.173.50.115`
-    `5` | `Remote IP/Hostname` | `104.30.32.0/19`
-    `6` | `Remote IP/Hostname` | `158.51.64.0/26`
-    `7` | `Remote IP/Hostname` | `158.51.65.0/26`
-    * Ensure that the **Apply rule:** drop-down is set to *If one or more conditions match*.
-    * **Actions**:
-        * **Action**: **Skip Remaining Content Filters (Final Action)**
+    1   | `Skip Remaining Content Filters (Final Action)` | `skip-filters()`
 
 ## 4. Add the Incoming Content Filter to the Inbound Policy table
 
-Assign the Incoming Content Filters created in step 3 to your primary mail policy in the Incoming Mail Policy table. Then, commit your changes to activate the email redirection.
+Assign the Incoming Content Filters created in [step 3](#3-create-incoming-content-filters) to your primary mail policy in the Incoming Mail Policy table. Then, commit your changes to activate the email redirection.
