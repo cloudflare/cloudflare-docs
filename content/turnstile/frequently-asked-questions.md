@@ -37,7 +37,7 @@ API Solve Rate is the share of tokens that were siteverified compared to issued.
 
 Action can be used in analytics and is more limited in size. It should identify different pages in a website where a widget is used.
 
-Action should not contain any PII as this is placed into the analytics.
+Action should not contain any personally identifiable information (PII) as this is placed into the analytics.
 
 cData is not stored in our analytics. It can contain data that may vary by each challenge instance.
 
