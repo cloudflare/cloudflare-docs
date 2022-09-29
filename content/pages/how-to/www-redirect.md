@@ -15,7 +15,7 @@ To do this:
 
 ![Adding a www record in the Cloudflare DNS dashboard](/pages/how-to/media/www_subdomain.png)
 
-4. Next, go to **Bulk Redirects** > **Create a new Bulk Redirects list** > **Create new list**.
+4. Next, go to **Rules** > **Bulk Redirects** > **Create a new Bulk Redirects list** > **Create new list**.
 
 ![Create a new Bulk redirects list](/pages/how-to/media/create_a_new_bulk_redirect_list.png)
 
