@@ -57,7 +57,7 @@ Deploy your site to Pages:
 
 {{</table-wrap>}}
 
-4. Go to **Environment variables (advanced)** and create a `NODE_VERSION` variable with a value of `16`.
+4. Go to **Environment variables (advanced)** > **Add variable** > create a `NODE_VERSION` variable with a value of `16`.
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 
