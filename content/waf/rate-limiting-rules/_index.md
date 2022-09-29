@@ -56,7 +56,7 @@ Feature | Free | Pro | Business | Enterprise w/ WAF Essential | Enterprise w/ Ad
 Available fields<br/>in rule expression | Path | Host, URI, Path, Full URI, Query | Host, URI, Path, Full URI, Query, Method, Source IP, User Agent | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Bot Management fields<sup>1</sup>) | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Bot Management fields<sup>1</sup>), [request body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields)<sup>2</sup>
 Counting characteristics | IP | IP | IP | IP, IP with NAT support | IP, IP with NAT support, Query, Host, Headers, Cookie, ASN, Country, Path, JA3 Fingerprint<sup>1</sup>
 Available fields<br/>in counting expression | N/A | N/A | All rule expression fields, Response code, Response headers | All rule expression fields, Response code, Response headers | All rule expression fields, Response code, Response headers
-Counting model | Number of requests | Number of requests | Number of requests | Number of requests | Number of requests<br/>[Complexity score](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting)
+Counting model | Number of requests | Number of requests | Number of requests | Number of requests | Number of requests,<br/>[complexity score](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting)
 Maximum sampling period | 10 seconds | 60 seconds | 10 minutes | 1 hour | 1 hour
 Maximum timeout period | 10 seconds | 1 hour | 1 day | 1 day | 1 day
 Number of rules | 1 | 2 | 5 | 100 | 100
