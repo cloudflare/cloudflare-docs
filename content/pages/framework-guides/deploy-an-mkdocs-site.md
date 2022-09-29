@@ -9,7 +9,7 @@ title: Deploy an Mkdocs site
 
 ## Install Mkdocs
 
-MkDocs requires a recent version of Python and the Python package manager, pip, to be installed on your system. To install pip, refer to the [Mkdocs Installation](https://www.mkdocs.org/user-guide/installation/). With pip installed, run:
+MkDocs requires a recent version of Python and the Python package manager, pip, to be installed on your system. To install pip, refer to the [Mkdocs Installation guide](https://www.mkdocs.org/user-guide/installation/). With pip installed, run:
 
 ```sh
 $ pip install mkdocs
@@ -24,7 +24,7 @@ Use the `mkdocs new` command to create a new application:
 $ mkdocs new <PROJECT_NAME>
 ```
 
-Then `cd` into your project and take Mkdocs and its dependencies and put them into a `requirements.txt` file:
+Then `cd` into your project, take Mkdocs and its dependencies and put them into a `requirements.txt` file:
 
 ```sh
 pip freeze > requirements.txt
@@ -66,7 +66,7 @@ Deploy your site to Pages:
 
 {{</table-wrap>}}
 
-4. Go to **Environment variables (advanced)** > **Add variable** > add the variable `PYTHON_VERSION` with a value of `3.7`.
+4. Go to **Environment variables (advanced)** > **Add variable** > and add the variable `PYTHON_VERSION` with a value of `3.7`.
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 
