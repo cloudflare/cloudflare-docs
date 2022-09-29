@@ -5,7 +5,7 @@ title: Deploy a Docusaurus site
 
 # Deploy a Docusaurus site
 
-[Docusaurus](https://docusaurus.io) is a static-site generator. It builds a single-page application with fast client-side navigation, leveraging the full power of React to make your site interactive. It provides out-of-the-box documentation features but can be used to create any kind of site (personal website, product, blog, marketing landing pages, etc).
+[Docusaurus](https://docusaurus.io) is a static site generator. It builds a single-page application with fast client-side navigation, leveraging the full power of React to make your site interactive. It provides out-of-the-box documentation features but can be used to create any kind of site such as a personal website, a product site, a blog, or marketing landing pages.
 
 ## Install Docusaurus
 
@@ -24,7 +24,7 @@ Create a new GitHub repository by visiting [repo.new](https://repo.new). When cr
 In your terminal, `cd` into your new Docusaurus project directory and run:
 
 ```sh
-# Setup the local repository
+# Set up the local repository
 $ git init
 $ git remote add origin <YOUR_NEW_GITHUB_REPOSITORY_URL>
 $ git branch -M main
@@ -53,11 +53,11 @@ Deploy your site to Pages:
 | -------------------- | --------------------------- |
 | Production branch    | `main`                      |
 | Build command        | `npm run build`             |
-| Build directory      | `build`                    |
+| Build directory      | `build`                     |
 
 {{</table-wrap>}}
 
-4. Go to **Environment variables (advanced)** and create a variable name `NODE_VERSION` with a value of `16`.
+4. Go to **Environment variables (advanced)** and create a `NODE_VERSION` variable with a value of `16`.
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 
