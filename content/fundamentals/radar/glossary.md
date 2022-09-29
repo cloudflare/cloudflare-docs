@@ -8,85 +8,85 @@ weight: 1
 
 This page provides a list of terms and concepts to help you understand Radar and the information shown.
 
-## Application-level attacks
+## Application-level Attacks
 
-Attacks that happen on [layer 7](https://www.cloudflare.com/learning/ddos/what-is-layer-7/). Includes the most frequent blocking reasons as well as the development of blocked requests over time.
+Layer 7 attack information based on requests that were mitigated. Including the most frequent mitigation techniques as well as trending of mitigated request volume over time.
 
-## Autonomous systems
+## Autonomous Systems
 
 The Internet is a network of networks, and autonomous systems are the networks that make up the Internet. More specifically, an autonomous system (AS) is a large network or group of networks that has a unified routing policy - the process by which a path through one or more networks is chosen.
 
-Data packets hop from one AS to another until they reach their final destination. Every computer or device that connects to the Internet is connected to an AS. ISPs have one or more ASs, and each AS is assigned an official Autonomous System Number (ASN) for use in Border Gateway Protocol (BGP) routing. For example, Cloudflare's ASN is AS13335. Learn more in [What is an autonomous system](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/).
+Data packets hop from one AS to another until they reach their final destination. Every computer or device that connects to the Internet is connected to an AS. ISPs have one or more ASs, and each AS is assigned an official Autonomous System Number (ASN) for use in Border Gateway Protocol (BGP) routing. For example, Cloudflare's ASN is AS13335. Learn more [here](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/).
 
-## BGP announcements
+## BGP Announcements
 
-Border Gateway Protocol (BGP) is the routing protocol for the Internet. Much like the post office processing mail, BGP picks the most efficient routes for delivering Internet traffic. A BGP announcement allows an [autonomous system](#autonomous-systems) (AS) to interface with another AS ask for messages of certain network prefixes. These messages are then processed and (possibly) forwarded to other ASes, allowing for every AS in the path to learn where to send traffic to that network prefix. Learn more in [What is BGP routing](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/).
+Border Gateway Protocol (BGP) is the routing protocol for the Internet. Much like the post office processing mail, BGP picks the most efficient routes for delivering Internet traffic. A BGP announcement is a way for an AS to say to another, "When you receive traffic to this network prefix, please send it to me". That message is then processed and (possibly) forwarded to other ASes, allowing for every AS in the path to learn where to send traffic to that network prefix. Learn more [here](https://www.cloudflare.com/en-gb/learning/security/glossary/what-is-bgp/).
 
 ## Certificates
 
-Digital certificates authenticate a website's identity and enables an encrypted connection. Encryption is a critical part of a safe Internet. SSL/TLS is the standard security technology for establishing an encrypted link between a server and a browser.
+Encryption is a critical part of a safe Internet. SSL/TLS is the standard security technology for establishing an encrypted link between a client and a server.
 
-In Cloudflare Radar, you can view all SSL certificates issued for a given site by a trusted Certificate Authority that are listed in active certificate transparency logs.
+In Cloudflare Radar, you can view all certificates issued for a given domain by a trusted Certificate Authority that are listed in active certificate transparency logs.
 
 You can review the certificates issued for your domain name to ensure that there have been no incorrect or fraudulent issuances of certificates associated with your domains. You can also sign up to receive alerts from our certificate transparency monitor in the [Cloudflare Dashboard](https://dash.cloudflare.com/).
 
-## Content categories
+## Content Categories
 
-Cloudflare uses a variety of data sources to categorize domains. Using Cloudflare Radar, you can view the content categories associated with a given domain. Cloudflare customers, using Cloudflare Gateway or 1.1.1.1 for Families, can decide to block certain categories, like adult content, in addition to security threats like malware and phishing.
+Cloudflare uses a variety of data sources to categorize domains. Using Cloudflare Radar, you can view the content categories associated with a given domain. Cloudflare customers using Cloudflare Gateway or 1.1.1.1 for Families can decide to block certain categories, like "Adult Content", in addition to security threats like malware and phishing.
 
-In some cases, a domain can be miscategorized. For example, a social media site might be categorized as Shopping & Auctions. If you believe a domain is miscategorized, or a domain has not yet been categorized, please provide your suggested category [using this form](https://radar.cloudflare.com/categorization-feedback) to bring it to our attention.
+In some cases, a domain may be miscategorized. For example, a social media site might be categorized as "Shopping & Auctions". If you believe a domain is miscategorized, or a domain has not yet been categorized, please provide your suggested category using [this form](https://radar.cloudflare.com/categorization-feedback) to bring it to our attention.
 
-## Geographical distribution
+## Domain Rankings
 
-Countries contributing traffic to this [Autonomous System](#autonomous-systems) (AS), and their relative contribution as percentage of the total AS traffic seen by Cloudflare. The total traffic includes other ASes through which traffic flows to their final destinations, as well as any devices that connect directly to this AS.
+Domain Rankings is based on our anonymized and aggregated 1.1.1.1 resolver data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular domains that reflect how people use the Internet globally. Domain Rankings’ popularity metric is best described as the estimated number of unique users that access a domain over some period of time.
 
-## Global traffic ranking trend
+## Geographical Distribution
 
-The Cloudflare 100k ranking is a measure of a website or web application's relative popularity. This ranking is calculated using a range of data that Cloudflare has about global Internet traffic patterns. The most popular website or web application, based on our ranking methodology, is ranked #1.
+Countries contributing traffic to this AS, and their relative contribution as percentage of the total AS traffic seen by Cloudflare.
 
-This chart shows the Cloudflare 100k daily global ranking for a site. You can adjust the period shown, from 24 hours to 30 days.
+## Internet Outages
 
-## Internet traffic change
+Internet connectivity can experience outages or disruptions due to a number of factors. These factors include power outages, damage to fiber optic cables, severe weather, natural disasters, or government direction. Outages may be sub-national or national in geographic scope, or may just impact one or more ASNs.
 
-The change in the amount of Internet traffic within the selected time range, based on data from Cloudflare's network.
+## Internet traffic trends
 
-## Network-level DDoS attacks
+Trends observed in Internet traffic originating gloablly or within a given location or autonomous system within the selected time range, based on aggregated data from our network.
 
-Attacks mitigated by our Level 3 and 4 [Denial of Service Attack prevention systems](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/). Cloudflare shows the most used attack vectors and the change in attack volume over the selected time range.
+## IP address geolocation
+
+IP address geolocation is the term used for the process of associating an IP address with a location in the physical world. IP geolocation used on Cloudflare Radar comes from a third-party database.
+
+Note that a number of factors may affect the accuracy of the geolocation information, including mobile network architecture, the use of VPN services, and the use of privacy-protecting proxy services.
+
+Learn more [here](https://www.maxmind.com/en/geoip-data-correction-request) about how to suggest a correction if you believe the location provided is incorrect.
+
+## Network-level DDoS Attacks
+
+Attacks mitigated by our Level 3 and 4 Denial of Service Attack prevention systems. We show the most used attack vectors as well as the change in attack volume over the selected time range.
 
 ## Traffic type filter
 
-* **Human-only traffic**: Traffic that Cloudflare's algorithms determine as being human due to its activity.
+* **Human Only Traffic**: Traffic that our algorithms determine as being generated by human activity.
 
-* **Automated-only traffic**: Traffic that Cloudflare's algorithms determine as being from bots and automated script due to its activity.
+* **Automated Only Traffic**: Traffic that our algorithms determine as being generated by bot or automated script activity.
 
-* **All traffic**: Use all traffic, which includes both human activity and automated activity.
-
-## Trending domains and most popular domains
-
-Our global and country-level domain ranking is calculated using aggregated data that Cloudflare has about global Internet traffic patterns. The most popular website or web application, based on our ranking methodology, is ranked #1.
-
-The top trending domains are calculated based on a combination of domain popularity, the percentage change in traffic patterns, and the change in rank over the selected time period.
-
-Domains for a given web application are grouped together and displayed in the ranking table using their best-known domain. For example, TikTok, which shows up in the ranking data as 'tiktok.com', includes all domains associated with TikTok, such as 'tiktokcdn.com' and 'tiktokv.com'.
-
-Domains categorized as pornography or content servers have been excluded from our ranking.
-
-Domain-specific trend information, such as rankings, is made available for all websites, whether or not the website is operated by a Cloudflare customer. This information is derived from aggregated data from the 1.1.1.1 public DNS resolver that has been anonymized in accordance with our privacy commitments for the resolver and external data sources. Any other information obtained from the Cloudflare network (like Internet traffic changes in a region) is based on aggregated data that contains no personal or customer identifying information.
+* **All Traffic**: Use all traffic, which includes both human activity and automated activity.
 
 ## Trends
 
-Based on the metadata Cloudflare collects on HTTP requests, we are able to show trends over a diverse set of data points. This includes the distribution of mobile versus desktop traffic, the percentage of traffic detected as coming from bots and the distribution of browsers.
+Based on the aggregated HTTP/s metadata we see, we are able to to show trends about a diverse set of metrics, including the distribution of mobile device vs. desktop traffic, the percentage of traffic detected as coming from bots, and the distribution of user agents/browsers. We also provide insights into the usage of HTTPS and IPv6.
 
 ## Verified bots
 
-Each entry on the list of verified bots exists because a corresponding IP was seen associated with a verified bot in the last 30 days. Bot traffic describes any non-human traffic to a website or an application. A verified bot is not necessarily good or bad.
+Bot traffic describes any non-human traffic to a website or an app. Some bots are useful, such as search engine bots that index content for search or customer service bots that help users. Other bots may be used to perform malicious activities, such as break into user accounts or scan the web for contact information to send spam.
 
-Some bots are useful, such as search engine bots that index content for search or customer service bots that help users. Other bots may be used to perform malicious activities, such as break into user accounts or scan the web for contact information to send spam.
+Verified bots, such as the ones from search engines, are usually transparent about who they are. Cloudflare manually approves well-behaved services that benefit the broader Internet and honor robots.txt.
+
+Each entry on the Verified Bots list exists because a corresponding IP address was seen associated with a verified bot in the last 30 days. A verified bot is not necessarily good or bad.
 
 ## Visitor location
 
-The data displayed on domain-specific geographic traffic patterns is based solely on data from our recursive DNS services. All data displayed is in accordance with our privacy policies and commitments. This data may include attack traffic and cross-origin requests.
+Domain Rankings is based on our anonymized and aggregated 1.1.1.1 resolver data, it complies with our 1.1.1.1 [privacy commitments](https://developers.cloudflare.com/1.1.1.1/privacy/public-dns-resolver/). It aims to identify the top most popular domains that reflect how people use the Internet globally. Domain Rankings’ popularity metric is best described as the estimated number of unique users that access a domain over some period of time.
 
 ## WHOIS
 
