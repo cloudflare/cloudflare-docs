@@ -86,5 +86,5 @@ You can add `CF-Worker` header on server logs similar to the way you add the [`C
 When using Spectrum with a TCP application, these headers are not visible at the origin as they are HTTP headers. If you wish to utilize these in your application, there are two options:
 
 - Use an HTTP or HTTPS Spectrum app instead of TCP
-- Use the Proxy Protocol feature - see [Enable Proxy protocol · Cloudflare Spectrum docs](https://developers.cloudflare.com/spectrum/how-to/enable-proxy-protocol/) for more information.
+- Use the [Proxy Protocol feature](/spectrum/how-to/enable-proxy-protocol/)
 
