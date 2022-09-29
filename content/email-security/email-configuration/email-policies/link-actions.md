@@ -26,7 +26,7 @@ Suspect hyperlinks are system-determined, and triggered by a dynamic isolation l
 
 ### Previous disposition actions
 
-When you enable Email Link Isolation, Cloudflare no longer takes into account [URL actions](#disposition-actions) based on the [email’s dispositions](/email-security/reference/dispositions-and-attributes/). URL actions are, rather, based on attributes of the link themselves. 
+When you enable Email Link Isolation, Cloudflare no longer takes into account [URL actions](#disposition-actions) based on the [email’s dispositions](/email-security/reference/dispositions-and-attributes/). URL actions are, rather, based on attributes of the link. 
 
 Link rewriting applies to all email dispositions. If you have URL actions set for other dispositions, you will see a warning when enabling Email Link Isolation. This indicates that Email Link Isolation's rewriting will apply globally.
 
@@ -52,7 +52,6 @@ Email Link Isolation (beta) does not have advanced configuration options. If you
 ## URL Rewrite Ignore Patterns
 
 Use this option to ignore rewrites on URLs matching specific patterns. This feature allows you to ensure that internal corporate services never have links rewritten for them.
-
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
