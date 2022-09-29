@@ -25,7 +25,7 @@ Pages comes with built in caching defaults that are optimized for caching as muc
 
 {{<Aside type="note" header="Purging the cache">}}
 
-If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. You can resolve this by selecting **Caching** > **Configuration** > <a href="/cache/how-to/purge-cache/#purge-everything">**Purge Everything**</a> in the dashboard to ensure the latest build gets served."
+If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. You can resolve this by selecting **Caching** > **Configuration** > <a href="/cache/how-to/purge-cache/#purge-everything">**Purge Everything**</a> in the dashboard to ensure the latest build gets served.
 
 {{</Aside>}}
 
