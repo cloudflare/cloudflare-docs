@@ -133,9 +133,16 @@ To create a Secure Internet Gateway (SIG) using vManage:
 
 For compatibility, you will need to disable replay protection, which is not an option through the templates, by creating a CLI template in addition to the feature template created in the previous step.
 
-![CLI configuration used to disable replay](/magic-wan/static/viptela-cli-config.png)
+```txt
+crypto ipsec profile {{ipsec_profile_name}}
+no set security-association replay window-size 512
+set security-association replay disable
 
-In the image above, replay is disabled and the `local key-id` is set to a variable so that a Cloudflare tunnel ID with the format `xxxxxx_YYYYYYY` can be added.
+crypto ikev2 profile {{ikev2_profile_name}}
+identity local key-id {{ipsec-key-id}}
+```
+
+In the example above, replay is disabled and the `local key-id` is set to a variable so that a Cloudflare tunnel ID with the format `xxxxxx_YYYYYYY` can be added.
 
 ## 3. Create tunnels in vManage
 
