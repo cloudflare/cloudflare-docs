@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Terraform
 weight: 8
-hidden: true
 ---
 # Deploy Tunnels with Terraform
 Terraform is an infrastructure as code software tool. It can be used to deploy and integrate multiple different products together by leveraging the different providers that are available. Terraform uses declarative configuration, so in the configuration files the final state is written rather than the steps to get to that state. This enables users to easily modify what infrastructure they want set up through Terraform.
