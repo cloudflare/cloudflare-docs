@@ -1,31 +1,41 @@
 ---
 pcx_content_type: tutorial
-title: Watch live streams
-weight: 2
+title: Watch a live stream
+weight: 3
 ---
 
-# Watch live streams
+# Watch a live stream
 
 When an input begins receiving the live stream, a new video with HLS and DASH URLs is automatically created as long as the mode property for the input is set to `automatic`.
 
-## View by video id
+## Use the API
 
-One live input can have multiple video ids associated with it. In order to get the video id representing the current live stream for a given input, make a `GET` request to the `/stream` endpoint:
+A live input can have multiple video UIDs associated with it. To get the video UID representing the current live stream for a given input, make a `GET` request to the `/stream` endpoint. 
+
+To play the video in your browser, use the URL from the `preview` field. To use your own player, use the `hls` or `dash` URLs.
 
 ```bash
-GET https://api.cloudflare.com/client/v4/accounts/{account}/stream/live_inputs/{live-input-uid}/videos
+---
+header: Request
+---
+curl -X GET \
+-H "Authorization: Bearer <API_TOKEN>" \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<LIVE_INPUT_UID>/videos
 ```
 
-The response will contain the HLS/DASH URL that can be used to play the current live video as well as any previously recorded live videos:
+The response contains the HLS/DASH URL that can be used to play the current live video as well as any previously recorded live videos. In the example below, the state of the live video is `live-inprogress` and the state for previously recorded video is `ready`.
 
 ```json
+---
+header: Response
+highlight: [4,7,21,28,32,46]
+---
 {
   "result": [
     {
-      "uid": "55b9b5ce48c3968c6b514c458959d6a",
-      "thumbnail": "https://videodelivery.net/55b9b5ce48c3968c6b514c458959d6a/thumbnails/thumbnail.jpg",
-      "thumbnailTimestampPct": 0,
-      "readyToStream": false,
+      "uid": "6b6972f427f51793099c6b427783398e",
+      "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/thumbnails/thumbnail.jpg",
+      
       "status": {
         "state": "live-inprogress",
         "errorReasonCode": "",
@@ -37,28 +47,18 @@ The response will contain the HLS/DASH URL that can be used to play the current 
       "created": "2021-09-23T05:44:30.453838Z",
       "modified": "2021-09-23T05:44:30.453838Z",
       "size": 0,
-      "preview": "https://watch.videodelivery.net/55b9b5ce48c3968c6b514c458959d6a",
-      "allowedOrigins": [],
-      "requireSignedURLs": false,
-      "uploaded": "2021-09-23T05:44:30.453812Z",
-      "uploadExpiry": null,
-      "maxSizeBytes": null,
-      "maxDurationSeconds": null,
-      "duration": -1,
-      "input": {
-        "width": -1,
-        "height": -1
-      },
+      "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/watch",
+      ...
+
       "playback": {
-        "hls": "https://videodelivery.net/55b9b5ce48c3968c6b514c458959d6a/manifest/video.m3u8",
-        "dash": "https://videodelivery.net/55b9b5ce48c3968c6b514c458959d6a/manifest/video.mpd"
+        "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/manifest/video.m3u8",
+        "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/manifest/video.mpd"
       },
-      "watermark": null,
-      "liveInput": "34036a0695ab5237ce757ac53fd158a2"
+      ...
     },
     {
-      "uid": "2ba59740c897a197df70814fd5ad991",
-      "thumbnail": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/thumbnails/thumbnail.jpg",
+      "uid": "b236bde30eb07b9d01318940e5fc3eda",
+      "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
       "thumbnailTimestampPct": 0,
       "readyToStream": true,
       "status": {
@@ -73,74 +73,18 @@ The response will contain the HLS/DASH URL that can be used to play the current 
       "created": "2021-09-22T22:12:53.587306Z",
       "modified": "2021-09-23T00:14:05.591333Z",
       "size": 0,
-      "preview": "https://watch.videodelivery.net/2ba59740c897a197df70814fd5ad991",
-      "allowedOrigins": [],
-      "requireSignedURLs": false,
-      "uploaded": "2021-09-22T22:12:53.587288Z",
-      "uploadExpiry": null,
-      "maxSizeBytes": null,
-      "maxDurationSeconds": null,
-      "duration": 7272,
-      "input": {
-        "width": 640,
-        "height": 360
-      },
+      "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/watch",
+      ...
       "playback": {
-        "hls": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.m3u8",
-        "dash": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.mpd"
+        "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8",
+        "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.mpd"
       },
-      "watermark": null,
-      "liveInput": "34036a0695ab5237ce757ac53fd158a2"
     }
   ],
-  "success": true,
-  "errors": [],
-  "messages": []
 }
 ```
 
-## View by live input ID
-
-You can use one of the options below to view a live video by input ID:
-
-- Replace the video ID with the input ID.
-- Use the Embed code.
-- Use the Manifest URL.
-
-### Replace video ID with input ID
-
-Using the input ID in this manner is fully integrated in the Stream player, but may require some additional support for third party players. You can make a `GET` request to the `/lifecycle` endpoint to get additional data about a video id or live input uid for more information to make additional decisions.
-
-```bash
-GET https://videodelivery.net/34036a0695ab5237ce757ac53fd158a2/lifecycle
-```
-
-This is a response for an input ID with an active live stream:
-
-```json
-{
-      // indicates if the ID provided is for an input or a video
-    "isInput": true,
-    // returns the active video ID or null for an input ID, otherwise returns the provided video ID
-    "videoUID": "55b9b5ce48c3968c6b514c458959d6a",
-    // if isInput is true, indicates if the input is actively streaming or not
-    "live": true
-}
-```
-
-Or if the input ID does not have an active live stream:
-
-```json
-{
-    "isInput": true,
-    "videoUID": null,
-    "live": false
-}
-```
-
-When viewing a livestream via the live input ID, the `requireSignedURLs` and `allowedOrigins` options in the live input recording settings are used. These settings are independent of the video-level settings.
-
-### Use the embed code or manifest URL
+## Use the dashboard
 
 To get the embed code or HLS Manifest URL for your video:
 
@@ -150,59 +94,50 @@ To get the embed code or HLS Manifest URL for your video:
 4. Locate the **Embed** and **HLS Manifest URL** beneath the video.
 5. Determine which option to use and then click **Click to copy** beneath your choice.
 
-## Replaying recordings
+## View by live input ID
 
-Live streams are automatically recorded. To get a list of recorded streams for a given input id, make the same `GET` request as you would to get the live video and filter for videos where the state property is set to `ready`:
+You can use one of the options below to view a live video by input ID:
+
+- Replace the video ID with the input ID.
+- Use the Embed code.
+- Use the Manifest URL.
+
+## Live input ID status
+
+You can check whether a live input ID is currently streaming a video or not by making a request to the `lifecycle` endpoint. The Stream player supports using input IDs to check a live stream status, but third party players may require additional support.
 
 ```bash
-GET https://dash.cloudflare.com/api/v4/accounts/{account}/stream/live_inputs/{live-input-id}/videos
+---
+header: Request
+---
+curl -X GET \
+-H "Authorization: Bearer <API_TOKEN>" \
+https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/lifecycle
 ```
 
-This is what a response looks like:
+In the example below, the response indicates the `ID` is for an input with an active `videoUID`. The `live` status value indicates the input is actively streaming.
 
 ```json
-{
-  "result": [
-...
-    {
-      "uid": "2ba59740c897a197df70814fd5ad991",
-      "thumbnail": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/thumbnails/thumbnail.jpg",
-      "thumbnailTimestampPct": 0,
-      "readyToStream": true,
-      "status": {
-        "state": "ready",
-        "pctComplete": "100.000000",
-        "errorReasonCode": "",
-        "errorReasonText": ""
-      },
-      "meta": {
-        "name": "Stream Live Test 22 Sep 21 22:12 UTC"
-      },
-      "created": "2021-09-22T22:12:53.587306Z",
-      "modified": "2021-09-23T00:14:05.591333Z",
-      "size": 0,
-      "preview": "https://watch.videodelivery.net/2ba59740c897a197df70814fd5ad991",
-      "allowedOrigins": [],
-      "requireSignedURLs": false,
-      "uploaded": "2021-09-22T22:12:53.587288Z",
-      "uploadExpiry": null,
-      "maxSizeBytes": null,
-      "maxDurationSeconds": null,
-      "duration": 7272,
-      "input": {
-        "width": 640,
-        "height": 360
-      },
-      "playback": {
-        "hls": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.m3u8",
-        "dash": "https://videodelivery.net/2ba59740c897a197df70814fd5ad991/manifest/video.mpd"
-      },
-      "watermark": null,
-      "liveInput": "34036a0695ab5237ce757ac53fd158a2"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+---
+header: Response for an active live stream
+---
+{    
+    "isInput": true,
+    "videoUID": "55b9b5ce48c3968c6b514c458959d6a",
+    "live": true
 }
 ```
+
+
+```json
+---
+header: Response for an inactive live stream
+---
+{
+    "isInput": true,
+    "videoUID": null,
+    "live": false
+}
+```
+
+When viewing a live stream via the live input ID, the `requireSignedURLs` and `allowedOrigins` options in the live input recording settings are used. These settings are independent of the video-level settings.

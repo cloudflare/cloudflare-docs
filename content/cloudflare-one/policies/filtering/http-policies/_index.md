@@ -13,7 +13,7 @@ Install the <a href="/cloudflare-one/connections/connect-devices/warp/install-cl
 
 {{</Aside>}}
 
-HTTP policies allow you to filter HTTP traffic on the L7 firewall. Gateway will intercept all HTTP and HTTPS traffic and apply the rules you have configured in your policy to either block, allow, or override specific elements such as websites, IP addresses, and file types.
+HTTP policies allow you to intercept all HTTP and HTTPS requests and either block, allow, or override specific elements such as websites, IP addresses, and file types. HTTP policies operate on Layer 7 for all TCP (and [optionally UDP](/cloudflare-one/policies/filtering/initial-setup/http/#1-connect-to-gateway)) traffic sent over ports 80 and 443.
 
 An HTTP policy consists of an **Action** as well as a logical expression that determines the scope of the policy. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field.
 
@@ -55,13 +55,13 @@ For more information on this action, refer to the documentation on [Browser Isol
 
 {{<Aside type="warning" header="Warning">}}
 
-When a *Do Not Inspect* rule is created for a given hostname, application, or app type, no traffic will be inspected.
+When a Do Not Inspect rule is created for a given hostname, application, or app type, no traffic will be inspected.
 
 {{</Aside>}}
 
-*Do Not Inspect* lets you bypass certain elements from inspection. To bypass a site, your policy must match against the host in order to prevent HTTP inspection from occurring on encrypted traffic.
+Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indicator (SNI) in the TLS header. [Learn more](/cloudflare-one/policies/filtering/http-policies/tls-decryption/) about applications which may require a Do Not Inspect policy.
 
-The L7 firewall will evaluate *Do Not Inspect* rules before any subsequent Allow or Block rules. For encrypted traffic, Gateway uses the Server Name Indicator (SNI) in the TLS header to determine whether to decrypt the traffic for further HTTP inspection against Allow or Block rules. All *Do Not Inspect* rules are evaluated first to determine if decryption should occur. This means regardless of precedence in a customer's list of rules, all *Do Not Inspect* rules will take precedence over Allow or Block rules.
+All Do Not Inspect rules are evaluated first, before any Allow or Block rules, to determine if decryption should occur. [Learn more](/cloudflare-one/policies/filtering/order-of-enforcement/#http-policies) about the order of enforcement for HTTP policies.
 
 ### Do Not Scan
 

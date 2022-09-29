@@ -58,7 +58,7 @@ While on the Network Settings page, ensure that **Split Tunnels** are configured
 
 ## Update `cloudflared`
 
-Next, update your Cloudflare Tunnel configuration to ensure it is using QUIC as the default transport protocol. To do this, you can either set the `protocol: quic` property in your [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/) or [pass the `–-protocol quic` flag](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/) directly through your CLI.
+Next, update your Cloudflare Tunnel configuration to ensure it is using QUIC as the default transport protocol. This will enable `cloudflared` to proxy UDP-based traffic which is required in most cases to resolve DNS queries. To do this, you can either set the `protocol: quic` property in your [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/) or [pass the `–-protocol quic` flag](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/) directly through your CLI.
 
 Finally, update to the latest available version (2021.12.3 as of the time of writing) of cloudflared running on your target private network.
 

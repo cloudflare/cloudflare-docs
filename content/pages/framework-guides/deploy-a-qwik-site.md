@@ -5,7 +5,7 @@ title: Deploy a Qwik site
 
 # Deploy a Qwik site
 
-[Qwik](https://github.com/builderio/qwik) is an open-source, DOM-centric, resumable web application framework designed for best possible time to interactive by focusing on [resumability](https://github.com/BuilderIO/qwik/blob/main/docs/pages/guide/resumable-vs-replayable.mdx) of server-side rendering of HTML and [fine-grained lazy-loading](https://github.com/BuilderIO/qwik/blob/main/docs/pages/guide/lazy-loading.mdx) of code.
+[Qwik](https://github.com/builderio/qwik) is an open-source, DOM-centric, resumable web application framework designed for best possible time to interactive by focusing on [resumability](https://qwik.builder.io/docs/concepts/resumable/) of server-side rendering of HTML and [fine-grained lazy-loading](https://qwik.builder.io/docs/concepts/progressive/#lazy-loading) of code.
 
 In this guide, you will create a new Qwik application and deploy it using Cloudflare Pages.
 

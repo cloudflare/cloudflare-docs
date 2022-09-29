@@ -89,3 +89,8 @@
 {{- else if $coveo -}}
   {{- partial "script" (dict "src" "search.redirect.ts" "defer" true) -}}
 {{- end -}}
+
+{{- if in $.Context.RelPermalink "/learning-paths/" -}}
+<link rel="stylesheet" href="/learning-paths.css"/>
+
+{{- end -}}

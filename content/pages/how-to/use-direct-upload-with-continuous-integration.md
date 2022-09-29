@@ -128,7 +128,7 @@ version: 2.1
 jobs:
  Publish-to-Pages:
    docker:
-     - image: cimg/node:18
+     - image: cimg/node:18.7.0
 
    steps:
      - checkout

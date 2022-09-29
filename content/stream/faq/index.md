@@ -1,7 +1,7 @@
 ---
 title: FAQ
 pcx_content_type: faq
-weight: 9
+weight: 12
 meta:
   title: Frequently asked questions about Cloudflare Stream
 ---
@@ -121,13 +121,29 @@ Below are bitrate recommendations for encoding new videos for Stream:
 
 Videos are removed if the subscription is not renewed within 30 days.
 
-### What domains do I need to add to my allowlist if I use Content Security Policy (CSP) directives on my website?
+### I use Content Security Policy (CSP) on my website. What domains do I need to add to which directives?
 
-If your website uses Content Security Policy (CSP) directives and you use the provided Stream Player, `videodelivery.net` and `*.cloudflarestream.com` must be included in the `frame-src` or `default-src` directive to allow the player's `<iframe>` element to load.
+If your website uses [Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) directives, depending on your configuration, you may need to add Cloudflare Stream's domains to particular directives, in order to allow videos to be viewed or uploaded by your users.
+
+If you use the provided [Stream Player](/stream/viewing-videos/using-the-stream-player/), `videodelivery.net` and `*.cloudflarestream.com` must be included in the `frame-src` or `default-src` directive to allow the player's `<iframe>` element to load.
 
 ```http
-Content-Security-Policy: frame-src; 'self' *.videodelivery.net *.cloudflarestream.com
+Content-Security-Policy: frame-src 'self' videodelivery.net *.cloudflarestream.com
 ```
+
+If you use your **own** Player, add `*.videodelivery.net` and `*.cloudflarestream.com` to the `media-src`, `img-src` and `connect-src` CSP directives to allow video files and thumbnail images to load.
+
+```http
+Content-Security-Policy: media-src 'self' videodelivery.net *.cloudflarestream.com; img-src 'self' *.videodelivery.net *.cloudflarestream.com; connect-src 'self' *.videodelivery.net *.cloudflarestream.com
+```
+
+If you allow users to upload their own videos directly to Cloudflare Stream, add `*.videodelivery.net` and `*.cloudflarestream.com` to the `connect-src` CSP directive.
+
+```http
+Content-Security-Policy: connect-src 'self' *.videodelivery.net *.cloudflarestream.com
+```
+
+To ensure **only** videos from **your** Cloudflare Stream account can be played on your website, replace `*` in `*.cloudflarestream.com` and `*.videodelivery.net` in the examples above with `customer-<CODE>`, replacing `<CODE>` with your unique customer code, which can be found in the Stream Dashboard [here](https://dash.cloudflare.com/?to=/:account/stream). This code is unique to your Cloudflare Account.
 
 ## Stream Live
 

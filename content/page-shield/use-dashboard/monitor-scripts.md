@@ -8,7 +8,7 @@ meta:
 
 # Monitor scripts on your site
 
-Once you have [activated Page Shield](/page-shield/get-started/), review the Active Scripts dashboard to see which [active scripts](/page-shield/reference/script-statuses/) are running on your domain. 
+Once you have [activated Page Shield](/page-shield/get-started/), review the Active Scripts dashboard to see which [active scripts](/page-shield/reference/script-statuses/) are running on your domain.
 
 If you see unexpected scripts on the dashboard, check them for signs of malicious activity.
 
@@ -62,6 +62,5 @@ You can check the details of each script displayed in the Active Scripts dashboa
 - **First seen on page**: The page where the script was first detected.
 - **Last seen**: How long ago the script was last detected (in the last 30 days).
 - **Last seen on pages**: The most recent pages where the script was detected (up to ten pages).
-- **Count**: The total number of reports received for the script, based on sampling. You should only use this value to compare the number of reports between different scripts.
 
 The information above helps you track how and how many times a script appeared in your domain and which pages have recently loaded the script.

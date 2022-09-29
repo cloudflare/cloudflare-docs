@@ -12,7 +12,7 @@ Cloudflare Zero Trust applies a set of **global rules** to all accounts.
 
 | Criteria       | Value                       | Action    | Description                                                                                                                                          |
 | -------------- | --------------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Hostname       | `*.cloudflareclient.com`    | bypass    | `engage.cloudflareclient.com` is used by client for registration                                                                                     |
+| Hostname       | `*.cloudflareclient.com`    | bypass    |  `engage.cloudflareclient.com` is used by client for registration. This policy ensures that customers cannot accidentally block themselves from making account changes.                                                                                     |
 | Hostname       | `*.assets.browser.run`      | bypass    | Do not inspect `assets.browser.run` or `*.assets.browser.run`                                                                                        |
 | Hostname       | `*.cloudflare-gateway.com`  | bypass    | Ensure we bypass requests to `cloudflare-gateway.com` DNS endpoint                                                                                   |
 | Hostname       | `*.cloudflarestatus.com`    | bypass    | Bypass `cloudflarestatus.com` so customers can reach the page in case of Gateway outage                                                              |

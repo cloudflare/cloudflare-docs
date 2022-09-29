@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Block Zaraz
-weight: 0
+weight: 1
 meta:
   title: Block Zaraz on specific pages or domains
 ---
@@ -10,7 +10,7 @@ meta:
 
 You can use Cloudflare Page Rules to prevent Zaraz from loading on specific URLs of your website. This can be useful if you want to block Zaraz from loading on the admin URL of your website, for example.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2. Go to **Rules**.
 3. Select **Create Page Rule**.
 4. Create a URL pattern that matches the page, domain or subdomain you want to exclude Zaraz from loading on.

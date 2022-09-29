@@ -1,10 +1,10 @@
 {{- $header := .Get "header" -}} {{- $url := .Get "href" -}}
 
-<h3 id="{{ $header }}">
+<h3 id="{{ $header | safeURL | anchorize }}">
   <span class="DocsMarkdown--header-anchor-positioner">
     <a
       class="DocsMarkdown--header-anchor Link Link-without-underline"
-      href="#{{ $header }}"
+      href="#{{ $header | safeURL | anchorize }}"
       >&#8203;​</a
     >
   </span>
@@ -19,7 +19,7 @@
     <a
       class="Button Button-is-docs-primary DocsMarkdown--link-content"
       href="{{ $url }}"
-      >Use {{ $header }} {{- if strings.HasPrefix $url "http" -}} {{-
+      >{{ with .Get "cta" }} {{- . -}} {{ else }} Use {{ $header }} {{ end }} {{- if strings.HasPrefix $url "http" -}} {{-
       partialCached "external.icon" . -}} {{- end -}}</a
     >
   </div>

@@ -49,10 +49,26 @@ The on-disk configuration of the Windows client can be changed at any time by mo
 <dict>
   <key>organization</key>
   <string>yourorganization</string>
+	<key>onboarding</key>
+	<false/>
 </dict>
 ```
 
 Changes to this file are processed immediately by the WARP client.
+
+### Authenticate in embedded browser
+
+By default WARP will use the user’s default browser to perform registration. You can override the default setting to instead authenticate users in an embedded browser. The embedded browser will work around any protocol handler issues that may prevent the default browser from launching.
+
+To use an embedded browser:
+
+1. Download and install WebView2 by following the instructions [here](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section).
+2. Add a registry key with the following command:
+    ```txt
+    REG ADD HKLM\SOFTWARE\Cloudflare\CloudflareWARP /f /v UseWebView2 /t REG_SZ /d y
+    ```
+
+The WARP client will now launch WebView2 when the user is registering their device with Zero Trust.
 
 ## Install WARP on macOS
 

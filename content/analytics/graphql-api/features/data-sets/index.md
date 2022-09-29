@@ -34,11 +34,13 @@ The following datasets (and associated nodes) are available in Cloudflare Analyt
 | HTTP Requests               | `httpRequestsAdaptiveGroups` `httpRequests1mGroups` `httpRequests1hGroups`  `httpRequests1dGroups`                             |
 | Image Resizing Analytics    | `imageResizingRequests1mGroups`                                                                                                |
 | Load Balancing Analytics    | `loadBalancingRequestsAdaptive` `loadBalancingRequestsAdaptiveGroups`                                                          |
+| Logpush Health Analytic    | `logpushHealthAdaptiveGroups`                                                                                           |
 | Magic Firewall Analytics    | `magicFirewallSamplesAdaptiveGroups`                                                                                           |
 | Network Analytics v2<br/> for Magic Transit customers | `magicTransitNetworkAnalyticsAdaptiveGroups` `dosdNetworkAnalyticsAdaptiveGroups` `dosdAttackAnalyticsGroups` `flowtrackdNetworkAnalyticsAdaptiveGroups` `magicFirewallNetworkAnalyticsAdaptiveGroups` |
 | Network Analytics v2<br/> for Spectrum customers<br/> (Enterprise plans only) | `spectrumNetworkAnalyticsAdaptiveGroups` `dosdNetworkAnalyticsAdaptiveGroups` `dosdAttackAnalyticsGroups` |
 | SYN Attacks (DoS Analytics) | `synAvgPps1mGroups`                                                                                                            |
 | Workers Metrics             | `workersInvocationsAdaptive`                                                                                                   |
+| Turnstile Widget Analytics  | `turnstileAdaptiveGroups`                                                                                                      |
 
 {{</table-wrap>}}
 

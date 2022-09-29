@@ -8,7 +8,7 @@ weight: 2
 
 {{<render file="_monitor-definition.md">}}
 
-![Dynamic load balancing involves pools, origins, monitors, and health checks](/load-balancing/static/images/load-balancer-components.png)
+{{<render file="_health-check-diagram.md">}}
 
 Health checks that result in a status change for an origin server are recorded as events in the Load Balancing event logs.
 
@@ -61,7 +61,7 @@ The Cloudflare API supports the following commands for monitors. Examples are gi
 | [Create Monitor](https://api.cloudflare.com/#account-load-balancer-monitors-create-monitor) | `POST` | `accounts/:account_id/load_balancers/monitors`|
 | [Delete Monitor](https://api.cloudflare.com/#account-load-balancer-monitors-delete-monitor) | `DELETE` | `accounts/:account_id/load_balancers/monitors/:id` |
 | [List Monitors](https://api.cloudflare.com/#account-load-balancer-monitors-list-monitors) | `GET` |  `accounts/:account_id/load_balancers/monitors` |
-| [Monitor Details](https://api.cloudflare.com/#account-load-balancer-monitors-monitor-details) | `GET` |`accounts/"account_id/load_balancers/monitors/:id` |
+| [Monitor Details](https://api.cloudflare.com/#account-load-balancer-monitors-monitor-details) | `GET` |`accounts/:account_id/load_balancers/monitors/:id` |
 | [Overwrite specific properties](https://api.cloudflare.com/#account-load-balancer-monitors-patch-monitor) | `PATCH` | `accounts/:account_id/load_balancers/monitors/:id` |
 | [Overwrite existing monitor](https://api.cloudflare.com/#account-load-balancer-monitors-update-monitor) | `PUT` | `accounts/:account_id/load_balancers/monitors/:id` |
 | [Preview Monitor](https://api.cloudflare.com/#account-load-balancer-monitors-preview-monitor) | `POST` | `accounts/:account_id/load_balancers/monitors/:id/preview` |

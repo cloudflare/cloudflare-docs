@@ -1,6 +1,7 @@
 ---
 title: Overview
 pcx_content_type: overview
+layout: overview
 weight: 1
 meta:
   title: Cloudflare Load Balancing
@@ -8,30 +9,74 @@ meta:
 
 # Cloudflare Load Balancing
 
-Cloudflare Load Balancing allows you to distribute traffic across your servers, which reduces server strain and latency and improves the experience for end users.
+{{<description>}}
+Maximize application performance and availability
+{{</description>}}
 
-## Benefits
+{{<plan type="add-on">}}
 
-Cloudflare Load Balancing provides several benefits:
+Cloudflare Load Balancing distributes traffic across your servers, which reduces server strain and latency and improves the experience for end users.
 
-*   **Load balancing and failover**: Distribute traffic evenly across your healthy servers, automatically failing over when a server is unhealthy or unresponsive.
-*   **Active health checks**: Monitor your servers at configurable intervals and across multiple data centers to look for specific status codes, response text, and timeouts.
-*   **Intelligent routing**: Choose whether to distribute requests based on server latency, a visitor's geographic region, or even a visitor's GPS coordinates.
-*   **Customized setup**: Create custom rules (or reuse monitors and pools across multiple load balancers) to adjust routing according to the characteristics of each request.
+Free, Pro, and Business users can enable Load Balancing in their [Cloudflare dashboard](https://dash.cloudflare.com/). Accounts with at least one **Enterprise** plan should contact their account team.
 
-{{<Aside type="note" header="Note">}}
+---
 
-If you are only interested in monitoring server health — and not in distributing traffic according to server health — check out our [standalone Health Checks](https://support.cloudflare.com/hc/articles/4404867308429).
+## Features
 
-{{</Aside>}}
+{{<feature header="Load balancing and failover" href="/load-balancing/understand-basics/load-balancers/">}}
 
-## Availability
+Distribute traffic evenly across your healthy servers, automatically failing over when a server is unhealthy or unresponsive.
 
-Cloudflare Load Balancing is available as an add-on feature for any type of account. The exact number of load balancers, origin servers, and monitors depend on your plan type.
+{{</feature>}}
 
-## Next steps
+{{<feature header="Active monitoring" href="/load-balancing/understand-basics/monitors/">}}
 
-{{<button-group>}}
-  {{<button type="primary" href="/load-balancing/get-started/">}}Get started{{</button>}}
-  {{<button type="secondary" href="/load-balancing/understand-basics/">}}Learn more{{</button>}}
-{{</button-group>}}
+Monitor your servers at configurable intervals and across multiple data centers to look for specific status codes, response text, and timeouts.
+
+{{</feature>}}
+
+{{<feature header="Intelligent routing" href="/load-balancing/understand-basics/traffic-steering/">}}
+
+Choose whether to distribute requests based on server latency, a visitor's geographic region, or even a visitor's GPS coordinates.
+
+{{</feature>}}
+
+{{<feature header="Custom rules" href="/load-balancing/additional-options/load-balancing-rules/">}}
+
+Customize the behavior of your load balancer based on the characteristics of individual requests.
+
+{{</feature>}}
+
+{{<feature header="Analytics" href="/load-balancing/reference/load-balancing-analytics/">}}
+
+Review comprehensive analytics to evaluate traffic flow, assess origin health status, and review changes in pools and pool health over time.
+
+{{</feature>}}
+
+---
+
+## Related products
+
+{{<related header="Standalone Health Checks" href="https://support.cloudflare.com/hc/articles/4404867308429" product="load-balancing">}}
+Actively monitor whether your origin server is online by sending specific requests at regular intervals.
+{{</related>}}
+
+{{<related header="DNS" href="/dns/" product="dns">}}
+Get enterprise-grade authoritative DNS service with the fastest response time, unparalleled redundancy, and advanced security with built-in DDoS mitigation and DNSSEC.
+{{</related>}}
+
+{{<related header="Waiting Room" href="/waiting-room/" product="waiting-room">}}
+Route excess users to a custom-branded waiting room, helping preserve customer experience and protect origin servers from being overwhelmed with requests.
+{{</related>}}
+
+---
+
+## More resources
+
+{{<resource-group>}}
+
+{{<resource header="Plans" href="https://www.cloudflare.com/plans/#overview" icon="documentation-clipboard">}}Compare available Cloudflare plans{{</resource>}}
+
+{{<resource header="Pricing" href="https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing/" icon="price">}}Explore pricing options for Load Balancing in the dashboard{{</resource>}}
+
+{{</resource-group>}}
