@@ -9,7 +9,7 @@ meta:
 
 # Deploy and configure Microsoft Office 365 with Area 1 as MX Record
 
-![A schematic showing where Area 1 security is in the life time of an email received](/email-security/static/office365-mx-record-flow.png)
+![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/office365-mx-record-flow.png)
 
 In this tutorial you will learn how to configure Microsoft Office 365 with Area 1 as MX record. This tutorial is broken down into several steps.
 
