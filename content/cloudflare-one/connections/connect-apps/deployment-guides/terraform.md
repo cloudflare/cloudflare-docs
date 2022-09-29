@@ -4,12 +4,17 @@ title: Terraform
 weight: 8
 ---
 # Deploy Tunnels with Terraform
-Terraform is an infrastructure as code software tool. It can be used to deploy and integrate multiple different products together by leveraging the different providers that are available. Terraform uses declarative configuration, so in the configuration files the final state is written rather than the steps to get to that state. This enables users to easily modify what infrastructure they want set up through Terraform.
 
-In this guide, we'll walk through how to use Terraform to deploy a GCP VM instance and connect it with Cloudflare Tunnel.
+[Terraform](https://www.terraform.io/) is an infrastructure as code software tool that allows you to deploy services from different providers using a standardized configuration syntax.  When creating a Terraform configuration file, you define the final state of the configuration rather than listing out the entire setup procedure. This allows you to easily deploy, modify, and manage your infrastructure.
 
-## Install and Setup
-In order to administer tunnels with Terraform it must be [installed](https://learn.hashicorp.com/tutorials/terraform/install-cli). The GCP CLI must also be [installed and authenticated](https://cloud.google.com/sdk/docs/install) so that Terraform can interact with your GCP account. 
+In this guide, you will learn how to use Terraform to deploy a Google Cloud Project (GCP) virtual machine and connect it with Cloudflare Tunnel.
+
+## Prerequisites
+
+- [Install Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli).
+- [Install and authenticate the GCP CLI](https://cloud.google.com/sdk/docs/install) so that Terraform can interact with your GCP account.
+
+## Create Terraform configuration file
 
 Terraform functions through a working directory that contains the configuration files and any other resources. A folder can be created from the command line using `mkdir <working directory name>`. Files within the folder can be created through the command line using the touch command (i.e. `touch terraform.tfvars` or touch providers.tf`) so that the correct file extension is assigned.
 
@@ -273,6 +278,7 @@ sudo cp -via ~/.cloudflared/cert.json /etc/cloudflared/
 cd /tmp
 sudo docker-compose up -d && sudo systemctl start cloudflared
 ```
+
 ## Deploying
 Once the configuration files are created, it can be deployed. First, to initialize the working directory run the `terraform init` command. This will set up the directory so that your infrastructure can be deployed.
 
