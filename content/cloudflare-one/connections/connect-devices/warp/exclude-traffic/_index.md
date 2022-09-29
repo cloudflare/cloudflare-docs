@@ -28,19 +28,20 @@ Traffic excluded from WARP by Split Tunnel configuration will not be encrypted, 
 
 {{</Aside>}}
 
-## How the WARP Agent handles DNS requests
+## How the WARP client handles DNS requests
 
-When you use the WARP Agent together with `cloudflared` Tunnels or third-party VPNs, Cloudflare evaluates each request and routes it according to the following traffic flow.
+When you use the WARP client together with `cloudflared` Tunnels or third-party VPNs, Cloudflare evaluates each request and routes it according to the following traffic flow.
 
 <div class="mermaid">
 flowchart TD
-A[WARP User requests resource] -- Domain does not match Local Domain Fallback --> C{WARP Agent resolves query according to Gateway DNS policies}
-A -- Domain matches Local Domain Fallback --> D[WARP Agent proxies DNS traffic to specified fallback server]
+accTitle: WARP traffic is evaluated and routed through various parts of the Cloudflare network
+A[WARP User requests resource] -- Domain does not match Local Domain Fallback --> C{WARP client resolves query according to Gateway DNS policies}
+A -- Domain matches Local Domain Fallback --> D[WARP client proxies DNS traffic to specified fallback server]
 D -- Resolver IP included in Tunnel per Split Tunnel configuration --> E[Query sent via WARP Tunnel to be resolved]
 D -- Resolver IP not included in Tunnel per Split Tunnel configuration --> F{Query sent to resolver IP outside WARP Tunnel} 
 E -- Matches CF Gateway block policy --> G{Traffic blocked by CF}
 E -- "Passes CF Gateway network policies (allowed or unblocked)" --> H[Evaluated by Cloudflare Tunnel routes]
 H -- Tunnel routes do not include resolver IP --> I{CF Gateway proxies query to resolver IP via normal WARP egress route}
 H -- Tunnel routes include resolver IP --> J[Cloudflare Tunnel advertises route that includes Resolver IP]
-J --> L{Private resolver returns IP address to WARP Agent}
+J --> L{Private resolver returns IP address to WARP client}
 </div>
