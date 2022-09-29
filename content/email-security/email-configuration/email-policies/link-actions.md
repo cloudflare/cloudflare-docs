@@ -22,7 +22,7 @@ To update or create a new disposition action:
 
 Email Link Isolation rewrites links in emails and opens them in a browser tab where all page contents are fetched and rendered on a remote server. When this feature is enabled, any malware that might be present in a web page or email link, for example, is isolated at the server level and will not infect and compromise the client network at the endpoint.
 
-Suspect hyperlinks are system-determined, and triggered by a dynamic isolation list maintained by Cloudflare’s security team.
+Suspicious hyperlinks are system-determined, and triggered by a dynamic isolation list maintained by Cloudflare’s security team.
 
 ### Previous disposition actions
 
@@ -34,7 +34,7 @@ Link rewriting applies to all email dispositions. If you have link actions set f
 
 To enable Email Link Isolation you must have an [inline deployment](/email-security/deployment/inline/) for your Area 1 setup. Email Link Isolation is not available if Area 1 is deployed through [journaling or BCC](/email-security/deployment/api/setup/) setups.
 
-Email Link Isolation can only be used when there are no other security applications doing URL rewrites. Double rewrites are not supported.
+Email Link Isolation can only be used when there are no other security applications doing URL rewrites. Double link rewrites are not supported.
 
 To enable Email Link Isolation:
 
