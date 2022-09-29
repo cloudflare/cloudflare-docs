@@ -27,7 +27,7 @@ $ ember new ember-quickstart --lang en
 
 ## Create a GitHub repository
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). When creating your repository, do not select to add a README file, .gitignore template or a license as these selections will cause the push to GitHub to fail.
+Create a new GitHub repository by visiting [repo.new](https://repo.new). When creating your repository, do not select to add a README file, `.gitignore` template or a license as these selections will cause the push to GitHub to fail.
 
 In your terminal, `cd` into your new Ember project directory and run:
 
@@ -47,7 +47,7 @@ Deploy your site to Pages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 2. In **Account Home**, select **Pages** > **Create a project**. 
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select *Ember* as your **Framework preset**. Your selection will provide the following information.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select *Ember* as your **Framework preset**. Your selection will provide the following information:
 
 {{<table-wrap>}}
 
