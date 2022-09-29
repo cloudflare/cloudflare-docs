@@ -17,4 +17,4 @@ Smart Tiered Cache dynamically selects the single best upper tier for each of yo
 
 ## Bandwidth Alliance may interrupt Tiered Cache
 
-Enterprise customers can override Bandwidth Alliance configuration with Tiered Cache, for all other customers Bandwidth Alliance will take precedence. To understand more read [Bandwidth Alliance](/cache/about/tiered-cache/#bandwidth-alliance).
+Enterprise customers can override Bandwidth Alliance configuration with Tiered Cache, for all other customers Bandwidth Alliance will take precedence. For more information, please refer to [Bandwidth Alliance](/cache/about/tiered-cache/#bandwidth-alliance).
