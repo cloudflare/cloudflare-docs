@@ -1,14 +1,14 @@
 ---
-title: Link Actions
+title: Link actions
 pcx_content_type: concept
 weight: 2
 ---
 
-# Link Actions
+# Link actions
 
-## Disposition Actions
+## Disposition actions
 
-Create actions for emails with specific [dispositions](/email-security/reference/dispositions-and-attributes/). `URL defang` means that every URL in an email of the selected type will be rewritten so that they are not selectable. For example, `https://www.example.com` will become `https[:]//www[.]example[.]com`.
+Create actions for emails with specific [dispositions](/email-security/reference/dispositions-and-attributes/). `URL defang` means that every URL in an email of the selected type will be rewritten so that the user cannot follow the link. For example, `https://www.example.com` will become `https[:]//www[.]example[.]com`.
 
 To update or create a new disposition action:
 
@@ -16,7 +16,7 @@ To update or create a new disposition action:
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Email Policies** > **Link Actions**.
 4. In **Disposition Actions** select **Edit**.
-5. For each disposition (`MALICIOUS`, `SPAM`, `BULK`, etc.), choose the action you want to perform.
+5. For each disposition, such as `MALICIOUS`, `SPAM`, and `BULK`, choose the action you want to perform.
 
 ## Email Link Isolation (beta)
 
@@ -28,7 +28,7 @@ Suspect hyperlinks are system-determined, and triggered by a dynamic isolation l
 
 When you enable Email Link Isolation, Cloudflare no longer takes into account [URL actions](#disposition-actions) based on the [email’s dispositions](/email-security/reference/dispositions-and-attributes/). URL actions are, rather, based on attributes of the link. 
 
-Link rewriting applies to all email dispositions. If you have URL actions set for other dispositions, you will see a warning when enabling Email Link Isolation. This indicates that Email Link Isolation's rewriting will apply globally.
+Link rewriting applies to all email dispositions. If you have link actions set for other dispositions, you will see a warning when enabling Email Link Isolation. This indicates that Email Link Isolation's rewriting will apply globally.
 
 ### Enable Email Link Isolation
 
@@ -46,10 +46,10 @@ To enable Email Link Isolation:
 Email Link Isolation is now enabled. 
 
 {{<Aside type="note">}}
-Email Link Isolation (beta) does not have advanced configuration options. If you need more fine grained control over what users can do in an isolated browser session, you must have a Cloudflare Zero Trust account, and make your changes on [Browser Isolation](/cloudflare-one/policies/browser-isolation/).
+Email Link Isolation (beta) does not have advanced configuration options. If you need more fine-grained control over what users can do in an isolated browser session, you must have a Cloudflare Zero Trust account and make your changes on [Browser Isolation](/cloudflare-one/policies/browser-isolation/).
 {{</Aside>}}
 
-## URL Rewrite Ignore Patterns
+## URL rewrite ignore patterns
 
 Use this option to ignore rewrites on URLs matching specific patterns. This feature allows you to ensure that internal corporate services never have links rewritten for them.
 
@@ -57,4 +57,4 @@ Use this option to ignore rewrites on URLs matching specific patterns. This feat
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Email Policies** > **Link Actions**.
 4. Scroll to **URL Rewrite Ignore Patterns**.
-5. Add a new URL pattern to **URL pattern** and select **+ Add Pattern**.
+5. Add a new URL pattern to **URL pattern** and select **Add Pattern**.
