@@ -17,8 +17,6 @@ To configure a custom error response, create a custom error response rule at the
 
 During the beta, you can define custom error responses using inline templates and specify the response's content type and HTTP status code.
 
-Additionally, at this stage you can only create custom error response rules [using the API](/rules/custom-error-responses/create-api/).
-
 {{</Aside>}}
 
 ## How it works
