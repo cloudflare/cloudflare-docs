@@ -15,12 +15,19 @@ MkDocs requires a recent version of Python and the Python package manager, pip, 
 $ pip install mkdocs
 ```
 
+
 ## Create an Mkdocs project
 
 Use the `mkdocs new` command to create a new application:
 
 ```sh
 $ mkdocs new <PROJECT_NAME>
+```
+
+Then `cd` into your project and take Mkdocs and its dependencies and put them into a `requirements.txt` file:
+
+```sh
+pip freeze > requirements.txt
 ```
 
 {{<render file="_tutorials-before-you-start.md">}}
@@ -59,9 +66,11 @@ Deploy your site to Pages:
 
 {{</table-wrap>}}
 
+4. Go to **Environment variables (advanced)** > **Add variable** > add the variable `PYTHON_VERSION` with a value of `3.7`.
+
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 
-Every time you commit new code to your Mkdocs site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests and be able to preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Mkdocs site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests and be able to preview how changes to your site look before deploying them to production.
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
