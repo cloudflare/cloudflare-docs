@@ -66,7 +66,7 @@ To create a new Content Filter:
 3. Configure the new Incoming Content Filter as follows:
     * **Name**: `ESA_to_A1S`
     * **Description**: `Redirect messages to Area 1 for anti-phishing inspection`
-    * **Order**: This will depend on your other filters, but do note the order you select.
+    * **Order**: This will depend on your other filters.
     * **Condition**: No conditions.
     * **Actions**:
         * For **Action** select **Send to Alternate Destination Host**.

@@ -85,7 +85,7 @@ When you are finished entering these details, select **SAVE**.
             * In **Match type**, select **Contains text**.
             * In **Content**, enter `X-Area1Security-Disposition: MALICIOUS`.
         * Select **SAVE** to save the condition.
-    * In the **If the above expression match, do the following** section, select the *Action* dropdown and select **Quarantine message** and the **Area 1 Malicious** quarantine that was created in the previous step.
+    * In the **If the above expression match, do the following** section, select the *Action* dropdown. Then choose **Quarantine message** and the **Area 1 Malicious** quarantine that was created in the previous step.
 
     After you enter this information, select **SAVE**.
 
