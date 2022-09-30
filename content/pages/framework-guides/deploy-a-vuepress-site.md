@@ -28,7 +28,10 @@ Once this is done, a scaffolded documentation site will be created in the `docs`
 Create a new GitHub repository by visiting [repo.new](https://repo.new). After your repository is set up, push your application to GitHub by running the following commands in your terminal:
 
 ```sh
-$ git remote add origin https://github.com/yourgithubusername/githubrepo
+$ git init
+$ git add -A
+$ git commit -m "<YOUR_COMMIT_MESSAGE>"
+$ git remote add origin <YOUR_GITHUB_REPOSITORY_URL>
 $ git branch -M main
 $ git push -u origin main
 ```
