@@ -14,7 +14,7 @@ Cloudflare Zaraz offers properties that you can use when configuring the product
 Property | Type | Description
 --- | --- | ---
 _Track Name_ | String | Returns the name of the event sent using the Track method of the Web API. Refer to the [Track method](/zaraz/web-api/track/) for more information.
-_Track Property: name:_ |String | Returns the value of a `zaraz.track()` `eventProperties` key. The key can either be directly used in `zaraz.track()` or set using `zaraz.set()`. Set the name of your key here. Refer to the [Set method](/zaraz/web-api/set/) for more information.
+_Track Property name:_ |String | Returns the value of a `zaraz.track()` `eventProperties` key. The key can either be directly used in `zaraz.track()` or set using `zaraz.set()`. Set the name of your key here. Refer to the [Set method](/zaraz/web-api/set/) for more information.
 
 {{</table-wrap>}}
 
@@ -27,7 +27,7 @@ Property | Type | Description
 _Page character encoding_ | String | Returns the document character encoding from `document.characterSet`.
 _Page referrer_ | String | Returns the page referrer from `document.referrer`.
 _Page title_ | String | Returns the page title.
-_Query param: name:_ | String | Returns the value of a URL query parameter. When you choose this variable, you need to set the name of your parameter.
+_Query param name:_ | String | Returns the value of a URL query parameter. When you choose this variable, you need to set the name of your parameter.
 _URL_ | String | Returns a string containing the entire URL.
 _URL base domain_ | String | Returns the base domain part of the URL, without any subdomains.
 _URL host_ | String | Returns the domain (that is, the hostname) followed by a `:` and the port of the URL (if a port was specified).
@@ -48,7 +48,7 @@ _URL username_ | String | Returns the username specified before the domain name.
 
 Property | Type | Description
 --- | --- | ---
-_Cookie: name:_ | Object | Returns cookies obtained from the browser `document`.
+_Cookie name:_ | Object | Returns cookies obtained from the browser `document`.
 
 {{</table-wrap>}}
 
@@ -71,6 +71,22 @@ _Device viewport_ | String | Returns the visible web page area in user’s devic
 _Operating system name_ | String | Returns the operating system.
 _Operating system version_ | String | Returns the version of the operating system.
 _User-agent string_	| String | Returns the browser’s user agent.
+
+{{</table-wrap>}}
+
+## Device location
+
+{{<table-wrap>}}
+
+Property | Type | Description
+--- | --- | ---
+_City_ | String | Returns the city the user is in.
+_Continent_ | String | Returns the continent the user is in.
+_Country_ code | String | Returns the code of the country the user is in.
+_EU_ country | String | Returns the European country the user is in.
+_Region_ | String | Returns the region the user is in.
+_Region_ code | String | Returns the region code the user is in.
+_Timezone_ | String | Returns the timezone the user is in.
 
 {{</table-wrap>}}
 
