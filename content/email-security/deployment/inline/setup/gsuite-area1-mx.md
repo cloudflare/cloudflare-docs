@@ -11,7 +11,7 @@ meta:
 
 ![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/gsuite-area1-mx.png)
 
-In this tutorial you will learn how to configure Gmail with Area 1 as MX record. This tutorial is broken down into several steps.
+In this tutorial, you will learn how to configure Gmail with Area 1 as MX record. This tutorial is broken down into several steps.
 
 ## Requirements
 
@@ -80,7 +80,7 @@ When you are finished entering these details, select **SAVE**.
     * In the **Email message to affect** section, select **Inbound**.
     * In the **Add expression that describe the content you want to search for in each message section**, configure the following:
         * Select **Add** to add the condition.
-            * In the *Match* drop down, select **Advanced content match**.
+            * In the *Match* dropdown, select **Advanced content match**.
             * In **Location**, select **Full headers**.
             * In **Match type**, select **Contains text**.
             * In **Content**, enter `X-Area1Security-Disposition: MALICIOUS`.

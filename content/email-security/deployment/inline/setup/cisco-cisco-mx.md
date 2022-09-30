@@ -11,7 +11,7 @@ meta:
 
 ![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/cisco-mx.png)
 
-In this tutorial you will learn how to configure Area 1 email security with Cisco as MX record. This tutorial is broken down into several steps.
+In this tutorial, you will learn how to configure Area 1 email security with Cisco as MX record. This tutorial is broken down into several steps.
 
 ## 1. Add a Sender Group for Area 1 Email Protection IPs
 
@@ -94,7 +94,7 @@ To create a new Content Filter:
     `5`   | `Remote IP/Hostname` | `104.30.32.0/19`
     `6`   | `Remote IP/Hostname` | `158.51.64.0/26`
     `7`   | `Remote IP/Hostname` | `158.51.65.0/26`
-        * Ensure that the *Apply rule:* drop-down is set to **If one or more conditions match**.
+        * Ensure that the *Apply rule:* dropdown is set to **If one or more conditions match**.
     * **Actions**: Select **Add Action**, and add the following:
     Order | Action          | Rule
     --- | -------------------- | ---

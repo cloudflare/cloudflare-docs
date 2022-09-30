@@ -11,7 +11,7 @@ meta:
 
 ![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/office365-mx.png)
 
-In this tutorial you will learn how to configure Microsoft Office 365 with Area 1 as MX record. This tutorial is broken down into several steps.
+In this tutorial, you will learn how to configure Microsoft Office 365 with Area 1 as MX record. This tutorial is broken down into several steps.
 
 ## 1. Add Area 1 IP addresses to Allow List
 
@@ -88,8 +88,8 @@ This option will allow Office 365 to properly identify the original connecting I
 
 2. Select the `+` icon to configure a new connector. In the **Select your mail flow scenario panel** dialog box that opens:
 
-    1. In the *From* drop-down: select **Partner organization**.
-    2. In the *To* drop-down: select **Office 365**.
+    1. In the *From* dropdown: select **Partner organization**.
+    2. In the *To* dropdown: select **Office 365**.
     3. Select **Next** to continue the configuration.
 
 3. Provide a **Name** and a **Description** for the new connector. Leave the **Turn it on** checkbox enabled. Select **Next**.
@@ -150,10 +150,10 @@ For this alternate behavior, you will need to configure a transport rule in Offi
 
 2. Select the **+** button > **Create a new rule**.
 
-3. In the new dialog box, select **More options…** to open the advanced version of the rule creator. Set the following conditions and actions:
+3. In the new dialog box, select **More options** to open the advanced version of the rule creator. Set the following conditions and actions:
 
 * **Name**: `Quarantine Area 1 Suspicious Messages`
-* Configure the first condition, select **A message header…** > **Includes any of these words:**
+* Configure the first condition, select **A message header** > **Includes any of these words:**
     * Enter text: `X-Area1Security-Disposition`
     * Enter words: `SUSPICIOUS`
 
@@ -163,7 +163,7 @@ For this alternate behavior, you will need to configure a transport rule in Offi
 
 5. In the new condition, select **The sender** > **IP address is in any of these ranges or exactly matches** and enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
 
-6. In the **Do the following…** section, select **Redirect the message to**  > **hosted quarantine.**.
+6. In the **Do the following** section, select **Redirect the message to**  > **hosted quarantine.**.
 
 {{<Aside type="note">}}
 If you prefer to send the message to the Junk folder, in the **Do the following** section, select **Modify the message properties**  > **set the spam confidence level (SCL)**. Then, select the SCL value that will send the message to the junk folder. This behavior is dependent on the configured spam filter policies (spam and bulk actions).
