@@ -16,6 +16,8 @@ A URL Rewrite Rule filter expression (that is, the expression that defines which
 
 For information on the available functions, refer to [Functions](/ruleset-engine/rules-language/functions/).
 
+The maximum length of a filter expression is 4,096 characters.
+
 ## Rewrite expressions
 
 A rewrite expression (that is, the expression that defines the dynamic URL rewrite to perform) can only include the following fields:
