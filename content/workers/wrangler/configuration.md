@@ -369,7 +369,7 @@ deleted_classes = ["DeprecatedClass"]
 
 ### KV namespaces
 
-[Workers KV]((/workers/runtime-apis/kv/)) is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare’s data centers after access.
+[Workers KV](/workers/runtime-apis/kv/) is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare’s data centers after access.
 
 To bind KV namespaces to your Worker, assign an array of the below object to the `kv_namespaces` key.
 
