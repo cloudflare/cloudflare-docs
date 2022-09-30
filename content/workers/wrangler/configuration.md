@@ -7,6 +7,7 @@ weight: 3
 # Configure `wrangler.toml`
 
 Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker.
+
 It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
 
 ## Sample wrangler.toml configuration
@@ -24,7 +25,7 @@ workers_dev = false
 route = { pattern = "example.org/*", zone_name = "example.org" }
 
 kv_namespaces = [
-  { binding = "MY_NAMESPACE", id = "KV_ID" }
+  { binding = "<MY_NAMESPACE>", id = "<KV_ID>" }
 ]
 
 [env.staging]
@@ -32,60 +33,52 @@ name = "my-worker-staging"
 route = { pattern = "staging.example.org/*", zone_name = "example.org" }
 
 kv_namespaces = [
-  { binding = "MY_NAMESPACE", id = "STAGING_KV_ID" }
+  { binding = "<MY_NAMESPACE>", id = "<STAGING_KV_ID>" }
 ]
 ```
 
 ## Environments
 
-The configuration for a Worker can become complex when you can define different [environments](/workers/platform/environments/), and each environment has its own configuration.
+The configuration for a Worker can become complex when you define different [environments](/workers/platform/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.
 
-These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or publish
-with the `-e` / `--env` flag in the `wrangler` commands like `wrangler publish --env staging`.
+These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or publish with the `-e` / `--env` flag in the `wrangler` commands like `wrangler publish --env staging`.
 
-Whilst the majority of keys are inheritable, meaning that top-level configuration can be used in environments,
-bindings such as `vars` or `kv_namespaces` are not inheritable and need to be defined explicitly.
+The majority of keys are inheritable, meaning that top-level configuration can be used in environments. [Bindings](/workers/platform/bindings/), such as `vars` or `kv_namespaces`, are not inheritable and need to be defined explicitly.
 
 ## Inheritable keys
 
-Inheritable keys are configurable at the top-level, and can be inherited (or overridden)
-by environment-specific configuration.
+Inheritable keys are configurable at the top-level, and can be inherited (or overridden) by environment-specific configuration.
 
 {{<Aside type="note">}}
-At a minimum, `name`, `main` and `compatibility_date` are required to publish a Worker.
+At a minimum, the `name`, `main` and `compatibility_date` keys are required to publish a Worker.
 {{</Aside>}}
 
 {{<definitions>}}
 
 - `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The name of your Worker. Alphanumeric + dashes only.
+  - The name of your Worker. Alphanumeric and dashes only.
 
 - `main` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The path to the entrypoint of your Worker that will be executed. For example: `./src/index.ts`
+  - The path to the entrypoint of your Worker that will be executed. For example: `./src/index.ts`.
 
 - `compatibility_date` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - A date in the form `yyyy-mm-dd`, which will be used to determine which version of the Workers
-    runtime is used. Refer to [compatibility dates](/workers/platform/compatibility-dates/).
+  - A date in the form `yyyy-mm-dd`, which will be used to determine which version of the Workers runtime is used. Refer to [Compatibility dates](/workers/platform/compatibility-dates/).
 
 - `account_id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - This is the ID of the account associated with your zone. You might have more than one account,
-    so make sure to use the ID of the account associated with the zone/route you provide, if you
-    provide one. It can also be specified through the `CLOUDFLARE_ACCOUNT_ID` environment variable.
+  - This is the ID of the account associated with your zone. You might have more than one account, so make sure to use the ID of the account associated with the zone/route you provide, if you provide one. It can also be specified through the `CLOUDFLARE_ACCOUNT_ID` environment variable.
 
 - `compatibility_flags` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A list of flags that enable features from upcoming features of the Workers runtime, usually
-    used together with `compatibility_date`. Refer to [compatibility dates](/workers/platform/compatibility-dates/).
+  - A list of flags that enable features from upcoming features of the Workers runtime, usually used together with `compatibility_date`. Refer to [compatibility dates](/workers/platform/compatibility-dates/).
 
 - `workers_dev` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Enables use of `<name>.<subdomain>.workers.dev` to test and deploy your Worker. If you have a Worker that
-    is only for `scheduled` events, you can set this to `false`. Defaults to `true`.
+  - Enables use of `*.workers.dev` subdomain to test and deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`.
 
 - `route` {{<type-link href="#types-of-routes">}}Route{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -97,11 +90,11 @@ At a minimum, `name`, `main` and `compatibility_date` are required to publish a 
 
 - `tsconfig` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Path to a custom tsconfig.
+  - Path to a custom `tsconfig`.
 
 - `triggers` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Cron definitions to trigger a Worker's `scheduled` function. Refer to [triggers](#triggers)
+  - Cron definitions to trigger a Worker's `scheduled` function. Refer to [triggers](#triggers).
 
 - `usage_model` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -109,22 +102,19 @@ At a minimum, `name`, `main` and `compatibility_date` are required to publish a 
 
 - `rules`  {{<type-link href="#bundling">}}Rule{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - An ordered list of rules that define which modules to import, and what type to import them as. You will
-    need to specify rules to use `Text`, `Data` and `CompiledWasm` modules, or when you wish to have a `.js`
-    file be treated as an `ESModule` instead of `CommonJS`.
+  - An ordered list of rules that define which modules to import, and what type to import them as. You will need to specify rules to use `Text`, `Data` and `CompiledWasm` modules, or when you wish to have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
 
 - `build` {{<type-link href="#custom-builds">}}Build{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Configures a custom build step to be run by Wrangler when building your Worker. Refer to [custom builds](#custom-builds).
+  - Configures a custom build step to be run by Wrangler when building your Worker. Refer to [Custom builds](#custom-builds).
 
 - `no_bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Skip internal build steps and directly publish script, such as if you have a plain JavaScript Worker with
-    no dependencies.
+  - Skip internal build steps and directly publish your Worker script. You must have a plain JavaScript Worker with no dependencies.
 
 - `minify` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Minify the script before uploading.
+  - Minify the Worker script before uploading.
 
 - `node_compat` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -136,15 +126,13 @@ At a minimum, `name`, `main` and `compatibility_date` are required to publish a 
 
 - `keep_vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether Wrangler should keep variables configured in the dashboard on publish.
-    Refer to [source of truth](#source-of-truth).
+  - Whether Wrangler should keep variables configured in the dashboard on publish. Refer to [source of truth](#source-of-truth).
 
 {{</definitions>}}
 
 ## Non-inheritable keys
 
-Non-inheritable keys are configurable at the top-level, but cannot be inherited by environments and must be
-specified for each environment.
+Non-inheritable keys are configurable at the top-level, but cannot be inherited by environments and must be specified for each environment.
 
 {{<definitions>}}
 
@@ -178,57 +166,53 @@ specified for each environment.
 
 There are four types of routes.
 
-### Simple Route
+### Simple route
 
 This is a simple route that only requires a pattern.
 
 Example: `"example.com/*"`
 
-### Zone ID Route
+### Zone ID route
 
 {{<definitions>}}
 
 - `pattern` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The pattern that your Worker should be run on, e.g. `"example.com/*"`.
+  - The pattern that your Worker can be run on, for example,`"example.com/*"`.
 
 - `zone_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The ID of the zone that your `pattern` is associated with.
-    Refer to [find zone and account IDs](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/)
+  - The ID of the zone that your `pattern` is associated with. Refer to [Find zone and account IDs](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`.
-    Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
 
 {{</definitions>}}
 
 Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
-### Zone Name Route
+### Zone name route
 
 {{<definitions>}}
 
 - `pattern` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The pattern that your Worker should be run on, e.g. `"example.com/*"`.
+  - The pattern that your Worker should be run on, for example, `"example.com/*"`.
 
 - `zone_name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The name of the zone that your `pattern` is associated with.
-    If you are using API tokens, this will require the `Account` scope.
+  - The name of the zone that your `pattern` is associated with. If you are using API tokens, this will require the `Account` scope.
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`.
-    Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
 
 {{</definitions>}}
 
 Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
-### Custom Domain Route
+### Custom Domain route
 
 This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
 
@@ -236,12 +220,11 @@ This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/
 
 - `pattern` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The pattern that your Worker should be run on, e.g. `"example.com/*"`.
+  - The pattern that your Worker should be run on, for example, `"example.com/*"`.
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`.
-    Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
 
 {{</definitions>}}
 
@@ -256,8 +239,7 @@ route = { pattern = "example.com/*", custom_domain: true }
 
 ## Triggers
 
-Triggers allow you to define the `cron` expression to invoke your Worker's `scheduled` function.
-Refer to [supported cron expressions](/workers/platform/cron-triggers/#supported-cron-expressions).
+Triggers allow you to define the `cron` expression to invoke your Worker's `scheduled` function. Refer to [Supported cron expressions](/workers/platform/cron-triggers/#supported-cron-expressions).
 
 {{<definitions>}}
 
@@ -277,17 +259,15 @@ header: wrangler.toml
 crons = ["* * * * *"]
 ```
 
-## Custom Builds
+## Custom builds
 
-You can configure a custom build step that will be run before your Worker is published.
-Refer to [custom builds](/workers/wrangler/custom-builds/).
+You can configure a custom build step that will be run before your Worker is published. Refer to [Custom builds](/workers/wrangler/custom-builds/).
 
 {{<definitions>}}
 
 - `command` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The command used to build your Worker. On Linux and macOS, the command is executed in the `sh` shell
-    and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used.
+  - The command used to build your Worker. On Linux and macOS, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used.
 
 - `cwd` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -315,8 +295,7 @@ watch_dir = "build_watch_dir"
 
 ### Durable Objects
 
-Durable Objects provide low-latency coordination and consistent storage for the Workers platform.
-Refer to [using Durable Objects](/workers/learning/using-durable-objects/).
+[Durable Objects](/workers/learning/using-durable-objects/) provide low-latency coordination and consistent storage for the Workers platform.
 
 To bind Durable Objects to your Worker, assign an array of the below object to the `durable_objects.bindings` key.
 
@@ -332,7 +311,7 @@ To bind Durable Objects to your Worker, assign an array of the below object to t
 
 - `script_name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The script where the Durable Object is defined, if it's external to this Worker.
+  - The script where the Durable Object is defined, if it is external to this Worker.
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -347,14 +326,13 @@ Example:
 header: wrangler.toml
 ---
 durable_objects.bindings = [
-  { name = "TEST_OBJECT", class_name = "TEST_CLASS" }
+  { name = "<TEST_OBJECT>", class_name = "<TEST_CLASS>" }
 ]
 ```
 
 #### Migrations
 
-When making changes to your Durable Object classes, you must perform a migration.
-Refer to [configuring Durable Object classes with migrations](https://developers.cloudflare.com/workers/learning/using-durable-objects#configuring-durable-object-classes-with-migrations).
+When making changes to your Durable Object classes, you must perform a migration. Refer to [Configuring Durable Object classes with migrations](https://developers.cloudflare.com/workers/learning/using-durable-objects#configuring-durable-object-classes-with-migrations).
 
 {{<definitions>}}
 
@@ -389,11 +367,9 @@ renamed_classes = [{from = "DurableObjectExample", to = "UpdatedName" }]
 deleted_classes = ["DeprecatedClass"]
 ```
 
-### KV Namespaces
+### KV namespaces
 
-Workers KV is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers,
-then caches that data in Cloudflare’s data centers after access.
-Refer to [KV](/workers/runtime-apis/kv/).
+[Workers KV]((/workers/runtime-apis/kv/)) is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare’s data centers after access.
 
 To bind KV namespaces to your Worker, assign an array of the below object to the `kv_namespaces` key.
 
@@ -405,11 +381,11 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
 
 - `id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The ID of the KV namespace
+  - The ID of the KV namespace.
 
 - `preview_id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The ID of the KV namespace used during `wrangler dev`
+  - The ID of the KV namespace used during `wrangler dev`.
 
 {{</definitions>}}
 
@@ -420,14 +396,13 @@ Example:
 header: wrangler.toml
 ---
 kv_namespaces = [
-  { binding = "TEST_NAMESPACE", id = "TEST_ID" }
+  { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>" }
 ]
 ```
 
-### R2 Buckets
+### R2 buckets
 
-Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
-Refer to [R2](/r2).
+[Cloudflare R2 Storage](/r2) allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
 To bind R2 buckets to your Worker, assign an array of the below object to the `r2_buckets` key.
 
@@ -454,15 +429,13 @@ Example:
 header: wrangler.toml
 ---
 r2_buckets  = [
-  { binding = "TEST_BUCKET", bucket_name = "TEST_BUCKET"}
+  { binding = "<TEST_BUCKET>", bucket_name = "<TEST_BUCKET>"}
 ]
 ```
 
-### Service Bindings
+### Service bindings
 
-A Service binding allows you to send HTTP requests to another Worker without those requests going over the Internet.
-The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service.
-Refer to [About Service Bindings](/workers/platform/bindings/about-service-bindings/).
+A service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service Bindings](/workers/platform/bindings/about-service-bindings/).
 
 To bind other Workers to your Worker, assign an array of the below object to the `services` key.
 
@@ -478,7 +451,7 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  The environment of the service (e.g. `production`, `staging`, etc). Refer to [Service Environments](/workers/platform/environments/).
+  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Service Environments](/workers/platform/environments/).
 
 {{</definitions>}}
 
@@ -489,7 +462,7 @@ Example:
 header: wrangler.toml
 ---
 services = [
-  { binding = "TEST_BINDING", service = "TEST_WORKER" }
+  { binding = "<TEST_BINDING>", service = "<TEST_WORKER>" }
 ]
 ```
 
@@ -501,11 +474,11 @@ You can bundle assets into your Worker using the `rules` key, making these asset
 
 - `type` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The type of asset. Must be one of `ESModule`, `CommonJS`, `CompiledWasm`, `Text` or `Data`.
+  - The type of asset. Must be one of: `ESModule`, `CommonJS`, `CompiledWasm`, `Text` or `Data`.
 
 - `globs` {{<type>}}string[]{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - An array of glob rules (e.g `["**/*.md"]`). Refer to [glob](https://man7.org/linux/man-pages/man7/glob.7.html).
+  - An array of glob rules (for example, `["**/*.md"]`). Refer to [glob](https://man7.org/linux/man-pages/man7/glob.7.html).
 
 - `fallthrough` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -582,11 +555,9 @@ port = "8080"
 local_protocol = "http"
 ```
 
-### Environmental Variables
+### Environmental variables
 
-When developing locally, you can create a `.dev.vars` file in the project root which allows you to define variables
-that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and
-`[vars]` in `wrangler.toml`.
+When developing locally, you can create a `.dev.vars` file in the project root which allows you to define variables that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and `[vars]` in `wrangler.toml`.
 
 This file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
 
@@ -599,14 +570,11 @@ SECRET_KEY = "value"
 
 ## Node compatibility
 
-You can add experimental Node compatibility to your Worker by adding the `node_compat` key to your `wrangler.toml`
-or by passing the `--node-compat` flag to `wrangler`.
+You can add experimental Node compatibility to your Worker by adding the `node_compat` key to your `wrangler.toml` or by passing the `--node-compat` flag to `wrangler`.
 
-It's not possible to polyfill all Node APIs or behaviours, but it's possible to polyfill some of them. APIs such as `fs`
-can't be replicated as Workers has no concept of a filesystem.
+It is not possible to polyfill all Node APIs or behaviours, but it is possible to polyfill some of them. APIs such as `fs` cannot be replicated as Workers has no concept of a filesystem.
 
-This is currently powered by `@esbuild-plugins/node-globals-polyfill`
-which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
+This is currently powered by `@esbuild-plugins/node-globals-polyfill` which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
 
 ## Workers Sites
 
@@ -614,8 +582,7 @@ which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/
 Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
 {{</Aside>}}
 
-Workers Sites allows you to host static websites, or dynamic websites using frameworks like Vue or React, on Workers.
-Refer to [Workers Sites](/workers/platform/sites).
+[Workers Sites](/workers/platform/sites) allows you to host static websites, or dynamic websites using frameworks like Vue or React, on Workers.
 
 {{<definitions>}}
 
@@ -625,13 +592,11 @@ Refer to [Workers Sites](/workers/platform/sites).
 
 - `include` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - An exclusive list of .gitignore-style patterns that match file  or directory names from your bucket location.
-    Only matched items will be uploaded.
+  - An exclusive list of `.gitignore`-style patterns that match file  or directory names from your bucket location. Only matched items will be uploaded.
 
 - `exclude` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  A list of .gitignore-style patterns that match files or directories in your bucket that should be
-     excluded from uploads.
+  -  A list of `.gitignore`-style patterns that match files or directories in your bucket that should be excluded from uploads.
 
 {{</definitions>}}
 
@@ -647,10 +612,9 @@ include = ["upload_dir"]
 exclude = ["ignore_dir"]
 ```
 
-## Proxy Support
+## Proxy support
 
-Corporate networks will often have proxies on their networks and this can sometimes cause connectivity issues. To
-configure Wrangler with the appropriate proxy details, use the below environmental variables:
+Corporate networks will often have proxies on their networks and this can sometimes cause connectivity issues. To configure Wrangler with the appropriate proxy details, use the below environmental variables:
 
 - `https_proxy`
 - `HTTPS_PROXY`
