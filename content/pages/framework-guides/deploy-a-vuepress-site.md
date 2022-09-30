@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Vuepress Project
+title: Deploy a Vuepress site
 ---
 
-# Deploy a Vuepress Project
+# Deploy a Vuepress site
 
 [VuePress](https://vuepress.vuejs.org/) is a minimalistic static site generator with a Vue-powered theming system and Plugin API. It is well optimized for writing technical documentation and was created to power Vue's own sub projects. 
 
