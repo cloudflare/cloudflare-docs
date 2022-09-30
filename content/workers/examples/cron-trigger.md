@@ -9,17 +9,36 @@ weight: 1001
 layout: example
 ---
 
-```js
-addEventListener("scheduled", (event) => {
-  event.waitUntil(triggerEvent(event.scheduledTime));
-});
+## Module worker
 
+```js
+async function triggerEvent(event) {
+  // Fetch some data
+  console.log('cron processed', event.scheduledTime);
+}
+
+export default {
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(triggerEvent(event));
+  },
+};
+```
+
+## Classic worker
+
+```js
 async function triggerEvent(scheduledTime) {
   // Fetch some data
   // Update API
   console.log("cron processed");
 }
+
+addEventListener("scheduled", (event) => {
+  event.waitUntil(triggerEvent(event.scheduledTime));
+});
 ```
+
+
 
 ## Test Cron Triggers using Wrangler
 
