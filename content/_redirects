@@ -102,6 +102,12 @@
 /analytics/web-analytics/change-log/ /analytics/web-analytics/changelog/ 301
 /analytics/web-analytics/about/ /analytics/web-analytics/ 301
 
+#area1
+/email-security/static/Deployment_and_Configuration_Guide_for_Office_365_MX.pdf /email-security/deployment/inline/setup/office-365-area1-mx/ 301
+/email-security/static/GSuite-Area1-MX.pdf /email-security/deployment/inline/setup/gsuite-area1-mx/ 301
+/email-security/static/Cisco-Area1-MX.pdf /email-security/deployment/inline/setup/cisco-area1-mx/ 301
+/email-security/static/Cisco-Cisco-MX.pdf /email-security/deployment/inline/setup/cisco-cisco-mx/ 301
+
 # argo-tunnel
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
 /argo-tunnel/create-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
