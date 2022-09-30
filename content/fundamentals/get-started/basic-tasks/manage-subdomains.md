@@ -26,7 +26,7 @@ Sometimes, you might want to create a subdomain (`www.example.com`) that simply 
     | -------- | -------- | ---------------- | ---------------- |
     | A        | `www`    | `192.0.2.1`      | Proxied          |
 
-2.  Use [Bulk redirects](/rules/bulk-redirects/) to forward traffic from your subdomain to your root domain. You will likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `www.example.com/examples` go to `example.com/examples`.
+2.  Use [Bulk redirects](/rules/url-forwarding/bulk-redirects/) to forward traffic from your subdomain to your root domain. You will likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `www.example.com/examples` go to `example.com/examples`.
 
     | **Source URL**    | **Target URL**        | **Status** | **Selected parameters**                       |
     | ----------------- | --------------------- | ---------- | --------------------------------------------- |
@@ -44,7 +44,7 @@ Sometimes, you might want all traffic to your root domain (`example.com`) to act
     | -------- | -------- | ---------------- | ---------------- |
     | A        | `@`      | `192.0.2.1`      | Proxied          |
 
-3.  Use [Bulk redirects](/rules/bulk-redirects/) to forward traffic from your root domain to your subdomain. You will likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `example.com/examples` go to `www.example.com/examples`.
+3.  Use [Bulk redirects](/rules/url-forwarding/bulk-redirects/) to forward traffic from your root domain to your subdomain. You will likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `example.com/examples` go to `www.example.com/examples`.
 
     | **Source URL** | **Target URL**            | **Status** | **Selected parameters**                       |
     | -------------- | ------------------------- | ---------- | --------------------------------------------- |

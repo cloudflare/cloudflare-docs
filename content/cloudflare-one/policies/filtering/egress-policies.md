@@ -20,9 +20,3 @@ All traffic proxied by Gateway will route via these dedicated egress IPs.
 Each dedicated egress IP is associated with a Cloudflare data center, and your egress traffic will share the same IP geolocation as the data center. When you purchase a dedicated egress IP, you can request a specific city to egress from. If you have multiple egress IPs, your end users will be automatically routed to the closest one.
 
 It can take anywhere from one week to up to four weeks for websites to recognize the updated IP geolocation. For example, if your users are in India, they would get a U.S. Google landing page instead of the Indian Google landing page until Google picks up the updated IP geolocation.
-
-## TCP/UDP support
-
-By default, only TCP traffic is proxied through dedicated egress IPs. UDP traffic will egress from the default shared IP ranges instead of your dedicated IPs.
-
-To proxy UDP traffic through dedicated egress IPs, contact your account team.

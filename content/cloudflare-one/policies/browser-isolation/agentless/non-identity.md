@@ -29,8 +29,4 @@ If you want to apply Isolate policies based on user identity, you will need to e
         | --------------------| ---------| ----------------| -------------- |
         | Hostname            | matches regex  | `.*` | Isolate        |
 
-        |Priority|
-        |--------|
-        | Last (after higher priority Block or Do Not Inspect rules)|
-
 For more examples, refer to the list of [common HTTP policies](/cloudflare-one/policies/filtering/http-policies/common-policies/#isolate-high-risk-sites-in-remote-browser).

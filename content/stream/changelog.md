@@ -6,6 +6,14 @@ weight: 11
 
 # Changelog
 
+## 2022-09-27
+
+### WebRTC live streaming and playback (beta)
+
+Cloudflare Stream now supports live video streaming over WebRTC, with sub-second latency, to unlimited concurrent viewers.
+
+For more, read the [blog post](https://blog.cloudflare.com/webrtc-whip-whep-cloudflare-stream) or the get started with example code in the [docs](/stream/webrtc-beta).
+
 ## 2022-09-15
 
 ### Manually control when you start and stop simulcasting

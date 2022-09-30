@@ -80,3 +80,11 @@ Currently, this header is a JSON object, containing only one key called “schem
 The `CF-Worker` request header is added to an edge Worker subrequest that identifies the host that spawned the subrequest. This is useful when you want to protect yourself against cross-zone worker subrequests. For example: `CF-Worker: example.com`.
 
 You can add `CF-Worker` header on server logs similar to the way you add the [`CF-RAY`](https://support.cloudflare.com/hc//articles/203118044#h_f7a7396f-ec41-4c52-abf5-a110cadaca7c) header. To do that, add `$http_cf_worker` in the log format file: `log_format cf_custom "CF-Worker:$http_cf_worker"'`
+
+# Considerations for Spectrum
+
+When using Spectrum with a TCP application, these headers are not visible at the origin as they are HTTP headers. If you wish to utilize these in your application, there are two options:
+
+- Use an HTTP or HTTPS Spectrum app instead of TCP
+- Use the [Proxy Protocol feature](/spectrum/how-to/enable-proxy-protocol/)
+

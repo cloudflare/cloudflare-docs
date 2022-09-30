@@ -5460,3 +5460,7 @@ pre {
 [theme="dark"] .littlefoot-footnote__button {
   background: rgba(110, 110, 110, 0.5);
 }
+
+ .mermaid {
+  background: #f5f5f5 !important;
+}

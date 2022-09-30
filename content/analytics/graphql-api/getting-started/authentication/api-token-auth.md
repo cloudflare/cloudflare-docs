@@ -8,7 +8,7 @@ weight: 21
 
 Cloudflare recommends API tokens as the preferred authentication method with Cloudflare APIs. This article walks through creating API tokens for authentication to the GraphQL Analytics API.
 
-For more details on API tokens and the full range of supported options, refer to [Creating API tokens](/api/tokens/create/).
+For more details on API tokens and the full range of supported options, refer to [Creating API tokens](/api/get-started/create-token/).
 
 To create an API token for authentication to the GraphQL Analytics API, use this workflow:
 

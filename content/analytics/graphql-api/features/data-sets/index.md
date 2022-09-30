@@ -40,6 +40,7 @@ The following datasets (and associated nodes) are available in Cloudflare Analyt
 | Network Analytics v2<br/> for Spectrum customers<br/> (Enterprise plans only) | `spectrumNetworkAnalyticsAdaptiveGroups` `dosdNetworkAnalyticsAdaptiveGroups` `dosdAttackAnalyticsGroups` |
 | SYN Attacks (DoS Analytics) | `synAvgPps1mGroups`                                                                                                            |
 | Workers Metrics             | `workersInvocationsAdaptive`                                                                                                   |
+| Turnstile Widget Analytics  | `turnstileAdaptiveGroups`                                                                                                      |
 
 {{</table-wrap>}}
 

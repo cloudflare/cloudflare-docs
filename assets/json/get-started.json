@@ -73,7 +73,7 @@
             "link_title": "Add other account members"
           },
           {
-            "url_path": "/api/tokens/create/",
+            "url_path": "/api/get-started/create-token/",
             "link_title": "(For some) Create an API token",
             "additional_description": "If you plan on using the Cloudflare API to manage various account settings, create an API token associated with your account."
           }

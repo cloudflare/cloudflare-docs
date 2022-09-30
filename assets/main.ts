@@ -1,6 +1,7 @@
 import * as events from "./events";
 import * as contents from "./contents";
 import * as timeago from "./timeago";
+import * as mermaid from "./mermaid";
 import * as navs from "./navlinks";
 
 declare global {
@@ -23,4 +24,5 @@ declare global {
   events.toggleSidebar();
   events.activeTab();
   events.tabs();
+  mermaid.init();
 })();

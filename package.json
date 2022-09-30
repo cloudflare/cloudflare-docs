@@ -13,7 +13,8 @@
     "postbuild": "tsm bin/highlight.ts restore"
   },
   "dependencies": {
-    "fromnow": "3.0.1"
+    "fromnow": "3.0.1",
+    "mermaid": "^9.1.7"
   },
   "devDependencies": {
     "@types/node": "16.11.12",

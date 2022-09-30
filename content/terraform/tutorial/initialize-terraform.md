@@ -10,7 +10,7 @@ meta:
 
 This tutorial shows you how to get started with Terraform. The tutorial uses an example scenario where you have a web server for your domain, accessible on `203.0.113.10`, and you just signed up your domain (`example.com`) on Cloudflare to manage everything in Terraform.
 
-Before you begin, ensure you [installed Terraform](/terraform/installing/). You will also need to [create an API Token](/api/tokens/create/) with permissions to edit resources for this tutorial.
+Before you begin, ensure you [installed Terraform](/terraform/installing/). You will also need to [create an API Token](/api/get-started/create-token/) with permissions to edit resources for this tutorial.
 
 ## 1. Define your first Terraform config file
 

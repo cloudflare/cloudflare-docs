@@ -2,17 +2,20 @@
 pcx_content_type: concept
 title: Rate limiting rules
 weight: 5
+layout: list
 ---
 
 # Rate limiting rules
+
+{{<content-column>}}
 
 Rate limiting rules allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
 
 {{<Aside type="note">}}
 
-This feature is only available for customers on an Enterprise plan. Refer to [Availability](#availability) for details.
+Rate limiting rules is an unmetered feature available on all plans. Refer to [Availability](#availability) for details.
 
-For guidance on the previous version of rate limiting rules, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
+For guidance on the previous version of rate limiting rules (billed based on usage), refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 
 {{</Aside>}}
 
@@ -41,22 +44,33 @@ Applying rate limiting rules to verified bots might affect Search Engine Optimiz
 
 ## Availability
 
-Rate limiting rules are available to Enterprise customers. The available features depend on the exact plan:
+Rate limiting rules are available to all customers. The available features depend on the exact plan:
 
-{{<table-wrap>}}
+{{</content-column>}}
 
-Feature | Enterprise | Enterprise Advanced |
----|---|---
-Available fields<br/>in rule expression | URL, Method, Headers, Source IP | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Bot Management fields*)
-Counting characteristics | IP | IP, IP with NAT support, Query, Headers, Cookie, ASN, Country, JA3 Fingerprint*
-Available fields<br/>in counting expression | URL, Method, Request headers, Source IP, Response code, Response headers | URL, Method, Request headers, Source IP, Response code, Response headers
-Counting model | Number of requests | Number of requests<br/>[Complexity score](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting)
-Maximum sampling period | 10 minutes | 1 hour
+{{<table-wrap style="font-size: 87%">}}
+
+
+Feature | Free | Pro | Business | Enterprise w/ WAF Essential | Enterprise w/ Advanced Rate Limiting |
+---|---|---|---|---|---
+Available fields<br/>in rule expression | Path | Host, URI, Path, Full URI, Query | Host, URI, Path, Full URI, Query, Method, Source IP, User Agent | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Bot Management fields<sup>1</sup>) | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Bot Management fields<sup>1</sup>), [request body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields)<sup>2</sup>
+Counting characteristics | IP | IP | IP | IP, IP with NAT support | IP, IP with NAT support, Query, Host, Headers, Cookie, ASN, Country, Path, JA3 Fingerprint<sup>1</sup>
+Available fields<br/>in counting expression | N/A | N/A | All rule expression fields, Response code, Response headers | All rule expression fields, Response code, Response headers | All rule expression fields, Response code, Response headers
+Counting model | Number of requests | Number of requests | Number of requests | Number of requests | Number of requests,<br/>[complexity score](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting)
+Maximum sampling period | 10 seconds | 60 seconds | 10 minutes | 1 hour | 1 hour
+Maximum timeout period | 10 seconds | 1 hour | 1 day | 1 day | 1 day
+Number of rules | 1 | 2 | 5 | 100 | 100
 
 {{</table-wrap>}}
 
-\* Only available to Enterprise customers who have purchased [Bot Management](/bots/plans/bm-subscription/).
+<sup>1</sup> _Only available to Enterprise customers who have purchased [Bot Management](/bots/plans/bm-subscription/)._<br>
+<sup>2</sup> _Availability depends on your WAF plan._
 
+{{<content-column>}}
+
+{{<Aside type="note">}}
+For availability information related to the previous version of rate limiting rules, refer to [Rate Liming allowances per plan](https://support.cloudflare.com/hc/articles/115001635128#4gd3s4xzV2xOE4CUbRIEAo) in the Support KB.
+{{</Aside>}}
 
 ## Next steps
 
@@ -65,3 +79,5 @@ You can configure rate limiting rules at the zone level and at the account level
 To configure rate limiting rules in the Cloudflare dashboard, refer to [Create rate limiting rules in the dashboard for a zone](/waf/rate-limiting-rules/create-zone-dashboard/).
 
 You can also configure rate limiting rules using the [Rulesets API](/ruleset-engine/rulesets-api/). Refer to [Create rate limiting rules via API](/waf/rate-limiting-rules/create-api/) for more information.
+
+{{</content-column>}}

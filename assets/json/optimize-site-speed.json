@@ -110,7 +110,7 @@
         "estimated_time": "~45 min",
         "pages": [
           {
-            "url_path": "/rules/bulk-redirects/",
+            "url_path": "/rules/url-forwarding/bulk-redirects/",
             "link_title": "Bulk redirects",
             "additional_description": "By using Bulk Redirects or [Page Rules](https://support.cloudflare.com/hc/articles/4729826525965) for URL forwarding, you can perform redirects at Cloudflare’s edge network instead of making requests travel all the way to your origin server."
           },

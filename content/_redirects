@@ -80,8 +80,9 @@
 /access/configuring-identity-providers/ /cloudflare-one/identity/idp-integration/ 301
 /access/getting-started/applications/ /cloudflare-one/applications/ 301
 /access/getting-started/access-setup/ /cloudflare-one/identity/ 301
-/access/rdp/ /cloudflare-one/tutorials/rdp/ 301
-/access/rdp/connect-rdp/ /cloudflare-one/tutorials/rdp/ 301
+/access/rdp/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
+/access/rdp/connect-rdp/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
+/cloudflare-one/tutorials/rdp/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
 /access/service-auth/mtls/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
 /access/service-auth/service-token/ /cloudflare-one/identity/service-tokens/ 301
 /access/setting-up-access/ /cloudflare-one/identity/ 301
@@ -101,6 +102,12 @@
 /analytics/web-analytics/change-log/ /analytics/web-analytics/changelog/ 301
 /analytics/web-analytics/about/ /analytics/web-analytics/ 301
 
+#area1
+/email-security/static/Deployment_and_Configuration_Guide_for_Office_365_MX.pdf /email-security/deployment/inline/setup/office-365-area1-mx/ 301
+/email-security/static/GSuite-Area1-MX.pdf /email-security/deployment/inline/setup/gsuite-area1-mx/ 301
+/email-security/static/Cisco-Area1-MX.pdf /email-security/deployment/inline/setup/cisco-area1-mx/ 301
+/email-security/static/Cisco-Cisco-MX.pdf /email-security/deployment/inline/setup/cisco-cisco-mx/ 301
+
 # argo-tunnel
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
 /argo-tunnel/create-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
@@ -115,6 +122,18 @@
 /argo-tunnel/routing-to-tunnel/kubernetes/ /cloudflare-one/connections/connect-apps/routing-to-tunnel/kubernetes/ 301
 /argo-tunnel/run-tunnel/run-as-service/ /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/ 301
 /argo-tunnel/trycloudflare/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
+
+# api
+/api/v4docs/ /api/how-to/make-api-calls/ 301
+/api/tokens/ /api/get-started/ 301
+/api/tokens/create/ /api/get-started/create-token/ 301
+/api/tokens/create/template/ /api/reference/template/ 301
+/api/tokens/create/permissions/ /api/reference/permissions/ 301
+/api/tokens/advanced/ /api/how-to/ 301
+/api/tokens/advanced/restrictions/ /api/how-to/restrict-tokens/ 301
+/api/tokens/advanced/api/ /api/how-to/create-via-api/ 301
+/api/keys/ /api/get-started/keys/ 301
+/api/limits/ /api/reference/limits/ 301
 
 # api-shield / api-security
 /api-security/ /api-shield/ 301
@@ -441,6 +460,7 @@
 /rules/transform/create-url-rewrite-rule/ /rules/transform/url-rewrite/create-dashboard/ 301
 /rules/transform/url-rewrite/parameters/ /rules/transform/url-rewrite/reference/parameters/ 301
 /rules/transform/use-cases/ /rules/transform/url-rewrite/examples/ 301
+/rules/url-forwarding/dynamic-redirects/parameters/ /rules/url-forwarding/dynamic-redirects/settings/ 301
 
 # ruleset-engine
 /ruleset-engine/common-use-cases/ /ruleset-engine/managed-rulesets/override-examples/ 301
@@ -845,6 +865,7 @@
 /workers/runtime-apis/r2/ /r2/data-access/workers-api/workers-api-reference/ 301
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-application/ 301
 /workers/examples/http2-server-push/ /workers/examples/103-early-hints/ 301
+/workers/get-started/storage-objects/ /workers/platform/storage-objects 301
 
 # zaraz
 
@@ -855,13 +876,13 @@
 /zaraz/web-api/zaraz-track/ /zaraz/web-api/track/ 301
 
 # cloudflare-one / zero-trust
-/cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare/ /cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare/ 301
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/analytics/logs/gateway-logs/manage-pii/ 301
 /cloudflare-one/applications/arbitrary-tcp/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
 /cloudflare-one/applications/configure-apps/app-paths/ /cloudflare-one/policies/zero-trust/app-paths/ 301
 /cloudflare-one/applications/non-HTTP/ /cloudflare-one/applications/non-http/ 301
-/cloudflare-one/applications/non-HTTP/RDP/ /cloudflare-one/tutorials/rdp/ 301
-/cloudflare-one/applications/non-HTTP/SMB-file-shares/ /cloudflare-one/tutorials/smb/ 301
+/cloudflare-one/applications/non-HTTP/RDP/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
+/cloudflare-one/applications/non-HTTP/SMB-file-shares/ /cloudflare-one/connections/connect-apps/use_cases/smb/ 301
+/cloudflare-one/tutorials/smb/ /cloudflare-one/connections/connect-apps/use_cases/smb/ 301
 /cloudflare-one/connections/connect-apps/configuration/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/setup/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
 /cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/ /cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/ 301
@@ -963,13 +984,15 @@
 /cloudflare-one/policies/filtering/dns-policies/configuring-block-page/ /cloudflare-one/policies/filtering/configuring-block-page/ 301
 /cloudflare-one/policies/filtering/dns-policies/safesearch/ /cloudflare-one/policies/filtering/dns-policies/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/dns-categories/ /cloudflare-one/policies/filtering/dns-policies/dns-categories/ 301
-/cloudflare-one/policies/filtering/dns-policies-builder/check-policy/ /cloudflare-one/policies/filtering/dns-policies/check-policy/ 301
+/cloudflare-one/policies/filtering/dns-policies-builder/check-policy/ /cloudflare-one/policies/filtering/dns-policies/test-dns-filtering/ 301
+/cloudflare-one/policies/filtering/dns-policies/check-policy/ /cloudflare-one/policies/filtering/dns-policies/test-dns-filtering/ 301
 /cloudflare-one/tutorials/custom-block-page/ /cloudflare-one/policies/filtering/configuring-block-page/ 301
 /cloudflare-one/tutorials/warp-to-tunnel-internal-dns/ /cloudflare-one/connections/connect-networks/private-net/private-hostnames-ips/ 301
 /cloudflare-one/policies/filtering/http-policies/application-app-types/ /cloudflare-one/policies/filtering/application-app-types/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/ /cloudflare-one/policies/filtering/dns-policies/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/categories/ /cloudflare-one/policies/filtering/dns-policies/dns-categories/ 301
 /cloudflare-one/policies/filtering/http-policies/incompatible-traffic/ /cloudflare-one/policies/filtering/http-policies/ 301
+/cloudflare-one/policies/filtering/http-policies/order-of-enforcement-http-policies/ /cloudflare-one/policies/filtering/order-of-enforcement/ 301
 
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
 
@@ -982,18 +1005,20 @@
 /access/configuring-identity-providers/* /cloudflare-one/identity/idp-integration/:splat 301
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
+/argo-tunnel/run-tunnel/run-as-service/* /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/:splat 301
 /distributed-web/* /web3/:splat 301
+/docs-engine/* https://github.com/cloudflare/cloudflare-docs/blob/production/README.md 301
 /fundamentals/internet/* /fundamentals/the-internet/ 301
 /fundamentals/get-started/basic-tasks/account-maintenance/* /fundamentals/account-and-billing/account-maintenance/:splat 301
+/fundamentals/get-started/setup/troubleshooting/* /fundamentals/get-started/setup/add-site/ 301
 /fundamentals/get-started/basic-tasks/account-security/* /fundamentals/account-and-billing/account-security/:splat 301
+/fundamentals/get-started/origin-health/* /fundamentals/get-started/task-guides/origin-health/:splat 301
 /fundamentals/get-started/setup/account-setup/* /fundamentals/account-and-billing/account-setup/:splat 301
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
 /load-balancing/understand-basics/load-balancing-rules/* /load-balancing/additional-options/load-balancing-rules/:splat 301
-/fundamentals/get-started/origin-health/* /fundamentals/get-started/task-guides/origin-health/:splat 301
-/tenant/tutorial/* /tenant/get-started/ 301
-/argo-tunnel/run-tunnel/run-as-service/* /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/:splat 301
-/docs-engine/* https://github.com/cloudflare/cloudflare-docs/blob/production/README.md 301
+/rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
 /ssl/ssl-tls/* /ssl/reference/:splat 301
+/tenant/tutorial/* /tenant/get-started/ 301
 
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ssl/common-tasks/:splat 301
