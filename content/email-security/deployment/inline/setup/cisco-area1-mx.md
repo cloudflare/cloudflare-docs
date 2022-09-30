@@ -53,9 +53,9 @@ To update your MX records with Area 1, use the following:
 
 MX Priority | Host
 --- | ---
-10 | mailstream-east.mxrecord.io
-10 | mailstream-west.mxrecord.io
-50 | mailstream-central.mxrecord.mx
+`10` | `mailstream-east.mxrecord.io`
+`10` | `mailstream-west.mxrecord.io`
+`50` | `mailstream-central.mxrecord.mx`
 
 When configuring the Area 1 MX records, it is important to configure both hosts with the same MX priority, this will allow mail flows to load balance between the hosts.
 
@@ -63,10 +63,10 @@ European customers should update  MX records with Area 1 European hosts:
 
 MX Priority | Host
 --- |---
-10 | mailstream-eu1.mxrecord.io
-20 | mailstream-east.mxrecord.io
-20 | mailstream-west.mxrecord.io
-50 | mailstream-central.mxrecord.mx
+`10` | `mailstream-eu1.mxrecord.io`
+`20` | `mailstream-east.mxrecord.io`
+`20` | `mailstream-west.mxrecord.io`
+`50` | `mailstream-central.mxrecord.mx`
 
 The European region will be the primary MX, with a fail-over to the US regions. If you wish to exclusively use the European region, update with only the European host.
 

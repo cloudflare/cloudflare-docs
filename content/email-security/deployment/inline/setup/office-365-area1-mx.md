@@ -177,9 +177,9 @@ Instructions to update your MX records will depend on the DNS provider you are u
 
 MX Priority | Host
 --- | ---
-10 | mailstream-east.mxrecord.io
-10 | mailstream-west.mxrecord.io
-20 | mailstream-central.mxrecord.mx
+`10` | `mailstream-east.mxrecord.io`
+`10` | `mailstream-west.mxrecord.io`
+`20` | `mailstream-central.mxrecord.mx`
 
 When configuring the Area 1 MX records, it is important to configure both hosts with the same MX priority. This will allow mail flows to load balance between the hosts.
 
