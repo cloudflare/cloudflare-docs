@@ -25,7 +25,7 @@ Once this is done, a scaffolded documentation site will be created in the `docs`
 
 ## Create a GitHub repository
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After your repository is set up, push your application to GitHub by running the following commands in your terminal:
+Create a new GitHub repository by visiting [repo.new](https://repo.new). When creating your repository, do not select to add a README file, `.gitignore` template or a license as these selections will cause the push to GitHub to fail. After your repository is set up, push your application to GitHub by running the following commands in your terminal:
 
 ```sh
 $ git init
