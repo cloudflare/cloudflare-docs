@@ -3,28 +3,27 @@ import { learning_paths as paths } from "json-collector";
 // Since we're keying off the actual hostname of the page matching the hostname specified in the json file,
 // need to make sure the page exactly matches via ending slash (if not already there).
 
-let current_path;
-const regex = '\/$'
+let currentPath;
 
 for (const item in paths) {
-    let amended_path = location.pathname
-    if (!location.pathname.match(regex)) {
-        amended_path += '/'
+    let amendedPath = location.pathname;
+    if (!location.pathname.endsWith('/')) {
+        amendedPath += '/';
     }
-    if (paths[item].path === amended_path) {
-        current_path = paths[item];
+    if (paths[item].path === amendedPath) {
+        currentPath = paths[item];
     }
 }
 
-let filteredElements = current_path.elements.filter(element => { return element.visible_by_default !== false})
+let filteredElements = currentPath.elements.filter(element => element.visible_by_default !== false);
 
 Vue.createApp({
     methods: {
         onRadioButtonChange() {
             const selectedOptions = document.querySelectorAll('input[type=radio]:checked');
-            this.elements = current_path.elements.filter (element => {
+            this.elements = currentPath.elements.filter (element => {
                 let keepItem = true;
-                if (element.variables !== undefined) {
+                if (element.variables) {
                     for (const i in element.variables) {
                         let variableActive = false;
                         selectedOptions.forEach((item) => {
@@ -46,12 +45,12 @@ Vue.createApp({
                 })
             },
         calculateModuleNumber(module) {
-            filteredModules = this.elements.filter(item => item.type === "module");
-            for (let element in filteredModules) {
-                if (module.title === filteredModules[element].title) {
-                    return (parseFloat(element) + 1).toString();
-                }
-            }
+            let filteredModules = this.elements.filter(item => item.type === "module");
+            let foundIdx = filteredModules.findIndex((elem, idx) => module.title === filteredModules[idx].title);
+            return (foundIdx + 1).toString();
+        },
+        slugify(stringInput) {
+            return stringInput.toLowerCase().replaceAll(' ', '-');
         }
         },
     template: `
@@ -62,10 +61,10 @@ Vue.createApp({
     <div v-for="(element, index) in elements" v-on:change="onRadioButtonChange">
         <div class="learningPathModule" v-if="element.type === 'module'">
         <div class="moduleHeader">
-            <h2 :id="element.title.toLowerCase().replaceAll(' ', '-')"><span class="DocsMarkdown--header-anchor-positioner">
+            <h2 :id="slugify(element.title)"><span class="DocsMarkdown--header-anchor-positioner">
                 <a
                 class="DocsMarkdown--header-anchor Link Link-without-underline"
-                :href="'#' + element.title.toLowerCase().replaceAll(' ', '-')"
+                :href="'#' + slugify(element.title)"
                 >&#8203;​</a
                 >
             </span>
@@ -117,11 +116,11 @@ Vue.createApp({
             return this.elements.filter(item => item.type === "module");
         },
         overallTimeEstimate() {
-            onlyTimeEstimates = this.elements.filter(item => item.estimated_time).map(item => item.estimated_time);
-            let total_min = onlyTimeEstimates.reduce((previousValue, currentValue) => previousValue + currentValue,
+            let onlyTimeEstimates = this.elements.filter(item => item.estimated_time).map(item => item.estimated_time);
+            let totalMin = onlyTimeEstimates.reduce((previousValue, currentValue) => previousValue + currentValue,
             0);
-            const hours = Math.floor(total_min / 60)
-            const minutes = total_min % 60;
+            const hours = Math.floor(totalMin / 60)
+            const minutes = totalMin % 60;
             return `${hours} hours and ${minutes} minutes`
         }
     },
