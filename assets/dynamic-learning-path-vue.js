@@ -6,54 +6,62 @@ import { learning_paths as paths } from "json-collector";
 let currentPath;
 
 for (const item in paths) {
-    let amendedPath = location.pathname;
-    if (!location.pathname.endsWith('/')) {
-        amendedPath += '/';
-    }
-    if (paths[item].path === amendedPath) {
-        currentPath = paths[item];
-    }
+  let amendedPath = location.pathname;
+  if (!location.pathname.endsWith("/")) {
+    amendedPath += "/";
+  }
+  if (paths[item].path === amendedPath) {
+    currentPath = paths[item];
+  }
 }
 
-let filteredElements = currentPath.elements.filter(element => element.visible_by_default !== false);
+let filteredElements = currentPath.elements.filter(
+  (element) => element.visible_by_default !== false
+);
 
 Vue.createApp({
-    methods: {
-        onRadioButtonChange() {
-            const selectedOptions = document.querySelectorAll('input[type=radio]:checked');
-            this.elements = currentPath.elements.filter (element => {
-                let keepItem = true;
-                if (element.variables) {
-                    for (const i in element.variables) {
-                        let variableActive = false;
-                        selectedOptions.forEach((item) => {
-                            if(item.name === element.variables[i].name) {
-                                variableActive = true;
-                               if (item.value !== element.variables[i].value.toString()) {
-                                keepItem = false;
-                               }
-                            }
-                        })
-                        if (!variableActive) {
-                           return false; 
-                        } 
-                    }
-                    return keepItem;
-                } else {
-                    return keepItem;
+  methods: {
+    onRadioButtonChange() {
+      const selectedOptions = document.querySelectorAll(
+        "input[type=radio]:checked"
+      );
+      this.elements = currentPath.elements.filter((element) => {
+        let keepItem = true;
+        if (element.variables) {
+          for (const i in element.variables) {
+            let variableActive = false;
+            selectedOptions.forEach((item) => {
+              if (item.name === element.variables[i].name) {
+                variableActive = true;
+                if (item.value !== element.variables[i].value.toString()) {
+                  keepItem = false;
                 }
-                })
-            },
-        calculateModuleNumber(module) {
-            let filteredModules = this.elements.filter(item => item.type === "module");
-            let foundIdx = filteredModules.findIndex((elem, idx) => module.title === filteredModules[idx].title);
-            return (foundIdx + 1).toString();
-        },
-        slugify(stringInput) {
-            return stringInput.toLowerCase().replaceAll(' ', '-');
+              }
+            });
+            if (!variableActive) {
+              return false;
+            }
+          }
+          return keepItem;
+        } else {
+          return keepItem;
         }
-        },
-    template: `
+      });
+    },
+    calculateModuleNumber(module) {
+      let filteredModules = this.elements.filter(
+        (item) => item.type === "module"
+      );
+      let foundIdx = filteredModules.findIndex(
+        (elem, idx) => module.title === filteredModules[idx].title
+      );
+      return (foundIdx + 1).toString();
+    },
+    slugify(stringInput) {
+      return stringInput.toLowerCase().replaceAll(" ", "-");
+    },
+  },
+  template: `
     <div>
         <p class="estimate">This learning path contains <span>[[ onlyModules.length ]] modules</span> and should take you around <span>[[ overallTimeEstimate ]]</span>.</p>
     </div>
@@ -108,21 +116,27 @@ Vue.createApp({
         </div>
     </div>
     </div>`,
-    data() {return {
-        elements: filteredElements
-    }},
-    computed: {
-        onlyModules() {
-            return this.elements.filter(item => item.type === "module");
-        },
-        overallTimeEstimate() {
-            let onlyTimeEstimates = this.elements.filter(item => item.estimated_time).map(item => item.estimated_time);
-            let totalMin = onlyTimeEstimates.reduce((previousValue, currentValue) => previousValue + currentValue,
-            0);
-            const hours = Math.floor(totalMin / 60)
-            const minutes = totalMin % 60;
-            return `${hours} hours and ${minutes} minutes`
-        }
+  data() {
+    return {
+      elements: filteredElements,
+    };
+  },
+  computed: {
+    onlyModules() {
+      return this.elements.filter((item) => item.type === "module");
     },
-    delimiters: ['[[', ']]'],
-  }).mount('#dynamicPath');
+    overallTimeEstimate() {
+      let onlyTimeEstimates = this.elements
+        .filter((item) => item.estimated_time)
+        .map((item) => item.estimated_time);
+      let totalMin = onlyTimeEstimates.reduce(
+        (previousValue, currentValue) => previousValue + currentValue,
+        0
+      );
+      const hours = Math.floor(totalMin / 60);
+      const minutes = totalMin % 60;
+      return `${hours} hours and ${minutes} minutes`;
+    },
+  },
+  delimiters: ["[[", "]]"],
+}).mount("#dynamicPath");
