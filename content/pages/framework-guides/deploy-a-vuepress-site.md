@@ -9,7 +9,7 @@ title: Deploy a Vuepress Project
 
 In this guide, you will create a new Vuepress project and deploy it using Cloudflare Pages. You will use the [`create-vuepress-site-generator`](https://github.com/vuepress/create-vuepress-site), a generator for creating new Vuepress projects.
 
-## Setting up a new project
+## Set up a new project
 
 Scaffold a Vuepress site using the `create-vuepress-site` tool to set up a new project, you can use `npx` or `yarn` by passing in `create-vuepress-site` and the name of the directory where you want the project to live:
 
