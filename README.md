@@ -8,7 +8,7 @@
 
 You must have [Hugo](https://gohugo.io) installed on your system and available in your `$PATH` as a global binary. Most operating systems are supported – follow the relevant [Install Hugo](https://gohugo.io/getting-started/installing) instructions for your operating system guides to get started.
 
-> **Important:** This project is built with version `0.92.2+extended` but `0.92.x` is the minimum required version. You may (probably) use a newer version of Hugo, but will be subject to any Hugo changes.
+> **Important:** This project is built with version `0.92.2+extended`, but `0.92.x` is the minimum required version. You may (probably) use a newer version of Hugo, but it will be subject to any Hugo changes.
 
 You must also have a recent version of Node.js (14+) installed. You may use [Volta](https://github.com/volta-cli/volta), a Node version manager, to install the latest version of Node and `npm`, which is a package manager that is included with `node`'s installation.
 
@@ -31,9 +31,9 @@ When making changes to the site, including any content changes, you may run a lo
 $ npm run dev
 ```
 
-This spawns a server that will be accessible via `http://localhost:1313` in your browser. Additionally, any changes made within the project – including `content/**` changes – will automatically reload your browser tab(s), allowing you to instantly preview your changes!
+This spawns a server that will be accessible via `http://localhost:1313` in your browser. Additionally, any changes made within the project – including `content/**` changes – will automatically reload your browser tab(s), allowing you to preview your changes instantly!
 
-Additionally, this project includes a CI step for ensuring consistent code style. This applies to all files within the project, including markdown (`*.md`) files, but will not affect the content itself or the content's output display. To see the style error(s), you may run:
+Additionally, this project includes a CI step for ensuring a consistent code style. This applies to all files within the project, including markdown (`*.md`) files, but will not affect the content itself or its output display. To see the style error(s), you may run:
 
 ```sh
 $ npm run lint
@@ -65,7 +65,7 @@ Prefixes | Description
 `headerfullfile` | Inserts a file header for a complete Markdown file.
 `metatitle` | Inserts meta title fields in existing Markdown header. Used to complement a full file header.
 `headerpartialfile` | Inserts a header for a partial Markdown file.
-`partialinclude` or `renderpartial` | Inserts a `render` shortcode to include content from a partial in the current document.
+`partialinclude` or `renderpartial` | Inserts a `render` shortcode to include content from a part in the current document.
 `twotabs` or `addtabs` | Inserts a new tabs section with two tabs for dashboard and API instructions.
 
 Triggering one of the available snippets will insert their body content at the current cursor position.
@@ -83,13 +83,13 @@ Note: Make sure you open the root folder of your cloned repository in Visual Stu
 To enter a snippet:
 1. Enter the snippet prefix and press `Ctrl+Space` (`Command+Space` on a Mac).
 2. Select the desired snippet and press `Enter`.
-3. (Optional) Enter or select a value for the first placeholder supported by the snippet, if any, and press `Tab` to move to the next placeholder. Keep replacing placeholders and pressing `Tab`. When there are no more placeholders, pressing `Tab` will end the process.
+3. (Optional) Enter or select a value for the first placeholder supported by the snippet if any, and press `Tab` to move to the next placeholder. Keep replacing placeholders and pressing `Tab`. When there are no more placeholders, pressing `Tab` will end the process.
 
 To surround existing content with a snippet:
 1. Select the text you wish to surround with a snippet.
 2. Enter the snippet prefix (temporarily replacing the selected text) and press `Ctrl+Space` (`Command+Space` on a Mac).
-3. Select the desired snippet and press `Enter`. VSCode will insert the snippet body and paste the previously selected content in the correct location.
-4. (Optional) Enter or select a value for the first placeholder supported by the snippet, if any, and press `Tab` to move to the next placeholder. Keep replacing placeholders and pressing `Tab`. When there are no more placeholders, pressing `Tab` will end the process.
+3. Select the desired snippet and press `Enter`. VSCode will insert the snippet body and paste the previously selected content into the correct location.
+4. (Optional) Enter or select a value for the first placeholder supported by the snippet if any, and press `Tab` to move to the next placeholder. Keep replacing placeholders and pressing `Tab`. When there are no more placeholders, pressing `Tab` will end the process.
 
 ## For Cloudflare employees
 
