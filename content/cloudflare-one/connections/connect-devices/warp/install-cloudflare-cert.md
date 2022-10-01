@@ -473,7 +473,61 @@ Alternatively, you can add this manually to your `composer.json` file under the 
 
 ### IntelliJ IDEA
 
-Instructions on how to install the Cloudflare root certificate are available [here](https://www.jetbrains.com/help/idea/settings-tools-server-certificates.html)
+Instructions on how to install the Cloudflare root certificate for various JetBrains products:
+
+  {{<tabs labels="AppCode|CLion|DataGrip|DataSpell|GoLand|IntelliJ IDEA|PhpStorm|PyCharm|Rider|WebStorm">}}
+  {{<tab label="AppCode" no-code="true">}}
+ 
+`https://www.jetbrains.com/help/objc/settings-tools-server-certificates.html`
+ 
+  {{</tab>}}
+  {{<tab label="CLion" no-code="true">}}
+ 
+`https://www.jetbrains.com/help/clion/settings-tools-server-certificates.html`
+ 
+  {{</tab>}}
+  {{<tab label="DataGrip" no-code="true">}}
+ 
+`https://www.jetbrains.com/help/datagrip/settings-tools-server-certificates.html`
+ 
+  {{</tab>}}
+  {{<tab label="DataSpell" no-code="true">}}
+ 
+`https://www.jetbrains.com/help/dataspell/settings-tools-server-certificates.html`
+ 
+  {{</tab>}}
+  {{<tab label="GoLand" no-code="true">}}
+ 
+`https://www.jetbrains.com/help/go/settings-tools-server-certificates.html`
+ 
+  {{</tab>}}
+  {{<tab label="IntelliJ IDEA" no-code="true">}}
+ 
+`https://www.jetbrains.com/help/idea/settings-tools-server-certificates.html`
+ 
+  {{</tab>}}
+  {{<tab label="PhpStorm" no-code="true">}}
+ 
+`https://www.jetbrains.com/help/phpstorm/settings-tools-server-certificates.html`
+ 
+  {{</tab>}}
+  {{<tab label="PyCharm" no-code="true">}}
+ 
+`https://www.jetbrains.com/help/pycharm/settings-tools-server-certificates.html`
+ 
+  {{</tab>}}
+  {{<tab label="Rider" no-code="true">}}
+ 
+`https://www.jetbrains.com/help/rider/Settings_Tools_Server_Certificates.html`
+ 
+  {{</tab>}}
+  {{<tab label="WebStorm" no-code="true">}}
+ 
+`https://www.jetbrains.com/help/webstorm/settings-tools-server-certificates.html`
+ 
+  {{</tab>}}
+  {{</tabs>}}
+
 
 ### Minikube
 
