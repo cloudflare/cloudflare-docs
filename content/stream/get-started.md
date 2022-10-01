@@ -8,7 +8,7 @@ weight: 2
 
 {{<Aside type="note" header="Before you get started:">}}
 
-You must first [create a Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/) and [create an API token](/api/tokens/create/) to begin using Stream.
+You must first [create a Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/) and [create an API token](/api/get-started/create-token/) to begin using Stream.
 
 {{</Aside>}}
 
@@ -180,3 +180,7 @@ The embed code above can also be found in the [Cloudflare dashboard](https://das
 
 - [Secure your stream](/stream/viewing-videos/securing-your-stream/)
 - [View live viewer counts](/stream/getting-analytics/live-viewer-count/)
+
+## Accessibility considerations
+
+To make your video content more accessible, include [captions](/stream/edit-videos/adding-captions/) and [high-quality audio recording](https://www.w3.org/WAI/media/av/av-content/).

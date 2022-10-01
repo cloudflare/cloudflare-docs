@@ -25,7 +25,7 @@ The available rate limiting rule parameters are the following:
 
   - Field name in the API: `mitigation_timeout`.
   - Once the rate is reached, the rate limiting rule applies the rule action to further requests for the period of time defined in this field (in seconds).
-  - In the dashboard, select one of the available values, which may vary according to your Cloudflare plan. The available API values are: `30`, `60` (one minute), `600` (ten minutes), `3600` (one hour), or `86400` (one day).
+  - In the dashboard, select one of the available values, which may vary according to your Cloudflare plan. The available API values are: `10`, `60` (one minute), `3600` (one hour), or `86400` (one day).
   - You cannot define a duration when using one of the challenge actions. In this case, when visitors pass a challenge, their corresponding [request counter](/waf/rate-limiting-rules/request-rate/) is set to zero. When visitors with the same values for the rule characteristics make enough requests to trigger the rate limiting rule again, they will receive a new challenge.
   - When using the API, you must set the `mitigation_timeout` value to `0` when the action is `managed_challenge`, `js_challenge`, or `challenge`.
 
@@ -49,10 +49,12 @@ The available rate limiting rule parameters are the following:
     | Dashboard value           | API value                                     |
     | ------------------------- | --------------------------------------------- |
     | N/A (implicitly included) | `cf.colo.id` (mandatory)                      |
-    | _IP with NAT support_     | `cf.unique_visitor_id`                        |
     | _IP_                      | `ip.src`                                      |
+    | _IP with NAT support_     | `cf.unique_visitor_id`                        |
     | _Country_                 | `ip.geoip.country`                            |
     | _AS Num_                  | `ip.geoip.asnum`                              |
+    | _Host_                    | `http.host`                                   |
+    | _Path_                    | `http.request.uri.path`                       |
     | _Headers_                 | `http.request.headers["<header_name>"]`       |
     | _Cookie_                  | `http.request.cookies["<cookie_name>"]`       |
     | _Query_                   | `http.request.uri.args["<query_param_name>"]` |

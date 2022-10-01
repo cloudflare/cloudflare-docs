@@ -5,7 +5,7 @@ weight: 0
 ---
 # Verified Bots Policy
 
-In order to be listed by Cloudflare as a Verified Bot, your bot must conform to the following requirements.
+In order to be listed by Cloudflare as a Verified Bot, your bot must conform to the below requirements. To provide the best possible protection to our customers, this policy may change in the future as we adapt to new bot behaviors.
 
 ## Bot Policy
 

@@ -38,6 +38,12 @@ Cloudflare Zero Trust replaces legacy security perimeters with our global edge, 
 * Detect insider threats and unsanctioned application usage, or Shadow IT
 * Ensure best practices to prevent data leaks and compliance violations
 
+**A Data Loss Prevention solution to safeguard data in transit.**
+
+* Detect sensitive data as it moves to and from SaaS applications
+* Predefined DLP Profiles to quickly get started
+* Log or block DLP matches
+
 ![](/cloudflare-one/static/documentation/teams-no-background.png)
 
 {{</content-column>}}

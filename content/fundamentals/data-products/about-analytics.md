@@ -42,4 +42,4 @@ You may not be seeing metrics on Cloudflare Analytics for the following reasons:
 * If you signed up through a Cloudflare [hosting partner option](https://www.cloudflare.com/partners/), something might not be configured correctly. Contact the hosting partner for support.
 * Some browser extensions designed to block ads may prevent analytics from loading. To address this issue, disable the ad block extension or allow `cloudflare.com` on it.
 
-{{<Aside type="note">}}Activations through a hosting partner works via a [CNAME setup](/dns/zone-setups/partial-setup/) on the `www` record. If most of your traffic actually goes to `domain.com`, [forward your traffic](/rules/bulk-redirects/) from `domain.com` to `www.domain.com`.{{</Aside>}}
+{{<Aside type="note">}}Activations through a hosting partner works via a [CNAME setup](/dns/zone-setups/partial-setup/) on the `www` record. If most of your traffic actually goes to `domain.com`, [forward your traffic](/rules/url-forwarding/bulk-redirects/) from `domain.com` to `www.domain.com`.{{</Aside>}}

@@ -52,7 +52,7 @@ Defining environment variables inline will override the default credentials stor
 
 ### API token
 
-1.  In **Overview**, select [**Get your API token**](/api/tokens/create).
+1.  In **Overview**, select [**Get your API token**](/api/get-started/create-token/).
 2.  After being taken to the **Profile** page, select **Create token**.
 3.  Under the **API token templates** section, find the **Edit Cloudflare Workers** template and select **Use template**.
 4.  Fill out the rest of the fields and then select **Continue to summary**, where you can select **Create Token** and issue your token for use.
