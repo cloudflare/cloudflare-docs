@@ -122,6 +122,7 @@ Beyond the [example WHIP client](https://github.com/cloudflare/templates/blob/ma
 #### WHIP
 
 - [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (Typescript)
+- [whip-go](https://github.com/ggarber/whip-go) (Go)
 
 #### WHEP
 
