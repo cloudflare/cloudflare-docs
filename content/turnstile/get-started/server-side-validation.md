@@ -27,7 +27,7 @@ Example using cURL:
 
 ```sh
 
-curl -L -X POST 'https://challenges.cloudflare.com/turnstile/v0/siteverify' --data 'secret=verysecret&response=<RESPONSE>'
+$ curl -L -X POST 'https://challenges.cloudflare.com/turnstile/v0/siteverify' --data 'secret=verysecret&response=<RESPONSE>'
 
 ```
 </div>
@@ -38,31 +38,34 @@ Example using `fetch` from Cloudflare Workers:
 
 ```javascript
 
-// This is the demo secret key. In production, we recommend you store
-// your secret key(s) safely.
-const SECRET_KEY = '1x0000000000000000000000000000000AA';
+// This is the demo secret key. In production, we recommend
+// you store your secret key(s) safely.
+const SECRET_KEY = "1x0000000000000000000000000000000AA";
 
 async function handlePost(request) {
-    const body = await request.formData();
-    // Turnstile injects a token in "cf-turnstile-response".
-    const token = body['cf-turnstile-response'];
-    const ip = request.headers.get('CF-Connecting-IP');
+	const body = await request.formData();
+	// Turnstile injects a token in "cf-turnstile-response".
+	const token = body["cf-turnstile-response"];
+	const ip = request.headers.get("CF-Connecting-IP");
 
-    // Validate the token by calling the "/siteverify" API endpoint.
-    let formData = new FormData();
-    formData.append('secret', SECRET_KEY);
-    formData.append('response', token);
-    formData.append('remoteip', ip);
+	// Validate the token by calling the
+	// "/siteverify" API endpoint.
+	let formData = new FormData();
+	formData.append("secret", SECRET_KEY);
+	formData.append("response", token);
+	formData.append("remoteip", ip);
 
-    const result = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-        body: formData,
-        method: 'POST',
-    });
+	const url =
+		"https://challenges.cloudflare.com/turnstile/v0/siteverify";
+	const result = await fetch(url, {
+		body: formData,
+		method: "POST",
+	});
 
-    const outcome = await result.json();
-    if (outcome.success) {
-        // ...
-    }
+	const outcome = await result.json();
+	if (outcome.success) {
+		// ...
+	}
 }
 
 ```
