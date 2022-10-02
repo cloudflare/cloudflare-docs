@@ -471,7 +471,7 @@ composer config cafile [PATH_TO_CLOUDFLARE_CERT.pem]
 
 Alternatively, you can add this manually to your `composer.json` file under the `config` key.
 
-### IntelliJ IDEA
+### JetBrains (IntelliJ IDEA, PyCharm, PhpStorm...)
 
 Instructions on how to install the Cloudflare root certificate for various JetBrains products:
 
