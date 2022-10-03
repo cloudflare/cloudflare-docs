@@ -6,7 +6,7 @@ weight: 5
 
 ## System Environment Variables
 
-System Environment Variables are process environment variables that are available to Wrangler commands. These variables are used to configure Wrangler's behavior. They can be set in a variety of ways, including:
+System Environment Variables are local environment variables that can change Wrangler's behavior. You can set them by:
 
 1. Setting an [`.env`](http://localhost:1313/workers/wrangler/system-environment-variables/#examples-in-env-file) file in your project directory this is the recommended & persistent way to set these variables.
 2. Inlining the values in your Wrangler command for one-off use cases, for example `WRANGLER_LOG="debug" wrangler publish`.
