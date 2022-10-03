@@ -96,7 +96,7 @@
       },
       {
         "type": "question",
-        "description": "How comfortable are you with HTML and CSS?",
+        "description": "How comfortable are you with using HTML and CSS?",
         "id": "web_development",
         "visible_by_default": false,
         "variables": [
