@@ -78,10 +78,10 @@ export default {
   - Stores the given {{<code>}}value{{</code>}} and metadata under the associated {{<code>}}key{{</code>}}. Once the write succeeds, returns an `R2Object` containing metadata about the stored Object.
   - R2 writes are strongly consistent. Once the Promise resolves, all subsequent read operations will see this key value pair globally.
 
-- {{<code>}}delete(key{{<param-type>}}string{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}void {{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}delete(keys{{<param-type>}}string | string[]{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}void {{</param-type>}}>{{</type>}}{{</code>}}
 
-  - Deletes the given {{<code>}}value{{</code>}} and metadata under the associated {{<code>}}key{{</code>}}. Once the delete succeeds, returns {{<code>}}void{{</code>}}.
-   - R2 deletes are strongly consistent. Once the Promise resolves, all subsequent read operations will no longer see this key value pair globally.
+  - Deletes the given {{<code>}}values{{</code>}} and metadata under the associated {{<code>}}keys{{</code>}}. Once the delete succeeds, returns {{<code>}}void{{</code>}}.
+   - R2 deletes are strongly consistent. Once the Promise resolves, all subsequent read operations will no longer see the provided key value pairs globally.
 
 - {{<code>}}list(options{{<param-type>}}R2ListOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Objects{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
@@ -155,6 +155,10 @@ export default {
 
   - A `R2Range` object containing the returned range of the object.
 
+- {{<code>}}checksums{{</code>}} {{<param-type>}}R2Checksums{{</param-type>}}
+
+  - A `R2Checksums` object containing the stored checksums of the object. Refer to [checksums](#checksums).
+
 - {{<code>}}writeHttpMetadata(headers{{<param-type>}}Headers{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
   -  Retrieves the `httpMetadata` from the `R2Object` and applies their corresponding HTTP headers to the `Headers` input object. Refer to [HTTP Metadata](#http-metadata).
@@ -207,6 +211,10 @@ There are 3 variations of arguments that can be used in a range:
 
 {{<definitions>}}
 
+- {{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}{{</code>}}
+
+  - Specifies that the object should only be stored given satisfaction of certain conditions in the `R2Conditional`. Refer to [Conditional operations](#conditional-operations).
+
 - {{<code>}}httpMetadata{{<param-type>}}R2HTTPMetadata{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
 
   - Various HTTP headers associated with the object. Refer to [HTTP Metadata](#http-metadata).
@@ -215,9 +223,31 @@ There are 3 variations of arguments that can be used in a range:
 
   - A map of custom, user-defined metadata that will be stored with the object.
 
+{{<Aside type="note">}}
+
+Only a single hashing algorithm can be specified at once.
+
+{{</Aside>}}
+
 - {{<code>}}md5{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
 
   - A md5 hash to use to check the received object's integrity.
+
+- {{<code>}}sha1{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+
+  - A SHA-1 hash to use to check the received object's integrity.
+
+- {{<code>}}sha256{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+
+  - A SHA-256 hash to use to check the received object's integrity.
+
+- {{<code>}}sha384{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+
+  - A SHA-384 hash to use to check the received object's integrity.
+
+- {{<code>}}sha512{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+
+  - A SHA-512 hash to use to check the received object's integrity.
 
 {{</definitions>}}
 
@@ -355,3 +385,31 @@ Generally, these fields match the HTTP metadata passed when the object was creat
 - {{<code>}}cacheExpiry{{<param-type>}}Date{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
 
  {{</definitions>}}
+
+## Checksums
+
+If an additional checksum was provided when using the `put()` binding, it will be available on the returned object under the `checksums` property.
+
+{{<definitions>}}
+
+- {{<code>}}md5{{</code>}} {{<param-type>}}ArrayBuffer{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The MD5 checksum of the object.
+
+- {{<code>}}sha1{{</code>}} {{<param-type>}}ArrayBuffer{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The SHA-1 checksum of the object.
+
+- {{<code>}}sha256{{</code>}} {{<param-type>}}ArrayBuffer{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The SHA-256 checksum of the object.
+
+- {{<code>}}sha384{{</code>}} {{<param-type>}}ArrayBuffer{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The SHA-384 checksum of the object.
+
+- {{<code>}}sha512{{</code>}} {{<param-type>}}ArrayBuffer{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The SHA-512 checksum of the object.
+
+{{</definitions>}}

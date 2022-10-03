@@ -6,6 +6,28 @@ weight: 3
 
 # Changelog
 
+## 2022-09-28
+
+- Fixed a bug where CORS configuration was not being applied to S3 endpoint.
+- No-longer render the `Access-Control-Expose-Headers` response header if `ExposeHeader` is not defined.
+- Public buckets will no-longer return the `Content-Range` response header unless the response is partial.
+- Fixed CORS rendering for the S3 `HeadObject` operation.
+- Fixed a bug where no matching CORS configuration could result in a `403` response.
+- Temporarily disable copying objects that were created with multipart uploads.
+
+## 2022-09-27
+
+- CORS preflight responses and adding CORS headers for other responses is now implemented for S3 and public buckets. Currently, the only way to configure CORS is via the S3 API.
+- Fixup for bindings list truncation to work more correctly when listing keys with custom metadata that have `"` or when some keys/values contain certain multi-byte UTF-8 values.
+- The S3 `GetObject` operation now only returns `Content-Range` in response to a ranged request.
+
+## 2022-09-19
+
+- The R2 `put()` binding options can now be given an `onlyIf` field, similar to `get()`, that performs a conditional upload.
+- The R2 `delete()` binding now supports deleting multiple keys at once.
+- The R2 `put()` binding now supports user-specified SHA-1, SHA-256, SHA-384, SHA-512 checksums in options.
+- User-specified object checksums will now be available in the R2 `get()` and `head()` bindings response. MD5 is included by default for non-multipart uploaded objects.
+
 ## 2022-09-06
 
 - The S3 `CopyObject` operation now includes `x-amz-version-id` and `x-amz-copy-source-version-id` in the response headers for consistency with other methods.
