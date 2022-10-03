@@ -53,6 +53,7 @@ export const OWNERS: Record<string, string[]> = {
   tenant: ["kodster28"],
   terraform: ["ranbel"],
   "time-services": ["kodster28"],
+  turnstile: ["patriciasantaana"],
   waf: ["pedrosousa"],
   "waiting-room": ["angelampcosta"],
   "warp-client": ["marciocloudflare"],
