@@ -14,6 +14,9 @@ To enable a non-contract service, use the **Dashboard link** in the following ta
 
 | Name | Dashboard link | Docs | Community |
 | --- | --- | --- | --- |
+| Advanced Certificate Manager (ACM) | [ACM dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) | [ACM docs](/ssl/edge-certificates/advanced-certificate-manager/) | [ACM community](https://community.cloudflare.com/c/security/6) |
+| Argo Smart Routing | [Argo dashboard](https://dash.cloudflare.com/?to=/:account/:zone/traffic) | [Argo docs](/argo-smart-routing/) | [Argo community](https://community.cloudflare.com/c/performance/argo/45) |
+| Images | [Images dashboard](https://dash.cloudflare.com/?to=/:account/images) | [Images docs](/images/cloudflare-images/) | [Images community](https://community.cloudflare.com/c/developers/images/63) |
 | Load Balancing | [Load Balancing dashboard](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing) | [Load Balancing docs](/load-balancing/) | [Load Balancing community](https://community.cloudflare.com/tag/loadbalancing) |
 | Stream | [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream) | [Stream docs](/stream/) | [Stream community](https://community.cloudflare.com/tag/cloudflarestream) |
 
