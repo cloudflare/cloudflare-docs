@@ -45,7 +45,7 @@ const SECRET_KEY = '1x0000000000000000000000000000000AA';
 async function handlePost(request) {
 	const body = await request.formData();
 	// Turnstile injects a token in "cf-turnstile-response".
-	const token = body['cf-turnstile-response'];
+	const token = body.get('cf-turnstile-response');
 	const ip = request.headers.get('CF-Connecting-IP');
 
 	// Validate the token by calling the
@@ -82,7 +82,7 @@ Check out the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo
 
 The siteverify endpoint behaves similar to reCAPTCHA’s siteverify endpoint. The response type of the siteverify is `application/json`.
 
-It always contains a 'success' property, either true or false, indicating whether the operation was successful or not. 
+It always contains a 'success' property, either true or false, indicating whether the operation was successful or not.
 
 In case of a successful validation, the response should be similar to the following:
 
@@ -96,8 +96,8 @@ In case of a successful validation, the response should be similar to the follow
   "error-codes": [],
   "action": "login",
   "cdata": "sessionid-123456789"
-}  
-``` 
+}
+```
 </div>
 
 * `challenge_ts` is the ISO timestamp for the time the challenge was solved.
