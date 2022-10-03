@@ -2,11 +2,11 @@
 title: 2022-10-03
 type: table
 pcx_content_type: changelog
-weight: 889
+weight: 888
 layout: list
 ---
 
-# 2022-10-03
+# 2022-10-03 - Emergency Release
 
 {{<table-wrap>}}
 <table style="width: 100%">
@@ -22,16 +22,15 @@ layout: list
     </tr>
   </thead>
   <tbody>
-    <tr>
+       <tr>
       <td>Cloudflare Specials</td>
-      <td>...1d870399</td>
-      <td>100546</td>
-      <td>XSS - HTML Encoding</td>
+      <td>...e09c1a1e</td>
+      <td>100551</td>
+      <td>Microsoft Exchange SSRF and RCE vulnerability - CVE:CVE-2022-41040, CVE:CVE-2022-41082</td>
+      <td>N/A</td>
       <td>Block</td>
-      <td>Block</td>
-      <td></td>
+      <td>This detection covers Microsoft Exchange vulnerabilities</td>
     </tr>
-
   </tbody>
 </table>
 {{</table-wrap>}}

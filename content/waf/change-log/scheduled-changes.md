@@ -33,15 +33,6 @@ layout: list
     </tr>
     <tr>
       <td>2022-10-03</td>
-      <td>2022-10-03</td>
-      <td>Block</td>
-      <td>100551</td>
-      <td>...1a973371</td>
-      <td>Microsoft Exchange SSRF and RCE vulnerability - CVE:CVE-2022-41040, CVE:CVE-2022-41082</td>
-      <td>This detection covers Microsoft Exchange vulnerabilities</td>
-    </tr>
-    <tr>
-      <td>2022-10-03</td>
       <td>2022-10-10</td>
       <td>Log</td>
       <td>100549BETA</td>
