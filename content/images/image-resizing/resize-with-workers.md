@@ -16,6 +16,8 @@ Here are a few examples of the flexibility Workers give you:
 
 The resizing feature is accessed via the [options](/workers/runtime-apis/request/#requestinitcfproperties) of a `fetch()` [subrequest inside a Worker](/workers/runtime-apis/fetch/).
 
+{{<render file="_ir-svg-aside.md">}}
+
 ## Fetch options
 
 The `fetch()` function accepts parameters in the second argument inside the `{cf: {image: {…}}}` object.

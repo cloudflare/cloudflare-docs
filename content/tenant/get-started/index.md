@@ -18,7 +18,7 @@ After you sign your partner agreement with Cloudflare, Cloudflare will add [cert
 
 ### API access
 
-You also need to [retrieve your API key](/api/keys/#view-your-api-key) to authenticate your requests to the Tenant API.
+You also need to [retrieve your API key](/api/get-started/keys/#view-your-api-key) to authenticate your requests to the Tenant API.
 
 For more details on using the Cloudflare API, refer to our [API overview](https://api.cloudflare.com/#getting-started-endpoints).
 
@@ -68,7 +68,7 @@ If your customer is on an Enterprise plan, they have access to a broader set of 
 
 If you want greater control over how customers use Cloudflare or if you want your customers to use an existing dashboard of yours that they already know, use the Cloudflare API to build this experience.
 
-This means that you will be making API calls to Cloudflare on behalf of your customers. To avoid getting [rate limited](/api/limits/) by our API, Cloudflare recommend that you create accounts and users for each of your customers. Changes made by customer `A` should go through user `A` and changes made by customer `B` should go through user `B`.
+This means that you will be making API calls to Cloudflare on behalf of your customers. To avoid getting [rate limited](/api/reference/limits/) by our API, Cloudflare recommend that you create accounts and users for each of your customers. Changes made by customer `A` should go through user `A` and changes made by customer `B` should go through user `B`.
 
 {{<Aside type="note">}}
 

@@ -71,3 +71,10 @@ Linux currently relies on the system Kernel version instead of a specific distro
 
 1. The valid SemVer would be the first 3 whole numbers of the output you obtain in the previous step. For instance, if the command above returned `5.14.0-25.el9.x86_64`, the valid SemVer would be `5.14.0`.
 
+
+### On ChromeOS
+
+On Chromebooks, the WARP client runs as an Android application inside an Android VM. For the OS version check, WARP version 6.16 and below reports the Android VM version and not the ChromeOS version. Version 6.17 and above returns the actual ChromeOS version. 
+
+To determine the ChromeOS version on your device, select the time and go to **Settings** > **About ChromeOS**.
+

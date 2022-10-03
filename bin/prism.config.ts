@@ -14,7 +14,9 @@ import 'prismjs/components/prism-http.min.js';
 import 'prismjs/components/prism-ini.min.js';
 import 'prismjs/components/prism-java.min.js';
 import 'prismjs/components/prism-json.min.js';
+import 'prismjs/components/prism-jsx.min.js';
 import 'prismjs/components/prism-markdown.min.js';
+import 'prismjs/components/prism-php.min.js';
 import 'prismjs/components/prism-python.min.js';
 import 'prismjs/components/prism-ruby.min.js';
 import 'prismjs/components/prism-rust.min.js';
@@ -234,7 +236,9 @@ export function highlight(code: string, lang: string): string {
     header?: string;
   } = {};
 
-  if (code.substring(0, 3) === '---') {
+  // Check for a YAML frontmatter,
+  // and ensure it's not something like -----BEGIN CERTIFICATE-----
+  if (code.substring(0, 3) === '---' && code[3] != '-') {
     let index = code.indexOf('---', 3);
     if (index > 3) {
       index += 3;

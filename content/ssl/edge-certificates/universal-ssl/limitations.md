@@ -25,7 +25,7 @@ On a CNAME setup zone, each subdomain has its own Universal SSL certificate and 
 
 ## Browser support
 
-For more on browser support, see [Browser compatibility](/ssl/ssl-tls/browser-compatibility/).
+For more on browser support, see [Browser compatibility](/ssl/reference/browser-compatibility/).
 
 ## Spectrum
 
@@ -33,6 +33,6 @@ Universal SSL is not compatible with [Cloudflare Spectrum](/spectrum/). If you a
 
 ## Certificate authority
 
-For Universal SSL certificates, Cloudflare chooses the [certificate authority](/ssl/ssl-tls/certificate-authorities/) used for your certificate.
+For Universal SSL certificates, Cloudflare chooses the [certificate authority](/ssl/reference/certificate-authorities/) used for your certificate.
 
 If you want to choose the issuing certificate authority, [order an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).

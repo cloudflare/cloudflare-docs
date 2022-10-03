@@ -18,5 +18,5 @@ Some samples will be directly converted to `Malicious` upon going through machin
 
 For more details, refer to our setup guides:
 
-- [Phish Submission Guide](/email-security/static/Phish-Submission-Triage.pdf)
-- [Configure Outlook Phish Submision Button](/email-security/static/Report_phishing_from_Outlook_client.pdf)
+- [Phish Submission Guide (PDF)](/email-security/static/Phish-Submission-Triage.pdf)
+- [Configure Outlook Phish Submision Button (PDF)](/email-security/static/Report_phishing_from_Outlook_client.pdf)

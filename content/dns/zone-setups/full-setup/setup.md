@@ -57,7 +57,7 @@ However, having a single set of signed records also prevents Cloudflare from iss
 
 When you start using Cloudflare's nameservers for authoritative DNS, Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
 
-If you [added your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, Cloudflare automatically scans for common records and adds them to your account’s DNS page.
+If you have [added your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, Cloudflare automatically scans for common records and adds them to your account’s DNS page.
 
 {{<render file="_dns-scan-procedure.md">}}
 

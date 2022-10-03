@@ -19,7 +19,7 @@ export const OWNERS: Record<string, string[]> = {
   cache: ["angelampcosta"],
   "china-network": ["pedrosousa"],
   "client-ip-geolocation": ["pedrosousa"],
-  "cloudflare-for-saas": ["kodster28"],
+  "cloudflare-for-platforms": ["kodster28"],
   "cloudflare-one": ["ranbel"],
   "ddos-protection": ["pedrosousa"],
   dns: ["kodster28"],
@@ -28,6 +28,7 @@ export const OWNERS: Record<string, string[]> = {
   firewall: ["pedrosousa"],
   fundamentals: ["kodster28"],
   images: ["marciocloudflare"],
+  "learning-paths": ["kodster28"],
   "load-balancing": ["patriciasantaana"],
   logs: ["angelampcosta"],
   "magic-firewall": ["dcpena"],
@@ -52,6 +53,7 @@ export const OWNERS: Record<string, string[]> = {
   tenant: ["kodster28"],
   terraform: ["ranbel"],
   "time-services": ["kodster28"],
+  turnstile: ["patriciasantaana"],
   waf: ["pedrosousa"],
   "waiting-room": ["angelampcosta"],
   "warp-client": ["marciocloudflare"],
@@ -61,7 +63,7 @@ export const OWNERS: Record<string, string[]> = {
 };
 
 export const REVIEWERS: Record<string, string[]> = {
-  analytics: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
+  analytics: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov", "jimhawkridge"],
   logs: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
   pages: ["WalshyDev"]
 };

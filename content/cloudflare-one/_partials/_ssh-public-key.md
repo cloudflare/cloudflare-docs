@@ -17,7 +17,11 @@ _build:
     $ vim ca.pub
     ```
 
-4. In the `ca.pub` file, paste the public key without any modifications. Save the file. In some systems, you may need to use the following command to force the file to save depending on your permissions:
+4. In the `ca.pub` file, paste the public key without any modifications.
+
+    The `ca.pub` file can hold multiple keys, listed one per line. Empty lines and comments starting with `#` are also allowed.
+
+5. Save the `ca.pub` file. In some systems, you may need to use the following command to force the file to save depending on your permissions:
 
     ```bash
     :w !sudo tee %
