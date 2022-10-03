@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Returne a JSON-friendly waiting room response
+title: Return a JSON-friendly waiting room response
 weight: 6
 ---
 
-# Returne a JSON-friendly waiting room response
+# Return a JSON-friendly waiting room response
 
 If you need to manage traffic in a non-browser environment such as a mobile app or web app, Cloudflare provides a JSON-friendly waiting room that can be consumed via your API endpoints:
 
