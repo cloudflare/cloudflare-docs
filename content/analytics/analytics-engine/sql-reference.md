@@ -274,38 +274,53 @@ column 1 value  column 2 value
 Usage:
 ```SQL
 COUNT()
+COUNT(DISTINCT column_name)
 ```
 
 Count is an aggregation function that returns the number of rows in each group or results set.
+
+Count can also be used to count the number of distinct (unique) values in each column:
+
+Example:
+```SQL
+-- return the total number of rows
+COUNT(item_cost)
+-- return the number of unique item costs
+COUNT(DISTINCT item_cost)
+```
 
 ### SUM
 
 Usage:
 ```SQL
-SUM(column_name)
+SUM([DISTINCT] column_name)
 ```
 
-Sum is an aggregation function that returns the sum of column values across all rows in each group or results set.
+Sum is an aggregation function that returns the sum of column values across all rows in each group or results set. Sum also supports `DISTINCT`, and then it will only sum the unique values in the column.
 
 Example:
 ```SQL
 -- return the total cost of all items
 SUM(item_cost)
+-- return the total of all unique item costs
+SUM(DISTINCT item_cost)
 ```
 
 ### AVG
 
 Usage:
 ```SQL
-AVG(column_name)
+AVG([DISTINCT] column_name)
 ```
 
-Avg is an aggregation function that returns the mean of column values across all rows in each group or results set.
+Avg is an aggregation function that returns the mean of column values across all rows in each group or results set. Avg also supports `DISTINCT`, and then it will only average the unique values in the column.
 
 Example:
 ```SQL
 -- return the mean item cost
 AVG(item_cost)
+-- return the mean of unique item costs
+AVG(DISTINCT item_cost)
 ```
 
 ### QUANTILEWEIGHTED
