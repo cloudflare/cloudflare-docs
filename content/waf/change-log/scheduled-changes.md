@@ -23,13 +23,31 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-09-12</td>
       <td>2022-10-03</td>
+      <td>2022-10-10</td>
       <td>Block</td>
       <td>100546</td>
       <td>...1d870399</td>
       <td>XSS - HTML Encoding</td>
       <td>N/A</td>
+    </tr>
+    <tr>
+      <td>2022-10-03</td>
+      <td>2022-10-03</td>
+      <td>Block</td>
+      <td>100551</td>
+      <td>...1a973371</td>
+      <td>Microsoft Exchange SSRF and RCE vulnerability - CVE:CVE-2022-41040, CVE:CVE-2022-41082</td>
+      <td>This detection covers Microsoft Exchange vulnerabilities</td>
+    </tr>
+    <tr>
+      <td>2022-10-03</td>
+      <td>2022-10-10</td>
+      <td>Log</td>
+      <td>100549BETA</td>
+      <td>...8abca591</td>
+      <td>Atlassian Bitbucket - Code Injection - CVE:CVE-2022-36804 - Beta</td>
+      <td>This detection will replace ...ee9bb2f5 on new WAF</td>
     </tr>
 </tbody>
 </table>
