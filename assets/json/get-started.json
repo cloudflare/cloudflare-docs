@@ -96,7 +96,7 @@
       },
       {
         "type": "question",
-        "description": "How comfortable are you with using HTML and CSS?",
+        "description": "How comfortable are you with web development?",
         "id": "web_development",
         "visible_by_default": false,
         "variables": [
@@ -107,11 +107,11 @@
       ],
         "choices": [
           { 
-            "name": "Very comfortable. I work in web development.",
+            "name": "Very comfortable.",
             "value": true
           },
           { 
-            "name": "Moderately comfortable. I use HTML and CSS in some side projects.",
+            "name": "Moderately comfortable.",
             "value": true
           },
           { 
