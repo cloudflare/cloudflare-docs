@@ -22,7 +22,7 @@ Magic Network Monitoring supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
 
 When you register your router with Cloudflare, your router links your NetFlow or sFlow data to your Cloudflare account.
 
-1. From the Cloudflare dashboard, select **Magic Network Monitoring**.
+1. From the [Cloudflare dashboard](https://dash.cloudflare.com/login), select **Magic Network Monitoring**.
 2. On the **Magic Network Monitoring** page, select **Configure Magic Network Monitoring**.
 3. Select the **Configure routers** tab.
 3. Under **IP Address**, enter your router's public IP address.
