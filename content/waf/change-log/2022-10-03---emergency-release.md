@@ -1,5 +1,5 @@
 ---
-title: 2022-10-03
+title: 2022-10-03 - Emergency
 type: table
 pcx_content_type: changelog
 weight: 888
