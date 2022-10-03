@@ -25,15 +25,6 @@ layout: list
     <tr>
       <td>2022-10-03</td>
       <td>2022-10-10</td>
-      <td>Block</td>
-      <td>100546</td>
-      <td>...1d870399</td>
-      <td>XSS - HTML Encoding</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2022-10-03</td>
-      <td>2022-10-10</td>
       <td>Log</td>
       <td>100549BETA</td>
       <td>...8abca591</td>
