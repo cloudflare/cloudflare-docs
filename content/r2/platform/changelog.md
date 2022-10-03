@@ -12,7 +12,7 @@ weight: 3
 - No-longer render the `Access-Control-Expose-Headers` response header if `ExposeHeader` is not defined.
 - Public buckets will no-longer return the `Content-Range` response header unless the response is partial.
 - Fixed CORS rendering for the S3 `HeadObject` operation.
-- Fixed a bug where no matching CORS configuration could result in a 403 response.
+- Fixed a bug where no matching CORS configuration could result in a `403` response.
 - Temporarily disable copying objects that were created with multipart uploads.
 
 ## 2022-09-27
