@@ -29,7 +29,7 @@ layout: list
       <td>Microsoft Exchange SSRF and RCE vulnerability - CVE:CVE-2022-41040, CVE:CVE-2022-41082</td>
       <td>N/A</td>
       <td>Block</td>
-      <td>This detection covers Microsoft Exchange vulnerabilities</td>
+      <td>N/A</td>
     </tr>
   </tbody>
 </table>
