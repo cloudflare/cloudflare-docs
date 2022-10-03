@@ -8,14 +8,16 @@ weight: 12
 
 Wrangler offers an experimental API to programmatically manage your Cloudflare Workers.
 
-- [`unstable_dev`](#unstable_dev) - Start a local server for running integration tests against your Worker.
+- [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
 
 
 ## unstable_dev
 
-Start a local HTTP server for testing your Worker. 
+Start a HTTP server for testing your Worker. 
 
 Once called, `unstable_dev` will return a `fetch()` function for invoking your Worker without needing to know the address or port, as well as a `stop()` function to shut down the HTTP server.
+
+By default, `unstable_dev` will perform integration tests against a local server. If you wish to perform an e2e test against a preview Worker, pass `local: false` in the `options` object when calling the `unstable_dev()` function. Note that e2e tests can be significantly slower than integration tests.
 
 {{<Aside type="note">}}
 
