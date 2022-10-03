@@ -167,9 +167,9 @@ export default {
 
 {{<definitions>}}
 
-- {{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}{{</code>}}
+- {{{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}{{</code>}}
 
-  - Specifies that the object should only be returned given satisfaction of certain conditions in the `R2Conditional`. Refer to [Conditional operations](#conditional-operations).
+  - Specifies that the object should only be returned given satisfaction of certain conditions in the `R2Conditional` or in the conditional Headers. Refer to [Conditional operations](#conditional-operations).
   
 - {{<code>}}range{{<param-type>}}R2Range{{</param-type>}}{{</code>}}
 
@@ -332,7 +332,9 @@ You can pass an `R2Conditional` object to `R2GetOptions`.  If the condition chec
 
  {{</definitions>}}
 
-For more information about conditional requests, refer to [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
+Alternatively, you can pass a `Headers` object containing conditional headers to `R2GetOptions`. For information on these conditional headers, refer to [the MDN docs on conditional requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests#conditional_headers). All conditional headers aside from `If-Range` are supported.
+
+For more specific information about conditional requests, refer to [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
 
 ### HTTP Metadata
 
