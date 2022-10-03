@@ -5,9 +5,9 @@ title: Early Hints
 
 # Early Hints
 
-[Early Hints](https://developers.cloudflare.com/cache/about/early-hints/) is enabled automatically on all `pages.dev` domains. [It can be enabled for your any custom domains](https://developers.cloudflare.com/cache/about/early-hints/#enabling-early-hints) by navigating to **Speed** > **Optimization** and toggling the "Early Hints" setting in the dashboard.
+[Early Hints](/cache/about/early-hints/) help the browser to load webpages faster. Early Hints is enabled automatically on all `pages.dev` domains. It can be [enabled](/cache/about/early-hints/#enabling-early-hints) for your custom domains by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > selecting your account and domain > **Speed** > **Optimization** and turning on the **Early Hints** toggle.
 
-Early Hints automatically caches any [`preload`](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload) and [`preconnect`](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preconnect) type [`Link` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link) to send as Early Hints. There are two ways to create these `Link` headers in Pages:
+Early Hints automatically caches any [`preload`](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload) and [`preconnect`](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preconnect) type [`Link` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link) to send as Early Hints to the browser. The hints are sent to the browser before the full response is prepared, and the browser can figure out how to load the webpage faster for the end user. There are two ways to create these `Link` headers in Pages:
 
 ## 1. Using a `_headers` file
 
@@ -50,8 +50,7 @@ filename: /blog/index.html
 
 ### Disabling automatic `Link` header generation Automatic `Link` header
 
-Automatic `Link` header generation should not have any negative performance impact on your website. If
-you find yourself needing to disable this feature, please get in touch with us!
+Automatic `Link` header generation should not have any negative performance impact on your website. If you find yourself needing to disable this feature, please reach let us know about your circumstance in our [Discord server](https://discord.com/invite/cloudflaredev).
 
 You can remove any automatically generated `Link` headers by adding the following to your `_headers` file:
 
