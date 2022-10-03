@@ -13,7 +13,7 @@ Wrangler offers an experimental API to programmatically manage your Cloudflare W
 
 ## unstable_dev
 
-Start a HTTP server for testing your Worker. 
+Start an HTTP server for testing your Worker. 
 
 Once called, `unstable_dev` will return a `fetch()` function for invoking your Worker without needing to know the address or port, as well as a `stop()` function to shut down the HTTP server.
 
