@@ -38,7 +38,7 @@ Vue.createApp({
                 }
               }
             });
-            if (!variableActive) {
+            if (!variableActive && !element.variables[i].postpone_evaluation) {
               return false;
             }
           }
@@ -81,7 +81,7 @@ Vue.createApp({
             <p v-if="element.estimated_time" class="durationEstimate">~[[ element.estimated_time ]] mins</p>
         </div>
         <div v-if="element.description" v-html="element.description"></div>
-        <details>
+        <details v-if="element.pages">
             <summary>Contains [[ element.pages.length ]] units</summary>
             <div>
                 <ul>
