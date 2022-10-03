@@ -323,6 +323,36 @@ AVG(item_cost)
 AVG(DISTINCT item_cost)
 ```
 
+### MIN
+
+Usage:
+```SQL
+MIN(column_name)
+```
+
+Min is an aggregation function that returns the minimum value of a column across all rows.
+
+Example:
+```SQL
+-- return the minimum item cost
+MIN(item_cost)
+```
+
+### MAX
+
+Usage:
+```SQL
+MAX(column_name)
+```
+
+Max is an aggregation function that returns the maximum value of a column across all rows.
+
+Example:
+```SQL
+-- return the maximum item cost
+MAX(item_cost)
+```
+
 ### QUANTILEWEIGHTED
 
 Usage:
