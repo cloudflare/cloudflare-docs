@@ -213,7 +213,7 @@ None of the options for this command are required. Also, many can be set in your
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the bundled script before publishing.
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Compile a project without actually publishing to live servers. Combined with --outdir, this is also useful for testing the output of publish. Further, it gives developers a chance to upload our generated sourcemap to a service like sentry etc, so that errors from the worker can be mapped against actual source code, but before the service actually goes live.
+  - Compile a project without actually publishing to live servers. Combined with `--outdir`, this is also useful for testing the output of `wrangler publish`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
 
 {{</definitions>}}
 
