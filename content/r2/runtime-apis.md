@@ -327,7 +327,7 @@ You can pass an `R2Conditional` object to `R2GetOptions`.  If the condition chec
 
  {{</definitions>}}
 
-Alternatively you can pass a `Headers` object containing conditional headers to R2GetOptions. For information on these conditional headers, refer to [the MDN docs on conditional requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests#conditional_headers). All conditional headers aside from If-Range are supported.
+Alternatively, you can pass a `Headers` object containing conditional headers to `R2GetOptions`. For information on these conditional headers, refer to [the MDN docs on conditional requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests#conditional_headers). All conditional headers aside from If-Range are supported.
 
 For more specific information about conditional requests, refer to [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
 
