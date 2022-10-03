@@ -8,7 +8,7 @@ weight: 2
 
 To begin using Magic Network Monitoring, complete the list of tasks below. If you are an Enterprise customer, Cloudflare can significantly accelerate the timeline during active-attack scenarios.
 
-If you are an Enterprise customer and would like to use Magic Network Monitoring and Magic Transit On Demand together, begin by [configurin gMagic Transit](/magic-transit/get-started/).
+If you are an Enterprise customer and would like to use Magic Network Monitoring and Magic Transit On Demand together, begin by [configuring Magic Transit](/magic-transit/get-started/).
 
 ## 1. Verify NetFlow or SFlow capabilities
 
