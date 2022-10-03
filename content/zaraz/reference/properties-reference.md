@@ -78,15 +78,15 @@ _User-agent string_	| String | Returns the browser’s user agent.
 
 {{<table-wrap>}}
 
-Property 		| Type 	| Description
---- 			| --- 	| ---
-_City_ 			| String | Returns the city of the incoming request. For example, `Lisbon`.
-_Continent_ 	| String | Returns the continent of the incoming request. For example, `EU`
-_Country_ code	| String | Returns the country code of the incoming request. For example, `PT`.
+Property 		| Type 	  | Description
+--------------- | ------- | -----------
+_City_ 			| String  | Returns the city of the incoming request. For example, `Lisbon`.
+_Continent_ 	| String  | Returns the continent of the incoming request. For example, `EU`
+_Country_ code	| String  | Returns the country code of the incoming request. For example, `PT`.
 _EU_ country 	| Boolean | Returns a `1` if the country of the incoming request is in the European Union, and a `0` if it is not.
-_Region_ 		| String | Returns the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) name for the first level region associated with the IP address of the incoming request. For example, `Lisbon`.
-_Region_ code 	| String | Returns the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) region code associated with the IP address of the incoming request. For example, `11`.
-_Timezone_ 		| String | Returns the timezone of the incoming request. For example, `Europe/Lisbon`.
+_Region_ 		| String  | Returns the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) name for the first level region associated with the IP address of the incoming request. For example, `Lisbon`.
+_Region_ code 	| String  | Returns the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) region code associated with the IP address of the incoming request. For example, `11`.
+_Timezone_ 		| String  | Returns the timezone of the incoming request. For example, `Europe/Lisbon`.
 
 {{</table-wrap>}}
 
