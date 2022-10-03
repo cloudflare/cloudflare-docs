@@ -11,9 +11,9 @@ enable_flag: "streams_byob_reader_detaches_buffer"
 disable_flag: "streams_byob_reader_does_not_detach_buffer"
 ---
 
-Originally, the Workers runtime did not detach the `ArrayBuffer`s from user-provided TypedArrays when using the [BYOB reader's `read()` method](/workers/runtime-apis/streams/readablestreambyobreader/#methods), as required by the Streams spec, meaning it was possible to inadvertently reuse the same buffer for multiple `read()` calls. This change makes Workers conform to the spec.
+Originally, the Workers runtime did not detach the `ArrayBuffer`s from user-provided TypedArrays when using the [BYOB reader's `read()` method](https://developers.cloudflare.com/workers/runtime-apis/streams/readablestreambyobreader/#methods), as required by the Streams spec, meaning it was possible to inadvertently reuse the same buffer for multiple `read()` calls. This change makes Workers conform to the spec.
 
-User code should never try to reuse an `ArrayBuffer` that has been passed into a [BYOB reader's `read()` method](/workers/runtime-apis/streams/readablestreambyobreader/#methods). Instead, user code can re-use the `ArrayBuffer` backing the result of the `read()` promise, as in the example below.
+User code should never try to reuse an `ArrayBuffer` that has been passed into a [BYOB reader's `read()` method](https://developers.cloudflare.com/workers/runtime-apis/streams/readablestreambyobreader/#methods). Instead, user code can re-use the `ArrayBuffer` backing the result of the `read()` promise, as in the example below.
 
 ```js
 // Consume and discard `readable` using a single 4KiB buffer.
