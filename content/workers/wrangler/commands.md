@@ -215,9 +215,8 @@ None of the options for this command are required. Also, many can be set in your
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Compile a project without actually publishing to live servers. Combined with `--outdir`, this is also useful for testing the output of `wrangler publish`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
 - `--keep-vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - It is recommended best practice to treat your wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard. 
-  - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy.
-  - If you want to disable this behaviour set `keep-vars` to `true`.
+  - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard. 
+  - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
 
 {{</definitions>}}
 
