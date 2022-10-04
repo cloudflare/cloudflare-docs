@@ -1,4 +1,10 @@
-{{- $data := .Site.Data.learning_paths -}}
+{{ $data := slice }}
+{{ $fileplaceholder := "" }}
+{{- range readDir "./assets/json/" -}}
+{{- $fileplaceholder :=  print "./assets/json/" .Name -}}
+{{- $file_data := getJSON $fileplaceholder -}}
+{{ $data = $data | append $file_data }}
+{{- end -}}
 {{- $numTrails := len $data -}}
 {{ $product_array := slice }}
 {{ $category_array := slice }}

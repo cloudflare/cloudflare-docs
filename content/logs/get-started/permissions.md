@@ -6,7 +6,7 @@ weight: 40
 
 # Permissions
 
-Below is a description of the available permissions for tokens and roles as they relate to Logs. For information about how to create an API token, refer to [Creating API tokens](/api/tokens/create/).
+Below is a description of the available permissions for tokens and roles as they relate to Logs. For information about how to create an API token, refer to [Creating API tokens](/api/get-started/create-token/).
 
 ## Tokens
 

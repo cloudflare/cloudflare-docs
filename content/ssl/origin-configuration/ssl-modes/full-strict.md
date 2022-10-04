@@ -10,7 +10,12 @@ meta:
 
 When you set your encryption mode to **Full (strict)**, Cloudflare does everything in [Full mode](/ssl/origin-configuration/ssl-modes/full/) but also enforces more stringent requirements for origin certificates.
 
-![With an encryption mode of Full (strict), your application encrypts traffic going to and coming from Cloudflare.](/ssl/static/ssl-encryption-mode-full-strict.png)
+<div class="mermaid">
+flowchart LR
+    accTitle: Full - Strict SSL/TLS Encryption
+    accDescr: With an encryption mode of Full (strict), your application encrypts traffic going to and coming from Cloudflare.
+    A[Browser] <--Encrypted--> B((Cloudflare))<--Encrypted--> C[("Origin server (verified) &#9989;")]
+</div>
 
 ## Use when
 

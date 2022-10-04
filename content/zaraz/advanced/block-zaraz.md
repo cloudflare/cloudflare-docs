@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Block Zaraz
-weight: 0
+weight: 1
 meta:
   title: Block Zaraz on specific pages or domains
 ---
