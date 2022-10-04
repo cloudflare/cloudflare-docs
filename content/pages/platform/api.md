@@ -16,7 +16,7 @@ To create an API token:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select the user icon on the top right of your dashboard > **My Profile**.
 3. Select [**API Tokens**](https://dash.cloudflare.com/profile/api-tokens) > **Create Token**. 
-4. You can choose to use the **Edit Cloudflare Workers** template or choose **Create Custom Token**. If you create a custom token, you will need to make sure to add the **Cloudflare Pages** permission with **Edit** access.
+4. You can go to **Edit Cloudflare Workers** template > **Use template** or go to **Create Custom Token** > **Get started**. If you create a custom token, you will need to make sure to add the **Cloudflare Pages** permission with **Edit** access.
 
 ### Make requests
 
