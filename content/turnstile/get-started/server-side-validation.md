@@ -113,7 +113,6 @@ In case of a validation failure, the response should be similar to the following
 ```json
 {
   "success": false,
-  "hostname": "",
   "error-codes": [
     "invalid-input-response"
   ]
