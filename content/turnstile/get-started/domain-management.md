@@ -21,7 +21,7 @@ For example, using the `www.example.com` value will allow widgets on the followi
 but not on the following domains:
 * `example.com`
 * `dash.example.com`
-* `not-example.com`
+* `workerd.dev`
 
 When the widget is embedded on a domain not listed, it will show an error message.
 
