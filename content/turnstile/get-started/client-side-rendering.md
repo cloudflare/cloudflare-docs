@@ -43,6 +43,9 @@ For example:
 <div>
 
 ```html
+---
+highlight: [4]
+---
 
 <form action="/login" method="POST">
    <input type="text" placeholder="username"/>

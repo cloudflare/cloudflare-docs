@@ -12,47 +12,12 @@ Public Bucket is a feature that allows users to expose the contents of their R2 
 
 Public buckets can be set up in two ways:
 
-1. The first exposes your bucket as a custom domain. 
-2. The second exposes your bucket as an `*.r2.dev` Cloudflare subdomain that is generated after you set up your bucket. 
+1. The first exposes your bucket as a custom domain under your control.
+2. The second exposes your bucket as an `*.r2.dev` Cloudflare managed subdomain.
+
+You may choose to do one or both options to test out public buckets.
 
 To configure firewall rules, caching, access controls, or bot management for your bucket, you must set up a custom domain.
-
-## Enable public access for your bucket
-
-Enabling public access for your bucket will make the content of your bucket available to the Internet. To enable public access for your buckets:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > **R2**.
-
-![Choose R2 from the side menu](/r2/static/public-buckets-r2.png)
-
-2. In. **R2**, select the bucket you want to enable public access for.
-
-![Select your bucket](/r2/static/public-buckets-bucket.png)
-
-3. Go to **Settings**.
-
-![Select settings](/r2/static/public-buckets-settings.png)
-
-4. In **Settings**, go to **Bucket Access**.
-
-![Select bucket access](/r2/static/public-buckets-not-allowed.png)
-
-5. Under **Bucket Access**, select **Allow Access**.
-
-![Allow access](/r2/static/public-buckets-allow-access.png)
-
-6. You will be prompted to confirm your choice. In the confirmation dialog, type ‘allow’ to confirm and select **Allow**.
-7. You can now access the bucket and its objects using the Public Bucket URL.
-
-![Show Public Bucket URL](/r2/static/public-buckets-allowed.png)
-
-You can review if your bucket is publicly accessible by going to your bucket and checking that **Public URL Access** states **Allowed**.
-
-{{<Aside type="note">}}
-
-To enable access management, Cache and bot management features, you must set up a custom domain when enabling public access to your bucket.
-
-{{</Aside>}}
 
 ## Connect your bucket to a custom domain
 
@@ -96,7 +61,8 @@ There are a few restrictions when using custom domains to access R2 buckets:
 
 ## Disable domain access
 
-Disabling a domain will turn off public access to your bucket through that domain. Your bucket will still be publicly accessible.
+Disabling a domain will turn off public access to your bucket through that domain. Access through other domains or the managed `r2.dev` subdomain are unaffected.
+The specified domain will also remain connected to R2 until you remove it or delete the bucket.
 
 To disable a domain:
 
@@ -128,9 +94,47 @@ To remove a domain:
 
 The domain is no longer connected to your bucket and will no longer appear in the connected domains list.
 
-## Disable public access for your bucket
+## Enable managed public access for your bucket
 
-Your bucket will not be exposed to the Internet after you disable public access.
+Enabling managed public access for your bucket will make the content of your bucket available to the Internet through a `r2.dev` Cloudflare subdomain.
+To enable public access for your buckets:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > **R2**.
+
+![Choose R2 from the side menu](/r2/static/public-buckets-r2.png)
+
+2. In. **R2**, select the bucket you want to enable public access for.
+
+![Select your bucket](/r2/static/public-buckets-bucket.png)
+
+3. Go to **Settings**.
+
+![Select settings](/r2/static/public-buckets-settings.png)
+
+4. In **Settings**, go to **Bucket Access**.
+
+![Select bucket access](/r2/static/public-buckets-not-allowed.png)
+
+5. Under **Bucket Access**, select **Allow Access**.
+
+![Allow access](/r2/static/public-buckets-allow-access.png)
+
+6. You will be prompted to confirm your choice. In the confirmation dialog, type ‘allow’ to confirm and select **Allow**.
+7. You can now access the bucket and its objects using the Public Bucket URL.
+
+![Show Public Bucket URL](/r2/static/public-buckets-allowed.png)
+
+You can review if your bucket is publicly accessible by going to your bucket and checking that **Public URL Access** states **Allowed**.
+
+{{<Aside type="note">}}
+
+To enable access management, Cache and bot management features, you must set up a custom domain when enabling public access to your bucket.
+
+{{</Aside>}}
+
+## Disable managed public access for your bucket
+
+Your bucket will not be exposed to the Internet as an `r2.dev subdomain` after you disable public access. If you have connected other domains, the bucket will remain accessible on those domains.
 
 To disable public access for your bucket:
 

@@ -18,9 +18,11 @@ If the visitor passes the challenge, their request is allowed. If they fail, the
 
 ## Available challenges
 
-### Managed challenge
+### Managed challenge (recommended)
 
 Managed challenges are where Cloudflare dynamically chooses the appropriate type of challenge based on the characteristics of a request. This helps avoid [CAPTCHAs](https://www.cloudflare.com/learning/bots/how-captchas-work/), which also reduces the lifetimes of human time spent solving CAPTCHAs across the Internet.
+
+Unless there are specific compatibility issues or other reasons to use other types of challenges, you should use managed challenges for your various firewall rules.
 
 Depending on the characteristics of a request, Cloudflare will choose an appropriate type of challenge, which may include but is not limited to:
 

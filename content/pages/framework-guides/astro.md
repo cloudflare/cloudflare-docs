@@ -52,7 +52,7 @@ $ git push -u origin main
 
 [Pages Functions](/pages/platform/functions/) enable you to run server-side code to add dynamic functionality without running a dedicated server.
 
-To get started, create a `functions` directory at the root of your project. Writing your Functions files in this directory automatically generates a Worker with custom functionality at the predesignated routes. To learn more, refer to[Pages Functions](/pages/platform/functions/).
+To get started, create a `functions` directory at the root of your project. Writing your Functions files in this directory automatically generates a Worker with custom functionality at the predesignated routes. To learn more, refer to [Pages Functions](/pages/platform/functions/).
 
 ### Astro Configuration
 
