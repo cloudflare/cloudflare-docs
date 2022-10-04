@@ -8,9 +8,17 @@ weight: 9
 
 To run Wrangler in a continuous integration/continuous deployment (CI/CD) environment, you must provide a Cloudflare API token and account ID.
 
-## Cloudflare API token
+## Create a Cloudflare API token
 
-Add the token to the `CLOUDFLARE_API_TOKEN` environment variable. (for example, `CLOUDFLARE_API_TOKEN=123 wrangler publish`)
+To create a token, you need to follow the steps outlined on the [API Token](/api/get-started/create-token/) docs. 
+
+![API Token Templates](/workers/wrangler/static/templates.png)
+
+- Select **Edit Cloudflare Workers** template, all templates are prefilled with a token name and permissions, you also need to modify the account and zone resources you want assigned to the token.
+
+- Select continue to summary and review the permissions before selecting create token.
+
+- Add the token to the `CLOUDFLARE_API_TOKEN` environment variable. (for example, `CLOUDFLARE_API_TOKEN=123 wrangler publish`)
 
 ## Account ID
 
