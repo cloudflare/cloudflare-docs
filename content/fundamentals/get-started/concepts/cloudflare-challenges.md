@@ -55,6 +55,8 @@ With a JS challenge, Cloudflare presents challenge page that requires no interac
 
 The visitor will have to wait until their browser finishes processing the JavaScript, which should be less than five seconds.
 
+Unless for specific compatibility reasons or instructed by Cloudflare Support to do so, we advise customers configuring new rule actions to use the Managed Challenge, instead of the JS challenge.
+
 ### Legacy CAPTCHA challenge
 
 CAPTCHA challenges require a visitor to interact with a visual image, usually identifying specific letters or characteristics of the image. Cloudflare does not recommend using Legacy CAPTCHAs.
