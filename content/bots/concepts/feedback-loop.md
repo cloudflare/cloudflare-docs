@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Bots Feedback Loop
 ---
 
-# False Positive/Negative Feedback Loop
+# Bots Feedback Loop
 
 The Bots Feedback Loop is an easy way for customers to send Cloudflare direct feedback in the case of Bot Management potentially scoring a request incorrectly. Before, customers could only report issues with bot scores via a support ticket or directly to their account team. 
 
@@ -15,13 +15,16 @@ Anyone who has access to Bot Analytics is able to submit feedback. Business and 
 
 ## False Positive
 
-A false positive can happen if Cloudflare scores a request in the **automated** or **likely automated** range, but the request is from a human. An example might be if you’re using a novel browser and OS combination that we have not seen before on the internet. 
+A false positive can happen if Cloudflare scores a request in the **automated** or **likely automated** range, but the request is from a human. 
+
+An example might be if you’re using a novel browser and OS combination that we have not seen before on the internet. 
 
 ## False Negative
 
 If Cloudflare is unable to detect a portion of automated traffic on your site, submitting a False Negative report will help us catch it in the future. 
 
 ## Submit a Report
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Security** > **Bots**.
 3. Apply **Bot score filter(s)**.
