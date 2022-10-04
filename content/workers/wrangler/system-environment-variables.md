@@ -8,7 +8,7 @@ weight: 5
 
 System Environment Variables are local environment variables that can change Wrangler's behavior. You can set them by:
 
-1. Setting the values in a [`.env`](http://localhost:1313/workers/wrangler/system-environment-variables/#examples-in-env-file) file in your project directory. This is the recommended way to set these variables, as it persists the values between Wrangler sessions.
+1. Setting the values in a [`.env`](/workers/wrangler/system-environment-variables/#example-env-file) file in your project directory. This is the recommended way to set these variables, as it persists the values between Wrangler sessions.
 2. Inlining the values in your Wrangler command. For example, `WRANGLER_LOG="debug" wrangler publish` will set the value of `WRANGLER_LOG` to "debug" for this execution of the command.
 3. Setting the values in your shell environment. For example, if you're using Z shell, adding `export CF_API_TOKEN=...` to your `~/.zshrc` file will set this token as part of your shell configuration.
 
