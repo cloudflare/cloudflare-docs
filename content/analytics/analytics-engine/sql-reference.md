@@ -296,7 +296,7 @@ Usage:
 SUM([DISTINCT] column_name)
 ```
 
-Sum is an aggregation function that returns the sum of column values across all rows in each group or results set. Sum also supports `DISTINCT`, and then it will only sum the unique values in the column.
+Sum is an aggregation function that returns the sum of column values across all rows in each group or results set. Sum also supports `DISTINCT`, but in this case it will only sum the unique values in the column.
 
 Example:
 ```SQL
