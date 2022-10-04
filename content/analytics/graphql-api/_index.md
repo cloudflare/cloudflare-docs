@@ -24,4 +24,4 @@ You can use `curl` to make requests to the GraphQL Analytics API. Alternatively,
 
 ## Clients
 
-There are many other popular open-source clients that you can find online, such as [Altair](https://altair.sirmuel.design) and [Insomnia](https://insomnia.rest).
+We are using [GraphiQL](https://github.com/skevy/graphiql-app) for our example GraphQL queries. There are many other popular open-source clients that you can find online, such as [Altair](https://altair.sirmuel.design) and [Insomnia](https://insomnia.rest).
