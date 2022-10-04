@@ -16,7 +16,7 @@ In order to consume the waiting room response in the JSON format, the following 
 ## Step 1 – Enable JSON response
 
 To receive a JSON response, you first need to enable that option in your waiting room.
-- **Via the dashboard**: When [customizing a waiting room](/waiting-room/how-to/customize-waiting-room/), toggle JSON Response to On.
+- **Via the dashboard**: When [customizing a waiting room](/waiting-room/how-to/customize-waiting-room/), enable **JSON Response**.
 - **Via the API**: When [creating a waiting room](https://api.cloudflare.com/#waiting-room-create-waiting-room), set `json_response_enabled` to true.
 
 ## Step 2 – Get JSON data
