@@ -1,20 +1,20 @@
 ---
-title: Gsuite BCC setup
+title: Gmail phishing risk assesment
 pcx_content_type: tutorial
 weight: 1
 meta:
-    title: Setup Area 1 proof of value for Gmail
+    title: Setup phishing risk assessment for Gmail with Area 1
 ---
 
-# Setup Area 1 proof of value for Gmail
+# Setup phishing risk assessment for Gmail with Area 1
 
-For customers using Gmail, setting up a proof of value (POV) with Area 1 for detecting phishing emails is quick and easy. You need to create a Content Compliance filter to BCC emails to Area 1. Refer to the following email flow during a POV for Gmail:
+For customers using Gmail, setting up a phishing risk assessment with Area 1 is quick and easy. All you need to do is create a content compliance filter to send emails to Area 1 through BCC. The following email flow shows how this works:
 
-![A schematic showing email flow with area 1 proof of value for Gmail.](/email-security/static/gmail-bcc-flow.png)
+![Email flow when setting up a phishing assessment risk for Gmail with Area 1.](/email-security/static/gmail-bcc-flow.png)
 
 To setup Area 1 POV for Gmail:
 
-1. Go to the Gmail Administative Console, and select the **Compliance** configuration option.
+1. In the Admin console, go to **Menu** > **Apps** > **Google Workspace > **Gmail** > **Compliance**.
 
 2. Scroll to **Content Compliance** and select **CONFIGURE**.
 
@@ -24,10 +24,27 @@ To setup Area 1 POV for Gmail:
 
 2. In **Email messages to affect**, select **Inbound**.
 
-3. Now, you need to add the recipients that will have their messages sent to Area 1 via BCC.
+3. Select the recipients that you want to sent emails to Area 1 via BCC.
     1. Select **Add** to configure the expression.
     2. Select **Advanced content match**.
         1. In **Location**, select **Headers + Body** from the dropdown.
         2. In **Match type** select **Matches regex**.
         3. In **Regexp** write `.*`. You can customize the regex as needed and test within the admin page or on sites like https://regexr.com/.
         4. Select **SAVE**.
+
+4. In **If the above expressions match, do the following**, make the following
+changes:
+    1. In **Also deliver to** check **Add more recipients**.
+        1. Under **Recipients** select **Add**
+        2. Change the setting to **Advanced**.
+        3. In **Envelope recipient** select **Change envelope recipient**.
+        4. In **Replace recipient** add the recipient BCC address. For example,`bcc_recipient@mxrecord.io`. This address is specific to each customer tenant and can be found in your Portal at https://horizon.area1security.com/support/service-addresses.
+
+        If you are located in the EU or GDPR applies to your organization, replace `@mxrecord.io` domain in the BCC recipient with `@mailstream-eu1.mxrecord.io`. This will force email to be processed in Germany under compliance with GDPR. For example,`bcc_recipient@mailstream-eu1.mxrecord.io`.
+        5. Under **Spam and delivery options** uncheck **Do not deliver spam to this recipient**.
+        6. Under **Headers** check **Add X-Gm-Spam and X-Gm-Phishy headers**.
+        7. Select **SAVE**.
+
+5. Scroll down and select **Show options**.
+    1. Under **Account types to affect** select **Groups**.
+    2. Select **SAVE**.
