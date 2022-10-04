@@ -78,6 +78,8 @@ In each test case, call `await worker.fetch()`, and check that the response is w
 
 To wrap up a test suite, call `await worker.stop()` in an `afterAll` function.
 
+#### Single Worker Example
+
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 ```js
@@ -139,6 +141,111 @@ describe("Worker", () => {
 		if (resp) {
 			const text = await resp.text();
 			expect(text).toMatchInlineSnapshot(`"Hello World!"`);
+		}
+	});
+});
+```
+{{</tab>}}
+{{</tabs>}}
+
+
+#### Multi-Worker Example
+
+It's also possible to test Workers that call other Workers.
+
+Note: if you shut down the child worker prematurely, the parent worker won't know the child worker exists and your tests will fail.
+
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+```js
+---
+filename: src/index.test.js
+---
+import { unstable_dev } from "wrangler";
+
+describe("multi-worker testing", () => {
+	let childWorker;
+	let parentWorker;
+
+	beforeAll(async () => {
+		childWorker = await unstable_dev(
+			"src/child-worker.js",
+			{ config: "src/child-wrangler.toml" },
+			{ disableExperimentalWarning: true }
+		);
+		parentWorker = await unstable_dev(
+			"src/parent-worker.js",
+			{ config: "src/parent-wrangler.toml" },
+			{ disableExperimentalWarning: true }
+		);
+	});
+
+	afterAll(async () => {
+		await childWorker.stop();
+		await parentWorker.stop();
+	});
+
+	it("childWorker should return Hello World itself", async () => {
+		const resp = await childWorker.fetch();
+		if (resp) {
+			const text = await resp.text();
+			expect(text).toMatchInlineSnapshot(`"Hello World!"`);
+		}
+	});
+
+	it("parentWorker should return Hello World by invoking the child worker", async () => {
+		const resp = await parentWorker.fetch();
+		if (resp) {
+			const parsedResp = await resp.text();
+			expect(parsedResp).toEqual("Parent worker sees: Hello World!");
+		}
+	});
+});
+```
+{{</tab>}}
+{{<tab label="ts" >}}
+```ts
+---
+filename: src/index.test.ts
+---
+import { unstable_dev } from "wrangler";
+import type { UnstableDevWorker } from "wrangler";
+
+describe("multi-worker testing", () => {
+	let childWorker: UnstableDevWorker;
+	let parentWorker: UnstableDevWorker;
+
+	beforeAll(async () => {
+		childWorker = await unstable_dev(
+			"src/child-worker.js",
+			{ config: "src/child-wrangler.toml" },
+			{ disableExperimentalWarning: true }
+		);
+		parentWorker = await unstable_dev(
+			"src/parent-worker.js",
+			{ config: "src/parent-wrangler.toml" },
+			{ disableExperimentalWarning: true }
+		);
+	});
+
+	afterAll(async () => {
+		await childWorker.stop();
+		await parentWorker.stop();
+	});
+
+	it("childWorker should return Hello World itself", async () => {
+		const resp = await childWorker.fetch();
+		if (resp) {
+			const text = await resp.text();
+			expect(text).toMatchInlineSnapshot(`"Hello World!"`);
+		}
+	});
+
+	it("parentWorker should return Hello World by invoking the child worker", async () => {
+		const resp = await parentWorker.fetch();
+		if (resp) {
+			const parsedResp = await resp.text();
+			expect(parsedResp).toEqual("Parent worker sees: Hello World!");
 		}
 	});
 });
