@@ -9,7 +9,7 @@ weight: 6
 If you need to manage traffic in a non-browser environment such as a mobile app or web app, Cloudflare provides a JSON-friendly waiting room that can be consumed via your API endpoints:
 
 1. When a user is queued, we return our own JSON response.
-2. When a user leaves the waiting room, we forward the request to your origin server and return the response from your origin server (be it JSON, XML, or an HTML page etc).
+2. When a user leaves the waiting room, we forward the request to your origin server and return the response from your origin server (be it JSON, XML, an HTML page, etc.).
 
 In order to consume the waiting room response in the JSON format, the following steps must be taken:
 
