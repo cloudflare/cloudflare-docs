@@ -11,11 +11,16 @@ The [Pages API](https://api.cloudflare.com/#pages-project-properties) empowers y
 
 ### Get an API token
 
-Go to the [API Tokens](https://dash.cloudflare.com/profile/api-tokens) page and select **Create Token**. You can either choose to use the `Edit Cloudflare Workers` template or choose `Create Custom Token`. If you select custom token, you will need to make sure to add the "Cloudflare Pages" permission with "Edit" access.
+To create an API token:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select the user icon on the top right of your dashboard > **My Profile**.
+3. Select [**API Tokens**](https://dash.cloudflare.com/profile/api-tokens) > **Create Token**. 
+4. You can choose to use the **Edit Cloudflare Workers** template or choose **Create Custom Token**. If you create a custom token, you will need to make sure to add the **Cloudflare Pages** permission with **Edit** access.
 
 ### Make requests
 
-Now, you can authenticate and make requests to the API using your API token in the request headers. For example, here is an API request to get all deployments in a project.
+After creating your token, you can authenticate and make requests to the API using your API token in the request headers. For example, here is an API request to get all deployments in a project.
 
 ```sh
 $ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments' \
