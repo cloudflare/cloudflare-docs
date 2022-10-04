@@ -196,3 +196,7 @@ details div ul li {
     font-size: 85%;
     padding-bottom: 1em;
 }
+
+label {
+    margin-left: .5em;
+}
