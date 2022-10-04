@@ -61,7 +61,7 @@ There are a few restrictions when using custom domains to access R2 buckets:
 
 ## Disable domain access
 
-Disabling a domain will turn off public access to your bucket through that domain. Access through other domains or the managed https://r2.dev domain are unaffected.
+Disabling a domain will turn off public access to your bucket through that domain. Access through other domains or the managed `r2.dev` subdomain are unaffected.
 The specified domain will also remain connected to R2 until you remove it or delete the bucket.
 
 To disable a domain:
@@ -96,7 +96,7 @@ The domain is no longer connected to your bucket and will no longer appear in th
 
 ## Enable managed public access for your bucket
 
-Enabling managed public access for your bucket will make the content of your bucket available to the Internet through a subdomain on the Cloudflare managed http://r2.dev domain.
+Enabling managed public access for your bucket will make the content of your bucket available to the Internet through a `r2.dev` Cloudflare subdomain.
 To enable public access for your buckets:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > **R2**.
@@ -134,8 +134,7 @@ To enable access management, Cache and bot management features, you must set up 
 
 ## Disable managed public access for your bucket
 
-Your bucket will not be exposed to the Internet as a subdomain on https://r2.dev after you disable public access.
-If you have connected other domains, the bucket will remain accessible on those domains.
+Your bucket will not be exposed to the Internet as an `r2.dev subdomain` after you disable public access. If you have connected other domains, the bucket will remain accessible on those domains.
 
 To disable public access for your bucket:
 
