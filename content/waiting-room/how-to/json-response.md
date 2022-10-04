@@ -75,26 +75,30 @@ These are some of the places where the JSON-friendly response can be consumed (t
         Here is an example, demonstrating the usage of the waiting room endpoint inside a Worker. The request headers include the necessary `accept` and `cookie` header values that are required by the waiting room API. The accept header ensures that a JSON-friendly response is returned, if a user is queued. Otherwise, if the request is sent to the origin, then whatever the response origin returns gets returned back. In this example, a hardcoded `__cfwaitingroom` value is embedded in the cookie field. In a real-life application, however, we expect that a cookie returned by the waiting room API is used in each of the subsequent requests to ensure that the user is placed accordingly in the queue and let through to the origin when it is the users turn.
 
 ```bash
-const waitingroomHost = 'https://examples.cloudflareworkers.com/waiting-room;
+const waitingroomSite = 'https://examples.cloudflareworkers.com/waiting-room';
+ 
 async function handleRequest() {
- const init = {
-   headers: {
-     'accept': 'application/json',
-	‘cookie’: ‘__cfwaitingroom=F)J@NcRfUjXnZr4u7x!A%D*G-KaPdSgV’
-   },
-  };
-  const response = await fetch(‘https://example.com/waiting-room’, init)
-.then(response => response.json());
-  if (response.cfWaitingRoom.inWaitingRoom) {
-	return Response(“in waiting room”, { ‘content-type’: ‘text/html’     
-  })
-  } else {
-    return new Response(response);
+  const init = {
+    headers: {
+      'accept': 'application/json',
+      'cookie': '__cfwaitingroom=F)J@NcRfUjXnZr4u7x!A%D*G-KaPdSgV'
+    }
   }
+ 
+  return await fetch(waitingroomSite, init)
+    .then(response => response.json())
+    .then(response => {
+      if (response.cfWaitingRoom.inWaitingRoom) {
+        return Response('in waiting room', { 'content-type': 'text/html' });
+      }
+      else {
+        return new Response(response);
+      }
+    })
 }
+ 
 addEventListener('fetch', event => {
- return event.respondWith(handleRequest());
-
+  return event.respondWith(handleRequest());
 });
 ```
 
