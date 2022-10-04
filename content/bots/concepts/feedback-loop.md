@@ -24,7 +24,9 @@ If Cloudflare is unable to detect a portion of automated traffic on your site, s
 ## Submit a Report
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Security** > **Bots**.
-Select **Report incorrect data**.
+3. Apply **Bot score filter(s)**.
+4. Select **Report incorrect data** and fill out the form.
+5. Select **Submit**. 
 
 ### Recommendations when submitting a false positive
 
@@ -32,12 +34,10 @@ Select **Report incorrect data**.
 ### Recommendations when submitting a false negative
 
 
-## API Example 
+## Creating a feedback report
 
 ```json
----
-header: Response
----
+
 curl -X POST 'https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/bot_management/feedback' \
      -H "X-Auth-Email: user@example.com" \
      -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
@@ -73,3 +73,48 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8
     }
 }'
  ```
+
+ ## Listing feedback reports
+ 
+ ```json
+
+ # Command
+curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576aec3fc2b/bot_management/feedback' \
+     -H "X-Auth-Email: user@example.com" \
+     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
+     -H "Content-Type: application/json" \ 
+ # Output
+[
+  {
+    "created_at": "2022-08-19T00:05:24.749712Z",
+    "type": "false_positive",
+    "description": "Legitimate customers having low score",
+    "expression": "(cf.bot_management.score le 46 and ip.geoip.asnum eq 132892 and http.host eq \"api-discovery.theburritobot.com\" and cf.bot_management.ja3_hash eq \"3fed133de60c35724739b913924b6c24\")",
+    "first_request_seen_at": "2022-08-01T00:00:00Z",
+    "last_request_seen_at": "2022-08-10T00:00:00Z",
+    "requests": 100,
+    "requests_by_score": {
+      "1": 50,
+      "10": 50
+    },
+    "requests_by_score_src": {
+      "heuristics": 25,
+      "machine_learning": 75
+    },
+    "requests_by_attribute": {
+      "topIPs": [
+        {
+          "metric": "10.75.34.1",
+          "requests": 100
+        }
+      ],
+      "topUserAgents": [
+        {
+          "metric": "curl/7.68.0",
+          "requests": 100
+        }
+      ]
+    }
+  }
+]
+```
