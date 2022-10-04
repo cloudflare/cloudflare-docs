@@ -78,7 +78,7 @@ In each test case, call `await worker.fetch()`, and check that the response is w
 
 To wrap up a test suite, call `await worker.stop()` in an `afterAll` function.
 
-#### Single Worker Example
+#### Single Worker example
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -149,11 +149,11 @@ describe("Worker", () => {
 {{</tabs>}}
 
 
-#### Multi-Worker Example
+#### Multi-Worker example
 
-It's also possible to test Workers that call other Workers. In the below example, we refer to the Worker that calls other Workers as the "parent" Worker, and the Worker being called as a "child" Worker.
+You can test Workers that call other Workers. In the below example, we refer to the Worker that calls other Workers as the parent Worker, and the Worker being called as a child Worker.
 
-Note: if you shut down the child Worker prematurely, the parent Worker won't know the child Worker exists and your tests will fail.
+If you shut down the child Worker prematurely, the parent Worker will not know the child Worker exists and your tests will fail.
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
