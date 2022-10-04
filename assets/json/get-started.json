@@ -81,7 +81,7 @@
       },
       {
         "type": "question",
-        "description": "Do you have a live website?",
+        "description": "Do you have an active website?",
         "id": "live_website",
         "choices": [
           { 
@@ -249,7 +249,8 @@
           },
           {
             "name": "web_development",
-            "value": false
+            "value": false,
+            "postpone_evaluation": true
           }
         ],
         "description": "After your domain is active on Cloudflare, add DNS records to make sure visitors can access your site.",
@@ -257,11 +258,13 @@
         "pages": [
           {
             "url_path": "/dns/manage-dns-records/how-to/create-root-domain/",
-            "link_title": "Create a root domain"
+            "link_title": "Create a root domain",
+            "additional_description": "Once you have content hosted online, you need to create DNS records so visitors can access that content using your domain name."
           },
           {
             "url_path": "/dns/manage-dns-records/how-to/create-subdomain/",
-            "link_title": "Create a subdomain"
+            "link_title": "Create a subdomain",
+            "additional_description": "Beyond having a root domain (<code>example.com</code), you may want to make sure visitors can access content on a subdomain, such as <code>www.example.com</code> or <code>blog.example.com</code>."
           },
           {
             "url_path": "/fundamentals/get-started/basic-tasks/manage-domains/redirect-domain/",
@@ -302,12 +305,9 @@
             "link_title": "Set up DNSSEC"
           },
           {
-            "url_path": "/dns/manage-dns-records/how-to/create-root-domain/",
-            "link_title": "Create a root domain"
-          },
-          {
             "url_path": "/dns/manage-dns-records/how-to/create-subdomain/",
-            "link_title": "Create a subdomain"
+            "link_title": "Create a subdomain (Optional)",
+            "additional_description": "Beyond having a root domain (<code>example.com</code), you may want to make sure visitors can access content on a subdomain, such as <code>www.example.com</code> or <code>blog.example.com</code>."
           },
           {
             "url_path": "/dns/manage-dns-records/how-to/email-records/",
