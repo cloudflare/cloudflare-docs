@@ -153,7 +153,7 @@ describe("Worker", () => {
 
 It's also possible to test Workers that call other Workers. In the below example, we refer to the Worker that calls other Workers as the "parent" Worker, and the Worker being called as a "child" Worker.
 
-Note: if you shut down the child worker prematurely, the parent worker won't know the child worker exists and your tests will fail.
+Note: if you shut down the child Worker prematurely, the parent Worker won't know the child Worker exists and your tests will fail.
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
