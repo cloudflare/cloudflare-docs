@@ -184,15 +184,7 @@ export function tabs() {
           const parts = defaultTab.id.split("-");
           const tabId = parts.slice(0, parts.length - 1).join("-");
 
-          let defaultTabLabel;
-          let found = false;
-          labels.forEach((label) => {
-            const labelId = label.getAttribute("data-link");
-            if (!found && labelId === tabId) {
-              defaultTabLabel = label; 
-              found = true;
-            }
-          });
+          const defaultTabLabel = wrappers[i].querySelector(`a[data-link=${tabId}]`);
 
           (defaultTab as HTMLElement).style.display = "block";
           (defaultTabLabel as HTMLElement).classList.add("active");
@@ -303,7 +295,7 @@ export function toggleSidebar() {
     let btn = div.querySelector("button");
     btn.addEventListener("click", () => {
       let classToggleList = ['.DocsSidebar', '.DocsToolbar', '.DocsFooter', '.DocsContent', '.DocsMarkdown', '.DocsSidebar--sections .toggleSidebar'];
-      
+
       classToggleList.forEach(function(querySelector){
         let item = document.querySelector(querySelector);
         item.classList.toggle('collapsed');
