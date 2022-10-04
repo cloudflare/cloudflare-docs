@@ -21,7 +21,7 @@ To receive a JSON response, you first need to enable that option in your waiting
 
 ## Step 2 – Get JSON data
 
-Make a request to your waiting room endpoint with the header `Accept: application/json`. Note that the header has to match exactly `Accept: application/json`, if it is anything else or has any additional content such as `Accept: application/json, text/html` the response will not return in the JSON format. You must retry the request every `refreshIntervalSeconds` in order for users to advance in the queue.
+Make a request to your waiting room endpoint with the header `Accept: application/json`. Note that the header has to match exactly `Accept: application/json`. If it is anything else or has any additional content such as `Accept: application/json, text/html` the response will not return in the JSON format. You must retry the request every `refreshIntervalSeconds` in order for users to advance in the queue.
 
 ```curl
 ---
