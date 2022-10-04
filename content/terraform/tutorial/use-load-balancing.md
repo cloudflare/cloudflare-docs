@@ -157,7 +157,6 @@ resource "cloudflare_load_balancer_monitor" "get-root-https" {
   path           = "/"
   interval       = 60
   retries        = 2
-  check_regions  = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
   description    = "GET / over HTTPS - expect 200"
 }
 EOF
@@ -167,7 +166,7 @@ EOF
 
 In this example, the pool will be called `www-servers` with two origins added to it:
 
-* `www-us` (`203.0.113.10`) 
+* `www-us` (`203.0.113.10`)
 * `www-asia` (`198.51.100.15`)
 
 For now, skip any sort of [geo routing](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/).
@@ -192,6 +191,7 @@ resource "cloudflare_load_balancer_pool" "www-servers" {
   enabled            = true
   minimum_origins    = 1
   notification_email = "you@example.com"
+  check_regions      = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
 }
 EOF
 ```
