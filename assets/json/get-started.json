@@ -264,7 +264,7 @@
           {
             "url_path": "/dns/manage-dns-records/how-to/create-subdomain/",
             "link_title": "Create a subdomain",
-            "additional_description": "Beyond having a root domain (<code>example.com</code), you may want to make sure visitors can access content on a subdomain, such as <code>www.example.com</code> or <code>blog.example.com</code>."
+            "additional_description": "Beyond having a root domain (<code>example.com</code>), you may want to make sure visitors can access content on a subdomain, such as <code>www.example.com</code> or <code>blog.example.com</code>."
           },
           {
             "url_path": "/fundamentals/get-started/basic-tasks/manage-domains/redirect-domain/",
@@ -307,7 +307,7 @@
           {
             "url_path": "/dns/manage-dns-records/how-to/create-subdomain/",
             "link_title": "Create a subdomain (Optional)",
-            "additional_description": "Beyond having a root domain (<code>example.com</code), you may want to make sure visitors can access content on a subdomain, such as <code>www.example.com</code> or <code>blog.example.com</code>."
+            "additional_description": "Beyond having a root domain (<code>example.com</code>), you may want to make sure visitors can access content on a subdomain, such as <code>www.example.com</code> or <code>blog.example.com</code>."
           },
           {
             "url_path": "/dns/manage-dns-records/how-to/email-records/",
