@@ -12,9 +12,9 @@ For customers using Gmail, setting up a phishing risk assessment with Area 1 is 
 
 ![Email flow when setting up a phishing assessment risk for Gmail with Area 1.](/email-security/static/gmail-bcc-flow.png)
 
-To setup Area 1 POV for Gmail:
+To setup Area 1 phishing risk assessment for Gmail:
 
-1. In the Admin console, go to **Menu** > **Apps** > **Google Workspace > **Gmail** > **Compliance**.
+1. In the Admin console, go to **Menu** > **Apps** > **Google Workspace** > **Gmail** > **Compliance**.
 
 2. Scroll to **Content Compliance** and select **CONFIGURE**.
 
