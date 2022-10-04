@@ -285,8 +285,8 @@ Example:
 ```SQL
 -- return the total number of rows
 COUNT()
--- return the number of unique item costs
-COUNT(DISTINCT item_cost)
+-- return the number of different values in the column
+COUNT(DISTINCT column_name)
 ```
 
 ### SUM
