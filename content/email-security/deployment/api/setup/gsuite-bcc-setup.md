@@ -18,13 +18,11 @@ To setup Area 1 phishing risk assessment for Gmail:
 
 2. Scroll to **Content Compliance** and select **CONFIGURE**.
 
-<!-- Renumber from here -->
+3. Add a **Content Compliance** filter and name it `Area 1 - BCC`.
 
-1. Add a **Content Compliance** filter and name it `Area 1 - BCC`.
+4. In **Email messages to affect**, select **Inbound**.
 
-2. In **Email messages to affect**, select **Inbound**.
-
-3. Select the recipients that you want to sent emails to Area 1 via BCC.
+5. Select the recipients that you want to sent emails to Area 1 via BCC.
     1. Select **Add** to configure the expression.
     2. Select **Advanced content match**.
         1. In **Location**, select **Headers + Body** from the dropdown.
@@ -32,9 +30,9 @@ To setup Area 1 phishing risk assessment for Gmail:
         3. In **Regexp** write `.*`. You can customize the regex as needed and test within the admin page or on sites like https://regexr.com/.
         4. Select **SAVE**.
 
-4. In **If the above expressions match, do the following**, make the following
+6. In **If the above expressions match, do the following**, make the following
 changes:
-    1. In **Also deliver to** check **Add more recipients**.
+    1. In **Also deliver to** select **Add more recipients**.
         1. Under **Recipients** select **Add**
         2. Change the setting to **Advanced**.
         3. In **Envelope recipient** select **Change envelope recipient**.
@@ -42,9 +40,9 @@ changes:
 
         If you are located in the EU or GDPR applies to your organization, replace `@mxrecord.io` domain in the BCC recipient with `@mailstream-eu1.mxrecord.io`. This will force email to be processed in Germany under compliance with GDPR. For example,`bcc_recipient@mailstream-eu1.mxrecord.io`.
         5. Under **Spam and delivery options** uncheck **Do not deliver spam to this recipient**.
-        6. Under **Headers** check **Add X-Gm-Spam and X-Gm-Phishy headers**.
+        6. Under **Headers** select **Add X-Gm-Spam and X-Gm-Phishy headers**.
         7. Select **SAVE**.
 
-5. Scroll down and select **Show options**.
+7. Scroll down and select **Show options**.
     1. Under **Account types to affect** select **Groups**.
     2. Select **SAVE**.
