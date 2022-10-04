@@ -284,7 +284,7 @@ Count can also be used to count the number of distinct (unique) values in each c
 Example:
 ```SQL
 -- return the total number of rows
-COUNT(item_cost)
+COUNT()
 -- return the number of unique item costs
 COUNT(DISTINCT item_cost)
 ```
