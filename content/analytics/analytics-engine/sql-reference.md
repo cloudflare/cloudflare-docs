@@ -313,7 +313,7 @@ Usage:
 AVG([DISTINCT] column_name)
 ```
 
-Avg is an aggregation function that returns the mean of column values across all rows in each group or results set. Avg also supports `DISTINCT`, and then it will only average the unique values in the column.
+Avg is an aggregation function that returns the mean of column values across all rows in each group or results set. Avg also supports `DISTINCT`, but in this case it will only average the unique values in the column.
 
 Example:
 ```SQL
