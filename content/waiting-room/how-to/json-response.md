@@ -59,7 +59,7 @@ Refer to the [waiting room cookies](/waiting-room/reference/waiting-room-cookie/
 
 In a browser environment, the page automatically refreshes every `refreshIntervalSeconds` to ensure that the user advances in the queue. In a non-browser environment, where the waiting room JSON-friendly API is being consumed, it is expected that your backend service (or API) also refreshes/makes a request to the waiting room configured endpoint every `refreshIntervalSeconds` to ensure the advancing of the user in the queue.
 
-Following are a few (but not limited to) places where the JSON-friendly response can be consumed:
+These are some of the places where the JSON-friendly response can be consumed (this list is not exhaustive):
 
 1. In a mobile app traffic
     - **Integrate waiting room variables** – Create a new template in your mobile app to receive the JSON response. For a full list of these variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](https://api.cloudflare.com/#waiting-room-create-waiting-room).
