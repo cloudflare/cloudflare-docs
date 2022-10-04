@@ -63,7 +63,7 @@ Following are a few (but not limited to) places where the JSON-friendly response
 
 1. In a mobile app traffic
     - **Integrate waiting room variables** – Create a new template in your mobile app to receive the JSON response. For a full list of these variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](https://api.cloudflare.com/#waiting-room-create-waiting-room).
-    - **Allow cookies** – As mentioned above, a waiting room [requires cookies](/waiting-room/reference/waiting-room-cookie/), your mobile app will need to support cookies. For ease of use, consider using a cookie manager like [CookieJar](https://pkg.go.dev/net/http#CookieJar).
+    - **Allow cookies** – As mentioned above, a waiting room [requires cookies](/waiting-room/reference/waiting-room-cookie/), and your mobile app will need to support cookies. For ease of use, consider using a cookie manager like [CookieJar](https://pkg.go.dev/net/http#CookieJar).
     - **Consume JSON data** - Make a request to the waiting room endpoint with the `Accept: application/json` header.
 
 2. Inside Cloudflare Workers (or in your own backend service)
