@@ -15,7 +15,7 @@ Go to the [API Tokens](https://dash.cloudflare.com/profile/api-tokens) page and 
 
 ### Make requests
 
-Now, you can authenticate and make requests to the API using your email and key in the request headers. For example, here is an API request to get all deployments in a project.
+Now, you can authenticate and make requests to the API using your API token in the request headers. For example, here is an API request to get all deployments in a project.
 
 ```sh
 $ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments' \
