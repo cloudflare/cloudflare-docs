@@ -120,6 +120,11 @@ In addition to the `render()` function, Turnstile supports obtaining the widget'
 
 If a given widget has expired or needs to be reloaded, you can use the `turnstile.reset(widgetId: string)` function to reset the widget.
 
+## Remove a widget
+
+Once a widget is no longer needed, it can be removed from the page using `turnstile.remove(widgetId: string)`.
+This won't call any callback and will remove all related DOM elements.
+
 ## Configurations
 
 | JavaScript Render Parameters | Data Attribute | Description |
