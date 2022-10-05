@@ -532,7 +532,7 @@
 /cloudflare-for-saas/related-products/waf-for-saas/ /cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas/ 301
 /cloudflare-for-saas/related-products/early-hints-for-saas/ /cloudflare-for-platforms/cloudflare-for-saas/performance/early-hints-for-saas/ 301
 /cloudflare-for-saas/ssl/reference/worker-as-origin/ /cloudflare-for-platforms/cloudflare-for-saas/workers-for-platforms/worker-as-origin/ 301
-/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/ /cloudflare-for-platforms/cloudflare-for-saas/workers-for-platforms/custom-metadata/ 301
+/cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/ /cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/ 301
 /cloudflare-for-saas/ssl/hostname-specific-behavior/connection-details/ /cloudflare-for-platforms/cloudflare-for-saas/reference/connection-details/ 301
 /cloudflare-for-saas/ssl/reference/hostname-analytics/ /cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/ 301
 /cloudflare-for-saas/ssl/ /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/ 301
@@ -1023,7 +1023,7 @@
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ssl/common-tasks/:splat 301
 /ssl/ssl-for-saas/custom-certificates/* /cloudflare-for-platforms/cloudflare-for-saas/ssl/custom-certificates/:splat
-/ssl/ssl-for-saas/hostname-specific-behavior/* /cloudflare-for-platforms/cloudflare-for-saas/ssl/hostname-specific-behavior/:splat
+/ssl/ssl-for-saas/hostname-specific-behavior/* /cloudflare-for-platforms/cloudflare-for-saas/domain-support/:splat
 /ssl/ssl-for-saas/reference/* /cloudflare-for-platforms/cloudflare-for-saas/ssl/reference/:splat 301
 /ssl/ssl-for-saas/* /cloudflare-for-platforms/cloudflare-for-saas/:splat 301
 /cloudflare-for-saas/ssl/reference/status-codes/* /cloudflare-for-platforms/cloudflare-for-saas/reference/status-codes/:splat 301
