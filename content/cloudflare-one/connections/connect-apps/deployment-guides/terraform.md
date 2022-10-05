@@ -12,17 +12,23 @@ In this guide, you will learn how to use Terraform to deploy a Google Cloud Proj
 
 ## Prerequisites
 
-To follow this guide, you will need:
+To complete the following procedure, you will need:
 - [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project)
 - [A zone on Cloudflare](/fundamentals/get-started/setup/add-site/)
 
 ## 1. Install Terraform
 
-To get started with Terraform, refer to the [installation instructions](https://learn.hashicorp.com/tutorials/terraform/install-cli) for your operating system.
+Refer to the [Terraform installation guide](https://learn.hashicorp.com/tutorials/terraform/install-cli) for your operating system.
 
-## 2. Install the GCP CLI
+## 2. Install the gcloud CLI
 
-[Install the GCP CLI](https://cloud.google.com/sdk/docs/install) so that Terraform can interact with your GCP account.
+1. [Install the gcloud CLI](https://cloud.google.com/sdk/docs/install) so that Terraform can interact with your GCP account.
+
+2. Authenticate with the CLI by running:
+
+    ```sh
+    $ gcloud auth application-default login
+    ```
 
 ## 3. Create a Cloudflare API token
 
@@ -52,7 +58,9 @@ Terraform functions through a working directory that contains the configuration 
 
 ### Define input variables
 
-1. In your `gcp-tunnel` directory, create a `.tf` file to store variable definitions:
+The following variables will be passed into your GCP and Cloudflare configuration.
+
+1. In your Terraform directory, create a `.tf` file:
 
     ```sh
     $ touch variables.tf
@@ -80,6 +88,7 @@ Terraform functions through a working directory that contains the configuration 
       type        = string
     }
 
+    # Cloudflare variables
     variable "cloudflare_zone" {
       description = "Domain used to expose the GCP VM instance to the Internet"
       type        = string
@@ -112,7 +121,7 @@ Terraform functions through a working directory that contains the configuration 
 
 ### Assign values to the variables
 
-1. In your `gcp-tunnel` directory, create a `.tfvars` file:
+1. In your Terraform directory, create a `.tfvars` file:
 
     ```sh
     $ touch terraform.tfvars
@@ -120,7 +129,7 @@ Terraform functions through a working directory that contains the configuration 
 
     Terraform will automatically use these variables if the file is named `terraform.tfvars`, otherwise the variable file will need to be manually passed in.
 
-2. Open the file in a text editor and include the following variables. Be sure to modify the example with your own values.
+2. Open the file in a text editor and add the following variables. Be sure to modify the example with your own values.
 
     ```txt
     ---
@@ -144,7 +153,9 @@ Terraform functions through a working directory that contains the configuration 
 
 ### Configure Terraform providers
 
-1. In your `gcp-tunnel` directory, create a `.tf` file:
+You will need to declare the [providers](https://registry.terraform.io/browse/providers) used to provision the infrastructure.
+
+1. In your Terraform directory, create a `.tf` file:
 
     ```sh
     $ touch providers.tf
@@ -186,7 +197,9 @@ Terraform functions through a working directory that contains the configuration 
 
 ### Configure Cloudflare resources
 
-1. In your `gcp-tunnel` directory, create a `.tf` file:
+The following configuration will modify settings in your Cloudflare account.
+
+1. In your Terraform directory, create a `.tf` file:
 
     ```sh
     $ touch Cloudflare-config.tf
@@ -235,7 +248,7 @@ Terraform functions through a working directory that contains the configuration 
       session_duration = "1h"
     }
     
-    # Creates an Access policy for the above application.
+    # Creates an Access policy for the SSH application.
     resource "cloudflare_access_policy" "ssh_policy" {
       application_id = cloudflare_access_application.ssh_app.id
       zone_id        = var.cloudflare_zone_id
@@ -248,16 +261,15 @@ Terraform functions through a working directory that contains the configuration 
     }
     ```
 
-    For more information about these resources, refer to the [cloudflare provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+    To learn more about these resources, refer to the [Cloudflare provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
 
 3. Save the file.
 
 ### Configure GCP resources
 
-The specifications for the GCP instance can be specified. A [start up script]() can be passed in to the instance to complete any internal configuration for the instance. 
+The following configuration defines the specifications for the GCP virtual machine and creates a startup script to run upon boot.
 
-
-1. In your `gcp-tunnel` directory, create a `.tf` file:
+1. In your Terraform directory, create a `.tf` file:
 
     ```sh
     $ touch GCP-config.tf
@@ -269,13 +281,13 @@ The specifications for the GCP instance can be specified. A [start up script]() 
     ---
     filename: GCP-config.tf
     ---
-    # OS the server will use
+    # Selects the OS for the GCP VM.
     data "google_compute_image" "image" {
       family  = "ubuntu-minimal-2004-lts"
       project = "ubuntu-os-cloud"
     }
     
-    # GCP Instance resource
+    # Sets up a GCP VM instance.
     resource "google_compute_instance" "origin" {
       name         = "test"
       machine_type = var.machine_type
@@ -295,12 +307,12 @@ The specifications for the GCP instance can be specified. A [start up script]() 
           // Ephemeral IP
         }
       }
-      // Optional config to make instance ephemeral
+      // Optional config to make the instance ephemeral
       scheduling {
         preemptible       = true
         automatic_restart = false
       }
-      // This is where we configure the server (aka instance). Variables like web_zone take a terraform variable and provide it to the server so that it can use them as a local variable
+      // Configures the VM to run a startup script that takes in the Terraform variables.
       metadata_startup_script = templatefile("./install-tunnel.tpl",
         {
           web_zone    = var.cloudflare_zone,
@@ -316,11 +328,9 @@ The specifications for the GCP instance can be specified. A [start up script]() 
 
 ### Create a startup script
 
-The script will install `cloudflared`, create the cert.json file so that the tunnel can be run, create the config file that routes the services to the tunnel, and set up the tunnel to run as a service. The needed variables for the tunnel will be passed in through Terraform so that the script is able to create the tunnel cert.json file and config file.
+The following script will install `cloudflared`, create a permissions and configuration file for the tunnel, and set up the tunnel to run as a service. This example also installs a lightweight HTTP application that you can use to test connectivity.
 
-Also sets up a lightweight HTTP application on the GCP VM
-
-1. In your `gcp-tunnel` directory, create a Terraform template file:
+1. In your Terraform directory, create a Terraform template file:
 
     ```sh
     $ touch install-tunnel.tftpl
@@ -333,6 +343,7 @@ Also sets up a lightweight HTTP application on the GCP VM
     filename: install-tunnel.tftpl
     ---
     # Script to install Cloudflare Tunnel and Docker resources
+
     # Docker configuration
     cd /tmp
     sudo apt-get install software-properties-common
@@ -342,7 +353,7 @@ Also sets up a lightweight HTTP application on the GCP VM
     # The OS is updated and docker is installed
     sudo apt update -y && sudo apt upgrade -y
     sudo apt install docker docker-compose -y
-    # This is a herefile that is used to populate the /tmp/docker-compose.yml file. This logic is used elsewhere in this script
+    # Add the HTTPBin application and run it on localhost:8080.
     cat > /tmp/docker-compose.yml << "EOF"
     version: '3'
     services:
@@ -353,16 +364,17 @@ Also sets up a lightweight HTTP application on the GCP VM
         ports:
           - 8080:80
     EOF
+
     # cloudflared configuration
     cd ~
-    # The package for this OS is retrieved
+    # Retrieve the cloudflared Linux package
     wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
     sudo dpkg -i cloudflared-linux-amd64.deb
-    # A local user directory is first created before we can install the tunnel as a system service
+    # Create a local user directory to temporarily hold the tunnel configuration.
     mkdir ~/.cloudflared
     touch ~/.cloudflared/cert.json
     touch ~/.cloudflared/config.yml
-    # Another herefile is used to dynamically populate the JSON credentials file
+    # Populate the tunnel credentials file.
     cat > ~/.cloudflared/cert.json << "EOF"
     {
         "AccountTag"   : "${account}",
@@ -371,7 +383,7 @@ Also sets up a lightweight HTTP application on the GCP VM
         "TunnelSecret" : "${secret}"
     }
     EOF
-    # Same concept with the Ingress Rules the tunnel will use
+    # Define the ingress rules the tunnel will use.
     cat > ~/.cloudflared/config.yml << "EOF"
     tunnel: ${tunnel_id}
     credentials-file: /etc/cloudflared/cert.json
@@ -386,11 +398,11 @@ Also sets up a lightweight HTTP application on the GCP VM
       - hostname: "*"
         service: hello-world
     EOF
-    # Now we install the tunnel as a systemd service. This copies the 
+    # Install the tunnel as a systemd service. This automatically copies cert.json to /etc/cloudfared.
     sudo cloudflared service install
-    # The credentials file does not get copied over so we'll do that manually
+    # The credentials file does not get copied over so we do that manually.
     sudo cp -via ~/.cloudflared/cert.json /etc/cloudflared/
-    # Now we can bring up our container(s) with docker-compose and then start the tunnel
+    # Start the HTTPBin application and start the tunnel
     cd /tmp
     sudo docker-compose up -d && sudo systemctl start cloudflared
     ```
@@ -401,13 +413,7 @@ Also sets up a lightweight HTTP application on the GCP VM
 
 Once the configuration files are created, they can be deployed.
 
-1. Authenticate with the gcloud CLI by running:
-
-    ```sh
-    $ gcloud auth application-default login
-    ```
-
-2. Initialize your Terraform directory:
+1. Initialize your Terraform directory:
 
     ```sh
     $ terraform init
@@ -415,13 +421,13 @@ Once the configuration files are created, they can be deployed.
 
   This will set up the directory so that your infrastructure can be deployed.
 
-3. Before actually deploying your infrastructure, you can view a preview of everything that will be created:
+2. Before actually deploying your infrastructure, you can preview everything that will be created:
 
     ```sh
     $ terraform plan
     ```
 
-4. Deploy the configuration:
+3. Deploy the configuration:
 
     ```sh
     $ terraform apply
@@ -435,9 +441,12 @@ If you need to roll back the configuration, run `terraform destroy` to delete ev
 
 ## 7. Test the connection
 
-To test the HTTP connection, open a browser and go to `http_app.<cloudflare_zone>` (for example `http_app.example.com`).
+### HTTP
+Open a browser and go to `http_app.<cloudflare_zone>` (for example `http_app.example.com`). You should see the [HTTPBin](https://httpbin.org/) homepage.
 
-To test the SSH connection ??? 
+### SSH
+To test the SSH connection ???
+
 Following https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/use_cases/ssh/#2-connect-as-a-user, I see
 ```bash
 ranbel@N3PFQMVM4W ~ % ssh ranbel@ssh_app.rsun.uk
