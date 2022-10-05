@@ -43,3 +43,5 @@ You are now ready to start requiring Gateway for your Access applications.
 5. Select **Save rule**.
 
 Before granting access to the application, your policy will now check that the device is running the WARP client and enrolled in your Zero Trust organization.
+
+Make sure you enabled Firewall Proxy in your Zero Trust Network settings and installed the Cloudflare Root CA-certificate on client devices with Cloudflare WARP installed before using the "require Gateway"-policy rule, otherwise your users will see a forbidden-error when accessing the application.
