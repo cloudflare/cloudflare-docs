@@ -22,8 +22,9 @@ Before you can play video using AV1, you must first [start a live stream](/strea
 To play your live video or live recording using AV1, add the `?betaCodecSuggestion=av1` query string to the HLS or DASH manifest URL that is provided to your video player, as shown below:
 
 ```bash
+---
 header: Example DASH manifest URL, with betaCodecSuggestion=av1 query parameter
-highlight: [1]
+---
 https://customer-wi9sckcs7uxt7lh4.cloudflarestream.com/bb2eaea47dd47e87ecde343451b3e8a1/manifest/video.mpd?betaCodecSuggestion=av1
 ```
 
