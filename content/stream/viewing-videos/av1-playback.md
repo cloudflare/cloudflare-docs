@@ -56,7 +56,7 @@ The video below is playing using the AV1 codec.
 - [ExoPlayer](/stream/viewing-videos/using-own-player/android/) (Native Android media player) supports AV1 playback
 - [AVPlayer](/stream/viewing-videos/using-own-player/ios/) (Native iOS media player) does not support AV1 playback
 
-Refer to [caniuse](https://caniuse.com/av1) for details on supported web browsers.
+Refer to [caniuse](https://caniuse.com/av1) for details on supported web browsers and devices.
 
 ## Limitations while in beta
 
