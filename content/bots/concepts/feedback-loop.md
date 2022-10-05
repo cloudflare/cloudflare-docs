@@ -152,30 +152,30 @@ curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576
 ]
 ```
 
-## Bots Feedback Loop API Fields
+## API Fields
 
 | Field | Type | Value Example | Description |
 | --- | --- | --- | --- |
-| `type` | `string` | `false_positive` | The feedback report type. |
-| `description` | `string` | Legitimate customers having low scores. | The feedback report description with  more details on the issue. |
-| `expression` | `string` | `(cf.bot_management.score le 46 and ip.geoip.asnum eq 132892 and http.host eq "app.example.com" and cf.bot_management.ja3_hash eq "3fed133de60c35724739b913924b6c24")` | The wirefilter expression matching reported requests. |
-| `first_request_seen_at` | `string` | `2022-08-01T00:00:00Z` | The time range start when the first request has been seen, RFC3339 format. | 
-| `last_request_seen_at` | `string` | `2022-08-10T00:00:00Z` | The time range end when the last request has been seen, RFC3339 format. |
-| `requests` | `integer` | `100` | The total number of reported requests. | 
-| `requests_by_score` | `object` | `{ "1": 50, "10": 50 }` | The requests breakdown by score. |
-| `requests_by_score_src` | `object` |`{"machine_learning": 75, "heuristics": 25}` | Requests breakdown by score source. |
-| `requests_by_attribute` | `object` |  | Requests breakdown by attribute (optional).
+| `type` | string | `false_positive` | The feedback report type. |
+| `description` | string | Legitimate customers having low scores. | The feedback report description with  more details on the issue. |
+| `expression` | string | `(cf.bot_management.score le 46 and ip.geoip.asnum eq 132892 and http.host eq "app.example.com" and cf.bot_management.ja3_hash eq "3fed133de60c35724739b913924b6c24")` | The wirefilter expression matching reported requests. |
+| `first_request_seen_at` | string | `2022-08-01T00:00:00Z` | The time range start when the first request has been seen, RFC3339 format. | 
+| `last_request_seen_at` | string | `2022-08-10T00:00:00Z` | The time range end when the last request has been seen, RFC3339 format. |
+| `requests` | integer | `100` | The total number of reported requests. | 
+| `requests_by_score` | object | `{ "1": 50, "10": 50 }` | The requests breakdown by score. |
+| `requests_by_score_src` | object |`{"machine_learning": 75, "heuristics": 25}` | Requests breakdown by score source. |
+| `requests_by_attribute` | object |  | Requests breakdown by attribute (optional).
 
 ### Expression Fields 
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `cf.bot_management.ja3_hash` | `string` | This provides an SSL/TLS fingerprint to help you identify potential bot requests. |
-| `cf.bot_management.score` | `integer` | This represents the likelihood that a request originates from a bot using a score from 1-99. |
-| `http.host` | `string` | This represents the host name used in the full request URI/ |
-| `http.request.uri.path` | `string` | This represents the URI path of the request. |
-| `http.user_agent` | `string` | This represents the HTTP user agent which is a request header that contains a characteristic string to allow identification of the client operating system and web browser. |
-| `ip.geoip.asnum` | `integer` | This represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address. |
-| `ip.geoip.country` | `string` | This represents the 2-letter country code in ISO 3166-1 Alpha 2 format. |
-| `ip.src` | `string` | The source address of the IP. |
+| `cf.bot_management.ja3_hash` | string | This provides an SSL/TLS fingerprint to help you identify potential bot requests. |
+| `cf.bot_management.score` | integer | This represents the likelihood that a request originates from a bot using a score from 1-99. |
+| `http.host` | string | This represents the host name used in the full request URI/ |
+| `http.request.uri.path` | string | This represents the URI path of the request. |
+| `http.user_agent` | string | This represents the HTTP user agent which is a request header that contains a characteristic string to allow identification of the client operating system and web browser. |
+| `ip.geoip.asnum` | integer | This represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address. |
+| `ip.geoip.country` | string | This represents the 2-letter country code in ISO 3166-1 Alpha 2 format. |
+| `ip.src` | string | The source address of the IP. |
 
