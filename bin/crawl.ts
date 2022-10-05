@@ -120,7 +120,11 @@ async function task(file: string) {
 
       if (!/https?/.test(resolved.protocol)) return;
 
-      if (resolved.hostname === "developers.cloudflare.com") {
+      if (
+        resolved.hostname === "developers.cloudflare.com" &&
+        // Add an exception allowing absolute URLs in the Workers Compatibility Dates page
+        url.pathname !== "/workers/platform/compatibility-dates/"
+      ) {
         messages.push({
           type: "warn",
           html: content,
