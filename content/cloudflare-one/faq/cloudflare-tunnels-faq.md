@@ -120,7 +120,7 @@ Before contacting the Cloudflare support team:
 
 - Set [`log-level`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
 
-- Set [`transport-log`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#transport-loglevel) level to `debug`.
+- Set [`transport-loglevel`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#transport-loglevel) to `debug`.
 
 - Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#logfile) either on the command line or in your configuration file.
 
