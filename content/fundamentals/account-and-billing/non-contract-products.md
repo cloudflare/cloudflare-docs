@@ -2,6 +2,7 @@
 pcx_content_type: reference
 title: Non-contract services
 weight: 4
+layout: list
 ---
 
 # Non-contract services
@@ -16,9 +17,11 @@ To enable a non-contract service, use the **Dashboard link** in the following ta
 | --- | --- | --- | --- |
 | Advanced Certificate Manager (ACM) | [ACM dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) | [ACM docs](/ssl/edge-certificates/advanced-certificate-manager/) | [ACM community](https://community.cloudflare.com/c/security/6) |
 | Argo Smart Routing | [Argo dashboard](https://dash.cloudflare.com/?to=/:account/:zone/traffic) | [Argo docs](/argo-smart-routing/) | [Argo community](https://community.cloudflare.com/c/performance/argo/45) |
+| Bot Management | [Bot Management dashboard](https://dash.cloudflare.com/?to=/:account/:zone/security/bots) | [Bot Management docs](/bots/get-started/bm-subscription/) | [Bot Management community](https://community.cloudflare.com/c/security/6) |
 | Images | [Images dashboard](https://dash.cloudflare.com/?to=/:account/images) | [Images docs](/images/cloudflare-images/) | [Images community](https://community.cloudflare.com/c/developers/images/63) |
 | Load Balancing | [Load Balancing dashboard](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing) | [Load Balancing docs](/load-balancing/) | [Load Balancing community](https://community.cloudflare.com/tag/loadbalancing) |
 | Stream | [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream) | [Stream docs](/stream/) | [Stream community](https://community.cloudflare.com/tag/cloudflarestream) |
+| Workers | [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers) | [Workers docs](/workers/) | [Workers discord](https://discord.com/channels/595317990191398933/779390076219686943) |
 
 Once you enable the product or feature, it will not be an officially contracted service until you purchase it. Cloudflare will reach out in case you have any questions or feedback, and provide you with a sales quote if you are enjoying the product.
 
