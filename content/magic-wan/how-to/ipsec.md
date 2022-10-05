@@ -29,6 +29,8 @@ Create a POST request using the API to [Create IPsec tunnels](https://api.cloudf
 
 ## 2. Generate the PSK for the IPsec tunnels
 
+You can provide your own PSK or use the command below to have Cloudflare generate a PSK for you.
+
 Create a POST request using the API to [Generate Pre Shared Key (PSK) for IPsec tunnels](https://api.cloudflare.com/#magic-ipsec-tunnels-generate-pre-shared-key-psk-for-ipsec-tunnels) and initiate your session.
 
 ## 3. Set up static routes
@@ -77,3 +79,17 @@ To set up your static routes, refer to [Configure static routes](/magic-wan/how-
 - 4h rekey time
 - Disable [anti-replay protection](/magic-wan/reference/anti-replay-protection/)
 - Null encryption
+
+## Supported key ID formats
+
+**RFC name:** `ID_RFC822_ADDR`<br>
+**Format:** `ipsec@<TUNNEL_ID>.<ACCOUNT_ID>.ipsec.cloudflare.com`<br>
+**Example:** `ipsec@f5407d8db1a542b196c59f6d04ba8bd1.123456789.ipsec.cloudflare.com`<br>
+
+**RFC name:** `ID_FQDN`<br>
+**Format:** `<TUNNEL_ID>.<ACCOUNT_ID>.ipsec.cloudflare.com`<br>
+**Example:** `f5407d8db1a542b196c59f6d04ba8bd1.123456789.ipsec.cloudflare.com`<br>
+
+**RFC name:** `ID_KEY_ID`<br>
+**Format:** `<ACCOUNT_ID>_<TUNNEL_ID>`<br>
+**Example:** `123456789_f5407d8db1a542b196c59f6d04ba8bd1`<br>
