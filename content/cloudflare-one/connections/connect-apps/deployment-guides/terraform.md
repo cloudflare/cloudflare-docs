@@ -402,7 +402,7 @@ The following script will install `cloudflared`, create a permissions and config
     sudo cloudflared service install
     # The credentials file does not get copied over so we do that manually.
     sudo cp -via ~/.cloudflared/cert.json /etc/cloudflared/
-    # Start the HTTPBin application and start the tunnel
+    # Start HTTPBin and start the tunnel
     cd /tmp
     sudo docker-compose up -d && sudo systemctl start cloudflared
     ```
@@ -419,7 +419,7 @@ Once the configuration files are created, they can be deployed.
     $ terraform init
     ```
 
-  This will set up the directory so that your infrastructure can be deployed.
+    This will set up the directory so that your infrastructure can be deployed.
 
 2. Before actually deploying your infrastructure, you can preview everything that will be created:
 
