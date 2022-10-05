@@ -51,8 +51,8 @@ The video below is playing using the AV1 codec.
 
 - Chrome (Desktop and Android) supports AV1 playback
 - Firefox (Desktop) supports AV1 playback
-- Safari does not support AV1 playback
-- Edge only supports AV1 playback if the [AV1 Extention](https://www.microsoft.com/store/productId/9MVZQVXJBQ9V) is installed
+- Safari does not currently support AV1 playback
+- Edge only supports AV1 playback if the [AV1 Extension](https://www.microsoft.com/store/productId/9MVZQVXJBQ9V) is installed
 - [ExoPlayer](/stream/viewing-videos/using-own-player/android/) (Native Android media player) supports AV1 playback
 - [AVPlayer](/stream/viewing-videos/using-own-player/ios/) (Native iOS media player) does not support AV1 playback
 
