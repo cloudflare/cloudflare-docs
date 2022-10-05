@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Custom metadata
-weight: 1
+weight: 3
 ---
 
 # Custom metadata
