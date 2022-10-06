@@ -4,7 +4,7 @@ title: Get started
 weight: 1
 ---
 
-# Getting started with Wrangler
+# Get started with Wrangler
 
 {{<Aside type="note">}}
 
