@@ -89,7 +89,7 @@ GraphQL Analytics API
 ## Zone settings - __cfduid
 **End of life date: May 10, 2021**
 
-The `__cfduid` cookie was set on Cloudflare HTTP responses and used for providing critical performance and security services on behalf of our customers. For more information on why we transitioned away from this cookie, refer to (Deprecating the `__cfduid` cookie)[https://blog.cloudflare.com/deprecating-cfduid-cookie/].
+The `__cfduid` cookie was set on Cloudflare HTTP responses and used for providing critical performance and security services on behalf of our customers. For more information on why we transitioned away from this cookie, refer to [Deprecating the `__cfduid` cookie](https://blog.cloudflare.com/deprecating-cfduid-cookie/).
 
 Cloudflare permanently stopped adding a `Set-Cookie` header on all HTTP responses on May 10, 2021. The last `__cfduid` cookies expired 30 days after that.
 
