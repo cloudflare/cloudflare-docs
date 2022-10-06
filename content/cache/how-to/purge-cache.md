@@ -13,7 +13,7 @@ Purge requests appear in Cloudflare Logs and are identified by the PURGE method 
 
 {{</Aside>}}
 
-For information on how to use single-file purge to purge assets cached by a workers fetch, please refer to [​​Using Workers to purge](/workers/learning/how-the-cache-works/#using-workers-to-purge).
+For information on how to use single-file purge to purge assets cached by a Workers fetch, please refer to [​​Using Workers to purge](/workers/learning/how-the-cache-works/#using-workers-to-purge).
 
 ## Purge by single-file (by URL)
 
