@@ -84,7 +84,7 @@ function HEAD(url: string): Promise<boolean> {
 
 interface Message {
   type: "error" | "warn";
-  html: string;
+  html?: string;
   value?: string;
   text?: string;
 }
@@ -117,7 +117,6 @@ async function testJSON(file: string) {
     if (item.match(devDocsRegex)) {
       messages.push({
         type: "warn",
-        html: "bad",
         text: `rewrite in "/absolute/" format: "${item}"`,
       });
     } else if (item.startsWith("/")) {
@@ -134,7 +133,6 @@ async function testJSON(file: string) {
       if (!exists) {
         messages.push({
           type: "error",
-          html: "bad",
           value: item,
         });
       }
@@ -152,7 +150,7 @@ async function testJSON(file: string) {
         JSON_WARNS++;
       }
       output += "  " + (msg.text || msg.value);
-      if (VERBOSE) output += "\n    " + msg.html;
+      if (VERBOSE) output += "\n    ";
     });
 
     console.log(output + "\n");
