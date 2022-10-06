@@ -49,9 +49,9 @@ System Environment Variables are local environment variables that can change Wra
 ### Example `.env` file:
 
 ```bash
-CLOUDFLARE_ACCOUNT_ID=00aa000000a00000a0aa00a000a00xxx
-CLOUDFLARE_API_TOKEN=XXXXXXXXXXXXXXXXXXX
-CLOUDFLARE_EMAIL=fakeemail@void.com
+CLOUDFLARE_ACCOUNT_ID=<YOUR_ACCOUNT_ID_VALUE>
+CLOUDFLARE_API_TOKEN=<YOUR_API_TOKEN_VALUE>
+CLOUDFLARE_EMAIL=<YOUR_EMAIL>
 WRANGLER_SEND_METRICS=true
 CLOUDFLARE_API_BASE_URL=https://api.cloudflare.com/client/v4
 WRANGLER_LOG=debug
