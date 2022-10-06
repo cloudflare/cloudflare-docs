@@ -14,7 +14,7 @@ Wrangler has launched a new version. If you previously had Wrangler 1 installed 
 
 Wrangler is a command-line tool for building [Cloudflare Workers](https://workers.cloudflare.com/). To use it, you'll need to have [`npm`](https://www.npmjs.com/get-npm) and [`Node.js`](https://nodejs.org/en/) installed. Wrangler requires a Node version of `16.13.0` or later.
 
-The easiest way to get started with Wrangler is to run:
+To get started with Wrangler run:
 
 ```sh
 $ npx wrangler init my-project
