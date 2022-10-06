@@ -17,9 +17,7 @@ The HTML is scanned for elements that have a `cf-turnstile` class name:
 <div>
 
 ```html
-
 <div class="cf-turnstile" data-sitekey="yourSitekey" data-callback="javascriptCallback"></div>
-
 ```
 </div>
 
@@ -79,9 +77,7 @@ When using this option, HTML elements with the `cf-turnstile` class will not sho
 <div>
 
 ```html
-
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload= onloadTurnstileCallback" async defer></script>
-
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" async defer></script>
 ```
 </div>
 
@@ -92,14 +88,13 @@ When using this option, HTML elements with the `cf-turnstile` class will not sho
 ```javascript
 
 window.onloadTurnstileCallback = function () {
-   const turnstileOptions = {
-            sitekey: '<YOUR_SITE_KEY>',
-            callback: function(token) {
-               console.log(`Challenge Success ${token}`);
-            }
-   };
-   turnstile.render('#example-container', turnstileOptions); 
-}
+    turnstile.render('#example-container', {
+        sitekey: '<YOUR_SITE_KEY>',
+        callback: function(token) {
+            console.log(`Challenge Success ${token}`);
+        },
+    });
+};
 
 ```
 </div>
@@ -108,7 +103,7 @@ Turnstile can be programmatically loaded by invoking the `turnstile.render()` fu
 
 The `turnstile.render: function (container: string | HTMLElement, params: RenderParameters)` render takes an argument to a HTML widget.
 
-If the invocation is successful, the function returns a `widgetId`. If the invocation is unsuccessful, the function returns `undefined`.
+If the invocation is successful, the function returns a `widgetId (string)`. If the invocation is unsuccessful, the function returns `undefined`.
 
 Check out the [demo](https://demo.turnstile.workers.dev/explicit) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/explicit.html).
 

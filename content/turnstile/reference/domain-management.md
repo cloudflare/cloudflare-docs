@@ -1,7 +1,7 @@
 ---
 title: Domain management
 pcx_content_type: get-started
-weight: 6
+weight: 10
 layout: single
 
 ---

@@ -18,9 +18,7 @@ To complete the migration, you must obtain the [sitekey and secret key](/turnsti
 <div>
 
 ```html
-
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha" async defer></script>
-
 ```
 
 </div>
