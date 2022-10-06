@@ -9,4 +9,6 @@ _build:
 2. Select your Cloudflare for SaaS application.
 3. Navigate to **SSL/TLS** > **Custom Hostnames**.
 4. Select a hostname.
-5. Copy the two values for **Certificate validation TXT name** and **Certificate validation TXT value**.
+5. Copy the values for **Certificate validation TXT name** and **Certificate validation TXT value**.
+
+If you had previously created a **wildcard** custom hostname, you would need to copy the values for two different validation TXT records.
