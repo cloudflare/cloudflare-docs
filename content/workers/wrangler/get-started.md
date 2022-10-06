@@ -29,7 +29,7 @@ $ cd my-project && npm start
 If you have not used Wrangler before, it will try to open your web browser to login with your Cloudflare account.
 {{<Aside type="note">}}
 
-If you have issues with this step or you do not have access to a browser interface, see the [`wrangler login`](/workers/wrangler/commands/#login) documentation for more information.
+If you have issues with this step or you do not have access to a browser interface, refer to the [`wrangler login`](/workers/wrangler/commands/#login) documentation for more information.
 {{</Aside>}}
 
 And that's it! 
