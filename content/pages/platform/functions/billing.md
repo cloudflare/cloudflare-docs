@@ -11,7 +11,7 @@ One of the key features of Pages Functions is limitless requests. In beta, Pages
 ## How it works 
 Pages Functions billing will be merged with the existing Workers billing structure for Free, Paid, and Enterprise customers. Read below to learn what this means for you as it relates to your Workers subscription plan: 
 
-{{<Aside type="note" header="Some title">}}
+{{<Aside type="note">}}
 If you had your Functions limit increased by the Pages team as part of the beta period, please note that this limit will no longer apply. Requests over 100k per day will be billed if on a paid/ENT plan or will not be served if on a free plan. 
 {{</Aside>}}
 
