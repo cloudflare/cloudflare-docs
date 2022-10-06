@@ -27,15 +27,15 @@
             "link_title": "What is Cloudflare?"
           },
           {
-            "url_path": "/fundamentals/get-started/concepts/how-cloudflare-works/",
+            "url_path": "/bad-path/2/",
             "link_title": "How does Cloudflare work?"
           },
           {
-            "url_path": "/fundamentals/get-started/concepts/cloudflare-ip-addresses/",
+            "url_path": "/no-path-here/#test-test",
             "link_title": "Cloudflare IP addresses"
           },
           {
-            "url_path": "/fundamentals/get-started/concepts/cloudflare-challenges/",
+            "url_path": "https://developers.cloudflare.com/fundamentals/get-started/concepts/cloudflare-challenges/",
             "link_title": "Cloudflare challenges"
           },
           {
