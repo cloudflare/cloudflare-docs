@@ -32,7 +32,7 @@ Conceptually, there are two ways to interact with Cloudflare’s Cache using a W
 
 ### Using Workers to purge
 
-When using single-file purge to purge assets cached by a workers fetch, be aware not to purge the end user url instead of the url that is in the fetch. For example, if you have a worker that runs on `https://example.com/hello` and this worker makes a `fetch` request to `https://notexample.com/hello`.
+When using single-file purge to purge assets cached by a Workers fetch, be aware not to purge the end user URL instead of the URL that is in the fetch. For example, if you have a Worker that runs on `https://example.com/hello` and this Worker makes a `fetch` request to `https://notexample.com/hello`.
 
 As far as cache is concerned, the asset in the fetch is the asset that is cached which is `https://notexample.com/hello`, so if you would like to purge it, you need to purge `https://notexample.com/hello`. 
 
