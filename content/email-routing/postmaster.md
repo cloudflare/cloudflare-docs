@@ -28,7 +28,7 @@ If you are a postmaster and are having trouble receiving Email Routing's emails,
 
 `2405:8100:c000::/38`
 
-_Ranges last updated: December 7, 2021_
+_Ranges last updated: October 4, 2022_
 
 ## IPv6 support
 
