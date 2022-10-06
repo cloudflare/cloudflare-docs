@@ -9,14 +9,36 @@ meta:
 # TXT domain control validation (DCV)
 
 {{<render file="../../ssl/_partials/_txt-validation-definition.md">}}
+
+## Wildcard or non-wildcard hostnames
+
+If you are not using a wildcard hostname and choose **TXT** validation, your customer only needs to add **one** token to their authoritative DNS.
+
+{{<render file="_wildcard-hostname-reqs.md">}}
 <br>
+
+## Get TXT tokens
  
-{{<render file="_ssl-for-saas-create-hostname.md">}}
-<br>
+Once you [create a new hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/issue-certificates/) and choose this validation method, your tokens will be ready after a few seconds.
+
+{{<render file="_txt-validation_preamble.md">}}
+
+{{<tabs labels="API | Dashboard">}}
+{{<tab label="api" no-code="true">}}
+
+{{<render file="_txt-validation_api.md">}}
+
+{{</tab>}}
+
+{{<tab label="dashboard" no-code="true">}}
+
+{{<render file="_txt-validation_dashboard.md">}}
+
+{{</tab>}}
+{{</tabs>}}
+
+## Steps for your customer
  
-- [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, refer to the values present in the `validation_records` array (specifically `txt_name` and `txt_value`).
-- **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the values for **Certificate validation TXT name** and **Certificate validation TXT value**.
- 
-Ask your customer to create a TXT record named the **name** and containing the **value** at their authoritative DNS provider. Once this TXT record is in place, validation and certificate issuance will automatically complete.
+{{<render file="_txt-validation_post.md">}}
  
 {{<render file="_ssl-for-saas-validate-patch.md">}}
