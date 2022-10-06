@@ -20,7 +20,7 @@ To create a token:
 
 4. Select **Use template** next to **Edit Cloudflare Workers**. All templates are prefilled with a token name and permissions. You also need to modify the account and zone resources you want assigned to the token.
 5. After editing your token, select **Continue to summary** and review the permissions before selecting create token.
-6. Create a `.env` file in your project directory and set `CLOUDFLARE_API_TOKEN` as the key and your token as the value. 
+6. Create an `.env` file in your project directory and set `CLOUDFLARE_API_TOKEN` as the key and your token as the value. 
 
 ```bash
 CLOUDFLARE_API_TOKEN=<YOUR_API_TOKEN_VALUE>
