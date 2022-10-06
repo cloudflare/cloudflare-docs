@@ -32,7 +32,9 @@ If you have not used Wrangler before, it will try to open your web browser to lo
 If you have issues with this step or you do not have access to a browser interface, see the [`wrangler login`](/workers/wrangler/commands/#login) documentation for more information.
 {{</Aside>}}
 
-And that's it! You'll now be able to go to [http://localhost:8787](http://localhost:8787) to see your Worker running. Any changes you make to your code will trigger a rebuild, and simply reloading the page will show you the up-to-date output of your Worker.
+And that's it! 
+
+You will now be able to go to [http://localhost:8787](http://localhost:8787) to see your Worker running. Any changes you make to your code will trigger a rebuild, and reloading the page will show you the up-to-date output of your Worker.
 
 When you're ready to deploy your Worker to Cloudflare's global network, run:
 
