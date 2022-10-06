@@ -35,7 +35,7 @@ If you have issues with this step or you do not have access to a browser interfa
 
 You will now be able to go to [http://localhost:8787](http://localhost:8787) to see your Worker running. Any changes you make to your code will trigger a rebuild, and reloading the page will show you the up-to-date output of your Worker.
 
-When you're ready to deploy your Worker to Cloudflare's global network, run:
+When you are ready to deploy your Worker to Cloudflare's edge network, run:
 
 ```sh
 $ npm run deploy
