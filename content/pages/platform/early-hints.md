@@ -9,9 +9,9 @@ title: Early Hints
 
 Early Hints automatically caches any [`preload`](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload) and [`preconnect`](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preconnect) type [`Link` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link) to send as Early Hints to the browser. The hints are sent to the browser before the full response is prepared, and the browser can figure out how to load the webpage faster for the end user. There are two ways to create these `Link` headers in Pages:
 
-## 1. Using a `_headers` file
+## 1. Configure your `_headers` file
 
-Custom headers can be created by using the [`_headers` file](/pages/platform/headers/). For example, if you include a particular stylesheet on your `/blog/` section of your website, you can create the following rule:
+Create custom headers using the [`_headers` file](/pages/platform/headers/). For example, if you include a particular stylesheet on your `/blog/` section of your website, you can create the following rule:
 
 ```txt
 ---
@@ -48,11 +48,11 @@ filename: /blog/index.html
 </html>
 ```
 
-### Disabling automatic `Link` header generation Automatic `Link` header
+### Disable automatic `Link` header generation Automatic `Link` header
 
 Automatic `Link` header generation should not have any negative performance impact on your website. If you find yourself needing to disable this feature, please reach let us know about your circumstance in our [Discord server](https://discord.com/invite/cloudflaredev).
 
-You can remove any automatically generated `Link` headers by adding the following to your `_headers` file:
+Remove any automatically generated `Link` headers by adding the following to your `_headers` file:
 
 ```txt
 ---
