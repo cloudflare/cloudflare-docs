@@ -26,7 +26,7 @@ To create a token:
 CLOUDFLARE_API_TOKEN=<YOUR_API_TOKEN_VALUE>
 ```
 
-You can also inline the value directly with the `wrangler publish` command, For example: `CLOUDFLARE_API_TOKEN=XXX wrangler publish`.
+You can also inline the value directly with the `wrangler publish` command. For example: `CLOUDFLARE_API_TOKEN=XXX wrangler publish`.
 
 Refer to [API Token](/api/get-started/create-token/) for more information on set up.
 
