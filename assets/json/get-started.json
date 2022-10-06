@@ -27,15 +27,15 @@
             "link_title": "What is Cloudflare?"
           },
           {
-            "url_path": "/bad-path/2/",
+            "url_path": "/fundamentals/get-started/concepts/how-cloudflare-works/",
             "link_title": "How does Cloudflare work?"
           },
           {
-            "url_path": "/no-path-here/#test-test",
+            "url_path": "/fundamentals/get-started/concepts/cloudflare-ip-addresses/",
             "link_title": "Cloudflare IP addresses"
           },
           {
-            "url_path": "https://developers.cloudflare.com/fundamentals/get-started/concepts/cloudflare-challenges/",
+            "url_path": "/fundamentals/get-started/concepts/cloudflare-challenges/",
             "link_title": "Cloudflare challenges"
           },
           {
@@ -134,7 +134,7 @@
             "value": true
           }
         ],
-        "description": "Build fast sites in record time with <a href='/bad-link-3/'>Cloudflare Pages</a>, a JAMstack platform for frontend developers to collaborate and deploy websites.",
+        "description": "Build fast sites in record time with <a href='/pages/get-started/'>Cloudflare Pages</a>, a JAMstack platform for frontend developers to collaborate and deploy websites.",
         "estimated_time": 20
       },
       {
