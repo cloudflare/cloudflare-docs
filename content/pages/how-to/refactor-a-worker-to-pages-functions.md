@@ -12,7 +12,7 @@ In this guide, you will learn how to refactor a Worker made to intake form submi
 
 {{<Aside type= "note">}}
 
-You can import your Worker to a Pages project without using Functions by creating a `_worker.js` file in the in the output directory of your Pages project. This [Advanced mode](/pages/platform/functions/#advanced-mode) requires writing your Worker with [Module syntax](/workers/learning/migrating-to-module-workers/). 
+You can import your Worker to a Pages project without using Functions by creating a `_worker.js` file in the output directory of your Pages project. This [Advanced mode](/pages/platform/functions/#advanced-mode) requires writing your Worker with [Module syntax](/workers/learning/migrating-to-module-workers/). 
 
 However, when using the `_worker.js` file in Pages, the entire `/functions` directory is ignored – including its routing and middleware characteristics.
 
