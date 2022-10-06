@@ -97,16 +97,21 @@
    });
 
    const jsonString = JSON.stringify(info)
-   const regex = new RegExp('"url_path":"(.*?)"', "g")
-
+   const urlPathRegex = new RegExp('"url_path":"(.*?)"', "g")
+   const hrefRegex = new RegExp("<a href='(.*?)'>", "g")
    const devDocsRegex = new RegExp("developers\.cloudflare\.com")
    const unanchoredRegex = new RegExp("([^#]*)")
 
-   let urlPathMatches = [...jsonString.matchAll(regex)]
-   let urls = urlPathMatches.map( match => match[1] );
+   let urlPathMatches = [...jsonString.matchAll(urlPathRegex)]
+   let pathUrls = urlPathMatches.map( match => match[1] );
+
+   let hrefMatches = [...jsonString.matchAll(hrefRegex)]
+   let hrefUrls = hrefMatches.map( match => match[1] )
+
+   let combinedUrls = pathUrls.concat(hrefUrls)
 
    let messages: Message[] = [];
-   urls.map(async item => {
+   combinedUrls.map(async item => {
 
        let exists: boolean;
        
