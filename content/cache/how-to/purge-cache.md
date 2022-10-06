@@ -13,6 +13,8 @@ Purge requests appear in Cloudflare Logs and are identified by the PURGE method 
 
 {{</Aside>}}
 
+For information on how to use single-file purge to purge assets cached by a workers fetch, please refer to [​​Using Workers to purge](/workers/learning/how-the-cache-works/#using-workers-to-purge).
+
 ## Purge by single-file (by URL)
 
 With purge by single-file, cached resources are immediately removed from the stored assets in your Content Delivery Network (CDN) across all data centers. New requests for the purged asset receive the latest version from your origin web server and add it back to your CDN cache within the specific Cloudflare data center that served the request.
