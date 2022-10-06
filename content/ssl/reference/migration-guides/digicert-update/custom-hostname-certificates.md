@@ -80,7 +80,7 @@ After your DigiCert certificate is renewed, the API will return a new certificat
 
 ### Non-wildcard custom hostnames
 
-For non-wildcard hostnames, you can use HTTP DCV to automatically perform DCV as long as the custom hostname is proxying traffic through Cloudflare. Cloudflare will complete DCV on the hostname's behalf by serving the [HTTP token](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#http-automatic).
+For non-wildcard hostnames, you can use HTTP DCV to automatically perform DCV as long as the custom hostname is proxying traffic through Cloudflare. Cloudflare will complete DCV on the hostname's behalf by serving the [HTTP token](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/).
 
 If your hostname is using another validation method, you will need to [update](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname) the `"method"` field in the SSL object to be `"http"`.
 
