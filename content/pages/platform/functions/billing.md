@@ -13,7 +13,7 @@ Pages Functions billing will be merged with the existing Workers billing structu
 
 ### Workers Paid 
 * If you currently have a Workers Paid subscription, billing will automatically occur for all Functions usage after November 15th –- no additional action required. Pages Functions will share the same pool of quotas included in the subscription (for example, requests and duration).
-* For example, you will share the included 10 million Bundled requests between Workers and Pages Functions.
+  * For example, you will share the included 10 million Bundled requests between Workers and Pages Functions.
 * The pricing will continue to be the same as stated [here](https://developers.cloudflare.com/workers/platform/pricing). 
 
 ### Free Tier
