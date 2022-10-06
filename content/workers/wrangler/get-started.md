@@ -26,7 +26,7 @@ This will create new directory (`my-project`), and setup a new Workers project w
 $ cd my-project && npm start
 ```
 
-If you've not used Wrangler before, it will try to open your web browser to login with your Cloudflare account.
+If you have not used Wrangler before, it will try to open your web browser to login with your Cloudflare account.
 {{<Aside type="note">}}
 
 If you have issues with this step or you do not have access to a browser interface, see the [`wrangler login`](/workers/wrangler/commands/#login) documentation for more information.
