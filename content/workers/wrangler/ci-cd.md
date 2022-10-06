@@ -23,7 +23,7 @@ To create a token:
 6. Create a `.env` file in your project directory and set `CLOUDFLARE_API_TOKEN` as the key and your token as the value. 
 
 ```bash
-CLOUDFLARE_API_TOKEN=XXXXXXXXXXXXXXXXXXX
+CLOUDFLARE_API_TOKEN=<YOUR_API_TOKEN_VALUE>
 ```
 
 You can also inline the value directly with the `wrangler publish` command, For example: `CLOUDFLARE_API_TOKEN=XXX wrangler publish`.
