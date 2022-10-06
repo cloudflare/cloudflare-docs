@@ -8,6 +8,19 @@ meta:
  
 # Renew certificates
 
-If you are using a proxied hostname, new certificates are automatically validated [via HTTP](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/).
+The exact method for certificate renewal depends on whether that hostname is proxying traffic through Cloudflare and whether it is a wildcard certificate.
+
+## Non-wildcard hostnames
+
+If you are using a non-wildcard hostname and proxying traffic through Cloudflare, Cloudflare will try to perform DCV automatically on the hostname’s behalf by serving the [HTTP token](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/).
+
+If the custom hostname is not proxying traffic through Cloudflare, then the custom hostname domain owner will need to add the TXT or HTTP DCV token for the new certificate to validate and issue. As the SaaS provider, you will be responsible for sharing this token with the custom hostname domain owner.
+
+## Wildcard hostnames
  
-If you need to use another validation method — for example, if you are using wildcard certificates or certificates with multiple SANs — you need to repeat the DCV process with your chosen method and share the tokens with your customer.
+{{<render file="_txt-validation_preamble.md">}}
+<br>
+
+{{<render file="_update-dcv-method.md">}}
+
+After this step, follow the normal steps for [TXT validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
