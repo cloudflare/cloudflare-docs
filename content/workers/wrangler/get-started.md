@@ -20,7 +20,7 @@ To get started with Wrangler run:
 $ npx wrangler init my-project
 ```
 
-This will create new directory (`my-project`), and setup a new Wrangler project within it. To start developing your worker, just run:
+This will create new directory (`my-project`), and setup a new Workers project within it. To start developing your worker, run:
 
 ```sh
 $ cd my-project && npm start
