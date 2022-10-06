@@ -52,7 +52,53 @@ The Web Crypto API differs significantly from Node’s Crypto API. If you want t
 
   - Generates a new random (version 4) UUID as defined in [RFC 4122](https://www.rfc-editor.org/rfc/rfc4122.txt).
 
+- {{<code>}}new crypto.DigestStream(algorithm){{</code>}} {{<type>}}DigestStream{{</type>}}
+
+  - A non-standard extension to the `crypto` API that supports generating a hash digest from streaming data. The `DigestStream` itself is a [`WritableStream`](/workers/runtime-apis/streams/writablestream/) that does not retain the data written into it; instead, it generates a digest hash automatically when the flow of data has ended.
+
+    **Parameters:**
+
+    - {{<code>}}algorithm{{<param-type>}}string | object{{</param-type>}}{{</code>}}
+
+      - Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#Syntax).
+
+    **Usage:**
 {{</definitions>}}
+{{<tabs labels="js/esm | ts/esm">}}
+{{<tab label="js/esm" default="true">}}
+```js
+export default {
+  async fetch(req) {
+    const res = await fetch(req);
+    const digestStream = new crypto.DigestStream("SHA-256");
+    res.clone().body.pipeTo(digestStream);
+    const digest = await digestStream.digest;
+    res.headers.set("x-content-digest", `SHA-256=${digest}`);
+    return res;
+  }
+}
+```
+{{</tab>}}
+{{<tab label="ts/esm">}}
+```ts
+const handler: ExportedHandler = {
+  async fetch(req) {
+    const res = await fetch(req);
+    if(req.body) {
+      const digestStream = new crypto.DigestStream("SHA-256");
+      res.clone().body?.pipeTo(digestStream);
+      const digest = await digestStream.digest;
+      res.headers.set("x-content-digest", `SHA-256=${digest}`);
+    } else {
+      res.headers.set("x-content-digest", "SHA-256=empty");
+    }
+    return res;
+  }
+}
+export default handler;
+```
+{{</tab>}}
+{{</tabs>}}
 
 ### SubtleCrypto Methods
 
