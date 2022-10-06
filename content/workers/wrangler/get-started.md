@@ -41,4 +41,4 @@ When you are ready to deploy your Worker to Cloudflare's edge network, run:
 $ npm run deploy
 ```
 
-For a detailed list of the commands that Wrangler supports, see the [commands documentation](/workers/wrangler/commands/). To learn more about Wrangler's configuration file, see the [configuration documentation](/workers/wrangler/configuration/)
+For a detailed list of the commands that Wrangler supports, refer to [Commands](/workers/wrangler/commands/). To learn more about Wrangler's configuration file, refer to [Configuration](/workers/wrangler/configuration/).
