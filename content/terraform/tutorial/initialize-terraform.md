@@ -34,7 +34,7 @@ provider "cloudflare" {
 }
 
 variable "zone_id" {
-  default = "<your-zone-ID>"
+  default = "<YOUR_ZONE_ID>"
 }
 
 variable "domain" {
