@@ -29,9 +29,6 @@ If you had your Functions limit increased by the Pages team as part of the beta 
 * If you currently have a Workers contract and need to make an addition to your contract, you can reach out to your Customer Service Manager (CSM) to make this change. 
 * If you do not have a Workers contract, you can reach out to your Customer Service Manager (CSM) to make this change. 
 
-{{<Aside type="note" header="Some title">}}
-If you had your Functions limit increased by the Pages team as part of the beta period, please note that this limit will no longer apply. Requests over 100k per day will be billed if on a paid tier or will not be served if on a free tier
-{{</Aside>}}
 
 ## Have questions? 
 Let us know! For any questions unanswered on this page, reach out to us on [Discord](https://discord.com/invite/cloudflaredev) in the [#functions channel](https://discord.com/channels/595317990191398933/910978223968518144) in the Pages section or contact your Customer Success Manager if applicable. 
