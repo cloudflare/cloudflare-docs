@@ -35,7 +35,7 @@
    );
  }
  
- async function walk_learning_path(dir: string) {
+ async function walkLearningPath(dir: string) {
    let files = await fs.readdir(dir);
    await Promise.all(
      files.map(async name => {
@@ -279,7 +279,7 @@
  }
  
  try {
-   await walk_learning_path(LEARNINGPATHDIR);
+   await walkLearningPath(LEARNINGPATHDIR);
    if (!JSON_ERRORS && !JSON_WARNS) {
     console.log('\n~> JSON files DONE~!\n\n');
   } else {
