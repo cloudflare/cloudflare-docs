@@ -12,7 +12,7 @@ Wrangler has launched a new version. If you previously had Wrangler 1 installed 
 
 {{</Aside>}}
 
-Wrangler is a command-line tool for building [Cloudflare Workers](https://workers.cloudflare.com/). To use it, you'll need to have [`npm`](https://www.npmjs.com/get-npm) and [`Node.js`](https://nodejs.org/en/) installed. Wrangler requires a Node version of `16.13.0` or later.
+Wrangler is a command-line tool for building [Cloudflare Workers](https://workers.cloudflare.com/). To use it, you will need to have [`npm`](https://www.npmjs.com/get-npm) and [`Node.js`](https://nodejs.org/en/) installed. Wrangler requires a Node version of `16.13.0` or later.
 
 To get started with Wrangler run:
 
