@@ -135,8 +135,8 @@ None of the options for this command are required. Many of these options can be 
   - Protocol to forward requests to host on.
 - `--var` {{<type>}}key:value[]{{</type>}}
   - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
-  - For example `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
-  - This flag is an alternative to defining [vars](/workers/wrangler/configuration/#non-inheritable-keys) in your wrangler.toml. If defined in both places, this flag's values will be used.
+  - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
+  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--tsconfig` {{<type>}}string{{</type>}}
   - Path to a custom `tsconfig.json` file.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
@@ -210,8 +210,8 @@ None of the options for this command are required. Also, many can be set in your
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
 - `--var` {{<type>}}key:value[]{{</type>}}
   - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
-  - For example `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
-  - This flag is an alternative to defining [vars](/workers/wrangler/configuration/#non-inheritable-keys) in your wrangler.toml. If defined in both places, this flag's values will be used.
+  - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
+  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--triggers`, `--schedule`, `--schedules` {{<type>}}string[]{{</type>}}
   - Cron schedules to attach to the published Worker.
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
