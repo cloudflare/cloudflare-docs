@@ -38,7 +38,7 @@ variable "zone_id" {
 }
 
 variable "domain" {
-  default = "<your-domain>"
+  default = "<YOUR_DOMAIN>"
 }
 
 resource "cloudflare_record" "www" {
