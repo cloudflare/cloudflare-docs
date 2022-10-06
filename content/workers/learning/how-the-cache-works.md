@@ -36,7 +36,7 @@ When using single-file purge to purge assets cached by a Workers fetch, be aware
 
 As far as cache is concerned, the asset in the fetch is the asset that is cached which is `https://notexample.com/hello`, so if you would like to purge it, you need to purge `https://notexample.com/hello`. 
 
-Purging the end user url, `https://example.com/hello`, will not work since that is not the url that cache sees. You need to confirm in your worker, which url you are actually fetching, so you can purge the correct asset.
+Purging the end user URL, `https://example.com/hello`, will not work since that is not the URL that cache sees. You need to confirm in your worker which URL you are actually fetching, so you can purge the correct asset.
 
 ### Purging assets stored with the Cache API
 
