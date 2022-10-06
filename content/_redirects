@@ -614,6 +614,9 @@
 /time-services/nts/usage/ /time-services/nts/ 301
 /time-services/roughtime/about/ /time-services/roughtime/ 301
 
+# turnstile
+/turnstile/get-started/domain-management/ /turnstile/reference/domain-management/ 301
+
 # waf
 /waf/ddos-l34-mitigation/ /ddos-protection/managed-rulesets/network/ 301
 /waf/ddos-l34-mitigation/configure-api/ /ddos-protection/managed-rulesets/network/configure-api/ 301

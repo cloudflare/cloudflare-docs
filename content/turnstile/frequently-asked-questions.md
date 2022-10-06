@@ -77,7 +77,7 @@ Turnstile is hosted under `challenges.cloudflare.com`.
 
 We currently do not offer an easy and official way to embed Turnstile in a React Native application. 
 
-An HTML page rendered in a [WebView](https://github.com/react-native-webview/react-native-webview) can use Turnstile. The page must be loaded from a domain allowed to use the [sitekey](/turnstile/get-started/domain-management/), either using `uri` or by specifying the `html` and `baseUrl` options.
+An HTML page rendered in a [WebView](https://github.com/react-native-webview/react-native-webview) can use Turnstile. The page must be loaded from a domain allowed to use the [sitekey](/turnstile/reference/domain-management/), either using `uri` or by specifying the `html` and `baseUrl` options.
 
 ## Are there sitekeys and secret keys that can be used for testing?
 

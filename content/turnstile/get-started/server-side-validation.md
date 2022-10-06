@@ -26,9 +26,13 @@ Example using cURL:
 <div>
 
 ```sh
-
-$ curl -L -X POST 'https://challenges.cloudflare.com/turnstile/v0/siteverify' --data 'secret=verysecret&response=<RESPONSE>'
-
+$ curl 'https://challenges.cloudflare.com/turnstile/v0/siteverify' --data 'secret=verysecret&response=<RESPONSE>'
+{
+  "success": true,
+  "error-codes": [],
+  "challenge_ts": "2022-10-06T00:07:23.274Z",
+  "hostname": "example.com"
+}
 ```
 </div>
 
@@ -37,7 +41,6 @@ Example using `fetch` from Cloudflare Workers:
 <div>
 
 ```javascript
-
 // This is the demo secret key. In production, we recommend
 // you store your secret key(s) safely.
 const SECRET_KEY = '1x0000000000000000000000000000000AA';
@@ -66,7 +69,6 @@ async function handlePost(request) {
 		// ...
 	}
 }
-
 ```
 </div>
 
@@ -89,6 +91,10 @@ In case of a successful validation, the response should be similar to the follow
 <div>
 
 ```json
+---
+highlight: [2]
+---
+
 {
   "success": true,
   "challenge_ts": "2022-02-28T15:14:30.096Z",
@@ -111,13 +117,16 @@ In case of a validation failure, the response should be similar to the following
 <div>
 
 ```json
+---
+highlight: [2]
+---
+
 {
   "success": false,
   "error-codes": [
     "invalid-input-response"
   ]
 }
-
 ```
 </div>
 

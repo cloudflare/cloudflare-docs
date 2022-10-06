@@ -1,7 +1,7 @@
 ---
 title: Analytics
 pcx_content_type: how-to
-weight: 9
+weight: 8
 layout: single
 ---
 
