@@ -10,6 +10,12 @@ meta:
 
 {{<render file="../../ssl/_partials/_email-validation-definition.md">}}
 <br>
+
+{{<Aside type="note">}}
+
+With the [upcoming change](/ssl/ssl-tls/migration-guides/digicert-update/custom-hostname-certificates/) to certificates issued by DigiCert, email DCV will soon be unsupported.
+
+{{</Aside>}}
  
 {{<render file="_ssl-for-saas-create-hostname.md">}}
 <br>
