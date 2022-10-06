@@ -10,6 +10,12 @@ meta:
 
 {{<render file="../../ssl/_partials/_dcv-cname-definition.md">}}
 <br>
+
+{{<Aside type="note">}}
+
+With the [upcoming change](/ssl/ssl-tls/migration-guides/digicert-update/custom-hostname-certificates/) to certificates issued by DigiCert, CNAME DCV will soon be unsupported.
+
+{{</Aside>}}
  
 Since this method is only available using the API, you need to make a [POST request](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) and set a `"method":"cname"` parameter.
  
