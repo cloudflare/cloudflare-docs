@@ -77,7 +77,7 @@ The following changes were made in the new routes:
 ## Zone Analytics API
 **End of life date: March 1, 2021**
 
-This API is deprecated in favor of the (GraphQL Analytics API([https://developers.cloudflare.com/analytics/graphql-api/]), which provides equivalent data and more features, including the ability to select only the metrics that you need. For more information, refer to the (Zone analytics to GraphQL analytics migration guide)[https://developers.cloudflare.com/analytics/graphql-api/migration-guides/zone-analytics/].
+This API is deprecated in favor of the [GraphQL Analytics AP](https://developers.cloudflare.com/analytics/graphql-api/), which provides equivalent data and more features, including the ability to select only the metrics that you need. For more information, refer to the [Zone analytics to GraphQL analytics migration guide](https://developers.cloudflare.com/analytics/graphql-api/migration-guides/zone-analytics/).
 
 Deprecated API:
 - GET zones/:zone_identifier/analytics/dashboard
