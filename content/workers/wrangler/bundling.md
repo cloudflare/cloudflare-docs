@@ -7,7 +7,7 @@ weight: 5
 # Wrangler's bundling
 
 {{<Aside type="note">}}
-We recommend using Wrangler's inbuilt bundling, but we understand there are cases where you'll need a bit more flexibility. We've built an escape hatch in the form of [Custom Builds](/workers/wrangler/custom-builds.md), which let you replace Wrangler's built-in build step with your own.
+We recommend using Wrangler's inbuilt bundling, but we understand there are cases where you'll need a bit more flexibility. We've built an escape hatch in the form of [Custom Builds](/workers/wrangler/custom-builds/), which let you replace Wrangler's built-in build step with your own.
 {{</Aside>}}
 
 By default, Wrangler bundles your Worker code using [`esbuild`](https://esbuild.github.io/). This means that Wrangler has built in support for importing modules from [npm](https://www.npmjs.com/) defined in your `package.json`. If you'd like to see the exact code that Wrangler will upload to Cloudflare, you can run `wrangler publish --dry-run --outdir dist`, which will show your Worker code post Wrangler's bundling.
