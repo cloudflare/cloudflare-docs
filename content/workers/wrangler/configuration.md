@@ -220,7 +220,7 @@ This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/
 
 - `pattern` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The pattern that your Worker should be run on, for example, `"example.com/*"`.
+  - The pattern that your Worker should be run on, for example, `"example.com"`.
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -234,7 +234,7 @@ Example:
 ---
 header: wrangler.toml
 ---
-route = { pattern = "example.com/*", custom_domain: true }
+route = { pattern = "example.com", custom_domain: true }
 ```
 
 ## Triggers
