@@ -110,7 +110,7 @@ None of the options for this command are required. Many of these options can be 
 - `--env` {{<type>}}string{{</type>}}
   - Perform on a specific environment.
 - `--compatibility-date` {{<type>}}string{{</type>}}
-  - Date to use for compatibility checks.
+  - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
 - `--compatibility-flags`, `--compatibility-flag` {{<type>}}boolean[]{{</type>}}
   - Flags to use for compatibility checks.
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
@@ -122,7 +122,8 @@ None of the options for this command are required. Many of these options can be 
 - `--inspector-port` {{<type>}}number{{</type>}}
   - Port for devtools to connect to.
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
-  - Routes to upload.
+  - Routes to upload. 
+  - For example: `--route example.com/*`.
 - `--host` {{<type>}}string{{</type>}}
   - Host to forward requests to, defaults to the zone of project.
 - `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}}
@@ -219,7 +220,7 @@ None of the options for this command are required. Also, many can be set in your
 - `--outdir` {{<type>}}string{{</type>}}
   - Path to directory where Wrangler will write the bundled Worker files.
 - `--compatibility-date` {{<type>}}string{{</type>}}
-  - Date to use for compatibility checks.
+  - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
 - `--compatibility-flags`, `--compatibility-flag` {{<type>}}boolean[]{{</type>}}
   - Flags to use for compatibility checks.
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
@@ -242,9 +243,10 @@ None of the options for this command are required. Also, many can be set in your
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
   - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--triggers`, `--schedule`, `--schedules` {{<type>}}string[]{{</type>}}
-  - Cron schedules to attach to the published Worker.
+  - Cron schedules to attach to the published Worker. Refer to [Cron Trigger Examples](/workers/platform/cron-triggers/#examples).
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
-  - Routes where this Worker will be published.
+  - Routes where this Worker will be published. 
+  - For example: `--route example.com/*`.
 - `--tsconfig` {{<type>}}string{{</type>}}
   - Path to a custom `tsconfig.json` file.
 - `--minify` {{<type>}}boolean{{</type>}}
@@ -1008,7 +1010,7 @@ $ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND..>]
 - `COMMAND..` {{<type>}}string{{</type>}}
   - The proxy command(s) to run.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
-  - Run on my machine.
+  - Run on your local machine.
 - `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}(default: 8788){{</prop-meta>}}
   - The port to listen on (serve from).
 - `--proxy` {{<type>}}number{{</type>}}
