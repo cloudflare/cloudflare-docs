@@ -48,7 +48,10 @@ If Cloudflare is unable to detect a portion of automated traffic on your site, s
 5. Select **Submit**. 
 
 ### Recommendations when submitting a report
-Desc desc desc
+
+When you submit a report, use the filters available in the Bot Analytics dashboard to ensure that your report includes only the traffic that received an incorrect score. In addition to filtering by a score (required), you may want to filter by user-agent, IP, ASN or JA3 to more precisely highlight the section of traffic that was scored incorrectly. 
+
+If you are not certain if some traffic received an incorrect score, keep this traffic in the report. 
 
 ### Recommendations after submitting a false positive
 
