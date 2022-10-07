@@ -34,25 +34,11 @@ Some common uses include:
 The Web Crypto API differs significantly from Node’s Crypto API. If you want to port JavaScript code that relies on Node’s Crypto API, you will need to adapt it to use Web Crypto primitives.
 {{</Aside>}}
 
-## Methods
+## Constructors
 
 {{<definitions>}}
 
-- {{<code>}}crypto.getRandomValues(buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} {{<type>}}ArrayBufferView{{</type>}}
-
-  - Fills the passed {{<code>}}ArrayBufferView{{</code>}} with cryptographically sound random values and returns the {{<code>}}buffer{{</code>}}.
-
-    **Parameters:**
-
-    - {{<code>}}buffer{{<param-type>}}ArrayBufferView{{</param-type>}}{{</code>}}
-
-      - Must be an {{<code>}}{{<type>}}Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array | BigInt64Array | BigUint64Array{{</type>}}{{</code>}}.
-
-- {{<code>}}crypto.randomUUID(){{</code>}} {{<type>}}string{{</type>}}
-
-  - Generates a new random (version 4) UUID as defined in [RFC 4122](https://www.rfc-editor.org/rfc/rfc4122.txt).
-
-- {{<code>}}new crypto.DigestStream(algorithm){{</code>}} {{<type>}}DigestStream{{</type>}}
+- {{<code>}}crypto.DigestStream(algorithm){{</code>}} {{<type>}}DigestStream{{</type>}}
 
   - A non-standard extension to the `crypto` API that supports generating a hash digest from streaming data. The `DigestStream` itself is a [`WritableStream`](/workers/runtime-apis/streams/writablestream/) that does not retain the data written into it. Instead, it generates a hash digest automatically when the flow of data has ended.
 
@@ -121,6 +107,26 @@ export default handler;
 ```
 {{</tab>}}
 {{</tabs>}}
+
+## Methods
+
+{{<definitions>}}
+
+- {{<code>}}crypto.getRandomValues(buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} {{<type>}}ArrayBufferView{{</type>}}
+
+  - Fills the passed {{<code>}}ArrayBufferView{{</code>}} with cryptographically sound random values and returns the {{<code>}}buffer{{</code>}}.
+
+    **Parameters:**
+
+    - {{<code>}}buffer{{<param-type>}}ArrayBufferView{{</param-type>}}{{</code>}}
+
+      - Must be an {{<code>}}{{<type>}}Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array | BigInt64Array | BigUint64Array{{</type>}}{{</code>}}.
+
+- {{<code>}}crypto.randomUUID(){{</code>}} {{<type>}}string{{</type>}}
+
+  - Generates a new random (version 4) UUID as defined in [RFC 4122](https://www.rfc-editor.org/rfc/rfc4122.txt).
+
+{{</definitions>}}
 
 ### SubtleCrypto Methods
 
