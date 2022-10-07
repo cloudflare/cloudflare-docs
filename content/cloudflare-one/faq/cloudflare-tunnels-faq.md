@@ -129,7 +129,3 @@ Before contacting the Cloudflare support team:
 - Make sure that the `cloudflared daemon` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
 
 - Gather any relevant error/access logs from your server.
-
-### End users are having issues connecting to private networks through the WARP client.
-
-If your end users are experiencing issues while accessing resources on private networks [exposed via Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/private-net/), ensure you include [WARP Client logs](/cloudflare-one/faq/teams-devices-faq/#how-do-i-retrieve-warp-client-logs) when contacting Cloudflare support. These logs will help Cloudflare support understand the overall architecture of your machine and networks.
