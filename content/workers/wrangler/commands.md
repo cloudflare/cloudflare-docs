@@ -128,9 +128,9 @@ None of the options for this command are required. Many of these options can be 
 - `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}}
   - Protocol to listen to requests on.
 - `--local-upstream` {{<type>}}string{{</type>}}
-  - Host to act as origin in local mode, defaults to dev.host or route.
+  - Host to act as origin in local mode, defaults to `dev.host` or route.
 - `--assets` {{<type>}}string{{</type>}}
-  - Root folder of static assets to be served. Unlike `--site`, `--assets` doesn't require a Worker script to serve your assets.
+  - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
   - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --assets dist/ --latest`.
 - `--site` {{<type>}}string{{</type>}}
   - Root folder of static assets for Workers Sites.
@@ -225,7 +225,7 @@ None of the options for this command are required. Also, many can be set in your
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
   - Use the latest version of the Workers runtime.
 - `--assets` {{<type>}}string{{</type>}}
-  - Root folder of static assets to be served. Unlike `--site`, `--assets` doesn't require a Worker script to serve your assets.
+  - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
   - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler publish --name personal_blog --assets dist/ --latest`.
 - `--site` {{<type>}}string{{</type>}}
   - Root folder of static assets for Workers Sites.
