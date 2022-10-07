@@ -46,7 +46,7 @@ System Environment Variables are local environment variables that can change Wra
 
 {{</definitions>}}
 
-### Example `.env` file:
+### Example `.env` file
 
 ```bash
 CLOUDFLARE_ACCOUNT_ID=<YOUR_ACCOUNT_ID_VALUE>
