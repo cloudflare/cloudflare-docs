@@ -7,7 +7,7 @@ title: Bots Feedback Loop
 
 The Bots Feedback Loop is an easy way for customers to send Cloudflare direct feedback in the case of Bot Management potentially scoring a request incorrectly. Before, customers could only report issues with bot scores via a support ticket or directly to their account team. 
 
-Now, the Bots Feedback Loop allows users to submit feedback via the API. When a customer submits a False Negative or a False Positive report, Cloudflare manually analyzes this data and use it as a training dataset for our next Machine Learning model.
+Now, the Bots Feedback Loop allows customer to submit feedback via the API. When a customer submits a False Negative or a False Positive report, Cloudflare manually analyzes this data and uses it as a training dataset for our next Machine Learning model.
 
 ## Availability
 
