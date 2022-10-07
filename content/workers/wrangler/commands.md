@@ -105,6 +105,8 @@ None of the options for this command are required. Many of these options can be 
   - The path to an entry point for your Worker.
 - `--name` {{<type>}}string{{</type>}}
   - Name of the Worker.
+- `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Skip Wrangler's build steps and show a preview of the script without modification. Particularly useful when using custom builds.
 - `--env` {{<type>}}string{{</type>}}
   - Perform on a specific environment.
 - `--compatibility-date` {{<type>}}string{{</type>}}
@@ -125,6 +127,11 @@ None of the options for this command are required. Many of these options can be 
   - Host to forward requests to, defaults to the zone of project.
 - `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}}
   - Protocol to listen to requests on.
+- `--local-upstream` {{<type>}}string{{</type>}}
+  - Host to act as origin in local mode, defaults to `dev.host` or route.
+- `--assets` {{<type>}}string{{</type>}}
+  - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --assets dist/ --latest`.
 - `--site` {{<type>}}string{{</type>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}}
@@ -153,11 +160,20 @@ This runs an ephemeral local version of your Worker, and will not be able to acc
 
 {{</Aside>}}
 
+- `--experimental-local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Run the preview of the Worker directly on your local machine using the [open source Cloudflare Workers runtime](https://github.com/cloudflare/workerd).
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the script.
+- `--node-compat` {{<type>}}boolean{{</type>}}
+  - Enable node.js compatibility.
+- `--persist` {{<type>}}boolean{{</type>}}
+  - Enable persistence for local mode, using default path: `.wrangler/state`.
+- `--persist-to` {{<type>}}string{{</type>}}
+  - Specify directory to use for local persistence. Setting this flag implicitly enables `--persist`.
 - `--test-scheduled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-
   - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (cron trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
+- `--log-level` {{<type>}}"debug"|"info"|"log"|"warn"|"error"|"none"{{</type>}} {{<prop-meta>}}(default: log){{</prop-meta>}}
+  - Specify Wrangler's logging level.
 
 {{</definitions>}}
 
@@ -196,6 +212,8 @@ None of the options for this command are required. Also, many can be set in your
   - The path to an entry point for your Worker.
 - `--name` {{<type>}}string{{</type>}}
   - Name of the Worker.
+- `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Skip Wrangler's build steps and directly publish script without modification. Particularly useful when using custom builds.
 - `--env` {{<type>}}string{{</type>}}
   - Perform on a specific environment.
 - `--outdir` {{<type>}}string{{</type>}}
@@ -206,6 +224,9 @@ None of the options for this command are required. Also, many can be set in your
   - Flags to use for compatibility checks.
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
   - Use the latest version of the Workers runtime.
+- `--assets` {{<type>}}string{{</type>}}
+  - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler publish --name personal_blog --assets dist/ --latest`.
 - `--site` {{<type>}}string{{</type>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}}
@@ -228,6 +249,8 @@ None of the options for this command are required. Also, many can be set in your
   - Path to a custom `tsconfig.json` file.
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the bundled script before publishing.
+- `--node-compat` {{<type>}}boolean{{</type>}}
+  - Enable node.js compatibility.
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Compile a project without actually publishing to live servers. Combined with `--outdir`, this is also useful for testing the output of `wrangler publish`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
 - `--keep-vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
