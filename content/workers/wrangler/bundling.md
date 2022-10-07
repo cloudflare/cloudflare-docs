@@ -26,10 +26,10 @@ See the [rules configuration](/workers/wrangler/configuration/#bundling) to cust
 This means that for an import like the following:
 
 ```js
-import data from "example.html"; // Where `example.html` is a file in your local directory
+import data from "./example.html"; // Where `example.html` is a file in your local directory
 ```
 
-the variable `data` will be a string containing the contents of `test.html`.
+the variable `data` will be a string containing the contents of `example.html`.
 
 This is also the basis of Wasm support with Wrangler. To use a Wasm module in a Worker developed with Wrangler, add the following to your Worker:
 
