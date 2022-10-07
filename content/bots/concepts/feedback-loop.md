@@ -5,9 +5,7 @@ title: Bots Feedback Loop
 
 # Bots Feedback Loop
 
-The Bots Feedback Loop is a way for customers to send Cloudflare direct feedback in the case of Bot Management potentially scoring a request incorrectly. Before, customers could only report issues with bot scores via a support ticket or directly to their account team. 
-
-Now, the Bots Feedback Loop allows customer to submit feedback via the API. When a customer submits a False Negative or a False Positive report, Cloudflare manually analyzes this data and uses it as a training dataset for our next Machine Learning model.
+The Bots Feedback Loop is a way for customers to send Cloudflare direct feedback in the case of Bot Management potentially scoring a request incorrectly. When a customer submits a False Negative or a False Positive report, Cloudflare manually analyzes this data and uses it as a training dataset for our next Machine Learning model.
 
 ## Availability
 
@@ -39,14 +37,6 @@ If Cloudflare is unable to detect a portion of automated traffic on your site, s
 | Token Cracking | Identification of valid token codes providing some form of user benefit within the application. | 
 | Vulnerability Scanning | Systematic enumeration and examination of identifiable, guessable and unknown content locations, paths, file names, parameters, in order to find weaknesses and points where a security vulnerability might exist. |
 
-## Submit a Report
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Security** > **Bots**.
-3. Apply **Bot score filter(s)**.
-4. Select **Report incorrect data** and fill out the form.
-5. Select **Submit**. 
-
 ### Recommendations when submitting a report
 
 When you submit a report, use the filters available in the Bot Analytics dashboard to ensure that your report includes only the traffic that received an incorrect score. In addition to filtering by a score (required), you may want to filter by user-agent, IP, ASN or JA3 to more precisely highlight the section of traffic that was scored incorrectly. 
@@ -67,9 +57,9 @@ After submitting a false positive, you can explicitly allow the traffic if you a
 
 After submitting a false negative report, you can explicitly block or rate-limit the incorrectly scored traffic using a combination of characteristics such as IP address, JA3 fingerprint, ASN, and user-agent. Before blocking or rate-limiting based on JA3 fingerprint, please use Bot Analytics to confirm that fingerprint is not being used by legitimate traffic sources. 
 
+## Using the API
 
-
-## Create a feedback report
+### Create a feedback report
 
 ```json
 curl -X POST 'https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/bot_management/feedback' \
@@ -113,7 +103,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8
 Null 
 ```
 
-## List feedback reports
+### List feedback reports
 
  ```json
  # Command
