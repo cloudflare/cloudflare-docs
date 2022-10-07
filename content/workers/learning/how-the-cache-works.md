@@ -38,6 +38,11 @@ As far as cache is concerned, the asset in the `fetch` request (`https://notexam
 
 Purging the end user URL, `https://example.com/hello`, will not work because that is not the URL that cache sees. You need to confirm in your Worker which URL you are actually fetching, so you can purge the correct asset.
 
+In the previously explained example, `https://notexample.com/hello` is not proxied through Cloudflare. If `https://notexample.com/hello` was proxied through Cloudflare (also known as orange clouded), there would be two caveats:
+ 
+- If `notexample.com/hello` is not owned by the account, then you cannot purge the asset.
+- If `notexample.com/hello` is not a cacheable asset for `notexample.com`, then you cannot purge the asset.
+
 ### Purging assets stored with the Cache API
 
 Assets stored in the cache through [Cache API](/workers/runtime-apis/cache/) operations can be purged in a couple of ways:
