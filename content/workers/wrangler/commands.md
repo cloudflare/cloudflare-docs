@@ -122,7 +122,8 @@ None of the options for this command are required. Many of these options can be 
 - `--inspector-port` {{<type>}}number{{</type>}}
   - Port for devtools to connect to.
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
-  - Routes to upload. Refer to [types of routes](/workers/wrangler/configuration/#types-of-routes).
+  - Routes to upload. 
+  - For example: `--route example.com/*`
 - `--host` {{<type>}}string{{</type>}}
   - Host to forward requests to, defaults to the zone of project.
 - `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}}
@@ -244,7 +245,8 @@ None of the options for this command are required. Also, many can be set in your
 - `--triggers`, `--schedule`, `--schedules` {{<type>}}string[]{{</type>}}
   - Cron schedules to attach to the published Worker. Refer to [cron trigger examples](/workers/platform/cron-triggers/#examples).
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
-  - Routes where this Worker will be published. Refer to [types of routes](/workers/wrangler/configuration/#types-of-routes).
+  - Routes where this Worker will be published. 
+  - For example: `--route example.com/*`
 - `--tsconfig` {{<type>}}string{{</type>}}
   - Path to a custom `tsconfig.json` file.
 - `--minify` {{<type>}}boolean{{</type>}}
