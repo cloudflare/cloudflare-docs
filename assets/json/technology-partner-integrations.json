@@ -1,0 +1,275 @@
+{
+  "path": "/learning-paths/technology-partner-integrations/",
+  "title": "Technology Partner integrations",
+  "description": "[Cloudflare Technology Partners](https://www.cloudflare.com/partners/technology-partners/) offer purpose-built integrations with our products, providing expanded functionality for our users. Learn how to configure these integrations with our tutorials and how-to guides.",
+  "products": [
+    "Cloudflare Essentials",
+    "SSL/TLS",
+    "Firewall",
+    "DDoS protection",
+    "Bots"
+  ],
+  "category": ["Analtyics Integrations"],
+  "elements": [
+    {
+      "type": "module",
+      "title": "Analytics integrations",
+      "description": "Learn how to configure a variety of products with Cloudflare Analytics, including Google Cloud, Splunk and New Relic.",
+      "estimated_time": "~????? mins",
+      "pages": [
+        {
+          "external_link": true,
+          "url_path": "https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/elastic/",
+          "link_title": "Elastic"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/datadog/",
+          "link_title": "Datadog"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/google-cloud/",
+          "link_title": "Google Cloud"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/graylog/",
+          "link_title": "Graylog"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/looker/",
+          "link_title": "Looker"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/new-relic/",
+          "link_title": "New Relic"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/splunk/",
+          "link_title": "Splunk"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/sumo-logic/",
+          "link_title": "Sumo Logic"
+        }
+      ]
+    },
+    {
+      "type": "module",
+      "title": "Before you begin",
+      "description": "Before you can secure your site, make sure you have already added that site to Cloudflare.",
+      "estimated_time": "~30 mins",
+      "pages": [
+        {
+          "url_path": "/learning-paths/get-started/",
+          "title": "Get started with Cloudflare (learning path)"
+        }
+      ]
+    },
+    {
+      "type": "module",
+      "title": "Account security",
+      "description": "Make sure your Cloudflare account is protected from takeover or compromise",
+      "estimated_time": "~15 mins",
+      "pages": [
+        {
+          "url_path": "/fundamentals/account-and-billing/account-setup/verify-email-address/"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/200167906",
+          "link_title": "Set up two-factor authentication (2FA)"
+        },
+        {
+          "url_path": "/fundamentals/account-and-billing/account-setup/manage-account-members/"
+        },
+        {
+          "url_path": "/fundamentals/account-and-billing/account-security/manage-active-sessions/"
+        },
+        {
+          "url_path": "/fundamentals/account-and-billing/account-security/review-audit-logs/"
+        },
+        {
+          "url_path": "/fundamentals/account-and-billing/account-security/securing-a-compromised-account/",
+          "link_title": "Secure a compromised account (if needed)"
+        }
+      ]
+    },
+    {
+      "type": "module",
+      "title": "General security — Minimal setup",
+      "description": "Take a few simple steps to make sure your application is protected from a broad array of threats.",
+      "estimated_time": "~1 hour",
+      "pages": [
+        {
+          "url_path": "/ssl/get-started/",
+          "link_title": "Customize SSL/TLS protection"
+        },
+        {
+          "url_path": "/waf/",
+          "link_title": "Set up your Web Application Firewall (WAF)",
+          "additional_description": "For customers on a **Pro** plan or above, Cloudflare offers several [Managed Rulesets](/waf/managed-rulesets/) as part of the Web Application Firewall (WAF)."
+        },
+        {
+          "url_path": "/dns/manage-dns-records/reference/proxied-dns-records/",
+          "link_title": "Proxy your DNS records",
+          "additional_description": "As long as your traffic is [proxied by Cloudflare](/fundamentals/get-started/concepts/how-cloudflare-works/), Cloudflare automatically protects your application from [DDoS attacks](/ddos-protection/)."
+        },
+        {
+          "url_path": "/dns/additional-options/dnssec/"
+        },
+        {
+          "url_path": "/security-center/",
+          "link_title": "Enable the Cloudflare Security Center",
+          "additional_description": "Our Security Center scans your application to identify potential security risks and provide recommended next steps."
+        }
+      ]
+    },
+    {
+      "type": "module",
+      "title": "Customize Web Application Firewall (WAF)",
+      "description": "Use a variety of rules to customize the behavior of your application's firewall. This step may require [detailed analysis](/waf/analytics/) of your application traffic.",
+      "estimated_time": "~2 hours",
+      "pages": [
+        {
+          "url_path": "/waf/managed-rulesets/waf-exceptions/",
+          "link_title": "WAF Exceptions",
+          "additional_description": "Skip the execution of WAF Managed Rulesets or some of their rules."
+        },
+        {
+          "url_path": "/firewall/cf-firewall-rules/",
+          "link_title": "Firewall Rules",
+          "additional_description": "Block, challenge, or allow requests based on [several characteristics](/ruleset-engine/rules-language/fields/) (user agents, cookies, referrer, and more)."
+        },
+        {
+          "url_path": "/waf/rate-limiting-rules/",
+          "link_title": "Rate Limiting Rules",
+          "additional_description": "Define rate limits for requests matching an expression and the action to perform when those rate limits are reached."
+        },
+        {
+          "url_path": "/waf/tools/ip-access-rules/",
+          "link_title": "IP Access Rules",
+          "additional_description": "Block, challenge, or allow requests based on IP address, IP range, country, or ASN."
+        },
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/115001856951",
+          "link_title": "User Agent Blocking Rules",
+          "additional_description": "Block or challenge specific requests based on the associated user agent value."
+        },
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/115001595131",
+          "link_title": "Zone Lockdown rules",
+          "additional_description": "For customers on a **Pro** plan or higher, specify a list of IP addresses, CIDR ranges, or networks that are allowed to access a particular domain, subdomain, or URL."
+        }
+      ]
+    },
+    {
+      "type": "module",
+      "title": "Customize other security settings",
+      "description": "Update various settings to further refine how your application processes incoming traffic. This step may require [detailed analysis](/waf/analytics/) of your application traffic.",
+      "estimated_time": "~2 hours",
+      "pages": [
+        {
+          "url_path": "/bots/get-started/",
+          "link_title": "Enable bot protection",
+          "additional_description": "There are some nuances to how bot protection works, so you may want to [review our plans pages](/bots/plans/) before enabling."
+        },
+        {
+          "url_path": "/ddos-protection/get-started/",
+          "link_title": "Customize DDoS protection"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/200170056",
+          "link_title": "Customize security level",
+          "additional_description": "Use the IP reputation of a visitor to determine whether to present a [Managed Challenge](/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge) page."
+        },
+        {
+          "url_path": "/fundamentals/security/challenge-passage/",
+          "link_title": "Customize challenge passage",
+          "additional_description": "Specify the length of time that a visitor can access your website after completing a security challenge."
+        },
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/115001992652",
+          "link_title": "Enable Privacy Pass",
+          "additional_description": "Reduce the number of challenges presented to visitors using the **Privacy Pass** browser extension."
+        },
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/200170086",
+          "link_title": "Learn about Browser Integrity Check",
+          "additional_description": "Browser Integrity Check evaluates incoming HTTP headers based on known threats — such as requests with a missing or non-standard user agent — and present a challenge page if needed."
+        },
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/4729826525965",
+          "link_title": "Create Forwarding URLs",
+          "additional_description": "Prevent access to specific URLs, request schemes, file types, subdomains, or directories by redirecting users to a safe location."
+        },
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/115001376488",
+          "link_title": "Token Authentication",
+          "additional_description": "Restrict access to documents, files, and media."
+        },
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/200170076",
+          "link_title": "Learn about I'm Under Attack Mode",
+          "additional_description": "I'm Under Attack Mode performs additional security checks to help mitigate Layer 7 DDoS attacks. This feature should be used as a last resort when your application is under attack."
+        }
+      ]
+    },
+    {
+      "type": "module",
+      "title": "Explore dedicated security products",
+      "description": "Cloudflare offers several dedicated products to increase the security of your website and underlying infrastructure.",
+      "estimated_time": "~30 mins",
+      "pages": [
+        {
+          "url_path": "/page-shield/",
+          "link_title": "Page Shield",
+          "additional_description": "Monitor third-party scripts on your application and receive notifications when they have been compromised or are exhibiting malicious behavior."
+        },
+        {
+          "url_path": "/api-shield/",
+          "link_title": "API Shield",
+          "additional_description": "Protect your API from malicious traffic by enforcing schema validation, detecting abuse patterns, and more."
+        },
+        {
+          "url_path": "/magic-firewall/",
+          "link_title": "Magic Firewall",
+          "additional_description": "Use Cloudflare’s firewall-as-a-service (FWaaS) to protect office networks and cloud infrastructure with advanced, scalable protection."
+        },
+        {
+          "url_path": "/magic-transit/",
+          "link_title": "Magic Transit",
+          "additional_description": "Delivers network functions at Cloudflare scale — DDoS protection, traffic acceleration, and much more from every Cloudflare data center — for on-premise, cloud-hosted, and hybrid networks."
+        },
+        {
+          "url_path": "/magic-wan/",
+          "link_title": "Magic Wan",
+          "additional_description": "Securely connect any traffic source - data centers, offices, devices, cloud properties - to Cloudflare’s network and configure routing policies to get the bits where they need to go, all within one SaaS solution."
+        }
+      ]
+    },
+    {
+      "type": "module",
+      "title": "Next steps",
+      "estimated_time": "~30 mins",
+      "pages": [
+        {
+          "url_path": "/fundamentals/get-started/task-guides/origin-health/"
+        }
+      ]
+    }
+  ]
+}
