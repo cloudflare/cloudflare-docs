@@ -8,7 +8,7 @@ meta:
 
 # Gmail BCC setup with Area 1
 
-For customers using Gmail, setting up a phishing risk assessment with Area 1 is quick and easy. All you need to do is create a content compliance filter to send emails to Area 1 through BCC. The following email flow shows how this works:
+For customers using Gmail, setting up a phishing risk assessment with Area 1 and a BCC setup is quick and easy. All you need to do is create a content compliance filter to send emails to Area 1 through BCC. The following email flow shows how this works:
 
 ![Email flow when setting up a phishing assessment risk for Gmail with Area 1.](/email-security/static/gmail-bcc-flow.png)
 
