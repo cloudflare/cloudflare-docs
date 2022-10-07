@@ -66,3 +66,158 @@ After submitting a false positive, you can explicitly allow the traffic if you a
 ### Recommendations after submitting a false negative
 
 After submitting a false negative report, you can explicitly block or rate-limit the incorrectly scored traffic using a combination of characteristics such as IP address, JA3 fingerprint, ASN, and user-agent. Before blocking or rate-limiting based on JA3 fingerprint, please use Bot Analytics to confirm that fingerprint is not being used by legitimate traffic sources. 
+
+
+
+## Creating a feedback report
+
+```json
+curl -X POST 'https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/bot_management/feedback' \
+     -H "X-Auth-Email: user@example.com" \
+     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
+     -H "Content-Type: application/json" \
+-d '{
+    "type": "false_positive",
+    "description": "Legitimate customers having low score",
+    "expression": "(cf.bot_management.score le 46 and ip.geoip.asnum eq 132892 and http.host eq \"api-discovery.theburritobot.com\" and cf.bot_management.ja3_hash eq \"3fed133de60c35724739b913924b6c24\")",
+    "first_request_seen_at": "2022-08-01T00:00:00Z",
+    "last_request_seen_at": "2022-08-10T00:00:00Z",
+    "requests": 100,
+    "requests_by_score": {
+      "1": 50,
+      "10": 50
+    },
+    "requests_by_score_src": {
+      "heuristics": 25,
+      "machine_learning": 75
+    },
+    "requests_by_attribute": {
+      "topIPs": [
+        {
+          "metric": "10.75.34.1",
+          "requests": 100
+        }
+      ],
+      "topUserAgents": [
+        {
+          "metric": "curl/7.68.0",
+          "requests": 100
+        }
+      ]
+    }
+}'
+ ```
+
+ ```json
+# Output
+Null 
+```
+
+## Listing feedback reports
+
+ ```json
+ # Command
+curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576aec3fc2b/bot_management/feedback' \
+     -H "X-Auth-Email: user@example.com" \
+     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
+     -H "Content-Type: application/json" \ 
+```
+```json
+ # Output
+[
+  {
+    "created_at": "2022-08-19T00:05:24.749712Z",
+    "type": "false_positive",
+    "description": "Legitimate customers having low score",
+    "expression": "(cf.bot_management.score le 46 and ip.geoip.asnum eq 132892 and http.host eq \"api-discovery.theburritobot.com\" and cf.bot_management.ja3_hash eq \"3fed133de60c35724739b913924b6c24\")",
+    "first_request_seen_at": "2022-08-01T00:00:00Z",
+    "last_request_seen_at": "2022-08-10T00:00:00Z",
+    "requests": 100,
+    "requests_by_score": {
+      "1": 50,
+      "10": 50
+    },
+    "requests_by_score_src": {
+      "heuristics": 25,
+      "machine_learning": 75
+    },
+    "requests_by_attribute": {
+      "topIPs": [
+        {
+          "metric": "10.75.34.1",
+          "requests": 100
+        }
+      ],
+      "topUserAgents": [
+        {
+          "metric": "curl/7.68.0",
+          "requests": 100
+        }
+      ]
+    }
+  }
+]
+```
+
+## API Fields
+
+| Field | Type | Description | Value Example |
+| --- | --- | --- | --- |
+| `type` | string |  The feedback report type. | `false_positive` |
+| `description` | string | The feedback report description with  more details on the issue. | Legitimate customers having low scores. |
+| `expression` | string | The wirefilter expression matching reported requests. | `(cf.bot_management.score le 46 and ip.geoip.asnum eq 132892 and http.host eq "app.example.com" and cf.bot_management.ja3_hash eq "3fed133de60c35724739b913924b6c24")` | 
+| `first_request_seen_at` | string | The time range start when the first request has been seen, RFC3339 format. |  `2022-08-01T00:00:00Z` | 
+| `last_request_seen_at` | string | The time range end when the last request has been seen, RFC3339 format. | `2022-08-10T00:00:00Z` | 
+| `requests` | integer | The total number of reported requests. | `100` | 
+| `requests_by_score` | object | The requests breakdown by score. | See example below. | 
+| `requests_by_score_src` | object | Requests breakdown by score source. | See example below. | 
+| `requests_by_attribute` | object | Requests breakdown by attribute (optional). | See example below. |
+
+`requests_by_score`
+```json
+{ 
+  "1": 50, 
+"10": 50 
+}
+```
+
+`requests_by_score_src`
+```json
+
+{
+  "machine_learning": 75, 
+  "heuristics": 25
+}
+```
+
+`requests_by_attribute`
+
+```json 
+{
+    "topIPs": [
+      {
+        "metric": "10.75.34.1"
+        "requests": 100
+      }
+    ],
+    "topUserAgents": [
+      {
+        "metric": "curl/7.68.0",
+        "requests": 100
+      }
+    ]
+}
+```
+
+### Expression Fields 
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `cf.bot_management.ja3_hash` | string | This provides an SSL/TLS fingerprint to help you identify potential bot requests. |
+| `cf.bot_management.score` | integer | This represents the likelihood that a request originates from a bot using a score from 1-99. |
+| `http.host` | string | This represents the host name used in the full request URI/ |
+| `http.request.uri.path` | string | This represents the URI path of the request. |
+| `http.user_agent` | string | This represents the HTTP user agent which is a request header that contains a characteristic string to allow identification of the client operating system and web browser. |
+| `ip.geoip.asnum` | integer | This represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address. |
+| `ip.geoip.country` | string | This represents the 2-letter country code in ISO 3166-1 Alpha 2 format. |
+| `ip.src` | string | The source address of the IP. |
