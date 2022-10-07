@@ -57,7 +57,7 @@ CLOUDFLARE_API_BASE_URL=https://api.cloudflare.com/client/v4
 WRANGLER_LOG=debug
 ```
 
-### Deprecated global variables are:
+### Deprecated global variables
 
 These variables are deprecated. Please use the new variables listed above, to prevent any issues or unwanted messaging.
 
