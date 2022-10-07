@@ -61,8 +61,8 @@ WRANGLER_LOG=debug
 
 The following variables are deprecated. Use the new variables listed above to prevent any issues or unwanted messaging.
 
-- CF_ACCOUNT_ID
-- CF_API_TOKEN
-- CF_API_KEY
-- CF_EMAIL
-- CF_API_BASE_URL
+- `CF_ACCOUNT_ID`
+- `CF_API_TOKEN`
+- `CF_API_KEY`
+- `CF_EMAIL`
+- `CF_API_BASE_URL`
