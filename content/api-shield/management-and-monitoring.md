@@ -48,6 +48,9 @@ By selecting multiple checkboxes, you can add several endpoints from Discovery a
 
 {{</Aside>}}
 
+When adding a path manually, you can specify variable fields by enclosing them in braces, `/api/user/{var1}/details`. 
+
+For more information on how Cloudflare uses variables in API Shield, see the examples from [API Discovery](/api-shield/security/api-discovery/).
 
 ## Endpoint Performance Analysis
 
