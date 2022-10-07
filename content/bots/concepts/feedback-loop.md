@@ -174,6 +174,7 @@ curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576
 | `requests_by_attribute` | object | Requests breakdown by attribute (optional). | See example below. |
 
 `requests_by_score`
+
 ```json
 { 
   "1": 50, 
@@ -182,8 +183,8 @@ curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576
 ```
 
 `requests_by_score_src`
-```json
 
+```json
 {
   "machine_learning": 75, 
   "heuristics": 25
