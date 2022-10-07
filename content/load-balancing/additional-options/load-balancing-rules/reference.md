@@ -85,6 +85,22 @@ Cloudflare Load Balancers support the following unproxied fields:
         </p>
       </td>
     </tr>  
+    <tr>
+      <td>ECS Exists</td>
+      <td valign="top"><code class>dns.rr.opt.client</code><br />{{<type>}}boolean{{</type>}}</td>
+      <td>
+        <p>Whether the EDNS Client Subnet (ECS) address was sent with the DNS request.
+        </p>
+      </td>
+    </tr>  
+    <tr>
+      <td>ECS Address</td>
+      <td valign="top"><code class>dns.rr.opt.client.addr</code><br />{{<type>}}string{{</type>}}</td>
+      <td>
+        <p> If present, the ECS address sent with the DNS request.
+        </p>
+      </td>
+    </tr>
   </tbody>
 </table>
 
