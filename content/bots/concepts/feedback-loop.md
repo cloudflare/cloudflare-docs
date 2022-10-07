@@ -5,7 +5,7 @@ title: Bots Feedback Loop
 
 # Bots Feedback Loop
 
-The Bots Feedback Loop is an easy way for customers to send Cloudflare direct feedback in the case of Bot Management potentially scoring a request incorrectly. Before, customers could only report issues with bot scores via a support ticket or directly to their account team. 
+The Bots Feedback Loop is a way for customers to send Cloudflare direct feedback in the case of Bot Management potentially scoring a request incorrectly. Before, customers could only report issues with bot scores via a support ticket or directly to their account team. 
 
 Now, the Bots Feedback Loop allows customer to submit feedback via the API. When a customer submits a False Negative or a False Positive report, Cloudflare manually analyzes this data and uses it as a training dataset for our next Machine Learning model.
 
@@ -28,13 +28,13 @@ If Cloudflare is unable to detect a portion of automated traffic on your site, s
 | Account Creation Abuse | The automated creation of many new accounts in order to gain access to site resources. |
 | Ad Fraud | Fraudulent increase in the number of times an advertisement is clicked on or displayed. |
 | Credit Card Abuse | Attempts to repeatedly validate many credit card numbers or the same credit card number with different validation details. |
-| Cashing Out | Abusing the target internet application to obtain valuable goods. |
-| Login Abuse | Attempts to gain access to a password protected portion of an internet application using many different combinations of usernames and passwords. |
+| Cashing Out | Abusing the target Internet application to obtain valuable goods. |
+| Login Abuse | Attempts to gain access to a password protected portion of an Internet application using many different combinations of usernames and passwords. |
 | Inventory Abuse | Automated abuse related to purchasing limited stock inventory or holding inventory to prevent others from making transactions. |
-| Denial of Service | Automated requests with the intent of exhausting server resources to prevent the internet application from functioning. |
-| Expediting | Automating the use of an internet application to make transactions faster than a human visitor to gain unfair advantage. |
+| Denial of Service | Automated requests with the intent of exhausting server resources to prevent the Internet application from functioning. |
+| Expediting | Automating the use of an Internet application to make transactions faster than a human visitor to gain unfair advantage. |
 | Fuzzing | Finding implementation bugs through the use of malformed data injection in an automated fashion. |
-| Scraping | Automated retrieval of valuable or proprietary information from an internet application. |
+| Scraping | Automated retrieval of valuable or proprietary information from an Internet application. |
 | Spamming | The abuse of content forms to send spam. |
 | Token Cracking | Identification of valid token codes providing some form of user benefit within the application. | 
 | Vulnerability Scanning | Systematic enumeration and examination of identifiable, guessable and unknown content locations, paths, file names, parameters, in order to find weaknesses and points where a security vulnerability might exist. |
@@ -178,7 +178,7 @@ curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576
 ```json
 { 
   "1": 50, 
-"10": 50 
+ "10": 50 
 }
 ```
 
@@ -216,7 +216,7 @@ curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576
 | --- | --- | --- |
 | `cf.bot_management.ja3_hash` | string | This provides an SSL/TLS fingerprint to help you identify potential bot requests. |
 | `cf.bot_management.score` | integer | This represents the likelihood that a request originates from a bot using a score from 1-99. |
-| `http.host` | string | This represents the host name used in the full request URI/ |
+| `http.host` | string | This represents the host name used in the full request URI. |
 | `http.request.uri.path` | string | This represents the URI path of the request. |
 | `http.user_agent` | string | This represents the HTTP user agent which is a request header that contains a characteristic string to allow identification of the client operating system and web browser. |
 | `ip.geoip.asnum` | integer | This represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address. |
