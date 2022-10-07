@@ -69,7 +69,7 @@ After submitting a false negative report, you can explicitly block or rate-limit
 
 
 
-## Creating a feedback report
+## Create a feedback report
 
 ```json
 curl -X POST 'https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/bot_management/feedback' \
@@ -113,7 +113,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8
 Null 
 ```
 
-## Listing feedback reports
+## List feedback reports
 
  ```json
  # Command
