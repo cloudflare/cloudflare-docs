@@ -69,7 +69,7 @@
           {
             "url_path": "/fundamentals/account-and-billing/account-setup/manage-account-members/",
             "link_title": "(Optional) Add public domains and subdomains to Cloudflare",
-            "additional_description": "You will use these domains to test DNS-based policies, as well as for public endpoints for [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup). Alternatively, you could purchase a new testing domain through [Cloudflare Registrar](/registrar/get-started/register-domain/)."
+            "additional_description": "You will use these domains to test DNS-based policies, as well as for public endpoints for <a href='/cloudflare-one/connections/connect-apps/install-and-setup/'>Cloudflare Tunnel</a>. Alternatively, you could purchase a new testing domain through <a href='/registrar/get-started/register-domain/'>Cloudflare Registrar</a>."
           }
         ]
       },
@@ -82,7 +82,7 @@
             "external_link": true,
             "url_path": "http://dash.teams.cloudflare.com/onboarding",
             "link_title": "Create Team Name and Team Domain",
-            "additional_description": "These values will act as your application portal and authorization realm. For more details, refer to [Team Name](/cloudflare-one/glossary#team-name)."
+            "additional_description": "These values will act as your application portal and authorization realm. For more details, refer to <a href='/cloudflare-one/glossary#team-name'>Team Name</a>."
           },
           {
             "url_path": "/cloudflare-one/identity/idp-integration/",
