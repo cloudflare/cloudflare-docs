@@ -12,7 +12,7 @@ System Environment Variables are local environment variables that can change Wra
 2. Inlining the values in your Wrangler command. For example, `WRANGLER_LOG="debug" wrangler publish` will set the value of `WRANGLER_LOG` to "debug" for this execution of the command.
 3. Setting the values in your shell environment. For example, if you're using Z shell, adding `export CLOUDFLARE_API_TOKEN=...` to your `~/.zshrc` file will set this token as part of your shell configuration.
 
-### Wrangler supports the following environment variables:
+### Supported environment variables
 
 {{<definitions>}}
 
