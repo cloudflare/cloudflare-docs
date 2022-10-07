@@ -59,7 +59,7 @@ WRANGLER_LOG=debug
 
 ### Deprecated global variables
 
-These variables are deprecated. Please use the new variables listed above, to prevent any issues or unwanted messaging.
+The following variables are deprecated. Use the new variables listed above to prevent any issues or unwanted messaging.
 
 - CF_ACCOUNT_ID
 - CF_API_TOKEN
