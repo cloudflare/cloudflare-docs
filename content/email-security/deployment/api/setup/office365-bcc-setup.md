@@ -1,12 +1,12 @@
 ---
-title: Office 365 phishing risk assesment
+title: Office 365 BCC setup
 pcx_content_type: tutorial
 weight: 2
 meta:
     title: Setup phishing risk assessment for Office 365 with Area 1
 ---
 
-# Setup phishing risk assessment for Office 365 with Area 1
+# Microsoft Office 365 BCC setup with Area 1
 
 For customers using Microsoft Office 365, setting up a phishing risk assessment with Area 1 is quick and easy. You need to configure an inbound rule to send emails to Area 1 via BCC for processing and detection of potential phishing attacks. The following email flow shows how this works:
 
