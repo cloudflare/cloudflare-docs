@@ -34,7 +34,7 @@ the variable `data` will be a string containing the contents of `test.html`.
 This is also the basis of WASM support with Wrangler. To use a WASM module in a Worker developed with Wrangler, add the following to your Worker:
 
 ```js
-import wasm from "example.wasm"; // Where `example.wasm` is a file in your local directory
+import wasm from "./example.wasm"; // Where `example.wasm` is a file in your local directory
 
 export default {
   fetch(request) {
