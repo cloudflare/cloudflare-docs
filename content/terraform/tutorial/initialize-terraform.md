@@ -14,7 +14,9 @@ Before you begin, ensure you [installed Terraform](/terraform/installing/). You 
 
 ## 1. Define your first Terraform config file
 
-Create an initial Terraform config file. Terraform will process any files with a `.tf` extension. As the configuration becomes more complex, you will want to split the config into separate files and modules. For now, proceed with a single file.
+Create an initial Terraform config file, filling in your own values for the [API token](/api/get-started/create-token/), [zone ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/), and [domain](/fundamentals/get-started/setup/add-site/).
+
+Terraform will process any files with a `.tf` extension. As the configuration becomes more complex, you will want to split the config into separate files and modules. For now, proceed with a single file.
 
 ```bash
 $ cat > cloudflare.tf <<'EOF'
@@ -28,15 +30,15 @@ terraform {
 }
 
 provider "cloudflare" {
-  api_token = "your-api-token"
+  api_token = "<YOUR_API_TOKEN>"
 }
 
 variable "zone_id" {
-  default = "e097e1136dc79bc1149e32a8a6bde5ef"
+  default = "<YOUR_ZONE_ID>"
 }
 
 variable "domain" {
-  default = "example.com"
+  default = "<YOUR_DOMAIN>"
 }
 
 resource "cloudflare_record" "www" {

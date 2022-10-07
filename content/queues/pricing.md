@@ -26,7 +26,7 @@ Cloudflare Queues charges for the total number of operations per month. An opera
 
 In most cases, it takes 3 operations to deliver a message: 1 write, 1 read, and 1 delete. Therefore, you can use the following formula to estimate your monthly bill:
 
-    (Number of Messages - 1,000,000) * 3 * $0.40
+    ((Number of Messages * 3) - 1,000,000) / 1,000,000  * $0.40
 
 ### Example
 

@@ -105,6 +105,8 @@ None of the options for this command are required. Many of these options can be 
   - The path to an entry point for your Worker.
 - `--name` {{<type>}}string{{</type>}}
   - Name of the Worker.
+- `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Skip Wrangler's build steps and show a preview of the script without modification. Particularly useful when using custom builds.
 - `--env` {{<type>}}string{{</type>}}
   - Perform on a specific environment.
 - `--compatibility-date` {{<type>}}string{{</type>}}
@@ -125,6 +127,11 @@ None of the options for this command are required. Many of these options can be 
   - Host to forward requests to, defaults to the zone of project.
 - `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}}
   - Protocol to listen to requests on.
+- `--local-upstream` {{<type>}}string{{</type>}}
+  - Host to act as origin in local mode, defaults to `dev.host` or route.
+- `--assets` {{<type>}}string{{</type>}}
+  - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --assets dist/ --latest`.
 - `--site` {{<type>}}string{{</type>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}}
@@ -133,6 +140,14 @@ None of the options for this command are required. Many of these options can be 
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
 - `--upstream-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: https){{</prop-meta>}}
   - Protocol to forward requests to host on.
+- `--var` {{<type>}}key:value[]{{</type>}}
+  - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
+  - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
+  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+- `--define` {{<type>}}key:value[]{{</type>}}
+  - Array of `key:value` pairs to replace global identifiers in your code. 
+  - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
+  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--tsconfig` {{<type>}}string{{</type>}}
   - Path to a custom `tsconfig.json` file.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
@@ -145,11 +160,20 @@ This runs an ephemeral local version of your Worker, and will not be able to acc
 
 {{</Aside>}}
 
+- `--experimental-local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Run the preview of the Worker directly on your local machine using the [open source Cloudflare Workers runtime](https://github.com/cloudflare/workerd).
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the script.
+- `--node-compat` {{<type>}}boolean{{</type>}}
+  - Enable node.js compatibility.
+- `--persist` {{<type>}}boolean{{</type>}}
+  - Enable persistence for local mode, using default path: `.wrangler/state`.
+- `--persist-to` {{<type>}}string{{</type>}}
+  - Specify directory to use for local persistence. Setting this flag implicitly enables `--persist`.
 - `--test-scheduled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-
   - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (cron trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
+- `--log-level` {{<type>}}"debug"|"info"|"log"|"warn"|"error"|"none"{{</type>}} {{<prop-meta>}}(default: log){{</prop-meta>}}
+  - Specify Wrangler's logging level.
 
 {{</definitions>}}
 
@@ -188,6 +212,8 @@ None of the options for this command are required. Also, many can be set in your
   - The path to an entry point for your Worker.
 - `--name` {{<type>}}string{{</type>}}
   - Name of the Worker.
+- `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Skip Wrangler's build steps and directly publish script without modification. Particularly useful when using custom builds.
 - `--env` {{<type>}}string{{</type>}}
   - Perform on a specific environment.
 - `--outdir` {{<type>}}string{{</type>}}
@@ -198,12 +224,23 @@ None of the options for this command are required. Also, many can be set in your
   - Flags to use for compatibility checks.
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
   - Use the latest version of the Workers runtime.
+- `--assets` {{<type>}}string{{</type>}}
+  - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler publish --name personal_blog --assets dist/ --latest`.
 - `--site` {{<type>}}string{{</type>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}}
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
 - `--site-exclude` {{<type>}}string[]{{</type>}}
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
+- `--var` {{<type>}}key:value[]{{</type>}}
+  - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
+  - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
+  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+- `--define` {{<type>}}key:value[]{{</type>}}
+  - Array of `key:value` pairs to replace global identifiers in your code. 
+  - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
+  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--triggers`, `--schedule`, `--schedules` {{<type>}}string[]{{</type>}}
   - Cron schedules to attach to the published Worker.
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
@@ -212,6 +249,8 @@ None of the options for this command are required. Also, many can be set in your
   - Path to a custom `tsconfig.json` file.
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the bundled script before publishing.
+- `--node-compat` {{<type>}}boolean{{</type>}}
+  - Enable node.js compatibility.
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Compile a project without actually publishing to live servers. Combined with `--outdir`, this is also useful for testing the output of `wrangler publish`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
 - `--keep-vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
@@ -1068,7 +1107,9 @@ This command has an alias of `wrangler pages deploy create`.
 
 ## login
 
-Authorize Wrangler with your Cloudflare account using OAuth. This will open a login page in your browser and request your account access permissions.
+Authorize Wrangler with your Cloudflare account using OAuth. Wrangler will attempt to automatically open your web browser to login with your Cloudflare account.
+
+If you prefer to use API tokens for authentication, such as in headless or continuous integration environments, refer to [Running Wrangler in CI/CD](/workers/wrangler/ci-cd/).
 
 ```sh
 $ wrangler login [OPTIONS]
@@ -1086,6 +1127,34 @@ $ wrangler login [OPTIONS]
 
 {{<Aside type="note">}}
 `wrangler login` uses all the available scopes by default if no flags are provided.
+{{</Aside>}}
+
+If Wrangler fails to open a browser, you can copy and paste the URL generated by `wrangler login` in your terminal into a browser and log in.
+
+{{<Aside type="note">}}
+
+### Using `wrangler login` on a remote machine
+
+If you are using Wrangler from a remote machine, but run the login flow from your local browser, you will receive the following error message after logging in:`This site can't be reached`.
+
+To finish the login flow, run `wrangler login` and go through the login flow in the browser:
+
+```sh
+$ wrangler login
+ ⛅️ wrangler 2.1.6
+-------------------
+Attempting to login via OAuth...
+Opening a link in your default browser: https://dash.cloudflare.com/oauth2/auth?xyz...
+```
+
+The browser login flow will redirect you to a `localhost` URL on your machine.
+
+Leave the login flow active. Open a second terminal session. In that second terminal session, use `curl` or an equivalent request library on the remote machine to fetch this `localhost` URL. Copy and paste the `localhost` URL that was generated during the `wrangler login` flow and run:
+
+```sh
+$ curl <LOCALHOST_URL>
+```
+
 {{</Aside>}}
 
 ---

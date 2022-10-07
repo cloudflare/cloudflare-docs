@@ -16,15 +16,41 @@ Currently, Email Routing does not support messages bigger than 25 MiB.
 
 ## Outbound prefixes
 
-Email Routing sends its traffic using IPv4 prefixes.
+Email Routing sends its traffic using both IPv4 and IPv6 prefixes, when supported by the upstream SMTP server.
 
 If you are a postmaster and are having trouble receiving Email Routing's emails, allow the following outbound IP addresses in your server configuration:
 
-```txt
-104.30.0.0/20
+**IPv4**
+
+`104.30.0.0/19`
+
+**IPv6**
+
+`2405:8100:c000::/38`
+
+_Ranges last updated: October 4th, 2022_
+
+## IPv6 support
+
+Currently, Email Routing will connect to the upstream SMTP servers using IPv6 if they provide AAAA records for their MX servers, and fall back to IPv4 if that is not possible.
+
+Below is an example of a popular provider that supports IPv6:
+
+```sh
+$ dig mx gmail.com
+ 
+gmail.com. 3084 IN MX 5 gmail-smtp-in.l.google.com.
+gmail.com. 3084 IN MX 20 alt2.gmail-smtp-in.l.google.com.
+gmail.com. 3084 IN MX 40 alt4.gmail-smtp-in.l.google.com.
+gmail.com. 3084 IN MX 10 alt1.gmail-smtp-in.l.google.com.
+gmail.com. 3084 IN MX 30 alt3.gmail-smtp-in.l.google.com.
+ 
+$ dig AAAA gmail-smtp-in.l.google.com
+ 
+gmail-smtp-in.l.google.com. 17 IN AAAA 2a00:1450:400c:c09::1b
 ```
 
-_Ranges last updated: December 7, 2021_
+Email Routing also supports IPv6 through Cloudflare’s inbound MX servers.
 
 ## Outbound hostnames
 
