@@ -6,6 +6,14 @@ weight: 11
 
 # Changelog
 
+## 2022-10-05
+
+### AV1 Codec support for live streams and recordings (beta)
+
+Cloudflare Stream now supports playback of live videos and live recordings using the [AV1 codec](https://aomedia.org/av1/), which uses 46% less bandwidth than H.264.
+
+For more, read the [blog post](https://blog.cloudflare.com/av1-cloudflare-stream-beta) or the get started with the [docs](/stream/viewing-videos/av1-playback).
+
 ## 2022-09-27
 
 ### WebRTC live streaming and playback (beta)
