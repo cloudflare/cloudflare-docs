@@ -14,6 +14,8 @@ System Environment Variables are local environment variables that can change Wra
 
 ### Supported environment variables
 
+Wrangler supports the following environment variables:
+
 {{<definitions>}}
 
 - `CLOUDFLARE_ACCOUNT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
