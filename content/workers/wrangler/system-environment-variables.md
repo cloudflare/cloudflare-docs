@@ -46,7 +46,7 @@ Wrangler supports the following environment variables:
 
 - `WRANGLER_LOG` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Options for Logging levels are "none", "error", "warn", "info", "log" and "debug".
+  - Options for Logging levels are `"none"`, `"error"`, `"warn"`, `"info"`, `"log"` and `"debug"`.
 
 {{</definitions>}}
 
