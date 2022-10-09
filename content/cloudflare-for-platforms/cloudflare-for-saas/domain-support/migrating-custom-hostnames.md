@@ -1,7 +1,7 @@
 ---
 pcx content type: concept
 title: Migrating custom hostnames
-weight: 
+weight: 2
 ---
 
 # Migrating Custom Hostnames

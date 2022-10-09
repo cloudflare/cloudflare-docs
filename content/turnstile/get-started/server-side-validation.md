@@ -26,9 +26,13 @@ Example using cURL:
 <div>
 
 ```sh
-
-curl -L -X POST 'https://challenges.cloudflare.com/turnstile/v0/siteverify' --data 'secret=verysecret&response=<RESPONSE>'
-
+$ curl 'https://challenges.cloudflare.com/turnstile/v0/siteverify' --data 'secret=verysecret&response=<RESPONSE>'
+{
+  "success": true,
+  "error-codes": [],
+  "challenge_ts": "2022-10-06T00:07:23.274Z",
+  "hostname": "example.com"
+}
 ```
 </div>
 
@@ -37,34 +41,34 @@ Example using `fetch` from Cloudflare Workers:
 <div>
 
 ```javascript
-
-// This is the demo secret key. In production, we recommend you store
-// your secret key(s) safely.
+// This is the demo secret key. In production, we recommend
+// you store your secret key(s) safely.
 const SECRET_KEY = '1x0000000000000000000000000000000AA';
 
 async function handlePost(request) {
-    const body = await request.formData();
-    // Turnstile injects a token in "cf-turnstile-response".
-    const token = body['cf-turnstile-response'];
-    const ip = request.headers.get('CF-Connecting-IP');
+	const body = await request.formData();
+	// Turnstile injects a token in "cf-turnstile-response".
+	const token = body.get('cf-turnstile-response');
+	const ip = request.headers.get('CF-Connecting-IP');
 
-    // Validate the token by calling the "/siteverify" API endpoint.
-    let formData = new FormData();
-    formData.append('secret', SECRET_KEY);
-    formData.append('response', token);
-    formData.append('remoteip', ip);
+	// Validate the token by calling the
+	// "/siteverify" API endpoint.
+	let formData = new FormData();
+	formData.append('secret', SECRET_KEY);
+	formData.append('response', token);
+	formData.append('remoteip', ip);
 
-    const result = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-        body: formData,
-        method: 'POST',
-    });
+	const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+	const result = await fetch(url, {
+		body: formData,
+		method: 'POST',
+	});
 
-    const outcome = await result.json();
-    if (outcome.success) {
-        // ...
-    }
+	const outcome = await result.json();
+	if (outcome.success) {
+		// ...
+	}
 }
-
 ```
 </div>
 
@@ -80,13 +84,17 @@ Check out the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo
 
 The siteverify endpoint behaves similar to reCAPTCHA’s siteverify endpoint. The response type of the siteverify is `application/json`.
 
-It always contains a 'success' property, either true or false, indicating whether the operation was successful or not. 
+It always contains a 'success' property, either true or false, indicating whether the operation was successful or not.
 
 In case of a successful validation, the response should be similar to the following:
 
 <div>
 
 ```json
+---
+highlight: [2]
+---
+
 {
   "success": true,
   "challenge_ts": "2022-02-28T15:14:30.096Z",
@@ -94,8 +102,8 @@ In case of a successful validation, the response should be similar to the follow
   "error-codes": [],
   "action": "login",
   "cdata": "sessionid-123456789"
-}  
-``` 
+}
+```
 </div>
 
 * `challenge_ts` is the ISO timestamp for the time the challenge was solved.
@@ -109,14 +117,16 @@ In case of a validation failure, the response should be similar to the following
 <div>
 
 ```json
+---
+highlight: [2]
+---
+
 {
   "success": false,
-  "hostname": "",
   "error-codes": [
     "invalid-input-response"
   ]
 }
-
 ```
 </div>
 

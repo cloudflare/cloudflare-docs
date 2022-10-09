@@ -85,8 +85,22 @@ Your application will appear on the **Applications** page.
 
 End users can now reach HTTP or TCP-based services on your network by navigating to any IP address in the range you have specified.
 
+### Troubleshooting
+
+#### Device configuration
+
 To check that their device is properly configured, the user can visit `https://help.teams.cloudflare.com/` to ensure that:
 
 - The page returns **Your network is fully protected**.
 - In **HTTP filtering**, both **WARP** and **Gateway Proxy** are enabled.
 - The **Team name** matches the Zero Trust organization from which you created the tunnel.
+
+#### Router configuration
+
+Check the local IP address of the device and ensure that it does not fall within the IP/CIDR range of your private network. For example, some home routers will make DHCP assignments in the `10.0.0.0/24` range, which overlaps with the `10.0.0.0/8` range used by most corporate private networks. When a user's home network shares the same IP addresses as the routes in your tunnel, their device will be unable to connect to your application.
+
+To resolve the IP conflict, you can either:
+
+- Reconfigure the user's router to use a non-overlapping IP range. Compatible routers typically use `192.168.1.0/24`, `192.168.0.0/24` or `172.16.0.0/24`.
+
+- Tighten the IP range in your tunnel configuration to exclude the `10.0.0.0/24` range. This will only work if your private network does not have any hosts within `10.0.0.0/24`.

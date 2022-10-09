@@ -74,7 +74,7 @@ const client = new WHIPClient(url, videoElement);
 
 Once the creator grants permission to their camera and microphone, live video and audio will automatically start being streamed to Cloudflare, using WebRTC.
 
-You can also use this URL with any client that supports the [WebRTC-HTTP ingestion protocol (WHIP)](https://www.ietf.org/id/draft-ietf-wish-whip-04.html), such as [Gstreamer](https://gstreamer.freedesktop.org/) or [whip-js](https://github.com/medooze/whip-js). There is active development and discussion around [supporting WHIP in OBS Studio](https://github.com/obsproject/obs-studio/pull/7192). 
+You can also use this URL with any client that supports the [WebRTC-HTTP ingestion protocol (WHIP)](https://www.ietf.org/id/draft-ietf-wish-whip-04.html). See [supported WHIP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
 
 {{<Aside>}}
 [Trickle ICE](https://datatracker.ietf.org/doc/rfc8838/) is not yet supported, but will be supported soon. Some WHIP clients require Trickle ICE.
@@ -84,7 +84,7 @@ You can also use this URL with any client that supports the [WebRTC-HTTP ingesti
 
 Copy the URL from the `webRTCPlayback` key in the API response (see above), or directly from the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs). There are no limits on the number of concurrent viewers.
 
-Paste this URL into the provided WHEP example code, which you [can run in your browser on Stackblitz](https://workers.new/stream/webrtc-whep).
+Paste this URL into the provided [WHEP example code](https://github.com/cloudflare/templates/blob/main/stream/webrtc/src/whep.html#L13), which you [can run in your browser on Stackblitz](https://workers.new/stream/webrtc-whep).
 
 ```javascript
 ---
@@ -103,7 +103,7 @@ const client = new WHEPClient(url, videoElement);
 
 As long as the creator is actively streaming, viewers should see their broadcast in their browser, with less than 1 second of latency.
 
-You can also use this URL with any client that supports the [WebRTC-HTTP egress protocol (WHEP)](https://www.ietf.org/id/draft-murillo-whep-00.html). As more WHEP clients are published, we are committed to supporting them and being fully compliant with the WHEP protocol as it evolves into a standard.
+You can also use this URL with any client that supports the [WebRTC-HTTP egress protocol (WHEP)](https://www.ietf.org/id/draft-murillo-whep-00.html). See [supported WHEP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
 
 ## Using WebRTC in native apps
 
@@ -115,11 +115,28 @@ If you are building a native app, the example code above can run within a [WkWeb
 - **Firefox**: Navigate to `about:webrtc` to view information about WebRTC sessions, similar to Chrome.
 - **Safari**: To enable WebRTC logs, from the inspector, open the settings tab (cogwheel icon), and set WebRTC logging to "Verbose" in the dropdown menu.
 
+## Supported WHIP and WHEP clients
+
+Beyond the [example WHIP client](https://github.com/cloudflare/templates/blob/main/stream/webrtc/src/WHIPClient.ts) and [example WHEP client](https://github.com/cloudflare/templates/blob/main/stream/webrtc/src/WHEPClient.ts) used in the examples above, we have tested and confirmed that the following clients are compatible with Cloudflare Stream:
+
+#### WHIP
+
+- [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (Typescript)
+- [whip-go](https://github.com/ggarber/whip-go) (Go)
+
+#### WHEP
+
+- [@eyevinn/webrtc-player](https://www.npmjs.com/package/@eyevinn/webrtc-player) (Typescript)
+- [@eyevinn/wrtc-egress](https://www.npmjs.com/package/@eyevinn/wrtc-egress) (Typescript)
+
+As more WHIP and WHEP clients are published, we are committed to supporting them and being fully compliant with the both protocols.
+
 ## Limitations while in beta
 
 - [Recording](/stream/stream-live/watch-live-stream/#replaying-recordings) is not yet supported (coming soon)
 - [Simulcasting](/stream/stream-live/simulcasting) (restreaming) is not yet supported (coming soon)
 - [Live viewer counts](/stream/getting-analytics/live-viewer-count/) are not yet supported (coming soon)
 - [Analytics](/stream/getting-analytics/fetching-bulk-analytics/) are not yet supported (coming soon)
+- WHIP and WHEP must be used together — we do not yet support streaming using RTMP/SRT and playing using WHEP, or streaming using WHIP and playing using HLS or DASH. (coming soon)
 - Though we don't anticipate major API changes, while in beta, the WHIP and WHEP protocol versions used by our APIs is subject to change without notice. You can find the version in the `protocol-version` header in WHIP and WHEP API responses. The value of this header references the IETF draft slug for each protocol, for example, `draft-ietf-wish-whip-04` and `draft-murillo-whep-00`.
 - Once generally available, WebRTC streaming will be priced just like the rest of Cloudflare Stream, based on minutes stored and minutes of video delivered.
