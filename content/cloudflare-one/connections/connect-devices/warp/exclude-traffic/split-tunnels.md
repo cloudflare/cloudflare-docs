@@ -71,7 +71,7 @@ Domain-based split tunneling works alongside DNS by dynamically excluding or inc
 1. Routes excluded or included from WARP and Gateway visibility may change day to day, and may be different for each user depending on where they are.
 2. You may inadvertently exclude or include additional hostnames that happen to share an IP address.
 3. Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/cloudflare-one/policies/filtering/application-app-types/), you will need to ensure you add all domains used by a particular app or service.
-4. WARP Agent must handle the DNS lookup request for the domain. If a DNS result has been previously cached by the operating system or otherwise intercepted such as via a your browsers secure DNS settings, it will not be dynamically added in the Split Tunnel.
+4. WARP must handle the DNS lookup request for the domain. If a DNS result has been previously cached by the operating system or otherwise intercepted (for example, via your browser's secure DNS settings), the IP address will not be dynamically added to your Split Tunnel.
 
 {{</Aside>}}
 
