@@ -3,7 +3,7 @@
   "title": "Technology Partner integrations",
   "description": "[Cloudflare Technology Partners](https://www.cloudflare.com/partners/technology-partners/) offer purpose-built integrations with our products, providing expanded functionality for our users. Learn how to configure these integrations with our tutorials and how-to guides.",
   "products": [
-    "Cloudflare Essentials",
+    "Analytics",
     "SSL/TLS",
     "Firewall",
     "DDoS protection",
@@ -15,7 +15,7 @@
       "type": "module",
       "title": "Analytics integrations",
       "description": "Learn how to configure a variety of products with Cloudflare Analytics, including Google Cloud, Splunk and New Relic.",
-      "estimated_time": "~????? mins",
+
       "pages": [
         {
           "external_link": true,
@@ -61,12 +61,12 @@
     },
     {
       "type": "module",
-      "title": "Before you begin",
-      "description": "Before you can secure your site, make sure you have already added that site to Cloudflare.",
-      "estimated_time": "~30 mins",
+      "title": "Area 1 Email Security",
+      "description": 
+
       "pages": [
         {
-          "url_path": "/learning-paths/get-started/",
+          "url_path": "https://developers.cloudflare.com/email-security/partners/",
           "title": "Get started with Cloudflare (learning path)"
         }
       ]
