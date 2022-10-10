@@ -21,7 +21,7 @@ For more information, refer to [Work with custom rulesets](/ruleset-engine/custo
 
 {{<Aside type="warning" header="Important">}}
 
-* Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. You must include `AND zone.level eq "ENT"` in the expression of the rule deploying the custom ruleset or else the API operation will fail.
+* Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. You must include `and (cf.zone.plan eq "ENT")` in the expression of the rule deploying the custom ruleset or else the API operation will fail.
 
 * Currently, you can only deploy custom rulesets to a phase at the account level.
 
