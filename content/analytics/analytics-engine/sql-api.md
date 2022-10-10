@@ -86,6 +86,46 @@ The rate at which the data is sampled is exposed via the `_sample_interval` colu
 
 Additionally, the [QUANTILEWEIGHTED function](../sql-reference/#quantileweighted) is designed to be used with sample interval as the third argument.
 
+## Pagination
+
+When you have a lot of data stored, the SQL API may not be able to retrieve all the data with one `SELECT` query. Instead you will need to retrieve it using multiple queries.
+
+Traditionally the SQL `OFFSET` feature has been used for pagination, but we do not support it because it is inefficient with big datasets. Instead you can use the timestamp of each row as a cursor.
+
+An example is where you want to retrieve all of your data from a dataset: `SELECT * FROM your_dataset`. If you only have a few thousand rows then that query should execute fine, but if you have millions of rows then it is likely to fail. Instead you can break down the query into multiple sequential queries.
+
+First run your desired query, adding `ORDER BY timestamp DESC` and a sensible `LIMIT`:
+
+```
+> SELECT * FROM your_dataset ORDER BY timestamp DESC LIMIT 10000
+{
+    "data": [
+        [...],
+        {
+            "timestamp": "2022-10-10 13:56:48",
+            [...]
+        }
+    ]
+}
+```
+
+Then run a second query, using the timestamp of the final row in the `WHERE` clause of the next query:
+
+```
+> SELECT * FROM your_dataset WHERE timestamp < toDateTime("2022-10-10 13:56:48") ORDER BY timestamp DESC LIMIT 1000
+{
+    "data": [
+        [...],
+        {
+            "timestamp": "2022-10-09 21:33:00",
+            [...]
+        }
+    ]
+}
+```
+
+Use the new oldest timestamp to run another query, and keep doing that until you run out of results.
+
 ## Example queries
 
 ### Select data with column aliases
