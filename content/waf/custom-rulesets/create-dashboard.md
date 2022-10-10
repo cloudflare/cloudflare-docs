@@ -58,7 +58,7 @@ To enable the custom ruleset you created, you must deploy it to your account.
 6. Under **Execution scope**, review the scope of the deployed custom ruleset. If necessary, select **Edit scope** and configure the expression that will determine the scope of the current rule.
 
     {{<Aside type="warning">}}
-Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression using the Expression Editor, you must include `and (cf.zone.plan eq "ENT")` in your expression so that the rule only applies to your domains on an Enterprise plan.
+Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression using the Expression Editor, you must use parentheses to enclose any custom conditions and end your expression with `and (cf.zone.plan eq "ENT")` so that the rule only applies to domains on an Enterprise plan.
     {{</Aside>}}
 
 7. To deploy your rule immediately, select **Deploy**. If you are not ready to deploy your rule, select **Save as draft**.

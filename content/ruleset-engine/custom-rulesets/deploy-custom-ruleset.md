@@ -15,7 +15,7 @@ Before you begin:
 To deploy a custom ruleset, add a rule that executes the custom ruleset. Define the rule scope in the rule expression.
 
 {{<Aside type="warning">}}
-You must include `and (cf.zone.plan eq "ENT")` in the expression of the rule deploying the ruleset or else the API operation will fail.
+Regarding the expression of the rule deploying the ruleset, you must use parentheses to enclose any custom conditions and end your expression with `and (cf.zone.plan eq "ENT")` or else the API operation will fail.
 {{</Aside>}}
 
 ## Example
