@@ -170,6 +170,11 @@ From **vManage**, click **Configuration** > **Templates**. You should see the ne
 
 In the example below, the template is the **GCP-Branch-Template**. Note that **VPN0** is the default, and the WAN interface used to build the tunnel needs to be part of VPN0.
 
+For the **ipsec-key-id** field, you can use one of two values from the IPsec tunnel information in the Cloudflare dashboard with the following modifications:
+
+- **FQDN ID**: Remove `ipsec.cloudflare.com` from the end of the value after pasting it into the field.
+- **User ID**: Remove the `@` symbol and everything to the right of it after pasting it into the field.
+
 ![Update template fields for IPsec tunnel](/magic-wan/static/viptela-update-device-template-ipsec.png)
 </div>
 </details>
