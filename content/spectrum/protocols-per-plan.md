@@ -17,3 +17,9 @@ On this table, you have information about which protocols are available per plan
 | RDP                           |      |     |    ✔     |     ✔      |
 
 \*Minecraft Java Edition is supported but Minecraft Bedrock Edition is not supported.
+
+{{<Aside type="note">}}
+
+PAYGO customers have access to all protocols, but there is a limit of one app per protocol.
+
+{{</Aside>}}
