@@ -52,7 +52,6 @@ export const OWNERS: Record<string, string[]> = {
   stream: ["dcpena"],
   tenant: ["kodster28"],
   terraform: ["ranbel"],
-  turnstile: ["patriciasantaana"],
   "time-services": ["kodster28"],
   turnstile: ["patriciasantaana"],
   waf: ["pedrosousa"],
