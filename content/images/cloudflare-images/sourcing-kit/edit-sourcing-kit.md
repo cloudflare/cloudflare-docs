@@ -6,7 +6,7 @@ weight: 2
 
 # Edit source details
 
-The Sourcing Kit main page has a list of all the import jobs and sources you have defined. This is where you can edit details for your sources or abort running import jobs
+The Sourcing Kit main page has a list of all the import jobs and sources you have defined. This is where you can edit details for your sources or abort running import jobs.
 
 ## Source details
 
