@@ -8,12 +8,7 @@ meta:
 
 # Microsoft Office 365 journaling setup with Area 1
 
-For customers using Microsoft Office 365, setting up a phishing risk assessment with Area 1 and a journaling setup is quick and easy. You need to:
-
-* Configure conector for delivery to Area 1 (if required)
-* Configure Journal Rule
-
-The following email flow shows how this works:
+For customers using Microsoft Office 365, setting up a phishing risk assessment with Area 1 and a journaling setup is quick and easy. The following email flow shows how this works:
 
 ![Email flow when setting up a phishing assessment risk for Office 365 with Area 1.](/email-security/static/office365-journalling-flow.png)
 
@@ -27,9 +22,9 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 2. Select the **+** button to configure a new connector and open **Select your mail flow scenario**.
 
-3. In the **From** dropdown menu, select _Office 365_.
+3. In the **From** dropdown menu, select *Office 365*.
 
-4. In the **To** drowndown menu, select _Partner Organization_.
+4. In the **To** drowndown menu, select *Partner Organization*.
 
 5. Select **Next**.
 
@@ -62,7 +57,7 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 10. Review your new connector configuration and select **Next**.
 
-11. To validate the new connector, select the `+` button and enter `address@journaling.mxrecord.io`. Then, select **Validade**.
+11. To validate the new connector, select the `+` button and enter `address@journaling.mxrecord.io`. Select **Validade**.
 
 12. After the validation completes, you should see a **Succeeded** message on all taks. Select **Save** to save your new connector.
 
@@ -70,15 +65,15 @@ Your new connector is now active and showing in **Exchange admin center** > **ma
 
 ## 2. Configure journal rule
 
-1. From the Exchange admin center, select > **compliance management** > **journal rules**.
+1. From the Exchange admin center, select **compliance management** > **journal rules**.
 
-2. You need an **undeliverable journal reports** address configured to be able to continue. If you do not have one, select **Select address**. Specify a mailbox that will receive any delivery bounces.
+2. You need to configure an **undeliverable journal reports** address to be able to continue. If you do not have one, select **Select address**. Specify a mailbox that will receive any delivery bounces.
 
 3. Select the `+` button to configure a journaling rule as follows:
     * **Send journal reports to**: This address is provided by Area 1.
     * **Name**: `Journal Messages to Area 1`.
-    * **If the message is sent to or received from**: _Apply to all messages_. If you want to apply this rule only to some messages, select _A specific user or group_ and choose from the list of users or groups.
-    * **Journal the following messages**: _External messages only_.
+    * **If the message is sent to or received from**: Select _Apply to all messages_ from the dropdown. If you want to apply this rule only to some messages, select _A specific user or group_ and choose from the list of users or groups.
+    * **Journal the following messages**: Select _External messages only_ from the dropdown.
 
 4. Select **Save** to save the journaling and acknowledge the warning indicating that the rule will only apply to future messages. 
 
@@ -86,14 +81,20 @@ Your journal rule is now configured and active. It may take a few minutes for th
 
 ## Create a distribution group in Office 365
 
-1. Go to Microsoft 365 admin center.
+1. Go to the Microsoft 365 admin center.
 
-2. Navigate to Home > Users > Active Groups.
+2. Navigate to **Home** > **Users** > **Active Groups**.
 
-3. Select **Add a group**. In **Choose a group type**, select **Distribution**. Select **Next**.
+3. Select **Add a group**. 
 
-4. Enter a name for your group.
+4. In **Choose a group type**, select **Distribution**.
 
-5. Select **Next** > **Create Group**.
+5. Select **Next**.
 
-6. Go to **Groups** > **Active groups** and find the one you have just created. Select it to add the users you want to have in that distribution group.
+6. Enter a name for your group.
+
+7. Select **Next** > **Create Group**.
+
+8. In the Microsoft 365 admin center main page, go to **Groups** > **Active groups**, and find the group you have just created.
+
+9. Select it to add the users you want to have in that distribution group.
