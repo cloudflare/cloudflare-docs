@@ -30,9 +30,11 @@ If you had your Functions limit increased by the Pages team as part of the beta 
 * If you do not have a Workers contract, you can reach out to your Customer Service Manager (CSM) to make this change.
 
 ## Have questions?
-Let us know! For any questions unanswered on this page, reach out to us on [Discord](https://discord.com/invite/cloudflaredev) in the [#functions channel](https://discord.com/channels/595317990191398933/910978223968518144) in the Pages section or contact your Customer Success Manager if applicable.
+
+For any questions unanswered on this page, reach out to us on [Discord](https://discord.com/invite/cloudflaredev) in the [#functions channel](https://discord.com/channels/595317990191398933/910978223968518144) in the Pages section or contact your Cloudflare account team.
 
 ## FAQ
 
 ### Will requests to assets be charged?
-During the beta asset hits would also count as a Function invocation. At the start of September we implemented support for a `_routes.json` file which allows you to exclude routes from running Functions. This allows for you to exclude your static files and not have Function invocations charged. This file is generated automatically if not specified so don't worry about having to create it yourself. You should already see an accurate Function count today which does not include static asset hits. If you're still seeing a value higher than expected please [join the Discord](https://discord.gg/cloudflaredev) and let us know.
+
+During the beta, asset hits would also count as a Function invocation. At the start of September we implemented support for a `_routes.json` file which allows you to exclude routes from running Functions. This allows for you to exclude your static files and not have Function invocations charged. This file is generated automatically, unless specified, so do not worry about having to create it yourself. You should already see an accurate Function count today which does not include static asset hits. If you are still seeing a value higher than expected please [join the Discord](https://discord.gg/cloudflaredev) and let us know.
