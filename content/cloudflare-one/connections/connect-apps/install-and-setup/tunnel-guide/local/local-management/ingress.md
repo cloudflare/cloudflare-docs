@@ -133,6 +133,7 @@ ingress:
 
 To set both top-level configurations and origin-specific configurations, you can use the following properties within `originRequest` rules:
 
+- [access](#access)
 - [connectTimeout](#connecttimeout)
 - [tlsTimeout](#tlstimeout)
 - [tcpKeepAlive](#tcpkeepalive)
@@ -147,6 +148,9 @@ To set both top-level configurations and origin-specific configurations, you can
 - [proxyAddress](#proxyaddress)
 - [proxyPort](#proxyport)
 - [proxyType](#proxyyype)
+
+### access
+
 
 ### connectTimeout
 
