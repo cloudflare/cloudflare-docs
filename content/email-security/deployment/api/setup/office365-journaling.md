@@ -54,6 +54,46 @@ On the other hand, if your email architecture requires outbound messages to trav
 
     Select **Next**.
 
-9. To preserve the default TLS configuration, make sure the following settings are enabled:
-    * The **Always use Transport Layer Security (TLS) to secure the connection (recommended)** checkbox should be selected.
+9. You need to preserve the default TLS configuration. Review the following settings:
+    * Make sure the **Always use Transport Layer Security (TLS) to secure the connection (recommended)** checkbox is selected.
     * In **Connect only if the recipients email server certificate matches this criteria** select **Issued by a trusted certificate authority (CA)**.
+
+    Select **Next**.
+
+10. Review your new connector configuration and select **Next**.
+
+11. To validate the new connector, select the `+` button and enter `address@journaling.mxrecord.io`. Then, select **Validade**.
+
+12. After the validation completes, you should see a **Succeeded** message on all taks. Select **Save** to save your new connector.
+
+Your new connector is now active and showing in **Exchange admin center** > **mail flow**.
+
+## 2. Configure journal rule
+
+1. From the Exchange admin center, select > **compliance management** > **journal rules**.
+
+2. You need an **undeliverable journal reports** address configured to be able to continue. If you do not have one, select **Select address**. Specify a mailbox that will receive any delivery bounces.
+
+3. Select the `+` button to configure a journaling rule as follows:
+    * **Send journal reports to**: This address is provided by Area 1.
+    * **Name**: `Journal Messages to Area 1`.
+    * **If the message is sent to or received from**: _Apply to all messages_. If you want to apply this rule only to some messages, select _A specific user or group_ and choose from the list of users or groups.
+    * **Journal the following messages**: _External messages only_.
+
+4. Select **Save** to save the journaling and acknowledge the warning indicating that the rule will only apply to future messages. 
+
+Your journal rule is now configured and active. It may take a few minutes for the configuration to propagate and start to push messages to Area 1. After it propagates, access the Area 1 portal. The number of messages processed will grow as journaled messages are sent to Area 1.
+
+## Create a distribution group in Office 365
+
+1. Go to Microsoft 365 admin center.
+
+2. Navigate to Home > Users > Active Groups.
+
+3. Select **Add a group**. In **Choose a group type**, select **Distribution**. Select **Next**.
+
+4. Enter a name for your group.
+
+5. Select **Next** > **Create Group**.
+
+6. Go to **Groups** > **Active groups** and find the one you have just created. Select it to add the users you want to have in that distribution group.
