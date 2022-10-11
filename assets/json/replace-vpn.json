@@ -1,7 +1,7 @@
 {
     "path": "/learning-paths/replace-vpn/",
     "title": "Replace your VPN",
-    "description": "Offload key applications from their traditional VPN to a cloud-native Zero Trust Network Access (ZTNA) solution.",
+    "description": "Give users secure, auditable network and application access.",
     "detailed_description": "This tutorial will show you how to use a combination of Cloudflare products to address use cases typically served by a VPN. Cloudflare provides discrete, Zero Trust enabled application and service access to all TCP and UDP ports in both on-premise and cloud networks. We do this using a combination of an endpoint agent, a network connector, but no other software and no hardware is required for this deployment.",
     "products": [
       "Cloudflare Gateway",
