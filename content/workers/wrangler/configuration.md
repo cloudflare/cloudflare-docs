@@ -551,7 +551,7 @@ header: wrangler.toml
 ---
 [dev]
 ip = "192.168.1.1"
-port = "8080"
+port = 8080
 local_protocol = "http"
 ```
 
