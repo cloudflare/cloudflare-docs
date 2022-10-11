@@ -4,7 +4,7 @@ _build:
   render: never
   list: never
 
-name: "Don't throw from async functions"
+name: "Do not throw from async functions"
 date: "2022-10-10"
 enable_flag: "capture_async_api_throws"
 disable_flag: "do_not_capture_async_api_throws"
