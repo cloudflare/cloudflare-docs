@@ -148,7 +148,7 @@ curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576
 ```json
 { 
   "1": 50, 
- "10": 50 
+  "10": 50 
 }
 ```
 
@@ -164,7 +164,7 @@ curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576
 `requests_by_attribute`
 
 ```json 
-{
+  {
     "topIPs": [
       {
         "metric": "10.75.34.1"
@@ -177,7 +177,7 @@ curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576
         "requests": 100
       }
     ]
-}
+  }
 ```
 
 ### Expression Fields 
