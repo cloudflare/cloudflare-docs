@@ -24,7 +24,7 @@ Create custom headers using the [`_headers` file](/pages/platform/headers/). For
 filename: _headers
 ---
 /blog/*
-  Link: </styles.css>; rel=preload; as=stylesheet
+  Link: </styles.css>; rel=preload; as=style
 ```
 
 Pages will then attach this `Link: </styles.css>; rel=preload; as=stylesheet` header. Early Hints will then emit this header as an Early Hint once cached.
@@ -48,7 +48,7 @@ filename: /blog/index.html
 
 <html>
   <head>
-    <link rel="preload" href="/style.css" as="stylesheet" />
+    <link rel="preload" href="/style.css" as="style" />
     <link rel="stylesheet" href="/style.css" />
   </head>
 </html>
