@@ -8,7 +8,7 @@ meta:
 
 # Microsoft Office 365 BCC setup with Area 1
 
-For customers using Microsoft Office 365, setting up a phishing risk assessment with Area 1 and a BCC setup is quick and easy. You need to configure an inbound rule to send emails to Area 1 via BCC for processing and detection of potential phishing attacks. The following email flow shows how this works:
+For customers using Microsoft Office 365, setting up a phishing risk assessment with Area 1 via a BCC setup is quick and easy. You need to configure an inbound rule to send emails to Area 1 via BCC for processing and detection of potential phishing attacks. The following email flow shows how this works:
 
 ![Email flow when setting up a phishing assessment risk for Office 365 with Area 1.](/email-security/static/office365-bcc-flow.png)
 
@@ -18,12 +18,12 @@ For customers using Microsoft Office 365, setting up a phishing risk assessment 
 2. On the **Actions** pane, select **New Transport Rule**.
 3. Give the transport rule a name and a description and select **Next**.
 4. In the **Condition** configuration panel, select the option **from users that are inside or outside the organization** option. In the dropdown that opens, select **Outside the organization**.
-5. In the same **Condition** configuration panel, add a second condition to the transport rule. Select **sent to users that are inside or outside the organization, or partners**. Keep the default value of **Inside the organization**.
+5. Still in the same **Condition** configuration panel, add a second condition to the transport rule. Select **sent to users that are inside or outside the organization, or partners**. Keep the default value of **Inside the organization**.
 6. Select **Next**.
-7. In the **Action** configuration panel, select **Blink carbon copy (Bcc) the message to addresses**, and then select the **addresses** variable to edit the addresses you copy as BCC.
+7. In the **Action** configuration panel, select **Blind carbon copy (Bcc) the message to addresses**. Edit the **addresses** variable to add the addresses you want to copy as BCC.
 8. In **Specify Recipient**, select the **down arrow** next to the **Add** button > **External E-Mail Address**.
 9. Enter the BCC address provided by Area 1. This address is specific to your account.
-10 Select **OK** > **OK** to return to the main configuration page of the transport rule.
+10. Select **OK** > **OK** to return to the main configuration page of the transport rule.
 11. At the main configuration page of the transport rule, select **Next** to continue to the Exception configuration panel.
 12. You do not need to configure an exception rule. Select **Next**.
 13. In **Create Rule**, select the **New** button.
