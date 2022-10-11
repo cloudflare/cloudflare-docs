@@ -6,7 +6,7 @@ weight: 9
 
 # WARP with firewall
 
-If your organization uses a firewall or other policies to restrict Internet traffic, you may need to make a few changes to allow WARP to connect.
+If your organization uses a firewall or other policies to restrict or intercept Internet traffic, you may need to make a few changes to allow the agent to connect.
 
 ## Client Orchestration API
 
@@ -40,3 +40,18 @@ If your organization does not currently allow Inbound/Outbound communication ove
 
 - Windows: `C:\Program Files\Cloudflare\Cloudflare WARP\warp-svc.exe`
 - macOS: `/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP`
+
+## Captive Portal
+The following domains are used as part of our captive portal check
+- cloudflareportal.com
+- cloudflareok.com
+- cloudflarecp.com
+
+## Connectivity check
+As part of establishing the WARP connection, the angent will check the follows URLs to validate a succesfull connection. 
+- Outside the tunnel: engage.cloudflareclient.com
+- Inside the tunnel: connectivity.cloudflareclient.com
+
+## NEL Reporting
+While not required for the agent to function, we will report connectivity issues to our NEL endpoint via the following URL. This is not technically required to operate but will result in errors in our logs if not excluded properly.
+- a.nel.cloudflare.com
