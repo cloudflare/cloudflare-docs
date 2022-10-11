@@ -1,10 +1,10 @@
 ---
 pcx_content_type: concept
-title: Sourcing kit (beta)
+title: Sourcing Kit (beta)
 weight: 8
 ---
 
-{{<beta>}}Sourcing kit{{</beta>}}
+{{<beta>}}Sourcing Kit{{</beta>}}
 
 Sourcing Kit allows you to easily import images from Amazon S3, no matter how many you have. Sourcing kit also allows you to import new images when there is a change on your source. 
 
