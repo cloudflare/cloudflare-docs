@@ -220,7 +220,7 @@ This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/
 
 - `pattern` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The pattern that your Worker should be run on, for example, `"example.com/*"`.
+  - The pattern that your Worker should be run on, for example, `"example.com"`.
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -234,7 +234,7 @@ Example:
 ---
 header: wrangler.toml
 ---
-route = { pattern = "example.com/*", custom_domain: true }
+route = { pattern = "example.com", custom_domain = true }
 ```
 
 ## Triggers
@@ -637,6 +637,6 @@ For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only 
 
 It is a recommended best practice to treat `wrangler.toml` as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard. This allows you to treat `wrangler.toml` as a form of Infrastructure as Code.
 
-If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`. 
+If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`.
 
 Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.
