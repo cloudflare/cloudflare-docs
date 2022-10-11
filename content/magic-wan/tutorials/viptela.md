@@ -142,7 +142,9 @@ crypto ikev2 profile {{ikev2_profile_name}}
 identity local key-id {{ipsec-key-id}}
 ```
 
-In the example above, replay is disabled and the `local key-id` is set to a variable so that a Cloudflare tunnel ID with the format `xxxxxx_YYYYYYY` can be added.
+In the example above, replay is disabled and the `local key-id` is set to a variable so that a Cloudflare tunnel ID (**HEX ID**, **FQDN ID**, or **User ID**) can be added.
+
+To use the **FQDN ID**, remove `ipsec.cloudflare.com` from the end of the value after pasting it into the **ipsec-key-id** field. To use the  **User ID**, remove the `@` symbol and everything to the right of it after pasting it into the **ipsec-key-id** field.
 
 ## 3. Create tunnels in vManage
 
@@ -170,10 +172,11 @@ From **vManage**, click **Configuration** > **Templates**. You should see the ne
 
 In the example below, the template is the **GCP-Branch-Template**. Note that **VPN0** is the default, and the WAN interface used to build the tunnel needs to be part of VPN0.
 
-For the **ipsec-key-id** field, you can use one of two values from the IPsec tunnel information in the Cloudflare dashboard with the following modifications:
+For the **ipsec-key-id** field, you can use one of the following options from the IPsec tunnel information in the Cloudflare dashboard:
 
-- **FQDN ID**: Remove `ipsec.cloudflare.com` from the end of the value after pasting it into the field.
-- **User ID**: Remove the `@` symbol and everything to the right of it after pasting it into the field.
+- **HEX ID**
+- **FQDN ID**: Remove `ipsec.cloudflare.com` from the end of the value after pasting it into the **ipsec-key-id** field.
+- **User ID**: Remove the `@` symbol and everything to the right of it after pasting it into the **ipsec-key-id** field.
 
 ![Update template fields for IPsec tunnel](/magic-wan/static/viptela-update-device-template-ipsec.png)
 </div>
