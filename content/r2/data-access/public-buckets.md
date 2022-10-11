@@ -158,6 +158,6 @@ To disable public access for your bucket:
 
 Your bucket and its objects can no longer be accessed using the Public Bucket URL. 
 
-## Configuring CORS for your bucket
+## Configure CORS for your bucket
 
-Currently you have to use the S3 API `PutBucketCors` to configure CORS for your bucket.
+Currently, you have to use the S3 API `PutBucketCors` to configure CORS for your bucket.
