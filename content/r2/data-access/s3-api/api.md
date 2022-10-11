@@ -54,7 +54,7 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 <details>
 <summary> Click to expand a list of unimplemented bucket-level operations. </summary>
 
-{{<table-wrap style="width:123%">}}
+{{<table-wrap style="width:110%">}}
 
 | API Name       | Feature                           |
 | ---------------| --------------------------------- |
@@ -127,7 +127,7 @@ This does not apply to concurrent uploads for different files.
 
 {{</Aside>}}
 
-{{<table-wrap style="width:123%">}}
+{{<table-wrap style="width:110%">}}
 
 | API Name                | Feature                   |
 | ------------------------| ------------------------- |
