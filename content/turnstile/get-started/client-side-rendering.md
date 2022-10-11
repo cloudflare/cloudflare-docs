@@ -117,8 +117,7 @@ If a given widget has expired or needs to be reloaded, you can use the `turnstil
 
 ## Remove a widget
 
-Once a widget is no longer needed, it can be removed from the page using `turnstile.remove(widgetId: string)`.
-This won't call any callback and will remove all related DOM elements.
+Once a widget is no longer needed, it can be removed from the page using `turnstile.remove(widgetId: string)`. This will not call any callback and will remove all related DOM elements.
 
 ## Configurations
 
