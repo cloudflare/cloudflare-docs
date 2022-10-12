@@ -4,7 +4,7 @@ title: Bundling
 weight: 5
 ---
 
-# Wrangler's bundling
+# Bundling
 
 {{<Aside type="note">}}
 We recommend using Wrangler's inbuilt bundling, but we understand there are cases where you'll need a bit more flexibility. We've built an escape hatch in the form of [Custom Builds](/workers/wrangler/custom-builds/), which let you replace Wrangler's built-in build step with your own.
