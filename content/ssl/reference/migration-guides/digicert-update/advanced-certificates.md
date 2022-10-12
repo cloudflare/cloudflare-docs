@@ -33,7 +33,7 @@ This table provides a summary of the differences between DigiCert and Cloudflare
 If your system integrates with the Cloudflare API to [order advanced certificates](https://api.cloudflare.com/#certificate-packs-order-advanced-certificate-manager-certificate-pack), you will need to update the following fields:
 
 - The `"certificate_authority"` field should either use Google Trust Services (`"google"`) or Let's Encrypt (`"lets_encrypt"`).
-- The `"validation_method"` field should either use [`"http"`](/ssl/edge-certificates/changing-dcv-method/methods/http/) (only available for [non-wildcard hostnames](/ssl/ssl-tls/migration-guides/dcv-update/)) or [`"txt"`](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
+- The `"validation_method"` field should either use [`"http"`](/ssl/edge-certificates/changing-dcv-method/methods/http/) (only available for [non-wildcard hostnames](/ssl/reference/migration-guides/dcv-update/)) or [`"txt"`](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
 - The `"validity_days"` field should either use `14`, `30`, or `90` (14 or 30 day certificates will use Google Trust Services as the issuing CA).
 
 ## Changes after February 13, 2023

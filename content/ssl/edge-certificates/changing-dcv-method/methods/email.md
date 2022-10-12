@@ -12,7 +12,7 @@ meta:
 
 {{<Aside type="note">}}
 
-With the [upcoming change](/ssl/ssl-tls/migration-guides/digicert-update/advanced-certificates/) to certificates issued by DigiCert, email DCV will soon be unsupported.
+With the [upcoming change](/ssl/reference/migration-guides/digicert-update/advanced-certificates/) to certificates issued by DigiCert, email DCV will soon be unsupported.
 
 {{</Aside>}}
 
