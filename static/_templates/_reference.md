@@ -11,7 +11,7 @@ Write an overview of the reference information on this page. If this section has
  
 <DirectoryListing path="/reference"/>
  
-## <Concise noun title></Concise>
+## Concise noun title
 
 Brief description of content in this section.
 
