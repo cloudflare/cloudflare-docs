@@ -24,7 +24,7 @@ To enable Total TLS:
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-To enable Opportunistic Encryption in the dashboard:
+To enable Total TLS in the dashboard:
  
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Choose your account and domain.
