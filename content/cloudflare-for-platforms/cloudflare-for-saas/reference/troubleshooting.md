@@ -25,6 +25,7 @@ CAA is a new DNS resource record type defined in [RFC 6844](https://datatracker.
 ```txt
 example.com. IN CAA 0 issue "digicert.com"
 example.com. IN CAA 0 issue "letsencrypt.org"
+example.com. IN CAA 0 issue "pki.goog"
 ```
 
 While it’s possible for CAA records to be set on the subdomain they wish to use with your service, it is unlikely. You would also have to remove this CAA record.
