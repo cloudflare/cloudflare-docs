@@ -24,9 +24,7 @@ Write an overview of the high-level feature here, not more than 2-3 sentences. O
 (Feature 2) allows you to (placeholder). For example, the following configuration (placeholder).
  
 | Setting 1 | Setting 2 | Setting 3 |
- 
 | - | - | - | 
- 
 | Value 1 | Value 2 | Value 3 |
  
 ## Feature 3
