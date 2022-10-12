@@ -11,7 +11,7 @@ meta:
 {{<render file="../../ssl/_partials/_email-validation-definition.md">}}
 <br>
 
-{{<Aside type="note">}}
+{{<Aside type="warning">}}
 
 With the [upcoming change](/ssl/reference/migration-guides/digicert-update/custom-hostname-certificates/) to certificates issued by DigiCert, email DCV will soon be unsupported.
 

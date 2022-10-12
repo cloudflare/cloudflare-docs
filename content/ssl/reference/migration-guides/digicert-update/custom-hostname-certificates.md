@@ -90,8 +90,6 @@ If the custom hostname is not proxying traffic through Cloudflare, then the cust
 
 {{<render file="../../cloudflare-for-platforms/_partials/_wildcard-hostname-reqs.md">}}
 
-This is because - in contrast to DigiCert - Let’s Encrypt and Google Trust Services follow the [ACME Protocol](https://datatracker.ietf.org/doc/html/rfc8555), which requires one DCV token to be placed for every hostname on the certificate.
-
 {{<render file="../../cloudflare-for-platforms/_partials/_update-dcv-method.md">}}
 
 {{<render file="../../cloudflare-for-platforms/_partials/_txt-validation_preamble.md">}}

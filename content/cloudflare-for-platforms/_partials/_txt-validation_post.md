@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Regardless of how you access them, your customers should place these at their authoritative DNS provider under the `"_acme-challenge"` DNS label. Once these TXT records are in place, validation and certificate issuance will automatically complete.
+Your customers should place these at their authoritative DNS provider under the `"_acme-challenge"` DNS label. Once these TXT records are in place, validation and certificate issuance will automatically complete.
 
 {{<Aside type="note">}}
 

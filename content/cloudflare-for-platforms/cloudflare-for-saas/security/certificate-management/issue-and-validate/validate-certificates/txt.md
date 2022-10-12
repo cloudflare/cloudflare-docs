@@ -10,14 +10,19 @@ meta:
 
 {{<render file="../../ssl/_partials/_txt-validation-definition.md">}}
 
-## Wildcard or non-wildcard hostnames
+## Non-wildcard hostnames
 
-If you are not using a wildcard hostname and choose **TXT** validation, your customer only needs to add **one** token to their authoritative DNS.
+If your custom hostname does not include a wildcard, Cloudflare will always and automatically attempt to complete DCV through [HTTP](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/#http-automatic), even if you have selected **TXT** for your validation method.
+
+This HTTP validation should succeed as long as your customer is pointing to your custom hostname and they do not have any [CAA records](/cloudflare-for-platforms/cloudflare-for-saas/reference/troubleshooting/#certificate-authority-authorization-caa-records) blocking your chosen certificate authority.
+
+## Wildcard hostnames
 
 {{<render file="_wildcard-hostname-reqs.md">}}
-<br>
 
-## Get TXT tokens
+This means that - if you choose to use wildcard custom hostnames - you will need a way to share these DCV tokens with your customer.
+
+### Step 1 - Get TXT tokens
  
 Once you [create a new hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/issue-certificates/) and choose this validation method, your tokens will be ready after a few seconds.
 
@@ -37,8 +42,26 @@ Once you [create a new hostname](/cloudflare-for-platforms/cloudflare-for-saas/s
 {{</tab>}}
 {{</tabs>}}
 
-## Steps for your customer
+### Step 2 - Share with your customer
+
+You will then need to share these TXT tokens with your customers.
+
+### Step 3 - Add DNS records (customer)
  
 {{<render file="_txt-validation_post.md">}}
  
 {{<render file="_ssl-for-saas-validate-patch.md">}}
+
+### Step 4 (optional) - Fetch new tokens
+
+Your DCV tokens expire after a [certain amount of time](/cloudflare-for-platforms/cloudflare-for-saas/reference/token-validity-periods/), depending on your certificate authority.
+
+This means that, if your customers take too long to place their tokens at their authoritative DNS provider, you may need to [get new tokens](#step-1---get-txt-tokens) and re-share them with your customer.
+
+---
+
+### DigiCert
+
+If you create a hostname with DigiCert as the certificate authority, you only need to share one TXT record for your customer to place at their authoritative DNS provider.
+
+However, Cloudflare [will soon be deprecating](/ssl/reference/migration-guides/digicert-update/) DigiCert as an issuing CA for custom hostnames, so we recommend you follow our [migration guide](/ssl/reference/migration-guides/digicert-update/custom-hostname-certificates/) to move your custom hostnames over to another CA.
