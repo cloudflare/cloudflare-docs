@@ -11,7 +11,7 @@ This guide will get you started on setting up the Turnstile widget.
 
 If you are currently using a CAPTCHA service, you can copy and paste our script wherever you have deployed the existing script today. 
  
-## Sitekey and secret key
+## 1. Get a sitekey and secret key
 
 To start using the Turnstile widget, you will need to obtain a sitekey and a secret key. The sitekey and secret key are always associated with one widget and cannot be reused for other widgets.
 
@@ -33,7 +33,7 @@ The sitekey and secret key are generated upon the creation of a widget, allowing
 3. In the widget overview, select **Settings**.
 4. Copy your sitekey and secret key.
 
-## Add the Turnstile widget to your site
+## 2. Add the Turnstile widget to your site
 
 To add the Turnstile widget:
 
@@ -42,9 +42,7 @@ To add the Turnstile widget:
 <div>
 
 ```html
-
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
 ```
 </div>
 
@@ -54,4 +52,7 @@ To add the Turnstile widget:
     * [Explicit rendering](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget)
     * [Implicit rendering](/turnstile/get-started/client-side-rendering/#implicitly-render-the-turnstile-widget)
 
-3. [Validate the server-side response](/turnstile/get-started/server-side-validation/)
+## 3. Validate the response server-side
+
+After you have installed the Turnstile widget on your site, you must configure your server to validate the Turnstile response.
+Refer to [Validate the server-side response](/turnstile/get-started/server-side-validation/)

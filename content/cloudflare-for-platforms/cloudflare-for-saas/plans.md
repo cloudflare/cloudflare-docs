@@ -77,10 +77,10 @@ meta:
     </tr>
     <tr>
       <td>
-        <strong>Selectable CA</strong>
+        <strong><a href="/ssl/reference/certificate-authorities/">Selectable CA</a></strong>
       </td>
       <td style="text-align:center">No</td>
-      <td>Yes (Digicert or Let's Encrypt)</td>
+      <td>Yes</td>
     </tr>
     <tr>
       <td>
@@ -122,7 +122,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/cloudflare-for-platforms/workers-for-platforms/">Custom metadata</a>
+          <a href="/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/">Custom metadata</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>

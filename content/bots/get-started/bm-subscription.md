@@ -28,7 +28,7 @@ Our Solutions Engineering team will work with you to begin setting up the produc
 - Review the following concepts:
 
   - [Bot score](/bots/concepts/bot-score/): Learn how Cloudflare scores bot requests.
-  - [Challenge Solve Rate (CSR)](/bots/concepts/challenge-solve-rate/): Learn how to evaluate the effectiveness of firewall rules.
+  - [Challenge Solve Rate (CSR)](/bots/concepts/challenge-solve-rate/): Learn how to evaluate the effectiveness of your rules.
   - [Bot tags](/bots/concepts/cloudflare-bot-tags/): Learn more about _why_ Cloudflare classified a request a certain way.
 
 ### Step 1 — Configure Bot Management

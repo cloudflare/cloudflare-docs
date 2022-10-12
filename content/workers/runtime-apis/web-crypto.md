@@ -34,6 +34,80 @@ Some common uses include:
 The Web Crypto API differs significantly from Node’s Crypto API. If you want to port JavaScript code that relies on Node’s Crypto API, you will need to adapt it to use Web Crypto primitives.
 {{</Aside>}}
 
+## Constructors
+
+{{<definitions>}}
+
+- {{<code>}}crypto.DigestStream(algorithm){{</code>}} {{<type>}}DigestStream{{</type>}}
+
+  - A non-standard extension to the `crypto` API that supports generating a hash digest from streaming data. The `DigestStream` itself is a [`WritableStream`](/workers/runtime-apis/streams/writablestream/) that does not retain the data written into it. Instead, it generates a hash digest automatically when the flow of data has ended.
+
+    **Parameters:**
+
+    - {{<code>}}algorithm{{<param-type>}}string | object{{</param-type>}}{{</code>}}
+
+      - Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#Syntax).
+
+    **Usage:**
+{{</definitions>}}
+{{<tabs labels="js/esm | ts/esm">}}
+{{<tab label="js/esm" default="true">}}
+```js
+export default {
+  async fetch(req) {
+    // Fetch from origin
+    const res = await fetch(req);
+    
+    // We need to read the body twice so we `tee` it (get two instances)
+    const [bodyOne, bodyTwo] = res.body.tee();
+    // Make a new response so we can set the headers (responses from `fetch` are immutable)
+    const newRes = new Response(bodyOne, res);
+    // Create a SHA-256 digest stream and pipe the body into it
+    const digestStream = new crypto.DigestStream("SHA-256");
+    bodyTwo.pipeTo(digestStream);
+    // Get the final result
+    const digest = await digestStream.digest;
+    // Turn it into a hex string
+    const hexString = [...new Uint8Array(digest)]
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('')
+    // Set a header with the SHA-256 hash and return the response
+    newRes.headers.set("x-content-digest", `SHA-256=${hexString}`);
+    return newRes;
+  }
+}
+```
+{{</tab>}}
+{{<tab label="ts/esm">}}
+```ts
+const handler: ExportedHandler = {
+  async fetch(req) {
+    // Fetch from origin
+    const res = await fetch(req);
+    
+    // We need to read the body twice so we `tee` it (get two instances)
+    const [bodyOne, bodyTwo] = res.body.tee();
+    // Make a new response so we can set the headers (responses from `fetch` are immutable)
+    const newRes = new Response(bodyOne, res);
+    // Create a SHA-256 digest stream and pipe the body into it
+    const digestStream = new crypto.DigestStream("SHA-256");
+    bodyTwo.pipeTo(digestStream);
+    // Get the final result
+    const digest = await digestStream.digest;
+    // Turn it into a hex string
+    const hexString = [...new Uint8Array(digest)]
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('')
+    // Set a header with the SHA-256 hash and return the response
+    newRes.headers.set("x-content-digest", `SHA-256=${hexString}`);
+    return newRes;
+  }
+}
+export default handler;
+```
+{{</tab>}}
+{{</tabs>}}
+
 ## Methods
 
 {{<definitions>}}

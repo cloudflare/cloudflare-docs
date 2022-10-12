@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Workers KV
-weight: 3
+weight: 4
 ---
 
 # Workers KV
