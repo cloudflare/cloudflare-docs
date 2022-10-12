@@ -11,4 +11,4 @@ With Sourcing Kit you can define one or multiple repositories of images to bulk 
 
 Sourcing Kit also lets you target paths, define prefixes  for imported images, and obtain error logs for bulk operations.
 
-Sourcing Kit is in beta. If you have any comments, questions, or bugs to report, contact the Images team on our [discord channel](https://discord.com/channels/595317990191398933/973591562615390228). You can also engage with other users and the Images team on Cloudflare [support forum](https://community.cloudflare.com/c/developers/images/63).
+Sourcing Kit is in beta. If you have any comments, questions, or bugs to report, contact the Images team on our [discord channel](https://discord.com/channels/595317990191398933/973591562615390228). You can also engage with other users and the Images team on Cloudflare's [support forum](https://community.cloudflare.com/c/developers/images/63).
