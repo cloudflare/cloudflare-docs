@@ -9,6 +9,8 @@ weight: 14
 {{<render file="_total-tls.md">}}
 <br>
 
+When issued, these certificates will have a type of **Advanced - Total TLS**.
+
 When you [enable](#enable-total-tls) Total TLS, Cloudflare will also show a warning on proxied DNS records that are not covered by a TLS certificate.
 
 ## Availability
