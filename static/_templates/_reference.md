@@ -15,6 +15,6 @@ Write an overview of the reference information on this page. If this section has
 
 Brief description of content in this section.
 
-## <Concise noun title></Concise>
+## Concise noun title
  
 Brief description of content in this section.
