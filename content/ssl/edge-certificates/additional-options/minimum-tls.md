@@ -36,8 +36,6 @@ To update your **Minimum TLS Version** with the API, send a [`PATCH`](https://ap
 {{</tab>}}
 {{</tabs>}}
 
-
-
 Selecting a minimum version ensures that all subsequent, newer versions of the protocol are also supported. TLS 1.0 is the version that Cloudflare sets by default for all customers using certificate-based encryption. In this case, it means that Cloudflare also accepts requests encrypted with all TLS versions beyond 1.0.
 
 To properly test supported TLS versions, attempt a request to your Cloudflare domain while specifying a TLS version. For example, use a `curl` command to test TLS 1.1 (replace `www.example.com` with your Cloudflare domain and hostname):

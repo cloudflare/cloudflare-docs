@@ -53,6 +53,8 @@ CT monitoring does not detect phishing attempts. For example, for <code>cloudfla
 
 Most certificate alerts are routine. We send alerts whenever a certificate for your domain appears in a log. Certificates expire (and must be reissued), so it is completely normal to receive issuance emails. If your domain is listed in the email, along with reasonable ownership and certificate information, then **no action is required**.
 
+Additionally, you should check whether the certificate was issued through Cloudflare. To view all Cloudflare-issued certificates and backup certificates - which require no additional actions - visit the [Edge Certificates page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) in the dashboard.
+
 You _should_ take action when something is clearly wrong, such as if you:
 
 - Do not recognize the certificate issuer
