@@ -42,7 +42,7 @@ The following changes will automatically affect certificates that are renewed af
 
 ### Certificate authorities
 
-DigiCert certificates renewed after November 7th will be issued through a Certificate Authority chosen by Cloudflare (Let's Encrypt or Google Trust Services).
+DigiCert certificates renewed after February 13th will be issued through a Certificate Authority chosen by Cloudflare (Let's Encrypt or Google Trust Services).
 
 {{<Aside type="note">}}
 
