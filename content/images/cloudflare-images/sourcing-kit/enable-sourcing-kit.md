@@ -46,8 +46,6 @@ You can have many import jobs from the same or different sources. If you select 
 4. Choose from one of the sources already configured.
 
 Repeat steps 8-11 in [Create your first import job](#create-your-first-import-job) to finish setting up your new import job.
-
-
 ## Next steps
 
 Refer to [Edit source details](/images/cloudflare-images/sourcing-kit/edit-sourcing-kit/) to learn more about editing details for import jobs you have already created, or to learn how to abort running import jobs.
