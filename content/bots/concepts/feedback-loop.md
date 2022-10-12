@@ -9,7 +9,7 @@ The Bots Feedback Loop is a way for customers to send Cloudflare direct feedback
 
 ## Availability
 
-Anyone who has access to Bot Analytics is able to submit feedback. This includes Enterprise Bot Management customers, as well as Business and Enterprise customers who use Super Bot Fight Mode. 
+Anyone who has access to Bot Analytics is able to submit feedback. This includes Enterprise Bot Management customers, as well as Business and Enterprise customers who use Super Bot Fight Mode. Visit [Plans](/bots/plans/) for more information.
 
 ## False Positive
 
