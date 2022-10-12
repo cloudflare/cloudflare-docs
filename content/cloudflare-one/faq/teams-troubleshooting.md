@@ -67,7 +67,7 @@ A browser isolation session is a connection from your local browser to a remote 
 
 ## I see `SAML Verify: Invalid SAML response, SAML Verify: No certificate selected to verify` when testing a SAML identity provider.
 
-This error occurs when the identity provider has not included the signing public key in the SAML response. Even though you uploaded the signing certificate to Cloudflare while setting up the IdP, we still require the public key in the SAML response. We use this public key to verify that....
+This error occurs when the identity provider has not included the signing public key in the SAML response. While not required by the SAML 2.0 specification, Cloudflare Access always checks that the public key provided matches the **Signing certificate** uploaded to the Zero Trust dashboard.  For the integration to work, you will need to configure your identity provider to add the public key.
 
 ## I see an error: x509: certificate signed by unknown authority.
 
