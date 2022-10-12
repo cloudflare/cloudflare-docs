@@ -290,9 +290,9 @@ try {
 try {
   await walkJsonFiles(LEARNING_PATH_DIR);
   if (!JSON_ERRORS && !JSON_WARNS) {
-    console.log("\n~> /asset/json files DONE~!\n\n");
+    console.log("\n~> /assets/json files DONE~!\n\n");
   } else {
-    let msg = "\n~> /asset/json files DONE with:";
+    let msg = "\n~> /assets/json files DONE with:";
     if (JSON_ERRORS > 0) {
       process.exitCode = 1;
       msg += "\n    - " + JSON_ERRORS.toLocaleString() + " error(s)";
