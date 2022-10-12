@@ -27,18 +27,14 @@ Once you have [set up your Cloudflare for SaaS application](/cloudflare-for-plat
 ## Validate certificates
  
 {{<render file="../../ssl/_partials/_dcv-definition.md">}}
-
-### Non-wildcard custom hostnames
-
-{{<render file="../../ssl/_partials/_custom-hostname-non-wildcard.md">}}
-
-### Wildcard custom hostnames
-
-{{<render file="../../ssl/_partials/_custom-hostname-wildcard.md">}}
-
----
  
 ### DCV methods
+
+If you want to pre-validate your customer's certificate before they set a CNAME record — either to avoid downtime or prevent any issuance errors — explore [TXT](#txt), [Email](#email), or [HTTP (manual)](#http-manual), or [CNAME](#cname) validation.
+
+If you create custom hostnames with wildcards, use [TXT](#txt) or [Email](#email) validation.
+
+If you value simplicity and your customers can tolerate a few minutes of downtime, use [HTTP (automatic)](#http-automatic) validation.
  
 #### TXT record
  
@@ -56,12 +52,6 @@ Ask your customer to create a TXT record named the **name** and containing the *
 #### Email
  
 {{<render file="../../ssl/_partials/_email-validation-definition.md">}}
-
-{{<Aside type="note">}}
-
-With the [upcoming change](/ssl/ssl-tls/migration-guides/digicert-update/custom-hostname-certificates/) to certificates issued by DigiCert, email DCV will soon be unsupported.
-
-{{</Aside>}}
  
 {{<render file="_ssl-for-saas-create-hostname.md">}}
  
@@ -76,12 +66,6 @@ With the [upcoming change](/ssl/ssl-tls/migration-guides/digicert-update/custom-
  
 {{<render file="../../ssl/_partials/_dcv-cname-definition.md">}}
 
-{{<Aside type="note">}}
-
-With the [upcoming change](/ssl/ssl-tls/migration-guides/digicert-update/custom-hostname-certificates/) to certificates issued by DigiCert, CNAME DCV will soon be unsupported.
-
-{{</Aside>}}
- 
 Since this method is only available using the API, you need to make a [POST request](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) and set a `"method":"cname"` parameter.
  
 Within the `ssl` object in the response, refer to the values present in the `validation_records` array. Each record will contain a property for `cname` and `cname_target` (you can also access these values in the dashboard by clicking that specific hostname certificate). Provide these values to your customer so they can add a CNAME record at their authoritative DNS provider.
