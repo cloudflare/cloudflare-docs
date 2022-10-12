@@ -13,7 +13,7 @@ Product description - What does this product do? Why would you use it? Short ove
 
 {{</description>}}
  
-{{<plan type="<type>">}}
+{{<plan type="<enterprise|pro|business|all|paid|add-on>">}}
 
 Summary - Brief welcoming introductory content. A few sentences describing the product’s benefits to the customer. Focus on customer benefit but can also include general product information.
  
@@ -30,7 +30,7 @@ Description highlighting capabilities of product feature. This section accepts M
  
 ## Related products
  
-{{<related header="<Name of product>" href="</link/to/product>" product="<slugified-product-name>">}}
+{{<related header="<Name of product>" href="</link/to/product/>" product="<slugified-product-name>">}}
 
 Description of product used together or connected configuration with current product.
 {{</related>}}
