@@ -15,7 +15,7 @@ Enabling Sourcing Kit is as easy as creating your first import job. This will se
 3. Select **Import images** to create an import job.
 4. In **Source name** give your source an appropriate name.
 5. In **Amazon S3 bucket information** enter the S3's bucket name where your images are stored.
-6. In **Required credentials**, enter your Amazon S3 credentials. This is required to connect Cloudflare Images to your source and import your images. Refer to [Amazon S3 credentials](/images/cloudflare-images/sourcing-kit/amazon-credentials) to learn more about how to set up credentials. 
+6. In **Required credentials**, enter your Amazon S3 credentials. This is required to connect Cloudflare Images to your source and import your images. Refer to [Credentials](/images/cloudflare-images/sourcing-kit/credentials) to learn more about how to set up credentials. 
 7. Select **Next**.
 8. In **Basic rules** define the Amazon S3 path to import your images from, and the path you want to copy your images to in your Cloudflare Images account. This is optional, and you can leave these fields blank.
 9. On the same page, in **Overwrite images**, you need to choose what happens when the files in your source change. The recommended action is to copy the new images and overwrite the old ones on your Cloudflare Images account. You can also choose to skip the import, and keep what you already have on your Cloudflare Images account. 
