@@ -100,9 +100,21 @@ To automatically fetch tokens for certificates that are coming up for renewal, s
 
 Notifications can be sent to an email address or a webhook.
 
-To manually fetch DCV tokens, look for certificates with the status of **Pending Validation**. You can access these certificates (as well as the corresponding token values) through the dashboard or the API:
+{{<render file="_txt-validation-preamble.md">}}
 
-{{<render file="_generic-view-validation-status.md">}}
+{{<tabs labels="API | Dashboard">}}
+{{<tab label="api" no-code="true">}}
+
+{{<render file="_txt-validation-api.md">}}
+
+{{</tab>}}
+
+{{<tab label="dashboard" no-code="true">}}
+
+{{<render file="_txt-validation-dashboard.md">}}
+
+{{</tab>}}
+{{</tabs>}}
 
 You will need to add all of the DCV records returned in the `validation_records` field to your Authoritative DNS provider.
 

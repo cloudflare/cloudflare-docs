@@ -16,16 +16,25 @@ meta:
 
 {{<render file="_generic-validation-process.md">}}
 
-### View DCV values
+### Get DCV values
 
-Once you specify your chosen validation method, you can access the validation values by:
+{{<render file="_txt-validation-preamble.md">}}
 
-{{<render file="_generic-view-validation-status.md">}}
+{{<tabs labels="API | Dashboard">}}
+{{<tab label="api" no-code="true">}}
 
-Once you locate your certificate, find the following values:
+{{<render file="_txt-validation-api.md">}}
 
-*   **API**: `txt_name` and `txt_value`
-*   **Dashboard**: **Certificate validation TXT name** and **Certificate validation TXT value**
+{{</tab>}}
+
+{{<tab label="dashboard" no-code="true">}}
+
+{{<render file="_txt-validation-dashboard.md">}}
+
+{{</tab>}}
+{{</tabs>}}
+
+You will need to add all of the DCV records returned in the `validation_records` field to your Authoritative DNS provider.
 
 ### Update DNS records
 
