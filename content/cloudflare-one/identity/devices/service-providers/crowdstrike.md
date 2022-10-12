@@ -25,7 +25,7 @@ To retrieve those values:
 1. Log in to your Falcon Dashboard.
 2. Go to **Support and resources** > **API Clients and Keys**.
 3. Select **Add new API client** and enter any name for the client.
-4. Enable the **Read** API Scope for **Zero Trust Assessment** and **Hosts**.
+4. Enable the **Read** API Scope for **Zero Trust Assessment**, **Hosts**, **Detections**, **Event Streams**, and **User Management**.
 5. Select **Add**.
 6. Copy the **Client ID**, **Client Secret**, and **Base URL** to a safe place.
 7. Go to **Host setup and management** > **Sensor downloads** and copy your Customer ID.
@@ -66,7 +66,7 @@ Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks)
 
 ## Crowdstrike device posture attributes
 
-Device posture data is gathered from the [CrowdStrike Zero Trust Assessment APIs](https://falcon.us-2.crowdstrike.com/documentation/156/zero-trust-assessment-apis).
+Device posture data is gathered from the [CrowdStrike Zero Trust Assessment APIs](https://falcon.us-2.crowdstrike.com/documentation/156/zero-trust-assessment-apis). To learn more about how scores are calculated, refer to the [CrowdStrike Zero Trust Assessment](https://falcon.us-2.crowdstrike.com/documentation/138/zero-trust-assessment) documentation.
 
 | Selector      | Description          | Value    |
 | ------------- | ---------------------|----------|

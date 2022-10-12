@@ -22,7 +22,7 @@ Once activated, it is possible to use resizing parameters on any Cloudflare Imag
 https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID/w=400,sharpen=3
 ```
 
-Note that flexible variants cannot be used for images that require a [signed delivery URL](/images/cloudflare-images/serve-images/serve-private-images-using-signed-url-tokens/).
+Note that flexible variants cannot be used for images that require a [signed delivery URL](/images/cloudflare-images/serve-images/serve-private-images-using-signed-url-tokens/), and that Cloudflare Images does not resize [SVG files](/images/cloudflare-images/upload-images/formats-limitations/#svg-files).
 
 {{<Aside type="warning" header="Warning">}}
 

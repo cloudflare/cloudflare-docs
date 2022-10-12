@@ -173,10 +173,26 @@ export function tabs() {
     for (let i = 0; i < wrappers.length; i++) {
       const labels = wrappers[i].querySelectorAll(".tab-label");
       const tabs = wrappers[i].querySelectorAll(".tab");
+      const defaultTab = wrappers[i].querySelector(".tab.tab-default");
 
       if (tabs.length > 0) {
-        // Set the first tab in a group to display
-        (tabs[0] as HTMLElement).style.display = "block";
+        // if a tab has been specified as default, set that
+        // as active as opposed to defaulting to the first tab
+        if (defaultTab) {
+          // changes an id (i.e tab-js-esm-6f3904f86f90c21d) into just the type (tab-js-esm)
+          // by removing the last element from the split array and then re-joining it
+          const parts = defaultTab.id.split("-");
+          const tabId = parts.slice(0, parts.length - 1).join("-");
+
+          const defaultTabLabel = wrappers[i].querySelector(`a[data-link=${tabId}]`);
+
+          (defaultTab as HTMLElement).style.display = "block";
+          (defaultTabLabel as HTMLElement).classList.add("active");
+        } else {
+          (tabs[0] as HTMLElement).style.display = "block";
+          (labels[0] as HTMLElement).classList.add("active");
+        }
+
         for (let i = 0; i < labels.length; i++)
           labels[i].addEventListener("click", $tab);
       }
@@ -279,7 +295,7 @@ export function toggleSidebar() {
     let btn = div.querySelector("button");
     btn.addEventListener("click", () => {
       let classToggleList = ['.DocsSidebar', '.DocsToolbar', '.DocsFooter', '.DocsContent', '.DocsMarkdown', '.DocsSidebar--sections .toggleSidebar'];
-      
+
       classToggleList.forEach(function(querySelector){
         let item = document.querySelector(querySelector);
         item.classList.toggle('collapsed');

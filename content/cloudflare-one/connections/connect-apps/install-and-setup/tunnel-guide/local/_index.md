@@ -74,6 +74,15 @@ Use the rpm package manager to install `cloudflared` on compatible machines. `am
 $ wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm
 ```
 
+### Arch Linux
+
+`cloudflared` is in the Arch Linux [`community` repository](https://wiki.archlinux.org/title/official_repositories#community).
+Use `pacman` to install `cloudflared` on compatible machines.
+
+```sh
+$ pacman -Syu cloudflared
+```
+
 </div>
 </details>
 

@@ -13,7 +13,8 @@
     "postbuild": "tsm bin/highlight.ts restore"
   },
   "dependencies": {
-    "fromnow": "3.0.1"
+    "fromnow": "3.0.1",
+    "mermaid": "^9.1.7"
   },
   "devDependencies": {
     "@types/node": "16.11.12",
@@ -23,5 +24,8 @@
     "prettier": "2.5.1",
     "prismjs": "^1.29.0",
     "tsm": "2.2.2"
+  },
+  "volta": {
+    "node": "18.10.0"
   }
 }

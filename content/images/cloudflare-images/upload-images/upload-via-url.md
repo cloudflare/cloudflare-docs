@@ -10,7 +10,7 @@ meta:
 
 Sometimes it can be useful to use a URL of an image instead of uploading its data. To accommodate this need, Cloudflare Images provides an option to use a URL to migrate images to Cloudflare without fetching them first.
 
-To learn more about the supported image formats you can upload, refer to [Supported image formats](/images/cloudflare-images/upload-images/supported-formats). Refer to [Make your first API request](/images/cloudflare-images/api-request/) to learn more about API tokens.
+To learn more about the supported image formats you can upload, refer to [Supported image formats](/images/cloudflare-images/upload-images/formats-limitations). Refer to [Make your first API request](/images/cloudflare-images/api-request/) to learn more about API tokens.
 
 Below is an example of how to use the upload via URL feature:
 

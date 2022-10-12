@@ -14,7 +14,7 @@ To make your first request to the Images API, you must obtain these pieces of in
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your
 account and website.
-2. In **Overview**, scroll down to find your Account ID.
+2. In **Overview**, scroll down to find your [Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
 
 </div>
 </details>
@@ -39,7 +39,7 @@ To use Cloudflare Images you need to create a custom token with the correct `Rea
 
 Your token for Cloudflare Images is now created. Copy it and keep it in a safe place. It grants access to your Cloudflare Images account.
 
-Refer to [Creating API tokens](/api/tokens/create/#getting-started) for more details about API tokens.
+Refer to [Creating API tokens](/api/get-started/create-token/) for more details about API tokens.
 
 </div>
 </details>

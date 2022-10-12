@@ -6,9 +6,9 @@ weight: 3
 
 # Ingress rules
 
-Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service. 
+Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service.
 
-To specify which local services a request should be proxied to, you can define ingress rules in the [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/).
+To specify which local services a request should be proxied to, you can define ingress rules in your [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/).
 
 ## Requirements
 
@@ -96,7 +96,7 @@ With the catch-all rule, you can set `cloudflared` to respond to traffic with an
 | HTTPS over Unix socket | Just like HTTPS, but using a Unix socket instead.                                               | `unix+tls:/home/production/echo.sock` |
 | TCP                     | TCP connections are proxied to your local service.                                               | `tcp://localhost:2222`            |
 | SSH                     | SSH connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-apps/use_cases/ssh/). | `ssh://localhost:22`              |
-| RDP                     | RDP connections are proxied to your local service. [Learn more](/cloudflare-one/tutorials/rdp/). | `rdp://localhost:3389`            |
+| RDP                     | RDP connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-apps/use_cases/rdp/). | `rdp://localhost:3389`            |
 | kubectl bastion mode    | `cloudflared` will act like a jumphost, allowing access to any local address.                    | `bastion`                         |
 | Hello World             | Test server for validating your Cloudflare Tunnel setup.                                         | `hello_world`                     |
 | HTTP status             | Responds to all requests with the given HTTP status.                                             | `http_status:404`                 |
@@ -114,25 +114,25 @@ originRequest: # Top-level configuration
   connectTimeout: 30s
 
 ingress:
-  # This service inherits all configuration from the root-level config, i.e.
-  # it will use a connectTimeout of 30 seconds.
+  # The localhost:8000 service inherits all root-level configuration.
+  # In other words, it will use a connectTimeout of 30 seconds.
   - hostname: example.com
     service: localhost:8000
   - hostname: example2.com
     service: localhost:8001
-  # This service overrides some root-level config.
+  # The localhost:8002 service overrides some root-level config.
   - service: localhost:8002
     originRequest:
       connectTimeout: 10s
       disableChunkedEncoding: true
-  # Some built-in services (like `http_status`) don't use any config. So, this
-  # rule will inherit all the config, but won't actually use it (because it just
-  # responds with HTTP 404).
+  # Some built-in services such as `http_status` do not use any configuration.
+  # The service below will simply respond with HTTP 404.
   - service: http_status:404
 ```
 
 To set both top-level configurations and origin-specific configurations, you can use the following properties within `originRequest` rules:
 
+- [access](#access)
 - [connectTimeout](#connecttimeout)
 - [tlsTimeout](#tlstimeout)
 - [tcpKeepAlive](#tcpkeepalive)
@@ -147,6 +147,27 @@ To set both top-level configurations and origin-specific configurations, you can
 - [proxyAddress](#proxyaddress)
 - [proxyPort](#proxyport)
 - [proxyType](#proxyyype)
+
+### access
+
+Default: `""`
+
+Requires `cloudflared` to validate the [Cloudflare Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) prior to proxying traffic to your origin. You can enforce this check on public hostname routes that are protected by an Access application. For all L7 requests to these hostnames, Access will send the JWT to `cloudflared` as a `Cf-Access-Jwt-Assertion` request header.
+
+To enable this security control, [get the AUD tag](/cloudflare-one/identity/authorization-cookie/validating-json/#get-your-aud-tag) for your Access application and add the following rule to `originRequest`:
+
+```yml
+access:
+  required: true
+  teamName: <your-team-name>
+  audTag:
+    - aud1 <Access-application-audience-tag> 
+    - aud2 <Optional-additional-tags>
+```
+
+{{<Aside type="note">}}
+The `access` rule is currently not available for tunnels managed through the dashboard.
+{{</Aside>}}
 
 ### connectTimeout
 

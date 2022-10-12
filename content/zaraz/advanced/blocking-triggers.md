@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Blocking Triggers
-weight: 0
+weight: 2
 ---
 
 # Blocking Triggers

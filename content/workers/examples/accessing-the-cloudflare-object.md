@@ -6,24 +6,48 @@ demo: https://accessing-the-cloudflare-object.workers-sites-examples.workers.dev
 tags:
   - Originless
 pcx_content_type: configuration
-title: Accessing the  object
+title: Accessing the Cloudflare Object
 weight: 11
 layout: example
 ---
 
+{{<tabs labels="js/esm | ts/esm">}}
+{{<tab label="js/esm" default="true">}}
 ```js
-addEventListener('fetch', event => {
-  const data =
-    event.request.cf !== undefined
-      ? event.request.cf
-      : { error: 'The `cf` object is not available inside the preview.' };
+export default {
+  async fetch(req) {
+    const data =
+      req.cf !== undefined
+        ? req.cf
+        : { error: "The `cf` object is not available inside the preview." };
 
-  return event.respondWith(
-    new Response(JSON.stringify(data, null, 2), {
+    return new Response(JSON.stringify(data, null, 2), {
       headers: {
-        'content-type': 'application/json;charset=UTF-8',
+        "content-type": "application/json;charset=UTF-8",
       },
-    })
-  );
-});
+    });
+  }
+}
 ```
+{{</tab>}}
+{{<tab label="ts/esm">}}
+```ts
+const handler: ExportedHandler = {
+  async fetch(req) {
+    const data =
+      req.cf !== undefined
+        ? req.cf
+        : { error: "The `cf` object is not available inside the preview." };
+
+    return new Response(JSON.stringify(data, null, 2), {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
+  }
+};
+
+export default handler;
+```
+{{</tab>}}
+{{</tabs>}}

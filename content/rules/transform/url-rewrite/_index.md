@@ -19,4 +19,4 @@ You can manipulate the URL of a request through different operations, namely thr
 
 *   A **rewrite** is a server-side operation that occurs before a web server has fully processed a request. A rewrite is not visible to website visitors, since the URL displayed in the browser does not change. Configure URL Rewrite Rules to perform rewrites at the edge without reaching your web server.
 
-*   A **redirect** is a client-side operation that occurs after the web server has loaded the initial URL. In this case, a website visitor can notice the URL changing when the redirect occurs. Refer to [Bulk Redirects](/rules/bulk-redirects/) to learn more about configuring redirects.
+*   A **redirect** is a client-side operation that occurs after the web server has loaded the initial URL. In this case, a website visitor can notice the URL changing when the redirect occurs. Refer to [Bulk Redirects](/rules/url-forwarding/bulk-redirects/) to learn more about configuring redirects.

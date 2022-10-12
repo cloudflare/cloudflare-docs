@@ -20,7 +20,7 @@ If you would like to deploy a managed ruleset at the account level, refer to the
  
 Ensure you have reviewed [Get Started with Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) and familiarize yourself with [WAF for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas/). 
  
-Customers can automate the [custom metadata](/cloudflare-for-platforms/workers-for-platforms/) tagging by adding it to the custom hostnames at creation. For more information on tagging a custom hostname with custom metadata, refer to the [API documentation](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname).
+Customers can automate the [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) tagging by adding it to the custom hostnames at creation. For more information on tagging a custom hostname with custom metadata, refer to the [API documentation](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname).
  
 ---
  
@@ -32,8 +32,8 @@ Customers can automate the [custom metadata](/cloudflare-for-platforms/workers-f
  
 {{<Aside type="note">}}
  
-After the association is complete, the JSON blob is added to the defined custom hostname. This blob is then associated to every incoming request and exposed in the WAF through the new field `cf.hostname.metadata`. In the rule, you can access `cf.hostname.metadat` and get whatever data you need from that blob.
- 
+After the association is complete, the JSON blob is added to the defined custom hostname. This blob is then associated to every incoming request and exposed in the WAF through the new field `cf.hostname.metadata`. In the rule, you can access `cf.hostname.metadata` and get whatever data you need from that blob.
+
 {{</Aside>}}
  
 ---
@@ -41,12 +41,12 @@ After the association is complete, the JSON blob is added to the defined custom 
 ## Step 2 - Deploy Rulesets
  
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and navigate to your account.
- 
-2. Select **Firewall Rulesets** > **Application Firewall**.
- 
+
+2. Select **Application Security** > **WAF**.
+
 {{<Aside type="note">}}
 
-**Firewall Rulesets** will only be visible if on Enterprise plans. If you do not see this option, contact your account manager.
+**Application Security** will only be visible on Enterprise plans. If you do not see this option, contact your account manager.
 
 {{</Aside>}}
  

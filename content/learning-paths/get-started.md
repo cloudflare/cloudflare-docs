@@ -5,4 +5,6 @@ layout: home
 pcx_content_type: learning-path
 ---
 
-{{<learning-path>}}
+{{<dynamic-learning-path-header file="get-started.json">}}
+
+{{<dynamic-learning-path>}}

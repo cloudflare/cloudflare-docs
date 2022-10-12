@@ -30,9 +30,11 @@ When using Cloudflare with [unproxied DNS records](/dns/manage-dns-records/refer
 
 Another way of thinking about this concept is that visitors directly connect with your origin server.
 
-{{<example>}}
-Visitor <--[Connection]--> Origin Server
-{{</example>}}
+<div class="mermaid">
+        flowchart LR
+        accTitle: Connections without Cloudflare
+        A[Visitor] <-- Connection --> B[Origin server]
+</div>
 
 ### With Cloudflare
 
@@ -44,9 +46,11 @@ With Cloudflare — meaning your domain or subdomain is using [proxied DNS recor
 
 This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server.
 
-{{<example>}}
-Visitor <--[Connection 1]--> Cloudflare Edge <--[Connection 2]--> Origin Server
-{{</example>}}
+<div class="mermaid">
+        flowchart LR
+        accTitle: Connections with Cloudflare
+        A[Visitor] <-- Connection --> B[Cloudflare Edge] <-- Connection --> C[Origin Server]
+</div>
 
 ## Benefits
 
@@ -64,7 +68,7 @@ For additional details on security, refer to our guide on how to [Secure your we
 
 For proxied traffic, Cloudflare also serves as a [Content Delivery Network (CDN)](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/), caching static resources and otherwise optimizing asset delivery.
 
-For additional details on performance, refer to our guides on [Optimizing Site Speed](/fundamentals/get-started/task-guides/optimize-site-speed/) and [Caching](/cache/get-started/).
+For additional details on performance, refer to our guides on [Optimizing Site Speed](/learning-paths/optimize-site-speed/) and [Caching](/cache/get-started/).
 
 ### Reliability
 

@@ -26,9 +26,9 @@ To create a new custom rule:
 
 3. Navigate to **Security** > **WAF** > **Custom rules**.
 
-4. Select **Create firewall rule**.
+4. Select **Create custom rule**.
 
-5. In the page that displays, enter a descriptive name for the rule in **Rule name**.
+5. Enter a descriptive name for the rule in **Rule name**.
 
     ![Custom rule creation page in the Cloudflare dashboard](/waf/static/custom-rules/firewall-custom-rule-create.png)
 

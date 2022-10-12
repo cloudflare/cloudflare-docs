@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Data layer compatibility mode
-weight: 0
+weight: 3
 ---
 
 # Data layer compatibility mode
@@ -16,7 +16,7 @@ To keep the Zaraz script as small and fast as possible, the data layer compatibi
 
 After enabling the compatibility mode, Zaraz will automatically translate your `dataLayer.push()` calls to `zaraz.track()`, so you can keep using the `dataLayer.push()` function to send events from the browser to Zaraz.
 
-{{<Aside type="note" header="Note">}}Zaraz does not support automatic ecommerce mapping through the `dataLayer` compatibility mode. If you need to track ecommerce events, refer to the [Ecommerce API](/zaraz/web-api/ecommerce/).{{</Aside>}}
+{{<Aside type="note" header="Note">}}Zaraz does not support automatic e-commerce mapping through the `dataLayer` compatibility mode. If you need to track e-commerce events, refer to the [E-commerce API](/zaraz/web-api/ecommerce/).{{</Aside>}}
 
 Events will only be sent to Zaraz if your pushed object includes an `event` key. The `event`key is used as the name for the Zaraz event. Other keys will become part of the `eventProperties` object. The following example shows how a purchase event will be sent using the data layer to Zaraz — note that the parameters inside the object depend on what you want to track:
 

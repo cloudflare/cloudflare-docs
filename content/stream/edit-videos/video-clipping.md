@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how to
+pcx_content_type: how to
 title: Clip videos
 ---
 
@@ -17,7 +17,7 @@ Video clipping does not work with recordings of live streams.
 
 ## Prerequisites
 
-Before you can clip a video, you will need an API token. For more information on creating an API token, refer to [Creating API tokens](/api/tokens/create/).
+Before you can clip a video, you will need an API token. For more information on creating an API token, refer to [Creating API tokens](/api/get-started/create-token/).
 
 ## Required parameters
 

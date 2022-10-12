@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: SSH
 weight: 1
-hidden: false
 ---
 
 # Connect with SSH through Cloudflare Tunnel
@@ -53,7 +52,7 @@ Now that the SSH key pair has been created, you can create a VM instance.
 5. Scroll down to **Advanced options** > **Security** > **Manage Access**.  
 6. Under **Add manually generated SSH keys**, select **Add item** and paste the public key that you have created.
 7. Select **Create**.
-8. Once your VM instance is running, select the **SSH** dropdown and select _Open in browser window_.
+8. Once your VM instance is running, open the dropdown next to **SSH** and select _Open in browser window_.
 
 {{<Aside type="note">}}
 In order to be able to establish an SSH connection, do not enable [OS Login](https://cloud.google.com/compute/docs/oslogin) on the VM instance.
@@ -61,25 +60,21 @@ In order to be able to establish an SSH connection, do not enable [OS Login](htt
 
 ## Connect to SSH server with WARP to Tunnel
 
-You can use Cloudflare Tunnel to create a secure, outbound-only connection from your server to Cloudflare's edge. Users reach the service by installing the [Cloudflare WARP client](/cloudflare-one/connections/connect-devices/warp/) on their device and enrolling in your Zero Trust organization. By default, all devices enrolled in your organization can access the service unless you build policies to allow or block specific users.
+{{<render file="_warp-to-tunnel-intro.md">}}
 
 ### 1. Connect the server to Cloudflare
 
-1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/). You can skip the connect an application step and go straight to connecting a network.
-
-2. In the **Private Networks** tab for the tunnel, enter the IP address of your SSH server (or a range that includes the server IP). In GCP, the server IP is the  **Internal IP** of the VM instance.
-
-3. (Optional) [Set up Zero Trust policies](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#2-recommended-filter-network-traffic-with-gateway) to fine-tune access to your server.  
+{{<render file="_warp-to-tunnel-server.md">}}
 
 ### 2. Set up the client
 
 In order for devices to connect to your Zero Trust organization, you will need to:
-- [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices in Gateway with WARP mode.  The Cloudflare certificate is only required if you want to display a custom block page or perform HTTP filtering.
-- [Create device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) to determine which devices can enroll to your Zero Trust organization.
+
+{{<render file="_warp-to-tunnel-client.md">}}
 
 ### 3. Connect as a user
 
-Once you have set up the application and the user device, the user can now SSH into the machine using its IP address.  If your SSH server requires an SSH key, the key should be included in the command.
+Once you have set up the application and the user device, the user can now SSH into the machine using its private IP address.  If your SSH server requires an SSH key, the key should be included in the command.
 
 ```sh
 $ ssh -i ~/.ssh/gcp_ssh <username>@<server IP>
@@ -87,9 +82,7 @@ $ ssh -i ~/.ssh/gcp_ssh <username>@<server IP>
 
 ## Connect to SSH server with `cloudflared access`
 
-Cloudflare Tunnel can also route applications through a public hostname, which allows users to connect to the application without the WARP client. This method requires having `cloudflared` installed on both the server machine and on the client machine. The SSH traffic is proxied over this connection, and the user logs in to the server with their Cloudflare Access credentials.
-
-The public hostname method can be implemented in conjunction with [routing over WARP](#connect-to-ssh-server-with-warp-to-tunnel) so that there are multiple ways to connect to the SSH server. You can reuse the same tunnel for both the private network and public hostname routes.
+{{<render file="_tunnel-cloudflared-access.md">}}
 
 ### 1. Connect the server to Cloudflare
 
