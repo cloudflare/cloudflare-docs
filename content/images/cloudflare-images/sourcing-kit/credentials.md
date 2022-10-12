@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Amazon S3 credentials
+title: Credentials
 weight: 3
 ---
 

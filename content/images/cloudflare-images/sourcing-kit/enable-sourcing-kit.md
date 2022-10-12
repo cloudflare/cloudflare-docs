@@ -6,9 +6,13 @@ weight: 1
 
 # Enable Sourcing Kit
 
+Enabling Sourcing Kit is as easy as creating your first import job. This will set it up with the necessary information to start importing images from your Amazon S3 account.
+
+## Create your first import job
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Images** > **Sourcing Kit**.
-3. Select **Import images** to create your first import job.
+3. Select **Import images** to create an import job.
 4. In **Source name** give your source an appropriate name.
 5. In **Amazon S3 bucket information** enter the S3's bucket name where your images are stored.
 6. In **Required credentials**, enter your Amazon S3 credentials. This is required to connect Cloudflare Images to your source and import your images. Refer to [Amazon S3 credentials](/images/cloudflare-images/sourcing-kit/amazon-credentials) to learn more about how to set up credentials. 
@@ -24,8 +28,26 @@ Your import job is now created. You can review the job status on the Sourcing Ki
 Sourcing Kit will warn you when you are about to reach the limit for your plan space quota. When you exhaust the space available in your plan, the importing jobs will be aborted. If you see this warning on Sourcing Kit’s main page, select **View plan** to change your plan’s limits.
 {{</Aside>}}
 
-## Next steps
+## Define a new source
 
-You can create another import job from the main page of Cloudflare Images Sourcing Kit by selecting **Import images**. From here, you can select a source you have already configured or **Define a new source** to import images from a new source.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Go to **Images** > **Sourcing Kit**.
+3. Select **Import images** > **Define a new source**.
+
+Repeat steps 4-11 to finish setting up your new source.
+
+## Define additional import jobs
+
+You can have many import jobs from the same or different sources. If you select an existing source to create a new import job, you will not need to enter your credentials again.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Go to **Images** > **Sourcing Kit**.
+3. Select **Import images**.
+4. Choose from one of the sources already configured.
+
+Repeat steps 8-11 to finish setting up your new import job.
+
+
+## Next steps
 
 Refer to [Edit source details](/images/cloudflare-images/sourcing-kit/edit-sourcing-kit) to learn more about editing details for import jobs you have already created, or to learn how to abort running import jobs.
