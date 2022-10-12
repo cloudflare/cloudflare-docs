@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Analytics
-weight: 9
+weight: 10
 meta:
   title: Images analytics
 ---
