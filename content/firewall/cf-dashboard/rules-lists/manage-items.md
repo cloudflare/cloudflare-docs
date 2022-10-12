@@ -18,7 +18,7 @@ The list of items displays sorted by IP address, ascending:
 
 {{<Aside type="note" header="Note">}}
 
-You cannot download a list in CSV format from the dashboard. If you need to download the contents of a list to your device, use the [Get Lists](https://api.cloudflare.com/#rules-lists-list-lists) operation to fetch them.
+You cannot download a list in CSV format from the dashboard. If you need to download the contents of a list to your device, use the [Get lists](https://api.cloudflare.com/#lists-get-lists) operation to fetch them.
 
 {{</Aside>}}
 
@@ -71,7 +71,7 @@ To add items to an IP List:
 
 Importing a CSV file to a list only updates descriptions or adds items to the list. It does not delete items from a list.
 
-If you need to replace the entire contents of a list, format the data as an array and use the Update Lists operation in the [Rules Lists API](/firewall/api/cf-lists/endpoints/).
+If you need to replace the entire contents of a list, format the data as an array and use the Update all list items operation in the [Lists API](/firewall/api/cf-lists/endpoints/).
 
 {{</Aside>}}
 
