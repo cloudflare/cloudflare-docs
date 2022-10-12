@@ -10,13 +10,13 @@ meta:
 
 {{<render file="../../ssl/_partials/_txt-validation-definition.md">}}
 
-## Non-wildcard hostnames
+## Non-wildcard custom hostnames
 
-If your custom hostname does not include a wildcard, Cloudflare will always and automatically attempt to complete DCV through [HTTP](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/#http-automatic), even if you have selected **TXT** for your validation method.
+If your custom hostname does not include a wildcard, Cloudflare will always and automatically attempt to complete DCV through [HTTP validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/#http-automatic), even if you have selected **TXT** for your validation method.
 
 This HTTP validation should succeed as long as your customer is pointing to your custom hostname and they do not have any [CAA records](/cloudflare-for-platforms/cloudflare-for-saas/reference/troubleshooting/#certificate-authority-authorization-caa-records) blocking your chosen certificate authority.
 
-## Wildcard hostnames
+## Wildcard custom hostnames
 
 {{<render file="_wildcard-hostname-reqs.md">}}
 
