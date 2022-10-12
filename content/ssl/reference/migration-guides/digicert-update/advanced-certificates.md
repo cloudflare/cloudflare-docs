@@ -42,7 +42,7 @@ The following changes will automatically affect certificates that are renewed af
 
 ### Certificate authorities
 
-DigiCert certificates renewed after November 7th will be issued through a Certificate Authority chosen by Cloudflare (Let's Encrypt of Google Trust Services).
+DigiCert certificates renewed after November 7th will be issued through a Certificate Authority chosen by Cloudflare (Let's Encrypt or Google Trust Services).
 
 {{<Aside type="note">}}
 
@@ -52,7 +52,7 @@ Certificates with 14 and 30 day validity periods will be renewed with Google Tru
 
 ### Validity period
 
-If the current DigiCert certificate has a 365 day validity period, that value will change to 90 in the “validity_days” field. 
+If the current DigiCert certificate has a 365 day validity period, that value will change to 90 in the `“validity_days”` field.
 
 ### DCV method
 
@@ -66,7 +66,7 @@ Partial zone certificate renewals will default to [HTTP DCV](/ssl/edge-certifica
 
 For multi-hostname or wildcard certificates using DigiCert, multiple DCV records will now be returned in the `“validation_records”` field.
 
-This is because DigiCert only requires one DCV record to be placed to validate the apex, wildcard, and subdomains on a certificate. Let’s Encrypt and Google Trust Services follow the ACME protocol which requires that one DCV token is placed for every hostname on a certificate. 
+This is because DigiCert only requires one DCV record to be placed to validate the apex, wildcard, and subdomains on a certificate. Let’s Encrypt and Google Trust Services follow the [ACME protocol](https://datatracker.ietf.org/doc/html/rfc8555) which requires that one DCV token is placed for every hostname on a certificate. 
 
 If your certificate covers multiple hostnames, then on renewal you will see one DCV token associated with every hostname on the certificate. These tokens will be returned in the `“validation_records”` field. 
 
