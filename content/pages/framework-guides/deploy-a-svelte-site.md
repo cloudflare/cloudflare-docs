@@ -12,7 +12,7 @@ You will use [`SvelteKit`](https://kit.svelte.dev/), the official Svelte framewo
 
 {{<Aside type="warning">}}
 
-**Note:** At this guide's time of publication, SvelteKit is still in beta. However, the Svelte team is confident that the steps below are stable. This guide will be updated as needed, both during and after the beta phase.
+At this guide's time of publication, SvelteKit is still in beta. However, the Svelte team is confident that the steps below are stable. This guide will be updated as needed, both during and after the beta phase.
 
 {{</Aside>}}
 
@@ -62,7 +62,6 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 | Production branch     | `main`             |
 | Build command         | `npm run build`    |
 | Build directory       | `build`            |
-| Environment Variables | `NODE_VERSION: 17` |
 
 </div>
 
@@ -70,7 +69,7 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 {{<Aside type="warning">}}
 
-**Important:** SvelteKit requires Node.js >=16.9 or later to build successfully. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Pages** > **Settings** > **Environment Variables** section and add a `NODE_VERSION` variable with a value of `17` or greater.
+SvelteKit requires Node.js version 16 to build successfully. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Pages** > **Settings** > **Environment Variables** section and add a `NODE_VERSION` variable with a value of `16` or greater. When creating your project, expand **Environment variables (Advanced)** to add a `NODE_VERSION` variable.
 
 {{</Aside>}}
 
