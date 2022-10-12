@@ -1,8 +1,11 @@
 /**
- * Crawl the `/public` directory and assert:
+ * 1. Crawl the `/public` directory (HTML files) and assert:
  * - all anchor tags (<a>) do not point to broken links
  * - all images (<img>) do not have broken sources
  * NOTE: Requires `npm run build` first!
+ * 2. Crawl the `assets/json` directory (JSON files) and assert:
+ * - all `url_path` values do not point to broken links
+ * - all anchor tags (<a>) do not point to broken links
  */
 import * as http from "http";
 import * as https from "https";
@@ -18,9 +21,10 @@ let JSON_ERRORS = 0;
 
 const ROOT = resolve(".");
 const PUBDIR = join(ROOT, "public");
-const LEARNINGPATHDIR = join(ROOT, "assets/json");
+const LEARNING_PATH_DIR = join(ROOT, "assets/json");
 const VERBOSE = process.argv.includes("--verbose");
 const EXTERNALS = process.argv.includes("--externals");
+const DEV_DOCS_HOSTNAME = "developers.cloudflare.com";
 
 async function walk(dir: string) {
   let files = await fs.readdir(dir);
@@ -35,7 +39,7 @@ async function walk(dir: string) {
   );
 }
 
-async function walkLearningPath(dir: string) {
+async function walkJsonFiles(dir: string) {
   let files = await fs.readdir(dir);
   await Promise.all(
     files.map(async (name) => {
@@ -90,6 +94,11 @@ interface Message {
 }
 
 async function testJSON(file: string) {
+  if (process.platform === "win32") {
+    // Local imports must have a `file://` scheme on Windows
+    file = `file://${file}`;
+  }
+
   const { default: info } = await import(file, {
     assert: {
       type: "json",
@@ -99,7 +108,6 @@ async function testJSON(file: string) {
   const jsonString = JSON.stringify(info);
   const urlPathRegex = new RegExp('"url_path":"(.*?)"', "g");
   const hrefRegex = new RegExp("<a href='(.*?)'>", "g");
-  const devDocsRegex = new RegExp("developers.cloudflare.com");
   const unanchoredRegex = new RegExp("([^#]*)");
 
   let urlPathMatches = [...jsonString.matchAll(urlPathRegex)];
@@ -112,9 +120,9 @@ async function testJSON(file: string) {
 
   let messages: Message[] = [];
   combinedUrls.map(async (item) => {
-    let exists: boolean;
+    let exists = false;
 
-    if (item.match(devDocsRegex)) {
+    if (item.includes(DEV_DOCS_HOSTNAME)) {
       messages.push({
         type: "warn",
         text: `rewrite in "/absolute/" format: "${item}"`,
@@ -139,7 +147,9 @@ async function testJSON(file: string) {
     }
   });
   if (messages.length > 0) {
-    let output = file.substring(LEARNINGPATHDIR.length);
+    let output = file.substring(
+      file.indexOf(LEARNING_PATH_DIR) + LEARNING_PATH_DIR.length
+    );
 
     messages.forEach((msg) => {
       if (msg.type === "error") {
@@ -201,7 +211,7 @@ async function task(file: string) {
 
       if (!/https?/.test(resolved.protocol)) return;
 
-      if (resolved.hostname === "developers.cloudflare.com") {
+      if (resolved.hostname === DEV_DOCS_HOSTNAME) {
         messages.push({
           type: "warn",
           html: content,
@@ -278,7 +288,7 @@ try {
 }
 
 try {
-  await walkLearningPath(LEARNINGPATHDIR);
+  await walkJsonFiles(LEARNING_PATH_DIR);
   if (!JSON_ERRORS && !JSON_WARNS) {
     console.log("\n~> /asset/json files DONE~!\n\n");
   } else {
@@ -287,7 +297,7 @@ try {
       process.exitCode = 1;
       msg += "\n    - " + JSON_ERRORS.toLocaleString() + " error(s)";
     }
-    if (WARNS > 0) {
+    if (JSON_WARNS > 0) {
       msg += "\n    - " + JSON_WARNS.toLocaleString() + " warning(s)";
     }
     console.log(msg + "\n\n");
