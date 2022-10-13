@@ -111,8 +111,7 @@ export default {
 
 See the D1 Client API appendix for the full in-Worker API docs.
 
-
-4. Test and publish with Wrangler 
+# 4. Test and publish with Wrangler 
 
 While in your project directory, you can test locally by running: 
 
