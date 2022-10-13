@@ -8,6 +8,9 @@ weight: 43
 
 You can configure custom fields — selected from the list of HTTP request headers, HTTP response headers, and cookies — to include in Logpush log entries of a zone. Once configured, these custom fields will be enabled for all the Logpush jobs in the zone that use the HTTP requests dataset and include the request headers, response headers, or cookie fields.
 
+Custom fields can be enabled via API or the Cloudflare dashboard.
+## Enable custom rules via API
+
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a rule that configures custom fields. For more information on concepts like phases, rulesets, and rules, as well as the available API operations, refer to the [Ruleset Engine](/ruleset-engine/) documentation.
 
 To configure custom fields:
@@ -15,7 +18,7 @@ To configure custom fields:
 1. Create a rule to configure the list of custom fields.
 2. Include the `Cookies`, `RequestHeaders`, and/or `ResponseHeaders` fields in your Logpush job.
 
-## 1. Create a rule to configure the list of custom fields
+### 1. Create a rule to configure the list of custom fields
 
 Create a rule configuring the list of custom fields in the `http_log_custom_fields` phase at the zone level. Set the rule action to `log_custom_field` and the rule expression to `true`.
 
@@ -162,7 +165,7 @@ Perform the following steps to create the rule:
     }
     ```
 
-## 2. Include the custom fields in your Logpush job
+### 2. Include the custom fields in your Logpush job
 
 Next, include `Cookies`, `RequestHeaders`, and/or `ResponseHeaders`, depending on your custom field configuration, in the list of fields of the `logpull_options` job parameter when creating or updating a job. The logs will contain the configured custom fields and their values in the request/response.
 
@@ -187,6 +190,15 @@ curl -X POST \
 If you are a Cloudflare Access user, as of March 2022 you have to manually add the `cf-access-user` user identity header to your logs by creating a custom fields ruleset or adding the `cf-access-user` HTTP request header to your custom fields configuration. Additionally, make sure that you include the `RequestHeaders` field in your Logpush job.
 
 {{</Aside>}}
+
+## Enable custom rules via dashboard
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select the domain you want to use.
+2. Go to **Analytics** > **Logs**.
+3. In the **Custom Fields** section, select **Edit Custom Fields**.
+4. Select **Set new Custom Field**. 
+5. From the **Field Type** dropdown, select _Request Header_, _Response Header_ or _Cookies_ and type the **Field Name**. 
+6. When you are done, select **Save**.
 
 ## Final remarks
 
