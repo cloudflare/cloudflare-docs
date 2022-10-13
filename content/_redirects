@@ -404,6 +404,7 @@
 /page-shield/script-monitor/troubleshooting/ /page-shield/troubleshooting/ 301
 /page-shield/script-monitor/use-dashboard/ /page-shield/use-dashboard/monitor-scripts/ 301
 /page-shield/reference/script-monitor-api/ /page-shield/reference/page-shield-api/ 301
+/page-shield/use-dashboard/configure-reporting-endpoint/ /page-shield/reference/settings/#csp-reporting-endpoint 301
 
 # railgun
 /railgun/user-guide/introduction/ /railgun/about/ 301
