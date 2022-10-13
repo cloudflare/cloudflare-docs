@@ -108,10 +108,14 @@ A set of validation methods and requirements to gather set IP ranges for a verif
 
 ## Breach of Policy 
 
-If any of the requirements to validate are breached, a service will be removed from the global allowlist. See the list below.
+If any of the requirements to validate are breached, a service will be removed from the global allowlist.
+
+{{<Aside type="example" header="Examples">}}
 
 * Adding a set of IPs that are not solely used by verified service. 
 * The service IPs are breached by an attacker. 
 * The service has vulnerabilities that have not been patched.
 * A block of IPs not briefed on onboarding is added to the list. 
 * The disclosed purpose of the service does not reflect on the traffic. 
+
+{{</Aside>}}
