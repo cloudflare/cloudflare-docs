@@ -15,7 +15,7 @@
         "type": "module",
         "title": "Concepts",
         "description": "Learn the fundamentals of website security. <br /> <br /> Feel free to skip if you have a technical background.",
-        "estimated_time": "~30 mins",
+        "estimated_time": 30,
         "pages": [
           {
             "external_link": true,
@@ -51,23 +51,18 @@
       {
         "type": "module",
         "title": "Before you begin",
-        "description": "Before you can secure your site, make sure you have already added that site to Cloudflare.",
-        "estimated_time": "~30 mins",
-        "pages": [
-          {
-            "url_path": "/learning-paths/get-started/",
-            "title": "Get started with Cloudflare (learning path)"
-          }
-        ]
+        "description": "Before you can secure your site, make sure you have already <a href='/learning-paths/get-started/'>added that site to Cloudflare</a>.",
+        "estimated_time": 30
       },
       {
         "type": "module",
         "title": "Account security",
-        "description": "Make sure your Cloudflare account is protected from takeover or compromise",
-        "estimated_time": "~15 mins",
+        "description": "Make sure your Cloudflare account is protected from takeover or compromise.",
+        "estimated_time": 15,
         "pages": [
           {
-            "url_path": "/fundamentals/account-and-billing/account-setup/verify-email-address/"
+            "url_path": "/fundamentals/account-and-billing/account-setup/verify-email-address/",
+            "link_title": "Verify your email address"
           },
           {
             "external_link": true,
@@ -75,13 +70,16 @@
             "link_title": "Set up two-factor authentication (2FA)"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/account-setup/manage-account-members/"
+            "url_path": "/fundamentals/account-and-billing/account-setup/manage-account-members/",
+            "link_title": "Manage account access"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/account-security/manage-active-sessions/"
+            "url_path": "/fundamentals/account-and-billing/account-security/manage-active-sessions/",
+            "link_title": "Review active sessions (if needed)"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/account-security/review-audit-logs/"
+            "url_path": "/fundamentals/account-and-billing/account-security/review-audit-logs/",
+            "link_title": "Review audit logs (if needed)"
           },
           {
             "url_path": "/fundamentals/account-and-billing/account-security/securing-a-compromised-account/",
@@ -93,7 +91,7 @@
         "type": "module",
         "title": "General security — Minimal setup",
         "description": "Take a few simple steps to make sure your application is protected from a broad array of threats.",
-        "estimated_time": "~1 hour",
+        "estimated_time": 60,
         "pages": [
           {
             "url_path": "/ssl/get-started/",
@@ -102,15 +100,16 @@
           {
             "url_path": "/waf/",
             "link_title": "Set up your Web Application Firewall (WAF)",
-            "additional_description": "For customers on a **Pro** plan or above, Cloudflare offers several [Managed Rulesets](/waf/managed-rulesets/) as part of the Web Application Firewall (WAF)."
+            "additional_description": "For customers on a <strong>Pro</strong> plan or above, Cloudflare offers several <a href='/waf/managed-rulesets/'>Managed Rulesets</a> as part of the Web Application Firewall (WAF)."
           },
           {
             "url_path": "/dns/manage-dns-records/reference/proxied-dns-records/",
             "link_title": "Proxy your DNS records",
-            "additional_description": "As long as your traffic is [proxied by Cloudflare](/fundamentals/get-started/concepts/how-cloudflare-works/), Cloudflare automatically protects your application from [DDoS attacks](/ddos-protection/)."
+            "additional_description": "As long as your traffic is <a href='/fundamentals/get-started/concepts/how-cloudflare-works/'>proxied by Cloudflare</a>, Cloudflare automatically protects your application from <a href='/ddos-protection/'>DDoS attacks</a>."
           },
           {
-            "url_path": "/dns/additional-options/dnssec/"
+            "url_path": "/dns/additional-options/dnssec/",
+            "link_title": "Enable DNSSEC"
           },
           {
             "url_path": "/security-center/",
@@ -122,8 +121,8 @@
       {
         "type": "module",
         "title": "Customize Web Application Firewall (WAF)",
-        "description": "Use a variety of rules to customize the behavior of your application's firewall. This step may require [detailed analysis](/waf/analytics/) of your application traffic.",
-        "estimated_time": "~2 hours",
+        "description": "Use a variety of rules to customize the behavior of your application's firewall. This step may require <a href='/waf/analytics/'>detailed analysis</a> of your application traffic.",
+        "estimated_time": 120,
         "pages": [
           {
             "url_path": "/waf/managed-rulesets/waf-exceptions/",
@@ -133,7 +132,7 @@
           {
             "url_path": "/firewall/cf-firewall-rules/",
             "link_title": "Firewall Rules",
-            "additional_description": "Block, challenge, or allow requests based on [several characteristics](/ruleset-engine/rules-language/fields/) (user agents, cookies, referrer, and more)."
+            "additional_description": "Block, challenge, or allow requests based on <a href='/ruleset-engine/rules-language/fields/'>several characteristics</a> (user agents, cookies, referrer, and more)."
           },
           {
             "url_path": "/waf/rate-limiting-rules/",
@@ -155,20 +154,20 @@
             "external_link": true,
             "url_path": "https://support.cloudflare.com/hc/articles/115001595131",
             "link_title": "Zone Lockdown rules",
-            "additional_description": "For customers on a **Pro** plan or higher, specify a list of IP addresses, CIDR ranges, or networks that are allowed to access a particular domain, subdomain, or URL."
+            "additional_description": "For customers on a <strong>Pro</strong> plan or higher, specify a list of IP addresses, CIDR ranges, or networks that are allowed to access a particular domain, subdomain, or URL."
           }
         ]
       },
       {
         "type": "module",
         "title": "Customize other security settings",
-        "description": "Update various settings to further refine how your application processes incoming traffic. This step may require [detailed analysis](/waf/analytics/) of your application traffic.",
-        "estimated_time": "~2 hours",
+        "description": "Update various settings to further refine how your application processes incoming traffic. This step may require <a href='/waf/analytics/'>detailed analysis</a> of your application traffic.",
+        "estimated_time": 120,
         "pages": [
           {
             "url_path": "/bots/get-started/",
             "link_title": "Enable bot protection",
-            "additional_description": "There are some nuances to how bot protection works, so you may want to [review our plans pages](/bots/plans/) before enabling."
+            "additional_description": "There are some nuances to how bot protection works, so you may want to <a href='/bots/plans/'>review our plans pages</a> before enabling."
           },
           {
             "url_path": "/ddos-protection/get-started/",
@@ -178,7 +177,7 @@
             "external_link": true,
             "url_path": "https://support.cloudflare.com/hc/articles/200170056",
             "link_title": "Customize security level",
-            "additional_description": "Use the IP reputation of a visitor to determine whether to present a [Managed Challenge](/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge) page."
+            "additional_description": "Use the IP reputation of a visitor to determine whether to present a <a href='/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge'>Managed Challenge</a> page."
           },
           {
             "url_path": "/fundamentals/security/challenge-passage/",
@@ -189,12 +188,12 @@
             "external_link": true,
             "url_path": "https://support.cloudflare.com/hc/articles/115001992652",
             "link_title": "Enable Privacy Pass",
-            "additional_description": "Reduce the number of challenges presented to visitors using the **Privacy Pass** browser extension."
+            "additional_description": "Reduce the number of challenges presented to visitors using the <strong>Privacy Pass</strong> browser extension."
           },
           {
             "external_link": true,
             "url_path": "https://support.cloudflare.com/hc/articles/200170086",
-            "link_title": "Learn about Browser Integrity Check",
+            "link_title": "Browser Integrity Check",
             "additional_description": "Browser Integrity Check evaluates incoming HTTP headers based on known threats — such as requests with a missing or non-standard user agent — and present a challenge page if needed."
           },
           {
@@ -212,7 +211,7 @@
           {
             "external_link": true,
             "url_path": "https://support.cloudflare.com/hc/articles/200170076",
-            "link_title": "Learn about I'm Under Attack Mode",
+            "link_title": "I'm Under Attack Mode",
             "additional_description": "I'm Under Attack Mode performs additional security checks to help mitigate Layer 7 DDoS attacks. This feature should be used as a last resort when your application is under attack."
           }
         ]
@@ -221,7 +220,7 @@
         "type": "module",
         "title": "Explore dedicated security products",
         "description": "Cloudflare offers several dedicated products to increase the security of your website and underlying infrastructure.",
-        "estimated_time": "~30 mins",
+        "estimated_time": 30,
         "pages": [
           {
             "url_path": "/page-shield/",
@@ -253,10 +252,10 @@
       {
         "type": "module",
         "title": "Next steps",
-        "estimated_time": "~30 mins",
         "pages": [
           {
-            "url_path": "/fundamentals/get-started/task-guides/origin-health/"
+            "url_path": "/fundamentals/get-started/task-guides/origin-health/",
+            "link_title": "Protect your origin server"
           }
         ]
       }
