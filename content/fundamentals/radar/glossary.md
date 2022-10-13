@@ -86,7 +86,7 @@ Each entry on the Verified Bots list exists because a corresponding IP address w
 
 ## Visitor location
 
-Domain Rankings is based on our anonymized and aggregated 1.1.1.1 resolver data, it complies with our 1.1.1.1 [privacy commitments](https://developers.cloudflare.com/1.1.1.1/privacy/public-dns-resolver/). It aims to identify the top most popular domains that reflect how people use the Internet globally. Domain Rankings’ popularity metric is best described as the estimated number of unique users that access a domain over some period of time.
+The data displayed on domain-specific geographic traffic patterns is based solely on data from our recursive DNS services. All data displayed is in accordance with our privacy policies and commitments. This data may include attack traffic and cross-origin requests.
 
 ## WHOIS
 
