@@ -136,13 +136,13 @@ On the Zero Trust dashboard, select your account and go to **Settings** > **Auth
 
 Your rule will now be visible under the **Device enrollment rules** list.
 
-## Configure the Cloudflare certificate
+## Configure the Cloudflare certificate (Optional) 
 
-To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
+To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow. However, this is not a requirement for private network routing.
 
 To download the Cloudflare certificate, refer to [Install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/). To find the certificate in the Zero Trust Dashboard, go to **Settings** > **Devices** > **Certificates**.
 
-## Enable the Cloudflare proxy
+## Enable the Cloudflare proxy (Optional)
 
 Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic.
 
@@ -150,7 +150,7 @@ Once the certificate has been installed, you can configure Gateway to inspect HT
 
 2. Toggle **Proxy** to Enabled. This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
 
-3. Toggle **TLS decryption** to Enabled. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
+3. Toggle **TLS decryption** to Enabled. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection. Again, this step is optional if you have not configured the Cloudflare certificate. 
 
 ## Enroll a device
 
