@@ -5,7 +5,7 @@ _build:
   list: never
 
 name: "New URL parser implementation"
-date: "2021-11-11"
+date: "2022-10-31"
 enable_date: "2022-10-31"
 enable_flag: "url_standard"
 disable_flag: "url_original"
