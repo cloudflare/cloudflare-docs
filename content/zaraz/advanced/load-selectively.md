@@ -6,9 +6,9 @@ weight: 1
 
 # Load Zaraz selectively
 
-You can use [Configuration Rules](/rules/configuration-rules) to load Zaraz selectively on specific URLs or subdomains. Configuration Rules can also be used to block Zaraz from loading based on cookies, IP addresses or anything else related to a request.
+You can use [Configuration Rules](/rules/configuration-rules/) to load Zaraz selectively on specific URLs or subdomains. Configuration Rules can also be used to block Zaraz from loading based on cookies, IP addresses or anything else related to a request.
 
-Refer to [Configuration Rules](/rules/configuration-rules) documentation to learn more about this feature and how you can use it with Zaraz.
+Refer to [Configuration Rules](/rules/configuration-rules/) documentation to learn more about this feature and how you can use it with Zaraz.
 
 {{<Aside type="note">}}
 
