@@ -115,9 +115,7 @@ Vue.createApp({
             <fieldset :id="element.id">
             <legend v-html="element.description"></legend>
                 <div v-for="choice in element.choices">
-                    <input v-if="choice.default" class="questionChoice" type="radio" :name="element.id" :id="choice.name" 
-                    :value=choice.value checked @change="onRadioButtonChange()">
-                    <input v-else class="questionChoice" type="radio" :name="element.id" :id="choice.name" 
+                    <input class="questionChoice" type="radio" :name="element.id" :id="choice.name" 
                     :value=choice.value @change="onRadioButtonChange()">
                     <label :for="choice.name">[[ choice.name ]]</label>
                 </div>
