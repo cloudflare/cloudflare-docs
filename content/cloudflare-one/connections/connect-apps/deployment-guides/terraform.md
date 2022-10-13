@@ -8,7 +8,10 @@ weight: 8
 
 [Terraform](https://www.terraform.io/) is an infrastructure as code software tool that allows you to deploy services from different providers using a standardized configuration syntax.  When creating a Terraform configuration file, you define the final state of the configuration rather than the step-by-step procedure. This allows you to easily deploy, modify, and manage your Tunnels alongside your other infrastructure.
 
-In this guide, you will learn how to use Terraform to deploy a Google Cloud Project (GCP) virtual machine and connect it with a [locally-managed](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/) Cloudflare Tunnel.
+In this guide, you will use Terraform to deploy:
+  - A Google Cloud Project (GCP) virtual machine
+  - A Cloudflare Tunnel that makes the server available over the Internet
+  - A Cloudflare Access policy that defines who can connect to the server
 
 ## Prerequisites
 
@@ -197,7 +200,7 @@ You will need to declare the [providers](https://registry.terraform.io/browse/pr
 
 ### Configure Cloudflare resources
 
-The following configuration will modify settings in your Cloudflare account.
+The following configuration will modify settings in your Cloudflare account. 
 
 1. In your Terraform directory, create a `.tf` file:
 
@@ -216,7 +219,7 @@ The following configuration will modify settings in your Cloudflare account.
       byte_length = 35
     }
     
-    # Creates a new tunnel for the GCP VM.
+    # Creates a new locally-managed tunnel for the GCP VM.
     resource "cloudflare_argo_tunnel" "auto_tunnel" {
       account_id = var.cloudflare_account_id
       name       = "Terraform GCP tunnel"
@@ -231,28 +234,20 @@ The following configuration will modify settings in your Cloudflare account.
       type    = "CNAME"
       proxied = true
     }
-    # Creates the CNAME record that routes ssh_app.${var.cloudflare_zone} to the tunnel.
-    resource "cloudflare_record" "ssh_app" {
-      zone_id = var.cloudflare_zone_id
-      name    = "ssh_app"
-      value   = "${cloudflare_argo_tunnel.auto_tunnel.id}.cfargotunnel.com"
-      type    = "CNAME"
-      proxied = true
-    }
     
-    # Creates an Access application to control who can connect over SSH.
-    resource "cloudflare_access_application" "ssh_app" {
+    # Creates an Access application to control who can connect.
+    resource "cloudflare_access_application" "http_app" {
       zone_id          = var.cloudflare_zone_id
-      name             = "Access application for ssh_app.${var.cloudflare_zone}"
-      domain           = "ssh_app.${var.cloudflare_zone}"
+      name             = "Access application for http_app.${var.cloudflare_zone}"
+      domain           = "http_app.${var.cloudflare_zone}"
       session_duration = "1h"
     }
     
-    # Creates an Access policy for the SSH application.
-    resource "cloudflare_access_policy" "ssh_policy" {
-      application_id = cloudflare_access_application.ssh_app.id
+    # Creates an Access policy for the application.
+    resource "cloudflare_access_policy" "http_policy" {
+      application_id = cloudflare_access_application.http_app.id
       zone_id        = var.cloudflare_zone_id
-      name           = "Example policy for ssh_app.${var.cloudflare_zone}"
+      name           = "Example policy for http_app.${var.cloudflare_zone}"
       precedence     = "1"
       decision       = "allow"
       include {
@@ -292,9 +287,7 @@ The following configuration defines the specifications for the GCP virtual machi
       name         = "test"
       machine_type = var.machine_type
       zone         = var.zone
-      // Your tags may differ. This one instructs the networking to not allow access to port 22
-      tags         = ["no-ssh"]
-    
+      tags         = []
       boot_disk {
         initialize_params {
           image = data.google_compute_image.image.self_link
@@ -391,8 +384,7 @@ The following script will install `cloudflared`, create a permissions and config
     loglevel: info
     
     ingress:
-      - hostname: ssh_app.${web_zone}
-        service: ssh://localhost:22
+
       - hostname: http_app.${web_zone}
         service: http://localhost:8080
       - hostname: "*"
@@ -441,14 +433,11 @@ If you need to roll back the configuration, run `terraform destroy` to delete ev
 
 ## 7. Test the connection
 
-### HTTP
-Open a browser and go to `http_app.<cloudflare_zone>` (for example `http_app.example.com`). You should see the [HTTPBin](https://httpbin.org/) homepage.
+1. In **Access** > **Tunnels**, verify that your tunnel is active.
+2. In **Access** > **Applications**, verify that your Cloudflare email is allowed by the Access policy.
+3. From any device, open a browser and go to `http_app.<cloudflare_zone>` (for example, `http_app.example.com`).
 
-### SSH
-To test the SSH connection ???
+    You will see the Access login page if you have not recently logged in.
+4. Log in with your Cloudflare email.
 
-Following https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/use_cases/ssh/#2-connect-as-a-user, I see
-```bash
-ranbel@N3PFQMVM4W ~ % ssh ranbel@ssh_app.rsun.uk
-ranbel@ssh_app.rsun.uk: Permission denied (publickey).
-```
+    You should see the [HTTPBin](https://httpbin.org/) homepage.
