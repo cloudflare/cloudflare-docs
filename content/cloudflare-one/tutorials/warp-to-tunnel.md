@@ -138,7 +138,7 @@ Your rule will now be visible under the **Device enrollment rules** list.
 
 ## (Optional) Configure the Cloudflare certificate
 
-To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow. However, this is not a requirement for private network routing.
+Installing the Cloudflare certificate on your devices is not a requirement for private network routing. However, the certificate allows Cloudflare Gateway to inspect and secure HTTP traffic to your private network. You can distribute this certificate through an MDM provider or install it manually.
 
 To download the Cloudflare certificate, refer to [Install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/). To find the certificate in the Zero Trust Dashboard, go to **Settings** > **Devices** > **Certificates**.
 
