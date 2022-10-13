@@ -89,7 +89,7 @@ Verification checks occur frequently immediately after a hostname is created, bu
 Depending on which method you select for each of these options, additional steps might be required for you and your customers.
 
 {{<Aside type="warning">}}
-You can no longer use HTTP based validation for Wildcard certificates according to the Certificate Authority Browser Forum.
+You can no longer use [HTTP-based validation for Wildcard certificates](/ssl/reference/migration-guides/dcv-update/) according to the Certificate Authority Browser Forum.
 {{</Aside>}}
 
 ---

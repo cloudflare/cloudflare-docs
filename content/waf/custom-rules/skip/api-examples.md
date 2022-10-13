@@ -18,13 +18,13 @@ Take the following into account regarding the provided examples:
 
 *   The `<ZONE_ID>` value is the ID of the zone where you want to add the rule. To retrieve a list of zones you have access to, use the [List Zones](https://api.cloudflare.com/#zone-list-zones) operation.
 
-*   The `<RULESET_ID>` value is the ID of the entry point ruleset of the `http_request_firewall_custom` phase. For details on obtaining this ruleset ID, refer to [List and view rulesets](/ruleset-engine/rulesets-api/view/). If you do not have such a ruleset yet, you can use the [Update zone entry point ruleset](/ruleset-engine/rulesets-api/update/) API operation to create the entry point ruleset with a skip rule in a single operation.
+*   The `<RULESET_ID>` value is the ID of the entry point ruleset of the `http_request_firewall_custom` phase. For details on obtaining this ruleset ID, refer to [List and view rulesets](/ruleset-engine/rulesets-api/view/). If you do not have such a ruleset yet, you can use the [Update a zone entry point ruleset](https://api.cloudflare.com/#zone-rulesets-update-zone-entry-point-ruleset) API operation to create the entry point ruleset with a skip rule in a single operation.
 
 *   Although each example only includes one action parameter, you can use several skip options in the same rule by specifying the `ruleset`, `phases`, and `products` action parameters simultaneously.
 
 ## Skip the remaining rules in the current ruleset
 
-This example uses the [Update zone entry point ruleset](/ruleset-engine/rulesets-api/update/) API operation to set all the rules in the entry point ruleset of the `http_request_firewall_custom` phase. The first rule, configured with the `skip` action, will skip all remaining rules in the current ruleset based on the request URI path:
+This example uses the [Update a zone entry point ruleset](https://api.cloudflare.com/#zone-rulesets-update-zone-entry-point-ruleset) API operation to set all the rules in the entry point ruleset of the `http_request_firewall_custom` phase. The first rule, configured with the `skip` action, will skip all remaining rules in the current ruleset based on the request URI path:
 
 ```json
 ---
@@ -107,7 +107,7 @@ curl -X PUT \
 
 ## Skip a phase
 
-This example uses the [Add individual rule](/ruleset-engine/rulesets-api/add-rule/) API operation to add a rule that skips the `http_ratelimit` phase:
+This example uses the [Create zone ruleset rule](https://api.cloudflare.com/#zone-rulesets-create-zone-ruleset-rule) API operation to add a rule that skips the `http_ratelimit` phase:
 
 ```json
 ---
@@ -134,7 +134,7 @@ Refer to [Available skip options](/waf/custom-rules/skip/options/) for the list 
 
 ## Skip a phase and do not log matching requests
 
-This example uses the [Add individual rule](/ruleset-engine/rulesets-api/add-rule/) API operation to add a rule that:
+This example uses the [Create zone ruleset rule](https://api.cloudflare.com/#zone-rulesets-create-zone-ruleset-rule) API operation to add a rule that:
 
 * Skips the `http_ratelimit` phase
 * Disables logging for requests matching this rule
@@ -166,7 +166,7 @@ Refer to [Available skip options: Logging](/waf/custom-rules/skip/options/#loggi
 
 ## Skip security products
 
-This example uses the [Add individual rule](/ruleset-engine/rulesets-api/add-rule/) API operation to add a rule that skips the Zone Lockdown and User Agent Blocking products:
+This example uses the [Create zone ruleset rule](https://api.cloudflare.com/#zone-rulesets-create-zone-ruleset-rule) API operation to add a rule that skips the Zone Lockdown and User Agent Blocking products:
 
 ```json
 ---

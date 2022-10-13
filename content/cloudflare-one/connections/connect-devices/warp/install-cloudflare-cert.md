@@ -104,7 +104,7 @@ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keyc
 4. Update the OpenSSL CA Store to include the Cloudflare certificate:
 
 ```bash
-sudo cat Cloudflare_CA.pem >> /usr/local/etc/openssl/cert.pem
+echo | sudo cat - Cloudflare_CA.pem >> /usr/local/etc/openssl/cert.pem
 ```
 
 ### iOS
@@ -347,7 +347,7 @@ This command will output:
 3. Append the Cloudflare certificate to this CA Store by running:
 
 ```bash
-cat /Library/Keychains/System.keychain Cloudflare_CA.crt >> $(python -m certifi)
+echo | cat - Cloudflare_CA.pem >> $(python -m certifi)
 ```
 
 4. If needed, configure system variables to point to this CA Store.
