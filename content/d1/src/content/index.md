@@ -7,28 +7,20 @@ pcx-content-type: landing-page
 
 <ContentColumn>
 
-# Cloudflare Pages documentation
+# Cloudflare D1 documentation
 
-Deploy your dynamic frontend applications using Cloudflare Pages. Pages are super fast, always up-to-date, and deployed directly from your GitHub account.
+Built on SQLite, D1 is Cloudflare’s first [queryable relational database at the edge](https://blog.cloudflare.com/introducing-d1/). Create an entire database in a few quick steps by importing data or defining your tables and writing your queries within a Worker or through our API. With D1 you can: 
+  
+* Interact with and push changes to your database directly through Wrangler
+* Create and modify your database directly from the D1 dashboard 
+* Store backups of your database in R2 automatically
+* Export your backups to download to your local machine. 
 
-Get started deploying your first site using our **Get started** guide below, or refer to our **Framework guides** page to explore the vast ecosystem of tools and frameworks that Pages supports.
-
-<ButtonGroup>
-  <Button type="primary" href="/get-started">Get started</Button>
-  <Button type="secondary" href="/framework-guides">See the framework guides</Button>
-  <Button type="secondary" href="https://pages.dev">Your Cloudflare Pages dashboard</Button>
-</ButtonGroup>
-
-## Popular pages
-
-- [Deploy a React application](/framework-guides/deploy-a-react-application)
-- [Build configuration](/platform/build-configuration)
-
---------------------------------
+With D1 currently in beta, you can truly go full-stack and build rich apps including eCommerce sites, accounting software, SaaS solutions, CRMs and more. 
 
 ## Community
 
-You can [connect with the Pages community on Discord](https://discord.gg/cloudflaredev) to ask questions, show off what you are building, and discuss the platform with other developers. 
+Please reach out to us on the [Cloudflare Developer Discord](https://discord.com/invite/cloudflaredev) in the [D1-open-beta channel](<link>). In this channel, you will be able to ask questions, surface any issues you run into, provide feedback and show off your projects directly with our product and engineering team. 
 
 [Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what is new in Cloudflare Pages.
 
