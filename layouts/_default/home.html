@@ -10,6 +10,7 @@
 
     {{ if gt (len (findRE "\\/learning\\-paths\\/.+" .Page.RelPermalink)) 0 }}
     {{- partial "vue" -}}
+    {{- partial "vue-router" -}}
     {{- partial "script" (dict "src" "dynamic-learning-path-vue.js" "defer" true) -}}
     {{ end }}
     

@@ -86,7 +86,8 @@
         "choices": [
           { 
             "name": "Yes",
-            "value": true
+            "value": true,
+            "default": true
           },
           { 
             "name": "No",
@@ -155,7 +156,8 @@
         "choices": [
           { 
             "name": "Yes",
-            "value": true
+            "value": true,
+            "default": true
           },
           { 
             "name": "No",

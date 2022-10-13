@@ -15,30 +15,28 @@ for (const item in paths) {
   }
 }
 
-let filteredElements = currentPath.elements.filter(
-  (element) => element.visible_by_default !== false
-);
+const router = VueRouter.createRouter({
+  history: VueRouter.createWebHashHistory(),
+  routes: [{path: '/'}]
+})
 
 Vue.createApp({
   methods: {
-    onRadioButtonChange() {
-      const selectedOptions = document.querySelectorAll(
-        "input[type=radio]:checked"
-      );
+    filterByInputs(inputs) {
       this.elements = currentPath.elements.filter((element) => {
         let keepItem = true;
         if (element.variables) {
           for (const i in element.variables) {
             let variableActive = false;
-            selectedOptions.forEach((item) => {
-              if (item.name === element.variables[i].name) {
+            Object.keys(inputs).forEach((key) => {
+              if (key === element.variables[i].name) {
                 variableActive = true;
-                if (item.value !== element.variables[i].value.toString()) {
+                if (inputs[key] !== element.variables[i].value.toString()) {
                   keepItem = false;
                 }
               }
             });
-            if (!variableActive && !element.variables[i].postpone_evaluation) {
+            if (!variableActive && !element.variables[i].postpone_evaluation && !element.visible_by_default) {
               return false;
             }
           }
@@ -46,7 +44,18 @@ Vue.createApp({
         } else {
           return keepItem;
         }
-      });
+      })
+    },
+    onRadioButtonChange() {
+      const selectedOptions = document.querySelectorAll(
+        "input[type=radio]:checked"
+      );
+      let queryRoutes = {}
+      selectedOptions.forEach((item) => {
+        queryRoutes[item.name] = item.value
+      })
+
+      this.$router.push({query: queryRoutes})
     },
     calculateModuleNumber(module) {
       let filteredModules = this.elements.filter(
@@ -106,7 +115,9 @@ Vue.createApp({
             <fieldset :id="element.id">
             <legend v-html="element.description"></legend>
                 <div v-for="choice in element.choices">
-                    <input class="questionChoice" type="radio" :name="element.id" :id="choice.name" 
+                    <input v-if="choice.default" class="questionChoice" type="radio" :name="element.id" :id="choice.name" 
+                    :value=choice.value checked @change="onRadioButtonChange()">
+                    <input v-else class="questionChoice" type="radio" :name="element.id" :id="choice.name" 
                     :value=choice.value @change="onRadioButtonChange()">
                     <label :for="choice.name">[[ choice.name ]]</label>
                 </div>
@@ -118,7 +129,7 @@ Vue.createApp({
     </div>`,
   data() {
     return {
-      elements: filteredElements,
+      elements: currentPath.elements,
     };
   },
   computed: {
@@ -136,7 +147,30 @@ Vue.createApp({
       const hours = Math.floor(totalMin / 60);
       const minutes = totalMin % 60;
       return `${hours} hours and ${minutes} minutes`;
-    },
+    }
   },
   delimiters: ["[[", "]]"],
-}).mount("#dynamicPath");
+  created() {
+    this.$watch(
+      () => this.$route.query,
+      () => {
+        const questions = document.querySelectorAll(
+          "fieldset"
+        );
+        questions.forEach((question) => {
+          Object.keys(this.$route.query).forEach((queryParam) => {
+            if (queryParam === question.id) {
+              let arr = Array.prototype.slice.call( question.elements )
+              arr.forEach((choice) => {
+                if(choice.value === this.$route.query[queryParam]) {
+                  choice.checked = true;
+                }
+              })
+            }
+          })
+        })
+        this.filterByInputs(this.$route.query)
+      }
+    )
+  },
+}).use(router).mount("#dynamicPath");
