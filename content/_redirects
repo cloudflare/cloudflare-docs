@@ -872,6 +872,7 @@
 
 # zaraz
 
+/zaraz/advanced/block-zaraz/ /zaraz/advanced/load-selectively/ 301
 /zaraz/datalayer-compatibility/ /zaraz/advanced/datalayer-compatibility/ 301
 /zaraz/get-started/block-zaraz/ /zaraz/advanced/block-zaraz/ 301
 /zaraz/user-properties/ /zaraz/reference/properties-reference/ 301

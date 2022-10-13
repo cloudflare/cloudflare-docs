@@ -22,6 +22,6 @@ To use Blocking Triggers, start by [creating the trigger](/zaraz/get-started/cre
 
 {{<Aside type="note">}}
 
-Blocking Triggers are useful if you wish to block specific actions, or even specific tools from firing, while keeping others active. If you wish to turn off Zaraz entirely on specific pages/domains/subdomains, we recommend using [Page Rules to block Zaraz](/zaraz/advanced/block-zaraz/).
+Blocking Triggers are useful if you wish to block specific actions, or even specific tools from firing, while keeping others active. If you wish to turn off Zaraz entirely on specific pages/domains/subdomains, or load Zaraz depending on other factors such as cookies, we recommend [loading Zaraz selectively](/zaraz/advanced/load-selectively/).
 
 {{</Aside>}}
