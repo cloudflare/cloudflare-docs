@@ -15,8 +15,8 @@ The descriptions below detail the fields available for `gateway_dns`.
 | Field | Value | Type |
 | -- | -- | -- |
 | ApplicationID | ID of the application the domain belongs to (for example, 1, 2). Set to 0 when no ApplicationID is matched. | int |
+| ColoCode | The name of the colo that received the DNS query (for example, 'SJC', 'MIA', 'IAD') | string |
 | ColoID | The ID of the colo that received the DNS query (for example, 46, 72, 397) | int |
-| ColoName | The name of the colo that received the DNS query (for example, 'SJC', 'MIA', 'IAD') | string |
 | Datetime | The date and time the corresponding DNS request was made (for example, '2021-07-27T00:01:07Z') | int or string |
 | DeviceID | UUID of the device where the HTTP request originated from (for example, 'dad71818-0429-11ec-a0dc-000000000000') | string |
 | DstIP | The destination IP address the DNS query was made to (for example, '104.16.132.2290') | string |
