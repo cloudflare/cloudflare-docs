@@ -17,7 +17,7 @@ The All Reported Scripts dashboard displays all the scripts, including infrequen
 Depending on your Cloudflare plan, you may also be able to:
 
 - [View the details of each script](#view-script-details)
-- [Review scripts marked as malicious](/page-shield/use-dashboard/review-malicious-scripts/)
+- [Review scripts considered malicious](/page-shield/use-dashboard/review-malicious-scripts/)
 - [Review changed scripts](/page-shield/use-dashboard/review-changed-scripts/)
 
 ## Use the Active Scripts dashboard
@@ -33,7 +33,7 @@ To review the active scripts monitored by Page Shield:
     - **Host contains**: Look for scripts appearing on specific hostnames.
     - **Seen on Pages** (requires a Business or Enterprise plan): Look for scripts appearing in a specific page. Searches the page where the first script occurred and the latest occurrences list.
 
-To review all scripts reported in your domain in the last 30 days, click **All scripts**.
+To review all scripts reported in your domain in the last 30 days, select **View all scripts**.
 
 If you recently activated Page Shield, you may see a delay in reporting.
 
@@ -42,9 +42,9 @@ If you recently activated Page Shield, you may see a delay in reporting.
 Use the All Reported Scripts dashboard to review all scripts reported in your domain in the last 30 days, including infrequent or inactive scripts.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Page Shield**.
-3. Under **Active Scripts**, click **All scripts**.
-4. Review the information displayed in the **All Reported Scripts** dashboard.
+2. Go to **Security** > **Page Shield** > **Script monitor**.
+3. Under **Active scripts**, select **View all scripts**.
+4. Review the information displayed in the **All reported scripts** dashboard.
 
 The All Reported Scripts dashboard allows you to filter the displayed scripts using different criteria and to print a report with the displayed scripts.
 
