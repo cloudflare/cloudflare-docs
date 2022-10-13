@@ -12,6 +12,6 @@ Refer to [Configuration Rules](/rules/configuration-rules) documentation to lear
 
 {{<Aside type="note">}}
 
-If you need to block one or more actions from firing in a tool, we recommend you use [Blocking Triggers](/zaraz/advanced/blocking-triggers/) instead of Configuration Rules.
+If you need to block one or more actions from firing in a tool, Cloudflare recommends you use [Blocking Triggers](/zaraz/advanced/blocking-triggers/) instead of Configuration Rules.
 
 {{</Aside>}}
