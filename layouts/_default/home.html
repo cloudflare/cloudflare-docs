@@ -15,7 +15,6 @@
 
     {{ if eq .Page.RelPermalink "/dashboard-landing/" }}
     {{- partial "vue" -}}
-    {{- partial "vue-router" -}}
     {{- partial "script" (dict "src" "dashboard-landing.js" "defer" true) -}}
     {{ end }}
     

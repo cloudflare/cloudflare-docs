@@ -3,18 +3,25 @@ import * as recommendations from "./dashboard-landing.json";
 
 let data = recommendations["default"]["resources"]
 
-const router = VueRouter.createRouter({
-  history: VueRouter.createWebHashHistory(),
-  routes: [{path: '/'}]
-})
+const params = new Proxy(new URLSearchParams(window.location.search), {
+  get: (searchParams, prop) => searchParams.get(prop),
+});
 
 Vue.createApp({
   methods: {
-    filterByQuery(query) {
-      if (Object.keys(query)[0] === "dash_area") {
-        this.visibleData = data.filter((item) => Object.values(this.$route.query)[0] === item.dashPath);
+    filterByParam() {
+      const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+      });
+      if (params.dash_area !== null) {
+        this.visibleData = data.filter((item) => item.dashPath === params.dash_area);
+      } else {
+        this.visibleData = data.filter((item) => item.id === "Default");
       }
     }
+  },
+  beforeMount() {
+    this.filterByParam();
   },
   template: `
     <div>
@@ -27,14 +34,5 @@ Vue.createApp({
       visibleData: data
     };
   },
-  computed: {
-  },
   delimiters: ["[[", "]]"],
-  created() {
-    this.$watch(
-      () => this.$route.query,
-      () => {
-        this.filterByQuery(this.$route.query)
-      })
-    }
-}).use(router).mount("#dashboardLandingPage");
+}).mount("#dashboardLandingPage");
