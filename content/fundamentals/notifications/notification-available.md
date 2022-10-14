@@ -515,7 +515,7 @@ All Cloudflare plans.
 
 **Who is it for?**
 
-BYOIP customers who want to receive a notification when their prefixes are advertised in places they should not be.
+[BYOIP customers](/byoip/) who want to receive a notification when their prefixes are advertised in places they should not be.
 
 **Other options / filters**
 
@@ -548,7 +548,7 @@ None.
 
 **Included with**
 
-Access and Cloudflare for SaaS.
+[Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) and [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/).
 
 **What should you do if you receive one?**
 
@@ -558,12 +558,12 @@ Upload a [renewed certificate](/cloudflare-one/identity/devices/access-integrati
 </details>
 
 <details>
-<summary>Dedicated SSL Alert</summary>
+<summary>Advanced Certificate Alert</summary>
 <div>
 
 **Who is it for?**
 
-Customers with dedicated certificates that want to be alerted on validation, issuance, renewal, and expiration of certificates.
+Customers with [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) that want to be alerted on validation, issuance, renewal, and expiration of certificates.
 
 **Other options / filters**
 
@@ -571,7 +571,7 @@ None.
 
 **Included with**
 
-When a dedicated certificate is validated, issued, renewed, or expired.
+When an advanced certificate is validated, issued, renewed, or expired.
 
 **What should you do if you receive one?**
 

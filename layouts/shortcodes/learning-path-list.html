@@ -51,7 +51,7 @@
     <div class="individualPath">
         <p class="pathHeading">Learning path</p>
         <a href="{{ .path }}"><h2>{{ .title }}</h2></a>
-        <p>{{ .description }}</p>        
+        <p>{{ .description | markdownify }}</p>        
     </div>
     {{- end -}}
 </div>

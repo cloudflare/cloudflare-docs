@@ -19,13 +19,13 @@ Deletes all the versions of an existing ruleset at the account or zone level.
 
 Use one of the following API endpoints:
 
-| Operation                            | Method + Endpoint                                     |
-| ------------------------------------ | ----------------------------------------------------- |
-| [Delete account ruleset][dr-account] | `DELETE /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>` |
-| [Delete zone ruleset][dr-zone]       | `DELETE /zones/<ZONE_ID>/rulesets/<RULESET_ID>`       |
+| Operation                               | Method + Endpoint                                     |
+| --------------------------------------- | ----------------------------------------------------- |
+| [Delete an account ruleset][dr-account] | `DELETE /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>` |
+| [Delete a zone ruleset][dr-zone]        | `DELETE /zones/<ZONE_ID>/rulesets/<RULESET_ID>`       |
 
-[dr-account]: https://api.cloudflare.com/#account-rulesets-delete-account-ruleset
-[dr-zone]: https://api.cloudflare.com/#zone-rulesets-delete-zone-ruleset
+[dr-account]: https://api.cloudflare.com/#account-rulesets-delete-an-account-ruleset
+[dr-zone]: https://api.cloudflare.com/#zone-rulesets-delete-a-zone-ruleset
 
 If the delete operation succeeds, the API method call returns a `204 No Content` HTTP status code.
 
@@ -58,11 +58,11 @@ Use one of the following API endpoints:
 
 | Operation                                             | Method + Endpoint                                                               |
 | ----------------------------------------------------- | ------------------------------------------------------------------------------- |
-| [Delete a version of an account ruleset][drv-account] | `DELETE /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>` |
-| [Delete a version of a zone ruleset][drv-zone]        | `DELETE /zones/<ZONE_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>`       |
+| [Delete an account ruleset version][drv-account] | `DELETE /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>` |
+| [Delete a zone ruleset version][drv-zone]        | `DELETE /zones/<ZONE_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>`       |
 
-[drv-account]: https://api.cloudflare.com/#account-rulesets-delete-a-version-of-an-account-ruleset
-[drv-zone]: https://api.cloudflare.com/#zone-rulesets-delete-a-version-of-a-zone-ruleset
+[drv-account]: https://api.cloudflare.com/#account-rulesets-delete-an-account-ruleset-version
+[drv-zone]: https://api.cloudflare.com/#zone-rulesets-delete-a-zone-ruleset-version
 
 If the delete operation succeeds, the method call returns a `204 No Content` HTTP status code.
 

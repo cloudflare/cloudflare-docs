@@ -77,10 +77,10 @@ meta:
     </tr>
     <tr>
       <td>
-        <strong>Selectable CA</strong>
+        <strong><a href="/ssl/reference/certificate-authorities/">Selectable CA</a></strong>
       </td>
       <td style="text-align:center">No</td>
-      <td>Yes (Digicert or Let's Encrypt)</td>
+      <td>Yes</td>
     </tr>
     <tr>
       <td>

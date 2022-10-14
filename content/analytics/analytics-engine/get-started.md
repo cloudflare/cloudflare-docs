@@ -43,7 +43,7 @@ A double is just a number type field that can be aggregated in some way – for 
 
 For example, suppose you are collecting air quality samples. Each data point would represent a reading from your weather sensor. Doubles might include numbers like the temperature or air pressure reading. The blobs could include the location of the sensor and the hardware identifier of the sensor.
 
-Up to twenty blobs, twenty doubles and one index can be supplied.
+Up to twenty blobs, twenty doubles and one index can be supplied. The total size of all blobs must not exceed 5120 bytes and the index must not be more than 32 bytes.
 
 This is how it translates into code:
 

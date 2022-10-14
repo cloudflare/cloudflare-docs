@@ -8,6 +8,7 @@ weight: 9
 
 Once you set up SSL/TLS on your application, you can adjust the following settings in **SSL/TLS** > **Edge Certificates**:
 
+*   [Total TLS](/ssl/edge-certificates/additional-options/total-tls/): {{<render file="_total-tls.md">}}
 *   [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/): {{<render file="_always-use-https-definition.md">}}
 *   [HTTP Strict Transport Security (HSTS)](/ssl/edge-certificates/additional-options/http-strict-transport-security/): {{<render file="_hsts-definition.md">}}
 *   [Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/): {{<render file="_minimum-tls-definition.md">}}
