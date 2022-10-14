@@ -50,7 +50,7 @@ You can configure [Malicious Script Alerts](/page-shield/reference/alerts/). You
 
 ## Malicious script categories
 
-Scripts considered malicious are categorized based on data from threat intelligence feeds. The current categories are the following:
+Scripts and connections considered malicious are categorized based on data from threat intelligence feeds. The current categories are the following:
 
 * Security threats
 * Command-and-Control (C2) & Botnet
@@ -61,4 +61,4 @@ Scripts considered malicious are categorized based on data from threat intellige
 * Domain Generation Algorithm (DGA) domain
 * Typosquatting & Impersonation
 
-Each script considered malicious can belong to several categories.
+Each script or connection considered malicious can belong to several categories.
