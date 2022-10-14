@@ -59,4 +59,4 @@ During the beta period for D1, D1 bindings will not be available to a Worker pub
 
 ### Editing via the Cloudflare dashboard
 
-There are sometimes cases where it's necessary to edit your Worker from the Cloudflare dashboard. When you use the `--no-bundle` flag, this isn't possible, as the Cloudflare dashboard doesn't support Workers with multiple modules. If you use a Custom Build script which bundles your Worker into a single module this limitation can be bypassed.
+It is not possible to edit your Worker in the Cloudflare dashboard when you use the `--no-bundle` flag. The Cloudflare dashboard does not support Workers with multiple modules. If you use a Custom Build script, which bundles your Worker into a single module, this limitation can be bypassed.
