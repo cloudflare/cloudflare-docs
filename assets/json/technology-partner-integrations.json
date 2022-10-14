@@ -52,7 +52,7 @@
     },
     {
       "type": "module",
-      "title": "Cloudfare Network Interconnect",
+      "title": "Cloudflare Network Interconnect",
       "description": "Connect your network infrastructure with Cloudflare network fabric partners for increased reliability and security.",
       "pages": [
         {
