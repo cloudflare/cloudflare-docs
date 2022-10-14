@@ -7,29 +7,27 @@ weight: 5
 # Bundling
 
 {{<Aside type="note">}}
-We recommend using Wrangler's inbuilt bundling, but we understand there are cases where you'll need a bit more flexibility. We've built an escape hatch in the form of [Custom Builds](/workers/wrangler/custom-builds/), which let you replace Wrangler's built-in build step with your own.
+We recommend using Wrangler's inbuilt bundling, but we understand there are cases where you will need more flexibility. We have built an escape hatch in the form of [Custom Builds](/workers/wrangler/custom-builds/), which let you run your own build before Wrangler's built-in one.
 {{</Aside>}}
 
-By default, Wrangler bundles your Worker code using [`esbuild`](https://esbuild.github.io/). This means that Wrangler has built in support for importing modules from [npm](https://www.npmjs.com/) defined in your `package.json`. If you'd like to see the exact code that Wrangler will upload to Cloudflare, you can run `wrangler publish --dry-run --outdir dist`, which will show your Worker code post Wrangler's bundling.
+By default, Wrangler bundles your Worker code using [`esbuild`](https://esbuild.github.io/). This means that Wrangler has built-in support for importing modules from [npm](https://www.npmjs.com/) defined in your `package.json`. To review the exact code that Wrangler will upload to Cloudflare, run `wrangler publish --dry-run --outdir dist`, which will show your Worker code after Wrangler's bundling.
 
-## Files which won't be bundled
+## Files which will not be bundled
 
-The effect of bundling your Worker code is to take multiple modules and bundle them into one. Sometimes, however, that isn't the behaviour you want. There might be modules that _shouldn't_ be inlined directly into the bundle. For instance, bundling a WASM file into your Javascript Worker wouldn't make a whole lot of sense—that's something you want to upload as a separate module that can be imported at runtime. Wrangler supports this out of the box for the following file types:
+Bundling your Worker code takes multiple modules and bundles them into one. Sometimes, that is not the desired behavior and there might be modules that should not be inlined directly into the bundle. For example, instead of bundling a WASM file into your Javascript Worker, you would want to upload the WASM file as a separate module that can be imported at runtime. Wrangler supports this for the following file types:
 
 - `.txt`
 - `.html`
 - `.bin`
 - `.wasm`
 
-See the [rules configuration](/workers/wrangler/configuration/#bundling) to customise these file types.
+Refer to [Bundling configuration](/workers/wrangler/configuration/#bundling) to customize these file types.
 
-This means that for an import like the following:
+For example, with the following import, the variable `data` will be a string containing the contents of `example.html`:
 
 ```js
 import data from "./example.html"; // Where `example.html` is a file in your local directory
 ```
-
-the variable `data` will be a string containing the contents of `example.html`.
 
 This is also the basis of Wasm support with Wrangler. To use a Wasm module in a Worker developed with Wrangler, add the following to your Worker:
 
@@ -44,5 +42,21 @@ export default {
 ```
 
 {{<Aside type="warning">}}
-Cloudflare Workers doesn't support `WebAssembly.instantiateStreaming()`
+Cloudflare Workers does not support `WebAssembly.instantiateStreaming()`
 {{</Aside>}}
+
+## Disable bundling
+
+{{<Aside type="warning">}}
+Disabling bundling is not recommended, and has a number of major tradeoffs that are detailed below. Most users should be able to ignore this section.
+{{</Aside>}}
+
+As well as using [Custom Builds](/workers/wrangler/custom-builds/) to customise what Wrangler will bundle and upload to the Cloudflare Edge when you use `wrangler dev` and `wrangler publish`, you can opt out of bundling entirely by using the `--no-bundle` command line flag (i.e. `wrangler publish --no-bundle`). Because this means that Wrangler won't process your code, a number of features aren't available.
+
+### D1 bindings
+
+During the beta period for D1, D1 bindings will not be available to a Worker published with `--no-bundle`.
+
+### Editing via the Cloudflare dashboard
+
+There are sometimes cases where it's necessary to edit your Worker from the Cloudflare dashboard. When you use the `--no-bundle` flag, this isn't possible, as the Cloudflare dashboard doesn't support Workers with multiple modules. If you use a Custom Build script which bundles your Worker into a single module this limitation can be bypassed.
