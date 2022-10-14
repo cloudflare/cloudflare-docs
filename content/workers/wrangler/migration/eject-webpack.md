@@ -30,7 +30,7 @@ Wrangler will continue to take care of it. Remove `type = webpack` from your `wr
 
 ### I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to handle JSX, TypeScript, WebAssembly, HTML files, and other non-standard filetypes.
 
-As of Wrangler 2, Wrangler has built-in support for this use case. Refer to the [Bundling](/workers/wrangler/bundling/) page for more details.
+As of Wrangler 2, Wrangler has built-in support for this use case. Refer to [Bundling](/workers/wrangler/bundling/) for more details.
 
 The Workers runtime handles JSX and TypeScript. You can `import` any modules you need into your code and the Workers runtime includes them in the built Worker automatically.
 
