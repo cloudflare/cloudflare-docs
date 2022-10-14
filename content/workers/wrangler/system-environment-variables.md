@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: concept
 title: System Environment Variables
 weight: 5
 ---

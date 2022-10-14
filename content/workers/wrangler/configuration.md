@@ -10,7 +10,7 @@ Wrangler optionally uses a `wrangler.toml` configuration file to customize the d
 
 It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
 
-## Sample wrangler.toml configuration
+## Sample `wrangler.toml` configuration
 
 ```toml
 ---
