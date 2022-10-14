@@ -5,9 +5,9 @@ title: Deploy a Honojs site
 
 # Deploy a Honojs site
 
-[Hono](https://honojs.dev/) - [炎] means flame🔥 in Japanese - is a small, simple, and ultrafast web framework for Cloudflare Pages/Workers, Deno, Bun, and others. Fast, but not only fast.  In this guide, you will create a new Honojs application and deploy it using Cloudflare Pages.
+[Hono](https://honojs.dev/) is a small, simple, and ultrafast web framework for Cloudflare Pages and Workers, Deno, and Bun. In this guide, you will create a new Honojs application and deploy it using Cloudflare Pages.
 
-## Creating a new project
+## Create a new project
 
 Create a new project by running the following commands in your terminal:
 
@@ -19,37 +19,34 @@ $ npm init -y
 # Make sure Hono is installed
 $ npm install hono
 
-# Install the required dependencies. 
+# Install the required dependencies
 # ESBuild is needed to bundle the hono app code
 # npm-run-all enables us to run multiple npm commands at once 
 $ npm install --save-dev wrangler esbuild npm-run-all 
 ```
 
-Now open the project in your code editor of choice.
-
-In the project, add a `src/server.js` file.
-
-Add the following content to the file.
+Open your project and create a `src/server.js` file. Add the following content to your file:
 
 ```javascript
 import { Hono } from 'hono'
 const app = new Hono()
 
-app.get('/', (c) => c.text('Hello world, this is Hono!!'))
+app.get('/', (ctx) => ctx.text('Hello world, this is Hono!!'))
 
 export default app
 ```
 
-If you want to serve any static files like css, image or js files, you will need to add this bit code
+If you want to serve static files like CSS, image or JavaScript files, you will need to add the following to your `src/server.js` file:
 
 ```javascript
-app.get('/pub/*', async (c) => {
-    return await c.env.ASSETS.fetch(c.req)
+app.get('/public/*', async (ctx) => {
+    return await ctx.env.ASSETS.fetch(ctx.req)
 })
 ```
-This will cause all the files in the `pub` folder within `dist` to be served in your app.
 
-Now, open your `package.json` file and update the `scripts` section.
+This will cause all the files in the `pub` folder within `dist` to be served in your application.
+
+Open your `package.json` file and update the `scripts` section:
 
 ```json
     "scripts": {
@@ -61,21 +58,21 @@ Now, open your `package.json` file and update the `scripts` section.
     },
 ```
 
-Here `npm-run-all` enables us to use a single command `npm run dev` to run `npm run dev:wrangler` and `npm run dev:esbuild` together simultaneously in watch mode.
+Here `npm-run-all` enables you to use a single command `npm run dev` to run `npm run dev:wrangler` and `npm run dev:esbuild` together simultaneously in watch mode.
 
-## Running in local
+## Run in local dev
 
-Start your dev workflow using
+Start your dev workflow by running:
 
 ```shell
 $ npm run dev
 ```
 
-You should be able to see the generated web app in http://localhost:8788
+You should be able to review your generated web application at `http://localhost:8788`.
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Creating a GitHub repository
+## Create a GitHub repository
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
 
@@ -85,7 +82,7 @@ $ git branch -M main
 $ git push -u origin main
 ```
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
 Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
