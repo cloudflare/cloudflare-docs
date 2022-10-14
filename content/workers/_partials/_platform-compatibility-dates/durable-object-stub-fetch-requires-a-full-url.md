@@ -5,7 +5,7 @@ _build:
   list: never
 
 name: "Durable Object `stub.fetch()` requires a full URL"
-date: "2021-11-10"
+sort_date: "2021-11-10"
 enable_date: "2021-11-10"
 enable_flag: "durable_object_fetch_requires_full_url"
 disable_flag: "durable_object_fetch_allows_relative_url"

@@ -5,7 +5,7 @@ _build:
   list: never
 
 name: "Do not substitute `null` on `TypeError`"
-date: "2022-06-01"
+sort_date: "2022-06-01"
 enable_date: "2022-06-01"
 enable_flag: "dont_substitute_null_on_type_error"
 disable_flag: "substitute_null_on_type_error"

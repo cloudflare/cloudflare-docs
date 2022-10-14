@@ -5,7 +5,7 @@ _build:
   list: never
 
 name: "Streams BYOB reader detaches buffer"
-date: "2021-11-10"
+sort_date: "2021-11-10"
 enable_date: "2021-11-10"
 enable_flag: "streams_byob_reader_detaches_buffer"
 disable_flag: "streams_byob_reader_does_not_detach_buffer"
