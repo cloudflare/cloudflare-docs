@@ -8,7 +8,7 @@ weight: 4
 
 {{<Aside type="note">}}
 
-This page is in progress.
+This page is in progress. Refer to [Configuration](/workers/wrangler/configuration/#custom-builds) for a brief overview.
 
 {{</Aside>}}
 
