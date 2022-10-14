@@ -1227,10 +1227,10 @@ The Cloudflare Rules language supports these HTTP response fields:
         <p>The available values are the following:</p>
         <ul>
           <li><code>managed_challenge</code></li>
-          <li><code>iuam_basic</code></li>
+          <li><code>iuam</code></li>
           <li><code>legacy_challenge</code></li>
-          <li><code>ip_block</code></li>
-          <li><code>waf_block</code></li>
+          <li><code>ip_ban</code></li>
+          <li><code>waf</code></li>
           <li><code>5xx</code></li>
           <li><code>1xxx</code></li>
           <li><code>always_online</code></li>
