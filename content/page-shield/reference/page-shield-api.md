@@ -51,7 +51,7 @@ The following table summarizes the available operations:
 
 * The malicious script classification (`Malicious` or `Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 50 — scripts with a score value higher than the threshold are considered malicious.
 
-* The API provides two separate properties for malicious script categories: `malicious_domain_categories` and `malicious_url_categories`, related to the `domain_reported_malicious` and `url_reported_malicious` properties, respectively. The Cloudflare dashboard displays all the categories in a single **Malicious category** field. For more information, refer to [Malicious script categories](/page-shield/about/malicious-script-detection/#malicious-script-categories).
+* The API provides two separate properties for malicious script/connection categories: `malicious_domain_categories` and `malicious_url_categories`, related to the `domain_reported_malicious` and `url_reported_malicious` properties, respectively. The Cloudflare dashboard displays all the categories in a single **Malicious category** field. For more information, refer to [Malicious script categories](/page-shield/about/malicious-script-detection/#malicious-script-categories).
 
 ## Common API calls
 
@@ -308,11 +308,13 @@ header: Response
       "first_seen_at": "2022-09-18T10:51:08Z",
       "last_seen_at": "2022-09-02T09:57:54Z",
       "host": "example.net",
-      "first_page_url": "http://malicious.example.com/one.html",
+      "domain_reported_malicious": true,
+      "malicious_domain_categories": ["Malware", "Spyware"],
+      "url_reported_malicious": false,
+      "malicious_url_categories": [],
+      "first_page_url": "https://example.net/one.html",
       "status": "active",
-      "url_contains_cdn_cgi_path": false,
-      "url_reported_malicious": true,
-      "malicious_url_categories": ["Malware", "Spyware"]
+      "url_contains_cdn_cgi_path": false
     },
     // (...)
   ],
@@ -355,11 +357,13 @@ header: Response
     "first_seen_at": "2022-09-18T10:51:08Z",
     "last_seen_at": "2022-09-02T09:57:54Z",
     "host": "example.net",
-    "first_page_url": "http://malicious.example.com/one.html",
+    "domain_reported_malicious": true,
+    "malicious_domain_categories": ["Malware", "Spyware"],
+    "url_reported_malicious": false,
+    "malicious_url_categories": [],
+    "first_page_url": "https://example.net/one.html",
     "status": "active",
-    "url_contains_cdn_cgi_path": false,
-    "url_reported_malicious": true,
-    "malicious_url_categories": ["Malware", "Spyware"]
+    "url_contains_cdn_cgi_path": false
   },
   "success": true,
   "errors": [],
