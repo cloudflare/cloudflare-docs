@@ -4,20 +4,18 @@ title: Detecting malicious scripts
 weight: 3
 ---
 
-# Detecting malicious scripts
+# Detecting malicious scripts and connections
 
-Page Shield implements different mechanisms to determine if a script is malicious. These mechanisms are:
+Page Shield implements different mechanisms to determine if a script or a connection is malicious. These mechanisms are:
 
 - Malicious URL checks
 - Malicious domain checks
 - Malicious script detection
 
-Any updates to the threat feeds will trigger new checks for previously detected scripts so that the Page Shield dashboards (**Active Scripts** and **All Reported Scripts**) always reflect the latest script categorization.
+Any updates to the threat feeds will trigger new checks for previously detected scripts or connections so that the Page Shield dashboards always reflect the latest categorization.
 
 {{<Aside type="note">}}
-
 This feature is available as a paid add-on for customers on an Enterprise plan.
-
 {{</Aside>}}
 
 ## Malicious URL checks
@@ -26,7 +24,9 @@ Page Shield will search for the URLs of your JavaScript dependencies in threat f
 
 The Page Shield dashboards display the scripts that were considered malicious at the top of the scripts list.
 
-You can [configure Malicious URL Alerts](/page-shield/reference/alerts/). You will receive an alert notification as soon as Cloudflare detects a malicious script URL in your domain.
+You can [configure Malicious URL Alerts](/page-shield/reference/alerts/) to receive an alert notification as soon as Cloudflare detects a script from a malicious URL in your domain.
+
+Depending on your current configuration, Page Shield can also search for malicious URLs in the URLs of outgoing connections made by scripts in your domain. To enable this check, you must [allow Page Shield to use the full URLs of outgoing connections](/page-shield/reference/settings/#connection-target-details) instead of only the hostname in Page Shield settings.
 
 ## Malicious domain checks
 
@@ -34,7 +34,9 @@ Page Shield will search for the domains of your client-side JavaScript dependenc
 
 A domain previously reported as malicious can later be reported as non-malicious if, after further analysis, the domain is deemed safe.
 
-You can configure [Malicious Domain Alerts](/page-shield/reference/alerts/). You will receive an alert notification as soon as Cloudflare detects a malicious script loaded from a known malicious domain in your domain.
+Page Shield will also check the target domains of connections made by scripts in your domain's pages, following the same approach described for scripts.
+
+You can configure [Malicious Domain Alerts](/page-shield/reference/alerts/) to receive an alert notification as soon as Cloudflare detects a malicious script loaded from a known malicious domain in your domain.
 
 ## Malicious script detection
 
