@@ -42,7 +42,7 @@ export default {
 ```
 
 {{<Aside type="warning">}}
-Cloudflare Workers does not support `WebAssembly.instantiateStreaming()`
+Cloudflare Workers does not support `WebAssembly.instantiateStreaming()`.
 {{</Aside>}}
 
 ## Disable bundling
