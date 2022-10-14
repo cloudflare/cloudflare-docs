@@ -2,7 +2,7 @@
   "resources": [
     {
         "id": "Default",
-        "dashPath": "",
+        "dashPath": "none",
         "recommendations": [
             {
                 "url_path": "/test/",
