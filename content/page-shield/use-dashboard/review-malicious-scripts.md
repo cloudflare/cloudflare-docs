@@ -43,7 +43,7 @@ To review the connections considered malicious:
 
 3.  Under **Active connections**, select **Details** for each connection considered malicious. The connection details will contain:
 
-    - **URL match**: Whether the connection's target URL is known to be malicious according to threat intelligence feeds. This field requires that you configure Page Shield to analyze the [full URL](/page-shield/reference/settings/#connection-target-details) of outgoing connections.
+    - **URL match**: Whether the connection's target URL is known to be malicious according to threat intelligence feeds. This field requires that you configure Page Shield to analyze the [full URI](/page-shield/reference/settings/#connection-target-details) of outgoing connections.
     - **Domain match**: Whether the connection's target domain is known to be malicious according to threat intelligence feeds.
     - **Category**: The categorization of the connection considered malicious according to threat intelligence feeds.
 
