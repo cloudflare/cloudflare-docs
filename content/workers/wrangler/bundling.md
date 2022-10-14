@@ -48,7 +48,7 @@ Cloudflare Workers does not support `WebAssembly.instantiateStreaming()`.
 ## Disable bundling
 
 {{<Aside type="warning">}}
-Disabling bundling is not recommended, and has a number of major tradeoffs that are detailed below. Most users should be able to ignore this section.
+Disabling bundling is not recommended and has a number of major tradeoffs that are detailed below. Most users should be able to ignore this section.
 {{</Aside>}}
 
 As well as using [Custom Builds](/workers/wrangler/custom-builds/) to customise what Wrangler will bundle and upload to the Cloudflare Edge when you use `wrangler dev` and `wrangler publish`, you can opt out of bundling entirely by using the `--no-bundle` command line flag (i.e. `wrangler publish --no-bundle`). Because this means that Wrangler won't process your code, a number of features aren't available.
