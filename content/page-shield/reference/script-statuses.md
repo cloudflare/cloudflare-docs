@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Script statuses
-weight: 1
+weight: 2
 ---
 
 # Script statuses
@@ -13,7 +13,7 @@ Cloudflare classifies scripts according to the following:
 
 Use Page Shield's dashboards to review the scripts loaded in your domain. For more information, refer to [Monitor scripts on your site](/page-shield/use-dashboard/monitor-scripts/).
 
-## Available statuses 
+## Available statuses
 
 * **Infrequent**: There are less than three reports for the script. If there are no reports for a script with _Infrequent_ status for five days, then Page Shield will delete all the information about the script. Scripts with _Infrequent_ status appear only in the All Reported Scripts dashboard.
 * **Active**: There are more than three reports for the script.
@@ -21,7 +21,7 @@ Use Page Shield's dashboards to review the scripts loaded in your domain. For mo
 
 {{<Aside type="note">}}
 
-All scripts considered malicious will appear in the Active Scripts dashboard, regardless of their status. 
+All scripts considered malicious will appear in the Active Scripts dashboard, regardless of their status.
 
 Malicious script detection is available to Enterprise customers with a paid add-on.
 

@@ -1,7 +1,7 @@
 ---
 title: Configure alerts
 pcx_content_type: how-to
-weight: 3
+weight: 4
 meta:
   title: Configure Page Shield alerts
 ---
