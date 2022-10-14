@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Page Shield API
-weight: 4
+weight: 5
 ---
 
 # Page Shield API
@@ -30,12 +30,15 @@ The `<SCRIPT_ID>` argument is the script ID (a hexadecimal string). This value i
 
 The following table summarizes the available operations:
 
-| Operation                        | Method + URL stub                                        | Notes                                                    |
-| -------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| [Get Page Shield status][1]      | `GET zones/<ZONE_ID>/page_shield`                     | Fetch the current Page Shield status (enabled/disabled). |
-| [Update Page Shield status][2]   | `PUT zones/<ZONE_ID>/page_shield`                     | Updates the Page Shield status (enabled/disabled).       |
-| [List Page Shield scripts][3]    | `GET zones/<ZONE_ID>/page_shield/scripts`             | Fetch a list of currently monitored scripts.             |
-| [Get a Page Shield script][4]    | `GET zones/<ZONE_ID>/page_shield/scripts/<SCRIPT_ID>` | Fetch the details of a currently monitored script.       |
+| Operation                         | Method + URL stub                                      | Notes                                                    |
+| --------------------------------- | ------------------------------------------------------ | -------------------------------------------------------- |
+| [Get Page Shield status][1]       | `GET zones/<ZONE_ID>/page_shield`                      | Fetch the current Page Shield status (enabled/disabled). |
+| [Update Page Shield status][2]    | `PUT zones/<ZONE_ID>/page_shield`                      | Updates the Page Shield status (enabled/disabled).       |
+| [List Page Shield scripts][3]     | `GET zones/<ZONE_ID>/page_shield/scripts`              | Fetch a list of currently monitored scripts.             |
+| [Get a Page Shield script][4]     | `GET zones/<ZONE_ID>/page_shield/scripts/<SCRIPT_ID>`  | Fetch the details of a currently monitored script.       |
+| List Page Shield connections      | `GET zones/<ZONE_ID>/page_shield/connections`          | Fetch a list of currently monitored connections.         |
+| Get a Page Shield connection      | `GET zones/<ZONE_ID>/page_shield/connections/<CONNECTION_ID>` | Fetch the details of a connection.                    |
+
 
 [1]: https://api.cloudflare.com/#page-shield-get-page-shield-status
 [2]: https://api.cloudflare.com/#page-shield-update-page-shield-status
@@ -275,3 +278,89 @@ header: Response
 ```
 
 Some fields displayed in the example response may not be available, depending on your Cloudflare plan.
+
+### Fetch list of monitored connections
+
+This example fetches a list of connections monitored by Page Shield, requesting the first page with 15 items per page.
+
+By default, the response will only include connections with `active` status when you do not specify a `status` filter parameter in the URL query string.
+
+```bash
+---
+header: Request
+---
+curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/page_shield/connections?page=1&per_page=15" \
+-H "Authorization: Bearer <API_TOKEN>"
+```
+
+```json
+---
+header: Response
+---
+{
+  "result": [
+    {
+      "id": "0a7bb628776f4e50a50d8594c4a01740",
+      "url": "https://malicious.example.com",
+      "added_at": "2022-09-18T10:51:10.09615Z",
+      "first_seen_at": "2022-09-18T10:51:08Z",
+      "last_seen_at": "2022-09-02T09:57:54Z",
+      "host": "example.net",
+      "first_page_url": "http://malicious.example.com/one.html",
+      "status": "active",
+      "url_contains_cdn_cgi_path": false,
+      "url_reported_malicious": true,
+      "malicious_url_categories": ["Malware", "Spyware"]
+    },
+    // (...)
+  ],
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result_info": {
+    "page": 1,
+    "per_page": 15,
+    "count": 15,
+    "total_count": 16,
+    "total_pages": 2
+  }
+}
+```
+
+For details on the available filtering, paging, and sorting parameters, refer to the [API reference](https://api.cloudflare.com/#page-shield-list-page-shield-scripts).
+
+### Get details of a monitored connection
+
+This example obtains the details of a connection monitored by Page Shield with connection ID `0a7bb628776f4e50a50d8594c4a01740`.
+
+```bash
+---
+header: Request
+---
+curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/page_shield/connections/0a7bb628776f4e50a50d8594c4a01740" \
+-H "Authorization: Bearer <API_TOKEN>"
+```
+
+```json
+---
+header: Response
+---
+{
+  "result": {
+    "id": "0a7bb628776f4e50a50d8594c4a01740",
+    "url": "https://malicious.example.com",
+    "added_at": "2022-09-18T10:51:10.09615Z",
+    "first_seen_at": "2022-09-18T10:51:08Z",
+    "last_seen_at": "2022-09-02T09:57:54Z",
+    "host": "example.net",
+    "first_page_url": "http://malicious.example.com/one.html",
+    "status": "active",
+    "url_contains_cdn_cgi_path": false,
+    "url_reported_malicious": true,
+    "malicious_url_categories": ["Malware", "Spyware"]
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
