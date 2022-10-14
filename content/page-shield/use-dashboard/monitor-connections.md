@@ -8,11 +8,11 @@ meta:
 
 # Monitor connections made by scripts on your site
 
+Page Shield's connection monitor helps you identify data exfiltration attacks such as MageCart, which rely on sending data from the browser to an unknown third-party endpoint.
+
 {{<Aside type="note">}}
 Only available to Enterprise customers with a paid add-on.
 {{</Aside>}}
-
-Page Shield's connection monitor helps you identify data exfiltration attacks such as MageCart, which rely on sending data from the browser to an unknown third-party endpoint.
 
 Use the Active Connections dashboard to review the connections made by scripts on your domain during the last seven days. If you see unexpected connections on the dashboard, check them for signs of malicious activity.
 
