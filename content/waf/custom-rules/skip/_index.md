@@ -19,7 +19,7 @@ For more information on the available options, refer to [Available skip options]
 
 2. Go to **Security** > **WAF** > **Custom rules**.
 
-3. [Create a custom rule](/waf/custom-rules/create-dashboard/) by selecting **Create firewall rule**, or edit an existing custom rule.
+3. [Create a custom rule](/waf/custom-rules/create-dashboard/) by selecting **Create custom rule**, or edit an existing custom rule.
 
 4. Define the rule name and the rule expression.
 

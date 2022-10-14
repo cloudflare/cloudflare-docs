@@ -43,9 +43,12 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 | ✅ [HeadBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html)       | ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
 | ✅ [CreateBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html)   | ❌ ACL: <br> &emsp;  ❌ x-amz-acl <br> &emsp;  ❌ x-amz-grant-full-control <br> &emsp;  ❌ x-amz-grant-read <br> &emsp;  ❌ x-amz-grant-read-acp  <br> &emsp;  ❌ x-amz-grant-write <br> &emsp;  ❌ x-amz-grant-write-acp <br> ❌ Object Locking: <br> &emsp;  ❌ x-amz-bucket-object-lock-enabled <br>  ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
 | ✅ [DeleteBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html)   | ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
+| ✅ [DeleteBucketCors](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketCors.html) | ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
+| ✅ [GetBucketCors](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketCors.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ✅ [GetBucketLocation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html)  | ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
 | ✅ [GetBucketEncryption](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketEncryption.html) | | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
 | ✅ [GetBucketLocation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketEncryption.html) | | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
+| ✅ [PutBucketCors](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketCors.html) | ❌ Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 
 {{</table-wrap>}}
 
@@ -54,7 +57,7 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 <details>
 <summary> Click to expand a list of unimplemented bucket-level operations. </summary>
 
-{{<table-wrap style="width:123%">}}
+{{<table-wrap style="width:110%">}}
 
 | API Name       | Feature                           |
 | ---------------| --------------------------------- |
@@ -62,7 +65,6 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 | ❌ [GetBucketAccelerateConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAccelerateConfiguration.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ❌ [GetBucketAcl](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ❌ [GetBucketAnalyticsConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAnalyticsConfiguration.html) | ❌ id <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
-| ❌ [GetBucketCors](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketCors.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ❌ [GetBucketIntelligentTieringConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketIntelligentTieringConfiguration.html) | ❌ id |
 | ❌ [GetBucketInventoryConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketInventoryConfiguration.html) | ❌ id <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ❌ [GetBucketLifecycle](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycle.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
@@ -88,7 +90,6 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 | ❌ [PutBucketAccelerateConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAccelerateConfiguration.html) | ❌ Checksums: <br> &emsp;  ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ❌ [PutBucketAcl](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAcl.html) | ❌ Permissions: <br> &emsp; ❌ x-amz-grant-full-control <br> &emsp; ❌ x-amz-grant-read <br> &emsp; ❌ x-amz-grant-read-acp <br> &emsp; ❌ x-amz-grant-write <br> &emsp; ❌ x-amz-grant-write-acp <br> ❌ Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ❌ [PutBucketAnalyticsConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAnalyticsConfiguration.html) | ❌ id <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
-| ❌ [PutBucketCors](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketCors.html) | ❌ Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ❌ [PutBucketEncryption](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketEncryption.html) | ❌ Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ❌ [PutBucketIntelligentTieringConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketIntelligentTieringConfiguration.html) | ❌ id <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ❌ [PutBucketInventoryConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketInventoryConfiguration.html) | ❌ id <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
@@ -127,7 +128,7 @@ This does not apply to concurrent uploads for different files.
 
 {{</Aside>}}
 
-{{<table-wrap style="width:123%">}}
+{{<table-wrap style="width:110%">}}
 
 | API Name                | Feature                   |
 | ------------------------| ------------------------- |

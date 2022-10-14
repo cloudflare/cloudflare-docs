@@ -126,7 +126,7 @@ curl -X PUT \
   "rules": [
     {
       "action": "execute",
-      "expression": "cf.zone.name eq \"example.com\" AND zone.level eq \"ENT\"",
+      "expression": "(cf.zone.name eq \"example.com\") and (cf.zone.plan eq \"ENT\")",
       "action_parameters": {
         "id": "<MANAGED_RULESET_ID>",
         "overrides": {

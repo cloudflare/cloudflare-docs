@@ -77,3 +77,45 @@ If a bot skips `robots.txt`, it will be rejected.
 ### Public Documentation
 
 The bot must have publicly documented expected behavior or user-agent format.
+
+## IP Validation 
+
+A set of validation methods and requirements to gather set IP ranges for a verified service.
+
+### Public IP List 
+
+* A fixed and limited set of IP addresses, which can be verified via publicly accessible plain-text, `JSON`, or `CSV`.
+* IP addresses used solely by the bot owner.
+* A user-agent match pattern.
+
+### Reverse DNS 
+
+* A list of domain suffixes to validate DNS records.
+* IP addresses should have PTR records set correctly.
+* A user-agent match pattern.
+
+### ASN 
+
+* A valid `ASN` belonging to the bot owner.
+* A user-agent match pattern.
+
+### Machine Learning 
+
+* A valid user-agent.
+* More than 1000 requests per day.
+* Dynamic IPs are solely used by bot owner. 
+* A user-agent match pattern.
+
+## Breach of Policy 
+
+If any of the requirements to validate are breached, a service will be removed from the global allowlist.
+
+{{<Aside type="example" header="Examples">}}
+
+* Adding a set of IPs that are not solely used by verified service. 
+* The service IPs are breached by an attacker. 
+* The service has vulnerabilities that have not been patched.
+* A block of IPs not briefed on onboarding is added to the list. 
+* The disclosed purpose of the service does not reflect on the traffic. 
+
+{{</Aside>}}

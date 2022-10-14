@@ -9,7 +9,7 @@ The Bots Feedback Loop is a way for customers to send Cloudflare direct feedback
 
 ## Availability
 
-Anyone who has access to Bot Analytics is able to submit feedback. Business and Enterprise customers who have Super Bot Fight Mode enabled will also be able to submit feedback. 
+Anyone who has access to Bot Analytics is able to submit feedback. This includes Enterprise Bot Management customers, as well as Business and Enterprise customers who use Super Bot Fight Mode. Visit [Plans](/bots/plans/) for more information.
 
 ## False Positive
 
@@ -148,7 +148,7 @@ curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576
 ```json
 { 
   "1": 50, 
- "10": 50 
+  "10": 50 
 }
 ```
 
@@ -163,8 +163,8 @@ curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576
 
 `requests_by_attribute`
 
-```json 
-{
+```json
+  {
     "topIPs": [
       {
         "metric": "10.75.34.1"
@@ -177,7 +177,7 @@ curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576
         "requests": 100
       }
     ]
-}
+  }
 ```
 
 ### Expression Fields 

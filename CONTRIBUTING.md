@@ -22,8 +22,9 @@ Before proposing significant changes, open an issue so that we can discuss your 
 
 - Commits and commit messages
   - Use smaller commits for your work to make it easier to review. In your commit messages, be specific about what you changed in the files.
+  - If you are proposing a new page, use one of the [content type templates](https://github.com/cloudflare/cloudflare-docs/tree/production/static/_templates).
 - Pull request titles
-  - Follow the title structure of  [Product Name]+ work you did + affected file(s)
+  - Follow the title structure of [Product Name] + work you did + affected file(s)
   - Example: [Access] fix broken link in example_file.md
 - Pull request descriptions
   - Use bullet points to summarize the changes in the commits

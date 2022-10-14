@@ -29,7 +29,7 @@ Yes. Refer to [Page Shield](/page-shield/) for more information related to this 
 
 ### Is there a way to prevent Zaraz from loading on specific pages, like under `/wp-admin`?
 
-To prevent Zaraz from loading on specific pages, refer to [Block Zaraz on specific pages or domains](/zaraz/advanced/block-zaraz/).
+To prevent Zaraz from loading on specific pages, refer to [Load Zaraz selectively](/zaraz/advanced/load-selectively/).
 
 ---
 

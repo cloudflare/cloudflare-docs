@@ -52,8 +52,8 @@
 
 {{- $coveo := index $.Context.Site.Params "coveo" -}}
 {{- if (and $coveo (eq $.Context.RelPermalink "/search/")) -}}
-  <link rel="stylesheet" href="/search-coveo.css"/>
-  <link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css" integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA==" crossorigin="anonymous" />
+  <link rel="stylesheet preconnect" href="/search-coveo.css"/>
+  <link rel="stylesheet preconnect" href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css" integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA==" crossorigin="anonymous" />
   <script defer async class="coveo-script" src="https://static.cloud.coveo.com/searchui/v2.10093/4/js/CoveoJsSearch.Lazy.min.js" integrity="sha512-wq21KRc/kpKncWYC+LRC5D1mw0ZIs7EJE4V3I3w6paHXKUsnRy2tP1DF9UjEyV23lY3lzOZH0VhXBauMF7Rikw==" crossorigin="anonymous"></script>
 
   {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
@@ -70,8 +70,8 @@
   ></script>
 {{- else if (and $coveo (eq $.Context.RelPermalink "/tutorials/")) -}}
 {{- partial "script" (dict "src" "search.redirect.ts" "defer" true) -}}
-<link rel="stylesheet" href="/tutorial-coveo.css"/>
-<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css" integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA==" crossorigin="anonymous" />
+<link rel="stylesheet preconnect" href="/tutorial-coveo.css"/>
+<link rel="stylesheet preconnect" href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css" integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA==" crossorigin="anonymous" />
 <script defer async class="coveo-script" src="https://static.cloud.coveo.com/searchui/v2.10093/4/js/CoveoJsSearch.Lazy.min.js" integrity="sha512-wq21KRc/kpKncWYC+LRC5D1mw0ZIs7EJE4V3I3w6paHXKUsnRy2tP1DF9UjEyV23lY3lzOZH0VhXBauMF7Rikw==" crossorigin="anonymous"></script>
 
 {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
@@ -91,6 +91,6 @@
 {{- end -}}
 
 {{- if in $.Context.RelPermalink "/learning-paths/" -}}
-<link rel="stylesheet" href="/learning-paths.css"/>
+<link rel="stylesheet preconnect" href="/learning-paths.css"/>
 
 {{- end -}}

@@ -79,6 +79,7 @@ To set up your static routes, refer to [Configure static routes](/magic-wan/how-
 - 4h rekey time
 - Disable [anti-replay protection](/magic-wan/reference/anti-replay-protection/)
 - Null encryption
+- NAT-T supported
 
 ## Supported key ID formats
 
