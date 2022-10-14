@@ -14,7 +14,7 @@ We recommend using Wrangler's inbuilt bundling, but we understand there are case
 
 ## Files which will not be bundled
 
-Bundling your Worker code takes multiple modules and bundles them into one. Sometimes, that is not the desired behavior and there might be modules that should not be inlined directly into the bundle. For example, instead of bundling a WASM file into your Javascript Worker, you would want to upload the WASM file as a separate module that can be imported at runtime. Wrangler supports this for the following file types:
+Bundling your Worker code takes multiple modules and bundles them into one. Sometimes, you might have modules that should not be inlined directly into the bundle. For example, instead of bundling a WASM file into your JavaScript Worker, you would want to upload the WASM file as a separate module that can be imported at runtime. Wrangler supports this for the following file types:
 
 - `.txt`
 - `.html`
