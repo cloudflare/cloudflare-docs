@@ -128,8 +128,8 @@ header: Response
 {
   "result": [
     {
-      "script_id": "8337233faec2357ff84465a919534e4d",
-      "script_url": "https://malicious.example.com/badscript.js",
+      "id": "8337233faec2357ff84465a919534e4d",
+      "url": "https://malicious.example.com/badscript.js",
       "added_at": "2021-11-18T10:51:10.09615Z",
       "first_seen_at": "2021-11-18T10:51:08Z",
       "last_seen_at": "2021-11-22T09:57:54Z",
@@ -137,9 +137,9 @@ header: Response
       "domain_reported_malicious": false,
       "url_reported_malicious": true,
       "malicious_url_categories": ["Malware"],
-      "seen_on_first": "http://malicious.example.com/page_one.html",
+      "first_page_url": "http://malicious.example.com/page_one.html",
       "status": "active",
-      "appears_in_cdn_cgi_path": false,
+      "url_contains_cdn_cgi_path": false,
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "js_integrity_score": 10,
       "obfuscation_score": 10,
@@ -184,17 +184,17 @@ header: Response
 {
   "result": [
     {
-      "script_id": "83c8da2267394ce8465b74c299658fea",
-      "script_url": "https://scripts.example.com/anotherbadscript.js",
+      "id": "83c8da2267394ce8465b74c299658fea",
+      "url": "https://scripts.example.com/anotherbadscript.js",
       "added_at": "2021-11-17T13:16:03.419619Z",
       "first_seen_at": "2021-11-17T13:15:23Z",
       "last_seen_at": "2021-11-18T09:05:20Z",
       "host": "example.net",
       "domain_reported_malicious": false,
       "url_reported_malicious": false,
-      "seen_on_first": "http://malicious.example.com/page_one.html",
+      "first_page_url": "http://malicious.example.com/page_one.html",
       "status": "infrequent",
-      "appears_in_cdn_cgi_path": false,
+      "url_contains_cdn_cgi_path": false,
       "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
       "js_integrity_score": 48,
       "obfuscation_score": 49,
@@ -238,8 +238,8 @@ header: Response
 ---
 {
   "result": {
-    "script_id": "8337233faec2357ff84465a919534e4d",
-    "script_url": "https://malicious.example.com/badscript.js",
+    "id": "8337233faec2357ff84465a919534e4d",
+    "url": "https://malicious.example.com/badscript.js",
     "added_at": "2021-11-18T10:51:10.09615Z",
     "first_seen_at": "2021-11-18T10:51:08Z",
     "last_seen_at": "2021-11-22T09:57:54Z",
@@ -247,15 +247,15 @@ header: Response
     "domain_reported_malicious": false,
     "url_reported_malicious": true,
     "malicious_url_categories": ["Malware"],
-    "seen_on_first": "http://malicious.example.com/page_one.html",
+    "first_page_url": "http://malicious.example.com/page_one.html",
     "status": "active",
-    "appears_in_cdn_cgi_path": false,
+    "url_contains_cdn_cgi_path": false,
     "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
     "js_integrity_score": 48,
     "obfuscation_score": 49,
     "dataflow_score": 45,
     "fetched_at": "2021-11-21T16:58:07Z",
-    "seen_on": [
+    "page_urls": [
       "http://malicious.example.com/page_two.html",
       "http://malicious.example.com/page_three.html",
       "http://malicious.example.com/page_four.html"
