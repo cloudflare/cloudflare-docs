@@ -1,14 +1,14 @@
 {
   "path": "/learning-paths/technology-partner-integrations/",
   "title": "Technology Partner integrations",
-  "description": "[Cloudflare Technology Partners](https://www.cloudflare.com/partners/technology-partners/) offer purpose-built integrations with our products, providing expanded functionality for our users. Learn how to configure these integrations with our tutorials and how-to guides.",
+  "description": "<a href='https://www.cloudflare.com/partners/technology-partners/'>Cloudflare Technology Partners</a> offer purpose-built integrations with our products, providing expanded functionality for our users. Learn how to configure these integrations with our tutorials and how-to guides.",
   "products": [
     "Analytics",
     "Magic WAN",
     "Cloudflare Zero Trust",
     "Cloudflare Logs"
   ],
-  "category": ["Analtyics Integrations"],
+  "category": ["Analytics Integrations"],
   "elements": [
     {
       "type": "module",
