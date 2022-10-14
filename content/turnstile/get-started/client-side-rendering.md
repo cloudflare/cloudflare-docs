@@ -131,3 +131,14 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 | `error-callback` | `data-error-callback` | A JavaScript callback that is invoked when there is a network error. |
 | `theme` | `data-theme` | The widget theme. Can take the following values: `light`, `dark`, `auto`. <br><br>The default is `auto`, which respects the user preference. This can be forced to light or dark by setting the theme accordingly. |
 | `tabindex` | `data-tabindex` | The tabindex of Turnstile's iframe for accessibility purposes. The default value is `0`. |
+| `size` | `data-size` | The widget size. Can take the following values: `normal`, `invisible`, `compact`. |
+
+## Widget size
+
+The Turnstile widget can take 3 different sizes:
+
+| Size | Width | Height |
+| --- | --- | --- |
+| normal | 300px | 64px |
+| compact | 130px | 120px |
+| invisible | 0px | 0px |
