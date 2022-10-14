@@ -55,7 +55,7 @@ As well as using [Custom Builds](/workers/wrangler/custom-builds/) to customise 
 
 ### D1 bindings
 
-During the beta period for D1, D1 bindings will not be available to a Worker published with `--no-bundle`.
+During the [beta period for D1](/workers/platform/betas/), D1 bindings will not be available to a Worker published with `--no-bundle`.
 
 ### Editing via the Cloudflare dashboard
 
