@@ -481,7 +481,19 @@ trim=20;30;20;0
 ---
 header: Workers
 ---
-cf: {image: {trim: {"top": 12, "bottom": 34, "left": 56, "right": 78}}}
+cf: {image: {trim: {"top": 12,  "right": 78, "bottom": 34, "left": 56,}}}
+```
+
+#### `border`
+
+Adds a border around the image. The border is added after resizing. Border width takes `dpr` into account, and can be specified either using a single `width` property, or individually for each side.
+
+```js
+---
+header: Workers
+---
+cf: {image: {border: {color: "rgb(0,0,0,0)", top: 5, right: 10, bottom: 5, left: 10}}}
+cf: {image: {border: {color: "#FFFFFF", width: 10}}}
 ```
 
 #### `width`
