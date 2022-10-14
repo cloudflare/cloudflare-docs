@@ -112,10 +112,10 @@ Vue.createApp({
         <div v-else-if="element.type === 'question'">
         <hr class="questionBreak">
         <div class="question" :id="element.id">
-            <fieldset :id="element.id">
+            <fieldset class="fieldsetQuestions" :id="element.id">
             <legend v-html="element.description"></legend>
                 <div v-for="choice in element.choices">
-                    <input class="questionChoice" type="radio" :name="element.id" :id="choice.name" 
+                    <input class="questionChoice" type="radio" :name="element.id" :id="element.id + ' / ' + choice.name" 
                     :value=choice.value @change="onRadioButtonChange()">
                     <label :for="choice.name">[[ choice.name ]]</label>
                 </div>
@@ -152,22 +152,22 @@ Vue.createApp({
     this.$watch(
       () => this.$route.query,
       () => {
-        const questions = document.querySelectorAll(
-          "fieldset"
-        );
-        questions.forEach((question) => {
+        this.filterByInputs(this.$route.query)
+        
+        let questions = document.getElementsByClassName("fieldsetQuestions");
+        
+        Object.keys(questions).forEach((question) => {
           Object.keys(this.$route.query).forEach((queryParam) => {
-            if (queryParam === question.id) {
-              let arr = Array.prototype.slice.call( question.elements )
-              arr.forEach((choice) => {
-                if(choice.value === this.$route.query[queryParam]) {
-                  choice.checked = true;
+            if (queryParam === questions[question].id) {
+              Object.keys(questions[question].elements).forEach((choice) => {
+                if(questions[question].elements[choice].value === this.$route.query[queryParam]) {
+                  questions[question].elements[choice].checked = true
+                  questions[question].elements[choice].setAttribute('checked', '')
                 }
               })
             }
           })
         })
-        this.filterByInputs(this.$route.query)
       }
     )
   },
