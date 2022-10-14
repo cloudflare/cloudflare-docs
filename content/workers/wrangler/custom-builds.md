@@ -6,14 +6,6 @@ weight: 4
 
 # Custom builds
 
-{{<Aside type="note">}}
+Wrangler provides a capable development environment for a large number of use cases. Sometimes, developers might want to customize how their code is compiled, before being processed by Wrangler. This document describes why you would want to create a custom build, and how custom builds fit together with `wrangler dev` and `wrangler publish`.
 
-This page is in progress. Refer to [Configuration](/workers/wrangler/configuration/#custom-builds) for a brief overview.
 
-{{</Aside>}}
-
-<!--
-
-While Wrangler provides a capable development environment for a large number of use cases, developers often need to customize how their code is compiled before being processed by Wrangler. This document suggests some strategies for creating custom build commands and systems together with `wrangler dev` and `wrangler publish`.
-
->
