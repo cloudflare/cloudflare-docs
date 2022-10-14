@@ -25,7 +25,7 @@ Page Shield provides two dashboards for reviewing the scripts loaded in your dom
 
 Since the scripts lists are based on sampling, there may be a small delay between script deployment and appearance.
 
-If you are a customer with an add-on to your Enterprise plan, Cloudflare will apply additional mechanisms to detect and report any potentially malicious scripts in your domain. Any scripts considered malicious will appear at the top of the Active Scripts dashboard. For more information on add-on features, refer to [Detecting malicious scripts](/page-shield/about/malicious-script-detection/) and [Review changed scripts](/page-shield/use-dashboard/review-changed-scripts/).
+If you are a customer with an add-on to your Enterprise plan, Cloudflare will apply additional mechanisms to detect and report any potentially malicious scripts in your domain. Any scripts considered malicious will appear at the top of the Active Scripts dashboard. For more information on add-on features, refer to [Detecting malicious scripts and connections](/page-shield/about/malicious-script-detection/) and [Review changed scripts](/page-shield/use-dashboard/review-changed-scripts/).
 
 ## Learn more
 
