@@ -47,17 +47,17 @@ Use the All Reported Connections dashboard to review all connections reported fo
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Page Shield** > **Connection monitor**.
 3. Under **Active connections**, select **View all connections**.
-4. Review the information displayed in the **All reported connections** dashboard.
+4. Review the information displayed in the **All Reported Connections** dashboard.
 
 The All Reported Connections dashboard allows you to filter the displayed connections using different criteria and to print a report with the displayed connections.
 
 ## View connection details
 
-You can check the details of each connection displayed in the Active Connections dashboard, including the following fields:
+You can check the details of each connection displayed in the dashboard, including the following fields:
 
-- **First seen at**: The date and time when the connection was first detected.
-- **First page URL**: The page where the connection was first detected.
 - **Last seen**: How long ago the connection was last detected (in the last 30 days).
+- **First seen at**: The date and time when the connection was first detected.
 - **Page URLs**: The most recent pages where the connection was detected (up to ten pages).
+- **First page URL**: The page where the connection was first detected.
 
 This information helps you track how and how many times a connection was made in your domain and the pages where the connection was made.
