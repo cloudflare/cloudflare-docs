@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: configuration
 title: Running in CI/CD
 weight: 8
 ---

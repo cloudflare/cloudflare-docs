@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: concept
 title: Comparing Wrangler 1 & 2
 weight: 11
 ---
