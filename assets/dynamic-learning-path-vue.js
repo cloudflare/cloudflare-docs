@@ -161,8 +161,9 @@ Vue.createApp({
             if (queryParam === questions[question].id) {
               Object.keys(questions[question].elements).forEach((choice) => {
                 if(questions[question].elements[choice].value === this.$route.query[queryParam]) {
-                  questions[question].elements[choice].checked = true
-                  questions[question].elements[choice].setAttribute('checked', '')
+                  this.$nextTick(() => {
+                    questions[question].elements[choice].checked = true
+                  })
                 }
               })
             }
