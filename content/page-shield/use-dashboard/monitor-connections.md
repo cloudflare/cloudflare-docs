@@ -16,7 +16,7 @@ Only available to Enterprise customers with a paid add-on.
 
 Use the Active Connections dashboard to review the connections made by scripts on your domain during the last seven days. If you see unexpected connections on the dashboard, check them for signs of malicious activity.
 
-The All Connections dashboard displays all the connections, including infrequent or inactive ones, reported in the last 30 days. After 30 days without any connection report, Page Shield will delete information about a previously reported connection, and the connection will no longer appear in any of the dashboards.
+The All Reported Connections dashboard displays all the connections, including infrequent or inactive ones, reported in the last 30 days. After 30 days without any connection report, Page Shield will delete information about a previously reported connection, and the connection will no longer appear in any of the dashboards.
 
 You can perform the following operations in the connection monitor:
 
