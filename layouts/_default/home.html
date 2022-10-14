@@ -12,6 +12,12 @@
     {{- partial "vue" -}}
     {{- partial "script" (dict "src" "dynamic-learning-path-vue.js" "defer" true) -}}
     {{ end }}
+
+    {{ if eq .Page.RelPermalink "/dashboard-landing/" }}
+    {{- partial "vue" -}}
+    {{- partial "vue-router" -}}
+    {{- partial "script" (dict "src" "dashboard-landing.js" "defer" true) -}}
+    {{ end }}
     
   </head>
   <body>

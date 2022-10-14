@@ -1,0 +1,82 @@
+{
+  "resources": [
+    {
+        "id": "Default",
+        "dashPath": "",
+        "recommendations": [
+            {
+                "url_path": "/test/",
+                "title": "Default recommendations"
+            }
+        ]
+    },
+    {
+      "id": "SSL/TLS",
+      "dashPath": "/:accountId/:zoneName/ssl-tls",
+      "recommendations": [
+        {
+            "url_path": "/ssl/origin-configuration/origin-ca/",
+            "title": "Origin CA certificates"
+        },
+        {
+            "url_path": "/ssl/get-started/",
+            "title": "Get started with SSL/TLS"
+        },
+        {
+            "external_link": true,
+            "url_path": "https://community.cloudflare.com/t/err-ssl-version-or-cipher-mismatch/24462",
+            "title": "ERR_SSL_VERSION_OR_CIPHER_MISMATCH"
+        },
+        {
+            "external_link": true,
+            "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+            "title": "Troubleshooting Cloudflare 5XX errors"
+        },
+        {
+            "url_path": "/ssl/edge-certificates/universal-ssl/",
+            "title": "Universal SSL"
+        },
+        {
+            "external_link": true,
+            "url_path": "https://support.cloudflare.com/hc/articles/200170566",
+            "title": "Troubleshooting SSL errors"
+        }
+      ]
+    },
+    {
+        "id": "DNS",
+        "dashPath": "/:accountId/:zoneName/dns",
+        "recommendations": [
+          {
+              "url_path": "/dns/manage-dns-records/reference/proxied-dns-records/",
+              "title": "DNS proxy status"
+          },
+          {
+              "url_path": "/dns/manage-dns-records/how-to/create-dns-records/",
+              "title": "Manage DNS records"
+          },
+          {
+              "url_path": "/learning-paths/get-started/",
+              "title": "Get started with Cloudflare"
+          },
+          {
+              "url_path": "/dns/zone-setups/full-setup/setup/",
+              "title": "Change your authoritative nameservers"
+          },
+          {
+              "url_path": "/fundamentals/account-and-billing/account-setup/",
+              "title": "Account setup"
+          },
+          {
+            "external_link": true,
+            "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+            "title": "Troubleshooting Cloudflare 5XX errors"
+            },
+            {
+                "url_path": "/registrar/",
+                "title": "Cloudflare Registrar"
+            }
+        ]
+      }
+  ]
+}
