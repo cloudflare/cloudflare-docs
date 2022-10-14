@@ -9,6 +9,7 @@ weight: 43
 You can configure custom fields — selected from the list of HTTP request headers, HTTP response headers, and cookies — to include in Logpush log entries of a zone. Once configured, these custom fields will be enabled for all the Logpush jobs in the zone that use the HTTP requests dataset and include the request headers, response headers, or cookie fields.
 
 Custom fields can be enabled via API or the Cloudflare dashboard.
+
 ## Enable custom rules via API
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a rule that configures custom fields. For more information on concepts like phases, rulesets, and rules, as well as the available API operations, refer to the [Ruleset Engine](/ruleset-engine/) documentation.
