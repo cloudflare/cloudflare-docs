@@ -513,3 +513,21 @@ header: Workers
 ---
 cf: {image: {width: 250}}
 ```
+
+#### `compression=fast`
+
+Slightly reduces latency on a cache miss by selecting a quickest-to-compress file format, at a cost of increased file size and lower image quality. It will usually override the `format` option and choose JPEG over WebP or AVIF. We don't recommend using this option, except unusual circumstances like resizing uncacheable dynamically-generated images.
+
+```js
+---
+header: URL format
+---
+compression=fast
+```
+
+```js
+---
+header: Workers
+---
+cf: {image: {compression: "fast"}}
+```
