@@ -44,17 +44,17 @@ To configure the CSP reporting endpoint:
 3.  Under **Reporting endpoint**, select **Cloudflare-owned endpoint** or **Same hostname**.
 4.  Click **Apply**.
 
-## Connection source details
+## Connection target details
 
-When connection sources are reported to Cloudflare, their URIs can sometimes include sensitive data such as session ID.
+When connection targets are reported to Cloudflare, their URIs can sometimes include sensitive data such as session ID.
 
 By default, Page Shield will only check the domain against malicious threat intelligence feeds. You can choose to let Page Shield use the full URI when analyzing the connections made from your domain's pages. Any sensitive data present in the URI will be logged in clear text, and any user with access to the connection monitor dashboard will be able to view it.
 
-### Configure the connection source details to use
+### Configure the connection target details to use
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2.  Go to **Security** > **Page Shield** > **Settings**.
-3.  Under **Connection source details**, select **Log host only** to analyze only the hostname or **Log full URI** to use the full URI in Page Shield.
+3.  Under **Connection target details**, select **Log host only** to analyze only the hostname or **Log full URI** to use the full URI in Page Shield.
 4.  Click **Apply**.
 
 ## Disable Page Shield
