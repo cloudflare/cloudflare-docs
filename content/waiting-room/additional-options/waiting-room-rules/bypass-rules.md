@@ -16,7 +16,9 @@ To indicate where you want your bypass rules to apply, write [custom logic](/rul
 - [HTTP request header fields](/ruleset-engine/rules-language/fields/#http-request-header-fields)
 - [HTTP request body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields)
 
-Please be aware that the waiting room will not be applied to the traffic that matches the expression written for this rule. This traffic will not count toward any waiting room limits or be counted in Waiting Room Analytics. No waiting room features, including but not limited to, Event pre-queuing, Reject queueing method, or Queue-all will apply to this traffic. Please be mindful of this when creating and enabling Bypass Waiting Room rules. Only use bypass rules for traffic you are confident will not overwhelm your origin or cause significant traffic surges.
+Please be aware that the waiting room will not be applied to the traffic that matches the expression written for this rule. This traffic will not count towards any waiting room limits or be counted in Waiting Room Analytics. No waiting room features, including but not limited to, Event pre-queuing, Reject queueing method, or Queue-all will apply to this traffic. Please be mindful of this when creating and enabling Bypass Waiting Room rules. Only use bypass rules for traffic you are confident will not overwhelm your origin or cause significant traffic surges.
+
+{{<Aside type="note">}}Only some customers can support scheduled events with their waiting rooms. For more details, refer to our [Plans](/waiting-room/plans/) page.{{</Aside>}}
 
 ## Common Use Cases
 
@@ -24,7 +26,7 @@ Please be aware that the waiting room will not be applied to the traffic that ma
 - **Administrative Bypass**: Allow internal site administrators to always bypass the waiting room, commonly identified by IP addresses. 
 - **Geo-targeting**: Exclude certain countries from being queued.
 - **Query String Exclusion**: Exclude specific query strings under the path you have configured for your waiting room. 
-- **Exclude file extensions**: Prevent waiting room from applying to certain file extensions such as .js that you utilize on your waiting room html template so that they render properly.
+- **Exclude file extensions**: Prevent waiting room from applying to certain file extensions, such as `.js` that you utilize on your waiting room html template so that they render properly.
 
 ### A note on subrequests
 
@@ -65,7 +67,7 @@ When creating a Bypass Waiting Room Rule via API, make sure you:
 - Define the expression to indicate which traffic you would like to bypass your waiting room.
 - Set the rule action to `bypass_waiting_room`.
 
-Create a waiting room rule by appending the following endpoint in the Waiting Room API to the Cloudflare API base URL.
+Create a waiting room rule by appending the following endpoint in the Waiting Room API to the Cloudflare API base URL. New waiting room rules will be added after any existing rules.
 
 ```txt
 POST zones/:zone_identifier/waiting_rooms/:waiting_room_id/rules
@@ -92,9 +94,9 @@ curl -X POST \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d '{
         "description": "subpath bypass",
-        "expression": "starts_with(http.request.uri.path, \"/bypassme\") and not (ends_with(http.request.uri.path, ".js") or ends_with(http.request.uri.path, ".css") or ends_with(http.request.uri.path, ".png"))",
+        "expression": "starts_with(http.request.uri.path, \"/bypassme\") and not (ends_with(http.request.uri.path, \".js\") or ends_with(http.request.uri.path, \".css\") or ends_with(http.request.uri.path, \".png\"))",
         "action": "bypass_waiting_room"
-}' 
+}'
 ```
 
 </div>
@@ -120,7 +122,7 @@ curl -X POST \
 
 ### Other API options for managing bypass rules
 
-Through the Waiting Room API, you can also do the following to manage bypass rule by using the waiting room custom rules api calls:
+Through the Waiting Room API, you can also do the following to manage bypass rules by using the waiting room custom rules api calls:
 
 - **List Custom Rules**: Lists custom rules for a waiting room.
 - **Replace Custom Rules**: Replaces all custom rules for a waiting room.
