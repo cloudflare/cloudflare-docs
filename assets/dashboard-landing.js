@@ -15,6 +15,9 @@ Vue.createApp({
       });
       if (params.dash_area !== null) {
         this.visibleData = data.filter((item) => item.dashPath === params.dash_area);
+        if (this.visibleData.length === 0) {
+          this.visibleData = data.filter((item) => item.id === "Default");
+        }
       } else {
         this.visibleData = data.filter((item) => item.id === "Default");
       }
