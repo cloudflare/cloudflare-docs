@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: Digicert update
+title: DigiCert update
 weight: 2
 ---
 
