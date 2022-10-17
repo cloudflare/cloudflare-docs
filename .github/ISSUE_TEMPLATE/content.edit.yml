@@ -44,6 +44,7 @@ body:
         - R2
         - Railgun
         - Randomness Beacon
+        - Reference Architecture
         - Registrar
         - Rules
         - Ruleset Engine
