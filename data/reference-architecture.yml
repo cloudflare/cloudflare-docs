@@ -7,14 +7,9 @@ product:
  
 meta:
   title: Cloudflare Reference Architecture docs
-  description: Review best practices and diagrams explaining how to address common Internet security and 
-  performance challenges using Cloudflare products. 
+  description: Review best practices and diagrams explaining how to address common Internet security and performance challenges using Cloudflare products. 
   author: '@cloudflare'
   image: /cf-twitter-card.png
- 
-resources:
-    community: https://community.cloudflare.com/
-    discord: https://discord.gg/2TRr6nSxdd
  
 externals:
   - title: Cloudflare homepage
