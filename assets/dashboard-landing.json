@@ -5,8 +5,35 @@
         "dashPath": "none",
         "recommendations": [
             {
-                "url_path": "/test/",
-                "title": "Default recommendations"
+                "url_path": "/learning-paths/get-started/",
+                "title": "Get started with Cloudflare"
+            },
+            {
+                "external_link": true,
+                "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+                "title": "Troubleshooting Cloudflare 5XX errors"
+            },
+            {
+                "external_link": true,
+                "url_path": "https://support.cloudflare.com/hc/articles/360029779472",
+                "title": "Troubleshooting Cloudflare 1XXX errors"
+            },
+            {
+                "url_path": "/registrar/",
+                "title": "Cloudflare Registrar"
+            },
+            {
+                "url_path": "/dns/zone-setups/full-setup/setup/",
+                "title": "Change your authoritative nameservers"
+            },
+            {
+                "url_path": "/fundamentals/account-and-billing/account-setup/",
+                "title": "Account setup"
+            },
+            {
+                "external_link": true,
+                  "url_path": "https://support.cloudflare.com/hc/articles/203471284",
+                "title": "Login and account issues"
             }
         ]
     },
@@ -68,14 +95,377 @@
               "title": "Account setup"
           },
           {
+                "external_link": true,
+                "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+                "title": "Troubleshooting Cloudflare 5XX errors"
+          },
+          {
+                "url_path": "/registrar/",
+                "title": "Cloudflare Registrar"
+          }
+        ]
+      },
+      {
+        "id": "Members",
+        "dashPath": "/:accountId/members",
+        "recommendations": [
+          {
+              "url_path": "/fundamentals/account-and-billing/account-setup/manage-account-members/",
+              "title": "Manage account members"
+          },
+          {
+              "external_link": true,
+              "url_path": "https://community.cloudflare.com/t/cannot-add-new-member-error-1005/421516",
+              "title": "Cannot add new members"
+          },
+          {
+              "external_link": true,
+                "url_path": "https://support.cloudflare.com/hc/articles/203471284",
+              "title": "Login and account issues"
+          },
+          {
+              "url_path": "/fundamentals/account-and-billing/account-setup/",
+              "title": "Account setup"
+          },
+          {
+              "url_path": "/fundamentals/account-and-billing/account-setup/manage-account-members#change-super-administrator",
+              "title": "Change super admin"
+          }
+        ]
+      },
+      {
+        "id": "Profile",
+        "dashPath": "/profile",
+        "recommendations": [
+            {
+                "external_link": true,
+                  "url_path": "https://support.cloudflare.com/hc/articles/203471284",
+                  "title": "Login and account issues"
+              },
+              {
+                "external_link": true,
+                "url_path": "https://support.cloudflare.com/hc/articles/360029779472",
+                "title": "Troubleshooting Cloudflare 1XXX errors"
+          },
+              {
+                  "url_path": "/fundamentals/account-and-billing/account-setup/",
+                  "title": "Account setup"
+              },
+              {
+                  "url_path": "/dns/zone-setups/full-setup/setup/",
+                  "title": "Change your authoritative nameservers"
+              },
+              {
+                  "url_path": "/registrar/",
+                  "title": "Cloudflare Registrar"
+              },
+              {
+                    "external_link": true,
+                    "url_path": "https://support.cloudflare.com/hc/articles/200167906",
+                    "title": "Set up two-factor authentication (2FA)"
+              }
+        ]
+      },
+      {
+        "id": "Registrar",
+        "dashPath": "/:accountId/domains",
+        "recommendations": [
+          {
+              "url_path": "/registrar/get-started/transfer-domain-to-cloudflare/",
+              "title": "Transfer domain to Cloudflare"
+          },
+          {
+            "external_link": true,
+            "url_path": "https://community.cloudflare.com/t/cloudflare-registrar-registry-status-client-transfer-prohibited/422058",
+            "title": "Solving 'Registry Status: Client transfer prohibited'"
+      },
+          {
+              "url_path": "/fundamentals/get-started/setup/add-site/",
+              "title": "Add a site to Cloudflare"
+          },
+          {
+              "url_path": "/registrar/get-started/register-domain/",
+              "title": "Register a new domain"
+          },
+          {
+            "url_path": "/dns/zone-setups/full-setup/setup/",
+            "title": "Change your authoritative nameservers"
+        },
+        {
+            "url_path": "/fundamentals/account-and-billing/account-setup/",
+            "title": "Account setup"
+        }
+        ]
+      },
+      {
+        "id": "Analytics",
+        "dashPath": "/:accountId/:zoneName/analytics",
+        "recommendations": [
+            {
+                "external_link": true,
+                "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+                "title": "Troubleshooting Cloudflare 5XX errors"
+          },
+          {
+            "external_link": true,
+            "url_path": "https://support.cloudflare.com/hc/articles/360037684251",
+            "title": "Understanding Cloudflare Analytics"
+            },
+          {
+              "url_path": "/learning-paths/get-started/",
+              "title": "Get started with Cloudflare"
+          },
+          {
+              "external_link": true,
+            "url_path": "https://support.cloudflare.com/hc/en-us/articles/203118044",
+              "title": "Get information for troubleshooting your site"
+          }
+        ]
+      },
+      {
+        "id": "Security",
+        "dashPath": "/:accountId/:zoneName/security",
+        "recommendations": [
+          {
+              "url_path": "/firewall/cf-firewall-rules/actions/",
+              "title": "Firewall rules actions"
+          },
+          {
+              "url_path": "/waf/",
+              "title": "Cloudflare Web Application Firewall (WAF)"
+          },
+          {
+              "url_path": "/firewall/cf-firewall-rules/",
+              "title": "Firewall Rules"
+          },
+          {
+              "url_path": "/waf/tools/ip-access-rules/",
+              "title": "IP Access Rules"
+          },
+          {
+              "url_path": "/waf/analytics/",
+              "title": "Firewall analytics"
+          },
+          {
+                "url_path": "/fundamentals/get-started/concepts/cloudflare-challenges/",
+                "title": "Types of Cloudflare challenges"
+          }
+        ]
+      },
+      {
+        "id": "Add site",
+        "dashPath": "/:accountId/add-site",
+        "recommendations": [
+          {
+            "external_link": true,
+              "url_path": "https://support.cloudflare.com/hc/articles/360000841472",
+              "title": "Adding multiple sites to Cloudflare via automation"
+          },
+          {
+              "url_path": "/registrar/",
+              "title": "Cloudflare Registrar"
+          },
+          {
+              "url_path": "/learning-paths/get-started/",
+              "title": "Get started with Cloudflare"
+          },
+          {
+            "external_link": true,
+              "url_path": "https://support.cloudflare.com/hc/articles/205359838",
+              "title": "Cannot add domain to Cloudflare"
+          }
+        ]
+      },
+      {
+        "id": "Caching",
+        "dashPath": "/:accountId/:zoneName/caching",
+        "recommendations": [
+            {
+                "external_link": true,
+                "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+                "title": "Troubleshooting Cloudflare 5XX errors"
+          },
+          {
+              "url_path": "/cache/get-started/",
+              "title": "Get started with caching"
+          },
+          {
+              "url_path": "/cache/how-to/purge-cache/",
+              "title": "Purge cache"
+          },
+          {
+              "url_path": "/cache/about/cache-rules/",
+              "title": "Cache Rules"
+          },
+          {
+            "url_path": "/cache/about/default-cache-behavior/",
+            "title": "Default cache behavior"
+      },
+          {
+              "url_path": "/cache/best-practices/customize-cache/",
+              "title": "Customize cache"
+          }
+        ]
+      },
+      {
+        "id": "Rules",
+        "dashPath": "/:accountId/:zoneName/rules",
+        "recommendations": [
+            {
+                "external_link": true,
+                "url_path": "https://support.cloudflare.com/hc/articles/218411427",
+                "title": "Page Rules"
+          },
+          {
+            "url_path": "/rules/url-forwarding/",
+            "title": "URL forwarding and redirects"
+            },
+          {
+              "url_path": "/rules/url-forwarding/bulk-redirects/use-cases/",
+              "title": "URL forwarding examples"
+          },
+          {
+              "external_link": true,
+            "url_path": "https://community.cloudflare.com/t/forwarding-page-rule-not-working/1786",
+              "title": "Page rule not working"
+          }
+        ]
+      },
+      {
+        "id": "Speed",
+        "dashPath": "/:accountId/:zoneName/speed",
+        "recommendations": [
+          {
+              "url_path": "/images/image-resizing/",
+              "title": "Image resizing"
+          },
+          {
+              "url_path": "/images/cloudflare-images/",
+              "title": "Cloudflare Images"
+          },
+          {
+              "url_path": "/automatic-platform-optimization/",
+              "title": "Automatic Platform Optimization for WordPress"
+          },
+          {
+            "external_link": true,
+              "url_path": "https://support.cloudflare.com/hc/articles/200168336",
+              "title": "Mobile redirects"
+          }
+        ]
+      },
+      {
+        "id": "Traffic",
+        "dashPath": "/:accountId/:zoneName/traffic",
+        "recommendations": [
+          {
+              "url_path": "/load-balancing/",
+              "title": "Cloudflare Load Balancing"
+          },
+          {
             "external_link": true,
             "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
             "title": "Troubleshooting Cloudflare 5XX errors"
-            },
-            {
-                "url_path": "/registrar/",
-                "title": "Cloudflare Registrar"
-            }
+      },
+          {
+            "external_link": true,
+            "url_path": "https://www.cloudflare.com/plans/application-services/#overview",
+            "title": "Load Balancing pricing"
+      },
+          {
+              "url_path": "/load-balancing/get-started/",
+              "title": "Get started with Load Balancing"
+          }
+        ]
+      },
+      {
+        "id": "Workers",
+        "dashPath": "/:accountId/workers",
+        "recommendations": [
+          {
+              "url_path": "/workers/platform/limits/",
+              "title": "Limits - Cloudflare Workers"
+          },
+          {
+              "url_path": "/workers/examples/",
+              "title": "Examples - Cloudflare Workers"
+          },
+          {
+              "url_path": "/workers/tutorials/",
+              "title": "Tutorials - Cloudflare Workers"
+          },
+          {
+              "url_path": "/workers/platform/routing/routes/",
+              "title": "Workers Routes"
+          },
+          {
+              "url_path": "/workers/platform/pricing/",
+              "title": "Pricing - Cloudflare Workers"
+          }
+        ]
+      },
+      {
+        "id": "Pages",
+        "dashPath": "/:accountId/pages",
+        "recommendations": [
+          {
+              "url_path": "/pages/get-started/",
+              "title": "Get started with Pages"
+          },
+          {
+              "url_path": "/fundamentals/get-started/",
+              "title": "Get started with Cloudflare"
+          },
+          {
+            "url_path": "/pages/platform/build-configuration/",
+            "title": "Build configurations"
+        },
+          {
+              "url_path": "/pages/platform/custom-domains/",
+              "title": "Custom domains"
+          },
+          {
+            "external_link": true,
+              "url_path": "https://community.cloudflare.com/t/edge-ip-restricted-error-1034/348084/17",
+              "title": "Edge IP Restricted - Error 1034"
+          },
+          {
+                "url_path": "/pages/framework-guides/",
+                "title": "Framework guides"
+          }
+        ]
+      },
+      {
+        "id": "Billing",
+        "dashPath": "/:accountId/billing",
+        "recommendations": [
+          {
+              "url_path": "/fundamentals/account-and-billing/account-maintenance/cancel-subscription/",
+              "title": "Cancel subscriptions"
+          },
+          {
+            "external_link": true,
+              "url_path": "https://support.cloudflare.com/hc/articles/203471284",
+              "title": "Login and account issues"
+          },
+          {
+              "url_path": "/fundamentals/account-and-billing/account-maintenance/delete-account/",
+              "title": "Delete account"
+          },
+          {
+            "external_link": true,
+              "url_path": "https://support.cloudflare.com/hc/articles/218344877",
+              "title": "Troubleshoot failed payments"
+          },
+          {
+            "external_link": true,
+            "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+            "title": "Troubleshooting Cloudflare 5XX errors"
+      },
+          {
+                "url_path": "/fundamentals/account-and-billing/account-maintenance/updating-billing-info/",
+                "title": "Update billing information"
+          }
         ]
       }
   ]

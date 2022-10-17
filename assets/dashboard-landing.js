@@ -1,23 +1,22 @@
 
 import * as recommendations from "./dashboard-landing.json";
 
-let data = recommendations["default"]["resources"]
+const data = recommendations["default"]["resources"]
 
-const params = new Proxy(new URLSearchParams(window.location.search), {
-  get: (searchParams, prop) => searchParams.get(prop),
-});
+const dashPathMap = data.map((x) => x.dashPath )
 
 Vue.createApp({
   methods: {
-    filterByParam() {
+    filterByParam() {      
       const params = new Proxy(new URLSearchParams(window.location.search), {
         get: (searchParams, prop) => searchParams.get(prop),
       });
       if (params.dash_area !== null) {
-        this.visibleData = data.filter((item) => item.dashPath === params.dash_area);
-        if (this.visibleData.length === 0) {
+        if (params.dash_area in this.dashPathMap) {
+          this.visibleData = data.filter((item) => item.dashPath === params.dash_area);
+        } else {
           this.visibleData = data.filter((item) => params.dash_area.includes(item.dashPath));
-        }        
+        }         
         if (this.visibleData.length === 0) {
           this.visibleData = data.filter((item) => item.id === "Default");
         }
@@ -30,14 +29,13 @@ Vue.createApp({
     this.filterByParam();
   },
   template: `
-    <div>
-        <ul>
-            <li v-for="element in visibleData[0].recommendations"><a href='element.url_path'>[[ element.title ]]</a></li>
-        </ul>
-    </div>`,
+        <ul class="recommendationList">
+            <li class="recommendationLink" v-for="element in visibleData[0].recommendations"><a href='element.url_path'>[[ element.title ]]</a></li>
+        </ul>`,
   data() {
     return {
-      visibleData: data
+      visibleData: data,
+      dashPathMap: dashPathMap
     };
   },
   delimiters: ["[[", "]]"],

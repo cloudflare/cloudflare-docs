@@ -92,5 +92,8 @@
 
 {{- if in $.Context.RelPermalink "/learning-paths/" -}}
 <link rel="stylesheet preconnect" href="/learning-paths.css"/>
+{{- end -}}
 
+{{ if eq $.Context.RelPermalink "/dashboard-landing/" }}
+<link rel="stylesheet preconnect" href="/dashboard-landing.css"/>
 {{- end -}}
