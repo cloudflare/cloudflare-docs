@@ -20,7 +20,7 @@ You will need to manually create an app for Area 1 in Okta.
 
 3. Name the app `Area 1` and select **Next**.
 
-4. In the SAML Settings dialog box that opens, enter the following settings:
+4. In the **SAML Settings** dialog box that opens, enter the following settings:
     * **Single sing on URL**: `https://portal.area1security.com/api/users/saml`
     * **Audience URI**: `https://portal.area1security.com/api/users/saml`
     * **Default RelayState**: `https://portal.area1security.com`
