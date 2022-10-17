@@ -9,9 +9,7 @@ meta:
 
 {{<beta>}} Dynamic Redirects {{</beta>}}
 
-Dynamic Redirects allow you to create powerful URL redirects [^1] like redirects based on the source country of requests.
-
-Unlike [Bulk Redirects](/rules/url-forwarding/bulk-redirects/), Dynamic Redirects support string replacement operations and regular expressions (depending on your Cloudflare plan).
+Dynamic Redirects allow you to create powerful URL redirects [^1] like redirects based on the source country of requests. Unlike [Bulk Redirects](/rules/url-forwarding/bulk-redirects/), Dynamic Redirects support string replacement operations.
 
 [^1]: URL redirects navigate the user from a source URL to a target URL using a given HTTP status code. URL redirection is also known as URL forwarding.
 
