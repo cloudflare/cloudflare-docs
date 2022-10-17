@@ -25,6 +25,7 @@ export const onRequestGet: PagesFunction<{}> = async ({ request }) => {
     const proxyResponse = await fetch(proxyUrl)
 
     return new HTMLRewriter()
+      .on("img[alt='logo']", rewriteStaticAssets)
       .on("script", rewriteStaticAssets)
       .on("link", rewriteStaticAssets)
       .transform(proxyResponse)
