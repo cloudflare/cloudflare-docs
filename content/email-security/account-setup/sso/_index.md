@@ -1,7 +1,7 @@
 ---
 title: SSO integration
 pcx_content_type: how-to
-weight: 2
+weight: 4
 ---
 
 # SSO integration
