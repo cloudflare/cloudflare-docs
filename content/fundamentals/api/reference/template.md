@@ -6,7 +6,7 @@ weight: 21
 
 # API token templates
 
-Below is a table of the currently available API token templates and the default [token permissions](/api/reference/permissions/) they grant. You can start creating a token with one of these templates and modify the permissions and resources from there.
+Below is a table of the currently available API token templates and the default [token permissions](/fundamentals/api/reference/permissions/) they grant. You can start creating a token with one of these templates and modify the permissions and resources from there.
 
 <table>
   <tbody>

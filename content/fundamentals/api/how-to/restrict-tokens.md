@@ -15,7 +15,7 @@ API tokens can be restricted at runtime in two ways:
 
 Client IP address restrictions control which IP address API requests with this token can and cannot be made from. By default, if no filtering is applied, all IP addresses can use the token. Once an `Is in` rule is applied, the token can only be used from the defined IP addresses. Define ranges with [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation). To allow an IP range with exceptions, define `Is not in` to exempt specific IPs or smaller ranges.
 
-![IP Address filtering options](/api/static/ip-filter.png)
+![IP Address filtering options](/fundamentals/api/static/ip-filter.png)
 
 ## Time to live (TTL) constraints
 
@@ -23,8 +23,8 @@ By default, tokens do not expire and are long lived. Defining a TTL sets when a 
 
 {{<Aside type="note">}}
 
-Dates selected are defined as 00:00 UTC of that day. For finer grained time selection, use the [API](/api/).
+Dates selected are defined as 00:00 UTC of that day. For finer grained time selection, use the [API](/fundamentals/api/).
 
 {{</Aside>}}
 
-![Time to Live selection calendar](/api/static/ttl.png)
+![Time to Live selection calendar](/fundamentals/api/static/ttl.png)

@@ -6,7 +6,7 @@ weight: 5
 
 # API commands
 
-Use the following API commands to manage advanced certificates. If you are using our API for the first time, review our [API Quickstart](/api/).
+Use the following API commands to manage advanced certificates. If you are using our API for the first time, review our [API documentation](/fundamentals/api/).
 
 {{<table-wrap>}}
 

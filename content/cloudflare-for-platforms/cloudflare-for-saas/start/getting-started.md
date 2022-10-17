@@ -12,7 +12,7 @@ weight: 1
 
 Before you can start creating custom hostnames, you need to have access to [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/#availability).
 
-If you have not used the Cloudflare API previously, review our [API Quickstart](/api/).
+If you have not used the Cloudflare API previously, review our [API Quickstart](/fundamentals/api/).
 
 If there are multiple proxied DNS records for one zone, Cloudflare must prioritize which record controls the zone settings and associated origin server. Adding a new custom hostname may take priority over your current settings or cause your settings to no longer apply. To prevent overriding or voiding your settings, review [Hostname priority (Cloudflare for SaaS)](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas)
  
