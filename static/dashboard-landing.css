@@ -6,11 +6,12 @@
 
 .recommendationList li {
     list-style-type: none;
-    padding: 0; /* Remove padding */
+    padding-bottom: .25em;
 }
 
 .recommendationLink {
     font-size: 1.2em;
+    
 }
 
 .recommendations a {
