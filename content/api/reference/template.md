@@ -39,7 +39,7 @@ Below is a table of the currently available API token templates and the default 
       <td>Zone</td>
     </tr>
     <tr>
-      <td rowspan="7">Edit Cloudflare Workers</td>
+      <td rowspan="8">Edit Cloudflare Workers</td>
       <td>Workers Routes Write</td>
       <td>Zone</td>
     </tr>
@@ -65,6 +65,10 @@ Below is a table of the currently available API token templates and the default 
     </tr>
     <tr>
       <td>User Details Read</td>
+      <td>User</td>
+    </tr>
+    <tr>
+      <td>User Memberships Read</td>
       <td>User</td>
     </tr>
     <tr>
