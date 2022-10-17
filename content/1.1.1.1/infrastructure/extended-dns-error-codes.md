@@ -19,10 +19,10 @@ layout: list
 <table>
     <thead>
         <tr>
-            <th style="width:5%">Code Number</th>
-            <th style="width:20%">Code Name</th>
-            <th style="width:35%">Example Output</th>
-            <th style="width:40%">Next Steps</th>
+            <th style="width:5%">Code number</th>
+            <th style="width:20%">Code name</th>
+            <th style="width:35%">Example output</th>
+            <th style="width:40%">Next steps</th>
         </tr>
     </thead>
     <tbody>
