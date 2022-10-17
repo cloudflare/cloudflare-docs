@@ -139,6 +139,6 @@ The Turnstile widget can take 3 different sizes:
 
 | Size | Width | Height |
 | --- | --- | --- |
-| normal | 300px | 64px |
+| normal | 300px | 65px |
 | compact | 130px | 120px |
 | invisible | 0px | 0px |
