@@ -30,7 +30,7 @@ Vue.createApp({
   },
   template: `
         <ul class="recommendationList">
-            <li class="recommendationLink" v-for="element in visibleData[0].recommendations"><a href='element.url_path'>[[ element.title ]]</a></li>
+            <li class="recommendationLink" v-for="element in visibleData[0].recommendations"><a :href='element.url_path' target='_blank'>[[ element.title ]]</a></li>
         </ul>`,
   data() {
     return {
