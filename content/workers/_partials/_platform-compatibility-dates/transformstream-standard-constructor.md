@@ -5,7 +5,8 @@ _build:
   list: never
 
 name: "Compliant TransformStream constructor"
-date: "2022-10-10"
+sort_date: "2022-11-30"
+enable_date: "2022-11-30"
 enable_flag: "transformstream_enable_standard_constructor"
 disable_flag: "transformstream_disable_standard_constructor"
 ---

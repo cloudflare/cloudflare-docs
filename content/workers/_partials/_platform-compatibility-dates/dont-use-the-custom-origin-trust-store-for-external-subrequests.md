@@ -5,7 +5,7 @@ _build:
   list: never
 
 name: "Do not use the Custom Origin Trust Store for external subrequests"
-date: "2022-03-08"
+sort_date: "2022-03-08"
 enable_date: "2022-03-08"
 enable_flag: "no_cots_on_external_fetch"
 disable_flag: "cots_on_external_fetch"

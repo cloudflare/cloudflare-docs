@@ -5,7 +5,7 @@ _build:
   list: never
 
 name: "`R2` bucket `list` respects the `include` option"
-date: "2022-08-04"
+sort_date: "2022-08-04"
 enable_date: "2022-08-04"
 enable_flag: "r2_list_honor_include"
 ---

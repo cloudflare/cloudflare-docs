@@ -5,7 +5,7 @@ _build:
   list: never
 
 name: "Global `navigator`"
-date: "2022-03-21"
+sort_date: "2022-03-21"
 enable_date: "2022-03-21"
 enable_flag: "global_navigator"
 disable_flag: "no_global_navigator"

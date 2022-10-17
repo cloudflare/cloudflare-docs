@@ -5,7 +5,8 @@ _build:
   list: never
 
 name: "CommonJS modules do not export a module namespace"
-date: "2022-10-10"
+sort_date: "2022-10-31"
+enable_date: "2022-10-31"
 enable_flag: "export_commonjs_default"
 disable_flag: "export_commonjs_namespace"
 ---

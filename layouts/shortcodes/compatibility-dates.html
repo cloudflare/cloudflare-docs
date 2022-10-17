@@ -4,7 +4,7 @@
     {{- $files = $files | append (dict "name" .Params.name "date" .Params.date "experimental" (default false .Params.experimental) "enable_date" .Params.enable_date "enable_flag" .Params.enable_flag "disable_flag" .Params.disable_flag "content" (trim .Content "\n")) -}}
   {{- end -}}
 {{- end -}}
-{{- $files = sort $files "date" "desc" -}}
+{{- $files = sort $files "sort_date" "desc" -}}
 {{- $experimental := lower (default "false" (.Get "experimental")) -}}
 {{- range $files -}}
   {{- if or (and .experimental (eq $experimental "true")) (and (not .experimental) (eq $experimental "false")) -}}

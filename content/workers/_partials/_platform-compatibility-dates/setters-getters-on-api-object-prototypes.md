@@ -5,7 +5,7 @@ _build:
   list: never
 
 name: "Setters/getters on API object prototypes"
-date: "2022-01-31"
+sort_date: "2022-01-31"
 enable_date: "2022-01-31"
 enable_flag: "workers_api_getters_setters_on_prototype"
 disable_flag: "workers_api_getters_setters_on_instance"
