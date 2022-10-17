@@ -13,7 +13,7 @@ Use the following Cloudflare products to perform URL redirects, according to you
 
 - [**Bulk Redirects**](/rules/url-forwarding/bulk-redirects/): Allow you to define a large number of redirects at the account level. These URL redirects are essentially static — they do not support string replacement operations or regular expressions. However, you can configure parameters that affect the redirects' URL matching behavior and their runtime behavior.
 
-- [**Dynamic Redirects**](/rules/url-forwarding/dynamic-redirects/): Allow you to create powerful URL redirects like redirects based on the source country of requests.
+- [**Dynamic Redirects**](/rules/url-forwarding/dynamic-redirects/): Allow you to create powerful URL redirects, such as redirects based on the source country of requests.
 
 ## Availability
 
