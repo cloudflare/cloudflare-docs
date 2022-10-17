@@ -7,3 +7,6 @@ meta:
 ---
 
 # Azure integration guide
+
+
+OS PRIMEIROS PASSOS SÃO IGUAIS AOS DO GENERIC SSO GUIDE. CRIAR PARTIAL COM ELES?
