@@ -2,9 +2,11 @@
 title: Generic SSO guide
 pcx_content_type: how-to
 weight: 1
+meta:
+    title: Generic single sign-on integration guide
 ---
 
-# Single sign-on Overview
+# Generic single sign-on integration guide
 
 For added security and convenience, Cloudflare Area 1 offers support for SAML-based single sign-on (SSO) logins to our portal. Organizations will be able to choose between having users access the Area 1 security data with a username and password plus a two-factor authentication (2FA) code, or having them use an SSO provider, such as OneLogin or Okta, to access the portal.
 
