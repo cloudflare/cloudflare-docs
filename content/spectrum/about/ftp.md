@@ -65,7 +65,7 @@ Example configuration for [vsftpd](https://security.appspot.com/vsftpd.html):
 > pasv_promiscuous=YES
 > ```
 
-## FTP/FTPS vs SFTP
+## SFTP
 
 Contrarily to FTP or FTPS, enabling Spectrum for SFTP does not require extra configuration, you can just set up a Spectrum application for SSH, select port 22 and TCP.
 
