@@ -470,6 +470,7 @@ The following operators are supported:
 | `<=` | less than or equal to |
 | `>=` | greater than or equal to |
 | `<>` or `!=` | not equal |
+| `IN` | true if the preceding expression's value is in the list<br>`column IN ('a', 'list', 'of', 'values')` |
 
 {{</table-wrap>}}
 
