@@ -88,6 +88,10 @@
           "title": "Get started with Cloudflare"
         },
         {
+          "url_path": "/fundamentals/get-started/setup/add-site/",
+          "title": "Add a site to Cloudflare"
+        },
+        {
           "external_link": true,
           "url_path": "https://support.cloudflare.com/hc/articles/205359838",
           "title": "Cannot add domain to Cloudflare"
@@ -208,7 +212,7 @@
         },
         {
           "external_link": true,
-          "url_path": "https://community.cloudflare.com/t/edge-ip-restricted-error-1034/348084/17",
+          "url_path": "https://community.cloudflare.com/t/edge-ip-restricted-error-1034/348084",
           "title": "Edge IP Restricted - Error 1034"
         },
         {
