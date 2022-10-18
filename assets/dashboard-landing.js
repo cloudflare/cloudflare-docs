@@ -3,7 +3,9 @@ import * as recommendations from "./dashboard-landing.json";
 
 const data = recommendations["default"]["resources"]
 
-const dashPathMap = data.map((x) => x.dashPath )
+const dashPathMap = data.map((x) => x.dashPath)
+
+const DEFAULT_ITEM_ID = "Default"
 
 Vue.createApp({
   methods: {
