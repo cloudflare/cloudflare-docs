@@ -388,8 +388,7 @@ Generally, these fields match the HTTP metadata passed when the object was creat
 
 ## Checksums
 
-If a checksum was provided when using the `put()` binding, it will be available on the returned object under the `checksums` property.
-The md5 checksum will be included by default for non-multipart objects.
+If a checksum was provided when using the `put()` binding, it will be available on the returned object under the `checksums` property. The MD5 checksum will be included by default for non-multipart objects.
 
 {{<definitions>}}
 
