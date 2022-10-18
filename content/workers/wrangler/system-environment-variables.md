@@ -26,7 +26,7 @@ Wrangler supports the following environment variables:
 
 - `CLOUDFLARE_API_TOKEN` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The [API token](/api/get-started/create-token/) for your Cloudflare account, can be used for authentication for situations like CI/CD, and other automation.
+  - The [API token](/fundamentals/api/get-started/create-token/) for your Cloudflare account, can be used for authentication for situations like CI/CD, and other automation.
 
 - `CLOUDFLARE_API_KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 

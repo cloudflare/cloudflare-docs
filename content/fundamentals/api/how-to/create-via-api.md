@@ -21,7 +21,7 @@ Cloudflare highly recommends that you do not grant other permissions to the toke
 
 {{</Aside>}}
 
-Cloudflare also recommends limiting the use of the token via client IP address filtering or TTL to reduce the potential for abuse in the event that the token is compromised. Refer to [Restrict token use](/api/how-to/restrict-tokens/) for more information.
+Cloudflare also recommends limiting the use of the token via client IP address filtering or TTL to reduce the potential for abuse in the event that the token is compromised. Refer to [Restrict token use](/fundamentals/api/how-to/restrict-tokens/) for more information.
 
 ## Creating API tokens with the API
 
@@ -35,7 +35,7 @@ To create a token:
 
 ### 1. Define the Access Policy
 
-An Access Policy defines what resources the token can act on and what permissions the token has to those resources. This process is similar to how you [create tokens in the Cloudflare dashboard](/api/get-started/create-token/).
+An Access Policy defines what resources the token can act on and what permissions the token has to those resources. This process is similar to how you [create tokens in the Cloudflare dashboard](/fundamentals/api/get-started/create-token/).
 
 Each token can contain multiple policies.
 
@@ -100,11 +100,11 @@ For user resources, you can only reference yourself, which is denoted as:`"com.c
 
 #### Permission groups
 
-Determine what permission groups should be applied. Refer to the full list of permission groups either in [the documentation](/api/reference/permissions/) or fetch the permission groups [via the API](https://api.cloudflare.com/#permission-groups-list-permission-groups). It is only required to pass the `id` of the permission group in the policy. Permission groups are scoped to specific resources, so a permission group in a policy will only apply to the resource type it is scoped for.
+Determine what permission groups should be applied. Refer to the full list of permission groups either in [the documentation](/fundamentals/api/reference/permissions/) or fetch the permission groups [via the API](https://api.cloudflare.com/#permission-groups-list-permission-groups). It is only required to pass the `id` of the permission group in the policy. Permission groups are scoped to specific resources, so a permission group in a policy will only apply to the resource type it is scoped for.
 
 ### 2. Define the restrictions
 
-Set up any limitations on how the token can be used. API tokens allow restrictions for client IP address filtering and TTLs. Refer to [Restrict token use](/api/how-to/restrict-tokens/) for more information.
+Set up any limitations on how the token can be used. API tokens allow restrictions for client IP address filtering and TTLs. Refer to [Restrict token use](/fundamentals/api/how-to/restrict-tokens/) for more information.
 
 When defining TTLs, you can set the time at which a token becomes active with `not_before` and the time when it expires with `expires_on`. Both of these fields take UTC timestamps in the following format: `"2018-07-01T05:20:00Z"`.
 

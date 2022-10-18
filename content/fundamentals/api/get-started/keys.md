@@ -6,7 +6,7 @@ weight: 12
 
 # Get API keys (legacy)
 
-API keys are the previous authorization scheme for interacting with the Cloudflare API. When possible, use [API tokens](/api/get-started/create-token/) instead of API keys.
+API keys are the previous authorization scheme for interacting with the Cloudflare API. When possible, use [API tokens](/fundamentals/api/get-started/create-token/) instead of API keys.
 
 ## Limitations
 
@@ -34,4 +34,4 @@ To retrieve your API key:
 
 ## Change your API key
 
-{{<render file="_change-api-key.md">}}
+{{<render file="_api-change-api-key.md">}}

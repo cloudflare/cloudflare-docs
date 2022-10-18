@@ -6,6 +6,6 @@ weight: 2
 
 # Get started
 
-{{<render file="_using-api.md">}}
+{{<render file="_api-using-api.md">}}
 
 {{<directory-listing>}}
