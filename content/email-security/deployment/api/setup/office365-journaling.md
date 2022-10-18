@@ -20,7 +20,7 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 1. Log in to the [Exchange admin center](https://admin.exchange.microsoft.com), and go to **Mail flow** > **Connectors**.
 
-2. Select **+ Add a connector**. 
+2. Select **Add a connector**. 
 
 3. Configure the new connector as follows:
     * **Connection From**: Office 365
@@ -41,7 +41,7 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 8. Select **Next**.
 
-9. Configure the Routing setting as follows:
+9. Configure the **Routing** setting as follows:
     * Select **Route email through these smart hosts**.
     * In the text field, enter the following smarthosts. Select the **+** button after each host to add it to the configuration:
         * `mailstream-east.mxrecord.io`
@@ -51,7 +51,7 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 10. Select **Next**.
 
-11. In Security restrictions, you need to preserve the default TLS configuration. Review the following settings:
+11. In **Security restrictions**, you need to preserve the default TLS configuration. Review the following settings:
     * Make sure the **Always use Transport Layer Security (TLS) to secure the connection (recommended)** checkbox is selected.
     * In **Connect only if the recipients email server certificate matches this criteria** select **Issued by a trusted certificate authority (CA)**.
 
@@ -86,7 +86,7 @@ Your connector is now active. You can find it in **Exchange admin center** > **M
     * **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses). If you are located in the EU or GDPR applies to your organization, ensure you are using a connector with the smarthost set to `mailstream-eu1.mxrecord.io`. Refer to step 9 of [Configure connector for delivery to Area 1](#1-configure-connector-for-delivery-to-area-1-if-required) for more information.
     * **Journal Rule Name**: `Journal Messages to CloudflareArea 1`
     * **Journal messages sent or received from**: Everyone
-        * If you wish to restrict this rule to specific users or groups select **A specific user or group**, and select the list of users/groups from the window that opens.
+        * If you wish to restrict this rule to specific users or groups select **A specific user or group**, and select the list of users/groups from the window that opens. Refer to [Create a distribution group](https://learn.microsoft.com/en-us/microsoft-365/admin/setup/create-distribution-lists?view=o365-worldwide#create-a-distribution-group-list) to learn how to create groups.
     * **Type of message to journal**: External messages only
 
 8. Select **Next**.
@@ -94,21 +94,3 @@ Your connector is now active. You can find it in **Exchange admin center** > **M
 9. Verify the information is correct, and select **Submit** > **Done**. 
 
 Once saved, the rule is automatically active. However, it may take a few minutes for the configuration to propagate and start pushing messages to Cloudflare Area 1. After it propagates, you can access the Cloudflare Area 1 dashboard to check the number of messages processed. This number will grow as journaled messages are sent to Cloudflare Area 1 from your Exchange server.
-
-## Create a distribution group in Office 365
-
-If you do not have a distribution group yet, follow these steps to create one.
-
-1. Log in to the [Exchange admin center](https://admin.exchange.microsoft.com) and go to **Home** > **Active Groups**.
-
-2. Select **Add a group** > **Distribution**.
-
-3. Select **Next**.
-
-4. In **Group email address** enter a name for your distribution group.
-
-5. Select **Next** > **Create Group**.
-
-6. In **Active groups** navigate to the distribution group you have just created.
-
-7. Select it to add the users you want to have in that distribution group.
