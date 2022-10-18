@@ -10,7 +10,7 @@ meta:
 
 The Workers Analytics Engine SQL API is an HTTP API that allows executing SQL queries against your Workers Anaytics Engine datasets.
 
-The API is hosted at `https://api.cloudflare.com/client/v4/accounts/<account_id>/analytics_engine/sql`. 
+The API is hosted at `https://api.cloudflare.com/client/v4/accounts/<account_id>/analytics_engine/sql`.
 
 ## Authentication
 
@@ -88,16 +88,21 @@ Additionally, the [QUANTILEWEIGHTED function](../sql-reference/#quantileweighted
 
 ## Pagination
 
-When you have a lot of data stored, the SQL API may not be able to retrieve all the data with one `SELECT` query. Instead you will need to retrieve it using multiple queries.
+When you have a lot of data stored, the SQL API may not be able to retrieve all the data with one `SELECT` query. Instead you will need to retrieve it using multiple queries. We suggest retrieving 1000 records at a time.
 
 Traditionally the SQL `OFFSET` feature has been used for pagination, but we do not support it because it is inefficient with big datasets. Instead you can use the timestamp of each row as a cursor.
 
 An example is where you want to retrieve all of your data from a dataset: `SELECT * FROM your_dataset`. If you only have a few thousand rows then that query should execute fine, but if you have millions of rows then it is likely to fail. Instead you can break down the query into multiple sequential queries.
 
-First run your desired query, adding `ORDER BY timestamp DESC` and a sensible `LIMIT`:
+First run your desired query, adding `ORDER BY timestamp DESC` and our recommended `LIMIT` of 1000:
 
 ```
-> SELECT * FROM your_dataset ORDER BY timestamp DESC LIMIT 10000
+SELECT * FROM your_dataset ORDER BY timestamp DESC LIMIT 1000
+```
+
+The response will include up to 1000 rows. Since the rows are ordered by descending timestamp, the oldest row has the oldest timestamp:
+
+```
 {
     "data": [
         [...],
@@ -109,10 +114,15 @@ First run your desired query, adding `ORDER BY timestamp DESC` and a sensible `L
 }
 ```
 
-Then run a second query, using the timestamp of the final row in the `WHERE` clause of the next query:
+Next run a second query, using the timestamp of the final row in the `WHERE` clause of the next query:
 
 ```
-> SELECT * FROM your_dataset WHERE timestamp < toDateTime("2022-10-10 13:56:48") ORDER BY timestamp DESC LIMIT 1000
+SELECT * FROM your_dataset WHERE timestamp < toDateTime("2022-10-10 13:56:48") ORDER BY timestamp DESC LIMIT 1000
+```
+
+You'll get the next 1000 older rows:
+
+```
 {
     "data": [
         [...],
@@ -124,7 +134,7 @@ Then run a second query, using the timestamp of the final row in the `WHERE` cla
 }
 ```
 
-Use the new oldest timestamp to run another query, and keep doing that until you run out of results.
+Repeat the process, using the new oldest timestamp to run another query. Keep doing that until you run out of results.
 
 ## Example queries
 
