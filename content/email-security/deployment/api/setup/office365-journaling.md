@@ -14,11 +14,11 @@ For customers using Microsoft Office 365, setting up a phishing risk assessment 
 
 ## 1. Configure connector for delivery to Area 1 (if required)
 
-If your email architecture does not include an outbound gateway, you can skip this step and proceed to the next one.
+If your email architecture does not include an outbound gateway, you can skip this step and [proceed to the next one](#2-configure-journal-rule).
 
 On the other hand, if your email architecture requires outbound messages to traverse your email gateway, you may want to consider configuring a connector to send the journal messages directly to Area 1.
 
-1. From the [Exchange admin center](https://admin.exchange.microsoft.com), go to **Mail flow** > **Connectors**.
+1. Log in to the [Exchange admin center](https://admin.exchange.microsoft.com), and go to **Mail flow** > **Connectors**.
 
 2. Select **+ Add a connector**. 
 
@@ -28,10 +28,10 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 4. Select **Next**.
 
-5. Configure the connector name and description as follows:
+5. Configure the connector as follows:
     * **Name**: `Deliver journal directly to Area 1`
     * **Description**: `Deliver journal directly to Area 1`
-    * Select the **Turn it on** checkbox.
+    * **Turn it on**: Enabled.
 
 6. Select **Next**.
 
@@ -57,7 +57,7 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 12. Select **Next**.
 
-13. You need to validate the connector by using your tenant’s specific journaling address. To find this address, go to the [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses) **Support** > **Service Addresses page**. 
+13. You need to validate the connector by using your tenant’s specific journaling address. To find this address, go to the [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses) > **Support** > **Service Addresses page**. 
 
 14. Add the address and select **Validate**.
 
@@ -69,13 +69,13 @@ Your connector is now active. You can find it in **Exchange admin center** > **M
 
 ## 2. Configure journal rule
 
-1. Go to the [Microsoft Purview compliance portal](https://compliance.microsoft.com/homepage).
+1. Log in to the [Microsoft Purview compliance portal](https://compliance.microsoft.com/homepage).
 
 2. Navigate to **Purview compliance portal** > **Data lifecycle management** > **Exchange (legacy)**.
 
 3. Select **Settings** (the gear icon).
 
-4. In **Send undeliverable journal reports to** enter the email address for a valid user account. Note that you cannot use a team or group address.
+4. In **Send undeliverable journal reports to** enter the email address of a valid user account. Note that you cannot use a team or group address.
 
 5. Select **Save**. 
 
@@ -85,7 +85,7 @@ Your connector is now active. You can find it in **Exchange admin center** > **M
 
     * **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses). If you are located in the EU or GDPR applies to your organization, ensure you are using a connector with the smarthost set to `mailstream-eu1.mxrecord.io`. Refer to step 9 of [Configure connector for delivery to Area 1](#1-configure-connector-for-delivery-to-area-1-if-required) for more information.
     * **Journal Rule Name**: `Journal Messages to CloudflareArea 1`
-    * **Journal messages sent or received from**: Everyone. 
+    * **Journal messages sent or received from**: Everyone
         * If you wish to restrict this rule to specific users or groups select **A specific user or group**, and select the list of users/groups from the window that opens.
     * **Type of message to journal**: External messages only
 
@@ -99,7 +99,7 @@ Once saved, the rule is automatically active. However, it may take a few minutes
 
 If you do not have a distribution group yet, follow these steps to create one.
 
-1. Go to **Microsoft Exchange admin center** > **Home** > **Active Groups**.
+1. Log in to the [Exchange admin center](https://admin.exchange.microsoft.com) and go to **Home** > **Active Groups**.
 
 2. Select **Add a group** > **Distribution**.
 
