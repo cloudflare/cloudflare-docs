@@ -1,0 +1,11 @@
+{{- $name_id := .Get "id" -}}
+
+{{- if $name_id -}}
+<code id="{{ $name_id }}" class="InlineCode InlineCode-is-name">
+  {{- .Page.RenderString .Inner -}}
+</code>
+{{- else -}}
+<code class="InlineCode InlineCode-is-name">
+  {{- .Page.RenderString .Inner -}}
+</code>
+{{- end -}}
