@@ -46,25 +46,27 @@ The available rate limiting rule parameters are the following:
   - Set of parameters defining how Cloudflare tracks the request rate for the rule.
   - Use one or more of the following characteristics:
 
-    | Dashboard value           | API value                                     |
-    | ------------------------- | --------------------------------------------- |
-    | N/A (implicitly included) | `cf.colo.id` (mandatory)                      |
-    | _IP_                      | `ip.src`                                      |
-    | _IP with NAT support_     | `cf.unique_visitor_id`                        |
-    | _Country_                 | `ip.geoip.country`                            |
-    | _AS Num_                  | `ip.geoip.asnum`                              |
-    | _Host_                    | `http.host`                                   |
-    | _Path_                    | `http.request.uri.path`                       |
-    | _Headers_                 | `http.request.headers["<header_name>"]`       |
-    | _Cookie_                  | `http.request.cookies["<cookie_name>"]`       |
-    | _Query_                   | `http.request.uri.args["<query_param_name>"]` |
-    | _JA3 Fingerprint_         | `cf.bot_management.ja3_hash`                  |
+    | Dashboard value           | API value                                            |
+    | ------------------------- | ---------------------------------------------------- |
+    | N/A (implicitly included) | `cf.colo.id` (mandatory)                             |
+    | _IP_                      | `ip.src`                                             |
+    | _IP with NAT support_     | `cf.unique_visitor_id`                               |
+    | _Country_                 | `ip.geoip.country`                                   |
+    | _AS Num_                  | `ip.geoip.asnum`                                     |
+    | _Host_                    | `http.host`                                          |
+    | _Path_                    | `http.request.uri.path`                              |
+    | _Headers_                 | `http.request.headers["<header_name>"]`              |
+    | _Cookie_                  | `http.request.cookies["<cookie_name>"]`              |
+    | _Query_                   | `http.request.uri.args["<query_param_name>"]`        |
+    | _JA3 Fingerprint_         | `cf.bot_management.ja3_hash`                         |
+    | N/A (JSON field)          | `lookup_json_string(http.request.body.raw, "<key>")` |
 
   - The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
   - You cannot use both _IP with NAT support_ and _IP_ as characteristics of the same rate limiting rule.
   - If you use `http.request.headers["<header_name>"]` in an API request, you must enter the header name in lower case, since Cloudflare normalizes header names at the edge.
   - If you use _Cookie_, refer to [Recommendations](#recommendations) for additional validations you should implement.
   - You should not use _Headers_ or _Cookie_ as the only characteristic of a rate limiting rule. Refer to [Recommendations](#recommendations) for details.
+  - For more information on the `lookup_json_string` function, refer to [Functions](/ruleset-engine/rules-language/functions/#function-lookup_json_string) in the Ruleset Engine documentation.
 
 {{<Aside type="note">}}
 
