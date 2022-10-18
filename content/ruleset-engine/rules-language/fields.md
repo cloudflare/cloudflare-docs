@@ -646,6 +646,15 @@ The Cloudflare Rules language supports these dynamic fields:
         Example values: <code class="InlineCode">54</code>
         </td>
     </tr>
+    <tr>
+        <td><p><code>sip</code><br />{{<type>}}Boolean{{</type>}}</p>
+        </td>
+        <td>
+       Determines if packets are valid L7 protocol <a href="https://datatracker.ietf.org/doc/html/rfc2543">SIP</a>. Requires UDP packets to operate. <br />
+       Use a guard clause as shown below to ensure the packet is UDP (wirefilter)<br />
+       <code class="InlineCode">ip.proto == "udp"</code>
+        </td>
+    </tr>
     <tr id="field-tcp">
         <td><p><code>tcp</code><br />{{<type>}}String{{</type>}}</p>
         </td>
