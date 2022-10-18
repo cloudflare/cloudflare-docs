@@ -66,3 +66,47 @@ On the other hand, if your email architecture requires outbound messages to trav
 16. Review the configuration and select **Create connector**.
 
 Your connector is now active. You can find it in **Exchange admin center** > **Mail flow** > **Connectors**.
+
+## 2: Configure journal rule
+
+1. Go to the [Microsoft Purview compliance portal](https://compliance.microsoft.com/homepage).
+
+2. Navigate to **Purview compliance portal** > **Data lifecycle management** > **Exchange (legacy)**.
+
+3. Select **Settings* (the gear icon).
+
+4. In **Send undeliverable journal reports to** enter the email address for a valid user account. Note that you cannot use a Team or Group address.
+
+5. Select **Save**. 
+
+6. Still in the Exchange (legacy) screen, select **Journal Rules**.
+
+7. Select **New rule** to configure a journaling rule, and configure it as follows:
+
+    * **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses). If you are located in the EU or GDPR applies to your organization, ensure you are using a connector with the smarthost set to `mailstream-eu1.mxrecord.io`. Refer to step 9 of [step 1](#1-configure-connector-for-delivery-to-area-1-if-required) for more information.
+    * **Journal Rule Name**: `Journal Messages to CloudflareArea 1`
+    * **Journal messages sent or received from**: **Everyone**. If you wish to restrict this rule to specific users or groups select **A specific user or group** > select the list of users/groups from the window that opens.
+    * **Type of message to journal**: **External messages only**
+    * Select **Next**.
+
+8. Verify the information is correct, and select **Submit** > **Done**. 
+
+Once saved, the rule is automatically active. However, it may take a few minutes for the configuration to propagate and start to push messages to Cloudflare Area 1. After it propagates, you can access the Cloudflare Area 1 dashboard to check the number of messages processed. This number will grow as journaled messages are sent to Cloudflare Area 1 from your Exchange server.
+
+## Create a distribution group in Office 365
+
+If you do not have a distribution group yet, follow these steps to create one.
+
+1. Go to **Microsoft Exchange admin center** > **Home** > **Active Groups** .
+
+2. Select **Add a group** > **Distribution**.
+
+3. Select **Next**.
+
+4. In **Group email address** enter a name for your distribution group.
+
+5. Select **Next** > **Create Group**.
+
+6. In **Active groups** navigate to the distribution group you have just created.
+
+7. Select it to add the users you want to have in that distribution group.
