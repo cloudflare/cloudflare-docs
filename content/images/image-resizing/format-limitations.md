@@ -49,4 +49,4 @@ AVIF format is supported on a best-effort basis. Images that cannot be compresse
 - Maximum image dimension is 12,000 pixels. 
 - Maximum image area is limited to 100 megapixels (for example, 10,000×10,000 pixels large). 
 - Maximum file size is 70 MB.
-- GIF animations are limited to 100 megapixels total (sum of sizes of all frames). Note that GIF is an outdated format and has very inefficient compression. High-resolution animations will be slow to process and will have very large file sizes. For video clips we recommend using [video formats like MP4 and WebM instead](/stream/).
+- GIF animations are limited to 100 megapixels total (sum of sizes of all frames). Note that GIF is an outdated format and has very inefficient compression. High-resolution animations will be slow to process and will have very large file sizes. For video clips, we recommend using [video formats like MP4 and WebM instead](/stream/).
