@@ -368,16 +368,6 @@
       ]
     },
     {
-      "id": "Edge certificates",
-      "dashPath": "/:accountId/:zoneName/ssl-tls/edge-certificates",
-      "recommendations": [
-        {
-          "url_path": "/",
-          "title": "test"
-        }
-      ]
-    },
-    {
       "id": "Rules",
       "dashPath": "/:accountId/:zoneName/rules",
       "recommendations": [
