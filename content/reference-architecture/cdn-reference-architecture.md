@@ -56,11 +56,9 @@ A CDN helps address the challenges customers face around latency, performance, a
 
 CDNs decrease latency and increase performance by having many data center locations across the globe that cache the content from the origin. The goal is to have content cached as close as possible to users, so content is cached at the edge of the CDN provider's network. 
 
-### The impact this has:
-
+### Impacts
 
 * **Improved website load time**: Instead of every client making a request to the origin server, which could be located a considerable distance away, the request is routed to a local server that responds with cached content, thus decreasing latency and increasing overall performance. Regardless of where the origin server and clients are located, performance will be more consistent for all users, as the CDN will serve locally cached content when possible.
-
 
 * **Increased content availability and redundancy:** Because every client request no longer needs to be sent to the origin server, CDNs provide not only performance benefits, but also availability and redundancy. Requests are load balanced over local servers with cached content; these servers respond to local requests, significantly decreasing overall load on the origin server. The origin server only is contacted when needed (when content is not cached or for dynamic non-cacheable content). 
 
@@ -68,12 +66,13 @@ CDNs decrease latency and increase performance by having many data center locati
 
 * **Reduced bandwidth costs:** Because CDNs use cached content to respond to requests, the number of requests sent to the origin server is reduced, thus also reducing associated bandwidth costs.
 
-
 An important difference in some CDN implementations is how they route traffic to the respective local CDN nodes. 
 
-### Routing requests to CDN nodes can be done via two different methods:
+### Routing requests to CDN nodes
 
-**1. DNS unicast routing** 
+Routing requests to CDN nodes can be done via two different methods, which are detailed in the following sections.
+
+#### 1. DNS unicast routing
 
 In this method, recursive DNS queries redirect requests to CDN nodes; the client’s DNS resolver forwards requests to the CDN’s authoritative nameserver. CDNs based on DNS unicast routing are not ideal in that clients may be geographically dispersed from the DNS resolver. Decisions on closest-proximity CDN nodes are based on the client's DNS server instead of client’s IP address. 
 
@@ -81,13 +80,11 @@ Also, if any changes are needed for the DNS response, there is a dependency on D
 
 Another challenge with DNS-based CDNs is that DNS is not very graceful upon failover. Typically a new session or application must be started for the DNS resolver with a different IP address to take over.
 
-
-
-**2. Anycast routing**
+#### 2. Anycast routing
 
 The Cloudflare CDN, which is discussed in more detail in the next section, uses Anycast routing. Anycast allows for nodes on a network to have the same IP address. The same IP address is announced from multiple nodes in different locations, and client redirection is handled via the Internet’s routing protocol, BGP.
 
-**Using an Anycast-based CDN has several advantages:**
+Using an Anycast-based CDN has several advantages:
 
 * Incoming traffic is routed to the nearest data center with the capacity to process the requests efficiently. 
 
@@ -99,26 +96,18 @@ The Cloudflare CDN, which is discussed in more detail in the next section, uses 
 
 Cloudflare provides a Software as a Service (SaaS) model for CDN. With Cloudflare’s SaaS model, customers benefit from the Cloudflare CDN without having to manage or maintain any infrastructure or software.
 
-The benefits of the Cloudflare CDN can be attributed to the below two points, discussed in more detail in this section.
+The benefits of the Cloudflare CDN can be attributed to the below two points, discussed in more detail in this section:
 
-
-**1. CDNs inherently increase performance by caching content on servers close to the user**
-
-
-**2. The unique Cloudflare architecture and integrated ecosystem**
-
+1. CDNs inherently increase performance by caching content on servers close to the user
+2. The unique Cloudflare architecture and integrated ecosystem
 
 Figure 2 shows a simplified view of the Cloudflare CDN. Clients are receiving their response back from a server on Cloudflare’s global Anycast edge network closest to where the clients are located, thus drastically reducing the latency and RTT. The diagram depicts a consistent end-user experience regardless of the physical location of the clients and origin. 
-
-
 
 ![Figure 2: HTTP request to Cloudflare CDN with Anycast](/reference-architecture/static/cdn-reference-architecture-images/cdn-ref-arch-2.jpg)
 
 ## Cloudflare CDN architecture and design
 
 Figure 3 is a view of the Cloudflare CDN on the global Anycast edge network. In addition to using Anycast for network performance and resiliency, the Cloudflare CDN leverages Argo Tiered Cache to deliver optimized results while saving costs for customers. Customers can also enable Argo Smart Routing to find the fastest network path to route requests to the origin server. These capabilities are discussed in detail in the remainder of this document.
-
-
 
 ![Figure 3: Cloudflare CDN with Argo Tiered Cache on global Anycast edge network](/reference-architecture/static/cdn-reference-architecture-images/cdn-ref-arch-3.jpg)
 
@@ -150,26 +139,22 @@ Cloudflare data centers have shorter distances and faster paths between them tha
 
 The Cloudflare CDN allows customers to configure tiered caching. Note that depending on the Cloudflare plan, different topologies are available for Argo Tiered Cache. By default, tiered caching is disabled and can be enabled under the caching tab of the main menu. ​​
 
-
 ### Argo Tiered Cache Topologies
 
 The different cache topologies allow customers to control how Cloudflare interacts with origin servers to help ensure higher cache hit ratios, fewer origin connections, and reduced latency.
 
-| **Smart Tiered Cache Topology (all plans)**     | **Generic Global Tiered Topology (Enterprise only)**       | **Custom Tiered Cache Topology (Enterprise only)**    |
-|-------------------------------|-----------------------|------------------------------------|
-| Recommended for most deployments. It is the default configuration once Tiered Cache is enabled.                                                                       | Recommended for those who have high traffic that is  spread across the globe and desire the highest cache usage and best performance possible.      | Recommended for customers who have additional data on their user base and have specific geographic regions they would like to focus on. |
+| **Smart Tiered Cache Topology (all plans)** | **Generic Global Tiered Topology (Enterprise only)** | **Custom Tiered Cache Topology (Enterprise only)** |
+|---|---|---|
+| Recommended for most deployments. It is the default configuration once Tiered Cache is enabled. | Recommended for those who have high traffic that is  spread across the globe and desire the highest cache usage and best performance possible. | Recommended for customers who have additional data on their user base and have specific geographic regions they would like to focus on. |
 | Ideal for customers who want to leverage CDN for performance but minimize requests to origin servers and bandwidth utilization between Cloudflare and origin servers. | Generic Global Tiered Topology balances between  cache efficiency and  latency. Instructs Cloudflare to use all Tier 1 data centers as upper tiers. | Custom Tiered Cache Topology allows customers to set a custom topology that fits specific needs (ex: upper tiers in specific geographic locations serving more customers). |
 | Cloudflare will dynamically find the single best upper tier for an origin using Argo performance and routing data. |               | Engage with a Customer Success Manager (CSM) to build a custom topology. |
-
 
 
 ### Traffic flow: Argo Tiered Cache, Smart Tiered Cache Topology
 
 In Figure 4, Argo Tiered Caching is enabled with Smart Tiered Cache Topology. The diagram depicts two separate traffic flows. The first traffic flow (#1 in green) is a request from a client that comes into Data Center 1. The second traffic flow (#2 in red) is a subsequent request for the same resource into a different data center, Data Center 2.
 
-
 ![Figure 4: HTTP requests and traffic flow through Cloudflare CDN](/reference-architecture/static/cdn-reference-architecture-images/cdn-ref-arch-4.jpg) 
-
 
 | **Client 1** | **Client 2** |
 |------|---------|
@@ -182,7 +167,6 @@ In Figure 4, traffic flow #1 displays the traffic flow when a client request is 
 Notice that when a new request for the same content is made to another data center (traffic flow #2), Data Center 2, the content is not locally cached; however, the content is retrieved from the upper tier data center, where it was cached from the first request for the same content.
 
 With the upper tier data center returning the cached content for the second request, the trip to the origin server is prevented, resulting in higher cache hit ratios, faster response times, saved bandwidth cost between the Cloudflare network and the origin server, and reduced load on the origin server responding to requests.
-
 
 ## Argo Smart Routing
 
@@ -197,22 +181,18 @@ Argo Smart Routing accelerates traffic by taking into account real-time data and
 
 Figure 5 details the traffic flow when Argo Tiered Cache and Argo Smart Routing are not enabled. The request comes into the closest data center, and, because content is not locally cached and Argo Tiered Cache is not enabled, the request is sent directly to the origin server for the content. Also, since Argo Smart Routing is not enabled, a reliable, but perhaps not the fastest, path is taken when communicating with the origin server.
 
-
 ![Figure 5: Cloudflare CDN without Argo Tiered Cache and Argo Smart Routing](/reference-architecture/static/cdn-reference-architecture-images/cdn-ref-arch-5.jpg) 
 
-
 Figure 6 articulates the traffic flow with both Argo Tiered Cache and Argo Smart Routing enabled.
-
 
 In Figure 6, when a request is received by Data Center 1 and there is a cache miss, the cache of the upper tier data center, Data Center 3, is checked. If the cached content is not found at the upper tier data center, with Argo Smart Routing enabled, the request is sent on the fastest path from the upper tier data center to the origin. The fastest path is determined by the Argo network intelligence capabilities, which take into account real-time network data such as congestion, latency, and RTT. 
 
 ![Figure 6: Cloudflare CDN with Argo Tiered Cache and Argo Smart Routing enabled](/reference-architecture/static/cdn-reference-architecture-images/cdn-ref-arch-6.jpg)
 
-**With the Cloudflare CDN, Argo Smart Routing is used when:** 
+With the Cloudflare CDN, Argo Smart Routing is used when:
 
-1. there is a cache miss and the request needs to be sent to the origin server to retrieve the content,
-2. There is a request for non-cacheable content, such as dynamic content (ex: APIs), and the request must go to the origin server.
-
+1. There is a cache miss and the request needs to be sent to the origin server to retrieve the content,
+2. There is a request for non-cacheable content, such as dynamic content (for example, APIs), and the request must go to the origin server.
 
 ## Summary 
 
