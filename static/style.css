@@ -1545,6 +1545,13 @@ code.InlineCode-is-nowrap,
   }
 }
 
+.InlineCode--name,
+.InlineCode.InlineCode-is-name {
+  font-size: 1em;
+  font-weight: 700;
+  --background: transparent;
+}
+
 .Link {
   text-decoration: none;
   color: inherit;
