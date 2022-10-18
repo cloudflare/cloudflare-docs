@@ -59,7 +59,7 @@ The available rate limiting rule parameters are the following:
     | _Cookie_                  | `http.request.cookies["<cookie_name>"]`              |
     | _Query_                   | `http.request.uri.args["<query_param_name>"]`        |
     | _JA3 Fingerprint_         | `cf.bot_management.ja3_hash`                         |
-    | N/A (JSON field)          | `lookup_json_string(http.request.body.raw, "<key>")` |
+    | N/A (JSON body field)     | `lookup_json_string(http.request.body.raw, "<key>")` |
 
   - The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
   - You cannot use both _IP with NAT support_ and _IP_ as characteristics of the same rate limiting rule.
