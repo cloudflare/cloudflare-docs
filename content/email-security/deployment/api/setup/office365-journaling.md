@@ -31,11 +31,11 @@ On the other hand, if your email architecture requires outbound messages to trav
 5. Configure the connector name and description as follows:
     * **Name**: `Deliver journal directly to Area 1`
     * **Description**: `Deliver journal directly to Area 1`
-    * Enable the **Turn it on** checkbox.
+    * Select the **Turn it on** checkbox.
 
 6. Select **Next**.
 
-7. Configure the Use of connector setting as follows:
+7. Configure the **Use of connector** setting as follows:
     * Select **Only when email messages are sent to these domains**.
     * In the text field, enter `journaling.mxrecord.io`, and select **+** to add the domain.
 
@@ -51,7 +51,7 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 10. Select **Next**.
 
-11. In Security restrictions, preserve the default TLS configuration. Review the following settings:
+11. In Security restrictions, you need to preserve the default TLS configuration. Review the following settings:
     * Make sure the **Always use Transport Layer Security (TLS) to secure the connection (recommended)** checkbox is selected.
     * In **Connect only if the recipients email server certificate matches this criteria** select **Issued by a trusted certificate authority (CA)**.
 
@@ -67,15 +67,15 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 Your connector is now active. You can find it in **Exchange admin center** > **Mail flow** > **Connectors**.
 
-## 2: Configure journal rule
+## 2. Configure journal rule
 
 1. Go to the [Microsoft Purview compliance portal](https://compliance.microsoft.com/homepage).
 
 2. Navigate to **Purview compliance portal** > **Data lifecycle management** > **Exchange (legacy)**.
 
-3. Select **Settings* (the gear icon).
+3. Select **Settings** (the gear icon).
 
-4. In **Send undeliverable journal reports to** enter the email address for a valid user account. Note that you cannot use a Team or Group address.
+4. In **Send undeliverable journal reports to** enter the email address for a valid user account. Note that you cannot use a team or group address.
 
 5. Select **Save**. 
 
@@ -83,21 +83,23 @@ Your connector is now active. You can find it in **Exchange admin center** > **M
 
 7. Select **New rule** to configure a journaling rule, and configure it as follows:
 
-    * **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses). If you are located in the EU or GDPR applies to your organization, ensure you are using a connector with the smarthost set to `mailstream-eu1.mxrecord.io`. Refer to step 9 of [step 1](#1-configure-connector-for-delivery-to-area-1-if-required) for more information.
+    * **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses). If you are located in the EU or GDPR applies to your organization, ensure you are using a connector with the smarthost set to `mailstream-eu1.mxrecord.io`. Refer to step 9 of [Configure connector for delivery to Area 1](#1-configure-connector-for-delivery-to-area-1-if-required) for more information.
     * **Journal Rule Name**: `Journal Messages to CloudflareArea 1`
-    * **Journal messages sent or received from**: **Everyone**. If you wish to restrict this rule to specific users or groups select **A specific user or group** > select the list of users/groups from the window that opens.
-    * **Type of message to journal**: **External messages only**
-    * Select **Next**.
+    * **Journal messages sent or received from**: Everyone. 
+        * If you wish to restrict this rule to specific users or groups select **A specific user or group**, and select the list of users/groups from the window that opens.
+    * **Type of message to journal**: External messages only
 
-8. Verify the information is correct, and select **Submit** > **Done**. 
+8. Select **Next**.
 
-Once saved, the rule is automatically active. However, it may take a few minutes for the configuration to propagate and start to push messages to Cloudflare Area 1. After it propagates, you can access the Cloudflare Area 1 dashboard to check the number of messages processed. This number will grow as journaled messages are sent to Cloudflare Area 1 from your Exchange server.
+9. Verify the information is correct, and select **Submit** > **Done**. 
+
+Once saved, the rule is automatically active. However, it may take a few minutes for the configuration to propagate and start pushing messages to Cloudflare Area 1. After it propagates, you can access the Cloudflare Area 1 dashboard to check the number of messages processed. This number will grow as journaled messages are sent to Cloudflare Area 1 from your Exchange server.
 
 ## Create a distribution group in Office 365
 
 If you do not have a distribution group yet, follow these steps to create one.
 
-1. Go to **Microsoft Exchange admin center** > **Home** > **Active Groups** .
+1. Go to **Microsoft Exchange admin center** > **Home** > **Active Groups**.
 
 2. Select **Add a group** > **Distribution**.
 
