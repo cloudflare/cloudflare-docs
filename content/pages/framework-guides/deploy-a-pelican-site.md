@@ -11,7 +11,6 @@ title: Deploy a Pelican site
 
 To begin, create a Pelican project directory. `cd` into your new directory and run:
 
-
 ```sh
 $ python3 -m pip install pelican
 ```
