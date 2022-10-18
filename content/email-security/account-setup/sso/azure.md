@@ -1,7 +1,7 @@
 ---
 title: Azure guide
 pcx_content_type: how-to
-weight: 1
+weight: 3
 meta:
     title: Azure integration guide
 ---

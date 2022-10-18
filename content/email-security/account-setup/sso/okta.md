@@ -1,7 +1,7 @@
 ---
 title: Okta guide
 pcx_content_type: how-to
-weight: 1
+weight: 2
 meta:
     title: Okta integration guide
 ---
