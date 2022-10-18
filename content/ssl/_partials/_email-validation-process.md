@@ -9,4 +9,4 @@ The addresses listed in this field will receive an email from `support@certvalid
 
 ![Example of the Certificate Validation Email](/ssl/static/certvalidate-email.png)
 
-As soon as the domain owner has clicked the link in this email and clicked **Approve** on the validation page, the certificate will move through the [various statuses](/ssl/ssl-tls/certificate-statuses/) until it becomes **Active**.
+As soon as the domain owner has clicked the link in this email and clicked **Approve** on the validation page, the certificate will move through the [various statuses](/ssl/reference/certificate-statuses/) until it becomes **Active**.

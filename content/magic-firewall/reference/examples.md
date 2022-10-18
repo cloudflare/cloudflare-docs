@@ -10,6 +10,7 @@ weight: 6
 
 The example below blocks all tcp ports, but allows one port (8080) by using the skip action.
 
+```bash
     curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets \
     -H 'Content-Type: application/json' \
     -H 'X-Auth-Email: user@example.com' \
@@ -33,11 +34,13 @@ The example below blocks all tcp ports, but allows one port (8080) by using the 
           }
         ]
     }'
+```
 
 ## Block a country
 
 The example below blocks all packets with a source or destination IP address coming from Brazil by using its 2-letter country code in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.
 
+```bash
     curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets \
     -H 'Content-Type: application/json' \
     -H 'X-Auth-Email: user@example.com' \
@@ -55,6 +58,7 @@ The example below blocks all packets with a source or destination IP address com
           }
         ]
     }'
+```
 
 ## Use an IP List
 
@@ -67,6 +71,7 @@ Magic Firewall supports [using lists in expressions](/firewall/cf-dashboard/rule
 
 <!---->
 
+```bash
     curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets \
     -H 'Content-Type: application/json' \
     -H 'X-Auth-Email: user@example.com' \
@@ -84,3 +89,4 @@ Magic Firewall supports [using lists in expressions](/firewall/cf-dashboard/rule
           }
         ]
     }'
+```

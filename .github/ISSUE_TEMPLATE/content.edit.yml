@@ -20,7 +20,7 @@ body:
         - Cache
         - China Network
         - Client IP Geolocation
-        - Cloudflare for SaaS
+        - Cloudflare for Platforms
         - Cloudflare One
         - DDoS Protection
         - DNS
@@ -28,6 +28,7 @@ body:
         - Email Security
         - Firewall
         - Fundamentals
+        - HTTP Applications
         - Image Optimization
         - Load Balancing
         - Logs
@@ -53,6 +54,7 @@ body:
         - Tenant
         - Terraform
         - Time Services
+        - Turnstile
         - WAF
         - Waiting Room
         - WARP Client

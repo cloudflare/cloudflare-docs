@@ -10,6 +10,10 @@ You can change the Page Shield status and fetch information about the currently 
 
 For authentication instructions, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
 
+{{<Aside type="note">}}
+Refer to [API deprecations](/api/reference/deprecations/#page-shield) for details on Page Shield API changes.
+{{</Aside>}}
+
 ## Endpoints
 
 You can obtain the complete endpoint by appending the [Page Shield API](https://api.cloudflare.com/#page-shield-properties) endpoints listed below to the Cloudflare API base URL.
@@ -28,10 +32,10 @@ The following table summarizes the available operations:
 
 | Operation                        | Method + URL stub                                        | Notes                                                    |
 | -------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| [Get Page Shield status][1]      | `GET zones/<ZONE_ID>/script_monitor`                     | Fetch the current Page Shield status (enabled/disabled). |
-| [Update Page Shield status][2]   | `PUT zones/<ZONE_ID>/script_monitor`                     | Updates the Page Shield status (enabled/disabled).       |
-| [List Page Shield scripts][3]    | `GET zones/<ZONE_ID>/script_monitor/scripts`             | Fetch a list of currently monitored scripts.             |
-| [Get a Page Shield script][4]    | `GET zones/<ZONE_ID>/script_monitor/scripts/<SCRIPT_ID>` | Fetch the details of a currently monitored script.       |
+| [Get Page Shield status][1]      | `GET zones/<ZONE_ID>/page_shield`                     | Fetch the current Page Shield status (enabled/disabled). |
+| [Update Page Shield status][2]   | `PUT zones/<ZONE_ID>/page_shield`                     | Updates the Page Shield status (enabled/disabled).       |
+| [List Page Shield scripts][3]    | `GET zones/<ZONE_ID>/page_shield/scripts`             | Fetch a list of currently monitored scripts.             |
+| [Get a Page Shield script][4]    | `GET zones/<ZONE_ID>/page_shield/scripts/<SCRIPT_ID>` | Fetch the details of a currently monitored script.       |
 
 [1]: https://api.cloudflare.com/#page-shield-get-page-shield-status
 [2]: https://api.cloudflare.com/#page-shield-update-page-shield-status
@@ -54,7 +58,7 @@ This example obtains the current status of Page Shield (enabled/disabled).
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/script_monitor" \
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/page_shield" \
 -H "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -82,7 +86,7 @@ This example enables Page Shield in the specified zone.
 header: Request
 ---
 curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/script_monitor" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/page_shield" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -H "Content-Type: application/json" \
 -d '{ "enabled": true }'
@@ -113,7 +117,7 @@ By default, the response will only include scripts with `active` status when you
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/script_monitor/scripts?hosts=example.net&page=1&per_page=15" \
+curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/page_shield/scripts?hosts=example.net&page=1&per_page=15" \
 -H "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -134,11 +138,12 @@ header: Response
       "url_reported_malicious": true,
       "malicious_url_categories": ["Malware"],
       "seen_on_first": "http://malicious.example.com/page_one.html",
-      "count": 10,
       "status": "active",
       "appears_in_cdn_cgi_path": false,
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "js_integrity_score": 10,
+      "obfuscation_score": 10,
+      "dataflow_score": 8,
       "fetched_at": "2021-11-21T16:58:07Z"
     },
     // (...)
@@ -168,7 +173,7 @@ This example fetches a list of infrequently reported scripts on hostname `exampl
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/script_monitor/scripts?status=infrequent&hosts=example.net&page=1&per_page=15" \
+curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/page_shield/scripts?status=infrequent&hosts=example.net&page=1&per_page=15" \
 -H "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -188,11 +193,12 @@ header: Response
       "domain_reported_malicious": false,
       "url_reported_malicious": false,
       "seen_on_first": "http://malicious.example.com/page_one.html",
-      "count": 2,
       "status": "infrequent",
       "appears_in_cdn_cgi_path": false,
       "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
-      "js_integrity_score": 50,
+      "js_integrity_score": 48,
+      "obfuscation_score": 49,
+      "dataflow_score": 45,
       "fetched_at": "2021-11-18T03:58:07Z"
     },
     // (...)
@@ -222,7 +228,7 @@ This example obtains the details of a script monitored by Page Shield with scrip
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/script_monitor/scripts/8337233faec2357ff84465a919534e4d" \
+curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/page_shield/scripts/8337233faec2357ff84465a919534e4d" \
 -H "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -242,11 +248,12 @@ header: Response
     "url_reported_malicious": true,
     "malicious_url_categories": ["Malware"],
     "seen_on_first": "http://malicious.example.com/page_one.html",
-    "count": 10,
     "status": "active",
     "appears_in_cdn_cgi_path": false,
     "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
-    "js_integrity_score": 50,
+    "js_integrity_score": 48,
+    "obfuscation_score": 49,
+    "dataflow_score": 45,
     "fetched_at": "2021-11-21T16:58:07Z",
     "seen_on": [
       "http://malicious.example.com/page_two.html",

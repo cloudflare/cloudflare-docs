@@ -40,24 +40,13 @@ Before you can complete your domain setup, you need to create an account and [ad
 
 ### Disable DNSSEC
 
-If you are onboarding an existing domain to Cloudflare — as opposed to purchasing a new domain through [Cloudflare Registrar](/registrar/) — make sure DNSSEC **is disabled** at your registrar (where you purchased your domain name). Otherwise, your domain will experience connectivity errors when you change your nameservers.
-
-<details>
-<summary>Why do I have to disable DNSSEC</summary>
-<div>
-
-When your domain has [DNSSEC enabled](https://www.cloudflare.com/learning/dns/dns-security/#what-is-dnssec), your DNS provider digitally signs all your DNS records. This action prevents anyone else from issuing false DNS records on your behalf and redirecting traffic intended for your domain.
-
-However, having a single set of signed records also prevents Cloudflare from issuing new DNS records on your behalf (which is part of using Cloudflare for your authoritative nameservers). So if you change your nameservers without disabling DNSSEC, DNSSEC will prevent Cloudflare's DNS records from resolving properly.
-
-</div>
-</details>
+{{<render file="_disable_dnssec.md">}}
 
 ### Review DNS records in Cloudflare
 
 When you start using Cloudflare's nameservers for authoritative DNS, Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
 
-If you [added your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, Cloudflare automatically scans for common records and adds them to your account’s DNS page.
+If you have [added your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, Cloudflare automatically scans for common records and adds them to your account’s DNS page.
 
 {{<render file="_dns-scan-procedure.md">}}
 

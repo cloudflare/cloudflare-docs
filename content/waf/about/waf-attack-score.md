@@ -7,7 +7,7 @@ weight: 2
 # WAF attack score
 
 {{<Aside type="note">}}
-This feature is available in early access to customers on an Enterprise plan. To get access, contact your account team.
+This feature is only available on Enterprise plans. To get access, contact your account team.
 {{</Aside>}}
 
 WAF attack score is a feature that complements [WAF Managed Rulesets](/waf/managed-rulesets/).

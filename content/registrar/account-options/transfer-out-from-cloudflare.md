@@ -9,8 +9,8 @@ meta:
 
 Cloudflare Registrar makes it easy to transfer your domain to another registrar. Be aware that ICANN rules prohibit a domain from being transferred if:
 
-- It has been transferred within the last 60 days;
-- It was registered within the last 60 days;
+- The domain has been transferred within the last 60 days;
+- The domain was registered within the last 60 days;
 - If the WHOIS registrant information has been modified in the last 60 days (even if redacted).
 
 Follow the instructions below to transfer your domain out from Cloudflare.
@@ -19,7 +19,7 @@ Follow the instructions below to transfer your domain out from Cloudflare.
 Anyone with super-admin and admin permissions for a zone can also manage your domains. This means these users can also unlock domains or obtain authorization codes to transfer domains to other registrars. Be careful who you give these account roles to.
 {{</Aside>}} 
 
-## Unlocking your domain at Cloudflare
+## 1. Unlock your domain at Cloudflare
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Registrar**.
@@ -32,7 +32,7 @@ If you lose your authentication code, you can get a new one by:
 * Selecting the **Regenerate** button;
 * Locking the domain and repeating steps 1-6.
 
-## Transfer to a new registrar
+## 2. Transfer to a new registrar
 
 1. Go to your new registrar.
 2. You will be asked for the authorization code from Cloudflare (it might be called EPP in some systems). Input the code created for you from the Cloudflare dashboard.

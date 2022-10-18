@@ -10,7 +10,12 @@ meta:
 
 Setting your encryption mode to **Off (not recommended)** redirects any HTTPS request to plaintext HTTP.
 
-![With an encryption mode of Off, your application does not encrypt traffic between the visitor and Cloudflare or between Cloudflare and your server.](/ssl/static/ssl-encryption-mode-off.png)
+<div class="mermaid">
+    flowchart LR
+        accTitle: No SSL/TLS Encryption
+        accDescr: With an encryption mode of Off, your application does not encrypt traffic between the visitor and Cloudflare or between Cloudflare and your server.
+        A[Browser] <--Unencrypted--> B((Cloudflare))<--Unencrypted--> C[(Origin server)]
+</div>
 
 ## Use when
 

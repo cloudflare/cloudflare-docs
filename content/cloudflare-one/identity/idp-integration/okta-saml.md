@@ -33,7 +33,7 @@ To set up SAML with Okta as your identity provider:
     * **Value**: Enter `user.email`.
 
 7. (Optional) If you are using Okta groups, create a **Group Attribute Statement** with the following information:
-    * **Name**: Enter `name`.
+    * **Name**: Enter `groups`.
     * **Filter**: Select _Matches regex_ and enter `.*`.
 
   ![Configuring attribute statements in Okta](/cloudflare-one/static/documentation/identity/okta-saml/okta-saml-2.png)

@@ -1,10 +1,32 @@
 ---
 pcx_content_type: changelog
 title: Changelog
-weight: 10
+weight: 11
 ---
 
 # Changelog
+
+## 2022-10-05
+
+### AV1 Codec support for live streams and recordings (beta)
+
+Cloudflare Stream now supports playback of live videos and live recordings using the [AV1 codec](https://aomedia.org/av1/), which uses 46% less bandwidth than H.264.
+
+For more, read the [blog post](https://blog.cloudflare.com/av1-cloudflare-stream-beta) or the get started with the [docs](/stream/viewing-videos/av1-playback).
+
+## 2022-09-27
+
+### WebRTC live streaming and playback (beta)
+
+Cloudflare Stream now supports live video streaming over WebRTC, with sub-second latency, to unlimited concurrent viewers.
+
+For more, read the [blog post](https://blog.cloudflare.com/webrtc-whip-whep-cloudflare-stream) or the get started with example code in the [docs](/stream/webrtc-beta).
+
+## 2022-09-15
+
+### Manually control when you start and stop simulcasting
+
+You can now enable and disable individual live outputs via the API or Stream dashboard, allowing you to control precisely when you start and stop simulcasting to specific destinations like YouTube and Twitch. For more, [read the docs](/stream/stream-live/simulcasting/#control-when-you-start-and-stop-simulcasting).
 
 ## 2022-08-15
 

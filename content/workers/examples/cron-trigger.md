@@ -9,16 +9,43 @@ weight: 1001
 layout: example
 ---
 
+{{<tabs labels="js/sw | js/esm">}}
+{{<tab label="js/sw" default="true">}}
+
 ```js
-addEventListener('scheduled', event => {
+addEventListener("scheduled", (event) => {
   event.waitUntil(triggerEvent(event.scheduledTime));
 });
 
 async function triggerEvent(scheduledTime) {
   // Fetch some data
   // Update API
-  console.log('cron processed');
+  console.log("cron processed");
 }
+```
+{{</tab>}}
+{{<tab label="js/esm">}}
+
+```js
+export default {
+	async scheduled(controller, env, ctx) {
+		console.log('cron processed');
+	},
+};
+```
+{{</tab>}}
+{{</tabs>}}
+
+## Test Cron Triggers using Wrangler
+
+The recommended way of testing Cron Triggers is using Wrangler.
+
+Cron Triggers can be tested using Wrangler by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+
+```sh
+$ wrangler dev --test-scheduled
+
+$ curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
 ```
 
 ## Setting Cron Triggers in Wrangler

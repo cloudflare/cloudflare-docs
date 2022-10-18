@@ -11,6 +11,10 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
+resources:
+  community: https://community.cloudflare.com/tag/page-rules
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/rules
+
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com

@@ -11,6 +11,12 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
+resources:
+  community: https://community.cloudflare.com/c/developers/stream/52
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/stream
+  learning_center: https://www.cloudflare.com/learning/video/what-is-streaming/
+  discord: https://discord.com/channels/595317990191398933/893253103695065128
+
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com

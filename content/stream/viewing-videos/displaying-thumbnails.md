@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Display thumbnails
-weight: 4
+weight: 5
 ---
 
 # Display thumbnails
@@ -46,33 +46,22 @@ Supported URL attributes are:
   - **`scale`** distort the image to fit the given size
   - **`fill`** preserve the entire frame and fill the rest of the requested size with black background
 
-## Use Case 2: Setting the default thumbnail timestamp using the API
+## Use Case 2: Set the default thumbnail timestamp using the API
 
-By default, the Stream Player sets the thumbnail to the first frame of the video.
-
-You can change this default value by setting the "thumbnailTimestampPct" value using the API:
+By default, the Stream Player sets the thumbnail to the first frame of the video. You can change this on a per-video basis by setting the "thumbnailTimestampPct" value using the API:
 
 ```bash
 curl -X POST \
 -H "Authorization: Bearer <API_TOKEN>" \
--d '{"uid": "<VIDEO_UID>", "thumbnailTimestampPct": <pct>}' \
+-d '{"thumbnailTimestampPct": 0.5}' \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>
 ```
 
-`thumbnailTimestampPct` is a value between 0.0 (the first frame of the video) and 1.0 (the last frame of the video). This is particularly useful if you have videos of varying lengths. For example, you wanted the thumbnail to be the frame at the half way point of your videos, you can simply set the `thumbnailTimestampPct` value to 0.5.
-
-The example will yield a request:
-
-```bash
-curl -X POST \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{"uid": "<VIDEO_UID>", "thumbnailTimestampPct": 0.5}' \
-https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>
-```
+`thumbnailTimestampPct` is a value between 0.0 (the first frame of the video) and 1.0 (the last frame of the video). For example, you wanted the thumbnail to be the frame at the half way point of your videos, you can simply set the `thumbnailTimestampPct` value to 0.5. Using relative values in this way allows you to set the default thumbnail even if you or your users' videos vary in duration.
 
 ## Use Case 3: Generating animated thumbnails
 
-Stream supports animated GIFs as thumbnails. Views using animated thumbnails do not count in Stream views or watch time for billing or analytics.
+Stream supports animated GIFs as thumbnails. Viewing animated thumbnails does not count toward billed minutes delivered or minutes viewed in [Stream Analytics](/stream/getting-analytics/).
 
 ### Animated GIF thumbnails
 

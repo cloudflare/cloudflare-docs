@@ -11,6 +11,10 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
+resources:
+  community: https://community.cloudflare.com/c/reliability/dns-1111/47
+  learning_center: https://www.cloudflare.com/learning/dns/what-is-1.1.1.1/
+
 externals:
   - title: 1.1.1.1 website
     url: https://1.1.1.1

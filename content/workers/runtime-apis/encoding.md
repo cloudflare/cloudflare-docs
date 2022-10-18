@@ -23,7 +23,7 @@ let encoder = new TextEncoder();
 
 {{<definitions>}}
 
-- `encoding` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString">}}DOMString{{</type-link>}} {{<prop-meta>}}read-only{{</prop-meta>}}
+- `encoding` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">}}DOMString{{</type-link>}} {{<prop-meta>}}read-only{{</prop-meta>}}
   - The name of the encoder as a string describing the method the `TextEncoder` uses (always `utf-8`).
 
 {{</definitions>}}
@@ -32,7 +32,7 @@ let encoder = new TextEncoder();
 
 {{<definitions>}}
 
-- {{<code>}}encode(input{{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/USVString">}}USVString{{</type-link>}}){{</code>}} {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">}}Uint8Array{{</type-link>}}
+- {{<code>}}encode(input{{<type-link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">}}USVString{{</type-link>}}){{</code>}} {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">}}Uint8Array{{</type-link>}}
 
   - Encodes a string input.
 
@@ -58,7 +58,7 @@ let decoder = new TextDecoder();
 
 {{<definitions>}}
 
-- `encoding` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString">}}DOMString{{</type-link>}} {{<prop-meta>}}read-only{{</prop-meta>}}
+- `encoding` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">}}DOMString{{</type-link>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
   - The name of the decoder that describes the method the `TextDecoder` uses.
 
@@ -75,7 +75,7 @@ let decoder = new TextDecoder();
 
 {{<definitions>}}
 
-- `decode()` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString">}}DOMString{{</type-link>}}
+- `decode()` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">}}DOMString{{</type-link>}}
   - Decodes using the method specified in the `TextDecoder` object. Learn more at [MDN’s TextDecoder documentation](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder/decode).
 
 {{</definitions>}}

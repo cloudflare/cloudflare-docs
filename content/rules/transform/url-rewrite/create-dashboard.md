@@ -24,7 +24,7 @@ Create URL Rewrite Rules in the **Transform Rules** tab under Rules. Refer to [U
 
 5.  Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
-    The **Expression Preview** area displays a text-only version of your expression. For more information on entering a rule expression manually using the Expression Editor, refer to [Edit rule expressions](/firewall/cf-dashboard/edit-expressions/) in the Firewall documentation.
+    The **Expression Preview** area displays a text-only version of your expression. For more information on entering a rule expression manually using the Expression Editor, refer to [Edit rule expressions](/firewall/cf-dashboard/edit-expressions/) in the Firewall Rules documentation.
 
 6.  Select a comparison operator in the **Operator** drop-down list.
 
@@ -39,6 +39,8 @@ Create URL Rewrite Rules in the **Transform Rules** tab under Rules. Refer to [U
     If you select **Rewrite to** > _Dynamic_, enter a [rewrite expression](/rules/transform/url-rewrite/reference/fields-functions/#rewrite-expressions) that defines the dynamic URL rewrite to perform.
 
     If you do not want to change the value of a component of the original request (the URL path or the URL query string), choose the _Preserve_ action for that component.
+
+    For more information, refer to [URL rewrite parameters](/rules/transform/url-rewrite/reference/parameters/).
 
 10. To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
 
