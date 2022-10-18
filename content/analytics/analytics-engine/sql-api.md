@@ -96,13 +96,13 @@ An example is where you want to retrieve all of your data from a dataset: `SELEC
 
 First run your desired query, adding `ORDER BY timestamp DESC` and our recommended `LIMIT` of 1000:
 
-```
+```sql
 SELECT * FROM your_dataset ORDER BY timestamp DESC LIMIT 1000
 ```
 
 The response will include up to 1000 rows. Since the rows are ordered by descending timestamp, the oldest row has the oldest timestamp:
 
-```
+```json
 {
     "data": [
         [...],
@@ -116,13 +116,13 @@ The response will include up to 1000 rows. Since the rows are ordered by descend
 
 Next run a second query, using the timestamp of the final row in the `WHERE` clause of the next query:
 
-```
+```sql
 SELECT * FROM your_dataset WHERE timestamp < toDateTime("2022-10-10 13:56:48") ORDER BY timestamp DESC LIMIT 1000
 ```
 
 You'll get the next 1000 older rows:
 
-```
+```json
 {
     "data": [
         [...],
