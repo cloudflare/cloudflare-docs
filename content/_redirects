@@ -635,6 +635,7 @@
 /waf/custom-rules/rate-limiting/request-rate/ /waf/rate-limiting-rules/request-rate/ 301
 /waf/custom-rules/rate-limiting/use-cases/ /waf/rate-limiting-rules/use-cases/ 301
 /waf/about/file-scanning/ /waf/about/content-scanning/ 301
+/waf/about/waf-ml/ /waf/about/waf-attack-score/ 301
 /waf/alerts/ /waf/reference/alerts/ 301
 /waf/managed-rulesets/cloudflare-managed-ruleset/ /waf/managed-rulesets/reference/cloudflare-managed-ruleset/ 301
 /waf/managed-rulesets/owasp-core-ruleset/ /waf/managed-rulesets/reference/owasp-core-ruleset/ 301
