@@ -6,6 +6,6 @@ weight: 3
 
 # How to
 
-{{<render file="_using-api.md">}}
+{{<render file="_api-using-api.md">}}
 
 {{<directory-listing>}}

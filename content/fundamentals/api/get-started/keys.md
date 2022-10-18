@@ -34,4 +34,4 @@ To retrieve your API key:
 
 ## Change your API key
 
-{{<render file="_change-api-key.md">}}
+{{<render file="_api-change-api-key.md">}}
