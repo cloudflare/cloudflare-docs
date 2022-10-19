@@ -44,7 +44,7 @@ It can take anywhere from one week to up to four weeks for websites to recognize
 
 ### Egress location
 
-If you want your traffic to physically egress from a specific location, you must connect using IPv4 instead of IPv6. Each dedicated IPv4 address is assigned to a single data center, so IPv4 traffic will egress from one of your dedicated locations. Unlike IPv4, your IPv6 range is split across all data centers in our global network. IPv6 traffic is not guaranteed to physically egress from your dedicated locations — only IP geolocation is supported.
+To physically egress from a specific location, traffic must be proxied to Cloudflare via IPv4. Each dedicated IPv4 address is assigned to a single data center, so IPv4 traffic will egress from one of your dedicated locations. Traffic proxied via IPv6, unlike IPv4, will physically egress from the most performant data center in our global network but logically egress with one of your dedicated IP geolocations.
 
 We are able to offer better IPv4 performance when users visit domains proxied by Cloudflare (also known as an [orange-clouded](https://community.cloudflare.com/t/step-3-enabling-the-orange-cloud/52715) domain). In this scenario, IPv4 traffic will physically egress from the most performant data center in our network while still appearing to egress from one of your dedicated locations.
 
