@@ -471,6 +471,7 @@ The following operators are supported:
 | `>=` | greater than or equal to |
 | `<>` or `!=` | not equal |
 | `IN` | true if the preceding expression's value is in the list<br>`column IN ('a', 'list', 'of', 'values')` |
+| `NOT IN` | true if the preceding expression's value is not in the list<br>`column NOT IN ('a', 'list', 'of', 'values')` |
 
 {{</table-wrap>}}
 
