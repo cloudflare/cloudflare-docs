@@ -117,6 +117,7 @@ export async function onRequest(context) {
 
 Note in the example above that the one-time upload URL is returned in the `Location` header of the response, not in the response body.
 
+<div id="tus"></div>
 ### Step 2: Use this API endpoint with your tus client
 
 Use this API endpoint **directly** in your tus client. A common mistake is to extract the upload URL from your new API endpoint, and use this directly. See below for a complete example of how to use the API from Step 1 with the uppy tus client.
