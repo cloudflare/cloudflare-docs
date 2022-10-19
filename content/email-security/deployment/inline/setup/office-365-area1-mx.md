@@ -19,11 +19,19 @@ In this tutorial, you will learn how to configure Microsoft Office 365 with Area
 
 2. In the **Threat management** section, select [**Policy settings**](https://protection.office.com/threatpolicy).
 
+    ![Select threat management](/email-security/static/inline-setup/o365-area1-mx/step2-threat-management.png)
+
 3. Select the [Anti-spam option](https://protection.office.com/antispam).
+
+    ![Select the anti-spam option](/email-security/static/inline-setup/o365-area1-mx/step3-anti-spam.png)
 
 4. Select **Connection filter policy (Default)** to edit the policy, and then select **Edit connection filter policy**.
 
+    ![Select edit connection filter policy](/email-security/static/inline-setup/o365-area1-mx/step4-edit-filter-policy.png)
+
 5. In **Always allow messages from the following IP addresses or address range** add the IP addresses and CIDR blocks mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
+
+    ![Enter the egress IP addressess](/email-security/static/inline-setup/o365-area1-mx/step5-egress-ips.png)
 
 6. Select **Save**.
 
@@ -40,6 +48,8 @@ The following steps are only required if you have not previously customized your
 ```txt
 PS C:\Windows\system32> Install-Module ExchangeOnlineManagement
 ```
+
+![Run the install-module command in PowerShell](/email-security/static/inline-setup/o365-area1-mx/step1-install-module.png)
 
 {{<Aside type="note">}}This module is a Microsoft module.{{</Aside>}}
 
@@ -61,7 +71,11 @@ PS C:\Windows\system32> Install-Module ExchangeOnlineManagement
     PS C:\Windows\system32> Connect-ExchangeOnline
     ```
 
+    ![Run the commands to execute the policy change](/email-security/static/inline-setup/o365-area1-mx/step2-set-executionpolicy.png)
+
 3. The `Connect-ExchangeOnline` cmdlet will prompt you to login. Log in using an Office 365 administrator account. Once authenticated, you will be returned to the PowerShell prompt.
+
+    ![Log in with an Office 365 admin account](/email-security/static/inline-setup/o365-area1-mx/step3-connect-exchange.png)
 
 4. You can verify that the `OrganizationCustomization` is enabled by running the command:
 
@@ -69,11 +83,15 @@ PS C:\Windows\system32> Install-Module ExchangeOnlineManagement
 PS C:\Windows\system32> Get-OrganizationConfig | FL isDehydrated
 ```
 
+![Run the get-organizationconfig command](/email-security/static/inline-setup/o365-area1-mx/step4-get-organizationconfig.png)
+
 If the result is `false`, `OrganizationCustomization` is already enabled and no further actions are required. If it is true, you need to enable it:
 
 ```txt
 PS C:\> Enable-OrganizationCustomization
 ```
+
+![If the previous result is true, enable the organization customization mode](/email-security/static/inline-setup/o365-area1-mx/step4-enable-organizationcustomization.png)
 
 ## 3. Enhanced Filtering configuration
 
@@ -86,31 +104,75 @@ This option will allow Office 365 to properly identify the original connecting I
 
 1. From the **Microsoft Exchange admin center**, select **mail flow** > **connectors**.
 
+    ![Select connectos from mail flow](/email-security/static/inline-setup/o365-area1-mx/step1-connectors.png)
+
 2. Select the `+` icon to configure a new connector. In the **Select your mail flow scenario panel** dialog box that opens:
 
     1. In the *From* dropdown: select **Partner organization**.
     2. In the *To* dropdown: select **Office 365**.
     3. Select **Next** to continue the configuration.
 
+    <div class="large-img">
+
+    ![Configure your mail flow](/email-security/static/inline-setup/o365-area1-mx/step2-mail-flow.png)
+
+    </div>
+
 3. Provide a **Name** and a **Description** for the new connector. Leave the **Turn it on** checkbox enabled. Select **Next**.
+
+    <div class="large-img">
+
+    ![Provide name and description for the new connector](/email-security/static/inline-setup/o365-area1-mx/step3-description.png)
+
+    </div>
 
 4. Select **Use the sender’s IP address** in the **How do you want to identify the partner organization?** configuration panel. Select **Next**.
 
+    <div class="large-img">
+
+    ![Select the senders IP address](/email-security/static/inline-setup/o365-area1-mx/step4-senders-ip.png)
+
+    </div>
+
 5. In **What sender IP addresses do you want to use to identify your partner?** add the IP addresses and CIDR blocks found in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/). Select **Next**.
+
+    <div class="large-img">
+
+    ![Enter Area 1's egress IP addressess](/email-security/static/inline-setup/o365-area1-mx/step5-office-egress-ips.png)
+
+    </div>
 
 6. Keep the **Reject email messages if they aren't sent over TLS** checkbox enabled. Select **Next**.
 
+    <div class="large-img">
+
+    ![Keep the Reject email messages if they aren't sent over TLS checkbox enabled](/email-security/static/inline-setup/o365-area1-mx/step6-tls.png)
+
+    </div>
+
 7. Review the connector configuration and select **Save**.
+
+    <div class="large-img">
+
+    ![Review settings](/email-security/static/inline-setup/o365-area1-mx/step7-review.png)
+
+    </div>
 
 ### Enable enhanced filtering
 
 Now that the inbound connector has been configured, you will need to enable the enhanced filtering configuration of the connector. Exit the Exchange Admin console, return to the main [Office 365 Administration Console](https://admin.microsoft.com) and select the [Security admin console](https://protection.office.com/homepage).
 
+![The security admin console](/email-security/static/inline-setup/o365-area1-mx/security-admin.png)
+
 1. Go to [Security Admin console](https://protection.office.com/homepage) > **Threat Management** > **Policy**, and select **Enhanced filtering**.
+
+    ![Go to Enhanced filtering](/email-security/static/inline-setup/o365-area1-mx/step1-enhanced-filtering.png)
 
 2. In **Enhanced Filtering for Connectors**, you will find the connector that was previously configured. Double click the connector to edit its configuration parameters. 
 
 3. Select **Automatically detect and skip the last IP address** and **Apply to entire organization**.
+
+    ![Select Automatically detect and skip the last IP address, and Apply to entire organization](/email-security/static/inline-setup/o365-area1-mx/step3-selectors.png)
 
 4. Select **Save**.
 
@@ -129,6 +191,12 @@ Quarantining messages is a per domain configuration. To modify which domains wil
 4. Select the `...` icon > **Edit**.
 
 5. Select the additional dispositions you want to quarantine.
+
+    <div class="large-img">
+
+    ![Manage domain quarantines](/email-security/static/inline-setup/o365-area1-mx/step4-area1-dispositions.png)
+
+    </div>
 
 {{<Aside type="note">}}When Area 1 is deployed as the MX record and protecting Office 365, Malicious and Spam detections will automatically be quarantined. This behavior cannot be modified.{{</Aside>}}
 
