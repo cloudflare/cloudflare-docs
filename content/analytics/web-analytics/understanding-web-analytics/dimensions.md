@@ -10,7 +10,7 @@ Dimensions are the labels used to describe different types of metrics or data. F
 
 Below you will find a list of the different dimensions you can use to filter Web Analytics:
 
-- **Referers**: The external links referring visits to a page.
+- **Referers**: The external links referring visits to a page. `referer` host is provided. Additionally `referer` path is available from the GraphQL API.
 - **Paths**: The links within your site referring visits to a page.
 - **Hosts**: The domain of the site's URL.
 - **Browsers**: The web browsers visitors use to access a page.
