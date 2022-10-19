@@ -27,7 +27,7 @@ Create a directory in your project named `content`:
 $ mkdir content
 ```
 
-This is the folder name that you will set in the build command.
+This is the directory name that you will set in the build command.
 
 {{<render file="_tutorials-before-you-start.md">}}
 
