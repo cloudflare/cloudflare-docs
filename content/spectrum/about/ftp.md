@@ -67,7 +67,7 @@ Example configuration for [vsftpd](https://security.appspot.com/vsftpd.html):
 
 ## SFTP
 
-Contrarily to FTP or FTPS, enabling Spectrum for SFTP does not require extra configuration, you can just set up a Spectrum application for SSH, select port 22 and TCP.
+Unlike FTP or FTPS, enabling Spectrum for SFTP does not require extra configuration. When setting up a Spectrum application for SSH, select port 22 and TCP.
 
 ## Related
 
