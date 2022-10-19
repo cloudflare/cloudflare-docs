@@ -26,6 +26,8 @@ $ cloudflared tunnel --url http://localhost:7000
 
 `cloudflared` will generate a random subdomain when connecting to the Cloudflare network and print it in the terminal for you to use and share. The output will serve traffic from the server on your local machine to the public internet, using Cloudflare's Argo Smart Routing, at a public URL.
 
+TryCloudflare quick tunnels are currently not supported if a `config.yaml` configuration file is present in the `.cloudflared` directory. It may be necessary to rename that file temporarily to use the feature.
+
 ## FAQ
 
 ### What are some example use cases for TryCloudflare?
