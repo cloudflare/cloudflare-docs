@@ -36,7 +36,7 @@ We suggest using a domain other than your main company domain (example.cloud ins
 
 2. [Create two DNS records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records).
 
-  *   A proxied *A* or *AAAA* record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
+  *   A proxied *A*, *AAAA*, or *CNAME* record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
   *   A *CNAME* record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
 
   | Record          | Type  | Name                              | Content                           |
