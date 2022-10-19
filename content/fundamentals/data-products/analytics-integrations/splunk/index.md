@@ -72,7 +72,7 @@ For example: `https://prd-p-0qk3h.splunkcloud.com:8088/services/collector/raw`. 
 
 **Post Installation Notes**
 
-You can change the **Index Name** after initial configuration by clicking on the **Settings** dropdown and navigating to **Advance search**. There you can select **Search macros** and look for the Cloudflare App for Splunk.
+You can change the **Index Name** after the initial configuration by clicking on the **Settings** dropdown and navigating to **Advance search**. There you can select **Search macros** and look for the Cloudflare App for Splunk.
 
 ![Splunk interface highlighting Apps menu and Manage Apps option along with Enable Acceleration checkbox](/fundamentals/static/images/splunk/screenshots/splunk-settings-advanced-search-search-macros.png)
 
