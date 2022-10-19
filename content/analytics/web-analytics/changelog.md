@@ -3,7 +3,7 @@ title: Changelog
 pcx_content_type: changelog
 weight: 6
 meta:
-  title: Changelog for beacon.mon.js
+  title: Changelog for beacon.min.js
 ---
 
 # Changelog for `beacon.min.js`
