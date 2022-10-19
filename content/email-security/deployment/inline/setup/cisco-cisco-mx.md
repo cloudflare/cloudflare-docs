@@ -32,6 +32,8 @@ To add a new Sender Group:
 
 4. Select **Submit and Add Senders** and add the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
 
+![Sender group.](/email-security/static/inline-setup/cisco-cisco-mx/step1.png)
+
 ## 2. Add SMTP route for the Area 1 Email Protection Hosts
 
 To add a new SMTP Route:
@@ -48,6 +50,8 @@ To add a new SMTP Route:
     `0`      | `mailstream-west.mxrecord.io` | `25`
     `0`      | `mailstream-east.mxrecord.io` | `25`
     `10`     | `mailstream-east.mxrecord.io` | `25`
+
+![Edit SMTP route](/email-security/static/inline-setup/cisco-cisco-mx/step2.png)
 
 ## 3. Create Incoming Content Filters
 
@@ -71,6 +75,8 @@ To create a new Content Filter:
     * **Actions**:
         * For **Action** select **Send to Alternate Destination Host**.
         * For **Mail Host** input `a1s.mailstream` (the SMTP route configured in step 2).
+
+![Content filter](/email-security/static/inline-setup/cisco-cisco-mx/step3-to-area1.png)
 
 ### Incoming Content Filter - From Area 1
 
@@ -99,6 +105,8 @@ To create a new Content Filter:
     Order | Action          | Rule
     --- | -------------------- | ---
     1   | `Skip Remaining Content Filters (Final Action)` | `skip-filters()`
+
+![Content filter](/email-security/static/inline-setup/cisco-cisco-mx/step3-from-area1.png)
 
 ## 4. Add the Incoming Content Filter to the Inbound Policy table
 
