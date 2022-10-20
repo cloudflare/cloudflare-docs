@@ -471,63 +471,20 @@ composer config cafile [PATH_TO_CLOUDFLARE_CERT.pem]
 
 Alternatively, you can add this manually to your `composer.json` file under the `config` key.
 
-### JetBrains (IntelliJ IDEA, PyCharm, PhpStorm...)
+### JetBrains
 
-Instructions on how to install the Cloudflare root certificate for various JetBrains products:
+To install the Cloudflare root certificate on JetBrains products, refer to the links below:
 
-  {{<tabs labels="AppCode|CLion|DataGrip|DataSpell|GoLand|IntelliJ IDEA|PhpStorm|PyCharm|Rider|WebStorm">}}
-  {{<tab label="AppCode" no-code="true">}}
- 
-`https://www.jetbrains.com/help/objc/settings-tools-server-certificates.html`
- 
-  {{</tab>}}
-  {{<tab label="CLion" no-code="true">}}
- 
-`https://www.jetbrains.com/help/clion/settings-tools-server-certificates.html`
- 
-  {{</tab>}}
-  {{<tab label="DataGrip" no-code="true">}}
- 
-`https://www.jetbrains.com/help/datagrip/settings-tools-server-certificates.html`
- 
-  {{</tab>}}
-  {{<tab label="DataSpell" no-code="true">}}
- 
-`https://www.jetbrains.com/help/dataspell/settings-tools-server-certificates.html`
- 
-  {{</tab>}}
-  {{<tab label="GoLand" no-code="true">}}
- 
-`https://www.jetbrains.com/help/go/settings-tools-server-certificates.html`
- 
-  {{</tab>}}
-  {{<tab label="IntelliJ IDEA" no-code="true">}}
- 
-`https://www.jetbrains.com/help/idea/settings-tools-server-certificates.html`
- 
-  {{</tab>}}
-  {{<tab label="PhpStorm" no-code="true">}}
- 
-`https://www.jetbrains.com/help/phpstorm/settings-tools-server-certificates.html`
- 
-  {{</tab>}}
-  {{<tab label="PyCharm" no-code="true">}}
- 
-`https://www.jetbrains.com/help/pycharm/settings-tools-server-certificates.html`
- 
-  {{</tab>}}
-  {{<tab label="Rider" no-code="true">}}
- 
-`https://www.jetbrains.com/help/rider/Settings_Tools_Server_Certificates.html`
- 
-  {{</tab>}}
-  {{<tab label="WebStorm" no-code="true">}}
- 
-`https://www.jetbrains.com/help/webstorm/settings-tools-server-certificates.html`
- 
-  {{</tab>}}
-  {{</tabs>}}
-
+- [AppCode](https://www.jetbrains.com/help/objc/settings-tools-server-certificates.html)
+- [CLion](https://www.jetbrains.com/help/clion/settings-tools-server-certificates.html)
+- [DataGrip](https://www.jetbrains.com/help/datagrip/settings-tools-server-certificates.html)
+- [DataSpell](https://www.jetbrains.com/help/dataspell/settings-tools-server-certificates.html)
+- [GoLand](https://www.jetbrains.com/help/go/settings-tools-server-certificates.html)
+- [IntelliJ IDEA](https://www.jetbrains.com/help/idea/settings-tools-server-certificates.html)
+- [PhpStorm](https://www.jetbrains.com/help/phpstorm/settings-tools-server-certificates.html)
+- [PyCharm](https://www.jetbrains.com/help/pycharm/settings-tools-server-certificates.html)
+- [Rider](https://www.jetbrains.com/help/rider/Settings_Tools_Server_Certificates.html)
+- [WebStorm](https://www.jetbrains.com/help/webstorm/settings-tools-server-certificates.html)
 
 ### Minikube
 
