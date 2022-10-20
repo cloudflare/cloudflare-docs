@@ -13,4 +13,4 @@ weight: 10
 
 ## 2022-10-11
 
-- Added `turnstile.remove`
+- Added [`turnstile.remove`](/turnstile/get-started/client-side-rendering/#remove-a-widget)
