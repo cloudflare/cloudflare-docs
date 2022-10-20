@@ -82,7 +82,7 @@ If you would like to send Area 1 malicious detection to a separate quarantine ot
 
     <div class="medium-img">
 
-    ![Select the add quarantine button](/email-security/static/inline-setup/gsuite-area1-mx/step3-configure-quarantine.png)
+    ![Configure the quarantine settings](/email-security/static/inline-setup/gsuite-area1-mx/step3-configure-quarantine.png)
 
     </div>
 
