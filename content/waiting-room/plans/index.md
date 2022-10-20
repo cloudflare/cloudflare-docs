@@ -68,6 +68,14 @@ The features available for a waiting room depend on your plan type. You can only
       <td>No</td>
       <td>Yes</td>
     </tr>
+        <tr>
+      <td>
+        <a href="/waiting-room/additional-options/waiting-room-rules/">Waiting Room Rules</a>
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
   </tbody>
 </table>
 
