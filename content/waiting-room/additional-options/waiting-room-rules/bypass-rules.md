@@ -26,7 +26,7 @@ Be aware that the waiting room will not be applied to the traffic that matches t
 - **Administrative Bypass**: Allow internal site administrators to always bypass the waiting room, commonly identified by IP addresses. 
 - **Geo-targeting**: Exclude certain countries from being queued.
 - **Query String Exclusion**: Exclude specific query strings under the path you have configured for your waiting room. 
-- **Exclude file extensions**: Prevent waiting room from applying to certain file extensions, such as `.js` that you utilize on your waiting room html template so that they render properly.
+- **Exclude file extensions**: Prevent waiting room from applying to certain file extensions, such as `.js` that you utilize on your waiting room HTML template so that they render properly.
 
 ### A note on subrequests
 
