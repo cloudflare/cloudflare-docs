@@ -208,6 +208,12 @@ Quarantining messages is a per domain configuration. To modify which domains wil
 
 3. Locate the message you want to manage, and select the `...` icon next to it. Thill will let you preview, download, or release the quarantined message.
 
+    <div class="large-img">
+
+    ![Manage admin quarantines](/email-security/static/inline-setup/o365-area1-mx/step4-manage-admin-quarantine.png)
+
+    </div>
+
 ### Optional - Quarantine messages using Microsoft Hosted Quarantine
 
 As previously noted, malicious and spam detections are automatically quarantined in Area 1’s quarantine (this behavior cannot be modified). However, for the suspicious and spoof dispositions, you may prefer to apply a different behavior, where these messages can be quarantined into the Microsoft Hosted Quarantine or sent to the user’s junk folder.
@@ -216,7 +222,11 @@ For this alternate behavior, you will need to configure a transport rule in Offi
 
 1. Go to the **Exchange administrator** console > **mail flow** > **rules**.
 
+    ![Select rules from the Exchange admin console](/email-security/static/inline-setup/o365-area1-mx/step1-rules.png)
+
 2. Select the **+** button > **Create a new rule**.
+
+    ![Create rule](/email-security/static/inline-setup/o365-area1-mx/step2-create-rule.png)
 
 3. In the new dialog box, select **More options** to open the advanced version of the rule creator. Set the following conditions and actions:
 
@@ -232,6 +242,8 @@ For this alternate behavior, you will need to configure a transport rule in Offi
 5. In the new condition, select **The sender** > **IP address is in any of these ranges or exactly matches** and enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
 
 6. In the **Do the following** section, select **Redirect the message to**  > **hosted quarantine.**.
+
+    ![Redirect messages to hosted quarantine](/email-security/static/inline-setup/o365-area1-mx/step6-hosted.png)
 
 {{<Aside type="note">}}
 If you prefer to send the message to the Junk folder, in the **Do the following** section, select **Modify the message properties**  > **set the spam confidence level (SCL)**. Then, select the SCL value that will send the message to the junk folder. This behavior is dependent on the configured spam filter policies (spam and bulk actions).
