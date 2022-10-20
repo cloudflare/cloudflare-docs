@@ -22,7 +22,7 @@ Be aware that the waiting room will not be applied to the traffic that matches t
 
 ## Common Use Cases
 
-- **Path/URL Exclusion**: Bypass specific paths or urls under the path you have configured for your waiting room, if you do not want your waiting room to apply to these paths. 
+- **Path/URL Exclusion**: Bypass specific paths or URLs under the path you have configured for your waiting room, if you do not want your waiting room to apply to these paths. 
 - **Administrative Bypass**: Allow internal site administrators to always bypass the waiting room, commonly identified by IP addresses. 
 - **Geo-targeting**: Exclude certain countries from being queued.
 - **Query String Exclusion**: Exclude specific query strings under the path you have configured for your waiting room. 
