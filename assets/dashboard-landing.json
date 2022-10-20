@@ -523,6 +523,39 @@
           "title": "Get started with Load Balancing"
         }
       ]
+    },
+    {
+      "id": "Edge certificates",
+      "dashPath": "/:accountId/:zoneId/ssl-tls/edge-certificates",
+      "recommendations": [
+        {
+          "url_path": "/ssl/edge-certificates/universal-ssl/",
+          "title": "Universal SSL"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://community.cloudflare.com/t/err-ssl-version-or-cipher-mismatch/24462",
+          "title": "ERR_SSL_VERSION_OR_CIPHER_MISMATCH"
+        },
+        {
+          "url_path": "/ssl/get-started/",
+          "title": "Get started with SSL/TLS"
+        },
+        {
+          "url_path": "/ssl/edge-certificates/custom-certificates/",
+          "title": "Custom certificates"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://community.cloudflare.com/t/universal-ssl-certificate-expired/21829",
+          "title": "Universal SSL certificate expired"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://community.cloudflare.com/t/pending-validation-txt-cloudflare-universal-ssl/275052",
+          "title": "Universal SSL pending validation"
+        }
+      ]
     }
   ]
 }
