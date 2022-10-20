@@ -122,7 +122,7 @@ curl -X POST \
 
 ### Other API options for managing bypass rules
 
-Through the Waiting Room API, you can also do the following to manage bypass rules by using the waiting room custom rules api calls:
+Through the Waiting Room API, you can also do the following to manage bypass rules by using the waiting room custom rules API calls:
 
 - **List Custom Rules**: Lists custom rules for a waiting room.
 - **Replace Custom Rules**: Replaces all custom rules for a waiting room.
