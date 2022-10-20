@@ -4,7 +4,7 @@ title: Waiting Room Rules
 weight: 10
 ---
 
-# Custom Rules 
+# Waiting Room Rules 
 
 In this section, we will list the Waiting Room rules available.
 
