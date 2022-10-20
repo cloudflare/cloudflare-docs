@@ -82,7 +82,7 @@ header: Ownership challenge response example
     "status": "pending",
     "submitted": "2022-04-22T18:54:13.397413Z",
     "validated": "",
-    "destinaton_conf": "gs://bucket-test",
+    "destination_conf": "gs://bucket-test",
     "filename": "ownership-challenge-1234.txt"
   },
   "success": true,
@@ -117,7 +117,7 @@ header: Bucket validation response
     "status": "success",
     "submitted": "2022-04-22T18:54:13.397413Z",
     "validated": "2022-04-27T14:54:46.440548Z",
-    "destinaton_conf": "gs://bucket-test",
+    "destination_conf": "gs://bucket-test",
     "filename": "ownership-challenge-1234.txt"
   },
   "success": true,
@@ -174,7 +174,7 @@ header: Bucket list response example
       "status": "success",
       "submitted": "2022-04-26T16:58:24.550762Z",
       "validated": "2022-04-26T17:01:18.426458Z",
-      "destinaton_conf": "s3://test-bucket?region=us-east-1",
+      "destination_conf": "s3://test-bucket?region=us-east-1",
       "filename": "ownership-challenge-1234.txt"
     },
   ],
