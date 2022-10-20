@@ -1,5 +1,5 @@
 ---
-title: Configure WAF Managed Rulesets
+title: WAF Managed Rulesets
 pcx_content_type: how-to
 weight: 2
 meta:
