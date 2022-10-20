@@ -12,7 +12,7 @@ This example uses version 3 of the [aws-sdk-net](https://www.nuget.org/packages/
 
 ## Client setup
 
-In this example, we will pass credentials explicitly to the `IAmazonS3` initialisation. If you wish, you can use a shared AWS credentials file or the SDK store in-line with other AWS SDKs. Refer to [Configure AWS credentials](https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/net-dg-config-creds.html) for more details.
+In this example, you will pass credentials explicitly to the `IAmazonS3` initialization. If you wish, use a shared AWS credentials file or the SDK store in-line with other AWS SDKs. Refer to [Configure AWS credentials](https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/net-dg-config-creds.html) for more details.
 
 ```csharp
 private static IAmazonS3 s3Client;
