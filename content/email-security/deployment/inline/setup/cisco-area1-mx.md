@@ -32,7 +32,7 @@ To add a new Sender Group:
 
 4. Select **Submit and Add Senders** and add the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
 
-![Sender group.](/email-security/static/inline-setup/cisco-area1-mx/step1.png)
+![Sender group](/email-security/static/inline-setup/cisco-area1-mx/step1.png)
 
 ## 2. Configure Incoming Relays
 

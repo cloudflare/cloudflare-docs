@@ -31,7 +31,7 @@ In this tutorial, you will learn how to configure Microsoft Office 365 with Area
 
 5. In **Always allow messages from the following IP addresses or address range** add the IP addresses and CIDR blocks mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
 
-    ![Enter the egress IP addressess](/email-security/static/inline-setup/o365-area1-mx/step5-egress-ips.png)
+    ![Enter the egress IP addresses](/email-security/static/inline-setup/o365-area1-mx/step5-egress-ips.png)
 
 6. Select **Save**.
 
@@ -104,7 +104,7 @@ This option will allow Office 365 to properly identify the original connecting I
 
 1. From the **Microsoft Exchange admin center**, select **mail flow** > **connectors**.
 
-    ![Select connectos from mail flow](/email-security/static/inline-setup/o365-area1-mx/step1-connectors.png)
+    ![Select connectors from mail flow](/email-security/static/inline-setup/o365-area1-mx/step1-connectors.png)
 
 2. Select the `+` icon to configure a new connector. In the **Select your mail flow scenario panel** dialog box that opens:
 
@@ -130,7 +130,7 @@ This option will allow Office 365 to properly identify the original connecting I
 
     <div class="large-img">
 
-    ![Select the senders IP address](/email-security/static/inline-setup/o365-area1-mx/step4-senders-ip.png)
+    ![Select the sender's IP address](/email-security/static/inline-setup/o365-area1-mx/step4-senders-ip.png)
 
     </div>
 
@@ -138,7 +138,7 @@ This option will allow Office 365 to properly identify the original connecting I
 
     <div class="large-img">
 
-    ![Enter Area 1's egress IP addressess](/email-security/static/inline-setup/o365-area1-mx/step5-office-egress-ips.png)
+    ![Enter Area 1's egress IP addresses](/email-security/static/inline-setup/o365-area1-mx/step5-office-egress-ips.png)
 
     </div>
 

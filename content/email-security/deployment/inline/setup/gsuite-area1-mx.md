@@ -31,7 +31,7 @@ When Area 1 is deployed as MX records upstream of Gmail, the Inbound gateways ne
 
 3. Select **Spam, Phishing, and Malware** and scroll to **Inbound Gateway configuration**.
 
-    ![Access the spam and phishing setting](/email-security/static/inline-setup/gsuite-area1-mx/step3-spam.png)
+    ![Access the spam, phishing and malware setting](/email-security/static/inline-setup/gsuite-area1-mx/step3-spam.png)
 
 4. Enable **Inbound Gateway**, and configure it with the following details:
 
@@ -129,7 +129,7 @@ When you are finished entering these details, select **SAVE**.
 
 4. Once saved, the console will update with the newly configured **content compliance filter**.
 
-    ![After configuratiuon, the console shows the content compliance filter](/email-security/static/inline-setup/gsuite-area1-mx/step4-compliance-filter.png)
+    ![After configuration, the console shows the content compliance filter](/email-security/static/inline-setup/gsuite-area1-mx/step4-compliance-filter.png)
 
     If you would like to quarantine the other dispositions, repeat the above steps and use the following strings for the other dispositions:
     * `X-Area1Security-Disposition: MALICIOUS`
