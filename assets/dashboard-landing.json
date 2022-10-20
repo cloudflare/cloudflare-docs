@@ -368,6 +368,29 @@
       ]
     },
     {
+      "id": "Email routing",
+      "dashPath": "/:accountId/:zoneName/email/routing",
+      "recommendations": [
+        {
+          "url_path": "/email-routing/",
+          "title": "Email Routing docs"
+        },
+        {
+          "url_path": "/dns/manage-dns-records/how-to/email-records/",
+          "title": "DNS records - Email"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://community.cloudflare.com/t/email-troubleshooting/60720",
+          "title": "Email troubleshooting - Video"
+        },
+        {
+          "url_path": "/email-routing/known-limitations/",
+          "title": "Limitations - Email Routing"
+        }
+      ]
+    },
+    {
       "id": "SSL/TLS",
       "dashPath": "/:accountId/:zoneName/ssl-tls",
       "recommendations": [
