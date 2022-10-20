@@ -21,15 +21,13 @@ Split Tunnels mode can be configured to exclude or include IP addresses or domai
 
 {{<Aside type="warning">}}
 
-Split Tunnel configuration only impacts the flow of IP traffic. DNS requests are still sent to Gateway unless you add the domains to your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) configuration.
+Split Tunnel configuration only impacts the flow of IP traffic. DNS requests are still resolved by Gateway and subject to DNS policies unless you add the domains to your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) configuration.
 
 {{</Aside>}}
 
 You can add or remove items from the Split Tunnels list at any time, but note that changes made to your Split Tunnel configuration are immediately propagated to clients. Because this setting controls what Gateway has visibility on at the network level, please review and test all changes immediately after making every change.
 
 Also, changing between Include and Exclude modes will immediately delete your existing Split Tunnel configuration. Be sure to make a copy of any IP addresses or domains in your existing configuration, as they will be reverted to the default upon switching modes.
-
-Domains included in your Split Tunnel configuration are still resolved by Gateway. If you want another DNS Server to handle domain name resolution, add the domain to your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) configuration.
 
 To set up Split Tunnels:
 
@@ -52,7 +50,7 @@ To set up Split Tunnels:
 4. Enter the IP address or CIDR you want to exclude or include.
 5. Enter an optional description and then select **Save destination**.
 
-The IP address will appear in the list of Split Tunnel entries.
+The IP address will appear in the list of Split Tunnel entries. Traffic to these IP addresses will be excluded or included from WARP.
 
 ## Add a domain
 
@@ -61,19 +59,18 @@ The IP address will appear in the list of Split Tunnel entries.
 3. In the **Selector** dropdown, select _Domain_.
 4. Enter a [valid domain](#valid-domains) to exclude or include.
 5. Enter an optional description and then select **Save destination**.
+6. (Optional) If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
 
-The domain will appear in the list of Split Tunnel entries.
+When a user navigates to the domain, the domain gets resolved according to your Local Domain Fallback configuration (either by Gateway or by your private DNS server). WARP Split Tunnels will then dynamically include or exclude the IP address returned in the DNS lookup.
 
-{{<Aside type="warning" header="Using domains in Split Tunnels">}}
+### Consequences of adding a domain
 
-Domain-based split tunneling works alongside DNS by dynamically excluding or including the route to the IP address(es) returned in the DNS lookup request. This has a few ramifications you should be aware of before deploying in your organization:
+Domain-based split tunneling has a few ramifications you should be aware of before deploying in your organization:
 
-1. Routes excluded or included from WARP and Gateway visibility may change day to day, and may be different for each user depending on where they are.
-2. You may inadvertently exclude or include additional hostnames that happen to share an IP address. This commonly occurs if you exclude or include a domain hosted by a CDN, such as Cloudflare. If other domains resolve to that same IP, those domains will be excluded or included as well.
-3. Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/cloudflare-one/policies/filtering/application-app-types/), you will need to ensure you add all domains used by a particular app or service.
-4. WARP must handle the DNS lookup request for the domain. If a DNS result has been previously cached by the operating system or otherwise intercepted (for example, via your browser's secure DNS settings), the IP address will not be dynamically added to your Split Tunnel.
-
-{{</Aside>}}
+- Routes excluded or included from WARP and Gateway visibility may change day to day, and may be different for each user depending on where they are.
+- You may inadvertently exclude or include additional hostnames that happen to share an IP address. This commonly occurs if you exclude or include a domain hosted by a CDN, such as Cloudflare. If other domains resolve to that same IP, those domains will be excluded or included as well.
+- Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/cloudflare-one/policies/filtering/application-app-types/), you will need to ensure you add all domains used by a particular app or service.
+- WARP must handle the DNS lookup request for the domain. If a DNS result has been previously cached by the operating system or otherwise intercepted (for example, via your browser's secure DNS settings), the IP address will not be dynamically added to your Split Tunnel.
 
 ### Valid domains
 
