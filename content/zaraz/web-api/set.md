@@ -54,3 +54,4 @@ To unset a variable, set it to `undefined`. The variable will then be removed fr
 
 ```js
 zaraz.set('product_name', undefined)
+```
