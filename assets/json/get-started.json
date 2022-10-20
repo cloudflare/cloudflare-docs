@@ -73,7 +73,7 @@
             "link_title": "Add other account members"
           },
           {
-            "url_path": "/api/get-started/create-token/",
+            "url_path": "/fundamentals/api/get-started/create-token/",
             "link_title": "(For some) Create an API token",
             "additional_description": "If you plan on using the Cloudflare API to manage various account settings, create an API token associated with your account."
           }
@@ -175,7 +175,7 @@
             "value": false
           }
         ],
-        "description": "Get an at-cost domain name through <a href='/registrar/get-started/register-domain/'>Cloudflare Registrar</a>, which simplifies the rest of your Cloudflare setup.",
+        "description": "Get an at-cost domain name through <a href='https://dash.cloudflare.com/?to=/:account/domains/register'>Cloudflare Registrar</a>, which simplifies the rest of your Cloudflare setup.<br /><br />For more details, refer to our <a href='/registrar/get-started/register-domain/'>Registrar documentation</a>.",
         "estimated_time": 5
       },
       {

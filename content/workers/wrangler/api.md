@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: configuration
 title: API
 weight: 12
 ---
@@ -11,7 +11,7 @@ Wrangler offers an experimental API to programmatically manage your Cloudflare W
 - [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
 
 
-## unstable_dev
+## `unstable_dev`
 
 Start an HTTP server for testing your Worker. 
 

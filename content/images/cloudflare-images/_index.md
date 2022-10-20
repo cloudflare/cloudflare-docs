@@ -14,4 +14,4 @@ Images you upload to Cloudflare Images are not attached to any domain in your Cl
 
 ## Availability
 
-Cloudflare Image is available [to all plans](/images/faq/#cloudflare-images-faq).
+Cloudflare Images is available [to all plans](/images/faq/#cloudflare-images-faq).

@@ -11,7 +11,7 @@ You can change the Page Shield status and fetch information about the currently 
 For authentication instructions, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
 
 {{<Aside type="note">}}
-Refer to [API deprecations](/api/reference/deprecations/#page-shield) for details on Page Shield API changes.
+Refer to [API deprecations](/fundamentals/api/reference/deprecations/#page-shield) for details on Page Shield API changes.
 {{</Aside>}}
 
 ## Endpoints

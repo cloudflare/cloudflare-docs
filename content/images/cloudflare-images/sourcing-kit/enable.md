@@ -20,7 +20,7 @@ Enabling Sourcing Kit will set it up with the necessary information to start imp
 8. In **Basic rules** define the Amazon S3 path to import your images from, and the path you want to copy your images to in your Cloudflare Images account. This is optional, and you can leave these fields blank.
 9. On the same page, in **Overwrite images**, you need to choose what happens when the files in your source change. The recommended action is to copy the new images and overwrite the old ones on your Cloudflare Images account. You can also choose to skip the import, and keep what you already have on your Cloudflare Images account. 
 10. Select **Next**.
-11. Review and confirm the information regarding the import job you created. Select **Start importing** to start importing images from your source.
+11. Review and confirm the information regarding the import job you created. Select **Import images** to start importing images from your source.
 
 Your import job is now created. You can review the job status on the Sourcing Kit main page. It will show you information such as how many objects it found, how many images were imported, and any errors that might have occurred.
 
