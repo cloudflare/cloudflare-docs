@@ -9,13 +9,13 @@ title: Deploy a Next.js site
 
 ## Consider if you need the Edge Runtime
 
-Cloudflare Pages supports full-stack Next.js projects which use the [Edge Runtime](https://nextjs.org/docs/api-reference/edge-runtime) or any projects which can be [statically exported](https://nextjs.org/docs/advanced-features/static-html-export). The Edge Runtime allows apps to use server-side features such as [Edge API Routes](https://nextjs.org/docs/api-routes/edge-api-routes), server-side rendering (SSR) pages with [`getServerSideProps()`](https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props) and [Middleware](https://nextjs.org/docs/advanced-features/middleware).
+Cloudflare Pages supports full-stack Next.js projects which use the [Edge Runtime](https://nextjs.org/docs/api-reference/edge-runtime) or any projects which can be [statically exported](https://nextjs.org/docs/advanced-features/static-html-export). The Edge Runtime allows applications to use server-side features such as [Edge API Routes](https://nextjs.org/docs/api-routes/edge-api-routes), server-side rendering (SSR) pages with [`getServerSideProps()`](https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props) and [Middleware](https://nextjs.org/docs/advanced-features/middleware).
 
-For more information about the Edge Runtime, you can check out [the official Next.js documentation](https://nextjs.org/docs/advanced-features/react-18/switchable-runtime) which elaborates on the differences between the Edge Runtime and traditional Node.js servers, or you can [read our announcement blog post](https://blog.cloudflare.com/next-on-pages).
+For more information about the Edge Runtime, refer to [the official Next.js documentation](https://nextjs.org/docs/advanced-features/react-18/switchable-runtime) which elaborates on the differences between the Edge Runtime and traditional Node.js servers, or [read the Cloudflare announcement blog post](https://blog.cloudflare.com/next-on-pages).
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Creating a new project using the Edge Runtime
+## Create a new project using the Edge Runtime
 
 Create a new project using `npx` or `yarn` by running either of the following commands in your terminal:
 
@@ -27,9 +27,9 @@ $ yarn create next-app my-app
 
 After creating your project, a new `my-app` directory will be generated using the official default template.
 
-### Configuring the project to use the Edge Runtime
+### Configure the project to use the Edge Runtime
 
-The default template includes a traditional Node.js-powered API route (`pages/api/hello.js`). This is incompatible with the Edge Runtime, so delete this file. If you wish to use API routes, check out the documentation on Next.js' new [Edge API Routes](https://nextjs.org/docs/api-routes/edge-api-routes), which offers a standards-based equivalent.
+The default template includes a traditional Node.js-powered API route (`pages/api/hello.js`). Delete this file. It is incompatible with the Edge Runtime. If you wish to use API routes, refer to Next.js' [Edge API Routes documentation](https://nextjs.org/docs/api-routes/edge-api-routes), which offers a standards-based equivalent.
 
 As an example, the existing `pages/api/hello.js` file re-written as an Edge API Route would look like this:
 
@@ -90,7 +90,7 @@ export default async function (req: NextRequest) {
 {{</tab>}}
 {{</tabs>}}
 
-Next, we need to configure the rest of the project to use the Edge Runtime. This can be done globally by adding the following to your `next.config.js` file:
+Next, you must configure the rest of the project to use the Edge Runtime. This can be done globally by adding the following to your `next.config.js` file:
 
 ```diff
 ---
@@ -108,7 +108,7 @@ const nextConfig = {
 module.exports = nextConfig
 ```
 
-Or, you can opt in on individual pages by exporting the following from each page:
+Or you can opt in on individual pages by exporting the following from each page:
 
 ```js
 export const config = {
@@ -116,19 +116,19 @@ export const config = {
 };
 ```
 
-More information can be found on [Next.js' documentation about the Edge Runtime](https://nextjs.org/docs/advanced-features/react-18/switchable-runtime).
+Refer to [Next.js' documentation about the Edge Runtime](https://nextjs.org/docs/advanced-features/react-18/switchable-runtime) for more information.
 
-### Creating a GitHub repository
+### Create a GitHub repository
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
 
 ```sh
-$ git remote add origin https://github.com/yourgithubusername/githubrepo
+$ git remote add origin <YOUR_GITHUB_REPO_URL>
 $ git branch -M main
 $ git push -u origin main
 ```
 
-### Deploying with Cloudflare Pages
+### Deploy with Cloudflare Pages
 
 Deploy your site to Pages:
 
@@ -136,21 +136,17 @@ Deploy your site to Pages:
 2. In **Account Home**, select **Pages** > **Create a project**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Next.js_ as your **Framework preset**. Your selection will provide the following information.
 
-{{<table-wrap>}}
+   {{<table-wrap>}}
 
-| Configuration option | Value                                                 |
-| -------------------- | ----------------------------------------------------- |
-| Production branch    | `main`                                                |
-| Build command        | `npx @cloudflare/next-on-pages --experimental-minify` |
-| Build directory      | `.vercel/output/static`                               |
+   | Configuration option | Value                                                 |
+   | -------------------- | ----------------------------------------------------- |
+   | Production branch    | `main`                                                |
+   | Build command        | `npx @cloudflare/next-on-pages --experimental-minify` |
+   | Build directory      | `.vercel/output/static`                               |
 
-{{</table-wrap>}}
+   {{</table-wrap>}}
 
-{{<Aside type="warning" header="Important">}}
-
-Next.js requires Node.js v12.22.0 or later to build successfully. To set your Node version, go to **Settings** in your Workers project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `12.22.0` or greater.
-
-{{</Aside>}}
+4. Next.js requires Node.js v12.22.0 or later to build successfully. To set your Node version, go to **Settings** in your Workers project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `12.22.0` or greater.
 
 {{<Aside type="note" header="Note">}}
 
@@ -158,11 +154,13 @@ The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of yo
 
 {{</Aside>}}
 
-Finally, you must add two compatibility flags to your project to enable using the Streams API which Next.js relies on. On your Pages project, navigate to **Settings** > **Functions**, and **Compatibility flags**. For both production and preview, enter the following two flags: `streams_enable_constructors` and `transformstream_enable_standard_constructor`. These flags are scheduled to graduate on the 2022-11-30 compatibility date and should no longer be necessary to manually add after this.
+Finally, you must add two compatibility flags to your project to enable using the Streams API which Next.js relies on. In your Pages project, go to **Settings** > **Functions** and **Compatibility flags**. For both production and preview, enter the following two flags: `streams_enable_constructors` and `transformstream_enable_standard_constructor`.
+
+These flags are scheduled to graduate on the 2022-11-30 compatibility date and should no longer be necessary to manually add after November 30, 2022.
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `@cloudflare/next-on-pages`, your project dependencies, and building your site before deploying it.
 
-## Creating a new static project
+## Create a new static project
 
 Create a new project using `npx` or `yarn` by running either of the following commands in your terminal:
 
@@ -174,17 +172,17 @@ $ yarn create next-app --example with-static-export my-app
 
 After creating your project, a new `my-app` directory will be generated using the official [`with-static-export`](https://github.com/vercel/next.js/tree/canary/examples/with-static-export) example as a template.
 
-### Creating a GitHub repository
+### Create a GitHub repository
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
 
 ```sh
-$ git remote add origin https://github.com/yourgithubusername/githubrepo
+$ git remote add origin <YOUR_GITHUB_REPO_URL>
 $ git branch -M main
 $ git push -u origin main
 ```
 
-### Deploying with Cloudflare Pages
+### Deploy with Cloudflare Pages
 
 Deploy your site to Pages:
 
@@ -192,21 +190,17 @@ Deploy your site to Pages:
 2. In **Account Home**, select **Pages** > **Create a project**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Next.js (Static HTML Export)_ as your **Framework preset**. Your selection will provide the following information.
 
-{{<table-wrap>}}
+   {{<table-wrap>}}
 
-| Configuration option | Value            |
-| -------------------- | ---------------- |
-| Production branch    | `main`           |
-| Build command        | `npm run export` |
-| Build directory      | `out`            |
+   | Configuration option | Value            |
+   | -------------------- | ---------------- |
+   | Production branch    | `main`           |
+   | Build command        | `npm run export` |
+   | Build directory      | `out`            |
 
-{{</table-wrap>}}
+   {{</table-wrap>}}
 
-{{<Aside type="warning" header="Important">}}
-
-Next.js requires Node.js v12.22.0 or later to build successfully. To set your Node version, go to **Settings** in your Workers project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `12.22.0` or greater.
-
-{{</Aside>}}
+4. Next.js requires Node.js v12.22.0 or later to build successfully. To set your Node version, go to **Settings** in your Workers project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `12.22.0` or greater.
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `next`, your project dependencies, and building your site before deploying it.
 
