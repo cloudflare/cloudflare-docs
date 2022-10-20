@@ -549,6 +549,11 @@
           "external_link": true,
           "url_path": "https://community.cloudflare.com/t/universal-ssl-certificate-expired/21829",
           "title": "Universal SSL certificate expired"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://community.cloudflare.com/t/pending-validation-txt-cloudflare-universal-ssl/275052",
+          "title": "Universal SSL pending validation"
         }
       ]
     }
