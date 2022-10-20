@@ -51,6 +51,6 @@ The `[options]` argument is an optional object and can include a `scope` propert
 In the previous example, `{scope: 'page'}` makes the `product_name` property available to all `zaraz.track()` calls in the current page, but will not affect calls after visitors navigate to other pages.
 
 To unset a variable, set it to `undefined`. The variable will then be removed from all scopes it was included in, and will not be automatically sent with future `zaraz.track` calls. For example:
+
 ```js
 zaraz.set('product_name', undefined)
-```
