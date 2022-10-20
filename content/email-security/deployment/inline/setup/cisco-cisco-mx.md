@@ -9,7 +9,7 @@ meta:
 
 # Deploy and configure Area 1 with with Cisco as MX record
 
-![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/cisco-mx.png)
+![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/inline-setup/cisco-cisco-mx/cisco-mx.png)
 
 In this tutorial, you will learn how to configure Area 1 email security with Cisco as MX record. This tutorial is broken down into several steps.
 
