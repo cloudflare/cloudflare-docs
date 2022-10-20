@@ -61,7 +61,7 @@ The IP address will appear in the list of Split Tunnel entries. Traffic to these
 5. Enter an optional description and then select **Save destination**.
 6. If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
 
-When a user navigates to the domain, the domain will get resolved according to your Local Domain Fallback configuration. Then, WARP will then dynamically add the resulting IP address to your split tunnel configuration.
+When a user navigates to the domain, the domain gets resolved according to your Local Domain Fallback configuration (either by Gateway or by your private DNS server). WARP Split Tunnels will then dynamically include or exclude the IP address returned in the DNS lookup.
 
 ### Consequences of adding a domain
 
