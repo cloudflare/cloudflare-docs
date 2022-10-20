@@ -38,6 +38,35 @@
       ]
     },
     {
+      "id": "Login",
+      "dashPath": "/login",
+      "recommendations": [
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/203471284",
+          "title": "Login and account issues"
+        },
+        {
+          "url_path": "/fundamentals/account-and-billing/account-setup/",
+          "title": "Account setup"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/360029779472",
+          "title": "Troubleshooting Cloudflare 1XXX errors"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "title": "Troubleshooting Cloudflare 5XX errors"
+        },
+        {
+          "url_path": "/registrar/",
+          "title": "Cloudflare Registrar"
+        }
+      ]
+    },
+    {
       "id": "Profile",
       "dashPath": "/profile",
       "recommendations": [
