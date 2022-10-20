@@ -18,7 +18,7 @@ To indicate where you want your bypass rules to apply, write [custom logic](/rul
 
 Be aware that the waiting room will not be applied to the traffic that matches the expression written for this rule. This traffic will not count towards any waiting room limits or be counted in Waiting Room Analytics. No waiting room features, including but not limited to, Event pre-queuing, Reject queueing method, or Queue-all will apply to this traffic. Be mindful of this when creating and enabling Bypass Waiting Room rules. Only use bypass rules for traffic you are confident will not overwhelm your origin or cause significant traffic surges.
 
-{{<Aside type="note">}}Only some customers can support scheduled events with their waiting rooms. For more details, refer to our [Plans](/waiting-room/plans/) page.{{</Aside>}}
+{{<Aside type="note">}}Only some customers can create waiting room rules. For more details, refer to our [Plans](/waiting-room/plans/) page.{{</Aside>}}
 
 ## Common Use Cases
 
