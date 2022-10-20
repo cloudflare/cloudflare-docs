@@ -1,9 +1,9 @@
 ---
 title: Available settings
 pcx_content_type: reference
-weight: 5
+weight: 6
 meta:
-  title: Configure Rules settings
+  title: Configuration Rules settings
 ---
 
 # Configuration Rules settings

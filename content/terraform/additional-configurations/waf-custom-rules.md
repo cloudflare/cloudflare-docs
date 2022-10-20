@@ -1,5 +1,5 @@
 ---
-title: Configure WAF custom rules
+title: WAF custom rules
 pcx_content_type: how-to
 weight: 5
 meta:
