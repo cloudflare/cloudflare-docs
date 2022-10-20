@@ -42,7 +42,7 @@ Each dedicated egress IP is associated with a specific Cloudflare data center. A
 
 ### IP geolocation
 
-Your egress traffic will share the same IP geolocations as your dedicated egress IP data centers. If you have multiple dedicated egress IPs, Cloudflare will automatically connect your users to the most performant data center (usually the closest one). Their source IP will match the dedicated egress IP of the assigned data center.
+Your egress traffic will share the same IP geolocations as your dedicated egress IP data centers. If you have multiple dedicated egress IPs, traffic will egress with the IP geolocation of the most performant data center (usually the closest one to the user).
 
 {{<Aside type="note">}}
 It can take anywhere from one week to up to four weeks for websites to recognize the updated IP geolocation. For example, if your users are in India, they would get a U.S. Google landing page instead of the Indian Google landing page until Google picks up the updated IP geolocation.
