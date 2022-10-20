@@ -38,6 +38,35 @@
       ]
     },
     {
+      "id": "Login",
+      "dashPath": "/login",
+      "recommendations": [
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/203471284",
+          "title": "Login and account issues"
+        },
+        {
+          "url_path": "/fundamentals/account-and-billing/account-setup/",
+          "title": "Account setup"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/360029779472",
+          "title": "Troubleshooting Cloudflare 1XXX errors"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "title": "Troubleshooting Cloudflare 5XX errors"
+        },
+        {
+          "url_path": "/registrar/",
+          "title": "Cloudflare Registrar"
+        }
+      ]
+    },
+    {
       "id": "Profile",
       "dashPath": "/profile",
       "recommendations": [
@@ -335,6 +364,29 @@
         {
           "url_path": "/registrar/",
           "title": "Cloudflare Registrar"
+        }
+      ]
+    },
+    {
+      "id": "Email routing",
+      "dashPath": "/:accountId/:zoneName/email/routing",
+      "recommendations": [
+        {
+          "url_path": "/email-routing/",
+          "title": "Email Routing docs"
+        },
+        {
+          "url_path": "/dns/manage-dns-records/how-to/email-records/",
+          "title": "DNS records - Email"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://community.cloudflare.com/t/email-troubleshooting/60720",
+          "title": "Email troubleshooting - Video"
+        },
+        {
+          "url_path": "/email-routing/known-limitations/",
+          "title": "Limitations - Email Routing"
         }
       ]
     },
