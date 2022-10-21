@@ -143,7 +143,7 @@ To create a new MQTT Broker called `example-broker` in the `my-namespace` namesp
 
 
 ```sh
-$ wrangler pubsub namespace create example-broker --namespace=my-namespace
+$ wrangler pubsub broker create example-broker --namespace=my-namespace
 ```
 
 You should receive a success response that resembles the following:
