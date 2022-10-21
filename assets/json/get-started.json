@@ -15,7 +15,6 @@
         "type": "module",
         "title": "Concepts",
         "description": "Concepts explain the basic ideas behind how Cloudflare works and how you can work with Cloudflare. <br /> <br /> Feel free to skip if you have a technical background.",
-        "estimated_time": 25,
         "pages": [
           {
             "external_link": true,
