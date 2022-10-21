@@ -274,6 +274,14 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
     **Supported options:** Like `put()` above, but without `noCache`.
 
+- {{<code>}}sync(){{</code>}} {{<type>}}Promise{{</type>}}
+
+  - Synchronizes any pending writes to disk.
+
+    This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with `allowUnconfirmed`), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
+
+    **Supported options:** None.
+
 {{</definitions>}}
 
 ### `alarm()` handler method
