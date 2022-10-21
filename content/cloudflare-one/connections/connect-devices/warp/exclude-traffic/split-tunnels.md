@@ -79,7 +79,7 @@ Domain-based split tunneling has a few ramifications you should be aware of befo
 | ------------------- | -------------- | --------------- |
 | `example.com`       | exact match of `example.com` | subdomains such as `www.example.com` |
 | `example.example.com` | exact match of `example.example.com` | `example.com` or subdomains such as `www.example.example.com` |
-| `*.example.com`    | subdomains such as `www.example.com` | `example.com` |
+| `*.example.com`    | subdomains such as `www.example.com` and `sub2.sub1.example.com` | `example.com` |
 {{</table-wrap>}}
 
 ### Cloudflare Zero Trust domains
