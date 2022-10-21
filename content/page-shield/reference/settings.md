@@ -42,7 +42,7 @@ To configure the CSP reporting endpoint:
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2.  Go to **Security** > **Page Shield** > **Settings**.
 3.  Under **Reporting endpoint**, select **Cloudflare-owned endpoint** or **Same hostname**.
-4.  Click **Apply**.
+4.  Click **Apply settings**.
 
 ## Connection target details
 
@@ -55,7 +55,7 @@ By default, Page Shield will only check the domain against malicious threat inte
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2.  Go to **Security** > **Page Shield** > **Settings**.
 3.  Under **Connection target details**, select **Log host only** to analyze only the hostname or **Log full URI** to use the full URI in Page Shield.
-4.  Click **Apply**.
+4.  Click **Apply settings**.
 
 ## Disable Page Shield
 
