@@ -141,16 +141,16 @@ These criteria are available for all Access application types, including [SaaS](
 | IP ranges | `192.168.100.14` (supports IPv4 and IPv6). | ✅ | ✅ |
 | Country | uses the IP address to determine country. | ✅ | ✅ |
 | Everyone | allows, denies, or bypasses access to everyone. |  ✅ | ❌ |
-| Common Name | The request will need to present a valid certificate with an expected common name. | | |
-| Valid Certificate | the request will need to present any valid client certificate. | | |
-| Service Token| the request will need to present the correct service token headers configured for the specific application | | |
-| Any Access Service Token] | the request will need to present the headers for any [service token](/cloudflare-one/identity/service-tokens/) created for this account. | | |
-| Login Methods | checks the identity provider used at the time of login. | | |
-| Authentication Method | checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider | | |
-| Identity provider group| employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an OIDC or SAML identity provider.| | |
-| Device posture | | |
-| Warp | checks that the device is connected to WARP, including the consumer version. | | |
-| Gateway | checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/). | | |
+| Common Name | The request will need to present a valid certificate with an expected common name. | ✅ | ✅ |
+| Valid Certificate | the request will need to present any valid client certificate. |✅ | ✅ |
+| Service Token| the request will need to present the correct service token headers configured for the specific application |✅ | ✅ |
+| Any Access Service Token] | the request will need to present the headers for any [service token](/cloudflare-one/identity/service-tokens/) created for this account. |✅ | ✅ |
+| Login Methods | checks the identity provider used at the time of login. | ✅ | ❌ |
+| Authentication Method | checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider |✅ | ❌  |
+| Identity provider group| employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an OIDC or SAML identity provider.| ✅ | ❌ |
+| Device posture |✅ | ✅ |
+| Warp | checks that the device is connected to WARP, including the consumer version. |✅ | ✅ |
+| Gateway | checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/). |✅ | ✅ |
 {{</table-wrap>}}
 ## Order of execution
 
