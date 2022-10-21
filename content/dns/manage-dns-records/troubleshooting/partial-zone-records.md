@@ -14,7 +14,7 @@ Cloudflare surfaces these warnings to prevent you from creating conflicting reco
 
 ## More detail
 
-When you [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a new DNS record in a partial zone, Cloudflare automatically checks whether any of your `CNAME` records point to existing `A`, `AAAA`, or `CNAME` records within the same zone.
+When you [create a new DNS record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) in a partial zone, Cloudflare automatically checks whether any of your `CNAME` records point to existing `A`, `AAAA`, or `CNAME` records within the same zone.
 
 For example, Cloudflare would show a warning if you had the following records in your partial zone:
 
