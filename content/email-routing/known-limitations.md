@@ -8,6 +8,15 @@ weight: 5
 
 Below, you will find information regarding the current limitations for Email Routing.
 
+## Email address internationalization (EAI)
+
+Email Routing [does not support internationalized email addresses](https://en.wikipedia.org/wiki/International_email). Email Routing only supports[Internationalized domain names](https://en.wikipedia.org/wiki/Internationalized_domain_name). 
+
+This means that you can have email addresses with an internationalized domain, but not an internationalized local-part (the first part of your email address, before the `@` symbol). Refer to the following examples:
+
+* `info@piñata.es` - Supported.
+* `piñata@piñata.es` - Not supported.
+
 ## Non-delivery reports (NDRs)
 
 Email Routing does not forward non-delivery reports to the original sender. This means the sender will not receive a notification indicating that the email did not reach the intended destination.
