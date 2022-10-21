@@ -6,19 +6,19 @@ weight: 5
 
 # Known limitations
 
-Below, you will find information regarding the current limitations for Email Routing (beta).
+Below, you will find information regarding the current limitations for Email Routing.
 
 ## Non-delivery reports (NDRs)
 
-Email Routing (beta) does not forward non-delivery reports to the original sender. This means the sender will not receive a notification indicating that the email did not reach the intended destination.
+Email Routing does not forward non-delivery reports to the original sender. This means the sender will not receive a notification indicating that the email did not reach the intended destination.
 
 ## Subdomains are only supported for Enterprise customers
 
-Subdomains cannot use Email Routing (beta) to forward emails, unless they are part of an Enterprise account.
+Subdomains cannot use Email Routing to forward emails, unless they are part of an Enterprise account.
 
 ## Signs such "`+`" and "`.`" are treated as normal characters for custom addresses
 
-Email Routing (beta) does not have advanced routing options. Characters such as `+` or `.`, which perform special actions in email providers like Gmail and Outlook, are currently treated as normal characters on custom addresses. More flexible routing options are in our roadmap.
+Email Routing does not have advanced routing options. Characters such as `+` or `.`, which perform special actions in email providers like Gmail and Outlook, are currently treated as normal characters on custom addresses. More flexible routing options are in our roadmap.
 
 ## Restrictive DMARC policies can make forwarded emails fail
 
