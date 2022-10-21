@@ -8,10 +8,6 @@ weight: 5
 
 Below, you will find information regarding the current limitations for Email Routing (beta).
 
-## Internationalized Domain Names (IDNs)
-
-Email Routing (beta) [does not support IDNs](https://en.wikipedia.org/wiki/Internationalized_domain_name). If you are setting up Email Routing from an IDN domain, email delivery might fail.
-
 ## Non-delivery reports (NDRs)
 
 Email Routing (beta) does not forward non-delivery reports to the original sender. This means the sender will not receive a notification indicating that the email did not reach the intended destination.
