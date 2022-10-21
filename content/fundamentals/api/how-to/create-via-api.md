@@ -127,7 +127,7 @@ Limit usage of a token by client IP address filters with the following object:
 
 Each parameter in the `in` and `not_in` objects must be in CIDR notation. For example, use `192.168.0.1/32` to specify a single IP address.
 
-## 3. Create the token
+### 3. Create the token
 
 Combine the previous information to create a token as in the following example:
 
