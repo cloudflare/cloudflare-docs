@@ -55,7 +55,7 @@ MP4, MKV, MOV, AVI, FLV, MPEG-2 TS, MPEG-2 PS, MXF, LXF, GXF, 3GP, WebM, MPG, Qu
 
 ### Does Stream support High Dynamic Range (HDR) video content?
 
-When HDR videos are uploaded to Stream, they are re-encoded and delivered in SDR format, to ensure compatibility with the widest range of viewing devices. We are looking to support HDR playback in the near future.
+When HDR videos are uploaded to Stream, they are re-encoded and delivered in SDR format, to ensure compatibility with the widest range of viewing devices.
 
 ### What frame rates (FPS) are supported?
 
