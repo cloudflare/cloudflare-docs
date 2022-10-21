@@ -36,9 +36,9 @@ Cloudflare DLP provides [predefined profiles](/cloudflare-one/policies/filtering
 2. Select **Create Profile**.
 3. Enter a name and optional description for the profile.
 4. Select **Add detection entry** and give it a name.
-5. In **Value**, enter a regular expression that defines the text pattern you want to detect.
+5. In **Value**, enter a regular expression that defines the text pattern you want to detect. Regexes are written in Rust, and we recommend validating your regex with [Rustexp](https://rustexp.lpil.uk/).
 
-    For example, `test\d\d` will detect the word `test` followed by 2 digits. We recommend validating your regex with [Rustexp](https://rustexp.lpil.uk/).
+    For example, `test\d\d` will detect the word `test` followed by 2 digits.
 6. Select **Done** to save and enable the detection entry.
 7. Select **Save profile**.
 
