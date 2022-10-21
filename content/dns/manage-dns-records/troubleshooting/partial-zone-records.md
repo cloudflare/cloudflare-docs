@@ -8,7 +8,7 @@ meta:
 
 # Records in partial zones
 
-When you have a [partial zone](/zone-setups/partial/)[^1] with Cloudflare, you may encounter a warning when adding new `A`, `AAAA`, and `CNAME` DNS records.
+When you have a [partial zone](/dns/zone-setups/partial-setup/)[^1] with Cloudflare, you may encounter a warning when adding new `A`, `AAAA`, and `CNAME` DNS records.
 
 Cloudflare surfaces these warnings to prevent you from creating conflicting records between Cloudflare and your authoritative DNS provider.
 
