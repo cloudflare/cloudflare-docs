@@ -35,11 +35,11 @@ The following table summarizes the available operations:
 | Operation                         | Method + URL stub                                      | Notes                                                    |
 | --------------------------------- | ------------------------------------------------------ | -------------------------------------------------------- |
 | [Get Page Shield status][1]       | `GET zones/<ZONE_ID>/page_shield`                      | Fetch the current Page Shield status (enabled/disabled). |
-| [Update Page Shield status][2]    | `PUT zones/<ZONE_ID>/page_shield`                      | Update the Page Shield status (enabled/disabled).       |
+| [Update Page Shield status][2]    | `PUT zones/<ZONE_ID>/page_shield`                      | Update the Page Shield status (enabled/disabled).        |
 | [List Page Shield scripts][3]     | `GET zones/<ZONE_ID>/page_shield/scripts`              | Fetch a list of currently monitored scripts.             |
 | [Get a Page Shield script][4]     | `GET zones/<ZONE_ID>/page_shield/scripts/<SCRIPT_ID>`  | Fetch the details of a currently monitored script.       |
 | List Page Shield connections      | `GET zones/<ZONE_ID>/page_shield/connections`          | Fetch a list of currently monitored connections.         |
-| Get a Page Shield connection      | `GET zones/<ZONE_ID>/page_shield/connections/<CONNECTION_ID>` | Fetch the details of a connection.                    |
+| Get a Page Shield connection      | `GET zones/<ZONE_ID>/page_shield/connections/<CONNECTION_ID>` | Fetch the details of a connection.                |
 
 
 [1]: https://api.cloudflare.com/#page-shield-get-page-shield-status
