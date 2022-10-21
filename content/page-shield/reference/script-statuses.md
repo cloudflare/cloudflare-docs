@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Statuses
 weight: 2
+meta:
+  title: Script and connection statuses
 ---
 
 # Script and connection statuses
