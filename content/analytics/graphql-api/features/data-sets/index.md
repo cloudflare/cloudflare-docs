@@ -38,8 +38,9 @@ The following datasets (and associated nodes) are available in Cloudflare Analyt
 | Magic Firewall Analytics    | `magicFirewallSamplesAdaptiveGroups`                                                                                           |
 | Network Analytics v2<br/> for Magic Transit customers | `magicTransitNetworkAnalyticsAdaptiveGroups` `dosdNetworkAnalyticsAdaptiveGroups` `dosdAttackAnalyticsGroups` `flowtrackdNetworkAnalyticsAdaptiveGroups` `magicFirewallNetworkAnalyticsAdaptiveGroups` |
 | Network Analytics v2<br/> for Spectrum customers<br/> (Enterprise plans only) | `spectrumNetworkAnalyticsAdaptiveGroups` `dosdNetworkAnalyticsAdaptiveGroups` `dosdAttackAnalyticsGroups` |
+| Stream Analytics  | `videoPlaybackEventsAdaptiveGroups`  
+| Turnstile Widget Analytics  |`turnstileAdaptiveGroups`                                                                                                      |
 | Workers Metrics             | `workersInvocationsAdaptive`                                                                                                   |
-| Turnstile Widget Analytics  | `turnstileAdaptiveGroups`                                                                                                      |
 
 {{</table-wrap>}}
 
