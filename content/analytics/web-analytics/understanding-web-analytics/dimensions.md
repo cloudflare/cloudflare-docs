@@ -16,7 +16,7 @@ Below you will find a list of the different dimensions you can use to filter Web
 - _Referer_: The external links referring visits to a page. You can access `referer host` data on the dashboard. Additionally, you can access data for the `referer path` from the GraphQL API.
 - _Device type_: The device visitors use to access a page (for example, desktop, mobile, or tablet).
 - _Browser_: The web browser visitors use to access a page.
-- _Operating_ system: The operating system visitors use to access a page.
-- _Site_: The website's domain name. Used as for high-level segmentation of data. For example, you can use it for a particular zone or gray-clouded website.
+- _Operating system_: The operating system visitors use to access a page.
+- _Site_: The website's domain name. Used for high-level segmentation of data. For example, you can use it for a particular zone or gray-clouded website.
 
 ![Web Analytics dimensions page](/analytics/static/images/web-analytics/dash-web_analytics-dimensions.png)
