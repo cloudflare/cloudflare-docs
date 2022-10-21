@@ -9,7 +9,7 @@ meta:
 
 # Cloudflare Page Shield
 
-Page Shield provides you with visibility on your application's JavaScript dependencies and the destinations of the connections they make, and to receive alerts when they change. These features help you detect attacks happening in your end users' browsers.
+Page Shield provides you with visibility on your application's JavaScript dependencies and the destinations of the connections they make, and allows you to receive alerts when they change. These features help you detect attacks happening in your end users' browsers.
 
 Page Shield includes the following features:
 
