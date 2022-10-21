@@ -97,7 +97,7 @@ To disable HSTS on your website:
     <tr>
       <td>Enable HSTS (Strict-Transport-Security)</td>
       <td>Yes</td>
-      <td>Serves HSTS headers to browsers for all HTTPS requests.</td>
+      <td>Serves HSTS headers to browsers for all HTTPS requests. HTTP (non-secure) requests will not contain the header.</td>
       <td>Off / On</td>
     </tr>
     <tr>
