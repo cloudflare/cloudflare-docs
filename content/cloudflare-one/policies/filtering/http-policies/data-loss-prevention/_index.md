@@ -8,7 +8,7 @@ layout: single
 # Data Loss Prevention
 
 {{<Aside type="note">}}
-Data Loss Prevention is only available on Enterprise plans.
+Data Loss Prevention is only available as an add-on to Zero Trust Enterprise plans.
 {{</Aside>}}
 
 With Cloudflare Data Loss Prevention (DLP) and Secure Web Gateway, you can inspect HTTP traffic for the presence of sensitive data such as social security numbers and credit card numbers. DLP scans the entire HTTP body, which may include uploaded or downloaded Microsoft Office documents (Office 2007 and later), chat messages, forms, and other web content. Visibility varies depending on the site or application. DLP does not scan non-HTTP traffic such as email, nor does it scan any traffic that bypasses Cloudflare Gateway (for example, traffic that matches a [_Do Not Inspect_](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) rule).
