@@ -14,8 +14,8 @@ Email Routing [does not support internationalized email addresses](https://en.wi
 
 This means that you can have email addresses with an internationalized domain, but not an internationalized local-part (the first part of your email address, before the `@` symbol). Refer to the following examples:
 
-* `info@piñata.es` - supported
-* `piñata@piñata.es` - not supported
+* `info@piñata.es` - Supported.
+* `piñata@piñata.es` - Not supported.
 
 ## Non-delivery reports (NDRs)
 
