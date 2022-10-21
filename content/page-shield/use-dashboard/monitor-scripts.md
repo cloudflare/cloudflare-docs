@@ -29,9 +29,9 @@ To review the active scripts monitored by Page Shield:
 3.  Under **Active Scripts**, review the active scripts for your domain.
 4.  To filter scripts, use the following options:
 
-    - **Search scripts**: Search by script URL.
-    - **Search host**: Look for scripts appearing on specific hostnames.
-    - **Search page** (requires a Business or Enterprise plan): Look for scripts appearing in a specific page. Searches the page where the first script occurred and the latest occurrences list.
+    - **Search scripts**: Search scripts by their URL.
+    - **Search hosts**: Look for scripts appearing on specific hostnames.
+    - **Search pages** (requires a Business or Enterprise plan): Look for scripts appearing in a specific page. Searches the page where the first script occurred and the latest occurrences list.
 
 To review all scripts reported in your domain in the last 30 days, select **View all scripts**.
 

@@ -32,9 +32,9 @@ To review the active connections identified by the connection monitor:
 3.  Under **Active connections**, review the active connections for your domain.
 4.  To filter connections, use the following options:
 
-    - **Search scripts**: Search for a specific URL.
-    - **Search host**: Look for connections appearing on specific hostnames.
-    - **Search page**: Look for connections made in a specific page. Searches the page where the connection first occurred and the latest occurrences list.
+    - **Search connections**: Search for connections by their target URL. Depending on your [Page Shield configuration](/page-shield/reference/settings/#connection-target-details), it may search only by target hostname.
+    - **Search hosts**: Look for connections made in a specific hostname.
+    - **Search pages**: Look for connections made in a specific page. Searches the page where the connection first occurred and the latest occurrences list.
 
 To review all connections reported for your domain in the last 30 days, select **View all connections**.
 
