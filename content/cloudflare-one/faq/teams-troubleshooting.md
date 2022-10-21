@@ -65,16 +65,9 @@ If you encounter this error please [file feedback](/cloudflare-one/policies/brow
 This can occur if your device is attempting to establish a connection to more than two remote browser instances.
 A browser isolation session is a connection from your local browser to a remote browser. Tabs and windows within the same browser share a single remote browser session. In practice, this generally means that you can open both Chrome and Firefox to use browser isolation concurrently, but attempting to open a third browser such as Opera will cause this alert to appear. To release a browser session, please close all tabs/windows in your local browser. The remote browser session will be automatically terminated within 15 minutes.
 
-## I see `Error 400 admin_policy_enforced` when using GSuite as an identity provider.
+## I see `SAML Verify: Invalid SAML response, SAML Verify: No certificate selected to verify` when testing a SAML identity provider.
 
-<div class="small-img">
-  <img alt="Google Error 400" src="/cloudflare-one/static/documentation/faq/google-error-400.png" />
-</div>
-
-This is due to a Google policy change requiring you to set your Google Admin console to trust your applications:
-
-1.  In the Google Admin console, navigate to **Security** > **API controls**.
-2.  Check the _Trust internal, domain-owned apps_ option.
+This error occurs when the identity provider has not included the signing public key in the SAML response. While not required by the SAML 2.0 specification, Cloudflare Access always checks that the public key provided matches the **Signing certificate** uploaded to the Zero Trust dashboard.  For the integration to work, you will need to configure your identity provider to add the public key.
 
 ## I see an error: x509: certificate signed by unknown authority.
 

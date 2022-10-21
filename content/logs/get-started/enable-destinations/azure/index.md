@@ -47,7 +47,7 @@ Once connected, Cloudflare lists Microsoft Azure as a connected service under **
 
 ## Manage via API
 
-Cloudflare uses a service-level shared access signature (SAS) to gain access to your Blob Storage container. You will need to provide `Write` permission and an expiration period of at least 5 years, which will allow you to not worry about the SAS token expiring.
+Cloudflare uses a shared access signature (SAS) token to gain access to your Blob Storage container. You will need to provide `Write` permission and an expiration period of at least five years, which will allow you to not worry about the SAS token expiring.
 
 {{<render file="_enable-read-permissions.md">}}
 
@@ -57,14 +57,26 @@ To enable Logpush to Azure:
 
 2.  Create a shared access signature (SAS). To learn about shared access signatures, refer to [information from Azure](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview).
 
-    - Logpush requires a service-level SAS, which provides the most restricted access.
-    - To create a service-level SAS, refer to [instructions from Azure](https://docs.microsoft.com/en-us/rest/api/storageservices/create-service-sas) or use the **Storage Explorer** feature in your storage account portal.
-    - Select **Storage Explorer**, navigate to **Blob Containers** and then right-click on your blob container to see the **Get Shared Access Signature** option. Select that option, set an expiration time of at least 5 years, and select only **Write** permission.
+    - Logpush requires a service-level SAS or an account-level SAS token.
+    - To create a SAS token:
+      - Service-level SAS token: 
+        1. Navigate to `Storage Explorer (preview)` under storage account.
+        2. Choose relevant blob container, and generate SAS token:
+          - Provide expiry time at least five years into the future (from now).
+          - Make sure to grant only `Write` permission.
+      - Account-level SAS token:
+        1. Navigate to `Shared access signature` under storage account.
+        2. Generate SAS token:
+          - Select only `Blob` for `Allowed service`.
+          - Select only `Object` for `Allowed resporce types`.
+          - Select only `Write` for `Allowed permissions`.
+          - Uncheck `Enables deletion of versions`.
+          - Provide expiry time at least five years into the future (from now).
 
 3.  Provide the SAS URL when prompted by the Logpush API or UI.
 
 {{<Aside type="note" header="Note">}}
 
-Logpush will stop pushing logs if your SAS token expires, which is why an expiration period of at least 5 years is required. You can always update your Logpush job with a new token if needed.
+Logpush will stop pushing logs if your SAS token expires, which is why an expiration period of at least five years is required. You can always update your Logpush job with a new token if needed.
 
 {{</Aside>}}

@@ -14,15 +14,15 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Update account ruleset][ur-account] | `PUT /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>` |
-| [Update zone ruleset][ur-zone] | `PUT /zones/<ZONE_ID>/rulesets/<RULESET_ID>` |
-| [Update account entry point ruleset][uep-account] | `PUT /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
-| [Update zone entry point ruleset][uep-zone] | `PUT /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
+| [Update an account ruleset][ur-account] | `PUT /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>` |
+| [Update a zone ruleset][ur-zone] | `PUT /zones/<ZONE_ID>/rulesets/<RULESET_ID>` |
+| [Update an account entry point ruleset][uep-account] | `PUT /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
+| [Update a zone entry point ruleset][uep-zone] | `PUT /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
 
-[ur-account]: https://api.cloudflare.com/#account-rulesets-update-account-ruleset
+[ur-account]: https://api.cloudflare.com/#account-rulesets-update-an-account-ruleset
 [ur-zone]: https://api.cloudflare.com/#zone-rulesets-update-a-zone-ruleset
-[uep-account]: https://api.cloudflare.com/#account-rulesets-update-entrypoint-ruleset
-[uep-zone]: https://api.cloudflare.com/#zone-rulesets-update-entrypoint-ruleset
+[uep-account]: https://api.cloudflare.com/#account-rulesets-update-an-account-entry-point-ruleset
+[uep-zone]: https://api.cloudflare.com/#zone-rulesets-update-zone-entry-point-ruleset
 
 {{<Aside type="warning" header="Important">}}
 

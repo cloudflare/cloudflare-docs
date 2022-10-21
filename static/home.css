@@ -1892,6 +1892,7 @@ html {
 }
 
 .CodeBlock--token-deleted,
+.CodeBlock--token-deleted-sign,
 .CodeBlock--token-namespace {
     color: var(--code-red)
 }
@@ -1901,7 +1902,8 @@ html {
     cursor: help
 }
 
-.CodeBlock--token-inserted {
+.CodeBlock--token-inserted,
+.CodeBlock--token-inserted-sign {
     color: var(--code-green)
 }
 

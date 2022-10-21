@@ -1,16 +1,16 @@
 ---
-title: Use rules lists
+title: Use lists
 weight: 3
 pcx_content_type: how-to
 meta:
-  title: Define a Rules List
+  title: Define a List
 ---
 
-# Define a Rules List
+# Define a List
 
-[Rules Lists](/firewall/cf-dashboard/rules-lists/#access-the-lists-interface) defined at the account level can be used to match against `ip.src` and `ip.dst` fields. Currently only IPv4 addresses in these lists are used as IPv6 is currently not supported in Magic Firewall.
+[Lists](/firewall/cf-dashboard/rules-lists/#access-the-lists-interface) defined at the account level can be used to match against `ip.src` and `ip.dst` fields. Currently only IPv4 addresses in these lists are used as IPv6 is currently not supported in Magic Firewall.
 
-In order to use this feature first [create a new list](https://api.cloudflare.com/#rules-lists-create-list).
+To use this feature first [create a new IP list](https://api.cloudflare.com/#lists-create-a-list).
 
 ```bash
 curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rules/lists \
@@ -26,7 +26,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rules/l
 
 ## Add IPs to the List
 
-Next [create list items](https://api.cloudflare.com/#rules-lists-create-list-items). This will add elements to the current list.
+Next [create list items](https://api.cloudflare.com/#lists-create-list-items). This will add elements to the current list.
 
 ```bash
     curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rules/lists/${list_id}/items \
@@ -37,11 +37,11 @@ Next [create list items](https://api.cloudflare.com/#rules-lists-create-list-ite
         {"ip":"10.0.0.1"},
         {"ip":"10.10.0.0/24"}
     ]'
-```    
+```
 
 ## Use the List in a Rule
 
-Finally add a Magic Firewall rule referencing the Rules List into an existing ruleset:
+Finally add a Magic Firewall rule referencing the List into an existing ruleset:
 
 ```bash
     curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets/${ruleset_id}/rules \

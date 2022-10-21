@@ -19,7 +19,7 @@ The API token used in API requests to manage Bulk Redirects objects (lists, list
 
 ## 1. Create a Bulk Redirect List via API
 
-Use the [Create list](https://api.cloudflare.com/#rules-lists-create-list) operation to create a new Bulk Redirect List. The list `kind` must be `redirect`.
+Use the [Create a list](https://api.cloudflare.com/#lists-create-a-list) operation to create a new Bulk Redirect List. The list `kind` must be `redirect`.
 
 ```json
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rules/lists" \
@@ -52,11 +52,11 @@ The response will be similar to the following:
 }
 ```
 
-For more information on list operations, refer to the [Rules Lists API](/firewall/api/cf-lists/) documentation.
+For more information on list operations, refer to the [Lists API](/firewall/api/cf-lists/) documentation.
 
 ## 2. Add items to the list
 
-Use the [Create list items](https://api.cloudflare.com/#rules-lists-create-list-items) operation to add URL Redirect items to the list:
+Use the [Create list items](https://api.cloudflare.com/#lists-create-list-items) operation to add URL Redirect items to the list:
 
 ```json
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rules/lists/f848b6ccb07647749411f504d6f88794/items" \
@@ -92,7 +92,7 @@ The response will be similar to the following:
 }
 ```
 
-This is an asynchronous operation. The response will contain an `operation_id` which you will use to check if the operation completed successfully using the [Get bulk operation](https://api.cloudflare.com/#rules-lists-get-bulk-operation) method:
+This is an asynchronous operation. The response will contain an `operation_id` which you will use to check if the operation completed successfully using the [Get bulk operation status](https://api.cloudflare.com/#lists-get-bulk-operation-status) method:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rules/lists/bulk_operations/92558f8b296d4dbe9d0419e0e53f6622" \

@@ -5,8 +5,8 @@ _build:
   list: never
 
 name: "`fetch()` improperly interprets unknown protocols as HTTP"
-date: "2022-11-10"
-enable_date: "2022-11-10"
+sort_date: "2021-11-10"
+enable_date: "2021-11-10"
 enable_flag: "fetch_refuses_unknown_protocols"
 disable_flag: "fetch_treats_unknown_protocols_as_http"
 ---

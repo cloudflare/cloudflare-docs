@@ -5,7 +5,7 @@ _build:
   list: never
 
 name: "Minimal subrequests"
-date: "2022-04-05"
+sort_date: "2022-04-05"
 enable_date: "2022-04-05"
 enable_flag: "minimal_subrequests"
 disable_flag: "no_minimal_subrequests"

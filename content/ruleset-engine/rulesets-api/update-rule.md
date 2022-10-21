@@ -14,10 +14,11 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Patch an individual rule][ur-account] (account) | `PATCH /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` |
-| Patch an individual rule (zone) | `PATCH /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` |
+| [Update an account ruleset rule][ur-account] | `PATCH /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` |
+| [Update a zone ruleset rule][ur-zone] | `PATCH /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` |
 
-[ur-account]: https://api.cloudflare.com/#account-rulesets-patch-an-individual-rule
+[ur-account]: https://api.cloudflare.com/#account-rulesets-update-an-account-ruleset-rule
+[ur-zone]: https://api.cloudflare.com/#zone-rulesets-update-a-zone-ruleset-rule
 
 You can update the definition of the rule, changing its fields, or change the order of the rule in the ruleset. Invoking this method creates a new version of the ruleset.
 

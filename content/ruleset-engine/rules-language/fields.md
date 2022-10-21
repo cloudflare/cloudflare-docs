@@ -646,6 +646,15 @@ The Cloudflare Rules language supports these dynamic fields:
         Example values: <code class="InlineCode">54</code>
         </td>
     </tr>
+    <tr id="field-sip">
+        <td><p><code>sip</code><br />{{<type>}}Boolean{{</type>}}</p>
+        </td>
+        <td>
+       Determines if packets are valid L7 protocol <a href="https://datatracker.ietf.org/doc/html/rfc2543">SIP</a>. Requires UDP packets to operate. <br />
+       Use a guard clause as shown below to ensure the packet is UDP (wirefilter):<br />
+       <code class="InlineCode">ip.proto == "udp"</code>
+        </td>
+    </tr>
     <tr id="field-tcp">
         <td><p><code>tcp</code><br />{{<type>}}String{{</type>}}</p>
         </td>
@@ -1227,10 +1236,10 @@ The Cloudflare Rules language supports these HTTP response fields:
         <p>The available values are the following:</p>
         <ul>
           <li><code>managed_challenge</code></li>
-          <li><code>iuam_basic</code></li>
+          <li><code>iuam</code></li>
           <li><code>legacy_challenge</code></li>
-          <li><code>ip_block</code></li>
-          <li><code>waf_block</code></li>
+          <li><code>ip_ban</code></li>
+          <li><code>waf</code></li>
           <li><code>5xx</code></li>
           <li><code>1xxx</code></li>
           <li><code>always_online</code></li>

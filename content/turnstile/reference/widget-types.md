@@ -1,5 +1,5 @@
 ---
-title: Widget Types
+title: Widget types
 pcx_content_type: reference
 weight: 7
 layout: single

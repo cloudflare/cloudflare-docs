@@ -60,7 +60,7 @@ curl -X PUT \
           ]
         }
       },
-      "expression": "true",
+      "expression": "true"
     }
   ]
 }'

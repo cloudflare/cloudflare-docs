@@ -23,13 +23,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-10-03</td>
-      <td>2022-10-10</td>
-      <td>Log</td>
-      <td>100549BETA</td>
-      <td>...8abca591</td>
-      <td>Atlassian Bitbucket - Code Injection - CVE:CVE-2022-36804 - Beta</td>
-      <td>This detection will replace ...ee9bb2f5 on new WAF</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
     </tr>
 </tbody>
 </table>

@@ -20,7 +20,7 @@ You can use the following endpoint:
 PUT /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint
 ```
 
-To invoke a Cloudflare Rulesets API operation, append the endpoint to the Cloudflare API base URL:
+To invoke a Rulesets API operation, append the endpoint to the Cloudflare API base URL:
 
 ```txt
 https://api.cloudflare.com/client/v4
