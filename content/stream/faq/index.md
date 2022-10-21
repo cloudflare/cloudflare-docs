@@ -53,6 +53,10 @@ Users can upload video in the following file formats:
 
 MP4, MKV, MOV, AVI, FLV, MPEG-2 TS, MPEG-2 PS, MXF, LXF, GXF, 3GP, WebM, MPG, QuickTime
 
+### Does Stream support High Dynamic Range (HDR) video content?
+
+When HDR videos are uploaded to Stream, they are re-encoded and delivered in SDR format, to ensure compatibility with the widest range of viewing devices. We are looking to support HDR playback in the near future.
+
 ### What frame rates (FPS) are supported?
 
 Cloudflare Stream supports video file uploads for any FPS, however videos will be re-encoded for 70 FPS playback. If the original video file has a frame rate lower than 70 FPS, Stream will re-encode at the original frame rate.
