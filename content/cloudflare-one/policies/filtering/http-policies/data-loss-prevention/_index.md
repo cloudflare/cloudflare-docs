@@ -73,15 +73,15 @@ DLP scanning is now enabled.
 
 ## 3. Test DLP
 
-You can test your DLP policy on any device connected to your Zero Trust organization. To verify basic functionality:
+You can test your DLP policy on any device connected to your Zero Trust organization. To perform a basic test:
 
 1. Go to [dlptest.com](http://dlptest.com/http-post/).
 2. Enter a text message or upload a file containing the sensitive data.
 3. Select **Submit** to send the request.
 
-If the data matches a detection entry in your DLP Profile, you will see the request in your [DLP logs](#4-view-dlp-logs).
+If the data matches your DLP policy, you will see the request in your [DLP logs](#4-view-dlp-logs).
 
-Different sites will send requests in different ways. For example, some sites will split a file upload into multiple requests. Therefore, even if the policy works on `dlptest.com`, it is not guaranteed to work the same way on another site. To fine-tune your DLP policy, refer to our [configuration tips](/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/configuration-guides).
+Different sites will send requests in different ways. For example, some sites will split a file upload into multiple requests. Therefore, even if the policy works on `dlptest.com`, it is not guaranteed to work the same way on another site or application. To fine-tune your DLP policy, refer to our [configuration tips](/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/configuration-guides).
 
 ## 4. View DLP logs
 
