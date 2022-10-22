@@ -210,7 +210,7 @@ Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
 {{</definitions>}}
 
-Example: `{ pattern = "example.com/*", zone_id = "foo" }`
+Example: `{ pattern = "example.com/*", zone_name = "example.com" }`
 
 ### Custom Domain route
 
