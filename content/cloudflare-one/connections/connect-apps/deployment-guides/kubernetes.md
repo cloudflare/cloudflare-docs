@@ -6,20 +6,20 @@ weight: 41
 
 # Kubernetes
 
-Kubernetes, or K8s, is a container orchestration and management tool. Kubernetes is declarative, so you define the end state in a .yml file. A Kubernetes cluster has two components, the master, and the workers. The master is the control plane that the user interacts with to manage the containers. Worker nodes are where the containers are deployed and ran. A Kubernetes cluster is connected internally through a private network. Cloudflare Tunnel can be used to expose services running inside the Kubernetes cluster to the public.
-![Tunnels in Kubernetes](/cloudflare-one/static/documentation/connections/connect-apps/kubernetes/k8s-layout.png)
+[Kubernetes]([url](https://kubernetes.io/)) is a container orchestration and management tool. Kubernetes is declarative, so you define the end state in a .yml file. A Kubernetes cluster has two components, the master, and the workers. The master is the control plane that the user interacts with to manage the containers. Worker nodes are where the containers are deployed and run. A Kubernetes cluster is connected internally through a private network. Cloudflare Tunnel can be used to expose services running inside the Kubernetes cluster to the public.
 
 ## Creating the Kubernetes Cluster
 This guide will use a Google managed Kubernetes GKE.
-You will need the [gcloud command line tool installed and connected to your account](https://cloud.google.com/sdk/docs/install) and the [kubectl command line tool installed](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl). In the GCP console create a new Kubernetes cluster.
-![Create the cluster](/cloudflare-one/static/documentation/connections/connect-apps/kubernetes/create-cluster.png)
-In order to connect to the cluster, in the dropdown form the three dots select connect.
-![Create to the cluster](/cloudflare-one/static/documentation/connections/connect-apps/kubernetes/connect-cluster.png)
-Copy the command that appears and paste it into your local terminal.
-![Connection command](/cloudflare-one/static/documentation/connections/connect-apps/kubernetes/connect-command.png)
+To get started, perform the following steps:
+
+- Install the [gcloud CLI]([url](https://cloud.google.com/sdk/docs/install)) and [kubectl CLI]([url](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl))
+- In the GCP console create a new Kubernetes cluster.
+- In order to connect to the cluster, select the three dots and then connect from the drop down. 
+- Copy the command that appears and paste it into your local terminal.
 
 ## Creating the Pods
 A pod is the basic deployable object that Kubernetes creates. It represents an instance of a running process in the cluster. The following .yml file ( httpbin-app.yml) will create a pod that contains the httpbin application. It will create two replicas so as to prevent any downtime. The application will be accessible inside the cluster at web-service:80.
+
 ```sh
 apiVersion: apps/v1
 kind: Deployment
@@ -97,4 +97,4 @@ This file will be deployed with the following command.
 ```sh
 kubectl create -f cloudflared-deployment.yml
 ```
-The application within the cluster will now be accessible through the domain name you configured.
+The application within the cluster will now be accessible through the domain name as configured.
