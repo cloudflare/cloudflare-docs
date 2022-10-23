@@ -3,8 +3,10 @@ pcx_content_type: how-to
 title: Grafana Dashboard for Tunnels
 weight: 7
 ---
+
 # Grafana Dashboard for Tunnels
-When running a personal tunnel a metrics server is created. This metrics server can be routed to Prometheus and Grafana in order to convert the metrics into usefull analytics.
+
+When running a personal tunnel a metrics server is created. This metrics server can be routed to Prometheus and Grafana in order to convert the metrics into useful analytics.
 The port that metrics are sent to can be manually set.
 ```sh
 cloudflared tunnel --metrics <service-URL>:<service-port>
