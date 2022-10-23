@@ -55,11 +55,11 @@ scrape_configs:
     static_configs:
       - targets: ['<service-URL>:<service-port>']  ##PORT THAT TUNNEL SENDS METRICS TOO
 ```
+
 From within the Prometheus folder, start it using: 
+
 ```sh
-./prometheus --config.file="prometheus.yml"
-```
-This can be configured to run as a service so that it does not need to be manually started if the machine reboots.
+$ ./prometheus --config.file="prometheus.yml"
 Heading to http://localhost:9090/ will show the Prometheus dashboard for this tunnel. To have the Prometheus dashboard on a different url change the replace 9090 with the desired port in the config file.
 
 ## Setting Up Grafana
