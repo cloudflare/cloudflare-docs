@@ -8,10 +8,9 @@ weight: 7
 
 When running a personal tunnel a metrics server is created. This metrics server can be routed to Prometheus and Grafana in order to convert the metrics into useful analytics.
 The port that metrics are sent to can be manually set.
+
 ```sh
-cloudflared tunnel --metrics <service-URL>:<service-port>
-```
-This server is accessed through <service-URL>:<service-port>/metrics. If no port is set a random one will be chosen when the tunnel is run.
+$ cloudflared tunnel --metrics <service-URL>:<service-port>
 ![Default Metrics Port](/cloudflare-one/static/documentation/connections/connect-apps/grafana/metrics-port.png)
 The port is highlighted in the above image.
 
