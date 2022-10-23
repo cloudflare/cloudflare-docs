@@ -72,6 +72,7 @@ $ /usr/local/opt/grafana/bin/grafana-server --config /usr/local/etc/grafana/graf
 Grafana will automatically start running on http://localhost:3000. A different port can be selected by editting the server section of the grafana.ini config file. Like with Prometheus, Grafana can be configured to run as a service so that it does not need to be manually restarted if the machine reboots.
 
 ## Connecting Prometheus to Grafana
+
 Go to the site that Grafana is listing on. In the bottom left corner of the page click on the gear and then Data Sources.
 Click "Add data source" and select Prometheus from the options. Enter the url that leads to the site that shows the Prometheus dashboard.
 A dashboard can now be created within Grafana to monitor tunnel metrics. Select the new data source and enter the Prometheus queries to monitor. Some simple queries to start with are "cloudflared_tunnel_request_errors" and "cloudflared_tunnel_requests". Create a new dashboard and then in the upper right corner of the page click the "Add panel" button, and "Add a new panel". Select the above metric names in the metrics drop down to populate a graph with them. 
