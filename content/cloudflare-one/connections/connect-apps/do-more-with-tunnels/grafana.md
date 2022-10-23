@@ -4,20 +4,29 @@ title: Grafana Dashboard for Tunnels
 weight: 7
 ---
 
-# Grafana Dashboard for Tunnels
+# Monitoring Tunnels with Grafana
 
-When running a personal tunnel a metrics server is created. This metrics server can be routed to Prometheus and Grafana in order to convert the metrics into useful analytics.
-The port that metrics are sent to can be manually set.
+When a Tunnel is run, cloudflared will automatically spin up a metrics server. This metrics server can be routed to Prometheus and Grafana in order to convert the metrics into actionable insights.
+
+By default, the port that metrics are sent to is randomly selected and can be found by viewing Tunnels logs as seen below: 
+
+![Default Metrics Port](/cloudflare-one/static/documentation/connections/connect-apps/grafana/metrics-port.png)
+
+The port is highlighted in the above image.
+
+However, it can also be manually set with the following configuration.
 
 ```sh
-$ cloudflared tunnel --metrics <service-URL>:<service-port>
-![Default Metrics Port](/cloudflare-one/static/documentation/connections/connect-apps/grafana/metrics-port.png)
-The port is highlighted in the above image.
+$ cloudflared tunnel --metrics <service-URL>:<service-port> run <TUNNEL NAME>
+```
 
 ## Setting Up Prometheus
 
-If Prometheus it is not already [downloaded](https://prometheus.io/download/), do so.
-In the folder created when Prometheus was downloaded there is a config file "prometheus.yml". Make the following additions to the end of the config file.
+If you do not already have Prometheus installed, follow this [guide](https://prometheus.io/download/) to get started.
+
+In the folder created when Prometheus was downloaded you will find a config file named "prometheus.yml". 
+
+Make the following additions to the end of the config file.
 
 ```yaml
 # my global config
@@ -56,33 +65,48 @@ scrape_configs:
       - targets: ['<service-URL>:<service-port>']  ##PORT THAT TUNNEL SENDS METRICS TOO
 ```
 
-From within the Prometheus folder, start it using: 
+To start Prometheus, from within the Prometheus folder enter:
 
 ```sh
 $ ./prometheus --config.file="prometheus.yml"
-Heading to http://localhost:9090/ will show the Prometheus dashboard for this tunnel. To have the Prometheus dashboard on a different url change the replace 9090 with the desired port in the config file.
+```
+
+This can also be configured to run as a service so that it does not need to be manually started if the machine reboots.
+
+Heading to http://localhost:9090/ will show the Prometheus dashboard for this Tunnel. To have the Prometheus dashboard run on a different port change the port selection from 9090 to the desired port in the config file.
 
 ## Setting Up Grafana
 
-If Grafana is not already [downloaded](https://grafana.com/grafana/download?edition=oss&pg=get&plcmt=selfmanaged-box1-cta1), do so.
+If you do not already have Grafana installed, follow this [guide]([https://prometheus.io/download/](https://grafana.com/grafana/download?edition=oss&pg=get&plcmt=selfmanaged-box1-cta1)) to get started.
+
 Grafana can be started with the following command.
 
 ```sh
 $ /usr/local/opt/grafana/bin/grafana-server --config /usr/local/etc/grafana/grafana.ini --homepath /usr/local/opt/grafana/share/grafana --packaging=brew cfg:default.paths.logs=/usr/local/var/log/grafana cfg:default.paths.data=/usr/local/var/lib/grafana cfg:default.paths.plugins=/usr/local/var/lib/grafana/plugins
-Grafana will automatically start running on http://localhost:3000. A different port can be selected by editting the server section of the grafana.ini config file. Like with Prometheus, Grafana can be configured to run as a service so that it does not need to be manually restarted if the machine reboots.
+```
+
+Heading to http://localhost:3000/ will show the Grafana dashboard for this Tunnel. To have the Grafana dashboard run on a different port edit the port selection from 3000 to the desired port in the grafana.ini config file .
+
+Like with Prometheus, Grafana can be configured to run as a so that it does not need to be manually restarted if the machine reboots.
 
 ## Connecting Prometheus to Grafana
 
-Go to the site that Grafana is listing on. In the bottom left corner of the page click on the gear and then Data Sources.
+Go to the site that Grafana is listening on. 
+
+In the bottom left corner of the page click on the gear and then Data Sources.
+
 Click "Add data source" and select Prometheus from the options. Enter the url that leads to the site that shows the Prometheus dashboard.
-A dashboard can now be created within Grafana to monitor tunnel metrics. Select the new data source and enter the Prometheus queries to monitor. Some simple queries to start with are "cloudflared_tunnel_request_errors" and "cloudflared_tunnel_requests". Create a new dashboard and then in the upper right corner of the page click the "Add panel" button, and "Add a new panel". Select the above metric names in the metrics drop down to populate a graph with them. 
+
+A dashboard can now be created within Grafana to monitor Tunnel metrics. 
+
+Select the new data source and enter the Prometheus queries to monitor. 
+
+Some simple queries to start with are "cloudflared_tunnel_request_errors" and "cloudflared_tunnel_requests". 
+
+Create a new dashboard and then in the upper right corner of the page click the "Add panel" button, and "Add a new panel". 
+
+Select the above metric names in the metrics drop down to populate a graph with them. 
+
 ![Grafana query](/cloudflare-one/static/documentation/connections/connect-apps/grafana/grafana-ops.png)
-Operations can be added to the queries to modify what is displayed. For example, showing all tunnel requests to showing all tunnel requests over a recent period of time, such as a day rather than all tunnel requests since it started running.
 
-## Other Resources
-
-[Prometheus Querying Language](https://prometheus.io/docs/prometheus/latest/querying/basics/) - Prometheus' own page about using it querying language
-
-[Grafana Docs](https://grafana.com/docs/)
-
-[Grafana Tutorials](https://grafana.com/tutorials/)
+Operations can be added to the queries to modify what is displayed. For example, showing all tunnel requests to showing all tunnel requests over a recent period of time, such as a day rather than all tunnel requests since metrics began reporting.
