@@ -63,12 +63,12 @@ $ ./prometheus --config.file="prometheus.yml"
 Heading to http://localhost:9090/ will show the Prometheus dashboard for this tunnel. To have the Prometheus dashboard on a different url change the replace 9090 with the desired port in the config file.
 
 ## Setting Up Grafana
+
 If Grafana is not already [downloaded](https://grafana.com/grafana/download?edition=oss&pg=get&plcmt=selfmanaged-box1-cta1), do so.
 Grafana can be started with the following command.
+
 ```sh
-/usr/local/opt/grafana/bin/grafana-server --config /usr/local/etc/grafana/grafana.ini --homepath /usr/local/opt/grafana/share/grafana --packaging=brew cfg:default.paths.logs=/usr/local/var/log/grafana cfg:default.paths.data=/usr/local/var/lib/grafana cfg:default.paths.plugins=/usr/local/var/lib/grafana/plugins
-```
-When Grafana is installed one of the printed lines displays how to call it.
+$ /usr/local/opt/grafana/bin/grafana-server --config /usr/local/etc/grafana/grafana.ini --homepath /usr/local/opt/grafana/share/grafana --packaging=brew cfg:default.paths.logs=/usr/local/var/log/grafana cfg:default.paths.data=/usr/local/var/lib/grafana cfg:default.paths.plugins=/usr/local/var/lib/grafana/plugins
 Grafana will automatically start running on http://localhost:3000. A different port can be selected by editting the server section of the grafana.ini config file. Like with Prometheus, Grafana can be configured to run as a service so that it does not need to be manually restarted if the machine reboots.
 
 ## Connecting Prometheus to Grafana
