@@ -15,9 +15,11 @@ $ cloudflared tunnel --metrics <service-URL>:<service-port>
 The port is highlighted in the above image.
 
 ## Setting Up Prometheus
+
 If Prometheus it is not already [downloaded](https://prometheus.io/download/), do so.
 In the folder created when Prometheus was downloaded there is a config file "prometheus.yml". Make the following additions to the end of the config file.
-```sh
+
+```yaml
 # my global config
 global:
   scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
