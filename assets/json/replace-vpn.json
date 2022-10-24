@@ -166,6 +166,21 @@
             "additional_description": "Review your Gateway logs to make sure traffic is reaching the edge."
           }
         ]
+      },
+      {
+        "type": "note",
+        "title": "Congratulations",
+        "description": "You should be finished setting up your VPN replacement.<br/><br/>If you encounter any issues after your initial onboarding, refer to the following resources",
+        "pages": [
+          {
+            "url_path": "/cloudflare-one/connections/connect-devices/warp/exclude-traffic/#how-the-warp-client-handles-dns-requests",
+            "link_title": "How the WARP client handles DNS requests"
+          },
+          {
+            "url_path": "/cloudflare-one/faq/",
+            "link_title": "Cloudflare Zero Trust FAQs"
+          }
+        ]
       }
     ]
   }
