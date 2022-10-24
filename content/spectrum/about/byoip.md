@@ -12,7 +12,7 @@ BYOIP stands for [Bring Your Own IP](/byoip/). If you own an IP prefix you can m
 
 {{<Aside type="warning">}}
 
-When switching from non-BYOIP to BYOIP, if you are already using a Spectrum application, you need to delete your configurations and recreate new ones, otherwise existing connections will persist.
+When switching from non-BYOIP to BYOIP, if you are already using a Spectrum application, you need to delete your configurations and recreate new ones.
 
 {{</Aside>}}
 
