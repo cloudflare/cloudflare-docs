@@ -6,13 +6,13 @@ weight: 41
 
 # Kubernetes
 
-[Kubernetes]([url](https://kubernetes.io/)) is a container orchestration and management tool. Kubernetes is declarative, so you define the end state in a .yml file. A Kubernetes cluster has two components, the master, and the workers. The master is the control plane that the user interacts with to manage the containers. Worker nodes are where the containers are deployed and run. A Kubernetes cluster is connected internally through a private network. Cloudflare Tunnel can be used to expose services running inside the Kubernetes cluster to the public.
+[Kubernetes](https://kubernetes.io/) is a container orchestration and management tool. Kubernetes is declarative, so you define the end state in a .yml file. A Kubernetes cluster has two components, the master, and the workers. The master is the control plane that the user interacts with to manage the containers. Worker nodes are where the containers are deployed and run. A Kubernetes cluster is connected internally through a private network. Cloudflare Tunnel can be used to expose services running inside the Kubernetes cluster to the public.
 
 ## Creating the Kubernetes Cluster
 This guide will use a Google managed Kubernetes GKE.
 To get started, perform the following steps:
 
-- Install the [gcloud CLI]([url](https://cloud.google.com/sdk/docs/install)) and [kubectl CLI]([url](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl))
+- Install the [gcloud CLI](https://cloud.google.com/sdk/docs/install) and [kubectl CLI](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl).
 - In the GCP console create a new Kubernetes cluster.
 - In order to connect to the cluster, select the three dots and then connect from the drop down. 
 - Copy the command that appears and paste it into your local terminal.
