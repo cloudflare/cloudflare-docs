@@ -40,16 +40,4 @@ Regional Services apply to all HTTPS traffic proxied through our Access, Gateway
 
 ### Logs scope
 
-Regional Services apply to the following types of [Zero Trust logs](/cloudflare-one/analytics/logs/):
-- Gateway activity logs:
-
-    - DNS logs
-    - Network logs
-    - HTTP logs for HTTPS requests
-- Access audit logs:
-
-    - Authentication audit logs
-    - Pre-request audit logs
-- Tunnel audit logs
-
-Logs are delivered from memory and never stored on disk.
+Regional Services apply to all [Zero Trust logs](/cloudflare-one/analytics/logs/). Logs are delivered from memory and never stored on disk.
