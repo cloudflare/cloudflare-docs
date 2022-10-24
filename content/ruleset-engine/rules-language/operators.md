@@ -29,12 +29,6 @@ This is the general pattern for using comparison operators:
 
 The Rules language supports these comparison operators:
 
-{{<Aside type="warning" header="Important">}}
-
-Access to the `matches` operator requires a Cloudflare Business or Enterprise plan.
-
-{{</Aside>}}
-
 {{<table-wrap style="width:100%">}}
 
 <table style='width:100%'>
@@ -134,7 +128,7 @@ Access to the `matches` operator requires a Cloudflare Business or Enterprise pl
       </td>
     </tr>
     <tr>
-      <td>Matches<br />regex</td>
+      <td>Matches<br />regex*</td>
       <td><code class="InlineCode">matches</code></td>
       <td><code class="InlineCode">~</code></td>
       <td>&#x2705;</td>
@@ -158,6 +152,16 @@ Access to the `matches` operator requires a Cloudflare Business or Enterprise pl
   </tbody>
 </table>
 {{</table-wrap>}}
+
+\* _Access to the `matches` operator requires a Cloudflare Business or Enterprise plan._
+
+{{<Aside type="note" header="Comparing string values">}}
+String comparison in rule expressions is case sensitive. To account for possible variations of string capitalization in an expression, you can use the [`lower()`](/ruleset-engine/rules-language/functions/#function-lower) function and compare the result with a lowercased string, like in the following example:
+
+```txt
+lower(http.request.uri.path) contains "/wp-login.php"
+```
+{{</Aside>}}
 
 ## Logical operators
 
@@ -227,12 +231,6 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
 
 ### Order of precedence
 
-{{<Aside type="warning" header="Important">}}
-
-To avoid ambiguity when working with logical operators, use grouping symbols so that the order of evaluation is explicit.
-
-{{</Aside>}}
-
 When writing compound expressions, it is important to be aware of the precedence of logical operators so that your expression is evaluated the way you expect.
 
 For example, consider the following generic expression, which uses `and` and `or` operators:
@@ -248,15 +246,14 @@ If these operators had no order of precedence, it would not be clear which of tw
 
 Since the logical `and` operator has precedence over logical `or`, the `and` operator must be evaluated first. Interpretation 1 is correct.
 
+To avoid ambiguity when working with logical operators, use grouping symbols so that the order of evaluation is explicit.
+
 ## Grouping symbols
 
-{{<Aside type="warning" header="Important">}}
+The Rules language supports parentheses (`(`,`)`) as grouping symbols. Grouping symbols allow you to organize expressions, enforce precedence, and nest expressions.
 
 Only the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) and the [Cloudflare API](https://api.cloudflare.com) support grouping symbols. The [Expression Builder](/firewall/cf-dashboard/edit-expressions/#expression-builder) does not.
 
-{{</Aside>}}
-
-The Rules language supports parentheses (`(`,`)`) as grouping symbols. Grouping symbols allow you to organize expressions, enforce precedence, and nest expressions.
 
 ### Group expressions
 
