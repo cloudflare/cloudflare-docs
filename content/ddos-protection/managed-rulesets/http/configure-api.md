@@ -23,6 +23,7 @@ You can create overrides at the zone level and at the account level. Account-lev
 {{<Aside type="warning" header="Important">}}
 * The HTTP DDoS Attack Protection Managed Ruleset is always enabled — you cannot disable its rules using an override with `"enabled": false`.
 * Currently, account-level overrides for the HTTP DDoS Attack Protection Managed Ruleset are only available via API.
+* {{<render file="_ddos-custom-expressions-api-only.md">}}
 {{</Aside>}}
 
 ## Zone-level configuration example
