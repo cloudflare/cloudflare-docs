@@ -26,6 +26,10 @@ You can create overrides at the zone level and at the account level. Account-lev
 * {{<render file="_ddos-custom-expressions-api-only.md">}}
 {{</Aside>}}
 
+## Rule order recommendations
+
+Rules in the phase entry point ruleset (where you create overrides) are evaluated in order until there is a match for a rule expression and sensitivity level. Therefore, the rule order in the entry point ruleset is very important: a rule with a **higher** sensitivity level must come after a rule with a **lower** sensitivity level, otherwise it will never be evaluated.
+
 ## Zone-level configuration example
 
 The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the zone level. The request includes several overrides to adjust the default behavior of the HTTP DDoS Attack Protection Managed Ruleset. These overrides are the following:
