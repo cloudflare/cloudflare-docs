@@ -2,7 +2,7 @@
     "path": "/learning-paths/replace-vpn/",
     "title": "Replace your VPN",
     "description": "Give users secure, auditable network and application access.",
-    "detailed_description": "This tutorial will show you how to use a combination of Cloudflare products to address use cases typically served by a VPN. Cloudflare provides discrete, Zero Trust enabled application and service access to all TCP and UDP ports in both on-premise and cloud networks. We do this using a combination of an endpoint agent and a network connector, but no other software and no hardware is required for this deployment and security policy is enforced at the Cloudflare edge and managed in your dashboard.",
+    "detailed_description": "This tutorial will show you how to use a combination of Cloudflare products to address use cases typically served by a VPN. Cloudflare provides discrete, Zero Trust enabled application and service access to all TCP and UDP ports in both on-premise and cloud networks. We do this using a combination of an endpoint agent and a network connector, but no other software or hardware is required for this deployment. Additionally, security policy is enforced at the Cloudflare edge and managed in your dashboard.",
     "products": [
       "Cloudflare Gateway",
       "Cloudflare Tunnel",
@@ -44,7 +44,7 @@
       {
         "type": "module",
         "title": "Review prerequisites",
-        "description": "Make sure that you have the following:<br /><br /><ol><li>A device that can run <a href='/cloudflare-one/connections/connect-devices/warp/'>WARP</a>, our endpoint agent.</li><li>A private network with applications or services that are available locally or via a VPN.</li><li>A host server that can run the lightweight Cloudflare Tunnel daemon process (<a href='/cloudflare-one/connections/connect-apps/do-more-with-tunnels/hosting-requirements/'>requirements</a>).</li><li>The ability for that host server to connect to the Internet on the <a href='/cloudflare-one/connections/connect-apps/do-more-with-tunnels/ports-and-ips/'>required ports</a> and to connect locally to the private network applications.</li></ol>"
+        "description": "Make sure that you have the following:<br /><br /><ol><li>A device that can run <a href='/cloudflare-one/connections/connect-devices/warp/'>WARP</a>, Cloudflare's endpoint agent.</li><li>A private network with applications or services that are available locally or via a VPN.</li><li>A host server that can run the lightweight Cloudflare Tunnel daemon process (<a href='/cloudflare-one/connections/connect-apps/do-more-with-tunnels/hosting-requirements/'>requirements</a>).</li><li>The ability for that host server to connect to the Internet on the <a href='/cloudflare-one/connections/connect-apps/do-more-with-tunnels/ports-and-ips/'>required ports</a> and to connect locally to the private network applications.</li></ol>"
       },
       {
         "type": "module",
@@ -88,7 +88,7 @@
       {
         "type": "module",
         "title": "Connect private network to Cloudflare",
-        "description": "You can use <a href='/cloudflare-one/connections/connect-apps/'>Cloudflare Tunnel</a> to connect applications and services to Cloudflare’s network. Cloudflare Tunnel is an outbound-only daemon service that can run on nearly any host machine and proxies local traffic once validated from the Cloudflare network.<br/><br/>More information about this total flow can be found in our <a href='/cloudflare-one/tutorials/warp-to-tunnel/'>Private Network documentation</a>.",
+        "description": "<a href='/cloudflare-one/connections/connect-apps/'>Cloudflare Tunnel</a> connects applications and services to Cloudflare’s network. Cloudflare Tunnel is an outbound-only daemon service that can run on nearly any host machine and proxies local traffic once validated from the Cloudflare network.<br/><br/>More information about this total flow can be found in our <a href='/cloudflare-one/tutorials/warp-to-tunnel/'>Private Network documentation</a>.",
         "estimated_time": 45,
         "pages": [
           {
@@ -111,7 +111,7 @@
       {
         "type": "module",
         "title": "Agentless access to private web services",
-        "description": "Cloudflare supports Zero Trust, identity-aware  access to internal web, SSH, and VNC applications without the need to use a device client. This step will require an active DNS zone on Cloudflare in the same account in which you are building your Zero Trust policies.<br/><br/>Performing these tasks in this order makes sure your private asset is never accessible via the public Internet",
+        "description": "Cloudflare supports Zero Trust, identity-aware  access to internal web, SSH, and VNC applications without the need to use a device client. This step will require an <a href='/dns/zone-setups/reference/domain-status/'>active DNS zone</a> on Cloudflare in the same account in which you are building your Zero Trust policies.<br/><br/>Performing these tasks in this order makes sure your private asset is never accessible via the public Internet",
         "estimated_time": 20,
         "pages": [
           {
@@ -147,13 +147,13 @@
           },
           {
             "url_path": "/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#on-windows-and-mac",
-            "link_title": "Log your WARP client into your Zero Trust tenant",
+            "link_title": "Log WARP client into your Zero Trust tenant",
             "additional_description": "For initial testing, users should manually authenticate the client to their organization’s Cloudflare Zero Trust instance."
           },
           {
             "url_path": "https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/",
             "link_title": "Define split tunnels settings",
-            "additional_description": "This will determine what traffic WARP does and does not proxy. If you intend to access applications remotely with a private IP address in a <code>10.0.0.0</code> range, ensure that is not excluded if running in <strong>exclude</strong> mode, and that it is included if deploying in <strong>include</strong> mode."
+            "additional_description": "This will determine what traffic WARP does and does not proxy.<br/><br/>If you intend to access applications remotely with a private IP address in a <code>10.0.0.0</code> range, ensure that this IP address is not excluded if running in <strong>exclude</strong> mode or included if deploying WARP in <strong>include</strong> mode."
           },
           {
             "url_path": "/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/",
