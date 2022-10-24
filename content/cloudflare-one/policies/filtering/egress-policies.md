@@ -13,9 +13,7 @@ Dedicated egress IPs are only available on Enterprise plans.
 
 When your users connect to the Internet through Cloudflare Gateway, by default their traffic is assigned a source IP address that is shared across all Cloudflare WARP users. Enterprise customers can purchase dedicated egress IPs to ensure that egress traffic from your organization is assigned a unique, static IP. These source IPs are dedicated to your account and can be used within allowlists on upstream services.
 
-The dedicated egress IPs apply to all network and HTTP traffic proxied by Gateway.
-
-They do not apply to DNS queries resolved through Gateway, nor do they apply to origins connected with Cloudflare Tunnel or Magic WAN. These origins will see the default shared IPs instead of the dedicated egress IPs.
+Each dedicated egress IP is associated with a specific Cloudflare data center. At minimum, Cloudflare will provision your account with two dedicated egress IPs corresponding to data centers in two different cities. An account can have any number of additional dedicated egress IPs.
 
 ## Enable egress IPs
 
@@ -24,6 +22,8 @@ Once you have received dedicated egress IPs for your account, enable the feature
 1. Go to **Settings** > **Network**.
 2. Enable **Proxy** for TCP.
 3. (Optional) Select **UDP**. This will allow HTTP/3 traffic to egress with your dedicated IPs.
+
+Dedicated egress IPs are now enabled for all network and HTTP traffic proxied by Gateway.
 
 ## Verify egress IPs
 
@@ -36,17 +36,30 @@ To check if your device is using the dedicated egress IPs:
 
 When testing against another origin, you may see either an IPv4 or IPv6 address. Gateway has no control over whether connections are made over IPv4 or IPv6. Some origins are only available over IPv4, while others are only available over IPv6. When both protocols are supported, the decision is made by the operating system and browser on the client device. For example, Windows will by default [favor IPv6](https://docs.microsoft.com/en-us/troubleshoot/windows-server/networking/configure-ipv6-in-windows) over IPv4.
 
-## Egress behavior
+## Limitations
 
-Each dedicated egress IP is associated with a specific Cloudflare data center. At minimum, Cloudflare will provision your account with two dedicated egress IPs corresponding to data centers in two different cities. An account can have any number of additional dedicated egress IPs.
+- [DNS queries and tunnel-backed origins](#unsupported-traffic) do not use dedicated egress IPs.
+- [IP geolocation](#ip-geolocation) may take up to four weeks to update.
+- [Physical egress location](#egress-location) varies depending on whether the connection is over IPv4 or IPv6.
+
+### Unsupported traffic
+
+Dedicated egress IPs do not apply to:
+
+- DNS queries resolved through Gateway
+- Origins connected with Cloudflare Tunnel or Magic WAN
+
+These origins will see the default shared IPs instead of the dedicated egress IPs. This is because Cloudflare can filter traffic to these origins by identifiers other than source IP.
 
 ### IP geolocation
 
 Your egress traffic will share the same IP geolocations as your dedicated egress IP data centers. If you have multiple dedicated egress IPs, traffic will egress with the IP geolocation of the most performant data center (usually the closest one to the user).
 
-{{<Aside type="note">}}
-It can take anywhere from one week to up to four weeks for websites to recognize the updated IP geolocation. For example, if your users are in India, they would get a U.S. Google landing page instead of the Indian Google landing page until Google picks up the updated IP geolocation.
-{{</Aside>}}
+When you enable dedicated egress IPs, Gateway updates their geolocations in the [MaxMind GeoIP2 database](https://www.maxmind.com/en/geoip2-services-and-databases). Other websites such as Google will check the MaxMind database to geolocate a user's source IP. This process can take anywhere from one week to up to four weeks. For example, if your users are in India, they would get a U.S. Google landing page instead of the Indian Google landing page until Google picks up the updated IP geolocation.
+
+#### Verify IP geolocation
+
+To verify that the IP geolocation has updated on MaxMind, go to the [MaxMind GeoIP tool](https://www.maxmind.com/en/geoip2-precision-demo) and enter your dedicated egress IP.
 
 ### Egress location
 
@@ -56,8 +69,8 @@ To physically egress from a specific location, traffic must be proxied to Cloudf
 
 We are able to offer better IPv4 performance when users visit domains proxied by Cloudflare (also known as an [orange-clouded](https://community.cloudflare.com/t/step-3-enabling-the-orange-cloud/52715) domain). In this scenario, IPv4 traffic will physically egress from the most performant data center in our network while still appearing to egress from one of your dedicated locations.
 
-For example, assume you have a primary dedicated egress IP in Los Angeles and a secondary dedicated egress IP in New York. A user in Las Vegas would see Las Vegas as their connected data center. If they navigate to a grey-clouded site such as `espn.com`, they will egress from Los Angeles. If they navigate to an orange-clouded site such as `cloudflare.com`, they will egress from Las Vegas but appear to egress from Los Angeles.
+For example, assume you have a primary dedicated egress IP in Los Angeles and a secondary dedicated egress IP in New York. A user in Las Vegas would see Las Vegas as their connected data center. If they navigate to a grey-clouded site such as `espn.com`, they will egress from Los Angeles. If they navigate to an orange-clouded site such as `cloudflare.com`, they will physically egress from Las Vegas but use Los Angeles as their IP geolocation.
 
 #### IPv6
 
-Traffic proxied via IPv6, unlike IPv4, will physically egress from the connected data center but logically egress with one of your dedicated IP geolocations. In the example above, the Las Vegas user would egress from Las Vegas but appear to egress from Los Angeles.
+Traffic proxied via IPv6, unlike IPv4, will physically egress from the connected data center but logically egress with one of your dedicated IP geolocations. In the example above, the Las Vegas user would egress from Las Vegas but IP geolocate from Los Angeles.
