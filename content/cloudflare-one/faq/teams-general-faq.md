@@ -34,11 +34,11 @@ These browsers are supported:
 
 As part of [Regional Services](https://support.cloudflare.com/hc/en-us/articles/360061946171-Data-Localization-Suite#h_7olRZn8DdrDsw79Rqfs05n), Cloudflare Zero Trust will only perform TLS decryption and store Logpush data within the region provisioned for your account.
 
-### Traffic scope
+### Supported traffic
 
 Regional Services apply to all HTTPS traffic proxied through our Access, Gateway, Cloudflare Tunnel and WARP products. Additionally, you can [configure Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#region) to only connect to data centers within the United States, regardless of where the software was deployed.
 
-### Logs scope
+### Supported logs
 
 Regional Services apply to the following types of [Zero Trust logs](/cloudflare-one/analytics/logs/):
 
