@@ -23,7 +23,7 @@ Reference architecture documents and diagrams are designed to provide a foundati
 Read articles and announcements about the latest Cloudflare products and features.
 {{</resource>}}
 
-{{<resource header="Learning Paths" href="https://developers.cloudflare.com/learning-paths/" icon="learning-center-book">}}
+{{<resource header="Learning Paths" href="/learning-paths/" icon="learning-center-book">}}
 Module-based guidance on Cloudflare product workflows.
 {{</resource>}}
  

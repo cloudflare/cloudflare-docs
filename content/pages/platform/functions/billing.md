@@ -18,7 +18,7 @@ If you had your Functions limit increased by the Pages team as part of the beta 
 ### Workers Paid
 * If you currently have a Workers Paid subscription, billing will automatically occur for all Functions usage after November 15th –- no additional action required. Pages Functions will share the same pool of quotas included in the subscription (for example, requests and duration).
   * For example, you will share the included 10 million Bundled requests between Workers and Pages Functions.
-* The pricing will continue to be the same as stated [here](https://developers.cloudflare.com/workers/platform/pricing).
+* The pricing will continue to be the same as stated [here](/workers/platform/pricing/).
 
 ### Free Tier
 * If you are currently a free Workers user, you will share the same 100,000 free tier limit pool with your Pages Functions. For example, you could use 50,000 Functions requests and 50,000 Workers requests to use your full 100,000 daily request usage.

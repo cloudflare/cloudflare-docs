@@ -332,7 +332,7 @@ durable_objects.bindings = [
 
 #### Migrations
 
-When making changes to your Durable Object classes, you must perform a migration. Refer to [Configuring Durable Object classes with migrations](https://developers.cloudflare.com/workers/learning/using-durable-objects#configuring-durable-object-classes-with-migrations).
+When making changes to your Durable Object classes, you must perform a migration. Refer to [Configuring Durable Object classes with migrations](/workers/learning/using-durable-objects#configuring-durable-object-classes-with-migrations).
 
 {{<definitions>}}
 
