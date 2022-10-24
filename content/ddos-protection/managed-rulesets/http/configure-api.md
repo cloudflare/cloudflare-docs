@@ -14,17 +14,16 @@ Each zone has the HTTP DDoS Attack Protection Managed Ruleset enabled by default
 
 ## Configure an override for the HTTP DDoS Attack Protection Managed Ruleset
 
-You can define overrides at the ruleset, tag, and rule level for all Managed Rulesets.
+Use overrides to configure the HTTP DDoS Attack Protection Managed Ruleset. Overrides allow you to define a different action or sensitivity level from the default values. For more information on the available action and sensitivity level values, refer to [Ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
 
-When configuring the HTTP DDoS Attack Protection Managed Ruleset, use overrides to define a different **action** or **sensitivity level** from the default values. For more information on these rule parameters and the allowed values, see [Managed Ruleset override parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
+Overrides can have a ruleset, tag, or rule scope. You can create overrides at the zone level and at the account level. Account-level overrides allow you to apply the same override to several zones in your account with a single rule. For example, you can use an account-level override to lower the sensitivity of a specific managed ruleset rule or exclude an IP List for multiple zones.
 
 {{<Aside type="warning" header="Important">}}
-
-The HTTP DDoS Attack Protection Managed Ruleset is always enabled — you cannot disable its rules using an override with `"enabled": false`. Additionally, you must set the override `"expression"` field to `"true"`.
-
+* The HTTP DDoS Attack Protection Managed Ruleset is always enabled — you cannot disable its rules using an override with `"enabled": false`.
+* Currently, account-level overrides for the HTTP DDoS Attack Protection Managed Ruleset are only available via API.
 {{</Aside>}}
 
-## Example
+## Zone-level configuration example
 
 The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the zone level. The request includes several overrides to adjust the default behavior of the HTTP DDoS Attack Protection Managed Ruleset. These overrides are the following:
 
@@ -67,6 +66,10 @@ curl -X PUT \
 ```
 
 The response returns the created (or updated) phase entry point ruleset.
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 {
@@ -112,5 +115,91 @@ The response returns the created (or updated) phase entry point ruleset.
   }
 }
 ```
+
+</div>
+</details>
+
+For more information on defining overrides for Managed Rulesets using the Rulesets API, refer to [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/) in the Ruleset Engine documentation.
+
+## Account-level configuration example
+
+The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the account level. The example defines a single rule override for requests coming from a specific IP address, with the following configuration:
+
+* The rule with ID `<MANAGED_RULESET_RULE_ID>`, belonging to the HTTP DDoS Attack Protection Managed Ruleset
+ (with ID `<MANAGED_RULESET_ID>`),  will have an `eoff` (_Essentially Off_) sensitivity level and it will perform a `log` action.
+
+```json
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/ddos_l7/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-d '{
+  "description": "Disable a managed ruleset rule for a specific source IP address",
+  "rules": [
+    {
+      "expression": "ip.src eq 192.0.2.1",
+      "action": "execute",
+      "action_parameters": {
+        "id": "<MANAGED_RULESET_ID>",
+        "overrides": {
+          "rules": [
+            {
+              "id": "<MANAGED_RULESET_RULE_ID>",
+              "action": "log",
+              "sensitivity_level": "eoff"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}'
+```
+
+The response returns the created (or updated) phase entry point ruleset.
+
+<details>
+<summary>Example response</summary>
+<div>
+
+```json
+{
+  "result": {
+    "id": "<PHASE_ENTRY_POINT_RULESET_ID>",
+    "name": "default",
+    "description": "Disable a managed ruleset rule for a specific source IP address",
+    "kind": "root",
+    "version": "1",
+    "rules": [
+      {
+        "id": "<RULE_ID>",
+        "version": "1",
+        "action": "execute",
+        "action_parameters": {
+          "id": "<MANAGED_RULESET_ID>",
+          "version": "latest",
+          "overrides": {
+            "rules": [
+              {
+                "id": "<MANAGED_RULESET_RULE_ID>",
+                "action": "log",
+                "sensitivity_level": "eoff"
+              }
+            ],
+          }
+        },
+        "expression": "ip.src eq 192.0.2.1",
+        "last_updated": "2022-10-16T04:14:47.977741Z",
+        "ref": "<RULE_REF>",
+        "enabled": true
+      }
+    ],
+    "last_updated": "2022-10-16T04:14:47.977741Z",
+    "phase": "ddos_l7"
+  }
+}
+```
+
+</div>
+</details>
 
 For more information on defining overrides for Managed Rulesets using the Rulesets API, refer to [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/) in the Ruleset Engine documentation.
