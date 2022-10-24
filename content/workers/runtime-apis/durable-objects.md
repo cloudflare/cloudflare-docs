@@ -199,7 +199,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 - {{<code>}}list(options{{<param-type>}}Object{{</param-type>}}){{</code>}} {{<type>}}Promise\<Map\<string, any>>{{</type>}}
 
-  - Returns keys associated with the current Durable Object according to the parameters in the provided options object.
+  - Returns keys and values associated with the current Durable Object according to the parameters in the provided options object.
 
     **Supported options:**
 
