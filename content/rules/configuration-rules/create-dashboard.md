@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Create a rule in the dashboard
 weight: 3
+meta:
+  title: Create a Configuration Rule in the dashboard
 ---
 
 # Create a Configuration Rule in the dashboard

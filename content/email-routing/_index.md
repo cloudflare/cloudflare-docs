@@ -7,7 +7,7 @@ meta:
   title: Cloudflare Email Routing
 ---
 
-{{<beta>}}Cloudflare Email Routing{{</beta>}}
+# Cloudflare Email Routing
 
 {{<description>}}
 Create any number of custom email addresses, and use them whenever you do not want to share your primary email address.
@@ -15,9 +15,9 @@ Create any number of custom email addresses, and use them whenever you do not wa
 
 {{<plan type="all">}}
 
-Cloudflare Email Routing (beta) is designed to simplify the way you create and manage email addresses, without needing to keep an eye on additional mailboxes. With Email Routing, you can create any number of custom email addresses to use in situations where you do not want to share your primary email address, such as when you subscribe to a new service or newsletter. Emails are then routed to your preferred email inbox, without you ever having to expose your primary email address.
+Cloudflare Email Routing is designed to simplify the way you create and manage email addresses, without needing to keep an eye on additional mailboxes. With Email Routing, you can create any number of custom email addresses to use in situations where you do not want to share your primary email address, such as when you subscribe to a new service or newsletter. Emails are then routed to your preferred email inbox, without you ever having to expose your primary email address.
 
-Email Routing (beta) is free and private by design. Cloudflare will not store or access the emails routed to your inbox. It is available to all Cloudflare customers [using Cloudflare as an authoritative nameserver](/dns/zone-setups/full-setup/).
+Email Routing is free and private by design. Cloudflare will not store or access the emails routed to your inbox. It is available to all Cloudflare customers [using Cloudflare as an authoritative nameserver](/dns/zone-setups/full-setup/).
 
 ---
 

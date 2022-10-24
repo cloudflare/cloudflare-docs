@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Review changed scripts
-weight: 5
+weight: 6
 ---
 
 # Review changed scripts

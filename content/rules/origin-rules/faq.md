@@ -1,7 +1,7 @@
 ---
 title: FAQ
 pcx_content_type: faq
-weight: 10
+weight: 11
 meta:
   title: FAQ — Origin Rules
 ---
