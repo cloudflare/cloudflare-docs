@@ -77,7 +77,7 @@ Heading to http://localhost:9090/ will show the Prometheus dashboard for this Tu
 
 ## Setting Up Grafana
 
-If you do not already have Grafana installed, follow this [guide]([https://prometheus.io/download/](https://grafana.com/grafana/download?edition=oss&pg=get&plcmt=selfmanaged-box1-cta1)) to get started.
+If you do not already have Grafana installed, follow this [guide](https://grafana.com/grafana/download?edition=oss&pg=get&plcmt=selfmanaged-box1-cta1) to get started.
 
 Grafana can be started with the following command.
 
