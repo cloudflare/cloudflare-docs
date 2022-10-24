@@ -16,7 +16,9 @@ Each zone has the HTTP DDoS Attack Protection Managed Ruleset enabled by default
 
 Use overrides to configure the HTTP DDoS Attack Protection Managed Ruleset. Overrides allow you to define a different action or sensitivity level from the default values. For more information on the available action and sensitivity level values, refer to [Ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
 
-Overrides can have a ruleset, tag, or rule scope. You can create overrides at the zone level and at the account level. Account-level overrides allow you to apply the same override to several zones in your account with a single rule. For example, you can use an account-level override to lower the sensitivity of a specific managed ruleset rule or exclude an [IP List](/firewall/cf-dashboard/rules-lists/) for multiple zones.
+Overrides can have a ruleset, tag, or rule scope. Tag and rule configurations have greater priority than ruleset configurations.
+
+You can create overrides at the zone level and at the account level. Account-level overrides allow you to apply the same override to several zones in your account with a single rule. For example, you can use an account-level override to lower the sensitivity of a specific managed ruleset rule or exclude an [IP List](/firewall/cf-dashboard/rules-lists/) for multiple zones.
 
 {{<Aside type="warning" header="Important">}}
 * The HTTP DDoS Attack Protection Managed Ruleset is always enabled — you cannot disable its rules using an override with `"enabled": false`.
