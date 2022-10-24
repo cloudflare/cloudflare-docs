@@ -55,6 +55,14 @@ ip.geoip.country ne "MY"
 
 Only the Expression Editor supports nested expressions such as the one above. If you create a rule with nested expressions in the Expression Editor and try to switch to the Expression Builder, a dialog will warn you that the expression is not supported in the builder. You will be prompted to **Discard changes** and switch to the Expression Builder or **Cancel** and continue working in the editor.
 
+{{<Aside type="note" header="Note">}}
+String comparison in rule expressions is case sensitive. To account for possible variations of string capitalization in an expression, you can use the [`lower()`](/ruleset-engine/rules-language/functions/#function-lower) function and compare the result with a lowercased string, like in the following example:
+
+```txt
+lower(http.request.uri.path) contains "/wp-login.php"
+```
+{{</Aside>}}
+
 ## Expression validation
 
 Cloudflare validates all expressions before saving them, so if your expression has errors, you will receive an error message in the Cloudflare dashboard, similar to the following:
