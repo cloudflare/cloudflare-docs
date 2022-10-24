@@ -13,8 +13,6 @@ In the Cloudflare dashboard, there are two options for editing [expressions](/ru
 
 In general, you can switch back and forth between the Expression Builder and the Expression Editor. However, the Expression Builder does not support [nested expressions](#create-nested-expressions).
 
-Both interfaces are available in the **Create firewall rule** page.
-
 ## Expression Builder
 
 The Expression Builder allows you to visually create rule expressions by using drop-down lists and entering field values to define one or multiple sub-expressions.
