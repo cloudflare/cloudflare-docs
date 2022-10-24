@@ -10,6 +10,12 @@ When creating a Spectrum application, Cloudflare normally assigns an arbitrary I
 
 BYOIP stands for [Bring Your Own IP](/byoip/). If you own an IP prefix you can migrate it to Cloudflare. After migration, Cloudflare broadcasts your IP prefix and traffic is routed to the global Cloudflare network. However, without configuration, Cloudflare will not know how to handle this traffic. The last step is to add Spectrum applications for all applications that you wish to protect with the IP addresses you want associated with them.
 
+{{<Aside type="warning">}}
+
+When switching from non-BYOIP to BYOIP, if you are already using a Spectrum application, you need to delete your configurations and recreate new ones, otherwise existing connections will persist.
+
+{{</Aside>}}
+
 The smallest prefixes that Cloudflare currently supports is /24 for IPv4 and /48 for IPv6.
 
 BYOIP does not come standard with Spectrum. To enable it, contact your account team.
