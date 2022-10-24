@@ -182,7 +182,7 @@ The `starts_with()` function is not available in [firewall rules](/firewall/).
     ```
 
 {{<Aside type="warning">}}
-You can only use the `to_string()` function in [rewrite expressions of Transform Rules](/rules/transform/).
+You can only use the `to_string()` function in rewrite expressions of [Transform Rules](/rules/transform/) and target URL expressions of [Dynamic Redirects](/rules/url-forwarding/dynamic-redirects/).
 {{</Aside>}}
 
 - <code id="function-upper">{{<name>}}upper{{</name>}}({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
