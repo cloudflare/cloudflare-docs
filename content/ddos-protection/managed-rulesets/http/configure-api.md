@@ -16,7 +16,7 @@ Each zone has the HTTP DDoS Attack Protection Managed Ruleset enabled by default
 
 Use overrides to configure the HTTP DDoS Attack Protection Managed Ruleset. Overrides allow you to define a different action or sensitivity level from the default values. For more information on the available action and sensitivity level values, refer to [Ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
 
-Overrides can have a ruleset, tag, or rule scope. You can create overrides at the zone level and at the account level. Account-level overrides allow you to apply the same override to several zones in your account with a single rule. For example, you can use an account-level override to lower the sensitivity of a specific managed ruleset rule or exclude an IP List for multiple zones.
+Overrides can have a ruleset, tag, or rule scope. You can create overrides at the zone level and at the account level. Account-level overrides allow you to apply the same override to several zones in your account with a single rule. For example, you can use an account-level override to lower the sensitivity of a specific managed ruleset rule or exclude an [IP List](/firewall/cf-dashboard/rules-lists/) for multiple zones.
 
 {{<Aside type="warning" header="Important">}}
 * The HTTP DDoS Attack Protection Managed Ruleset is always enabled — you cannot disable its rules using an override with `"enabled": false`.
@@ -123,20 +123,19 @@ For more information on defining overrides for Managed Rulesets using the Rulese
 
 ## Account-level configuration example
 
-The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the account level. The example defines a single rule override for requests coming from a specific IP address, with the following configuration:
+The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the account level. The example defines a single rule override for requests coming from IP addresses in the `allowlisted_ips` [IP List](/firewall/cf-dashboard/rules-lists/), with the following configuration:
 
-* The rule with ID `<MANAGED_RULESET_RULE_ID>`, belonging to the HTTP DDoS Attack Protection Managed Ruleset
- (with ID `<MANAGED_RULESET_ID>`),  will have an `eoff` (_Essentially Off_) sensitivity level and it will perform a `log` action.
+* The rule with ID `<MANAGED_RULESET_RULE_ID>`, belonging to the HTTP DDoS Attack Protection Managed Ruleset (with ID `<MANAGED_RULESET_ID>`),  will have an `eoff` (_Essentially Off_) sensitivity level and it will perform a `log` action.
 
 ```json
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/ddos_l7/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d '{
-  "description": "Disable a managed ruleset rule for a specific source IP address",
+  "description": "Disable a managed ruleset rule for allowlisted IP addresses",
   "rules": [
     {
-      "expression": "ip.src eq 192.0.2.1",
+      "expression": "ip.src in $allowlisted_ips",
       "action": "execute",
       "action_parameters": {
         "id": "<MANAGED_RULESET_ID>",
@@ -166,7 +165,7 @@ The response returns the created (or updated) phase entry point ruleset.
   "result": {
     "id": "<PHASE_ENTRY_POINT_RULESET_ID>",
     "name": "default",
-    "description": "Disable a managed ruleset rule for a specific source IP address",
+    "description": "Disable a managed ruleset rule for allowlisted IP addresses",
     "kind": "root",
     "version": "1",
     "rules": [
@@ -187,7 +186,7 @@ The response returns the created (or updated) phase entry point ruleset.
             ],
           }
         },
-        "expression": "ip.src eq 192.0.2.1",
+        "expression": "ip.src in $allowlisted_ips",
         "last_updated": "2022-10-16T04:14:47.977741Z",
         "ref": "<RULE_REF>",
         "enabled": true
