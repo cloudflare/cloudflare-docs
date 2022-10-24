@@ -104,7 +104,7 @@ Requests blocked by a non-identity policy not appear in the Zero Trust dashboard
 ### Log retention
 Block policy decisions are retained for a week. Authentication logs are retained for six months.
 
-## Per-Request Audit Logs
+## Per-Request audit Logs
 
 Users who have authenticated through Access have access to authorized URL paths for the duration of their session. Cloudflare provides several ways to audit these requests.
 
