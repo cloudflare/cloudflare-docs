@@ -11,7 +11,7 @@ title: Deploy a Next.js site
 
 Cloudflare Pages supports full-stack Next.js projects which use the [Edge Runtime](https://nextjs.org/docs/api-reference/edge-runtime) or any projects which can be [statically exported](https://nextjs.org/docs/advanced-features/static-html-export). The Edge Runtime allows applications to use server-side features such as [Edge API Routes](https://nextjs.org/docs/api-routes/edge-api-routes), server-side rendering (SSR) pages with [`getServerSideProps()`](https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props) and [Middleware](https://nextjs.org/docs/advanced-features/middleware).
 
-For more information about the Edge Runtime, refer to [the official Next.js documentation](https://nextjs.org/docs/advanced-features/react-18/switchable-runtime) which elaborates on the differences between the Edge Runtime and traditional Node.js servers, or [read the Cloudflare announcement blog post](https://blog.cloudflare.com/next-on-pages).
+For more information about the Edge Runtime, refer to [the official Next.js documentation](https://nextjs.org/docs/advanced-features/react-18/switchable-runtime) which explains the differences between the Edge Runtime and traditional Node.js servers, or [read the Cloudflare announcement blog post](https://blog.cloudflare.com/next-on-pages).
 
 {{<render file="_tutorials-before-you-start.md">}}
 
@@ -29,7 +29,7 @@ After creating your project, a new `my-app` directory will be generated using th
 
 ### Configure the project to use the Edge Runtime
 
-The default template includes a traditional Node.js-powered API route (`pages/api/hello.js`). Delete this file. It is incompatible with the Edge Runtime. If you wish to use API routes, refer to Next.js' [Edge API Routes documentation](https://nextjs.org/docs/api-routes/edge-api-routes), which offers a standards-based equivalent.
+The default template includes a traditional Node.js-powered API route (`pages/api/hello.js`). Delete this file. It is incompatible with the Edge Runtime. To use API routes, refer to Next.js' [Edge API Routes documentation](https://nextjs.org/docs/api-routes/edge-api-routes), which offers a standards-based equivalent.
 
 As an example, the existing `pages/api/hello.js` file re-written as an Edge API Route would look like this:
 
@@ -150,7 +150,7 @@ Deploy your site to Pages:
 
 {{<Aside type="note" header="Note">}}
 
-The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of your project into an `_worker.js` which is deployed with [Pages Functions](/pages/platform/functions/#advanced-mode). The `--experimental-minify` argument attempts to deduplicate code that would otherwise result in your project quickly hitting the [script size limit](https://developers.cloudflare.com/workers/platform/limits/#worker-size). If you notice any bugs in this feature, please let us know by filing a [GitHub issue](https://github.com/cloudflare/next-on-pages/issues/).
+The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of your project into a `_worker.js` file which is deployed with [Pages Functions](/pages/platform/functions/#advanced-mode). The `--experimental-minify` argument attempts to deduplicate code that would otherwise result in your project quickly hitting the [script size limit](https://developers.cloudflare.com/workers/platform/limits/#worker-size). If you notice any bugs in this feature, please let us know by filing a [GitHub issue](https://github.com/cloudflare/next-on-pages/issues/).
 
 {{</Aside>}}
 
@@ -204,16 +204,12 @@ Deploy your site to Pages:
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `next`, your project dependencies, and building your site before deploying it.
 
-## What's next?
-
-{{<Aside type="note">}}
-
-For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
-
-{{</Aside>}}
+## Preview your site
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Next.js site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
 ## Learn more
 
