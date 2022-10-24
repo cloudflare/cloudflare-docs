@@ -36,7 +36,7 @@ As part of [Regional Services](https://support.cloudflare.com/hc/en-us/articles/
 
 ### Traffic scope
 
-Regional Services apply to all HTTPS traffic proxied through our Access, Gateway, Cloudflare Tunnel and WARP products. Additionally, you can [configure Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#region) to only connect to data centers within the United States, regardless of where the tunnel was deployed.
+Regional Services apply to all HTTPS traffic proxied through our Access, Gateway, Cloudflare Tunnel and WARP products. Additionally, you can [configure Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#region) to only connect to data centers within the United States, regardless of where the software was deployed.
 
 ### Logs scope
 
