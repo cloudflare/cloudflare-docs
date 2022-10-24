@@ -16,7 +16,7 @@ On this table, you have information about which protocols are available per plan
 | SSH                           |      |  ✔  |    ✔     |     ✔      |
 | RDP                           |      |     |    ✔     |     ✔      |
 
-[^1]: At the moment, Cloudflare does not support packet fragmentation for UDP packets. If packets are too large, they will be dropped.
+[^1]: At the moment, Cloudflare does not support packet fragmentation for UDP packets. If packets are fragmented, they will be dropped at Cloudflare's edge.
 
 [^2]: Minecraft Java Edition is supported but Minecraft Bedrock Edition is not supported.
 
