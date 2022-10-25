@@ -92,7 +92,7 @@
         },  
         {
           "url_path": "/dns/additional-options/dnssec/",
-          "link_title": "Deploy WARP with Jamf"
+          "link_title": "Deploy WARP with DNSSEC"
         },
         {
           "url_path": "/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/partners/jumpcloud/",
