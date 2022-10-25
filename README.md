@@ -67,6 +67,7 @@ Prefixes | Description
 `headerpartialfile` | Inserts a header for a partial Markdown file.
 `partialinclude` or `renderpartial` | Inserts a `render` shortcode to include content from a partial in the current document.
 `twotabs` or `addtabs` | Inserts a new tabs section with two tabs for dashboard and API instructions.
+`detailssection` or `collapsible` | Inserts a collapsible `<details>` HTML element.
 
 Triggering one of the available snippets will insert their body content at the current cursor position.
 
@@ -75,6 +76,7 @@ Additionally, the following snippets support surrounding existing text:
 * `Aside without header`
 * `Surround with content-column`
 * `Surround with table-wrap`
+* `Create collapsible details section`
 
 ### How to use
 
