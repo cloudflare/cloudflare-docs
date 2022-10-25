@@ -16,7 +16,7 @@ Some of these features require an Enterprise plan. If you would like to upgrade,
 
 ## Application type
 
-The application type determines the protocol by which data travels from the edge to your origin. Select TCP/UDP, if you want to proxy directly to the origin. If you want to set up products, like CDN, Workers or Bot management, you need to select HTTP/HTTPS. In this case, traffic is routed through Cloudflare's pipeline instead of connecting directly to your origin.
+The application type determines the protocol by which data travels from the edge to your origin. Select TCP/UDP if you want to proxy directly to the origin. If you want to set up products like CDN, Workers, or Bot management, you need to select HTTP/HTTPS. In this case, traffic is routed through Cloudflare's pipeline instead of connecting directly to your origin.
 
 ## IP addresses
 
