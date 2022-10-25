@@ -67,7 +67,7 @@ To verify that the IP geolocation has updated on MaxMind, go to the [MaxMind Geo
 
 To physically egress from a specific location, traffic must be proxied to Cloudflare via IPv4. The end user connects to the nearest Cloudflare data center, but Cloudflare will internally route their traffic to egress from one of your dedicated locations. Therefore, the connected data center shown in the user's WARP client preferences may not match their actual egress location.
 
-We are able to offer better IPv4 performance when users visit domains proxied by Cloudflare (also known as an [orange-clouded](https://community.cloudflare.com/t/step-3-enabling-the-orange-cloud/52715) domain). In this scenario, IPv4 traffic will physically egress from the most performant data center in our network while still appearing to egress from one of your dedicated locations.
+We are able to offer better IPv4 performance when users visit domains proxied by Cloudflare (also known as an [orange-clouded](/dns/manage-dns-records/reference/proxied-dns-records/) domain). In this scenario, IPv4 traffic will physically egress from the most performant data center in our network while still appearing to egress from one of your dedicated locations.
 
 For example, assume you have a primary dedicated egress IP in Los Angeles and a secondary dedicated egress IP in New York. A user in Las Vegas would see Las Vegas as their connected data center. If they navigate to a grey-clouded site such as `espn.com`, they will egress from Los Angeles. If they navigate to an orange-clouded site such as `cloudflare.com`, they will physically egress from Las Vegas but use Los Angeles as their IP geolocation.
 
