@@ -1,5 +1,5 @@
 ---
-pcx_content_type: concept
+pcx_content_type: configuration
 title: Bundling
 weight: 5
 ---

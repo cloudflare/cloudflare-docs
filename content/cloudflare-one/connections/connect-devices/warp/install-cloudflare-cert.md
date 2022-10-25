@@ -472,9 +472,20 @@ $ composer config cafile [PATH_TO_CLOUDFLARE_CERT.pem]
 
 Alternatively, you can add this manually to your `composer.json` file under the `config` key.
 
-### IntelliJ IDEA
+### JetBrains
 
-Instructions on how to install the Cloudflare root certificate are available [here](https://www.jetbrains.com/help/idea/settings-tools-server-certificates.html)
+To install the Cloudflare root certificate on JetBrains products, refer to the links below:
+
+- [AppCode](https://www.jetbrains.com/help/objc/settings-tools-server-certificates.html)
+- [CLion](https://www.jetbrains.com/help/clion/settings-tools-server-certificates.html)
+- [DataGrip](https://www.jetbrains.com/help/datagrip/settings-tools-server-certificates.html)
+- [DataSpell](https://www.jetbrains.com/help/dataspell/settings-tools-server-certificates.html)
+- [GoLand](https://www.jetbrains.com/help/go/settings-tools-server-certificates.html)
+- [IntelliJ IDEA](https://www.jetbrains.com/help/idea/settings-tools-server-certificates.html)
+- [PhpStorm](https://www.jetbrains.com/help/phpstorm/settings-tools-server-certificates.html)
+- [PyCharm](https://www.jetbrains.com/help/pycharm/settings-tools-server-certificates.html)
+- [Rider](https://www.jetbrains.com/help/rider/Settings_Tools_Server_Certificates.html)
+- [WebStorm](https://www.jetbrains.com/help/webstorm/settings-tools-server-certificates.html)
 
 ### Minikube
 

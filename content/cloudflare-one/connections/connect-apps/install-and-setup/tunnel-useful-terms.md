@@ -61,6 +61,6 @@ This file is created when you run `cloudflared tunnel create <NAME>`. It stores 
 
 Quick tunnels, when run, will generate a URL that consists of a random subdomain of the website `trycloudflare.com`, and point traffic to localhost on port 8080. If you have a web service running at that address, users who visit the generated subdomain will be able to visit your web service through Cloudflare’s network. Refer to [TryCloudflare](/cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare/) for more information on how to run quick tunnels.
 
-## Virtual Networks
+## Virtual networks
 
 A software abstraction that allows you to logically segregate resources on your private network.  [Tunnel Virtual Networks](/cloudflare-one/connections/connect-apps/private-net/tunnel-virtual-networks/) are especially useful for exposing resources which have overlapping IP routes. To connect to a resource, end users would select a virtual network in their WARP client settings before entering the destination IP.

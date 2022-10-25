@@ -84,7 +84,9 @@ func main() {
 	// }
 }
 ```
-  
+
+## Generate presigned URLs
+
 You can also generate presigned links that can be used to temporarily share public write access to a bucket.
 
 ```go

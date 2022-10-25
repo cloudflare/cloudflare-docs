@@ -199,7 +199,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 - {{<code>}}list(options{{<param-type>}}Object{{</param-type>}}){{</code>}} {{<type>}}Promise\<Map\<string, any>>{{</type>}}
 
-  - Returns keys associated with the current Durable Object according to the parameters in the provided options object.
+  - Returns keys and values associated with the current Durable Object according to the parameters in the provided options object.
 
     **Supported options:**
 
@@ -273,6 +273,14 @@ The `put()` method returns a `Promise`, but most applications can discard this p
   - Deletes the alarm if one exists. Does not cancel the alarm handler if it is currently executing.
 
     **Supported options:** Like `put()` above, but without `noCache`.
+
+- {{<code>}}sync(){{</code>}} {{<type>}}Promise{{</type>}}
+
+  - Synchronizes any pending writes to disk.
+
+    This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with `allowUnconfirmed`), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
+
+    **Supported options:** None.
 
 {{</definitions>}}
 

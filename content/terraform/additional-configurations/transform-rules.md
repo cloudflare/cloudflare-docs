@@ -1,5 +1,5 @@
 ---
-title: Configure Transform Rules
+title: Transform Rules
 pcx_content_type: how-to
 weight: 6
 meta:

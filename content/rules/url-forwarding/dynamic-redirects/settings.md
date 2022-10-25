@@ -1,7 +1,7 @@
 ---
 title: Available settings
 pcx_content_type: reference
-weight: 4
+weight: 10
 meta:
   title: Available dynamic redirect rules settings
 ---

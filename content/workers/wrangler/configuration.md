@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: configuration
 title: Configuration
 weight: 3
 ---
@@ -10,7 +10,7 @@ Wrangler optionally uses a `wrangler.toml` configuration file to customize the d
 
 It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
 
-## Sample wrangler.toml configuration
+## Sample `wrangler.toml` configuration
 
 ```toml
 ---
@@ -210,7 +210,7 @@ Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
 {{</definitions>}}
 
-Example: `{ pattern = "example.com/*", zone_id = "foo" }`
+Example: `{ pattern = "example.com/*", zone_name = "example.com" }`
 
 ### Custom Domain route
 
@@ -332,7 +332,7 @@ durable_objects.bindings = [
 
 #### Migrations
 
-When making changes to your Durable Object classes, you must perform a migration. Refer to [Configuring Durable Object classes with migrations](https://developers.cloudflare.com/workers/learning/using-durable-objects#configuring-durable-object-classes-with-migrations).
+When making changes to your Durable Object classes, you must perform a migration. Refer to [Configuring Durable Object classes with migrations](/workers/learning/using-durable-objects#configuring-durable-object-classes-with-migrations).
 
 {{<definitions>}}
 

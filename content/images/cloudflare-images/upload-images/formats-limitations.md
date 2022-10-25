@@ -20,7 +20,8 @@ You can upload the following image formats to Cloudflare Images:
 
 These are the maximum allowed sizes and dimensions Cloudflare Images supports:
 
-- Images' height and width are limited to 10,000 pixels.
+- Maximum image dimension is 12,000 pixels. 
+- Maximum image area is limited to 100 megapixels (for example, 10,000×10,000 pixels).
 - Image metadata is limited to 1024 bytes.
 - Images have a 10 megabyte (MB) size limit.
 - Animated GIFs, including all frames, are limited to 100 megapixels (MP).

@@ -130,7 +130,7 @@ weight: 3
 
 ## 2022-05-16
 
-- Add support for virtual-hosted style paths, such as `<BUCKET>.<ACCOUNT_ID>.r2.cloudflarestorage.com`.
+- Add support for S3 [virtual-hosted style paths](https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html), such as `<BUCKET>.<ACCOUNT_ID>.r2.cloudflarestorage.com` instead of path-based routing (`<ACCOUNT_ID>.r2.cloudflarestorage.com/<BUCKET>`).
 - Implemented `GetBucketLocation` for compatibility with external tools, this will always return a `LocationConstraint` of `auto`.
 
 ## 2022-05-06

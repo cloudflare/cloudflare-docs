@@ -35,7 +35,7 @@ Refer to the [Terraform installation guide](https://learn.hashicorp.com/tutorial
 
 ## 3. Create a Cloudflare API token
 
-[Create an API token](/api/get-started/create-token/) so that Terraform can interact with your Cloudflare account. Your token should include the following permissions:
+[Create an API token](/fundamentals/api/get-started/create-token/) so that Terraform can interact with your Cloudflare account. Your token should include the following permissions:
 
 | Permission type | Permission | Access level |
 | ----------------|-------| ----------- |
