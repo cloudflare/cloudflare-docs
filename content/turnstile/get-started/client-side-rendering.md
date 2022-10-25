@@ -127,7 +127,7 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 | `action` | `data-action` | A customer value that can be used to differentiate widgets under the same sitekey in analytics and which is returned upon validation. This can only contain up to 32 alphanumeric characters including `_` and `-`. |
 | `cData` | `data-cdata` | A customer payload that can be used to attach customer data to the challenge throughout its issuance and which is returned upon validation. This can only contain up to 255 alphanumeric characters including `_` and `-`.  |
 | `callback` | `data-callback` | A JavaScript callback that is invoked upon success of the challenge. The callback is passed a token that can be validated. |
-| `expired-callback` | `data-expired-callback` | A JavaScript callback that is invoked when the token expires. (does not reset the widget) |
+| `expired-callback` | `data-expired-callback` | A JavaScript callback that is invoked when the token expires and does not reset the widget. |
 | `timeout-callback` | `data-timeout-callback` | A JavaScript callback that is invoked when the challenge expires. (resets the widget) |
 | `error-callback` | `data-error-callback` | A JavaScript callback that is invoked when there is a network error. |
 | `theme` | `data-theme` | The widget theme. Can take the following values: `light`, `dark`, `auto`. <br><br>The default is `auto`, which respects the user preference. This can be forced to light or dark by setting the theme accordingly. |
