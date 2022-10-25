@@ -29,7 +29,7 @@ You can create overrides at the zone level and at the account level. Account-lev
 ### Creating multiple rules
 
 {{<Aside type="note">}}
-Only customers on an Enterprise plan with the Advanced DDoS service can create more than one rule.
+Only customers on an Enterprise plan with the Advanced DDoS Protection subscription can create more than one rule.
 {{</Aside>}}
 
 Create multiple rules in the `ddos_l7` phase entry point ruleset to define different overrides for different sets of incoming requests. Set each rule expression according to the traffic whose HTTP DDoS protection you wish to customize.
@@ -143,7 +143,7 @@ The following `PUT` example creates a new phase ruleset (or updates the existing
 * The rule with ID `<MANAGED_RULESET_RULE_ID>`, belonging to the HTTP DDoS Attack Protection Managed Ruleset (with ID `<MANAGED_RULESET_ID>`),  will have an `eoff` (_Essentially Off_) sensitivity level and it will perform a `log` action.
 
 {{<Aside type="note">}}
-Custom rule expressions (different from `"true"`) require an Enterprise plan with the Advanced DDoS service.
+Custom rule expressions (different from `"true"`) require an Enterprise plan with the Advanced DDoS Protection subscription.
 {{</Aside>}}
 
 ```json
