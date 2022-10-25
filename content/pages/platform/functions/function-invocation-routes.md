@@ -53,6 +53,6 @@ highlight: [3]
 ```
 
 ## Limits
-* You must have at least one include rule 
+* You must have at least one `include` rule.
 * You may have no more than 100 include/exclude rules combined. 
-* Each rule may have no more than 100 characters 
+* Each rule may have no more than 100 characters.
