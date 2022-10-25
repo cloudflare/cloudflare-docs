@@ -26,11 +26,19 @@ You can create overrides at the zone level and at the account level. Account-lev
 * {{<render file="_ddos-custom-expressions-api-only.md">}}
 {{</Aside>}}
 
-## Rule order recommendations
+### Creating multiple rules
 
-Rules in the phase entry point ruleset (where you create overrides) are evaluated in order until there is a match for a rule expression and sensitivity level. Therefore, the rule order in the entry point ruleset is very important: a rule with a **higher** sensitivity level must come after a rule with a **lower** sensitivity level, otherwise it will never be evaluated.
+{{<Aside type="note">}}
+Only customers on an Enterprise plan with the Advanced DDoS service can create more than one rule.
+{{</Aside>}}
 
-## Zone-level configuration example
+Create multiple rules in the `ddos_l7` phase entry point ruleset to define different overrides for different sets of incoming requests. Set each rule expression according to the traffic whose HTTP DDoS protection you wish to customize.
+
+Rules in the phase entry point ruleset, where you create overrides, are evaluated in order until there is a match for a rule expression and sensitivity level. Therefore, the rule order in the entry point ruleset is very important: a rule with a **higher** sensitivity level must come after a rule with a **lower** sensitivity level, otherwise it will never be evaluated.
+
+## Example API calls
+
+### Zone-level configuration example
 
 The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the zone level. The request includes several overrides to adjust the default behavior of the HTTP DDoS Attack Protection Managed Ruleset. These overrides are the following:
 
@@ -128,11 +136,15 @@ The response returns the created (or updated) phase entry point ruleset.
 
 For more information on defining overrides for Managed Rulesets using the Rulesets API, refer to [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/) in the Ruleset Engine documentation.
 
-## Account-level configuration example
+### Account-level configuration example
 
 The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the account level. The example defines a single rule override for requests coming from IP addresses in the `allowlisted_ips` [IP List](/firewall/cf-dashboard/rules-lists/), with the following configuration:
 
 * The rule with ID `<MANAGED_RULESET_RULE_ID>`, belonging to the HTTP DDoS Attack Protection Managed Ruleset (with ID `<MANAGED_RULESET_ID>`),  will have an `eoff` (_Essentially Off_) sensitivity level and it will perform a `log` action.
+
+{{<Aside type="note">}}
+Custom rule expressions (different from `"true"`) require an Enterprise plan with the Advanced DDoS service.
+{{</Aside>}}
 
 ```json
 curl -X PUT \
