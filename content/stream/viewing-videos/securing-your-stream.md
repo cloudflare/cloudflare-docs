@@ -322,11 +322,11 @@ Depending on the rule type, accessRules support 2 additional properties:
 ```
 ...
 "accessRules": [
-  {
-    "type": "ip.geoip.country",
-    "action": "block",
-    "country": ["US", "DE", "MX"],
-  },
+	{
+		"type": "ip.geoip.country",
+		"action": "block",
+		"country": ["US", "DE", "MX"],
+	},
 ]
 ```
 
