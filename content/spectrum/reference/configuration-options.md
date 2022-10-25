@@ -105,7 +105,7 @@ Below are the cipher suites Cloudflare presents to origins during an SSL/TLS han
 
 The cipher suites below are ordered based on how they appear in the ClientHello, communicating our preference to the origin.
 
-## Supported Cipher suites by protocol
+## Supported cipher suites by protocol
 
 | OpenSSL Name                        | TLS 1.1 | TLS 1.2 | TLS 1.3 |
 | ----------------------------------- | ------- | ------- | ------- |
