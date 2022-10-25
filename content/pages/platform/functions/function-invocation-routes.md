@@ -16,9 +16,9 @@ Having a `_routes.json` file gives you more granular control over when your Func
 
 ## How do you use it: 
 You will need to create an `_routes.json` file. This file will include three different properties:
-* **Version**: Defines the version of the schema. Currently there is only one version of the schema (version 1), however, we may add more in the future and aim to be backwards compatible.
-* **Include**: Defines routes that will be invoked by Functions. Accepts wildcard behavior.
-* **Exclude**: Defines routes that will not be invoked by Functions. Accepts wildcard behavior. Excludes always take priority over Includes.
+* **version**: Defines the version of the schema. Currently there is only one version of the schema (version 1), however, we may add more in the future and aim to be backwards compatible.
+* **include**: Defines routes that will be invoked by Functions. Accepts wildcard behavior.
+* **exclude**: Defines routes that will not be invoked by Functions. Accepts wildcard behavior. Excludes always take priority over Includes.
 
 Below is an example of a `_routes.json`. 
 
@@ -38,7 +38,7 @@ highlight: [3]
 
 This `_routes.json` will invoke your Functions on all routes. 
 
-Let’s look at another example. Here, any route inside the build directory will not invoke the Function and therefore will not incur a Functions invocation charge. 
+Let's look at another example. Here, any route inside the build directory will not invoke the Function and therefore will not incur a Functions invocation charge. 
 
 ```json
 ---
@@ -48,7 +48,7 @@ highlight: [3]
 {
     "version": 1,
     "include": ["/*"],
-    "exclude": [/build/*]
+    "exclude": ["/build/*"]
 }
 ```
 
