@@ -15,7 +15,7 @@ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
 ```
 
 - [`config`](#config)
-- [`-ip-version`](#edge-ip-version)
+- [`edge-ip-version`](#edge-ip-version)
 - [`autoupdate-freq`](#autoupdate-freq)
 - [`no-autoupdate`](#no-autoupdate)
 - [`origincert`](#origincert)
@@ -41,11 +41,11 @@ Specifies the path to a config file in YAML format.
 
 | Syntax         | Default                     |
 | -------------- | --------------------------- |
-| `config value` | `auto` |
+| `edge-ip-version value` | `auto` |
 
-Specifies the IP version used to establish a connection between `cloudflared` and the Cloudflare Global Network. Available values are `auto`, `4`, and `6`. 
+Specifies the IP address version (IPv4 or IPv6) used to establish a connection between `cloudflared` and the Cloudflare global network. Available values are `auto`, `4`, and `6`.
 
-The value `auto` relies on host operating system to determine which IP version to select. The first IP version returned from the DNS resolution of the region lookup will be used as the primary set. In dual IPv6 and IPv4 network setups, `cloudflared` will separate the IP versions into two address sets that will be used to fallback in connectivity failure scenarios.
+The value `auto` relies on the host operating system to determine which IP version to select. The first IP version returned from the DNS resolution of the region lookup will be used as the primary set. In dual IPv6 and IPv4 network setups, `cloudflared` will separate the IP versions into two address sets that will be used to fallback in connectivity failure scenarios.
 
 ## `autoupdate-freq`
 
@@ -61,7 +61,7 @@ Configures autoupdate frequency. See also: [`no-autoupdate`](#no-autoupdate).
 | --------------- | ------- |
 | `no-autoupdate` | `false` |
 
-Disables periodic check for updates, restarting the server with the new version. See also: [`autoupdate-freq`](#autoupdate-freq). Restarts are performed by spawning a new process that connects to the Cloudflare Global Network. On successful connection, the old process will gracefully shut down after handling all outstanding requests.
+Disables periodic check for updates, restarting the server with the new version. See also: [`autoupdate-freq`](#autoupdate-freq). Restarts are performed by spawning a new process that connects to the Cloudflare global network. On successful connection, the old process will gracefully shut down after handling all outstanding requests.
 
 ## `origincert`
 
@@ -125,7 +125,7 @@ Writes the application's process identifier (PID) to this file after the first s
 | ---------- | ------- | --------------------------- |
 | `protocol` | `auto`  | `TUNNEL_TRANSPORT_PROTOCOL` |
 
-Specifies the protocol used to establish a connection between `cloudflared` and the Cloudflare Global Network. Available values are `auto`, `http2`, `h2mux`, and `quic`.
+Specifies the protocol used to establish a connection between `cloudflared` and the Cloudflare global network. Available values are `auto`, `http2`, `h2mux`, and `quic`.
 
 The `auto` value will automatically configure the `quic` protocol. If `cloudflared` is unable to establish UDP connections, it will fallback to using the `http2` protocol.
 
@@ -155,5 +155,5 @@ Specifies the verbosity of logging. The default `info` level does not produce mu
 | -------------------- | ------- | ----------------------- |
 | `transport-loglevel` | `warn`  | `TUNNEL_PROTO_LOGLEVEL` |
 
-Specifies the verbosity of logs for the transport between `cloudflared` and the Cloudflare Global Network. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
+Specifies the verbosity of logs for the transport between `cloudflared` and the Cloudflare global network. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
 Any value below `warn` produces substantial output and should only be used to debug low-level performance issues and protocol quirks.
