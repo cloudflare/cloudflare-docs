@@ -6,6 +6,11 @@ weight: 10
 
 # Changelog
 
+## 2022-10-24
+
+- Added [`response-field` and `response-field-name`](/turnstile/get-started/client-side-rendering/#configurations) for controlling the input element created by Turnstile
+- Added option for changing the [size of the Turnstile widget](/turnstile/get-started/client-side-rendering/#widget-size)
+
 ## 2022-10-13
 
 - Added validation for action: `/^[a-z0-9_-]{0,32}$/i`
