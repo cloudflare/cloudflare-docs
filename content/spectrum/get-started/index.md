@@ -7,7 +7,7 @@ layout: single
 
 # Get started
 
-Spectrum is available on all paid plans. Pro and Business support selected protocols only, whereas Enterprise supports all TCP and UDP based traffic.
+Spectrum is available on all paid plans. Pro and Business support selected protocols only, whereas Enterprise supports all TCP and UDP based traffic. Refer to [Application type](/spectrum/reference/configuration-options/#application-type), for more information about supported protocols. 
 
 To create a Spectrum application, you can either use an IP address, a CNAME Record or a Load Balancer. Independently of the method you use, you can create the application through the dashboard or via API.
 
