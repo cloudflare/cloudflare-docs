@@ -39,7 +39,7 @@ For more information on the available configuration parameters, refer to [Manage
 
 The HTTP DDoS Attack Protection Managed Ruleset protects Cloudflare customers on all plans. All customers can customize the ruleset both at the zone level and at the account level.
 
-Customers on Enterprise plans with the Advanced DDoS service can create more than one rule with different expressions, to customize the DDoS protection for different incoming requests.
+Customers on Enterprise plans with the Advanced DDoS Protection subscription can create more than one rule with different expressions, to customize the DDoS protection for different incoming requests.
 
 Customers on other plans can create only one rule and they cannot customize the rule expression. In this case, the single rule, containing one or more configurations or overrides, will always apply to all incoming traffic.
 
