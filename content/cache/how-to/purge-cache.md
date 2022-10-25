@@ -95,7 +95,7 @@ When your content reaches our edge network, Cloudflare:
 - The minimum length of a cache-tag is 1 byte.
 - Individual tags don’t have a maximum length, but the aggregate `Cache-Tag HTTP` header cannot exceed 16 KB after the header field name, which is approximately 1000 unique tags. Length includes whitespace and commas but does not include the header field name.
 - For cache purges, the maximum length of a cache-tag in an API call is 1024 characters.
-- The `Cache-Tag HTTP` header must accept all valid characters allowable in HTTP headers, as specified in [RFC-5987](https://tools.ietf.org/html/rfc5987).
+- The `Cache-Tag HTTP` header must only contain UTF-8 encoded characters.
 - Spaces are not allowed in cache-tags.
 - Case does not matter. For example, `Tag1` and `tag1` are considered the same.
 
@@ -162,11 +162,11 @@ Example: If you purge `foo.com/bar`, any asset that starts with `foo.com/bar` wi
 
 ### Purge by prefix normalization
 
-Currently, when a purge by prefix request comes into Cloudflare for a normalized URL path, the purge service does not respect the [URL normalization](/rules/normalization/). Cloudflare is changing the purge by prefix functionality so that normalized URLs will be purged as expected. We plan for this change to occur on October 12th, 2022.
+Using purge by prefix normalization, when a purge by prefix request comes into Cloudflare for a normalized URL path, the purge services respects the [URL normalization](/rules/normalization/) and purges the normalized URL.
 
 #### How does URL Normalization work
 
-As an example of this behavior change, take the following website as an example: `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg`. The table below shows you how Cloudflare’s cache views these paths with [normalization on/off](/rules/normalization/).
+Take the following website as an example: `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg`. The table below shows you how Cloudflare’s cache views these paths with [normalization on/off](/rules/normalization/).
 
 <table>
   <tbody>
@@ -215,20 +215,16 @@ As an example of this behavior change, take the following website as an example:
   </tbody>
 </table>
 
-#### Behavior change
+#### Purge by prefix
 
-If you try to purge by prefix, this will happen:
+If you want to purge by prefix, this will happen:
 
 <table>
   <tbody>
     <th colspan="5" rowspan="1">
       What the user wants to purge
-    </th>
     <th colspan="5" rowspan="1">
-      What the EDGE purges (current behavior)
-    </th>
-    <th colspan="5" rowspan="1">
-      What the EDGE purges (new behavior)
+      What the EDGE purges
     </th>
     <tr>
       <td colspan="5" rowspan="1">
@@ -237,25 +233,16 @@ If you try to purge by prefix, this will happen:
       <td colspan="5" rowspan="1">
         <code>cloudflare.com/انشاء-موقع-الكتروني/</code>
       </td>
-      <td colspan="5" rowspan="1">
-        <code>cloudflare.com/انشاء-موقع-الكتروني/</code>
-      </td>
     </tr>
     <tr>
       <td colspan="5" rowspan="1">
         <code>cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/</code>
       </td>
       <td colspan="5" rowspan="1">
-        <code>cloudflare.com/انشاء-موقع-الكتروني/</code>
-      </td>
-      <td colspan="5" rowspan="1">
         <code>cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/</code>
       </td>
     </tr>
     <tr>
-      <td colspan="5" rowspan="1">
-        <code>cloudflare.com/hello/</code>
-      </td>
       <td colspan="5" rowspan="1">
         <code>cloudflare.com/hello/</code>
       </td>
@@ -266,15 +253,7 @@ If you try to purge by prefix, this will happen:
   </tbody>
 </table>
 
-This means that if the prefix being purged does not match what Cloudflare’s cache sees  purge by prefix will not work, regardless of how the URL looked when it hit the edge. Specifically:
-
-- If the visitor request was for `https://cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg`, then currently purge by prefix will not be able to purge this asset because no matter what prefix you try to purge, for instance `cloudflare.com/انشاء-موقع-الكتروني/` or `cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg`, what will be purged is `cloudflare.com/انشاء-موقع-الكتروني/` which will not match the asset that was cached by the visitor request.
-
-  With the new behavior, purging by prefix `cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/` will purge the asset cached by the visitor request for `https://cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg`.
-
-- Currently, if a visitor request was for `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg` and URL normalization is **ON**, then currently purge by prefix will not be able to purge this asset since it will be cached as if `https://cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg` was requested and, similarly to the first point, we can not purge this with the current behaviour. If, on the other hand, URL normalization is **OFF**, then purging by prefix `cloudflare.com/انشاء-موقع-الكتروني/` will purge `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg`.
-
-  With the new behavior, in order to purge by prefix the asset that was cached by the visitor request `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg`, you can purge by prefix `cloudflare.com/انشاء-موقع-الكتروني/`.
+If you want to purge the asset cached by the visitor request for `https://cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg`, `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg` and `https://cloudflare.com/hello/img_1.jpg`, you can respectivaly purge by prefix `cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/`, `cloudflare.com/انشاء-موقع-الكتروني/` and `cloudflare.com/hello/`. 
 
 ## Purge cache key resources
 
