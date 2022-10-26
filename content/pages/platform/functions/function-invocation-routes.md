@@ -21,6 +21,7 @@ You will need to create a `_routes.json` file to control when your Function is i
 * **exclude**: Defines routes that will not be invoked by Functions. Accepts wildcard behavior. `exclude` always take priority over `include`.
 
 ### Example configuration
+
 Below is an example of a `_routes.json`. 
 
 ```json
@@ -50,6 +51,7 @@ filename: _routes.json
 }
 ```
 ### Example matches
+
 Below are other examples of how matching works in the `_routes.json` file
 
 | Rule          | Matches                              |
