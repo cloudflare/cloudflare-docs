@@ -33,7 +33,7 @@ Cloudflare Zero Trust provides predefined DLP Profiles for common types of sensi
 ## National identifiers
 
 - Detections are validated algorithmically when possible. Some detections such as United States SSNs do not adhere to algorithmic validation.
-- Commonly used separators are required to match the detection entry. For example, `000-00-0000` matches a United States SSN but `000000000` is not.
+- Commonly used separators are required to match the detection entry. For example, `000-00-0000` matches a United States SSN but `000000000` does not.
 
 {{<table-wrap>}}
 | Detection entry | Regex |
