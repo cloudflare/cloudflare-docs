@@ -5,9 +5,6 @@
   <nav role="navigation" class="tabs">
     <ul class="tab-active" block-id="{{$unique_id}}">
       {{ range $idx, $txt := $labels }} {{- $link := replace $txt "/" "-"}}
-      <script>
-        console.log({{$idx}})
-        </script>
       <li class="tab-label-wrapper">
         {{ if (eq $link "js") }}
         <a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
