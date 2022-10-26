@@ -55,9 +55,9 @@ Origin drain is not supported for load balancers in [DNS-only mode (gray cloud)]
 
 {{</Aside>}}
 
-### Zero Downtime Failover
+### Zero-Downtime Failover
 
-Zero Downtime Failover automatically sends traffic to origin servers within a pool during transient network issues. This helps reduce errors shown to your users when issues occur in between active health monitors. 
+Zero-Downtime Failover automatically sends traffic to origin servers within a pool during transient network issues. This helps reduce errors shown to your users when issues occur in between active health monitors. 
 
 You can enable one of three options:
 
