@@ -15,7 +15,7 @@ Cloudflare Rules allows you to make adjustments to requests and responses, confi
 
 ---
 
-## Features
+## Products
 
 {{<feature header="Transform Rules" href="/rules/transform/">}}
 Adjust the URI path, query string, and HTTP headers of requests and responses at the edge.
