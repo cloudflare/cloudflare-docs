@@ -1,5 +1,5 @@
 ---
-title: Configure DDoS Managed Rulesets
+title: DDoS Managed Rulesets
 pcx_content_type: how-to
 weight: 3
 meta:

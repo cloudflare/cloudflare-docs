@@ -47,7 +47,7 @@ To get started with R2:
 
 {{<table-wrap>}}
 
-| Feature                                       | KV           | R2 (beta)    |
+| Feature                                       | KV           | R2           |
 | --------------------------------------------- | ------------ | ------------ |
 | Maximum size per value                        | 25 MiB       | 5 TB         |
 | Consistency model                             | Eventual     | Strong       |

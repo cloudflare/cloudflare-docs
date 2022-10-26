@@ -5,7 +5,7 @@ _build:
   list: never
 
 name: "`HTMLRewriter` handling of `<esi:include>`"
-date: "2021-11-02"
+sort_date: "2021-11-02"
 experimental: true
 enable_flag: "html_rewriter_treats_esi_include_as_void_tag"
 ---

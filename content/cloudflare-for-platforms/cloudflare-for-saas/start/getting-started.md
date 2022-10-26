@@ -12,7 +12,7 @@ weight: 1
 
 Before you can start creating custom hostnames, you need to have access to [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/#availability).
 
-If you have not used the Cloudflare API previously, review our [API Quickstart](/api/).
+If you have not used the Cloudflare API previously, review our [API documentation](/fundamentals/api/).
 
 If there are multiple proxied DNS records for one zone, Cloudflare must prioritize which record controls the zone settings and associated origin server. Adding a new custom hostname may take priority over your current settings or cause your settings to no longer apply. To prevent overriding or voiding your settings, review [Hostname priority (Cloudflare for SaaS)](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas)
  
@@ -24,7 +24,7 @@ The fallback origin is where Cloudflare will route traffic sent to your custom h
 
 {{<Aside type="note">}}
 
-You can also [use a Worker as your origin](/cloudflare-for-platforms/workers-for-platforms/) or [create a custom origin server](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/) to send traffic from one or more custom hostnames somewhere besides your default proxy fallback.
+You can also [use a Worker as your origin](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/worker-as-origin/) or [create a custom origin server](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/) to send traffic from one or more custom hostnames somewhere besides your default proxy fallback.
 
 {{</Aside>}}
 
@@ -36,7 +36,7 @@ We suggest using a domain other than your main company domain (example.cloud ins
 
 2. [Create two DNS records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records).
 
-  *   A proxied *A* or *AAAA* record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
+  *   A proxied *A*, *AAAA*, or *CNAME* record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
   *   A *CNAME* record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
 
   | Record          | Type  | Name                              | Content                           |
@@ -89,7 +89,7 @@ Verification checks occur frequently immediately after a hostname is created, bu
 Depending on which method you select for each of these options, additional steps might be required for you and your customers.
 
 {{<Aside type="warning">}}
-You can no longer use HTTP based validation for Wildcard certificates according to the Certificate Authority Browser Forum.
+You can no longer use [HTTP-based validation for Wildcard certificates](/ssl/reference/migration-guides/dcv-update/) according to the Certificate Authority Browser Forum.
 {{</Aside>}}
 
 ---

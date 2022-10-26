@@ -13,6 +13,8 @@ Cloudflare regularly updates the Workers runtime. These updates apply to all Wor
 
 Compatibility dates (and flags) are how you, as a developer, opt into these changes. By specifying a `compatibility_date` in your `wrangler.toml` file, that Worker enables all changes that were made before the given date.
 
+Compatibility dates can only be set via your `wrangler.toml` file and by running [`wrangler publish`](/workers/wrangler/commands/#publish).
+
 ```toml
 # (in wrangler.toml)
 # Opt into backwards-incompatible changes through April 5, 2022.

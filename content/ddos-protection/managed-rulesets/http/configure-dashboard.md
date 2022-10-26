@@ -17,6 +17,10 @@ Tag and rule configurations have greater priority than ruleset configurations.
 
 For more information on the available parameters and allowed values, refer to [Managed Ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
 
+{{<Aside type="warning" header="Important note for API users">}}
+{{<render file="_ddos-custom-expressions-api-only.md">}}
+{{</Aside>}}
+
 ## Configure all the rules in the ruleset
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.

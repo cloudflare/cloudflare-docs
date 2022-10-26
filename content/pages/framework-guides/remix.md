@@ -26,7 +26,7 @@ After selecting your deployment option, change the directory to your project and
 
 ```sh
 # choose Cloudflare Pages
-$ cd [whatever you named the project]
+$ cd <YOUR_PROJECT>
 $ npm run dev
 ```
 
@@ -59,7 +59,7 @@ Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://da
 
 {{<Aside type="warning">}}
 
-Currently Cloudflare uses Node `12.18.0` in the Pages build environment, but Remix requires a newer node version >14.0.0 to build on Cloudflare Pages. To set the Node version go to _Settings_ > _Environment Variables_ > _Production_ and add `NODE_VERSION = v16.7.0` in your production option.
+Currently Cloudflare uses Node `12.18.0` in the Pages build environment, but Remix requires a newer node version greater than `14.0.0` to build on Cloudflare Pages. To set the Node version, go to your Pages project > **Settings** > **Environment Variables** > **Production** and add `NODE_VERSION` environment variable with a value of `14` or greater in your Production option.
 
 {{</Aside>}}
 

@@ -16,7 +16,8 @@ But how does your load balancer _know_ which servers can handle the traffic? We 
 
 Dynamic load balancing happens through a combination of [origin pools](/load-balancing/understand-basics/pools/)[^1], [monitors](/load-balancing/understand-basics/monitors/)[^2], and health checks[^3]. 
 
-![Dynamic load balancing involves pools, origins, monitors, and health checks](/load-balancing/static/images/load-balancer-components.png)
+
+{{<render file="_health-check-diagram.md">}}
 
 ---
 

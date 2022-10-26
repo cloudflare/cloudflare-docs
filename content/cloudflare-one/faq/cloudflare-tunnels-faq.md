@@ -120,7 +120,7 @@ Before contacting the Cloudflare support team:
 
 - Set [`log-level`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
 
-- Set [`transport-log`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#transport-loglevel) level to `debug`.
+- Set [`transport-loglevel`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#transport-loglevel) to `debug`.
 
 - Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#logfile) either on the command line or in your configuration file.
 
@@ -129,7 +129,3 @@ Before contacting the Cloudflare support team:
 - Make sure that the `cloudflared daemon` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
 
 - Gather any relevant error/access logs from your server.
-
-### End users are having issues connecting to private networks through the WARP client.
-
-If your end users are experiencing issues while accessing resources on private networks [exposed via Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/private-net/), ensure you include [WARP Client logs](/cloudflare-one/faq/teams-devices-faq/#how-do-i-retrieve-warp-client-logs) when contacting Cloudflare support. These logs will help Cloudflare support understand the overall architecture of your machine and networks.

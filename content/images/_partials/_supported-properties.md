@@ -63,6 +63,18 @@ header: Workers
 cf: {image: {blur: 50}}
 ```
 
+#### `border`
+
+Adds a border around the image. The border is added after resizing. Border width takes `dpr` into account, and can be specified either using a single `width` property, or individually for each side.
+
+```js
+---
+header: Workers
+---
+cf: {image: {border: {color: "rgb(0,0,0,0)", top: 5, right: 10, bottom: 5, left: 10}}}
+cf: {image: {border: {color: "#FFFFFF", width: 10}}}
+```
+
 #### `brightness`
 
 Increase brightness by a factor. A value of `1.0` equals no change, a value of `0.5` equals half brightness, and a value of `2.0` equals twice as bright. `0` is ignored. Example:
@@ -79,6 +91,24 @@ brightness=0.5
 header: Workers
 ---
 cf: {image: {brightness: 0.5}}
+```
+
+#### `compression=fast`
+
+Slightly reduces latency on a cache miss by selecting a quickest-to-compress file format, at a cost of increased file size and lower image quality. It will usually override the `format` option and choose JPEG over WebP or AVIF. We do not recommend using this option, except in unusual circumstances like resizing uncacheable dynamically-generated images.
+
+```js
+---
+header: URL format
+---
+compression=fast
+```
+
+```js
+---
+header: Workers
+---
+cf: {image: {compression: "fast"}}
 ```
 
 #### `contrast`
@@ -481,7 +511,7 @@ trim=20;30;20;0
 ---
 header: Workers
 ---
-cf: {image: {trim: {"top": 12, "bottom": 34, "left": 56, "right": 78}}}
+cf: {image: {trim: {"top": 12,  "right": 78, "bottom": 34, "left": 56,}}}
 ```
 
 #### `width`

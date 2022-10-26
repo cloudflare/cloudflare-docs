@@ -14,6 +14,7 @@ The descriptions below detail the fields available for `gateway_dns`.
 
 | Field | Value | Type |
 | -- | -- | -- |
+| ApplicationID | ID of the application the domain belongs to (for example, 1, 2). Set to 0 when no ApplicationID is matched. | int |
 | ColoID | The ID of the colo that received the DNS query (for example, 46, 72, 397) | int |
 | ColoName | The name of the colo that received the DNS query (for example, 'SJC', 'MIA', 'IAD') | string |
 | Datetime | The date and time the corresponding DNS request was made (for example, '2021-07-27T00:01:07Z') | int or string |
@@ -31,6 +32,7 @@ The descriptions below detail the fields available for `gateway_dns`.
 | QueryNameReversed | Query name in reverse (for example, 'com.example') | string |
 | QuerySize | The size of the DNS request in bytes (for example, 151) | int |
 | QueryType | The type of DNS query (for example, 'A', 'AAAA', 'MX', or 'TXT') | string |
+| RCode | The return code sent back by the DNS resolver | int |
 | RData | The rdata objects (for example, {"type":"5","data":"dns-packet-placeholder..."}) | array[object] |
 | ResolverDecision | Result of the DNS query (for example, 'overrideForSafeSearch') | string |
 | SrcIP | The source IP address making the DNS query (for example, '104.16.132.229') | string |

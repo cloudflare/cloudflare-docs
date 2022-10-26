@@ -1,7 +1,7 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: concept
 title: Environments
-weight: 6
+weight: 7
 ---
 
 ## Environments

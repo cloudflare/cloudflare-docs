@@ -75,7 +75,7 @@ export default function ContactForm() {
       <input id="email" type="email" name="email" required />
       <ValidationError prefix="Email" field="email" errors={state.errors} />
 
-      <label for="message">Message</label>
+      <label htmlFor="message">Message</label>
       <textarea id="message" name="message" required></textarea>
       <ValidationError prefix="Message" field="message" errors={state.errors} />
 

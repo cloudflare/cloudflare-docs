@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: R2 Log Retrieval (beta)
+title: R2 Log Retrieval
 weight: 117
 ---
 
-# R2 Log Retrieval (beta)
+# R2 Log Retrieval
 
 Cloudflare’s Log Retrieval API allows you to query logs from R2 by providing a time range. This functionality is available in beta via the API documented here.
 
@@ -60,7 +60,7 @@ Stream logs stored in R2 that match the provided query parameters, using the end
 
 - `bucket` (required) string (Bucket) - R2 bucket name, for example `bucket=cloudflare-logs`
 
-- `prefix` string (Prefix) - R2 bucket prefix logs are stored under, for example `prefix=http_requests/exmaple.com/{DATE}`
+- `prefix` string (Prefix) - R2 bucket prefix logs are stored under, for example `prefix=http_requests/example.com/{DATE}`
 
 ### Header parameters
 
@@ -71,7 +71,7 @@ Stream logs stored in R2 that match the provided query parameters, using the end
 ## Example API request
 
 ```bash
-curl -s -g -X GET  'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logs/retrieve?start=2022-06-01T16:00:00Z&end=2022-06-01T16:05:00Z&bucket=cloudflare-logs&prefix=http_requests/exmaple.com/{DATE}' \
+curl -s -g -X GET  'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logs/retrieve?start=2022-06-01T16:00:00Z&end=2022-06-01T16:05:00Z&bucket=cloudflare-logs&prefix=http_requests/example.com/{DATE}' \
 -H "X-Auth-Email: <EMAIL>" \
 -H "X-Auth-Key: <API_KEY>" \ 
 -H "R2-Access-Key-Id: R2_ACCESS_KEY_ID" \

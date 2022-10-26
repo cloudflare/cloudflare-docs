@@ -17,7 +17,7 @@ If you have an alias domain that only forwards traffic to another domain, you ca
     | A        | `@`      | `192.0.2.1`      | Proxied          |
     | A        | `www`    | `192.0.2.1`      | Proxied          |
 
-3. Use [Bulk redirects](/rules/bulk-redirects/) to forward traffic from your alias domain to your other domain. Select **Include subdomains** and **Subpath matching** to cover your entire alias domain (for example, `www.previous.com` and `www.previous.com/examples`).
+3. Use [Bulk redirects](/rules/url-forwarding/bulk-redirects/) to forward traffic from your alias domain to your other domain. Select **Include subdomains** and **Subpath matching** to cover your entire alias domain (for example, `www.previous.com` and `www.previous.com/examples`).
 
     | **Source URL** | **Target URL**    | **Status** | **Selected parameters**                     |
     | -------------- | ----------------- | ---------- | ------------------------------------------- |

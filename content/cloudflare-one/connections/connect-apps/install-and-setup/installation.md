@@ -30,21 +30,12 @@ Alternatively, download the latest release directly.
 
 {{</table-wrap>}}
 
-{{<Aside type="note">}}
-If you see the following error when running `apt-get update`:
-
-`E: The repository 'https://pkg.cloudflare.com buster Release' does not have a Release file.`
-
-This is due to a recent update which now points the `cloudflared` repository to `pkg.cloudflare.com/cloudflared` instead of `pkg.cloudflare.com`. To resolve, refer to the instructions in the [package repository](https://pkg.cloudflare.com/).
-
-{{</Aside>}}
-
 ## macOS
 
 Download and install `cloudflared` via Homebrew:
 
 ```sh
-$ brew install cloudflare/cloudflare/cloudflared
+$ brew install cloudflared
 ```
 
 Alternatively, [download the latest Darwin amd64 release directly](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz).

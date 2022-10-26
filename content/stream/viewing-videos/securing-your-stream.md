@@ -319,20 +319,23 @@ Depending on the rule type, accessRules support 2 additional properties:
 
 ***Example 1: Block views from a specific country***
 
-    ...
-    "accessRules": [
-    	{
-    		"type": "ip.geoip.country",
-    		"action": "block",
-    		"country": ["US", "DE", "MX"],
-    	},
-    ]
+```
+...
+"accessRules": [
+	{
+		"type": "ip.geoip.country",
+		"action": "block",
+		"country": ["US", "DE", "MX"],
+	},
+]
+```
 
 The first rule matches on country, US, DE, and MX here. When that rule matches, the block action will have the token considered invalid. If the first rule doesn't match, there are no further rules to evaluate. The behavior in this situation is to consider the token valid.
 
 ***Example 2: Allow only views from specific country or IPs***
 
-```...
+```
+...
 "accessRules": [
 	{
 		"type": "ip.geoip.country",

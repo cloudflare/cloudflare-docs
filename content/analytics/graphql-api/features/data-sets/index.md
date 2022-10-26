@@ -38,7 +38,8 @@ The following datasets (and associated nodes) are available in Cloudflare Analyt
 | Magic Firewall Analytics    | `magicFirewallSamplesAdaptiveGroups`                                                                                           |
 | Network Analytics v2<br/> for Magic Transit customers | `magicTransitNetworkAnalyticsAdaptiveGroups` `dosdNetworkAnalyticsAdaptiveGroups` `dosdAttackAnalyticsGroups` `flowtrackdNetworkAnalyticsAdaptiveGroups` `magicFirewallNetworkAnalyticsAdaptiveGroups` |
 | Network Analytics v2<br/> for Spectrum customers<br/> (Enterprise plans only) | `spectrumNetworkAnalyticsAdaptiveGroups` `dosdNetworkAnalyticsAdaptiveGroups` `dosdAttackAnalyticsGroups` |
-| SYN Attacks (DoS Analytics) | `synAvgPps1mGroups`                                                                                                            |
+| Stream Analytics  | `videoPlaybackEventsAdaptiveGroups`  
+| Turnstile Widget Analytics  |`turnstileAdaptiveGroups`                                                                                                      |
 | Workers Metrics             | `workersInvocationsAdaptive`                                                                                                   |
 
 {{</table-wrap>}}
@@ -60,19 +61,20 @@ Beta datasets are available to Enterprise customers for testing and exploration.
 
 The following data nodes are deprecated. To avoid disruption, migrate to replacement nodes before the sunset date.
 
-{{<table-wrap>}}
+{{<table-wrap style="font-size: 87%">}}
 
-| Node                         | Replacement node                     | Sunset date       |
-| ---------------------------- | ------------------------------------ | ----------------- |
-| `httpRequestsCacheGroups`    | `httpRequestsAdaptiveGroups`         | March 1, 2021     |
-| `httpRequests1mByColoGroups` | `httpRequestsAdaptiveGroups`         | September 1, 2021 |
-| `httpRequests1dByColoGroups` | `httpRequestsAdaptiveGroups`         | September 1, 2021 |
-| `firewallRulePreviewGroups`  | `httpRequestsAdaptiveGroups`         | March 1, 2021     |
-| `healthCheckEvents`          | `healthCheckEventsAdaptive`          | March 1, 2021     |\
-| `healthCheckEventsGroups`    | `healthCheckEventsAdaptiveGroups`    | March 1, 2021     |\
-| `loadBalancingRequests`      | `loadBalancingRequestsAdaptive`      | September 30, 2021     |
-| `loadBalancingRequestsGroups`| `loadBalancingRequestsAdaptiveGroups`| September 30, 2021     |
+| Node                         | Replacement node                     | Sunset date        |
+| ---------------------------- | ------------------------------------ | ------------------ |
+| `httpRequestsCacheGroups`    | `httpRequestsAdaptiveGroups`         | March 1, 2021      |
+| `firewallRulePreviewGroups`  | `httpRequestsAdaptiveGroups`         | March 1, 2021      |
+| `healthCheckEvents`          | `healthCheckEventsAdaptive`          | March 1, 2021      |
+| `healthCheckEventsGroups`    | `healthCheckEventsAdaptiveGroups`    | March 1, 2021      |
+| `httpRequests1mByColoGroups` | `httpRequestsAdaptiveGroups`         | September 1, 2021  |
+| `httpRequests1dByColoGroups` | `httpRequestsAdaptiveGroups`         | September 1, 2021  |
+| `loadBalancingRequests`      | `loadBalancingRequestsAdaptive`      | September 30, 2021 |
+| `loadBalancingRequestsGroups`| `loadBalancingRequestsAdaptiveGroups`| September 30, 2021 |
 | `ipFlows1mGroups`<br/> `ipFlows1hGroups`<br/> `ipFlows1dGroups`<br/> `ipFlows1mAttacksGroups` | `spectrumNetworkAnalyticsAdaptiveGroups`<br/> `magicTransitNetworkAnalyticsAdaptiveGroups`<br/> `dosdNetworkAnalyticsAdaptiveGroups`<br/> `dosdAttackAnalyticsGroups`<br/> `flowtrackdNetworkAnalyticsAdaptiveGroups`<br/> `magicFirewallNetworkAnalyticsAdaptiveGroups` | March 31, 2022 |
+| `synAvgPps1mGroups`          | N/A                                  | December 1, 2022   |
 
 {{</table-wrap>}}
 

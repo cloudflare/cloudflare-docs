@@ -89,6 +89,7 @@ $ request_body=$(< <(cat <<EOF
 	"bundle_method":"ubiquitous",
 	"geo_restrictions":{"label":"us"}'
 }
+EOF
 ))
 ```
 
@@ -103,6 +104,7 @@ $ request_body=$(< <(cat <<EOF
 	"geo_restrictions":{"label":"us"}',
 	"type":"sni_custom"
 }
+EOF
 ))
 ```
 

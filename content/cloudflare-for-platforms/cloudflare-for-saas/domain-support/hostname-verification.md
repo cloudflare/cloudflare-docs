@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Verify custom hostnames
-weight: 5
+weight: 1
 ---
 
 # Verify custom hostnames

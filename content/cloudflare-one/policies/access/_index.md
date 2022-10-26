@@ -128,26 +128,30 @@ Next, you can create a policy for your application that requires the group, and 
 
 ## Selectors
 
-When you add a rule to your policy, you will be asked to specify the criteria you want users to meet.
+When you add a rule to your policy, you will be asked to specify the criteria you want users to meet.  
 
-Here is a list of all the criteria you can apply:
+These criteria are available for all Access application types, including [SaaS](/cloudflare-one/applications/configure-apps/saas-apps/), [self-hosted](/cloudflare-one/applications/configure-apps/self-hosted-apps/), and [non-HTTP](/cloudflare-one/applications/non-http/) applications. Identity-based attributes are only checked when a user authenticates, whereas other attributes are polled continuously for changes during the session.
 
-- **Access groups** — `example-team`
-- **Emails** — `you@company.com`
-- **Emails ending in** — `@company.com`
-- **External Evaluation** - allows or denies access based on custom logic in an external API. For more information, refer to the [External Evaluation rules](/cloudflare-one/policies/access/external-evaluation/) page.
-- **IP ranges** — `192.168.100.14` (supports IPv4 and IPv6).
-- **Country** – uses the IP address to determine country.
-- **Everyone** — allows, denies, or bypasses access to everyone.
-- **Common Name** - The request will need to present a valid certificate with an expected common name.
-- **Valid Certificate** - the request will need to present any valid client certificate.
-- **Service Token** - the request will need to present the correct service token headers configured for the specific application
-- **Any Access Service Token** - the request will need to present the headers for any [service token](/cloudflare-one/identity/service-tokens/) created for this account.
-- **Login Methods** - checks the identity provider used at the time of login.
-- **Authentication Method** - checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider.
-- **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an OIDC or SAML identity provider.
-- **Warp** - checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
-
+{{<table-wrap>}}
+| Selector | Description  | Checked at login | Checked continuously |
+| -------- | ------------ | ---------------- | -------------------- |
+| Emails   | `you@company.com`  | ✅ | ❌ |
+| Emails ending in | `@company.com`| ✅ | ❌ |
+| External Evaluation | Allows or denies access based on [custom logic](/cloudflare-one/policies/access/external-evaluation/) in an external API. | ✅ | ❌ |
+| IP ranges | `192.168.100.14` (supports IPv4 and IPv6). | ✅ | ✅ |
+| Country | Uses the IP address to determine country. | ✅ | ✅ |
+| Everyone | Allows, denies, or bypasses access to everyone. |  ✅ | ❌ |
+| Common Name | The request will need to present a valid certificate with an expected common name. | ✅ | ✅ |
+| Valid Certificate | The request will need to present any valid client certificate. |✅ | ✅ |
+| Service Token| The request will need to present the correct service token headers configured for the specific application. |✅ | ✅ |
+| Any Access Service Token | The request will need to present the headers for any [service token](/cloudflare-one/identity/service-tokens/) created for this account. |✅ | ✅ |
+| Login Methods | Checks the identity provider used at the time of login. | ✅ | ❌ |
+| Authentication Method | Checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider. |✅ | ❌  |
+| Identity provider group| Checks the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an OIDC or SAML identity provider.| ✅ | ❌ |
+| Device posture | Checks [device posture signals](/cloudflare-one/identity/devices/) from the WARP client or a third-party service provider. |✅ | ✅ |
+| Warp | Checks that the device is connected to WARP, including the consumer version. |✅ | ✅ |
+| Gateway | Checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/). |✅ | ✅ |
+{{</table-wrap>}}
 ## Order of execution
 
 Policies are evaluated based on their action type and ordering. Bypass and Service Auth policies are evaluated first, from top to bottom as shown in the UI. Then, Block and Allow policies are evaluated based on their order.

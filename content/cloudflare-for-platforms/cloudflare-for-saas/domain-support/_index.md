@@ -17,6 +17,6 @@ Ensure you have reviewed [Get Started with Cloudflare for SaaS](/cloudflare-for-
  
 {{<Aside type="note">}}
  
-To further customize hostname specific behavior, refer to [custom metadata](/cloudflare-for-platforms/workers-for-platforms/).
+To further customize hostname specific behavior, refer to [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/).
  
 {{</Aside>}}

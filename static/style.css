@@ -1099,6 +1099,7 @@ html {
 }
 
 .CodeBlock--token-deleted,
+.CodeBlock--token-deleted-sign,
 .CodeBlock--token-namespace {
   color: var(--code-red);
 }
@@ -1108,7 +1109,8 @@ html {
   cursor: help;
 }
 
-.CodeBlock--token-inserted {
+.CodeBlock--token-inserted,
+.CodeBlock--token-inserted-sign {
   color: var(--code-green);
 }
 
@@ -1543,6 +1545,13 @@ code.InlineCode-is-nowrap,
   .InlineCode.InlineCode-is-type {
     padding: 0 2px;
   }
+}
+
+.InlineCode--name,
+.InlineCode.InlineCode-is-name {
+  font-size: 1em;
+  font-weight: 700;
+  --background: transparent;
 }
 
 .Link {
@@ -5459,4 +5468,8 @@ pre {
 
 [theme="dark"] .littlefoot-footnote__button {
   background: rgba(110, 110, 110, 0.5);
+}
+
+ .mermaid {
+  background: #f5f5f5 !important;
 }

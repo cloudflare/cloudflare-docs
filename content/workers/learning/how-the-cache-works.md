@@ -30,6 +30,16 @@ Conceptually, there are two ways to interact with Cloudflare’s Cache using a W
 
 ---
 
+### Using Workers to purge
+
+When using single-file purge to purge assets cached by a Worker, make sure not to purge the end user URL. Instead, purge the URL that is in the `fetch` request. For example, you have a Worker that runs on `https://example.com/hello` and this Worker makes a `fetch` request to `https://notexample.com/hello`.
+
+As far as cache is concerned, the asset in the `fetch` request (`https://notexample.com/hello`) is the asset that is cached (`https://notexample.com/hello`). To purge it, you need to purge `https://notexample.com/hello`. 
+
+Purging the end user URL, `https://example.com/hello`, will not work because that is not the URL that cache sees. You need to confirm in your Worker which URL you are actually fetching, so you can purge the correct asset.
+
+In the previous example, `https://notexample.com/hello` is not proxied through Cloudflare. If `https://notexample.com/hello` was proxied (orange-clouded) through Cloudflare, then you must own `notexample.com` and purge `https://notexample.com/hello` from the `notexample.com` zone.
+
 ### Purging assets stored with the Cache API
 
 Assets stored in the cache through [Cache API](/workers/runtime-apis/cache/) operations can be purged in a couple of ways:

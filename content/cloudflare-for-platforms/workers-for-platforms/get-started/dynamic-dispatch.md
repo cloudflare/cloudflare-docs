@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Create dynamic dispatch
+title: Create a dynamic dispatch Worker
 weight: 3
 layout: list
 ---

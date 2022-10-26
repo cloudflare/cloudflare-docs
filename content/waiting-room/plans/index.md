@@ -54,7 +54,7 @@ The features available for a waiting room depend on your plan type. You can only
     </tr>
     <tr>
       <td>
-        <a href="/waiting-room/additional-options/mobile-traffic/">Mobile app traffic</a>
+        <a href="/waiting-room/how-to/json-response/">JSON-friendly response</a>
       </td>
       <td>No</td>
       <td>No</td>
@@ -63,6 +63,14 @@ The features available for a waiting room depend on your plan type. You can only
     <tr>
       <td>
         <a href="/waiting-room/additional-options/create-events/">Scheduled events</a>
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+        <tr>
+      <td>
+        <a href="/waiting-room/additional-options/waiting-room-rules/">Waiting Room Rules</a>
       </td>
       <td>No</td>
       <td>No</td>

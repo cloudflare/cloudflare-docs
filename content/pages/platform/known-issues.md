@@ -19,9 +19,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 ## Git configuration 
 
-- After you have selected a GitHub/GitLab repository for your Pages application, it cannot be changed. Remove/delete your Pages project and create a new one pointing at a different repository if you need to update it.
-
-- A GitHub or GitLab account cannot be attached to more than one Cloudflare account.
+- After you have selected a GitHub/GitLab repository for your Pages application, it cannot be changed. Delete your Pages project and create a new one pointing at a different repository if you need to update it.
 
 ## Build configuration
 
@@ -33,6 +31,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 - For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. An [equivalent](/pages/platform/functions/) to Netlify's Serverless Functions is currently in beta.
 
 ## Custom Domains
+
 - It is currently not possible to add a custom domain with a wildcard, for example, `*.domain.com`.
 
 - It is currently not possible to add a custom domain with a Worker already routed on that domain.

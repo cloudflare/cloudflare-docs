@@ -8,7 +8,7 @@ weight: 2
 
 {{<render file="_monitor-definition.md">}}
 
-![Dynamic load balancing involves pools, origins, monitors, and health checks](/load-balancing/static/images/load-balancer-components.png)
+{{<render file="_health-check-diagram.md">}}
 
 Health checks that result in a status change for an origin server are recorded as events in the Load Balancing event logs.
 

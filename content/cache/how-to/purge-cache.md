@@ -13,6 +13,8 @@ Purge requests appear in Cloudflare Logs and are identified by the PURGE method 
 
 {{</Aside>}}
 
+For information on how to use single-file purge to purge assets cached by a Workers fetch, refer to [​​Using Workers to purge](/workers/learning/how-the-cache-works/#using-workers-to-purge).
+
 ## Purge by single-file (by URL)
 
 With purge by single-file, cached resources are immediately removed from the stored assets in your Content Delivery Network (CDN) across all data centers. New requests for the purged asset receive the latest version from your origin web server and add it back to your CDN cache within the specific Cloudflare data center that served the request.
@@ -92,7 +94,7 @@ When your content reaches our edge network, Cloudflare:
 - A single HTTP response can have more than one `Cache-Tag HTTP` header field.
 - The minimum length of a cache-tag is 1 byte.
 - Individual tags don’t have a maximum length, but the aggregate `Cache-Tag HTTP` header cannot exceed 16 KB after the header field name, which is approximately 1000 unique tags. Length includes whitespace and commas but does not include the header field name.
-- For cache purges, the maximum length of cache-tags in an API call is 120 characters.
+- For cache purges, the maximum length of a cache-tag in an API call is 1024 characters.
 - The `Cache-Tag HTTP` header must accept all valid characters allowable in HTTP headers, as specified in [RFC-5987](https://tools.ietf.org/html/rfc5987).
 - Spaces are not allowed in cache-tags.
 - Case does not matter. For example, `Tag1` and `tag1` are considered the same.
