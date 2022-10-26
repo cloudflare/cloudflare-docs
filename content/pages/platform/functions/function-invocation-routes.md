@@ -10,7 +10,7 @@ By adding Functions to a project, all requests by default will invoke your Funct
 Additionally, some frameworks (e.g. Remix, SvelteKit) will also automatically generate this file.  However, if the framework you are using does not, please create an issue on their repository with a link to this page or let us know. 
 
 ## Why do you need it: 
-Having a `_routes.json` file gives you more granular control over when your Function is invoked. This is particularly useful with respect to [billing](https://developers.cloudflare.com/pages/platform/functions/billing/) because Pages offers unlimited free requests to static assets if:
+Having a `_routes.json` file gives you more granular control over when your Function is invoked. This is particularly useful with respect to [billing](https://developers.cloudflare.com/pages/platform/functions/billing/) because Pages offers unlimited free requests to static assets in either case:
 * You have excluded the static asset routes in your `_routes.json`
 * You do not have Functions on your project 
 
