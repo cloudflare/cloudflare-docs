@@ -6,7 +6,7 @@ title: Function invocation routes
 
 By adding Functions to a Pages project, all requests by default will invoke your Function. You can exclude routes such as a static assets directory by creating `_routes.json` file. This file will be automatically generated if a `functions` directory is detected in your project when you publish your project with Pages CI or Wrangler. 
 
-Additionally, some frameworks (such as Remix, SvelteKit) will also automatically generate a `_routes.json` file. However, if the framework you are using does not, create an issue on their repository with a link to this page or let us know on [Discord]().
+Additionally, some frameworks (such as Remix, SvelteKit) will also automatically generate a `_routes.json` file. However, if the framework you are using does not, create an issue on their repository with a link to this page or let us know on [Discord](https://discord.gg/cloudflaredev).
 
 Having a `_routes.json` file gives you more granular control over when your Function is invoked. This is useful with respect to [billing](https://developers.cloudflare.com/pages/platform/functions/billing/) because Pages offers unlimited free requests to static assets in the following cases:
 
