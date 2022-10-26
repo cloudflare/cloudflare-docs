@@ -8,7 +8,7 @@ weight: 10
 
 ## 2022-10-25
 
-- Renamed the `[data-]expired-callback` callback to [`[data-]timeout-callback`]((/turnstile/get-started/client-side-rendering/#configurations)) (called when the challenge times out)
+- Renamed the `[data-]expired-callback` callback to [`[data-]timeout-callback`](/turnstile/get-started/client-side-rendering/#configurations) (called when the challenge times out)
 - Added the [`[data-]expired-callback`](/turnstile/get-started/client-side-rendering/#configurations) callback (called when the token expires)
 
 ## 2022-10-24
