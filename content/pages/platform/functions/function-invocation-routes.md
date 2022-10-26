@@ -26,7 +26,6 @@ Below is an example of a `_routes.json`.
 ```json
 ---
 filename: _routes.json
-highlight: [3]
 ---
 
 {
@@ -38,12 +37,11 @@ highlight: [3]
 
 This `_routes.json` will invoke your Functions on all routes. 
 
-Let's look at another example. Here, any route inside the build directory will not invoke the Function and therefore will not incur a Functions invocation charge. 
+Let's look at another example. Here, any route inside the `build` directory will not invoke the Function and therefore will not incur a Functions invocation charge. 
 
 ```json
 ---
 filename: _routes.json
-highlight: [3]
 ---
 {
     "version": 1,
