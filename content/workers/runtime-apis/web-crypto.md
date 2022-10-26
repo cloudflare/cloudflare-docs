@@ -208,16 +208,16 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
     - Returns a Promise that fulfills with a newly-generated `CryptoKey`, for symmetrical algorithms, or a `CryptoKeyPair`, containing two newly generated keys, for asymmetrical algorithms. For example, to generate a new AES-GCM key:
 
-    ```js
-    let keyPair = await crypto.subtle.generateKey(
-      {
-        name: 'AES-GCM',
-        length: '256',
-      },
-      true,
-      ['encrypt', 'decrypt']
-    );
-    ```
+```js
+let keyPair = await crypto.subtle.generateKey(
+  {
+    name: 'AES-GCM',
+    length: '256',
+  },
+  true,
+  ['encrypt', 'decrypt']
+);
+```
 
   **Parameters:**
 
