@@ -60,15 +60,35 @@ These APIs allow a consumer Worker to consume messages from a Queue.
 
 To define a consumer Worker, add a `queue` function to the default export of the Worker. This will allow it to receive messages from the Queue.
 
+By default, all messages in the batch will be acknowledged as soon as all of the following conditions are met:
+
+1. The `queue` function has returned.
+2. If the `queue` function returned a promise, the promise has resolved.
+3. Any promises passed to `waitUntil()` have resolved.
+
+If the `queue` function throws, or the promise returned by it or any of the promises passed to `waitUntil()` were rejected, then the entire batch will be considered a failure and will be retried according to the consumer's retry settings.
+
 ```ts
 export default {
-  async queue(batch: MessageBatch, env: Environment) {
+  async queue(batch: MessageBatch, env: Environment, ctx: ExecutionContext) {
     for (const message of batch.messages) {
       console.log("Received", message);
     }
   },
 };
 ```
+
+The `env` and `ctx` fields are as [documented in the Workers docs](/workers/learning/migrating-to-module-workers/).
+
+Or alternatively, a queue consumer can be written using service worker syntax:
+
+```js
+addEventListener("queue", (event) => {
+  event.waitUntil(handleMessages(event));
+});
+```
+
+In service worker syntax, `event` provides the same fields and methods as `MessageBatch`, as defined below, in addition to [`waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil).
 
 ### `MessageBatch`
 
@@ -90,7 +110,7 @@ interface MessageBatch<Body = any> {
 
 - {{<code>}}messages{{<param-type>}}Message[]{{</param-type>}}{{</code>}}
 
-  - An array of messages in the batch. Ordering of messages is not guaranteed.
+  - An array of messages in the batch. Ordering of messages is best effort -- not guaranteed to be exactly the same as the real-world order in which they were published. If you are interested in guaranteed FIFO ordering, please [reach out](mailto:queues@cloudflare.com).
 
 - {{<code>}}retryAll() {{<type>}}void{{</type>}}{{</code>}}
 
