@@ -43,8 +43,8 @@ For help determining which data center to select for a packet capture, visit htt
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit** or **Magic WAN**.
+2. On the **Magic Transit** or **Magic WAN** page next to **Packet captures**, select **Start a capture**.
 3. Select the **Captures** tab and select **Start a capture**.
 4. From **Packet captures - Capture configuration**, choose a capture type and select **Next**.
 5. Fill out the required fields to begin the capture and then select **Start**.
@@ -190,8 +190,8 @@ header: Simple PCAP example response
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit** or **Magic WAN**.
+2. On the **Magic Transit** or **Magic WAN** page next to **Packet captures**, select **Start a capture**.
 3. From the **Packet Capture** page, select the **Captures** tab.
 
 {{</tab>}}
@@ -251,8 +251,8 @@ After your request finishes processing, you can download your packet captures.
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit** or **Magic WAN**.
+2. On the **Magic Transit** or **Magic WAN** page next to **Packet captures**, select **Start a capture**.
 3. From the **Packet captures** page, select the **Captures** tab.
 4. Locate your packet capture you want to download and under **Captures**, select the link to download it.
 
@@ -288,8 +288,8 @@ Once the simple PCAP collection is complete, you can download the PCAP by specif
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit** or **Magic WAN**.
+2. On the **Magic Transit** or **Magic WAN** page next to **Packet captures**, select **Start a capture**.
 3. From the **Packet captures** page, select the **Captures** tab.
 
 The list of packet captures associated with your account displays.
