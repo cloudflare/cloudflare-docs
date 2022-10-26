@@ -38,7 +38,6 @@ export const OWNERS: Record<string, string[]> = {
   "network-interconnect": ["dcpena"],
   "page-shield": ["pedrosousa"],
   pages: ["deadlypants1973"],
-  partners: ["kodster28"],
   "pub-sub": ["dcpena"],
   r2: ["deadlypants1973"],
   railgun: ["marciocloudflare"],
