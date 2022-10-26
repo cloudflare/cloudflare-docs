@@ -162,7 +162,7 @@ Example: If you purge `foo.com/bar`, any asset that starts with `foo.com/bar` wi
 
 ### Purge by prefix normalization
 
-Using purge by prefix normalization, when a purge by prefix request comes into Cloudflare for a normalized URL path, the purge services respects the [URL normalization](/rules/normalization/) and purges the normalized URL.
+Using purge by prefix normalization, when a purge by prefix request comes into Cloudflare for a normalized URL path, the purge service respects the [URL normalization](/rules/normalization/) and purges the normalized URL.
 
 #### How does URL Normalization work
 
@@ -215,45 +215,7 @@ Take the following website as an example: `https://cloudflare.com/انشاء-م�
   </tbody>
 </table>
 
-#### Purge by prefix
-
-If you want to purge by prefix, this will happen:
-
-<table>
-  <tbody>
-    <th colspan="5" rowspan="1">
-      What the user wants to purge
-    <th colspan="5" rowspan="1">
-      What the EDGE purges
-    </th>
-    <tr>
-      <td colspan="5" rowspan="1">
-        <code>clouflare.com/انشاء-موقع-الكتروني/</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        <code>cloudflare.com/انشاء-موقع-الكتروني/</code>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        <code>cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        <code>cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/</code>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        <code>cloudflare.com/hello/</code>
-      </td>
-      <td colspan="5" rowspan="1">
-        <code>cloudflare.com/hello/</code>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-If you want to purge the asset cached by the visitor request for `https://cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg`, `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg` and `https://cloudflare.com/hello/img_1.jpg`, you can respectivaly purge by prefix `cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/`, `cloudflare.com/انشاء-موقع-الكتروني/` and `cloudflare.com/hello/`. 
+As shown above, with URL normalization **ON**, visitors to the two URLs, `https://cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg` and `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg`, will be served the same cached asset. Purging `https://cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg` will purge that asset for both visitors.
 
 ## Purge cache key resources
 
