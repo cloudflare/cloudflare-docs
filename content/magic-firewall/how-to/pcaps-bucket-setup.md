@@ -17,8 +17,8 @@ Learn how to set up a bucket for use with full packet captures.
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit** or **Magic WAN**.
+2. On the **Magic Transit** or **Magic WAN** page next to **Packet captures**, select **Start a capture**.
 3. From the **Packet captures** page, select the **Buckets** tab.
 4. Select **Add a bucket**.
 5. Under **Bucket configuration**, select a bucket service and select **Next**.
@@ -144,8 +144,8 @@ View a list of all buckets configured on your account.
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit** or **Magic WAN**.
+2. On the **Magic Transit** or **Magic WAN** page next to **Packet captures**, select **Start a capture**.
 3. From the **Packet captures** page, select the **Buckets** tab.
 
 The list of buckets associated with your account displays.
