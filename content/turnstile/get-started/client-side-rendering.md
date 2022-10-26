@@ -134,14 +134,13 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 | `tabindex` | `data-tabindex` | The tabindex of Turnstile's iframe for accessibility purposes. The default value is `0`. |
 | `response-field` | `data-response-field` | A boolean that controls if an input element with the response token is created, defaults to `true`. |
 | `response-field-name` | `data-response-field-name` | Name of the input element, defaults to `cf-turnstile-response`. |
-| `size` | `data-size` | The widget size. Can take the following values: `normal`, `invisible`, `compact`. |
+| `size` | `data-size` | The widget size. Can take the following values: `normal`, `compact`. |
 
 ## Widget size
 
-The Turnstile widget can take 3 different sizes:
+The Turnstile widget can take two different sizes, when using the Managed or Non-interactive modes:
 
 | Size | Width | Height |
 | --- | --- | --- |
 | normal | 300px | 65px |
 | compact | 130px | 120px |
-| invisible | 0px | 0px |
