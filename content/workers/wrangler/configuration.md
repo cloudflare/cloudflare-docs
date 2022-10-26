@@ -639,4 +639,6 @@ It is a recommended best practice to treat `wrangler.toml` as a source of truth 
 
 If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`.
 
+Changing routes in your `wrangler.toml` will behave in a similar way, overriding any routes currently deployed. At the moment, there is no way to disable this behaviour.
+
 Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.
