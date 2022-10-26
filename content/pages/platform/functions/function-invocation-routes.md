@@ -20,8 +20,8 @@ You will need to create a `_routes.json` file to control when your Function is i
 * **include**: Defines routes that will be invoked by Functions. Accepts wildcard behavior.
 * **exclude**: Defines routes that will not be invoked by Functions. Accepts wildcard behavior. `exclude` always take priority over `include`.
 
+### Example configuration
 Below is an example of a `_routes.json`. 
-
 
 ```json
 ---
@@ -49,6 +49,17 @@ filename: _routes.json
     "exclude": ["/build/*"]
 }
 ```
+### Example matches
+Below are other examples of how matching works in the `_routes.json` file
+
+| rule | matches |
+| --- | ---| 
+| /foo | /foo, /foo/ |
+| /foo/ | /foo, /foo/ |
+| /foo* | /foo, /foobar, /foo/bar, /foobar/baz |
+| /* | This matches everything | 
+| /foo/* | /foo, /foo/, /foo/bar |
+| /foo/*.html | /foo/bar.html, /foo/bar/baz.html |
 
 ## Limits
 
