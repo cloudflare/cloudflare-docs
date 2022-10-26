@@ -42,7 +42,9 @@ You can now use your device posture check in an [Access policy](/cloudflare-one/
 
 ## Policy enforcement rate
 
-Access detects changes in device posture at the same rate as the [polling frequency](#polling-frequency) configured for the posture check. Due to how Gateway caches data, Gateway policies are subject to an additional five minute delay. For example, if your polling frequency is set to 10 minutes, it may take up to 15 minutes for Gateway to detect posture changes on a device.
+Access detects changes in device posture at the same rate as the [polling frequency](#polling-frequency) configured for the posture check.
+
+Because Gateway evaluates network and HTTP policies on every request, it maintains a local cache of posture results that is only updated every five minutes. Therefore, Gateway policies are subject to an additional five-minute delay. For example, if you set your polling frequency to 10 minutes, it may take up to 15 minutes for Gateway to detect posture changes on a device.
 
 ### Polling frequency
 
