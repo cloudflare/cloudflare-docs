@@ -96,7 +96,7 @@ To create a Spectrum application using a CNAME record, you will need to create a
 3.  Select **Create an Application**. If this is your first time using Spectrum, the **Create an Application** modal appears.
 5.  Select your **Application Type**.
 6.  Under **Domain**, enter the domain that will use Spectrum.
-7.  Under **Edge Port**, enter the port Cloudflare should use your application.
+7.  Under **Edge Port**, enter the port Cloudflare should use for your application.
 8.  Under **Origin**, enter your CNAME Record name.
 9.  Select **Add**.
 
