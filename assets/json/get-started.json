@@ -133,12 +133,12 @@
             "value": true
           }
         ],
-        "description": "Build fast sites in record time with <a href='/pages/get-started/'>Cloudflare Pages</a>, a JAMstack platform for frontend developers to collaborate and deploy websites.",
+        "description": "Build fast sites in record time with <a target='_blank' href='https://dash.cloudflare.com/?to=/:account/pages'>Cloudflare Pages</a>, a JAMstack platform for frontend developers to collaborate and deploy websites.<br /><br />For more details, refer to our <a href='/pages/get-started/' target='_blank'>Pages documentation</a>.",
         "estimated_time": 20
       },
       {
         "type": "question",
-        "description": "Do you already own a <a href='https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/'>domain name</a> (something like <code>example.com</code> or <code>wikipedia.org</code>)?",
+        "description": "Do you already own a <a target='_blank' href='https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/'>domain name</a> (something like <code>example.com</code> or <code>wikipedia.org</code>)?",
         "id": "domain_ownership",
         "visible_by_default": false,
         "variables": [
@@ -172,14 +172,14 @@
             "value": false
           }
         ],
-        "description": "Get an at-cost domain name through <a href='https://dash.cloudflare.com/?to=/:account/domains/register'>Cloudflare Registrar</a>, which simplifies the rest of your Cloudflare setup.<br /><br />For more details, refer to our <a href='/registrar/get-started/register-domain/'>Registrar documentation</a>.",
+        "description": "Get an at-cost domain name through <a target='_blank' href='https://dash.cloudflare.com/?to=/:account/domains/register'>Cloudflare Registrar</a>, which simplifies the rest of your Cloudflare setup.<br /><br />For more details, refer to our <a target='_blank' href='/registrar/get-started/register-domain/'>Registrar documentation</a>.",
         "estimated_time": 5
       },
       {
         "type": "module",
         "title": "Create a new website",
         "visible_by_default": false,
-        "description": "Outside of Cloudflare, you need to create and host your website content. For more guidance, refer to <a href='https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web'>Getting started with the web</a>.",
+        "description": "Outside of Cloudflare, you need to create and host your website content. For more guidance, refer to <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web'>Getting started with the web</a>.",
         "variables": [
           {
             "name": "live_website",
@@ -207,7 +207,7 @@
             "postpone_evaluation": true
           }
         ],
-        "description": "Make a few updates at your registrar and within Cloudflare to improve your domain's <a href='/fundamentals/get-started/concepts/how-cloudflare-works/#benefits'>speed, security, and reliability</a>.",
+        "description": "Make a few updates at your registrar and within Cloudflare to improve your domain's <a target='_blank' href='/fundamentals/get-started/concepts/how-cloudflare-works/#benefits'>speed, security, and reliability</a>.",
         "estimated_time": 5,
         "pages": [
           {
