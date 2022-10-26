@@ -39,6 +39,7 @@ export const OWNERS: Record<string, string[]> = {
   "page-shield": ["pedrosousa"],
   pages: ["deadlypants1973"],
   "pub-sub": ["dcpena"],
+  queues: ["deadlypants1973"],
   r2: ["deadlypants1973"],
   railgun: ["marciocloudflare"],
   "randomness-beacon": ["kodster28"],
