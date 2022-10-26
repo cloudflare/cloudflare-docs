@@ -151,6 +151,8 @@ The burst rate and daily request limits apply at the account level, meaning that
 
 Accounts using the Workers Free plan are subject to a burst rate limit of 1000 requests per minute. Users visiting a rate limited site will receive a Cloudflare `1015` error page. However if you are calling your Worker programmatically, you can detect the rate limit page and handle it yourself by looking for HTTP status code `429`.
 
+Workers being rate-limited by Anti-Abuse Protection are also visible from the Cloudflare Dashboard, in the form of a Web Application Firewall Block event, with a `ruleID` of `worker`.
+
 ### Daily request
 
 Accounts using the Workers Free plan are subject to a daily request limit of 100,000 requests. Free plan daily requests counts reset at midnight UTC. A Worker that fails as a result of daily request limit errors can be configured by toggling its corresponding [route](/workers/platform/routing/routes/) in two modes: 1) Fail open and 2) Fail closed.
