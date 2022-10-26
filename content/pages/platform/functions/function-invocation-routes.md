@@ -52,14 +52,14 @@ filename: _routes.json
 ### Example matches
 Below are other examples of how matching works in the `_routes.json` file
 
-| rule | matches |
-| --- | ---| 
-| /foo | /foo, /foo/ |
-| /foo/ | /foo, /foo/ |
-| /foo* | /foo, /foobar, /foo/bar, /foobar/baz |
-| /* | This matches everything | 
-| /foo/* | /foo, /foo/, /foo/bar |
-| /foo/*.html | /foo/bar.html, /foo/bar/baz.html |
+| Rule          | Matches                              |
+| ------------- | ------------------------------------ |
+| `/foo`        | /foo, /foo/                          |
+| `/foo/`       | /foo, /foo/                          |
+| `/foo*`       | /foo, /foobar, /foo/bar, /foobar/baz |
+| `/*`          | This matches everything              |
+| `/foo/*`      | /foo, /foo/, /foo/bar                |
+| `/foo/*.html` | /foo/bar.html, /foo/bar/baz.html     |
 
 ## Limits
 
