@@ -24,10 +24,7 @@ Cloudflare Zero Trust logs are stored for a varying period of time based on the 
 
 By default, Cloudflare will store and deliver logs from data centers across our global edge network. To maintain regional control over your data, you can use [Regional Services](https://support.cloudflare.com/hc/en-us/articles/360061946171-Data-Localization-Suite) and restrict data storage to a specific geographic region.
 
-{{<Aside type="note">}}
-- Logs are delivered from memory and never stored on disk.
-- All logs are still sent to the Portland, OR (PDX) data center for processing.
-{{</Aside>}}
+Cloudflare will still send all logs to the Portland, OR (PDX) data center for processing and deliver them from memory. Logs are never stored on disk outside of your provisioned region.
 
 ## Data privacy
 
