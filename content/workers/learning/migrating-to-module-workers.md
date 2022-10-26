@@ -122,15 +122,7 @@ To add support for module Workers to an existing project, update your `wrangler.
 name = "my-worker"
 type = "javascript"
 workers_dev = true
-
-[build.upload]
-format = "modules"
-dir = "./src"
-main = "./worker.js" # becomes "./src/worker.js"
-
-[[build.upload.rules]]
-type = "ESModule"
-globs = ["**/*.js"]
+main = "src/index.js"
 
 # Uncomment if you have a build script.
 # [build]
