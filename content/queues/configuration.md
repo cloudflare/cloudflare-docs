@@ -20,7 +20,7 @@ Queues support is not yet available in a full Wrangler release. It will be soon,
 
 {{<Aside type="note">}}
 
-Queues are currently only configurable via Wrangler. Support for configuring Queues in the Dashboard will be coming soon.
+Queues are currently only configurable via [Wrangler](/workers/wrangler/get-started/). Support for configuring Queues in the dashboard will be coming soon.
 
 {{</Aside>}}
 
@@ -54,7 +54,7 @@ These options should be used when a Worker wants to send messages to a Queue.
 
 ## Consumer
 
-These options should be used when a Worker wants to receive messages from a Queue. Maximum values for each of these options can be found on the [Limits](/queues/limits) page.
+These options should be used when a Worker wants to receive messages from a Queue. Refer to [Limits](/queues/limits) to review the maximum values for each of these options.
 
 ```toml
 [[queues.consumers]]
