@@ -24,7 +24,7 @@ To create a Spectrum application using an IP address, Cloudflare normally assign
 3.  Select **Create an Application**. If this is your first time using Spectrum, the **Create an Application** modal appears.
 4.  Select your **Application Type**.
 5.  Under **Domain**, enter the domain that will use Spectrum.
-6.  Under **Edge Port**, enter the port Cloudflare should use your application.
+6.  Under **Edge Port**, enter the port Cloudflare should use for your application.
 7.  Under **Origin**, enter your application's origin IP and port.
 8.  If your application requires the client IP and supports [Proxy Protocol](https://www.haproxy.com/blog/haproxy/proxy-protocol/), enable **Proxy Protocols**. Proxy Protocol is a method for a proxy like Cloudflare to send the client IP to the origin application.
 9.  Select **Add**.
