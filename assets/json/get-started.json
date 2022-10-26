@@ -133,7 +133,7 @@
             "value": true
           }
         ],
-        "description": "Build fast sites in record time with <a target='_blank' href='https://dash.cloudflare.com/?to=/:account/pages'>Cloudflare Pages</a>, a JAMstack platform for frontend developers to collaborate and deploy websites.<br /><br />For more details, refer to our <a href='/pages/get-started/' target='_blank'>Pages documentation</a>.",
+        "description": "Build fast sites in record time with <a href='https://dash.cloudflare.com/?to=/:account/pages' target='_blank'>Cloudflare Pages</a>, a JAMstack platform for frontend developers to collaborate and deploy websites.<br /><br />For more details, refer to our <a href='/pages/get-started/' target='_blank'>Pages documentation</a>.",
         "estimated_time": 20
       },
       {
