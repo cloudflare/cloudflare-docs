@@ -406,6 +406,13 @@
 /pages/platform/github-integration/ /pages/platform/git-integration/ 301
 /pages/platform/direct-uploads/ /pages/platform/direct-upload/ 301
 
+# partners
+/partners/ /learning-paths/technology-partner-integrations/ 301
+/partners/analytics/ /learning-paths/technology-partner-integrations/#analytics-integrations/ 301
+/partners/logs/ /learning-paths/technology-partner-integrations/#cloudflare-logs 301
+/partners/email-security/ /email-security/partners/ 301
+/partners/network-interconnect/ /learning-paths/technology-partner-integrations/#cloudflare-network-interconnect/ 301
+/partners/tenant/ /tenant/ 301
 
 # page-shield
 /page-shield/script-monitor/ /page-shield/ 301
