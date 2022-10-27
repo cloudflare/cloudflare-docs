@@ -22,6 +22,6 @@ On this table, you have information about which protocols are available per plan
 
 {{<Aside type="note">}}
 
-PAYGO customers have access to all protocols, except for TCP and UDP. There is a limit of one app per protocol.
+Pro and Business customers have access to all protocols, except for TCP and UDP. For Minecraft, SSH and RDP, there is a limit of one app per protocol.
 
 {{</Aside>}}
