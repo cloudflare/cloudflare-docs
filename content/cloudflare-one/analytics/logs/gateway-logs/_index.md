@@ -1,21 +1,21 @@
 ---
 pcx_content_type: reference
-title: Gateway Activity logs
+title: Gateway activity logs
 layout: single
 weight: 3
 ---
 
-# Gateway Activity logs
+# Gateway activity logs
 
 {{<Aside>}}
 
-Activity logs will only show the public Source IP address. Private IP addresses are NAT-ed behind a public IP address.
+Gateway logs will only show the public Source IP address. Private IP addresses are NAT-ed behind a public IP address.
 
 {{</Aside>}}
 
-The Activity log shows the individual DNS queries, Network packets, and HTTP requests inspected by Gateway. You can also download encrypted [SSH command logs](/cloudflare-one/policies/filtering/network-policies/ssh-logging/) for sessions proxied by Gateway.
+Gateway activity logs show the individual DNS queries, Network packets, and HTTP requests inspected by Gateway. You can also download encrypted [SSH command logs](/cloudflare-one/policies/filtering/network-policies/ssh-logging/) for sessions proxied by Gateway.
 
-To view Activity logs, log in to your [Zero Trust dashboard](https://dash.teams.cloudflare.com/) and navigate to **Logs** > **Gateway**. Click on an individual row to investigate the event in more detail.
+To view Gateway activity logs, log in to your [Zero Trust dashboard](https://dash.teams.cloudflare.com/) and navigate to **Logs** > **Gateway**. Click on an individual row to investigate the event in more detail.
 
 ## Selective logging
 
@@ -129,11 +129,11 @@ This feature is only available on the Zero Trust Enterprise plan.
 
 {{</Aside>}}
 
-You can configure the automatic export of Gateway Activity logs to third-party storage destinations or to security information and event management (SIEM) tools. Once exported, your team can analyze and audit the data as needed.
+You can configure the automatic export of Gateway logs to third-party storage destinations or to security information and event management (SIEM) tools. Once exported, your team can analyze and audit the data as needed.
 
 This feature builds on Cloudflare's Logpush Service — refer to the Logpush documentation to find a list of available fields for[DNS](/logs/reference/log-fields/account/gateway_dns/), [Network](/logs/reference/log-fields/account/gateway_network/), and [HTTP](/logs/reference/log-fields/account/gateway_http/) logs.
 
-To enable Logpush for Gateway Activity logs:
+To enable Logpush for Gateway logs:
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **Logs** > **Logpush**.
 2. Click **Connect a service**.
