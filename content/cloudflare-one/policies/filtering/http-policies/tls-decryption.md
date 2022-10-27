@@ -30,7 +30,7 @@ Applications that use embedded certificates and mTLS authentication do not trust
 
 If you try to perform TLS decryption, these applications may not load or may return an error. You can resolve the issue by [adding the Cloudflare certificate to the application](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/#add-the-certificate-to-applications)(if supported by the application) or by [exempting] the application from TLS decryption.
 
-To bypass TLS decryption, add a [Do Not Inspect](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) HTTP policy for the application or domain. The HTTP policy builder provides a [list of trusted applications](/cloudflare-one/policies/filtering/initial-setup/http/#bypass-inspection-for-incompatible-applications) that are known to use embedded certificates. When accessing a Do Not Inspect site in the browser, you will see a **Your connection is not private** warning which you can proceed through to connect.
+To bypass TLS decryption, add a [Do Not Inspect](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) HTTP policy for the application or domain. The HTTP policy builder provides a [list of trusted applications](/cloudflare-one/policies/filtering/initial-setup/http/#bypass-inspection-for-incompatible-applications) that are known to use embedded certificates. When accessing a Do Not Inspect site in the browser, you will see a **Your connection is not private** warning, which you can proceed through to connect.
 
 HTTPS traffic from `Do Not Inspect` applications will not be intercepted by Gateway or subject to your HTTP policies. You can, however, still apply [network policies](/cloudflare-one/policies/filtering/network-policies/) to these applications.
 
