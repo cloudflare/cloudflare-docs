@@ -18,7 +18,7 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
 
      | **Type** | **Name** | **IPv4 address** | **Proxy status** |
      | -------- | -------- | ---------------- | ---------------- |
-     | A        | `mail`   | `192.0.2.1`      | Proxied          |
+     | A        | `mail`   | `192.0.2.1`      | Unproxied          |
 
 2.  An **MX** record that points to that subdomain.
 
