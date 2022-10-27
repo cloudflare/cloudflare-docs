@@ -17,7 +17,7 @@ $ npm install --global @gridsome/cli
 
 ## Set up a new project
 
-With Gridsome installed, you can set up a new project by running `gridsome create`. The `create` command accepts a name that defines the directory of the project created and an optional starter kit name. You can find out more in the [Gridsome starters section](https://gridsome.org/docs/starters/).
+With Gridsome installed, set up a new project by running `gridsome create`. The `create` command accepts a name that defines the directory of the project created and an optional starter kit name. You can review more starters in the [Gridsome starters section](https://gridsome.org/docs/starters/).
 
 ```sh
 $ gridsome create my-gridsome-website
