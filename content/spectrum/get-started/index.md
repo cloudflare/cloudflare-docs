@@ -9,7 +9,7 @@ layout: single
 
 Spectrum is available on all paid plans. Pro and Business support selected protocols only, whereas Enterprise supports all TCP and UDP based traffic. Refer to [Configuration options](/spectrum/reference/configuration-options/) for more configuration details.
 
-To create a Spectrum application, you can either use an IP address, a CNAME Record or a Load Balancer. Independently of the method you use, you can create the application through the dashboard or via API.
+To create a Spectrum application, you can either use an IP address, a CNAME Record or a Load Balancer. Independently of the method you use, you can create the application through the dashboard or via [API](https://api.cloudflare.com/#spectrum-applications-properties).
 
 ## Create a Spectrum application using an IP address
 
