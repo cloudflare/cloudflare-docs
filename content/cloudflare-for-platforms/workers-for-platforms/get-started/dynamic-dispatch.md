@@ -46,8 +46,5 @@ Method and endpoint | Description
 `PUT https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>` | Uploads a Worker to a dispatch namespace.
 `DELETE https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>` |  Deletes a script from a dispatch namespace. This will fully delete the given script, immediately making it unavailable to all of the dispatch namespace bindings referencing this dispatch namespace.
 `GET https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>` | Returns details for an individual script in a namespace.
-`POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces'` | Creates a new dispatch namespace. Accepts a namespace name in the request body. 
-{
-    "name": "my-dispatch-namespace"
-}
+`POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces'` | Creates a new dispatch namespace. Accepts a namespace name in the request body. `{ "name": "my-dispatch-namespace" }`
 `DELETE 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>'` | Immediately deletes a dispatch namespace and any scripts in the namespace.
