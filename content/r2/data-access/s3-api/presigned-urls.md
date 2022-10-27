@@ -173,16 +173,20 @@ Note that the caller has to add the the same `If-Unmodified-Since` header to use
 In a Worker, you would change your upload to:
 
 ```ts
-    const existingObject = await env.DROP_BOX_BUCKET.put(url.toString().substring(1), request.body, {
-      onlyIf: {
-        // No objects will have been uploaded before September 28th, 2021 which
-        // is the initial R2 announcement.
-        uploadedBefore: new Date(1632844800000),
-      }
-    });
-    if (existingObject?.etag !== request.headers.get('etag')) {
-      return new Response('attempt to overwrite object', { status: 400 })
-    }
+const existingObject = await env.DROP_BOX_BUCKET.put(
+	url.toString().substring(1),
+	request.body,
+	{
+		onlyIf: {
+			// No objects will have been uploaded before September 28th, 2021 which
+			// is the initial R2 announcement.
+			uploadedBefore: new Date(1632844800000),
+		},
+	}
+);
+if (existingObject?.etag !== request.headers.get('etag')) {
+	return new Response('attempt to overwrite object', { status: 400 });
+}
 ```
 
 Cloudflare Workers currently have some limitations that you may need to consider:
