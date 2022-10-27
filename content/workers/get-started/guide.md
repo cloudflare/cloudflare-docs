@@ -52,12 +52,7 @@ Run `wrangler init` followed by your project name:
 $ wrangler init <YOUR_WORKER>
 ```
 
-In your terminal, you will be asked:
-
-1. `Would you like to use git to manage this Worker? (y/n)` Indicate `y`.
-2. `Would you like to use TypeScript? (y/n)` Indicate `n` to continue with JavaScript for this guide.
-3. `No package.json found. Would you like to create one? (y/n)` Indicate `y`.
-4. `Would you like to create a Worker at <YOUR_WORKER>\src\index.js?` Indicate `y`.
+In your terminal, you will be asked a series of questions related to your project.
 
 {{<Aside type="note" header="TypeScript">}}
 
