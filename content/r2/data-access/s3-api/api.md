@@ -27,9 +27,27 @@ When using the S3 API, the region for an R2 bucket is `auto`. For compatibility 
 
 This also applies to the `LocationConstraint` for the `CreateBucket` API.
 
+## Account-level operations
+
+The following tables are related to operations you perform directly on the account itself. The URL
+will be `https://<ACCOUNT>.r2.cloudflarestorage.com/`. There may be search parameters but there
+is no additional path in the URL.
+
+### Implemented account-level operations
+
+| API Name                                | Feature                           |
+| --------------------------------------- |---------------------------------- |
+| ✅ [ListBuckets](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBuckets.html)     |                                    |
+| ✅ [HeadBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html)       | ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
+| ✅ [CreateBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html)   | ❌ ACL: <br> &emsp;  ❌ x-amz-acl <br> &emsp;  ❌ x-amz-grant-full-control <br> &emsp;  ❌ x-amz-grant-read <br> &emsp;  ❌ x-amz-grant-read-acp  <br> &emsp;  ❌ x-amz-grant-write <br> &emsp;  ❌ x-amz-grant-write-acp <br> ❌ Object Locking: <br> &emsp;  ❌ x-amz-bucket-object-lock-enabled <br>  ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
+| ✅ [DeleteBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html)   | ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
+
 ## Bucket-level operations
 
-The following tables are related to bucket-level operations.
+The following tables are related to operations you perform on the bucket for a given account. The URL
+will be `http://<BUCKET>.<ACCOUNT>.r2.cloudflarestorage.com/` (or `https://<ACCOUNT>.r2.cloudflarestorage.com/<BUCKET>`
+if using [path-style access](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-bucket-intro.html)).
+There may be search parameters but there is no additional path in the URL.
 
 ### Implemented bucket-level operations
 
@@ -39,15 +57,13 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 
 | API Name                                | Feature                           |
 | --------------------------------------- |---------------------------------- |
-| ✅ [ListBuckets](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBuckets.html)     |                                    |
-| ✅ [HeadBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html)       | ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
-| ✅ [CreateBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html)   | ❌ ACL: <br> &emsp;  ❌ x-amz-acl <br> &emsp;  ❌ x-amz-grant-full-control <br> &emsp;  ❌ x-amz-grant-read <br> &emsp;  ❌ x-amz-grant-read-acp  <br> &emsp;  ❌ x-amz-grant-write <br> &emsp;  ❌ x-amz-grant-write-acp <br> ❌ Object Locking: <br> &emsp;  ❌ x-amz-bucket-object-lock-enabled <br>  ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
-| ✅ [DeleteBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html)   | ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
 | ✅ [DeleteBucketCors](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketCors.html) | ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
 | ✅ [GetBucketCors](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketCors.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ✅ [GetBucketLocation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html)  | ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
 | ✅ [GetBucketEncryption](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketEncryption.html) | | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
 | ✅ [GetBucketLocation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html) | | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
+| ✅ [ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html)      | Query Parameters: <br> &emsp;  ✅ delimiter <br> &emsp;  ✅ encoding-type <br> &emsp; ✅ marker <br> &emsp;  ✅ max-keys <br> &emsp;  ✅ prefix <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
+| ✅ [ListObjectsV2](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html) | Query Parameters: <br> &emsp;  ✅ list-type <br> &emsp;  ✅ continuation-token <br> &emsp;  ✅ delimiter <br> &emsp;  ✅ encoding-type <br> &emsp;  ✅ fetch-owner <br> &emsp;  ✅ max-keys <br> &emsp;  ✅ prefix <br> &emsp;  ✅ start-after <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner                   |
 | ✅ [PutBucketCors](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketCors.html) | ❌ Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 
 {{</table-wrap>}}
@@ -112,9 +128,19 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 {{</table-wrap>}}
 </details>
 
+{{<Aside type="warning">}}
+
+Even though `ListObjects` is a supported operation, it is recommended that you use `ListObjectsV2` instead when developing applications. For more information, refer to [ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html).
+
+{{</Aside>}}
+
 ## Object-level operations
 
-The following tables are related to object-level operations.
+The following tables are related to operations you perform on a single object in a given bucket and
+account. The URL will be `http://<BUCKET>.<ACCOUNT>.r2.cloudflarestorage.com/<OBJECT NAME>` (or
+`https://<ACCOUNT>.r2.cloudflarestorage.com/<BUCKET>/<OBJECT NAME>` if using
+[path-style access](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-bucket-intro.html)).
+There may also be additional search parameters depending on the operation.
 
 ### Implemented object-level operations
 
@@ -133,8 +159,6 @@ This does not apply to concurrent uploads for different files.
 | API Name                | Feature                   |
 | ------------------------| ------------------------- |
 | ✅ [HeadObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadObject.html)       | ✅ Conditional Operations: <br> &emsp;   ✅ If-Match <br> &emsp;  ✅ If-Modified-Since <br> &emsp;  ✅ If-None-Match <br> &emsp;  ✅ If-Unmodified-Since <br> ✅ Range: <br> &emsp;  ✅ Range (has no effect in HeadObject) <br> &emsp;  ✅ partNumber <br> ❌ SSE-C: <br> &emsp;  ❌ x-amz-server-side-encryption-customer-algorithm <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key-MD5 <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner  |
-| ✅ [ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html)      | Query Parameters: <br> &emsp;  ✅ delimiter <br> &emsp;  ✅ encoding-type <br> &emsp; ✅ marker <br> &emsp;  ✅ max-keys <br> &emsp;  ✅ prefix <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
-| ✅ [ListObjectsV2](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html) | Query Parameters: <br> &emsp;  ✅ list-type <br> &emsp;  ✅ continuation-token <br> &emsp;  ✅ delimiter <br> &emsp;  ✅ encoding-type <br> &emsp;  ✅ fetch-owner <br> &emsp;  ✅ max-keys <br> &emsp;  ✅ prefix <br> &emsp;  ✅ start-after <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner                   |
 | ✅ [GetObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html)         | ✅ Conditional Operations: <br> &emsp;  ✅ If-Match <br> &emsp;  ✅ If-Modified-Since <br> &emsp;  ✅ If-None-Match <br> &emsp;  ✅ If-Unmodified-Since <br> ✅ Range: <br> &emsp;  ✅ Range <br> &emsp;  ✅ PartNumber <br> ❌ SSE-C: <br> &emsp;  ❌ x-amz-server-side-encryption-customer-algorithm <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key-MD5 <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
 | ✅ [PutObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html)         | ✅ System Metadata: <br> &emsp;  ✅ Content-Type <br> &emsp;  ✅ Cache-Control <br> &emsp;  ✅ Content-Disposition <br> &emsp;  ✅ Content-Encoding <br> &emsp;  ✅ Content-Language <br> &emsp;  ✅ Expires <br> &emsp;  ✅ Content-MD5 <br> ❌ Object Lifecycle <br> ❌ Website: <br> &emsp;  ❌ x-amz-website-redirect-location <br> ❌ SSE-C: <br> &emsp;  ❌ x-amz-server-side-encryption <br> &emsp;  ❌ x-amz-server-side-encryption-customer-algorithm <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key <br> &emsp;  ❌ x-amz-server-side-encryption-customer-key-MD5 <br> &emsp;  ❌ x-amz-server-side-encryption-aws-kms-key-id <br> &emsp;  ❌ x-amz-server-side-encryption-context <br> &emsp;  ❌ x-amz-server-side-encryption-bucket-key-enabled <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Tagging: <br> &emsp;  ❌ x-amz-tagging <br> ❌ Object Locking: <br> &emsp;  ❌ x-amz-object-lock-mode <br> &emsp;  ❌ x-amz-object-lock-retain-until-date <br> &emsp;  ❌ x-amz-object-lock-legal-hold <br> ❌ ACL: <br> &emsp;  ❌ x-amz-acl <br> &emsp;  ❌ x-amz-grant-full-control <br> &emsp;  ❌ x-amz-grant-read <br> &emsp;  ❌ x-amz-grant-read-acp <br> &emsp;  ❌ x-amz-grant-write-acp <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
 | ✅ [DeleteObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html)| ❌ Multi-factor authentication: <br> &emsp;  ❌ x-amz-mfa <br> ❌ Object Locking: <br> &emsp;  ❌ x-amz-bypass-governance-retention <br> ❌ Request Payer: <br> &emsp;  ❌ x-amz-request-payer <br> ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
@@ -160,9 +184,3 @@ Below is a list of unimplemented object-level operations.
 | ❌ [ListParts](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html)          | ❌ Query Parameters: <br> &emsp;  ❌ max-parts <br> &emsp;  ❌ part-number-marker <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner <br> ❌ Request Payer: <br> &emsp; ❌ x-amz-request-payer |
 
 {{</table-wrap>}}
-
-{{<Aside type="warning">}}
-
-Even though `ListObjects` is a supported operation, it is recommended that you use `ListObjectsV2` instead when developing applications. For more information, refer to [ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html).
-
-{{</Aside>}}
