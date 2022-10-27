@@ -63,6 +63,7 @@ Cloudflare cacheable file limits:
 
 The output of the `CF-Cache-Status header` shows whether or not a resource is cached. To investigate cache responses returned by the `CF-Cache-Status` header, use services like [Redbot](https://redbot.org/), [webpagetest.org](http://www.webpagetest.org/), or a visual tool like [Chrome’s Dr. Flare plugin](https://community.cloudflare.com/t/community-tip-dr-flare-debug-tool-for-cloudflare-chrome-extension/110166).
 
+{{<table-wrap>}}
 <table>
   <tbody>
     <th colspan="4" rowspan="1">
@@ -89,10 +90,14 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
     </tr>
     <tr>
       <td colspan="5" rowspan="1">
-        NONE
+        NONE/UNKNOWN
       </td>
       <td colspan="5" rowspan="1">
-        Cloudflare generated response. The resource is not eligible for caching.
+        Cloudflare generated a response that denotes the asset is not eligible for caching. This may have happened because:
+          <li>A worker generated a response without sending any subrequests and in this case the response did not come from cache, so the cache status will be <code>none/unknown</code>.
+          <li>A worker request made a subrequest (<code>fetch</code>). In this case, the subrequest will be logged with a cache status, while the main request will be logged with <code>none/unknown</code> status (the main request did not hit cache, since Workers sits in front of cache).</li>
+          <li>A Firewall rule was triggered to block a request, the response will come from the Edge, before it hits cache, since there is no cache status, we will log as <code>none/unknown</code>.</li>
+          <li>A redirect page rules caused the Edge to return a redirect to another asset/URL. This redirect happens before the request that gets redirected reaches cache, so we will log a cache status of <code>none/unknown</code>.</li>
       </td>
     </tr>
     <tr>
@@ -154,3 +159,4 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
     </tr>
   </tbody>
 </table>
+{{</table-wrap>}}
