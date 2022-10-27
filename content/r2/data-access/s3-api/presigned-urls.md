@@ -116,31 +116,31 @@ An equivalent Cloudflare Worker would be:
 
 ```ts
 interface Env {
-  DROP_BOX_BUCKET: R2Bucket
+	DROP_BOX_BUCKET: R2Bucket;
 }
 
-export default <ExportedHandler<Env>> {
-  async fetch(req, env) {
-  const authorization = await authorize(request);
-  if (authorization === undefined) {
-    return new Response('invalid authorization', { status: 401 })
-  }
-  if (authorization.application === 'drop-box') {
-    const url = new URL(request.url);
+export default <ExportedHandler<Env>>{
+	async fetch(req, env) {
+		const authorization = await authorize(request);
+		if (authorization === undefined) {
+			return new Response('invalid authorization', { status: 401 });
+		}
+		if (authorization.application === 'drop-box') {
+			const url = new URL(request.url);
 
-    // Check that the application is only requesting a URL
-    if (url.pathname.startsWith('/my-upload-folder/')) {
-      return new Response('invalid destination folder', { status: 403 });
-    }
+			// Check that the application is only requesting a URL
+			if (url.pathname.startsWith('/my-upload-folder/')) {
+				return new Response('invalid destination folder', { status: 403 });
+			}
 
-    await env.DROP_BOX_BUCKET.put(url.toString().substring(1), request.body);
+			await env.DROP_BOX_BUCKET.put(url.toString().substring(1), request.body);
 
-    return new Response(null, { status: 200 });
-  }
+			return new Response(null, { status: 200 });
+		}
 
-//  ... handle other kinds of requests
-  }
-}
+		//  ... handle other kinds of requests
+	},
+};
 ```
 
 Notice the total absence of any configuration or token secrets present in the Worker code. Instead, you would create a `wrangler.toml` [binding](/r2/data-access/workers-api/workers-api-usage/#4-bind-your-bucket-to-a-worker) to whatever bucket represents the bucket you will upload to. Additionally, authorization is handled in-line with the upload which can reduce latency.
