@@ -23,6 +23,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
+- [`types`](#types) - Generate types from bindings & module rules in configuration.
 
 {{<Aside type="note">}}
 
@@ -122,7 +123,7 @@ None of the options for this command are required. Many of these options can be 
 - `--inspector-port` {{<type>}}number{{</type>}}
   - Port for devtools to connect to.
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
-  - Routes to upload. 
+  - Routes to upload.
   - For example: `--route example.com/*`.
 - `--host` {{<type>}}string{{</type>}}
   - Host to forward requests to, defaults to the zone of project.
@@ -146,7 +147,7 @@ None of the options for this command are required. Many of these options can be 
   - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
   - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--define` {{<type>}}key:value[]{{</type>}}
-  - Array of `key:value` pairs to replace global identifiers in your code. 
+  - Array of `key:value` pairs to replace global identifiers in your code.
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
   - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--tsconfig` {{<type>}}string{{</type>}}
@@ -239,13 +240,13 @@ None of the options for this command are required. Also, many can be set in your
   - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
   - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--define` {{<type>}}key:value[]{{</type>}}
-  - Array of `key:value` pairs to replace global identifiers in your code. 
+  - Array of `key:value` pairs to replace global identifiers in your code.
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
   - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--triggers`, `--schedule`, `--schedules` {{<type>}}string[]{{</type>}}
   - Cron schedules to attach to the published Worker. Refer to [Cron Trigger Examples](/workers/platform/cron-triggers/#examples).
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
-  - Routes where this Worker will be published. 
+  - Routes where this Worker will be published.
   - For example: `--route example.com/*`.
 - `--tsconfig` {{<type>}}string{{</type>}}
   - Path to a custom `tsconfig.json` file.
@@ -256,7 +257,7 @@ None of the options for this command are required. Also, many can be set in your
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Compile a project without actually publishing to live servers. Combined with `--outdir`, this is also useful for testing the output of `wrangler publish`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
 - `--keep-vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard. 
+  - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
   - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
 
 {{</definitions>}}
@@ -1184,4 +1185,14 @@ Retrieve your user information and test your authentication configuration.
 
 ```sh
 $ wrangler whoami
+```
+
+---
+
+## types
+
+Generate types from bindings & module rules in configuration.
+
+```sh
+$ wrangler types
 ```
