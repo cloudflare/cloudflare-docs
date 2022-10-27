@@ -201,7 +201,9 @@ Note that these limitations depends on R2's extension for conditional uploads. A
 
 ## Differences between presigned URLs and public buckets
 
-Presigned URLs share some superificial similarity with public buckets. If you give out presigned URLs only for `GET`/`HEAD` operations on specific objects in a bucket, then your presigned URL functionality is mostly similar to public buckets. The notable exception is that any custom metadata associated with the object is rendered in headers with the `x-amz-meta-` prefix. Any error responses are returned as XML documents, as they would with normal non-presigned S3 access. Presigned URLs can be generated for any S3 operation. After a presigned URL is generated it can be reused as many times as the holder of the URL wants until the signed expiry date.
+Presigned URLs share some superificial similarity with public buckets. If you give out presigned URLs only for `GET`/`HEAD` operations on specific objects in a bucket, then your presigned URL functionality is mostly similar to public buckets. The notable exception is that any custom metadata associated with the object is rendered in headers with the `x-amz-meta-` prefix. Any error responses are returned as XML documents, as they would with normal non-presigned S3 access.
+
+Presigned URLs can be generated for any S3 operation. After a presigned URL is generated it can be reused as many times as the holder of the URL wants until the signed expiry date.
 
 [Public buckets](/r2/data-access/public-buckets/) are available on a regular HTTP endpoint. By default, there is no authorization or access controls associated with a public bucket. Anyone with a public bucket URL can access an object in that public bucket. If you are using a custom domain to expose the R2 bucket, you can manage authorization and access controls as you would for a Cloudflare zone. Public buckets only provide `GET`/`HEAD` on a known object path. Public bucket errors are rendered as HTML pages.
 
