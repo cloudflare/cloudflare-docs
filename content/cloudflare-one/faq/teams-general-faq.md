@@ -35,8 +35,8 @@ These browsers are supported:
 As part of our Regional Services, Cloudflare Zero Trust will only perform TLS decryption and store logs within the region provisioned for your account.
 
 Services available in all [supported regions](https://support.cloudflare.com/hc/en-us/articles/360061946171-Data-Localization-Suite#h_7olRZn8DdrDsw79Rqfs05n):
- - Terminate connections for all network, HTTP, and HTTPS traffic proxied through Cloudflare Gateway.
- - Maintain local storage for all [Zero Trust logs](/cloudflare-one/analytics/logs/).
+- Ensure that Cloudflare Gateway proxies all network, HTTP, and HTTPS traffic through regional data centers.
+- Maintain local storage for all [Zero Trust logs](/cloudflare-one/analytics/logs/).
 
 Additional services available in the United States:
 - Ensure that all reverse proxy requests for applications protected by Access will only occur in FedRAMP-compliant data centers.
