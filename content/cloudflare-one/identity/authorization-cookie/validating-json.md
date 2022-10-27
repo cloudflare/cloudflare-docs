@@ -63,7 +63,7 @@ As shown in the example below, `https://<your-team-name>.cloudflareaccess.com/cd
 
 {{<Aside type="note" header="Avoid key rotation issues">}}
 - Validate tokens using the external endpoint rather than saving the public key as a hard-coded value. 
-- Do not fetch the current key from `public_cert`, since your origin may inadvertently read an expired cached value. from an outdated cache. Instead, match the `kid` value in the JWT to the corresponding certificate in `public_certs`.
+- Do not fetch the current key from `public_cert`, since your origin may inadvertently read an expired value from an outdated cache. Instead, match the `kid` value in the JWT to the corresponding certificate in `public_certs`.
 {{</Aside>}}
 
 ## Verify the JWT manually
