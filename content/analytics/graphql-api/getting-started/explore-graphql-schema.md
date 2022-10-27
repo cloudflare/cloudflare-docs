@@ -1,95 +1,135 @@
 ---
 pcx_content_type: how-to
-title: Explore the Analytics schema with GraphiQL
+title: Explore the GraphQL schema
 weight: 41
 ---
 
-# Explore the Analytics schema with GraphiQL
+# Explore the GraphQL schema
 
-The GraphQL API offers [introspection](https://graphql.org/learn/introspection/), which allows you to explore the graph (by making API calls) to see the available datasets, fields, and operations you can perform.
+Many GraphQL clients are support surfing GraphQL schema by taking care of
+[introspection][1]. In this page, we will cover GraphiQL and Altair clients.
 
-[GraphiQL](https://github.com/graphql/graphiql/tree/main/packages/graphiql#readme) is a GraphQL client that uses introspection to provide the **Documentation Explorer**, a tool with which you can visually browse a GraphQL schema.
-
-This article provides an introduction to browsing the Analytics GraphQL schema with the Documentation Explorer.
+[GraphiQL][2] and [Altair][3] are open-source GraphQL clients that provide a
+descent tool to compose a query, execute it, and inspect the results. And as a
+bonus, they also allow you to browse GraphQL schema.
 
 ## Prerequisites
 
-Before you begin, [configure the API endpoint and HTTP headers](/analytics/graphql-api/getting-started/authentication/graphql-client-headers/) in the GraphiQL client.
+Before you begin, don't forget to [configure][4] the API endpoint and HTTP
+headers.
+
+The screenshots below are done from GraphiQL. However, Altair provides the same
+functionality and you won't find any difficulties following the same
+instructions to explore the schema.
 
 ## Open the Documentation Explorer
 
-To open the GraphiQL Documentation Explorer, click the **Docs** link in header of the response pane:
+To open the GraphiQL Documentation Explorer, click the **Docs** link in header
+of the response pane:
 
-![Clicking GraphiQL Docs link to open Documentation Explorer](/analytics/static/images/graphiql-docs-link.png)
+![Clicking GraphiQL Docs link to open Documentation Explorer][5]
 
 The **Documentation Explorer** opens and displays a list of available objects:
 
-![GraphiQl Doc Explorer pane](/analytics/static/images/graphiql-doc-explorer.png)
+![GraphiQl Doc Explorer pane][6]
 
 Objects in the **Documentation Explorer** use this syntax:
 
-    object-name: object-type-definition
+```code
+  object-name: object-type-definition
+```
 
 ## Find the type definition of an object
 
-When you first open the **Documentation Explorer** pane, the `mutation` and `query` root types display:
+When you first open the **Documentation Explorer** pane, the `mutation` and
+`query` root types display:
 
-![Documentation Explorer displaying mutation and query nodes](/analytics/static/images/graphiql-doc-explorer-query-mutations.png)
+![Documentation Explorer displaying mutation and query nodes][7]
 
 In this example `query` is the name of a root, and `Query` is the type definition.
 
 ## Find the fields available for a type definition
 
-Click on the **type definition** of a node to view the fields that it provides. The **Documentation Explorer** also displays descriptions of the nodes.
+Click on the **type definition** of a node to view the fields that it provides.
+The **Documentation Explorer** also displays descriptions of the nodes.
 
-For example, click the **Query** type definition. The **Documentation Explorer** displays the fields that `Query` provides. In this example, the fields are `cost` and `viewer`:
+For example, click the **Query** type definition. The **Documentation Explorer**
+displays the fields that `Query` provides. In this example, the fields are
+`cost` and `viewer`:
 
-![Documentation Explorer displaying cost and viewer fields](/analytics/static/images/graphiql-doc-explorer-view-cost.png)
+![Documentation Explorer displaying cost and viewer fields][8]
 
-To explore the schema, click the names of objects and definitions. You can also use the search input (magnifying glass icon) and breadcrumb links in the header.
+To explore the schema, click the names of objects and definitions. You can also
+use the search input (magnifying glass icon) and breadcrumb links in the header.
 
 ## Find the arguments associated with a field
 
-Click the type definition of the `viewer` field (gold text) to list its sub-fields. The `viewer` field provides sub-fields that allow you to query `accounts` or `zones` data:
+Click the type definition of the `viewer` field (gold text) to list its
+sub-fields. The `viewer` field provides sub-fields that allow you to query
+`accounts` or `zones` data:
 
-![Displaying viewer fields](/analytics/static/images/graphiql-doc-explorer-viewer-fields.png)
+![Displaying viewer fields][9]
 
-The `accounts` and `zones` fields take arguments to specify which dataset to query.
+The `accounts` and `zones` nodes take arguments to specify which dataset to
+query.
 
-For example, `zones` can take a filter of `ZoneFilter_InputObject` type as an argument. To view the fields available to filter, click **ZoneFilter_InputObject**.
+For example, `zones` can take a filter of `ZoneFilter_InputObject` type as an
+argument. To view the fields available to filter, click
+**ZoneFilter_InputObject**.
 
 ## Find the datasets available for a zone
 
-To view a list of the datasets available to query, click the **zone** type definition (gold text):
+To view a list of the datasets available to query, click the **zone** type
+definition (gold text):
 
-![Clicking zone type definition](/analytics/static/images/graphiql-doc-explorer-zones.png)
+![Clicking zone type definition][10]
 
-A list of datasets displays in the **Fields** section, each with list of valid arguments and a brief description. Arguments that end with an exclamation mark (`!`) are required.
+A list of datasets displays in the **Fields** section, each with list of valid
+arguments and a brief description. Arguments that end with an exclamation mark
+(`!`) are required.
 
-![Fields section displaying datasets available](/analytics/static/images/graphiql-doc-explorer-zone-fields.png)
+![Fields section displaying datasets available][11]
 
 Use the search input (magnifying glass icon) to find specific datasets:
 
-![Searching a dataset in the Documentation Explorer](/analytics/static/images/graphiql-doc-explorer-find-firewall.png)
+![Searching a dataset in the Documentation Explorer][12]
 
 To select a dataset, click its name.
 
-The definition for the dataset displays. This example shows the `firewallEventsAdaptive` dataset:
+The definition for the dataset displays. This example shows the
+`firewallEventsAdaptive` dataset:
 
-![Example of a dataset definition](/analytics/static/images/graphiql-doc-explorer-firewallevents-definition.png)
-
-Refer to [Datasets (tables)](/analytics/graphql-api/features/data-sets/) for details on the nomenclature and behavior of these nodes.
+![Example of a dataset definition][13]
 
 ## Find the fields available for a dataset
 
-To view the fields available for a particular dataset, click on its type definition (gold text).
+To view the fields available for a particular dataset, click on its type
+definition (gold text).
 
-For example, click the **ZoneFirewallEventsAdaptive** type definition to view the fields available for the `firewallEventsAdaptive` dataset:
+For example, click the **ZoneFirewallEventsAdaptive** type definition to view
+the fields available for the `firewallEventsAdaptive` dataset:
 
-![Clicking type definition to visualize fields available for a dataset](/analytics/static/images/graphiql-doc-explorer-firewall-type-definition.png)
+![Clicking type definition to visualize fields available for a dataset][14]
 
 The list of fields displays:
 
-![Displaying available fields for a dataset](/analytics/static/images/graphiql-doc-explorer-firewall-fields.png)
+![Displaying available fields for a dataset][15]
 
-For more on working with the Analytics API in GraphiQL, refer to [Create a query in GraphiQL](/analytics/graphql-api/getting-started/compose-graphql-query/).
+For more information on using GraphiQL, please visit this [guide][16].
+
+[1]: </analytics/graphql-api/features/discovery/introspection/>
+[2]: <https://github.com/graphql/graphiql/tree/main/packages/graphiql#readme>
+[3]: <https://altairgraphql.dev/#download>
+[4]: </analytics/graphql-api/getting-started/authentication/graphql-client-headers/>
+[5]: </analytics/static/images/graphiql-docs-link.png>
+[6]: </analytics/static/images/graphiql-doc-explorer.png>
+[7]: </analytics/static/images/graphiql-doc-explorer-query-mutations.png>
+[8]: </analytics/static/images/graphiql-doc-explorer-view-cost.png>
+[9]: </analytics/static/images/graphiql-doc-explorer-viewer-fields.png>
+[10]: </analytics/static/images/graphiql-doc-explorer-zones.png>
+[11]: </analytics/static/images/graphiql-doc-explorer-zone-fields.png>
+[12]: </analytics/static/images/graphiql-doc-explorer-find-firewall.png>
+[13]: </analytics/static/images/graphiql-doc-explorer-firewallevents-definition.png>
+[14]: </analytics/static/images/graphiql-doc-explorer-firewall-type-definition.png>
+[15]: </analytics/static/images/graphiql-doc-explorer-firewall-fields.png>
+[16]: </analytics/graphql-api/getting-started/compose-graphql-query/>
