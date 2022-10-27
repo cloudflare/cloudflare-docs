@@ -148,18 +148,22 @@ Notice the total absence of any configuration or token secrets present in the Wo
 In some cases, Workers lets you implement certain functionality more easily. For example, if you wanted to offer a write-once guarantee so that users can only upload to a path once, with pre-signed URLs, you would need to sign specific headers and require the sender to send them. This adds some complexity:
 
 ```ts
-    const signedUrl = await r2.sign(new Request(
-      `https://<DROPBOX BUCKET>.<ACCOUNT ID>.r2.cloudflarestorage.com${url.pathname}`, {
-        method: 'PUT'
-      }
-    ), {
-      aws: { signQuery: true },
-      headers: {
-        // The signed request is valid for 1 hour.
-        'X-Amz-Expires': 3600,
-        'If-Unmodified-Since': 'Tue, 28 Sep 2021 16:00:00 GMT',
-      },
-    });
+const signedUrl = await r2.sign(
+	new Request(
+		`https://<DROPBOX BUCKET>.<ACCOUNT ID>.r2.cloudflarestorage.com${url.pathname}`,
+		{
+			method: 'PUT',
+		}
+	),
+	{
+		aws: { signQuery: true },
+		headers: {
+			// The signed request is valid for 1 hour.
+			'X-Amz-Expires': 3600,
+			'If-Unmodified-Since': 'Tue, 28 Sep 2021 16:00:00 GMT',
+		},
+	}
+);
 ```
 
 Note that the caller has to add the the same `If-Unmodified-Since` header to use the URL. The caller cannot omit the header or use a different header. If the caller uses a different header, the presigned URL signature would not match and they would receive a `403/SignatureDoesNotMatch`.
