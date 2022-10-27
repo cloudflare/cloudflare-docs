@@ -128,6 +128,7 @@ export default <ExportedHandler<Env>> {
   }
 
 //  ... handle other kinds of requests
+  }
 }
 ```
 
