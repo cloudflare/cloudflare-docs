@@ -10,8 +10,8 @@ Presigned URLs are an [S3 concept](https://docs.aws.amazon.com/AmazonS3/latest/u
 There are three kinds of resources in R2: 
 
 1. **Account**: For account-level operations (such as `CreateBucket`, `ListBuckets`, `DeleteBucket`) the identifier is the account ID.
-2. **Bucket**: For bucket-level operations (such as `ListObjects`, `PutBucketCors`) the identifier is the account ID, bucket name.
-3. **Object**: For object-level operations (such as `GetObject`, `PutObject`, `CreateMultipartUpload`) the identifier is the account ID, bucket name, object path.
+2. **Bucket**: For bucket-level operations (such as `ListObjects`, `PutBucketCors`) the identifier is the account ID, and bucket name.
+3. **Object**: For object-level operations (such as `GetObject`, `PutObject`, `CreateMultipartUpload`) the identifier is the account ID, bucket name, and object path.
 
 All parts of the identifier are part of the presigned URL. You cannot change the resource being accessed after the request is signed. For example, trying to change the bucket name to access the same object in a different bucket will return a `403` with an error code of `SignatureDoesNotMatch`.
 
@@ -25,7 +25,7 @@ There are three ways to grant an application access to R2:
 
 1. The application has its own copy of an [R2 API token](/r2/data-access/s3-api/tokens/).
 2. The application requests a copy of an R2 API token from a vault application and promises to not permanently store that token locally.
-3. The application requests a central application to give it a presigned URL so it can use to perform an action.
+3. The application requests a central application to give it a presigned URL it can use to perform an action.
 
 In scenarios 1 and 2, if the application or vault application is compromised, the holder of the token can perform arbitrary actions. 
 
