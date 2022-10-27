@@ -64,41 +64,52 @@ A binding is defined in the `wrangler.toml` file of your Worker project's direct
 A possible use case may be restricting an application to only be able to upload to a specific URL. With presigned URLs, your central signing application might look like the following JavaScript code running on Cloudflare Workers, workerd, or another platform:
 
 ```ts
-import { AwsClient } from 'aws4fetch'
+import { AwsClient } from 'aws4fetch';
 
-const r2 = new AwsClient({ accessKeyId: '', secretAccessKey: '', service: 's3' , region: 'auto' });
+const r2 = new AwsClient({
+	accessKeyId: '',
+	secretAccessKey: '',
+	service: 's3',
+	region: 'auto',
+});
 
-export async function fetch(request: Request): Promise<Response> {
-  const authorization = await authorize(request);
-  if (authorization === undefined) {
-    return new Response('invalid authorization', { status: 401 })
-  }
-  if (authorization.application === 'drop-box') {
-    const url = new URL(request.url);
+export default <ExportedHandler>{
+	async fetch(request) {
+		const authorization = await authorize(request);
+		if (authorization === undefined) {
+			return new Response('invalid authorization', { status: 401 });
+		}
+		if (authorization.application === 'drop-box') {
+			const url = new URL(request.url);
 
-    // Check that the application is only requesting a URL
-    if (url.pathname.startsWith('/my-upload-folder/')) {
-      return new Response('invalid destination folder', { status: 403 });
-    }
+			// Check that the application is only requesting a URL
+			if (url.pathname.startsWith('/my-upload-folder/')) {
+				return new Response('invalid destination folder', { status: 403 });
+			}
 
-    const signedUrl = await r2.sign(new Request(
-      `https://<DROPBOX BUCKET>.<ACCOUNT ID>.r2.cloudflarestorage.com${url.pathname}`, {
-        method: 'PUT'
-      }
-    ), {
-      aws: { signQuery: true },
-      headers: {
-        // The signed request is valid for 1 hour.
-        'X-Amz-Expires': 3600,
-      },
-    });
+			const signedUrl = await r2.sign(
+				new Request(
+					`https://<DROPBOX BUCKET>.<ACCOUNT ID>.r2.cloudflarestorage.com${url.pathname}`,
+					{
+						method: 'PUT',
+					}
+				),
+				{
+					aws: { signQuery: true },
+					headers: {
+						// The signed request is valid for 1 hour.
+						'X-Amz-Expires': 3600,
+					},
+				}
+			);
 
-    // Caller can now use this URL to upload to that object.
-    return new Response(signedUrl, { status: 200 });
-  }
+			// Caller can now use this URL to upload to that object.
+			return new Response(signedUrl, { status: 200 });
+		}
 
-  ... handle other kinds of requests
-}
+		// ... handle other kinds of requests
+	},
+};
 ```
 
 An equivalent Cloudflare Worker would be:
