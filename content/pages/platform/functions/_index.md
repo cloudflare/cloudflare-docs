@@ -558,7 +558,7 @@ While still in open beta, there is no additional cost to deploy Functions within
 
 If you reach this limit or need it increased in order to migrate your existing Workers applications into a Pages project, [complete this form](https://forms.gle/fK65trEL67cTvGQG6) to request an increase. You may track this limit by going to **Account Home** > **Pages** > and reviewing **Functions requests today**.
 
-In the future, you can expect billing to reflect that of the Workers Bundled plan.
+Billing will come into effect on November 15th, 2022. Refer to [Pages Functions billing](/pages/platform/functions/billing/) for more information.
 
 ## Demo
 
