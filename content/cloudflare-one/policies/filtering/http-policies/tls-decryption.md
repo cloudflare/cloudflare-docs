@@ -38,7 +38,7 @@ HTTPS traffic from `Do Not Inspect` applications will not be intercepted by Gate
 
 Websites that adhere to [ESNI or ECH standards](https://blog.cloudflare.com/encrypted-client-hello/) encrypt the Server Name Indicator (SNI) during the TLS handshake and are therefore incompatible with HTTP inspection. This is because Gateway relies on the SNI to match an HTTP request to a policy.
 
-You can still apply all [network policy filters](/cloudflare-one/policies/filtering/network-policies/#selectors) expect for SNI and SNI Domain. To restrict ENSI and ECH traffic, an option is to filter out all port `80` and `443` traffic that does not include an SNI header.
+You can still apply all [network policy filters](/cloudflare-one/policies/filtering/network-policies/#selectors) except for SNI and SNI Domain. To restrict ENSI and ECH traffic, an option is to filter out all port `80` and `443` traffic that does not include an SNI header.
 
 ## FIPS compliance
 
