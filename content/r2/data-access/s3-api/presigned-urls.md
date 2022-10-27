@@ -76,6 +76,8 @@ const r2 = new AwsClient({
 export default <ExportedHandler>{
 	async fetch(request) {
 		const authorization = await authorize(request);
+// `authorize` is not provided in the Worker
+// It is best practice to add some form of authorization to protect your bucket from abuse, such as a preshared secret in a header
 		if (authorization === undefined) {
 			return new Response('invalid authorization', { status: 401 });
 		}
