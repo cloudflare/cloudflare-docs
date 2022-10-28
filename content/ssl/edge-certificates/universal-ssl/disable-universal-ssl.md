@@ -48,7 +48,6 @@ To disable Universal SSL in the dashboard:
  
 To disable Universal SSL with the Cloudflare API, send a [`PATCH`](https://api.cloudflare.com/#universal-ssl-settings-for-a-zone-edit-universal-ssl-settings) request and include the `"enabled": true` parameter.
   
-{{<Aside type="note">}}Even with Universal SSL disabled, some features such as [AMP Real URL](/fundamentals/signed-exchanges/amp-real-ulr/) and [Signed Exchanges](/fundamentals/signed-exchanges/signed-exchanges/) will still provision certificates for your domain.{{</Aside>}}
  
 {{</tab>}}
 {{</tabs>}}
