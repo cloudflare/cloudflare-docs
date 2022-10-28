@@ -13,9 +13,11 @@ This guide will instruct you on setting up Workers for Platforms. This guide ass
 ---
 ## 1. Create dispatch namespace 
 
-The first step to working with dispatch namespaces is to create a namespace. First, [install and authenticate Wrangler (the Workers CLI)](/workers/get-started/guide/#1-install-wrangler-workers-cli). 
+The first step to working with dispatch namespaces is to create a namespace. 
 
-Then run the following command to create a new dispatch namespace:
+A dispatch namespace is composed of a collection of user Workers, which are Workers that end users (end developers) create. With dispatch namespaces, a dynamic dispatch Worker can be used to call any user Worker in a namespace, without needing to explicitly predefine the relationship. 
+
+To create a dispatch namespace, first [install and authenticate Wrangler (the Workers CLI)](/workers/get-started/guide/#1-install-wrangler-workers-cli). Then run the following command to create a new dispatch namespace:
 
 ```sh
 $ wrangler dispatch-namespace create <NAMESPACE_NAME>
@@ -23,12 +25,13 @@ $ wrangler dispatch-namespace create <NAMESPACE_NAME>
 
 ## 2. Create a dynamic dispatch Worker
 
-The dynamic dispatch Worker calls user Workers from the namespace and executes them. A dispatch namespace binding is used in order to create a dynamic dispatch Worker.
+The dynamic dispatch Worker calls user Workers from the dispatch namespace and executes them. Dynamic dispatch Workers are written by Cloudflare platform users to run their own logic before dispatching (routing) the request to user Workers. User Workers are written by end developers to script automated actions, create integrations or modify response payload to return custom content.
 
+Dynamic dispatch Workers can be used to run authentication, create boilerplate functions and sanitize responses, in addition to routing. 
 
+To create a dynamic dispatch Worker, you must set up a dispatch namespace binding.
 
-
-After [starting a new project](/workers/get-started/guide/#3-start-a-new-project), add the following to your `wrangler.toml` file.
+[Create a new Worker project](/workers/get-started/guide/#3-start-a-new-project), and add the following to your `wrangler.toml` file:
 
 ```toml
 [[dispatch_namespaces]]
