@@ -47,7 +47,6 @@ To disable Universal SSL in the dashboard:
 {{<tab label="api" no-code="true">}}
  
 To disable Universal SSL with the Cloudflare API, send a [`PATCH`](https://api.cloudflare.com/#universal-ssl-settings-for-a-zone-edit-universal-ssl-settings) request and include the `"enabled": true` parameter.
-  
  
 {{</tab>}}
 {{</tabs>}}
