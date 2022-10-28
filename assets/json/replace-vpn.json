@@ -98,7 +98,7 @@
           },
           {
             "url_path": "/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/",
-            "link_title": "Create private network 'routes' in Cloudflare Tunnel",
+            "link_title": "Create private network routes in Cloudflare Tunnel",
             "additional_description": "Routes determine which private IP addresses are available to users in your Zero Trust organization. It's okay to make these routes relatively wide, since you can add granular security control with Zero Trust policies."
           },
           {
