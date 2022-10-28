@@ -10,15 +10,15 @@ Workers KV is a global, low-latency, key-value data store. It stores data in a s
 
 When you write to KV, your data is written to central data stores. It is not sent automatically to every location’s cache.
 
-![Writing to KV](/workers/static/kv-write.svg)
+![Your data is written to central data stores when you write to KV.](/workers/static/kv-write.svg)
 
 Initial reads from a location do not have a cached value. The data must be read from the nearest central data store, resulting in a slower response.
 
-![Cache misses](/workers/static/kv-slow-read.svg)
+![Initial reads will miss the cache and go to the nearest central data store first.](/workers/static/kv-slow-read.svg)
 
 Frequent reads from the same location return the cached value without reading from a central data store, resulting in faster response times.
 
-![Cache hits](/workers/static/kv-fast-read.svg)
+![As mentioned above, frequent reads will return a cached value.](/workers/static/kv-fast-read.svg)
 
 Because Workers KV stores data centrally and uses pull-based replication to store data in cache, it is generally good for use cases where you need to write relatively infrequently, but read quickly and frequently. It is optimized for these high-read applications, only reaching its full performance when data is being frequently read. Infrequently read values are pulled from a central store, while more popular values are cached in the data centers they are requested from.
 
