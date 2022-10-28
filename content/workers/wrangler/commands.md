@@ -1198,5 +1198,6 @@ $ wrangler deployments
 {{<definitions>}}
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 {{</definitions>}}
