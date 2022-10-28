@@ -31,6 +31,11 @@
           },
           {
             "external_link": true,
+            "url_path": "https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/",
+            "link_title": "Why should you replace your VPN?"
+          },
+          {
+            "external_link": true,
             "url_path": "https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/",
             "link_title": "What is a Secure Web Gateway?"
           },
@@ -159,7 +164,7 @@
           {
             "url_path": "/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/",
             "link_title": "Define local domain fallback policies",
-            "additional_description": "These policies allow Cloudflare to proxy requests to internal or private DNS infrastructure."
+            "additional_description": "These policies allow Cloudflare to proxy requests to internal or private infrastructure without a public DNS record."
           },
           {
             "url_path": "/cloudflare-one/analytics/logs/gateway-logs/",
