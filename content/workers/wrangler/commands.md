@@ -1189,7 +1189,7 @@ $ wrangler whoami
 
 ## deployments
 
-Logs the 10 most recent deployments with 'Version ID', 'Version number','Author name', and 'Latest deploy'
+Retrieve details for the 10 most recent deployments. Details include `Version ID`, `Version number`, `Author name`, and `Latest deploy`.
 
 ```sh
 $ wrangler deployments
