@@ -55,13 +55,13 @@ console.log(STRIPE_TOKEN);
 //=> (env.production) "pk_xyz1234"
 ```
 
-### Adding secrets to your project
+### Add secrets to your project
 
-#### Secrets in Development
+#### Secrets in development
 
 When developing your Worker/Pages Functions, you can create a `.dev.vars` file in the project root which allows you to define variables that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and `[vars]` in `wrangler.toml`. This works both in the local and remote development modes.
 
-This file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
+The `.dev.vars` file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
 
 ```bash
 ---
@@ -70,7 +70,7 @@ header: .dev.vars
 SECRET_KEY=value
 ```
 
-#### Secrets on Deployed Workers
+#### Secrets on deployed Workers
 
 Secrets are defined by running [`wrangler secret put <KEY>`](/workers/wrangler/commands/#secret) in your terminal, where `<KEY>` is the name of your binding. You may assign environment-specific secrets by rerunning the command `wrangler secret put <KEY> -e` or `wrangler secret put <KEY> --env`. Keep a detailed list of the secrets used in your code in your `wrangler.toml` file, like the example under `[vars]`:
 
