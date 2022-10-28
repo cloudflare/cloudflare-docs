@@ -69,13 +69,28 @@ To get started with Durable Objects:
 
 {{<table-wrap>}}
 
-| Feature                                       | KV           | R2           | Durable Objects (DO) |
-| --------------------------------------------- | ------------ | ------------ |-----------------|
-| Maximum size per value                        | 25 MiB       | 5 TB         | 128 KiB per value, unlimited number of values per DO |
+| Feature                                       | KV           | R2           | DO                   |
+| --------------------------------------------- | ------------ | ------------ |--------------------- |
+| Maximum storage per account                   | Unlimited<sup>1</sup>|Unlimited| 50 GiB            |
+| Storage grouping name<sup>2</sup>             | Namespace    | Bucket       | Durable Object       |
+| Groups per account                            | 100          | 1,000        | Unlimited            |
+| Maximum keys per grouping                     | Unlimited    | Unlimited    | Unlimited            |
+| Maximum key size                              | 512 bytes    | 1,024 bytes  | 2,048 bytes          |
+| Maximum metadata per key                      | 1,024 bytes  | 2,048 bytes  | N/A                  |
+| Maximum size per value                        | 25 MiB       | 5 TiB        | 128 KiB per value    |
 | Consistency model                             | Eventual     | Strong       | Transactional for multiple keys in a single DO |
-| Cached                                        | Always       | Possible when using [Cache API](/workers/runtime-apis/cache/) in a Worker | Possible when using [Cache API](/workers/runtime-apis/cache/) |
-| S3-compatible API                             | No           | Yes                     | No |
+| Cached                                        | Always       | Programatically using the [Worker Cache API](/workers/runtime-apis/cache/) or configure a custom [public bucket](/r2/data-access/public-buckets) domain. | Possible when using [Cache API](/workers/runtime-apis/cache/) |
+| S3-compatible API                             | No           | Yes          | No                   |
 | TTL expiration                                | Object-level | Not currently available | Not automatic, but possible using [alarms](/workers/learning/using-durable-objects/#alarms-in-durable-objects) |
-| Maximum operations per second                 | Unlimited cached reads |  < 1,000/bucket           | Approximately 100 requests/second per DO, depending on workload |
+| Maximum operations per second                 | Unlimited cached reads |  10,000+ reads/s per bucket, 1,000+ writes/s per bucket<sup>3</sup> | 150 requests/second per DO<sup>3</sup> |
 
 {{</table-wrap>}}
+
+<sup>1</sup>Free accounts are limited to 1GiB.
+<sup>2</sup>A Durable Object namespace is a logical container for as many Durable Objects as you need and is backed by a class implementing the logic all those Durable Objects will share.
+<sup>3</sup>Performance may depend on the specific data access patterns of your application and may be lower or higher depending on your specific application.
+
+This is a comparison of the baseline limits available across customers.
+We want to encourage you to build any application you can dream up, and realize that doesn't always fit within our limits.
+
+To increase a limit, please fill out the [Limit Increase Request form](https://forms.gle/ukpeZVLWLnKeixDu7).
