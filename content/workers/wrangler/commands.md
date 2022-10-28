@@ -23,7 +23,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
-- [`types`](#types) - Generate types from bindings & module rules in configuration.
+- [`types`](#types) - Generate types from bindings and module rules in configuration.
 
 {{<Aside type="note">}}
 
