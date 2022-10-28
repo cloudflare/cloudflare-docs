@@ -125,7 +125,7 @@ cache.match(request, options);
 
 {{<definitions>}}
 
-- {{<code>}}match(request, options){{</code>}} {{<type-link href="/runtime-apis/response">}}Promise{`<Response>`}{{</type-link>}}
+- {{<code>}}match(request, options){{</code>}} {{<type-link href="/runtime-apis/response">}}Promise{`<Response | undefined>`}{{</type-link>}}
 
   - Returns a promise wrapping the response object keyed to that request.
 
@@ -202,9 +202,7 @@ Deletes the `Response` object from the cache and returns a `Promise` for a Boole
 
   - The string or [`Request`](/workers/runtime-apis/request/) object used as the lookup key. Strings are interpreted as the URL for a new `Request` object.
 
-<!-- What type is this? -->
-
-- `options`
+- `options` {{<type>}}object{{</type>}}
   - Can contain one possible property: `ignoreMethod` (Boolean) Consider the request method a GET regardless of its actual value.
 
 {{</definitions>}}
