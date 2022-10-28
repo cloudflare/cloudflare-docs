@@ -97,7 +97,7 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
           <li>A worker generated a response without sending any subrequests and in this case the response did not come from cache, so the cache status will be <code>none/unknown</code>.
           <li>A worker request made a subrequest (<code>fetch</code>). In this case, the subrequest will be logged with a cache status, while the main request will be logged with <code>none/unknown</code> status (the main request did not hit cache, since Workers sits in front of cache).</li>
           <li>A Firewall rule was triggered to block a request, the response will come from the Edge, before it hits cache, since there is no cache status, we will log as <code>none/unknown</code>.</li>
-          <li>A redirect page rules caused the Edge to return a redirect to another asset/URL. This redirect happens before the request that gets redirected reaches cache, so we will log a cache status of <code>none/unknown</code>.</li>
+          <li>A redirect page rule caused the Edge to respond with a redirect to another asset/URL. This redirect response happens before the request reaches cache, so the cache status is <code>none/unknown</code>.</li>
       </td>
     </tr>
     <tr>
