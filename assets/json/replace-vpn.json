@@ -13,7 +13,7 @@
       {
         "type": "module",
         "title": "Concepts",
-        "description": "Concepts explain the basic ideas behind how Cloudflare Zero Trust works. <br /> <br />Feel free to skip if you have a technical background.",
+        "description": "Concepts explain the basic ideas behind how Cloudflare Zero Trust works. <br />",
         "pages": [
           {
             "url_path": "/fundamentals/get-started/concepts/what-is-cloudflare/",
