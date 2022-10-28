@@ -94,10 +94,10 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
       </td>
       <td colspan="5" rowspan="1">
         Cloudflare generated a response that denotes the asset is not eligible for caching. This may have happened because:
-          <li>A worker generated a response without sending any subrequests and in this case the response did not come from cache, so the cache status will be <code>none/unknown</code>.
-          <li>A worker request made a subrequest (<code>fetch</code>). In this case, the subrequest will be logged with a cache status, while the main request will be logged with <code>none/unknown</code> status (the main request did not hit cache, since Workers sits in front of cache).</li>
-          <li>A Firewall rule was triggered to block a request, the response will come from the Edge, before it hits cache, since there is no cache status, we will log as <code>none/unknown</code>.</li>
-          <li>A redirect page rule caused the Edge to respond with a redirect to another asset/URL. This redirect response happens before the request reaches cache, so the cache status is <code>none/unknown</code>.</li>
+          <li>A Worker generated a response without sending any subrequests. In this case, the response did not come from cache, so the cache status will be <code>none/unknown</code>.
+          <li>A Worker request made a subrequest (<code>fetch</code>). In this case, the subrequest will be logged with a cache status, while the main request will be logged with <code>none/unknown</code> status (the main request did not hit cache, since Workers sits in front of cache).</li>
+          <li>A Firewall rule was triggered to block a request. The response will come from the edge network before it hits cache. Since there is no cache status, Cloudflare will log as <code>none/unknown</code>.</li>
+          <li>A redirect page rule caused the edge network to respond with a redirect to another asset/URL. This redirect response happens before the request reaches cache, so the cache status is <code>none/unknown</code>.</li>
       </td>
     </tr>
     <tr>
