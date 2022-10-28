@@ -1191,7 +1191,7 @@ $ wrangler whoami
 
 ## types
 
-Generate types from bindings & module rules in configuration.
+Generate types from bindings and module rules in configuration.
 
 ```sh
 $ wrangler types
