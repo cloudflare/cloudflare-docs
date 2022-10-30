@@ -62,7 +62,7 @@ header: Response
 
 #### Optional API parameters
 
-[API Reference Docs for `/live_inputs`](https://api.cloudflare.com/#stream-live-inputs-create-live-inputs)
+[API Reference Docs for `/live_inputs`](https://api.cloudflare.com/#stream-live-inputs-create-a-live-input)
 
 {{<definitions>}}
 
@@ -92,9 +92,10 @@ You can update live inputs by making a `PUT` request:
 ---
 header: Request
 ---
-curl -X PUT \ 
--H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id 
--D '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}'
+curl -X PUT \
+-H "Authorization: Bearer <API_TOKEN>" \
+-D '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}' \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
 ```
 
 Delete a live input by making a `DELETE` request:
@@ -103,8 +104,9 @@ Delete a live input by making a `DELETE` request:
 ---
 header: Request
 ---
-curl -X DELETE \ 
--H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
+curl -X DELETE \
+-H "Authorization: Bearer <API_TOKEN>" \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
 ```
 
 ## Requirements and known limitations
