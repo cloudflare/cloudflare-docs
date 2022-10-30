@@ -325,7 +325,8 @@ Example:
 ---
 header: wrangler.toml
 ---
-durable_objects.bindings = [
+[durable_objects]
+bindings = [
   { name = "<TEST_OBJECT>", class_name = "<TEST_CLASS>" }
 ]
 ```
@@ -348,7 +349,7 @@ When making changes to your Durable Object classes, you must perform a migration
 
   - The Durable Objects being renamed.
 
-- `environment` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `deleted_classes` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The Durable Objects being removed.
 
