@@ -153,7 +153,7 @@ The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transac
 {{</table-wrap>}}
 
 1.  A request unit is defined as 4 KB of data read or written. A request that writes or reads more than 4 KB will consume multiple units, for example, a 9 KB write will consume 3 write request units.
-2.  List operations are billed by read request units, based on the amount of data examined, for example, a list request that returns a combined 80 KB of keys and values will be billed 20 request units.
+2.  List operations are billed by read request units, based on the amount of data examined, for example, a list request that returns a combined 80 KB of keys and values will be billed 20 read request units. A list request that doesn't return anything is billed for 1 read request unit.
 3.  Delete requests are unmetered, for example, deleting a 100 KB value will be charged one delete request.
 4.  Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
 5.  Each alarm write is billed as a single write request unit.
