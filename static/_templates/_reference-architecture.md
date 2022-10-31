@@ -4,14 +4,14 @@ pcx_content_type: reference-architecture
 ---
  
 <!---
-Cloudflare employees should refer to the "Guidelines for creating architectures"  page of the PCX wiki for more information on information you are required to include in reference architecture documents, formatting information, and Markdown components.
+Cloudflare employees should refer to the "Guidelines for creating architectures" page of the PCX wiki for more information on what content you are required to include in reference architecture documents, including formatting instructions and Markdown components.
 -->
 
-# <PRODUCT> Reference architecture
+# <PRODUCT> reference architecture
  
 ## Brief introduction title
  
-<!--- In this section you should provide a brief 1-2 paragraph introduction to the reference architecture document covering who the documentation will serve, which products are involved and the scope of the document.
+<!--- In this section you should provide a brief 1-2 paragraph introduction to the reference architecture document covering who the documentation will serve, which products are involved, and the scope of the document.
 -->
  
 ### Customer problem statement(s) title
