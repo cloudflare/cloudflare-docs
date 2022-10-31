@@ -119,6 +119,6 @@ curl -X DELETE \
 
 ### Known limitations
 
-- DASH playback is not currently supported
+- Playback of live streams using DASH is not currently supported
 - Watermarks cannot yet be used with live videos.
 - If a live video exceeds seven days in length, the recording will be truncated to seven days and not be viewable.
