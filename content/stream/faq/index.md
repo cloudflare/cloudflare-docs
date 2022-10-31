@@ -162,7 +162,6 @@ All Stream Live videos are automatically recorded. There is no additional cost f
 
 ### How many live inputs can I create? Are there any other limits?
 
-- You can create up to 1000 live inputs per account.
 - You can configure up to 50 outputs per live input.
 - You should use a maximum recommended bitrate of 12000 kbps.
 
