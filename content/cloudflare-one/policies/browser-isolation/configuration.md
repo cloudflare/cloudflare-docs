@@ -4,29 +4,42 @@ title: Setup
 weight: 1
 ---
 
-# Setup
+# Set up Browser Isolation
 
-Browser Isolation is enabled through Secure Web Gateway HTTP policies. By default, no traffic is isolated until an Isolation policy has been added within HTTP policies. To start isolating your traffic, you need to:
+## Setup options
 
-1.  Create a [Cloudflare Zero Trust account](https://dash.teams.cloudflare.com/) and click **Add on Browser Isolation** for either your Zero Trust Standard or your Zero Trust Enterprise plan.
+Two options for getting started with BISO:
+In-line browser isolation -> Setup [Gateway HTTP filtering (WARP)](/cloudflare-one/policies/filtering/initial-setup/http/) or set up a non-identity connection (Magic WAN, PAC file)
+Clientless browser isolation
 
-1.  Download the latest version of the [WARP client](/cloudflare-one/connections/connect-devices/warp/download-warp/).
+Browser Isolation is enabled through Secure Web Gateway HTTP policies. By default, no traffic is isolated until an Isolation policy has been added within HTTP policies.
 
-1.  Create a [Device enrollment rule](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions).
+To start isolating your traffic you need to:
 
-1.  Set up an [Isolation policy](/cloudflare-one/policies/filtering/http-policies/#isolate).
+1. Set up
 
-Cloudflare Browser Isolation integrates with your existing web browser. Once connected to Cloudflare WARP, open your browser and navigate to any websites you normally use.
+2. Set up an [Isolation policy](/cloudflare-one/policies/filtering/http-policies/#isolate).
 
-Every tab is automatically connected to an isolated browser running on Cloudflare's edge.
+## Build an Isolation policy
 
-## How to check if a webpage is isolated
+Browser Isolation policies are configured through the Gateway HTTP policy builder.
+
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **Policies** > **HTTP**.
+2. Select **Create a policy** and enter a name for the policy.
+3. Use the HTTP policy [selectors](/cloudflare-one/policies/filtering/http-policies/#selectors) and [operators](/cloudflare-one/policies/filtering/http-policies/#operators) to specify the websites or content you want to isolate.
+4. For **Action**, choose either [_Isolate_](#isolate) or [_Do not Isolate_](#do-not-isolate).
+5. (Optional) Configure [settings](#policy-settings) for an Isolate policy.
+6. Select **Create policy**.
+
+Next, verify that the 
+
+## Check if a webpage is isolated
 
 The easiest way to check if a webpage is proxied through Cloudflare is by checking for the presence of a Cloudflare Root CA.
 
 In Chrome, click the padlock to the left of your address bar and select **Certificate**.
 
-### Normal Browsing
+### Normal browsing
 
 **Non-Cloudflare Root CA**. Non-Cloudflare for Teams root certificate indicates that Cloudflare did not proxy this webpage.
 
@@ -36,7 +49,7 @@ In Chrome, click the padlock to the left of your address bar and select **Certif
 
 ![Normal right click menu](/cloudflare-one/static/documentation/rbi/non-isolated-browser.png)
 
-### Isolated Browsing
+### Isolated browsing
 
 **Cloudflare Root CA**. Cloudflare for Teams + Gateway Intermediate indicates traffic was proxied through Cloudflare Gateway.
 
@@ -46,18 +59,18 @@ In Chrome, click the padlock to the left of your address bar and select **Certif
 
 ![Simplified right click menu](/cloudflare-one/static/documentation/rbi/isolated-browser.png)
 
-## Disconnecting Browser Isolation
+## Disconnect Browser Isolation
 
-If you would like to temporarily disconnect Browser Isolation, you can do this by simply selecting the WARP agent and disconnecting the client.
+If a user would like to temporarily disable isolated browsing, they can do this by disconnecting the WARP client.
 
 ### macOS
 
-1.  Click the **Cloudflare Logo** in the Menu Bar.
-1.  Toggle the blue **Connected** switch into the Disconnected state.
-1.  Refresh your webpage to return to the non-isolated page.
+1. In the Menu Bar, select the Cloudflare logo.
+2. Toggle the blue **Connected** switch into the Disconnected state.
+3. Refresh the webpage to return to the non-isolated page.
 
 ### Windows
 
-1.  Click the **Cloudflare Logo** in the System Tray.
-1.  Toggle the blue **Connected** switch into the Disconnected state.
-1.  Refresh your webpage to return to the non-isolated page.
+1. In the System Tray, select the Cloudflare logo.
+2. Toggle the blue **Connected** switch into the Disconnected state.
+3. Refresh the webpage to return to the non-isolated page.

@@ -24,38 +24,7 @@ Require devices to have certain software installed or other configuration attrib
 
 ## Isolate high risk sites in remote browser
 
-<details>
-<summary>Feature availability</summary>
-<div>
-
-Remote Browser Isolation is available as an add-on to Zero Trust Standard and Enterprise plans. See our [payment plans](https://www.cloudflare.com/teams-pricing/) for more information.
-
-</div>
-</details>
-
-### Isolate security risks
-
-Isolate high risk content categories such as newly registered domains.
-
-| Selector            | Operator | Value           | Action         |
-| --------------------| ---------| ----------------| -------------- |
-| Content categories  | in       | Security Risks  | Isolate        |
-
-### Isolate news and media
-
-Isolate News and Media sites, which are targets for Malvertising attacks:
-
-| Selector            | Operator | Value           | Action         |
-| --------------------| ---------| ----------------| -------------- |
-| Content categories  | in       | News and Media | Isolate         |
-
-### Isolate uncategorized content
-
-Isolate content that has not been categorized by Cloudflare Radar:
-
-| Selector            | Operator | Value           | Action         |
-| --------------------| ---------| ----------------| -------------- |
-| Content categories  | not in   | All content categories |  Isolate  |
+If you are using the [Browser Isolation add-on](/cloudflare-one/policies/browser-isolation/), refer to our list of [common Isolate policies](/cloudflare-one/policies/browser-isolation/configuration/#common-policies).
 
 ## Bypass inspection for self-signed certificates
 

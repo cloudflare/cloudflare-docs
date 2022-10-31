@@ -21,12 +21,4 @@ If you want to apply Isolate policies based on user identity, you will need to e
 3. Enable non-identity browser isolation:
     1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Browser Isolation**.
     2. Turn on **Non-identity on-ramp support**.
-4. Create HTTP policies to isolate websites in a remote browser:
-    1. Go to **Gateway** > **Policies** > **HTTP**.
-    2. Build a non-identity [HTTP policy](/cloudflare-one/policies/filtering/http-policies/) using the Isolate action. The following example enables isolation for all web traffic:
-
-        | Selector            | Operator | Value           | Action         |
-        | --------------------| ---------| ----------------| -------------- |
-        | Hostname            | matches regex  | `.*` | Isolate        |
-
-For more examples, refer to the list of [common HTTP policies](/cloudflare-one/policies/filtering/http-policies/common-policies/#isolate-high-risk-sites-in-remote-browser).
+4. Build a non-identity [HTTP policy](/cloudflare-one/policies/browser-isolation/configuration/) to isolate websites in a remote browser.

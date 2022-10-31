@@ -1,7 +1,7 @@
 ---
 pcx_content_type:  navigation
 title: Agentless options
-weight: 10
+weight: 3
 ---
 
 # Agentless options
