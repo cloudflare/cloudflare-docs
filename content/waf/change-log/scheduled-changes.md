@@ -23,12 +23,12 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-10-24</td>
-      <td>2022-10-31</td>
-      <td>Block</td>
-      <td>100552</td>
-      <td>...b9cfd82d</td>
-      <td>JXPath RCE - CVE:CVE-2022-41852</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
       <td>N/A</td>
     </tr>
 </tbody>
