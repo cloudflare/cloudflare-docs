@@ -20,7 +20,7 @@ To get started, perform the following steps:
 ## Creating the Pods
 A pod is the basic deployable object that Kubernetes creates. It represents an instance of a running process in the cluster. The following .yml file ( httpbin-app.yml) will create a pod that contains the httpbin application. It will create two replicas so as to prevent any downtime. The application will be accessible inside the cluster at web-service:80.
 
-```sh
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -54,16 +54,16 @@ spec:
 ```
 Using the following command the application will begin to run inside the cluster.
 ```sh
-kubectl create -f httpbin-app.yml
+$ kubectl create -f httpbin-app.yml
 ```
 The pods' status can be seen through the console or using the kubectl get pod command.
 ```sh
-kubectl get pods
+$ kubectl get pods
 ```
 
 ## Routing with Cloudflare Tunnel
 The tunnel can be created through the dashboard using [this guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/). Instead of running the command to install a connector you will select docker as the environment and copy just the token rather than the whole command. Configure the tunnel to route to k8.example.com from the service http://web-service:80. Create the cloudflared-deployement.yml file with the following content.
-```sh
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -95,6 +95,6 @@ spec:
 ```
 This file will be deployed with the following command.
 ```sh
-kubectl create -f cloudflared-deployment.yml
+$ kubectl create -f cloudflared-deployment.yml
 ```
 The application within the cluster will now be accessible through the domain name as configured.
