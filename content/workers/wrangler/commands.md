@@ -24,6 +24,8 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`deployments`](#deployments) - Retrieve details for the 10 most recent deployments.
+- [`types`](#types) - Generate types from bindings and module rules in configuration.
+
 
 {{<Aside type="note">}}
 
@@ -1201,3 +1203,14 @@ $ wrangler deployments
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 {{</definitions>}}
+
+---
+
+## types
+
+Generate types from bindings and module rules in configuration.
+
+```sh
+$ wrangler types
+```
+

@@ -20,6 +20,8 @@ You will need to create a `_routes.json` file to control when your Function is i
 * **include**: Defines routes that will be invoked by Functions. Accepts wildcard behavior.
 * **exclude**: Defines routes that will not be invoked by Functions. Accepts wildcard behavior. `exclude` always take priority over `include`.
 
+This file will need to be created in the output directory of the project.
+
 ### Example configuration
 
 Below is an example of a `_routes.json`. 
