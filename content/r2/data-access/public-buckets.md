@@ -99,6 +99,14 @@ The domain is no longer connected to your bucket and will no longer appear in th
 Enabling managed public access for your bucket will make the content of your bucket available to the Internet through a `r2.dev` Cloudflare subdomain.
 To enable public access for your buckets:
 
+{{<Aside type="note">}}
+
+Public access through `r2.dev` subdomains are rate limited and should only be used for development purposes.
+
+To enable access management, Cache and bot management features, you must set up a custom domain when enabling public access to your bucket.
+
+{{</Aside>}}
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > **R2**.
 
 ![Choose R2 from the side menu](/r2/static/public-buckets-r2.png)
@@ -125,12 +133,6 @@ To enable public access for your buckets:
 ![Show Public Bucket URL](/r2/static/public-buckets-allowed.png)
 
 You can review if your bucket is publicly accessible by going to your bucket and checking that **Public URL Access** states **Allowed**.
-
-{{<Aside type="note">}}
-
-To enable access management, Cache and bot management features, you must set up a custom domain when enabling public access to your bucket.
-
-{{</Aside>}}
 
 ## Disable managed public access for your bucket
 
