@@ -102,7 +102,6 @@ Vue.createApp({
             </div>
         </details>
         </div>
-        <div v-else-if="element.type === 'note'">
         <div v-else-if="element.type === 'question'">
         <hr class="questionBreak">
         <div class="question" :id="element.id">
