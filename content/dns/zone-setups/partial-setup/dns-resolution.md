@@ -8,7 +8,7 @@ meta:
 
 # DNS resolution in partial zones
 
-When you have a [partial zone](/dns/zone-setups/partial-setup/)[^1], Cloudflare resolves DNS records a bit differently from full zones to prevent you from creating conflicting records between Cloudflare and your authoritative DNS provider.
+When you have a [partial zone](/dns/zone-setups/partial-setup/)[^1], Cloudflare handles DNS records a bit differently from full zones in order to internally resolve the origin server where proxied HTTP requests are sent to.
 
 ## Records within the same zone
 
@@ -21,14 +21,14 @@ sub1.partialzone.com   CNAME   sub2.partialzone.com
 sub2.partialzone.com   A       192.0.2.1
 ```
 
-Since Cloudflare contains both the `CNAME` and its target, our DNS resolution will send incoming requests to `sub1.partialzone.com` to `192.0.2.1`.
+Since Cloudflare contains both the `CNAME` and its target, our DNS resolution will send incoming HTTP requests to `sub1.partialzone.com` to the origin `192.0.2.1`.
 
 This can cause issues if you already have DNS records for `sub2.partialzone.com` at your authoritative DNS provider. These records may point to `192.0.2.4`, another IP address, or another domain but - because Cloudflare contains the initial record and the target - it never queries your authoritative DNS provider for the record for `sub2.partialzone.com`.
 
 <div class="mermaid">
     flowchart TD
       accTitle: DNS resolution flow with CNAME target in same partial zone
-      A[Request to <code>sub1.partialzone.com</code>] --> B[<code>CNAME</code> record to <code>sub2.partialzone.com</code>]
+      A[Request to <code>sub1.partialzone.com</code>] --> B[<code>CNAME</code> record for <code>sub1.partialzone.com</code> to <code>sub2.partialzone.com</code>]
       subgraph Cloudflare
         B --> C[<code>A</code> record for <code>sub2.partialzone.com</code> to <code>192.0.2.1</code>]
       end
@@ -44,7 +44,7 @@ When you avoid this situation - meaning you do not have the **target** of the `C
 <div class="mermaid">
     flowchart TD
       accTitle: DNS resolution flow with CNAME target not in partial zone
-      A[Request to <code>sub1.partialzone.com</code>] --> B[<code>CNAME</code> record to <code>sub2.partialzone.com</code>]
+      A[Request to <code>sub1.partialzone.com</code>] --> B[<code>CNAME</code> record for <code>sub1.partialzone.com</code> to <code>sub2.partialzone.com</code>]
       B --> C[<code>A</code> record for <code>sub2.partialzone.com</code> to <code>192.0.2.4</code>]
       C --> D[<code>192.0.2.4</code>]
       subgraph Cloudflare
@@ -57,54 +57,29 @@ When you avoid this situation - meaning you do not have the **target** of the `C
 
 ---
 
-## Records within the same account
+## Records pointing to a partial zone within the same account
 
-You could also [create a `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) in a partial zone that points to a record in another zone within your account. That zone could be partial or full.
+You could also [create a `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) in a zone (partial or full setup) that points to a record in another zone within your account.
 
-In this case, Cloudflare will always resolve the `CNAME` record based on the value at your authoritative DNS provider.
+In this case, Cloudflare will always resolve the `CNAME` target based on the value at your authoritative DNS provider of the partial target zone.
 
 <div class="mermaid">
     flowchart TD
       accTitle: DNS resolution flow with CNAME target in a zone within the same account
-      A[Request to <code>sub1.partialzone.com</code>] --> B[<code>CNAME</code> record to <code>sub2.partialzone.com</code>]
-      B --> C[<code>A</code> record for <code>sub2.partialzone.com</code> to <code>192.0.2.4</code>]
+      A[Request to <code>www.alice.com</code>] --> B[<code>CNAME</code> record for <code>www.alice.com</code> to <code>www.partialzone.com</code>]
+      B --> C[<code>A</code> record for <code>www.partialzone.com</code> to <code>192.0.2.4</code>]
       C --> D[<code>192.0.2.4</code>]
       subgraph Cloudflare account
         subgraph Cloudflare zone 1
           B
         end
         subgraph Cloudflare zone 2
-        E[<code>A</code> record for <code>sub2.partialzone.com</code> to <code>203.0.113.1</code>]
+        E[<code>A</code> record for <code>www.partialzone.com</code> to <code>203.0.113.1</code>]
         end
       end
       subgraph Authoritative DNS
       C
       end
 </div>
-
----
-
-## Records in different account
-
-You could also [create a `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) in a partial zone that points to a record in another zone in a different account.
-
-By default, Cloudflare does not resolve these records and instead returns a [1014 error](https://support.cloudflare.com/hc/articles/360029779472#error1014).
-
-<div class="mermaid">
-    flowchart TD
-      accTitle: DNS resolution flow with CNAME target in a zone in a different account
-      A[Request to <code>sub1.partialzone.com</code>] --> B[<code>CNAME</code> record to <code>sub2.partialzone.com</code>]
-      B --> C[<code>A</code> record for <code>sub2.partialzone.com</code> to <code>192.0.2.4</code>]
-      C --> D[1014 error: CNAME Cross-User Banned]
-      subgraph Cloudflare account 1
-          B
-      end
-      subgraph Cloudflare account 2
-        C
-      end
-</div>
-<br />
-
-However, if you want to allow `CNAME` record resolution to a domain in a different Cloudflare account, the domain owner of your `CNAME` target should be using [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/).
 
 [^1]: {{<render file="_partial-setup-definition.md">}}
