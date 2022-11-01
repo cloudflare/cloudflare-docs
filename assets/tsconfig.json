@@ -1,5 +1,4 @@
 {
- "moduleResolution":"node",
  "compilerOptions": {
   "target": "es2015",
   "baseUrl": ".",
