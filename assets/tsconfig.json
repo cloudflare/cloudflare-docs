@@ -1,6 +1,6 @@
 {
+ "moduleResolution":"node",
  "compilerOptions": {
-  "moduleResolution":"node",
   "target": "es2015",
   "baseUrl": ".",
   "paths": {
