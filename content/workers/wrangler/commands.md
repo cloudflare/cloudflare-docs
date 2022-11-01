@@ -23,9 +23,8 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
-- [`deployments`](#deployments) - Retrieve details for the 10 most recent deployments.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
-
+<!-- - [`deployments`](#deployments) - Retrieve details for the 10 most recent deployments. -->
 
 {{<Aside type="note">}}
 
@@ -1189,7 +1188,7 @@ Retrieve your user information and test your authentication configuration.
 $ wrangler whoami
 ```
 
-## deployments
+<!-- ## deployments
 
 Retrieve details for the 10 most recent deployments. Details include `Version ID`, `Version number`, `Author email`, `Created on`, and `Latest deploy`.
 
@@ -1204,6 +1203,9 @@ $ wrangler deployments
 
 {{</definitions>}}
 
+TODO Add examples of logged output
+-->
+
 ---
 
 ## types
@@ -1214,3 +1216,4 @@ Generate types from bindings and module rules in configuration.
 $ wrangler types
 ```
 
+<!--TODO Add examples of DTS generated output -->
