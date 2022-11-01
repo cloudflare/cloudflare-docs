@@ -23,7 +23,7 @@ $ npm install --save-dev wrangler
 After you have the correct version of Wrangler installed, run the following to login to Wrangler in order to get access to D1:
 
 ```sh
-$ npx wrangler@d1 login
+$ npx wrangler login
 ```
 
 This will open a login page and request your account access permissions.
