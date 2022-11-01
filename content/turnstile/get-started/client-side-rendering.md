@@ -58,6 +58,12 @@ highlight: [4]
 
 An invisible input with the name `cf-turnstile-response` is added and will be sent to the server with the other fields.
 
+{{<Aside type= "Note">}}
+
+A form is not protected by having a widget rendered. The corresponding token that is a result of a widget being rendered also needs to be verified using the siteverify API.
+
+{{</Aside>}}
+
 ### Disable implicit rendering 
 
 You can disable implicit rendering by replacing the script from:
@@ -138,9 +144,9 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 
 ## Widget size
 
-The Turnstile widget can take two different sizes, when using the Managed or Non-interactive modes:
+The Turnstile widget can have two different sizes when using the Managed or Non-interactive modes:
 
 | Size | Width | Height |
 | --- | --- | --- |
-| normal | 300px | 65px |
-| compact | 130px | 120px |
+| Normal | 300px | 65px |
+| Compact | 130px | 120px |
