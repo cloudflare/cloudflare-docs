@@ -42,44 +42,39 @@ You can choose to disable isolation for certain destinations or categories. The 
 
 ## Policy settings
 
-These settings are available in the Gateway HTTP policy builder when you select the **Isolate** action.
+The following optional settings appear in the Gateway HTTP policy builder when you select the _Isolate_ action. Enable these settings to [prevent data loss](https://blog.cloudflare.com/data-protection-browser/) when users interact with untrusted websites in the remote browser.  
 
 ### Disable copy / paste
 
-*   **Behavior**. Prohibits users from copying and pasting content between a remote web page and their local machine.
-*   **Use Case**. [Protect sensitive content in self-hosted or SaaS applications from data loss](https://blog.cloudflare.com/data-protection-browser/).
+Prohibits users from copying and pasting content between a remote web page and their local machine.
 
 ### Disable printing
 
-*   **Behavior**. Prohibits users from printing remote web pages to their local machine.
-*   **Use Case**. [Protect sensitive content in self-hosted or SaaS applications from data loss](https://blog.cloudflare.com/data-protection-browser/).
+Prohibits users from printing remote web pages to their local machine.
 
 ### Disable keyboard
 
-{{<Aside>}}
+Prohibits users from performing keyboard input into the remote web page.
+
+{{<Aside type="note">}}
 Mouse input remains available (to allow users to navigate a website by following hyperlinks and scrolling). This does not prevent user input into third party virtual keyboards within a remote webpage.
 {{</Aside>}}
 
-*   **Behavior**. Prohibits users from performing keyboard input into the remote page.
-*   **Use Case**. Prevent users inputting sensitive information into unknown/untrusted websites.
-
 ### Disable upload
 
-{{<Aside>}}
-This option does not prevent files being uploaded to websites from third party cloud file managers or files downloaded into the remote browser download bar from other isolated websites. To prevent files being uploaded from the remote browser into an isolated website use HTTP Policies to block by Upload Mime Type.
-{{</Aside>}}
+Prohibits users from uploading files from their local machine into a remote web page.
 
-*   **Behavior**. Prohibits users from uploading files from their local machine into a remote web page.
-*   **Use Case**. Protect sensitive data from being exfiltrated to unknown/untrusted websites.
+{{<Aside type="note">}}
+This option does not prevent files being uploaded to websites from third party cloud file managers or files downloaded into the remote browser download bar from other isolated websites. To prevent files being uploaded from the remote browser into an isolated website, use HTTP Policies to block by [Upload Mime Type](/cloudflare-one/policies/filtering/http-policies/#download-and-upload-mime-type).
+{{</Aside>}}
 
 ### Disable download
 
-{{<Aside>}}
-This option does not prevent files from being downloaded into the remote browser. To prevent files being downloaded into the remote browser use HTTP Policies to block by Download Mime Type.
-{{</Aside>}}
+Prohibits users from exporting files from the remote browser to their local machine.
 
-*   **Behavior**. Prohibits users from exporting files from the remote browser to their local machine.
-*   **Use Cases**. Protect users from downloading files from unknown/untrusted sources, and protect sensitive content in self-hosted or SaaS applications from data loss.
+{{<Aside type="note">}}
+This option does not prevent files from being downloaded into the remote browser. To prevent files being downloaded into the remote browser, use HTTP Policies to block by [Download Mime Type](/cloudflare-one/policies/filtering/http-policies/#download-and-upload-mime-type).
+{{</Aside>}}
 
 ## Common policies
 
