@@ -24,7 +24,7 @@ Require devices to have certain software installed or other configuration attrib
 
 ## Isolate high risk sites in remote browser
 
-If you are using the [Browser Isolation add-on](/cloudflare-one/policies/browser-isolation/), refer to our list of [common Isolate policies](/cloudflare-one/policies/browser-isolation/configuration/#common-policies).
+If you are using the [Browser Isolation add-on](/cloudflare-one/policies/browser-isolation/), refer to our list of [common Isolate policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#common-policies).
 
 ## Bypass inspection for self-signed certificates
 
