@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Browser Isolation
 weight: 5
-layout: single
 ---
 
 # Browser Isolation
