@@ -144,30 +144,3 @@ Content-Security-Policy: connect-src 'self' *.videodelivery.net *.cloudflarestre
 ```
 
 To ensure **only** videos from **your** Cloudflare Stream account can be played on your website, replace `*` in `*.cloudflarestream.com` and `*.videodelivery.net` in the examples above with `customer-<CODE>`, replacing `<CODE>` with your unique customer code, which can be found in the Stream Dashboard [here](https://dash.cloudflare.com/?to=/:account/stream). This code is unique to your Cloudflare Account.
-
-## Stream Live
-
-### Do I need a separate Stream Live subscription to use Stream Live?
-
-As long as you have a Cloudflare Stream subscription, you can use all the features of Stream Live. You do not need to add another subscription.
-
-### How does billing work for Stream Live?
-
-Stream Live billing works the same way as Stream On-demand:
-
-- You pay $5 per 1000 minutes of recorded video.
-- You pay $1 per 1000 minutes of delivered video.
-
-All Stream Live videos are automatically recorded. There is no additional cost for encoding and packaging live videos.
-
-### How many live inputs can I create? Are there any other limits?
-
-- You can create up to 1000 live inputs per account.
-- You can configure up to 50 outputs per live input.
-- You should use a maximum recommended bitrate of 12000 kbps.
-
-If your use case requires the limits to be increased, please contact support.
-
-### How does Stream Live handle RTMP reconnections?
-
-As long as your streaming software reconnects, Stream Live will continue to ingest and stream your live video. Make sure the streaming software you use to push RTMP feeds automatically reconnects if the connection breaks. Some apps like OBS reconnect automatically while other apps like FFmpeg require custom configuration.
