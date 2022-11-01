@@ -32,7 +32,7 @@ Protocol-aware   | IP protocol                                | —   | Yes
 
 {{</table-wrap>}}
 
-<sup>1</sup> _WAF/CDN customers on the Enterprise plan with Advanced DDoS service._<br/>
+<sup>1</sup> _WAF/CDN customers on the Enterprise plan with the Advanced DDoS Protection subscription._<br/>
 <sup>2</sup> _Magic Transit and Spectrum BYOIP customers on an Enterprise plan._
 
 ## How it works

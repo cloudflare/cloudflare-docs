@@ -1,7 +1,7 @@
 ---
 pcx_content_type: tutorial
 title: Test a waiting room
-weight: 0
+weight: 9
 ---
 
 # Test a waiting room

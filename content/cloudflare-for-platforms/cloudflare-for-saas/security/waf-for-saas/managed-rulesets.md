@@ -14,7 +14,7 @@ If you are interested in [WAF for SaaS](/cloudflare-for-platforms/cloudflare-for
  
 ## Prerequisites
  
-WAF for SaaS is available with certain Enterprise plans. To verify access, contact your account manager.
+WAF for SaaS is available for customers on an Enterprise plan.
  
 If you would like to deploy a managed ruleset at the account level, refer to the [Ruleset Engine documentation](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/). 
  

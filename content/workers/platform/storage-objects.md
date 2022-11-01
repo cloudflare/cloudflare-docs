@@ -43,20 +43,6 @@ To get started with R2:
 * Learn about R2 [Limits](/r2/platform/limits/).
 * Review the [R2 Workers API](/r2/data-access/workers-api/workers-api-reference/).
 
-## R2 and KV comparison
-
-{{<table-wrap>}}
-
-| Feature                                       | KV           | R2           |
-| --------------------------------------------- | ------------ | ------------ |
-| Maximum size per value                        | 25 MiB       | 5 TB         |
-| Consistency model                             | Eventual     | Strong       |
-| Cached                                        | Always       | Possible when using [Cache API](/workers/runtime-apis/cache/) in a Worker |
-| S3-compatible API                             | No           | Yes                     |
-| TTL expiration                                | Object-level | Not currently available |
-| Maximum operations per second                 | Unlimited    |  < 1,000/bucket           |
-
-{{</table-wrap>}}
 
 ## Durable Objects
 
@@ -78,3 +64,18 @@ To get started with Durable Objects:
 * Get started with [Durable Objects](/workers/learning/using-durable-objects/).
 * Review the [Durable Objects Runtime API](/workers/runtime-apis/durable-objects/).
 * Learn about Durable Objects [Limits](/workers/platform/limits/#durable-objects-limits/).
+
+## Comparison
+
+{{<table-wrap>}}
+
+| Feature                                       | KV           | R2           | Durable Objects (DO) |
+| --------------------------------------------- | ------------ | ------------ |-----------------|
+| Maximum size per value                        | 25 MiB       | 5 TB         | 128 KiB per value, unlimited number of values per DO |
+| Consistency model                             | Eventual     | Strong       | Transactional for multiple keys in a single DO |
+| Cached                                        | Always       | Possible when using [Cache API](/workers/runtime-apis/cache/) in a Worker | Possible when using [Cache API](/workers/runtime-apis/cache/) |
+| S3-compatible API                             | No           | Yes                     | No |
+| TTL expiration                                | Object-level | Not currently available | Not automatic, but possible using [alarms](/workers/learning/using-durable-objects/#alarms-in-durable-objects) |
+| Maximum operations per second                 | Unlimited cached reads |  < 1,000/bucket           | Approximately 100 requests/second per DO, depending on workload |
+
+{{</table-wrap>}}

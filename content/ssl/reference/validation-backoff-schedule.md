@@ -10,7 +10,7 @@ Domain control validation (DCV) has to happen before a Certificate Authority (CA
 
 DCV happens with Cloudflare's CA partners according to the following schedule:
 
-- Digicert - 30 days
+- DigiCert - 30 days
 - Google Trust Services - 14 days
 - Let's Encrypt - 7 days
 

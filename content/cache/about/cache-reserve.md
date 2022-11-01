@@ -15,7 +15,7 @@ The retention period of an asset is how long we will keep the asset in Cache Res
 
 Assets must [meet certain criteria](#cache-reserve-asset-eligibility) to use Cache Reserve.
 
-Cache Reserve is a usage-based product and [pricing](#pricing) is detailed below.
+Cache Reserve is a usage-based product and [pricing](#pricing) is detailed below. While Cache Reserve does require a paid plan, users can continue to use Cloudflare’s CDN (without Cache Reserve) for free.
 
 ## Enable Cache Reserve
 
@@ -98,13 +98,15 @@ Class A operations are performed based on cache misses from Cloudflare’s CDN. 
 
 Class B operations are performed when data needs to be fetched from Cache Reserve to respond to a miss in the edge cache. 
 
-#### Free operations
+#### Purge
 
-Free operations include purging assets.
+Asset purges are free operations.
 
-Cache Reserve will also be purged along with edge cache when you send a purge by URL request. Other purge methods such as purge by tag or prefix will invalidate the asset in Cache Reserve, but assets purged this way will still incur storage costs until they expire.
+Cache Reserve will also be purged along with edge cache when you send a purge by URL request.
 
-While Cache Reserve does require a paid plan, users can continue to use Cloudflare’s CDN (without Cache Reserve) for free. 
+Other purge methods, such as purge by tag, host, prefix, or purge everything will force an attempt to revalidate the Cache Reserve asset, but assets purged this way will still incur storage costs until their retention TTL expires.
+
+{{<Aside type="note">}}Note this differs from the standard CDN's purge by tag, host, or prefix features which force a cache miss, requiring the origin to deliver the asset in full.{{</Aside>}}
 
 ## Cache Reserve billing examples
 

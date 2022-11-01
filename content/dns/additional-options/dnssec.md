@@ -10,9 +10,11 @@ DNS Security Extensions (DNSSEC) adds an extra layer of authentication to DNS, e
 
 {{<Aside type="note">}}
 
-For additional background on DNSSEC, visit the [Cloudflare Learning Center](https://www.cloudflare.com/learning/dns/dns-security/).
+If you are using Cloudflare as your Secondary DNS provider and want to configure DNSSEC on your secondary zone(s), you have [three options](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/#dnssec) depending on your setup.
 
 {{</Aside>}}
+
+For additional background on DNSSEC, visit the [Cloudflare Learning Center](https://www.cloudflare.com/learning/dns/dns-security/).
 
 ---
 

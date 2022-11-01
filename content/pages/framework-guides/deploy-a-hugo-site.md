@@ -187,7 +187,7 @@ Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://da
 
 {{<Aside type="note" header="Base URL configuration">}}
 
-Hugo allows you to configure the `baseURL` of your application. This allows you to utilize the `absURL` helper to construct full canonical URLs. In order to do this with Pages, you must provde the `-b` or `--baseURL` flags with the `CF_PAGES_URL` environment variable to your `hugo` build command.
+Hugo allows you to configure the `baseURL` of your application. This allows you to utilize the `absURL` helper to construct full canonical URLs. In order to do this with Pages, you must provide the `-b` or `--baseURL` flags with the `CF_PAGES_URL` environment variable to your `hugo` build command.
 
 Your final build command may look like this: 
 

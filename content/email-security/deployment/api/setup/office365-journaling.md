@@ -10,91 +10,116 @@ meta:
 
 For customers using Microsoft Office 365, setting up a phishing risk assessment with Area 1 and a journaling setup is quick and easy. The following email flow shows how this works:
 
-![Email flow when setting up a phishing assessment risk for Office 365 with Area 1.](/email-security/static/office365-journalling-flow.png)
+![Email flow when setting up a phishing assessment risk for Office 365 with Area 1.](/email-security/static/bcc-setup/journaling/office365-journaling-flow.png)
 
 ## 1. Configure connector for delivery to Area 1 (if required)
 
-If your email architecture does not include an outbound gateway, you can skip this step and proceed to step two.
+If your email architecture does not include an outbound gateway, you can skip this step and [proceed to the next one](#2-configure-journal-rule).
 
 On the other hand, if your email architecture requires outbound messages to traverse your email gateway, you may want to consider configuring a connector to send the journal messages directly to Area 1.
 
-1. From the Exchange admin center, go to **mail flow** > **connectors**. 
+1. Log in to the [Exchange admin center](https://admin.exchange.microsoft.com), and go to **Mail flow** > **Connectors**.
 
-2. Select the **+** button to configure a new connector and open **Select your mail flow scenario**.
+    ![Go to the connectors area](/email-security/static/bcc-setup/journaling/step1-connector.png)
 
-3. In the **From** dropdown menu, select *Office 365*.
+2. Select **Add a connector**. 
 
-4. In the **To** drowndown menu, select *Partner Organization*.
+3. Configure the new connector as follows:
+    * **Connection From**: Office 365
+    * **Connection to**: Partner Organization
 
-5. Select **Next**.
+    ![Configure the connector](/email-security/static/bcc-setup/journaling/step3-configure-connector.png)
 
-6. Configure the **New connector** as follows:
-    1. **Name**: `Deliver journal directly to Area 1`.
-    2. **Description**: `Deliver journal directly to Area 1`.
-    3. Select the **Turn it on** checkbox.
-    4. Select the **Retain internal Exchange email headers (recommended)** checkbox.
-    5. Select **Next**.
+4. Select **Next**.
 
-7. Configure the **When do you want to use this connector?** as follows:
-    1. Select **Only when email messages are sent to these domains**.
-    2. Select the **+** button and input `journaling.mxrecord.io` in the configuration pop-up.
-    3. Select **Next**.
+5. Configure the connector as follows:
+    * **Name**: `Deliver journal directly to Area 1`
+    * **Description**: `Deliver journal directly to Area 1`
+    * **Turn it on**: Enabled.
 
-8. In **How do you want to route email messages?**, select the **+** button to add the following smarthosts:
-    * `mailstream-east.mxrecord.io`
-    * `mailstream-west.mxrecord.io`
+    ![Name the connector and give it a description](/email-security/static/bcc-setup/journaling/step5-name-connector.png)
 
-    If you need to enforce traffic through the EU region, use the following smarthosts instead:
-    * `mailstream-eu1.mxrecord.io`
+6. Select **Next**.
 
-    Select **Next**.
+7. Configure the **Use of connector** setting as follows:
+    * Select **Only when email messages are sent to these domains**.
+    * In the text field, enter `journaling.mxrecord.io`, and select **+** to add the domain.
 
-9. You need to preserve the default TLS configuration. Review the following settings:
+    ![Configure use of connector](/email-security/static/bcc-setup/journaling/step7-use-of-connector.png)
+
+8. Select **Next**.
+
+9. Configure the **Routing** setting as follows:
+    * Select **Route email through these smart hosts**.
+    * In the text field, enter the following smarthosts. Select the **+** button after each host to add it to the configuration:
+        * `mailstream-east.mxrecord.io`
+        * `mailstream-west.mxrecord.io`
+    * If there is a requirement to enforce traffic through the EU region, use the following smarthost instead:
+        * `mailstream-eu1.mxrecord.io`
+
+    ![Configure the routing setting](/email-security/static/bcc-setup/journaling/step9-routing.png)
+
+10. Select **Next**.
+
+11. In **Security restrictions**, you need to preserve the default TLS configuration. Review the following settings:
     * Make sure the **Always use Transport Layer Security (TLS) to secure the connection (recommended)** checkbox is selected.
     * In **Connect only if the recipients email server certificate matches this criteria** select **Issued by a trusted certificate authority (CA)**.
 
-    Select **Next**.
+    ![Configure security restrictions](/email-security/static/bcc-setup/journaling/step11-security.png)
 
-10. Review your new connector configuration and select **Next**.
+12. Select **Next**.
 
-11. To validate the new connector, select the `+` button and enter `address@journaling.mxrecord.io`. Select **Validade**.
+13. You need to validate the connector by using your tenant’s specific journaling address. To find this address, go to the [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses) > **Support** > **Service Addresses page**. 
 
-12. After the validation completes, you should see a **Succeeded** message on all taks. Select **Save** to save your new connector.
+    ![Validade the connector](/email-security/static/bcc-setup/journaling/step13-validate-email.png)
 
-Your new connector is now active and showing in **Exchange admin center** > **mail flow**.
+14. Add the address and select **Validate**.
+
+15. Once the validation completes, you should receive a **Succeeded** status for all the tasks. Select **Next**.
+
+    ![Validation success if all goes well](/email-security/static/bcc-setup/journaling/step15-validation-success.png)
+
+16. Review the configuration and select **Create connector**.
+
+    ![Review your connector](/email-security/static/bcc-setup/journaling/step16-review-connector.png)
+
+Your connector is now active. You can find it in **Exchange admin center** > **Mail flow** > **Connectors**.
+
+![Connector active](/email-security/static/bcc-setup/journaling/connector-active.png)
 
 ## 2. Configure journal rule
 
-1. From the Exchange admin center, select **compliance management** > **journal rules**.
+1. Log in to the [Microsoft Purview compliance portal](https://compliance.microsoft.com/homepage).
 
-2. You need to configure an **undeliverable journal reports** address to be able to continue. If you do not have one, select **Select address**. Specify a mailbox that will receive any delivery bounces.
+2. Navigate to **Purview compliance portal** > **Data lifecycle management** > **Exchange (legacy)**.
 
-3. Select the `+` button to configure a journaling rule as follows:
-    * **Send journal reports to**: This address is provided by Area 1.
-    * **Name**: `Journal Messages to Area 1`.
-    * **If the message is sent to or received from**: Select _Apply to all messages_ from the dropdown. If you want to apply this rule only to some messages, select _A specific user or group_ and choose from the list of users or groups.
-    * **Journal the following messages**: Select _External messages only_ from the dropdown.
+3. Select **Settings** (the gear icon).
 
-4. Select **Save** to save the journaling and acknowledge the warning indicating that the rule will only apply to future messages. 
+4. In **Send undeliverable journal reports to** enter the email address of a valid user account. Note that you cannot use a team or group address.
 
-Your journal rule is now configured and active. It may take a few minutes for the configuration to propagate and start to push messages to Area 1. After it propagates, access the Area 1 portal. The number of messages processed will grow as journaled messages are sent to Area 1.
+    ![Configure undeliverable emails](/email-security/static/bcc-setup/journaling/step4-undeliverable.png)
 
-## Create a distribution group in Office 365
+5. Select **Save**. 
 
-1. Go to the Microsoft 365 admin center.
+6. Still in the Exchange (legacy) screen, select **Journal Rules**.
 
-2. Navigate to **Home** > **Users** > **Active Groups**.
+    ![Select journal rules](/email-security/static/bcc-setup/journaling/step6-journal-rules.png)
 
-3. Select **Add a group**. 
 
-4. In **Choose a group type**, select **Distribution**.
+7. Select **New rule** to configure a journaling rule, and configure it as follows:
 
-5. Select **Next**.
+    * **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses). If you are located in the EU or GDPR applies to your organization, ensure you are using a connector with the smarthost set to `mailstream-eu1.mxrecord.io`. Refer to step 9 of [Configure connector for delivery to Area 1](#1-configure-connector-for-delivery-to-area-1-if-required) for more information.
+    * **Journal Rule Name**: `Journal Messages to CloudflareArea 1`
+    * **Journal messages sent or received from**: Everyone
+        * If you wish to restrict this rule to specific users or groups select **A specific user or group**, and select the list of users/groups from the window that opens. Refer to [Create a distribution group](https://learn.microsoft.com/en-us/microsoft-365/admin/setup/create-distribution-lists?view=o365-worldwide#create-a-distribution-group-list) to learn how to create groups.
+    * **Type of message to journal**: External messages only
 
-6. Enter a name for your group.
+    ![Configure the journal rule](/email-security/static/bcc-setup/journaling/step7-define-journal-rules.png)
 
-7. Select **Next** > **Create Group**.
+8. Select **Next**.
 
-8. In the Microsoft 365 admin center main page, go to **Groups** > **Active groups**, and find the group you have just created.
+9. Verify the information is correct, and select **Submit** > **Done**. 
 
-9. Select it to add the users you want to have in that distribution group.
+    ![Verify the journal rule information](/email-security/static/bcc-setup/journaling/step9-verify-journal-rules.png)
+
+Once saved, the rule is automatically active. However, it may take a few minutes for the configuration to propagate and start pushing messages to Cloudflare Area 1. After it propagates, you can access the Cloudflare Area 1 dashboard to check the number of messages processed. This number will grow as journaled messages are sent to Cloudflare Area 1 from your Exchange server.

@@ -45,6 +45,10 @@ Aside from APNIC, Cloudflare will not share the Public Resolver Logs with any th
 
 The Public Resolver Logs we store consist entirely of the following fields:
 
+* ns ip
+* ns name
+* ede
+* reused
 * date
 * dateTime
 * srcAsNum

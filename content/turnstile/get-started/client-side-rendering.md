@@ -58,6 +58,12 @@ highlight: [4]
 
 An invisible input with the name `cf-turnstile-response` is added and will be sent to the server with the other fields.
 
+{{<Aside type= "Note">}}
+
+A form is not protected by having a widget rendered. The corresponding token that is a result of a widget being rendered also needs to be verified using the siteverify API.
+
+{{</Aside>}}
+
 ### Disable implicit rendering 
 
 You can disable implicit rendering by replacing the script from:
@@ -113,7 +119,7 @@ In addition to the `render()` function, Turnstile supports obtaining the widget'
 
 ## Reset a widget
 
-If a given widget has expired or needs to be reloaded, you can use the `turnstile.reset(widgetId: string)` function to reset the widget.
+If a given widget has timed out, expired or needs to be reloaded, you can use the `turnstile.reset(widgetId: string)` function to reset the widget.
 
 ## Remove a widget
 
@@ -127,7 +133,20 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 | `action` | `data-action` | A customer value that can be used to differentiate widgets under the same sitekey in analytics and which is returned upon validation. This can only contain up to 32 alphanumeric characters including `_` and `-`. |
 | `cData` | `data-cdata` | A customer payload that can be used to attach customer data to the challenge throughout its issuance and which is returned upon validation. This can only contain up to 255 alphanumeric characters including `_` and `-`.  |
 | `callback` | `data-callback` | A JavaScript callback that is invoked upon success of the challenge. The callback is passed a token that can be validated. |
-| `expired-callback` | `data-expired-callback` | A JavaScript callback that is invoked when a challenge expires. |
+| `expired-callback` | `data-expired-callback` | A JavaScript callback that is invoked when the token expires and does not reset the widget. |
+| `timeout-callback` | `data-timeout-callback` | A JavaScript callback that is invoked when the challenge expires and resets the widget. |
 | `error-callback` | `data-error-callback` | A JavaScript callback that is invoked when there is a network error. |
 | `theme` | `data-theme` | The widget theme. Can take the following values: `light`, `dark`, `auto`. <br><br>The default is `auto`, which respects the user preference. This can be forced to light or dark by setting the theme accordingly. |
 | `tabindex` | `data-tabindex` | The tabindex of Turnstile's iframe for accessibility purposes. The default value is `0`. |
+| `response-field` | `data-response-field` | A boolean that controls if an input element with the response token is created, defaults to `true`. |
+| `response-field-name` | `data-response-field-name` | Name of the input element, defaults to `cf-turnstile-response`. |
+| `size` | `data-size` | The widget size. Can take the following values: `normal`, `compact`. |
+
+## Widget size
+
+The Turnstile widget can have two different sizes when using the Managed or Non-interactive modes:
+
+| Size | Width | Height |
+| --- | --- | --- |
+| Normal | 300px | 65px |
+| Compact | 130px | 120px |

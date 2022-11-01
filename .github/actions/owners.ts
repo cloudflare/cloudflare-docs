@@ -38,11 +38,12 @@ export const OWNERS: Record<string, string[]> = {
   "network-interconnect": ["dcpena"],
   "page-shield": ["pedrosousa"],
   pages: ["deadlypants1973"],
-  partners: ["kodster28"],
   "pub-sub": ["dcpena"],
+  queues: ["deadlypants1973"],
   r2: ["deadlypants1973"],
   railgun: ["marciocloudflare"],
   "randomness-beacon": ["kodster28"],
+  "reference-architecture": ["haleycode"],
   registrar: ["marciocloudflare"],
   rules: ["pedrosousa"],
   "ruleset-engine": ["pedrosousa"],
@@ -65,5 +66,6 @@ export const OWNERS: Record<string, string[]> = {
 export const REVIEWERS: Record<string, string[]> = {
   analytics: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov", "jimhawkridge", "46bit"],
   logs: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
-  pages: ["WalshyDev"]
+  pages: ["WalshyDev"],
+  turnstile: ["migueldemoura", "punkeel", "worenga"],
 };

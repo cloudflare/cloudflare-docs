@@ -136,21 +136,23 @@ On the Zero Trust dashboard, select your account and go to **Settings** > **Auth
 
 Your rule will now be visible under the **Device enrollment rules** list.
 
-## Configure the Cloudflare certificate
-
-To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
-
-To download the Cloudflare certificate, refer to [Install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/). To find the certificate in the Zero Trust Dashboard, go to **Settings** > **Devices** > **Certificates**.
-
 ## Enable the Cloudflare proxy
-
-Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic.
 
 1. Go to **Settings** > **Network**.
 
-2. Toggle **Proxy** to Enabled. This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
+2. Enable **Proxy**.
 
-3. Toggle **TLS decryption** to Enabled. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
+This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
+
+## (Optional) Enable HTTPS inspection
+
+1. [Download and install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on your devices.
+
+    Installing the certificate is not a requirement for private network routing. However, the certificate allows Cloudflare Gateway to inspect and secure HTTPS traffic to your private network. You can distribute this certificate through an MDM provider or install it manually.
+
+2. Go to **Settings** > **Network** and enable **TLS decryption**.
+
+    This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
 
 ## Enroll a device
 

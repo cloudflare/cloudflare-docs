@@ -10,6 +10,22 @@ meta:
 
 {{<render file="_txt-validation-definition.md">}}
 
+---
+
+## Zone setups
+
+### Full zones
+
+{{<render file="_full-zone-acm-dcv.md">}}
+
+### Partial zones
+
+For partial zones[^2], the process depends on whether the certificate uses a wildcard hostname.
+
+{{<render file="_partial-zone-acm-dcv.md">}}
+
+---
+
 ## Setup
 
 ### Specify DCV method
@@ -47,3 +63,5 @@ At your authoritative DNS provider, create a TXT record named the `txt_name` and
 ## Renew DCV tokens
 
 {{<render file="_dcv-token-renewal.md">}}
+
+[^2]: Meaning that another DNS provider - not Cloudflare - maintains your Authoritative DNS.
