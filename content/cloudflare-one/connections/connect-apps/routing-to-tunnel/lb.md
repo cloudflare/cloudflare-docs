@@ -12,17 +12,19 @@ Unlike publicly routable IP addresses, the subdomain will only proxy traffic for
 
 ## Add a tunnel to a load balancer pool
 
-### Via the dashboard
+{{<tabs labels="Dashboard | CLI">}}
+{{<tab label="dashboard" no-code="true">}}
 
 To create or edit a Cloudflare Load Balancer pool, refer to the [load balancer documentation](/load-balancing/how-to/create-load-balancer/). When adding an origin server address, enter the subdomain of your tunnel (`UUID.cfargotunnel.com`).
 
 If you want to add a [monitor](/load-balancing/understand-basics/monitors/) to your load balancer pool, you will need to add a host header to **Advanced health check settings**. The header will be similar to `Header Name: Host` and `Value: www.your-zone.com`. The monitor will not work without the host header if you are using a config file that defines the `ingress` field, as shown in [this example](https://github.com/cloudflare/argo-tunnel-examples/blob/adb44da43ec0aa65f7928613b762a47ae0d9b2b0/named-tunnel-k8s/cloudflared.yaml#L90).
+{{</tab>}}
 
-### Via the command line
+{{<tab label="cli" no-code="true">}}
 
 You can add Cloudflare Tunnel to an existing load balancer pool directly from `cloudflared`:
 
-```bash
+```sh
 $ cloudflared tunnel route lb <tunnel name/uuid> <hostname> <load balancer pool>
 ```
 
@@ -35,6 +37,10 @@ This command creates an LB DNS record that points the specified hostname to the 
 {{<Aside type="note">}}
 In order to create DNS records using `cloudflared`, the [`cert.pem`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#certpem) file must be installed on your system.
 {{</Aside>}}
+
+{{</tab>}}
+
+{{</tabs>}}
 
 ## Optional Cloudflare settings
 
@@ -58,4 +64,4 @@ If you notice traffic imbalances across origin servers in different locations, y
 
 `cloudflared` connections give preference to tunnels that terminate in the same Cloudflare data center. This behavior can impact how connections are weighted and traffic is distributed.
 
-The solution depends on the type of tunnel being used. If running Classic Tunnels, put your origins in different pools. If running [Named Tunnels replicas](/cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/) (using a shared ID), switch to separate Named Tunnels as distinct origins.
+The solution depends on the type of tunnel being used. If running [legacy tunnels](/cloudflare-one/connections/connect-apps/do-more-with-tunnels/migrate-legacy-tunnels/), put your origins in different pools. If running [Cloudflare tunnel replicas](/cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/) (using a shared ID), switch to separate Cloudflare tunnels as distinct origins.
