@@ -27,7 +27,7 @@ To fix this in GitHub:
 1. Log in to your Github account.
 2. Go to **Settings**  from your user icon > find **Applications** under Integrations.
 3. Find **Cloudflare Pages** > **Configure** > scroll down and select **Uninstall**.
-4. Readd the repository on the Cloudflare dashboard. 
+4. Re-add the repository on the Cloudflare dashboard. 
 
 To fix this in GitLab:
 1. Log in to your GitLab account.
