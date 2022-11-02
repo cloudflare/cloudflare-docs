@@ -470,7 +470,10 @@ toLower({string})
 ```
 
 Returns the string converted to lowercase. This function is Unicode compatible. This may not be perfect for all languages and users with stringent needs, should do the operation in their own code.
-
+Examples:
+```SQL
+SELECT toLower('STRING TO DOWNCASE');
+SELECT toLower(blob1) FROM your_dataset;
 ### toUpper
 
 Usage:
