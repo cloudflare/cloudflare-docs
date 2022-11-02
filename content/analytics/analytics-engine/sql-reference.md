@@ -482,7 +482,10 @@ toUpper({string})
 ```
 
 Returns the string converted to uppercase. This function is Unicode compatible. This may not be perfect for all languages and users with stringent needs, should do the operation in their own code.
-
+Examples:
+```SQL
+SELECT toUpper('string to uppercase');
+SELECT toUpper(blob1) FROM your_dataset;
 ### startsWith
 
 Usage:
