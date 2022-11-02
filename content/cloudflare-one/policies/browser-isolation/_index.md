@@ -6,11 +6,13 @@ weight: 5
 
 # Browser Isolation
 
+{{<plan type="pro">}}
+
 Cloudflare Browser Isolation complements the [Secure Web Gateway](/cloudflare-one/policies/filtering/) and [Zero Trust Network Access](/cloudflare-one/connections/connect-apps/) solutions by executing active webpage content in a secure isolated browser. Executing active content remotely from the endpoint protects users from zero-day attacks and malware. In addition to protecting endpoints, Browser Isolation also protects users from phishing attacks by preventing user input on risky websites and controlling data transmission to sensitive web applications.
 
 Remote browsing is invisible to the user who continues to use their browser normally without changing their preferred browser and habits. Every open tab and window is automatically isolated.
 
-## Availability
+## Feature availability
 
 Browser Isolation is available as an add-on to Zero Trust Pro, Business, and Enterprise plans.
 
