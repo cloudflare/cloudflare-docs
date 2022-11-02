@@ -56,7 +56,7 @@ If you are doing your own multipart uploads, include a similar object in your me
 
 ## 3. Upload user Workers to a namespace
 
-This is the same as our standard Worker upload API, but will upload the worker to a dispatch namespace instead of to your account in general. User Workers must be uploaded via the Cloudflare API, wrangler does not support this operation. Workers uploaded this way will not appear on your dashboard.
+This is the same as our standard Worker upload API, but will upload the worker to a dispatch namespace instead of to your account in general. User Workers must be uploaded via the Cloudflare API, Wrangler does not support this operation. Workers uploaded this way will not appear on your dashboard.
 
 ```bash
 curl -X PUT 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>' \
@@ -74,7 +74,7 @@ async function handleRequest(request) {
 
 ## 4. Tag your users' Workers
 
-To help you manage your customers’ Workers, you can use tags to better perform CRUD operations at scale. You can tag scripts based on things like user ID, account ID, project ID, environment, etc, such that when a user deletes their project, you can easily clean up all of their Workers.
+To help you manage your customers’ Workers, use tags to better perform create, read, update, delete (CRUD) operations at scale. You can tag scripts based on things like user ID, account ID, project ID, and environment, such that when a user deletes their project, you can easily clean up all of their Workers.
 
 ```bash
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>/tags" \
