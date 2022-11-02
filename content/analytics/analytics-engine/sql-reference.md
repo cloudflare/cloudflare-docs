@@ -445,7 +445,7 @@ Usage:
 length({string})
 ```
 
-Returns the length of a string. This is executed as ClickHouse's `lengthUTF8()` function, so it is UTF-8 compatible and returns the number of Unicode characters.
+Returns the length of a string. This function is UTF-8 compatible.
 
 ### isEmpty
 
@@ -454,7 +454,7 @@ Usage:
 isEmpty({string})
 ```
 
-Returns a boolean saying whether the string was empty. This computation can also be done as a binary operation, `{string} = ''`. This function is executed as ClickHouse's `empty`.
+Returns a boolean saying whether the string was empty. This computation can also be done as a binary operation, `{string} = ''`.
 
 ### toLower
 
@@ -463,7 +463,7 @@ Usage:
 toLower({string})
 ```
 
-Returns the string converted to lowercase. This executes as ClickHouse's `lowerUTF8`, so is Unicode compatible. This may not be perfect for all languages and users with stringent needs, should do the operation in their own code.
+Returns the string converted to lowercase. This function is Unicode compatible. This may not be perfect for all languages and users with stringent needs, should do the operation in their own code.
 
 ### toUpper
 
@@ -472,7 +472,7 @@ Usage:
 toUpper({string})
 ```
 
-Returns the string converted to uppercase. This executes as ClickHouse's `upperUTF8`, so is Unicode compatible. This may not be perfect for all languages and users with stringent needs, should do the operation in their own code.
+Returns the string converted to uppercase. This function is Unicode compatible. This may not be perfect for all languages and users with stringent needs, should do the operation in their own code.
 
 ### startsWith
 
@@ -481,7 +481,7 @@ Usage:
 startsWith({string}, {string})
 ```
 
-Returns a boolean of whether the first string has the second string at its start. This executes as ClickHouse's `startsWith`.
+Returns a boolean of whether the first string has the second string at its start.
 
 ### endsWith
 
@@ -490,7 +490,7 @@ Usage:
 endsWith({string}, {string})
 ```
 
-Returns a boolean of whether the first string contains the second string at its end. This executes as ClickHouse's `endsWith`.
+Returns a boolean of whether the first string contains the second string at its end.
 
 ### position
 
@@ -508,7 +508,7 @@ Usage:
 substring({string}, {offset:integer}[. {length:integer}]) 
 ```
 
-Extracts part of a string, starting at the Unicode code point indicated by the offset and returning the number of code points requested by the length. If the offset plus the length exceeds the length of the input string, ClickHouse returns up to the end of the string. As previously mentioned, in SQL, indexes are usually 1-based. That means that the offset provided to substring should be at least 1.
+Extracts part of a string, starting at the Unicode code point indicated by the offset and returning the number of code points requested by the length. As previously mentioned, in SQL, indexes are usually 1-based. That means that the offset provided to substring should be at least 1.
 
 ### format
 
@@ -517,7 +517,7 @@ Usage:
 format({string}[, ...])
 ```
 
-This function supports formatting strings, integers, floats, datetimes, intervals, etc, except NULL. The function executes using ClickHouse's own format function, but with `toString` called on each argument. The format string is validated, to prevent invalid format strings being passed to ClickHouse. We do not support literal `{ and }` in the format string and numbered arguments.
+This function supports formatting strings, integers, floats, datetimes, intervals, etc, except NULL. We do not support literal `{ and }` in the format string and numbered arguments.
 
 ## Supported operators
 
