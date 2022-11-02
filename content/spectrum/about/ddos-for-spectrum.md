@@ -18,4 +18,4 @@ L3/4 DDoS attacks should be detected and mitigated by the [Network-layer DDoS Ma
 
 For protecting HTTP/S applications against L7 DDoS attacks and to benefit from caching and additional features, onboard your application to Cloudflare’s Web Application Firewall/Content Delivery Network service, which works in tandem with Cloudflare Spectrum.
 
-Refer to [Cloudflare DDoS Protection](https://developers.cloudflare.com/ddos-protection/), to learn more.
+Refer to [Cloudflare DDoS Protection](/ddos-protection/) to learn more.
