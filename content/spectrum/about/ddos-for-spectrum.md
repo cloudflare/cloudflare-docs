@@ -12,7 +12,7 @@ Spectrum works as a layer 4 reverse proxy, therefore a proper TCP connection mus
 
 Random or out-of-state TCP packets should not be passed to the origin if a legitimate TCP connection has not yet been established between the client and Cloudflare. Spectrum also [leverages SYN cookie challenges as part of the Linux networking stack](https://blog.cloudflare.com/syn-packet-handling-in-the-wild/) to defend against floods.
 
-Furthermore, if a flood of packets of an unspecified protocol target your application, (for example, your Spectrum application is for TCP traffic, and a UDP flood targets your Spectrum application), the packets will be dropped. Similarly, if packets target a port or port range that you did not specify, they will also be dropped.
+Furthermore, if a flood of packets of an unspecified protocol target your application (for example, your Spectrum application is for TCP traffic, and a UDP flood targets your Spectrum application), the packets will be dropped. Similarly, if packets target a port or port range that you did not specify, they will also be dropped.
 
 L3/4 DDoS attacks should be detected and mitigated by the [Network-layer DDoS Managed Ruleset](/ddos-protection/managed-rulesets/network/) that is enabled by default. This ruleset detects and mitigates DDoS attacks by dynamically fingerprinting attacks based on packet header fields.
 
