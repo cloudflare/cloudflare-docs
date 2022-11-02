@@ -29,8 +29,8 @@ To configure Browser Isolation policies:
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **Policies** > **HTTP**.
 2. Select **Create a policy** and enter a name for the policy.
 3. Use the HTTP policy [selectors](/cloudflare-one/policies/filtering/http-policies/#selectors) and [operators](/cloudflare-one/policies/filtering/http-policies/#operators) to specify the websites or content you want to isolate.
-4. For **Action**, choose either [_Isolate_](#isolate) or [_Do not Isolate_](#do-not-isolate).
-5. (Optional) Configure [settings](#policy-settings) for an Isolate policy.
+4. For **Action**, choose either [_Isolate_](/cloudflare-one/policies/browser-isolation/isolation-policies/#isolate) or [_Do not Isolate_](/cloudflare-one/policies/browser-isolation/isolation-policies/#do-not-isolate).
+5. (Optional) Configure [settings](/cloudflare-one/policies/browser-isolation/isolation-policies/#policy-settings) for an Isolate policy.
 6. Select **Create policy**.
 
 Next, [verify that your policy is working](#3-check-if-a-web-page-is-isolated).
