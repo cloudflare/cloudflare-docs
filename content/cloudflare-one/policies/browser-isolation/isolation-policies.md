@@ -57,7 +57,7 @@ Prohibits users from printing remote web pages to their local machine.
 Prohibits users from performing keyboard input into the remote web page.
 
 {{<Aside type="note">}}
-Mouse input remains available (to allow users to navigate a website by following hyperlinks and scrolling). This does not prevent user input into third party virtual keyboards within a remote webpage.
+Mouse input remains available (to allow users to navigate a website by following hyperlinks and scrolling). This does not prevent user input into third-party virtual keyboards within a remote web page.
 {{</Aside>}}
 
 ### Disable upload
