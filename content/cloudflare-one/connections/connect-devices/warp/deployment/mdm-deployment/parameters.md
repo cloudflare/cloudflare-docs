@@ -111,6 +111,66 @@ When the WARP client is deployed via MDM, the in-app **Send Feedback** button is
 - `https://<support.example.com>` &mdash; Use an `https://` link to open your company's internal help site.
 - `mailto:<yoursupport@example.com>` &mdash; Use a `mailto:` link to open your default mail client.
 
+### `override_api_endpoint`
+
+Overrides the IP address the WARP client will use to communicate with the client
+orchestration API. This parameter is only usable by clients with a version newer
+than 2022.10.0.0. Most IT admins should not set this setting as it will redirect
+all API traffic to a new IP. If the parameter is used, please be sure to update
+your organization's firewall to ensure this IP is allowed through.
+
+Although the IP has changed the domain name used will remain the same, meaning
+this new IP address may not terminate the TLS connection.
+
+**Value Type:** `string`
+
+**Value:**
+
+- `1.2.3.4` &mdash; Redirect all client orchestration API calls to 1.2.3.4.
+
+The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will
+fail to parse the entire mdm file.
+
+### `override_doh_endpoint`
+
+Overrides the IP address the WARP client will use to resolve DNS queries using
+DNS over HTTPS. This parameter is only usable by clients with a version newer
+than 2022.10.0.0. Most IT admins should not set this setting as it will redirect
+all DNS over HTTPS traffic to a new IP. If the parameter is used, please be sure
+to update your organization's firewall to ensure this IP is allowed through.
+
+Although the IP has changed the domain name used will remain the same, meaning
+this new IP address may not terminate the TLS connection.
+
+**Value Type:** `string`
+
+**Value:**
+
+- `1.2.3.4` &mdash; Redirect all client DNS over HTTPS lookups to 1.2.3.4.
+
+The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will
+fail to parse the entire mdm file.
+
+### `override_warp_endpoint`
+
+Overrides the socket address the WARP client will use to send WARP traffic. This
+parameter is only usable by clients with a version newer than 2022.10.0.0. Most
+IT admins should not set this setting as it will redirect all WARP traffic to a
+new IP. If the parameter is used, please be sure to update your organization's
+firewall to ensure this IP is allowed through.
+
+Although the IP has changed, the keys used to encrypt the traffic will remain
+the same, meaning this new IP address may not terminate the WARP connection.
+
+**Value Type:** `string`
+
+**Value:**
+
+- `1.2.3.4:500` &mdash; Redirect all client WARP traffic to 1.2.3.4 at port 500.
+
+The string must be a valid IPv4 or IPv6 socket address (contain the IP and
+port), otherwise the WARP client will fail to parse the entire mdm file.
+
 ## Authentication with service tokens
 
 {{<Aside>}}
