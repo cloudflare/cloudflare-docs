@@ -4,7 +4,7 @@ title: DDoS Protection for Spectrum
 weight: 0
 ---
 
-# DDoS Protection for Spectrum application
+# DDoS Protection for Spectrum
 
 Spectrum provides DDoS Protection at layers 3-4 of the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/), that is against TCP and UDP based DDoS attacks.
 
