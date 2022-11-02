@@ -65,7 +65,7 @@ Mouse input remains available (to allow users to navigate a website by following
 Prohibits users from uploading files from their local machine into a remote web page.
 
 {{<Aside type="note">}}
-This option does not prevent files being uploaded to websites from third party cloud file managers or files downloaded into the remote browser download bar from other isolated websites. To prevent files being uploaded from the remote browser into an isolated website, use HTTP Policies to block by [Upload Mime Type](/cloudflare-one/policies/filtering/http-policies/#download-and-upload-mime-type).
+This option does not prevent files being uploaded to websites from third-party cloud file managers or files downloaded into the remote browser download bar from other isolated websites. To prevent files being uploaded from the remote browser into an isolated website, use HTTP Policies to block by [Upload Mime Type](/cloudflare-one/policies/filtering/http-policies/#download-and-upload-mime-type).
 {{</Aside>}}
 
 ### Disable download
