@@ -10,7 +10,7 @@ With custom (or vanity) nameservers, a domain can use Cloudflare DNS without usi
 
 {{<Aside type="note">}}
 
-When using [subdomain support](https://support.cloudflare.com/hc/articles/360026440252), a parent and child zone cannot share the same nameserver names.
+When using [subdomain support](/dns/zone-setups/subdomain-setup/), a parent and child zone cannot share the same nameserver names.
 
 {{</Aside>}}
 
