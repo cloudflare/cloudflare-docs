@@ -14,7 +14,7 @@ Random or out-of-state TCP packets should not be passed to the origin if a legit
 
 Furthermore, if a flood of packets of an unspecified protocol target your application, (for example, your Spectrum application is for TCP traffic, and a UDP flood targets your Spectrum application), the packets will be dropped. Similarly, if packets target a port or port range that you did not specify, they will also be dropped.
 
-L3/4 DDoS attack should be detected and mitigated by the [Network-layer DDoS Managed Ruleset](/ddos-protection/managed-rulesets/network/) that is enabled by default. This ruleset detects and mitigates DDoS attacks by dynamically fingerprinting attacks based on packet header fields.
+L3/4 DDoS attacks should be detected and mitigated by the [Network-layer DDoS Managed Ruleset](/ddos-protection/managed-rulesets/network/) that is enabled by default. This ruleset detects and mitigates DDoS attacks by dynamically fingerprinting attacks based on packet header fields.
 
 For protecting HTTP/S applications against L7 DDoS attacks and to benefit from caching and additional features, onboard your application to Cloudflare’s Web Application Firewall/Content Delivery Network service — which works in tandem with Cloudflare Spectrum.
 
