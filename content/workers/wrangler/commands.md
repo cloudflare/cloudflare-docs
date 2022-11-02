@@ -245,7 +245,7 @@ None of the options for this command are required. Also, many can be set in your
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
   - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--triggers`, `--schedule`, `--schedules` {{<type>}}string[]{{</type>}}
-  - Cron schedules to attach to the published Worker. Refer to [Cron Trigger Examples](/workers/platform/cron-triggers/#examples).
+  - Cron schedules to attach to the published Worker. Refer to [Cron Trigger Examples](/workers/platform/triggers/custom-domains/#examples).
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
   - Routes where this Worker will be published.
   - For example: `--route example.com/*`.
