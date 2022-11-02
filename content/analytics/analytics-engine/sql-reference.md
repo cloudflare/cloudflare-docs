@@ -446,7 +446,10 @@ length({string})
 ```
 
 Returns the length of a string. This function is UTF-8 compatible.
-
+Examples:
+```SQL
+SELECT length('a string');
+SELECT length(blob1) FROM your_dataset;
 ### isEmpty
 
 Usage:
